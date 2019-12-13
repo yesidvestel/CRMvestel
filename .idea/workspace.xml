@@ -1,0 +1,793 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="1ed20545-17dd-42ca-84ae-a731dfe8c807" name="Default" comment="" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FUSProjectUsageTrigger">
+    <session id="614823047">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.closed" value="2" />
+          <entry key="project.open.time.0" value="2" />
+          <entry key="project.opened" value="2" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="css" value="1" />
+          <entry key="js" value="2" />
+          <entry key="php" value="3" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="CSS" value="1" />
+          <entry key="JavaScript" value="2" />
+          <entry key="PHP" value="3" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="css" value="3" />
+          <entry key="js" value="2" />
+          <entry key="php" value="22" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="CSS" value="3" />
+          <entry key="JavaScript" value="2" />
+          <entry key="PHP" value="22" />
+        </counts>
+      </usages-collector>
+    </session>
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="450">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/assets/myjs/custom.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="138">
+              <caret line="6" column="37" selection-start-line="6" selection-start-column="37" selection-end-line="6" selection-end-column="37" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/assets/custom/style.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="908">
+              <caret line="235" column="1" selection-start-line="235" selection-start-column="1" selection-end-line="235" selection-end-column="1" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/application/controllers/Webupdate.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="483">
+              <caret line="150" column="27" lean-forward="true" selection-start-line="150" selection-start-column="27" selection-end-line="150" selection-end-column="27" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/config/constants.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="517">
+              <caret line="28" column="68" selection-start-line="28" selection-start-column="68" selection-end-line="28" selection-end-column="68" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/views/fixed/header.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="263">
+              <caret line="640" column="79" selection-start-line="640" selection-start-column="79" selection-end-line="640" selection-end-column="79" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/controllers/Customers.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1173">
+              <caret line="66" column="8" selection-start-line="66" selection-start-column="8" selection-end-line="66" selection-end-column="62" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/models/Customers_model.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2461">
+              <caret line="122" selection-start-line="122" selection-end-line="131" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/views/customers/view.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1288">
+              <caret line="56" column="45" selection-start-line="53" selection-start-column="39" selection-end-line="56" selection-end-column="45" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/controllers/Invoices.php.bak">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="6371">
+              <caret line="277" column="70" selection-start-line="277" selection-start-column="70" selection-end-line="277" selection-end-column="70" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/language/english/english_lang.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="15410">
+              <caret line="670" column="47" selection-start-line="670" selection-start-column="47" selection-end-line="670" selection-end-column="47" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>discountFormat</find>
+      <find>discount_format</find>
+      <find>extendable</find>
+      <find>refreshRows</find>
+      <find>taxcolmn</find>
+      <find>discolm</find>
+      <find>curren</find>
+      <find>Select</find>
+      <find>Do no</find>
+      <find>Extra</find>
+      <find>product_action</find>
+      <find>Prefix</find>
+      <find>Recurr</find>
+      <find>extra</find>
+      <find>progress</find>
+      <find>$rming</find>
+      <find>ganak</find>
+      <find>taxa</find>
+      <find>taxr</find>
+      <find>formInputGet</find>
+      <find>deleteRow</find>
+      <find>alert</find>
+      <find>stoc</find>
+      <find>plist</find>
+      <find>item</find>
+      <find>descr</find>
+      <find>tr</find>
+      <find>td</find>
+      <find>date</find>
+      <find>myco</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>amountExchange</replace>
+      <replace>stockreturn</replace>
+    </replaceStrings>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/application/views/invoices/del_note.php" />
+        <option value="$PROJECT_DIR$/application/config/custom.php" />
+        <option value="$PROJECT_DIR$/application/views/invoices/view.php" />
+        <option value="$PROJECT_DIR$/application/views/billing/view.php" />
+        <option value="$PROJECT_DIR$/application/views/billing/stockreturn.php" />
+        <option value="$PROJECT_DIR$/application/views/billing/reccur.php" />
+        <option value="$PROJECT_DIR$/application/views/billing/quoteview.php" />
+        <option value="$PROJECT_DIR$/application/views/billing/purchase.php" />
+        <option value="$PROJECT_DIR$/application/views/purchase/view.php" />
+        <option value="$PROJECT_DIR$/application/views/quotes/view.php" />
+        <option value="$PROJECT_DIR$/application/views/rec_invoices/view.php" />
+        <option value="$PROJECT_DIR$/application/views/stockreturn/view.php" />
+        <option value="$PROJECT_DIR$/application/views/purchase/newinvoice.php" />
+        <option value="$PROJECT_DIR$/application/views/quotes/newquote.php" />
+        <option value="$PROJECT_DIR$/application/views/rec_invoices/newinvoice.php" />
+        <option value="$PROJECT_DIR$/application/views/stockreturn/newinvoice.php" />
+        <option value="$PROJECT_DIR$/application/views/purchase/edit.php" />
+        <option value="$PROJECT_DIR$/application/views/quotes/edit.php" />
+        <option value="$PROJECT_DIR$/application/views/rec_invoices/edit.php" />
+        <option value="$PROJECT_DIR$/application/views/stockreturn/edit.php" />
+        <option value="$PROJECT_DIR$/application/language/english/english_lang.php" />
+        <option value="$PROJECT_DIR$/crm/application/helpers/siteconfig_helper.php" />
+        <option value="$PROJECT_DIR$/crm/application/views/quotes/view.php" />
+        <option value="$PROJECT_DIR$/crm/application/views/rec_invoices/view.php" />
+        <option value="$PROJECT_DIR$/application/views/invoices/proforma.php" />
+        <option value="$PROJECT_DIR$/application/models/Transactions_model.php" />
+        <option value="$PROJECT_DIR$/application/controllers/Transactions.php" />
+        <option value="$PROJECT_DIR$/application/controllers/Rec_invoices.php" />
+        <option value="$PROJECT_DIR$/application/controllers/Stockreturn.php" />
+        <option value="$PROJECT_DIR$/application/views/invoices/edit.php" />
+        <option value="$PROJECT_DIR$/crm/application/libraries/Ultimatemailer.php" />
+        <option value="$PROJECT_DIR$/crm/application/models/Ticket_model.php" />
+        <option value="$PROJECT_DIR$/application/views/invoices/view-print-header-rtl.php" />
+        <option value="$PROJECT_DIR$/application/views/invoices/view-print-rtl.php" />
+        <option value="$PROJECT_DIR$/application/views/invoices/header-print-rtl.php" />
+        <option value="$PROJECT_DIR$/application/views/settings/about.php" />
+        <option value="$PROJECT_DIR$/install/version.php" />
+        <option value="$PROJECT_DIR$/update/version.php" />
+        <option value="$PROJECT_DIR$/application/libraries/Pdf.php" />
+        <option value="$PROJECT_DIR$/application/models/Customers_model.php" />
+        <option value="$PROJECT_DIR$/application/controllers/Customers.php" />
+        <option value="$PROJECT_DIR$/application/views/customers/view.php" />
+        <option value="$PROJECT_DIR$/application/libraries/Pdf_invoice.php" />
+        <option value="$PROJECT_DIR$/application/controllers/Invoices.php" />
+        <option value="$PROJECT_DIR$/application/views/invoices/view-print-ltr.php" />
+        <option value="$PROJECT_DIR$/application/views/invoices/header-print-ltr.php" />
+        <option value="$PROJECT_DIR$/assets/myjs/custom.js" />
+        <option value="$PROJECT_DIR$/assets/custom/style.css" />
+        <option value="$PROJECT_DIR$/application/views/fixed/header.php" />
+        <option value="$PROJECT_DIR$/application/config/constants.php" />
+        <option value="$PROJECT_DIR$/application/controllers/Webupdate.php" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="NamedScopeManager">
+    <scope name="Unnamed" pattern="" />
+  </component>
+  <component name="NodePackageJsonFileManager">
+    <packageJsonPaths>
+      <path value="$PROJECT_DIR$/assets/vendors/js/select/package.json" />
+    </packageJsonPaths>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-1929" />
+    <option name="y" value="-9" />
+    <option name="width" value="1938" />
+    <option name="height" value="1048" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="application_setup" type="b2602c69:ProjectViewProjectNode" />
+              <item name="application_setup" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="application_setup" type="b2602c69:ProjectViewProjectNode" />
+              <item name="application_setup" type="462c0819:PsiDirectoryNode" />
+              <item name="application" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="application_setup" type="b2602c69:ProjectViewProjectNode" />
+              <item name="application_setup" type="462c0819:PsiDirectoryNode" />
+              <item name="application" type="462c0819:PsiDirectoryNode" />
+              <item name="config" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="application_setup" type="b2602c69:ProjectViewProjectNode" />
+              <item name="application_setup" type="462c0819:PsiDirectoryNode" />
+              <item name="application" type="462c0819:PsiDirectoryNode" />
+              <item name="controllers" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="application_setup" type="b2602c69:ProjectViewProjectNode" />
+              <item name="application_setup" type="462c0819:PsiDirectoryNode" />
+              <item name="application" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="application_setup" type="b2602c69:ProjectViewProjectNode" />
+              <item name="application_setup" type="462c0819:PsiDirectoryNode" />
+              <item name="application" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="fixed" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="application_setup" type="b2602c69:ProjectViewProjectNode" />
+              <item name="application_setup" type="462c0819:PsiDirectoryNode" />
+              <item name="assets" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="application_setup" type="b2602c69:ProjectViewProjectNode" />
+              <item name="application_setup" type="462c0819:PsiDirectoryNode" />
+              <item name="assets" type="462c0819:PsiDirectoryNode" />
+              <item name="custom" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="true" />
+    <property name="nodejs_interpreter_path" value="node" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\server\htdocs\neo\application_setup\application\controllers" />
+      <recent name="D:\server\htdocs\neo\application_setup\application\libraries" />
+      <recent name="D:\server\htdocs\neo\application_setup\application\views\invoices" />
+      <recent name="D:\server\htdocs\neo\application_setup\application\views\accounts" />
+      <recent name="D:\server\htdocs\neo\application_setup\application\views\purchase" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="1ed20545-17dd-42ca-84ae-a731dfe8c807" name="Default" comment="" />
+      <created>1526228520698</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1526228520698</updated>
+      <workItem from="1526228522309" duration="7267000" />
+      <workItem from="1526526733390" duration="2981000" />
+      <workItem from="1526552180239" duration="1254000" />
+      <workItem from="1526703375110" duration="5000" />
+      <workItem from="1527052015270" duration="691000" />
+      <workItem from="1527223245248" duration="588000" />
+      <workItem from="1528983232737" duration="7102000" />
+      <workItem from="1529933765293" duration="8448000" />
+      <workItem from="1529949855704" duration="597000" />
+      <workItem from="1530088698663" duration="4000" />
+      <workItem from="1530153522881" duration="10919000" />
+      <workItem from="1530250577816" duration="3997000" />
+      <workItem from="1530276474461" duration="567000" />
+      <workItem from="1530277560602" duration="2774000" />
+      <workItem from="1530286985719" duration="9699000" />
+      <workItem from="1530332228744" duration="24765000" />
+      <workItem from="1530419834912" duration="6716000" />
+      <workItem from="1530429694536" duration="10674000" />
+      <workItem from="1530591582994" duration="63000" />
+      <workItem from="1530692097369" duration="2489000" />
+      <workItem from="1530808980959" duration="598000" />
+      <workItem from="1531849556256" duration="1512000" />
+      <workItem from="1531851779226" duration="11734000" />
+      <workItem from="1531975678078" duration="2357000" />
+      <workItem from="1532001757795" duration="654000" />
+      <workItem from="1532006005195" duration="711000" />
+      <workItem from="1532249072120" duration="16576000" />
+      <workItem from="1532281045201" duration="598000" />
+      <workItem from="1532335211470" duration="9000" />
+      <workItem from="1532406881610" duration="541000" />
+      <workItem from="1532407980454" duration="602000" />
+      <workItem from="1532669270638" duration="2703000" />
+      <workItem from="1532680391149" duration="3816000" />
+      <workItem from="1532695749107" duration="4382000" />
+      <workItem from="1532753857456" duration="12000" />
+      <workItem from="1532753884800" duration="13045000" />
+      <workItem from="1533030285855" duration="723000" />
+      <workItem from="1533061499807" duration="598000" />
+      <workItem from="1533124812845" duration="7784000" />
+      <workItem from="1533148248715" duration="117000" />
+      <workItem from="1534347870376" duration="7641000" />
+      <workItem from="1536517995909" duration="1224000" />
+      <workItem from="1536562735620" duration="2755000" />
+      <workItem from="1536779672738" duration="7000" />
+      <workItem from="1536826997759" duration="598000" />
+      <workItem from="1539460959933" duration="688000" />
+      <workItem from="1539469596017" duration="1894000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="185479000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-1927" y="-7" width="1550" height="838" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info id="Favorites" order="0" side_tool="true" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.1818792" />
+      <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Event Log" order="0" side_tool="true" weight="0.32993197" />
+      <window_info anchor="bottom" id="Version Control" order="1" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Terminal" order="2" />
+      <window_info anchor="bottom" id="Message" order="3" />
+      <window_info anchor="bottom" id="Find" order="4" weight="0.32816902" />
+      <window_info anchor="bottom" id="Run" order="5" />
+      <window_info anchor="bottom" id="Debug" order="6" weight="0.31026527" />
+      <window_info anchor="bottom" id="Cvs" order="7" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="8" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="9" />
+      <window_info anchor="bottom" id="REST Client" order="10" weight="0.4094579" />
+      <window_info anchor="bottom" id="Docker" order="11" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Database Changes" order="12" show_stripe_button="false" />
+      <window_info anchor="right" id="Database" order="0" />
+      <window_info anchor="right" id="Commander" order="1" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="2" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="3" weight="0.25" />
+      <window_info anchor="right" id="Remote Host" order="4" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/application/views/purchase/edit.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="483">
+          <caret line="152" column="164" selection-start-line="152" selection-start-column="164" selection-end-line="152" selection-end-column="164" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/rec_invoices/edit.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3519">
+          <caret line="153" column="164" selection-start-line="153" selection-start-column="164" selection-end-line="153" selection-end-column="164" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/quotes/edit.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3243">
+          <caret line="141" column="164" selection-start-line="141" selection-start-column="164" selection-end-line="141" selection-end-column="164" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/stockreturn/edit.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="161">
+          <caret line="7" column="43" selection-start-line="7" selection-start-column="43" selection-end-line="7" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/helpers/siteconfig_helper.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1610">
+          <caret line="85" selection-start-line="85" selection-end-line="106" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/crm/application/helpers/siteconfig_helper.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4761">
+          <caret line="207" column="1" selection-start-line="207" selection-start-column="1" selection-end-line="207" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/billing/view.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3519">
+          <caret line="153" column="183" selection-start-line="153" selection-start-column="183" selection-end-line="153" selection-end-column="183" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/billing/quoteview.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1357">
+          <caret line="59" column="69" selection-start-line="59" selection-start-column="58" selection-end-line="59" selection-end-column="69" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/crm/application/views/quotes/view.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1518">
+          <caret line="66" column="67" selection-start-line="66" selection-start-column="55" selection-end-line="66" selection-end-column="67" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/crm/application/views/rec_invoices/view.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="943">
+          <caret line="41" column="93" selection-start-line="41" selection-start-column="93" selection-end-line="41" selection-end-column="93" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/invoices/proforma.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="446">
+          <caret line="373" column="5" lean-forward="true" selection-start-line="373" selection-start-column="5" selection-end-line="373" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/models/Invoices_model.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-5484" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers/Quote.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-4347" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers/Rec_invoices.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-245">
+          <caret line="430" column="72" selection-start-line="430" selection-start-column="72" selection-end-line="430" selection-end-column="72" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers/Stockreturn.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="103" column="9" selection-start-line="103" selection-start-column="9" selection-end-line="103" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/invoices/newinvoice.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5014">
+          <caret line="218" column="63" selection-start-line="218" selection-start-column="59" selection-end-line="218" selection-end-column="63" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers/Purchase.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="9269">
+          <caret line="418" column="29" selection-start-line="418" selection-start-column="29" selection-end-line="418" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers/Transactions.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17043">
+          <caret line="756" column="51" selection-start-line="756" selection-start-column="51" selection-end-line="756" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/models/Transactions_model.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5382">
+          <caret line="249" column="16" selection-start-line="249" selection-start-column="16" selection-end-line="249" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/invoices/edit.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-46">
+          <caret line="206" column="52" selection-start-line="206" selection-start-column="52" selection-end-line="206" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/crm/application/libraries/Ultimatemailer.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="243">
+          <caret line="197" column="42" selection-start-line="197" selection-start-column="42" selection-end-line="197" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/crm/application/models/Ticket_model.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2484">
+          <caret line="122" column="52" selection-start-line="122" selection-start-column="52" selection-end-line="122" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/invoices/view-print-header-rtl.php" />
+    <entry file="file://$PROJECT_DIR$/application/views/invoices/view-print-rtl.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3082">
+          <caret line="16" column="25" lean-forward="true" selection-start-line="16" selection-start-column="25" selection-end-line="16" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/invoices/view.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="182" column="249" selection-start-line="182" selection-start-column="239" selection-end-line="182" selection-end-column="249" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/invoices/header-print-rtl.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="483">
+          <caret line="21" column="117" selection-start-line="21" selection-start-column="117" selection-end-line="21" selection-end-column="117" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/accounts/statementpdf-ltr.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="506">
+          <caret line="213" column="66" selection-start-line="213" selection-start-column="66" selection-end-line="213" selection-end-column="66" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/settings/about.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="437">
+          <caret line="19" column="69" selection-start-line="19" selection-start-column="69" selection-end-line="19" selection-end-column="69" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/install/version.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret selection-end-line="4" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/update/version.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="4" column="26" selection-start-line="4" selection-start-column="26" selection-end-line="4" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/update/update.sql">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/update/index.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/update/action.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/libraries/Pdf.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="644">
+          <caret line="43" selection-start-line="43" selection-end-line="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/libraries/Pdf_invoice.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="552">
+          <caret line="39" column="21" selection-start-line="39" selection-start-column="21" selection-end-line="39" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers/Billing.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/invoices/view-print-ltr.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3933">
+          <caret line="171" selection-start-line="171" selection-end-line="171" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers/Invoices.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="7912">
+          <caret line="359" column="8" selection-start-line="359" selection-start-column="8" selection-end-line="359" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers/Emailinvoice.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="851">
+          <caret line="52" column="90" selection-start-line="52" selection-start-column="90" selection-end-line="52" selection-end-column="90" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/myjs/control.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="19021">
+          <caret line="827" selection-start-line="827" selection-end-line="827" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/invoices/header-print-ltr.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="299">
+          <caret line="13" column="21" selection-start-line="13" selection-start-column="21" selection-end-line="13" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers/Customers.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1173">
+          <caret line="66" column="8" selection-start-line="66" selection-start-column="8" selection-end-line="66" selection-end-column="62" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/models/Customers_model.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2461">
+          <caret line="122" selection-start-line="122" selection-end-line="131" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/customers/view.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1288">
+          <caret line="56" column="45" selection-start-line="53" selection-start-column="39" selection-end-line="56" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers/Invoices.php.bak">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6371">
+          <caret line="277" column="70" selection-start-line="277" selection-start-column="70" selection-end-line="277" selection-end-column="70" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/language/english/english_lang.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15410">
+          <caret line="670" column="47" selection-start-line="670" selection-start-column="47" selection-end-line="670" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/myjs/custom.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="138">
+          <caret line="6" column="37" selection-start-line="6" selection-start-column="37" selection-end-line="6" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/custom/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="908">
+          <caret line="235" column="1" selection-start-line="235" selection-start-column="1" selection-end-line="235" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/fixed/header.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="263">
+          <caret line="640" column="79" selection-start-line="640" selection-start-column="79" selection-end-line="640" selection-end-column="79" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/config/constants.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="517">
+          <caret line="28" column="68" selection-start-line="28" selection-start-column="68" selection-end-line="28" selection-end-column="68" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers/Webupdate.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="483">
+          <caret line="150" column="27" lean-forward="true" selection-start-line="150" selection-start-column="27" selection-end-line="150" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ScopeChooserConfigurable.UI">
+        <settings>
+          <last-edited>Unnamed</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+          <order>
+            <scope name="Unnamed" />
+          </order>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>
