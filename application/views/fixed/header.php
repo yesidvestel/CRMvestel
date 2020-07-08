@@ -221,74 +221,11 @@
                 <a href="<?php echo base_url(); ?>dashboard/"> <i class="icon-dashboard"></i><span
                             class="menu-title"> <?php echo $this->lang->line('Dashboard') ?></span></a>
             </li>
-<<<<<<< HEAD
-            <?php /*?>if ($this->aauth->get_user()->roleid == -1) { ?>
-=======
-<?php /*?>            <?php if ($this->aauth->get_user()->roleid == -1) { ?>
->>>>>>> ea91a0c75048d4da00dd3486ca0284656b9557fa
+<!--- HEAD ----->
 
-                <li class="navigation-header"><span><?php echo $this->lang->line('Project') ?></span><i
-                            data-toggle="tooltip" data-placement="right"
-                            data-original-title="Balance"
-                            class="icon-ellipsis icon-ellipsis"></i>
-                </li>
-                <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "projects") {
-                    echo ' open';
-                } ?>">
-                    <a href=""> <i class="icon-file"></i><span
-                                class="menu-title"> <?php echo $this->lang->line('Project Management') ?> </span><i
-                                class="fa arrow"></i> </a>
-                    <ul class="menu-content">
-                        <li>
-                            <a href="<?php echo base_url(); ?>projects/addproject"><?php echo $this->lang->line('New Project') ?></a>
-                        </li>
-                        <li>
-                            <a href="<?php echo base_url(); ?>projects"><?php echo $this->lang->line('Manage Projects') ?></a>
-                        </li>
-                    </ul>
-                </li>
-                
-<<<<<<< HEAD
-                <div style="height: 600px;"></div>
-            <?php }<?php */?>
-            <?php /*?><?php if ($this->aauth->get_user()->roleid == 1) { ?>
-=======
-                <div style="height: 600px;"></div><?php */?>
-            <?php 
-            if ($this->aauth->get_user()->roleid == 1) { ?>
->>>>>>> ea91a0c75048d4da00dd3486ca0284656b9557fa
-
-                <li class="navigation-header"><span><?php echo $this->lang->line('Stock') ?></span><i
-                            data-toggle="tooltip" data-placement="right"
-                            data-original-title="Stock"
-                            class="icon-ellipsis icon-ellipsis"></i>
-                </li>
-                <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "products") {
-                    echo ' open';
-                } ?>">
-                    <a href=""> <i class="icon-truck2"></i><span
-                                class="menu-title"><?php echo $this->lang->line('Items Manager') ?></span><i
-                                class="fa arrow"></i> </a>
-                    <ul class="menu-content">
-                        <li>
-                            <a href="<?php echo base_url(); ?>products/add"><?php echo $this->lang->line('New Product') ?></a>
-                        </li>
-                        <li>
-                            <a href="<?php echo base_url(); ?>products"><?php echo $this->lang->line('Manage Products') ?></a>
-                        </li>
-                        <li>
-                            <a href="<?php echo base_url(); ?>productcategory"><?php echo $this->lang->line('Product Categories') ?></a>
-                        </li>
-                        <li>
-                            <a href="<?php echo base_url(); ?>productcategory/warehouse"><?php echo $this->lang->line('Warehouses') ?></a>
-                        </li>
-                    </ul>
-                </li>
-                <div style="height: 600px;"></div><?php */?>
-                <?php
             
 
-            if ($this->aauth->get_user()->roleid > 4) { ?>
+            <?php if ($this->aauth->get_user()->roleid > 4) { ?>
                 <li class="navigation-header"><span
                             data-i18n="nav.category.support"> <?php echo $this->lang->line('sales') ?></span><i
                             data-toggle="tooltip"
@@ -798,13 +735,10 @@
                         <li>
                             <a href="<?php echo base_url(); ?>import/products"><?php echo $this->lang->line('Import Products'); ?></a>
                         </li>
-
-
-
-
                     </ul>
                 </li>
             <?php } ?>
+			
 			<?php if ($this->aauth->get_user()->roleid == 4) { ?>
 			<li class="navigation-header"><span>MATERIALES</span><i
                             data-toggle="tooltip" data-placement="right"
