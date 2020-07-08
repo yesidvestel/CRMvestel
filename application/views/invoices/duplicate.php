@@ -60,12 +60,12 @@
                             </div>
                             <div class="clientinfo">
 
-                                <div id="customer_address1"><strong>' . $invoice['address'] . '<br>' . $invoice['city'] . ',' . $invoice['country'] . '</strong></div>
+                                <div id="customer_address1"><strong>' . $invoice['company'] . '<br>' . $invoice['ciudad'] . ',' . $invoice['documento'] . '</strong></div>
                             </div>
 
                             <div class="clientinfo">
 
-                                <div type="text" id="customer_phone">Phone: <strong>' . $invoice['phone'] . '</strong><br>Email: <strong>' . $invoice['email'] . '</strong></div>
+                                <div type="text" id="customer_phone">Phone: <strong>' . $invoice['celular'] . '</strong><br>Email: <strong>' . $invoice['email'] . '</strong></div>
                             </div>'; ?>
                                 <hr>
                                 <div id="customer_pass"></div><?php echo $this->lang->line('Warehouse') ?> <select

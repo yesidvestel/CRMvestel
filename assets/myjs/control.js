@@ -966,11 +966,11 @@ $("#copy_address").change(function ()
 {
     if($(this).prop("checked") == true){
        // alert("Checkbox is checked." );
-        $('#mcustomer_name_s').val($('#mcustomer_name').val());
-        $('#mcustomer_phone_s').val($('#mcustomer_phone').val());
+        $('#mcustomer_name_s').val($('#mcustomer_name').val()+$('#mcustomer_unoapellido').val());
+        $('#mcustomer_documento_s').val($('#mcustomer_documento').val());
         $('#mcustomer_email_s').val($('#mcustomer_email').val());
         $('#mcustomer_address1_s').val($('#mcustomer_address1').val());
-        $('#mcustomer_city_s').val($('#mcustomer_city').val());
+        $('#mcustomer_comentario_s').val($('#cmbBarrios').val());
         $('#region_s').val($('#region').val());
         $('#mcustomer_country_s').val($('#mcustomer_country').val());
         $('#postbox_s').val($('#postbox').val());

@@ -1,11 +1,11 @@
-function selectCustomer(cid, cname, cadd1, cadd2, ph, email) {
+function selectCustomer(cid, cname, cadd1, cadd2, celular, email) {
 
 
     $('#customer_id').val(cid);
     $('#customer_name').html('<strong>'+cname+'</strong>');
     $('#customer_name').val(cname);
     $('#customer_address1').html('<strong>'+cadd1+'<br>'+cadd2+'</strong>');
-    $('#customer_phone').html('Phone: <strong>'+ph+'</strong><br>Email: <strong>'+email+'</strong>');
+    $('#customer_phone').html('Phone: <strong>'+celular+'</strong><br>Email: <strong>'+email+'</strong>');
     $("#customer-box").val();
 
     $("#customer-box-result").hide();

@@ -1,6 +1,8 @@
 <?php
 $lang['Date'] = "Fecha";
-$lang['Search:'] = "Busqueda:";
+$lang['Search'] = "Busqueda";
+$lang['Show'] = "Mostrar";
+$lang['Activo'] = "Activo";
 $lang['end'] = "Finalizado";
 $lang['Date acte'] = "Fecha acte";
 $lang['Place acte'] = "Lugar acte";
@@ -98,7 +100,7 @@ $lang['revenue'] = "Los ingresos totales";
 $lang['targets'] = "Objetivos";
 $lang['recent'] = "Reciente";
 $lang['Customer'] = "Cliente";
-$lang['Due'] = "Parcial";
+$lang['Due'] = "Pendinete";
 $lang['Status'] = "Estado";
 $lang['Amount'] = "Cantidad";
 $lang['net_income'] = "Lngresos netos";
@@ -198,7 +200,7 @@ $lang['Subject'] = "Tema";
 $lang['Message'] = "Mensaje";
 $lang['Mark As'] = "Marcar como";
 $lang['Paid'] = "Recibido";
-$lang['Due'] = "Parcial";
+$lang['Due'] = "Pendiente";
 $lang['Partial'] = "Cancelado";
 $lang['Cancelled'] = "Cancelado";
 $lang['Canceled'] = "Cancelado";

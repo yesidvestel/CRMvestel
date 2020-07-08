@@ -270,7 +270,8 @@ class Purchase extends CI_Controller
             $row[] = $invoices->name;
             $row[] = dateformat($invoices->invoicedate);
             $row[] = amountFormat($invoices->total);
-            $row[] = '<span class="st-' . $invoices->status . '">' . $this->lang->line(ucwords($invoices->status)) . '</span>';
+			$row[] = $invoices->refer;
+            $row[] = '<span class="st-' . $invoices->status . '">' .ucwords($invoices->status) . '</span>';
             $row[] = '<a href="' . base_url("purchase/view?id=$invoices->tid") . '" class="btn btn-success btn-xs"><i class="icon-file-text"></i> ' . $this->lang->line('View') . '</a> &nbsp; <a href="' . base_url("purchase/printinvoice?id=$invoices->tid") . '&d=1" class="btn btn-info btn-xs"  title="Download"><span class="icon-download"></span></a>&nbsp; &nbsp;<a href="#" data-object-id="' . $invoices->tid . '" class="btn btn-danger btn-xs delete-object"><span class="icon-trash"></span></a>';
 
             $data[] = $row;
@@ -308,6 +309,13 @@ class Purchase extends CI_Controller
         $this->load->view('fixed/footer');
 
     }
+	// WATCH LIST OF USERS, MANAGE THEM
+	function sacar_pdfs()
+	{
+		$page_data['page_name']		=	'wiew';
+		$page_data['page_title']	=	'Manage user';
+		$this->load->view('backend/pages/sacar_pdf');
+	}
 
 
     public function printinvoice()
@@ -323,7 +331,7 @@ class Purchase extends CI_Controller
         $data['invoice']['multi'] = 0;
 
         ini_set('memory_limit', '64M');
-
+		
         $html = $this->load->view('purchase/view-print-'.LTR, $data, true);
 
         //PDF Rendering
@@ -357,24 +365,25 @@ class Purchase extends CI_Controller
         $data['invoice']['multi'] = 0;
 
         ini_set('memory_limit', '64M');
-
+		var_dump('purchase/view-print-'.RTL);
         $html = $this->load->view('purchase/view-print-'.RTL, $data, true);
 
         //PDF Rendering
-        $this->load->library('pdf');
+        $this->load->library('pdf_recibido');
 
-        $pdf = $this->pdf->load();
+        $pdf = $this->pdf_recibido->load();
 
         $pdf->SetHTMLFooter('<table width="100%" style="vertical-align: bottom; font-family: serif; font-size: 8pt; color: #959595; font-weight: bold; font-style: italic;"><tr><td width="33%"><span style="font-weight: bold; font-style: italic;">{DATE j-m-Y}</span></td><td width="33%" align="center" style="font-weight: bold; font-style: italic;">{PAGENO}/{nbpg}</td><td width="33%" style="text-align: right; ">#' . $tid . '</td></tr></table>');
 
-        $pdf->WriteHTML($html);
+        /*$pdf->WriteHTML($html);
 
         if ($this->input->get('d')) {
 
             $pdf->Output('Purchase_#' . $tid . '.pdf', 'D');
         } else {
             $pdf->Output('Purchase_#' . $tid . '.pdf', 'I');
-        }
+        }*/
+
 
 
     }

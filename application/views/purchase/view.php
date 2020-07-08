@@ -54,9 +54,10 @@
                                            href="<?php echo 'printinvoice?id=' . $invoice['tid']; ?>&d=1"><?php echo $this->lang->line('PDF Download') ?></a>
 										<div class="dropdown-divider"></div>
                                         <a class="dropdown-item"
-                                           href="<?php echo 'recibido?id=' . $invoice['tid']; ?>&d=1"><?php echo $this->lang->line('') ?>Recibido</a>
+                                           href="<?php echo 'recibido?id=' . $invoice['tid']; ?>"><?php echo $this->lang->line('') ?>Recibidos</a>
                                     </div>
                                 </div>
+									
                                 <a href="<?php echo $link; ?>" class="btn btn-primary"><i
                                             class="icon-earth"></i> <?php echo $this->lang->line('Public Preview') ?>
                                 </a>
@@ -552,10 +553,10 @@
                         <div class="col-xs-12 mb-1"><label
                                     for="pmethod"><?php echo $this->lang->line('Mark As') ?></label>
                             <select name="status" class="form-control mb-1">
-                                <option value="paid"><?php echo $this->lang->line('') ?>Recibido</option>
-                                <option value="due"><?php echo $this->lang->line('') ?>Parcial</option>
-                                <option value="partial"><?php echo $this->lang->line('') ?>Cancelado</option>
-                                <option value="end"><?php echo $this->lang->line('') ?>Finalizado</option>
+                                <option value="recibido"><?php echo $this->lang->line('') ?>Recibido</option>
+                                <option value="pendiente"><?php echo $this->lang->line('') ?>Pendiente</option>
+                                <option value="cancelado"><?php echo $this->lang->line('') ?>Cancelado</option>
+                                <option value="finalizado"><?php echo $this->lang->line('') ?>Finalizado</option>
                             </select>
 
                         </div>

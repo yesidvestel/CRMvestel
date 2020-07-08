@@ -15,28 +15,43 @@
                     <hr>
                     <div class="form-group row">
 
-                        <h6><label class="col-sm-6 col-form-label"
-                               for="name"><?php echo $this->lang->line('') ?>Nombre(s)</label></h6> 
+                        <h6><label class="col-sm-3 col-form-label"
+                               for="name"><?php echo $this->lang->line('') ?>1er Nombre</label></h6> 
 
-                        <div class="col-sm-6">
-                            <h6><label class="col-sm-2 col-form-label"
-                               for="name"><?php echo $this->lang->line('') ?>Apellido(s)</label></h6>
+                        <div class="col-sm-3">
+                            <h6><label class="col-form-label"
+                               for="apellidos"><?php echo $this->lang->line('') ?>2do Nombre</label></h6>
                         </div>
-                        
+                        <div class="col-sm-3">
+                            <h6><label class="col-form-label"
+                               for="apellidos"><?php echo $this->lang->line('') ?>1er Apellido</label></h6>
+                        </div>
+                        <div class="col-sm-3">
+                            <h6><label class="col-form-label"
+                               for="apellidos"><?php echo $this->lang->line('') ?>2do Apellido</label></h6>
+                        </div>
 
-                        <div class="col-sm-6">
-                            <input type="text" placeholder="Nombres completos"
+                        <div class="col-sm-3">
+                            <input type="text"
                                    class="form-control margin-bottom  required" name="name" id="mcustomer_name">
                         </div>
-                        <div class="col-sm-6">
-                            <input type="text" placeholder="Apellido completos"
-                                   class="form-control margin-bottom  required" name="apellidos" id="mcustomer_apellidos">
+                        <div class="col-sm-3">
+                            <input type="text"
+                                   class="form-control margin-bottom" name="dosnombre" id="mcustomer_dosnombre">
+                        </div>
+                        <div class="col-sm-3">
+                            <input type="text"
+                                   class="form-control margin-bottom  required" name="unoapellido" id="mcustomer_unoapellido">
+                        </div>
+                        <div class="col-sm-3">
+                            <input type="text"
+                                   class="form-control margin-bottom  required" name="dosapellido" id="mcustomer_dosapellido">
                         </div>
                     </div>
                     <div class="form-group row">
 
                         <h6><label class="col-sm-6 col-form-label"
-                               for="name"><?php echo $this->lang->line('Company') ?></label></h6>
+                               for="address"><?php echo $this->lang->line('Company') ?></label></h6>
 
                         <div class="col-sm-6">
                             <h6><label class="col-sm-2 col-form-label"
@@ -45,17 +60,17 @@
                     
                     <div class="col-sm-6">
 							<input type="text" placeholder="Compañia"
-                                   class="form-control margin-bottom required" name="company" id="mcustomer_phone">
+                                   class="form-control margin-bottom" name="company" id="mcustomer_address1">
                         
 							</div>
                         <div class="col-sm-6">
                             <input type="text" placeholder="Numero"
-                                   class="form-control margin-bottom required" name="celular" id="mcustomer_celular">
+                                   class="form-control margin-bottom required" name="celular" id="mcustomer_phone">
                         </div>
                     </div>
                     <div class="form-group row">
 
-                        <h6><label class="col-sm-6 col-form-label" for="email">Celular (adi)</label></h6>
+                        <h6><label class="col-sm-6 col-form-label" for="celular2">Celular (adi)</label></h6>
 
                         <div class="col-sm-6">
                             <h6><label class="col-sm-2 col-form-label"
@@ -63,7 +78,7 @@
                         </div>                    
                         <div class="col-sm-6">
                             <input type="text" placeholder="Numero adicional"
-                                   class="form-control margin-bottom required" name="celular2" id="mcustomer_celular2">
+                                   class="form-control margin-bottom" name="celular2" id="mcustomer_city">
                         </div>
                         <div class="col-sm-6">
                         <input type="text" placeholder="email"
@@ -104,7 +119,7 @@
                                             </select>
                         </div>
                         <div class="col-sm-2">
-                            <select class="form-control"  id="discountFormat" name="tipo_documento">
+                            <select class="form-control"  id="mcustomer_country" name="tipo_documento">
 													<option value="CC">CC</option>
                                                 	<option value="CE">CE</option>
                                                   	<option value="NIT">NIT</option>
@@ -113,78 +128,67 @@
                         </div>
                         <div class="col-sm-4">
                             <input type="text" placeholder="Numero de documento"
-                                   class="form-control margin-bottom" name="documento" id="">
+                                   class="form-control margin-bottom" name="documento" id="mcustomer_documento">
                         </div>
                     </div>
                     <hr>
                     <h5><?php echo $this->lang->line('') ?>Datos de residencia</h5>
                     <hr>
                     <div class="form-group row">
+						
+						
+						<div class="col-sm-6">
+							 <h6><label class="col-sm-6 col-form-label"
+								   for="departamento"><?php echo $this->lang->line('') ?>Departamento</label></h6>
+						
+							<?php echo $this->lang->line('departamentos') ?> 
+							<select id="departamentos"	class="selectpicker form-control" name="departamento" id="mcustomer_country">
+								<option value="0"><?php echo $this->lang->line('departamentos') ?></option><?php 						foreach ($departamentos as $row) {
+									echo '<option value="' . $row['idDepartamento'] . '">' . $row['departamento'] . '</option>';
+								} ?>
 
-                        <h6><label class="col-sm-6 col-form-label"
-                               for="Country"><?php echo $this->lang->line('') ?>Departamento</label></h6>
+							</select>
+						
+						</div> 
 
                         <div class="col-sm-6">
                             <h6><label class="col-sm-2 col-form-label"
-                               for="PBX"><?php echo $this->lang->line('') ?>Ciudad</label></h6>
+                               for="ciudad"><?php echo $this->lang->line('') ?>Ciudad</label></h6>
+						    <div id="ciudades">
+								<select id="cmbCiudades" class="selectpicker form-control" name="ciudad">
+                                <option>Seleccionar</option>
+                                <option value="1">Seleccionar</option>
+                                </select>
+							</div>
+							   
                         </div>
-                    
-						<div class="col-sm-6" id="departamento">
-						
-                        <select class="seleccion" name="cosa" onchange="cambia()" id="cosa" >
-                                   <option value="0">-
-                                   <option value="1">Casanare
-                                   <option value="2">Putumayo           
-				
-			</select>
-			
-			<select class="seleccion">
-				<?php if ("cosa"==1){
-						echo "<option value='0'>-</option>";
-							"<option value='2'>yopal</option>";
-					} ?>
-			</select>
-                       
-						</div>
-                        <div class="col-sm-6">
-                        <select id="Cbodepartamentos" name="opt" onchange="distinto()">                               
-                        </select>                       
-                        
-                       </div> 
-                        
+                      
                        
                     </div>
-                    <div class="form-group row">
-
-                        <h6><label class="col-sm-6 col-form-label"
-                               for="postbox"><?php echo $this->lang->line('') ?>Localidad</label></h6>
-
-                        <div class="col-sm-6">
-                            
+                    <div class="form-group row"> 
+					
+						<div class="col-sm-6">
                             <h6><label class="col-sm-2 col-form-label"
-                               for="postbox"><?php echo $this->lang->line('') ?>Barrio</label></h6>
+                               for="localidad"><?php echo $this->lang->line('') ?>Localidad</label></h6>
+						    <div id="localidades">
+								<select id="cmbLocalidades"  class="selectpicker form-control" name="localidad">
+                                <option>Seleccionar</option>
+                                </select>
+							</div>
+							   
                         </div>
-                    
-                    	<div class="col-sm-6">
-
-                        	<select class="seleccion" name="cosa2" >
-				<option value="-">-
-			</select>
-			
-			<select class="seleccion" name="">
-				<option value="-">-
-			</select>
-                       
-						</div>
-                        <div class="col-sm-6">
-                        <select id="Cbodepartamentos" name="opt2"> 
-                                                      
-                        </select>  
-						</div>
-                        <div class="col-sm-6">
-                            <select id="Cbodepartamentos">                               
-                        	</select>
+						
+						<div class="col-sm-6">
+                            <h6><label class="col-sm-2 col-form-label"
+                               for="barrio"><?php echo $this->lang->line('') ?>Barrio</label></h6>
+						    <div id="barrios">
+								<select id="cmbBarrios" class="selectpicker form-control" name="barrio" >
+                                <option>Seleccionar</option>
+                                </select>
+							</div>
+							   
                         </div>
+                    	 
                     </div>
                     <div class="form-group row">
 
@@ -194,31 +198,31 @@
                         
                     
                     	<div class="col-sm-2">
-						<select class="form-control"  id="discountFormat" name="tipo_clte">
-													<option value="">Calle</option>
-                                                	<option value="">Carrera</option>
-                                                  	<option value="">Diagonal</option>
-                                                	<option value="">Transversal</option>
+						<select class="form-control"  id="discountFormat" name="nomenclatura">
+													<option value="Calle">Calle</option>
+                                                	<option value="Carrera">Carrera</option>
+                                                  	<option value="Diagonal">Diagonal</option>
+                                                	<option value="Transversal">Transversal</option>
                                             </select>
                         
 						</div>
                         <div class="col-sm-2">
                             <input type="text" placeholder="Numero"
-                                   class="form-control margin-bottom" name="Numero" id="">
+                                   class="form-control margin-bottom" name="numero1">
                         </div>
-                        <div class="col-sm-1">
-                            <select class="form-control"  id="discountFormat" name="tipo_clte">
+                        <div class="col-sm-2">
+                            <select class="form-control" name="adicionauno">
 													<option value=""></option>
-                                                    <option value="">bis</option>
-                                                	<option value="">a</option>
-                                                  	<option value="">b</option>
-                                                	<option value="">c</option>
-                                                    <option value="">d</option>
-                                                    <option value="">e</option>
-                                                    <option value="">a bis</option>
-                                                    <option value="">b bis</option>
-                                                    <option value="">c bis</option>
-                                                    <option value="">d bis</option>
+                                                    <option value="bis">bis</option>
+                                                	<option value="a">a</option>
+                                                  	<option value="b">b</option>
+                                                	<option value="c">c</option>
+                                                    <option value="d">d</option>
+                                                    <option value="e">e</option>
+                                                    <option value="a bis">a bis</option>
+                                                    <option value="b bis">b bis</option>
+                                                    <option value="c bis">c bis</option>
+                                                    <option value="d bis">d bis</option>
                                             </select>
                         </div>
                         <div class="col-sm-1">
@@ -226,26 +230,26 @@
                         </div>
                         <div class="col-sm-2">
                             <input type="text" placeholder="Numero"
-                                   class="form-control margin-bottom" name="Numero" id="">
+                                   class="form-control margin-bottom" name="numero2" >
                         </div>
-                        <div class="col-sm-2">
-                            <select class=" col-sm-2 form-control"  id="discountFormat" name="tipo_clte">
+                        <div class="col-sm-1">
+                            <select class="col-sm-1 form-control" name="adicional2">
 													<option value=""></option>
-                                                    <option value="">bis</option>
-                                                	<option value="">a</option>
-                                                  	<option value="">b</option>
-                                                	<option value="">c</option>
-                                                    <option value="">d</option>
-                                                    <option value="">e</option>
-                                                    <option value="">a bis</option>
-                                                    <option value="">b bis</option>
-                                                    <option value="">c bis</option>
-                                                    <option value="">d bis</option>
+                                                    <option value="bis">bis</option>
+                                                	<option value="a">a</option>
+                                                  	<option value="b">b</option>
+                                                	<option value="c">c</option>
+                                                    <option value="d">d</option>
+                                                    <option value="e">e</option>
+                                                    <option value="a bis">a bis</option>
+                                                    <option value="b bis">b bis</option>
+                                                    <option value="c bis">c bis</option>
+                                                    <option value="d bis">d bis</option>
                                             </select>
                         </div>
                         <div class="col-sm-2">
                             <input type="text" placeholder="Numero"
-                                   class="form-control margin-bottom" name="Numero" id="">
+                                   class="form-control margin-bottom" name="numero3" id="numero3">
                         </div>
                     </div>
                     <div class="form-group row">
@@ -260,16 +264,16 @@
                         </div>
                     
                     	<div class="col-sm-6">
-                        	<select class="form-control"  id="discountFormat" name="tipo_clte">
-													<option value="">Casa</option>
-                                                	<option value="">Apartamento</option>
-                                                  	<option value="">Edificio</option>
-                                                	<option value="">Oficina</option>
+                        	<select class="form-control"  id="discountFormat" name="residencia">
+													<option value="Casa">Casa</option>
+                                                	<option value="Apartamento">Apartamento</option>
+                                                  	<option value="Edificio">Edificio</option>
+                                                	<option value="Oficina">Oficina</option>
                                             </select>
 						</div>
                         <div class="col-sm-6">
-                            <input type="text" placeholder="seleccione.."
-                                   class="form-control margin-bottom" name="taxid">
+                            <input type="text" placeholder="detalles de residencia"
+                                   class="form-control margin-bottom" name="referencia">
                         </div>
                     </div>
                     
@@ -302,7 +306,7 @@
                                for="customergroup"><?php echo $this->lang->line('') ?>Mikrotik</label></h6>
 
                         <div class="col-sm-12">
-                            <select name="customergroup" class="form-control">
+                            <select name="customergroup" class="form-control" onchange="cambia()" >
                                 <?php
 
                                 foreach ($customergrouplist as $row) {
@@ -324,7 +328,7 @@
 						
                         <div class="col-sm-12">
                             <input type="text" placeholder="Name"
-                                   class="form-control margin-bottom" name="name_s" id="mcustomer_name_s">
+                                   class="form-control margin-bottom" name="name_s" id="mcustomer_name_s"> 
                         </div>
                     </div>
 
@@ -338,12 +342,15 @@
                              <h6><label class="col-sm-2 col-form-label" for="email_s">Servicio</label></h6>
                         </div>                    
                     	<div class="col-sm-6">                       
-                        <input type="text" placeholder="phone"
-                                   class="form-control margin-bottom" name="phone_s" id="mcustomer_phone_s">
+                        <input type="text" 
+                                   class="form-control margin-bottom" name="contra" id="mcustomer_documento_s">
 						</div>
                         <div class="col-sm-6">
-                            <input type="text" placeholder="email"
-                                   class="form-control margin-bottom" name="email_s" id="mcustomer_email_s">
+                            <select class=" col-sm-2 form-control"  id="discountFormat" name="servicio">
+													<option value="pppoe">pppoe</option>
+                                                    <option value="pptp">pptp</option>
+                                                	
+                                            </select>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -358,13 +365,14 @@
                         </div>
                     
                    		 <div class="col-sm-6">
-							<input type="text" placeholder="address_s"
-                                   class="form-control margin-bottom" name="address_s"
-                                   id="mcustomer_address1_s">                       
+							<select class=" col-sm-2 form-control"  id="discountFormat" name="perfil" onchange="cambia2()">
+													<option value="-">-</option>
+                                            </select>                       
 						</div>
                         <div class="col-sm-6">
-                            <input type="text" placeholder="city"
-                                   class="form-control margin-bottom" name="city_s" id="mcustomer_city_s">
+                            <select class=" col-sm-2 form-control"  id="discountFormat" name="Iplocal">
+													<option value="-">-</option>
+                                            </select>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -374,16 +382,16 @@
 
                         <div class="col-sm-6">                            
                             <h6><label class="col-sm-2 col-form-label"
-                               for="country_s"><?php echo $this->lang->line('') ?>Comenterio</label></h6>
+                               for="country_s"><?php echo $this->lang->line('') ?>Comentario</label></h6>
                         </div>
                     
                     	<div class="col-sm-6">
 							<input type="text" placeholder="Region"
-                                   class="form-control margin-bottom" name="region_s" id="region_s">
+                                   class="form-control margin-bottom" name="Ipremota" id="Ipremota" value="10.0.0.3">
                         </div>
                         <div class="col-sm-6">
-                            <input type="text" placeholder="Country"
-                                   class="form-control margin-bottom" name="country_s" id="mcustomer_country_s">
+                            <input type="text" placeholder="Barrio y codigo usuario"
+                                   class="form-control margin-bottom" name="comentario" id="mcustomer_comentario_s">
                         </div>
                     </div>
                     
@@ -422,86 +430,124 @@ var selected = combo.options[combo.selectedIndex].text;
 alert(selected);
 }
 </script>
-<script type="text/javascript">
-			//1) Definir Las Variables Correspondintes
-			
-			var opt_1 = new Array ("-", "Yopal", "Monterrey", "DOTA2");
-			Yopal[1]
-			Monterrey[2]
-			var opt_2 = new Array ("-", "Mocoa", "villa", "CPU", "...");
-			var opt_3 = new Array ("-", "Google Chrome", "Linux", "opera", "...");
-			var opt_4 = new Array ("-", "MSI", "ASUS", "GIGABYTE", "...");
-			// 2) crear una funcion que permita ejecutar el cambio dinamico
-			
-			function cambia(){
-				var cosa;
-				//Se toma el vamor de la "cosa seleccionada"
-				cosa = document.formulario1.cosa[document.formulario1.cosa.selectedIndex].value;
-				//se chequea si la "cosa" esta definida
-				if(cosa!=0){
-					//selecionamos las cosas Correctas
-					mis_opts=eval("opt_" + cosa);
-					//se calcula el numero de cosas
-					num_opts=mis_opts.length;
-					//marco el numero de opt en el select
-					document.formulario1.opt.length = num_opts;
-					//para cada opt del array, la pongo en el select
-					for(i=0; i<num_opts; i++){
-						document.formulario1.opt.options[i].value=mis_opts[i];
-						document.formulario1.opt.options[i].text=mis_opts[i];
-					}
-					}else{
-						//si no habia ninguna opt seleccionada, elimino las cosas del select
-						document.formulario1.opt.length = 1;
-						//ponemos un guion en la unica opt que he dejado
-						document.formulario1.opt.options[0].value="-";
-						document.formulario1.opt.options[0].text="-";
-					}
-					//hacer un reset de las opts
-					document.formulario1.opt.options[0].selected = true;
-					
+<script type="text/javascript">	
+	var perfil_2 = new Array ("Seleccine...","3Megas","5Megas","10Megas","MOROSOS");
+	var perfil_3 = new Array ("Seleccine...","3MEGAS","5MEGAS","10MEGAS","MOROSOS");
+	var perfil_4 = new Array ("Seleccine...","3Megas","5Megas","10Megas","Cortados");
+							//crear funcion que ejecute el cambio
+							function cambia(){
+								var customergroup;
+								customergroup = document.formulario1.customergroup[document.formulario1.customergroup.			selectedIndex].value;
+								//se verifica la seleccion dada
+								if(customergroup!=0){
+									mis_opts=eval("perfil_"+customergroup);
+									//definimos cuantas obciones hay
+									num_opts=mis_opts.length;
+									//marcamos obciones en el selector
+									document.formulario1.perfil.length = num_opts;
+									//colocamos las obciones array
+									for(i=0; i<num_opts; i++){
+										document.formulario1.perfil.options[i].value=mis_opts[i];
+										document.formulario1.perfil.options[i].text=mis_opts[i];
+									}
+										}else{
+											//resultado si no hay obciones
+											document.formulario1.perfil.length = 1;
+											document.formulario1.perfil.options[0].value="-"
+											document.formulario1.perfil.options[0].text="-"											
+								}
+								document.formulario1.perfil.options[0].selected = true;
+							}	
+	var Iplocal_2 = new Array ("10.0.0.1");
+	var Iplocal_3 = new Array ("80.0.0.1");
+	var Iplocal_4 = new Array ("10.1.100.1");
+							//crear funcion que ejecute el cambio
+							function cambia2(){
+								var customergroup;
+								customergroup = document.formulario1.customergroup[document.formulario1.customergroup.			selectedIndex].value;
+								//se verifica la seleccion dada
+								if(customergroup!=0){
+									mis_opts=eval("Iplocal_"+customergroup);
+									//definimos cuantas obciones hay
+									num_opts=mis_opts.length;
+									//marcamos obciones en el selector
+									document.formulario1.Iplocal.length = num_opts;
+									//colocamos las obciones array
+									for(i=0; i<num_opts; i++){
+										document.formulario1.Iplocal.options[i].value=mis_opts[i];
+										document.formulario1.Iplocal.options[i].text=mis_opts[i];
+									}
+										}else{
+											//resultado si no hay obciones
+											document.formulario1.Iplocal.length = 1;
+											document.formulario1.Iplocal.options[0].value="-"
+											document.formulario1.Iplocal.options[0].text="-"											
+								}
+								document.formulario1.Iplocal.options[0].selected = true;
+							}		
+				
+			$("#departamentos").change(function(){
+ 
+				if($(this).val()!=""){
+					 
+					var dato=$(this).val(); 
+					$.ajax({
+						type:"POST",
+						dataType:"html",
+						url:"ciudades_list",
+						data:"idDepartamento="+dato+" ",
+						success:function(msg){ 
+							$('#cmbCiudades').html('<option>Seleccionar</option>'+ msg); 
+						}
+					});
+				}else{
+					//$("#dependencia").empty().attr("disabled","disabled");
+					//$("#departamento").empty().attr("disabled","disabled");
 				}
+			});
 			
-			
-		
-		</script>
- <script type="text/javascript">
-			//1) Definir Las Variables Correspondintes
-			
-			var opt2_1 = new Array ("-", "localidad1", "localidad2", "DOTA2", "...");
-			var opt2_2 = new Array ("-", "no tiene", "SSD", "CPU", "...");
-			var opt2_3 = new Array ("-", "Google Chrome", "Linux", "opera", "...");
-			var opt2_4 = new Array ("-", "MSI", "ASUS", "GIGABYTE", "...");
-			// 2) crear una funcion que permita ejecutar el cambio dinamico
-			
-			function distinto(){
-				var opt;
-				//Se toma el vamor de la "cosa seleccionada"
-				opt = document.formulario1.opt[document.formulario1.opt.selectedIndex].value;
-				//se chequea si la "cosa" esta definida
-				if(opt!=0){
-					//selecionamos las cosas Correctas
-					mis_opts=eval("opt2_" + opt);
-					//se calcula el numero de cosas
-					num_opts=mis_opts.length;
-					//marco el numero de opt en el select
-					document.formulario1.opt2.length = num_opts;
-					//para cada opt del array, la pongo en el select
-					for(x=0; x<num_opts; x++){
-						document.formulario1.opt2.options[x].value=mis_opts[x];
-						document.formulario1.opt2.options[x].text=mis_opts[x];
-					}
-					}else{
-						//si no habia ninguna opt seleccionada, elimino las cosas del select
-						document.formulario1.opt2.length = 1;
-						//ponemos un guion en la unica opt que he dejado
-						document.formulario1.opt2.options[0].value="-";
-						document.formulario1.opt2.options[0].text="-";
-					}
-					//hacer un reset de las opts
-					document.formulario1.opt2.options[0].selected = true;
+			$("#cmbCiudades").change(function(){ 
+				 
+				if($(this).val()!=""){
+					 
+					var dato=$(this).val(); 
+				 
 					
+					$.ajax({
+						type:"POST",
+						dataType:"html",
+						url:"localidades_list",
+						data:"idCiudad="+dato+" ",
+						success:function(msg){   
+							$('#cmbLocalidades').html('<option>Seleccionar</option>'+msg); 
+						}
+					});
+				}else{
+					//$("#dependencia").empty().attr("disabled","disabled");
+					//$("#departamento").empty().attr("disabled","disabled");
 				}
+			});
+			
+			$("#cmbLocalidades").change(function(){ 
+ 
+				if($(this).val()!=""){
+					 
+					var dato=$(this).val();  
+					
+					$.ajax({
+						type:"POST",
+						dataType:"html",
+						url:"barrios_list",
+						data:"idLocalidad="+dato+" ",
+						success:function(msg){  
+							$('#cmbBarrios').html('<option>Seleccionar</option>'+msg); 
+						}
+					});
+				}else{
+					//$("#dependencia").empty().attr("disabled","disabled");
+					//$("#departamento").empty().attr("disabled","disabled");
+				}
+			});
 			
 			
 		

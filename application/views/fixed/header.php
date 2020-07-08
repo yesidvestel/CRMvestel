@@ -221,7 +221,7 @@
                 <a href="<?php echo base_url(); ?>dashboard/"> <i class="icon-dashboard"></i><span
                             class="menu-title"> <?php echo $this->lang->line('Dashboard') ?></span></a>
             </li>
-            <?php if ($this->aauth->get_user()->roleid == -1) { ?>
+<?php /*?>            <?php if ($this->aauth->get_user()->roleid == -1) { ?>
 
                 <li class="navigation-header"><span><?php echo $this->lang->line('Project') ?></span><i
                             data-toggle="tooltip" data-placement="right"
@@ -244,8 +244,8 @@
                     </ul>
                 </li>
                 
-                <div style="height: 600px;"></div>
-            <?php }
+                <div style="height: 600px;"></div><?php */?>
+            <?php 
             if ($this->aauth->get_user()->roleid == 1) { ?>
 
                 <li class="navigation-header"><span><?php echo $this->lang->line('Stock') ?></span><i
@@ -400,14 +400,14 @@
                     echo ' open';
                 } ?>">
                     <a href=""> <i class="icon-group"></i><span
-                                class="menu-title"> <?php echo $this->lang->line('Clients') ?></span><i
+                                class="menu-title"> <?php echo $this->lang->line('') ?>Usuarios</span><i
                                 class="fa arrow"></i> </a>
                     <ul class="menu-content">
                         <li>
-                            <a href="<?php echo base_url(); ?>customers/create"><?php echo $this->lang->line('New Client') ?></a>
+                            <a href="<?php echo base_url(); ?>customers/create"><?php echo $this->lang->line('') ?>Nuevo Usuario</a>
                         </li>
                         <li>
-                            <a href="<?php echo base_url(); ?>customers"><?php echo $this->lang->line('Manage Clients') ?></a>
+                            <a href="<?php echo base_url(); ?>customers"><?php echo $this->lang->line('') ?>Administrar Usuarios</a>
                         <li>
                             <a href="<?php echo base_url(); ?>clientgroup"><?php echo $this->lang->line('Manage Groups') ?></a>
                         </li>

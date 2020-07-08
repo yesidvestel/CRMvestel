@@ -192,9 +192,9 @@
             </td>
 
             <td>
-                <?php echo '<strong>'.$invoice['name'] . '</strong><br>';
+                <?php echo '<strong>'.ucwords($invoice['name']) .' '.ucwords($invoice['apellidos']) . '</strong><br>';
                 if ($invoice['company']) echo $invoice['company'] . '<br>';
-                 echo $invoice['address'] . '<br>' . $invoice['city'] . ', ' . $invoice['region'] . '<br>' . $invoice['country'] . '-' . $invoice['postbox'] . '<br>'.$this->lang->line('Phone').': ' . $invoice['phone'] . '<br>' . $this->lang->line('Email') . ' : ' . $invoice['email'];
+                 echo $invoice['tipo_documento'] .': '.$invoice['documento'].'<br>'.Celular.': ' . $invoice['celular'] . '<br>' . $this->lang->line('Email') . ' : ' . $invoice['email'];
                 if ($invoice['taxid']) echo '<br>' . $this->lang->line('Tax') . ' ID: ' . $invoice['taxid'];
                 ?>
             </td>
@@ -202,14 +202,7 @@
 
             <tr>
 
-                <td>
-                    <?php echo '<strong>' . $this->lang->line('Shipping Address') . '</strong>:<br>';
-                    echo $invoice['name_s'] . '<br>';
-
-                    echo $invoice['address_s'] . '<br>' . $invoice['city_s'] . ', ' . $invoice['region_s'] . '<br>' . $invoice['country_s'] . '-' . $invoice['postbox_s'] . '<br> '.$this->lang->line('Phone').': ' . $invoice['phone_s'] . '<br> '.$this->lang->line('Email').': ' . $invoice['email_s'];
-
-                    ?>
-                </td>
+                
             </tr>
         <?php } ?>
         </tbody>

@@ -276,6 +276,7 @@
                                 <td colspan="2"><?php echo $this->lang->line('Reccuring Period') ?> <select
                                             name="reccur"
                                             class="selectpicker form-control">
+                                        <option value="1 day">1 <?php echo $this->lang->line('Days') ?></option> 
                                         <option value="7 day">7 <?php echo $this->lang->line('Days') ?></option>
                                         <option value="14 day">14 <?php echo $this->lang->line('Days') ?></option>
                                         <option value="30 day">30 <?php echo $this->lang->line('Days') ?></option>

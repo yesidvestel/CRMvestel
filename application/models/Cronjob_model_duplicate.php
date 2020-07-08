@@ -97,7 +97,26 @@ $productlist2 = array();
 
  $ndate = date("Y-m-d", strtotime($row['invoiceduedate'] . " +" . $row['rec'] . 's'));
 
- $data = array('tid' => $last, 'invoicedate' => $duedate, 'invoiceduedate' => $ndate, 'subtotal' => $row['subtotal'], 'shipping' => $row['shipping'], 'discount' => $row['discount'], 'tax' => $row['tax'], 'total' => $row['total'], 'notes' => $row['notes'], 'csd' => $row['csd'], 'eid' => $row['eid'], 'items' => $row['items'], 'taxstatus' => $row['taxstatus'], 'discstatus' => $row['discstatus'], 'format_discount' => $row['format_discount'], 'refer' => $row['refer'], 'term' => $row['term'], 'rec' => $row['rec'], 'multi' => $row['multi']);
+ $data = array(
+ 	'tid' => $last, 
+	'invoicedate' => $duedate, 
+	'invoiceduedate' => $ndate, 
+	'subtotal' => $row['subtotal'], 
+	'shipping' => $row['shipping'], 
+	'discount' => $row['discount'], 
+	'tax' => $row['tax'], 
+	'total' => $row['total'], 
+	'notes' => $row['notes'], 
+	'csd' => $row['csd'], 
+	'eid' => $row['eid'], 
+	'items' => $row['items'], 
+	'taxstatus' => $row['taxstatus'], 
+	'discstatus' => $row['discstatus'], 
+	'format_discount' => $row['format_discount'], 
+	'refer' => $row['refer'], 
+	'term' => $row['term'], 
+	'rec' => $row['rec'], 
+	'multi' => $row['multi']);
 
 
    $data2 = array(

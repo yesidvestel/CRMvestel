@@ -108,6 +108,9 @@
                                 <a href="#pop_model" data-toggle="modal" data-remote="false"
                                    class="btn btn-large btn-cyan mb-1" title="Change Status"
                                 ><span class="icon-tab"></span> <?php echo $this->lang->line('Change Status') ?></a>
+                                <a href="#pop_model2" data-toggle="modal" data-remote="false"
+                                   class="btn btn-large btn-orange mb-1" title="Change Status"
+                                ><span class="icon-tab"></span> <?php echo $invoice['ron'] ?> </a>
                                 <a href="#cancel-bill" class="btn btn-danger mb-1" id="cancel-bill"><i
                                             class="icon-minus-circle"> </i> <?php echo $this->lang->line('Cancel') ?>
                                 </a>
@@ -146,13 +149,13 @@
                     <div id="invoice-company-details" class="row mt-2">
                         <div class="col-md-6 col-sm-12 text-xs-center text-md-left"><p></p>
                             <img src="<?php echo base_url('userfiles/company/' . $this->config->item('logo')) ?>"
-                                 class="img-responsive p-1 m-b-2" style="max-height: 120px;">
+                                 class="img-responsive p-1 m-b-2" style="max-height: 180px;">
 
                         </div>
                         <div class="col-md-6 col-sm-12 text-xs-center text-md-right">
-                            <h2><?php echo $this->lang->line('INVOICE') ?></h2>
-                            <p class="pb-1"> <?php echo $this->config->item('prefix') . ' #' . $invoice['tid'] . '</p>
-                            <p class="pb-1">'.$this->lang->line('Reference') .':' . $invoice['refer'] . '</p>'; ?>
+                            <h2 ><?php echo $this->lang->line('INVOICE') ?></h2>
+                            <ul class="pb-1"> <?php echo $this->config->item('prefix') . ' #' . $invoice['tid'] . '</p>
+                            <ul class="pb-1">'.Sede .': ' . $invoice['refer'] . '</p>'; ?>
                             <ul class="px-0 list-unstyled">
                                 <li><?php echo $this->lang->line('Gross Amount') ?></li>
                                 <li class="lead text-bold-800"><?php echo amountFormat($invoice['total']) ?></li>
@@ -164,7 +167,7 @@
                     <!-- Invoice Customer Details -->
                     <div id="invoice-customer-details" class="row">
                         <div class="col-sm-12 text-xs-center text-md-left">
-                            <p class="text-muted"><?php echo $this->lang->line('Bill To') ?></p>
+                            <p class="text-muted"><?php echo $this->lang->line('Bill To') ?>:</p>
                         </div>
                         <div class="col-md-6 col-sm-12 text-xs-center text-md-left">
                             <ul class="px-0 list-unstyled">
@@ -172,7 +175,7 @@
 
                                 <li class="text-bold-800"><a
                                             href="<?php echo base_url('customers/view?id=' . $invoice['cid']) ?>"><strong
-                                                class="invoice_a"><?php echo $invoice['name'] . '</strong></a></li><li>' . $invoice['company'] . '</li><li>' . $invoice['address'] . ', ' . $invoice['city'] . ',' . $invoice['region'] . '</li><li>' . $invoice['country'] . ',' . $invoice['postbox'] . '</li><li>'.$this->lang->line('Phone') .': ' . $invoice['phone'] . '</li><li>'.$this->lang->line('Email') .': ' . $invoice['email'];
+                                                class="invoice_a"><?php echo ucwords($invoice['name']) .' '.ucwords($invoice['apellidos']).'</strong></a></li><li>' .$invoice['tipo_documento'].': '. $invoice['documento'] .  '</li><li>'.Celular .': ' . $invoice['celular'] . '</li><li>'.$this->lang->line('Email') .': ' . $invoice['email'];
                                     if ($invoice['taxid']) echo '</li><li>' . $this->lang->line('Tax') . ' ID: ' . $invoice['taxid']
                                                 ?>
                                 </li>
@@ -262,7 +265,7 @@
                                             <td class="text-xs-right"><?php echo amountFormat($invoice['tax']) ?></td>
                                         </tr>
                                         <tr>
-                                            <td><?php echo $this->lang->line('Discount') ?></td>
+                                            <td><?php echo $this->lang->line('') ?>Descuento</td>
                                             <td class="text-xs-right"><?php echo amountFormat($invoice['discount']) ?></td>
                                         </tr>
                                         <tr>
@@ -716,6 +719,49 @@
                         <input type="hidden" id="action-url" value="invoices/update_status">
                         <button type="button" class="btn btn-primary"
                                 id="submit_model"><?php echo $this->lang->line('Change Status'); ?></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="pop_model2" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title"><?php echo $this->lang->line('Recurring') ?></h4>
+            </div>
+
+            <div class="modal-body">
+                <form id="form_model2">
+
+
+                    <div class="row">
+                        <div class="col-xs-12 mb-1"><label
+                                    for="pmethod"><?php echo $this->lang->line('Mark As') ?></label>
+                            <select name="status" class="form-control mb-1">
+                                <option value="Activo"><?php echo $this->lang->line('') ?>Activo</option>
+                                <option value="Instalar"><?php echo $this->lang->line('') ?>Instalar</option>
+                                <option value="Cortado"><?php echo $this->lang->line('') ?>Cortado</option>
+                                <option value="Suspendido"><?php echo $this->lang->line('') ?>Suspendido</option>
+                                <option value="Exonerado"><?php echo $this->lang->line('') ?>Exonerado</option>
+                                <option value="Retirado"><?php echo $this->lang->line('') ?>Retirado</option>
+                                <option value="Compromiso"><?php echo $this->lang->line('') ?>Compromiso</option>
+                                <option value="Cartera"><?php echo $this->lang->line('') ?>Cartera</option>
+                            </select>
+
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <input type="hidden" class="form-control required"
+                               name="tid" id="invoiceid" value="<?php echo $invoice['tid'] ?>">
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal"><?php echo $this->lang->line('Close') ?></button>
+                        <input type="hidden" id="action-url" value="invoices/rec_status">
+                        <button type="button" class="btn btn-primary"
+                                id="submit_model2"><?php echo $this->lang->line('Change Status') ?></button>
                     </div>
                 </form>
             </div>

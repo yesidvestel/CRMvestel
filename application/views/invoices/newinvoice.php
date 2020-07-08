@@ -92,7 +92,7 @@
                                         </div>
                                     </div>
                                     <div class="col-sm-6"><label for="invocieno"
-                                                                 class="caption"><?php echo $this->lang->line('') ?>Sede</label>
+                                                                 class="caption"><?php echo $this->lang->line('Reference') ?></label>
 
                                         <div class="input-group">
                                             <div class="input-group-addon"><span class="icon-bookmark-o"

@@ -6,7 +6,7 @@
             <div class="message"></div>
         </div>
         <div class="grid_3 grid_4">
-            <h5><?php echo $this->lang->line('Clients') ?></h5>
+            <h5><?php echo $this->lang->line('') ?>USUARIOS</h5>
 
             <hr>
             <div class="table-responsive">
@@ -17,7 +17,7 @@
                         <th><?php echo $this->lang->line('Name') ?></th>
                         <th><?php echo $this->lang->line('Address') ?></th>
                         <th><?php echo $this->lang->line('Email') ?></th>
-                        <th><?php echo $this->lang->line('Mobile') ?></th>
+                        <th>Celular</th>
                         <th><?php echo $this->lang->line('Settings') ?></th>
 
 
@@ -32,7 +32,7 @@
                         <th><?php echo $this->lang->line('Name') ?></th>
                         <th><?php echo $this->lang->line('Address') ?></th>
                         <th>Email</th>
-                        <th><?php echo $this->lang->line('Mobile') ?></th>
+                        <th>Celular</th>
                         <th><?php echo $this->lang->line('Settings') ?></th>
 
 

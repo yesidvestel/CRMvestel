@@ -79,6 +79,7 @@ class Cronjob_model extends CI_Model
             $this->db->where('DATE(invoiceduedate)<=', $duedate);
             $this->db->where('status', 'paid');
             $this->db->where('ron', 'Recurring');
+			$this->db->where('pamnt<=', 'total');
 
 
             if ($this->db->update('rec_invoices')) {

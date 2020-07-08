@@ -183,7 +183,7 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffd9534f',end
 background-color: #F35958;
 background-image: none;
 }
-.st-paid, .st-due, .st-partial,.st-canceled,.st-rejected,.st-pending,.st-accepted,.st-Recurring,.st-Stopped,.st-end
+.st-paid, .st-due, .st-partial,.st-canceled,.st-rejected,.st-pending,.st-accepted,.st-Activo,.st-Stopped, st-Finalizado
 {
 text-transform: capitalize;
     color: #fff;
@@ -202,11 +202,11 @@ text-transform: capitalize;
  background-color: #C36;
 }
 
-.st-partial,.st-pending,.st-Recurring
+.st-partial,.st-pending,.st-Activo
 {
  background-color: #5da6fb;
 }
-.st-canceled,.st-rejected,.st-end
+.st-canceled,.st-rejected, st-Finalizado
 {
  background-color: #F00;
 }
