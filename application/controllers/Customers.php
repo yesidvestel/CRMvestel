@@ -53,17 +53,57 @@ class Customers extends CI_Controller
 				
         $head['usernm'] = $this->aauth->get_user()->username;
         $head['title'] = 'Create Customer';
+		 
+		$data['departamentos'] = $this->customers->departamentos_list();
+		
         $this->load->view('fixed/header', $head);
         $this->load->view('customers/create', $data);
         $this->load->view('fixed/footer');
     }
+	
+	public function ciudades_list()
+	{ 
+		$id = $this->input->post('idDepartamento');
+		$ciudades = $this->customers->ciudades_list($id);
+		//echo '<select  id="cmbCiudades"  class="selectpicker form-control"><option>Seleccionar</option>';
+		foreach ($ciudades as $row) {
+			echo '<option value="' . $row['idCiudad'] . '">' . $row['ciudad'] . '</option>';
+		}
+		//echo '</select>'; 
+	}
+	
+	public function localidades_list()
+	{ 
+		$id = $this->input->post('idCiudad');
+		$ciudades = $this->customers->localidades_list($id);
+		//echo '<select class="selectpicker form-control"><option>Seleccionar</option>';
+		foreach ($ciudades as $row) {
+			echo '<option value="' . $row['idLocalidad'] . '">' . $row['localidad'] . '</option>';
+		}
+		//echo '</select>'; 
+	}
+	
+	public function barrios_list()
+	{ 
+		$id = $this->input->post('idLocalidad');
+		$ciudades = $this->customers->barrios_list($id);
+		//echo '<select class="selectpicker form-control"><option>Seleccionar</option>';
+		foreach ($ciudades as $row) {
+			echo '<option value="' . $row['idBarrio'] . '">' . $row['barrio'] . '</option>';
+		}
+		//echo '</select>'; 
+	}
 
     public function view()
     {
-
-        $custid = $this->input->get('id');
+		
+        $custid = $this->input->get('id');		
         $data['details'] = $this->customers->details($custid);
         $data['customergroup'] = $this->customers->group_info($data['details']['gid']);
+		$data['departamentos'] = $this->customers->group_departamentos($data['details']['departamento']);
+		$data['ciudad'] = $this->customers->group_ciudad($data['details']['ciudad']);
+		$data['localidad'] = $this->customers->group_localidad($data['details']['localidad']);
+		$data['barrio'] = $this->customers->group_barrio($data['details']['barrio']);
         $data['money'] = $this->customers->money_details($custid);
         $data['due'] = $this->customers->due_details($custid);
         $head['usernm'] = $this->aauth->get_user()->username;
@@ -84,10 +124,10 @@ class Customers extends CI_Controller
 
             $row = array();
             $row[] = $no;
-            $row[] = '<a href="customers/view?id=' . $customers->id . '">' . $customers->name . '</a>';
-            $row[] = $customers->address . ',' . $customers->city . ',' . $customers->country;
+            $row[] = '<a href="customers/view?id=' . $customers->id . '">' . $customers->name ." ". $customers->unoapellido. '</a>';
+            $row[] = $customers->nomenclatura . ' ' . $customers->numero1 . $customers->adicionauno.' Nº '.$customers->numero2.$customers->adicional2.' - '.$customers->numero3;
             $row[] = $customers->email;
-            $row[] = $customers->phone;
+            $row[] = $customers->celular;
             $row[] = '<a href="customers/view?id=' . $customers->id . '" class="btn btn-info btn-sm"><span class="icon-eye"></span>  '.$this->lang->line('View').'</a> <a href="customers/edit?id=' . $customers->id . '" class="btn btn-primary btn-sm"><span class="icon-pencil"></span>  '.$this->lang->line('Edit').'</a> <a href="#" data-object-id="' . $customers->id . '" class="btn btn-danger btn-sm delete-object"><span class="icon-bin"></span></a>';
 
 
@@ -111,9 +151,15 @@ class Customers extends CI_Controller
 
         $data['customer'] = $this->customers->details($pid);
         $data['customergroup'] = $this->customers->group_info($data['customer']['gid']);
+		$data['departamentos'] = $this->customers->group_departamentos($data['customer']['departamento']);		
+		$data['ciudad'] = $this->customers->group_ciudad($data['customer']['ciudad']);
+		$data['localidad'] = $this->customers->group_localidad($data['customer']['localidad']);
+		$data['barrio'] = $this->customers->group_barrio($data['customer']['barrio']);
         $data['customergrouplist'] = $this->customers->group_list();
         $head['usernm'] = $this->aauth->get_user()->username;
-        $head['title'] = 'Edit Customer';
+        $head['title'] = 'Edit Customer';		
+		$data['departamentoslist'] = $this->customers->departamentos_list();
+		
         $this->load->view('fixed/header', $head);
         $this->load->view('customers/edit', $data);
         $this->load->view('fixed/footer');
@@ -123,25 +169,38 @@ class Customers extends CI_Controller
     public function addcustomer()
     {
         $name = $this->input->post('name');
+		$dosnombre = $this->input->post('dosnombre');
+        $unoapellido = $this->input->post('unoapellido');
+		$dosapellido = $this->input->post('dosapellido');
         $company = $this->input->post('company');
-        $phone = $this->input->post('phone');
+        $celular = $this->input->post('celular');
+        $celular2 = $this->input->post('celular2');
         $email = $this->input->post('email');
-        $address = $this->input->post('address');
-        $city = $this->input->post('city');
-        $region = $this->input->post('region');
-        $country = $this->input->post('country');
-        $postbox = $this->input->post('postbox');
-        $taxid = $this->input->post('taxid');
-        $customergroup = $this->input->post('customergroup');
-        $name_s = $this->input->post('name_s');
-        $phone_s = $this->input->post('phone_s');
-        $email_s = $this->input->post('email_s');
-        $address_s = $this->input->post('address_s');
-        $city_s = $this->input->post('city_s');
-        $region_s = $this->input->post('region_s');
-        $country_s = $this->input->post('country_s');
-        $postbox_s = $this->input->post('postbox_s');
-        $this->customers->add($name, $company, $phone, $email, $address, $city, $region, $country, $postbox, $customergroup, $taxid, $name_s, $phone_s, $email_s, $address_s, $city_s, $region_s, $country_s, $postbox_s);
+        $nacimiento = $this->input->post('nacimiento');
+        $tipo_cliente = $this->input->post('tipo_cliente');
+        $tipo_documento = $this->input->post('tipo_documento');
+        $documento = $this->input->post('documento');
+        $departamento = $this->input->post('departamento');
+        $ciudad = $this->input->post('ciudad');
+        $localidad = $this->input->post('localidad');
+        $barrio = $this->input->post('barrio');
+        $nomenclatura = $this->input->post('nomenclatura');
+        $numero1 = $this->input->post('numero1');
+        $adicionauno = $this->input->post('adicionauno');
+        $numero2 = $this->input->post('numero2');
+        $adicional2 = $this->input->post('adicional2');
+		$numero3 = $this->input->post('numero3');
+		$residencia = $this->input->post('residencia');
+		$referencia = $this->input->post('referencia');
+		$customergroup = $this->input->post('customergroup');
+		$name_s = $this->input->post('name_s');
+		$contra = $this->input->post('contra');
+		$servicio = $this->input->post('servicio');
+		$perfil = $this->input->post('perfil');
+		$Iplocal = $this->input->post('Iplocal');
+		$Ipremota = $this->input->post('Ipremota');
+		$comentario = $this->input->post('comentario');
+        $this->customers->add($name, $dosnombre, $unoapellido, $dosapellido, $company, $celular, $celular2, $email, $nacimiento, $tipo_cliente, $tipo_documento, $documento, $departamento, $ciudad, $localidad, $barrio, $nomenclatura, $numero1, $adicionauno, $numero2, $adicional2, $numero3, $residencia, $referencia, $customergroup, $name_s, $contra, $servicio, $perfil, $Iplocal, $Ipremota, $comentario);
 
     }
 
@@ -149,26 +208,39 @@ class Customers extends CI_Controller
     {
         $id = $this->input->post('id');
         $name = $this->input->post('name');
+		$dosnombre = $this->input->post('dosnombre');
+        $unoapellido = $this->input->post('unoapellido');
+		$dosapellido = $this->input->post('dosapellido');
         $company = $this->input->post('company');
-        $phone = $this->input->post('phone');
+        $celular = $this->input->post('celular');
+        $celular2 = $this->input->post('celular2');
         $email = $this->input->post('email');
-        $address = $this->input->post('address');
-        $city = $this->input->post('city');
-        $region = $this->input->post('region');
-        $country = $this->input->post('country');
-        $postbox = $this->input->post('postbox');
-        $customergroup = $this->input->post('customergroup');
-        $taxid = $this->input->post('taxid');
-        $name_s = $this->input->post('name_s');
-        $phone_s = $this->input->post('phone_s');
-        $email_s = $this->input->post('email_s');
-        $address_s = $this->input->post('address_s');
-        $city_s = $this->input->post('city_s');
-        $region_s = $this->input->post('region_s');
-        $country_s = $this->input->post('country_s');
-        $postbox_s = $this->input->post('postbox_s');
+        $nacimiento = $this->input->post('nacimiento');
+        $tipo_cliente = $this->input->post('tipo_cliente');
+        $tipo_documento = $this->input->post('tipo_documento');
+        $documento = $this->input->post('documento');
+        $departamento = $this->input->post('departamento');
+        $ciudad = $this->input->post('ciudad');
+        $localidad = $this->input->post('localidad');
+        $barrio = $this->input->post('barrio');
+        $nomenclatura = $this->input->post('nomenclatura');
+        $numero1 = $this->input->post('numero1');
+        $adicionauno = $this->input->post('adicionauno');
+        $numero2 = $this->input->post('numero2');
+        $adicional2 = $this->input->post('adicional2');
+		$numero3 = $this->input->post('numero3');
+		$residencia = $this->input->post('residencia');
+		$referencia = $this->input->post('referencia');
+		$customergroup = $this->input->post('customergroup');
+		$name_s = $this->input->post('name_s');
+		$contra = $this->input->post('contra');
+		$servicio = $this->input->post('servicio');
+		$perfil = $this->input->post('perfil');
+		$Iplocal = $this->input->post('Iplocal');
+		$Ipremota = $this->input->post('Ipremota');
+		$comentario = $this->input->post('comentario');
         if ($id) {
-            $this->customers->edit($id, $name, $company, $phone, $email, $address, $city, $region, $country, $postbox, $customergroup, $taxid, $name_s, $phone_s, $email_s, $address_s, $city_s, $region_s, $country_s, $postbox_s);
+            $this->customers->edit($id, $name, $dosnombre, $unoapellido, $dosapellido, $company, $celular, $celular2, $email, $nacimiento, $tipo_cliente, $tipo_documento, $documento, $departamento, $ciudad, $localidad, $barrio, $nomenclatura, $numero1, $adicionauno, $numero2, $adicional2, $numero3, $residencia, $referencia, $customergroup, $name_s, $contra, $servicio, $perfil, $Iplocal, $Ipremota, $comentario);
         }
    
     }
@@ -276,12 +348,14 @@ class Customers extends CI_Controller
             $row[] = $invoices->tid;
             $row[] = $invoices->name;
             $row[] = $invoices->invoicedate;
+			$row[] = '<span class="st-' . $invoices->ron . '">' . $invoices->ron . '</span>';
             $row[] = amountFormat($invoices->total);
             $row[] = '<span class="st-' . $invoices->status . '">' . $this->lang->line(ucwords($invoices->status)) . '</span>';
             $row[] = '<a href="' . base_url("invoices/view?id=$invoices->tid") . '" class="btn btn-success btn-xs"><i class="icon-file-text"></i> '.$this->lang->line('View').'</a> &nbsp; <a href="' . base_url("invoices/printinvoice?id=$invoices->tid") . '&d=1" class="btn btn-info btn-xs"  title="Download"><span class="icon-download"></span></a>&nbsp; &nbsp;<a href="#" data-object-id="' . $invoices->tid . '" class="btn btn-danger btn-xs delete-object"><span class="icon-trash"></span></a>';
 
             $data[] = $row;
         }
+		
 
         $output = array(
             "draw" => $_POST['draw'],
@@ -293,7 +367,8 @@ class Customers extends CI_Controller
         echo json_encode($output);
 
     }
-
+	
+ 	
 
     public function transactions()
     {
@@ -317,6 +392,9 @@ class Customers extends CI_Controller
         $data['money'] = $this->customers->money_details($custid);
         $head['usernm'] = $this->aauth->get_user()->username;
         $head['title'] = 'View Customer Invoices';
+		$data['due'] = $this->customers->due_details($custid);
+		$this->load->model('accounts_model');
+		$data['acclist'] = $this->accounts_model->accountslist();
         $this->load->view('fixed/header', $head);
         $this->load->view('customers/invoices', $data);
         $this->load->view('fixed/footer');

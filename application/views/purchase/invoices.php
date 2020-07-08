@@ -1,3 +1,33 @@
+<style>
+.st-finalizado, .st-pendiente , .st-cancelado, .st-recibido, .st-anulado
+{
+text-transform: capitalize;
+    color: #fff;
+    padding: 4px;
+    border-radius: 11px;
+    font-size: 10px;
+}
+.st-finalizado
+{
+ background-color: #3C3;
+}
+.st-pendiente
+{
+ background-color: #FC3;
+}
+.st-cancelado
+{
+ background-color: #F33;
+}
+.st-recibido
+{
+ background-color: #36F;
+}
+.st-anulado
+{
+ background-color: #000;
+}
+</style>
 <article class="content">
     <div class="card card-block">
         <div id="notify" class="alert alert-success" style="display:none;">
@@ -16,6 +46,7 @@
                     <th><?php echo $this->lang->line('Supplier') ?></th>
                     <th><?php echo $this->lang->line('Date') ?></th>
                     <th><?php echo $this->lang->line('Amount') ?></th>
+                    <th>Sede</th>
                     <th><?php echo $this->lang->line('Status') ?></th>
                     <th class="no-sort"><?php echo $this->lang->line('Settings') ?></th>
 					<?php if ($this->aauth->get_user()->roleid > 4) { ?>
@@ -32,6 +63,7 @@
                     <th><?php echo $this->lang->line('Supplier') ?></th>
                     <th><?php echo $this->lang->line('Date') ?></th>
                     <th><?php echo $this->lang->line('Amount') ?></th>
+                    <th>Sede</th>
                     <th><?php echo $this->lang->line('Status') ?></th>
                     <th class="no-sort"><?php echo $this->lang->line('Settings') ?></th>
 					<?php if ($this->aauth->get_user()->roleid > 4) { ?>

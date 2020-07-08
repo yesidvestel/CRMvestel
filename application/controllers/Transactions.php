@@ -130,85 +130,81 @@ class Transactions extends CI_Controller
         }
 
     $data = array(
-        'acid' => $acid,
-        'account' => $account['holder'],
-        'type' => 'Income',
-        'cat' => 'Sales',
-        'credit' => $amount,
-        'payer' => $cname,
-        'payerid' => $cid,
-        'method' => $pmethod,
-        'date' => $paydate,
-        'eid' => $this->aauth->get_user()->id,
-        'tid' => $tid,
-        'note' => $note
-    );
+            'acid' => $acid,
+            'account' => $account['holder'],
+            'type' => 'Income',
+            'cat' => 'Sales',
+            'credit' => $amount,
+            'payer' => $cname,
+            'payerid' => $cid,
+            'method' => $pmethod,
+            'date' => $paydate,
+            'eid' => $this->aauth->get_user()->id,
+            'tid' => $tid,
+            'note' => $note,
+            'ext' => 2
+        );
 
-    $this->db->insert('transactions', $data);
-    //$this->db->insert_id();
+        $this->db->insert('transactions', $data);
+        $this->db->insert_id();
 
-    $this->db->select('total,csd,pamnt');
-    $this->db->from('invoices');
-    $this->db->where('tid', $tid);
-    $query = $this->db->get();
-    $invresult = $query->row();
-
-    $totalrm = $invresult->total - $invresult->pamnt;
-
-    if ($totalrm > $amount) {
-        $this->db->set('pmethod', $pmethod);
-        $this->db->set('pamnt', "pamnt+$amount", FALSE);
-
-        $this->db->set('status', 'partial');
+        $this->db->select('invoiceduedate,total,csd,pamnt,rec');
+        $this->db->from('invoices');
         $this->db->where('tid', $tid);
-        $this->db->update('invoices');
+        $query = $this->db->get();
+        $invresult = $query->row();
+
+        $totalrm = $invresult->total - $invresult->pamnt;
+
+        if ($totalrm > $amount) {
+            $this->db->set('pmethod', $pmethod);
+            $this->db->set('pamnt', "pamnt+$amount", FALSE);
+
+            $this->db->set('status', 'partial');
+            $this->db->where('tid', $tid);
+            $this->db->update('invoices');
 
 
-        //account update
-        $this->db->set('lastbal', "lastbal+$amount", FALSE);
-        $this->db->where('id', $acid);
-        $this->db->update('accounts');
-        $paid_amount = $invresult->pamnt + $amount;
-        $status = 'Partial';
-        $totalrm = $totalrm - $amount;
-    } else {
-        if($totalrm < $amount) {
-            $diff=$totalrm - $amount;
-            $diff=abs($diff);
-            $amount=$totalrm;
-            $this->db->set('balance', "balance+$diff", FALSE);
-            $this->db->where('id', $cid);
-            $this->db->update('customers');
+            //account update
+            $this->db->set('lastbal', "lastbal+$amount", FALSE);
+            $this->db->where('id', $acid);
+            $this->db->update('accounts');
+            $paid_amount = $invresult->pamnt + $amount;
+            $status = 'Partial';
+            $totalrm = $totalrm - $amount;
+        } else {
+
+            $today = $invresult->invoiceduedate;
+            $addday = $invresult->rec;
+
+
+            $ndate = date("Y-m-d", strtotime($today . " +" . $addday . 's'));
+
+            $this->db->set('invoiceduedate', $ndate);
+            $this->db->set('pmethod', $pmethod);
+            $this->db->set('pamnt', "pamnt+$amount", FALSE);
+            $this->db->set('status', 'paid');
+            $this->db->where('tid', $tid);
+            $this->db->update('invoices');
+            //acount update
+            $this->db->set('lastbal', "lastbal+$amount", FALSE);
+            $this->db->where('id', $acid);
+            $this->db->update('accounts');
+
+            $totalrm = 0;
+            $status = 'Paid';
+            $paid_amount = $amount;
+
 
         }
-        $this->db->set('pmethod', $pmethod);
-        $this->db->set('pamnt', "pamnt+$totalrm", FALSE);
-        $this->db->set('status', 'paid');
-        $this->db->where('tid', $tid);
-        $this->db->update('invoices');
-        //account update
-        $this->db->set('lastbal', "lastbal+$totalrm", FALSE);
-        $this->db->where('id', $acid);
-        $this->db->update('accounts');
-
-        $totalrm = 0;
-        $status = 'Paid';
 
 
-
-    }
-
+        $activitym = "<tr><td>" . substr($paydate, 0, 10) . "</td><td>$pmethod</td><td>$amount</td><td>$note</td></tr>";
 
 
-
-    $activitym = "<tr><td>" . substr($paydate, 0, 10) . "</td><td>$pmethod</td><td>$amount</td><td>$note</td></tr>";
-
-
-    echo json_encode(array('status' => 'Success', 'message' =>
-        $this->lang->line('Transaction has been added'), 'pstatus' => $this->lang->line($status), 'activity' => $activitym, 'amt' => $totalrm, 'ttlpaid' => $amount));
-
-
-    }
+        echo json_encode(array('status' => 'Success', 'message' =>
+            $this->lang->line('Transaction has been added'), 'pstatus' => $this->lang->line($status), 'activity' => $activitym, 'amt' => $totalrm, 'ttlpaid' => $paid_amount));
+    } 
 
 
     public function paypurchase()
@@ -292,7 +288,7 @@ class Transactions extends CI_Controller
 
             $totalrm = 0;
             $status = 'Paid';
-            $paid_amount = $amount;
+            $paid_amount = $amount;		
 
 
         }
@@ -484,7 +480,7 @@ class Transactions extends CI_Controller
 
 
         $this->db->set('pamnt', "0.00", FALSE);
-        $this->db->set('status', 'canceled');
+        $this->db->set('status', 'anulado');
         $this->db->where('tid', $tid);
         $this->db->update('purchase');
         //reverse

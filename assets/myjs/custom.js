@@ -78,7 +78,7 @@ var precentCalc = function (total, percentageVal) {
 };
 //format
 var deciFormat = function (minput) {
-    return parseFloat(minput).toFixed(2);
+    return parseFloat(minput).toFixed(0);
 };
 var formInputGet = function (iname, inumber) {
     var inputId;

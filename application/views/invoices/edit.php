@@ -43,9 +43,9 @@
 
                         <div class="form-group row">
                             <div class="frmSearch col-sm-12"><label for="cst"
-                                                                    class="caption"><?php echo $this->lang->line('Search Client'); ?></label>
+                                                                    class="caption" hidden><?php echo $this->lang->line('Search Client'); ?></label>
                                 <input type="text" class="form-control" name="cst" id="customer-box"
-                                       placeholder="Enter Customer Name or Mobile Number to search" autocomplete="off"/>
+                                       placeholder="Enter Customer Name or Mobile Number to search" autocomplete="off"/ hidden>
 
                                 <div id="customer-box-result"></div>
                             </div>
@@ -60,17 +60,17 @@
                             </div>
                             <div class="clientinfo">
 
-                                <div id="customer_address1"><strong>' . $invoice['address'] . '<br>' . $invoice['city'] . ',' . $invoice['country'] . '</strong></div>
+                                <div id="customer_address1"><strong>' . $invoice['documento'] . '<br>' . $invoice['company'] . ',' . $invoice['ciudad'] . '</strong></div>
                             </div>
 
                             <div class="clientinfo">
 
-                                <div type="text" id="customer_phone">Phone: <strong>' . $invoice['phone'] . '</strong><br>Email: <strong>' . $invoice['email'] . '</strong></div>
+                                <div type="text" id="customer_phone">Celular: <strong>' . $invoice['celular'] . '</strong><br>Email: <strong>' . $invoice['email'] . '</strong></div>
                             </div>'; ?>
                                 <hr>
-                                <div id="customer_pass"></div><?php echo $this->lang->line('Warehouse') ?> <select
+                                <div id="customer_pass" hidden></div><?php echo $this->lang->line('') ?> <select
                                         id="warehouses"
-                                        class="selectpicker form-control">
+                                        class="selectpicker form-control" hidden>
                                     <option value="0"><?php echo $this->lang->line('All') ?></option><?php foreach ($warehouse as $row) {
                                         echo '<option value="' . $row['id'] . '">' . $row['title'] . '</option>';
                                     } ?>
@@ -162,11 +162,11 @@
                                                class="caption"><?php echo $this->lang->line('Discount') ?></label>
                                         <select class="form-control" onchange="changeDiscountFormat(this.value)"
                                                 id="discountFormat">
-                                            <?php echo '<option value="' . $invoice['format_discount'] . '">'.$this->lang->line('Do not change').'</option>'; ?>
-                                                 <option value="%"><?php echo $this->lang->line('% Discount').' '.$this->lang->line('After TAX') ?> </option>
-                                                <option value="flat"><?php echo $this->lang->line('Flat Discount').' '.$this->lang->line('After TAX')  ?></option>
-                                                  <option value="b_p"><?php echo $this->lang->line('% Discount').' '.$this->lang->line('Before TAX')  ?></option>
-                                                <option value="bflat"><?php echo $this->lang->line('Flat Discount').' '.$this->lang->line('Before TAX')  ?></option>
+                                            <?php echo '<option value="' . $invoice['format_discount'] . '">'.$this->lang->line('').'</option>'; ?>
+                                                 <option value="%"><?php echo $this->lang->line('').' '.$this->lang->line('') ?> </option>
+                                                <option value="flat"><?php echo $this->lang->line('').' '.$this->lang->line('')  ?>Despues del impuesto</option>
+                                                  <option value="b_p"><?php echo $this->lang->line('').' '.$this->lang->line('')  ?>Antes de impuestos</option>
+                                                <option value="bflat"><?php echo $this->lang->line('').' '.$this->lang->line('')  ?>Descuento plano antes de impuesto</option>
                                             <!-- <option value="0">Off</option> -->
                                         </select>
                                     </div>
@@ -273,7 +273,7 @@
                         </tr>
 
                         <tr class="sub_c" style="display: table-row;">
-                            <td colspan="2"><?php if ($exchange['active'] == 1){
+                            <td colspan="2" hidden><?php if ($exchange['active'] == 1){
                                 echo $this->lang->line('Payment Currency client') . ' <small>' . $this->lang->line('based on live market') ?></small>
                                 <select name="mcurrency"
                                         class="selectpicker form-control">
@@ -286,7 +286,7 @@
                                     } ?>
 
                                 </select><?php } ?></td>
-                            <td colspan="4" align="right"><strong><?php echo $this->lang->line('Grand Total') ?> (<span
+                            <td colspan="6" align="right"><strong><?php echo $this->lang->line('Grand Total') ?> (<span
                                             class="currenty lightMode"><?php echo $this->config->item('currency'); ?></span>)</strong>
                             </td>
                             <td align="left" colspan="2"><input type="text" name="total" class="form-control"
@@ -296,7 +296,7 @@
                             </td>
                         </tr>
                         <tr class="sub_c" style="display: table-row;">
-                            <td colspan="2"><?php echo $this->lang->line('Payment Terms') ?> <select name="pterms"
+                            <td colspan="2" hidden><?php echo $this->lang->line('Payment Terms') ?> <select name="pterms"
                                                                                                      class="selectpicker form-control"><?php echo '<option value="' . $invoice['termid'] . '">*' . $invoice['termtit'] . '</option>';
                                     foreach ($terms as $row) {
                                         echo '<option value="' . $row['id'] . '">' . $row['title'] . '</option>';
@@ -304,6 +304,28 @@
 
 
                                 </select></td>
+                         <tr class="sub_c" style="display: table-row;">
+                                <td colspan="2"><?php echo $this->lang->line('') ?>Mensualmente</label>
+                                    <select name="ron" class="form-control mb-1">
+                                    	<option value="<?php echo $invoice['ron']; ?>"><?php echo $invoice['ron']; ?></option>
+                                        <option value="Instalar">Si</option>
+                                        <option value="null">No</option>
+                                    </select>                        
+                                 </td>
+                            <tr class="sub_c" style="display: table-row;">
+                                <td colspan="2"><?php echo $this->lang->line('') ?>Periodo de Renovacion 
+                                <select name="reccur" class="selectpicker form-control">
+                                        <option value="<?php echo $invoice['rec']; ?>"><?php echo $invoice['rec']; ?></option> 
+                                        <option value="7 day">7 <?php echo $this->lang->line('Days') ?></option>
+                                        <option value="14 day">14 <?php echo $this->lang->line('Days') ?></option>
+                                        <option value="30 day">30 <?php echo $this->lang->line('Days') ?></option>
+                                        <option value="45 day">45 <?php echo $this->lang->line('Days') ?></option>
+                                        <option value="2 month">2 <?php echo $this->lang->line('Months') ?></option>
+                                        <option value="3 month">3 <?php echo $this->lang->line('Months') ?></option>
+                                        <option value="6 month">6 <?php echo $this->lang->line('Months') ?></option>
+                                        <option value="9 month">9 <?php echo $this->lang->line('Months') ?></option>
+                                        <option value="1 year">1 <?php echo $this->lang->line('Year') ?></option>
+                                    </select>
                             <td align="right" colspan="6"><input type="submit" class="btn btn-success sub-btn"
                                                                  value="<?php echo $this->lang->line('Update') ?>"
                                                                  id="submit-data" data-loading-text="Updating...">

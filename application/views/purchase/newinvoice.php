@@ -111,8 +111,12 @@
                                         <div class="input-group">
                                             <div class="input-group-addon"><span class="icon-bookmark-o"
                                                                                  aria-hidden="true"></span></div>
-                                            <input type="text" class="form-control" placeholder="Sede de destino"
-                                                   name="refer">
+                                            <select class="form-control" name="refer">
+													<option value="">Seleccione...</option>
+                                                	<option value="Yopal">Yopal</option>
+                                                  	<option value="Monterrey">Monterrey</option>
+                                                	<option value="Villanueva">Villanueva</option>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>

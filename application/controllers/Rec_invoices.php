@@ -266,7 +266,7 @@ class Rec_invoices extends CI_Controller
 
     public function ajax_list()
     {
-
+		
         $list = $this->invocies->get_datatables();
         $data = array();
 

@@ -2,7 +2,7 @@
         <tr>
             <td class="myco">
                 <img src="<?php echo base_url('userfiles/company/' . $this->config->item('logo')) ?>"
-                     style="max-width:260px;max-height:180px;">
+                     style="max-width:200px;max-height:180px; margin:20px">
             </td>
             <td>
 
@@ -23,7 +23,7 @@
 			</tr>
 			<?php if($invoice['refer']) { ?>
 			<tr>
-            <td><?php echo $this->lang->line('Reference') ?></td><td><?php echo $invoice['refer'] ?></td>
+            <td><?php echo $this->lang->line('') ?>Sede</td><td><?php echo $invoice['refer'] ?></td>
 			</tr>
 			<?php } ?>
 			</table>

@@ -22,12 +22,12 @@ class departamento_model extends CI_Model
 {
 
 
-    public function details($id)
+    public function details($idDepartamento)
     {
 
         $this->db->select('*');
         $this->db->from('departamentos');
-        $this->db->where('idDepartamento', $id);
+        $this->db->where('idDepartamento', $idDepartamento);
         $query = $this->db->get();
         return $query->row_array();
     }

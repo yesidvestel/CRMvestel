@@ -23,7 +23,7 @@ class Customers_model extends CI_Model
 
     var $table = 'customers';
     var $column_order = array(null, 'name', 'address', 'email', 'phone', null);
-    var $column_search = array('name', 'phone', 'address', 'city', 'email');
+    var $column_search = array('name', 'celular', 'documento', 'apellidos', 'email');
     var $trans_column_order = array('date', 'debit', 'credit', 'account', null);
     var $trans_column_search = array('id', 'date');
     var $inv_column_order = array(null, 'tid', 'name', 'invoicedate', 'total', 'status', null);
@@ -131,28 +131,43 @@ class Customers_model extends CI_Model
     }
 
 
-    public function add($name, $company, $phone, $email, $address, $city, $region, $country, $postbox, $customergroup, $taxid, $name_s, $phone_s, $email_s, $address_s, $city_s, $region_s, $country_s, $postbox_s)
+    public function add($name, $dosnombre, $unoapellido, $dosapellido, $company, $celular, $celular2, $email, $nacimiento, $tipo_cliente, $tipo_documento, $documento, $departamento, $ciudad, $localidad, $barrio, $nomenclatura, $numero1, $adicionauno, $numero2, $adicional2, $numero3, $residencia, $referencia, $customergroup, $name_s, $contra, $servicio, $perfil, $Iplocal, $Ipremota, $comentario)
     {
         $data = array(
             'name' => $name,
+			'dosnombre' => $dosnombre,
+            'unoapellido' => $unoapellido,
+			'dosapellido' => $dosapellido,
             'company' => $company,
-            'phone' => $phone,
+            'celular' => $celular,
+            'celular2' => $celular2,
             'email' => $email,
-            'address' => $address,
-            'city' => $city,
-            'region' => $region,
-            'country' => $country,
-            'postbox' => $postbox,
-            'gid' => $customergroup,
-            'taxid' => $taxid,
-            'name_s' => $name_s,
-            'phone_s' => $phone_s,
-            'email_s' => $email_s,
-            'address_s' => $address_s,
-            'city_s' => $city_s,
-            'region_s' => $region_s,
-            'country_s' => $country_s,
-            'postbox_s' => $postbox_s
+            'nacimiento' => $nacimiento,
+            'tipo_cliente' => $tipo_cliente,
+            'tipo_documento' => $tipo_documento,
+            'documento' => $documento,
+            'departamento' => $departamento,
+            'ciudad' => $ciudad,
+            'localidad' => $localidad,
+            'barrio' => $barrio,
+            'nomenclatura' => $nomenclatura,
+            'numero1' => $numero1,
+            'adicionauno' => $adicionauno,
+            'numero2' => $numero2,
+            'adicional2' => $adicional2,
+			'numero3' => $numero3,
+			'residencia' => $residencia,
+			'referencia' => $referencia,
+			'gid' => $customergroup,
+			'name_s' => $name_s,
+			'contra' => $contra,
+			'servicio' => $servicio,
+			'perfil' => $perfil,
+			'Iplocal' => $Iplocal,
+			'Ipremota' => $Ipremota,
+			'comentario' => $comentario,
+			
+			
         );
 
         if ($this->db->insert('customers', $data)) {
@@ -181,28 +196,41 @@ class Customers_model extends CI_Model
     }
 
 
-    public function edit($id, $name, $company, $phone, $email, $address, $city, $region, $country, $postbox, $customergroup, $taxid, $name_s, $phone_s, $email_s, $address_s, $city_s, $region_s, $country_s, $postbox_s)
+    public function edit($id, $name, $dosnombre, $unoapellido, $dosapellido, $company, $celular, $celular2, $email, $nacimiento, $tipo_cliente, $tipo_documento, $documento, $departamento, $ciudad, $localidad, $barrio, $nomenclatura, $numero1, $adicionauno, $numero2, $adicional2, $numero3, $residencia, $referencia, $customergroup, $name_s, $contra, $servicio, $perfil, $Iplocal, $Ipremota, $comentario)
     {
         $data = array(
             'name' => $name,
+			'dosnombre' => $dosnombre,
+            'unoapellido' => $unoapellido,
+			'dosapellido' => $dosapellido,
             'company' => $company,
-            'phone' => $phone,
+            'celular' => $celular,
+            'celular2' => $celular2,
             'email' => $email,
-            'address' => $address,
-            'city' => $city,
-            'region' => $region,
-            'country' => $country,
-            'postbox' => $postbox,
-            'gid' => $customergroup,
-            'taxid' => $taxid,
-            'name_s' => $name_s,
-            'phone_s' => $phone_s,
-            'email_s' => $email_s,
-            'address_s' => $address_s,
-            'city_s' => $city_s,
-            'region_s' => $region_s,
-            'country_s' => $country_s,
-            'postbox_s' => $postbox_s
+            'nacimiento' => $nacimiento,
+            'tipo_cliente' => $tipo_cliente,
+            'tipo_documento' => $tipo_documento,
+            'documento' => $documento,
+            'departamento' => $departamento,
+            'ciudad' => $ciudad,
+            'localidad' => $localidad,
+            'barrio' => $barrio,
+            'nomenclatura' => $nomenclatura,
+            'numero1' => $numero1,
+            'adicionauno' => $adicionauno,
+            'numero2' => $numero2,
+            'adicional2' => $adicional2,
+			'numero3' => $numero3,
+			'residencia' => $residencia,
+			'referencia' => $referencia,
+			'gid' => $customergroup,
+			'name_s' => $name_s,
+			'contra' => $contra,
+			'servicio' => $servicio,
+			'perfil' => $perfil,
+			'Iplocal' => $Iplocal,
+			'Ipremota' => $Ipremota,
+			'comentario' => $comentario,
         );
 
 
@@ -279,10 +307,71 @@ class Customers_model extends CI_Model
         $query = $this->db->query("SELECT c.*,p.pc FROM customers_group AS c LEFT JOIN ( SELECT gid,COUNT(gid) AS pc FROM customers GROUP BY gid) AS p ON p.gid=c.id");
         return $query->result_array();
     }
-	public function departamento_list()
+	
+	public function departamentos_list()
     {
-        $query = $this->db->query("SELECT idDepartamento,departamento FROM departamentos AS c LEFT JOIN ( SELECT gid,COUNT(gid) AS pc FROM customers GROUP BY gid) AS p ON p.gid=c.id");
+        $query = $this->db->query("SELECT idDepartamento,departamento FROM departamentos ");
         return $query->result_array();
+		
+    }
+	public function group_departamentos($id)
+    {
+
+        $this->db->from('departamentos');
+        $this->db->where('idDepartamento', $id);
+        $query = $this->db->get();
+        return $query->row_array();
+    }
+	
+	public function ciudades_list($id)
+    { 
+		$this->db->select('*');
+        $this->db->from('ciudad');
+        $this->db->where('idDepartamento', $id);
+        $query = $this->db->get();
+        return $query->result_array(); 
+    }
+	public function group_ciudad($id)
+    {
+
+        $this->db->from('ciudad');
+        $this->db->where('idCiudad', $id);
+        $query = $this->db->get();
+        return $query->row_array();
+    }
+	
+	public function localidades_list($id)
+    { 
+		$this->db->select('*');
+        $this->db->from('localidad');
+        $this->db->where('idCiudad', $id);
+        $query = $this->db->get();
+        return $query->result_array(); 
+    }
+	public function group_localidad($id)
+    {
+
+        $this->db->from('localidad');
+        $this->db->where('idLocalidad', $id);
+        $query = $this->db->get();
+        return $query->row_array();
+    }
+	
+	public function barrios_list($id)
+    { 
+		$this->db->select('*');
+        $this->db->from('barrio');
+        $this->db->where('idLocalidad', $id);
+        $query = $this->db->get();
+        return $query->result_array(); 
+    }
+	public function group_barrio($id)
+    {
+
+        $this->db->from('barrio');
+        $this->db->where('idBarrio', $id);
+        $query = $this->db->get();
+        return $query->row_array();
     }
 
     public function delete($id)

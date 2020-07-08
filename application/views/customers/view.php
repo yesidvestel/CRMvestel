@@ -11,7 +11,7 @@
                 <div class="row wrapper white-bg page-heading">
                     <div class="col-md-4">
                         <div class="card card-block">
-                            <h4 class="text-xs-center"><?php echo $details['name'] ?></h4>
+                            <h4 class="text-xs-center"><?php  echo  strtoupper($details['name']." ".$details['apellidos']) ?></h4>
                             <div class="ibox-content mt-2">
                                 <img alt="image" id="dpic" class="img-responsive"
                                      src="<?php echo base_url('userfiles/customers/') . $details['picture'] ?>">
@@ -62,8 +62,8 @@
                             </div>
                             <div class="row mt-2">
                                 <div class="col-md-12">
-                                    <h5><?php echo $this->lang->line('Client Group') ?>
-                                        <small><?php echo $customergroup['title'] ?></small>
+                                    <h5><?php echo $this->lang->line('') ?>SEDE
+                                        <small><?php echo $invoice['ron'] ?></small>
                                     </h5>
 
 
@@ -76,16 +76,61 @@
                                                 class="icon-pencil"></i> <?php echo $this->lang->line('Change Password') ?>
                                     </a>
                                 </div>
+                                
                                 <div class="col-md-12"><br>
                                     <h5><?php echo $this->lang->line('Change Customer Picture') ?></h5><input
                                             id="fileupload"
                                             type="file"
                                             name="files[]"></div>
+                                           
+                               
+                                            
 
                                 <div id="progress" class="progress1">
                                     <div class="progress-bar progress-bar-success"></div>
+                                     
                                 </div>
+                                
                             </div>
+                            <hr>
+                             <strong>DATOS DE INTEGRACION</strong>
+                            <hr>                            
+                                <div class="col-md-3">
+                                    <strong><?php echo $this->lang->line('') ?>Mikrotik:</strong>
+                                    <strong><?php echo $this->lang->line('') ?>Usuario:</strong>
+                                    <strong><?php echo $this->lang->line('') ?>Pasword:</strong>
+                                    <strong><?php echo $this->lang->line('') ?>Servicio:</strong>
+                                    <strong><?php echo $this->lang->line('') ?>Perfil:</strong>
+                                    <strong><?php echo $this->lang->line('') ?>Local:</strong>
+                                    <strong><?php echo $this->lang->line('') ?>Remota:</strong>
+                                    <strong><?php echo $this->lang->line('') ?>Comt/rio:</strong>
+                                </div>
+                                <div class="col-md-6">
+                                    <?php echo $customergroup['title'] ?>                                    
+                                </div>
+                                <div class="col-md-6">
+                                    <?php echo $details['name_s'] ?>                                   
+                                </div>
+                                <div class="col-md-6">
+                                    <?php echo $details['contra'] ?>                                    
+                                </div>
+                                <div class="col-md-6">
+                                    <?php echo $details['servicio'] ?>                                    
+                                </div>
+                                <div class="col-md-6">
+                                    <?php echo $details['perfil'] ?>                                    
+                                </div>
+                                <div class="col-md-6">
+                                    <?php echo $details['Iplocal'] ?>                                    
+                                </div>
+                                <div class="col-md-6">
+                                    <?php echo $details['Ipremota'] ?>                                    
+                                </div>
+                                <div class="col-md-6">
+                                    <?php echo $barrio['barrio'] ?>                                    
+                                </div>
+                                
+                                
                         </div>
 
                     </div>
@@ -95,100 +140,160 @@
                             <hr>
                             <div class="row m-t-lg">
                                 <div class="col-md-2">
-                                    <strong><?php echo $this->lang->line('Name') ?></strong>
+                                    <strong><?php echo $this->lang->line('') ?>Usuario Nº:</strong>
                                 </div>
                                 <div class="col-md-10">
-                                    <?php echo $details['name'] ?>
+                                    <?php echo $details['id'] ?>
                                 </div>
 
                             </div>
                             <hr>
                             <div class="row m-t-lg">
                                 <div class="col-md-2">
-                                    <strong><?php echo $this->lang->line('identification card') ?></strong>
+                                    <strong><?php echo $this->lang->line('Name') ?>s:</strong>
                                 </div>
                                 <div class="col-md-10">
-                                    <?php echo $details['identification card'] ?>
+                                    <?php echo $details['name'] ?> <?php echo $details['dosnombre'] ?>
+                                </div>
+
+                            </div>
+                            <hr>
+                            <div class="row m-t-lg">
+                                <div class="col-md-2">
+                                    <strong><?php echo $this->lang->line('') ?>Apellidos:</strong>
+                                </div>
+                                <div class="col-md-10">
+                                    <?php echo $details['unoapellido'] ?> <?php echo $details['dosapellido'] ?>
                                 </div>
                     
                             </div>
                             <hr>
                             <div class="row m-t-lg">
                                 <div class="col-md-2">
-                                    <strong><?php echo $this->lang->line('age') ?></strong>
+                                    <strong><?php echo $this->lang->line('') ?>Empresa:</strong>
                                 </div>
                                 <div class="col-md-10">
-                                    <?php echo $details['age'] ?>
+                                    <?php echo $details['company'] ?>
                                 </div>
 
                             </div>
                             <hr>
                             <div class="row m-t-lg">
                                 <div class="col-md-2">
-                                    <strong><?php echo $this->lang->line('City') ?></strong>
+                                    <strong><?php echo $this->lang->line('') ?>Celular:</strong>
                                 </div>
                                 <div class="col-md-10">
-                                    <?php echo $details['city'] ?>
+                                    <?php echo $details['celular'] ?>
                                 </div>
 
                             </div>
                             <hr>
                             <div class="row m-t-lg">
                                 <div class="col-md-2">
-                                    <strong><?php echo $this->lang->line('Region') ?></strong>
+                                    <strong><?php echo $this->lang->line('') ?>Celular ADI:</strong>
                                 </div>
                                 <div class="col-md-10">
-                                    <?php echo $details['region'] ?>
+                                    <?php echo $details['celular2'] ?>
                                 </div>
 
                             </div>
                             <hr>
                             <div class="row m-t-lg">
                                 <div class="col-md-2">
-                                    <strong><?php echo $this->lang->line('Country') ?></strong>
-                                </div>
-                                <div class="col-md-10">
-                                    <?php echo $details['country'] ?>
-                                </div>
-
-                            </div>
-							<hr>
-                            <div class="row m-t-lg">
-                                <div class="col-md-2">
-                                    <strong><?php echo $this->lang->line('PBX') ?></strong>
-                                </div>
-                                <div class="col-md-10">
-                                    <?php echo $details['PBX'] ?>
-                                </div>
-
-                            </div>
-                            <hr>
-                            <div class="row m-t-lg">
-                                <div class="col-md-2">
-                                    <strong><?php echo $this->lang->line('PostBox') ?></strong>
-                                </div>
-                                <div class="col-md-10">
-                                    <?php echo $details['postbox'] ?>
-                                </div>
-
-                            </div>
-                            <hr>
-                            <div class="row m-t-lg">
-                                <div class="col-md-2">
-                                    <strong>Email</strong>
+                                    <strong><?php echo $this->lang->line('') ?>Correo:</strong>
                                 </div>
                                 <div class="col-md-10">
                                     <?php echo $details['email'] ?>
                                 </div>
 
                             </div>
+							<hr>
+                            <div class="row m-t-lg">
+                                <div class="col-md-2">
+                                    <strong><?php echo $this->lang->line('') ?>Fecha de nacimiento:</strong>
+                                </div>
+                                <div class="col-md-10">
+                                    <?php echo $details['nacimiento'] ?>
+                                </div>
+
+                            </div>
                             <hr>
                             <div class="row m-t-lg">
                                 <div class="col-md-2">
-                                    <strong><?php echo $this->lang->line('Phone') ?></strong>
+                                    <strong><?php echo $this->lang->line('') ?>Tipo:</strong>
                                 </div>
                                 <div class="col-md-10">
-                                    <?php echo $details['phone'] ?>
+                                    <?php echo $details['tipo_cliente'] ?>
+                                </div>
+
+                            </div>
+                            <hr>
+                            <div class="row m-t-lg">
+                                <div class="col-md-2">
+                                    <strong>Documento:</strong>
+                                </div>
+                                <div class="col-md-10">
+                                    <?php echo $details['tipo_documento'] .". ". $details['documento'] ?>
+                                </div>
+
+                            </div>
+                            <hr>
+                            <div class="row m-t-lg">
+                                <div class="col-md-2">
+                                    <strong><?php echo $this->lang->line('') ?>Departamento:</strong>
+                                </div>
+                                <div class="col-md-10">
+                                    <?php echo  $departamentos['departamento'] ?>
+                                </div>
+
+                            </div>
+                            <hr>
+                            <div class="row m-t-lg">
+                                <div class="col-md-2">
+                                    <strong><?php echo $this->lang->line('') ?>Ciudad:</strong>
+                                </div>
+                                <div class="col-md-10">
+                                    <?php echo $ciudad['ciudad'] ?>
+                                </div>
+
+                            </div>
+                            <hr>
+                            <div class="row m-t-lg">
+                                <div class="col-md-2">
+                                    <strong><?php echo $this->lang->line('') ?>Localidad:</strong>
+                                </div>
+                                <div class="col-md-10">
+                                    <?php echo $localidad['localidad'] ?>
+                                </div>
+
+                            </div>
+                            <hr>
+                            <div class="row m-t-lg">
+                                <div class="col-md-2">
+                                    <strong><?php echo $this->lang->line('') ?>Barrio:</strong>
+                                </div>
+                                <div class="col-md-10">
+                                    <?php echo $barrio['barrio'] ?>
+                                </div>
+
+                            </div>
+                            <hr>
+                            <div class="row m-t-lg">
+                                <div class="col-md-2">
+                                    <strong><?php echo $this->lang->line('') ?>Direccion:</strong>
+                                </div>
+                                <div class="col-md-10">
+                                    <?php echo $details['nomenclatura']." ".$details['numero1'].$details['adicionauno']." N° ".$details['numero2'].$details['adicional2']." - ".$details['numero3'] ?>
+                                </div>
+
+                            </div>
+                            <hr>
+                            <div class="row m-t-lg">
+                                <div class="col-md-2">
+                                    <strong><?php echo $this->lang->line('') ?>Referencia:</strong>
+                                </div>
+                                <div class="col-md-10">
+                                    <?php echo $details['residencia'].", ".$details['referencia'] ?>
                                 </div>
 
                             </div>
@@ -276,8 +381,9 @@
                         <div class="col-xs-12 mb-1"><label
                                     for="shortnote"><?php echo $this->lang->line('Customer Name') ?></label>
                             <input type="text" class="form-control"
-                                   name="customername" value="<?php echo $details['name'] ?>"></div>
+                                   name="customername" value="<?php echo $details['name'].$details['apellidos'] ?>"></div>
                     </div>
+                    
                     <div class="row">
                         <div class="col-xs-12 mb-1"><label
                                     for="shortnote"><?php echo $this->lang->line('Subject') ?></label>
@@ -298,12 +404,16 @@
 
                 </form>
             </div>
+            
             <div class="modal-footer">
                 <button type="button" class="btn btn-default"
                         data-dismiss="modal"><?php echo $this->lang->line('Close') ?></button>
                 <button type="button" class="btn btn-primary"
                         id="sendNow"><?php echo $this->lang->line('Send') ?></button>
             </div>
+            
+            
+            
         </div>
     </div>
 </div>

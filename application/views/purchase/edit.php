@@ -93,8 +93,13 @@
                                     <div class="input-group">
                                         <div class="input-group-addon"><span class="icon-bookmark-o"
                                                                              aria-hidden="true"></span></div>
-                                        <input type="text" class="form-control" placeholder="Reference #" name="refer"
-                                               value="<?php echo $invoice['refer'] ?>">
+                                        <select class="form-control" name="refer">
+													<option value="<?php echo $invoice['refer'] ?>"><?php echo $invoice['refer'] ?></option>
+                                                	<option value="Yopal">Yopal</option>
+                                                  	<option value="Monterrey">Monterrey</option>
+                                                	<option value="Villanueva">Villanueva</option>
+                                            </select>
+                                               
                                     </div>
                                 </div>
                             </div>
