@@ -18,6 +18,9 @@
                     <th><?php echo $this->lang->line('Amount') ?></th>
                     <th><?php echo $this->lang->line('Status') ?></th>
                     <th class="no-sort"><?php echo $this->lang->line('Settings') ?></th>
+					<?php if ($this->aauth->get_user()->roleid > 4) { ?>
+					<th>Eliminar</th>
+					<?php } ?>
                 </tr>
                 </thead>
                 <tbody>
@@ -31,6 +34,9 @@
                     <th><?php echo $this->lang->line('Amount') ?></th>
                     <th><?php echo $this->lang->line('Status') ?></th>
                     <th class="no-sort"><?php echo $this->lang->line('Settings') ?></th>
+					<?php if ($this->aauth->get_user()->roleid > 4) { ?>
+					<th>Eliminar</th>
+					<?php } ?>
                 </tr>
                 </tfoot>
             </table>
@@ -41,6 +47,7 @@
 </article>
 <div id="delete_model" class="modal fade">
     <div class="modal-dialog">
+	 <?php if ($this->aauth->get_user()->roleid > 4) { ?>
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
@@ -57,6 +64,7 @@
                 <button type="button" data-dismiss="modal" class="btn">Cancel</button>
             </div>
         </div>
+		<?php } ?>
     </div>
 </div>
 <script type="text/javascript">

@@ -18,9 +18,13 @@
                             $link = base_url('billing/purchase?id=' . $invoice['tid'] . '&token=' . $validtoken);
                             if ($invoice['status'] != 'canceled') { ?>
                                 <div class="title-action">
-
+									
+                                <?php
+            
+                               if ($this->aauth->get_user()->roleid > 4) { ?> 
                                 <a href="<?php echo 'edit?id=' . $invoice['tid']; ?>" class="btn btn-warning"><i
                                             class="icon-pencil"></i> <?php echo $this->lang->line('Edit Order') ?> </a>
+									<?php } ?>
 
                                 <a href="#part_payment" data-toggle="modal" data-remote="false" data-type="reminder"
                                    class="btn btn-large btn-success" title="Partial Payment"
@@ -60,17 +64,24 @@
                                 <a href="<?php echo $link; ?>" class="btn btn-primary"><i
                                             class="icon-earth"></i> <?php echo $this->lang->line('Public Preview') ?>
                                 </a>
-
+                                 <?php if ($this->aauth->get_user()->roleid > 4) { ?> 
                                 <a href="#pop_model" data-toggle="modal" data-remote="false"
                                    class="btn btn-large btn-success" title="Change Status"
                                 ><span class="icon-tab"></span> <?php echo $this->lang->line('Change Status') ?></a>
+								<?php } ?>
+									
+								<?php if ($this->aauth->get_user()->roleid > 4) { ?>										
                                 <a href="#cancel-bill" class="btn btn-danger" id="cancel-bill_p"><i
                                             class="icon-minus-circle"> </i> <?php echo $this->lang->line('Cancel') ?>
                                 </a>
+									<?php } ?>
 
                                 </div><?php } else {
-                                echo '<h2 class="btn btn-oval btn-danger">' . $this->lang->line('Cancelled') . '</h2>';
-                            } ?>
+                                echo '<h2 class="btn btn-oval btn-danger">' . $this->lang->line('Cancelled') . '</h2>';}
+							     ?>							  
+                           
+							
+							
                         </div>
                     </div>
 

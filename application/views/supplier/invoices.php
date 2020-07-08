@@ -69,7 +69,9 @@
 </article>
 <div id="delete_model" class="modal fade">
     <div class="modal-dialog">
+		
         <div class="modal-content">
+			
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
@@ -86,6 +88,7 @@
                 <button type="button" data-dismiss="modal"
                         class="btn"><?php echo $this->lang->line('Cancel') ?></button>
             </div>
+			
         </div>
     </div>
 </div>
