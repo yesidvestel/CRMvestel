@@ -1,4 +1,4 @@
-<article class="content">
+http://localhost/CRMvestel/customers/edit?id=71<article class="content">
     <div class="card card-block">
         <div id="notify" class="alert alert-success" style="display:none;">
             <a href="#" class="close" data-dismiss="alert">&times;</a>
@@ -267,7 +267,7 @@
                             <h6><label class="col-sm-2 col-form-label"
                                for="postbox"><?php echo $this->lang->line('') ?>Referencia</label></h6>
                         </div>
-                    
+						
                     	<div class="col-sm-6">
                         	<select class="form-control"  id="discountFormat" name="residencia">
                             						<option value="<?php echo $customer['residencia'] ?>"><?php echo $customer['residencia'] ?></option>
@@ -282,7 +282,28 @@
                                    class="form-control margin-bottom" name="referencia" value="<?php echo $customer['referencia'] ?>">
                         </div>
                     </div>
-                    
+					
+                    <div class="form-group row">
+
+                        <h6><label class="col-sm-10 col-form-label"
+                               for="customergroup"><?php echo $this->lang->line('') ?>Sede</label></h6>
+
+                        <div class="col-sm-12">
+                            <select name="customergroup" class="form-control" onchange="cambia()" >
+                            	
+                                <?php
+								echo '<option value="' . $customergroup['id'] . '">' . $customergroup['title'] . '</option>';
+                                foreach ($customergrouplist as $row) {
+                                    $cid = $row['id'];
+                                    $title = $row['title'];
+                                    echo "<option value='$cid'>$title</option>";
+                                }
+                                ?>
+                            </select>
+
+
+                        </div>
+                    </div>
 
                 </div>
                 
@@ -306,27 +327,7 @@
                             <?php echo $this->lang->line("") ?>Ingrese los datos para integrar USUARIO con el SISTEMA
                         </div>
                     </div>
-                    <div class="form-group row">
-
-                        <h6><label class="col-sm-10 col-form-label"
-                               for="customergroup"><?php echo $this->lang->line('') ?>Mikrotik</label></h6>
-
-                        <div class="col-sm-12">
-                            <select name="customergroup" class="form-control" onchange="cambia()" >
-                            	
-                                <?php
-								echo '<option value="' . $customergroup['id'] . '">' . $customergroup['title'] . '</option>';
-                                foreach ($customergrouplist as $row) {
-                                    $cid = $row['id'];
-                                    $title = $row['title'];
-                                    echo "<option value='$cid'>$title</option>";
-                                }
-                                ?>
-                            </select>
-
-
-                        </div>
-                    </div>
+                    
 
                     <div class="form-group row">
 
@@ -401,6 +402,9 @@
                             <input type="text" placeholder="Barrio y codigo usuario"
                                    class="form-control margin-bottom" name="comentario" value="<?php echo $barrio['barrio'] ?>" id="mcustomer_comentario_s">
                         </div>
+						
+						
+						
                     </div>
 
 

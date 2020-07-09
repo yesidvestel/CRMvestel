@@ -739,6 +739,8 @@
                 </li>
             <?php } ?>
 			
+			<!---------- MENU PARA EL DOCTOR,MAIRA Y DON HUGO----->
+			
 			<?php if ($this->aauth->get_user()->roleid == 4) { ?>
 			<li class="navigation-header"><span>MATERIALES</span><i
                             data-toggle="tooltip" data-placement="right"
@@ -814,7 +816,65 @@
 		
 
 <?php } ?>
+			<!------ MENU PARA TECNICOS------->
+			
+			<?php if ($this->aauth->get_user()->roleid == 3) { ?>
+			<li class="navigation-header"><span>MATERIALES</span><i
+                            data-toggle="tooltip" data-placement="right"
+                            data-original-title="Stock"
+                            class="icon-ellipsis icon-ellipsis"></i>
+                </li>
+			
+					
+                <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "purchase") {
+                    echo ' open';
+                } ?>">
+					
+					
+                    <a href=""> <i class="icon-file"></i><span
+                                class="menu-title"> <?php echo $this->lang->line('Purchase Order') ?> </span><i
+                                class="fa arrow"></i> </a>
+                    <ul class="menu-content">
+                        <li>
+                            <a href="<?php echo base_url(); ?>purchase/create"><?php echo $this->lang->line('New Order') ?></a>
+                        </li>
+                        <li>
+                            <a href="<?php echo base_url(); ?>purchase"><?php echo $this->lang->line('Manage Orders') ?></a>
+                        </li>
+                    </ul>
+                </li>
+			
+			
+			<!---------------- GESTION DE PROYECTOS ----------------->
+                <li class="navigation-header"><span>PROYECTOS</span><i
+                            data-toggle="tooltip" data-placement="right"
+                            data-original-title="Balance"
+                            class="icon-ellipsis icon-ellipsis"></i>
+                </li>
+			 <li><a href="<?php echo base_url(); ?>tools/todo"><i class="icon-android-done-all"></i><span
+                                class="menu-title"> <?php echo $this->lang->line('') ?>Listado de Tareas</span></a></li>
+			
+			<!---- diverso--->
+			
+			<li class="navigation-header"><span>DIVERSOS</span><i
+                            data-toggle="tooltip" data-placement="right"
+                            data-original-title="Miscellaneous"
+                            class="icon-ellipsis icon-ellipsis"></i>
+                </li>
+			
+			<li><a href="<?php echo base_url(); ?>tools/notes"><i class="icon-android-clipboard"></i><span
+                                class="menu-title"> <?php echo $this->lang->line('Notes') ?></span></a></li>
+
+
+                <li><a href="<?php echo base_url(); ?>events"><i class="icon-calendar2"></i><span
+                                class="menu-title"> <?php echo $this->lang->line('Calendar') ?></span></a></li>
+		
+
+<?php } ?>
+				   	
         </ul>
+		
+		
     </div>
     <!-- /main menu content-->
     <!-- main menu footer-->

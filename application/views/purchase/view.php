@@ -5,6 +5,8 @@
 
             <div class="message"></div>
         </div>
+		
+		<!-------- MENU PARA MOSTRAR ----->
 
         <div class="content-body">
             <section class="card">
@@ -21,7 +23,7 @@
 									
                                 <?php
             
-                               if ($this->aauth->get_user()->roleid > 4) { ?> 
+                               if ($this->aauth->get_user()->roleid > 3) { ?> 
                                 <a href="<?php echo 'edit?id=' . $invoice['tid']; ?>" class="btn btn-warning"><i
                                             class="icon-pencil"></i> <?php echo $this->lang->line('Edit Order') ?> </a>
 									<?php } ?>
@@ -65,7 +67,7 @@
                                 <a href="<?php echo $link; ?>" class="btn btn-primary"><i
                                             class="icon-earth"></i> <?php echo $this->lang->line('Public Preview') ?>
                                 </a>
-                                 <?php if ($this->aauth->get_user()->roleid > 4) { ?> 
+                                 <?php if ($this->aauth->get_user()->roleid > 3) { ?> 
                                 <a href="#pop_model" data-toggle="modal" data-remote="false"
                                    class="btn btn-large btn-success" title="Change Status"
                                 ><span class="icon-tab"></span> <?php echo $this->lang->line('Change Status') ?></a>
@@ -433,8 +435,7 @@
                         <button type="button" class="btn btn-default"
                                 data-dismiss="modal"><?php echo $this->lang->line('Close') ?></button>
                         <input type="hidden" name="cid" value="<?php echo $invoice['cid'] ?>"><input type="hidden"
-                                                                                                     name="cname"
-                                                                                                     value="<?php echo $invoice['name'] ?>">
+                                                                                                                                                                                                        va
                         <button type="button" class="btn btn-primary"
                                 id="purchasepayment"><?php echo $this->lang->line('Do Payment') ?></button>
                     </div>
