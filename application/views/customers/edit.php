@@ -1,11 +1,11 @@
-http://localhost/CRMvestel/customers/edit?id=71<article class="content">
+<article class="content">
     <div class="card card-block">
         <div id="notify" class="alert alert-success" style="display:none;">
             <a href="#" class="close" data-dismiss="alert">&times;</a>
 
             <div class="message"></div>
         </div>
-        <form method="post" id="data_form" class="form-horizontal">
+        <form method="post" id="data_form" class="form-horizontal" name="formulario1">
             <div class="row">
 
                 <h5><?php echo $this->lang->line('Edit Customer Details') ?></h5>
@@ -443,11 +443,11 @@ alert(selected);
 	var perfil_4 = new Array ("Seleccine...","3Megas","5Megas","10Megas","Cortados");
 							//crear funcion que ejecute el cambio
 							function cambia(){
-								var mikrotik;
-								mikrotik = document.formulario1.mikrotik[document.formulario1.mikrotik.			selectedIndex].value;
+								var customergroup;
+								customergroup = document.formulario1.customergroup[document.formulario1.customergroup.			selectedIndex].value;
 								//se verifica la seleccion dada
-								if(mikrotik!=0){
-									mis_opts=eval("perfil_"+mikrotik);
+								if(customergroup!=0){
+									mis_opts=eval("perfil_"+customergroup);
 									//definimos cuantas obciones hay
 									num_opts=mis_opts.length;
 									//marcamos obciones en el selector
@@ -470,11 +470,11 @@ alert(selected);
 	var Iplocal_4 = new Array ("10.1.100.1");
 							//crear funcion que ejecute el cambio
 							function cambia2(){
-								var mikrotik;
-								mikrotik = document.formulario1.mikrotik[document.formulario1.mikrotik.			selectedIndex].value;
+								var customergroup;
+								customergroup = document.formulario1.customergroup[document.formulario1.customergroup.			selectedIndex].value;
 								//se verifica la seleccion dada
-								if(mikrotik!=0){
-									mis_opts=eval("Iplocal_"+mikrotik);
+								if(customergroup!=0){
+									mis_opts=eval("Iplocal_"+customergroup);
 									//definimos cuantas obciones hay
 									num_opts=mis_opts.length;
 									//marcamos obciones en el selector

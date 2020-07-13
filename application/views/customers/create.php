@@ -275,12 +275,26 @@
                             <input type="text" placeholder="detalles de residencia"
                                    class="form-control margin-bottom" name="referencia">
                         </div>
-                    </div>
-                    
+					</div>
+						<div class="form-group row">
 
-                </div>
-                
+                        <h6><label class="col-sm-2 col-form-label"
+                               for="customergroup"><?php echo $this->lang->line('') ?>Sede</label></h6>
+						
+                        <div class="col-sm-12">
+                            <select name="customergroup" class="form-control"  onchange="cambia()">
+                                <?php
 
+                                foreach ($customergrouplist as $row) {
+                                    $cid = $row['id'];
+                                    $title = $row['title'];
+                                    echo "<option value='$cid'>$title</option>";
+                                }
+                                ?>
+                            </select>
+                        </div>
+					</div>
+                 </div> 
                 <!--ship-->
 
                 <div class="col-md-6">
@@ -300,26 +314,7 @@
                             <?php echo $this->lang->line("") ?>Ingrese los datos para integrar USUARIO con el SISTEMA
                         </div>
                     </div>
-                    <div class="form-group row">
 
-                        <h6><label class="col-sm-10 col-form-label"
-                               for="customergroup"><?php echo $this->lang->line('') ?>Mikrotik</label></h6>
-
-                        <div class="col-sm-12">
-                            <select name="customergroup" class="form-control" onchange="cambia()" >
-                                <?php
-
-                                foreach ($customergrouplist as $row) {
-                                    $cid = $row['id'];
-                                    $title = $row['title'];
-                                    echo "<option value='$cid'>$title</option>";
-                                }
-                                ?>
-                            </select>
-
-
-                        </div>
-                    </div>
 
                     <div class="form-group row">
 
