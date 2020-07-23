@@ -49,13 +49,10 @@ class Customers extends CI_Controller
     public function create()
     {
 
-        $data['customergrouplist'] = $this->customers->group_list();
-				
+        $data['customergrouplist'] = $this->customers->group_list();				
         $head['usernm'] = $this->aauth->get_user()->username;
-        $head['title'] = 'Create Customer';
-		 
-		$data['departamentos'] = $this->customers->departamentos_list();
-		
+        $head['title'] = 'Create Customer';		 
+		$data['departamentos'] = $this->customers->departamentos_list();		
         $this->load->view('fixed/header', $head);
         $this->load->view('customers/create', $data);
         $this->load->view('fixed/footer');
@@ -157,9 +154,8 @@ class Customers extends CI_Controller
 		$data['barrio'] = $this->customers->group_barrio($data['customer']['barrio']);
         $data['customergrouplist'] = $this->customers->group_list();
         $head['usernm'] = $this->aauth->get_user()->username;
-        $head['title'] = 'Edit Customer';		
-		$data['departamentoslist'] = $this->customers->departamentos_list();
-		
+        $head['title'] = 'Edit Customer';	
+		$data['departamentoslist'] = $this->customers->departamentos_list();		
         $this->load->view('fixed/header', $head);
         $this->load->view('customers/edit', $data);
         $this->load->view('fixed/footer');

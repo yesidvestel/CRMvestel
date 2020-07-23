@@ -48,16 +48,17 @@ class Invoices extends CI_Controller
         $this->load->model('plugins_model', 'plugins');
         $data['exchange'] = $this->plugins->universal_api(5);
         $data['customergrouplist'] = $this->customers->group_list();
-        $data['lastinvoice'] = $this->invocies->lastinvoice();
-        $data['warehouse'] = $this->invocies->warehouses();
+        $data['lastinvoice'] = $this->invocies->lastinvoice();			
+        $data['warehouse'] = $this->invocies->warehouses();		
         $data['terms'] = $this->invocies->billingterms();
         $data['currency'] = $this->invocies->currencies();
         $head['title'] = "New Invoice";
+		$data['departamentos'] = $this->customers->departamentos_list();
         $head['usernm'] = $this->aauth->get_user()->username;
         $this->load->view('fixed/header', $head);
         $this->load->view('invoices/newinvoice', $data);
         $this->load->view('fixed/footer');
-    }
+    }	
 
     //edit invoice
     public function edit()
@@ -606,26 +607,38 @@ class Invoices extends CI_Controller
     public function addcustomer()
     {
         $name = $this->input->post('name');
+		$dosnombre = $this->input->post('dosnombre');
+        $unoapellido = $this->input->post('unoapellido');
+		$dosapellido = $this->input->post('dosapellido');
         $company = $this->input->post('company');
-        $phone = $this->input->post('phone');
+        $celular = $this->input->post('celular');
+        $celular2 = $this->input->post('celular2');
         $email = $this->input->post('email');
-        $address = $this->input->post('address');
-        $city = $this->input->post('city');
-        $region = $this->input->post('region');
-        $country = $this->input->post('country');
-        $postbox = $this->input->post('postbox');
-        $taxid = $this->input->post('taxid');
-        $customergroup = $this->input->post('customergroup');
-        $name_s = $this->input->post('name_s');
-        $phone_s = $this->input->post('phone_s');
-        $email_s = $this->input->post('email_s');
-        $address_s = $this->input->post('address_s');
-        $city_s = $this->input->post('city_s');
-        $region_s = $this->input->post('region_s');
-        $country_s = $this->input->post('country_s');
-        $postbox_s = $this->input->post('postbox_s');
-		$this->load->model('customers_model', 'customers');
-        $this->customers->add($name, $company, $phone, $email, $address, $city, $region, $country, $postbox, $customergroup, $taxid, $name_s, $phone_s, $email_s, $address_s, $city_s, $region_s, $country_s, $postbox_s);
+        $nacimiento = $this->input->post('nacimiento');
+        $tipo_cliente = $this->input->post('tipo_cliente');
+        $tipo_documento = $this->input->post('tipo_documento');
+        $documento = $this->input->post('documento');
+        $departamento = $this->input->post('departamento');
+        $ciudad = $this->input->post('ciudad');
+        $localidad = $this->input->post('localidad');
+        $barrio = $this->input->post('barrio');
+        $nomenclatura = $this->input->post('nomenclatura');
+        $numero1 = $this->input->post('numero1');
+        $adicionauno = $this->input->post('adicionauno');
+        $numero2 = $this->input->post('numero2');
+        $adicional2 = $this->input->post('adicional2');
+		$numero3 = $this->input->post('numero3');
+		$residencia = $this->input->post('residencia');
+		$referencia = $this->input->post('referencia');
+		$customergroup = $this->input->post('customergroup');
+		$name_s = $this->input->post('name_s');
+		$contra = $this->input->post('contra');
+		$servicio = $this->input->post('servicio');
+		$perfil = $this->input->post('perfil');
+		$Iplocal = $this->input->post('Iplocal');
+		$Ipremota = $this->input->post('Ipremota');
+		$comentario = $this->input->post('comentario');
+        $this->customers->add($name, $dosnombre, $unoapellido, $dosapellido, $company, $celular, $celular2, $email, $nacimiento, $tipo_cliente, $tipo_documento, $documento, $departamento, $ciudad, $localidad, $barrio, $nomenclatura, $numero1, $adicionauno, $numero2, $adicional2, $numero3, $residencia, $referencia, $customergroup, $name_s, $contra, $servicio, $perfil, $Iplocal, $Ipremota, $comentario);
 
     }
 

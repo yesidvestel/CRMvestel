@@ -225,14 +225,14 @@
                                                     <option value="d bis">d bis</option>
                                             </select>
                         </div>
-                        <div class="col-sm-1">
+                        <div class="col-sm-1" style="margin-left: -10px;">
                             <label class="col-form-label" for="Nº">Nº</label>
                         </div>
-                        <div class="col-sm-2">
+                        <div class="col-sm-2" style="margin-left: 14px;">
                             <input type="text" placeholder="Numero"
-                                   class="form-control margin-bottom" name="numero2" >
+                                   class="form-control margin-bottom" name="numero2" style="margin-left: -20px;">
                         </div>
-                        <div class="col-sm-1">
+                        <div class="col-sm-2" style="margin-left: -30px;margin-right: -20px;">
                             <select class="col-sm-1 form-control" name="adicional2">
 													<option value=""></option>
                                                     <option value="bis">bis</option>

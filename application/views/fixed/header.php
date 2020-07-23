@@ -308,7 +308,7 @@
                         </li>
                     </ul>
                 </li>
-						<!---ORDENES DE SERVICIOS --->
+				<!---ORDENES DE SERVICIOS --->
 			
                 <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "purchase") {
                     echo ' open';
