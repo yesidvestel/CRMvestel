@@ -92,13 +92,16 @@
                                         </div>
                                     </div>
                                     <div class="col-sm-6"><label for="invocieno"
-                                                                 class="caption"><?php echo $this->lang->line('Reference') ?></label>
+                                                                 class="caption">Sede</label>
 
                                         <div class="input-group">
                                             <div class="input-group-addon"><span class="icon-bookmark-o"
                                                                                  aria-hidden="true"></span></div>
-                                            <input type="text" class="form-control" placeholder="Reference #"
-                                                   name="refer">
+                                            <select type="text" class="form-control" placeholder="Reference #" name="refer">
+												<option value="0">Yopal</option>
+												<option value="1">Monterrey</option>
+												<option value="2">Villanueva</option>
+											</select>
                                         </div>
                                     </div>
                                 </div>
@@ -137,12 +140,12 @@
                                                 onchange="changeTaxFormat(this.value)"
                                                 id="taxformat">
                                             <?php if ($this->config->item('tax') == 1) {
-                                                echo '<option value="on" seleted>&raquo;On</option>';
+                                                echo '<option value="on" seleted>&raquo;Con impuesto</option>';
                                             } else {
-                                                echo '<option value="off">&raquo;Off</option>';
+                                                echo '<option value="off">&raquo;Sin impuesto</option>';
                                             } ?>
-                                            <option value="on"><?php echo $this->lang->line('On') ?></option>
-                                            <option value="off"><?php echo $this->lang->line('Off') ?></option>
+                                            <option value="on">Con impuesto</option>
+                                            <option value="off">Sin impuesto</option>
                                         </select>
                                     </div>
                                     <div class="col-sm-6">
@@ -200,7 +203,7 @@
                                 </td>
                                 <td><input type="text" class="form-control req amnt" name="product_qty[]" id="amount-0"
                                            onkeypress="return isNumber(event)" onkeyup="rowTotal('0'), billUpyog()"
-                                           autocomplete="off" value="1"></td>
+                                           autocomplete="off" value="<?php date('d') ?>"></td>
                                 <td><input type="text" class="form-control req prc" name="product_price[]" id="price-0"
                                            onkeypress="return isNumber(event)" onkeyup="rowTotal('0'), billUpyog()"
                                            autocomplete="off"></td>
@@ -264,7 +267,7 @@
                             </tr>
 
                             <tr class="sub_c" style="display: table-row;">
-                                <td colspan="2"><?php if ($exchange['active'] == 1){
+                                <td colspan="2" hidden=""><?php if ($exchange['active'] == 1){
                                     echo $this->lang->line('Payment Currency client') . ' <small>' . $this->lang->line('based on live market') ?></small>
                                     <select name="mcurrency"
                                             class="selectpicker form-control">
@@ -274,6 +277,11 @@
                                         } ?>
 
                                     </select><?php } ?></td>
+									<td colspan="2">Television</small>
+                                    <select name="television" class="selectpicker form-control">
+                                        <option value="no">No</option>
+                                        <option value="Television">Si</option>
+                                    </select></td>
                                 <td colspan="4" align="right"><strong><?php echo $this->lang->line('Grand Total') ?>
                                         (<span
                                                 class="currenty lightMode"><?php echo $this->config->item('currency'); ?></span>)</strong>
@@ -284,15 +292,20 @@
                                 </td>
                             </tr>
                             <tr class="sub_c" style="display: table-row;">
-                                <td colspan="2"><?php echo $this->lang->line('Payment Terms') ?> <select name="pterms"
-                                                                                                         class="selectpicker form-control"><?php foreach ($terms as $row) {
+                                <td colspan="2" hidden=""><?php echo $this->lang->line('Payment Terms') ?> 
+								<select name="pterms" class="selectpicker form-control"><?php foreach ($terms as $row) {
                                             echo '<option value="' . $row['id'] . '">' . $row['title'] . '</option>';
                                         } ?>
 
                                     </select></td>
-                                <td align="right" colspan="6"><input type="submit" class="btn btn-success sub-btn"
-                                                                     value="<?php echo $this->lang->line('Generate Invoice') ?> "
-                                                                     id="submit-data" data-loading-text="Creating...">
+								<td colspan="2">Combo 
+								<select name="combo" class="selectpicker form-control">
+										<option value="no">No</option>
+                                        <option value="3 Megas">3 Megas</option>
+										<option value="5 Megas">5 Megas</option>
+										<option value="10 Megas">10 Megas</option>
+                                    </select></td>
+                                <td align="right" colspan="6"><input type="submit" class="btn btn-success sub-btn" value="<?php echo $this->lang->line('Generate Invoice') ?> " id="submit-data" data-loading-text="Creating...">
 
                                 </td>
                             </tr>

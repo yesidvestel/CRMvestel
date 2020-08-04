@@ -108,6 +108,8 @@ class Invoices extends CI_Controller
         $subtotal = $this->input->post('subtotal');
         $shipping = $this->input->post('shipping');
         $refer = $this->input->post('refer');
+		$television = $this->input->post('television');
+		$combo = $this->input->post('combo');
         $total = $this->input->post('total');
         $project = $this->input->post('prjid');
         $total_tax = 0;
@@ -239,7 +241,27 @@ class Invoices extends CI_Controller
         $bill_date = datefordatabase($invoicedate);
         $bill_due_date = datefordatabase($invocieduedate);
 
-        $data = array('tid' => $invocieno, 'invoicedate' => $bill_date, 'invoiceduedate' => $bill_due_date, 'subtotal' => $subtotal, 'shipping' => $shipping, 'discount' => $total_discount, 'tax' => $total_tax, 'total' => $total, 'notes' => $notes, 'csd' => $customer_id, 'eid' => $this->aauth->get_user()->id, 'items' => $itc, 'taxstatus' => $textst, 'discstatus' => $discstatus, 'format_discount' => $discountFormat, 'refer' => $refer, 'term' => $pterms, 'multi' => $currency);
+        $data = array(
+			'tid' => $invocieno, 
+			'invoicedate' => $bill_date, 
+			'invoiceduedate' => $bill_due_date, 
+			'subtotal' => $subtotal, 
+			'shipping' => $shipping, 
+			'discount' => $total_discount, 
+			'tax' => $total_tax, 
+			'total' => $total, 
+			'notes' => $notes, 
+			'csd' => $customer_id, 
+			'eid' => $this->aauth->get_user()->id, 
+			'items' => $itc, 
+			'taxstatus' => $textst, 
+			'discstatus' => $discstatus, 
+			'format_discount' => $discountFormat, 
+			'refer' => $refer, 
+			'term' => $pterms, 
+			'multi' => $currency, 
+			'television' => $television, 
+			'combo' => $combo);
 
         if ($flag == true) {
             $this->db->insert_batch('invoice_items', $productlist);

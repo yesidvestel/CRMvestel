@@ -244,9 +244,9 @@
                                                         id="pmethod"><?php echo $this->lang->line($invoice['pmethod']) ?></strong></u>
                                         </p>
 
-                                        <p class="lead mt-1"><br><?php echo $this->lang->line('Note') ?>:</p>
+                                        <p class="lead mt-1"><br>Servicios Asignados:</p>
                                         <code>
-                                            <?php echo $invoice['notes'] ?>
+                                            <?php echo $invoice['notes'] ?><?php echo $invoice['television'].', '.$invoice['combo'] ?>
                                         </code>
                                     </div>
                                 </div>

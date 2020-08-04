@@ -774,7 +774,35 @@
                             class="icon-ellipsis icon-ellipsis"></i>
                 </li>
 			<!--- PROVEDORES--->
-			
+			 <li class="navigation-header"><span><?php echo $this->lang->line('Stock') ?></span><i
+                            data-toggle="tooltip" data-placement="right"
+                            data-original-title="Stock"
+                            class="icon-ellipsis icon-ellipsis"></i>
+                </li>
+                <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "products") {
+                    echo ' open';
+                } ?>">
+                    <a href=""> <i class="icon-truck2"></i><span
+                                class="menu-title"><?php echo $this->lang->line('') ?>Inventarios</span><i
+                                class="fa arrow"></i> </a>
+                    <ul class="menu-content">
+                        <li>
+                            <a href="<?php echo base_url(); ?>products/add"><?php echo $this->lang->line('') ?>Ingreso de material</a>
+                        </li>
+                        <li>
+                            <a href="<?php echo base_url(); ?>products"><?php echo $this->lang->line('') ?>Administrar material</a>
+                        </li>
+                        <li>
+                            <a href="<?php echo base_url(); ?>productcategory"><?php echo $this->lang->line('') ?>Categoria de material</a>
+                        </li>
+                        <li>
+                            <a href="<?php echo base_url(); ?>productcategory/warehouse"><?php echo $this->lang->line('Warehouses') ?></a>
+                        </li>
+                        <li>
+                            <a href="<?php echo base_url(); ?>products/stock_transfer"><?php echo $this->lang->line('') ?>Traspasos</a>
+                        </li>
+                    </ul>
+                </li>
                 <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "supplier") {
                     echo ' open';
                 } ?>">

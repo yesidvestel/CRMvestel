@@ -617,7 +617,7 @@
     $(document).on('click', "#cancel-bill_p", function (e) {
         e.preventDefault();
 
-        $('#cancel_bill').modal({backdrop: 'static', keyboard: false}).one('click', '#send', function () {
+        $('#cancel_bill').modal({backdrop: 'static', keyboard: false}).one('click', '#send', function (){
             var acturl = 'transactions/cancelpurchase';
             cancelBill(acturl);
 
