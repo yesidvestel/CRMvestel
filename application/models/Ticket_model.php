@@ -77,6 +77,13 @@ class Ticket_model extends CI_Model
         $query = $this->db->get();
         return $query->row();
     }
+		public function tecnico_list()
+    {
+        $query = $this->db->query("SELECT id,username FROM aauth_users WHERE UPPER(roleid) LIKE '3'");
+        return $query->result_array();
+		
+		
+    }
 
     function addreply($thread_id, $message, $filename)
     {

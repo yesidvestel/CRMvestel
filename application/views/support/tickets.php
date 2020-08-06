@@ -87,20 +87,42 @@
             <table id="doctable" class="display" cellspacing="0" width="100%">
                 <thead>
                 <tr>
+					<th>Selec</th>
                     <th>#</th>
                     <th><?php echo $this->lang->line('Subject') ?></th>
                     <th><?php echo $this->lang->line('Added') ?></th>
                     <th><?php echo $this->lang->line('Status') ?></th>
                     <th><?php echo $this->lang->line('Action') ?></th>
-
+					
 
                 </tr>
                 </thead>
                 <tbody>
-
+				
                 </tbody>
 
             </table>
+			 <div class="col-md-2">
+			<h5 class="colspan 2">ASIGNAR ORDEN:</h5>
+			</div>
+			<div class="col-md-5">
+			<select name="tecnicos">
+				<?php
+					foreach ($tecnicoslista as $row) {
+						$cid = $row['id'];
+						$title = $row['username'];
+						echo "<option value='$cid'>$title</option>";
+					}
+					?>
+			</select>
+			</div>
+			<select name="sede">
+				<!--option value="0"></option-->
+				<option value="yopal">yopal</option>
+				<option value="monterrey">monterrey</option>
+				<option value="villanueva">villanueva</option>
+			</select>
+			</div>
         </div>
     </div>
     <input type="hidden" id="dashurl" value="tickets/ticket_stats">

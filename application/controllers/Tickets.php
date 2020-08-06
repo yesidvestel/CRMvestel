@@ -42,9 +42,10 @@ class Tickets Extends CI_Controller
 
     public function index()
     {
-
+		
         $head['usernm'] = $this->aauth->get_user()->username;
         $head['title'] = 'Support Tickets';
+		$data['tecnicoslista'] = $this->ticket->tecnico_list();
         $data['totalt'] = $this->ticket->ticket_count_all('');
         $this->load->view('fixed/header', $head);
         $this->load->view('support/tickets', $data);
@@ -63,7 +64,8 @@ class Tickets Extends CI_Controller
         foreach ($list as $ticket) {
             $row = array();
             $no++;
-            $row[] = $no;
+			$row[] = '<input type="checkbox">';
+            $row[] = $no;			
             $row[] = $ticket->subject;
             $row[] = dateformat_time($ticket->created);
             $row[] = '<span class="st-' . $ticket->status . '">' . $ticket->status . '</span>';
