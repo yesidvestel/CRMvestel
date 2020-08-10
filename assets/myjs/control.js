@@ -123,7 +123,6 @@ $(document).ready(function () {
 //part
 $(document).on('click', "#submitpayment", function (e) {
     e.preventDefault();
-
    var pyurl=baseurl + 'transactions/payinvoice';
 
         payInvoice(pyurl);
@@ -149,7 +148,7 @@ $(document).on('click', "#recpayment", function (e) {
 
 });
 function payInvoice(pyurl) {
-
+    
     var errorNum = farmCheck();
     $("#part_payment").modal('hide');
     if (errorNum > 0) {
@@ -173,7 +172,11 @@ function payInvoice(pyurl) {
                     $('#rmpay').val(data.amt);
                     $('#paymade').text(data.ttlpaid);
                     $('#paydue').text(data.amt);
+                    var urlx=baseurl+'transactions/payinvoicemultiple';
+                    location.reload();
+                    if(pyurl==urlx){
 
+                    }
                 } else {
                     $("#notify .message").html("<strong>" + data.status + "</strong>: " + data.message);
                     $("#notify").removeClass("alert-success").addClass("alert-danger").fadeIn();

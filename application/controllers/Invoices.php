@@ -266,6 +266,16 @@ class Invoices extends CI_Controller
         if ($flag == true) {
             $this->db->insert_batch('invoice_items', $productlist);
             if ($this->db->insert('invoices', $data)) {
+
+
+                $data2['subject']='Instalacion';
+                $data2['created']=$bill_date;
+                $data2['cid']=$customer_id;
+                $data2['status']='Waiting';
+                $data2['section']='';
+                $this->db->insert('tickets',$data2);
+                
+
                 $validtoken = hash_hmac('ripemd160', $invocieno, $this->config->item('encryption_key'));
                 $link = base_url('billing/view?id=' . $invocieno . '&token=' . $validtoken);
                 echo json_encode(array('status' => 'Success', 'message' =>

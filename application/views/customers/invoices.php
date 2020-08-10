@@ -39,10 +39,12 @@
                     </div>
                 </div>
             </div>
-            <a href="#part_payment" data-toggle="modal" data-remote="false" data-type="reminder"
+            <a href="#part_payment" onclick="cargar_facturas()" data-toggle="modal" data-remote="false" data-type="reminder"
                                    class="btn btn-large btn-success mb-1" title="Partial Payment"
                                 ><span class="icon-money"></span> <?php echo $this->lang->line('Make Payment') ?> </a>
+                                <br><a href="#" class="btn btn-primary" onclick="filtrar_facturas()">Filtrar Facturas Sin Pagar</a>
             <hr>
+
             <table id="invoices" class="table-striped" cellspacing="0" width="100%">
                 <thead>
                 <tr>
@@ -54,11 +56,12 @@
                     <th><?php echo $this->lang->line('Total') ?></th>
                     <th class="no-sort"><?php echo $this->lang->line('Status') ?></th>
                     <th class="no-sort"><?php echo $this->lang->line('Settings') ?></th>
+                    <th>Seleccionar</th>
 
 
                 </tr>
                 </thead>
-                <tbody>
+                <tbody id="tbody1"> 
                 </tbody>
 
                 <tfoot>
@@ -158,7 +161,8 @@
                                    value="Payment for invoice #<?php echo $invoice['tid'] ?>"></div>
                     </div>
                     <div class="modal-footer">
-                        <input type="hidden" class="form-control required"
+                        <input type="text" name="facturas_seleccionadas" hidden id="facturas_seleccionadas">
+                        <input type="hidden" class="form-control "
                                name="tid" id="invoiceid" value="<?php echo $invoice['tid'] ?>">
                         <button type="button" class="btn btn-default"
                                 data-dismiss="modal"><?php echo $this->lang->line('Close') ?></button>
@@ -166,14 +170,14 @@
                                                                                                      name="cname"
                                                                                                      value="<?php echo $invoice['name'] ?>">
                         <button type="button" class="btn btn-primary"
-                                id="submitpayment"><?php echo $this->lang->line('Make Payment'); ?></button>
+                                id="submitpayment2"><?php echo $this->lang->line('Make Payment'); ?></button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
-
+<?php $lista_invoices=$this->db->order_by('status','DESC')->get_where('invoices')->result_array(); ?>
 <script type="text/javascript">
     $(document).ready(function () {
         $('#invoices').DataTable({
@@ -193,5 +197,66 @@
                 },
             ],
         });
+ 
+        
+
     });
+   $(document).on('click', "#submitpayment2", function (e) {
+    e.preventDefault();
+   var pyurl=baseurl + 'transactions/payinvoicemultiple';
+
+        payInvoice(pyurl);
+
+
+});
+
+    function filtrar_facturas(){
+        datax=jQuery.parseJSON('<?php echo json_encode($lista_invoices);?>');
+        var datos="";
+
+        $(datax).each(function(index,value){
+             console.log(value);
+             var clase ="st-due";
+             var texto ="Pendiente"
+                if(value.status=="paid"){
+                    clase="st-paid";
+                    texto="resivido";
+                }
+                //falta terminar
+                datos+=' <tr role="row" class="odd"><td>'+value.id+'</td><td>'+value.tid+'</td><td>Yesid </td><td>'+value.invoicedate+'</td><td><span class="st-Instalar">'+value.ron+'</span></td><td>$ '+value.total+'</td><td class="sorting_1"><span class="'+clase+'">'+texto+'</span></td><td><a href="'+baseurl+'invoices/view?id='+value.tid+'" class="btn btn-success btn-xs"><i class="icon-file-text"></i> Ver</a> &nbsp; <a href="'+baseurl+'invoices/printinvoice?id='+value.tid+'&amp;d=1" class="btn btn-info btn-xs" title="Download"><span class="icon-download"></span></a>&nbsp; &nbsp;<a href="#" data-object-id="'+value.id+'" class="btn btn-danger btn-xs delete-object"><span class="icon-trash"></span></a></td><td><input type="checkbox" name="x" class="form-check-input facturas_para_pagar" data-status="'+value.status+'" data-total="'+value.total+'" data-idfacturas="'+value.tid+'" style="cursor:pointer"></td></tr> '
+        });
+        var table = $('#tbody1').html(datos);
+        
+    }
+
+    var total_facturas="<?=$due['total']-$due['pamnt']?>";
+   
+    function cargar_facturas(){
+        console.log("asd");
+        $("#facturas_seleccionadas").val("");
+        var total = 0;
+        var x="";
+        $(".facturas_para_pagar:checked").each(function(index){
+            
+            if($(this).data('status')=="due"){
+                 x= $("#facturas_seleccionadas").val();
+                total+=parseInt($(this).data('total'));
+                if(x==""){
+                    x+=$(this).data('idfacturas');
+                }else{
+                    x+="-"+$(this).data('idfacturas');
+                }
+                $("#facturas_seleccionadas").val(x);    
+            }
+           
+        });  
+        if(x==""){
+            $("#rmpay").val(total_facturas);
+        }else{
+            $("#rmpay").val(total);
+        }
+        
+
+    }
+    
 </script>

@@ -495,8 +495,10 @@ class Customers_model extends CI_Model
     function inv_datatables($id)
     {
         $this->_inv_datatables_query($id);
+        
         if ($_POST['length'] != -1)
             $this->db->limit($_POST['length'], $_POST['start']);
+
         $query = $this->db->get();
         return $query->result();
     }

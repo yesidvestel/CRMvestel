@@ -85,7 +85,134 @@ class Transactions extends CI_Controller
         $this->load->view('fixed/footer');
 
     }
+    public function payinvoicemultiple(){
+        if ($this->aauth->get_user()->roleid < 2) {
 
+            exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
+
+        }
+
+        $ids_facturas =$this->input->post('facturas_seleccionadas');
+            $x="";
+        $array_facturas=explode("-", $ids_facturas);
+        foreach ($array_facturas as $key => $id_factura) {
+
+            $factura_var = $this->db->get_where('invoices',array('tid'=>$id_factura))->row();
+            $customer=$this->db->get_where('customers',array('id'=>$factura_var->csd))->row();
+            //codigo copiado
+             $tid = $id_factura;
+        $amount = $factura_var->total;
+        $paydate = $this->input->post('paydate');
+        $note = $this->input->post('shortnote');
+        $pmethod = $this->input->post('pmethod');
+        $acid = $this->input->post('account');
+        $cid = $factura_var->csd;
+        $cname = $customer->name;
+        $paydate = datefordatabase($paydate);
+
+        $this->db->select('holder');
+        $this->db->from('accounts');
+        $this->db->where('id', $acid);
+        $query = $this->db->get();
+        $account = $query->row_array();
+
+        if($pmethod=='Balance'){
+
+            $customer = $this->transactions->check_balance($cid);
+            if($customer['balance']>=$amount){
+
+                $this->db->set('balance', "balance-$amount", FALSE);
+                $this->db->where('id', $cid);
+                $this->db->update('customers');
+            }
+            else{
+
+                $amount=$customer['balance'];
+                $this->db->set('balance', 0, FALSE);
+                $this->db->where('id', $cid);
+                $this->db->update('customers');
+            }
+        }
+
+    $data = array(
+            'acid' => $acid,
+            'account' => $account['holder'],
+            'type' => 'Income',
+            'cat' => 'Sales',
+            'credit' => $amount,
+            'payer' => $cname,
+            'payerid' => $cid,
+            'method' => $pmethod,
+            'date' => $paydate,
+            'eid' => $this->aauth->get_user()->id,
+            'tid' => $tid,
+            'note' => $note,
+            'ext' => 2
+        );
+
+        $this->db->insert('transactions', $data);
+        $this->db->insert_id();
+
+        $this->db->select('invoiceduedate,total,csd,pamnt,rec');
+        $this->db->from('invoices');
+        $this->db->where('tid', $tid);
+        $query = $this->db->get();
+        $invresult = $query->row();
+
+        $totalrm = $invresult->total - $invresult->pamnt;
+
+        if ($totalrm > $amount) {
+            $this->db->set('pmethod', $pmethod);
+            $this->db->set('pamnt', "pamnt+$amount", FALSE);
+
+            $this->db->set('status', 'partial');
+            $this->db->where('tid', $tid);
+            $this->db->update('invoices');
+
+
+            //account update
+            $this->db->set('lastbal', "lastbal+$amount", FALSE);
+            $this->db->where('id', $acid);
+            $this->db->update('accounts');
+            $paid_amount = $invresult->pamnt + $amount;
+            $status = 'Partial';
+            $totalrm = $totalrm - $amount;
+        } else {
+
+            $today = $invresult->invoiceduedate;
+            $addday = $invresult->rec;
+
+
+            $ndate = date("Y-m-d", strtotime($today . " +" . $addday . 's'));
+
+            $this->db->set('invoiceduedate', $ndate);
+            $this->db->set('pmethod', $pmethod);
+            $this->db->set('pamnt', "pamnt+$amount", FALSE);
+            $this->db->set('status', 'paid');
+            $this->db->where('tid', $tid);
+            $this->db->update('invoices');
+            //acount update
+            $this->db->set('lastbal', "lastbal+$amount", FALSE);
+            $this->db->where('id', $acid);
+            $this->db->update('accounts');
+
+            $totalrm = 0;
+            $status = 'Paid';
+            $paid_amount = $amount;
+
+
+        }
+
+
+       // $activitym = "<tr><td>" . substr($paydate, 0, 10) . "</td><td>$pmethod</td><td>$amount</td><td>$note</td></tr>";
+
+
+        //echo json_encode(array('status' => 'Success', 'message' =>
+            //$this->lang->line('Transaction has been added'), 'pstatus' => $this->lang->line($status), 'activity' => $activitym, 'amt' => $totalrm, 'ttlpaid' => $paid_amount));
+            //codigo cop fin
+        }
+        echo json_encode(array('status'=>"Success"));
+    }
     public function payinvoice()
     {
 
