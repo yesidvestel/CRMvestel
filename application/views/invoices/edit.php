@@ -109,8 +109,13 @@
                                     <div class="input-group">
                                         <div class="input-group-addon"><span class="icon-bookmark-o"
                                                                              aria-hidden="true"></span></div>
-                                        <input type="text" class="form-control" placeholder="Sede" name="refer"
-                                               value="<?php echo $invoice['refer'] ?>">
+										<select name="refer" class="form-control">
+											<option value="<?php echo $invoice['refer'] ?>">--<?php echo $invoice['refer'] ?>--</option>
+											<option value="Yopal">Yopal</option>
+											<option value="Monterrey">Monterrey</option>
+											<option value="Villanueva">Villanueva</option>
+											<option value="Mocoa">Mocoa</option>
+										</select>  
                                     </div>
                                 </div>
                             </div>
@@ -147,7 +152,7 @@
                                     <select class="form-control" name="taxformat" onchange="changeTaxFormat(this.value)"
                                             id="taxformat">
                                         <?php if ($invoice['taxstatus'] == 'yes') {
-                                            echo '<option value="on" seleted>&raquo;' . $this->lang->line('On') . '</option>';
+                                            echo '<option value="on" seleted>&raquo;' . 'Con impuesto' . '</option>';
                                         } else {
                                             echo '<option value="off">&raquo;' . $this->lang->line('Off') . '</option>';
                                         } ?>
@@ -175,7 +180,7 @@
                             <div class="form-group row">
                                 <div class="col-sm-12">
                                     <label for="toAddInfo"
-                                           class="caption"><?php echo $this->lang->line('Invoice Note') ?></label>
+                                           class="caption">Observacion</label>
                                     <textarea class="form-control" name="notes"
                                               rows="2"><?php echo $invoice['notes'] ?></textarea></div>
                             </div>
@@ -263,7 +268,8 @@
                         </tr>
 
                         <tr class="sub_c" style="display: table-row;">
-                            <td colspan="6" align="right"><strong><?php echo $this->lang->line('Shipping') ?></strong>
+							<td colspan="2"><strong>ASIGNAR SERVICIO</strong>
+                            <td colspan="4" align="right"><strong><?php echo $this->lang->line('Shipping') ?></strong>
                             </td>
                             <td align="left" colspan="2"><input type="text" class="form-control shipVal"
                                                                 onkeypress="return isNumber(event)" placeholder="Value"
@@ -286,7 +292,13 @@
                                     } ?>
 
                                 </select><?php } ?></td>
-                            <td colspan="6" align="right"><strong><?php echo $this->lang->line('Grand Total') ?> (<span
+								<td colspan="2">Television</small>
+                                    <select name="television" class="selectpicker form-control">
+                                        <option value="<?php echo $invoice['television']; ?>">--<?php echo $invoice['television']; ?></option>
+										<option value="no">No</option>
+                                        <option value="Television">Si</option>
+                                </select></td>
+                            <td colspan="4" align="right"><strong><?php echo $this->lang->line('Grand Total') ?> (<span
                                             class="currenty lightMode"><?php echo $this->config->item('currency'); ?></span>)</strong>
                             </td>
                             <td align="left" colspan="2"><input type="text" name="total" class="form-control"
@@ -295,9 +307,8 @@
 
                             </td>
                         </tr>
-                        <tr class="sub_c" style="display: table-row;">
-                            <td colspan="2" hidden><?php echo $this->lang->line('Payment Terms') ?> <select name="pterms"
-                                                                                                     class="selectpicker form-control"><?php echo '<option value="' . $invoice['termid'] . '">*' . $invoice['termtit'] . '</option>';
+                        <tr class="sub_c" style="display: table-row;" hidden="">
+                            <td colspan="2" hidden><?php echo $this->lang->line('Payment Terms') ?> <select name="pterms" class="selectpicker form-control"><?php echo '<option value="' . $invoice['termid'] . '">*' . $invoice['termtit'] . '</option>';
                                     foreach ($terms as $row) {
                                         echo '<option value="' . $row['id'] . '">' . $row['title'] . '</option>';
                                     } ?>
@@ -305,29 +316,15 @@
 
                                 </select></td>
                          <tr class="sub_c" style="display: table-row;">
-                                <td colspan="2"><?php echo $this->lang->line('') ?>Mensualmente</label>
-                                    <select name="ron" class="form-control mb-1">
-                                    	<option value="<?php echo $invoice['ron']; ?>"><?php echo $invoice['ron']; ?></option>
-                                        <option value="Instalar">Si</option>
-                                        <option value="null">No</option>
-                                    </select>                        
-                                 </td>
-                            <tr class="sub_c" style="display: table-row;">
-                                <td colspan="2"><?php echo $this->lang->line('') ?>Periodo de Renovacion 
-                                <select name="reccur" class="selectpicker form-control">
-                                        <option value="<?php echo $invoice['rec']; ?>"><?php echo $invoice['rec']; ?></option> 
-                                        <option value="7 day">7 <?php echo $this->lang->line('Days') ?></option>
-                                        <option value="14 day">14 <?php echo $this->lang->line('Days') ?></option>
-                                        <option value="30 day">30 <?php echo $this->lang->line('Days') ?></option>
-                                        <option value="45 day">45 <?php echo $this->lang->line('Days') ?></option>
-                                        <option value="2 month">2 <?php echo $this->lang->line('Months') ?></option>
-                                        <option value="3 month">3 <?php echo $this->lang->line('Months') ?></option>
-                                        <option value="6 month">6 <?php echo $this->lang->line('Months') ?></option>
-                                        <option value="9 month">9 <?php echo $this->lang->line('Months') ?></option>
-                                        <option value="1 year">1 <?php echo $this->lang->line('Year') ?></option>
-                                    </select>
-                            <td align="right" colspan="6"><input type="submit" class="btn btn-success sub-btn"
-                                                                 value="<?php echo $this->lang->line('Update') ?>"
+							 <td colspan="2">Combo
+							 <select name="combo" class="selectpicker form-control">
+										<option value="<?php echo $invoice['combo']; ?>">--<?php echo $invoice['combo']; ?></option>
+								 		<option value="no">No</option>
+                                        <option value="3 Megas">3 Megas</option>
+										<option value="5 Megas">5 Megas</option>
+										<option value="10 Megas">10 Megas</option>
+                                    </select></td>
+                            <td align="right" colspan="6"><input type="submit" class="btn btn-success sub-btn" value="<?php echo $this->lang->line('Update') ?>"
                                                                  id="submit-data" data-loading-text="Updating...">
                             </td>
                         </tr>
@@ -449,7 +446,7 @@
 
                                 <div class="col-sm-6">
                                     <input type="text" placeholder="TAX ID"
-                                           class="form-control margin-bottom" name="taxid" id="mcustomer_city">
+                                           class="form-control margin-bottom" name="taxid" >
                                 </div>
 
 

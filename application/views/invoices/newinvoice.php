@@ -55,9 +55,9 @@
                                         <div id="customer_phone"></div>
                                     </div>
                                     <hr>
-                                    <div id="customer_pass"></div><?php echo $this->lang->line('Warehouse') ?> <select
+                                    <div id="customer_pass" hidden=""></div><?php echo $this->lang->line('') ?> <select
                                             id="warehouses"
-                                            class="selectpicker form-control">
+                                            class="selectpicker form-control" hidden="">
                                         <option value="0"><?php echo $this->lang->line('All') ?></option><?php foreach ($warehouse as $row) {
                                             echo '<option value="' . $row['id'] . '">' . $row['title'] . '</option>';
                                         } ?>
@@ -88,7 +88,7 @@
                                                                                  aria-hidden="true"></span></div>
                                             <input type="text" class="form-control" placeholder="Invoice #"
                                                    name="invocieno"
-                                                   value="<?php echo $lastinvoice + 1 ?>">
+                                                   value="<?php echo $lastinvoice + 1 ?>" readonly>
                                         </div>
                                     </div>
                                     <div class="col-sm-6"><label for="invocieno"
@@ -98,9 +98,10 @@
                                             <div class="input-group-addon"><span class="icon-bookmark-o"
                                                                                  aria-hidden="true"></span></div>
                                             <select type="text" class="form-control" placeholder="Reference #" name="refer">
-												<option value="0">Yopal</option>
-												<option value="1">Monterrey</option>
-												<option value="2">Villanueva</option>
+												<option value="Yopal">Yopal</option>
+												<option value="monterrey">Monterrey</option>
+												<option value="Villanueva">Villanueva</option>
+												<option value="Mocoa">Mocoa</option>
 											</select>
                                         </div>
                                     </div>
@@ -168,7 +169,7 @@
                                 <div class="form-group row">
                                     <div class="col-sm-12">
                                         <label for="toAddInfo"
-                                               class="caption"><?php echo $this->lang->line('Invoice Note') ?></label>
+                                               class="caption">Observacion</label>
                                         <textarea class="form-control" name="notes" rows="2"></textarea></div>
                                 </div>
 
@@ -183,13 +184,13 @@
 
 <thead>
                             <tr class="item_header">
-                                <th width="30%" class="text-center"><?php echo $this->lang->line('Item Name') ?></th>
+                                <th width="25%" class="text-center"><?php echo $this->lang->line('Item Name') ?></th>
                                 <th width="8%" class="text-center"><?php echo $this->lang->line('Quantity') ?></th>
                                 <th width="10%" class="text-center"><?php echo $this->lang->line('Rate') ?></th>
                                 <th width="10%" class="text-center"><?php echo $this->lang->line('Tax(%)') ?></th>
                                 <th width="10%" class="text-center"><?php echo $this->lang->line('Tax') ?></th>
                                 <th width="7%" class="text-center"><?php echo $this->lang->line('Discount') ?></th>
-                                <th width="10%" class="text-center">
+                                <th width="15%" class="text-center">
                                     <?php echo $this->lang->line('Amount') ?>
                                     (<?php echo $this->config->item('currency'); ?>)
                                 </th>
@@ -257,7 +258,8 @@
                             </tr>
 
                             <tr class="sub_c" style="display: table-row;">
-                                <td colspan="6" align="right">
+								<td colspan="2"><strong>ASIGNAR SERVICIO</strong>
+                                <td colspan="4" align="right">
                                     <strong><?php echo $this->lang->line('Shipping') ?></strong></td>
                                 <td align="left" colspan="2"><input type="text" class="form-control shipVal"
                                                                     onkeypress="return isNumber(event)"
