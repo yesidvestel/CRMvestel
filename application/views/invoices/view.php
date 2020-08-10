@@ -246,7 +246,15 @@
 
                                         <p class="lead mt-1"><br>Servicios Asignados:</p>
                                         <code>
-                                            <?php echo $invoice['notes'] ?><?php echo $invoice['television'].', '.$invoice['combo'] ?>
+                                            <?php echo $invoice['notes'] ?><?php 
+												if ($invoice['television'] == no ){
+													echo '';
+												} else{
+													echo $invoice['television'];}
+											if ($invoice['combo'] == no ){
+													echo '';
+												} else{
+													echo ' mas '.$invoice['combo'];}?>
                                         </code>
                                     </div>
                                 </div>

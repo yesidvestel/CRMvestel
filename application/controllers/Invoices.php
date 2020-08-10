@@ -435,6 +435,8 @@ class Invoices extends CI_Controller
         $subtotal = $this->input->post('subtotal');
         $shipping = $this->input->post('shipping');
         $refer = $this->input->post('refer');
+		$television = $this->input->post('television');
+		$combo = $this->input->post('combo');
         $total = $this->input->post('total');
         $total_tax = 0;
         $total_discount = 0;
@@ -572,7 +574,25 @@ class Invoices extends CI_Controller
         $bill_date = datefordatabase($invoicedate);
         $bill_due_date = datefordatabase($invocieduedate);
 
-        $data = array('invoicedate' => $bill_date, 'invoiceduedate' => $bill_due_date, 'subtotal' => $subtotal, 'shipping' => $shipping, 'discount' => $total_discount, 'tax' => $total_tax, 'total' => $total, 'notes' => $notes, 'csd' => $customer_id, 'items' => $itc, 'taxstatus' => $taxstatus, 'discstatus' => $discstatus, 'format_discount' => $discountFormat, 'refer' => $refer, 'term' => $pterms, 'multi' => $currency);
+        $data = array(
+			'invoicedate' => $bill_date,
+			'invoiceduedate' => $bill_due_date,
+			'subtotal' => $subtotal,
+			'shipping' => $shipping,
+			'discount' => $total_discount,
+			'tax' => $total_tax,
+			'total' => $total,
+			'notes' => $notes,
+			'csd' => $customer_id,
+			'items' => $itc,
+			'taxstatus' => $taxstatus,
+			'discstatus' => $discstatus,
+			'format_discount' => $discountFormat,
+			'refer' => $refer,
+			'television' => $television,
+			'combo' => $combo,
+			'term' => $pterms,
+			'multi' => $currency);
         $this->db->set($data);
         $this->db->where('tid', $invocieno);
 
