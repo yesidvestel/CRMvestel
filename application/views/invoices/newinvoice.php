@@ -55,9 +55,9 @@
                                         <div id="customer_phone"></div>
                                     </div>
                                     <hr>
-                                    <div id="customer_pass"></div><?php echo $this->lang->line('Warehouse') ?> <select
+                                    <div id="customer_pass" hidden=""></div><?php echo $this->lang->line('') ?> <select
                                             id="warehouses"
-                                            class="selectpicker form-control">
+                                            class="selectpicker form-control" hidden="">
                                         <option value="0"><?php echo $this->lang->line('All') ?></option><?php foreach ($warehouse as $row) {
                                             echo '<option value="' . $row['id'] . '">' . $row['title'] . '</option>';
                                         } ?>
@@ -257,7 +257,8 @@
                             </tr>
 
                             <tr class="sub_c" style="display: table-row;">
-                                <td colspan="6" align="right">
+								<td colspan="2"><strong>ASIGNAR SERVICIO</strong>
+                                <td colspan="4" align="right">
                                     <strong><?php echo $this->lang->line('Shipping') ?></strong></td>
                                 <td align="left" colspan="2"><input type="text" class="form-control shipVal"
                                                                     onkeypress="return isNumber(event)"
