@@ -178,6 +178,10 @@
     </div>
 </div>
 <?php $lista_invoices=$this->db->order_by('status','DESC')->get_where('invoices')->result_array(); ?>
+<?php foreach ($lista_invoices as $key => $value) {
+    $customer = $this->db->get_where('customers',array('id'=>$value['csd']));
+    $lista_invoices[$key]['nombres_cus']=$customer->name." ".$customer->unoapellido;
+} ?>
 <script type="text/javascript">
     $(document).ready(function () {
         $('#invoices').DataTable({
@@ -223,7 +227,7 @@
                     texto="resivido";
                 }
                 //falta terminar
-                datos+=' <tr role="row" class="odd"><td>'+value.id+'</td><td>'+value.tid+'</td><td>Yesid </td><td>'+value.invoicedate+'</td><td><span class="st-Instalar">'+value.ron+'</span></td><td>$ '+value.total+'</td><td class="sorting_1"><span class="'+clase+'">'+texto+'</span></td><td><a href="'+baseurl+'invoices/view?id='+value.tid+'" class="btn btn-success btn-xs"><i class="icon-file-text"></i> Ver</a> &nbsp; <a href="'+baseurl+'invoices/printinvoice?id='+value.tid+'&amp;d=1" class="btn btn-info btn-xs" title="Download"><span class="icon-download"></span></a>&nbsp; &nbsp;<a href="#" data-object-id="'+value.id+'" class="btn btn-danger btn-xs delete-object"><span class="icon-trash"></span></a></td><td><input type="checkbox" name="x" class="form-check-input facturas_para_pagar" data-status="'+value.status+'" data-total="'+value.total+'" data-idfacturas="'+value.tid+'" style="cursor:pointer"></td></tr> '
+                datos+=' <tr role="row" class="odd"><td>'+value.id+'</td><td>'+value.tid+'</td><td>'+value.nombres_cus+' </td><td>'+value.invoicedate+'</td><td><span class="st-Instalar">'+value.ron+'</span></td><td>$ '+value.total+'</td><td class="sorting_1"><span class="'+clase+'">'+texto+'</span></td><td><a href="'+baseurl+'invoices/view?id='+value.tid+'" class="btn btn-success btn-xs"><i class="icon-file-text"></i> Ver</a> &nbsp; <a href="'+baseurl+'invoices/printinvoice?id='+value.tid+'&amp;d=1" class="btn btn-info btn-xs" title="Download"><span class="icon-download"></span></a>&nbsp; &nbsp;<a href="#" data-object-id="'+value.id+'" class="btn btn-danger btn-xs delete-object"><span class="icon-trash"></span></a></td><td><input type="checkbox" name="x" class="form-check-input facturas_para_pagar" data-status="'+value.status+'" data-total="'+value.total+'" data-idfacturas="'+value.tid+'" style="cursor:pointer"></td></tr> '
         });
         var table = $('#tbody1').html(datos);
         
