@@ -27,6 +27,7 @@
                                         </a>
 
                                     </div>
+									
                                     <div class="col-md-6">
                                         <a href="<?php echo base_url('customers/edit?id=' . $details['id']) ?>"
                                            class="btn btn-info btn-md"><i

@@ -20,15 +20,16 @@
         </div>';
 
         } ?>
-        <div class="grid_3 grid_4"><h4><?php echo $thread_info['subject'] ?> <a href="#pop_model" data-toggle="modal"
-                                                                                data-remote="false"
-                                                                                class="btn btn-sm btn-cyan mb-1"
-                                                                                title="Change Status"
-                ><span class="icon-tab"></span> <?php echo $this->lang->line('Change Status') ?></a></h4>
-            <p class="card card-block"><?php echo '<strong>Created on</strong> ' . dateformat_time($thread_info['created']);
-                echo '<br><strong>Customer</strong> ' . $thread_info['name'];
-                echo '<br><strong>Status</strong> <span id="pstatus">' . $thread_info['status']
+        <div class="grid_3 grid_4"><h4><?php echo $thread_info['subject'] ?> </h4>
+            <p class="card card-block"><?php echo '<strong>Creado el: </strong> ' . dateformat_time($thread_info['created']);
+                echo '<br><strong>Usuario:</strong> ' . $thread_info['name'] .' '. $thread_info['unoapellido'];
+				echo '<br><strong>Celular:</strong> ' . $thread_info['celular'];
+				echo '<br><strong>Direccion:</strong> ' . $thread_info['nomenclatura'].' '. $thread_info['numero1']. $thread_info['adicionauno'].' N°'. $thread_info['numero2']. $thread_info['adicional2'].' - '. $thread_info['numero3'];
+				echo '<br><strong>Barrio:</strong> ' . $barrio['barrio'];
+                echo '<br><strong>Estado:</strong> <span id="pstatus">' . $thread_info['status']
                 ?></span></p>
+			<a href="#pop_model" data-toggle="modal" data-remote="false" class="btn btn-sm btn-cyan mb-1" title="Change Status"
+                ><span class="icon-tab"></span> CAMBIAR ESTADO</a>
             <?php foreach ($thread_list as $row) { ?>
 
 
@@ -67,7 +68,7 @@
 
             <div class="form-group row">
 
-                <label class="col-sm-2 col-form-label" for="name">Attach </label>
+                <label class="col-sm-2 col-form-label" for="name">Documentacion </label>
 
                 <div class="col-sm-6">
                     <input type="file" name="userfile" size="20"/><br>
@@ -126,9 +127,9 @@
                         <div class="col-xs-12 mb-1"><label
                                     for="pmethod"><?php echo $this->lang->line('Mark As') ?></label>
                             <select name="status" class="form-control mb-1">
-                                <option value="Solved"><?php echo $this->lang->line('Solved'); ?></option>
-                                <option value="Processing"><?php echo $this->lang->line('Processing'); ?></option>
-                                <option value="Waiting"><?php echo $this->lang->line('Waiting'); ?></option>
+                                <option value="Resuelto">Resuelto</option>
+                                <option value="Realizando">Realizando</option>
+                                <option value="Pendiente">Pendiente</option>
                             </select>
 
                         </div>

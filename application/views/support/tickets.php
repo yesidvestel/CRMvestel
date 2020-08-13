@@ -87,7 +87,7 @@
             <table id="doctable" class="display" cellspacing="0" width="100%">
                 <thead>
                 <tr>
-					<th>Selec</th>
+					<th><i class="icon-marquee"></th>
                     <th>#</th>
                     <th><?php echo $this->lang->line('Subject') ?></th>
                     <th><?php echo $this->lang->line('Added') ?></th>

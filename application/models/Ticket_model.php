@@ -61,10 +61,26 @@ class Ticket_model extends CI_Model
 
     public function thread_info($id)
     {
-        $this->db->select('tickets.*, customers.name,customers.email');
+        $this->db->select('tickets.*, customers.name,customers.email,customers.nomenclatura,customers.numero1,customers.adicionauno,customers.numero2,customers.adicional2,customers.numero3,customers.barrio,customers.celular,customers.unoapellido');
         $this->db->from('tickets');
         $this->db->join('customers', 'tickets.cid=customers.id', 'left');
         $this->db->where('tickets.id', $id);
+        $query = $this->db->get();
+        return $query->row_array();
+    }
+	public function barrios_list($id)
+    { 
+		$this->db->select('*');
+        $this->db->from('barrio');
+        $this->db->where('idLocalidad', $id);
+        $query = $this->db->get();
+        return $query->result_array(); 
+    }
+	public function group_barrio($id)
+    {
+
+        $this->db->from('barrio');
+        $this->db->where('idBarrio', $id);
         $query = $this->db->get();
         return $query->row_array();
     }
@@ -123,9 +139,9 @@ class Ticket_model extends CI_Model
     {
 
         $query = $this->db->query("SELECT
-				COUNT(IF( status = 'Waiting', id, NULL)) AS Waiting,
-				COUNT(IF( status = 'Processing', id, NULL)) AS Processing,
-				COUNT(IF( status = 'Solved', id, NULL)) AS Solved
+				COUNT(IF( status = 'Pendiente', id, NULL)) AS Pendiente,
+				COUNT(IF( status = 'Realizando', id, NULL)) AS Realizando,
+				COUNT(IF( status = 'Resuelto', id, NULL)) AS Resuelto
 				FROM tickets ");
         echo json_encode($query->result_array());
 
@@ -190,6 +206,25 @@ class Ticket_model extends CI_Model
         $this->ticket_datatables_query($filt);
         $query = $this->db->get();
         return $query->num_rows();
+    }
+	function addticket($subject, $message, $filename)
+    {
+        $data = array('subject' => $subject, 'created' => date('Y-m-d H:i:s'), 'cid' => $this->session->userdata('user_details')[0]->cid, 'status' => 'Waiting');
+        $this->db->insert('tickets', $data);
+        $thread_id = $this->db->insert_id();
+
+
+        $data = array('tid' => $thread_id, 'message' => $message, 'cid' => $this->session->userdata('user_details')[0]->cid, 'eid' => 0, 'cdate' => date('Y-m-d H:i:s'), 'attach' => $filename);
+        if ($this->ticket()->key2) {
+
+
+            $this->send_email($this->ticket()->url, $this->ticket()->name, '[Customer Ticket] #' . $thread_id, $message, $attachmenttrue = false, $attachment = '');
+
+        }
+
+        return $this->db->insert('tickets_th', $data);
+
+
     }
 
 

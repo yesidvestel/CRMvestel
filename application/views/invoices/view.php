@@ -509,9 +509,7 @@
                                name="tid" id="invoiceid" value="<?php echo $invoice['tid'] ?>">
                         <button type="button" class="btn btn-default"
                                 data-dismiss="modal"><?php echo $this->lang->line('Close') ?></button>
-                        <input type="hidden" name="cid" value="<?php echo $invoice['cid'] ?>"><input type="hidden"
-                                                                                                     name="cname"
-                                                                                                     value="<?php echo $invoice['name'] ?>">
+                        <input type="hidden" name="cid" value="<?php echo $invoice['cid'] ?>"><input type="hidden"name="cname" value="<?php echo $invoice['name'] ?>">
                         <button type="button" class="btn btn-primary"
                                 id="submitpayment"><?php echo $this->lang->line('Make Payment'); ?></button>
                     </div>

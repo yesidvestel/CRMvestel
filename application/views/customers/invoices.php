@@ -48,6 +48,7 @@
             <table id="invoices" class="table-striped" cellspacing="0" width="100%">
                 <thead>
                 <tr>
+					<th><i class="icon-marquee"></i></th>
                     <th>No</th>
                     <th><?php echo $this->lang->line('Invoice') ?>#</th>
                     <th><?php echo $this->lang->line('Customer') ?></th>
@@ -56,7 +57,7 @@
                     <th><?php echo $this->lang->line('Total') ?></th>
                     <th class="no-sort"><?php echo $this->lang->line('Status') ?></th>
                     <th class="no-sort"><?php echo $this->lang->line('Settings') ?></th>
-                    <th>Seleccionar</th>
+                    
 
 
                 </tr>
@@ -66,6 +67,7 @@
 
                 <tfoot>
                 <tr>
+					<th ><i class="icon-marquee"></i></th>
                     <th>No</th>
                     <th><?php echo $this->lang->line('Invoice') ?>#</th>
                     <th><?php echo $this->lang->line('Customer') ?></th>

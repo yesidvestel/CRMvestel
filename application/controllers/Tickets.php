@@ -64,7 +64,7 @@ class Tickets Extends CI_Controller
         foreach ($list as $ticket) {
             $row = array();
             $no++;
-			$row[] = '<input type="checkbox">';
+			$row[] = '<input type="checkbox" style="margin-left: 9px">';
             $row[] = $no;			
             $row[] = $ticket->subject;
             $row[] = dateformat_time($ticket->created);
@@ -99,11 +99,11 @@ class Tickets Extends CI_Controller
 
         $this->load->helper(array('form'));
         $thread_id = $this->input->get('id');
-
-        $data['response'] = 3;
+		$data2['barrio'] = $this->ticket->group_barrio($data['details']['barrio']);
+        $data['response'] = 3;		
+		
         $head['usernm'] = $this->aauth->get_user()->username;
-        $head['title'] = 'Add Support Reply';
-
+        $head['title'] = 'Add Support Reply';		
         $this->load->view('fixed/header', $head);
 
         if ($this->input->post('content')) {
@@ -148,6 +148,7 @@ class Tickets Extends CI_Controller
 
         }
         $this->load->view('fixed/footer');
+		
 
 
     }
@@ -177,6 +178,66 @@ class Tickets Extends CI_Controller
         echo json_encode(array('status' => 'Success', 'message' =>
             $this->lang->line('UPDATED'), 'pstatus' => $status));
     }
+	public function addticket()
+    {
+        $this->load->helper(array('form'));
+        $thread_id = $this->input->get('id');
+		$data2['barrio'] = $this->ticket->group_barrio($data['details']['barrio']);
+        $data['response'] = 3;		
+		
+        $head['usernm'] = $this->aauth->get_user()->username;
+        $head['title'] = 'Add ticket';		
+        $this->load->view('fixed/header', $head);
+
+        if ($this->input->post('content')) {
+
+            $message = $this->input->post('content');
+            $attach = $_FILES['userfile']['name'];
+            if ($attach) {
+                $config['upload_path'] = './userfiles/support';
+                $config['allowed_types'] = 'docx|docs|txt|pdf|xls|png|jpg|gif';
+                $config['max_size'] = 3000;
+                $config['file_name'] = time() . $attach;
+                $this->load->library('upload', $config);
+
+                if (!$this->upload->do_upload('userfile')) {
+                    $data['response'] = 0;
+                    $data['responsetext'] = 'File Upload Error';
+
+                } else {
+                    $data['response'] = 1;
+                    $data['responsetext'] = 'Reply Added Successfully.';
+                    $filename = $this->upload->data()['file_name'];
+                    $this->ticket->addreply($thread_id, $message, $filename);
+                }
+            } else {
+                $this->ticket->addreply($thread_id, $message, '');
+                $data['response'] = 1;
+                $data['responsetext'] = 'Reply Added Successfully.';
+            }
+
+            $data['thread_info'] = $this->ticket->thread_info($thread_id);
+            $data['thread_list'] = $this->ticket->thread_list($thread_id);
+
+            $this->load->view('support/addticket', $data);
+        } else {
+
+            $data['thread_info'] = $this->ticket->thread_info($thread_id);
+            $data['thread_list'] = $this->ticket->thread_list($thread_id);
+
+
+            $this->load->view('support/addticket', $data);
+
+
+        }
+        $this->load->view('fixed/footer');
+		
+
+
+    }
+
+
+    
 
 
 }
