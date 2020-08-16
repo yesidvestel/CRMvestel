@@ -28,7 +28,7 @@
 				echo '<br><strong>Barrio:</strong> ' . $barrio['barrio'];
                 echo '<br><strong>Estado:</strong> <span id="pstatus">' . $thread_info['status']
                 ?></span></p>
-			<a href="#pop_model" data-toggle="modal" data-remote="false" class="btn btn-sm btn-cyan mb-1" title="Change Status"
+			<a href="#pop_model" data-toggle="modal" onclick="funcion_status();" data-remote="false" class="btn btn-sm btn-cyan mb-1" title="Change Status"
                 ><span class="icon-tab"></span> CAMBIAR ESTADO</a>
             <?php foreach ($thread_list as $row) { ?>
 
@@ -111,6 +111,33 @@
     });
 </script>
 
+<script type="text/javascript">
+    function funcion_status(){
+        //aqui estoy toca terminar esto de que muestre y n el div
+        var x= $('#estadoid option:selected').text();
+        if(x!='Resuelto'){
+            $("#fecha_final_div").css('visibility','hidden');
+            $("#submit_model").removeAttr("disabled");
+        }else{
+            $("#fecha_final_div").css('visibility','visible');    
+             $("#submit_model").prop("disabled","true");
+        }
+        
+    }
+    <?php $fec=new DateTime($thread_info['created'] );  ?>
+    var fecha_ano='<?= $fec->format("Y-m-d") ?>';
+    function funcion_fecha(){
+
+            fecha_inicialjs=new Date(fecha_ano);
+            var fecha_finaljs=new Date($("#fecha_final").val());
+            if(fecha_finaljs<fecha_inicialjs){
+                $("#fecha_final").val('');
+                $("#submit_model").prop("disabled","true");
+            }else{
+                $("#submit_model").removeAttr("disabled");
+            }
+    }
+</script>
 <div id="pop_model" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -126,12 +153,17 @@
                     <div class="row">
                         <div class="col-xs-12 mb-1"><label
                                     for="pmethod"><?php echo $this->lang->line('Mark As') ?></label>
-                            <select name="status" class="form-control mb-1">
+                            <select id="estadoid" name="status" class="form-control mb-1" onchange="funcion_status();">
                                 <option value="Resuelto">Resuelto</option>
                                 <option value="Realizando">Realizando</option>
                                 <option value="Pendiente">Pendiente</option>
                             </select>
 
+                        </div>
+                    </div>
+                    <div class="row" id="fecha_final_div">
+                        <div class="col-xs-12 mb-1" ><label>Fecha Final</label>
+                            <input type="date" class="form-control" id="fecha_final" onchange="funcion_fecha()" name="fecha_final">
                         </div>
                     </div>
 

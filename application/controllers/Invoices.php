@@ -273,6 +273,7 @@ class Invoices extends CI_Controller
                 $data2['cid']=$customer_id;
                 $data2['status']='Waiting';
                 $data2['section']='';
+                $data2['id_invoice']=$invocieno;
                 $this->db->insert('tickets',$data2);
 				}
 

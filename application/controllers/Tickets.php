@@ -169,13 +169,66 @@ class Tickets Extends CI_Controller
     {
         $tid = $this->input->post('tid');
         $status = $this->input->post('status');
+        $fecha_final = $this->input->post('fecha_final');
 
 
         $this->db->set('status', $status);
+        $this->db->set('fecha_final', $fecha_final);
         $this->db->where('id', $tid);
         $this->db->update('tickets');
-
-        echo json_encode(array('status' => 'Success', 'message' =>
+        $ticket = $this->db->get_where('tickets', array('id' => $tid))->row();
+        $invoice = $this->db->get_where('invoices',array('tid'=>$ticket->id_invoice))->result_array();
+        $data;
+        foreach ($invoice[0] as $key => $value) {
+            if($key!='id'){
+             $data[$key]=$value;
+            }
+        }
+        $tidactualmasuno= $this->db->select('max(tid)+1 as tid')->from('invoices')->get()->result();
+        //esta data es de la nueva factura para insertar
+        $data['tid']=$tidactualmasuno[0]->tid;
+        $data['status']='due';
+        $data['ron']='Activo';
+        //ssss
+        $date_fecha_final = new DateTime($fecha_final);
+        $var_mes ;
+        if(intval($date_fecha_final->format('d')) >=27){
+            $ms =intval($date_fecha_final->format('m'));
+            if($ms==12){
+                $var_mes='1';
+            }else{
+                $var_mes=$ms+1;    
+            }
+            
+        }else{
+            $var_mes ='m';
+        }
+        
+        $date_fecha_corte=new DateTime(date('Y-'.$var_mes.'-27'));
+        
+        $diferencia = $date_fecha_final->diff($date_fecha_corte);
+        $data['invoicedate']=$date_fecha_final->format("Y-m-d");
+        $data['invoiceduedate']=$date_fecha_corte->format('Y-m-d');
+        //ya tengo la diferencia entre las fechas ahora tengo que cojer el valortotal y dividirlo por los dias para obtener el valor de la factura que se cambia en $data['total'] y se insertan los datos al igual con cada item luego lo mando a http://localhost/CRMvestel/invoices/view?id=ticket->id_factura
+        //end sss
+        // lista_de_invoice_items es la lista de itemes para insertar
+        $lista_de_invoice_items = $this->db->select('*')->from('invoice_items')->where("tid='".$ticket->id_invoice."' && ( pid=22 or pid =24 or pid =25 or pid =26 or pid =27 or pid =31 or pid =32)")->get()->result();
+        $total=0;
+        for ($i=0; $i < count($lista_de_invoice_items); $i++) { 
+            $lista_de_invoice_items[$i]->id=0;
+             $lista_de_invoice_items[$i]->tid=$data['tid'];
+             
+             $x=intval($lista_de_invoice_items[$i]->price);
+             $x=($x/31)*$diferencia->days;
+             $total+=$x;
+             $lista_de_invoice_items[$i]->price=$x;
+             $lista_de_invoice_items[$i]->subtotal=$x;
+             $this->db->insert('invoice_items',$lista_de_invoice_items[$i]);
+        }
+        $data['subtotal']=$total;
+        $data['total']=$total;
+        $this->db->insert('invoices',$data);
+        echo json_encode(array('tid'=>$data['tid'],'status' => 'Success', 'message' =>
             $this->lang->line('UPDATED'), 'pstatus' => $status));
     }
 	public function addticket()

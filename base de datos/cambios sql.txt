@@ -1,0 +1,8 @@
+
+ALTER TABLE `crm`.`tickets` 
+ADD COLUMN `fecha_final` DATE NULL DEFAULT NULL AFTER `section`;
+
+ALTER TABLE `crm`.`tickets` 
+ADD COLUMN `id_invoice` INT(11) NULL DEFAULT NULL AFTER `fecha_final`;
+ALTER TABLE `crm`.`tickets` 
+ADD COLUMN `id_factura` INT(11) NULL DEFAULT NULL AFTER `id_invoice`;
