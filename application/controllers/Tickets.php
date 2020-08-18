@@ -244,12 +244,16 @@ class Tickets Extends CI_Controller
                 $datay['totaldiscount']=0;
                 $this->db->insert('invoice_items',$datay);
 
-                $producto = $this->db->get_where('products',array('pid'=>$lista_de_invoice_items[0]->pid))->row();
-                $total+=intval($producto->product_price);
+                $producto = $this->db->get_where('products',array('pid'=>22))->row();
+                
                 $datay['pid']=$producto->pid;
                 $datay['product']=$producto->product_name;
-                $datay['price']=$producto->product_price;
-                $datay['subtotal']=$producto->product_price;
+                
+                $x=intval($producto->product_price);
+                $x=($x/31)*$diferencia->days;
+                $total+=$x;
+                $datay['price']=$x;
+                $datay['subtotal']=$x;
                 $this->db->insert('invoice_items',$datay);
                 
                 
