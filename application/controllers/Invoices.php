@@ -275,6 +275,9 @@ class Invoices extends CI_Controller
                 $data2['section']='';
                 $data2['id_invoice']=$invocieno;
                 $this->db->insert('tickets',$data2);
+
+                
+                    
 				}
 
                 $validtoken = hash_hmac('ripemd160', $invocieno, $this->config->item('encryption_key'));

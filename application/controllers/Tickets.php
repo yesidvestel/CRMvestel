@@ -212,19 +212,50 @@ class Tickets Extends CI_Controller
         //ya tengo la diferencia entre las fechas ahora tengo que cojer el valortotal y dividirlo por los dias para obtener el valor de la factura que se cambia en $data['total'] y se insertan los datos al igual con cada item luego lo mando a http://localhost/CRMvestel/invoices/view?id=ticket->id_factura
         //end sss
         // lista_de_invoice_items es la lista de itemes para insertar
-        $lista_de_invoice_items = $this->db->select('*')->from('invoice_items')->where("tid='".$ticket->id_invoice."' && ( pid=22 or pid =24 or pid =25 or pid =26 or pid =27 or pid =31 or pid =32)")->get()->result();
+        $lista_de_invoice_items = $this->db->select('*')->from('invoice_items')->where("tid='".$ticket->id_invoice."' && ( pid =23 or pid =27)")->get()->result();
         $total=0;
-        for ($i=0; $i < count($lista_de_invoice_items); $i++) { 
-            $lista_de_invoice_items[$i]->id=0;
-             $lista_de_invoice_items[$i]->tid=$data['tid'];
-             
-             $x=intval($lista_de_invoice_items[$i]->price);
-             $x=($x/31)*$diferencia->days;
-             $total+=$x;
-             $lista_de_invoice_items[$i]->price=$x;
-             $lista_de_invoice_items[$i]->subtotal=$x;
-             $this->db->insert('invoice_items',$lista_de_invoice_items[$i]);
-        }
+
+        //cod x
+
+        $datay['tid']=$data['tid'];
+                if($data['television']!==no){                
+                    $datay['pid']=22;
+                    if($data['combo']==='3 Megas'){
+                        $datay['pid']=24;
+                    }else if($data['combo']==='5 Megas'){
+                        $datay['pid']=25;
+                    }else if($data['combo']==='10 Megas'){
+                        $datay['pid']=26;
+                    }
+                }else{
+                    //falta este codigo proximamente :)
+                }
+                $producto = $this->db->get_where('products',array('pid'=>$datay['pid']))->row();
+                $x=intval($producto->product_price);
+                $x=($x/31)*$diferencia->days;
+                $total+=$x;
+                $datay['product']=$producto->product_name;
+                $datay['price']=$x;
+                $datay['subtotal']=$x;
+                $datay['qty']=1;
+                $datay['tax']=0;
+                $datay['discount']=0;
+                $datay['totaltax']=0;
+                $datay['totaldiscount']=0;
+                $this->db->insert('invoice_items',$datay);
+
+                $producto = $this->db->get_where('products',array('pid'=>$lista_de_invoice_items[0]->pid))->row();
+                $total+=intval($producto->product_price);
+                $datay['pid']=$producto->pid;
+                $datay['product']=$producto->product_name;
+                $datay['price']=$producto->product_price;
+                $datay['subtotal']=$producto->product_price;
+                $this->db->insert('invoice_items',$datay);
+                
+                
+               
+        //end cod x
+        
         $data['subtotal']=$total;
         $data['total']=$total;
         $this->db->insert('invoices',$data);
