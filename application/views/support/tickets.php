@@ -93,6 +93,8 @@
                     <th><?php echo $this->lang->line('Added') ?></th>
                     <th><?php echo $this->lang->line('Status') ?></th>
                     <th><?php echo $this->lang->line('Action') ?></th>
+                    <th>Install</th>
+                    <th>Factura</th>
 					
 
                 </tr>

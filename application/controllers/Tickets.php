@@ -72,6 +72,14 @@ class Tickets Extends CI_Controller
 
             $row[] = '<a href="' . base_url('tickets/thread/?id=' . $ticket->id) . '" class="btn btn-success btn-xs"><i class="icon-file-text"></i> ' . $this->lang->line('View') . '</a> <a class="btn btn-danger btn-xs delete-object" href="#" data-object-id="' . $ticket->id . '"> <i class="icon-trash-o "></i> </a>';
 
+            if($ticket->id_invoice !=null){
+                $row[]='<a href="'.base_url("invoices/view?id=".$ticket->id_invoice).'">'.$ticket->id_invoice.'</a>';
+            }
+          if($ticket->id_factura !=null){
+                $row[]='<a href="'.base_url("invoices/view?id=".$ticket->id_factura).'">'.$ticket->id_factura.'</a>';
+            }else{
+                 $row[]="Sin Factura";
+            }
 
             $data[] = $row;
         }
@@ -172,10 +180,7 @@ class Tickets Extends CI_Controller
         $fecha_final = $this->input->post('fecha_final');
 
 
-        $this->db->set('status', $status);
-        $this->db->set('fecha_final', $fecha_final);
-        $this->db->where('id', $tid);
-        $this->db->update('tickets');
+        
         $ticket = $this->db->get_where('tickets', array('id' => $tid))->row();
         $invoice = $this->db->get_where('invoices',array('tid'=>$ticket->id_invoice))->result_array();
         $data;
@@ -263,6 +268,13 @@ class Tickets Extends CI_Controller
         $data['subtotal']=$total;
         $data['total']=$total;
         $this->db->insert('invoices',$data);
+
+       
+        $dataz['status']=$status;
+        $dataz['fecha_final']=$fecha_final;
+        $dataz['id_factura']=$data['tid'];
+        $this->db->update('tickets',$dataz,array('id'=>$tid));
+        
         echo json_encode(array('tid'=>$data['tid'],'status' => 'Success', 'message' =>
             $this->lang->line('UPDATED'), 'pstatus' => $status));
     }
