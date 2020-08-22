@@ -32,24 +32,23 @@ class Equipos_model extends CI_Model
         parent::__construct();
         $this->load->database();
     }
-
-    private function _get_datatables_query($id = '', $w = '')
+	// Consulta para tabla de equipos
+	 private function _get_datatables_query($id = '', $w = '')
     {
         if ($w) {
             $this->db->from($this->table);
-            //$this->db->join('product_cat', 'product_cat.id = products.pcat');
+            $this->db->join('almacen_equipos', 'almacen_equipos.id = equipos.almacen');
             if ($id > 0) {
-                $this->db->where("almacen = $id");
+                $this->db->where("almacen_equipos.id = $id");
             }
         } else {
             $this->db->from($this->table);
             //$this->db->join('product_cat', 'product_cat.id = products.pcat');
             if ($id > 0) {
                 $this->db->where("almacen = $id");
-            }
+            } 
         }
-		
-		  $i = 0;
+        $i = 0;
         foreach ($this->column_search as $item) // loop column 
         {
             $search = $this->input->post('search');
@@ -77,7 +76,6 @@ class Equipos_model extends CI_Model
             $order = $this->order;
             $this->db->order_by(key($order), $order[key($order)]);
         }
-      
     }
 
     function get_datatables($id = '', $w = '')
@@ -91,7 +89,7 @@ class Equipos_model extends CI_Model
             $this->db->limit($this->input->post('length'), $this->input->post('start'));
         $query = $this->db->get();
         return $query->result();
-    }
+    }  
 	
 	public function codigoequipo()
     {

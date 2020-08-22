@@ -21,12 +21,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Products_model extends CI_Model
 {
 
-    var $table = 'products';
-	var $table2 = 'equipos';
+    var $table = 'products';	
     var $column_order = array(null, 'product_name', 'qty', 'product_code', 'title', 'product_price', null, 'mac', 'serial'); //set column field database for datatable orderable
-    var $column_search = array('product_name', 'product_code','mac','serial'); //Establecer base de datos de campo de columna para la tabla de datos
-    var $order = array('pid' => 'desc'); // default order
-	var $order2 = array('id' => 'desc');
+    var $column_search = array('product_name', 'product_code'); //Establecer base de datos de campo de columna para la tabla de datos
+    var $order = array('pid' => 'desc'); // default order	
     public function __construct()
     {
         parent::__construct();
