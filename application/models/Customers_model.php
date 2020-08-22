@@ -23,7 +23,7 @@ class Customers_model extends CI_Model
 
     var $table = 'customers';
     var $column_order = array(null, 'name', 'address', 'email', 'phone', null);
-    var $column_search = array('name', 'celular', 'documento', 'apellidos', 'email');
+    var $column_search = array('name', 'celular', 'documento', 'unoapellido', 'email');
     var $trans_column_order = array('date', 'debit', 'credit', 'account', null);
     var $trans_column_search = array('id', 'date');
     var $inv_column_order = array(null, 'tid', 'name', 'invoicedate', 'total', 'status', null);

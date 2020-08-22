@@ -24,6 +24,7 @@ class Products extends CI_Controller
     {
         parent::__construct();
         $this->load->model('products_model', 'products');
+		$this->load->model('equipos_model', 'equipos');
         $this->load->model('categories_model');
         $this->load->library("Aauth");
         if (!$this->aauth->is_loggedin()) {
@@ -43,6 +44,15 @@ class Products extends CI_Controller
         $head['usernm'] = $this->aauth->get_user()->username;
         $this->load->view('fixed/header', $head);
         $this->load->view('products/products');
+        $this->load->view('fixed/footer');
+
+    }
+	public function equipos()
+    {
+        $head['title'] = "Equipos";
+        $head['usernm'] = $this->aauth->get_user()->username;
+        $this->load->view('fixed/header', $head);
+        $this->load->view('products/equipos');
         $this->load->view('fixed/footer');
 
     }
@@ -66,6 +76,18 @@ class Products extends CI_Controller
         $head['usernm'] = $this->aauth->get_user()->username;
         $this->load->view('fixed/header', $head);
         $this->load->view('products/product-add', $data);
+        $this->load->view('fixed/footer');
+    }
+	public function equipoadd()
+    {
+        $data['customer'] = $this->categories_model->customers_list();
+		$data['codigo'] = $this->products->codigoequipo();
+		$data['supplier'] = $this->categories_model->supplier_list();
+        $data['almacen'] = $this->categories_model->almacen_list();
+        $head['title'] = "Add Product";
+        $head['usernm'] = $this->aauth->get_user()->username;
+        $this->load->view('fixed/header', $head);
+        $this->load->view('products/equipo-add', $data);
         $this->load->view('fixed/footer');
     }
 
@@ -104,6 +126,44 @@ class Products extends CI_Controller
         //output to json format
         echo json_encode($output);
     }
+	public function equipos_list()
+    {
+        $alid = $this->input->get('id');
+
+        if ($alid > 0) {
+            $list = $this->equipos->get_datatables($alid);
+        } else {
+			
+            $list = $this->equipos->get_datatables();
+        }
+        $data = array();
+        $no = $this->input->post('start');
+		
+        foreach ($list as $prd) {
+            $no++;
+            $row = array();
+            $row[] = $no;
+           // $row[] = $prd->id;
+            $row[] = $prd->mac;
+            $row[] = $prd->serial;
+			$row[] = $prd->estado;
+            $row[] = $prd->asignado;
+			$row[] = $prd->marca;
+
+			
+            $row[] = '<a href="' . base_url() . 'products/edit?id=' . $pid . '" class="btn btn-primary btn-xs"><span class="icon-pencil"></span> ' . $this->lang->line('Edit') . '</a> <a href="#" data-object-id="' . $pid . '" class="btn btn-danger btn-xs  delete-object"><span class="icon-bin"></span> ' . $this->lang->line('Delete') . '</a>';
+            $data[] = $row;
+        }
+		var_dump($data);
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->products->count_all($alid),
+            "recordsFiltered" => $this->products->count_filtered($alid),
+            "data" => $data,
+        );
+        //output to json format
+        echo json_encode($output);
+    }
 
     public function addproduct()
     {
@@ -121,6 +181,25 @@ class Products extends CI_Controller
         if ($catid) {
             $this->products->addnew($catid, $warehouse, $product_name, $product_code, $product_price, $factoryprice, $taxrate, $disrate, $product_qty,$product_qty_alert,$product_desc);
         }
+
+
+    }
+	public function addequipo()
+    {
+        $codigo = $this->input->post('codigo');
+        $proveedor = $this->input->post('proveedor');
+        $almacen = $this->input->post('almacen');
+        $mac = $this->input->post('mac');
+        $serial = $this->input->post('serial');
+        $llegada = $this->input->post('llegada');
+        $final = $this->input->post('final');
+        $marca = $this->input->post('marca');
+        $asignado = $this->input->post('asignado');
+        $estado = $this->input->post('estado');
+        $observacion = $this->input->post('observacion');
+		if ($codigo) {
+        	$this->products->addequipo($codigo,$proveedor,$almacen,$mac,$serial,$llegada,$final,$marca,$asignado,$estado,$observacion);
+		}
 
 
     }
@@ -194,6 +273,36 @@ class Products extends CI_Controller
             $row[] = $no;
             $pid = $prd->pid;
             $row[] = $prd->product_name;
+            $row[] = $prd->qty;
+            $row[] = $prd->product_code;
+            $row[] = $prd->title;
+            $row[] = amountFormat($prd->product_price);
+            $row[] = '<a href="' . base_url() . 'products/edit?id=' . $pid . '" class="btn btn-primary btn-xs"><span class="icon-pencil"></span> ' . $this->lang->line('Edit') . '</a> <a href="#" data-object-id="' . $pid . '" class="btn btn-danger btn-xs  delete-object"><span class="icon-bin"></span> ' . $this->lang->line('Delete') . '</a>';
+            $data[] = $row;
+        }
+
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->products->count_all($catid, true),
+            "recordsFiltered" => $this->products->count_filtered($catid, true),
+            "data" => $data,
+        );
+        //output to json format
+        echo json_encode($output);
+    }
+	public function almacenequipos_list()
+    {
+        $catid = $this->input->get('id');
+        $list = $this->products->get_datatables2($catid, true);
+
+        $data = array();
+        $no = $this->input->post('start');
+        foreach ($list as $prd) {
+            $no++;
+            $row = array();
+            $row[] = $no;
+            $pid = $prd->pid;
+            $row[] = $prd->mac;
             $row[] = $prd->qty;
             $row[] = $prd->product_code;
             $row[] = $prd->title;

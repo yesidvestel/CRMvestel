@@ -55,6 +55,15 @@ class Productcategory Extends CI_Controller
         $this->load->view('products/warehouse', $data);
         $this->load->view('fixed/footer');
     }
+	public function almacen()
+    {
+        $data['cat'] = $this->products_cat->almacenquery();
+        $head['title'] = "Product Warehouse";
+        $head['usernm'] = $this->aauth->get_user()->username;
+        $this->load->view('fixed/header', $head);
+        $this->load->view('products/almacen', $data);
+        $this->load->view('fixed/footer');
+    }
 
 
     public function view()
@@ -76,6 +85,15 @@ class Productcategory Extends CI_Controller
         $this->load->view('products/warehouse_view', $data);
         $this->load->view('fixed/footer');
     }
+	public function viewalmacen()
+    {
+        $data['cat'] = $this->products_cat->warehouse();
+        $head['title'] = "Vista Productos Almacen";
+        $head['usernm'] = $this->aauth->get_user()->username;
+        $this->load->view('fixed/header', $head);
+        $this->load->view('products/almacen_vista', $data);
+        $this->load->view('fixed/footer');
+    }
 
     public function add()
     {
@@ -84,6 +102,15 @@ class Productcategory Extends CI_Controller
         $head['usernm'] = $this->aauth->get_user()->username;
         $this->load->view('fixed/header', $head);
         $this->load->view('products/category_add', $data);
+        $this->load->view('fixed/footer');
+    }
+	public function addalmacen()
+    {
+        $data['cat'] = $this->products_cat->category_list();
+        $head['title'] = "Nuevo almacen de equipos";
+        $head['usernm'] = $this->aauth->get_user()->username;
+        $this->load->view('fixed/header', $head);
+        $this->load->view('products/almacen_add', $data);
         $this->load->view('fixed/footer');
     }
 
@@ -105,6 +132,7 @@ class Productcategory Extends CI_Controller
             $this->load->view('fixed/footer');
         }
     }
+	
 
     public function addcat()
     {
@@ -115,7 +143,16 @@ class Productcategory Extends CI_Controller
             $this->products_cat->addnew($cat_name, $cat_desc);
         }
     }
+	 public function addalmacenequipo()
+    {
+        $cat_name = $this->input->post('almacen_name');
+        $cat_desc = $this->input->post('almacen_desc');
 
+        if ($cat_name) {
+            $this->products_cat->addalequipo($cat_name, $cat_desc);
+        }
+    }
+	
 
     public function delete_i()
     {

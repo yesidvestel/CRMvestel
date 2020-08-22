@@ -18,11 +18,9 @@
                                 <div class="form-group row">
                                     <div class="fcol-sm-12">
                                         <h3 class="title">
-                                            <?php echo $this->lang->line('Bill To') ?> <a href='#'
-                                                                                          class="btn btn-primary btn-sm rounded"
-                                                                                          data-toggle="modal"
-                                                                                          data-target="#addCustomer">
-                                                <?php echo $this->lang->line('Add Client') ?>
+                                            <?php echo $this->lang->line('Bill To') ?> 
+											<a href='#' class="btn btn-primary btn-sm rounded" data-toggle="modal" data-target="#addCustomer">
+                                             <?php echo $this->lang->line('Add Client') ?>
                                             </a>
                                     </div>
                                 </div>
@@ -86,8 +84,7 @@
                                         <div class="input-group">
                                             <div class="input-group-addon"><span class="icon-file-text-o"
                                                                                  aria-hidden="true"></span></div>
-                                            <input type="text" class="form-control" placeholder="Invoice #"
-                                                   name="invocieno"
+                                            <input type="text" class="form-control" placeholder="Invoice #" name="invocieno"
                                                    value="<?php echo $lastinvoice + 1 ?>" readonly>
                                         </div>
                                     </div>

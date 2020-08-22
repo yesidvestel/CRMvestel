@@ -39,10 +39,39 @@ FROM product_warehouse
 ORDER BY id DESC");
         return $query->result_array();
     }
+	public function supplier_list()
+    {
+        $query = $this->db->query("SELECT id,name
+FROM supplier
+
+ORDER BY id DESC");
+        return $query->result_array();
+    }
+	public function almacen_list()
+    {
+        $query = $this->db->query("SELECT id,almacen
+FROM almacen_equipos
+
+ORDER BY id DESC");
+        return $query->result_array();
+    }
+	public function customers_list()
+    {
+        $query = $this->db->query("SELECT id,abonado,name
+FROM customers
+
+ORDER BY id DESC");
+        return $query->result_array();
+    }
 
     public function category_stock()
     {
         $query = $this->db->query("SELECT c.*,p.pc,p.salessum,p.worthsum,p.qty FROM product_cat AS c LEFT JOIN ( SELECT pcat,COUNT(pid) AS pc,SUM(product_price*qty) AS salessum, SUM(fproduct_price*qty) AS worthsum,SUM(qty) AS qty FROM products GROUP BY pcat ) AS p ON c.id=p.pcat");
+        return $query->result_array();
+    }
+	public function almacenquery()
+    {
+        $query = $this->db->query("SELECT c.*,p.pc FROM almacen_equipos AS c LEFT JOIN ( SELECT almacen,COUNT(id) AS pc FROM equipos GROUP BY almacen) AS p ON c.id=p.almacen");
         return $query->result_array();
     }
 
@@ -75,6 +104,22 @@ p.pid='$id' ");
         }
 
     }
+	public function addalequipo($cat_name, $cat_desc)
+    {
+        $data = array(
+            'almacen' 		=> $cat_name,
+            'descripcion' 	=> $cat_desc
+        );
+
+        if ($this->db->insert('almacen_equipos', $data)) {
+            echo json_encode(array('status' => 'Success', 'message' =>
+                $this->lang->line('ADDED')));
+        } else {
+            echo json_encode(array('status' => 'Error', 'message' =>
+                $this->lang->line('ERROR')));
+        }
+
+    }
 
     public function addwarehouse($cat_name, $cat_desc)
     {
@@ -92,6 +137,7 @@ p.pid='$id' ");
         }
 
     }
+	
 
     public function edit($catid, $product_cat_name, $product_cat_desc)
     {

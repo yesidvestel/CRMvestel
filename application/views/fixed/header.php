@@ -292,14 +292,23 @@
                         <li>
                             <a href="<?php echo base_url(); ?>products/add"><?php echo $this->lang->line('') ?>Ingreso de material</a>
                         </li>
+						<li>
+                            <a href="<?php echo base_url(); ?>products/equipoadd"><?php echo $this->lang->line('') ?>Ingreso de Equipo</a>
+                        </li>
                         <li>
                             <a href="<?php echo base_url(); ?>products"><?php echo $this->lang->line('') ?>Administrar material</a>
+                        </li>
+						<li>
+                            <a href="<?php echo base_url(); ?>products/equipos"><?php echo $this->lang->line('') ?>Administrar equipos</a>
                         </li>
                         <li>
                             <a href="<?php echo base_url(); ?>productcategory"><?php echo $this->lang->line('') ?>Categoria de material</a>
                         </li>
                         <li>
                             <a href="<?php echo base_url(); ?>productcategory/warehouse"><?php echo $this->lang->line('Warehouses') ?></a>
+                        </li>
+						<li>
+                            <a href="<?php echo base_url(); ?>productcategory/almacen">Bodega equipos</a>
                         </li>
                         <li>
                             <a href="<?php echo base_url(); ?>products/stock_transfer"><?php echo $this->lang->line('') ?>Traspasos</a>

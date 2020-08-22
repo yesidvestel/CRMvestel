@@ -18,15 +18,15 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Products_model extends CI_Model
+class Equipos_model extends CI_Model
 {
 
-    var $table = 'products';
-	var $table2 = 'equipos';
-    var $column_order = array(null, 'product_name', 'qty', 'product_code', 'title', 'product_price', null, 'mac', 'serial'); //set column field database for datatable orderable
-    var $column_search = array('product_name', 'product_code','mac','serial'); //Establecer base de datos de campo de columna para la tabla de datos
-    var $order = array('pid' => 'desc'); // default order
-	var $order2 = array('id' => 'desc');
+    var $table = 'equipos';
+	
+    var $column_order = array(null, 'mac', 'serial', 'estado', 'asignado', 'marca', null); //set column field database for datatable orderable
+    var $column_search = array('mac','serial','estado','asignado','marca'); //Establecer base de datos de campo de columna para la tabla de datos
+    var $order = array('id' => 'desc'); // default order
+	
     public function __construct()
     {
         parent::__construct();
@@ -37,18 +37,19 @@ class Products_model extends CI_Model
     {
         if ($w) {
             $this->db->from($this->table);
-            $this->db->join('product_warehouse', 'product_warehouse.id = products.warehouse');
+            //$this->db->join('product_cat', 'product_cat.id = products.pcat');
             if ($id > 0) {
-                $this->db->where("product_warehouse.id = $id");
+                $this->db->where("almacen = $id");
             }
         } else {
             $this->db->from($this->table);
-            $this->db->join('product_cat', 'product_cat.id = products.pcat');
+            //$this->db->join('product_cat', 'product_cat.id = products.pcat');
             if ($id > 0) {
-                $this->db->where("product_cat.id = $id");
-            } 
+                $this->db->where("almacen = $id");
+            }
         }
-        $i = 0;
+		
+		  $i = 0;
         foreach ($this->column_search as $item) // loop column 
         {
             $search = $this->input->post('search');
@@ -76,6 +77,7 @@ class Products_model extends CI_Model
             $order = $this->order;
             $this->db->order_by(key($order), $order[key($order)]);
         }
+      
     }
 
     function get_datatables($id = '', $w = '')
