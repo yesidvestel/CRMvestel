@@ -223,8 +223,12 @@ class Tickets Extends CI_Controller
         //cod x
 
         $datay['tid']=$data['tid'];
-                if($data['television']!==no){                
-                    $datay['pid']=22;
+        $datay['qty']=1;
+        $datay['tax']=0;
+        $datay['discount']=0;
+        $datay['totaltax']=0;
+        $datay['totaldiscount']=0;
+                if($data['combo']!==no){
                     if($data['combo']==='3 Megas'){
                         $datay['pid']=24;
                     }else if($data['combo']==='5 Megas'){
@@ -232,34 +236,31 @@ class Tickets Extends CI_Controller
                     }else if($data['combo']==='10 Megas'){
                         $datay['pid']=26;
                     }
-                }else{
-                    //falta este codigo proximamente :)
+                    $producto = $this->db->get_where('products',array('pid'=>$datay['pid']))->row();
+                    $x=intval($producto->product_price);
+                    $x=($x/31)*$diferencia->days;
+                    $total+=$x;
+                    $datay['product']=$producto->product_name;
+                    $datay['price']=$x;
+                    $datay['subtotal']=$x;
+                    
+                   
+                    $this->db->insert('invoice_items',$datay);    
                 }
-                $producto = $this->db->get_where('products',array('pid'=>$datay['pid']))->row();
-                $x=intval($producto->product_price);
-                $x=($x/31)*$diferencia->days;
-                $total+=$x;
-                $datay['product']=$producto->product_name;
-                $datay['price']=$x;
-                $datay['subtotal']=$x;
-                $datay['qty']=1;
-                $datay['tax']=0;
-                $datay['discount']=0;
-                $datay['totaltax']=0;
-                $datay['totaldiscount']=0;
-                $this->db->insert('invoice_items',$datay);
-
-                $producto = $this->db->get_where('products',array('pid'=>22))->row();
                 
-                $datay['pid']=$producto->pid;
-                $datay['product']=$producto->product_name;
+                if($data['television']!==no){                
+                    $producto = $this->db->get_where('products',array('pid'=>22))->row();
+                    $datay['pid']=$producto->pid;
+                    $datay['product']=$producto->product_name;
+                    
+                    $x=intval($producto->product_price);
+                    $x=($x/31)*$diferencia->days;
+                    $total+=$x;
+                    $datay['price']=$x;
+                    $datay['subtotal']=$x;
+                    $this->db->insert('invoice_items',$datay);
+                }
                 
-                $x=intval($producto->product_price);
-                $x=($x/31)*$diferencia->days;
-                $total+=$x;
-                $datay['price']=$x;
-                $datay['subtotal']=$x;
-                $this->db->insert('invoice_items',$datay);
                 
                 
                
