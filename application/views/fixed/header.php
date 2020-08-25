@@ -745,7 +745,10 @@
                         <li>
                             <a href="<?php echo base_url(); ?>import/products"><?php echo $this->lang->line('Import Products'); ?></a>
                         </li>
-                    </ul>
+						<li>
+                            <a href="<?php echo base_url(); ?>importequipo/equipos"><?php echo $this->lang->line(''); ?>Importar Equipos</a>
+                        </li>
+					</ul>
                 </li>
             <?php } ?>
 			

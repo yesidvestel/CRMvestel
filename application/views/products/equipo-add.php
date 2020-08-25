@@ -104,7 +104,7 @@
                     <div class="col-sm-6">
                         <div class="input-group">
                             <span class="input-group-addon icon-calendar4"><?php echo $this->config->item('') ?></span>
-                            <input type="text" class="form-control" name="final" autocomplete="false">
+                            <input type="text" class="form-control" name="final" data-toggle="datepicker" autocomplete="false">
                         </div>
                     </div>
                 </div>
@@ -176,6 +176,51 @@
                         <input type="submit" id="submit-data" class="btn btn-success margin-bottom"
                                value="<?php echo $this->lang->line('Add material') ?>Agregar Material" data-loading-text="Adding...">
                         <input type="hidden" value="products/addequipo" id="action-url">
+                    </div>
+                </div>
+            </div>
+			<hr>
+				<h5><?php echo $this->lang->line('') ?>Agregar lista de Equipos</h5>
+			<hr>
+				
+                <div class="form-group row">
+
+                    <label class="col-sm-2 col-form-label" for="name">Archivo
+                        </label>
+
+                    <div class="col-sm-6">
+                        <input type="file" name="userfile" size="15"/>(solo formato CSV)
+                    </div>
+                </div>
+
+                <div class="form-group row">
+
+                    <label class="col-sm-2 col-form-label"
+                           for="product_cat"><?php echo $this->lang->line('') ?>Almacen</label>
+
+                    <div class="col-sm-6">
+                        <select name="product_warehouse" class="form-control">
+                            <?php
+                            foreach ($almacen as $row) {
+                                $cid = $row['id'];
+                                $title = $row['almacen'];
+                                echo "<option value='$cid'>$title</option>";
+                            }
+                            ?>
+                        </select>
+
+
+                    </div>
+                </div>
+
+                <div class="form-group row">
+
+                    <label class="col-sm-2 col-form-label"></label>
+
+                    <div class="col-sm-4">
+                        <input type="submit"class="btn btn-success margin-bottom"
+                               value="<?php echo $this->lang->line('Import Products') ?>" data-loading-text="Adding...">
+						<input type="hidden" value="importequipo/products_upload" id="action-url">
                     </div>
                 </div>
             </div>

@@ -40,7 +40,7 @@
                     <td>$title</td>
 					<td>$descrip</td>
                     <td>$total</td>                    
-                    <td><a href='" . base_url("productcategory/viewalmacen?id=$cid") . "' class='btn btn-success btn-xs'><i class='icon-file-text'></i> " . $this->lang->line('View') . "</a>&nbsp;<a href='" . base_url("productcategory/editwarehouse?id=$cid") . "' class='btn btn-warning btn-xs'><i class='icon-pencil'></i> " . $this->lang->line('Edit') . "</a>&nbsp;<a href='#' data-object-id='" . $cid . "' class='btn btn-danger btn-xs delete-object' title='Delete'><i class='icon-trash-o'></i></a></td></tr>";
+                    <td><a href='" . base_url("productcategory/viewalmacen?id=$cid") . "' class='btn btn-success btn-xs'><i class='icon-file-text'></i> " . $this->lang->line('View') . "</a>&nbsp;<a href='" . base_url("productcategory/editalmacenvista?id=$cid") . "' class='btn btn-warning btn-xs'><i class='icon-pencil'></i> " . $this->lang->line('Edit') . "</a>&nbsp;<a href='#' data-object-id='" . $cid . "' class='btn btn-danger btn-xs delete-object' title='Delete'><i class='icon-trash-o'></i></a></td></tr>";
                     $i++;
                 }
                 ?>
@@ -80,7 +80,7 @@
             </div>
             <div class="modal-footer">
                 <input type="hidden" id="object-id" value="">
-                <input type="hidden" id="action-url" value="productcategory/delete_warehouse">
+                <input type="hidden" id="action-url" value="productcategory/delete_a">
                 <button type="button" data-dismiss="modal" class="btn btn-primary"
                         id="delete-confirm"><?php echo $this->lang->line('Delete') ?></button>
                 <button type="button" data-dismiss="modal"

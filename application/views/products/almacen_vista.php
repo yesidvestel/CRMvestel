@@ -13,6 +13,7 @@
                 <thead>
                 <tr>
                     <th>#</th>
+					<th>Codigo</th>
                     <th><?php echo $this->lang->line('') ?>MAC</th>
                     <th><?php echo $this->lang->line('') ?>Serial</th>
                     <th><?php echo $this->lang->line('') ?>Estado</th>
@@ -29,6 +30,7 @@
                 <tfoot>
                 <tr>
                     <th>#</th>
+					<th>Codigo</th>
                     <th><?php echo $this->lang->line('') ?>MAC</th>
                     <th><?php echo $this->lang->line('') ?>Serial</th>
                     <th><?php echo $this->lang->line('') ?>Estado</th>
@@ -86,11 +88,12 @@
             </div>
             <div class="modal-footer">
                 <input type="hidden" id="object-id" value="">
-                <input type="hidden" id="action-url" value="products/delete_i">
+                <input type="hidden" id="action-url" value="products/delete_e">
                 <button type="button" data-dismiss="modal" class="btn btn-primary"
                         id="delete-confirm"><?php echo $this->lang->line('Delete') ?></button>
                 <button type="button" data-dismiss="modal"
                         class="btn"><?php echo $this->lang->line('Cancel') ?></button>
+            </div>
             </div>
         </div>
     </div>

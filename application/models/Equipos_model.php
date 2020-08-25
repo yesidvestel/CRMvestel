@@ -21,10 +21,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Equipos_model extends CI_Model
 {
 
-    var $table = 'equipos';
-	
-    var $column_order = array(null, 'mac', 'serial', 'estado', 'asignado', 'marca', null); //set column field database for datatable orderable
-    var $column_search = array('mac','serial','estado','asignado','marca'); //Establecer base de datos de campo de columna para la tabla de datos
+    var $table = 'equipos';	
+    var $column_order = array(null, 'codigo','mac', 'serial', 'estado', 'asignado', 'marca', null); //set column field database for datatable orderable
+    var $column_search = array('codigo', 'mac','serial','estado','asignado','marca'); //Establecer base de datos de campo de columna para la tabla de datos
     var $order = array('id' => 'desc'); // default order
 	
     public function __construct()
@@ -90,11 +89,11 @@ class Equipos_model extends CI_Model
         $query = $this->db->get();
         return $query->result();
     }  
-	
+	// Consecutivo equipos
 	public function codigoequipo()
     {
         $this->db->select('codigo');
-        $this->db->from($this->table2);
+        $this->db->from($this->table);
         $this->db->order_by('codigo', 'DESC');
         $this->db->limit(1);
         $query = $this->db->get();

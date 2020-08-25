@@ -87,6 +87,22 @@ ORDER BY id DESC");
 p.pid='$id' ");
         return $query->row_array();
     }
+	public function pro_ware($id)
+    {
+        $query = $this->db->query("SELECT w.id AS wid, w.name AS watt FROM equipos AS e LEFT JOIN supplier AS w ON e.proveedor=w.id WHERE e.id='$id' ");
+        return $query->row_array();
+    }
+	public function alm_ware($id)
+    {
+        $query = $this->db->query("SELECT w.id AS wid, w.almacen AS watt FROM equipos AS e LEFT JOIN almacen_equipos AS w ON e.almacen=w.id WHERE e.id='$id' ");
+        return $query->row_array();
+    }
+	public function cus_ware($id)
+    {
+        $query = $this->db->query("SELECT w.id AS wid, w.name AS watt, w.abonado AS abon FROM equipos AS e LEFT JOIN customers AS w ON e.asignado=w.id WHERE e.id='$id' ");
+        return $query->row_array();
+    }
+	
 
     public function addnew($cat_name, $cat_desc)
     {
@@ -151,6 +167,26 @@ p.pid='$id' ");
         $this->db->where('id', $catid);
 
         if ($this->db->update('product_cat')) {
+            echo json_encode(array('status' => 'Success', 'message' =>
+                $this->lang->line('UPDATED')));
+        } else {
+            echo json_encode(array('status' => 'Error', 'message' =>
+                $this->lang->line('ERROR')));
+        }
+
+    }
+	public function editalmacen($catid, $almacen, $descripcion)
+    {
+        $data = array(
+            'almacen' => $almacen,
+            'descripcion' => $descripcion
+        );
+
+
+        $this->db->set($data);
+        $this->db->where('id', $catid);
+
+        if ($this->db->update('almacen_equipos')) {
             echo json_encode(array('status' => 'Success', 'message' =>
                 $this->lang->line('UPDATED')));
         } else {

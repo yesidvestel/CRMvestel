@@ -68,10 +68,12 @@
                 <thead>
                 <tr>
                     <th>#</th>
+					<th>Codigo</th>
                     <th>MAC</th>
                     <th>Serial</th>
+                    <th>Estado</th>
                     <th>Asignado a:</th>
-                    <th>Estado</th>                    
+					<th>Marca</th>
                     <th><?php echo $this->lang->line('Settings') ?></th>
                 </tr>
                 </thead>
@@ -81,10 +83,12 @@
                 <tfoot>
                 <tr>
                     <th>#</th>
+					<th>Codigo</th>
                     <th>MAC</th>
                     <th>Serial</th>
-                    <th>Asignado a:</th>
                     <th>Estado</th>
+                    <th>Asignado a:</th>
+					<th>Marca</th>
                     <th><?php echo $this->lang->line('Settings') ?></th>
                 </tr>
                 </tfoot>

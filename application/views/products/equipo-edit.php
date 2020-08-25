@@ -8,36 +8,36 @@
         <form method="post" id="data_form" class="form-horizontal">
             <div class="grid_3 grid_4">
 
-                <h5><?php echo $this->lang->line('Edit Product') ?></h5>
+                <h5><?php echo $this->lang->line('') ?>Editar Equipo</h5>
                 <hr>
 
 
-                <input type="hidden" name="pid" value="<?php echo $product['pid'] ?>">
+                <input type="hidden" name="pid" value="<?php echo $equipos['id'] ?>">
 
 
                 <div class="form-group row">
 
                     <label class="col-sm-2 col-form-label"
-                           for="product_name"><?php echo $this->lang->line('Product Name') ?></label>
+                           for="product_name"><?php echo $this->lang->line('') ?>Codigo Equipo</label>
 
                     <div class="col-sm-6">
                         <input type="text" placeholder="Product Name"
-                               class="form-control margin-bottom  required" name="product_name"
-                               value="<?php echo $product['product_name'] ?>">
+                               class="form-control margin-bottom  required" name="codigo"
+                               value="<?php echo $equipos['codigo'] ?>">
                     </div>
                 </div>
                 <div class="form-group row">
 
                     <label class="col-sm-2 col-form-label"
-                           for="product_cat"><?php echo $this->lang->line('Product Category') ?></label>
+                           for="product_cat"><?php echo $this->lang->line('') ?>Proveedor</label>
 
                     <div class="col-sm-6">
-                        <select name="product_cat" class="form-control">
+                        <select name="proveedor" class="form-control">
                             <?php
-                            echo '<option value="' . $cat_ware['cid'] . '">' . $cat_ware['catt'] . ' (S)</option>';
-                            foreach ($cat as $row) {
+                            echo '<option value="'. $cat_ware['wid'] . '">' .'>>'. $cat_ware['watt'] . '</option>';
+                            foreach ($supplier as $row) {
                                 $cid = $row['id'];
-                                $title = $row['title'];
+                                $title = $row['name'];
                                 echo "<option value='$cid'>$title</option>";
                             }
                             ?>
@@ -52,12 +52,12 @@
                            for="product_cat"><?php echo $this->lang->line('Warehouse') ?></label>
 
                     <div class="col-sm-6">
-                        <select name="product_warehouse" class="form-control">
+                        <select name="almacen" class="form-control">
                             <?php
-                            echo '<option value="' . $cat_ware['wid'] . '">' . $cat_ware['watt'] . ' (S)</option>';
-                            foreach ($warehouse as $row) {
+                            echo '<option value="' . $alm_ware['wid'] . '">'.'>>' . $alm_ware['watt'] . ' </option>';
+                            foreach ($almacen as $row) {
                                 $cid = $row['id'];
-                                $title = $row['title'];
+                                $title = $row['almacen'];
                                 echo "<option value='$cid'>$title</option>";
                             }
                             ?>
@@ -69,103 +69,110 @@
                 <div class="form-group row">
 
                     <label class="col-sm-2 col-form-label"
-                           for="product_code"><?php echo $this->lang->line('Product Code') ?></label>
+                           for="product_code"><?php echo $this->lang->line('') ?>MAC</label>
 
                     <div class="col-sm-6">
                         <input type="text" placeholder="Product Code"
-                               class="form-control required" name="product_code"
-                               value="<?php echo $product['product_code'] ?>">
+                               class="form-control required" name="mac"
+                               value="<?php echo $equipos['mac'] ?>">
+                    </div>
+                </div>
+                <div class="form-group row">
+
+                    <label class="col-sm-2 col-form-label"
+                           for="product_code"><?php echo $this->lang->line('') ?>Serial</label>
+
+                    <div class="col-sm-6">
+                        <input type="text" placeholder="Serial equipo"
+                               class="form-control required" name="serial" value="<?php echo $equipos['serial'] ?>">
                     </div>
                 </div>
                 <div class="form-group row">
 
                     <label class="col-sm-2 control-label"
-                           for="product_price"><?php echo $this->lang->line('Product Retail Price') ?></label>
+                           for="product_price"><?php echo $this->lang->line('') ?>Fecha llegada</label>
 
                     <div class="col-sm-6">
                         <div class="input-group">
-                            <span class="input-group-addon"><?php echo $this->config->item('currency') ?></span>
-                            <input type="text" name="product_price" class="form-control required"
-                                   placeholder="0.00" aria-describedby="sizing-addon"
-                                   onkeypress="return isNumber(event)" value="<?php echo $product['product_price'] ?>">
+                            <span class="input-group-addon icon-calendar4"><?php echo $this->config->item('') ?></span>
+                            <input type="text" class="form-control required editdate"
+                                               placeholder="Billing Date" name="llegada" autocomplete="false"
+                                               value="<?php echo dateformat($equipos['llegada']) ?>">
                         </div>
                     </div>
                 </div>
                 <div class="form-group row">
 
-                    <label class="col-sm-2 col-form-label"><?php echo $this->lang->line('Product Wholesale Price') ?></label>
+                    <label class="col-sm-2 col-form-label"><?php echo $this->lang->line('') ?>Fecha instalacion</label>
 
                     <div class="col-sm-6">
                         <div class="input-group">
-                            <span class="input-group-addon"><?php echo $this->config->item('currency') ?></span>
-                            <input type="text" name="fproduct_price" class="form-control required"
-                                   placeholder="0.00" aria-describedby="sizing-addon1"
-                                   onkeypress="return isNumber(event)" value="<?php echo $product['fproduct_price'] ?>">
+                            <span class="input-group-addon icon-calendar4"><?php echo $this->config->item('') ?></span>
+                            <input type="text" class="form-control editdate" placeholder="Due Date" name="final" value="<?php echo dateformat($equipos['final']) ?>" autocomplete="false" >
                         </div>
                     </div>
                 </div>
                 <div class="form-group row">
 
-                    <label class="col-sm-2 col-form-label"><?php echo $this->lang->line('Default TAX Rate') ?></label>
+                    <label class="col-sm-2 col-form-label"><?php echo $this->lang->line('') ?>Marca</label>
+
+                    <div class="col-sm-4">
+                        <div class="input-group">                            
+							<select name="marca" class="form-control">
+								<option value="<?php echo $equipos['marca'] ?>">>> <?php echo $equipos['marca'] ?></option>
+								<option value="Bestcom">Bestcom</option>
+								<option value="Kyngtype">Kyngtype</option>
+								<option value="Wifi">Wifi</option>
+							</select>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <small><?php echo $this->lang->line('') ?>Puede cambiar el impuestos durante la creación de facturas también</small>
+                    </div>
+                </div>
+                <div class="form-group row">
+
+                     <label class="col-sm-2 col-form-label"><?php echo $this->lang->line('') ?>Asignar a:</label>
 
                     <div class="col-sm-4">
                         <div class="input-group">
 
-                            <input type="text" name="product_tax" class="form-control required"
-                                   placeholder="0.00" aria-describedby="sizing-addon1"
-                                   onkeypress="return isNumber(event)" value="<?php echo $product['taxrate'] ?>"><span
-                                    class="input-group-addon">%</span>
+                            <select name="asignado" class="form-control">
+                            <?php
+	 						echo '<option value="' . $cus_ware['wid'] . '">'.'>>' . $cus_ware['abon'] . ' '.$cus_ware['watt'].'</option>';
+                            foreach ($customer as $row) {
+                                $cid = $row['id'];
+                                $title = $row['abonado'];
+								$name = $row['name'];
+                                echo "<option value='$cid'>$title $name</option>";
+                            }
+                            ?>
+                        </select>
                         </div>
-                    </div>
+					</div>
+						<div class="col-sm-4">
+                        <small><?php echo $this->lang->line('') ?>Usuario al cual se le asigna el equipo</small>
+                    	</div>					
+                </div>
+                <div class="form-group row">
+
+                    <label class="col-sm-2 col-form-label"><?php echo $this->lang->line('') ?>Estado</label>
+
                     <div class="col-sm-4">
-                        <small><?php echo $this->lang->line('Tax rate during') ?></small>
+                        <select name="estado" class="form-control">
+								<option value="<?php echo $equipos['estado'] ?>">>><?php echo $equipos['estado'] ?></option>
+								<option value="Bueno">Bueno</option>
+								<option value="Malo">Malo</option>								
+							</select>
                     </div>
                 </div>
                 <div class="form-group row">
 
-                    <label class="col-sm-2 col-form-label"><?php echo $this->lang->line('Default Discount Rate') ?></label>
-
-                    <div class="col-sm-4">
-                        <div class="input-group">
-
-                            <input type="text" name="product_disc" class="form-control required"
-                                   placeholder="0.00" aria-describedby="sizing-addon1"
-                                   onkeypress="return isNumber(event)" value="<?php echo $product['disrate'] ?>"><span
-                                    class="input-group-addon">%</span>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <small><?php echo $this->lang->line('Discount rate during') ?></small>
-                    </div>
-                </div>
-                <div class="form-group row">
-
-                    <label class="col-sm-2 col-form-label"><?php echo $this->lang->line('Stock Units') ?></label>
-
-                    <div class="col-sm-4">
-                        <input type="text" placeholder="Total Items in stock"
-                               class="form-control margin-bottom required" name="product_qty"
-                               onkeypress="return isNumber(event)" value="<?php echo $product['qty'] ?>">
-                    </div>
-                </div>
-                <div class="form-group row">
-
-                    <label class="col-sm-2 col-form-label"><?php echo $this->lang->line('Alert Quantity') ?></label>
-
-                    <div class="col-sm-4">
-                        <input type="number" placeholder="Low Stock Alert Quantity"
-                               class="form-control margin-bottom required" name="product_qty_alert"  value="<?php echo $product['alert'] ?>"
-                               onkeypress="return isNumber(event)">
-                    </div>
-                </div>
-                <div class="form-group row">
-
-                    <label class="col-sm-2 col-form-label"><?php echo $this->lang->line('Description') ?></label>
+                    <label class="col-sm-2 col-form-label"><?php echo $this->lang->line('') ?>Observacion</label>
 
                     <div class="col-sm-8">
-                        <textarea placeholder="Description"
-                                  class="form-control margin-bottom" name="product_desc"
-                        ><?php echo $product['product_des'] ?></textarea>
+                        <textarea class="form-control margin-bottom" name="observacion"><?php echo $equipos['observacion'] ?>
+						</textarea>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -176,7 +183,7 @@
                         <input type="submit" id="submit-data" class="btn btn-success margin-bottom"
                                value="<?php echo $this->lang->line('Update') ?>"
                                data-loading-text="Updating...">
-                        <input type="hidden" value="products/editproduct" id="action-url">
+                        <input type="hidden" value="products/editequipos" id="action-url">
                     </div>
                 </div>
 

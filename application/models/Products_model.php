@@ -204,6 +204,37 @@ class Products_model extends CI_Model
         }
 
     }
+	public function editequipo($pid, $codigo, $proveedor, $almacen, $mac, $serial, $llegada, $final, $marca, $asignado, $estado, $observacion)
+    {
+		$bill_final = datefordatabase($final);
+		$bill_llegada = datefordatabase($llegada);
+        $data = array(
+            'codigo' => $codigo,
+            'proveedor' => $proveedor,
+            'almacen' => $almacen,
+            'mac' => $mac,
+            'serial' => $serial,
+            'llegada' => $bill_llegada,
+            'final' => $bill_final,
+            'marca' => $marca,
+            'asignado' => $asignado,
+            'estado' => $estado,
+            'observacion' => $observacion
+        );
+
+
+        $this->db->set($data);
+        $this->db->where('id', $pid);
+
+        if ($this->db->update('equipos')) {
+            echo json_encode(array('status' => 'Success', 'message' =>
+                $this->lang->line('UPDATED')));
+        } else {
+            echo json_encode(array('status' => 'Error', 'message' =>
+                $this->lang->line('ERROR')));
+        }
+
+    }
 
     public function prd_stats()
     {

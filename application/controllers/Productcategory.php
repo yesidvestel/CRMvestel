@@ -165,6 +165,17 @@ class Productcategory Extends CI_Controller
             echo json_encode(array('status' => 'Error', 'message' => $this->lang->line('ERROR')));
         }
     }
+	public function delete_a()
+    {
+        $id = $this->input->post('deleteid');
+        if ($id) {
+            $this->db->delete('equipos', array('almacen' => $id));
+            $this->db->delete('almacen_equipos', array('id' => $id));
+            echo json_encode(array('status' => 'Success', 'message' => $this->lang->line('Product Category with products')));
+        } else {
+            echo json_encode(array('status' => 'Error', 'message' => $this->lang->line('ERROR')));
+        }
+    }
 
     public function delete_warehouse()
     {
@@ -192,6 +203,21 @@ class Productcategory Extends CI_Controller
         $head['usernm'] = $this->aauth->get_user()->username;
         $this->load->view('fixed/header', $head);
         $this->load->view('products/product-cat-edit', $data);
+        $this->load->view('fixed/footer');
+
+    }
+	public function editalmacenvista()
+    {
+        $catid = $this->input->get('id');
+        $this->db->select('*');
+        $this->db->from('almacen_equipos');
+        $this->db->where('id', $catid);
+        $query = $this->db->get();
+        $data['almacenes'] = $query->row_array();
+        $head['title'] = "Edit almacen";
+        $head['usernm'] = $this->aauth->get_user()->username;
+        $this->load->view('fixed/header', $head);
+        $this->load->view('products/almacen_edit', $data);
         $this->load->view('fixed/footer');
 
     }
@@ -230,6 +256,15 @@ class Productcategory Extends CI_Controller
         $product_cat_desc = $this->input->post('product_cat_desc');
         if ($cid) {
             $this->products_cat->edit($cid, $product_cat_name, $product_cat_desc);
+        }
+    }
+	public function editalmacenes()
+    {
+        $cid = $this->input->post('catid');
+        $almacen = $this->input->post('almacen');
+        $descripcion = $this->input->post('descripcion');
+        if ($cid) {
+            $this->products_cat->editalmacen($cid, $almacen, $descripcion);
         }
     }
 

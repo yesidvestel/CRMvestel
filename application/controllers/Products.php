@@ -81,7 +81,7 @@ class Products extends CI_Controller
 	public function equipoadd()
     {
         $data['customer'] = $this->categories_model->customers_list();
-		$data['codigo'] = $this->products->codigoequipo();
+		$data['codigo'] = $this->equipos->codigoequipo();
 		$data['supplier'] = $this->categories_model->supplier_list();
         $data['almacen'] = $this->categories_model->almacen_list();
         $head['title'] = "Add Product";
@@ -143,7 +143,8 @@ class Products extends CI_Controller
             $no++;
             $row = array();
             $row[] = $no;
-           // $row[] = $prd->id;
+           	$pid = $prd->id;
+			$row[] = $prd->codigo;
             $row[] = $prd->mac;
             $row[] = $prd->serial;
 			$row[] = $prd->estado;
@@ -151,7 +152,7 @@ class Products extends CI_Controller
 			$row[] = $prd->marca;
 
 			
-            $row[] = '<a href="' . base_url() . 'products/edit?id=' . $pid . '" class="btn btn-primary btn-xs"><span class="icon-pencil"></span> ' . $this->lang->line('Edit') . '</a> <a href="#" data-object-id="' . $pid . '" class="btn btn-danger btn-xs  delete-object"><span class="icon-bin"></span> ' . $this->lang->line('Delete') . '</a>';
+            $row[] = '<a href="' . base_url() . 'products/editequipoview?id=' . $pid . '" class="btn btn-primary btn-xs"><span class="icon-pencil"></span> ' . $this->lang->line('Edit') . '</a> <a href="#" data-object-id="' . $pid . '" class="btn btn-danger btn-xs  delete-object"><span class="icon-bin"></span> ' . $this->lang->line('Delete') . '</a>';
             $data[] = $row;
         }
 		
@@ -214,6 +215,16 @@ class Products extends CI_Controller
             echo json_encode(array('status' => 'Error', 'message' => $this->lang->line('ERROR')));
         }
     }
+	public function delete_e()
+    {
+        $id = $this->input->post('deleteid');
+        if ($id) {
+            $this->db->delete('equipos', array('id' => $id));
+            echo json_encode(array('status' => 'Success', 'message' => $this->lang->line('DELETED')));
+        } else {
+            echo json_encode(array('status' => 'Error', 'message' => $this->lang->line('ERROR')));
+        }
+    }
 
     public function edit()
     {
@@ -223,8 +234,6 @@ class Products extends CI_Controller
         $this->db->where('pid', $pid);
         $query = $this->db->get();
         $data['product'] = $query->row_array();
-
-
         $data['cat_ware'] = $this->categories_model->cat_ware($pid);
         $data['warehouse'] = $this->categories_model->warehouse_list();
         $data['cat'] = $this->categories_model->category_list();
@@ -232,6 +241,27 @@ class Products extends CI_Controller
         $head['usernm'] = $this->aauth->get_user()->username;
         $this->load->view('fixed/header', $head);
         $this->load->view('products/product-edit', $data);
+        $this->load->view('fixed/footer');
+
+    }
+	public function editequipoview()
+    {
+        $pid = $this->input->get('id');
+        $this->db->select('*');
+        $this->db->from('equipos');
+        $this->db->where('id', $pid);
+        $query = $this->db->get();
+        $data['equipos'] = $query->row_array();
+		$data['cat_ware'] = $this->categories_model->pro_ware($pid);
+        $data['supplier'] = $this->categories_model->supplier_list();
+        $data['almacen'] = $this->categories_model->almacen_list();
+		$data['alm_ware'] = $this->categories_model->alm_ware($pid);
+        $data['customer'] = $this->categories_model->customers_list();
+		$data['cus_ware'] = $this->categories_model->cus_ware($pid);
+        $head['title'] = "Edit equipo";
+        $head['usernm'] = $this->aauth->get_user()->username;
+        $this->load->view('fixed/header', $head);
+        $this->load->view('products/equipo-edit', $data);
         $this->load->view('fixed/footer');
 
     }
@@ -252,6 +282,26 @@ class Products extends CI_Controller
         $product_desc = $this->input->post('product_desc');
         if ($pid) {
             $this->products->edit($pid, $catid, $warehouse, $product_name, $product_code, $product_price, $factoryprice, $taxrate, $disrate, $product_qty,$product_qty_alert,$product_desc);
+        }
+
+
+    }
+	public function editequipos()
+    {
+        $pid = $this->input->post('pid');
+        $codigo = $this->input->post('codigo');
+        $proveedor = $this->input->post('proveedor');
+        $almacen = $this->input->post('almacen');
+        $mac = $this->input->post('mac');
+        $serial = $this->input->post('serial');
+        $llegada = $this->input->post('llegada');
+        $final = $this->input->post('final');
+        $marca = $this->input->post('marca');
+        $asignado = $this->input->post('asignado');
+        $estado = $this->input->post('estado');
+        $observacion = $this->input->post('observacion');
+        if ($pid) {
+            $this->products->editequipo($pid, $codigo, $proveedor, $almacen, $mac, $serial, $llegada, $final, $marca, $asignado, $estado, $observacion);
         }
 
 
