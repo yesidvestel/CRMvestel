@@ -33,7 +33,7 @@
                             <div class="card-block">
                                 <div class="media">
                                     <div class="media-body text-xs-left">
-                                        <?php $numero_asignados= $this->db->select('count(id) as numero')->from('equipos')->where(' asignado=0 or asignado="null"')->get()->result(); ?>
+                                        <?php $numero_asignados= $this->db->select('count(id) as numero')->from('equipos')->where(' asignado=0 or asignado is null')->get()->result(); ?>
                                         <h3 class="red"><?=$numero_asignados[0]->numero?></h3>
                                         <span>Por Asignar</span>
                                     </div>
