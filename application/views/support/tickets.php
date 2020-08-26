@@ -95,6 +95,7 @@
                     <th><?php echo $this->lang->line('Added') ?></th>
                     <th>Abonado</th>
                     <th>Factura</th>
+					<th>Asignado</th>
                     <th>Estado</th>
                     <th>Accion</th>
 					

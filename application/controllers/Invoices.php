@@ -268,10 +268,11 @@ class Invoices extends CI_Controller
             if ($this->db->insert('invoices', $data)) {
 				if (($television !== no) || $combo !== no){
 
-                $data2['subject']='Instalacion';
+                $data2['subject']='servicio';
+				$data2['detalle']='Instalacion';
                 $data2['created']=$bill_date;
                 $data2['cid']=$customer_id;
-                $data2['status']='Waiting';
+                $data2['status']='Pendiente';
                 $data2['section']='';
                 $data2['id_invoice']=$invocieno;
                 $this->db->insert('tickets',$data2);

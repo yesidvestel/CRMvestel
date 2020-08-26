@@ -15,9 +15,10 @@
                             <div class="card-block">
                                 <div class="media">
                                     <div class="media-body text-xs-left">
-                                    <?php $numero_asignados= $this->db->get_where('equipos',array('asignado IS NOT NULL','asignado !='=>0))->result_array(); ?>
-                                        <h3 class="green"><?= count($numero_asignados) ?></h3>
-                                        <span>Asignados</span>
+                                    
+										<?php $numero_asignados= $this->db->select('count(id) as numero')->from('equipos')->where(' asignado=0 or asignado is null')->get()->result(); ?>
+                                        <h3 class="green"><?=$numero_asignados[0]->numero?></h3>
+                                        <span>Por asignar</span>
                                     </div>
                                     <div class="media-right media-middle">
                                         <i class="icon-rocket green font-large-2 float-xs-right"></i>
@@ -33,9 +34,9 @@
                             <div class="card-block">
                                 <div class="media">
                                     <div class="media-body text-xs-left">
-                                        <?php $numero_asignados= $this->db->select('count(id) as numero')->from('equipos')->where(' asignado=0 or asignado is null')->get()->result(); ?>
-                                        <h3 class="red"><?=$numero_asignados[0]->numero?></h3>
-                                        <span>Por Asignar</span>
+                                        <?php $numero_asignados= $this->db->get_where('equipos',array('asignado IS NOT NULL','asignado !='=>0))->result_array(); ?>
+                                        <h3 class="red"><?= count($numero_asignados) ?></h3>
+                                        <span>Asignados</span>
                                     </div>
                                     <div class="media-right media-middle">
                                         <i class="icon-blocked red font-large-2 float-xs-right"></i>

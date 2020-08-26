@@ -139,7 +139,9 @@
 
                             <select name="asignado" class="form-control">
                             <?php
-	 						echo '<option value="' . $cus_ware['wid'] . '">'.'>>' . $cus_ware['abon'] . ' '.$cus_ware['watt'].'</option>';
+	 						echo '<option value="' . $cus_ware['wid'] . '">'.'>>' . $cus_ware['abon'] . ' '.$cus_ware['watt'].'</option>';?>
+							<option value="0">Sin asignar</option>
+							<?php
                             foreach ($customer as $row) {
                                 $cid = $row['id'];
                                 $title = $row['abonado'];

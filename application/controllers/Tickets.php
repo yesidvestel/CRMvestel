@@ -69,8 +69,7 @@ class Tickets Extends CI_Controller
 			$row[] = $ticket->id;
             $row[] = $ticket->subject;
 			$row[] = $ticket->detalle;
-            $row[] = $ticket->created;
-           
+            $row[] = $ticket->created;           
 			if($ticket->cid !=null){
                 $row[]='<a href="'.base_url("customers/view?id=".$ticket->cid).'">'.$ticket->cid.'</a>';
             }
@@ -79,6 +78,7 @@ class Tickets Extends CI_Controller
             }else{
                  $row[]="Sin Factura";
             }
+			$row[] = $ticket->asignado;
 			$row[] = '<span class="st-' . $ticket->status . '">' . $ticket->status . '</span>';
             $row[] = '<a href="' . base_url('tickets/thread/?id=' . $ticket->id) . '" class="btn btn-success btn-xs"><i class="icon-file-text"></i> ' . $this->lang->line('View') . '</a> <a class="btn btn-danger btn-xs delete-object" href="#" data-object-id="' . $ticket->id . '"> <i class="icon-trash-o "></i> </a>';
 
@@ -230,7 +230,7 @@ class Tickets Extends CI_Controller
         $datay['tax']=0;
         $datay['discount']=0;
         $datay['totaltax']=0;
-        $datay['totaldiscount']=0;
+        $datay['totaldiscount']=0;			
                 if($data['combo']!==no){
                     if($data['combo']==='3 Megas'){
                         $datay['pid']=24;
@@ -241,7 +241,7 @@ class Tickets Extends CI_Controller
                     }
                     $producto = $this->db->get_where('products',array('pid'=>$datay['pid']))->row();
                     $x=intval($producto->product_price);
-                    $x=($x/31)*$diferencia->days;
+                    $x=($x/30)*$diferencia->days;
                     $total+=$x;
                     $datay['product']=$producto->product_name;
                     $datay['price']=$x;
@@ -257,14 +257,14 @@ class Tickets Extends CI_Controller
                     $datay['product']=$producto->product_name;
                     
                     $x=intval($producto->product_price);
-                    $x=($x/31)*$diferencia->days;
+                    $x=($x/30)*$diferencia->days;
                     $total+=$x;
                     $datay['price']=$x;
                     $datay['subtotal']=$x;
                     $this->db->insert('invoice_items',$datay);
                 }
                 
-                
+			
                 
                
         //end cod x

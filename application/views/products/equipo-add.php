@@ -133,6 +133,7 @@
                         <div class="input-group">
 
                             <select name="asignado" class="form-control">
+								<option value="0">Sin asignar</option>
                             <?php
                             foreach ($customer as $row) {
                                 $cid = $row['id'];
