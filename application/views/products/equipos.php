@@ -15,8 +15,9 @@
                             <div class="card-block">
                                 <div class="media">
                                     <div class="media-body text-xs-left">
-                                        <h3 class="green"><span id="dash_0"></span></h3>
-                                        <span><?php echo $this->lang->line('In Stock') ?></span>
+                                    <?php $numero_asignados= $this->db->get_where('equipos',array('asignado IS NOT NULL','asignado !='=>0))->result_array(); ?>
+                                        <h3 class="green"><?= count($numero_asignados) ?></h3>
+                                        <span>Asignados</span>
                                     </div>
                                     <div class="media-right media-middle">
                                         <i class="icon-rocket green font-large-2 float-xs-right"></i>
@@ -32,8 +33,9 @@
                             <div class="card-block">
                                 <div class="media">
                                     <div class="media-body text-xs-left">
-                                        <h3 class="red"><span id="dash_1"></span></h3>
-                                        <span><?php echo $this->lang->line('Stock out') ?></span>
+                                        <?php $numero_asignados= $this->db->select('count(id) as numero')->from('equipos')->where(' asignado=0 or asignado="null"')->get()->result(); ?>
+                                        <h3 class="red"><?=$numero_asignados[0]->numero?></h3>
+                                        <span>Por Asignar</span>
                                     </div>
                                     <div class="media-right media-middle">
                                         <i class="icon-blocked red font-large-2 float-xs-right"></i>
@@ -49,7 +51,8 @@
                             <div class="card-block">
                                 <div class="media">
                                     <div class="media-body text-xs-left">
-                                        <h3 class="cyan" id="dash_2"></h3>
+                                        <?php $numero_asignados= $this->db->select('count(id) as numero')->from('equipos')->get()->result(); ?>
+                                        <h3 class="cyan"><?=$numero_asignados[0]->numero?></h3>
                                         <span><?php echo $this->lang->line('Total') ?></span>
                                     </div>
                                     <div class="media-right media-middle">
