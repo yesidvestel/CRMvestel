@@ -58,13 +58,13 @@ class Importequipo extends CI_Controller
 
     }
 
-    public function products_upload()
+    public function equipos_upload()
     {
 
         $this->load->helper(array('form'));
         $data['response'] = 3;
         $head['usernm'] = $this->aauth->get_user()->username;
-        $head['title'] = 'Importar Equipos';
+        $head['title'] = 'Import Product';
 
         $this->load->view('fixed/header', $head);
 
@@ -112,16 +112,17 @@ class Importequipo extends CI_Controller
         $sheetData = $spreadsheet->getActiveSheet()->toArray(null, true, true, false);
 //print_r($sheetData);
 
+		
         $products=array();
+		
 
         foreach ($sheetData as $row) {
-
-
-            $products[] = array(
-                'pid' => null,                
-                'almacen' => $warehouse,
+			
+			$products[] = array(
+                'id' => null,				
 				'codigo' => $row[0],
                 'proveedor' => $row[1],
+				'almacen' => $warehouse,
                 'mac' => $row[2],
                 'serial' => $row[3],
                 'llegada' => $row[4],

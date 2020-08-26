@@ -146,5 +146,33 @@
             ]
         });
     });
+	// selecion de orden
+	var perfil_2 = new Array ("Seleccine...","3Megas","5Megas","10Megas","MOROSOS");
+	var perfil_3 = new Array ("Seleccine...","3MEGAS","5MEGAS","10MEGAS","MOROSOS");
+	var perfil_4 = new Array ("Seleccine...","3Megas","5Megas","10Megas","Cortados");
+							//crear funcion que ejecute el cambio
+							function cambia(){
+								var customergroup;
+								customergroup = document.formulario1.customergroup[document.formulario1.customergroup.			selectedIndex].value;
+								//se verifica la seleccion dada
+								if(customergroup!=0){
+									mis_opts=eval("perfil_"+customergroup);
+									//definimos cuantas obciones hay
+									num_opts=mis_opts.length;
+									//marcamos obciones en el selector
+									document.formulario1.perfil.length = num_opts;
+									//colocamos las obciones array
+									for(i=0; i<num_opts; i++){
+										document.formulario1.perfil.options[i].value=mis_opts[i];
+										document.formulario1.perfil.options[i].text=mis_opts[i];
+									}
+										}else{
+											//resultado si no hay obciones
+											document.formulario1.perfil.length = 1;
+											document.formulario1.perfil.options[0].value="-"
+											document.formulario1.perfil.options[0].text="-"											
+								}
+								document.formulario1.perfil.options[0].selected = true;
+							}
 
 </script>

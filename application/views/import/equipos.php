@@ -5,7 +5,7 @@
 
             <div class="message"></div>
         </div>
-        <?php echo form_open_multipart('importequipos/products_upload'); ?>
+        <?php echo form_open_multipart('importequipo/equipos_upload'); ?>
             <div class="grid_3 grid_4">
                 <h5><?php echo $this->lang->line('') ?>Importar Equipos</h5>
                 <hr>

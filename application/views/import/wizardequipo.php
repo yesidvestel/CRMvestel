@@ -71,7 +71,7 @@
                 $("#ups").hide();
                 if(data.status=='Success')
                 {  setTimeout(function () {
-                    window.location.href = baseurl + 'importequipo/equipos';
+                    window.location.href = baseurl + 'import/equipos';
                 }, 2000);
                 }
 
