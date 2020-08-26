@@ -173,6 +173,30 @@ class Quote_model extends CI_Model
         $query = $this->db->get();
         return $query->row_array();
     }
+	public function addticket($customer_id, $subject, $detalle, $created, $section)
+    {
+		$bill_llegada = datefordatabase($created);
+        $data = array(
+            'subject' => $subject,
+            'detalle' => $detalle,
+            'created' => $bill_llegada,
+            'cid' => $customer_id,
+            'status' => 'Pendiente',
+            'section' => $section,
+            'fecha_final' => '',
+            'id_invoice' => 'null',
+            'id_factura' => 'null',            
+        );
+
+        if ($this->db->insert('tickets', $data)) {
+            echo json_encode(array('status' => 'Success', 'message' =>
+                $this->lang->line('ADDED')));
+        } else {
+            echo json_encode(array('status' => 'Error', 'message' =>
+                $this->lang->line('ERROR')));
+        }
+
+    }
 
     public function convert($id)
     {

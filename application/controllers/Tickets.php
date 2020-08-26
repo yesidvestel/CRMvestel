@@ -63,23 +63,26 @@ class Tickets Extends CI_Controller
 
         foreach ($list as $ticket) {
             $row = array();
-            $no++;
+            $no++;			
+            $row[] = $no;
 			$row[] = '<input type="checkbox" style="margin-left: 9px">';
-            $row[] = $no;			
+			$row[] = $ticket->id;
             $row[] = $ticket->subject;
-            $row[] = dateformat_time($ticket->created);
-            $row[] = '<span class="st-' . $ticket->status . '">' . $ticket->status . '</span>';
-
-            $row[] = '<a href="' . base_url('tickets/thread/?id=' . $ticket->id) . '" class="btn btn-success btn-xs"><i class="icon-file-text"></i> ' . $this->lang->line('View') . '</a> <a class="btn btn-danger btn-xs delete-object" href="#" data-object-id="' . $ticket->id . '"> <i class="icon-trash-o "></i> </a>';
-
-            if($ticket->id_invoice !=null){
-                $row[]='<a href="'.base_url("invoices/view?id=".$ticket->id_invoice).'">'.$ticket->id_invoice.'</a>';
+			$row[] = $ticket->detalle;
+            $row[] = $ticket->created;
+           
+			if($ticket->cid !=null){
+                $row[]='<a href="'.base_url("customers/view?id=".$ticket->cid).'">'.$ticket->cid.'</a>';
             }
           if($ticket->id_factura !=null){
                 $row[]='<a href="'.base_url("invoices/view?id=".$ticket->id_factura).'">'.$ticket->id_factura.'</a>';
             }else{
                  $row[]="Sin Factura";
             }
+			$row[] = '<span class="st-' . $ticket->status . '">' . $ticket->status . '</span>';
+            $row[] = '<a href="' . base_url('tickets/thread/?id=' . $ticket->id) . '" class="btn btn-success btn-xs"><i class="icon-file-text"></i> ' . $this->lang->line('View') . '</a> <a class="btn btn-danger btn-xs delete-object" href="#" data-object-id="' . $ticket->id . '"> <i class="icon-trash-o "></i> </a>';
+
+            
 
             $data[] = $row;
         }

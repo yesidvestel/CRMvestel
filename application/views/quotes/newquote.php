@@ -7,7 +7,7 @@
 
                     <div class="message"></div>
                 </div>
-                <form method="post" id="data_form">
+                <form method="post" id="data_form" name="soporte">
 
 
                     <div class="row">
@@ -65,10 +65,10 @@
                                         <div class="input-group">
                                             <div class="input-group-addon">
 											<span class="icon-file-text-o" aria-hidden="true"></span></div>
-                                            	<select name="tipo" class="form-control">
-													<option value="">seleccione...</option>
-													<option value="Orden de servicio">Orden de servicio</option>								
-													<option value="Orden de reclamo">Orden de reclamo</option>
+                                            	<select name="subject" class="form-control" onchange="cambia()">
+													<option value="0">seleccione...</option>
+													<option value="servicio">Orden de servicio</option>								
+													<option value="reclamo">Orden de reclamo</option>
 												</select>
                                         </div>
                                     </div>
@@ -77,7 +77,9 @@
                                         <div class="input-group">
                                             <div class="input-group-addon">
 												<span class="icon-bookmark-o" aria-hidden="true"></span></div>
-                                            <input type="text" class="form-control" placeholder="Reference #" name="refer">
+                                            <select class=" col-sm-2 form-control"  id="discountFormat" name="detalle" >
+													<option value="-">-</option>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
@@ -90,7 +92,7 @@
                                             <div class="input-group-addon"><span class="icon-calendar4"
                                                                                  aria-hidden="true"></span></div>
                                             <input type="text" class="form-control required"
-                                                   placeholder="Billing Date" name="invoicedate"
+                                                   placeholder="Billing Date" name="created"
                                                    data-toggle="datepicker"
                                                    autocomplete="false" readonly>
                                         </div>
@@ -104,7 +106,7 @@
                     <div class="form-group row">
                         <div class="col-sm-12">
                             <label for="toAddInfo" class="caption">Descripcion de Orden</label>
-                            <textarea class="summernote" name="propos" id="contents" rows="2"></textarea></div>
+                            <textarea class="summernote" name="section" id="contents" rows="2"></textarea></div>
                     </div>
                    
 					<input type="submit" class="btn btn-success sub-btn"value="<?php echo $this->lang->line('Generate Quote') ?>" id="submit-data" data-loading-text="Creating...">
@@ -147,32 +149,31 @@
         });
     });
 	// selecion de orden
-	var perfil_2 = new Array ("Seleccine...","3Megas","5Megas","10Megas","MOROSOS");
-	var perfil_3 = new Array ("Seleccine...","3MEGAS","5MEGAS","10MEGAS","MOROSOS");
-	var perfil_4 = new Array ("Seleccine...","3Megas","5Megas","10Megas","Cortados");
+	var perfil_servicio = new Array ("Seleccine...","Instalacion","Reinstalacion","Traslado","Subir 5 Mg","Subir 10 Mg","Bajar 5 Mg","Bajar 3 Mg","Cambio de equipo","Equipo adicional","Reconexion","Suspencion Combo","Suspencion Internet","Suspencion Television");
+	var perfil_reclamo = new Array ("Seleccine...","Revision de Internet","Revision de television","Otros");	
 							//crear funcion que ejecute el cambio
 							function cambia(){
-								var customergroup;
-								customergroup = document.formulario1.customergroup[document.formulario1.customergroup.			selectedIndex].value;
+								var subject;
+								subject = document.soporte.subject[document.soporte.subject.			selectedIndex].value;
 								//se verifica la seleccion dada
-								if(customergroup!=0){
-									mis_opts=eval("perfil_"+customergroup);
+								if(subject!=0){
+									mis_opts=eval("perfil_"+subject);
 									//definimos cuantas obciones hay
 									num_opts=mis_opts.length;
 									//marcamos obciones en el selector
-									document.formulario1.perfil.length = num_opts;
+									document.soporte.detalle.length = num_opts;
 									//colocamos las obciones array
 									for(i=0; i<num_opts; i++){
-										document.formulario1.perfil.options[i].value=mis_opts[i];
-										document.formulario1.perfil.options[i].text=mis_opts[i];
+										document.soporte.detalle.options[i].value=mis_opts[i];
+										document.soporte.detalle.options[i].text=mis_opts[i];
 									}
 										}else{
 											//resultado si no hay obciones
-											document.formulario1.perfil.length = 1;
-											document.formulario1.perfil.options[0].value="-"
-											document.formulario1.perfil.options[0].text="-"											
+											document.soporte.detalle.length = 1;
+											document.soporte.detalle.options[0].value="-"
+											document.soporte.detalle.options[0].text="-"											
 								}
-								document.formulario1.perfil.options[0].selected = true;
+								document.soporte.detalle.options[0].selected = true;
 							}
 
 </script>

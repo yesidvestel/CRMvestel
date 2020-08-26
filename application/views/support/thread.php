@@ -21,7 +21,7 @@
 
         } ?>
         <div class="grid_3 grid_4"><h4><?php echo $thread_info['subject'] ?> </h4>
-            <p class="card card-block"><?php echo '<strong>Creado el: </strong> ' . dateformat_time($thread_info['created']);
+            <p class="card card-block"><?php echo '<strong>Creado el: </strong> ' . $thread_info['created'];
                 echo '<br><strong>Usuario:</strong> ' . $thread_info['name'] .' '. $thread_info['unoapellido'];
 				echo '<br><strong>Celular:</strong> ' . $thread_info['celular'];
 				echo '<br><strong>Direccion:</strong> ' . $thread_info['nomenclatura'].' '. $thread_info['numero1']. $thread_info['adicionauno'].' N°'. $thread_info['numero2']. $thread_info['adicional2'].' - '. $thread_info['numero3'];

@@ -87,14 +87,16 @@
             <table id="doctable" class="display" cellspacing="0" width="100%">
                 <thead>
                 <tr>
+					<th>#</th>
 					<th><i class="icon-marquee"></th>
-                    <th>#</th>
+					<th>N° orden</th>	
                     <th><?php echo $this->lang->line('Subject') ?></th>
+					<th>Detalle</th>
                     <th><?php echo $this->lang->line('Added') ?></th>
-                    <th><?php echo $this->lang->line('Status') ?></th>
-                    <th><?php echo $this->lang->line('Action') ?></th>
-                    <th>Install</th>
+                    <th>Abonado</th>
                     <th>Factura</th>
+                    <th>Estado</th>
+                    <th>Accion</th>
 					
 
                 </tr>
