@@ -5,7 +5,10 @@
 
             <div class="message"></div>
         </div>
-        <?php echo form_open_multipart('importequipo/equipos_upload'); ?>
+        <form method="post" action="<?=base_url()?>importequipo/equipos_upload" enctype="multipart/form-data">
+
+            
+        <?php //echo form_open_multipart('importequipo/equipos_upload'); ?>
             <div class="grid_3 grid_4">
                 <h5><?php echo $this->lang->line('') ?>Importar Equipos</h5>
                 <hr>
@@ -26,7 +29,7 @@
                         </label>
 
                     <div class="col-sm-6">
-                        <input type="file" name="userfile" size="15"/>(Solo Formato CSV)
+                        <input type="file" name="cargar_csv" accept=".csv" required="true"/>(Solo Formato CSV)
                     </div>
                 </div>                
 

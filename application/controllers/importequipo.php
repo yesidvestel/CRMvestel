@@ -60,43 +60,55 @@ class Importequipo extends CI_Controller
 
     public function equipos_upload()
     {
-
-        $this->load->helper(array('form'));
-        $data['response'] = 3;
-        $head['usernm'] = $this->aauth->get_user()->username;
-        $head['title'] = 'Import Product';
-
-        $this->load->view('fixed/header', $head);
-
-        if ($this->input->post('product_warehouse')) {            
-            $data['wid'] = $this->input->post('product_warehouse');
-            $config['upload_path'] = './userfiles';
-            $config['allowed_types'] = 'csv';
-            $config['max_size'] = 6000;
-            $this->load->library('upload', $config);
-
-            if (!$this->upload->do_upload('userfile')) {
-                $data['response'] = 0;
-                $data['responsetext'] = 'File Upload Error';
-
-            } else {
-                $data['response'] = 1;
-                $data['responsetext'] = 'Document Uploaded Successfully.';
-                $data['filename'] = $this->upload->data()['file_name'];
-
-            }
-
-            $this->load->view('import/wizardequipo', $data);
-        } else {
-
-
-           echo' error';
-
-
+        //datos del arhivo enviado por post
+        $nombre_archivo = "temporal.csv";
+        $tipo_archivo = $_FILES['cargar_csv']['type'];
+        $tamano_archivo = $_FILES['cargar_csv']['size'];
+        //comprobacion de extencion
+        if(strcasecmp($tipo_archivo,"csv")){
+            //copiando el archivo a la ruta application/cache/temporal.csv
+            if (move_uploaded_file($_FILES['cargar_csv']['tmp_name'],  'application/cache/'.$nombre_archivo)){
+                //abriendo el archivo para lectura
+                $fp = fopen('application/cache/'.$nombre_archivo, "r");
+                //indice para saber la linea del archivo
+                $i=0;
+                while (!feof($fp)){
+                    //lectura de cada linea 
+                    $linea = fgets($fp);
+                    //separacion de la linea por ; en un array
+                    $array = explode(";",$linea);
+                    //comprovacion de que no sea la primera linea porque la destine para el encabezado en la generacion y que el primer dato del array tiene que ser diferente a nada y tambien un entero
+                    if($i!=0 && strcasecmp($array[0],"")!=false){
+                        $datax['codigo']=$array[0];
+                        $datax['proveedor']=$array[1];
+                        $datax['almacen']=$array[2];
+                        $datax['mac']=$array[3];
+                        $datax['serial']=$array[4];
+                        $datax['llegada']=$array[5];
+                        $datax['final']=$array[6];
+                        $datax['marca']=$array[7];
+                        $datax['asignado']=$array[8];
+                        $datax['estado']=$array[9];
+                        $datax['observacion']=$array[10];
+                        
+                        
+                        $equipo = $this->db->get_where('equipos',array('codigo'=>$datax['codigo']))->row();
+                        if(!isset($equipo)){
+                          $this->db->insert('equipos',$datax);
+                        }
+                    }
+                    //aumento indice en cada iteracion
+                    $i++;
+                }
+                fclose($fp);
+                $_SESSION['importacion']=true;
+                redirect(base_url().'products/equipos' , 'refresh');
+         }else{
+            $_SESSION['importacion']=false;
+                echo "Ocurrió algún error al subir el fichero. No pudo guardarse.";
+         }
         }
-        $this->load->view('fixed/footer');
-
-
+        
     }
 
 
