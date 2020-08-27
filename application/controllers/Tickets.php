@@ -146,14 +146,13 @@ class Tickets Extends CI_Controller
 
             $data['thread_info'] = $this->ticket->thread_info($thread_id);
             $data['thread_list'] = $this->ticket->thread_list($thread_id);
-
+			$data['barrio'] = $this->ticket->group_barrio($data['details']['barrio']);
             $this->load->view('support/thread', $data);
         } else {
 
             $data['thread_info'] = $this->ticket->thread_info($thread_id);
             $data['thread_list'] = $this->ticket->thread_list($thread_id);
-
-
+			$data['barrio'] = $this->ticket->group_barrio($data['details']['barrio']);
             $this->load->view('support/thread', $data);
 
 

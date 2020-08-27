@@ -23,7 +23,7 @@ class Ticket_model extends CI_Model
 
 
     //documents list
-
+	var $table = 'customers';
     var $doccolumn_order = array(null, 'subject', 'created', null);
     var $doccolumn_search = array('subject', 'created');
 
@@ -81,6 +81,15 @@ class Ticket_model extends CI_Model
 
         $this->db->from('barrio');
         $this->db->where('idBarrio', $id);
+        $query = $this->db->get();
+        return $query->row_array();
+    }
+	public function details($thread_id)
+    {
+
+        $this->db->select('*');
+        $this->db->from($this->table);
+        $this->db->where('id', $thread_id);
         $query = $this->db->get();
         return $query->row_array();
     }
@@ -225,6 +234,33 @@ class Ticket_model extends CI_Model
         return $this->db->insert('tickets_th', $data);
 
 
+    }
+	public function meta_insert($id, $type, $meta_data)
+    {
+
+        $data = array('type' => $type, 'rid' => $id, 'col1' => $meta_data);
+        if ($id) {
+            return $this->db->insert('meta_data', $data);
+        } else {
+            return 0;
+        }
+    }
+
+    public function attach($id)
+    {
+        $this->db->select('meta_data.*');
+        $this->db->from('meta_data');
+        $this->db->where('meta_data.type', 5);
+        $this->db->where('meta_data.rid', $id);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+    public function meta_delete($id,$type,$name)
+    {
+        if (@unlink(FCPATH . 'userfiles/attach/' . $name)) {
+            return $this->db->delete('meta_data', array('rid' => $id, 'type' => $type, 'col1' => $name));
+        }
     }
 
 

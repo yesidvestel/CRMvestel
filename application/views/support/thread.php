@@ -40,11 +40,11 @@
                         <div class="card card-block"><?php
                             if ($row['custo']) echo 'Customer <strong>' . $row['custo'] . '</strong> Replied<br><br>';
 
-                            if ($row['emp']) echo 'Employee <strong>' . $row['emp'] . '</strong> Replied<br><br>';
+                            if ($row['emp']) echo 'Tecnico <strong>' . $row['emp'] . '</strong> Respondio<br><br>';
 
                             echo $row['message'] . '';
 
-                            if ($row['attach']) echo '<br><br><strong>Attachment: </strong><a href="' . base_url('userfiles/support/' . $row['attach']) . '">' . $row['attach'] . '</a><br><br>';
+                            if ($row['attach']) echo '<br><br><strong>Documentacion: </strong><a href="' . base_url('userfiles/support/' . $row['attach']) . '">' . $row['attach'] . '</a><br><br>';
                             ?></div>
                     </div>
                 </div>
