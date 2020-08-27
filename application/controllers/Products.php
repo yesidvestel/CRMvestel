@@ -148,10 +148,10 @@ class Products extends CI_Controller
             $row[] = $prd->mac;
             $row[] = $prd->serial;
 			$row[] = $prd->estado;
-            $row[] = $prd->asignado;
-			$row[] = $prd->marca;
-
-			
+			if ($prd->asignado == 0){
+            $row[]= 'Sin asignar';
+			}else{ $row[] = $prd->asignado;}
+			$row[] = $prd->marca;			
             $row[] = '<a href="' . base_url() . 'products/editequipoview?id=' . $pid . '" class="btn btn-primary btn-xs"><span class="icon-pencil"></span> ' . $this->lang->line('Edit') . '</a> <a href="#" data-object-id="' . $pid . '" class="btn btn-danger btn-xs  delete-object"><span class="icon-bin"></span> ' . $this->lang->line('Delete') . '</a>';
             $data[] = $row;
         }
