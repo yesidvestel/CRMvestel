@@ -268,26 +268,34 @@ FROM products ");
 
     }
     public function transfer($from_warehouse,$products_l,$to_warehouse)
-    {    $updateArray = array();
-        foreach($products_l as $row){
+    {   
+        foreach ($products_l as $key => $value) {
+            $producto = $this->db->get_where('products',array("pid"=>$value['pid']))->row();
+            if($value['qty']>0){
+                $qty_nuevo_pt=intval($value['qty']);//cantidad que se quiere transferir
+                $qty_viejo_pt=intval($producto->qty);//cantidad que hay en existencia
+                $qty_viejo_pt=$qty_viejo_pt-$qty_nuevo_pt;
+                //trabajando sobre el producto transferido
+                if($producto->id_prod_transfer!=null){
+                $producto_ya_transferido = $this->db->get_where('products',array('pid'=>$producto->id_prod_transfer))->row();    
+                }
+                
+                if(isset($producto_ya_transferido)){
+                    $datay['qty']=$qty_nuevo_pt+intval($producto_ya_transferido->qty);
+                    $this->db->update('products',$datay,array("pid"=>$producto_ya_transferido->pid));
+                }else{
+                    $value['id_prod_transfer']=$value['pid'];
+                    $value['warehouse']=$to_warehouse;
+                    $value['pid']=null;
+                    $this->db->insert('products',$value);
+                }
+                //trabajando sobre el producto a transferir
+                $datax['qty']=$qty_viejo_pt;
+                $this->db->update('products',$datax,array('pid'=>$producto->pid));
 
-
-            $updateArray[] = array(
-                'pid' => $row,
-                'warehouse' => $to_warehouse
-            );
-
-
+            }
         }
-
-        if ($this->db->update_batch('products',$updateArray, 'pid')) {
-            echo json_encode(array('status' => 'Success', 'message' =>
-                $this->lang->line('UPDATED')));
-        } else {
-            echo json_encode(array('status' => 'Error', 'message' =>
-                $this->lang->line('ERROR')));
-        }
-
+        echo json_encode(array('status'=>"success"));
     }
 
 }

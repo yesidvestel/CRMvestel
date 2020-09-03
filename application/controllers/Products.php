@@ -383,6 +383,7 @@ class Products extends CI_Controller
     {
         $wid = $this->input->get('wid');
         $result=$this->products->products_list($wid);
+        
         echo json_encode($result);
 
 
@@ -391,12 +392,8 @@ class Products extends CI_Controller
     public function stock_transfer()
     {
         if ($this->input->post()) {
-
-            $products_l = $this->input->post('products_l');
-            $from_warehouse = $this->input->post('from_warehouse');
-            $to_warehouse= $this->input->post('to_warehouse');
-
-            $this->products->transfer($from_warehouse,$products_l,$to_warehouse);
+            
+            $this->products->transfer($_POST['from_warehouse'],$_POST['lista'],$_POST['to_warehouse']);
 
         } else {
 

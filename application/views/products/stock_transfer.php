@@ -1,3 +1,4 @@
+
 <article class="content">
     <div class="card card-block">
         <div id="notify" class="alert alert-success" style="display:none;">
@@ -5,14 +6,14 @@
 
             <div class="message"></div>
         </div>
-        <form method="post" id="data_form" class="form-horizontal">
+        <form method="post"  class="form-horizontal" onsubmit="al_enviar_form(event);">
             <div class="grid_3 grid_4">
                 <h5><?php echo $this->lang->line('Stock Transfer') ?></h5>
                 <hr>
 
 
                 <input type="hidden" name="act" value="add_product">
-
+              
 
 
                 <div class="form-group row">
@@ -21,7 +22,7 @@
                            for="product_cat"><?php echo $this->lang->line('Transfer From') ?></label>
 
                     <div class="col-sm-6">
-                        <select id="wfrom" name="from_warehouse" class="form-control">
+                        <select id="wfrom" name="from_warehouse" class="form-control" onchange="al_cambiar_almacen();" required>
                             <option value='0'>Select</option>
                             <?php
                             foreach ($warehouse as $row) {
@@ -42,56 +43,44 @@
                            
 
                     <div class="col-sm-8">
-                        <select id="products_l" name="products_l[]" class="form-control required select-box" multiple="multiple">
+                        <select id="products_l" name="products_l[]" class="form-control required select-box" required multiple="multiple">
 
                        </select>                  
-
-                    </div>
+                      
+                    </div><br>
+                   
+            </div>
+            
                     <div id="saman-row">
-                        <table class="table-responsive tfr my_stripe">
-                         <thead>
-
-                            <tr class="item_header">
-                                <th width="30%" class="text-center"><?php echo $this->lang->line('Item Name') ?></th>
-                                <th width="10%" class="text-center"><?php echo $this->lang->line('Amount') ?>
-                                    (<?php echo $this->config->item('currency'); ?>)
-                                </th>
-                            </tr>
-                         </thead>   
-                         <tbody>
-                            <tr>
-                                <td><input type="text" class="form-control text-center" name="product_name[]"
-                                           placeholder="<?php echo $this->lang->line('Enter Product name') ?>" id='productname-0'>
-                                </td>
-                                <td><input type="text" class="form-control req amnt" name="product_qty[]" id="amount-0"
-                                           onkeypress="return isNumber(event)" onkeyup="rowTotal('0'), billUpyog()"
-                                           autocomplete="off" value="1"></td>                                                       
-                                <input type="hidden" name="taxa[]" id="taxa-0" value="0">
-                                <input type="hidden" name="disca[]" id="disca-0" value="0">
-                                <input type="hidden" class="ttInput" name="product_subtotal[]" id="total-0" value="0">
-                                <input type="hidden" class="pdIn" name="pid[]" id="pid-0" value="0">
-                            </tr>
-                            <tr class="last-item-row sub_c">
-                                <td class="add-row">
-                                    <button type="button" class="btn btn-success" aria-label="Left Align"
-                                            data-toggle="tooltip"
-                                            data-placement="top" title="Add product row" id="addproduct">
-                                        <i class="icon-plus-square"></i> <?php echo $this->lang->line('Add Row') ?>
-                                    </button>
-                                </td>
-                                <td colspan="7"></td>
-                            </tr> 
+                        <table width="100%" style="text-align: center;" class="table">
+                            <thead >
+                                <tr >
+                                    <th style="text-align: center;"><h2>PID</h2></th>
+                                    <th style="text-align: center;"><h2>Nombre</h2></th>
+                                    <th style="text-align: center;"><h2>Cantidad Tot.</h2></th>
+                                    <th style="text-align: center;"><h2>Valor a Transferir</h2></th>
+                                </tr>
+                            </thead>
+                            <tbody id="itemsx">
+                                <tr id="remover_fila">
+                                    <td>PID</td>
+                                    <td>Nombre</td>
+                                    <td>##</td>
+                                    <td><input type="number" name="" data-max="5" data-pid="0" class="form-control" onfocusout="validar_numeros(this);" disabled></td>   
+                                </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
+                <br>
                 <div class="form-group row">
 
                     <label class="col-sm-2 col-form-label"
                            for="product_cat"><?php echo $this->lang->line('Transfer To') ?></label>
 
                     <div class="col-sm-6">
-                        <select name="to_warehouse" class="form-control">
+                        <select name="to_warehouse" class="form-control" id="sel2" required>
+                            <option value="">Seleccionar</option>
                             <?php
                             foreach ($warehouse as $row) {
                                 $cid = $row['id'];
@@ -111,9 +100,9 @@
                     <label class="col-sm-2 col-form-label"></label>
 
                     <div class="col-sm-4">
-                        <input type="submit" id="submit-data" class="btn btn-success margin-bottom"
+                        <input type="submit" class="btn btn-success margin-bottom"
                                value="<?php echo $this->lang->line('Stock Transfer') ?>" data-loading-text="Adding...">
-                        <input type="hidden" value="products/stock_transfer" id="action-url">
+                        <input type="text" hidden id="prods_change" name="prods_change">
                     </div>
                 </div>
             </div>
@@ -123,9 +112,13 @@
 </article>
 
 <script type="text/javascript">
+    var dataglobal;
+    var listaProductos=[];
     $("#products_l").select2();
     $("#wfrom").on('change', function(){
     var tips=$('#wfrom').val();
+    //este es el escucha cuando se cambia el select
+    listaProductos=[];
     $("#products_l").select2({
 
         tags: [],
@@ -140,6 +133,10 @@
                 };
             },
             processResults: function (data) {
+                dataglobal=data;
+                //aqui es el escucha de cuando se toca el input
+
+                
                 return {
                     results: $.map(data, function (item) {
                         return {
@@ -151,5 +148,89 @@
             },
         }
     }); });
+
+    $("#products_l").on("select2:unselect",function(e){
+        console.log("eliminado "+e.params.data.id);
+        console.log(listaProductos);
+        $("#fila_"+e.params.data.id).remove();
+        var remove_index=0;
+        $(listaProductos).each(function(index,value){
+            if(e.params.data.id==value.pid){
+                remove_index=index;
+            }    
+            
+            
+        });
+        listaProductos.splice(remove_index,1);
+        
+    });
+    $("#products_l").on('select2:select',function(e){
+                var itemSeleccionado;
+                $(dataglobal).each(function(index,data){
+                    if(e.params.data.id==data.pid){
+                        itemSeleccionado=data;
+                    }
+                    
+                });
+                
+               
+                listaProductos.push(itemSeleccionado);
+                $("#remover_fila").html('');
+                var max_var=itemSeleccionado.qty;
+                if(max_var<0){
+                    max_var=0;
+                }
+                $("#itemsx").append('<tr id="fila_'+itemSeleccionado.pid+'"> <td>'+itemSeleccionado.pid+'</td><td>'+itemSeleccionado.product_name+'</td>       <td>'+itemSeleccionado.qty+'</td>           <td><input type="number" name="" data-max="'+max_var+'" data-pid="'+itemSeleccionado.pid+'" class="form-control" onfocusout="validar_numeros(this);" value="'+max_var+'"></td>     </tr>');
+
+                 
+            });
+    function validar_numeros (input){
+        var valorInput =parseInt($(input).val());
+        var valorMaximo = parseInt($(input).data('max'));
+        var valor_pid=parseInt($(input).data('pid'));
+        if(isNaN(valorInput)){
+            $(input).val(0);
+        }else if(valorInput<0){
+            $(input).val(0);    
+        }else if(valorInput>valorMaximo){
+            $(input).val(valorMaximo);
+        }
+        // cambia el valor total del la listaProductos y pasar los valores al input para que se envien al submit
+        valorInput =parseInt($(input).val());
+        var index_cambiar=0;
+        $(listaProductos).each(function(index,value){
+            if(value.pid==valor_pid){
+                index_cambiar=index;
+            }
+        });
+        listaProductos[index_cambiar].qty=valorInput;
+    }
+    var option_hid=null;
+    function al_cambiar_almacen(){
+        $("#products_l").val("");
+        $("#products_l").trigger("change");
+        $("#itemsx").html('<tr id="remover_fila"><td>PID</td><td>Nombre</td><td>##</td><td><input type="number" data-max="5" data-pid="0" class="form-control" onfocusout="validar_numeros(this);" disabled></td>   </tr>');
+        
+        $("#sel2").val("").change();
+
+        if(option_hid!=null){
+            $('#sel2 option[value="'+option_hid+'"]').removeAttr("hidden");
+        }
+        $('#sel2 option[value="'+$("#wfrom").val()+'"]').attr("hidden","true");
+        option_hid=$("#wfrom").val();
+    }
+    function al_enviar_form(event){
+        event.preventDefault();
+        $.post(baseurl+'products/stock_transfer',{lista:listaProductos,from_warehouse:$("#wfrom").val(),to_warehouse:$("#sel2").val()},function(data){
+                if(data.status=="success"){
+                    
+                    alert("Productos Transferidos");
+                    window.location.reload();   
+                }else{
+                    alert("A ocurrido un error");
+                }
+        },'json');
+           
+    }
 </script>
 
