@@ -13,6 +13,7 @@
                 <div class="col-md-6">
                     <h5><?php echo $this->lang->line('') ?>DATOS PERSONALES</h5>
                     <input type="hidden" name="id" value="<?php echo $customer['id'] ?>" id="customer_id">
+					<input type="text" placeholder="Material nombre" class="form-control margin-bottom  required" name="abonado" value="<?php echo $customer['abonado'] ?>" disabled>
 					<hr>
 
                     <div class="form-group row">

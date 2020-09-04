@@ -389,7 +389,7 @@
                             <a href="<?php echo base_url(); ?>quote/create"><?php echo $this->lang->line(''); ?>Nuevo ticket</a>
                         </li>
                         <li>
-                            <a href="<?php echo base_url(); ?>tickets/?filter=unsolved"><?php echo $this->lang->line('UnSolved') ?></a>
+                            <a href="<?php echo base_url(); ?>tickets/?filter=Pendiente"><?php echo $this->lang->line('UnSolved') ?></a>
                         </li>
                         <li>
                             <a href="<?php echo base_url(); ?>tickets"><?php echo $this->lang->line('Manage Tickets') ?></a>
@@ -747,6 +747,9 @@
                         </li>
 						<li>
                             <a href="<?php echo base_url(); ?>importequipo/equipos"><?php echo $this->lang->line(''); ?>Importar Equipos</a>
+                        </li>
+						<li>
+                            <a href="<?php echo base_url(); ?>importequipo/usuarios"><?php echo $this->lang->line(''); ?>Importar Usuarios</a>
                         </li>
 					</ul>
                 </li>

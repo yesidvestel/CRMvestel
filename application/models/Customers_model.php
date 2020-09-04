@@ -23,7 +23,7 @@ class Customers_model extends CI_Model
 
     var $table = 'customers';
     var $column_order = array(null, 'name', 'address', 'email', 'phone', null);
-    var $column_search = array('name', 'celular', 'documento', 'unoapellido', 'email');
+    var $column_search = array('id','abonado','name', 'celular', 'documento', 'unoapellido', 'email');
     var $trans_column_order = array('date', 'debit', 'credit', 'account', null);
     var $trans_column_search = array('id', 'date');
     var $inv_column_order = array(null, 'tid', 'name', 'invoicedate', 'total', 'status', null);
@@ -99,6 +99,19 @@ class Customers_model extends CI_Model
         }
         return $query->num_rows($id = '');
     }
+	public function codigouser()
+    {
+        $this->db->select('abonado');
+        $this->db->from($this->table);
+        $this->db->order_by('abonado', 'DESC');
+        $this->db->limit(1);
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            return $query->row()->abonado;
+        } else {
+            return 1000;
+        }
+    }
 
     public function details($custid)
     {
@@ -131,9 +144,10 @@ class Customers_model extends CI_Model
     }
 
 
-    public function add($name, $dosnombre, $unoapellido, $dosapellido, $company, $celular, $celular2, $email, $nacimiento, $tipo_cliente, $tipo_documento, $documento, $departamento, $ciudad, $localidad, $barrio, $nomenclatura, $numero1, $adicionauno, $numero2, $adicional2, $numero3, $residencia, $referencia, $customergroup, $name_s, $contra, $servicio, $perfil, $Iplocal, $Ipremota, $comentario)
+    public function add($abonado, $name, $dosnombre, $unoapellido, $dosapellido, $company, $celular, $celular2, $email, $nacimiento, $tipo_cliente, $tipo_documento, $documento, $departamento, $ciudad, $localidad, $barrio, $nomenclatura, $numero1, $adicionauno, $numero2, $adicional2, $numero3, $residencia, $referencia, $customergroup, $name_s, $contra, $servicio, $perfil, $Iplocal, $Ipremota, $comentario)
     {
         $data = array(
+			'abonado' => $abonado,
             'name' => $name,
 			'dosnombre' => $dosnombre,
             'unoapellido' => $unoapellido,
@@ -400,7 +414,7 @@ class Customers_model extends CI_Model
 
 
         $this->db->where('payerid', $id);
-        $this->db->where('ext', 0);
+        //$this->db->where('ext', 2);
 
         $i = 0;
 
