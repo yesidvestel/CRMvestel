@@ -274,25 +274,33 @@ FROM products ");
             if($value['qty']>0){
                 $qty_nuevo_pt=intval($value['qty']);//cantidad que se quiere transferir
                 $qty_viejo_pt=intval($producto->qty);//cantidad que hay en existencia
-                $qty_viejo_pt=$qty_viejo_pt-$qty_nuevo_pt;
+                $qty_viejo_pt=$qty_viejo_pt-$qty_nuevo_pt;//cantidad que quedara al transferir las unidades
                 //trabajando sobre el producto transferido
-                if($producto->id_prod_transfer!=null){
-                $producto_ya_transferido = $this->db->get_where('products',array('pid'=>$producto->id_prod_transfer))->row();    
-                }
-                
-                if(isset($producto_ya_transferido)){
-                    $datay['qty']=$qty_nuevo_pt+intval($producto_ya_transferido->qty);
-                    $this->db->update('products',$datay,array("pid"=>$producto_ya_transferido->pid));
+
+            $transferencia_creada=$this->db->select('transferencias.id_transferencia,transferencias.producto_a,transferencias.producto_b,rel_a.warehouse as almacen_a,rel_b.warehouse as almacen_b')->from('transferencias')->join('products as rel_a','rel_a.pid=transferencias.producto_a')->join('products as rel_b','rel_b.pid=transferencias.producto_b')->where('(rel_a.pid='.$value["pid"].' or rel_b.pid='.$value["pid"].') and (rel_a.warehouse='.$to_warehouse.' or rel_b.warehouse='.$to_warehouse.')')->get()->result();
+            
+            if(!empty($transferencia_creada)){
+                $id_a_transferir;
+                if($value['pid']==$transferencia_creada[0]->producto_a){
+                    $id_a_transferir=$transferencia_creada[0]->producto_b;                    
                 }else{
-                    $value['id_prod_transfer']=$value['pid'];
+                    $id_a_transferir=$transferencia_creada[0]->producto_a;
+                }
+                $producto_b=$this->db->get_where('products',array('pid'=>$id_a_transferir))->row();
+                $datay['qty']=$qty_nuevo_pt+intval($producto_b->qty);
+                $this->db->update('products',$datay,array("pid"=>$id_a_transferir));
+            }else{
+                    $proximo_pid=$this->db->select('max(pid)+1 as pid')->from('products')->get()->result();
                     $value['warehouse']=$to_warehouse;
                     $value['pid']=null;
                     $this->db->insert('products',$value);
-                }
-                //trabajando sobre el producto a transferir
-                $datax['qty']=$qty_viejo_pt;
-                $this->db->update('products',$datax,array('pid'=>$producto->pid));
-
+                    $data_transfer['producto_a']=$producto->pid;
+                    $data_transfer['producto_b']=$proximo_pid[0]->pid;
+                    $this->db->insert('transferencias',$data_transfer);
+            }
+            //trabajando sobre el producto a transferir
+            $datax['qty']=$qty_viejo_pt;
+            $this->db->update('products',$datax,array('pid'=>$producto->pid));
             }
         }
         echo json_encode(array('status'=>"success"));
