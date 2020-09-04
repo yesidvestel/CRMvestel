@@ -14,10 +14,11 @@
                     <thead>
                     <tr>
                         <th>#</th>
+						<th>Abonado</th>
                         <th><?php echo $this->lang->line('Name') ?></th>
-                        <th><?php echo $this->lang->line('Address') ?></th>
-                        <th><?php echo $this->lang->line('Email') ?></th>
-                        <th>Celular</th>
+						<th>Celular</th>
+						<th>Cedula</th>
+                        <th><?php echo $this->lang->line('Address') ?></th> 
                         <th><?php echo $this->lang->line('Settings') ?></th>
 
 
@@ -29,10 +30,11 @@
                     <tfoot>
                     <tr>
                         <th>#</th>
+						<th>Abonado</th>
                         <th><?php echo $this->lang->line('Name') ?></th>
-                        <th><?php echo $this->lang->line('Address') ?></th>
-                        <th>Email</th>
-                        <th>Celular</th>
+						<th>Celular</th>
+						<th>Cedula</th>
+                        <th><?php echo $this->lang->line('Address') ?></th> 
                         <th><?php echo $this->lang->line('Settings') ?></th>
 
 

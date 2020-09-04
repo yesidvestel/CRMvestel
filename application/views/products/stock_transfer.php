@@ -55,10 +55,10 @@
                         <table width="100%" style="text-align: center;" class="table">
                             <thead >
                                 <tr >
-                                    <th style="text-align: center;"><h2>PID</h2></th>
-                                    <th style="text-align: center;"><h2>Nombre</h2></th>
-                                    <th style="text-align: center;"><h2>Cantidad Tot.</h2></th>
-                                    <th style="text-align: center;"><h2>Valor a Transferir</h2></th>
+                                    <th style="text-align: center;">PID</th>
+                                    <th style="text-align: center;">Nombre</th>
+                                    <th style="text-align: center;">Cantidad Tot.</th>
+                                    <th style="text-align: center;">Valor a Transferir</th>
                                 </tr>
                             </thead>
                             <tbody id="itemsx">

@@ -51,6 +51,7 @@ class Customers extends CI_Controller
 
         $data['customergrouplist'] = $this->customers->group_list();				
         $head['usernm'] = $this->aauth->get_user()->username;
+		$data['codigo'] = $this->customers->codigouser();
         $head['title'] = 'Create Customer';		 
 		$data['departamentos'] = $this->customers->departamentos_list();		
         $this->load->view('fixed/header', $head);
@@ -121,13 +122,12 @@ class Customers extends CI_Controller
 
             $row = array();
             $row[] = $no;
+			$row[] = $customers->abonado;
             $row[] = '<a href="customers/view?id=' . $customers->id . '">' . $customers->name ." ". $customers->unoapellido. '</a>';
+			$row[] = $customers->celular;
+			$row[] = $customers->documento;
             $row[] = $customers->nomenclatura . ' ' . $customers->numero1 . $customers->adicionauno.' Nº '.$customers->numero2.$customers->adicional2.' - '.$customers->numero3;
-            $row[] = $customers->email;
-            $row[] = $customers->celular;
             $row[] = '<a href="customers/view?id=' . $customers->id . '" class="btn btn-info btn-sm"><span class="icon-eye"></span>  '.$this->lang->line('View').'</a> <a href="customers/edit?id=' . $customers->id . '" class="btn btn-primary btn-sm"><span class="icon-pencil"></span>  '.$this->lang->line('Edit').'</a> <a href="#" data-object-id="' . $customers->id . '" class="btn btn-danger btn-sm delete-object"><span class="icon-bin"></span></a>';
-
-
             $data[] = $row;
         }
 
@@ -164,7 +164,8 @@ class Customers extends CI_Controller
 
     public function addcustomer()
     {
-        $name = $this->input->post('name');
+        $abonado = $this->input->post('abonado');
+		$name = $this->input->post('name');
 		$dosnombre = $this->input->post('dosnombre');
         $unoapellido = $this->input->post('unoapellido');
 		$dosapellido = $this->input->post('dosapellido');
@@ -196,7 +197,7 @@ class Customers extends CI_Controller
 		$Iplocal = $this->input->post('Iplocal');
 		$Ipremota = $this->input->post('Ipremota');
 		$comentario = $this->input->post('comentario');
-        $this->customers->add($name, $dosnombre, $unoapellido, $dosapellido, $company, $celular, $celular2, $email, $nacimiento, $tipo_cliente, $tipo_documento, $documento, $departamento, $ciudad, $localidad, $barrio, $nomenclatura, $numero1, $adicionauno, $numero2, $adicional2, $numero3, $residencia, $referencia, $customergroup, $name_s, $contra, $servicio, $perfil, $Iplocal, $Ipremota, $comentario);
+        $this->customers->add($abonado, $name, $dosnombre, $unoapellido, $dosapellido, $company, $celular, $celular2, $email, $nacimiento, $tipo_cliente, $tipo_documento, $documento, $departamento, $ciudad, $localidad, $barrio, $nomenclatura, $numero1, $adicionauno, $numero2, $adicional2, $numero3, $residencia, $referencia, $customergroup, $name_s, $contra, $servicio, $perfil, $Iplocal, $Ipremota, $comentario);
 
     }
 

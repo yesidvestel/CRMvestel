@@ -57,6 +57,19 @@ class Importequipo extends CI_Controller
         $this->load->view('fixed/footer');
 
     }
+	function usuarios()
+    {
+        $this->load->helper(array('form'));
+        $this->load->model('categories_model');
+        $head['title'] = "Importar Equipos";
+        $head['usernm'] = $this->aauth->get_user()->username;
+        $data['almacen'] = $this->categories_model->almacen_list();
+        $data['warehouse'] = $this->categories_model->warehouse_list();
+        $this->load->view('fixed/header', $head);
+        $this->load->view('import/usuarios', $data);
+        $this->load->view('fixed/footer');
+
+    }
 
     public function equipos_upload()
     {
@@ -64,6 +77,8 @@ class Importequipo extends CI_Controller
         $nombre_archivo = "temporal.csv";
         $tipo_archivo = $_FILES['cargar_csv']['type'];
         $tamano_archivo = $_FILES['cargar_csv']['size'];
+		$bill_date = datefordatabase($array[5]);
+        $bill_due_date = datefordatabase($array[6]);
         //comprobacion de extencion
         if(strcasecmp($tipo_archivo,"csv")){
             //copiando el archivo a la ruta application/cache/temporal.csv
@@ -84,8 +99,8 @@ class Importequipo extends CI_Controller
                         $datax['almacen']=$array[2];
                         $datax['mac']=$array[3];
                         $datax['serial']=$array[4];
-                        $datax['llegada']=$array[5];
-                        $datax['final']=$array[6];
+                        $datax['llegada']=$bill_date;
+                        $datax['final']=$bill_due_date;
                         $datax['marca']=$array[7];
                         $datax['asignado']=$array[8];
                         $datax['estado']=$array[9];
@@ -95,6 +110,81 @@ class Importequipo extends CI_Controller
                         $equipo = $this->db->get_where('equipos',array('codigo'=>$datax['codigo']))->row();
                         if(!isset($equipo)){
                           $this->db->insert('equipos',$datax);
+                        }
+                    }
+                    //aumento indice en cada iteracion
+                    $i++;
+                }
+                fclose($fp);
+                $_SESSION['importacion']=true;
+                redirect(base_url().'products/equipos' , 'refresh');
+         }else{
+            $_SESSION['importacion']=false;
+                echo "Ocurrió algún error al subir el fichero. No pudo guardarse.";
+         }
+        }
+        
+    }
+	 public function usuarios_upload()
+    {
+        //datos del arhivo enviado por post
+        $nombre_archivo = $this->input->post('name');
+        $tipo_archivo = $_FILES['cargar_csv']['type'];
+        $tamano_archivo = $_FILES['cargar_csv']['size'];
+		$bill_date = datefordatabase($array[9]);        
+        //comprobacion de extencion
+        if(strcasecmp($tipo_archivo,"csv")){
+            //copiando el archivo a la ruta application/cache/temporal.csv
+            if (move_uploaded_file($_FILES['cargar_csv']['tmp_name'],  'application/cache/'.$nombre_archivo)){
+                //abriendo el archivo para lectura
+                $fp = fopen('application/cache/'.$nombre_archivo, "r");
+                //indice para saber la linea del archivo
+                $i=0;
+                while (!feof($fp)){
+                    //lectura de cada linea 
+                    $linea = fgets($fp);
+                    //separacion de la linea por ; en un array
+                    $array = explode(";",$linea);
+                    //comprovacion de que no sea la primera linea porque la destine para el encabezado en la generacion y que el primer dato del array tiene que ser diferente a nada y tambien un entero
+                    if($i!=0 && strcasecmp($array[0],"")!=false){
+                        $datax['abonado']=$array[0];
+                        $datax['name']=$array[1];
+                        $datax['dosnombre']=$array[2];
+                        $datax['unoapellido']=$array[3];
+                        $datax['dosapellido']=$array[4];
+                        $datax['company']=$array[5];
+                        $datax['celular']=$array[6];
+                        $datax['celular2']=$array[7];
+                        $datax['email']=$array[8];
+                        $datax['nacimiento']=$bill_date;
+                        $datax['tipo_cliente']=$array[10];
+						$datax['tipo_documento']=$array[11];
+						$datax['documento']=$array[12];
+						$datax['departamento']=$array[13];
+						$datax['ciudad']=$array[14];
+						$datax['localidad']=$array[15];
+						$datax['barrio']=$array[16];
+						$datax['nomenclatura']=$array[17];
+						$datax['numero1']=$array[18];						
+						$datax['adicionauno']=$array[19];
+						$datax['numero2']=$array[20];
+						$datax['adicional2']=$array[21];
+						$datax['numero3']=$array[22];
+						$datax['residencia']=$array[23];
+						$datax['picture']='example.png';
+						$datax['gid']='2';
+						$datax['name_s']=$array[24];
+						$datax['contra']=$array[25];
+						$datax['servicio']=$array[26];
+						$datax['perfil']=$array[27];
+						$datax['Iplocal']=$array[28];
+						$datax['Ipremota']=$array[29];
+						$datax['comentario']=$array[30];
+						$datax['balance']=$array[31];                        
+                        
+                        $usuarios = $this->db->get_where('customers',array('abonado'=>$datax['abonado']))->row();
+                        if(!isset($usuarios)){
+                          $this->db->insert('customers',$datax);
                         }
                     }
                     //aumento indice en cada iteracion

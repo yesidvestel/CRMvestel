@@ -99,6 +99,7 @@ class Quote extends CI_Controller
         $section = $this->input->post('section');
         if ($customer_id) {
         	$this->quote->addticket($customer_id,$subject,$detalle,$created,$section);
+			
 		}
 
 

@@ -18,7 +18,7 @@
                             $validtoken = hash_hmac('ripemd160', 'p' . $invoice['tid'], $this->config->item('encryption_key'));
 
                             $link = base_url('billing/purchase?id=' . $invoice['tid'] . '&token=' . $validtoken);
-                            if ($invoice['status'] != 'canceled') { ?>
+                            if ($invoice['status'] != 'anulado') { ?>
                                 <div class="title-action">
 									
                                 <?php
@@ -434,10 +434,9 @@
                                name="tid" id="invoiceid" value="<?php echo $invoice['tid'] ?>">
                         <button type="button" class="btn btn-default"
                                 data-dismiss="modal"><?php echo $this->lang->line('Close') ?></button>
-                        <input type="hidden" name="cid" value="<?php echo $invoice['cid'] ?>"><input type="hidden"
+                        <input type="hidden" name="cid" value="<?php echo $invoice['cid'] ?>">
                                                                                                                                                                                                         va
-                        <button type="button" class="btn btn-primary"
-                                id="purchasepayment"><?php echo $this->lang->line('Do Payment') ?></button>
+                        <button type="button" class="btn btn-primary" id="purchasepayment"><?php echo $this->lang->line('Do Payment') ?></button>
                     </div>
                 </form>
             </div>
