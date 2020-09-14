@@ -36,6 +36,26 @@
 
                     </div>
                 </div>
+				<div class="form-group row">
+
+                    <label class="col-sm-2 col-form-label"
+                           for="product_cat"><?php echo $this->lang->line('Transfer To') ?></label>
+
+                    <div class="col-sm-6">
+                        <select name="to_warehouse" class="form-control" id="sel2" required>
+                            <option value="">Seleccionar</option>
+                            <?php
+                            foreach ($warehouse as $row) {
+                                $cid = $row['id'];
+                                $title = $row['title'];
+                                echo "<option value='$cid'>$title</option>";
+                            }
+                            ?>
+                        </select>
+
+
+                    </div>
+                </div>
                 <div class="form-group row">
 
                     <label class="col-sm-2 col-form-label"
@@ -50,6 +70,7 @@
                     </div><br>
                    
             </div>
+				
             
                     <div id="saman-row">
                         <table width="100%" style="text-align: center;" class="table">
@@ -73,26 +94,7 @@
                     </div>
                 </div>
                 <br>
-                <div class="form-group row">
-
-                    <label class="col-sm-2 col-form-label"
-                           for="product_cat"><?php echo $this->lang->line('Transfer To') ?></label>
-
-                    <div class="col-sm-6">
-                        <select name="to_warehouse" class="form-control" id="sel2" required>
-                            <option value="">Seleccionar</option>
-                            <?php
-                            foreach ($warehouse as $row) {
-                                $cid = $row['id'];
-                                $title = $row['title'];
-                                echo "<option value='$cid'>$title</option>";
-                            }
-                            ?>
-                        </select>
-
-
-                    </div>
-                </div>
+                
 				
 
                 <div class="form-group row">

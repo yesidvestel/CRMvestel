@@ -237,7 +237,7 @@
                                     <strong><?php echo $this->lang->line('') ?>Departamento:</strong>
                                 </div>
                                 <div class="col-md-10">
-                                    <?php echo  $departamentos['departamento'] ?>
+                                    <?php echo  $details['departamento'] ?>
                                 </div>
 
                             </div>
@@ -247,7 +247,7 @@
                                     <strong><?php echo $this->lang->line('') ?>Ciudad:</strong>
                                 </div>
                                 <div class="col-md-10">
-                                    <?php echo $ciudad['ciudad'] ?>
+                                    <?php echo $details['ciudad'] ?>
                                 </div>
 
                             </div>
@@ -257,7 +257,7 @@
                                     <strong><?php echo $this->lang->line('') ?>Localidad:</strong>
                                 </div>
                                 <div class="col-md-10">
-                                    <?php echo $localidad['localidad'] ?>
+                                    <?php echo $details['localidad'] ?>
                                 </div>
 
                             </div>
@@ -267,7 +267,7 @@
                                     <strong><?php echo $this->lang->line('') ?>Barrio:</strong>
                                 </div>
                                 <div class="col-md-10">
-                                    <?php echo $barrio['barrio'] ?>
+                                    <?php echo $details['barrio'] ?>
                                 </div>
 
                             </div>

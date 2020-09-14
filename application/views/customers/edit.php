@@ -145,12 +145,10 @@
 								   for="departamento"><?php echo $this->lang->line('') ?>Departamento</label></h6>
 						
 							<?php echo $this->lang->line('departamentos') ?> 
-							<select id="departamentos"	class="selectpicker form-control" name="departamento">                            	
-								 <?php
-								 echo '<option value="' . $departamentos['idDepartamento'] . '">' . $departamentos['departamento'] . '</option>';
-								foreach ($departamentoslist as $row) {
-									echo '<option value="' . $row['idDepartamento'] . '">' . $row['departamento'] . '</option>';
-								}?>
+							<select id="departamentos"	class="selectpicker form-control" name="departamento" onchange="cambia3()">                            	
+								<option value="<?php echo $customer['departamento'] ?>">>><?php echo $customer['departamento'] ?></option>
+								<option value="Casanare">Casanare</option>
+								<option value="Putumayo">Putumayo</option>
 
 							</select>
 						
@@ -160,9 +158,10 @@
                             <h6><label class="col-sm-2 col-form-label"
                                for="ciudad"><?php echo $this->lang->line('') ?>Ciudad</label></h6>
 						    <div id="ciudades">
-								<select id="cmbCiudades" class="selectpicker form-control" name="ciudad">
-                                <option value="<?php echo $ciudad['idCiudad'] ?>"><?php echo $ciudad['ciudad'] ?></option>
+								<select id="cmbCiudades" class="selectpicker form-control" name="ciudad" onChange="cambia4()">
+                                <option value="<?php echo $customer['ciudad'] ?>">>><?php echo $customer['ciudad'] ?></option>
                                 <option value="1">Seleccionar</option>
+								<option value="0">-</option>
                                 </select>
 							</div>
 							   
@@ -176,8 +175,9 @@
                             <h6><label class="col-sm-2 col-form-label"
                                for="localidad"><?php echo $this->lang->line('') ?>Localidad</label></h6>
 						    <div id="localidades">
-								<select id="cmbLocalidades"  class="selectpicker form-control" name="localidad">
-                                <option value="<?php echo $localidad['idLocalidad'] ?>"><?php echo $localidad['localidad'] ?></option>
+								<select id="cmbLocalidades"  class="selectpicker form-control" name="localidad"  onChange="cambia5()">
+                                <option value="<?php echo $customer['localidad'] ?>">>><?php echo $customer['localidad'] ?></option>
+								<option value="0">-</option>
                                 </select>
 							</div>
 							   
@@ -188,7 +188,8 @@
                                for="barrio"><?php echo $this->lang->line('') ?>Barrio</label></h6>
 						    <div id="barrios">
 								<select id="cmbBarrios" class="selectpicker form-control" name="barrio">
-                                <option value="<?php echo $barrio['idBarrio'] ?>"><?php echo $barrio['barrio'] ?></option>
+                                <option value="<?php echo $customer['barrio'] ?>">>><?php echo $customer['barrio'] ?></option>
+								<option value="0">-</option>
                                 </select>
 							</div>
 							   
@@ -494,68 +495,92 @@ alert(selected);
 								document.formulario1.Iplocal.options[0].selected = true;
 							}		
 				
-			$("#departamentos").change(function(){
- 
-				if($(this).val()!=""){
-					 
-					var dato=$(this).val(); 
-					$.ajax({
-						type:"POST",
-						dataType:"html",
-						url:"ciudades_list",
-						data:"idDepartamento="+dato+" ",
-						success:function(msg){ 
-							$('#cmbCiudades').html('<option>Seleccionar</option>'+ msg); 
-						}
-					});
-				}else{
-					//$("#dependencia").empty().attr("disabled","disabled");
-					//$("#departamento").empty().attr("disabled","disabled");
-				}
-			});
-			
-			$("#cmbCiudades").change(function(){ 
-				 
-				if($(this).val()!=""){
-					 
-					var dato=$(this).val(); 
-				 
-					
-					$.ajax({
-						type:"POST",
-						dataType:"html",
-						url:"localidades_list",
-						data:"idCiudad="+dato+" ",
-						success:function(msg){   
-							$('#cmbLocalidades').html('<option>Seleccionar</option>'+msg); 
-						}
-					});
-				}else{
-					//$("#dependencia").empty().attr("disabled","disabled");
-					//$("#departamento").empty().attr("disabled","disabled");
-				}
-			});
-			
-			$("#cmbLocalidades").change(function(){ 
- 
-				if($(this).val()!=""){
-					 
-					var dato=$(this).val();  
-					
-					$.ajax({
-						type:"POST",
-						dataType:"html",
-						url:"barrios_list",
-						data:"idLocalidad="+dato+" ",
-						success:function(msg){  
-							$('#cmbBarrios').html('<option>Seleccionar</option>'+msg); 
-						}
-					});
-				}else{
-					//$("#dependencia").empty().attr("disabled","disabled");
-					//$("#departamento").empty().attr("disabled","disabled");
-				}
-			});
+	var ciudad_Casanare = new Array ("-","Yopal","Monterrey","Villanueva");
+	var ciudad_Putumayo = new Array ("-","Mocoa");	
+							//crear funcion que ejecute el cambio
+							function cambia3(){
+								var departamento;
+								departamento = document.formulario1.departamento[document.formulario1.departamento.			selectedIndex].value;
+								//se verifica la seleccion dada
+								if(departamento!=0){
+									mis_opts=eval("ciudad_"+departamento);
+									//definimos cuantas obciones hay
+									num_opts=mis_opts.length;
+									//marcamos obciones en el selector
+									document.formulario1.ciudad.length = num_opts;
+									//colocamos las obciones array
+									for(i=0; i<num_opts; i++){
+										document.formulario1.ciudad.options[i].value=mis_opts[i];
+										document.formulario1.ciudad.options[i].text=mis_opts[i];
+									}
+										}else{
+											//resultado si no hay obciones
+											document.formulario1.ciudad.length = 1;
+											document.formulario1.ciudad.options[0].value="-"
+											document.formulario1.ciudad.options[0].text="-"											
+								}
+								document.formulario1.ciudad.options[0].selected = true;
+							}
+	var localidad_Yopal = new Array ("-","ComunaI","ComunaII","ComunaIII","ComunaIV","ComunaV","ComunaVI");
+	var localidad_Monterrey = new Array ("-","Ninguno");
+	var localidad_Villanueva = new Array ("-","Ninguno");
+	var localidad_Mocoa = new Array ("-","Ninguna");
+							//crear funcion que ejecute el cambio
+							function cambia4(){
+								var ciudad;
+								ciudad = document.formulario1.ciudad[document.formulario1.ciudad.			selectedIndex].value;
+								//se verifica la seleccion dada
+								if(ciudad!=0){
+									mis_opts=eval("localidad_"+ciudad);
+									//definimos cuantas obciones hay
+									num_opts=mis_opts.length;
+									//marcamos obciones en el selector
+									document.formulario1.localidad.length = num_opts;
+									//colocamos las obciones array
+									for(i=0; i<num_opts; i++){
+										document.formulario1.localidad.options[i].value=mis_opts[i];
+										document.formulario1.localidad.options[i].text=mis_opts[i];
+									}
+										}else{
+											//resultado si no hay obciones
+											document.formulario1.localidad.length = 1;
+											document.formulario1.localidad.options[0].value="-"
+											document.formulario1.localidad.options[0].text="-"											
+								}
+								document.formulario1.localidad.options[0].selected = true;
+							}
+	var barrio_ComunaI = new Array ("-","Bello horizonte","Brisas del Cravo","El Batallon","El Centro","El Libertador","La Corocora","La Estrella bon Habitad","la Pradera","Luis Hernandez Vargas","San Martin","La Arboleda");
+	var barrio_ComunaII = new Array ("-","El Triunfo","Comfacasanare","Conjunto Residencial Comfaboy","El Bicentenario","El Remanso","Juan Pablo","La Floresta","Los Andes","Los Helechos","Los Heroes","Maria Milena","Puerta Amarilla","Valle de los guarataros","Villa Benilda","Barcelona","Ciudad Jardín","Juan Hernando Urrego","Unión San Carlos","Laureles","Villa Natalia");
+	var barrio_ComunaIII = new Array ("-","20 De Julio","Aerocivil","El Gavan","El Oasis","El Recuerdo","La Amistad","Maria Paz","Mastranto II","Provivienda");
+	var barrio_ComunaIV = new Array ("-","1ro de Mayo","Araguaney","Vencedores","Casiquiare","El Bosque","La Campiña","La Esperanza","Las Palmeras","Paraíso","Villa Rocío");
+	var barrio_ComunaV = new Array ("-","Ciudad del Carmen","Ciudadela San Jorge","El Laguito","El Nogal","El Portal","El Progreso","La Primavera","Los Almendros","Maranatha","Montecarlo","Nuevo Hábitat","Nuevo Hábitat II","Nuevo Milenio","San Mateo","Villa Nelly","Villa Vargas","Villas de Chavinave");
+	var barrio_ComunaVI = new Array ("-","Villa Lucia","Villa Salomé 1","Xiruma","Llano Vargas","Bosques de Sirivana","Bosques de Guarataros","Villa David","Getsemaní","Villa Salomé 2","Las americas","Puente Raudal","Camoruco");
+	var barrio_Ninguno = new Array ("-","Ninguna");
+	var barrio_Ninguna = new Array ("-","Ninguno");
+							//crear funcion que ejecute el cambio
+							function cambia5(){
+								var localidad;
+								localidad = document.formulario1.localidad[document.formulario1.localidad.			selectedIndex].value;
+								//se verifica la seleccion dada
+								if(localidad!=0){
+									mis_opts=eval("barrio_"+localidad);
+									//definimos cuantas obciones hay
+									num_opts=mis_opts.length;
+									//marcamos obciones en el selector
+									document.formulario1.barrio.length = num_opts;
+									//colocamos las obciones array
+									for(i=0; i<num_opts; i++){
+										document.formulario1.barrio.options[i].value=mis_opts[i];
+										document.formulario1.barrio.options[i].text=mis_opts[i];
+									}
+										}else{
+											//resultado si no hay obciones
+											document.formulario1.barrio.length = 1;
+											document.formulario1.barrio.options[0].value="-"
+											document.formulario1.barrio.options[0].text="-"											
+								}
+								document.formulario1.barrio.options[0].selected = true;
+							}
 			
 			
 		

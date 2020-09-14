@@ -171,16 +171,17 @@ class Importequipo extends CI_Controller
 						$datax['adicional2']=$array[21];
 						$datax['numero3']=$array[22];
 						$datax['residencia']=$array[23];
+						$datax['referencia']=$array[24];
 						$datax['picture']='example.png';
 						$datax['gid']='2';
-						$datax['name_s']=$array[24];
-						$datax['contra']=$array[25];
-						$datax['servicio']=$array[26];
-						$datax['perfil']=$array[27];
-						$datax['Iplocal']=$array[28];
-						$datax['Ipremota']=$array[29];
-						$datax['comentario']=$array[30];
-						$datax['balance']=$array[31];                        
+						$datax['name_s']=$array[25];
+						$datax['contra']=$array[26];
+						$datax['servicio']=$array[27];
+						$datax['perfil']=$array[28];
+						$datax['Iplocal']=$array[29];
+						$datax['Ipremota']=$array[30];
+						$datax['comentario']=$array[31];
+						$datax['balance']=$array[32];                        
                         
                         $usuarios = $this->db->get_where('customers',array('abonado'=>$datax['abonado']))->row();
                         if(!isset($usuarios)){
