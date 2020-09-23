@@ -287,15 +287,36 @@ FROM products ");
                     $id_a_transferir=$transferencia_creada[0]->producto_a;
                 }
                 $producto_b=$this->db->get_where('products',array('pid'=>$id_a_transferir))->row();
+                $transferido_a=$producto_b->pid;
                 $datay['qty']=$qty_nuevo_pt+intval($producto_b->qty);
                 $this->db->update('products',$datay,array("pid"=>$id_a_transferir));
             }else{
+
+                $producto_por_nombre = $this->db->get_where('products',array('product_name'=>$producto->product_name,'warehouse'=>$to_warehouse))->row();
+
                     $proximo_pid=$this->db->select('max(pid)+1 as pid')->from('products')->get()->result();
                     $value['warehouse']=$to_warehouse;
                     $value['pid']=null;
-                    $this->db->insert('products',$value);
+                    //aqui es donde tengo que verificar por el nombre like y por el almacen claro esta al que se le transfiere el producto
+                    // si existe el primero en coincidir crea la relacion y la transferencia
+                    
                     $data_transfer['producto_a']=$producto->pid;
                     $data_transfer['producto_b']=$proximo_pid[0]->pid;
+                    
+                    if(!empty($producto_por_nombre)){
+                        $data_transfer['producto_b']=$producto_por_nombre->pid;
+                        if($producto_por_nombre->qty<0){
+                            $producto_por_nombre->qty=0;
+                        }
+                        $datay['qty']=$qty_nuevo_pt+intval($producto_por_nombre->qty);
+                        
+                        $this->db->update('products',$datay,array("pid"=>$producto_por_nombre->pid));
+                    }else{
+                        $this->db->insert('products',$value);    
+                    }
+                    
+                    $transferido_a=$data_transfer['producto_b'];
+
                     $this->db->insert('transferencias',$data_transfer);
             }
             //trabajando sobre el producto a transferir
@@ -303,7 +324,7 @@ FROM products ");
             $this->db->update('products',$datax,array('pid'=>$producto->pid));
             }
         }
-        echo json_encode(array('status'=>"success"));
+        echo json_encode(array('status'=>"success",'transferido_a'=>$transferido_a));
     }
 
 }

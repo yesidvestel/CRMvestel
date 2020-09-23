@@ -73,6 +73,7 @@
                     <th><?php echo $this->lang->line('Code') ?></th>
                     <th><?php echo $this->lang->line('Category') ?></th>
                     <th><?php echo $this->lang->line('Price') ?></th>
+                    <th>Almacen</th>
                     <th><?php echo $this->lang->line('Settings') ?></th>
                 </tr>
                 </thead>
@@ -87,6 +88,7 @@
                     <th><?php echo $this->lang->line('Code') ?></th>
                     <th><?php echo $this->lang->line('Category') ?></th>
                     <th><?php echo $this->lang->line('Price') ?></th>
+                    <th>Almacen</th>
                     <th><?php echo $this->lang->line('Settings') ?></th>
                 </tr>
                 </tfoot>

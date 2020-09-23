@@ -113,6 +113,7 @@ class Products extends CI_Controller
             $row[] = $prd->product_code;
             $row[] = $prd->title;
             $row[] = amountFormat($prd->product_price);
+            $row[] = $prd->warehouse;
             $row[] = '<a href="' . base_url() . 'products/edit?id=' . $pid . '" class="btn btn-primary btn-xs"><span class="icon-pencil"></span> ' . $this->lang->line('Edit') . '</a> <a href="#" data-object-id="' . $pid . '" class="btn btn-danger btn-xs  delete-object"><span class="icon-bin"></span> ' . $this->lang->line('Delete') . '</a>';
             $data[] = $row;
         }

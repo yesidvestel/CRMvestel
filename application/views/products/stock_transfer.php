@@ -226,7 +226,7 @@
         $.post(baseurl+'products/stock_transfer',{lista:listaProductos,from_warehouse:$("#wfrom").val(),to_warehouse:$("#sel2").val()},function(data){
                 if(data.status=="success"){
                     
-                    alert("Productos Transferidos");
+                    alert("Productos Transferidos a PID = "+data.transferido_a);
                     window.location.reload();   
                 }else{
                     alert("A ocurrido un error");
