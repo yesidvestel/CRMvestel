@@ -1,0 +1,21 @@
+tid;invoicedate;invoiceduedate;subtotal;shipping;discount;tax;total;pmethod;notes;status;csd;eid;pamnt;items;taxstatus;discstatus;format_discount;refer;television;combo;term;rec;ron;multi
+1008;09/01/2020;27/09/2020;101008;0;0;3992;105000;EFECTIVOS ;;due;8;8;0;2;Yes;0;%;Yopal ;Television ;10Megas;0;no;Activos;0
+1032;09/01/2020;27/09/2020;101008;0;0;3992;105000;EFECTIVOS ;;due;32;8;0;2;Yes;0;%;Yopal ;Television ;10Megas;0;no;Activos;0
+1169;09/01/2020;27/09/2020;101008;0;0;3992;105000;EFECTIVOS ;;due;169;8;0;2;Yes;0;%;Yopal ;Television ;10Megas;0;no;Activos;0
+1182;09/01/2020;27/09/2020;101008;0;0;3992;105000;EFECTIVOS ;;due;182;8;0;2;Yes;0;%;Yopal ;Television ;10Megas;0;no;Activos;0
+1239;09/01/2020;27/09/2020;176008;0;0;3992;180000;EFECTIVOS ;;due;239;8;0;2;Yes;0;%;Yopal ;Television ;10Megas;0;no;Activos;0
+1318;09/01/2020;27/09/2020;95000;0;0;;95000;EFECTIVOS ;;due;318;8;0;;No;0;%;Yopal ;No;10Megas;0;no;Activos;0
+1424;09/01/2020;27/09/2020;101008;0;0;3992;55000;EFECTIVOS ;;due;424;8;50000;2;Yes;0;%;Yopal ;Television ;10Megas;0;no;Activos;0
+1525;09/01/2020;27/09/2020;101008;0;0;3992;0;EFECTIVOS ;;paid;525;8;105000;2;Yes;0;%;Yopal ;Television ;10Megas;0;no;Activos;0
+1531;09/01/2020;27/09/2020;101008;0;0;3992;105000;EFECTIVOS ;;due;531;8;0;2;Yes;0;%;Yopal ;Television ;10Megas;0;no;Activos;0
+1541;09/01/2020;27/09/2020;95000;0;0;;95000;EFECTIVOS ;;due;541;8;0;;No;0;%;Yopal ;No;10Megas;0;no;Activos;0
+1555;09/01/2020;27/09/2020;101008;0;0;3992;105000;EFECTIVOS ;;due;555;8;0;2;Yes;0;%;Yopal ;Television ;10Megas;0;no;Activos;0
+1597;09/01/2020;27/09/2020;101008;0;0;3992;105000;EFECTIVOS ;;due;597;8;0;2;Yes;0;%;Yopal ;Television ;10Megas;0;no;Activos;0
+1698;09/01/2020;27/09/2020;101008;0;0;3992;105000;EFECTIVOS ;;due;698;8;0;2;Yes;0;%;Yopal ;Television ;10Megas;0;no;Activos;0
+1705;09/01/2020;27/09/2020;101008;0;0;3992;105000;EFECTIVOS ;;due;705;8;0;2;Yes;0;%;Yopal ;Television ;10Megas;0;no;Activos;0
+1717;09/01/2020;27/09/2020;101008;0;0;3992;105000;EFECTIVOS ;;due;717;8;0;2;Yes;0;%;Yopal ;Television ;10Megas;0;no;Activos;0
+1724;09/01/2020;27/09/2020;101008;0;0;3992;105000;EFECTIVOS ;;due;724;8;0;2;Yes;0;%;Yopal ;Television ;10Megas;0;no;Activos;0
+1749;09/01/2020;27/09/2020;101008;0;0;3992;105000;EFECTIVOS ;;due;749;8;0;2;Yes;0;%;Yopal ;Television ;10Megas;0;no;Activos;0
+1768;09/01/2020;27/09/2020;101008;0;0;3992;105000;EFECTIVOS ;;due;768;8;0;2;Yes;0;%;Yopal ;Television ;10Megas;0;no;Activos;0
+1785;09/01/2020;27/09/2020;101008;0;0;3992;105000;EFECTIVOS ;;due;785;8;0;2;Yes;0;%;Yopal ;Television ;10Megas;0;no;Activos;0
+1833;09/01/2020;27/09/2020;101008;0;0;3992;59500;EFECTIVOS ;;due;833;8;45500;2;Yes;0;%;Yopal ;Television ;10Megas;0;no;Activos;0

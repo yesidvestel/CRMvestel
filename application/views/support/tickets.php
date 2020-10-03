@@ -111,7 +111,7 @@
 			<h5 class="colspan 2">ASIGNAR ORDEN:</h5>
 			</div>
 			<div class="col-md-5">
-			<select name="tecnicos">
+			<select name="asignado">
 				<?php
 					foreach ($tecnicoslista as $row) {
 						$cid = $row['id'];
@@ -120,6 +120,9 @@
 					}
 					?>
 			</select>
+				<input type="hidden" id="action-url" value="tickets/update_status">
+                        <button type="button" class="btn btn-primary"
+                                id="submit_model">Asignar</button>
 			</div>
 			<select name="sede">
 				<!--option value="0"></option-->

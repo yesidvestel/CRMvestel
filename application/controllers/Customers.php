@@ -164,6 +164,7 @@ class Customers extends CI_Controller
 
     public function addcustomer()
     {
+		$bill_due_date = datefordatabase($this->input->post('nacimiento'));
         $abonado = $this->input->post('abonado');
 		$name = $this->input->post('name');
 		$dosnombre = $this->input->post('dosnombre');
@@ -173,7 +174,7 @@ class Customers extends CI_Controller
         $celular = $this->input->post('celular');
         $celular2 = $this->input->post('celular2');
         $email = $this->input->post('email');
-        $nacimiento = $this->input->post('nacimiento');
+        $nacimiento = $bill_due_date;
         $tipo_cliente = $this->input->post('tipo_cliente');
         $tipo_documento = $this->input->post('tipo_documento');
         $documento = $this->input->post('documento');
@@ -203,7 +204,9 @@ class Customers extends CI_Controller
 
     public function editcustomer()
     {
+		$bill_due_date = datefordatabase($this->input->post('nacimiento'));
         $id = $this->input->post('id');
+		$abonado = $this->input->post('abonado');
         $name = $this->input->post('name');
 		$dosnombre = $this->input->post('dosnombre');
         $unoapellido = $this->input->post('unoapellido');
@@ -212,7 +215,7 @@ class Customers extends CI_Controller
         $celular = $this->input->post('celular');
         $celular2 = $this->input->post('celular2');
         $email = $this->input->post('email');
-        $nacimiento = $this->input->post('nacimiento');
+        $nacimiento = $bill_due_date;
         $tipo_cliente = $this->input->post('tipo_cliente');
         $tipo_documento = $this->input->post('tipo_documento');
         $documento = $this->input->post('documento');
@@ -237,7 +240,7 @@ class Customers extends CI_Controller
 		$Ipremota = $this->input->post('Ipremota');
 		$comentario = $this->input->post('comentario');
         if ($id) {
-            $this->customers->edit($id, $name, $dosnombre, $unoapellido, $dosapellido, $company, $celular, $celular2, $email, $nacimiento, $tipo_cliente, $tipo_documento, $documento, $departamento, $ciudad, $localidad, $barrio, $nomenclatura, $numero1, $adicionauno, $numero2, $adicional2, $numero3, $residencia, $referencia, $customergroup, $name_s, $contra, $servicio, $perfil, $Iplocal, $Ipremota, $comentario);
+            $this->customers->edit($id, $abonado, $name, $dosnombre, $unoapellido, $dosapellido, $company, $celular, $celular2, $email, $nacimiento, $tipo_cliente, $tipo_documento, $documento, $departamento, $ciudad, $localidad, $barrio, $nomenclatura, $numero1, $adicionauno, $numero2, $adicional2, $numero3, $residencia, $referencia, $customergroup, $name_s, $contra, $servicio, $perfil, $Iplocal, $Ipremota, $comentario);
         }
    
     }

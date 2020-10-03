@@ -105,7 +105,7 @@ class Search_products extends CI_Controller
 
 
         if ($name) {
-            $query = $this->db->query("SELECT id,name,company,documento,celular,email FROM customers WHERE UPPER(name)  LIKE '" . strtoupper($name) . "%' OR UPPER(celular)  LIKE '" . strtoupper($name) . "%' OR UPPER(id)  LIKE '" . strtoupper($name) ."%' LIMIT 6");
+            $query = $this->db->query("SELECT id,abonado,name,company,documento,celular,email FROM customers WHERE UPPER(name)  LIKE '" . strtoupper($name) . "%' OR UPPER(documento)  LIKE '" . strtoupper($name) . "%' OR UPPER(abonado)  LIKE '" . strtoupper($name) ."%' LIMIT 6");
 
             $result = $query->result_array();
 
@@ -114,7 +114,7 @@ class Search_products extends CI_Controller
             foreach ($result as $row) {
 
 
-                echo "<li onClick=\"selectCustomer('" . $row['id'] . "','" . $row['name'] . " ','" . $row['company'] . "','" . $row['documento'] . "','" . $row['celular'] . "','" . $row['email'] . "')\"><span>$i</span><p>" . $row['name'] . " &nbsp; &nbsp  " . $row['celular'] . "</p></li>";
+                echo "<li onClick=\"selectCustomer('" . $row['id'] . "','" . $row['name'] . " ','" . $row['unoapellido'] . " ','" . $row['company'] . "','" . $row['documento'] . "','" . $row['celular'] . "','" . $row['email'] . "')\"><span>$i</span><p>" . $row['name'] . " &nbsp; &nbsp  " . $row['celular'] . "</p></li>";
                 $i++;
             }
             echo '</ol>';

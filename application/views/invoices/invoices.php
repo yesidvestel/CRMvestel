@@ -64,7 +64,9 @@ text-transform: capitalize;
                     <th><?php echo $this->lang->line('Total') ?></th>
                     <th class="no-sort"><?php echo $this->lang->line('') ?>Pago</th>
                     <th class="no-sort"><?php echo $this->lang->line('Settings') ?></th>
-
+					<?php if ($this->aauth->get_user()->roleid > 4) { ?>
+					<th><?php echo $this->lang->line('') ?>Eliminar</th>
+					<?php } ?>
 
                 </tr>
                 </thead>
@@ -81,6 +83,9 @@ text-transform: capitalize;
                     <th><?php echo $this->lang->line('Total') ?></th>
                     <th class="no-sort"><?php echo $this->lang->line('') ?>Pago</th>
                     <th class="no-sort"><?php echo $this->lang->line('Settings') ?></th>
+					<?php if ($this->aauth->get_user()->roleid > 4) { ?>
+					<th><?php echo $this->lang->line('') ?>Eliminar</th>
+					<?php } ?>
                 </tr>
                 
                 </tfoot>

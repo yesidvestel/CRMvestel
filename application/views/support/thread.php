@@ -25,7 +25,7 @@
                 echo '<br><strong>Usuario:</strong> ' . $thread_info['name'] .' '. $thread_info['unoapellido'];
 				echo '<br><strong>Celular:</strong> ' . $thread_info['celular'];
 				echo '<br><strong>Direccion:</strong> ' . $thread_info['nomenclatura'].' '. $thread_info['numero1']. $thread_info['adicionauno'].' N°'. $thread_info['numero2']. $thread_info['adicional2'].' - '. $thread_info['numero3'];
-				echo '<br><strong>Barrio:</strong> ' . $barrio['barrio'];
+				echo '<br><strong>Barrio:</strong> ' . $thread_info['barrio'];
                 echo '<br><strong>Estado:</strong> <span id="pstatus">' . $thread_info['status']
                 ?></span></p>
 			<a href="#pop_model" data-toggle="modal" onclick="funcion_status();" data-remote="false" class="btn btn-sm btn-cyan mb-1" title="Change Status"
@@ -65,10 +65,47 @@
                                   autocomplete="false" rows="10" name="content"></textarea>
                 </div>
             </div>
+	<table class="table-responsive tfr my_stripe" style="padding-left: 17%">
+
+<thead>
+                            <tr class="item_header">
+                                <th width="25%" class="text-center"><?php echo $this->lang->line('Item Name') ?></th>
+                                <th width="8%" class="text-center"><?php echo $this->lang->line('Quantity') ?></th>
+								<th width="5%" class="text-center"><?php echo $this->lang->line('Action') ?></th>
+                                
+                            </tr>
+
+</thead>  <tbody>
+                            <tr>
+                                <td><input type="text" class="form-control text-center" name="product_name[]"
+                                           placeholder="<?php echo $this->lang->line('Enter Product name') ?>" id='productname-0'>
+                                </td>
+                                <td><input type="text" class="form-control req amnt" name="product_qty[]" id="amount-0"
+                                           onkeypress="return isNumber(event)" onkeyup="rowTotal('0'), billUpyog()"
+                                           autocomplete="off" value="<?php date('d') ?>"></td>
+								
+                                
+                            </tr>
+                           
+
+                            <tr class="last-item-row sub_c">
+                                <td class="add-row">
+                                    <button type="button" class="btn btn-success" aria-label="Left Align"
+                                            data-toggle="tooltip"
+                                            data-placement="top" title="Add product row" id="addproduct">
+                                        <i class="icon-plus-square"></i> <?php echo $this->lang->line('Add Row') ?>
+                                    </button>
+                                </td>
+                                <td colspan="7"></td>
+								
+                            </tr>
+
+                            </tbody>
+                        </table>
 
             <div class="form-group row">
 
-                <label class="col-sm-2 col-form-label" for="name">Documentacion </label>
+                <label class="col-sm-2 col-form-label" for="name">Documentacion</label>
 
                 <div class="col-sm-6">
                     <input type="file" name="userfile" size="20"/><br>

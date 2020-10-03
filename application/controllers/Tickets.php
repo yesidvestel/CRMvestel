@@ -179,10 +179,7 @@ class Tickets Extends CI_Controller
     {
         $tid = $this->input->post('tid');
         $status = $this->input->post('status');
-        $fecha_final = $this->input->post('fecha_final');
-
-
-        
+        $fecha_final = $this->input->post('fecha_final');        
         $ticket = $this->db->get_where('tickets', array('id' => $tid))->row();
         $invoice = $this->db->get_where('invoices',array('tid'=>$ticket->id_invoice))->result_array();
         $data;
@@ -281,6 +278,8 @@ class Tickets Extends CI_Controller
         echo json_encode(array('tid'=>$data['tid'],'status' => 'Success', 'message' =>
             $this->lang->line('UPDATED'), 'pstatus' => $status));
     }
+	  
+	
 	public function addticket()
     {
         $this->load->helper(array('form'));

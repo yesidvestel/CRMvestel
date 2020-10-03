@@ -14,7 +14,7 @@
     <link rel="apple-touch-icon" sizes="60x60" href="<?php echo base_url(); ?>assets/images/ico/apple-icon-60.png">
     <link rel="apple-touch-icon" sizes="76x76" href="<?php echo base_url(); ?>assets/images/ico/apple-icon-76.png">
     <link rel="apple-touch-icon" sizes="120x120" href="<?php echo base_url(); ?>assets/images/ico/apple-icon-120.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="<?php echo base_url(); ?>assets/images/ico/apple-icon-152.png">
+    <link rel="apple-touch-icon" sizes="152x1f52" href="<?php echo base_url(); ?>assets/images/ico/apple-icon-152.png">
     <link rel="shortcut icon" type="image/x-icon" href="<?php echo base_url(); ?>assets/images/ico/favicon.ico">
     <link rel="shortcut icon" type="image/png" href="<?php echo base_url(); ?>assets/images/ico/favicon-32.png">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -282,6 +282,24 @@
                             data-original-title="Stock"
                             class="icon-ellipsis icon-ellipsis"></i>
                 </li>
+				<li class="nav-item has-sub <?php if ($this->uri->segment(1) == "equipos") {
+                    echo ' open';
+                } ?>">
+                    <a href=""> <i class="icon-wifi3"></i><span
+                                class="menu-title"><?php echo $this->lang->line('') ?>Redes</span><i
+                                class="fa arrow"></i> </a>
+                    <ul class="menu-content">
+						<li>
+                            <a href="<?php echo base_url(); ?>products/equipoadd"><?php echo $this->lang->line('') ?>Ingreso de Equipo</a>
+                        </li>
+						<li>
+                            <a href="<?php echo base_url(); ?>products/equipos"><?php echo $this->lang->line('') ?>Administrar equipos</a>
+                        </li>
+						<li>
+                            <a href="<?php echo base_url(); ?>productcategory/almacen">Bodega equipos</a>
+                        </li>
+					</ul>
+				</li>
                 <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "products") {
                     echo ' open';
                 } ?>">
@@ -292,24 +310,18 @@
                         <li>
                             <a href="<?php echo base_url(); ?>products/add"><?php echo $this->lang->line('') ?>Ingreso de material</a>
                         </li>
-						<li>
-                            <a href="<?php echo base_url(); ?>products/equipoadd"><?php echo $this->lang->line('') ?>Ingreso de Equipo</a>
-                        </li>
+						
                         <li>
                             <a href="<?php echo base_url(); ?>products"><?php echo $this->lang->line('') ?>Administrar material</a>
                         </li>
-						<li>
-                            <a href="<?php echo base_url(); ?>products/equipos"><?php echo $this->lang->line('') ?>Administrar equipos</a>
-                        </li>
+						
                         <li>
                             <a href="<?php echo base_url(); ?>productcategory"><?php echo $this->lang->line('') ?>Categoria de material</a>
                         </li>
                         <li>
                             <a href="<?php echo base_url(); ?>productcategory/warehouse"><?php echo $this->lang->line('Warehouses') ?></a>
                         </li>
-						<li>
-                            <a href="<?php echo base_url(); ?>productcategory/almacen">Bodega equipos</a>
-                        </li>
+						
                         <li>
                             <a href="<?php echo base_url(); ?>products/stock_transfer"><?php echo $this->lang->line('') ?>Traspasos</a>
                         </li>
@@ -751,6 +763,9 @@
 						<li>
                             <a href="<?php echo base_url(); ?>importequipo/usuarios"><?php echo $this->lang->line(''); ?>Importar Usuarios</a>
                         </li>
+						<li>
+                            <a href="<?php echo base_url(); ?>importequipo/facturas"><?php echo $this->lang->line(''); ?>Importar facturas</a>
+                        </li>
 					</ul>
                 </li>
             <?php } ?>
@@ -863,6 +878,52 @@
 			<!------ MENU PARA TECNICOS------->
 			
 			<?php if ($this->aauth->get_user()->roleid == 3) { ?>
+			<li class="nav-item has-sub <?php if ($this->uri->segment(1) == "invoices" OR $this->uri->segment(1) == "quote") {
+                    echo ' open';
+                } ?>">
+                    <a href=""> <i class="icon-plus"></i> <span
+                                class="menu-title"><?php echo $this->lang->line('sales') ?>
+						
+						<!-- MENU FACTURACION-->
+						
+                    <i class="icon-arrow"></i></span></a>
+                    <ul class="menu-content">
+                        <li>
+                            <a href="<?php echo base_url(); ?>invoices/create"><?php echo $this->lang->line('New Invoice'); ?></a>
+                        </li>
+                        <li>
+                            <a href="<?php echo base_url(); ?>invoices"><?php echo $this->lang->line('Manage Invoices'); ?></a>
+                        </li>
+
+                        <li>
+                            <a href="<?php echo base_url(); ?>quote"><?php echo $this->lang->line('Manage Quotes'); ?></a>
+                        </li>
+                    </ul>
+                </li>
+			<li class="navigation-header"><span><?php echo $this->lang->line('CRM') ?></span><i
+                            data-toggle="tooltip" data-placement="right"
+                            data-original-title="CRM"
+                            class="icon-ellipsis icon-ellipsis"></i>
+                </li>
+                <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "customers") {
+                    echo ' open';
+                } ?>">
+                    <a href=""> <i class="icon-group"></i><span
+                                class="menu-title"> <?php echo $this->lang->line('') ?>Usuarios</span><i
+                                class="fa arrow"></i> </a>
+					<!---ADMINISTRADOR DE USUARIOS--->
+					
+                    <ul class="menu-content">
+                        <li>
+                            <a href="<?php echo base_url(); ?>customers/create"><?php echo $this->lang->line('') ?>Nuevo Usuario</a>
+                        </li>
+                        <li>
+                            <a href="<?php echo base_url(); ?>customers"><?php echo $this->lang->line('') ?>Administrar Usuarios</a>
+                        <li>
+                            <a href="<?php echo base_url(); ?>clientgroup"><?php echo $this->lang->line('Manage Groups') ?></a>
+                        </li>
+                    </ul>
+                </li>
 			<li class="navigation-header"><span>MATERIALES</span><i
                             data-toggle="tooltip" data-placement="right"
                             data-original-title="Stock"

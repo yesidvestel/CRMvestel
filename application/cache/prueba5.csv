@@ -1,0 +1,9 @@
+tid;invoicedate;invoiceduedate;subtotal;shipping;discount;tax;total;pmethod;notes;status;csd;eid;pamnt;items;taxstatus;discstatus;format_discount;refer;television;combo;term;rec;ron;multi
+1002;08/08/2020;08/08/2020;55000;0;0;3992;55000;;;due;2;8;0;2;yes;0;%;Yopal;Television;3Megas;0;;Activo;NULL
+1003;08/08/2020;08/08/2020;55000;0;0;3992;55000;;;due;3;8;0;2;yes;0;%;Yopal;Television;5Megas;0;;Activo;NULL
+1004;08/08/2020;08/08/2020;40000;0;0;3992;40000;;;due;4;8;0;2;yes;0;%;Yopal;Television;1Mega;0;;Activo;NULL
+1005;08/08/2020;08/08/2020;25000;0;0;3992;25000;;;due;5;8;0;1;yes;0;%;Yopal;Television;no;0;;Activo;NULL
+1006;08/08/2020;08/08/2020;110000;0;0;3992;110000;;;due;6;8;0;2;yes;0;%;Yopal;Television;3Megas;0;;Activo;NULL
+1007;08/08/2020;08/08/2020;55000;0;0;3992;55000;;;due;7;8;0;2;yes;0;%;Yopal;Television;3Megas;0;;Activo;NULL
+1008;08/08/2020;08/08/2020;210000;0;0;3992;210000;;;due;8;8;0;2;yes;0;%;Yopal;Television;10Megas;0;;Activo;NULL
+1009;08/08/2020;08/08/2020;45000;0;0;3992;45000;;;due;9;8;0;2;yes;0;%;Yopal;Television;2Megas;0;;Activo;NULL

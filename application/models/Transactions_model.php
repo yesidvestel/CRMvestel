@@ -240,16 +240,17 @@ class Transactions_model extends CI_Model
         $this->db->where('id', $id);
         $query = $this->db->get();
         $trans = $query->row_array();
-        $amt = $trans['credit'] - $trans['debit'];
+        $amt = $trans['debit'];
+		$crt = $trans['credit'];
         $this->db->set('lastbal', "lastbal-$amt", FALSE);
         $this->db->where('id', $trans['acid']);
         $this->db->update('accounts');
-echo $trans['tid'];
-if($trans['tid']>0) {
-    switch ($trans['ext']) {
+		echo $trans['tid'];
+		if($trans['tid']>0) {
+    	switch ($trans['ext']) {
         case 0 :
 
-            $this->db->set('pamnt', "pamnt-$amt", FALSE);
+            $this->db->set('pamnt', "pamnt-$crt", FALSE);
             $this->db->where('tid', $trans['tid']);
             $this->db->update('invoices');
             break;

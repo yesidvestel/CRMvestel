@@ -147,7 +147,7 @@ class Transactions extends CI_Controller
             'eid' => $this->aauth->get_user()->id,
             'tid' => $tid,
             'note' => $note,
-            'ext' => 2
+            'ext' => 0
         );
 
         $this->db->insert('transactions', $data);
@@ -269,7 +269,7 @@ class Transactions extends CI_Controller
             'eid' => $this->aauth->get_user()->id,
             'tid' => $tid,
             'note' => $note,
-            'ext' => 2
+            'ext' => 0
         );
 
         $this->db->insert('transactions', $data);

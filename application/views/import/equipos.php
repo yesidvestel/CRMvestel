@@ -12,14 +12,16 @@
             <div class="grid_3 grid_4">
                 <h5><?php echo $this->lang->line('') ?>Importar Equipos</h5>
                 <hr>
-                <p>Your products data file should as per this template <a href="http://www.ultimatekode.com/samples/products_import.csv"><strong>Download Template</strong></a>. Please download a database backup before importing the products.</p>
+                <p>El archivo de datos de sus productos debe seguir esta plantilla <a href="http://www.ultimatekode.com/samples/products_import.csv"><strong>Descargar plantilla</strong></a>. Please download a database backup before importing the products.</p>
 <p>Column Order in CSV File Must be like this</p>
  <pre>
-     1. (string)Product A, 2. (string)ProductCODE, 3.(number)Sales_Price, 4.(number)Factory_Price,
+     1. (numero)Codigo, 2. (string)Proveedor, 3.(string)Almacen, 4.(string)Mac,
 
-     5.(number)TAX_Rate, 6.(number)Discount_Rate, 7.(integer)Quantity,
+     5.(string)Serial, 6.(data)Fecha Llegada, 7.(data)Fecha asignado,
 
-     8.(string)Product_Description, 9.(integer)Low_Stock_Alert_Quantity
+     8.(string)marca, 9.(number)Abonado del asignado, 10.(string)Estado de equipo, 
+	 
+	 11.(string)detalles
 </pre>
 
                 <hr>
@@ -31,28 +33,7 @@
                     <div class="col-sm-6">
                         <input type="file" name="cargar_csv" accept=".csv" required="true"/>(Solo Formato CSV)
                     </div>
-                </div>                
-
-                <div class="form-group row">
-
-                    <label class="col-sm-2 col-form-label"
-                           for="product_cat"><?php echo $this->lang->line('Warehouse') ?></label>
-
-                    <div class="col-sm-6">
-                        <select name="product_warehouse" class="form-control">
-                           <?php
-                            foreach ($almacen as $row) {
-                                $cid = $row['id'];
-                                $title = $row['almacen'];
-                                echo "<option value='$cid'>$title</option>";
-                            }
-                            ?>
-                        </select>
-
-
-                    </div>
-                </div>
-
+                </div> 
                 <div class="form-group row">
 
                     <label class="col-sm-2 col-form-label"></label>
