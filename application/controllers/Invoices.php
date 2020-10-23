@@ -94,6 +94,23 @@ class Invoices extends CI_Controller
         $this->load->view('invoices/invoices');
         $this->load->view('fixed/footer');
     }
+	public function apertura()
+
+    {
+		if (!$this->aauth->is_loggedin()) {
+            redirect('/user/', 'refresh');
+        }
+        $this->load->model('employee_model', 'employee');
+        $id = $this->aauth->get_user()->id;
+        $data['employee'] = $this->employee->employee_details($id);
+        $data['eid'] = intval($id);        
+        $head['title'] = "Account Statement";
+        $head['usernm'] = $this->aauth->get_user()->username;
+        $this->load->view('fixed/header', $head);
+        $this->load->view('invoices/apertura', $data);
+        $this->load->view('fixed/footer');
+
+    }
 
     //action
     public function action()
@@ -328,6 +345,27 @@ class Invoices extends CI_Controller
         echo json_encode(array('status' => 'Success', 'message' =>
             $this->lang->line('UPDATED'), 'pstatus' => $status));
     }
+	public function activar()
+    {
+		$tid = $this->input->post('iduser');
+        $status = $this->input->post('perfil');
+		$fecha = $this->input->post('fecha');
+		$hora = $this->input->post('hora');
+		$bill_fecha = datefordatabase($fecha);
+		$bill_hora = datefordatabase($hora);
+		if ($tid){
+        $this->invocies->activar($tid,$status,$bill_fecha,$bill_hora);
+		}
+		if ($this->invocies->activar($tid,$status,$bill_fecha,$bill_hora)) {                
+                echo json_encode(array('status' => 'Success', 'message' => $this->lang->line('Invoice has  been updated') . " <a href='view?id=$invocieno' class='btn btn-info btn-lg'><span class='icon-file-text2' aria-hidden='true'></span> " . $this->lang->line('View') . " </a> "));
+            } else {
+                echo json_encode(array('status' => 'Error', 'message' =>
+                    $this->lang->line('ERROR')));
+                $transok = false;
+            }
+		
+        
+    }
 
 
     public function ajax_list()
@@ -346,7 +384,7 @@ class Invoices extends CI_Controller
             $row[] = $invoices->tid;
             $row[] = $invoices->name ." ". $invoices->unoapellido;
             $row[] = dateformat($invoices->invoicedate);
-			$row[] = $invoices->ron;
+			$row[] = $invoices->ron; 
             $row[] = amountFormat($invoices->total);
             $row[] = '<span class="st-' . $invoices->status . '">' . $this->lang->line(ucwords($invoices->status)) . '</span>';
             $row[] = '<a href="' . base_url("invoices/view?id=$invoices->tid") . '" class="btn btn-success btn-xs"><i class="icon-file-text"></i> ' . $this->lang->line('View') . '</a> &nbsp; <a href="' . base_url("invoices/printinvoice?id=$invoices->tid") . '&d=1" class="btn btn-info btn-xs"  title="Download"><span class="icon-download"></span></a>&nbsp; &nbsp';

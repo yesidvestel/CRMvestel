@@ -46,6 +46,7 @@
                                         <li class="list-group-item">
                                             <span class="tag tag-default tag-pill bg-primary float-xs-right"><?php echo amountFormat($money['credit']) ?></span>
                                             <?php echo $this->lang->line('Income') ?>
+											<?php echo $due['ron']?>
                                         </li>
                                         <li class="list-group-item">
                                             <span class="tag tag-default tag-pill bg-danger float-xs-right"><?php echo amountFormat($money['debit']) ?></span>
@@ -55,6 +56,7 @@
                                         <li class="list-group-item">
                                             <span class="tag tag-default tag-pill bg-danger float-xs-right"><?php echo amountFormat($due['total']-$due['pamnt']) ?></span>
                                             <?php echo $this->lang->line('Total Due') ?>
+											
                                         </li>
 
                                     </ul>
@@ -137,7 +139,7 @@
                                     <strong><?php echo $this->lang->line('') ?>Usuario Nº:</strong>
                                 </div>
                                 <div class="col-md-10">
-                                    <?php echo $details['abonado'] ?>
+                                    <?php echo $details['abonado'] ?> <strong>ID:</strong> <?php echo $details['id'] ?>
                                 </div>
 
                             </div>

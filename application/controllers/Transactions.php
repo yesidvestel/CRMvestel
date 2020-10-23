@@ -390,7 +390,7 @@ class Transactions extends CI_Controller
             $this->db->set('pmethod', $pmethod);
             $this->db->set('pamnt', "pamnt+$amount", FALSE);
 
-            $this->db->set('status', 'partial');
+            $this->db->set('status', 'Recibido');
             $this->db->where('tid', $tid);
             $this->db->update('purchase');
 
@@ -405,7 +405,7 @@ class Transactions extends CI_Controller
         } else {
             $this->db->set('pmethod', $pmethod);
             $this->db->set('pamnt', "pamnt+$amount", FALSE);
-            $this->db->set('status', 'paid');
+            $this->db->set('status', 'Cancelado');
             $this->db->where('tid', $tid);
             $this->db->update('purchase');
             //acount update
@@ -414,7 +414,7 @@ class Transactions extends CI_Controller
             $this->db->update('accounts');
 
             $totalrm = 0;
-            $status = 'Paid';
+            $status = 'Cancelado';
             $paid_amount = $amount;		
 
 

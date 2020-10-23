@@ -186,7 +186,7 @@ background-image: none;
 .st-paid, .st-due, .st-partial,.st-canceled,.st-rejected,.st-pending,.st-accepted,.st-Activo,.st-Stopped, st-Finalizado
 {
 text-transform: capitalize;
-    color: #fff;
+    color: #000000;
     padding: 4px;
     border-radius: 11px;
     font-size: 10px;
@@ -204,7 +204,7 @@ text-transform: capitalize;
 
 .st-partial,.st-pending,.st-Activo
 {
- background-color: #5da6fb;
+ background-color: #A86522;
 }
 .st-canceled,.st-rejected, st-Finalizado
 {

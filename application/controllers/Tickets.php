@@ -247,11 +247,21 @@ class Tickets Extends CI_Controller
                     $this->db->insert('invoice_items',$datay);    
                 }
                 
-                if($data['television']!==no){                
+                if($data['television']!==no AND $data['refer']!==Mocoa){                
                     $producto = $this->db->get_where('products',array('pid'=>22))->row();
                     $datay['pid']=$producto->pid;
-                    $datay['product']=$producto->product_name;
-                    
+                    $datay['product']=$producto->product_name;                    
+                    $x=intval($producto->product_price);
+                    $x=($x/30)*$diferencia->days;
+                    $total+=$x;
+                    $datay['price']=$x;
+                    $datay['subtotal']=$x;
+                    $this->db->insert('invoice_items',$datay);
+                }
+				if($data['television']!==no AND $data['refer']==Mocoa){                
+                    $producto = $this->db->get_where('products',array('pid'=>66))->row();
+                    $datay['pid']=$producto->pid;
+                    $datay['product']=$producto->product_name;                    
                     $x=intval($producto->product_price);
                     $x=($x/30)*$diferencia->days;
                     $total+=$x;

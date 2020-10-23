@@ -1,8 +1,8 @@
 <style>
 .st-paid, .st-partial,.st-canceled,.st-rejected,.st-pending,.st-accepted,.st-Activo,.st-Stopped,.st-end, .st-Cortado, .st-Instalar, .st-Suspendido, .st-Exonerado
 {
-text-transform: capitalize;
-    color: #fff;
+text-transform: lowercase;
+    color:#000000;
     padding: 4px;
     border-radius: 11px;
     font-size: 10px;
@@ -12,12 +12,9 @@ text-transform: capitalize;
 {
  background-color: #5ed45e;
 }
-
-
-
-.st-partial,.st-pending,.st-Activo
+.st-pending,.st-Activo
 {
- background-color: #0C6;
+ background-color:#D4BF30;
 }
 .st-canceled,.st-rejected,.st-end
 {
@@ -27,9 +24,9 @@ text-transform: capitalize;
 {
  background-color: #C33;
 }
-.st-Instalar
+.st-Instalar, .st-partial
 {
- background-color: #F63;
+ background-color:#E2ED30;
 }
 .st-Suspendido
 {

@@ -24,8 +24,8 @@ class Ticket_model extends CI_Model
 
     //documents list
 	var $table = 'customers';
-    var $doccolumn_order = array(null, 'subject', 'created','status', null);
-    var $doccolumn_search = array('id','subject','detalle', 'created','status');
+    var $doccolumn_order = array(null, 'id', 'subject', 'created','status', null);
+    var $doccolumn_search = array('id', 'cid', 'subject','detalle', 'created','status');
 
 
     public function thread_list($id)
@@ -102,7 +102,7 @@ class Ticket_model extends CI_Model
         $query = $this->db->get();
         return $query->row();
     }
-		public function tecnico_list()
+	public function tecnico_list()
     {
         $query = $this->db->query("SELECT id,username FROM aauth_users WHERE UPPER(roleid) LIKE '3'");
         return $query->result_array();

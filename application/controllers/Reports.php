@@ -72,6 +72,18 @@ class Reports extends CI_Controller
         $this->load->view('fixed/footer');
 
     }
+	public function cierre()
+
+    {
+        $this->load->model('transactions_model');
+        $data['accounts'] = $this->transactions_model->acc_list();
+        $head['title'] = "Account Statement";
+        $head['usernm'] = $this->aauth->get_user()->username;
+        $this->load->view('fixed/header', $head);
+        $this->load->view('invoices/cierre', $data);
+        $this->load->view('fixed/footer');
+
+    }
 
     public function customerstatement()
 
@@ -110,6 +122,7 @@ class Reports extends CI_Controller
         $ttype = $this->input->post('ttype');
         $account = $this->accounts->details($pay_acc);
         $data['filter'] = array($pay_acc, $trans_type, $sdate, $edate, $ttype, $account['holder']);
+		$data['income'] = $this->reports->incomestatement();
         $head['title'] = "Account Statement";
         $head['usernm'] = $this->aauth->get_user()->username;
         $this->load->view('fixed/header', $head);
@@ -231,15 +244,10 @@ class Reports extends CI_Controller
         $head['title'] = "Income Statement";
         $head['usernm'] = $this->aauth->get_user()->username;
         $this->load->view('fixed/header', $head);
-
         $this->load->model('transactions_model');
         $data['accounts'] = $this->transactions_model->acc_list();
         $data['income'] = $this->reports->incomestatement();
-
-
         $this->load->view('reports/incomestatement', $data);
-
-
         $this->load->view('fixed/footer');
 
     }
