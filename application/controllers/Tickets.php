@@ -65,7 +65,7 @@ class Tickets Extends CI_Controller
             $row = array();
             $no++;			
             $row[] = $no;
-			$row[] = '<input type="checkbox" style="margin-left: 9px">';
+			$row[] = '<input id="input_'.$ticket->id.'" type="checkbox" style="margin-left: 9px;cursor:pointer;" onclick="asignar_orden(this)" data-id="'.$ticket->id.'">';
 			$row[] = $ticket->id;
             $row[] = $ticket->subject;
 			$row[] = $ticket->detalle;
@@ -78,7 +78,14 @@ class Tickets Extends CI_Controller
             }else{
                  $row[]="Sin Factura";
             }
-			$row[] = $ticket->asignado;
+
+            if($ticket->asignado!=null){
+                $tecnico=$this->db->get_where('aauth_users',array('id'=>$ticket->asignado))->row();
+                $row[]=$tecnico->username;
+            }else{
+                $row[] = "--";    
+            }
+			
 			$row[] = '<span class="st-' . $ticket->status . '">' . $ticket->status . '</span>';
             $row[] = '<a href="' . base_url('tickets/thread/?id=' . $ticket->id) . '" class="btn btn-success btn-xs"><i class="icon-file-text"></i> ' . $this->lang->line('View') . '</a> <a class="btn btn-danger btn-xs delete-object" href="#" data-object-id="' . $ticket->id . '"> <i class="icon-trash-o "></i> </a>';
 
@@ -95,7 +102,14 @@ class Tickets Extends CI_Controller
         );
         echo json_encode($output);
     }
-
+    public function asignar_ordenes(){
+        foreach ($_POST['lista'] as $key => $id_orden) {
+            $datos['asignado']=$_POST['id_tecnico_seleccionado'];
+            $condicion['id']=$id_orden;
+            $this->db->update('tickets',$datos,$condicion);
+        }
+        echo "correcto";
+    }
     public function ticket_stats()
     {
 

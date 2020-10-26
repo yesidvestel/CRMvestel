@@ -111,7 +111,7 @@
 			<h5 class="colspan 2">ASIGNAR ORDEN:</h5>
 			</div>
 			<div class="col-md-5">
-			<select name="asignado">
+			<select name="asignado" id="tecnicos">
 				<?php
 					foreach ($tecnicoslista as $row) {
 						$cid = $row['id'];
@@ -122,7 +122,7 @@
 			</select>
 				<input type="hidden" id="action-url" value="tickets/update_status">
                         <button type="button" class="btn btn-primary"
-                                id="submit_model">Asignar</button>
+                                onclick="asignar_tecnico()">Asignar</button>
 			</div>
 			<select name="sede">
 				<!--option value="0"></option-->
@@ -182,5 +182,49 @@
 
         });
         miniDash();
+
+ 
+
     });
+    let lista_ordenes=[];
+    function asignar_orden(elemento){
+        var indice_elemento=lista_ordenes.indexOf($(elemento).data("id"));
+        
+        if(indice_elemento==-1){
+                if(elemento.checked==true){
+                    lista_ordenes.push($(elemento).data("id"));                   
+                }
+        }else{
+            if(elemento.checked==false){
+                lista_ordenes.splice(indice_elemento,1);
+            }
+        }
+    }
+
+    $("#doctable").on('draw.dt',function (){
+        $(lista_ordenes).each(function(index,value){
+            var checked_seleccionado=document.getElementById("input_"+value);            
+            try{
+                if(checked_seleccionado.checked==false){
+                        console.log("si esta imprimiendo todo esta bien Gloria Al Dios Altisimo Jesus de Nazaret.");
+                        $(checked_seleccionado).prop("checked",true);
+
+                }
+            }catch(error){
+
+            }
+            
+        });
+
+    });
+    function asignar_tecnico (){
+        var id_tecnico_seleccionado=$("#tecnicos").val();
+        $.post(baseurl+"tickets/asignar_ordenes",{id_tecnico_seleccionado:id_tecnico_seleccionado,lista:lista_ordenes},function(data){
+
+                if(data=="correcto"){
+                    var url1=baseurl+"tickets/";
+                    window.location.replace(url1);
+                }
+        });
+    }
 </script>
