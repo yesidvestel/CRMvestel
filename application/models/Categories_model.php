@@ -196,14 +196,16 @@ p.pid='$id' ");
 
     }
 
-    public function editwarehouse($catid, $product_cat_name, $product_cat_desc)
+    public function editwarehouse($catid, $product_cat_name, $product_cat_desc,$tecnico)
     {
         $data = array(
             'title' => $product_cat_name,
             'extra' => $product_cat_desc
         );
 
-
+        if($tecnico!=null || $tecnico!=0 ){
+            $data['id_tecnico']=$tecnico;
+        }
         $this->db->set($data);
         $this->db->where('id', $catid);
 
