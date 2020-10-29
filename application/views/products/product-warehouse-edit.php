@@ -51,9 +51,14 @@
                                     $texto1='selected="true"';
                                     $varx=true;
                                 }
+                                $almacen=$this->db->get_where('product_warehouse',array("id_tecnico"=>$tecnico['id']))->row();
+                                if(empty($almacen)  ){//esta validacion es para saber si el tecnico ya esta asignado a un almacen, si esta vacia la busqueda significa que esta disponible el tecnico y lo deja visualizar
                                 ?>
+
                                 <option value="<?=$tecnico['id']?>" <?= $texto1?>  ><?=$tecnico['username']?></option>
-                            <?php }//falta para mañana recorrer y preguntar por cada uno de los tecnicos si ya fue asignado al almacen, para anularlo y de no aver ninguno disponible colocar ninguno disponible y desabilitarlo, lo mismo al agregar almacen; ?>
+                            <?php }else if($texto1!=""){ //aqui es para visualizar cuando el tecnico esta asignado al almacen el cual se esta editando;  ?>
+                                    <option value="<?=$tecnico['id']?>" <?= $texto1?>  ><?=$tecnico['username']?></option>
+                        <?php }}//falta replicar esto al añadir almacen ?>
                         </select>
                 </div>
                 </div>
