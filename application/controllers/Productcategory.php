@@ -119,12 +119,15 @@ class Productcategory Extends CI_Controller
         if ($this->input->post()) {
             $cat_name = $this->input->post('product_catname');
             $cat_desc = $this->input->post('product_catdesc');
+            $tecnico = $this->input->post('id_del_tecnico');
             if ($cat_name) {
-                $this->products_cat->addwarehouse($cat_name, $cat_desc);
+                $this->products_cat->addwarehouse($cat_name, $cat_desc, $tecnico);
             }
         } else {
 
             $data['cat'] = $this->products_cat->category_list();
+            $data['lista_de_tecnicos']=$this->db->get_where('aauth_users',array("roleid"=>3))->result_array();
+
             $head['title'] = "Add Product Warehouse";
             $head['usernm'] = $this->aauth->get_user()->username;
             $this->load->view('fixed/header', $head);

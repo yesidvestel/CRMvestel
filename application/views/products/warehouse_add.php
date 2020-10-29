@@ -33,6 +33,23 @@
                                class="form-control margin-bottom required" name="product_catdesc">
                     </div>
                 </div>
+<div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Lista de Tecnicos</label>
+                    <div class="col-sm-8">
+                        <select class="form-control" name="id_del_tecnico" id="id_del_tecnico">
+                            <option value="">Ninguno</option>
+                            <?php foreach ($lista_de_tecnicos as $key => $tecnico) {
+                                
+                                $almacen=$this->db->get_where('product_warehouse',array("id_tecnico"=>$tecnico['id']))->row();
+                                if(empty($almacen)){//esta validacion es para saber si el tecnico ya esta asignado a un almacen, si esta vacia la busqueda significa que esta disponible el tecnico y lo deja visualizar
+                                ?>
+
+                                <option value="<?=$tecnico['id']?>" <?= $texto1?>  ><?=$tecnico['username']?></option>
+                            <?php }} ?>
+                        </select>
+                </div>
+                </div>
+
                 <div class="form-group row">
 
                     <label class="col-sm-2 col-form-label"></label>

@@ -137,12 +137,15 @@ p.pid='$id' ");
 
     }
 
-    public function addwarehouse($cat_name, $cat_desc)
+    public function addwarehouse($cat_name, $cat_desc,$tecnico)
     {
         $data = array(
             'title' => $cat_name,
             'extra' => $cat_desc
         );
+        if($tecnico!=null || $tecnico!=0){
+            $data['id_tecnico']=$tecnico;
+        }
 
         if ($this->db->insert('product_warehouse', $data)) {
             echo json_encode(array('status' => 'Success', 'message' =>
