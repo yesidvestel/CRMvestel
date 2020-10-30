@@ -126,7 +126,9 @@ class Tickets Extends CI_Controller
         $thread_id = $this->input->get('id');
 		$data2['barrio'] = $this->ticket->group_barrio($data['details']['barrio']);
         $data['response'] = 3;		
-		
+        $orden = $this->db->get_where('tickets',array('id'=>$thread_id))->row();
+        $almacen= $this->db->get_where('product_warehouse',array('id_tecnico'=>$orden->asignado))->row();
+		$data['lista_productos_tecnico']=$this->db->get_where('products',array('warehouse'=>$almacen->id))->result_array();
         $head['usernm'] = $this->aauth->get_user()->username;
         $head['title'] = 'Add Support Reply';		
         $this->load->view('fixed/header', $head);
