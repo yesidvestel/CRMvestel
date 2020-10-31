@@ -119,12 +119,15 @@ class Productcategory Extends CI_Controller
         if ($this->input->post()) {
             $cat_name = $this->input->post('product_catname');
             $cat_desc = $this->input->post('product_catdesc');
+            $tecnico = $this->input->post('id_del_tecnico');
             if ($cat_name) {
-                $this->products_cat->addwarehouse($cat_name, $cat_desc);
+                $this->products_cat->addwarehouse($cat_name, $cat_desc, $tecnico);
             }
         } else {
 
             $data['cat'] = $this->products_cat->category_list();
+            $data['lista_de_tecnicos']=$this->db->get_where('aauth_users',array("roleid"=>3))->result_array();
+
             $head['title'] = "Add Product Warehouse";
             $head['usernm'] = $this->aauth->get_user()->username;
             $this->load->view('fixed/header', $head);
@@ -228,8 +231,9 @@ class Productcategory Extends CI_Controller
             $cid = $this->input->post('catid');
             $cat_name = $this->input->post('product_cat_name');
             $cat_desc = $this->input->post('product_cat_desc');
+            $id_del_tecnico = $this->input->post('id_del_tecnico');
             if ($cat_name) {
-                $this->products_cat->editwarehouse($cid, $cat_name, $cat_desc);
+                $this->products_cat->editwarehouse($cid, $cat_name, $cat_desc,$id_del_tecnico);
             }
         } else {
             $catid = $this->input->get('id');
@@ -241,6 +245,8 @@ class Productcategory Extends CI_Controller
 
             $head['title'] = "Edit Product Warehouse";
             $head['usernm'] = $this->aauth->get_user()->username;
+            
+            $data['lista_de_tecnicos']=$this->db->get_where('aauth_users',array("roleid"=>3))->result_array();
             $this->load->view('fixed/header', $head);
             $this->load->view('products/product-warehouse-edit', $data);
             $this->load->view('fixed/footer');

@@ -1,22 +1,2 @@
-ALTER TABLE `crm`.`products` 
-ADD COLUMN `id_prod_transfer` INT(11) NULL DEFAULT NULL COMMENT 'id del producto originalmente transferido' AFTER `alert`;
-
-CREATE TABLE IF NOT EXISTS `crm`.`transferencias` (
-  `id_transferencia` INT(11) NOT NULL AUTO_INCREMENT,
-  `producto_a` INT(11) NOT NULL,
-  `producto_b` INT(11) NOT NULL,
-  PRIMARY KEY (`id_transferencia`),
-  INDEX `fk_transferencias_products_idx` (`producto_a` ASC),
-  INDEX `fk_transferencias_products1_idx` (`producto_b` ASC),
-  CONSTRAINT `fk_transferencias_products`
-    FOREIGN KEY (`producto_a`)
-    REFERENCES `crm`.`products` (`pid`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_transferencias_products1`
-    FOREIGN KEY (`producto_b`)
-    REFERENCES `crm`.`products` (`pid`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
+ALTER TABLE `crm`.`product_warehouse` 
+ADD COLUMN `id_tecnico` INT(11) NULL DEFAULT NULL AFTER `extra`;

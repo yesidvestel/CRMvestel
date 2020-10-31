@@ -102,6 +102,34 @@
 
                             </tbody>
                         </table>
+                     <div class="form-group row">
+        <label class="col-sm-2 col-form-label" for="name">Nombre del articulo</label>                        
+        <div class="col-sm-10">
+            <select class="form-control select-box" id="lista_productos" name="lista_productos[]" multiple="multiple">
+                <?php foreach ($lista_productos_tecnico as $key => $producto) { ?>
+                    <option value="<?=$producto['pid']?>"><?=$producto['product_name']?></option>
+               <?php } ?>
+            </select>
+        </div>
+                     </div>   
+                     <table width="100%" style="text-align: center;" class="table">
+                            <thead >
+                                <tr >
+                                    <th style="text-align: center;">PID</th>
+                                    <th style="text-align: center;">Nombre</th>
+                                    <th style="text-align: center;">Cantidad Tot.</th>
+                                    <th style="text-align: center;">Valor a Transferir</th>
+                                </tr>
+                            </thead>
+                            <tbody id="itemsx">
+                                <tr id="remover_fila">
+                                    <td>PID</td>
+                                    <td>Nombre</td>
+                                    <td>##</td>
+                                    <td><input type="number" name="" data-max="5" data-pid="0" class="form-control" onfocusout="validar_numeros(this);" disabled></td>   
+                                </tr>
+                            </tbody>
+                        </table>
 
             <div class="form-group row">
 
@@ -218,3 +246,6 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    $("#lista_productos").select2();
+</script>

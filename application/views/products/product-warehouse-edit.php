@@ -40,6 +40,28 @@
                     </div>
 
                 </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Lista de Tecnicos</label>
+                    <div class="col-sm-8">
+                        <select class="form-control" name="id_del_tecnico" id="id_del_tecnico">
+                            <option value="">Ninguno</option>
+                            <?php $varx=false; foreach ($lista_de_tecnicos as $key => $tecnico) {
+                                $texto1="";
+                                if($warehouse['id_tecnico']===$tecnico['id']){
+                                    $texto1='selected="true"';
+                                    $varx=true;
+                                }
+                                $almacen=$this->db->get_where('product_warehouse',array("id_tecnico"=>$tecnico['id']))->row();
+                                if(empty($almacen)  ){//esta validacion es para saber si el tecnico ya esta asignado a un almacen, si esta vacia la busqueda significa que esta disponible el tecnico y lo deja visualizar
+                                ?>
+
+                                <option value="<?=$tecnico['id']?>" <?= $texto1?>  ><?=$tecnico['username']?></option>
+                            <?php }else if($texto1!=""){ //aqui es para visualizar cuando el tecnico esta asignado al almacen el cual se esta editando;  ?>
+                                    <option value="<?=$tecnico['id']?>" <?= $texto1?>  ><?=$tecnico['username']?></option>
+                        <?php }}//falta replicar esto al añadir almacen ?>
+                        </select>
+                </div>
+                </div>
 
 
                 <div class="form-group row">
@@ -58,4 +80,9 @@
     </div>
 
 </article>
-
+<script type="text/javascript">
+    var seleccionado=<?= $varx ?>;
+    if(seleccionado==1){
+        $("#id_del_tecnico").prop('disabled','true');
+    }
+</script>
