@@ -52,9 +52,9 @@
                         <div class="col-xs-12 mb-1"><label
                                     for="status"><?php echo $this->lang->line('Change Status') ?></label>
                             <select name="stat" class="form-control mb-1">
-                                <option value="Due">Due</option>
-                                <option value="Progress">Progress</option>
-                                <option value="Done">Done</option>
+                                <option value="Due">Pendiente</option>
+                                <option value="Progress">Realizando</option>
+                                <option value="Done">Hecho</option>
                             </select>
 
                         </div>

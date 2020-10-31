@@ -919,6 +919,8 @@
 
                 <li><a href="<?php echo base_url(); ?>events"><i class="icon-calendar2"></i><span
                                 class="menu-title"> <?php echo $this->lang->line('Calendar') ?></span></a></li>
+			<li><a href="<?php echo base_url(); ?>tools/documents"><i class="icon-android-download"></i><span
+                                class="menu-title"><?php echo $this->lang->line('Documents') ?></span></a></li>
 		
 
 <?php } ?>

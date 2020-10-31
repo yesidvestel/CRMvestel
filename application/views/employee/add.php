@@ -60,7 +60,7 @@
                                         <div class="col-sm-5">
                                             <select name="roleid" class="form-control margin-bottom">
                                                 <option value="4">Administrativo</option>
-                                                <option value="3"> Tecnico</option>
+                                                <option value="3">Tecnico</option>
                                                 <option value="5">Super Usuario </option>
                                                 <option value="2">Sales Team</option>
                                                 <option value="1">Inventory Manager</option>

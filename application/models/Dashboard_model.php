@@ -37,20 +37,21 @@ class Dashboard_model extends CI_Model
 
     public function todaySales($today)
     {
-
-        $where = "DATE(invoicedate) ='$today'";
+		$sede = "DATE(invoicedate)='Yopal'";
+        $where = "DATE(refer) ='$today'";
         $this->db->select_sum('total');
         $this->db->from('invoices');
-        $this->db->where($where);
+        $this->db->where($where,$sede);
         $query = $this->db->get();
         return $query->row()->total;
     }
 
     public function todayInexp($today)
-    {
+    {	
+		$sede = "DATE(invoicedate)='Mocoa'";
         $this->db->select('SUM(debit) as debit,SUM(credit) as credit', FALSE);
         $this->db->where("DATE(date) ='$today'");
-        $this->db->where("type!='Transfer'");
+        $this->db->where("type!='Transfer'",$sede);
         $this->db->from('transactions');
         $query = $this->db->get();
         return $query->row_array();
@@ -109,9 +110,9 @@ class Dashboard_model extends CI_Model
 
     public function monthlyInvoice($month, $year)
     {
-
+		$sede = "DATE(refer)='Mocoa'";
         $where = "DATE(invoicedate) BETWEEN '$year-$month-01' AND '$year-$month-31'";
-        $this->db->where($where);
+        $this->db->where($where,$sede);
         $this->db->from('invoices');
         return $this->db->count_all_results();
 
@@ -119,7 +120,7 @@ class Dashboard_model extends CI_Model
 
     public function monthlySales($month, $year)
     {
-
+		
         $where = "DATE(invoicedate) BETWEEN '$year-$month-01' AND '$year-$month-31'";
         $this->db->select_sum('total');
         $this->db->from('invoices');

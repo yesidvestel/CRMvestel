@@ -16,7 +16,7 @@
                             $validtoken = hash_hmac('ripemd160', $invoice['tid'], $this->config->item('encryption_key'));
 
                             $link = base_url('billing/view?id=' . $invoice['tid'] . '&token=' . $validtoken);
-                            if ($invoice['status'] != 'canceled') { ?>
+                            if ($invoice['status'] != 'Anulado') { ?>
                                 <div class="title-action">
 
                                 <a href="<?php echo 'edit?id=' . $invoice['tid']; ?>" class="btn btn-warning mb-1"><i
@@ -113,7 +113,7 @@
                                 ><span class="icon-tab"></span> <?php echo $invoice['ron'] ?> </a>
 								<?php if ($this->aauth->get_user()->roleid > 4) { ?>	
                                 <a href="#cancel-bill" class="btn btn-danger mb-1" id="cancel-bill"><i
-                                            class="icon-minus-circle"> </i> <?php echo $this->lang->line('Cancel') ?>
+                                            class="icon-minus-circle"> </i> <?php echo $this->lang->line('') ?>Anular
                                 </a>
 									<?php } ?>
                                       <div class="btn-group ">
@@ -550,7 +550,7 @@
                         <button type="button" class="btn btn-default"
                                 data-dismiss="modal"><?php echo $this->lang->line('Close'); ?></button>
                         <button type="button" class="btn btn-primary"
-                                id="send"><?php echo $this->lang->line('Cancel Invoice'); ?></button>
+                                id="send"><?php echo $this->lang->line(''); ?>Anular Factura</button>
                     </div>
                 </form>
             </div>
