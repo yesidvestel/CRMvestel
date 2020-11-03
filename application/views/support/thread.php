@@ -107,7 +107,7 @@
         <div class="col-sm-10">
             <select class="form-control select-box" id="lista_productos" name="lista_productos[]" multiple="multiple">
                 <?php foreach ($lista_productos_tecnico as $key => $producto) { ?>
-                    <option value="<?=$producto['pid']?>"><?=$producto['product_name']?></option>
+                    <option value="<?=$producto['pid']?>"  data-qty="<?=$producto['qty']?>" data-pid="<?=$producto['pid']?>" data-product_name="<?=$producto['product_name']?>" ><?=$producto['product_name']?></option>
                <?php } ?>
             </select>
         </div>
@@ -248,4 +248,38 @@
 </div>
 <script type="text/javascript">
     $("#lista_productos").select2();
+    let listaProductos=[];
+    $("#lista_productos").on('select2:select',function(e){
+                var itemSeleccionado;
+                itemSeleccionado= {pid:e.params.data.element.dataset.pid,qty:e.params.data.element.dataset.qty,product_name:e.params.data.element.dataset.product_name};
+
+                
+                listaProductos.push(itemSeleccionado);
+                $("#remover_fila").html('');
+                var max_var=itemSeleccionado.qty;
+                if(max_var<0){
+                    max_var=0;
+                }
+                $("#itemsx").append('<tr id="fila_'+itemSeleccionado.pid+'"> <td>'+itemSeleccionado.pid+'</td><td>'+itemSeleccionado.product_name+'</td>       <td>'+itemSeleccionado.qty+'</td>           <td><input type="number" name="" data-max="'+max_var+'" data-pid="'+itemSeleccionado.pid+'" class="form-control" onfocusout="validar_numeros(this);" value="'+max_var+'"></td>     </tr>');
+
+console.log(e);
+console.log(itemSeleccionado);
+                 
+            });
+
+        $("#lista_productos").on("select2:unselect",function(e){
+        console.log("eliminado "+e.params.data.element.dataset.pid);
+        
+        $("#fila_"+e.params.data.element.dataset.pid).remove();
+        var remove_index=0;
+        $(listaProductos).each(function(index,value){
+            if(e.params.data.element.dataset.pid==value.pid){
+                remove_index=index;
+            }    
+            
+            
+        });
+        listaProductos.splice(remove_index,1);
+        
+    });
 </script>
