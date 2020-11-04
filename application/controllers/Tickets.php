@@ -125,7 +125,8 @@ class Tickets Extends CI_Controller
         $this->load->helper(array('form'));
         $thread_id = $this->input->get('id');
 		$data2['barrio'] = $this->ticket->group_barrio($data['details']['barrio']);
-        $data['response'] = 3;		
+        $data['response'] = 3;
+        $data['id_orden_n']	=$thread_id;	
         $orden = $this->db->get_where('tickets',array('id'=>$thread_id))->row();
         $almacen= $this->db->get_where('product_warehouse',array('id_tecnico'=>$orden->asignado))->row();
 		$data['lista_productos_tecnico']=$this->db->get_where('products',array('warehouse'=>$almacen->id))->result_array();
@@ -178,7 +179,23 @@ class Tickets Extends CI_Controller
 
 
     }
+    public function add_products_orden(){
+        $varx=array();
+        foreach ($_POST['lista'] as $key => $producto) {
+             $vary=intval($producto['qty']);
+             if($vary>0){
+                $tf_prod_orden=$this->db->get_where('transferencia_products_orden',array("products_pid"=>$producto['pid'],"tickets_id"=>$_POST['id_orden_n']))->row();
+                if(empty($tf_prod_orden)){
+                    $dats['products_pid']=$producto['pid'];
+                    $dats['tickets_id']=$_POST['id_orden_n'];
+                    $dats['cantidad']=$producto['qty'];
+                    $this->db->insert('transferencia_products_orden',$dats);
+                }
+             }
+        }
 
+        echo "Correcto";
+    }
 
     public function delete_ticket()
     {

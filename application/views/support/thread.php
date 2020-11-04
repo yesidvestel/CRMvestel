@@ -1,5 +1,32 @@
 <article class="content">
     <div class="card card-block">
+        <?php $lista_productos_orden=$this->db->get_where('transferencia_products_orden')->result_array(); ?>
+        
+        <table  class="table"> 
+            <thead>
+                <tr>
+                    <th colspan="3" ><h5 align="left"><strong>Productos Agregados a la Orden</strong></h5></th>
+                </tr>
+                <tr>
+                    <th style="text-align: center;">PID</th>
+                    <th style="text-align: center;">Nombre del Producto</th>
+                    <th style="text-align: center;">Cantidades</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <?php foreach ($lista_productos_orden as $key => $prod) { $prod_padre=$this->db->get_where('products',array('pid'=>$prod['products_pid']))->row(); ?>        
+                    <tr>
+                        <td style="text-align: center;"><?=$prod_padre->pid?></td>
+                        <td style="text-align: center;"><?=$prod_padre->product_name?></td>
+                        <td style="text-align: center;"><?=$prod['cantidad']?></td>
+                    </tr>
+                <?php } ?>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="card card-block">
         <?php if ($response == 1) {
             echo '<div id="notify" class="alert alert-success">
             <a href="#" class="close" data-dismiss="alert">&times;</a>
@@ -65,47 +92,11 @@
                                   autocomplete="false" rows="10" name="content"></textarea>
                 </div>
             </div>
-	<table class="table-responsive tfr my_stripe" style="padding-left: 17%">
-
-<thead>
-                            <tr class="item_header">
-                                <th width="25%" class="text-center"><?php echo $this->lang->line('Item Name') ?></th>
-                                <th width="8%" class="text-center"><?php echo $this->lang->line('Quantity') ?></th>
-								<th width="5%" class="text-center"><?php echo $this->lang->line('Action') ?></th>
-                                
-                            </tr>
-
-</thead>  <tbody>
-                            <tr>
-                                <td><input type="text" class="form-control text-center" name="product_name[]"
-                                           placeholder="<?php echo $this->lang->line('Enter Product name') ?>" id='productname-0'>
-                                </td>
-                                <td><input type="text" class="form-control req amnt" name="product_qty[]" id="amount-0"
-                                           onkeypress="return isNumber(event)" onkeyup="rowTotal('0'), billUpyog()"
-                                           autocomplete="off" value="<?php date('d') ?>"></td>
-								
-                                
-                            </tr>
-                           
-
-                            <tr class="last-item-row sub_c">
-                                <td class="add-row">
-                                    <button type="button" class="btn btn-success" aria-label="Left Align"
-                                            data-toggle="tooltip"
-                                            data-placement="top" title="Add product row" id="addproduct">
-                                        <i class="icon-plus-square"></i> <?php echo $this->lang->line('Add Row') ?>
-                                    </button>
-                                </td>
-                                <td colspan="7"></td>
-								
-                            </tr>
-
-                            </tbody>
-                        </table>
+	   
                      <div class="form-group row">
         <label class="col-sm-2 col-form-label" for="name">Nombre del articulo</label>                        
         <div class="col-sm-10">
-            <select class="form-control select-box" id="lista_productos" name="lista_productos[]" multiple="multiple">
+            <select class="form-control select-box" id="lista_productos" name="lista_productos[]" multiple="multiple" required>
                 <?php foreach ($lista_productos_tecnico as $key => $producto) { ?>
                     <option value="<?=$producto['pid']?>"  data-qty="<?=$producto['qty']?>" data-pid="<?=$producto['pid']?>" data-product_name="<?=$producto['product_name']?>" ><?=$producto['product_name']?></option>
                <?php } ?>
@@ -130,7 +121,8 @@
                                 </tr>
                             </tbody>
                         </table>
-
+                        <div align="center"><input  type="button" class="btn btn-success"  value="Agregar Productos a la Orden" onclick="guardar_productos()"></div>
+                    
             <div class="form-group row">
 
                 <label class="col-sm-2 col-form-label" for="name">Documentacion</label>
@@ -247,6 +239,8 @@
     </div>
 </div>
 <script type="text/javascript">
+    var id_orden_n="<?=$id_orden_n?>";
+
     $("#lista_productos").select2();
     let listaProductos=[];
     $("#lista_productos").on('select2:select',function(e){
@@ -282,4 +276,34 @@ console.log(itemSeleccionado);
         listaProductos.splice(remove_index,1);
         
     });
+
+
+    function guardar_productos(){
+         $.post(baseurl+"tickets/add_products_orden",{lista:listaProductos,id_orden_n:id_orden_n},function(data){
+
+            });   
+            
+    }
+
+    function validar_numeros (input){
+        var valorInput =parseInt($(input).val());
+        var valorMaximo = parseInt($(input).data('max'));
+        var valor_pid=parseInt($(input).data('pid'));
+        if(isNaN(valorInput)){
+            $(input).val(0);
+        }else if(valorInput<0){
+            $(input).val(0);    
+        }else if(valorInput>valorMaximo){
+            $(input).val(valorMaximo);
+        }
+        // cambia el valor total del la listaProductos y pasar los valores al input para que se envien al submit
+        valorInput =parseInt($(input).val());
+        var index_cambiar=0;
+        $(listaProductos).each(function(index,value){
+            if(value.pid==valor_pid){
+                index_cambiar=index;
+            }
+        });
+        listaProductos[index_cambiar].qty=valorInput;
+    }
 </script>

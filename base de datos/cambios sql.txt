@@ -1,2 +1,25 @@
 ALTER TABLE `crm`.`product_warehouse` 
 ADD COLUMN `id_tecnico` INT(11) NULL DEFAULT NULL AFTER `extra`;
+
+-- creacion de tabla relacional para la transferencia de productos a la orden--
+
+CREATE TABLE IF NOT EXISTS `crm`.`transferencia_products_orden` (
+  `idtransferencia_products_orden` INT(11) NOT NULL AUTO_INCREMENT,
+  `products_pid` INT(11) NOT NULL,
+  `tickets_id` INT(11) NOT NULL,
+  `cantidad` INT(11) NOT NULL,
+  PRIMARY KEY (`idtransferencia_products_orden`),
+  INDEX `fk_transferencia_products_orden_products1_idx` (`products_pid` ASC),
+  INDEX `fk_transferencia_products_orden_tickets1_idx` (`tickets_id` ASC),
+  CONSTRAINT `fk_transferencia_products_orden_products1`
+    FOREIGN KEY (`products_pid`)
+    REFERENCES `crm`.`products` (`pid`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_transferencia_products_orden_tickets1`
+    FOREIGN KEY (`tickets_id`)
+    REFERENCES `crm`.`tickets` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
