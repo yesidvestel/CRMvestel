@@ -102,6 +102,7 @@ class Tickets Extends CI_Controller
         );
         echo json_encode($output);
     }
+    
     public function asignar_ordenes(){
         foreach ($_POST['lista'] as $key => $id_orden) {
             $datos['asignado']=$_POST['id_tecnico_seleccionado'];
@@ -110,6 +111,7 @@ class Tickets Extends CI_Controller
         }
         echo "correcto";
     }
+
     public function ticket_stats()
     {
 
@@ -179,8 +181,9 @@ class Tickets Extends CI_Controller
 
 
     }
+    //consultas ajax referentes a tikets materiales add delet
     public function add_products_orden(){
-        $varx=array();
+        
         foreach ($_POST['lista'] as $key => $producto) {
              $vary=intval($producto['qty']);
              if($vary>0){
@@ -197,6 +200,11 @@ class Tickets Extends CI_Controller
         echo "Correcto";
     }
 
+    public function eliminar_prod_lista(){
+        $this->db->delete('transferencia_products_orden',array("idtransferencia_products_orden"=>$_POST['id']));
+        echo "Eliminado";
+    }
+    //fin consultas ajax referentes a tikets materiales add delet
     public function delete_ticket()
     {
         $id = $this->input->post('deleteid');

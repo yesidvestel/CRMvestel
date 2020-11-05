@@ -1,6 +1,6 @@
 <article class="content">
     <div class="card card-block">
-        <?php $lista_productos_orden=$this->db->get_where('transferencia_products_orden')->result_array(); ?>
+        <?php $lista_productos_orden=$this->db->get_where('transferencia_products_orden',array('tickets_id'=>$id_orden_n))->result_array(); ?>
         
         <table  class="table"> 
             <thead>
@@ -11,6 +11,7 @@
                     <th style="text-align: center;">PID</th>
                     <th style="text-align: center;">Nombre del Producto</th>
                     <th style="text-align: center;">Cantidades</th>
+                    <th style="text-align: center;">Eliminar</th>
                 </tr>
             </thead>
             <tbody>
@@ -20,6 +21,7 @@
                         <td style="text-align: center;"><?=$prod_padre->pid?></td>
                         <td style="text-align: center;"><?=$prod_padre->product_name?></td>
                         <td style="text-align: center;"><?=$prod['cantidad']?></td>
+                        <td style="text-align: center;"><a onclick="eliminar_prod_lista(<?=$prod['idtransferencia_products_orden']?>)"><img src="<?=base_url()?>/assets/img/trash.png"></a></td>
                     </tr>
                 <?php } ?>
             </tbody>
@@ -279,10 +281,17 @@ console.log(itemSeleccionado);
 
 
     function guardar_productos(){
-         $.post(baseurl+"tickets/add_products_orden",{lista:listaProductos,id_orden_n:id_orden_n},function(data){
+        var datos_lista=$("#lista_productos").val();
+        if(datos_lista==null){
+            $("#document_add").click();
 
+        }else{
+
+         $.post(baseurl+"tickets/add_products_orden",{lista:listaProductos,id_orden_n:id_orden_n},function(data){
+                alert("Productos Agregados");
+                window.location.reload();
             });   
-            
+        }
     }
 
     function validar_numeros (input){
@@ -305,5 +314,15 @@ console.log(itemSeleccionado);
             }
         });
         listaProductos[index_cambiar].qty=valorInput;
+    }
+
+    function eliminar_prod_lista(idtransferencia_products_orden){
+        var confirmacion =confirm("¿Deseas realmente eliminar este item ?");
+        if(confirmacion==true){
+            $.post(baseurl+"tickets/eliminar_prod_lista",{id:idtransferencia_products_orden},function(data){
+                alert("Producto Eliminado");
+                window.location.reload();
+            });
+        }
     }
 </script>
