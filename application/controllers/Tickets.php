@@ -192,6 +192,13 @@ class Tickets Extends CI_Controller
                     $dats['products_pid']=$producto['pid'];
                     $dats['tickets_id']=$_POST['id_orden_n'];
                     $dats['cantidad']=$producto['qty'];
+                    //proceso de descontar cantidades del almacen
+                    $producto_padre=$this->db->get_where('products',array('pid'=>$producto['pid']))->row();
+                    $x1=intval($producto_padre->qty);
+                    $x1=$x1-$vary;
+                    $datx['qty']=$x1;
+                    $this->db->update('products',$datx,array('pid'=>$producto['pid']));
+                    // end proceso de descontar cantidades del almacen
                     $this->db->insert('transferencia_products_orden',$dats);
                 }
              }
@@ -201,6 +208,13 @@ class Tickets Extends CI_Controller
     }
 
     public function eliminar_prod_lista(){
+        $transferencia =  $this->db->get_where('transferencia_products_orden',array("idtransferencia_products_orden"=>$_POST['id']))->row();
+        $producto=$this->db->get_where('products',array("pid"=>$transferencia->products_pid))->row();
+        $x1=intval($producto->qty);
+        $y1=intval($transferencia->cantidad);
+        $x1=$x1+$y1;
+        $datosx['qty']=$x1;
+        $this->db->update('products',$datosx,array('pid'=>$producto->pid));
         $this->db->delete('transferencia_products_orden',array("idtransferencia_products_orden"=>$_POST['id']));
         echo "Eliminado";
     }
