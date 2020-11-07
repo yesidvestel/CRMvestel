@@ -109,7 +109,7 @@
                             <textarea class="summernote" name="section" id="contents" rows="2"></textarea></div>
                     </div>
                    
-					<input type="submit" class="btn btn-success sub-btn"value="<?php echo $this->lang->line('Generate Quote') ?>" id="submit-data" data-loading-text="Creating...">
+					<input type="submit" class="btn btn-success sub-btn"value="Generar" id="submit-data" data-loading-text="Creating...">
 						
                     <input type="hidden" value="quote/action" id="action-url">
                     <input type="hidden" value="search" id="billtype">
