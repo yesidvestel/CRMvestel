@@ -45,7 +45,7 @@
                         </div>
                         <div class="col-sm-3">
                             <input type="text"
-                                   class="form-control margin-bottom  required" name="dosapellido" id="mcustomer_dosapellido">
+                                   class="form-control margin-bottom" name="dosapellido" id="mcustomer_dosapellido">
                         </div>
                     </div>
                     <div class="form-group row">
