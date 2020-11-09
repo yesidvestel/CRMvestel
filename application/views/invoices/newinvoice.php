@@ -300,9 +300,12 @@
 								<td colspan="2">Combo 
 								<select name="combo" class="selectpicker form-control">
 										<option value="no">No</option>
-                                        <option value="3 Megas">3 Megas</option>
-										<option value="5 Megas">5 Megas</option>
-										<option value="10 Megas">10 Megas</option>
+										<option value="1Mega">1 Mega</option>
+										<option value="2Megas">2 Megas</option>
+                                        <option value="3Megas">3 Megas</option>
+										<option value="5Megas">5 Megas</option>
+										<option value="10Megas">10 Megas</option>
+										
                                     </select></td>
                                 <td align="right" colspan="6"><input type="submit" class="btn btn-success sub-btn" value="<?php echo $this->lang->line('Generate Invoice') ?> " id="submit-data" data-loading-text="Creating...">
 

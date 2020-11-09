@@ -753,6 +753,7 @@
                         <div class="col-xs-12 mb-1"><label
                                     for="pmethod"><?php echo $this->lang->line('Mark As') ?></label>
                             <select name="status" class="form-control mb-1">
+								<option value="<?php echo $invoice['ron'] ?>">>><?php echo $invoice['ron'] ?></option>
                                 <option value="Activo"><?php echo $this->lang->line('') ?>Activo</option>
                                 <option value="Instalar"><?php echo $this->lang->line('') ?>Instalar</option>
                                 <option value="Cortado"><?php echo $this->lang->line('') ?>Cortado</option>
@@ -764,6 +765,41 @@
                             </select>
 
                         </div>
+						<?php if ($invoice['ron'] != 'Activo') { ?>
+						<div class="col-xs-6 mb-1"><label
+                                    for="pmethod">Television</label>
+                            <select name="television" class="form-control mb-1">
+                                <option value="no">No</option>
+                                <option value="Television">Si</option>
+                            </select>
+                        </div>
+						<div class="col-xs-6 mb-1"><label
+                                    for="pmethod">Internet</label>
+                            <select name="internet" class="form-control mb-1">
+                                <option value="no">No</option>
+                                <option value="1Mega">1Mega</option>
+								<option value="2Megas">2Megas</option>
+								<option value="3Megas">3Megas</option>
+								<option value="5Megas">5Megas</option>
+								<option value="10Megas">10Megas</option>
+                            </select>
+                        </div>
+						<?php } else { ?>
+						<div class="col-xs-6 mb-1"><label
+                                    for="pmethod">Television</label>
+                            <select name="television" class="form-control mb-1">
+                                <option value="<?php echo $invoice['television'] ?>">No</option>
+                                <option value="no">Si</option>
+                            </select>
+                        </div>
+						<div class="col-xs-6 mb-1"><label
+                                    for="pmethod">Internet</label>
+                            <select name="internet" class="form-control mb-1">
+                                <option value="<?php echo $invoice['combo'] ?>">No</option>
+                                <option value="no">Si</option>                            
+                            </select>
+                        </div>
+						<?php } ?>
                     </div>
 
                     <div class="modal-footer">

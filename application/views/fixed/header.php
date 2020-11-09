@@ -973,6 +973,27 @@
                         </li>
                     </ul>
                 </li>
+			<!--- SOPORTE TECNICO --->
+                <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "tickets") {
+                    echo ' open';
+                } ?>">
+                    <a href=""> <i class="icon-ticket"></i><span
+                                class="menu-title"><?php echo $this->lang->line('Support Tickets') ?></span><i
+                                class="fa arrow"></i> </a>
+                    <ul class="menu-content">
+						<li>
+                            <a href="<?php echo base_url(); ?>quote/create"><?php echo $this->lang->line(''); ?>Nuevo ticket</a>
+                        </li>
+                        <li>
+                            <a href="<?php echo base_url(); ?>tickets/?filter=Pendiente"><?php echo $this->lang->line('UnSolved') ?></a>
+                        </li>
+                        <li>
+                            <a href="<?php echo base_url(); ?>tickets"><?php echo $this->lang->line('Manage Tickets') ?></a>
+                        </li>
+
+
+                    </ul>
+                </li>
 			<li class="navigation-header"><span>MATERIALES</span><i
                             data-toggle="tooltip" data-placement="right"
                             data-original-title="Stock"

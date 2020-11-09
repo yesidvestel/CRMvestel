@@ -336,8 +336,10 @@ class Invoices extends CI_Controller
     {
         $tid = $this->input->post('tid');
         $status = $this->input->post('status');
-
-
+		$tv = $this->input->post('television');
+		$int = $this->input->post('internet');
+		$this->db->set('combo', $int);
+		$this->db->set('television', $tv);
         $this->db->set('ron', $status);
         $this->db->where('tid', $tid);
         $this->db->update('invoices');

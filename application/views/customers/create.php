@@ -14,7 +14,7 @@
                     <h5><?php echo $this->lang->line('') ?>Datos personales</h5>
                     <hr>
                     <div class="form-group row">
-						<input type="hidden" placeholder="Material nombre" class="form-control margin-bottom  required" name="abonado" value="<?php echo $codigo + 1 ?>">
+						<input type="text" placeholder="Material nombre" class="form-control margin-bottom  required" name="abonado" value="<?php echo $codigo + 1 ?>">
                         <h6><label class="col-sm-3 col-form-label"
                                for="name"><?php echo $this->lang->line('') ?>1er Nombre</label></h6> 
 
@@ -212,8 +212,11 @@
                             <select class="form-control" name="adicionauno">
 													<option value=""></option>
                                                     <option value="bis">bis</option>
+													<option value="sur">sur</option>
                                                 	<option value="a">a</option>
+													<option value="a">a sur</option>
                                                   	<option value="b">b</option>
+													<option value="a">b sur</option>
                                                 	<option value="c">c</option>
                                                     <option value="d">d</option>
                                                     <option value="e">e</option>
@@ -234,8 +237,11 @@
                             <select class="col-sm-1 form-control" name="adicional2">
 													<option value=""></option>
                                                     <option value="bis">bis</option>
+													<option value="sur">sur</option>
                                                 	<option value="a">a</option>
+													<option value="a sur">a sur</option>
                                                   	<option value="b">b</option>
+													<option value="b sur">b sur</option>
                                                 	<option value="c">c</option>
                                                     <option value="d">d</option>
                                                     <option value="e">e</option>
