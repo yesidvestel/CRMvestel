@@ -325,4 +325,6 @@ console.log(itemSeleccionado);
             });
         }
     }
+
+    
 </script>

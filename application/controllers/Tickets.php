@@ -87,7 +87,7 @@ class Tickets Extends CI_Controller
             }
 			
 			$row[] = '<span class="st-' . $ticket->status . '">' . $ticket->status . '</span>';
-            $row[] = '<a href="' . base_url('tickets/thread/?id=' . $ticket->id) . '" class="btn btn-success btn-xs"><i class="icon-file-text"></i> ' . $this->lang->line('View') . '</a> <a class="btn btn-danger btn-xs delete-object" href="#" data-object-id="' . $ticket->id . '"> <i class="icon-trash-o "></i> </a>';
+            $row[] = '<a href="' . base_url('tickets/thread/?id=' . $ticket->id) . '" class="btn btn-success btn-xs"><i class="icon-file-text"></i> ' . $this->lang->line('View') . '</a> <a class="btn btn-danger" onclick="eliminar_ticket('.$ticket->id.')" > <i class="icon-trash-o "></i> </a>';
 
             
 
@@ -220,7 +220,9 @@ class Tickets Extends CI_Controller
     }
     //fin consultas ajax referentes a tikets materiales add delet
     public function delete_ticket()
-    {
+    {   
+       
+       
         $id = $this->input->post('deleteid');
 
         if ($this->ticket->deleteticket($id)) {

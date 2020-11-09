@@ -227,4 +227,13 @@
                 }
         });
     }
+    function eliminar_ticket(id){
+        var confirmacion = confirm("Deseas Eliminar esta orden ?");
+        if(confirmacion==true){
+            $.post(baseurl+"tickets/delete_ticket",{deleteid:id},function (data){
+                alert("Orden Eliminada...");                
+                window.location.reload();
+            },'json');
+      }
+    }
 </script>
