@@ -32,8 +32,9 @@
 				echo '<br><strong>Celular:</strong> ' . $thread_info['celular'];
 				echo '<br><strong>Direccion:</strong> ' . $thread_info['nomenclatura'].' '. $thread_info['numero1']. $thread_info['adicionauno'].' N°'. $thread_info['numero2']. $thread_info['adicional2'].' - '. $thread_info['numero3'];
 				echo '<br><strong>Barrio:</strong> ' . $thread_info['barrio'];
-                echo '<br><strong>Estado:</strong> <span id="pstatus">' . $thread_info['status']
-                ?></span></p>
+                echo '<br><strong>Estado:</strong> <span id="pstatus">' . $thread_info['status'];		
+                ?></p>
+			<?php echo '<h4>Detalles:</h4><code class="card card-block">' . $thread_info['section']?></code>
 			<table  class="table"> 
             <thead>
                 <tr>
@@ -58,8 +59,9 @@
                 <?php } ?>
             </tbody>
         </table>
+			<div align="center">
 			<a href="#pop_model" data-toggle="modal" onclick="funcion_status();" data-remote="false" class="btn btn-sm btn-cyan mb-1" title="Change Status"
-                ><span class="icon-tab"></span> CAMBIAR ESTADO</a>
+                ><span class="icon-tab"></span> CAMBIAR ESTADO</a></div>
             <?php foreach ($thread_list as $row) { ?>
 
 
