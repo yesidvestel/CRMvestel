@@ -22,7 +22,7 @@ class Invoices_model extends CI_Model
 {
     var $table = 'invoices';
     var $column_order = array(null, 'tid', 'name', 'invoicedate', 'total', 'status', null);
-    var $column_search = array('tid', 'name', 'invoicedate', 'total');
+    var $column_search = array('tid', 'name', 'invoicedate', 'total','refer');
     var $order = array('tid' => 'desc');
 
     public function __construct()

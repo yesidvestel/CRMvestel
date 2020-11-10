@@ -385,9 +385,10 @@ class Invoices extends CI_Controller
             $row[] = $no;
             $row[] = $invoices->tid;
             $row[] = $invoices->name ." ". $invoices->unoapellido;
-            $row[] = dateformat($invoices->invoicedate);
-			$row[] = $invoices->ron; 
+            $row[] = dateformat($invoices->invoiceduedate);
+			$row[] = $invoices->ron;
             $row[] = amountFormat($invoices->total);
+			$row[] = $invoices->refer;
             $row[] = '<span class="st-' . $invoices->status . '">' . $this->lang->line(ucwords($invoices->status)) . '</span>';
             $row[] = '<a href="' . base_url("invoices/view?id=$invoices->tid") . '" class="btn btn-success btn-xs"><i class="icon-file-text"></i> ' . $this->lang->line('View') . '</a> &nbsp; <a href="' . base_url("invoices/printinvoice?id=$invoices->tid") . '&d=1" class="btn btn-info btn-xs"  title="Download"><span class="icon-download"></span></a>&nbsp; &nbsp';
 			if ($this->aauth->get_user()->roleid > 4) { 
