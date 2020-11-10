@@ -33,10 +33,11 @@
                 <tfoot>
                 <tr>
                     <th>#</th>
+					<th>Abonado</th>
+					<th>Cedula</th>
                     <th><?php echo $this->lang->line('Name') ?></th>
+					<th>Celular</th>
                     <th><?php echo $this->lang->line('Address') ?></th>
-                    <th><?php echo $this->lang->line('Email') ?></th>
-                    <th><?php echo $this->lang->line('Mobile') ?></th>
                     <th><?php echo $this->lang->line('Settings') ?></th>
                 </tr>
                 </tfoot>
