@@ -69,7 +69,7 @@ class Tickets Extends CI_Controller
 			$row[] = $ticket->id;
             $row[] = $ticket->subject;
 			$row[] = $ticket->detalle;
-            $row[] = $ticket->created;           
+            $row[] = $ticket->created;          
 			if($ticket->cid !=null){
                 $row[]='<a href="'.base_url("customers/view?id=".$ticket->cid).'">'.$ticket->cid.'</a>';
             }

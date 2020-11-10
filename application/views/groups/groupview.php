@@ -13,14 +13,15 @@
                         class="fa fa-envelope"></i> <?php echo $this->lang->line('Send Group Message') ?> </a>
 
             <hr>
-            <table id="fclientstable" class="display table-responsive" cellspacing="0">
+            <table id="fclientstable" class="table-striped" cellspacing="0" width="100%">
                 <thead>
                 <tr>
                     <th>#</th>
+					<th>Abonado</th>
+					<th>Cedula</th>
                     <th><?php echo $this->lang->line('Name') ?></th>
+					<th>Celular</th>
                     <th><?php echo $this->lang->line('Address') ?></th>
-                    <th><?php echo $this->lang->line('Email') ?></th>
-                    <th><?php echo $this->lang->line('Mobile') ?></th>
                     <th><?php echo $this->lang->line('Settings') ?></th>
 
 
