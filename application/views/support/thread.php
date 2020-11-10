@@ -2,30 +2,7 @@
     <div class="card card-block">
         <?php $lista_productos_orden=$this->db->get_where('transferencia_products_orden',array('tickets_id'=>$id_orden_n))->result_array(); ?>
         
-        <table  class="table"> 
-            <thead>
-                <tr>
-                    <th colspan="3" ><h5 align="left"><strong>Productos Agregados a la Orden</strong></h5></th>
-                </tr>
-                <tr>
-                    <th style="text-align: center;">PID</th>
-                    <th style="text-align: center;">Nombre del Producto</th>
-                    <th style="text-align: center;">Cantidades</th>
-                    <th style="text-align: center;">Eliminar</th>
-                </tr>
-            </thead>
-            <tbody>
-
-                <?php foreach ($lista_productos_orden as $key => $prod) { $prod_padre=$this->db->get_where('products',array('pid'=>$prod['products_pid']))->row(); ?>        
-                    <tr>
-                        <td style="text-align: center;"><?=$prod_padre->pid?></td>
-                        <td style="text-align: center;"><?=$prod_padre->product_name?></td>
-                        <td style="text-align: center;"><?=$prod['cantidad']?></td>
-                        <td style="text-align: center;"><a onclick="eliminar_prod_lista(<?=$prod['idtransferencia_products_orden']?>)"><img src="<?=base_url()?>/assets/img/trash.png"></a></td>
-                    </tr>
-                <?php } ?>
-            </tbody>
-        </table>
+        
     </div>
 
     <div class="card card-block">
@@ -57,6 +34,30 @@
 				echo '<br><strong>Barrio:</strong> ' . $thread_info['barrio'];
                 echo '<br><strong>Estado:</strong> <span id="pstatus">' . $thread_info['status']
                 ?></span></p>
+			<table  class="table"> 
+            <thead>
+                <tr>
+                    <th colspan="3" ><h5 align="left"><strong>Material usado en la Orden</strong></h5></th>
+                </tr>
+                <tr>
+                    <th style="text-align: center;">PID</th>
+                    <th style="text-align: center;">Item</th>
+                    <th style="text-align: center;">Cantidades</th>
+                    <th style="text-align: center;">Eliminar</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <?php foreach ($lista_productos_orden as $key => $prod) { $prod_padre=$this->db->get_where('products',array('pid'=>$prod['products_pid']))->row(); ?>        
+                    <tr>
+                        <td style="text-align: center;"><?=$prod_padre->pid?></td>
+                        <td style="text-align: center;"><?=$prod_padre->product_name?></td>
+                        <td style="text-align: center;"><?=$prod['cantidad']?></td>
+                        <td style="text-align: center;"><a onclick="eliminar_prod_lista(<?=$prod['idtransferencia_products_orden']?>)"><img src="<?=base_url()?>/assets/img/trash.png"></a></td>
+                    </tr>
+                <?php } ?>
+            </tbody>
+        </table>
 			<a href="#pop_model" data-toggle="modal" onclick="funcion_status();" data-remote="false" class="btn btn-sm btn-cyan mb-1" title="Change Status"
                 ><span class="icon-tab"></span> CAMBIAR ESTADO</a>
             <?php foreach ($thread_list as $row) { ?>
@@ -105,13 +106,13 @@
             </select>
         </div>
                      </div>   
-                     <table width="100%" style="text-align: center;" class="table">
+                     <table width="80%" style="text-align: center;padding-left: 17%;" class="table-responsive tfr my_stripe">
                             <thead >
-                                <tr >
-                                    <th style="text-align: center;">PID</th>
-                                    <th style="text-align: center;">Nombre</th>
-                                    <th style="text-align: center;">Cantidad Tot.</th>
-                                    <th style="text-align: center;">Valor a Transferir</th>
+                                <tr>
+                                    <th style="text-align: center;" width="10%">PID</th>
+                                    <th style="text-align: center;" width="30%">Nombre</th>
+                                    <th style="text-align: center;" width="20%">Cantidad Tot.</th>
+                                    <th style="text-align: center;" width="20%">Valor a Transferir</th>
                                 </tr>
                             </thead>
                             <tbody id="itemsx">
@@ -123,7 +124,7 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <div align="center"><input  type="button" class="btn btn-success"  value="Agregar Productos a la Orden" onclick="guardar_productos()"></div>
+                        <div align="center" style="padding-left: 17%;"><input  type="button" class="btn " style="background-color: #767676;color: aliceblue;"  value="Agregar Material a la Orden" onclick="guardar_productos()"></div>
                     
             <div class="form-group row">
 

@@ -107,11 +107,11 @@
                 </tbody>
 
             </table>
-			 <div class="col-md-2">
-			<h5 class="colspan 2">ASIGNAR ORDEN:</h5>
+			 <div class="col-md-12">
+			<h6 class="colspan 1">ASIGNAR ORDEN</h6>
 			</div>
-			<div class="col-md-5">
-			<select name="asignado" id="tecnicos">
+			<div class="col-xs-3 mb-1">
+			<select name="asignado" id="tecnicos" class="form-control mb-1">
 				<?php
 					foreach ($tecnicoslista as $row) {
 						$cid = $row['id'];
@@ -120,16 +120,13 @@
 					}
 					?>
 			</select>
+				</div>
+			<div class="col-xs-2 mb-1">
 				<input type="hidden" id="action-url" value="tickets/update_status">
                         <button type="button" class="btn btn-primary"
                                 onclick="asignar_tecnico()">Asignar</button>
 			</div>
-			<select name="sede">
-				<!--option value="0"></option-->
-				<option value="yopal">yopal</option>
-				<option value="monterrey">monterrey</option>
-				<option value="villanueva">villanueva</option>
-			</select>
+			
 			</div>
         </div>
     </div>
