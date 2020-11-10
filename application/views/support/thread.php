@@ -35,16 +35,16 @@
                 echo '<br><strong>Estado:</strong> <span id="pstatus">' . $thread_info['status'];		
                 ?></p>
 			<?php echo '<h4>Detalles:</h4><code class="card card-block">' . $thread_info['section']?></code>
-			<table  class="table"> 
+			<table  class="table" width="100%"> 
             <thead>
                 <tr>
                     <th colspan="3" ><h5 align="left"><strong>Material usado en la Orden</strong></h5></th>
                 </tr>
                 <tr>
-                    <th style="text-align: center;">PID</th>
-                    <th style="text-align: center;">Item</th>
-                    <th style="text-align: center;">Cantidades</th>
-                    <th style="text-align: center;">Eliminar</th>
+                    <th style="text-align: center;" width="10%">PID</th>
+                    <th style="text-align: center;" width="30%">Nombre</th>
+                    <th style="text-align: center;" width="20%">Cantidad Tot.</th>
+                    <th style="text-align: center;" width="20%">Valor a Transferir</th>
                 </tr>
             </thead>
             <tbody>
