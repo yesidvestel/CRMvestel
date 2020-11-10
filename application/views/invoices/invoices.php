@@ -54,9 +54,9 @@ text-transform: lowercase;
                 <thead>
                 <tr>
                     <th><?php echo $this->lang->line('No') ?></th>
-                    <th><?php echo $this->lang->line('Invoice') ?> #</th>
+                    <th>F/ra #</th>
                     <th><?php echo $this->lang->line('Customer') ?></th>
-                    <th>F/vencimiento</th>
+                    <th>Vence</th>
                     <th><?php echo $this->lang->line('') ?>Estado</th>
                     <th><?php echo $this->lang->line('Total') ?></th>
 					<th>sede</th>
@@ -74,9 +74,9 @@ text-transform: lowercase;
                 <tfoot>
                 <tr>
                     <th><?php echo $this->lang->line('No') ?></th>
-                    <th><?php echo $this->lang->line('Invoice') ?> #</th>
+                    <th>F/ra #</th>
                     <th><?php echo $this->lang->line('Customer') ?></th>
-                    <th>F/vencimiento</th>
+                    <th>Vence</th>
                     <th><?php echo $this->lang->line('') ?>Estado</th>
                     <th><?php echo $this->lang->line('Total') ?></th>
 					<th>sede</th>
