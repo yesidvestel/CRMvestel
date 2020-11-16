@@ -125,6 +125,18 @@ class Reports extends CI_Controller
 		$data['income'] = $this->reports->incomestatement();
         $head['title'] = "Account Statement";
         $head['usernm'] = $this->aauth->get_user()->username;
+
+        //codigo listar
+            
+            
+            
+            
+            $list = $this->reports->get_statements($pay_acc, $trans_type, $sdate, $edate);
+            $data['lista']=$list;
+        
+        //fin codigo listar
+
+
         $this->load->view('fixed/header', $head);
         $this->load->view('reports/statement_list', $data);
         $this->load->view('fixed/footer');

@@ -35,7 +35,7 @@
                 echo '<br><strong>Estado:</strong> <span id="pstatus">' . $thread_info['status'];		
                 ?></p>
 			<?php echo '<h4>Detalles:</h4><code class="card card-block">' . $thread_info['section']?></code>
-			<table  class="table" width="100%"> 
+			<table  class="table table-hover table-condensed" width="100%"> 
             <thead>
                 <tr>
                     <th colspan="3" ><h5 align="left"><strong>Material usado en la Orden</strong></h5></th>
