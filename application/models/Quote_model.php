@@ -173,7 +173,7 @@ class Quote_model extends CI_Model
         $query = $this->db->get();
         return $query->row_array();
     }
-	public function addticket($customer_id, $subject, $detalle, $created, $section)
+	public function addticket($customer_id, $subject, $detalle, $created, $section, $factura)
     {
 		$bill_llegada = datefordatabase($created);
         $data = array(
@@ -184,8 +184,8 @@ class Quote_model extends CI_Model
             'status' => 'Pendiente',
             'section' => $section,
             'fecha_final' => '',
-            'id_invoice' => 'null',
-            'id_factura' => 'null',            
+            'id_invoice' => $factura,
+            'id_factura' => 'null',          
         );
 
         if ($this->db->insert('tickets', $data)) {

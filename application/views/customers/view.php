@@ -309,9 +309,9 @@
                                     </a>
                                 </div>
                                 <div class="col-md-4">
-                                    <a href="<?php echo base_url('customers/balance?id=' . $details['id']) ?>"
+                                    <a href="<?php echo base_url('quote/create?id=' . $details['id']) ?>"
                                        class="btn btn-primary btn-lg"><i
-                                                class="icon-wallet"></i> <?php echo $this->lang->line('Wallet') ?>
+                                                class="icon-ticket"></i> Generar ticket
                                     </a>
                                 </div>
                             </div>
