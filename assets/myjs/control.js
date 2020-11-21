@@ -853,7 +853,11 @@ function saveMData(o_data,action_url) {
                     $("#notify").removeClass("alert-danger").addClass("alert-success").fadeIn();
                     $("html, body").scrollTop($("body").offset().top);
                     $('#pstatus').html(data.pstatus);
-                    window.location.href =baseurl+"invoices/view?id="+data.tid;
+                    if(data.msg1==""){
+                        window.location.href =baseurl+"invoices/view?id="+data.tid;
+                    }else{
+                        location.reload();
+                    }
 
 
                 } else {

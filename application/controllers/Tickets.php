@@ -287,10 +287,10 @@ class Tickets Extends CI_Controller
         $datay['discount']=0;
         $datay['totaltax']=0;
         $datay['totaldiscount']=0;			
-                if($data['combo']!==no){
+                if($data['combo']!=="no"){
                     if($data['combo']==='3 Megas'){
                         $datay['pid']=24;
-                    }else if($data['combo']==='5 Megas'){
+                    }else if($data['combo']==='5 Megas' || $data['combo']==='5Megas'){
                         $datay['pid']=25;
                     }else if($data['combo']==='10 Megas'){
                         $datay['pid']=26;
@@ -302,7 +302,9 @@ class Tickets Extends CI_Controller
                     $datay['product']=$producto->product_name;
                     $datay['price']=$x;
                     $datay['subtotal']=$x;     
-                    $this->db->insert('invoice_items',$datay);    
+                    if($ticket->detalle=="Instalacion" && $ticket->id_factura==null){
+                        $this->db->insert('invoice_items',$datay);    
+                    }
                 }
                 
                 if($data['television']!==no AND $data['refer']!==Mocoa){                
@@ -314,7 +316,9 @@ class Tickets Extends CI_Controller
                     $total+=$x;
                     $datay['price']=$x;
                     $datay['subtotal']=$x;
-                    $this->db->insert('invoice_items',$datay);
+                    if($ticket->detalle=="Instalacion" && $ticket->id_factura==null){
+                        $this->db->insert('invoice_items',$datay);
+                    }
                 }
 				if($data['television']!==no AND $data['refer']==Mocoa){                
                     $producto = $this->db->get_where('products',array('pid'=>66))->row();
@@ -325,7 +329,9 @@ class Tickets Extends CI_Controller
                     $total+=$x;
                     $datay['price']=$x;
                     $datay['subtotal']=$x;
-                    $this->db->insert('invoice_items',$datay);
+                    if($ticket->detalle=="Instalacion" && $ticket->id_factura==null){
+                        $this->db->insert('invoice_items',$datay);
+                    }
                 }
                 
 			
@@ -335,14 +341,22 @@ class Tickets Extends CI_Controller
         
         $data['subtotal']=$total;
         $data['total']=$total;
-        $this->db->insert('invoices',$data);		
+        //no haga ni insert ni update si no es instalacion y tambien si ya existe una factura
+        $msg1="";
+        if($ticket->detalle=="Instalacion" && $ticket->id_factura==null){
+            $this->db->insert('invoices',$data);    
+            $dataz['id_factura']=$data['tid'];
+        }else{
+            $msg1="no redirect";
+        }
+        		
        
         $dataz['status']=$status;
         $dataz['fecha_final']=$fecha_final;
-        $dataz['id_factura']=$data['tid'];
+        
         $this->db->update('tickets',$dataz,array('id'=>$tid));
         
-        echo json_encode(array('tid'=>$data['tid'],'status' => 'Success', 'message' =>
+        echo json_encode(array('msg1'=>$msg1,'tid'=>$data['tid'],'status' => 'Success', 'message' =>
             $this->lang->line('UPDATED'), 'pstatus' => $status));
 		
 		
