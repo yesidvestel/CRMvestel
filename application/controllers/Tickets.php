@@ -287,7 +287,7 @@ class Tickets Extends CI_Controller
         $datay['discount']=0;
         $datay['totaltax']=0;
         $datay['totaldiscount']=0;			
-                if($data['combo']!=="no"){
+                if($data['combo']!==no){
                     if($data['combo']==='3 Megas'){
                         $datay['pid']=24;
                     }else if($data['combo']==='5 Megas' || $data['combo']==='5Megas'){
