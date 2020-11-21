@@ -28,7 +28,7 @@
         } ?>
         <div class="grid_3 grid_4"><h4><?php echo $thread_info['subject'] ?> </h4>
 			<input type="hidden" name="detalle" value="<?php echo $thread_info['detalle'] ?>"></input>
-			<input type="text" name="ids" value="<?php echo $thread_info['id'] ?>"></input>
+			<input type="hidden" name="ids" value="<?php echo $thread_info['id'] ?>"></input>
             <p class="card card-block"><?php echo '<strong>Creado el: </strong> ' . $thread_info['created'];
                 echo '<br><strong>Usuario:</strong> ' . $thread_info['name'] .' '. $thread_info['unoapellido'];
 				echo '<br><strong>Celular:</strong> ' . $thread_info['celular'];
@@ -36,15 +36,16 @@
 				echo '<br><strong>Barrio:</strong> ' . $thread_info['barrio'];
                 echo '<br><strong>Estado:</strong> <span id="pstatus">' . $thread_info['status'];		
                 ?></p>
-<<<<<<< Updated upstream
-			<?php echo '<h4>Detalles:</h4><code class="card card-block">' . $thread_info['section']?></code>
-			<table  class="table table-hover table-condensed" width="100%"> 
-=======
+
+			<?php //echo '<h4>Detalles:</h4><code class="card card-block">' . $thread_info['section']?>
+        <!--</code>
+			<table  class="table table-hover table-condensed" width="100%"> -->
+
 			<?php echo '<h4>Detalles:</h4><code class="card card-block"><h5 style="text-decoration: underline;">' .$thread_info['detalle'].'</h5>'. $thread_info['section']?>
 		</code>			
 			<table  class="table" width="100%">
 				
->>>>>>> Stashed changes
+
             <thead>
                 <tr>
                     <th colspan="3" ><h5 align="left"><strong>Material usado en la Orden</strong></h5></th>
