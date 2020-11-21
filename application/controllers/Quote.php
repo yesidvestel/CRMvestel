@@ -40,7 +40,11 @@ class Quote extends CI_Controller
     {
         $this->load->model('customers_model', 'customers');
         $this->load->model('plugins_model', 'plugins');
+		$this->load->model('ticket_model', 'ticket');		
+		$custid = $this->input->get('id');
+        $data['details'] = $this->customers->details($custid);
         $data['exchange'] = $this->plugins->universal_api(5);
+		$data['facturalist'] = $this->ticket->factura_list($custid);
         $data['currency'] = $this->quote->currencies();
         $data['customergrouplist'] = $this->customers->group_list();
         $data['lastinvoice'] = $this->quote->lastquote();
@@ -97,8 +101,9 @@ class Quote extends CI_Controller
         $detalle = $this->input->post('detalle');
         $created = $this->input->post('created');
         $section = $this->input->post('section');
+		$factura = $this->input->post('factura');
         if ($customer_id) {
-        	$this->quote->addticket($customer_id,$subject,$detalle,$created,$section);
+        	$this->quote->addticket($customer_id,$subject,$detalle,$created,$section, $factura);
 			
 		}
 

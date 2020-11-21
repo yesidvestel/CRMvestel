@@ -84,7 +84,7 @@ class Search extends CI_Controller
 
 
         if ($name) {
-            $query = $this->db->query("SELECT id,name,documento,company,celular,email FROM customers WHERE UPPER(name)  LIKE '" . strtoupper($name) . "%' OR UPPER(documento)  LIKE '" . strtoupper($name) . "%' LIMIT 6");
+            $query = $this->db->query("SELECT id,abonado, name,documento,company,celular,email FROM customers WHERE UPPER(name)  LIKE '" . strtoupper($name) . "%' OR UPPER(documento) LIKE  '" . strtoupper($name) . "%' OR UPPER(abonado) LIKE  '" . strtoupper($name). "%' LIMIT 6");
 
             $result = $query->result_array();
 
@@ -145,7 +145,7 @@ class Search extends CI_Controller
 
 
         if ($name) {
-            $query = $this->db->query("SELECT id,abonado,documento,name,unoapellido,company,celular,email FROM customers WHERE UPPER(name)  LIKE '" . strtoupper($name['term']) . "%' OR UPPER(documento)  LIKE '" . strtoupper($name['term']) . "%' LIMIT 6");
+            $query = $this->db->query("SELECT id,abonado,documento,name,unoapellido,company,celular,email FROM customers WHERE UPPER(name)  LIKE '" . strtoupper($name['term']) . "%' OR UPPER(documento)  LIKE  '" . strtoupper($name['term']) . "%' LIMIT 6");
 
             $result = $query->result_array();
 

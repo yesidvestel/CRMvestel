@@ -235,11 +235,14 @@ class Tickets Extends CI_Controller
     public function update_status()
     {
         $tid = $this->input->post('tid');
+		$ids = $this->input->post('ids');
         $status = $this->input->post('status');
         $fecha_final = $this->input->post('fecha_final');        
         $ticket = $this->db->get_where('tickets', array('id' => $tid))->row();
         $invoice = $this->db->get_where('invoices',array('tid'=>$ticket->id_invoice))->result_array();
         $data;
+		$detalle = $this->input->post('detalle');
+		
         foreach ($invoice[0] as $key => $value) {
             if($key!='id'){
              $data[$key]=$value;
@@ -298,9 +301,7 @@ class Tickets Extends CI_Controller
                     $total+=$x;
                     $datay['product']=$producto->product_name;
                     $datay['price']=$x;
-                    $datay['subtotal']=$x;
-                    
-                   
+                    $datay['subtotal']=$x;     
                     $this->db->insert('invoice_items',$datay);    
                 }
                 
@@ -334,8 +335,7 @@ class Tickets Extends CI_Controller
         
         $data['subtotal']=$total;
         $data['total']=$total;
-        $this->db->insert('invoices',$data);
-
+        $this->db->insert('invoices',$data);		
        
         $dataz['status']=$status;
         $dataz['fecha_final']=$fecha_final;
@@ -344,7 +344,10 @@ class Tickets Extends CI_Controller
         
         echo json_encode(array('tid'=>$data['tid'],'status' => 'Success', 'message' =>
             $this->lang->line('UPDATED'), 'pstatus' => $status));
-    }
+		
+		
+	}
+
 	  
 	
 	public function addticket()

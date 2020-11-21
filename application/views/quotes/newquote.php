@@ -14,33 +14,24 @@
 
 
                         <div class="col-sm-6 cmp-pnl">
-                            <div id="customerpanel" class="inner-cmp-pnl">
+                            <div id="customerpanel" class="inner-cmp-pnl">                               
+
                                 
-
-                                <div class="form-group row">
-                                    <div class="frmSearch col-sm-12">
-										<label for="cst" class="caption">Buscar usuario</label>
-                                        <input type="text" class="form-control" name="cst" id="customer-box" placeholder="Ingresa nombre o numero de abonado"
-                                        autocomplete="off"/>
-                                        <div id="customer-box-result"></div>
-                                    </div>
-
-                                </div>
                                 <div id="customer">
                                     <div class="clientinfo">
-                                        Detalles Usuario:
+										<h3 class="title">Detalles Usuario</h3>
                                         <hr>
-                                        <input type="hidden" name="customer_id" id="customer_id" value="0">
-                                        <div id="customer_name"></div>
+										<input type="hidden" name="customer_id" value="<?php echo $details['id'] ?>"></input>
+                                        <?php echo $details['name'].' '.$details['unoapellido'] ?>
                                     </div>
                                     <div class="clientinfo">
-
-                                        <div id="customer_address1"></div>
+                                        Documento: <?php echo $details['documento'] ?>
                                     </div>
-
                                     <div class="clientinfo">
-
-                                        <div type="text" id="customer_phone"></div>
+                                        Celular: <?php echo $details['celular'] ?>
+                                    </div>
+									<div class="clientinfo">
+                                        Direccion: <?php echo $details['nomenclatura'] ?> <?php echo $details['numero1'] ?><?php echo $details['adicionauno'] ?> Nº <?php echo $details['numero2'] ?> <?php echo $details['adicional2'] ?> - <?php echo $details['numero3'] ?>
                                     </div>
                                     <hr>                                    
                                 </div>
@@ -96,8 +87,23 @@
                                                    data-toggle="datepicker"
                                                    autocomplete="false" readonly>
                                         </div>
-                                    </div>                                    
-                                </div> 
+                                    </div>
+									<div class="col-sm-6">
+										<label for="invociedate" class="caption">Factura mes</label>
+										<div class="input-group">
+										<select name="factura" id="tecnicos" class="form-control mb-1">
+												<?php
+													foreach ($facturalist as $row) {
+														$cid = $row['id'];
+														$title = $row['tid'];
+														$mes = $row['invoicedate'];
+														echo "<option value='$title'>$title" . date(" F, Y",strtotime($mes))." </option>";
+													}
+													?>
+											</select>
+										</div>
+                                        </div>
+                                    </div>                                
 							</div>
                         </div>
 
@@ -149,7 +155,7 @@
         });
     });
 	// selecion de orden
-	var perfil_servicio = new Array ("Seleccine...","Instalacion","Reinstalacion","Traslado","Subir 5 Mg","Subir 10 Mg","Bajar 5 Mg","Bajar 3 Mg","Cambio de equipo","Equipo adicional","Reconexion","Suspencion Combo","Suspencion Internet","Suspencion Television");
+	var perfil_servicio = new Array ("Seleccine...","Instalacion","Reinstalacion","Traslado","Subir 5 Mg","Subir 10 Mg","Bajar 5 Mg","Bajar 3 Mg","Cambio de equipo","Equipo adicional","Reconexion","Suspencion Combo","Suspencion Internet","Suspencion Television","Corte");
 	var perfil_reclamo = new Array ("Seleccine...","Revision de Internet","Revision de television","Otros");	
 							//crear funcion que ejecute el cambio
 							function cambia(){

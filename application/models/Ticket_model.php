@@ -105,8 +105,13 @@ class Ticket_model extends CI_Model
 	public function tecnico_list()
     {
         $query = $this->db->query("SELECT id,username FROM aauth_users WHERE UPPER(roleid) LIKE '3'");
-        return $query->result_array();
+        return $query->result_array();		
 		
+    }
+	public function factura_list($custid)
+    {
+        $query = $this->db->query('SELECT id, tid, invoicedate FROM invoices WHERE csd=\''.$custid.'\'');
+        return $query->result_array();
 		
     }
 
