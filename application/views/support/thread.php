@@ -101,7 +101,7 @@
                      <div class="form-group row">
         <label class="col-sm-2 col-form-label" for="name">Nombre del articulo</label>                        
         <div class="col-sm-10">
-            <select class="form-control select-box" id="lista_productos" name="lista_productos[]" multiple="multiple" required>
+            <select class="form-control select-box" id="lista_productos" name="lista_productos[]" multiple="multiple">
                 <?php foreach ($lista_productos_tecnico as $key => $producto) { ?>
                     <option value="<?=$producto['pid']?>"  data-qty="<?=$producto['qty']?>" data-pid="<?=$producto['pid']?>" data-product_name="<?=$producto['product_name']?>" ><?=$producto['product_name']?></option>
                <?php } ?>
@@ -286,7 +286,12 @@ console.log(itemSeleccionado);
     function guardar_productos(){
         var datos_lista=$("#lista_productos").val();
         if(datos_lista==null){
+            $("#lista_productos").attr("required", true);
             $("#document_add").click();
+            setTimeout(function(){
+            $("#lista_productos").attr("required", false);    
+            },1000);
+            
 
         }else{
 

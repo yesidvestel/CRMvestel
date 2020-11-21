@@ -812,7 +812,6 @@ function sendMail_g(o_data,action_url) {
 //part
 $(document).on('click', "#submit_model", function (e) {
     e.preventDefault();
-
     var o_data =  $("#form_model").serialize();
     var action_url= $('#form_model #action-url').val();
     $("#pop_model").modal('hide');
