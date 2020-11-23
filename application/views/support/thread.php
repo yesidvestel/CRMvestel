@@ -4,7 +4,7 @@
         
         
     </div>
-	<input type="hidden" name="factura" value="<?php echo $thread_info['id_invoice'] ?>"></input>
+	
     <div class="card card-block">
         <?php if ($response == 1) {
             echo '<div id="notify" class="alert alert-success">
@@ -43,7 +43,7 @@
 
 			<?php echo '<h4>Detalles:</h4><code class="card card-block"><h5 style="text-decoration: underline;">' .$thread_info['detalle'].'</h5>'. $thread_info['section']?>
 		</code>			
-			<table  class="table" width="100%">
+			<table  class="table-responsive tfr my_stripe" width="80%">
 				
 
             <thead>
@@ -52,8 +52,8 @@
                 </tr>
                 <tr>
                     <th style="text-align: center;" width="10%">PID</th>
-                    <th style="text-align: center;" width="30%">Nombre</th>
-                    <th style="text-align: center;" width="20%">Cantidad Tot.</th>
+                    <th style="text-align: center;" width="40%">Nombre</th>
+                    <th style="text-align: center;" width="30%">Cantidad Tot.</th>
                     <th style="text-align: center;" width="20%">Valor a Transferir</th>
                 </tr>
             </thead>
@@ -61,10 +61,10 @@
 
                 <?php foreach ($lista_productos_orden as $key => $prod) { $prod_padre=$this->db->get_where('products',array('pid'=>$prod['products_pid']))->row(); ?>        
                     <tr>
-                        <td style="text-align: center;"><?=$prod_padre->pid?></td>
-                        <td style="text-align: center;"><?=$prod_padre->product_name?></td>
-                        <td style="text-align: center;"><?=$prod['cantidad']?></td>
-                        <td style="text-align: center;"><a onclick="eliminar_prod_lista(<?=$prod['idtransferencia_products_orden']?>)"><img src="<?=base_url()?>/assets/img/trash.png"></a></td>
+                        <td style="text-align: center;" width="10%"><?=$prod_padre->pid?></td>
+                        <td style="text-align: center;" width="30%"><?=$prod_padre->product_name?></td>
+                        <td style="text-align: center;" width="20%"><?=$prod['cantidad']?></td>
+                        <td style="text-align: center;" width="20%"><a onclick="eliminar_prod_lista(<?=$prod['idtransferencia_products_orden']?>)"><img src="<?=base_url()?>/assets/img/trash.png"></a></td>
                     </tr>
                 <?php } ?>
             </tbody>
@@ -95,30 +95,18 @@
 
             <h5><?php echo $this->lang->line('Your Response') ?></h5>
             <hr>
-
-            <div class="form-group row">
-
-                <label class="col-sm-2 control-label"
-                       for="edate"><?php echo $this->lang->line('Reply') ?></label>
-
-                <div class="col-sm-10">
-                        <textarea class="summernote"
-                                  placeholder=" Message"
-                                  autocomplete="false" rows="10" name="content"></textarea>
-                </div>
-            </div>
-	   
-                     <div class="form-group row">
-        <label class="col-sm-2 col-form-label" for="name">Nombre del articulo</label>                        
+			<div class="form-group row">
+                               
         <div class="col-sm-10">
-            <select class="form-control select-box" id="lista_productos" name="lista_productos[]" multiple="multiple">
+			<label class="col-sm-4 col-form-label" for="name">Nombre del articulo</label> 
+            <select class="form-control select-box" id="lista_productos" name="lista_productos[]" multiple="multiple" style="width: 100%;">
                 <?php foreach ($lista_productos_tecnico as $key => $producto) { ?>
                     <option value="<?=$producto['pid']?>"  data-qty="<?=$producto['qty']?>" data-pid="<?=$producto['pid']?>" data-product_name="<?=$producto['product_name']?>" ><?=$producto['product_name']?></option>
                <?php } ?>
             </select>
         </div>
                      </div>   
-                     <table width="80%" style="text-align: center;padding-left: 17%;" class="table-responsive tfr my_stripe">
+                     <table width="80%" style="text-align: center;" class="table-responsive tfr my_stripe">
                             <thead >
                                 <tr>
                                     <th style="text-align: center;" width="10%">PID</th>
@@ -136,7 +124,19 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <div align="center" style="padding-left: 17%;"><input  type="button" class="btn " style="background-color: #767676;color: aliceblue;"  value="Agregar Material a la Orden" onclick="guardar_productos()"></div>
+                        <div align="center"><input  type="button" class="btn " style="background-color: #767676;color: aliceblue;"  value="Agregar Material a la Orden" onclick="guardar_productos()"></div>
+            <div class="form-group row">
+
+                <label class="col-sm-2 control-label" for="edate"><?php echo $this->lang->line('Reply') ?></label>
+
+                <div class="col-sm-12">
+                        <textarea class="summernote"
+                                  placeholder=" Message"
+                                  autocomplete="false" rows="10" name="content"></textarea>
+                </div>
+            </div>
+	   
+                     
                     
             <div class="form-group row">
 
