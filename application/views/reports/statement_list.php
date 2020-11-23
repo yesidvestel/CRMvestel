@@ -51,6 +51,36 @@
 	font-weight: bold;
   }
 </style>
+<?php 
+	$var_cuenta_planes=array("1Mega"=>0,"2Megas"=>0,"3Megas"=>0,"5Megas"=>0,"10Megas"=>0,"Television"=>0); 
+		foreach ($lista as $key => $value) { 
+			$invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
+		
+			if($invoice->combo=="1Mega"){
+			 		$var_cuenta_planes['1Mega']++;
+
+			}else if($invoice->combo=="2Megas"){
+					$var_cuenta_planes['2Megas']++;
+
+			}else if($invoice->combo=="3Megas"){
+					$var_cuenta_planes['3Megas']++;
+
+			}else if($invoice->combo=="5Megas"){
+					$var_cuenta_planes['5Megas']++;
+
+			}else if($invoice->combo=="10Megas"){
+					$var_cuenta_planes['10Megas']++;
+
+			}else{
+					$var_cuenta_planes['Television']++;
+			}
+
+		 } 
+		 	
+		 	
+
+		 ?>
+
 <article class="content">
     <div class="card card-block">
         <div id="notify" class="alert alert-success" style="display:none;">
@@ -136,33 +166,7 @@
 				</thead>
 				<tbody>
 
-					<?php 
-					$var_cuenta_planes=array("1Mega"=>0,"2Megas"=>0,"3Megas"=>0,"5Megas"=>0,"10Megas"=>0,"Television"=>0); 
-					foreach ($lista as $key => $value) { 
-						$invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
 					
-						if($invoice->combo=="1Mega"){
-						 		$var_cuenta_planes['1Mega']++;
-
-						}else if($invoice->combo=="2Megas"){
-								$var_cuenta_planes['2Megas']++;
-
-						}else if($invoice->combo=="3Megas"){
-								$var_cuenta_planes['3Megas']++;
-
-						}else if($invoice->combo=="5Megas"){
-								$var_cuenta_planes['5Megas']++;
-
-						}else if($invoice->combo=="10Megas"){
-								$var_cuenta_planes['10Megas']++;
-
-						}else{
-								$var_cuenta_planes['Television']++;
-						}
-
-					 } 
-					 	
-					 ?>
 					<?php if($var_cuenta_planes['1Mega']!=0){  ?>
 					<tr>
 						<td>Internet 1MG</td>
@@ -251,13 +255,13 @@
 				</thead>
 				<tbody>
 					<tr>
-						<td>Octubre 2020</td>
-						<td style="text-align: center">0</td>
+						<td>Noviembre 2020</td>
+						<td style="text-align: center"><?=count($lista_mes_actual)?></td>
 						<td style="text-align: center">0</td>
 					</tr>
 					<tr>
-						<td>Septiembre 2020</td>
-						<td style="text-align: center">0</td>
+						<td>Octubre 2020</td>
+						<td style="text-align: center"><?=count($lista_mes_anterior)?></td>
 						<td style="text-align: center">0</td>
 					</tr>					
 				</tbody>
