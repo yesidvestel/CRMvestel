@@ -234,12 +234,12 @@ class Tickets Extends CI_Controller
 
     public function update_status()
     {
-        $tid = $this->input->post('tid');
-		$ids = $this->input->post('ids');
+        $tid = $this->input->post('tid');		
         $status = $this->input->post('status');
         $fecha_final = $this->input->post('fecha_final');        
         $ticket = $this->db->get_where('tickets', array('id' => $tid))->row();
         $invoice = $this->db->get_where('invoices',array('tid'=>$ticket->id_invoice))->result_array();
+		$idfactura = $ticket->id_factura;
         $data;
 		$detalle = $this->input->post('detalle');
 		
@@ -347,10 +347,77 @@ class Tickets Extends CI_Controller
             $this->db->insert('invoices',$data);    
             $dataz['id_factura']=$data['tid'];
         }else{
-            $msg1="no redirect";
-        }
-        		
-       
+            $msg1="no redirect";        
+		}
+		if($ticket->detalle=="Subir 5 Mg"){			
+			$this->db->set('combo', '5Megas');
+        	$this->db->where('tid', $idfactura);
+        	$this->db->update('invoices');
+		}
+		if($ticket->detalle=="Subir 10 Mg"){			
+			$this->db->set('combo', '10Megas');
+        	$this->db->where('tid', $idfactura);
+        	$this->db->update('invoices');
+		}
+		if($ticket->detalle=="Bajar 5 Mg"){			
+			$this->db->set('combo', '5Megas');
+        	$this->db->where('tid', $idfactura);
+        	$this->db->update('invoices');
+		}
+		if($ticket->detalle=="Bajar 3 Mg"){			
+			$this->db->set('combo', '3Megas');
+        	$this->db->where('tid', $idfactura);
+        	$this->db->update('invoices');
+		}
+		if($ticket->detalle=="Bajar 3 Mg"){			
+			$this->db->set('combo', '3Megas');
+        	$this->db->where('tid', $idfactura);
+        	$this->db->update('invoices');
+		}
+		if($ticket->detalle=="Reconexion"){			
+			$this->db->set('ron', 'Activo');
+        	$this->db->where('tid', $idfactura);
+        	$this->db->update('invoices');
+		}
+		if($ticket->detalle=="Corte Combo"){			
+			$this->db->set('ron', 'Cortado');
+			$this->db->set('television', 'no');
+			$this->db->set('combo', 'no');
+        	$this->db->where('tid', $idfactura);
+        	$this->db->update('invoices');
+		}
+		if($ticket->detalle=="Corte Internet"){			
+			$this->db->set('ron', 'Cortado');
+			$this->db->set('combo', 'no');			
+        	$this->db->where('tid', $idfactura);
+        	$this->db->update('invoices');
+		}
+		if($ticket->detalle=="Corte Television"){			
+			$this->db->set('ron', 'Cortado');
+			$this->db->set('television', 'no');		
+        	$this->db->where('tid', $idfactura);
+        	$this->db->update('invoices');
+		}
+		if($ticket->detalle=="Suspencion Combo"){			
+			$this->db->set('ron', 'Suspendido');
+			$this->db->set('television', 'no');
+			$this->db->set('combo', 'no');
+        	$this->db->where('tid', $idfactura);
+        	$this->db->update('invoices');
+		}
+		if($ticket->detalle=="Suspencion Television"){			
+			$this->db->set('ron', 'Activo');
+			$this->db->set('television', 'no');			
+        	$this->db->where('tid', $idfactura);
+        	$this->db->update('invoices');
+		}
+		if($ticket->detalle=="Suspencion Internet"){			
+			$this->db->set('ron', 'Activo');
+			$this->db->set('combo', 'no');			
+        	$this->db->where('tid', $idfactura);
+        	$this->db->update('invoices');
+		}
+		
         $dataz['status']=$status;
         $dataz['fecha_final']=$fecha_final;
         

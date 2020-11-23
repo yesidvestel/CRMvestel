@@ -4,7 +4,7 @@
         
         
     </div>
-	<input type="hidden" name="factura" value="<?php echo $thread_info['id_invoice'] ?>"></input>
+	
     <div class="card card-block">
         <?php if ($response == 1) {
             echo '<div id="notify" class="alert alert-success">
@@ -95,20 +95,7 @@
 
             <h5><?php echo $this->lang->line('Your Response') ?></h5>
             <hr>
-
-            <div class="form-group row">
-
-                <label class="col-sm-2 control-label"
-                       for="edate"><?php echo $this->lang->line('Reply') ?></label>
-
-                <div class="col-sm-10">
-                        <textarea class="summernote"
-                                  placeholder=" Message"
-                                  autocomplete="false" rows="10" name="content"></textarea>
-                </div>
-            </div>
-	   
-                     <div class="form-group row">
+			<div class="form-group row">
         <label class="col-sm-2 col-form-label" for="name">Nombre del articulo</label>                        
         <div class="col-sm-10">
             <select class="form-control select-box" id="lista_productos" name="lista_productos[]" multiple="multiple">
@@ -137,6 +124,19 @@
                             </tbody>
                         </table>
                         <div align="center" style="padding-left: 17%;"><input  type="button" class="btn " style="background-color: #767676;color: aliceblue;"  value="Agregar Material a la Orden" onclick="guardar_productos()"></div>
+            <div class="form-group row">
+
+                <label class="col-sm-2 control-label"
+                       for="edate"><?php echo $this->lang->line('Reply') ?></label>
+
+                <div class="col-sm-10">
+                        <textarea class="summernote"
+                                  placeholder=" Message"
+                                  autocomplete="false" rows="10" name="content"></textarea>
+                </div>
+            </div>
+	   
+                     
                     
             <div class="form-group row">
 

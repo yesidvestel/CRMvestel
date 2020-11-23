@@ -184,8 +184,8 @@ class Quote_model extends CI_Model
             'status' => 'Pendiente',
             'section' => $section,
             'fecha_final' => '',
-            'id_invoice' => $factura,
-            'id_factura' => 'null',          
+            'id_invoice' => 'null',
+            'id_factura' => $factura,          
         );
 
         if ($this->db->insert('tickets', $data)) {
