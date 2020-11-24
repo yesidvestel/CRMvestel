@@ -385,6 +385,7 @@ class Invoices extends CI_Controller
             $row[] = $no;
             $row[] = $invoices->tid;
             $row[] = $invoices->name ." ". $invoices->unoapellido;
+			$row[] = $invoices->abonado;
             $row[] = dateformat($invoices->invoiceduedate);
 			$row[] = $invoices->ron;
             $row[] = amountFormat($invoices->total);

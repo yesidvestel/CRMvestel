@@ -53,9 +53,10 @@ text-transform: lowercase;
             <table id="invoices" class="table-striped" cellspacing="0" width="100%">
                 <thead>
                 <tr>
-                    <th><?php echo $this->lang->line('No') ?></th>
+                    <th width="1%"><?php echo $this->lang->line('No') ?></th>
                     <th>F/ra #</th>
                     <th><?php echo $this->lang->line('Customer') ?></th>
+					<th>Abonado</th>
                     <th>Vence</th>
                     <th><?php echo $this->lang->line('') ?>Estado</th>
                     <th><?php echo $this->lang->line('Total') ?></th>
@@ -73,9 +74,10 @@ text-transform: lowercase;
 
                 <tfoot>
                 <tr>
-                    <th><?php echo $this->lang->line('No') ?></th>
+                    <th width="1%"><?php echo $this->lang->line('No') ?></th>
                     <th>F/ra #</th>
                     <th><?php echo $this->lang->line('Customer') ?></th>
+					<th>Abonado</th>
                     <th>Vence</th>
                     <th><?php echo $this->lang->line('') ?>Estado</th>
                     <th><?php echo $this->lang->line('Total') ?></th>
