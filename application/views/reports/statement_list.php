@@ -53,9 +53,39 @@
 </style>
 <?php 
 	$var_cuenta_planes=array("1Mega"=>0,"2Megas"=>0,"3Megas"=>0,"5Megas"=>0,"10Megas"=>0,"Television"=>0); 
+//tabla total cobranza
+	//productos con iva
+		$cuantos_prod_con_iva_hay=0;
+		$monto_prod_con_iva_hay=0;
+		$monto_iva_prod_con_iva_hay=0;
+
+	//end productos con iva
+
+	//productos sin iva
+		$cuantos_prod_sin_iva_hay=0;
+		$monto_prod_sin_iva_hay=0;
+	//end productos sin iva
+//end tabla total cobranza
+
 		foreach ($lista as $key => $value) { 
 			$invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
-		
+			$invoice_items=$this->db->get_where('invoice_items',array('tid' =>$value['tid']))->result_array();
+			foreach ($invoice_items as $key => $item_invoic) {
+				//recorro y pregunto si tiene iva o no el item
+				if($item_invoic['totaltax']!="0"){
+					$cuantos_prod_con_iva_hay++;
+					$monto_iva_prod_con_iva_hay=$monto_iva_prod_con_iva_hay+intval($item_invoic['totaltax']);
+					$monto_prod_con_iva_hay=$monto_prod_con_iva_hay+intval($item_invoic['price']);
+				}else{
+					$cuantos_prod_sin_iva_hay++;
+					$monto_prod_sin_iva_hay=$monto_prod_sin_iva_hay+intval($item_invoic['price']);
+				}
+			}
+			$tabla_total_cobranza_monto=$monto_prod_sin_iva_hay+$monto_prod_con_iva_hay+$monto_iva_prod_con_iva_hay;
+			//ya esta terminada la primera tabla amenos de que se agreguen los productos asignados a la orden;
+
+
+			//queda pendiente de cambiar esto... falta
 			if($invoice->combo=="1Mega"){
 			 		$var_cuenta_planes['1Mega']++;
 
@@ -78,7 +108,7 @@
 		 } 
 		 	
 		 	
-
+		 
 		 ?>
 
 <article class="content">
@@ -106,21 +136,21 @@
 				</thead>
 				<tbody>
 					<tr>
-						<td>Excento</td><td style="text-align: center">500</td><td style="text-align: center">0</td>
+						<td>Excento</td><td style="text-align: center"><?=$cuantos_prod_sin_iva_hay?></td><td style="text-align: center"><?="$ ".number_format($monto_prod_sin_iva_hay,0,",",".")?></td>
 					</tr>
 					<tr>
-						<td>Base</td><td style="text-align: center">0</td><td style="text-align: center">0</td>
+						<td>Base</td><td style="text-align: center"><?=$cuantos_prod_con_iva_hay?></td><td style="text-align: center"><?="$ ".number_format($monto_prod_con_iva_hay,0,",",".")?></td>
 					</tr>
 					<tr>
-						<td>iva</td><td style="text-align: center">0</td><td style="text-align: center">0</td>
+						<td>iva</td><td style="text-align: center"><?=$cuantos_prod_con_iva_hay?></td><td style="text-align: center"><?="$ ".number_format($monto_iva_prod_con_iva_hay,0,",",".")?></td>
 					</tr>
 					
 				</tbody>
 				<tfoot>
 					<tr>
 						<th class="pie">TOTAL COBRANZA</th>
-						<th class="pie">0</th>
-						<th class="pie">0</th>			
+						<th class="pie"><?=$cuantos_prod_sin_iva_hay+$cuantos_prod_con_iva_hay?></th>
+						<th class="pie"><?="$ ".number_format($tabla_total_cobranza_monto,0,",",".")?></th>			
 					</tr>
 				</tfoot>
 			</table>
