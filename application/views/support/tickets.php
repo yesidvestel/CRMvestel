@@ -92,11 +92,12 @@
 					<th>N° orden</th>	
                     <th><?php echo $this->lang->line('Subject') ?></th>
 					<th>Detalle</th>
-                    <th><?php echo $this->lang->line('Added') ?></th>
-                    <th>Usuario</th>
+                    <th>F/creada</th>                    
+					<th>Abonado</th>
+					<th>Usuario</th>
                     <th>Factura</th>
 					<th>Asignado</th>
-                    <th>Estado</th>
+					<th>Estado</th>
                     <th>Accion</th>
 					
 

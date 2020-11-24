@@ -96,14 +96,14 @@ class Quote extends CI_Controller
     public function action()
     {
 
-        $customer_id = $this->input->post('customer_id');
+        $customer_id = $this->input->post('customer_id');		
         $subject = $this->input->post('subject');
         $detalle = $this->input->post('detalle');
         $created = $this->input->post('created');
         $section = $this->input->post('section');
 		$factura = $this->input->post('factura');
         if ($customer_id) {
-        	$this->quote->addticket($customer_id,$subject,$detalle,$created,$section, $factura);
+        	$this->quote->addticket($customer_id, $subject, $detalle, $created, $section, $factura);
 			
 		}
 

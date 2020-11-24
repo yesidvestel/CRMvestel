@@ -31,7 +31,7 @@
                                         Celular: <?php echo $details['celular'] ?>
                                     </div>
 									<div class="clientinfo">
-                                        Direccion: <?php echo $details['nomenclatura'] ?> <?php echo $details['numero1'] ?><?php echo $details['adicionauno'] ?> Nº <?php echo $details['numero2'] ?> <?php echo $details['adicional2'] ?> - <?php echo $details['numero3'] ?>
+                                        Direccion: <?php echo $details['nomenclatura'] ?> <?php echo $details['numero1'] ?><?php echo $details['adicionauno'] ?> Nยบ <?php echo $details['numero2'] ?> <?php echo $details['adicional2'] ?> - <?php echo $details['numero3'] ?>
                                     </div>
                                     <hr>                                    
                                 </div>
@@ -44,7 +44,8 @@
 
 
                                 <div class="form-group row">
-
+									<?php /*?><input type="hidden" class="form-control" placeholder="Invoice #" name="ticketnumero"
+                                                   value="<?php echo $lastinvoice + 1 ?>" readonly></input><?php */?>
                                     <div class="col-sm-12"><h3
                                                 class="title"><?php echo $this->lang->line('') ?>Propiedades de orden</h3>
                                     </div>

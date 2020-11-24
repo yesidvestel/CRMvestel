@@ -65,14 +65,15 @@ class Tickets Extends CI_Controller
             $row = array();
             $no++;			
             $row[] = $no;
-			$row[] = '<input id="input_'.$ticket->id.'" type="checkbox" style="margin-left: 9px;cursor:pointer;" onclick="asignar_orden(this)" data-id="'.$ticket->id.'">';
-			$row[] = $ticket->id;
+			$row[] = '<input id="input_'.$ticket->idt.'" type="checkbox" style="margin-left: 9px;cursor:pointer;" onclick="asignar_orden(this)" data-id="'.$ticket->idt.'">';
+			$row[] = $ticket->idt;
             $row[] = $ticket->subject;
 			$row[] = $ticket->detalle;
             $row[] = $ticket->created;          
 			if($ticket->cid !=null){
-                $row[]='<a href="'.base_url("customers/view?id=".$ticket->cid).'">'.$ticket->cid.'</a>';
+                $row[]='<a href="'.base_url("customers/view?id=".$ticket->cid).'">'.$ticket->abonado.'</a>';
             }
+			$row[] = $ticket->name;
           if($ticket->id_factura !=null){
                 $row[]='<a href="'.base_url("invoices/view?id=".$ticket->id_factura).'">'.$ticket->id_factura.'</a>';
             }else{
@@ -87,7 +88,7 @@ class Tickets Extends CI_Controller
             }
 			
 			$row[] = '<span class="st-' . $ticket->status . '">' . $ticket->status . '</span>';
-            $row[] = '<a href="' . base_url('tickets/thread/?id=' . $ticket->id) . '" class="btn btn-success btn-xs"><i class="icon-file-text"></i> ' . $this->lang->line('View') . '</a> <a class="btn btn-danger" onclick="eliminar_ticket('.$ticket->id.')" > <i class="icon-trash-o "></i> </a>';
+            $row[] = '<a href="' . base_url('tickets/thread/?id=' . $ticket->idt) . '" class="btn btn-success btn-xs"><i class="icon-file-text"></i> ' . $this->lang->line('View') . '</a> <a class="btn btn-danger" onclick="eliminar_ticket('.$ticket->idt.')" > <i class="icon-trash-o "></i> </a>';
 
             
 
@@ -106,7 +107,7 @@ class Tickets Extends CI_Controller
     public function asignar_ordenes(){
         foreach ($_POST['lista'] as $key => $id_orden) {
             $datos['asignado']=$_POST['id_tecnico_seleccionado'];
-            $condicion['id']=$id_orden;
+            $condicion['idt']=$id_orden;
             $this->db->update('tickets',$datos,$condicion);
         }
         echo "correcto";
@@ -129,7 +130,7 @@ class Tickets Extends CI_Controller
 		$data2['barrio'] = $this->ticket->group_barrio($data['details']['barrio']);
         $data['response'] = 3;
         $data['id_orden_n']	=$thread_id;	
-        $orden = $this->db->get_where('tickets',array('id'=>$thread_id))->row();
+        $orden = $this->db->get_where('tickets',array('idt'=>$thread_id))->row();
         $almacen= $this->db->get_where('product_warehouse',array('id_tecnico'=>$orden->asignado))->row();
 		$data['lista_productos_tecnico']=$this->db->get_where('products',array('warehouse'=>$almacen->id))->result_array();
         $head['usernm'] = $this->aauth->get_user()->username;
@@ -208,7 +209,7 @@ class Tickets Extends CI_Controller
     }
 
     public function eliminar_prod_lista(){
-        $transferencia =  $this->db->get_where('transferencia_products_orden',array("idtransferencia_products_orden"=>$_POST['id']))->row();
+        $transferencia =  $this->db->get_where('transferencia_products_orden',array("idtransferencia_products_orden"=>$_POST['idt']))->row();
         $producto=$this->db->get_where('products',array("pid"=>$transferencia->products_pid))->row();
         $x1=intval($producto->qty);
         $y1=intval($transferencia->cantidad);

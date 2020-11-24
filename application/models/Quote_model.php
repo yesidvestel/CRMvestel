@@ -21,6 +21,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Quote_model extends CI_Model
 {
     var $table = 'quotes';
+	
     var $column_order = array(null, 'tid', 'name', 'invoicedate', 'total', 'status', null);
     var $column_search = array('tid', 'name', 'invoicedate', 'total');
     var $order = array('tid' => 'desc');
@@ -32,13 +33,13 @@ class Quote_model extends CI_Model
 
     public function lastquote()
     {
-        $this->db->select('tid');
+        $this->db->select('id');
         $this->db->from($this->table);
-        $this->db->order_by('tid', 'DESC');
+        $this->db->order_by('id', 'DESC');
         $this->db->limit(1);
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
-            return $query->row()->tid;
+            return $query->row()->n_orden;
         } else {
             return 1000;
         }
@@ -176,7 +177,7 @@ class Quote_model extends CI_Model
 	public function addticket($customer_id, $subject, $detalle, $created, $section, $factura)
     {
 		$bill_llegada = datefordatabase($created);
-        $data = array(
+        $data = array(			
             'subject' => $subject,
             'detalle' => $detalle,
             'created' => $bill_llegada,

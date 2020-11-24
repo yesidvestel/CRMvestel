@@ -64,7 +64,7 @@ class Ticket_model extends CI_Model
         $this->db->select('tickets.*, customers.name,customers.email,customers.nomenclatura,customers.numero1,customers.adicionauno,customers.numero2,customers.adicional2,customers.numero3,customers.barrio,customers.celular,customers.unoapellido');
         $this->db->from('tickets');
         $this->db->join('customers', 'tickets.cid=customers.id', 'left');
-        $this->db->where('tickets.id', $id);
+        $this->db->where('tickets.idt', $id);
         $query = $this->db->get();
         return $query->row_array();
     }
@@ -131,7 +131,7 @@ class Ticket_model extends CI_Model
 
     function deleteticket($id)
     {
-        $this->db->delete('tickets', array('id' => $id));
+        $this->db->delete('tickets', array('idt' => $id));
 
         $this->db->select('attach');
         $this->db->from('tickets_th');
@@ -178,7 +178,7 @@ class Ticket_model extends CI_Model
         if ($filt == 'unsolved') {
             $this->db->where('status!=', 'Solved');
         }
-
+		$this->db->join('customers', 'tickets.cid=customers.id', 'left');
         $i = 0;
 
         foreach ($this->doccolumn_search as $item) // loop column

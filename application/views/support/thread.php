@@ -1,4 +1,5 @@
 <article class="content">
+	
     <div class="card card-block">
         <?php $lista_productos_orden=$this->db->get_where('transferencia_products_orden',array('tickets_id'=>$id_orden_n))->result_array(); ?>
         
@@ -26,6 +27,9 @@
         </div>';
 
         } ?>
+		
+		
+		
         <div class="grid_3 grid_4"><h4><?php echo $thread_info['subject'] ?> </h4>
 			<input type="hidden" name="detalle" value="<?php echo $thread_info['detalle'] ?>"></input>
 			<input type="hidden" name="ids" value="<?php echo $thread_info['id'] ?>"></input>
@@ -36,13 +40,16 @@
 				echo '<br><strong>Barrio:</strong> ' . $thread_info['barrio'];
                 echo '<br><strong>Estado:</strong> <span id="pstatus">' . $thread_info['status'];		
                 ?></p>
+				
 
 			<?php //echo '<h4>Detalles:</h4><code class="card card-block">' . $thread_info['section']?>
         <!--</code>
 			<table  class="table table-hover table-condensed" width="100%"> -->
 
-			<?php echo '<h4>Detalles:</h4><code class="card card-block"><h5 style="text-decoration: underline;">' .$thread_info['detalle'].'</h5>'. $thread_info['section']?>
-		</code>			
+			<?php echo '<h4>Detalles:</h4><code class="card card-block"><h5 style="text-decoration: underline;">' .$thread_info['detalle'].'</h5>'.strip_tags($thread_info['section'],'<p>')?>
+		</code>		
+			
+					
 			<table  class="table-responsive tfr my_stripe" width="80%">
 				
 
