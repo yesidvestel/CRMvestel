@@ -88,7 +88,7 @@ class Tickets Extends CI_Controller
             }
 			
 			$row[] = '<span class="st-' . $ticket->status . '">' . $ticket->status . '</span>';
-            $row[] = '<a href="' . base_url('tickets/thread/?id=' . $ticket->idt) . '" class="btn btn-success btn-xs"><i class="icon-file-text"></i> ' . $this->lang->line('View') . '</a> <a class="btn btn-danger" onclick="eliminar_ticket('.$ticket->idt.')" > <i class="icon-trash-o "></i> </a>';
+            $row[] = '<a href="' . base_url('tickets/thread/?id=' . $ticket->idt) . '" class="btn btn-success btn-xs"><i class="icon-file-text"></i> ' . $this->lang->line('View') . '</a> <a href="' . base_url('quote/edit/?id=' . $ticket->idt) . '" class="btn btn-primary btn-sm"><i class="icon-pencil"></i> ' . 'Editar' . '</a> <a class="btn btn-danger" onclick="eliminar_ticket('.$ticket->idt.')" > <i class="icon-trash-o "></i> </a>';
 
             
 

@@ -60,22 +60,18 @@ class Quote extends CI_Controller
     //edit invoice
     public function edit()
     {
-        $this->load->model('customers_model', 'customers');
-        $data['customergrouplist'] = $this->customers->group_list();
-        $tid = intval($this->input->get('id'));
+        $this->load->model('ticket_model', 'ticket');        
+        $thread_id = intval($this->input->get('id'));
         $data['id'] = $tid;
         $data['title'] = "Quote $tid";
-        $data['terms'] = $this->quote->billingterms();
-        $data['invoice'] = $this->quote->quote_details($tid);
-        $data['products'] = $this->quote->quote_products($tid);
-        $data['currency'] = $this->quote->currencies();
+        $data['thread_info'] = $this->ticket->thread_info($thread_id);
+        $data['thread_list'] = $this->ticket->thread_list($thread_id);
+		$data['facturalist'] = $this->ticket->factura_list($thread_id);
         $head['title'] = "Edit Quote #$tid";
         $head['usernm'] = $this->aauth->get_user()->username;
         $data['warehouse'] = $this->quote->warehouses();
         $this->load->model('plugins_model', 'plugins');
         $data['exchange'] = $this->plugins->universal_api(5);
-
-
         $this->load->view('fixed/header', $head);
         $this->load->view('quotes/edit', $data);
         $this->load->view('fixed/footer');
@@ -221,157 +217,24 @@ class Quote extends CI_Controller
     public function editaction()
     {
 
-        $customer_id = $this->input->post('customer_id');
-
-        $invocieno = $this->input->post('invocieno');
-        $invoicedate = $this->input->post('invoicedate');
-        $invocieduedate = $this->input->post('invocieduedate');
-        $notes = $this->input->post('notes');
-        $tax = $this->input->post('tax_handle');
-        $subtotal = $this->input->post('subtotal');
-        $shipping = $this->input->post('shipping');
-        $refer = $this->input->post('refer');
-        $total = $this->input->post('total');
-        $total_tax = 0;
-        $total_discount = 0;
-        $discountFormat = $this->input->post('discountFormat');
-        $pterms = $this->input->post('pterms');
-        $propos = $this->input->post('propos');
-        $currency = $this->input->post('mcurrency');
-        $i = 0;
-        if ($discountFormat == '0') {
-            $discstatus = 0;
-        } else {
-            $discstatus = 1;
-        }
-
-        if ($customer_id == 0) {
-            echo json_encode(array('status' => 'Error', 'message' =>
-                $this->lang->line('Please add a new client')));
-            exit;
-
-
-        }
-
-
-        $this->db->trans_start();
-        $flag = false;
-        $transok = true;
-
-
-        //Product Data
-        $pid = $this->input->post('pid');
-        $productlist = array();
-
-        $prodindex = 0;
-
-        $this->db->delete('quotes_items', array('tid' => $invocieno));
-        if ($tax == 'yes') {
-            $taxstatus = 1;
-
-            foreach ($pid as $key => $value) {
-
-                $product_id = $this->input->post('pid');
-                $product_name1 = $this->input->post('product_name');
-                $product_qty = $this->input->post('product_qty');
-                $old_product_qty = intval($this->input->post('old_product_qty'));
-                $product_price = $this->input->post('product_price');
-                $product_tax = $this->input->post('product_tax');
-                $product_discount = $this->input->post('product_discount');
-                $product_subtotal = $this->input->post('product_subtotal');
-                $ptotal_tax = $this->input->post('taxa');
-                $ptotal_disc = $this->input->post('disca');
-                $product_des = $this->input->post('product_description');
-                $total_discount += $ptotal_disc[$key];
-                $total_tax += $ptotal_tax[$key];
-
-                $data = array(
-                    'tid' => $invocieno,
-                    'pid' => $product_id[$key],
-                    'product' => $product_name1[$key],
-                    'qty' => $product_qty[$key],
-                    'price' => $product_price[$key],
-                    'tax' => $product_tax[$key],
-                    'discount' => $product_discount[$key],
-                    'subtotal' => $product_subtotal[$key],
-                    'totaltax' => $ptotal_tax[$key],
-                    'totaldiscount' => $ptotal_disc[$key],
-                    'product_des' => $product_des[$key]
-                );
-
-
-                $flag = true;
-                $productlist[$prodindex] = $data;
-                $i++;
-                $prodindex++;
-
-
-            }
-        } else {
-            $taxstatus = 0;
-            foreach ($pid as $key => $value) {
-                $product_id = $this->input->post('pid');
-                $product_name1 = $this->input->post('product_name');
-                $product_qty = $this->input->post('product_qty');
-                $old_product_qty = $this->input->post('old_product_qty');
-                $product_price = $this->input->post('product_price');
-                $product_discount = $this->input->post('product_discount');
-                $product_subtotal = $this->input->post('product_subtotal');
-                $product_des = $this->input->post('product_description');
-
-
-                $data = array(
-                    'tid' => $invocieno,
-                    'product' => $product_name1,
-                    'qty' => $product_qty,
-                    'price' => $product_price,
-                    'discount' => $product_discount,
-                    'subtotal' => $product_subtotal,
-                    'product_des' => $product_des[$key]
-                );
-
-
-                $flag = true;
-                $productlist[$prodindex] = $data;
-                $i++;
-                $prodindex++;
-
-
-            }
-        }
-
-        $bill_date = datefordatabase($invoicedate);
-        $bill_due_date = datefordatabase($invocieduedate);
-
-        $data = array('invoicedate' => $bill_date, 'invoiceduedate' => $bill_due_date, 'subtotal' => $subtotal, 'shipping' => $shipping, 'discount' => $total_discount, 'tax' => $total_tax, 'total' => $total, 'notes' => $notes, 'csd' => $customer_id, 'items' => $i, 'taxstatus' => $taxstatus, 'discstatus' => $discstatus, 'format_discount' => $discountFormat, 'refer' => $refer, 'term' => $pterms, 'proposal' => $propos, 'multi' => $currency);
+        $customer_id = $this->input->post('customer_id');		
+        $subject = $this->input->post('subject');
+        $detalle = $this->input->post('detalle');
+        $created = $this->input->post('created');
+        $section = $this->input->post('section');
+		$factura = $this->input->post('factura'); 
+        $bill_date = datefordatabase($created);        
+        $data = array('subject' => $subject, 'detalle' => $detalle, 'created' => $bill_date, 'section' => $section, 'id_factura' => $factura);
         $this->db->set($data);
-        $this->db->where('tid', $invocieno);
+        $this->db->where('idt', $customer_id);
+		$this->db->update('tickets');
 
-        if ($flag) {
-
-            if ($this->db->update('quotes', $data)) {
-                $this->db->insert_batch('quotes_items', $productlist);
-                echo json_encode(array('status' => 'Success', 'message' =>
-                    $this->lang->line('Quote has  been updated') . " <a href='view?id=$invocieno' class='btn btn-info btn-lg'><span class='icon-file-text2' aria-hidden='true'></span> View </a> "));
-            } else {
-                echo json_encode(array('status' => 'Error', 'message' =>
-                    $this->lang->line('ERROR')));
-                $transok = false;
-            }
+        echo json_encode(array('status' => 'Success', 'message' =>
+            $this->lang->line('UPDATED'), 'pstatus' => $status));
+        
 
 
-        } else {
-            echo json_encode(array('status' => 'Error', 'message' =>
-                "Please add atleast one product in invoice $invocieno"));
-            $transok = false;
-        }
-
-
-        if ($transok) {
-            $this->db->trans_complete();
-        } else {
-            $this->db->trans_rollback();
-        }
+        
     }
 
 
