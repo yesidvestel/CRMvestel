@@ -53,6 +53,7 @@
 </style>
 <?php 
 	$var_cuenta_planes=array("1Mega"=>0,"2Megas"=>0,"3Megas"=>0,"5Megas"=>0,"10Megas"=>0,"Television"=>0); 
+	$var_cuenta_planes_montos=array("1MegaMonto"=>0,"2MegasMonto"=>0,"3MegasMonto"=>0,"5MegasMonto"=>0,"10MegasMonto"=>0,"TelevisionMonto"=>0); 
 //tabla total cobranza
 	//productos con iva
 		$cuantos_prod_con_iva_hay=0;
@@ -80,33 +81,45 @@
 					$cuantos_prod_sin_iva_hay++;
 					$monto_prod_sin_iva_hay=$monto_prod_sin_iva_hay+intval($item_invoic['price']);
 				}
+
+				if($item_invoic['product']=="1Mega" ||$item_invoic['product']=="1 Mega"){
+			 		$var_cuenta_planes['1Mega']++;
+			 		$var_cuenta_planes_montos['1MegaMonto']+=intval($item_invoic['subtotal']);
+
+				}else if($item_invoic['product']=="2Megas" ||$item_invoic['product']=="2 Megas"){
+					$var_cuenta_planes['2Megas']++;
+					$var_cuenta_planes_montos['2MegasMonto']+=intval($item_invoic['subtotal']);
+
+				}else if($item_invoic['product']=="3Megas"|| $item_invoic['product']=="3 Megas"){
+					$var_cuenta_planes['3Megas']++;
+					$var_cuenta_planes_montos['3MegasMonto']+=intval($item_invoic['subtotal']);
+
+				}else if($item_invoic['product']=="5Megas"||$item_invoic['product']=="5 Megas"){
+					$var_cuenta_planes['5Megas']++;
+					$var_cuenta_planes_montos['5MegasMonto']+=intval($item_invoic['subtotal']);
+
+				}else if($item_invoic['product']=="10Megas"||$item_invoic['product']=="10 Megas"){
+					$var_cuenta_planes['10Megas']++;
+					$var_cuenta_planes_montos['10MegasMonto']+=intval($item_invoic['subtotal']);
+
+				}
+				if(strpos(strtolower($item_invoic['product']), "tele")!==false){
+					$var_cuenta_planes['Television']++;
+					$var_cuenta_planes_montos['TelevisionMonto']+=intval($item_invoic['subtotal']);
+				}
+
+
 			}
 			$tabla_total_cobranza_monto=$monto_prod_sin_iva_hay+$monto_prod_con_iva_hay+$monto_iva_prod_con_iva_hay;
 			//ya esta terminada la primera tabla amenos de que se agreguen los productos asignados a la orden;
-
-
+			//segunda tabla 
+			$var_cantidad_mensualidades=$var_cuenta_planes['1Mega']+$var_cuenta_planes['2Megas']+$var_cuenta_planes['3Megas']+$var_cuenta_planes['5Megas']+$var_cuenta_planes['10Megas']+$var_cuenta_planes['Television'];
+			$var_total_mensualidades=$var_cuenta_planes_montos['1MegaMonto']+$var_cuenta_planes_montos['2MegasMonto']+$var_cuenta_planes_montos['3MegasMonto']+$var_cuenta_planes_montos['5MegasMonto']+$var_cuenta_planes_montos['10MegasMonto']+$var_cuenta_planes_montos['TelevisionMonto'];
 			//queda pendiente de cambiar esto... falta
-			if($invoice->combo=="1Mega"){
-			 		$var_cuenta_planes['1Mega']++;
-
-			}else if($invoice->combo=="2Megas"){
-					$var_cuenta_planes['2Megas']++;
-
-			}else if($invoice->combo=="3Megas"){
-					$var_cuenta_planes['3Megas']++;
-
-			}else if($invoice->combo=="5Megas"){
-					$var_cuenta_planes['5Megas']++;
-
-			}else if($invoice->combo=="10Megas"){
-					$var_cuenta_planes['10Megas']++;
-
-			}else{
-					$var_cuenta_planes['Television']++;
-			}
+			
 
 		 } 
-		 	
+		 
 		 	
 		 
 		 ?>
@@ -201,48 +214,48 @@
 					<tr>
 						<td>Internet 1MG</td>
 						<td style="text-align: center"><?=$var_cuenta_planes['1Mega']?></td>
-						<td style="text-align: center">0</td>
+						<td style="text-align: center"><?="$ ".number_format($var_cuenta_planes_montos['1MegaMonto'],0,",",".")?></td>
 					</tr>
 					<?php } ?>
 					<?php if($var_cuenta_planes['2Megas']!=0){  ?>
 					<tr>
 						<td>Internet 2MG</td>
 						<td style="text-align: center"><?=$var_cuenta_planes['2Megas']?></td>
-						<td style="text-align: center">0</td>
+						<td style="text-align: center"><?="$ ".number_format($var_cuenta_planes_montos['2MegasMonto'],0,",",".")?></td>
 					</tr>
 					<?php } ?>
 					<?php if($var_cuenta_planes['3Megas']!=0){  ?>
 					<tr>
 						<td>Internet 3MG</td>
 						<td style="text-align: center"><?=$var_cuenta_planes['3Megas']?></td>
-						<td style="text-align: center">0</td>
+						<td style="text-align: center"><?="$ ".number_format($var_cuenta_planes_montos['3MegasMonto'],0,",",".")?></td>
 					</tr>
 					<?php } ?>
 					<?php if($var_cuenta_planes['5Megas']!=0){  ?>
 					<tr>
 						<td>Internet 5MG</td>
 						<td style="text-align: center"><?=$var_cuenta_planes['5Megas']?></td>
-						<td style="text-align: center">0</td>
+						<td style="text-align: center"><?="$ ".number_format($var_cuenta_planes_montos['5MegasMonto'],0,",",".")?></td>
 					</tr>
 					<?php } ?>
 					<?php if($var_cuenta_planes['10Megas']!=0){  ?>
 					<tr>
 						<td>Internet 10MG</td>
 						<td style="text-align: center"><?=$var_cuenta_planes['10Megas']?></td>
-						<td style="text-align: center">0</td>
+						<td style="text-align: center"><?="$ ".number_format($var_cuenta_planes_montos['10MegasMonto'],0,",",".")?></td>
 					</tr>
 					<?php } ?>
 					<?php if($var_cuenta_planes['Television']!=0){  ?>
 					<tr>
 						<td>Television</td>
 						<td style="text-align: center"><?=$var_cuenta_planes['Television']?></td>
-						<td style="text-align: center">0</td>
+						<td style="text-align: center"><?="$ ".number_format($var_cuenta_planes_montos['TelevisionMonto'],0,",",".")?></td>
 					</tr>
 					<?php } ?>
 					<tr>
 						<th class="pie">TOTAL MENSUALIDADES</th>
-						<th class="pie">0</th>
-						<th class="pie"><?php echo amountFormat($income['monthinc']) ?></th>			
+						<th class="pie"><?=$var_cantidad_mensualidades?></th>
+						<th class="pie"><?="$ ".number_format($var_total_mensualidades,0,",",".") ?></th>			
 					</tr>
 					<tr>
 						<td class="sub">Total Ventas</td>
