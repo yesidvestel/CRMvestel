@@ -30,9 +30,8 @@
 		
 		
 		
-        <div class="grid_3 grid_4"><h4><?php echo $thread_info['subject'] ?> </h4>
-			<input type="hidden" name="detalle" value="<?php echo $thread_info['detalle'] ?>"></input>
-			<input type="hidden" name="ids" value="<?php echo $thread_info['id'] ?>"></input>
+        <div class="grid_3 grid_4"><h4><?php echo $thread_info['subject'] ?> </h4>			
+			
             <p class="card card-block"><?php echo '<strong>Creado el: </strong> ' . $thread_info['created'];
                 echo '<br><strong>Usuario:</strong> ' . $thread_info['name'] .' '. $thread_info['unoapellido'];
 				echo '<br><strong>Celular:</strong> ' . $thread_info['celular'];
@@ -98,7 +97,7 @@
                     </div>
                 </div>
             <?php }
-            echo form_open_multipart('tickets/thread?id=' . $thread_info['id']); ?>
+            echo form_open_multipart('tickets/thread?id=' . $thread_info['idt']); ?>
 
             <h5><?php echo $this->lang->line('Your Response') ?></h5>
             <hr>
