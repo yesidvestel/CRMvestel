@@ -148,6 +148,25 @@ class Ticket_model extends CI_Model
         $this->db->delete('tickets_th', array('tid' => $id));
         return true;
     }
+	function deletedoc($id)
+    {
+        $this->db->delete('tickets_th', array('id' => $id));
+
+        $this->db->select('attach');
+        $this->db->from('tickets_th');
+        $this->db->where('id', $id);
+        $query = $this->db->get();
+        $result = $query->result_array();
+        foreach ($result as $row) {
+            if ($row['attach'] != '') {
+
+                unlink(FCPATH . 'userfiles/support/' . $row['attach']);
+
+            }
+        }
+        $this->db->delete('tickets_th', array('id' => $id));
+        return true;
+    }
 
     public function ticket_stats()
     {

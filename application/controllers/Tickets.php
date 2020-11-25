@@ -229,6 +229,16 @@ class Tickets Extends CI_Controller
             echo json_encode(array('status' => 'Error', 'message' => $this->lang->line('ERROR')));
         }
     }
+	public function delete_documento()
+    {  
+        $id = $this->input->post('deleteid');
+
+        if ($this->ticket->deletedoc($id)) {
+            echo json_encode(array('status' => 'Success', 'message' => $this->lang->line('DELETED')));
+        } else {
+            echo json_encode(array('status' => 'Error', 'message' => $this->lang->line('ERROR')));
+        }
+    }
 
     public function update_status()
     {
@@ -242,7 +252,7 @@ class Tickets Extends CI_Controller
 		$detalle = $this->input->post('detalle');
 		
         foreach ($invoice[0] as $key => $value) {
-            if($key!='idt'){
+            if($key!='id'){
              $data[$key]=$value;
             }
         }
