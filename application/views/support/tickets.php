@@ -83,8 +83,8 @@
                     </div>
                 </div>
             </div>
-
-            <table id="doctable" class="display" cellspacing="0" width="100%">
+			<div class="table-responsive">
+            <table id="doctable" class="table table-hover" cellspacing="0" width="100%">
                 <thead>
                 <tr>
 					<th>#</th>
@@ -108,6 +108,7 @@
                 </tbody>
 
             </table>
+			</div>
 			 <div class="col-md-12">
 			<h6 class="colspan 1">ASIGNAR ORDEN</h6>
 			</div>
