@@ -52,6 +52,7 @@
   }
 </style>
 <?php 
+	$array_afiliaciones=array();
 	$var_cuenta_planes=array("1Mega"=>0,"2Megas"=>0,"3Megas"=>0,"5Megas"=>0,"10Megas"=>0,"Television"=>0); 
 	$var_cuenta_planes_montos=array("1MegaMonto"=>0,"2MegasMonto"=>0,"3MegasMonto"=>0,"5MegasMonto"=>0,"10MegasMonto"=>0,"TelevisionMonto"=>0); 
 //tabla total cobranza
@@ -72,7 +73,7 @@
 			$invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
 			$invoice_items=$this->db->get_where('invoice_items',array('tid' =>$value['tid']))->result_array();
 			foreach ($invoice_items as $key => $item_invoic) {
-				//recorro y pregunto si tiene iva o no el item
+				//recorro y pregunto si tiene iva o no el item para la primera tabla
 				if($item_invoic['totaltax']!="0"){
 					$cuantos_prod_con_iva_hay++;
 					$monto_iva_prod_con_iva_hay=$monto_iva_prod_con_iva_hay+intval($item_invoic['totaltax']);
@@ -81,7 +82,7 @@
 					$cuantos_prod_sin_iva_hay++;
 					$monto_prod_sin_iva_hay=$monto_prod_sin_iva_hay+intval($item_invoic['price']);
 				}
-
+				//para la Resumen por Servicios
 				if($item_invoic['product']=="1Mega" ||$item_invoic['product']=="1 Mega"){
 			 		$var_cuenta_planes['1Mega']++;
 			 		$var_cuenta_planes_montos['1MegaMonto']+=intval($item_invoic['subtotal']);
@@ -103,24 +104,40 @@
 					$var_cuenta_planes_montos['10MegasMonto']+=intval($item_invoic['subtotal']);
 
 				}
-				if(strpos(strtolower($item_invoic['product']), "tele")!==false){
+				if(strpos(strtolower($item_invoic['product']), "afilia")!==false){
+					$cuenta_afiliacion=1;
+					$monto_afiliacion=1;
+					if(isset($array_afiliaciones[$item_invoic['product']])) {
+						$array_afiliaciones[$item_invoic['product']]['cuenta_afiliacion']++;
+						$array_afiliaciones[$item_invoic['product']]['monto_afiliacion']+=intval($item_invoic['subtotal']);
+					}else{
+						$array_afiliaciones[$item_invoic['product']]=array('cuenta_afiliacion' => intval($cuenta_afiliacion),"monto_afiliacion"=> intval($item_invoic['subtotal']));
+					}
+				}else if(strpos(strtolower($item_invoic['product']), "tele")!==false){
 					$var_cuenta_planes['Television']++;
 					$var_cuenta_planes_montos['TelevisionMonto']+=intval($item_invoic['subtotal']);
 				}
 
+				
 
 			}
-			$tabla_total_cobranza_monto=$monto_prod_sin_iva_hay+$monto_prod_con_iva_hay+$monto_iva_prod_con_iva_hay;
-			//ya esta terminada la primera tabla amenos de que se agreguen los productos asignados a la orden;
-			//segunda tabla 
-			$var_cantidad_mensualidades=$var_cuenta_planes['1Mega']+$var_cuenta_planes['2Megas']+$var_cuenta_planes['3Megas']+$var_cuenta_planes['5Megas']+$var_cuenta_planes['10Megas']+$var_cuenta_planes['Television'];
-			$var_total_mensualidades=$var_cuenta_planes_montos['1MegaMonto']+$var_cuenta_planes_montos['2MegasMonto']+$var_cuenta_planes_montos['3MegasMonto']+$var_cuenta_planes_montos['5MegasMonto']+$var_cuenta_planes_montos['10MegasMonto']+$var_cuenta_planes_montos['TelevisionMonto'];
-			//queda pendiente de cambiar esto... falta
 			
 
 		 } 
-		 
+		 //tabla 1
+		 $tabla_total_cobranza_monto=$monto_prod_sin_iva_hay+$monto_prod_con_iva_hay+$monto_iva_prod_con_iva_hay;
+		//end tabla 1
+			//tabla 3 Resumen por Servicios
+			$var_cantidad_mensualidades=$var_cuenta_planes['1Mega']+$var_cuenta_planes['2Megas']+$var_cuenta_planes['3Megas']+$var_cuenta_planes['5Megas']+$var_cuenta_planes['10Megas']+$var_cuenta_planes['Television'];
+			$var_total_mensualidades=$var_cuenta_planes_montos['1MegaMonto']+$var_cuenta_planes_montos['2MegasMonto']+$var_cuenta_planes_montos['3MegasMonto']+$var_cuenta_planes_montos['5MegasMonto']+$var_cuenta_planes_montos['10MegasMonto']+$var_cuenta_planes_montos['TelevisionMonto'];
+			//end tabla 3 Resumen por Servicios
+			
+			//sobre afiliaciones
+
+
+			//end sobre afiliaciones
 		 	
+		 var_dump($array_afiliaciones);
 		 
 		 ?>
 
@@ -257,10 +274,23 @@
 						<th class="pie"><?=$var_cantidad_mensualidades?></th>
 						<th class="pie"><?="$ ".number_format($var_total_mensualidades,0,",",".") ?></th>			
 					</tr>
+					<?php 
+					$var_cuenta_afiliaciones=0;
+					$var_monto_afiliaciones=0;
+					foreach ($array_afiliaciones as $key => $afiliacion) { 
+						$var_cuenta_afiliaciones+=$afiliacion['cuenta_afiliacion'];
+						$var_monto_afiliaciones+=$afiliacion['monto_afiliacion'];
+						?>
+					<tr>
+						<td><?=$key?></td>
+						<td style="text-align: center"><?=$afiliacion['cuenta_afiliacion']?></td>
+						<td style="text-align: center"><?="$ ".number_format($afiliacion['monto_afiliacion'],0,",",".")?></td>
+					</tr>
+					<?php } ?>
 					<tr>
 						<td class="sub">Total Ventas</td>
-						<td class="sub">0</td>
-						<td class="sub">0</td>
+						<td class="sub"><?=$var_cuenta_afiliaciones?></td>
+						<td class="sub"><?="$ ".number_format($var_monto_afiliaciones,0,",",".")?></td>
 					</tr>
 					<tr>
 						<td class="sub">Total Reconexiones</td>
