@@ -247,7 +247,7 @@
 
                     <div class="modal-footer">
                         <input type="hidden" class="form-control required"
-                               name="tid" id="invoiceid" value="<?php echo $thread_info['id'] ?>">
+                               name="tid" id="invoiceid" value="<?php echo $thread_info['idt'] ?>">
                         <button type="button" class="btn btn-default"
                                 data-dismiss="modal"><?php echo $this->lang->line('Close'); ?></button>
                         <input type="hidden" id="action-url" value="tickets/update_status">
