@@ -235,14 +235,14 @@ class Tickets Extends CI_Controller
         $tid = $this->input->post('tid');		
         $status = $this->input->post('status');
         $fecha_final = $this->input->post('fecha_final');        
-        $ticket = $this->db->get_where('tickets', array('id' => $tid))->row();
+        $ticket = $this->db->get_where('tickets', array('idt' => $tid))->row();
         $invoice = $this->db->get_where('invoices',array('tid'=>$ticket->id_invoice))->result_array();
 		$idfactura = $ticket->id_factura;
         $data;
 		$detalle = $this->input->post('detalle');
 		
         foreach ($invoice[0] as $key => $value) {
-            if($key!='id'){
+            if($key!='idt'){
              $data[$key]=$value;
             }
         }
@@ -419,7 +419,7 @@ class Tickets Extends CI_Controller
         $dataz['status']=$status;
         $dataz['fecha_final']=$fecha_final;
         
-        $this->db->update('tickets',$dataz,array('id'=>$tid));
+        $this->db->update('tickets',$dataz,array('idt'=>$tid));
         
         echo json_encode(array('msg1'=>$msg1,'tid'=>$data['tid'],'status' => 'Success', 'message' =>
             $this->lang->line('UPDATED'), 'pstatus' => $status));
