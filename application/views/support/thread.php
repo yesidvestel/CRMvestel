@@ -88,19 +88,22 @@
                         <div class="card card-block"><?php
                             if ($row['custo']) echo 'Customer <strong>' . $row['custo'] . '</strong> Replied<br><br>';
 
-                            if ($row['emp']) echo 'Tecnico <strong>' . $row['emp'] . '</strong> Respondio<br><br>';
+                            if ($row['emp']) echo 'Tecnico <strong>' . $row['emp'] . '</strong> Respondio';
 
                             echo $row['message'] . '';
-
-                            if ($row['attach']) echo '<br><br><strong>Documentacion: </strong><a href="' . base_url('userfiles/support/' . $row['attach']) . '">' . $row['attach'] . '</a><br><br>';
-                            ?></div>
+                            if ($row['attach']) echo '<strong>Documentacion: </strong><a href="' . base_url('userfiles/support/' . $row['attach']) . '"><br><br>';?>
+							<img width="20%" src="<?php if ($row['attach']) echo  base_url('userfiles/support/' . $row['attach']);?>"/></a><br><br>
+							<a class="btn btn-danger" onclick="eliminar_documento(<?php echo $row['id']?>)" > <i class="icon-trash-o "></i> Eliminar</a>
+                            </div>
+							
                     </div>
                 </div>
             <?php }
             echo form_open_multipart('tickets/thread?id=' . $thread_info['idt']); ?>
-
+			
             <h5><?php echo $this->lang->line('Your Response') ?></h5>
             <hr>
+		
 			<div class="form-group row">
                                
         <div class="col-sm-10">
@@ -348,6 +351,15 @@ console.log(itemSeleccionado);
                 window.location.reload();
             });
         }
+    }
+	function eliminar_documento(id){
+        var confirmacion = confirm("Deseas Eliminar esta orden ?");
+        if(confirmacion==true){
+            $.post(baseurl+"tickets/delete_documento",{deleteid:id},function (data){
+                alert("Orden Eliminada...");                
+                window.location.reload();
+            },'json');
+      }
     }
 
     

@@ -89,10 +89,11 @@
                                                    autocomplete="false" readonly>
                                         </div>
                                     </div>
-									<div class="col-sm-6">
+									<div class="col-sm-6"><option value=""></option>
 										<label for="invociedate" class="caption">Factura mes</label>
 										<div class="input-group">
 										<select name="factura" id="tecnicos" class="form-control mb-1">
+												<option value=''>-</option>
 												<?php
 													foreach ($facturalist as $row) {
 														$cid = $row['id'];
