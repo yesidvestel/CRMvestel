@@ -126,8 +126,7 @@ class Tickets Extends CI_Controller
     {
 
         $this->load->helper(array('form'));
-        $thread_id = $this->input->get('id');
-		$data2['barrio'] = $this->ticket->group_barrio($data['details']['barrio']);
+        $thread_id = $this->input->get('id');		
         $data['response'] = 3;
         $data['id_orden_n']	=$thread_id;	
         $orden = $this->db->get_where('tickets',array('idt'=>$thread_id))->row();
@@ -165,14 +164,12 @@ class Tickets Extends CI_Controller
             }
 
             $data['thread_info'] = $this->ticket->thread_info($thread_id);
-            $data['thread_list'] = $this->ticket->thread_list($thread_id);
-			$data['barrio'] = $this->ticket->group_barrio($data['details']['barrio']);
+            $data['thread_list'] = $this->ticket->thread_list($thread_id);			
             $this->load->view('support/thread', $data);
         } else {
 
             $data['thread_info'] = $this->ticket->thread_info($thread_id);
-            $data['thread_list'] = $this->ticket->thread_list($thread_id);
-			$data['barrio'] = $this->ticket->group_barrio($data['details']['barrio']);
+            $data['thread_list'] = $this->ticket->thread_list($thread_id);			
             $this->load->view('support/thread', $data);
 
 
