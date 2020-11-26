@@ -316,7 +316,7 @@ class Tickets Extends CI_Controller
                 }
                 
                 if($data['television']!==no AND $data['refer']!==Mocoa){                
-                    $producto = $this->db->get_where('products',array('pid'=>22))->row();
+                    $producto = $this->db->get_where('products',array('pid'=>27))->row();
                     $datay['pid']=$producto->pid;
                     $datay['product']=$producto->product_name;                    
                     $x=intval($producto->product_price);
@@ -329,7 +329,7 @@ class Tickets Extends CI_Controller
                     }
                 }
 				if($data['television']!==no AND $data['refer']==Mocoa){                
-                    $producto = $this->db->get_where('products',array('pid'=>66))->row();
+                    $producto = $this->db->get_where('products',array('pid'=>159))->row();
                     $datay['pid']=$producto->pid;
                     $datay['product']=$producto->product_name;                    
                     $x=intval($producto->product_price);
@@ -382,30 +382,90 @@ class Tickets Extends CI_Controller
         	$this->db->where('tid', $idfactura);
         	$this->db->update('invoices');
 		}
-		if($ticket->detalle=="Reconexion"){			
+		if($ticket->detalle=="Reconexion Combo"){
+			$paquete = $this->input->post('paquete');
+			$this->db->set('combo', $paquete);
+			$this->db->set('television', 'Television');
 			$this->db->set('ron', 'Activo');
         	$this->db->where('tid', $idfactura);
         	$this->db->update('invoices');
 		}
-		if($ticket->detalle=="Corte Combo"){			
-			$this->db->set('ron', 'Cortado');
-			$this->db->set('television', 'no');
-			$this->db->set('combo', 'no');
+		if($ticket->detalle=="Reconexion Internet"){
+			$paquete = $this->input->post('paquete');
+			$this->db->set('combo', $paquete);			
+			$this->db->set('ron', 'Activo');
         	$this->db->where('tid', $idfactura);
         	$this->db->update('invoices');
 		}
-		if($ticket->detalle=="Corte Internet"){			
-			$this->db->set('ron', 'Cortado');
-			$this->db->set('combo', 'no');			
+		if($ticket->detalle=="Reconexion Television"){
+			$paquete = $this->input->post('paquete');
+			$this->db->set('television', 'Television');			
+			$this->db->set('ron', 'Activo');
         	$this->db->where('tid', $idfactura);
         	$this->db->update('invoices');
 		}
-		if($ticket->detalle=="Corte Television"){			
-			$this->db->set('ron', 'Cortado');
-			$this->db->set('television', 'no');		
-        	$this->db->where('tid', $idfactura);
-        	$this->db->update('invoices');
+		if($ticket->detalle=="Corte Combo"){
+			//agregar reconexion
+			$producto2 = $this->db->get_where('products',array('pid'=>169))->row();
+				$data2['tid']=$idfactura;
+				$data2['pid']=$producto2->pid;
+                $data2['product']=$producto2->product_name;
+                $data2['price']=$producto2->product_price;
+				$data2['qty']=1;
+                $data2['subtotal']=$producto2->product_price;			
+            	$this->db->insert('invoice_items',$data2);
+			//actualizar factura
+			$factura = $this->db->get_where('invoices',array('tid'=>$idfactura))->row();
+				$this->db->set('subtotal', $factura->subtotal+$producto2->product_price);
+				$this->db->set('ron', 'Cortado');				
+				$this->db->set('total', $factura->total+$producto2->product_price);
+				$this->db->set('items', $factura->items+1);
+				$this->db->set('television', 'no');
+				$this->db->set('combo', 'no');
+        		$this->db->where('tid', $idfactura);
+        		$this->db->update('invoices');
 		}
+		if($ticket->detalle=="Corte Internet"){
+			//agregar reconexion
+			$producto2 = $this->db->get_where('products',array('pid'=>162))->row();
+				$data2['tid']=$idfactura;
+				$data2['pid']=$producto2->pid;
+                $data2['product']=$producto2->product_name;
+                $data2['price']=$producto2->product_price;
+				$data2['qty']=1;
+                $data2['subtotal']=$producto2->product_price;			
+            	$this->db->insert('invoice_items',$data2);
+			//actualizar factura
+			$factura = $this->db->get_where('invoices',array('tid'=>$idfactura))->row();
+				$this->db->set('subtotal', $factura->subtotal+$producto2->product_price);
+				$this->db->set('total', $factura->total+$producto2->product_price);
+				$this->db->set('items', $factura->items+1);
+				$this->db->set('ron', 'Cortado');
+				$this->db->set('combo', 'no');			
+        		$this->db->where('tid', $idfactura);
+        		$this->db->update('invoices');
+		}
+		if($ticket->detalle=="Corte Television"){
+			//agregar reconexion
+			$producto2 = $this->db->get_where('products',array('pid'=>161))->row();
+				$data2['tid']=$idfactura;
+				$data2['pid']=$producto2->pid;
+                $data2['product']=$producto2->product_name;
+                $data2['price']=$producto2->product_price;
+				$data2['qty']=1;
+                $data2['subtotal']=$producto2->product_price;			
+            	$this->db->insert('invoice_items',$data2);
+			//actualizar factura
+			$factura = $this->db->get_where('invoices',array('tid'=>$idfactura))->row();
+				$this->db->set('subtotal', $factura->subtotal+$producto2->product_price);
+				$this->db->set('total', $factura->total+$producto2->product_price);
+				$this->db->set('items', $factura->items+1);
+				$this->db->set('ron', 'Cortado');
+				$this->db->set('television', 'no');			
+        		$this->db->where('tid', $idfactura);
+        		$this->db->update('invoices');
+		}
+		
 		if($ticket->detalle=="Suspencion Combo"){			
 			$this->db->set('ron', 'Suspendido');
 			$this->db->set('television', 'no');

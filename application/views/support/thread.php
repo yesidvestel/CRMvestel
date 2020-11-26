@@ -242,6 +242,21 @@
 
                         </div>
                     </div>
+					<?php if ($thread_info['detalle']=='Reconexion Combo' or $thread_info['detalle']=='Reconexion Internet') {?>
+					<div class="row">
+                        <div class="col-xs-12 mb-1"><label
+                                    for="pmethod">Paquete</label>
+                            <select id="estadoid" name="paquete" class="form-control mb-1" onchange="funcion_status();">
+								<option value="">-</option>
+                                <option value="3Megas">3Megas</option>
+                                <option value="5Megas">5Megas</option>
+                                <option value="10Megas">10Megas</option>
+                            </select>
+
+                        </div>
+						
+                    </div>
+					<?php } ?>
                     <div class="row" id="fecha_final_div">
                         <div class="col-xs-12 mb-1" ><label>Fecha Final</label>
                             <input type="date" class="form-control" id="fecha_final" onchange="funcion_fecha()" name="fecha_final">
