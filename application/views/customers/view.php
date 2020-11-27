@@ -69,9 +69,7 @@
                             </div>
                             <div class="row mt-2">
                                 <div class="col-md-12">
-                                    <h5><?php echo $this->lang->line('') ?>SEDE
-                                        <small><?php echo $invoice['ron'] ?></small>
-                                    </h5>
+                                    <h5><?php echo $this->lang->line('') ?>SEDE </h5>
 
 
                                 </div>

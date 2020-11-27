@@ -194,8 +194,8 @@ class Ticket_model extends CI_Model
     {
 
         $this->db->from('tickets');
-        if ($filt == 'unsolved') {
-            $this->db->where('status!=', 'Solved');
+        if ($filt == 'Pendiente') {
+            $this->db->where('status!=', 'Resuelto');
         }
 		$this->db->join('customers', 'tickets.cid=customers.id', 'left');
         $i = 0;
