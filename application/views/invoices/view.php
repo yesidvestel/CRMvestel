@@ -503,13 +503,45 @@
                                 ?>
                             </select></div>
                     </div>
-                    <div class="row">
+                    
+					<div class="row">
                         <div class="col-xs-12 mb-1"><label
                                     for="shortnote"><?php echo $this->lang->line('Note') ?></label>
                             <input type="text" class="form-control"
                                    name="shortnote" placeholder="Short note"
-                                   value="Payment for invoice #<?php echo $invoice['tid'] ?>"></div>
+                                   value="Pago de la factura #<?php echo $invoice['tid'] ?>"></div>
                     </div>
+					<?php if ($invoice['ron']=='Cortado') { ?>
+					<div class="row">
+                        <div class="col-xs-12 mb-1"><label
+                                    for="shortnote">Generar Reconexion</label>
+                             <select name="reconexion" class="form-control mb-1">
+                                <option value="no">No</option>
+                                <option value="si">Si</option>
+                            </select></div>
+                    </div>
+					<div class="row">
+                        <div class="col-xs-12 mb-1"><label
+                                    for="shortnote">Tipo de reconexion</label>
+                             <select name="tipo" class="form-control mb-1">
+                                <option value="Reconexion Combo">Combo</option>
+                                <option value="Reconexion Internet">Internet</option>
+								<option value="Reconexion Television">Television</option> 
+                            </select></div>
+                    </div>
+					<div class="row">
+                        <div class="col-xs-12 mb-1"><label
+                                    for="shortnote">Paquete</label>
+                             <select name="paquete" class="form-control mb-1">
+                                <option value="no">No</option>
+                                <option value="1Mega">1Mega</option>
+								<option value="2Megas">2Megas</option>
+								<option value="3Megas">3Megas</option>
+								<option value="5Megas">5Megas</option>
+								<option value="10Megas">10Megas</option>
+                            </select></div>
+                    </div>
+					<?php } ?>
                     <div class="modal-footer">
                         <input type="hidden" class="form-control required"
                                name="tid" id="invoiceid" value="<?php echo $invoice['tid'] ?>">

@@ -231,12 +231,24 @@ class Transactions extends CI_Controller
         $cid = $this->input->post('cid');
         $cname = $this->input->post('cname');
         $paydate = datefordatabase($paydate);
-
+		$reconexion = $this->input->post('reconexion');
+		$paquete = $this->input->post('paquete');
+		$tipo = $this->input->post('tipo');
         $this->db->select('holder');
         $this->db->from('accounts');
         $this->db->where('id', $acid);
         $query = $this->db->get();
         $account = $query->row_array();
+		if ($reconexion==si){
+			$data2['subject']='servicio';
+				$data2['detalle']=$tipo;
+                $data2['created']=$paydate;
+                $data2['cid']=$cid;
+                $data2['status']='Pendiente';
+                $data2['section']=$paquete;
+                $data2['id_factura']=$tid;
+                $this->db->insert('tickets',$data2);
+			}
 
         if($pmethod=='Balance'){
 
@@ -282,6 +294,7 @@ class Transactions extends CI_Controller
         $invresult = $query->row();
 
         $totalrm = $invresult->total - $invresult->pamnt;
+		
 
         if ($totalrm > $amount) {
             $this->db->set('pmethod', $pmethod);
@@ -299,6 +312,7 @@ class Transactions extends CI_Controller
             $paid_amount = $invresult->pamnt + $amount;
             $status = 'Partial';
             $totalrm = $totalrm - $amount;
+			
         } else {
 
             $today = $invresult->invoiceduedate;
@@ -306,6 +320,7 @@ class Transactions extends CI_Controller
 
 
             $ndate = date("Y-m-d", strtotime($today . " +" . $addday . 's'));
+			
 
             $this->db->set('invoiceduedate', $ndate);
             $this->db->set('pmethod', $pmethod);
@@ -313,6 +328,7 @@ class Transactions extends CI_Controller
             $this->db->set('status', 'paid');
             $this->db->where('tid', $tid);
             $this->db->update('invoices');
+			
             //acount update
             $this->db->set('lastbal', "lastbal+$amount", FALSE);
             $this->db->where('id', $acid);
@@ -320,11 +336,14 @@ class Transactions extends CI_Controller
 
             $totalrm = 0;
             $status = 'Paid';
-            $paid_amount = $amount;
-
+            $paid_amount = $amount;			
+						
+				
+		
 
         }
-
+		
+		
 
         $activitym = "<tr><td>" . substr($paydate, 0, 10) . "</td><td>$pmethod</td><td>$amount</td><td>$note</td></tr>";
 
