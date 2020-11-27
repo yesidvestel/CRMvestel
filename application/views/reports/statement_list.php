@@ -146,7 +146,8 @@
 
 			//end sobre afiliaciones
 		 	
-		 
+		 	//tabla resumen por servicios total final
+
 		 
 		 ?>
 
@@ -319,9 +320,10 @@
 				</tbody>
 				<tfoot>
 					<tr>
+						<?php $var_total_resumen_por_servicios=$var_total_mensualidades+$var_monto_afiliaciones+$array_reconexiones['monto']; ?>
 						<th class="pie">TOTAL</th>
 						<th class="pie">0</th>
-						<th class="pie"><?php echo amountFormat($income['monthinc']) ?></th>			
+						<th class="pie"><?= "$ ".number_format($var_total_resumen_por_servicios,0,",",".") ?></th>			
 					</tr>
 				</tfoot>
 			</table>
