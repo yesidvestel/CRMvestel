@@ -68,6 +68,7 @@
 		$monto_prod_sin_iva_hay=0;
 	//end productos sin iva
 //end tabla total cobranza
+		$array_reconexiones=array('cantidad' =>0 ,"monto"=>0 );
 
 		foreach ($lista as $key => $value) { 
 			$invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
@@ -104,6 +105,7 @@
 					$var_cuenta_planes_montos['10MegasMonto']+=intval($item_invoic['subtotal']);
 
 				}
+				//le coloque asi primero para que la afiliacion teve no se entrelase con la sola tev mensual que es diferente
 				if(strpos(strtolower($item_invoic['product']), "afilia")!==false){
 					$cuenta_afiliacion=1;
 					$monto_afiliacion=1;
@@ -122,6 +124,13 @@
 
 			}
 			
+			$ticket = $this->db->select("*")->from('tickets')->where("id_invoice=".$value['tid']." or id_factura=".$value['tid'])->get();
+			$varx =$ticket->result();
+			
+			if(strpos(strtolower($varx[0]->detalle),'reconexi')!==false){
+					$array_reconexiones['cantidad']++;
+					$array_reconexiones['monto']+=intval($invoice->subtotal);
+			}
 
 		 } 
 		 //tabla 1
@@ -137,7 +146,7 @@
 
 			//end sobre afiliaciones
 		 	
-		 var_dump($array_afiliaciones);
+		 
 		 
 		 ?>
 
@@ -294,8 +303,8 @@
 					</tr>
 					<tr>
 						<td class="sub">Total Reconexiones</td>
-						<td class="sub">0</td>
-						<td class="sub">0</td>
+						<td class="sub"><?=$array_reconexiones['cantidad']?></td>
+						<td class="sub"><?="$ ".number_format($array_reconexiones['monto'],0,",",".")?></td>
 					</tr>
 					<tr>
 						<td class="sub">Total Materiales</td>
