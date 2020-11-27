@@ -69,6 +69,7 @@
 	//end productos sin iva
 //end tabla total cobranza
 		$array_reconexiones=array('cantidad' =>0 ,"monto"=>0 );
+		$array_bancos=array("Bancolombia" => array('cantidad' => 0,"monto"=>0 ),"BBVA"=>array('cantidad' => 0,"monto"=>0 ));
 
 		foreach ($lista as $key => $value) { 
 			$invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
@@ -132,6 +133,17 @@
 					$array_reconexiones['monto']+=intval($invoice->subtotal);
 			}
 
+			if($value['method']=="Bank"){
+				if($value['nombre_banco']=="Bancolombia"){
+					$array_bancos['Bancolombia']['cantidad']++;
+					$array_bancos['Bancolombia']['monto']+=intval($invoice->subtotal);
+				}else{
+					$array_bancos['BBVA']['cantidad']++;
+					$array_bancos['BBVA']['monto']+=intval($invoice->subtotal);
+				}
+			}
+
+
 		 } 
 		 //tabla 1
 		 $tabla_total_cobranza_monto=$monto_prod_sin_iva_hay+$monto_prod_con_iva_hay+$monto_iva_prod_con_iva_hay;
@@ -148,7 +160,7 @@
 		 	
 		 	//tabla resumen por servicios total final
 
-		 
+		 var_dump($array_bancos);
 		 ?>
 
 <article class="content">
@@ -207,20 +219,20 @@
 				<tbody>
 					<tr>
 						<td>Bancolombia</td>
-						<td style="text-align: center">0</td>
-						<td style="text-align: center">0</td>
+						<td style="text-align: center"><?=$array_bancos['Bancolombia']['cantidad']?></td>
+						<td style="text-align: center"><?="$ ".number_format($array_bancos['Bancolombia']['monto'],0,",",".")?></td>
 					</tr>
 					<tr>
 						<td>BBVA colombia</td>
-						<td style="text-align: center">0</td>
-						<td style="text-align: center">0</td>
+						<td style="text-align: center"><?=$array_bancos['BBVA']['cantidad']?></td>
+						<td style="text-align: center"><?="$ ".number_format($array_bancos['BBVA']['monto'],0,",",".")?></td>
 					</tr>					
 				</tbody>
 				<tfoot>
 					<tr>
 						<th class="pie">TOTAL COBRANZA</th>
-						<th class="pie">0</th>
-						<th class="pie"><?php echo amountFormat($income['monthinc']) ?></th>			
+						<th class="pie"><?= $array_bancos['Bancolombia']['cantidad']+$array_bancos['BBVA']['cantidad'] ?></th>
+						<th class="pie"><?= "$ ".number_format($array_bancos['Bancolombia']['monto']+$array_bancos['BBVA']['monto'],0,",",".") ?></th>			
 					</tr>
 				</tfoot>
 			</table>

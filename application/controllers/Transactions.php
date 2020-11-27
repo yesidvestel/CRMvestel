@@ -227,6 +227,7 @@ class Transactions extends CI_Controller
         $paydate = $this->input->post('paydate');
         $note = $this->input->post('shortnote');
         $pmethod = $this->input->post('pmethod');
+        $banco = $this->input->post('banco');
         $acid = $this->input->post('account');
         $cid = $this->input->post('cid');
         $cname = $this->input->post('cname');
@@ -267,7 +268,9 @@ class Transactions extends CI_Controller
                 $this->db->update('customers');
             }
         }
-
+        if($pmethod!="Bank"){
+            $banco=null;
+        }
     $data = array(
             'acid' => $acid,
             'account' => $account['holder'],
@@ -281,7 +284,8 @@ class Transactions extends CI_Controller
             'eid' => $this->aauth->get_user()->id,
             'tid' => $tid,
             'note' => $note,
-            'ext' => 0
+            'ext' => 0,
+            'nombre_banco'=>$banco
         );
 
         $this->db->insert('transactions', $data);

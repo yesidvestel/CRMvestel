@@ -489,12 +489,18 @@
                     <div class="row">
                         <div class="col-xs-12 mb-1"><label
                                     for="pmethod"><?php echo $this->lang->line('Payment Method') ?></label>
-                            <select name="pmethod" class="form-control mb-1">
+                            <select name="pmethod" class="form-control mb-1" onchange="metodo_de_pago_select()" id="select_metodo_de_pago">
                                 <option value="Cash"><?php echo $this->lang->line('Cash') ?></option>
                                 <option value="Card"><?php echo $this->lang->line('Card') ?></option>
                                 <option value="Balance"><?php echo $this->lang->line('Client Balance') ?></option>
                                 <option value="Bank"><?php echo $this->lang->line('Bank') ?></option>
-                            </select><label for="account"><?php echo $this->lang->line('Account') ?></label>
+                            </select>
+                            <div id="seleccion_banco" style="text-align: center;">
+                                <input type="radio" name="banco" value="Bancolombia" style="cursor: pointer;" checked>&nbspBancolombia
+                                <input type="radio" name="banco" value="BBVA colombia" style="cursor: pointer;">&nbspBBVA colombia
+                            </div>
+                            <label for="account"><?php echo $this->lang->line('Account') ?></label>
+
 
                             <select name="account" class="form-control">
                                 <?php foreach ($acclist as $row) {
@@ -850,6 +856,14 @@
 </div>
 
 <script type="text/javascript">
+$("#seleccion_banco").hide();
+    function metodo_de_pago_select(){
+        if($("#select_metodo_de_pago option:selected").val()=="Bank"){
+            $("#seleccion_banco").show();
+        }else{
+            $("#seleccion_banco").hide();
+        }
+    }
     $(function () {
         $('.summernote').summernote({
             height: 150,
