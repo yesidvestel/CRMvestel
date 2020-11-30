@@ -20,7 +20,7 @@
                                        for="pay_cat"><?php echo $this->lang->line('') ?>Caja</label>
 
                                 <div class="col-sm-9">
-                                    <select name="pay_acc" class="form-control">
+                                    <select name="pay_acc" class="form-control" id="cuentas_">
                                         <?php
                                         foreach ($accounts as $row) {
                                             $cid = $row['id'];
@@ -90,3 +90,7 @@
         </div>
     </div>
 </article>
+<script type="text/javascript">
+        $('#cuentas_ option[value="4"]').remove();
+        $('#cuentas_ option[value="5"]').remove();
+</script>

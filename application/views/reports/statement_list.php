@@ -160,7 +160,7 @@
 		 	
 		 	//tabla resumen por servicios total final
 
-		 var_dump($array_bancos);
+		 
 		 ?>
 
 <article class="content">

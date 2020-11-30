@@ -1,2 +1,5 @@
 ALTER TABLE `crm`.`transactions` 
 ADD COLUMN `nombre_banco` VARCHAR(18) NULL DEFAULT NULL AFTER `ext`;
+
+ALTER TABLE `crm`.`transactions` 
+ADD COLUMN `id_banco` int NULL DEFAULT NULL AFTER `nombre_banco`;

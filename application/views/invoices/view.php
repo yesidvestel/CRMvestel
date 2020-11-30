@@ -502,7 +502,7 @@
                             <label for="account"><?php echo $this->lang->line('Account') ?></label>
 
 
-                            <select name="account" class="form-control">
+                            <select name="account" class="form-control" id="cuentas_">
                                 <?php foreach ($acclist as $row) {
                                     echo '<option value="' . $row['id'] . '">' . $row['holder'] . ' / ' . $row['acn'] . '</option>';
                                 }
@@ -865,6 +865,9 @@ $("#seleccion_banco").hide();
         }
     }
     $(function () {
+        $('#cuentas_ option[value="4"]').remove();
+        $('#cuentas_ option[value="5"]').remove();
+
         $('.summernote').summernote({
             height: 150,
             toolbar: [

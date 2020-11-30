@@ -268,8 +268,32 @@ class Transactions extends CI_Controller
                 $this->db->update('customers');
             }
         }
+        $id_banco=null;
         if($pmethod!="Bank"){
             $banco=null;
+        }else{
+            if($banco=="Bancolombia"){
+                $cuenta = $this->db->select("*")->from('accounts')->like('holder','Bancolombia','both')->get();
+                $cuenta = $cuenta->result();
+                if($cuenta!=null){
+                    $id_banco=$cuenta[0]->id;
+                    $mas=intval($cuenta[0]->lastbal)+intval($amount);
+                    $data5['lastbal']=$mas;
+                    $this->db->update('accounts',$data5,array('id' =>$id_banco ));    
+                }
+                
+            }else{
+                $cuenta = $this->db->select("*")->from('accounts')->like('holder','BBVA','both')->get();
+                $cuenta = $cuenta->result();
+                if($cuenta!=null){
+                    $id_banco=$cuenta[0]->id;
+                    $mas=intval($cuenta[0]->lastbal)+intval($amount);
+                    $data5['lastbal']=$mas;
+                    $this->db->update('accounts',$data5,array('id' =>$id_banco ));    
+                }
+                
+
+            }
         }
     $data = array(
             'acid' => $acid,
@@ -285,7 +309,8 @@ class Transactions extends CI_Controller
             'tid' => $tid,
             'note' => $note,
             'ext' => 0,
-            'nombre_banco'=>$banco
+            'nombre_banco'=>$banco,
+            'id_banco'=>$id_banco
         );
 
         $this->db->insert('transactions', $data);
