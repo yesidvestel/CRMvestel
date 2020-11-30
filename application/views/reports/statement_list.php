@@ -350,22 +350,37 @@
 					</tr>
 				</thead>
 				<tbody>
+					<?php 
+					$valores_mes_actual= array('cantidad' =>0 , 'monto'=>0);
+					$valores_mes_anterior= array('cantidad' =>0 , 'monto'=>0);
+					foreach ($lista_mes_actual as $key => $val1) {
+						$inv1 = $this->db->get_where("invoices",array("tid"=>$val1['tid']))->row(); 
+						$valores_mes_actual['monto']+=intval($inv1->subtotal);
+					}
+
+					foreach ($lista_mes_anterior as $key => $val1) {
+						$inv1 = $this->db->get_where("invoices",array("tid"=>$val1['tid']))->row(); 
+						$valores_mes_anterior['monto']+=intval($inv1->subtotal);
+					}
+
+					 ?>
+
 					<tr>
 						<td>Noviembre 2020</td>
 						<td style="text-align: center"><?=count($lista_mes_actual)?></td>
-						<td style="text-align: center">0</td>
+						<td style="text-align: center"><?="$ ".number_format($valores_mes_actual['monto'],0,",",".")?></td>
 					</tr>
 					<tr>
 						<td>Octubre 2020</td>
 						<td style="text-align: center"><?=count($lista_mes_anterior)?></td>
-						<td style="text-align: center">0</td>
+						<td style="text-align: center"><?="$ ".number_format($valores_mes_anterior['monto'],0,",",".")?></td>
 					</tr>					
 				</tbody>
 				<tfoot>
 					<tr>
 						<th class="pie">TOTAL COBRANZA POR MESES</th>
-						<th class="pie">0</th>
-						<th class="pie"><?php echo amountFormat($income['monthinc']) ?></th>			
+						<th class="pie"><?=count($lista_mes_anterior)+count($lista_mes_actual)?></th>
+						<th class="pie"><?="$ ".number_format($valores_mes_actual['monto']+$valores_mes_anterior['monto'],0,",",".") ?></th>			
 					</tr>
 				</tfoot>
 			</table>
