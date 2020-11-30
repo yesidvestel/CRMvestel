@@ -103,7 +103,7 @@
 			
             <h5><?php echo $this->lang->line('Your Response') ?></h5>
             <hr>
-		
+			
 			<div class="form-group row">
                                
         <div class="col-sm-10">
@@ -248,6 +248,7 @@
                                     for="pmethod">Paquete</label>
                             <select id="estadoid" name="paquete" class="form-control mb-1" onchange="funcion_status();">
 								<option value="">-</option>
+								<option value="2Megas">2Megas</option>
                                 <option value="3Megas">3Megas</option>
                                 <option value="5Megas">5Megas</option>
                                 <option value="10Megas">10Megas</option>

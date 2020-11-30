@@ -101,10 +101,7 @@
                                     class="icon-menu5"> </i></a></li>
                     <li class="nav-item hidden-sm-down"><a href="#" class="nav-link nav-link-expand"><i
                                     class="icon icon-expand2"></i></a></li>
-                    <li class="nav-item hidden-sm-down"><input type="text"
-                                                               placeholder="<?php echo $this->lang->line('Search Customer') ?>"
-                                                               id="head-customerbox"
-                                                               class="nav-link menu-search form-control round"/></li>
+                    <li class="nav-item hidden-sm-down"><input type="text" placeholder="<?php echo $this->lang->line('Search Customer') ?>" id="head-customerbox" class="nav-link menu-search form-control round"/></li>
                 </ul>
                 <div id="head-customerbox-result" class="dropdown dropdown-notification"></div>
                 <ul class="nav navbar-nav float-xs-right">
