@@ -366,12 +366,12 @@
 					 ?>
 
 					<tr>
-						<td>Noviembre 2020</td>
+						<td><?=$texto_mes_actual?></td>
 						<td style="text-align: center"><?=count($lista_mes_actual)?></td>
 						<td style="text-align: center"><?="$ ".number_format($valores_mes_actual['monto'],0,",",".")?></td>
 					</tr>
 					<tr>
-						<td>Octubre 2020</td>
+						<td><?=$texto_mes_anterior?></td>
 						<td style="text-align: center"><?=count($lista_mes_anterior)?></td>
 						<td style="text-align: center"><?="$ ".number_format($valores_mes_anterior['monto'],0,",",".")?></td>
 					</tr>					

@@ -151,7 +151,8 @@ class Reports extends CI_Controller
             
             $data['lista_mes_anterior']=$lista_mes_anterior;
         //fin codigo listar
-
+            $data['texto_mes_actual']=$this->reports->devolver_nombre_mes(date("m"))." ".date("Y");
+            $data['texto_mes_anterior']=$this->reports->devolver_nombre_mes(date("m", strtotime("- 1 month")))." ".date("Y", strtotime("- 1 month"));
 
         $this->load->view('fixed/header', $head);
         $this->load->view('reports/statement_list', $data);
