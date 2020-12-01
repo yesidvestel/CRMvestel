@@ -351,16 +351,84 @@
 				</thead>
 				<tbody>
 					<?php 
-					$valores_mes_actual= array('cantidad' =>0 , 'monto'=>0);
-					$valores_mes_anterior= array('cantidad' =>0 , 'monto'=>0);
+					$valores_mes_actual= array('cantidad' =>0 , 'monto'=>0,'Internet'=> array('cantidad' => 0,"monto"=>0),"Television"=> array('cantidad' =>0 ,"monto"=>0 ));
+					$valores_mes_anterior= array('cantidad' =>0 , 'monto'=>0,'Internet'=> array('cantidad' => 0,"monto"=>0),"Television"=> array('cantidad' =>0 ,"monto"=>0 ));
+
 					foreach ($lista_mes_actual as $key => $val1) {
 						$inv1 = $this->db->get_where("invoices",array("tid"=>$val1['tid']))->row(); 
 						$valores_mes_actual['monto']+=intval($inv1->subtotal);
+
+						$invoice_items = $this->db->get_where("invoice_items",array('tid' => $val1['tid'] ))->result_array();
+						foreach ($invoice_items as $key => $item_invoic) {
+							if($item_invoic['product']=="1Mega" ||$item_invoic['product']=="1 Mega"){
+						 		$valores_mes_actual['Internet']['cantidad']++;
+						 		$valores_mes_actual['Internet']['monto']+=intval($item_invoic['subtotal']);
+
+							}else if($item_invoic['product']=="2Megas" ||$item_invoic['product']=="2 Megas"){
+								$valores_mes_actual['Internet']['cantidad']++;
+						 		$valores_mes_actual['Internet']['monto']+=intval($item_invoic['subtotal']);
+
+							}else if($item_invoic['product']=="3Megas"|| $item_invoic['product']=="3 Megas"){
+								$valores_mes_actual['Internet']['cantidad']++;
+						 		$valores_mes_actual['Internet']['monto']+=intval($item_invoic['subtotal']);
+
+							}else if($item_invoic['product']=="5Megas"||$item_invoic['product']=="5 Megas"){
+								$valores_mes_actual['Internet']['cantidad']++;
+						 		$valores_mes_actual['Internet']['monto']+=intval($item_invoic['subtotal']);
+
+							}else if($item_invoic['product']=="10Megas"||$item_invoic['product']=="10 Megas"){
+								$valores_mes_actual['Internet']['cantidad']++;
+						 		$valores_mes_actual['Internet']['monto']+=intval($item_invoic['subtotal']);
+							}
+
+							if(strpos(strtolower($item_invoic['product']), "tele")!==false){
+								$valores_mes_actual['Television']['cantidad']++;
+								$valores_mes_actual['Television']['monto']+=intval($item_invoic['subtotal']);
+							}else if(strpos(strtolower($item_invoic['product']), "afilia")!==false){
+								$valores_mes_actual['Internet']['cantidad']++;
+						 		$valores_mes_actual['Internet']['monto']+=intval($item_invoic['subtotal']);
+							}
+
+						}
 					}
 
 					foreach ($lista_mes_anterior as $key => $val1) {
 						$inv1 = $this->db->get_where("invoices",array("tid"=>$val1['tid']))->row(); 
 						$valores_mes_anterior['monto']+=intval($inv1->subtotal);
+
+						$invoice_items = $this->db->get_where("invoice_items",array('tid' => $val1['tid'] ))->result_array();
+
+						foreach ($invoice_items as $key => $item_invoic) {
+							if($item_invoic['product']=="1Mega" ||$item_invoic['product']=="1 Mega"){
+						 		$valores_mes_anterior['Internet']['cantidad']++;
+						 		$valores_mes_anterior['Internet']['monto']+=intval($item_invoic['subtotal']);
+
+							}else if($item_invoic['product']=="2Megas" ||$item_invoic['product']=="2 Megas"){
+								$valores_mes_anterior['Internet']['cantidad']++;
+						 		$valores_mes_anterior['Internet']['monto']+=intval($item_invoic['subtotal']);
+
+							}else if($item_invoic['product']=="3Megas"|| $item_invoic['product']=="3 Megas"){
+								$valores_mes_anterior['Internet']['cantidad']++;
+						 		$valores_mes_anterior['Internet']['monto']+=intval($item_invoic['subtotal']);
+
+							}else if($item_invoic['product']=="5Megas"||$item_invoic['product']=="5 Megas"){
+								$valores_mes_anterior['Internet']['cantidad']++;
+						 		$valores_mes_anterior['Internet']['monto']+=intval($item_invoic['subtotal']);
+
+							}else if($item_invoic['product']=="10Megas"||$item_invoic['product']=="10 Megas"){
+								$valores_mes_anterior['Internet']['cantidad']++;
+						 		$valores_mes_anterior['Internet']['monto']+=intval($item_invoic['subtotal']);
+							}
+
+							if(strpos(strtolower($item_invoic['product']), "tele")!==false){
+								$valores_mes_anterior['Television']['cantidad']++;
+								$valores_mes_anterior['Television']['monto']+=intval($item_invoic['subtotal']);
+							}else if(strpos(strtolower($item_invoic['product']), "afilia")!==false){
+								$valores_mes_anterior['Internet']['cantidad']++;
+						 		$valores_mes_anterior['Internet']['monto']+=intval($item_invoic['subtotal']);
+							}
+
+						}
 					}
 
 					 ?>
@@ -488,7 +556,7 @@
 				</tfoot>
 			</table>
 			<hr>
-			<h6><?php echo $this->lang->line('') ?>Resumen de cargos cobrados por meses</h6>
+			<h6><?php echo $this->lang->line('') ?>Resumen de cargos cobrados por meses INTERNET</h6>
 			<table class="party">
 				<thead>
 					<tr>
@@ -499,21 +567,21 @@
 				</thead>
 				<tbody>
 					<tr>
-						<td>Octubre 2020</td>
-						<td style="text-align: center">0</td>
-						<td style="text-align: center"><?php echo amountFormat($income['monthinc']) ?></td>
+						<td><?=$texto_mes_actual?></td>
+						<td style="text-align: center"><?=$valores_mes_actual['Internet']['cantidad']?></td>
+						<td style="text-align: center"><?="$ ".number_format($valores_mes_actual['Internet']['monto'],0,",",".") ?></td>
 					</tr>
 					<tr>
-						<td>Septiembre 2020</td>
-						<td style="text-align: center">0</td>
-						<td style="text-align: center">0</td>
+						<td><?=$texto_mes_anterior?></td>
+						<td style="text-align: center"><?=$valores_mes_anterior['Internet']['cantidad']?></td>
+						<td style="text-align: center"><?="$ ".number_format($valores_mes_anterior['Internet']['monto'],0,",",".") ?></td>
 					</tr>					
 				</tbody>
 				<tfoot>
 					<tr>
 						<th class="pie">TOTAL COBRANZA POR MESES</th>
-						<th class="pie">0</th>
-						<th class="pie"><?php echo amountFormat($income['monthinc']) ?></th>			
+						<th class="pie"><?=$valores_mes_actual['Internet']['cantidad']+$valores_mes_anterior['Internet']['cantidad']?></th>
+						<th class="pie"><?= "$ ".number_format($valores_mes_actual['Internet']['monto']+$valores_mes_anterior['Internet']['monto'],0,",",".") ?></th>			
 					</tr>
 				</tfoot>
 			</table>
@@ -529,21 +597,21 @@
 				</thead>
 				<tbody>
 					<tr>
-						<td>Octubre 2020</td>
-						<td style="text-align: center">0</td>
-						<td style="text-align: center">0</td>
+						<td><?=$texto_mes_actual?></td>
+						<td style="text-align: center"><?=$valores_mes_actual['Television']['cantidad']?></td>
+						<td style="text-align: center"><?="$ ".number_format($valores_mes_actual['Television']['monto'],0,",",".") ?></td>
 					</tr>
 					<tr>
-						<td>Septiembre 2020</td>
-						<td style="text-align: center">0</td>
-						<td style="text-align: center">0</td>
+						<td><?=$texto_mes_anterior?></td>
+						<td style="text-align: center"><?=$valores_mes_anterior['Television']['cantidad']?></td>
+						<td style="text-align: center"><?="$ ".number_format($valores_mes_anterior['Television']['monto'],0,",",".") ?></td>
 					</tr>					
 				</tbody>
 				<tfoot>
 					<tr>
 						<th class="pie">TOTAL COBRANZA POR MESES</th>
-						<th class="pie">0</th>
-						<th class="pie"><?php echo amountFormat($income['monthinc']) ?></th>			
+						<th class="pie"><?=$valores_mes_actual['Television']['cantidad']+$valores_mes_anterior['Television']['cantidad']?></th>
+						<th class="pie"><?= "$ ".number_format($valores_mes_actual['Television']['monto']+$valores_mes_anterior['Television']['monto'],0,",",".") ?></th>			
 					</tr>
 				</tfoot>
 			</table>
