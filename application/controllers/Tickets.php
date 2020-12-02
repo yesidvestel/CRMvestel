@@ -296,18 +296,25 @@ class Tickets Extends CI_Controller
         $datay['totaltax']=0;
         $datay['totaldiscount']=0;			
                 if($data['combo']!==no){
-                    if($data['combo']==='3 Megas'){
+                    if($data['combo']==='3Megas'){
                         $datay['pid']=24;
-                    }else if($data['combo']==='5 Megas' || $data['combo']==='5Megas'){
+					}else if($data['combo']==='3MegasSolo'){
+                        $datay['pid']=170;
+                    }else if($data['combo']==='5Megas'){
                         $datay['pid']=25;
-                    }else if($data['combo']==='10 Megas'){
+					}else if($data['combo']==='5MegasSolo'){
+                        $datay['pid']=171;
+                    }else if($data['combo']==='10Megas'){
                         $datay['pid']=26;
+					}else if($data['combo']==='10MegasSolo'){
+                        $datay['pid']=172;
                     }
                     $producto = $this->db->get_where('products',array('pid'=>$datay['pid']))->row();
                     $x=intval($producto->product_price);
                     $x=($x/30)*$diferencia->days;
                     $total+=$x;
                     $datay['product']=$producto->product_name;
+					$datay['qty']=1;
                     $datay['price']=$x;
                     $datay['subtotal']=$x;     
                     if($ticket->detalle=="Instalacion" && $ticket->id_factura==null){
@@ -318,7 +325,8 @@ class Tickets Extends CI_Controller
                 if($data['television']!==no AND $data['refer']!==Mocoa){                
                     $producto = $this->db->get_where('products',array('pid'=>27))->row();
                     $datay['pid']=$producto->pid;
-                    $datay['product']=$producto->product_name;                    
+                    $datay['product']=$producto->product_name;
+					$datay['qty']=1;
                     $x=intval($producto->product_price);
                     $x=($x/30)*$diferencia->days;
                     $total+=$x;
@@ -331,7 +339,8 @@ class Tickets Extends CI_Controller
 				if($data['television']!==no AND $data['refer']==Mocoa){                
                     $producto = $this->db->get_where('products',array('pid'=>159))->row();
                     $datay['pid']=$producto->pid;
-                    $datay['product']=$producto->product_name;                    
+                    $datay['product']=$producto->product_name;
+					$datay['qty']=1;
                     $x=intval($producto->product_price);
                     $x=($x/30)*$diferencia->days;
                     $total+=$x;
