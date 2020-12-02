@@ -267,20 +267,27 @@ class Importequipo extends CI_Controller
 							if($datax['combo']!==no){
 								if($datax['combo']==='3Megas'){
 									$datay['pid']=24;
+								}else if($datax['combo']==='3MegasSolo'){
+									$datay['pid']=170;
 								}else if($datax['combo']==='5Megas'){
-									$datay['pid']=61;
+									$datay['pid']=25;
+								}else if($datax['combo']==='5MegasSolo'){
+									$datay['pid']=171;
 								}else if($datax['combo']==='10Megas'){
-									$datay['pid']=62;
+									$datay['pid']=26;
+								}else if($datax['combo']==='10MegasSolo'){
+									$datay['pid']=172;
 								}else if($datax['combo']==='2Megas'){
-									$datay['pid']=59;
+									$datay['pid']=126;
 								}else if($datax['combo']==='1Mega'){
-									$datay['pid']=60;
+									$datay['pid']=125;
 								}
 								$producto = $this->db->get_where('products',array('pid'=>$datay['pid']))->row();
 								$x=intval($producto->product_price);								
 								$datay['product']=$producto->product_name;
+								$datay['qty']=1;
 								$datay['price']=$x;
-								$datay['tax']=0;
+								$datay['tax']=0;								
 								$datay['totaltax']=0;
 								$datay['subtotal']=$x;
 								$this->db->insert('invoice_items',$datay);    
@@ -290,6 +297,7 @@ class Importequipo extends CI_Controller
 								$producto = $this->db->get_where('products',array('pid'=>27))->row();
 								$datay['pid']=$producto->pid;
 								$datay['product']=$producto->product_name;
+								$datay['qty']=1;
 								$x=intval($producto->product_price);							
 								$datay['price']=$x;
 								$datay['tax']=19;
@@ -297,17 +305,7 @@ class Importequipo extends CI_Controller
 								$datay['subtotal']=$x+$datay['totaltax'];
 								$this->db->insert('invoice_items',$datay);
 							}
-							if($array[25]!==0){                
-								$producto = $this->db->get_where('products',array('pid'=>65))->row();
-								$datay['pid']=$producto->pid;
-								$datay['product']=$producto->product_name;
-								$x=intval($producto->product_price);							
-								$datay['price']=$array[25];
-								$datay['tax']=0;
-								$datay['totaltax']=0;
-								$datay['subtotal']=$array[25];
-								$this->db->insert('invoice_items',$datay);
-							}
+							
                         
                         $facturas = $this->db->get_where('invoices',array('tid'=>$datax['tid']))->row();
                         if(!isset($facturas)){
