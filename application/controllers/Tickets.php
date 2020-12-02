@@ -252,7 +252,7 @@ class Tickets Extends CI_Controller
 		$detalle = $this->input->post('detalle');
 		
         foreach ($invoice[0] as $key => $value) {
-            if($key!='id'){
+            if($key!='id' && $key!='pmethod' && $key!='status' && $key!='pamnt'){
              $data[$key]=$value;
             }
         }
