@@ -70,7 +70,7 @@
 //end tabla total cobranza
 		$array_reconexiones=array('cantidad' =>0 ,"monto"=>0 );
 		$array_bancos=array("Bancolombia" => array('cantidad' => 0,"monto"=>0 ),"BBVA"=>array('cantidad' => 0,"monto"=>0 ));
-
+		$array_resumen_tipo_servicio= array('Internet' => array('cantidad' => 0,"monto"=>0 ),"Television"=> array('cantidad' => 0,"monto"=>0 ));
 		foreach ($lista as $key => $value) { 
 			$invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
 			$invoice_items=$this->db->get_where('invoice_items',array('tid' =>$value['tid']))->result_array();
@@ -88,22 +88,41 @@
 				if($item_invoic['product']=="1Mega" ||$item_invoic['product']=="1 Mega"){
 			 		$var_cuenta_planes['1Mega']++;
 			 		$var_cuenta_planes_montos['1MegaMonto']+=intval($item_invoic['subtotal']);
+			 		//resumen tipo servicio
+			 		$array_resumen_tipo_servicio['Internet']['cantidad']++;
+			 		$array_resumen_tipo_servicio['Internet']['monto']+=intval($item_invoic['subtotal']);
 
 				}else if($item_invoic['product']=="2Megas" ||$item_invoic['product']=="2 Megas"){
 					$var_cuenta_planes['2Megas']++;
 					$var_cuenta_planes_montos['2MegasMonto']+=intval($item_invoic['subtotal']);
 
+					//resumen tipo servicio
+			 		$array_resumen_tipo_servicio['Internet']['cantidad']++;
+			 		$array_resumen_tipo_servicio['Internet']['monto']+=intval($item_invoic['subtotal']);
+
 				}else if($item_invoic['product']=="3Megas"|| $item_invoic['product']=="3 Megas"){
 					$var_cuenta_planes['3Megas']++;
 					$var_cuenta_planes_montos['3MegasMonto']+=intval($item_invoic['subtotal']);
+
+					//resumen tipo servicio
+			 		$array_resumen_tipo_servicio['Internet']['cantidad']++;
+			 		$array_resumen_tipo_servicio['Internet']['monto']+=intval($item_invoic['subtotal']);
 
 				}else if($item_invoic['product']=="5Megas"||$item_invoic['product']=="5 Megas"){
 					$var_cuenta_planes['5Megas']++;
 					$var_cuenta_planes_montos['5MegasMonto']+=intval($item_invoic['subtotal']);
 
+					//resumen tipo servicio
+			 		$array_resumen_tipo_servicio['Internet']['cantidad']++;
+			 		$array_resumen_tipo_servicio['Internet']['monto']+=intval($item_invoic['subtotal']);
+
 				}else if($item_invoic['product']=="10Megas"||$item_invoic['product']=="10 Megas"){
 					$var_cuenta_planes['10Megas']++;
 					$var_cuenta_planes_montos['10MegasMonto']+=intval($item_invoic['subtotal']);
+
+					//resumen tipo servicio
+			 		$array_resumen_tipo_servicio['Internet']['cantidad']++;
+			 		$array_resumen_tipo_servicio['Internet']['monto']+=intval($item_invoic['subtotal']);
 
 				}
 				//le coloque asi primero para que la afiliacion teve no se entrelase con la sola tev mensual que es diferente
@@ -121,6 +140,15 @@
 					$var_cuenta_planes_montos['TelevisionMonto']+=intval($item_invoic['subtotal']);
 				}
 
+				//resumen por tipo servicio
+				if(strpos(strtolower($item_invoic['product']), "tele")!==false){
+					$array_resumen_tipo_servicio['Television']['cantidad']++;
+					$array_resumen_tipo_servicio['Television']['monto']+=intval($item_invoic['subtotal']);
+				}else if(strpos(strtolower($item_invoic['product']), "afilia")!==false){
+					$array_resumen_tipo_servicio['Internet']['cantidad']++;
+			 		$array_resumen_tipo_servicio['Internet']['monto']+=intval($item_invoic['subtotal']);
+				}
+				//end resumen por tipo servicio
 				
 
 			}
@@ -628,20 +656,20 @@
 				<tbody>
 					<tr>
 						<td>Internet</td>
-						<td style="text-align: center">0</td>
-						<td style="text-align: center">0</td>
+						<td style="text-align: center"><?=$array_resumen_tipo_servicio['Internet']['cantidad']?></td>
+						<td style="text-align: center"><?="$ ".number_format($array_resumen_tipo_servicio['Internet']['monto'],0,",",".")?></td>
 					</tr>
 					<tr>
 						<td>Television</td>
-						<td style="text-align: center">0</td>
-						<td style="text-align: center">0</td>
+						<td style="text-align: center"><?=$array_resumen_tipo_servicio['Television']['cantidad']?></td>
+						<td style="text-align: center"><?="$ ".number_format($array_resumen_tipo_servicio['Television']['monto'],0,",",".")?></td>
 					</tr>					
 				</tbody>
 				<tfoot>
 					<tr>
 						<th class="pie">TOTAL TIPO DE SERVICIOS</th>
-						<th class="pie">0</th>
-						<th class="pie"><?php echo amountFormat($income['monthinc']) ?></th>			
+						<th class="pie"><?=$array_resumen_tipo_servicio['Internet']['cantidad']+$array_resumen_tipo_servicio['Television']['cantidad']?></th>
+						<th class="pie"><?="$ ".number_format($array_resumen_tipo_servicio['Internet']['monto']+$array_resumen_tipo_servicio['Television']['monto'],0,",",".") ?></th>			
 					</tr>
 				</tfoot>
 			</table>
