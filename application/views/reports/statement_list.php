@@ -71,6 +71,7 @@
 		$array_reconexiones=array('cantidad' =>0 ,"monto"=>0 );
 		$array_bancos=array("Bancolombia" => array('cantidad' => 0,"monto"=>0 ),"BBVA"=>array('cantidad' => 0,"monto"=>0 ));
 		$array_resumen_tipo_servicio= array('Internet' => array('cantidad' => 0,"monto"=>0 ),"Television"=> array('cantidad' => 0,"monto"=>0 ));
+		$array_efectivo=array("cantidad"=>0,"monto"=>0);
 		foreach ($lista as $key => $value) { 
 			$invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
 			$invoice_items=$this->db->get_where('invoice_items',array('tid' =>$value['tid']))->result_array();
@@ -169,6 +170,9 @@
 					$array_bancos['BBVA']['cantidad']++;
 					$array_bancos['BBVA']['monto']+=intval($invoice->subtotal);
 				}
+			}else if($value['method']=="Cash"){
+				$array_efectivo['cantidad']++;
+				$array_efectivo['monto']+=intval($invoice->subtotal);
 			}
 
 
@@ -494,8 +498,8 @@
 				<tbody>
 					<tr>
 						<td>Efectivo</td>
-						<td style="text-align: center">0</td>
-						<td style="text-align: center">0</td>
+						<td style="text-align: center"><?=$array_efectivo['cantidad']?></td>
+						<td style="text-align: center"><?="$ ".number_format($array_efectivo['monto'],0,",",".")?></td>
 					</tr>
 					<tr>
 						<td>Tarjeta Debito</td>
@@ -514,8 +518,8 @@
 					</tr>
 					<tr>
 						<td>Transferencia</td>
-						<td style="text-align: center">0</td>
-						<td style="text-align: center">0</td>
+						<td style="text-align: center"><?=$array_bancos['Bancolombia']['cantidad']+$array_bancos['BBVA']['cantidad']?></td>
+						<td style="text-align: center"><?="$ ".number_format($array_bancos['Bancolombia']['monto']+$array_bancos['BBVA']['monto'],0,",",".")?></td>
 					</tr>
 					<tr>
 						<td>Cheque</td>
@@ -537,8 +541,8 @@
 				<tfoot>
 					<tr>
 						<th class="pie">TOTAL FORMA PAGO</th>
-						<th class="pie">0</th>
-						<th class="pie">0</th>			
+						<th class="pie"><?=$array_efectivo['cantidad']+$array_bancos['Bancolombia']['cantidad']+$array_bancos['BBVA']['cantidad']?></th>
+						<th class="pie"><?="$ ".number_format($array_efectivo['monto']+$array_bancos['Bancolombia']['monto']+$array_bancos['BBVA']['monto'],0,",",".")?></th>			
 					</tr>
 				</tfoot>
 			</table>
