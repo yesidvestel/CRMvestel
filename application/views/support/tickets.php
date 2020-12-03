@@ -83,17 +83,7 @@
                     </div>
                 </div>
             </div>
-			<div class="col-xs-3 mb-1">
-			<select name="filtec" id="tecnicos" class="form-control mb-1">
-				<?php
-					foreach ($tecnicoslista as $row) {
-						$cid = $row['id'];
-						$title = $row['username'];
-						echo "<option value='$cid'>$title</option>";
-					}
-					?>
-			</select>
-				</div>
+			
 			<div class="table-responsive">
             <table id="doctable" class="table table-hover" cellspacing="0" width="100%">
                 <thead>
