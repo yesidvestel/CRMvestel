@@ -54,7 +54,7 @@ class Reports_model extends CI_Model
     {
 
         if ($trans_type == 'All') {
-            $where = "acid='$pay_acc' AND (DATE(date) BETWEEN '$sdate' AND '$edate') ";
+            $where = "acid='$pay_acc' AND (DATE(date) BETWEEN '$sdate' AND '$edate')  ";
         } else {
             $where = "acid='$pay_acc' AND (DATE(date) BETWEEN '$sdate' AND '$edate') AND type='$trans_type'";
         }

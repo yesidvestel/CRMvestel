@@ -132,9 +132,15 @@ class Reports extends CI_Controller
             
             
             $list = $this->reports->get_statements($pay_acc, $trans_type, $sdate, $edate);
-            $data['lista']=$list;
 
-            
+            $lista2=array();
+            foreach ($list as $key => $value) {
+                if($value['estado']!="Anulada"){
+                    $lista2[]=$value;    
+                }
+                
+            }
+            $data['lista']=$lista2;
             
             
             //obteniendo datos mes actual
@@ -218,7 +224,9 @@ class Reports extends CI_Controller
 
         foreach ($list as $row) {
             $balance += $row['credit'] - $row['debit'];
+            if($row['estado']!="Anulada"){
             echo '<tr><td>' . $row['date'] . '</td><td>' . $row['note'] . '</td><td>' . amountFormat($row['debit']) . '</td><td>' . amountFormat($row['credit']) . '</td><td>' . amountFormat($balance) . '</td></tr>';
+            }
         }
 
     }
