@@ -19,6 +19,7 @@
                     <th><?php echo $this->lang->line('Credit') ?></th>
                     <th><?php echo $this->lang->line('') ?>Sede</th>
                     <th><?php echo $this->lang->line('Method') ?></th>
+                    <th>Estado</th>
                     <th><?php echo $this->lang->line('Action') ?></th>
 
 
@@ -35,6 +36,7 @@
                     <th><?php echo $this->lang->line('Credit') ?></th>
                     <th><?php echo $this->lang->line('') ?>Sede</th>
                     <th><?php echo $this->lang->line('Method') ?></th>
+                    <th>Estado</th>
                     <th><?php echo $this->lang->line('Action') ?></th>
 
 
@@ -70,19 +72,41 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title"><?php echo $this->lang->line('Delete') ?></h4>
+                <h4 class="modal-title">Anulacion</h4>
             </div>
             <div class="modal-body">
-                <p><?php echo $this->lang->line('delete this transaction') ?></p>
+                <p>¿Seguro que quieres anular esta transacción? El saldo de la cuenta se ajustará.</p>
+
+                <div >
+                    <input style="cursor: pointer" type="radio" name="anulacion" value="Cobranza Efectiva" checked>&nbspCobranza Efectiva<br>
+                    <input style="cursor: pointer" type="radio" name="anulacion" value="Anulado de Cierre">&nbspAnulado de Cierre<br>
+                    <input style="cursor: pointer" type="radio" name="anulacion" value="Anulado de otros Cierres">&nbspAnulado de otros Cierres<br>
+                </div>
+
             </div>
             <div class="modal-footer">
                 <input type="hidden" id="object-id" value="">
                 <input type="hidden" id="action-url" value="transactions/delete_i">
                 <button type="button" data-dismiss="modal" class="btn btn-primary"
-                        id="delete-confirm"><?php echo $this->lang->line('Delete') ?></button>
+                        id="delete-confirm_002">Anular</button>
                 <button type="button" data-dismiss="modal"
                         class="btn"><?php echo $this->lang->line('Cancel') ?></button>
             </div>
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    $("#delete-confirm_002").on("click", function() {
+     var o_data = $('#object-id').val();
+     var anulacion=$("input:radio[name=anulacion]:checked").val();
+    var action_url= $('#action-url').val();
+    
+    
+
+    $.post(baseurl+action_url,{deleteid:o_data,anulacion:anulacion},function(data){
+        alert("Transferencia anulada");
+        $("#estado_"+o_data).text("Anulada");
+    },'json');
+
+});
+</script>

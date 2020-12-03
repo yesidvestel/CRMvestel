@@ -711,6 +711,7 @@ class Transactions extends CI_Controller
             $row[] = amountFormat($prd->credit);
             $row[] = $prd->payer;
             $row[] = $this->lang->line($prd->method);
+            $row[] = "<span id='estado_".$prd->id."'>".$prd->estado."</span>";
             $row[] = '<a href="' . base_url() . 'transactions/view?id=' . $pid . '" class="btn btn-primary btn-xs"><span class="icon-eye"></span>  '.$this->lang->line('View').'</a> <a href="' . base_url() . 'transactions/print_t?id=' . $pid . '" class="btn btn-info btn-xs"  title="Print"><span class="icon-print"></span></a>&nbsp; &nbsp;<a  href="#" data-object-id="' . $pid . '" class="btn btn-danger btn-xs delete-object"><span class="icon-bin"></span></a>';
             $data[] = $row;
         }

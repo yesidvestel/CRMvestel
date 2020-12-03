@@ -3,3 +3,23 @@ ADD COLUMN `nombre_banco` VARCHAR(18) NULL DEFAULT NULL AFTER `ext`;
 
 ALTER TABLE `crm`.`transactions` 
 ADD COLUMN `id_banco` int NULL DEFAULT NULL AFTER `nombre_banco`;
+
+ALTER TABLE `crm`.`transactions` 
+ADD COLUMN `estado` varchar(15) NULL DEFAULT NULL AFTER `id_banco`;
+
+
+CREATE TABLE IF NOT EXISTS `crm`.`anulaciones` (
+  `id_anulacion` INT(11) NOT NULL AUTO_INCREMENT,
+  `fecha_hora` DATETIME NOT NULL,
+  `detalle` VARCHAR(45) NULL DEFAULT NULL,
+  `transactions_id` INT(11) NOT NULL,
+  PRIMARY KEY (`id_anulacion`),
+  INDEX `fk_anulaciones_transactions1_idx` (`transactions_id` ASC),
+  CONSTRAINT `fk_anulaciones_transactions1`
+    FOREIGN KEY (`transactions_id`)
+    REFERENCES `crm`.`transactions` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+

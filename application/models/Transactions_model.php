@@ -245,7 +245,7 @@ class Transactions_model extends CI_Model
         $this->db->set('lastbal', "lastbal-$amt", FALSE);
         $this->db->where('id', $trans['acid']);
         $this->db->update('accounts');
-		echo $trans['tid'];
+		//echo $trans['tid'];
 		if($trans['tid']>0) {
     	switch ($trans['ext']) {
         case 0 :
@@ -262,10 +262,17 @@ class Transactions_model extends CI_Model
             break;
 
     }
-}
+}       
+        $dataa['fecha_hora']=date("Y-m-d 00:00:00");
+        $dataa['detalle']=$this->input->post("anulacion");
+        $dataa['transactions_id']=$id;
+        $this->db->insert('anulaciones',$dataa);
+
+        $datat['estado']="Anulada";
+        $this->db->update("transactions",$datat,array("id"=>$id));
 
         $this->db->delete('transactions', array('id' => $id));
-        return array('status' => 'Success', 'message' => $this->lang->line('DELETED'));
+        return array('status' => 'Success', 'message' => "Transferencia Anulada");
 
 
     }
