@@ -463,6 +463,8 @@
 						}
 					}
 
+
+
 					 ?>
 
 					<tr>
@@ -557,33 +559,46 @@
 					</tr>
 				</thead>
 				<tbody>
+					<?php 
+						$cuenta_anulaciones=array("Cobranza Efectiva"=>array("cantidad"=>0,"monto"=>0),"Anulado de Cierre"=>array("cantidad"=>0,"monto"=>0),"Anulado de otros Cierres"=>array("cantidad"=>0,"monto"=>0));
+						foreach ($lista_anulaciones as $key => $value) {
+								$anul=$this->db->get_where("anulaciones",array("transactions_id"=>$value['id']))->row();
+								
+								if(isset($cuenta_anulaciones[$anul->detalle])) {
+									
+									$cuenta_anulaciones[$anul->detalle]['cantidad']++;
+									
+									$invoce = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row();
+									$cuenta_anulaciones[$anul->detalle]['monto']+=intval($invoce->subtotal);
+									
+								}
+
+						} 
+
+					?>
 					<tr>
 						<td>Cobranza efectiva</td>
-						<td style="text-align: center">0</td>
-						<td style="text-align: center">0</td>
+						<td style="text-align: center"><?=$cuenta_anulaciones['Cobranza Efectiva']['cantidad']?></td>
+						<td style="text-align: center"><?="$ ".number_format($cuenta_anulaciones['Cobranza Efectiva']['monto'],0,",",".")?></td>
 					</tr>
 					<tr>
 						<td>Anulado de cierre</td>
-						<td style="text-align: center">0</td>
-						<td style="text-align: center">0</td>
+						<td style="text-align: center"><?=$cuenta_anulaciones['Anulado de Cierre']['cantidad']?></td>
+						<td style="text-align: center"><?="$ ".number_format($cuenta_anulaciones['Anulado de Cierre']['monto'],0,",",".")?></td>
 					</tr>
 					<tr>
 						<td>Anulado de otros cierres</td>
-						<td style="text-align: center">0</td>
-						<td style="text-align: center">0</td>
+						<td style="text-align: center"><?=$cuenta_anulaciones['Anulado de otros Cierres']['cantidad']?></td>
+						<td style="text-align: center"><?="$ ".number_format($cuenta_anulaciones['Anulado de otros Cierres']['monto'],0,",",".")?></td>
 					</tr>
-					<tr>
-						<td>Anulado de otros cierres</td>
-						<td style="text-align: center">0</td>
-						<td style="text-align: center">0</td>
-					</tr>
+					
 					
 				</tbody>
 				<tfoot>
 					<tr>
 						<th class="pie">COBRADO - ANULADO DE OTRAS FECHAS</th>
-						<th class="pie">0</th>
-						<th class="pie">0</th>			
+						<th class="pie"><?=$cuenta_anulaciones['Cobranza Efectiva']['cantidad']+$cuenta_anulaciones['Anulado de Cierre']['cantidad']+$cuenta_anulaciones['Anulado de otros Cierres']['cantidad']?></th>
+						<th class="pie"><?="$ ".number_format($cuenta_anulaciones['Cobranza Efectiva']['monto']+$cuenta_anulaciones['Anulado de Cierre']['monto']+$cuenta_anulaciones['Anulado de otros Cierres']['monto'],0,",",".")?></th>			
 					</tr>
 				</tfoot>
 			</table>

@@ -132,7 +132,7 @@ class Reports extends CI_Controller
             
             
             $list = $this->reports->get_statements($pay_acc, $trans_type, $sdate, $edate);
-
+            
             $lista2=array();
             foreach ($list as $key => $value) {
                 if($value['estado']!="Anulada"){
@@ -141,7 +141,13 @@ class Reports extends CI_Controller
                 
             }
             $data['lista']=$lista2;
-            
+            $anulaciones=array();
+            foreach ($list as $key => $value) {
+                if($value["estado"]=="Anulada"){
+                    $anulaciones[]=$value;
+                }
+            }
+            $data['lista_anulaciones']=$anulaciones;
             
             //obteniendo datos mes actual
             $dia_inicial_mes_actual = date("Y-m-01 00:00:00");
@@ -159,6 +165,23 @@ class Reports extends CI_Controller
         //fin codigo listar
             $data['texto_mes_actual']=$this->reports->devolver_nombre_mes(date("m"))." ".date("Y");
             $data['texto_mes_anterior']=$this->reports->devolver_nombre_mes(date("m", strtotime("- 1 month")))." ".date("Y", strtotime("- 1 month"));
+
+            $list3 =array();
+            foreach ($lista_mes_anterior as $key => $value) {
+                if($value['estado']!="Anulada"){
+                    $list3[]=$value;
+                }
+            }
+            $data['lista_mes_anterior']=$list3;
+            $lista4=array();
+            foreach ($lista_mes_actual as $key => $value) {
+                if($value['estado']!="Anulada"){
+                    $lista4[]=$value;
+                }
+            }
+            $data['lista_mes_actual']=$lista4;
+
+
 
         $this->load->view('fixed/header', $head);
         $this->load->view('reports/statement_list', $data);
