@@ -66,7 +66,7 @@
     });
 </script>
 
-<div id="delete_model" class="modal fade">
+<div id="delete_model" class="modal fade" >
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -96,6 +96,7 @@
     </div>
 </div>
 <script type="text/javascript">
+    
     $("#delete-confirm_002").on("click", function() {
      var o_data = $('#object-id').val();
      var anulacion=$("input:radio[name=anulacion]:checked").val();
@@ -109,4 +110,17 @@
     },'json');
 
 });
+
+
+    function abrir_modal(link){
+        $("#delete_model").modal("show");
+        $("#object-id").val($(link).data("object-id"));
+        var estado=$("#estado_"+$(link).data("object-id")).text();
+        if(estado=="Anulada"){
+            $("#delete-confirm_002").attr("disabled",true);
+        }else{
+            $("#delete-confirm_002").removeAttr("disabled");
+        }
+
+    }
 </script>
