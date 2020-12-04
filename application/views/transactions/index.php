@@ -75,12 +75,11 @@
                 <h4 class="modal-title">Anulacion</h4>
             </div>
             <div class="modal-body">
-                <p>¿Seguro que quieres anular esta transacción? El saldo de la cuenta se ajustará.</p>
-
+                <p id="texto1">¿Seguro que quieres anular esta transacción? El saldo de la cuenta se ajustará.</p>
                 <div >
-                    <input style="cursor: pointer" type="radio" name="anulacion" value="Cobranza Efectiva" checked>&nbspCobranza Efectiva<br>
-                    <input style="cursor: pointer" type="radio" name="anulacion" value="Anulado de Cierre">&nbspAnulado de Cierre<br>
-                    <input style="cursor: pointer" type="radio" name="anulacion" value="Anulado de otros Cierres">&nbspAnulado de otros Cierres<br>
+                    <input style="cursor: pointer" id="ck1" type="radio" name="anulacion" value="Cobranza Efectiva" checked>&nbspCobranza Efectiva<br>
+                    <input style="cursor: pointer" id="ck2" type="radio" name="anulacion" value="Anulado de Cierre">&nbspAnulado de Cierre<br>
+                    <input style="cursor: pointer" id="ck3" type="radio" name="anulacion" value="Anulado de otros Cierres">&nbspAnulado de otros Cierres<br>
                 </div>
 
             </div>
@@ -116,11 +115,23 @@
         $("#delete_model").modal("show");
         $("#object-id").val($(link).data("object-id"));
         var estado=$("#estado_"+$(link).data("object-id")).text();
+        var detalle_estado=$(link).data("detalle");
         if(estado=="Anulada"){
+            $("#texto1").text("Esta Transaccion ya fue anulada por...");
+            if(detalle_estado=="Cobranza Efectiva"){
+                    $('#ck1').prop("checked", true);
+            }else if(detalle_estado=="Anulado de Cierre"){
+                    $('#ck2').prop("checked", true);
+            }else{
+                    $('#ck3').prop("checked", true);
+            }
             $("#delete-confirm_002").attr("disabled",true);
         }else{
+            $("#texto1").text("¿Seguro que quieres anular esta transacción? El saldo de la cuenta se ajustará.");
+            $('#ck1').prop("checked", true);
             $("#delete-confirm_002").removeAttr("disabled");
         }
+        
 
     }
 </script>
