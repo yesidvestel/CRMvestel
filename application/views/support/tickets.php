@@ -83,32 +83,11 @@
                     </div>
                 </div>
             </div>
-<<<<<<< HEAD
-
-            <label for="tecnicos2">Filtrar Por Tecnico</label>
-<select name="filtro1" id="tecnicos2" class="form-control mb-1">
-    <option value='0'>Todos</option>
-                <?php
-                    foreach ($tecnicoslista as $row) {
-                        $cid = $row['id'];
-                        $title = $row['username'];
-                        echo "<option value='$cid'>$title</option>";
-                    }
-                    ?>
-            </select>
-            <label for="estados">Filtrar por estado</label>
-            <select id="estados" class="form-control mb-1">
-                <option value="">Todos</option>
-                <option value="Resuelto">Resuelto</option>
-                <option value="Pendiente">Pendiente</option>
-            </select>
-<button type="button" onclick="filtrar()" class="btn btn-primary">Filtrar</button>
 
 
-=======
 			 <div class="card card-block sameheight-item">
 
-                        <form action="<?php echo base_url() ?>tickets/ticketfil" method="post" role="form">
+                        
                             <div class="form-group row">
 								<label class="col-sm-12 col-form-label"
                                        for="pay_cat"><h5>FILTRAR</h5></label>
@@ -116,7 +95,8 @@
                                        for="pay_cat">Tecnico</label>
 
                                 <div class="col-sm-6">
-                                    <select name="tec" class="form-control">
+                                    <select name="tec" class="form-control" id="tecnicos2">
+                                        <option value='0'>Todos</option>
                                         <?php
 											foreach ($tecnicoslista as $row) {
 												$cid = $row['id'];
@@ -132,8 +112,8 @@
                                        for="pay_cat">Estado</label>
 
                                 <div class="col-sm-6">
-                                    <select name="trans_type" class="form-control">
-                                        <option value='All'>Todas</option>
+                                    <select name="trans_type" class="form-control" id="estados">
+                                        <option value=''>Todas</option>
                                         <option value='Pendiente'>Pendiente</option>
                                         <option value='Resuelto'>Resuelto</option>
                                     </select>
@@ -143,14 +123,14 @@
                                 <label class="col-sm-3 col-form-label" for="pay_cat"></label>
 
                                 <div class="col-sm-4">
-                                    <input type="submit" class="btn btn-primary btn-md" value="VER">
+                                    <input type="button" class="btn btn-primary btn-md" value="VER" onclick="filtrar()">
 
 
                                 </div>
                             </div>
-                        </form>
+                        
                     </div>
->>>>>>> d8dc3dab8f095bf219c8548ce17d7b7c56534e03
+
 			<div class="table-responsive">
             <table id="doctable" class="table table-hover" cellspacing="0" width="100%">
                 <thead>
