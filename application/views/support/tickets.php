@@ -291,7 +291,7 @@
         if(tecnico==0 && estado==""){
             tb.ajax.url( baseurl+'tickets/tickets_load_list?stat=' ).load();     
         }else{
-            tb.ajax.url( baseurl+'tickets/tickets_load_list_2?tecnico='+tecnico+"&estado="+estado+"&stat=" ).load();     
+            tb.ajax.url( baseurl+'tickets/tickets_load_list?tecnico='+tecnico+"&estado="+estado+"&stat=" ).load();     
         }
        
 
