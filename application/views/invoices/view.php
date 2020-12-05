@@ -865,8 +865,8 @@ $("#seleccion_banco").hide();
         }
     }
     $(function () {
-        $('#cuentas_ option[value="4"]').remove();
-        $('#cuentas_ option[value="5"]').remove();
+       // $('#cuentas_ option[value="4"]').remove();
+       // $('#cuentas_ option[value="5"]').remove();
 
         $('.summernote').summernote({
             height: 150,

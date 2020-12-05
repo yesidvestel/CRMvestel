@@ -165,7 +165,7 @@ class Search extends CI_Controller
 
 
         if ($name) {
-            $query = $this->db->query("SELECT id,,name,apellidos,company,celular,email FROM supplier WHERE UPPER(name)  LIKE '" . strtoupper($name['term']) . "%' OR UPPER(celular)  LIKE '" . strtoupper($name['term']) . "%' LIMIT 6");
+            $query = $this->db->query("SELECT id,name,nit,phone,email FROM supplier WHERE UPPER(name)  LIKE '" . strtoupper($name['term']) . "%' OR UPPER(phone)  LIKE '" . strtoupper($name['term']) . "%' LIMIT 6");
 
             $result = $query->result_array();
 

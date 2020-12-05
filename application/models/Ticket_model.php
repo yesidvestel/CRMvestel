@@ -24,7 +24,7 @@ class Ticket_model extends CI_Model
 
     //documents list
 	var $table = 'customers';
-    var $doccolumn_order = array(null, 'id', 'subject', 'created','status', null);
+    var $doccolumn_order = array(null, 'idt', 'abonado', 'asignado', 'cid', 'subject','detalle', 'created','status', null);
     var $doccolumn_search = array('idt', 'abonado', 'asignado', 'cid', 'subject','detalle', 'created','status');
 
 
@@ -232,6 +232,24 @@ class Ticket_model extends CI_Model
         $this->ticket_datatables_query($filt);
         $query = $this->db->get();
         return $query->num_rows();
+    }
+	 public function get_ticfiltrado($tec, $trans_type)
+    {
+
+        if ($trans_type == 'All') {
+            $where = "asignado='$tec'";
+        } else {
+            $where = "asignado='$tec' AND status='$trans_type'";
+        }
+		$this->db->join('customers', 'tickets.cid=customers.id', 'left');
+        $this->db->select('*');
+        $this->db->from('tickets');
+        $this->db->where($where);
+        //  $this->db->order_by('id', 'DESC');
+        $query = $this->db->get();
+        $result = $query->result_array();
+
+        return $result;
     }
 
     public function ticket_count_all($filt)

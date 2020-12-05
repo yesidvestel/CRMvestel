@@ -553,7 +553,7 @@
                             <a href="<?php echo base_url(); ?>reports/expensestatement"><?php echo $this->lang->line('Calculate Expenses') ?></a>
                         </li>
                         <li>
-                            <a href="<?php echo base_url(); ?>customers"><?php echo $this->lang->line('Clients Transactions') ?></a>
+                            <a href="<?php echo base_url(); ?>reports/customerviewstatement"><?php echo $this->lang->line('Clients Transactions') ?></a>
                         </li>
                         <li>
                             <a href="<?php echo base_url(); ?>reports/taxstatement"><?php echo $this->lang->line('TAX').' '.$this->lang->line('Statements'); ?> </a>

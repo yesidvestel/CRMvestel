@@ -53,6 +53,36 @@ class Tickets Extends CI_Controller
 
 
     }
+	public function ticketfil()
+    {
+		$head['usernm'] = $this->aauth->get_user()->username;
+		$tec = $this->input->post('tec');
+		$trans_type = $this->input->post('trans_type');
+        $head['title'] = 'Support Tickets';
+		$list = $this->ticket->get_ticfiltrado($tec, $trans_type);
+        $data['lista']=$list;
+		$data['filter'] = array($tec,$trans_type);
+		$data['tecnicoslista'] = $this->ticket->tecnico_list();
+        $data['totalt'] = $this->ticket->ticket_count_all('');
+		$this->load->view('fixed/header', $head);
+        $this->load->view('support/ticketsfiltrado', $data);
+        $this->load->view('fixed/footer');
+
+
+    }
+	public function statements()
+    {
+
+        $tec = $this->input->post('ac');
+        $trans_type = $this->input->post('ty');        
+        $list = $this->ticket->get_ticfiltrado($tec, $trans_type);       
+
+        foreach ($list as $row) { 
+			$no++;
+            echo '<tr><td>' . $no . '</td><td>' . $row['idt'] . '</td><td>' . $row['subject'] . '</td><td>' . $row['detalle'] . '</td><td>' . $row['created'] . '</td><td>' . $row['abonado'] . '</td><td>' . $row['name'] . '</td><td><span class="st-'. $row['status'] .'">' .$row['status'] .'</span></td><td><a href="' . base_url('tickets/thread/?id=' . $row['idt']) . '" class="btn btn-success btn-xs"><i class="icon-file-text"></i> ' . $this->lang->line('View') . '</a> ' .  '</td></tr>';
+        }
+
+    }
 
     public function tickets_load_list()
     {

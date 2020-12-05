@@ -83,71 +83,25 @@
                     </div>
                 </div>
             </div>
-			 <div class="card card-block sameheight-item">
-
-                        <form action="<?php echo base_url() ?>tickets/ticketfil" method="post" role="form">
-                            <div class="form-group row">
-								<label class="col-sm-12 col-form-label"
-                                       for="pay_cat"><h5>FILTRAR</h5></label>
-                                <label class="col-sm-2 col-form-label"
-                                       for="pay_cat">Tecnico</label>
-
-                                <div class="col-sm-6">
-                                    <select name="tec" class="form-control">
-                                        <?php
-											foreach ($tecnicoslista as $row) {
-												$cid = $row['id'];
-												$title = $row['username'];
-												echo "<option value='$cid'>$title</option>";
-											}
-											?>
-                                    </select>
-                                </div>
-                            </div>
-							<div class="form-group row">
-                                <label class="col-sm-2 col-form-label"
-                                       for="pay_cat">Estado</label>
-
-                                <div class="col-sm-6">
-                                    <select name="trans_type" class="form-control">
-                                        <option value='All'>Todas</option>
-                                        <option value='Pendiente'>Pendiente</option>
-                                        <option value='Resuelto'>Resuelto</option>
-                                    </select>
-                                </div>								
-                            </div>
-							<div class="form-group row">
-                                <label class="col-sm-3 col-form-label" for="pay_cat"></label>
-
-                                <div class="col-sm-4">
-                                    <input type="submit" class="btn btn-primary btn-md" value="VER">
-
-
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+			 
 			<div class="table-responsive">
-            <table id="doctable" class="table table-hover" cellspacing="0" width="100%">
+            <table class="table table-hover" cellspacing="0" width="100%">
                 <thead>
                 <tr>
-					<th>#</th>
-					<th><i class="icon-marquee"></th>
+					<th>#</th>					
 					<th>N° orden</th>	
                     <th><?php echo $this->lang->line('Subject') ?></th>
 					<th>Detalle</th>
                     <th>F/creada</th>                    
 					<th>Abonado</th>
-					<th>Usuario</th>
-                    <th>Factura</th>
-					<th>Asignado</th>
+					<th>Usuario</th>                    
 					<th>Estado</th>
                     <th>Accion</th>
 					
 
                 </tr>
                 </thead>
-                <tbody>
+                <tbody id="entries">
 				
                 </tbody>
 
@@ -203,31 +157,23 @@
 <script type="text/javascript">
     $(document).ready(function () {
 
-        $('#doctable').DataTable({
+        $('#entries').html('<td class="text-lg-center" colspan="5">Data loading...</td>');
 
-            "processing": true,
-            "serverSide": true,
-            "ajax": {
-                "url": "<?php if (isset($_GET['filter'])) {
-                    $filter = $_GET['filter'];
-                } else {
-                    $filter = '';
-                }    echo site_url('tickets/tickets_load_list?stat=' . $filter)?>",
-                "type": "POST"
+        $.ajax({
+
+            url: baseurl + 'tickets/statements',
+            type: 'POST',
+            data: <?php echo "{'ac': '" . $filter[0] . "','ty':'" . $filter[1] . "'}"; ?>,
+            dataType: 'html',
+            success: function (data) {
+                $('#entries').html(data);
+
             },
-            "columnDefs": [
-                {
-                    "targets": [0],
-                    "orderable": false,
-                },
-            ],
-			"order": [[ 2, "desc" ]]
+            error: function (data) {
+                $('#response').html('Error')
+            }
 
         });
-        miniDash();
-
- 
-
     });
     let lista_ordenes=[];
     function asignar_orden(elemento){
