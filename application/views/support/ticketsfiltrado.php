@@ -83,95 +83,25 @@
                     </div>
                 </div>
             </div>
-<<<<<<< HEAD
-
-            <label for="tecnicos2">Filtrar Por Tecnico</label>
-<select name="filtro1" id="tecnicos2" class="form-control mb-1">
-    <option value='0'>Todos</option>
-                <?php
-                    foreach ($tecnicoslista as $row) {
-                        $cid = $row['id'];
-                        $title = $row['username'];
-                        echo "<option value='$cid'>$title</option>";
-                    }
-                    ?>
-            </select>
-            <label for="estados">Filtrar por estado</label>
-            <select id="estados" class="form-control mb-1">
-                <option value="">Todos</option>
-                <option value="Resuelto">Resuelto</option>
-                <option value="Pendiente">Pendiente</option>
-            </select>
-<button type="button" onclick="filtrar()" class="btn btn-primary">Filtrar</button>
-
-
-=======
-			 <div class="card card-block sameheight-item">
-
-                        <form action="<?php echo base_url() ?>tickets/ticketfil" method="post" role="form">
-                            <div class="form-group row">
-								<label class="col-sm-12 col-form-label"
-                                       for="pay_cat"><h5>FILTRAR</h5></label>
-                                <label class="col-sm-2 col-form-label"
-                                       for="pay_cat">Tecnico</label>
-
-                                <div class="col-sm-6">
-                                    <select name="tec" class="form-control">
-                                        <?php
-											foreach ($tecnicoslista as $row) {
-												$cid = $row['id'];
-												$title = $row['username'];
-												echo "<option value='$cid'>$title</option>";
-											}
-											?>
-                                    </select>
-                                </div>
-                            </div>
-							<div class="form-group row">
-                                <label class="col-sm-2 col-form-label"
-                                       for="pay_cat">Estado</label>
-
-                                <div class="col-sm-6">
-                                    <select name="trans_type" class="form-control">
-                                        <option value='All'>Todas</option>
-                                        <option value='Pendiente'>Pendiente</option>
-                                        <option value='Resuelto'>Resuelto</option>
-                                    </select>
-                                </div>								
-                            </div>
-							<div class="form-group row">
-                                <label class="col-sm-3 col-form-label" for="pay_cat"></label>
-
-                                <div class="col-sm-4">
-                                    <input type="submit" class="btn btn-primary btn-md" value="VER">
-
-
-                                </div>
-                            </div>
-                        </form>
-                    </div>
->>>>>>> d8dc3dab8f095bf219c8548ce17d7b7c56534e03
+			 
 			<div class="table-responsive">
-            <table id="doctable" class="table table-hover" cellspacing="0" width="100%">
+            <table class="table table-hover" cellspacing="0" width="100%">
                 <thead>
                 <tr>
-					<th>#</th>
-					<th><i class="icon-marquee"></th>
+					<th>#</th>					
 					<th>N° orden</th>	
                     <th><?php echo $this->lang->line('Subject') ?></th>
 					<th>Detalle</th>
                     <th>F/creada</th>                    
 					<th>Abonado</th>
-					<th>Usuario</th>
-                    <th>Factura</th>
-					<th>Asignado</th>
+					<th>Usuario</th>                    
 					<th>Estado</th>
                     <th>Accion</th>
 					
 
                 </tr>
                 </thead>
-                <tbody>
+                <tbody id="entries">
 				
                 </tbody>
 
@@ -202,7 +132,6 @@
     </div>
     <input type="hidden" id="dashurl" value="tickets/ticket_stats">
 </article>
-
 <div id="delete_model" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -226,34 +155,25 @@
     </div>
 </div>
 <script type="text/javascript">
-    var tb;
     $(document).ready(function () {
 
-        tb=$('#doctable').DataTable({
+        $('#entries').html('<td class="text-lg-center" colspan="5">Data loading...</td>');
 
-            "processing": true,
-            "serverSide": true,
-            "ajax": {
-                "url": "<?php if (isset($_GET['filter'])) {
-                    $filter = $_GET['filter'];
-                } else {
-                    $filter = '';
-                }    echo site_url('tickets/tickets_load_list?stat=' . $filter)?>",
-                "type": "POST"
+        $.ajax({
+
+            url: baseurl + 'tickets/statements',
+            type: 'POST',
+            data: <?php echo "{'ac': '" . $filter[0] . "','ty':'" . $filter[1] . "'}"; ?>,
+            dataType: 'html',
+            success: function (data) {
+                $('#entries').html(data);
+
             },
-            "columnDefs": [
-                {
-                    "targets": [0],
-                    "orderable": false,
-                },
-            ],
-			"order": [[ 2, "desc" ]]
+            error: function (data) {
+                $('#response').html('Error')
+            }
 
         });
-        //miniDash();
-
- 
-
     });
     let lista_ordenes=[];
     function asignar_orden(elemento){
@@ -304,16 +224,5 @@
                 window.location.reload();
             },'json');
       }
-    }
-    function filtrar(){
-        var tecnico=$("#tecnicos2 option:selected").val();
-        var estado =$("#estados option:selected").val();
-        if(tecnico==0 && estado==""){
-            tb.ajax.url( baseurl+'tickets/tickets_load_list?stat=' ).load();     
-        }else{
-            tb.ajax.url( baseurl+'tickets/tickets_load_list_2?tecnico='+tecnico+"&estado="+estado+"&stat=" ).load();     
-        }
-       
-
     }
 </script>
