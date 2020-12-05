@@ -83,7 +83,27 @@
                     </div>
                 </div>
             </div>
-			
+
+            <label for="tecnicos2">Filtrar Por Tecnico</label>
+<select name="filtro1" id="tecnicos2" class="form-control mb-1">
+    <option value='0'>Todos</option>
+                <?php
+                    foreach ($tecnicoslista as $row) {
+                        $cid = $row['id'];
+                        $title = $row['username'];
+                        echo "<option value='$cid'>$title</option>";
+                    }
+                    ?>
+            </select>
+            <label for="estados">Filtrar por estado</label>
+            <select id="estados" class="form-control mb-1">
+                <option value="">Todos</option>
+                <option value="Resuelto">Resuelto</option>
+                <option value="Pendiente">Pendiente</option>
+            </select>
+<button type="button" onclick="filtrar()" class="btn btn-primary">Filtrar</button>
+
+
 			<div class="table-responsive">
             <table id="doctable" class="table table-hover" cellspacing="0" width="100%">
                 <thead>
@@ -135,6 +155,7 @@
     </div>
     <input type="hidden" id="dashurl" value="tickets/ticket_stats">
 </article>
+
 <div id="delete_model" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -158,9 +179,10 @@
     </div>
 </div>
 <script type="text/javascript">
+    var tb;
     $(document).ready(function () {
 
-        $('#doctable').DataTable({
+        tb=$('#doctable').DataTable({
 
             "processing": true,
             "serverSide": true,
@@ -181,7 +203,7 @@
 			"order": [[ 2, "desc" ]]
 
         });
-        miniDash();
+        //miniDash();
 
  
 
@@ -235,5 +257,16 @@
                 window.location.reload();
             },'json');
       }
+    }
+    function filtrar(){
+        var tecnico=$("#tecnicos2 option:selected").val();
+        var estado =$("#estados option:selected").val();
+        if(tecnico==0 && estado==""){
+            tb.ajax.url( baseurl+'tickets/tickets_load_list?stat=' ).load();     
+        }else{
+            tb.ajax.url( baseurl+'tickets/tickets_load_list_2?tecnico='+tecnico+"&estado="+estado+"&stat=" ).load();     
+        }
+       
+
     }
 </script>

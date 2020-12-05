@@ -103,6 +103,55 @@ class Tickets Extends CI_Controller
         );
         echo json_encode($output);
     }
+    public function tickets_load_list_2()
+    {
+        $filt = $this->input->get('stat');
+        $filt="Pendiente";
+        $list = $this->ticket->ticket_datatables_2($filt,$_GET);
+        $data = array();
+        $no = $this->input->post('start');
+        foreach ($list as $ticket) {
+            $row = array();
+            $no++;          
+            $row[] = $no;
+            $row[] = '<input id="input_'.$ticket->idt.'" type="checkbox" style="margin-left: 9px;cursor:pointer;" onclick="asignar_orden(this)" data-id="'.$ticket->idt.'">';
+            $row[] = $ticket->idt;
+            $row[] = $ticket->subject;
+            $row[] = $ticket->detalle;
+            $row[] = $ticket->created;          
+            if($ticket->cid !=null){
+                $row[]='<a href="'.base_url("customers/view?id=".$ticket->cid).'">'.$ticket->abonado.'</a>';
+            }
+            $row[] = $ticket->name;
+          if($ticket->id_factura !=null){
+                $row[]='<a href="'.base_url("invoices/view?id=".$ticket->id_factura).'">'.$ticket->id_factura.'</a>';
+            }else{
+                 $row[]="Sin Factura jeje";
+            }
+
+            if($ticket->asignado!=null){
+                $tecnico=$this->db->get_where('aauth_users',array('id'=>$ticket->asignado))->row();
+                $row[]=$tecnico->username;
+            }else{
+                $row[] = "--";    
+            }
+            
+            $row[] = '<span class="st-' . $ticket->status . '">' . $ticket->status . '</span>';
+            $row[] = '<a href="' . base_url('tickets/thread/?id=' . $ticket->idt) . '" class="btn btn-success btn-xs"><i class="icon-file-text"></i> ' . $this->lang->line('View') . '</a> <a href="' . base_url('quote/edit/?id=' . $ticket->idt) . '" class="btn btn-primary btn-sm"><i class="icon-pencil"></i> ' . 'Editar' . '</a> <a class="btn btn-danger" onclick="eliminar_ticket('.$ticket->idt.')" > <i class="icon-trash-o "></i> </a>';
+
+            
+
+            $data[] = $row;
+        }
+
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->ticket->ticket_count_all($filt),
+            "recordsFiltered" => $this->ticket->ticket_count_filtered($filt),
+            "data" => $data,
+        );
+        echo json_encode($output);
+    }
     
     public function asignar_ordenes(){
         foreach ($_POST['lista'] as $key => $id_orden) {

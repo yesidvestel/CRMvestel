@@ -179,7 +179,50 @@ class Ticket_model extends CI_Model
         echo json_encode($query->result_array());
 
     }
+ function ticket_datatables_2($filt,$filt2)
+    {
+        $this->ticket_datatables_query_2($filt,$filt2);
+        if ($this->input->post('length') != -1)
+            $this->db->limit($this->input->post('length'), $this->input->post('start'));
+        $query = $this->db->get();
+        return $query->result();
+    }
+    private function ticket_datatables_query_2($filt,$filt2)
+    {
 
+        $this->db->from('tickets');
+        if ($filt2['estado'] != '') {
+            $this->db->where('status=', $filt2['estado']);
+        }
+        $this->db->join('customers', 'tickets.cid=customers.id', 'left');
+        $i = 0;
+
+        foreach ($this->doccolumn_search as $item) // loop column
+        {
+            $search = $this->input->post('search');
+            $value = $search['value'];
+            if ($value) {
+
+                if ($i === 0) {
+                    $this->db->group_start();
+                    $this->db->like($item, $value);
+                } else {
+                    $this->db->or_like($item, $value);
+                }
+
+                if (count($this->doccolumn_search) - 1 == $i) //last loop
+                    $this->db->group_end(); //close bracket
+            }
+            $i++;
+        }
+        $search = $this->input->post('order');
+        if ($search) {
+            $this->db->order_by($this->doccolumn_order[$search['0']['column']], $search['0']['dir']);
+        } else if (isset($this->order)) {
+            $order = $this->order;
+            $this->db->order_by(key($order), $order[key($order)]);
+        }
+    }
 
     function ticket_datatables($filt)
     {
