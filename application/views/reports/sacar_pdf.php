@@ -383,6 +383,43 @@ $contenidoTabla="<div style='text-align: center;'>
 		</td>
 	</tr>
 </table>
+<br><br>
+<table style='width: 100%;max-width: 100%;margin-bottom: 1rem;vertical-align: bottom;border-bottom: 2px solid #e3ebf3;border-top: 1px solid #e3ebf3;padding: 0.75rem 2rem;border-spacing: 2px;font-variant: normal;border-collapse: collapse;'>
+	<thead>
+                <tr>
+                    <th style='vertical-align: bottom;border-bottom: 2px solid #e3ebf3;border-top: 1px solid #e3ebf3;padding: 0.75rem 2rem;background: #555;color: #fff;text-transform: uppercase;text-align: center;font-size: 14px;'>Fecha</th>
+                    <th style='vertical-align: bottom;border-bottom: 2px solid #e3ebf3;border-top: 1px solid #e3ebf3;padding: 0.75rem 2rem;background: #555;color: #fff;text-transform: uppercase;text-align: center;font-size: 14px;'>Descripción</th>
+
+                    <th style='vertical-align: bottom;border-bottom: 2px solid #e3ebf3;border-top: 1px solid #e3ebf3;padding: 0.75rem 2rem;background: #555;color: #fff;text-transform: uppercase;text-align: center;font-size: 14px;'>Débito</th>
+                    <th style='vertical-align: bottom;border-bottom: 2px solid #e3ebf3;border-top: 1px solid #e3ebf3;padding: 0.75rem 2rem;background: #555;color: #fff;text-transform: uppercase;text-align: center;font-size: 14px;'>Crédito</th>
+
+                    <th style='vertical-align: bottom;border-bottom: 2px solid #e3ebf3;border-top: 1px solid #e3ebf3;padding: 0.75rem 2rem;background: #555;color: #fff;text-transform: uppercase;text-align: center;font-size: 14px;'>Equilibrar</th>
+
+
+                </tr>
+   </thead>
+   <tbody >
+   		<tr><td style='padding: 0.75rem 2rem;border-bottom: 1px solid #e3ebf3;color: #333;font-size: 12px;background-color: rgba(0, 0, 0, 0.05);text-align: center;'>2020-10-08</td><td style='padding: 0.75rem 2rem;border-bottom: 1px solid #e3ebf3;color: #333;font-size: 12px;background-color: rgba(0, 0, 0, 0.05);text-align: center;'>Payment for invoice #1037</td><td style='padding: 0.75rem 2rem;border-bottom: 1px solid #e3ebf3;color: #333;font-size: 12px;background-color: rgba(0, 0, 0, 0.05);text-align: center;'>$ 0</td><td style='padding: 0.75rem 2rem;border-bottom: 1px solid #e3ebf3;color: #333;font-size: 12px;background-color: rgba(0, 0, 0, 0.05);text-align: center;'>$ 10.000</td><td style='padding: 0.75rem 2rem;border-bottom: 1px solid #e3ebf3;color: #333;font-size: 12px;background-color: rgba(0, 0, 0, 0.05);text-align: center;'>$ 10.000</td></tr>
+   		<tr><td style='padding: 0.75rem 2rem;border-bottom: 1px solid #e3ebf3;color: #333;font-size: 12px;text-align: center;'>2020-10-08</td><td style='padding: 0.75rem 2rem;border-bottom: 1px solid #e3ebf3;color: #333;font-size: 12px;text-align: center;'>Payment for invoice #1006</td><td style='padding: 0.75rem 2rem;border-bottom: 1px solid #e3ebf3;color: #333;font-size: 12px;text-align: center;'>$ 0</td><td style='padding: 0.75rem 2rem;border-bottom: 1px solid #e3ebf3;color: #333;font-size: 12px;text-align: center;'>$ 50.000</td><td style='padding: 0.75rem 2rem;border-bottom: 1px solid #e3ebf3;color: #333;font-size: 12px;text-align: center;'>$ 60.000</td></tr>
+   		<tr><td style='padding: 0.75rem 2rem;border-bottom: 1px solid #e3ebf3;color: #333;font-size: 12px;background-color: rgba(0, 0, 0, 0.05);text-align: center;'>2020-10-08</td><td style='padding: 0.75rem 2rem;border-bottom: 1px solid #e3ebf3;color: #333;font-size: 12px;background-color: rgba(0, 0, 0, 0.05);text-align: center;'>Payment for invoice #1037</td><td style='padding: 0.75rem 2rem;border-bottom: 1px solid #e3ebf3;color: #333;font-size: 12px;background-color: rgba(0, 0, 0, 0.05);text-align: center;'>$ 0</td><td style='padding: 0.75rem 2rem;border-bottom: 1px solid #e3ebf3;color: #333;font-size: 12px;background-color: rgba(0, 0, 0, 0.05);text-align: center;'>$ 10.000</td><td style='padding: 0.75rem 2rem;border-bottom: 1px solid #e3ebf3;color: #333;font-size: 12px;background-color: rgba(0, 0, 0, 0.05);text-align: center;'>$ 10.000</td></tr>
+   		<tr><td style='padding: 0.75rem 2rem;border-bottom: 1px solid #e3ebf3;color: #333;font-size: 12px;text-align: center;'>2020-10-08</td><td style='padding: 0.75rem 2rem;border-bottom: 1px solid #e3ebf3;color: #333;font-size: 12px;text-align: center;'>Payment for invoice #1006</td><td style='padding: 0.75rem 2rem;border-bottom: 1px solid #e3ebf3;color: #333;font-size: 12px;text-align: center;'>$ 0</td><td style='padding: 0.75rem 2rem;border-bottom: 1px solid #e3ebf3;color: #333;font-size: 12px;text-align: center;'>$ 50.000</td><td style='padding: 0.75rem 2rem;border-bottom: 1px solid #e3ebf3;color: #333;font-size: 12px;text-align: center;'>$ 60.000</td></tr>
+   		
+   	</tbody>
+   	<tfoot>
+                <tr>
+                    <th style='vertical-align: bottom;border-bottom: 2px solid #e3ebf3;border-top: 1px solid #e3ebf3;padding: 0.75rem 2rem;background: #555;color: #fff;text-transform: uppercase;text-align: center;font-size: 14px;'>Fecha</th>
+                    <th style='vertical-align: bottom;border-bottom: 2px solid #e3ebf3;border-top: 1px solid #e3ebf3;padding: 0.75rem 2rem;background: #555;color: #fff;text-transform: uppercase;text-align: center;font-size: 14px;'>Descripción</th>
+
+                    <th style='vertical-align: bottom;border-bottom: 2px solid #e3ebf3;border-top: 1px solid #e3ebf3;padding: 0.75rem 2rem;background: #555;color: #fff;text-transform: uppercase;text-align: center;font-size: 14px;'>Débito</th>
+                    <th style='vertical-align: bottom;border-bottom: 2px solid #e3ebf3;border-top: 1px solid #e3ebf3;padding: 0.75rem 2rem;background: #555;color: #fff;text-transform: uppercase;text-align: center;font-size: 14px;'>Crédito</th>
+
+                    <th style='vertical-align: bottom;border-bottom: 2px solid #e3ebf3;border-top: 1px solid #e3ebf3;padding: 0.75rem 2rem;background: #555;color: #fff;text-transform: uppercase;text-align: center;font-size: 14px;'>Equilibrar</th>
+
+
+                </tr>
+	</tfoot>
+	
+</table>
 </div>";
 
 
