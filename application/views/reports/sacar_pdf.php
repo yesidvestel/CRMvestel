@@ -1,13 +1,8 @@
 <?php 
 
-include (APPPATH."libraries\dendor\autoload.php");
-
-$mpdf = new \Mpdf\Mpdf([
-
-]);
-$mpdf->SetTitle('Lista de Usuarios');
-
-$contenidoTabla="
+$contenidoTabla="<div style='text-align: center;'>
+<img style='display:block;margin:auto;' src='".base_url()."userfiles/theme/logo-header.png'>
+</div>
 
 <div style='box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.05);margin-bottom: 1.875rem;border-radius: 0;padding: 1.5rem'>
 <h6 style='font-size: 1rem;margin-bottom: 0.5rem;font-family: inherit;font-weight: 500;line-height: 1.2;color: inherit;margin-top: 0;'>Estado de Caja : </h6>
@@ -390,6 +385,18 @@ $contenidoTabla="
 </table>
 </div>";
 
+
+include (APPPATH."libraries\dendor\autoload.php");
+
+$mpdf = new \Mpdf\Mpdf([
+
+]);
+$mpdf->SetTitle('Lista de Usuarios');
+
+
+
+
 $mpdf->setFooter('Pagina N° {PAGENO} de {nb}');
+
 $mpdf->writeHtml($contenidoTabla,\Mpdf\HTMLParserMode::HTML_BODY);
 $mpdf->Output();
