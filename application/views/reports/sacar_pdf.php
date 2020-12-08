@@ -1,8 +1,165 @@
 <?php 
 
+$array_afiliaciones=array();
+	$var_cuenta_planes=array("1Mega"=>0,"2Megas"=>0,"3Megas"=>0,"5Megas"=>0,"10Megas"=>0,"Television"=>0); 
+	$var_cuenta_planes_montos=array("1MegaMonto"=>0,"2MegasMonto"=>0,"3MegasMonto"=>0,"5MegasMonto"=>0,"10MegasMonto"=>0,"TelevisionMonto"=>0); 
+//tabla total cobranza
+	//productos con iva
+		$cuantos_prod_con_iva_hay=0;
+		$monto_prod_con_iva_hay=0;
+		$monto_iva_prod_con_iva_hay=0;
+
+	//end productos con iva
+
+	//productos sin iva
+		$cuantos_prod_sin_iva_hay=0;
+		$monto_prod_sin_iva_hay=0;
+	//end productos sin iva
+//end tabla total cobranza
+		$array_reconexiones=array('cantidad' =>0 ,"monto"=>0 );
+		$array_bancos=array("Bancolombia" => array('cantidad' => 0,"monto"=>0 ),"BBVA"=>array('cantidad' => 0,"monto"=>0 ));
+		$array_resumen_tipo_servicio= array('Internet' => array('cantidad' => 0,"monto"=>0 ),"Television"=> array('cantidad' => 0,"monto"=>0 ));
+		$array_efectivo=array("cantidad"=>0,"monto"=>0);
+		foreach ($lista as $key => $value) { 
+			$invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
+			$invoice_items=$this->db->get_where('invoice_items',array('tid' =>$value['tid']))->result_array();
+			foreach ($invoice_items as $key => $item_invoic) {
+				//recorro y pregunto si tiene iva o no el item para la primera tabla
+				if($item_invoic['totaltax']!="0"){
+					$cuantos_prod_con_iva_hay++;
+					$monto_iva_prod_con_iva_hay=$monto_iva_prod_con_iva_hay+intval($item_invoic['totaltax']);
+					$monto_prod_con_iva_hay=$monto_prod_con_iva_hay+intval($item_invoic['price']);
+				}else{
+					$cuantos_prod_sin_iva_hay++;
+					$monto_prod_sin_iva_hay=$monto_prod_sin_iva_hay+intval($item_invoic['price']);
+				}
+				//para la Resumen por Servicios
+				if($item_invoic['product']=="1Mega" ||$item_invoic['product']=="1 Mega"){
+			 		$var_cuenta_planes['1Mega']++;
+			 		$var_cuenta_planes_montos['1MegaMonto']+=intval($item_invoic['subtotal']);
+			 		//resumen tipo servicio
+			 		$array_resumen_tipo_servicio['Internet']['cantidad']++;
+			 		$array_resumen_tipo_servicio['Internet']['monto']+=intval($item_invoic['subtotal']);
+
+				}else if($item_invoic['product']=="2Megas" ||$item_invoic['product']=="2 Megas"){
+					$var_cuenta_planes['2Megas']++;
+					$var_cuenta_planes_montos['2MegasMonto']+=intval($item_invoic['subtotal']);
+
+					//resumen tipo servicio
+			 		$array_resumen_tipo_servicio['Internet']['cantidad']++;
+			 		$array_resumen_tipo_servicio['Internet']['monto']+=intval($item_invoic['subtotal']);
+
+				}else if($item_invoic['product']=="3Megas"|| $item_invoic['product']=="3 Megas"){
+					$var_cuenta_planes['3Megas']++;
+					$var_cuenta_planes_montos['3MegasMonto']+=intval($item_invoic['subtotal']);
+
+					//resumen tipo servicio
+			 		$array_resumen_tipo_servicio['Internet']['cantidad']++;
+			 		$array_resumen_tipo_servicio['Internet']['monto']+=intval($item_invoic['subtotal']);
+
+				}else if($item_invoic['product']=="5Megas"||$item_invoic['product']=="5 Megas"){
+					$var_cuenta_planes['5Megas']++;
+					$var_cuenta_planes_montos['5MegasMonto']+=intval($item_invoic['subtotal']);
+
+					//resumen tipo servicio
+			 		$array_resumen_tipo_servicio['Internet']['cantidad']++;
+			 		$array_resumen_tipo_servicio['Internet']['monto']+=intval($item_invoic['subtotal']);
+
+				}else if($item_invoic['product']=="10Megas"||$item_invoic['product']=="10 Megas"){
+					$var_cuenta_planes['10Megas']++;
+					$var_cuenta_planes_montos['10MegasMonto']+=intval($item_invoic['subtotal']);
+
+					//resumen tipo servicio
+			 		$array_resumen_tipo_servicio['Internet']['cantidad']++;
+			 		$array_resumen_tipo_servicio['Internet']['monto']+=intval($item_invoic['subtotal']);
+
+				}
+				//le coloque asi primero para que la afiliacion teve no se entrelase con la sola tev mensual que es diferente
+				if(strpos(strtolower($item_invoic['product']), "afilia")!==false){
+					$cuenta_afiliacion=1;
+					$monto_afiliacion=1;
+					if(isset($array_afiliaciones[$item_invoic['product']])) {
+						$array_afiliaciones[$item_invoic['product']]['cuenta_afiliacion']++;
+						$array_afiliaciones[$item_invoic['product']]['monto_afiliacion']+=intval($item_invoic['subtotal']);
+					}else{
+						$array_afiliaciones[$item_invoic['product']]=array('cuenta_afiliacion' => intval($cuenta_afiliacion),"monto_afiliacion"=> intval($item_invoic['subtotal']));
+					}
+				}else if(strpos(strtolower($item_invoic['product']), "tele")!==false){
+					$var_cuenta_planes['Television']++;
+					$var_cuenta_planes_montos['TelevisionMonto']+=intval($item_invoic['subtotal']);
+				}
+
+				//resumen por tipo servicio
+				if(strpos(strtolower($item_invoic['product']), "tele")!==false){
+					$array_resumen_tipo_servicio['Television']['cantidad']++;
+					$array_resumen_tipo_servicio['Television']['monto']+=intval($item_invoic['subtotal']);
+				}else if(strpos(strtolower($item_invoic['product']), "afilia")!==false){
+					$array_resumen_tipo_servicio['Internet']['cantidad']++;
+			 		$array_resumen_tipo_servicio['Internet']['monto']+=intval($item_invoic['subtotal']);
+				}
+				//end resumen por tipo servicio
+				
+
+			}
+			
+			$ticket = $this->db->select("*")->from('tickets')->where("id_invoice=".$value['tid']." or id_factura=".$value['tid'])->get();
+			$varx =$ticket->result();
+			
+			if(strpos(strtolower($varx[0]->detalle),'reconexi')!==false){
+					$array_reconexiones['cantidad']++;
+					$array_reconexiones['monto']+=intval($invoice->subtotal);
+			}
+
+			if($value['method']=="Bank"){
+				if($value['nombre_banco']=="Bancolombia"){
+					$array_bancos['Bancolombia']['cantidad']++;
+					$array_bancos['Bancolombia']['monto']+=intval($invoice->subtotal);
+				}else{
+					$array_bancos['BBVA']['cantidad']++;
+					$array_bancos['BBVA']['monto']+=intval($invoice->subtotal);
+				}
+			}else if($value['method']=="Cash"){
+				$array_efectivo['cantidad']++;
+				$array_efectivo['monto']+=intval($invoice->subtotal);
+			}
+
+
+		 } 
+		 //tabla 1
+		 $tabla_total_cobranza_monto=$monto_prod_sin_iva_hay+$monto_prod_con_iva_hay+$monto_iva_prod_con_iva_hay;
+		//end tabla 1
+			//tabla 3 Resumen por Servicios
+			$var_cantidad_mensualidades=$var_cuenta_planes['1Mega']+$var_cuenta_planes['2Megas']+$var_cuenta_planes['3Megas']+$var_cuenta_planes['5Megas']+$var_cuenta_planes['10Megas']+$var_cuenta_planes['Television'];
+			$var_total_mensualidades=$var_cuenta_planes_montos['1MegaMonto']+$var_cuenta_planes_montos['2MegasMonto']+$var_cuenta_planes_montos['3MegasMonto']+$var_cuenta_planes_montos['5MegasMonto']+$var_cuenta_planes_montos['10MegasMonto']+$var_cuenta_planes_montos['TelevisionMonto'];
+			//end tabla 3 Resumen por Servicios
+			
+			//sobre anulaciones
+				$cuenta_anulaciones=array("Cobranza Efectiva"=>array("cantidad"=>0,"monto"=>0),"Anulado de Cierre"=>array("cantidad"=>0,"monto"=>0),"Anulado de otros Cierres"=>array("cantidad"=>0,"monto"=>0));
+						foreach ($lista_anulaciones as $key => $value) {
+								$anul=$this->db->get_where("anulaciones",array("transactions_id"=>$value['id']))->row();
+								
+								if(isset($cuenta_anulaciones[$anul->detalle])) {
+									
+									$cuenta_anulaciones[$anul->detalle]['cantidad']++;
+									
+									$invoce = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row();
+									$cuenta_anulaciones[$anul->detalle]['monto']+=intval($invoce->subtotal);
+									
+								}
+
+						} 
+
+			//end sobre Anulaciones
+		 	
+		 	//tabla resumen por servicios total final
+
+//datos pdf para abajo
+
+
 $contenidoTabla="<div style='text-align: center;'>
 <img style='display:block;margin:auto;' src='".base_url()."userfiles/theme/logo-header.png'>
 </div>
+
 
 <div style='box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.05);margin-bottom: 1.875rem;border-radius: 0;padding: 1.5rem'>
 <h6 style='font-size: 1rem;margin-bottom: 0.5rem;font-family: inherit;font-weight: 500;line-height: 1.2;color: inherit;margin-top: 0;'>Estado de Caja : </h6>
@@ -26,21 +183,21 @@ $contenidoTabla="<div style='text-align: center;'>
 					</thead>
 					<tbody>
 						<tr >
-							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Excento</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>12</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>$ 545.000</td>
+							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Excento</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>".$cuantos_prod_sin_iva_hay."</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>"."$ ".number_format($monto_prod_sin_iva_hay,0,",",".")."</td>
 						</tr>
 						<tr>
-							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Base</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>0</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>$ 0</td>
+							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Base</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>".$cuantos_prod_con_iva_hay."</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>"."$ ".number_format($monto_prod_con_iva_hay,0,",",".")."</td>
 						</tr>
 						<tr>
-							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>iva</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>0</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>$ 0</td>
+							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>iva</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>".$cuantos_prod_con_iva_hay."</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>"."$ ".number_format($monto_iva_prod_con_iva_hay,0,",",".")."</td>
 						</tr>
 						
 					</tbody>
 					<tfoot>
 						<tr>
 							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;' >TOTAL COBRANZA</th>
-							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'>12</th>
-							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'>$ 545.000</th>			
+							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'>".($cuantos_prod_sin_iva_hay+$cuantos_prod_con_iva_hay)."</th>
+							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'>".("$ ".number_format($tabla_total_cobranza_monto,0,",","."))."</th>			
 						</tr>
 					</tfoot>
 			</table>
@@ -61,10 +218,10 @@ $contenidoTabla="<div style='text-align: center;'>
 					</thead>
 					<tbody>
 						<tr >
-							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Bancolombia</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>12</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>$ 545.000</td>
+							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Bancolombia</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>".$array_bancos['Bancolombia']['cantidad']."</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>".("$ ".number_format($array_bancos['Bancolombia']['monto'],0,",","."))."</td>
 						</tr>
 						<tr>
-							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>BBVA colombia</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>0</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>$ 0</td>
+							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>BBVA colombia</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>".$array_bancos['BBVA']['cantidad']."</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>".("$ ".number_format($array_bancos['BBVA']['monto'],0,",","."))."</td>
 						</tr>
 						
 						
@@ -72,8 +229,8 @@ $contenidoTabla="<div style='text-align: center;'>
 					<tfoot>
 						<tr>
 							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;' >TOTAL COBRANZA</th>
-							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'>12</th>
-							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'>$ 545.000</th>			
+							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'>".($array_bancos['Bancolombia']['cantidad']+$array_bancos['BBVA']['cantidad'])."</th>
+							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'>".("$ ".number_format($array_bancos['Bancolombia']['monto']+$array_bancos['BBVA']['monto'],0,",","."))."</th>			
 						</tr>
 					</tfoot>
 			</table>
@@ -96,7 +253,7 @@ $contenidoTabla="<div style='text-align: center;'>
 					</thead>
 					<tbody>
 						<tr >
-							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Efectivo</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>12</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>$ 545.000</td>
+							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Efectivo</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>".$array_efectivo['cantidad']."</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>"."$ ".number_format($array_efectivo['monto'],0,",",".")."</td>
 						</tr>
 						<tr>
 							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Tarjeta Debito</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>0</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>$ 0</td>
@@ -108,7 +265,7 @@ $contenidoTabla="<div style='text-align: center;'>
 							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Deposito</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>0</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>$ 0</td>
 						</tr>
 						<tr>
-							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Transferencia</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>0</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>$ 0</td>
+							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Transferencia</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>".($array_bancos['Bancolombia']['cantidad']+$array_bancos['BBVA']['cantidad'])."</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>".("$ ".number_format($array_bancos['Bancolombia']['monto']+$array_bancos['BBVA']['monto'],0,",","."))."</td>
 						</tr>
 						<tr>
 							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Cheque</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>0</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>$ 0</td>
@@ -124,8 +281,8 @@ $contenidoTabla="<div style='text-align: center;'>
 					<tfoot>
 						<tr>
 							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;' >TOTAL FORMA PAGO</th>
-							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'>12</th>
-							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'>$ 545.000</th>			
+							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'>".($array_efectivo['cantidad']+$array_bancos['Bancolombia']['cantidad']+$array_bancos['BBVA']['cantidad'])."</th>
+							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'>".("$ ".number_format($array_efectivo['monto']+$array_bancos['Bancolombia']['monto']+$array_bancos['BBVA']['monto'],0,",","."))."</th>			
 						</tr>
 					</tfoot>
 			</table>
@@ -154,21 +311,21 @@ $contenidoTabla="<div style='text-align: center;'>
 					</thead>
 					<tbody>
 						<tr >
-							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Cobranza efectiva</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>12</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>$ 545.000</td>
+							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Cobranza efectiva</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>".$cuenta_anulaciones['Cobranza Efectiva']['cantidad']."</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>"."$ ".number_format($cuenta_anulaciones['Cobranza Efectiva']['monto'],0,",",".")."</td>
 						</tr>
 						<tr>
-							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Anulado de cierre</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>0</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>$ 0</td>
+							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Anulado de cierre</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>".$cuenta_anulaciones['Anulado de Cierre']['cantidad']."</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>"."$ ".number_format($cuenta_anulaciones['Anulado de Cierre']['monto'],0,",",".")."</td>
 						</tr>
 						<tr>
-							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Anulado de otros cierres</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>0</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>$ 0</td>
+							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Anulado de otros cierres</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>".$cuenta_anulaciones['Anulado de otros Cierres']['cantidad']."</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>"."$ ".number_format($cuenta_anulaciones['Anulado de otros Cierres']['monto'],0,",",".")."</td>
 						</tr>
 						
 					</tbody>
 					<tfoot>
 						<tr>
 							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;' >COBRADO - ANULADO<br>DE OTRAS FECHAS</th>
-							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'>12</th>
-							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'>$ 545.000</th>			
+							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'>".($cuenta_anulaciones['Cobranza Efectiva']['cantidad']+$cuenta_anulaciones['Anulado de Cierre']['cantidad']+$cuenta_anulaciones['Anulado de otros Cierres']['cantidad'])."</th>
+							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'>".("$ ".number_format($cuenta_anulaciones['Cobranza Efectiva']['monto']+$cuenta_anulaciones['Anulado de Cierre']['monto']+$cuenta_anulaciones['Anulado de otros Cierres']['monto'],0,",","."))."</th>			
 						</tr>
 					</tfoot>
 			</table>
@@ -383,7 +540,7 @@ $contenidoTabla="<div style='text-align: center;'>
 		</td>
 	</tr>
 </table>
-<br><br>
+<div style='page-break-after: always'></div>
 <table style='width: 100%;max-width: 100%;margin-bottom: 1rem;vertical-align: bottom;border-bottom: 2px solid #e3ebf3;border-top: 1px solid #e3ebf3;padding: 0.75rem 2rem;border-spacing: 2px;font-variant: normal;border-collapse: collapse;'>
 	<thead>
                 <tr>
@@ -437,3 +594,4 @@ $mpdf->setFooter('Pagina N° {PAGENO} de {nb}');
 
 $mpdf->writeHtml($contenidoTabla,\Mpdf\HTMLParserMode::HTML_BODY);
 $mpdf->Output();
+

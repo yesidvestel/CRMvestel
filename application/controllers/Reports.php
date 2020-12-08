@@ -126,6 +126,8 @@ class Reports extends CI_Controller
         $head['title'] = "Account Statement";
         $head['usernm'] = $this->aauth->get_user()->username;
 
+
+        $data['datos_informe']=array("pay_acc"=>$pay_acc,"trans_type"=>$trans_type,"sdate"=>$sdate,"edate"=>$edate);
         //codigo listar
             
             
@@ -189,17 +191,17 @@ class Reports extends CI_Controller
     }
 
     public function sacar_pdf(){
-         $this->load->model('accounts_model', 'accounts');
+         //$this->load->model('accounts_model', 'accounts');
         $pay_acc = $this->input->post('pay_acc');
         $trans_type = $this->input->post('trans_type');
-        $sdate = datefordatabase($this->input->post('sdate'));
-        $edate = datefordatabase($this->input->post('edate'));
-        $ttype = $this->input->post('ttype');
-        $account = $this->accounts->details($pay_acc);
-        $data['filter'] = array($pay_acc, $trans_type, $sdate, $edate, $ttype, $account['holder']);
-        $data['income'] = $this->reports->incomestatement();
-        $head['title'] = "Account Statement";
-        $head['usernm'] = $this->aauth->get_user()->username;
+        $sdate = $this->input->post('sdate');
+        $edate = $this->input->post('edate');
+        //$ttype = $this->input->post('ttype');
+        //$account = $this->accounts->details($pay_acc);
+        //$data['filter'] = array($pay_acc, $trans_type, $sdate, $edate, $ttype, $account['holder']);
+        //$data['income'] = $this->reports->incomestatement();
+        //$head['title'] = "Account Statement";
+        //$head['usernm'] = $this->aauth->get_user()->username;
 
         //codigo listar
             
@@ -257,7 +259,7 @@ class Reports extends CI_Controller
             $data['lista_mes_actual']=$lista4;
 
 
-//$this->load->view('fixed/header', $head);
+
         $this->load->view('reports/sacar_pdf', $data);
     }
 

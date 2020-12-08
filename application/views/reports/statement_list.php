@@ -196,7 +196,15 @@
 		 ?>
 
 <article class="content">
-	<a href="<?=base_url()?>reports/sacar_pdf" class="btn btn-primary" style="margin-left: 3px;">Sacar Pdf</a>
+	<form method="POST" action="<?=base_url()?>reports/sacar_pdf" target="_blank">
+		<input type="hidden" name="pay_acc" value="<?=$datos_informe['pay_acc']?>" >
+		<input type="hidden" name="trans_type" value="<?=$datos_informe['trans_type']?>">
+		<input type="hidden" name="sdate" value="<?=$datos_informe['sdate']?>">
+		<input type="hidden" name="edate" value="<?=$datos_informe['edate']?>">
+		
+		<button class="btn btn-primary" style="margin-left: 3px;">Sacar Pdf</button>
+	
+	</form>
     <div class="card card-block">
         <div id="notify" class="alert alert-success" style="display:none;">
             <a href="#" class="close" data-dismiss="alert">&times;</a>
