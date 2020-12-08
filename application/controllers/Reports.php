@@ -204,7 +204,7 @@ class Reports extends CI_Controller
         //$head['usernm'] = $this->aauth->get_user()->username;
 
         //codigo listar
-            
+          $data['fecha']=$sdate;  
             
             
             
@@ -258,6 +258,8 @@ class Reports extends CI_Controller
             }
             $data['lista_mes_actual']=$lista4;
 
+
+           
 
 
         $this->load->view('reports/sacar_pdf', $data);

@@ -94,6 +94,23 @@ class Reports_model extends CI_Model
             return "Diciembre";
         }
     }
+    public function obtener_dia($numero){
+        if($numero==1){
+            return "Lunes";
+        }else if($numero==2){
+            return "Martes";
+        }else if($numero==3){
+            return "Miercoles";
+        }else if($numero==4){
+            return "Jueves";
+        }else if($numero==5){
+            return "Viernes";
+        }else if($numero==6){
+            return "Sabado";
+        }else {
+            return "Domingo";
+        }
+    }
     //transaction account statement
 
     var $table = 'transactions';

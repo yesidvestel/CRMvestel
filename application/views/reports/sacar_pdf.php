@@ -235,6 +235,21 @@ $array_afiliaciones=array();
 
 
 			//end calculo tablas meses
+ //afiliaciones
+                    $var_cuenta_afiliaciones=0;
+                    $var_monto_afiliaciones=0;
+                    $var1_afiliaciones="";
+                    foreach ($array_afiliaciones as $key => $afiliacion) { 
+                        $var_cuenta_afiliaciones+=$afiliacion['cuenta_afiliacion'];
+                        $var_monto_afiliaciones+=$afiliacion['monto_afiliacion'];
+                        $var1_afiliaciones.='<tr>
+                        <td style="border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;">'.$key.'</td>
+                        <td style="border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;text-align:center;">'.$afiliacion['cuenta_afiliacion'].'</td>
+                        <td style="border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;text-align:center;">'."$ ".number_format($afiliacion['monto_afiliacion'],0,",",".").'</td>
+                        </tr>';
+                    }
+                    //end afiliaciones
+					
 //datos pdf para abajo
 
 
@@ -428,58 +443,49 @@ $contenidoTabla="<div style='text-align: center;'>
 						</tr>
 					</thead>
 					<tbody>
-						<tr >
-							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Internet 1MG</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>12</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>$ 545.000</td>
-						</tr>
-						<tr>
-							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Internet 2MG</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>0</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>$ 0</td>
-						</tr>
-						<tr>
-							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Internet 3MG</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>0</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>$ 0</td>
-						</tr>
-						<tr>
-							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Internet 5MG</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>0</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>$ 0</td>
-						</tr>
-						<tr>
-							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Internet 10MG</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>0</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>$ 0</td>
-						</tr>
-						<tr>
-							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Television</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>0</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>$ 0</td>
-						</tr>
+						".(($var_cuenta_planes['1Mega']!=0)? "<tr ><td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Internet 1MG</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>".$var_cuenta_planes['1Mega']."</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>"."$ ".number_format($var_cuenta_planes_montos['1MegaMonto'],0,",",".")."</td></tr>":"")."
+						
+						".(($var_cuenta_planes['2Megas']!=0)? "<tr ><td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Internet 2MG</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>".$var_cuenta_planes['2Megas']."</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>"."$ ".number_format($var_cuenta_planes_montos['2MegasMonto'],0,",",".")."</td></tr>":"")."
+						
+						".(($var_cuenta_planes['3Megas']!=0)? "<tr ><td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Internet 3MG</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>".$var_cuenta_planes['3Megas']."</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>"."$ ".number_format($var_cuenta_planes_montos['3MegasMonto'],0,",",".")."</td></tr>":"")."
+
+						".(($var_cuenta_planes['5Megas']!=0)? "<tr ><td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Internet 5MG</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>".$var_cuenta_planes['5Megas']."</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>"."$ ".number_format($var_cuenta_planes_montos['5MegasMonto'],0,",",".")."</td></tr>":"")."
+						
+						".(($var_cuenta_planes['10Megas']!=0)? "<tr ><td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Internet 10MG</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>".$var_cuenta_planes['10Megas']."</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>"."$ ".number_format($var_cuenta_planes_montos['10MegasMonto'],0,",",".")."</td></tr>":"")."
+						
+						".(($var_cuenta_planes['Television']!=0)? "<tr ><td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Television</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>".$var_cuenta_planes['Television']."</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>"."$ ".number_format($var_cuenta_planes_montos['TelevisionMonto'],0,",",".")."</td></tr>":"")."
 						<tr>
 							<td style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;' ><strong>TOTAL <br>MENSUALIDADES</strong></td>
-							<td style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'><strong>12</strong></td>
-							<td style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'><strong>$ 545.000</strong></td>			
+							<td style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'><strong>".$var_cantidad_mensualidades."</strong></td>
+							<td style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'><strong>"."$ ".number_format($var_total_mensualidades,0,",",".")."</strong></td>			
 						</tr>
-						<tr>
-							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Afiliacion Borrar</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>0</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>$ 0</td>
-						</tr>
+						".$var1_afiliaciones."
 						<tr>
 							<td style='border-bottom: 2px solid #111;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;' ><strong>TOTAL VENTAS</strong></td>
-							<td style='border-bottom: 2px solid #111;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'><strong>12</strong></td>
-							<td style='border-bottom: 2px solid #111;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'><strong>$ 545.000</strong></td>			
+							<td style='border-bottom: 2px solid #111;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'><strong>".$var_cuenta_afiliaciones."</strong></td>
+							<td style='border-bottom: 2px solid #111;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'><strong>"."$ ".number_format($var_monto_afiliaciones,0,",",".")."</strong></td>			
 						</tr>
 						<tr>
 							<td style='border-bottom: 2px solid #111;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;' ><strong>TOTAL <br>RECONEXIONES</strong></td>
-							<td style='border-bottom: 2px solid #111;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'><strong>12</strong></td>
-							<td style='border-bottom: 2px solid #111;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'><strong>$ 545.000</strong></td>			
+							<td style='border-bottom: 2px solid #111;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'><strong>".$array_reconexiones['cantidad']."</strong></td>
+							<td style='border-bottom: 2px solid #111;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'><strong>"."$ ".number_format($array_reconexiones['monto'],0,",",".")."</strong></td>			
 						</tr>
 						<tr>
 							<td style='border-bottom: 2px solid #111;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;' ><strong>TOTAL MATERIALES</strong></td>
-							<td style='border-bottom: 2px solid #111;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'><strong>12</strong></td>
-							<td style='border-bottom: 2px solid #111;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'><strong>$ 545.000</strong></td>			
+							<td style='border-bottom: 2px solid #111;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'><strong>0</strong></td>
+							<td style='border-bottom: 2px solid #111;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'><strong>$ 0</strong></td>			
 						</tr>
 						<tr>
 							<td style='border-bottom: 2px solid #111;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;' ><strong>TOTAL OTROS</strong></td>
-							<td style='border-bottom: 2px solid #111;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'><strong>12</strong></td>
-							<td style='border-bottom: 2px solid #111;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'><strong>$ 545.000</strong></td>			
+							<td style='border-bottom: 2px solid #111;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'><strong>0</strong></td>
+							<td style='border-bottom: 2px solid #111;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'><strong>$ 0</strong></td>			
 						</tr>
 					</tbody>
 					<tfoot>
 						<tr>
 							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;' >TOTAL</th>
-							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'>12</th>
-							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'>$ 545.000</th>			
+							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'>".($var_cantidad_mensualidades+$var_cuenta_afiliaciones+$array_reconexiones['cantidad'])."</th>
+							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'>"."$ ".number_format($var_total_mensualidades+$var_monto_afiliaciones+$array_reconexiones['monto'],0,",",".")."</th>			
 						</tr>
 					</tfoot>
 			</table>
@@ -667,7 +673,11 @@ include (APPPATH."libraries\dendor\autoload.php");
 $mpdf = new \Mpdf\Mpdf([
 
 ]);
-$mpdf->SetTitle('Lista de Usuarios');
+$fecha =new DateTime($fecha);
+
+
+
+$mpdf->SetTitle('Cierre de Caja '.$this->reports->obtener_dia($fecha->format("N")).', '.$fecha->format("d-m-Y"));
 
 
 
@@ -675,5 +685,5 @@ $mpdf->SetTitle('Lista de Usuarios');
 $mpdf->setFooter('Pagina N° {PAGENO} de {nb}');
 
 $mpdf->writeHtml($contenidoTabla,\Mpdf\HTMLParserMode::HTML_BODY);
-$mpdf->Output();
+$mpdf->Output('Cierre de Caja '.$this->reports->obtener_dia($fecha->format("N")).', '.$fecha->format("d-m-Y").'.pdf',"I");
 

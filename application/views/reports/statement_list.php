@@ -201,7 +201,7 @@
 		<input type="hidden" name="trans_type" value="<?=$datos_informe['trans_type']?>">
 		<input type="hidden" name="sdate" value="<?=$datos_informe['sdate']?>">
 		<input type="hidden" name="edate" value="<?=$datos_informe['edate']?>">
-		
+
 		<button class="btn btn-primary" style="margin-left: 3px;">Sacar Pdf</button>
 	
 	</form>
@@ -375,7 +375,7 @@
 					<tr>
 						<?php $var_total_resumen_por_servicios=$var_total_mensualidades+$var_monto_afiliaciones+$array_reconexiones['monto']; ?>
 						<th class="pie">TOTAL</th>
-						<th class="pie">0</th>
+						<th class="pie"><?=$var_cantidad_mensualidades+$var_cuenta_afiliaciones+$array_reconexiones['cantidad']?></th>
 						<th class="pie"><?= "$ ".number_format($var_total_resumen_por_servicios,0,",",".") ?></th>			
 					</tr>
 				</tfoot>
