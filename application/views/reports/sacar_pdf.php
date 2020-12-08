@@ -152,7 +152,89 @@ $array_afiliaciones=array();
 			//end sobre Anulaciones
 		 	
 		 	//tabla resumen por servicios total final
+			//calculo tablas meses
+						$valores_mes_actual= array('cantidad' =>0 , 'monto'=>0,'Internet'=> array('cantidad' => 0,"monto"=>0),"Television"=> array('cantidad' =>0 ,"monto"=>0 ));
+					$valores_mes_anterior= array('cantidad' =>0 , 'monto'=>0,'Internet'=> array('cantidad' => 0,"monto"=>0),"Television"=> array('cantidad' =>0 ,"monto"=>0 ));
 
+					foreach ($lista_mes_actual as $key => $val1) {
+						$inv1 = $this->db->get_where("invoices",array("tid"=>$val1['tid']))->row(); 
+						$valores_mes_actual['monto']+=intval($inv1->subtotal);
+
+						$invoice_items = $this->db->get_where("invoice_items",array('tid' => $val1['tid'] ))->result_array();
+						foreach ($invoice_items as $key => $item_invoic) {
+							if($item_invoic['product']=="1Mega" ||$item_invoic['product']=="1 Mega"){
+						 		$valores_mes_actual['Internet']['cantidad']++;
+						 		$valores_mes_actual['Internet']['monto']+=intval($item_invoic['subtotal']);
+
+							}else if($item_invoic['product']=="2Megas" ||$item_invoic['product']=="2 Megas"){
+								$valores_mes_actual['Internet']['cantidad']++;
+						 		$valores_mes_actual['Internet']['monto']+=intval($item_invoic['subtotal']);
+
+							}else if($item_invoic['product']=="3Megas"|| $item_invoic['product']=="3 Megas"){
+								$valores_mes_actual['Internet']['cantidad']++;
+						 		$valores_mes_actual['Internet']['monto']+=intval($item_invoic['subtotal']);
+
+							}else if($item_invoic['product']=="5Megas"||$item_invoic['product']=="5 Megas"){
+								$valores_mes_actual['Internet']['cantidad']++;
+						 		$valores_mes_actual['Internet']['monto']+=intval($item_invoic['subtotal']);
+
+							}else if($item_invoic['product']=="10Megas"||$item_invoic['product']=="10 Megas"){
+								$valores_mes_actual['Internet']['cantidad']++;
+						 		$valores_mes_actual['Internet']['monto']+=intval($item_invoic['subtotal']);
+							}
+
+							if(strpos(strtolower($item_invoic['product']), "tele")!==false){
+								$valores_mes_actual['Television']['cantidad']++;
+								$valores_mes_actual['Television']['monto']+=intval($item_invoic['subtotal']);
+							}else if(strpos(strtolower($item_invoic['product']), "afilia")!==false){
+								$valores_mes_actual['Internet']['cantidad']++;
+						 		$valores_mes_actual['Internet']['monto']+=intval($item_invoic['subtotal']);
+							}
+
+						}
+					}
+
+					foreach ($lista_mes_anterior as $key => $val1) {
+						$inv1 = $this->db->get_where("invoices",array("tid"=>$val1['tid']))->row(); 
+						$valores_mes_anterior['monto']+=intval($inv1->subtotal);
+
+						$invoice_items = $this->db->get_where("invoice_items",array('tid' => $val1['tid'] ))->result_array();
+
+						foreach ($invoice_items as $key => $item_invoic) {
+							if($item_invoic['product']=="1Mega" ||$item_invoic['product']=="1 Mega"){
+						 		$valores_mes_anterior['Internet']['cantidad']++;
+						 		$valores_mes_anterior['Internet']['monto']+=intval($item_invoic['subtotal']);
+
+							}else if($item_invoic['product']=="2Megas" ||$item_invoic['product']=="2 Megas"){
+								$valores_mes_anterior['Internet']['cantidad']++;
+						 		$valores_mes_anterior['Internet']['monto']+=intval($item_invoic['subtotal']);
+
+							}else if($item_invoic['product']=="3Megas"|| $item_invoic['product']=="3 Megas"){
+								$valores_mes_anterior['Internet']['cantidad']++;
+						 		$valores_mes_anterior['Internet']['monto']+=intval($item_invoic['subtotal']);
+
+							}else if($item_invoic['product']=="5Megas"||$item_invoic['product']=="5 Megas"){
+								$valores_mes_anterior['Internet']['cantidad']++;
+						 		$valores_mes_anterior['Internet']['monto']+=intval($item_invoic['subtotal']);
+
+							}else if($item_invoic['product']=="10Megas"||$item_invoic['product']=="10 Megas"){
+								$valores_mes_anterior['Internet']['cantidad']++;
+						 		$valores_mes_anterior['Internet']['monto']+=intval($item_invoic['subtotal']);
+							}
+
+							if(strpos(strtolower($item_invoic['product']), "tele")!==false){
+								$valores_mes_anterior['Television']['cantidad']++;
+								$valores_mes_anterior['Television']['monto']+=intval($item_invoic['subtotal']);
+							}else if(strpos(strtolower($item_invoic['product']), "afilia")!==false){
+								$valores_mes_anterior['Internet']['cantidad']++;
+						 		$valores_mes_anterior['Internet']['monto']+=intval($item_invoic['subtotal']);
+							}
+
+						}
+					}
+
+
+			//end calculo tablas meses
 //datos pdf para abajo
 
 
@@ -416,10 +498,10 @@ $contenidoTabla="<div style='text-align: center;'>
 					</thead>
 					<tbody>
 						<tr >
-							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Diciembre 2020</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>12</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>$ 545.000</td>
+							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>".$texto_mes_actual."</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>".(count($lista_mes_actual))."</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>"."$ ".number_format($valores_mes_actual['monto'],0,",",".")."</td>
 						</tr>
 						<tr>
-							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Noviembre 2020</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>0</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>$ 0</td>
+							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>".$texto_mes_anterior."</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>".(count($lista_mes_anterior))."</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>"."$ ".number_format($valores_mes_anterior['monto'],0,",",".")."</td>
 						</tr>
 					
 						
@@ -427,8 +509,8 @@ $contenidoTabla="<div style='text-align: center;'>
 					<tfoot>
 						<tr>
 							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;' >TOTAL COBRANZA<br>POR MESES</th>
-							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'>12</th>
-							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'>$ 545.000</th>			
+							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'>".(count($lista_mes_anterior)+count($lista_mes_actual))."</th>
+							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'>"."$ ".number_format($valores_mes_actual['monto']+$valores_mes_anterior['monto'],0,",",".") ."</th>			
 						</tr>
 					</tfoot>
 			</table>
@@ -449,10 +531,10 @@ $contenidoTabla="<div style='text-align: center;'>
 					</thead>
 					<tbody>
 						<tr >
-							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Diciembre 2020</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>12</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>$ 545.000</td>
+							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>".$texto_mes_actual."</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>".$valores_mes_actual['Internet']['cantidad']."</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>"."$ ".number_format($valores_mes_actual['Internet']['monto'],0,",",".")."</td>
 						</tr>
 						<tr>
-							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Noviembre 2020</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>0</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>$ 0</td>
+							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>".$texto_mes_anterior."</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>".$valores_mes_anterior['Internet']['cantidad']."</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>"."$ ".number_format($valores_mes_anterior['Internet']['monto'],0,",",".")."</td>
 						</tr>
 					
 						
@@ -460,8 +542,8 @@ $contenidoTabla="<div style='text-align: center;'>
 					<tfoot>
 						<tr>
 							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;' >TOTAL COBRANZA<br>POR MESES</th>
-							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'>12</th>
-							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'>$ 545.000</th>			
+							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'>".($valores_mes_actual['Internet']['cantidad']+$valores_mes_anterior['Internet']['cantidad'])."</th>
+							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'>".("$ ".number_format($valores_mes_actual['Internet']['monto']+$valores_mes_anterior['Internet']['monto'],0,",",".") )."</th>			
 						</tr>
 					</tfoot>
 			</table>
@@ -480,10 +562,10 @@ $contenidoTabla="<div style='text-align: center;'>
 					</thead>
 					<tbody>
 						<tr >
-							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Diciembre 2020</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>12</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>$ 545.000</td>
+							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>".$texto_mes_actual."</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>".$valores_mes_actual['Television']['cantidad']."</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>"."$ ".number_format($valores_mes_actual['Television']['monto'],0,",",".")."</td>
 						</tr>
 						<tr>
-							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Noviembre 2020</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>0</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>$ 0</td>
+							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>".$texto_mes_anterior."</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>".$valores_mes_anterior['Television']['cantidad']."</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>"."$ ".number_format($valores_mes_anterior['Television']['monto'],0,",",".")."</td>
 						</tr>
 					
 						
@@ -491,8 +573,8 @@ $contenidoTabla="<div style='text-align: center;'>
 					<tfoot>
 						<tr>
 							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;' >TOTAL COBRANZA<br>POR MESES</th>
-							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'>12</th>
-							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'>$ 545.000</th>			
+							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'>".($valores_mes_actual['Television']['cantidad']+$valores_mes_anterior['Television']['cantidad'])."</th>
+							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'>".("$ ".number_format($valores_mes_actual['Television']['monto']+$valores_mes_anterior['Television']['monto'],0,",","."))."</th>			
 						</tr>
 					</tfoot>
 			</table>
@@ -511,19 +593,19 @@ $contenidoTabla="<div style='text-align: center;'>
 					</thead>
 					<tbody>
 						<tr >
-							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Internet</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>12</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>$ 545.000</td>
+							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Internet</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>".$array_resumen_tipo_servicio['Internet']['cantidad']."</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>"."$ ".number_format($array_resumen_tipo_servicio['Internet']['monto'],0,",",".")."</td>
 						</tr>
 						<tr>
-							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Television</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>0</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>$ 0</td>
+							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Television</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>".$array_resumen_tipo_servicio['Television']['cantidad']."</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>"."$ ".number_format($array_resumen_tipo_servicio['Television']['monto'],0,",",".")."</td>
 						</tr>
 					
 						
 					</tbody>
 					<tfoot>
 						<tr>
-							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;' >TOTAL COBRANZA<br>POR MESES</th>
-							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'>12</th>
-							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'>$ 545.000</th>			
+							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;' >TOTAL TIPO DE SERVICIOS</th>
+							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'>".($array_resumen_tipo_servicio['Internet']['cantidad']+$array_resumen_tipo_servicio['Television']['cantidad'])."</th>
+							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'>".("$ ".number_format($array_resumen_tipo_servicio['Internet']['monto']+$array_resumen_tipo_servicio['Television']['monto'],0,",","."))."</th>			
 						</tr>
 					</tfoot>
 			</table>
