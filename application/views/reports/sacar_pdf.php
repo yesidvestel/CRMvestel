@@ -643,12 +643,8 @@ $contenidoTabla="<div style='text-align: center;'>
 
                 </tr>
    </thead>
-   <tbody >
-   		<tr><td style='padding: 0.75rem 2rem;border-bottom: 1px solid #e3ebf3;color: #333;font-size: 12px;background-color: rgba(0, 0, 0, 0.05);text-align: center;'>2020-10-08</td><td style='padding: 0.75rem 2rem;border-bottom: 1px solid #e3ebf3;color: #333;font-size: 12px;background-color: rgba(0, 0, 0, 0.05);text-align: center;'>Payment for invoice #1037</td><td style='padding: 0.75rem 2rem;border-bottom: 1px solid #e3ebf3;color: #333;font-size: 12px;background-color: rgba(0, 0, 0, 0.05);text-align: center;'>$ 0</td><td style='padding: 0.75rem 2rem;border-bottom: 1px solid #e3ebf3;color: #333;font-size: 12px;background-color: rgba(0, 0, 0, 0.05);text-align: center;'>$ 10.000</td><td style='padding: 0.75rem 2rem;border-bottom: 1px solid #e3ebf3;color: #333;font-size: 12px;background-color: rgba(0, 0, 0, 0.05);text-align: center;'>$ 10.000</td></tr>
-   		<tr><td style='padding: 0.75rem 2rem;border-bottom: 1px solid #e3ebf3;color: #333;font-size: 12px;text-align: center;'>2020-10-08</td><td style='padding: 0.75rem 2rem;border-bottom: 1px solid #e3ebf3;color: #333;font-size: 12px;text-align: center;'>Payment for invoice #1006</td><td style='padding: 0.75rem 2rem;border-bottom: 1px solid #e3ebf3;color: #333;font-size: 12px;text-align: center;'>$ 0</td><td style='padding: 0.75rem 2rem;border-bottom: 1px solid #e3ebf3;color: #333;font-size: 12px;text-align: center;'>$ 50.000</td><td style='padding: 0.75rem 2rem;border-bottom: 1px solid #e3ebf3;color: #333;font-size: 12px;text-align: center;'>$ 60.000</td></tr>
-   		<tr><td style='padding: 0.75rem 2rem;border-bottom: 1px solid #e3ebf3;color: #333;font-size: 12px;background-color: rgba(0, 0, 0, 0.05);text-align: center;'>2020-10-08</td><td style='padding: 0.75rem 2rem;border-bottom: 1px solid #e3ebf3;color: #333;font-size: 12px;background-color: rgba(0, 0, 0, 0.05);text-align: center;'>Payment for invoice #1037</td><td style='padding: 0.75rem 2rem;border-bottom: 1px solid #e3ebf3;color: #333;font-size: 12px;background-color: rgba(0, 0, 0, 0.05);text-align: center;'>$ 0</td><td style='padding: 0.75rem 2rem;border-bottom: 1px solid #e3ebf3;color: #333;font-size: 12px;background-color: rgba(0, 0, 0, 0.05);text-align: center;'>$ 10.000</td><td style='padding: 0.75rem 2rem;border-bottom: 1px solid #e3ebf3;color: #333;font-size: 12px;background-color: rgba(0, 0, 0, 0.05);text-align: center;'>$ 10.000</td></tr>
-   		<tr><td style='padding: 0.75rem 2rem;border-bottom: 1px solid #e3ebf3;color: #333;font-size: 12px;text-align: center;'>2020-10-08</td><td style='padding: 0.75rem 2rem;border-bottom: 1px solid #e3ebf3;color: #333;font-size: 12px;text-align: center;'>Payment for invoice #1006</td><td style='padding: 0.75rem 2rem;border-bottom: 1px solid #e3ebf3;color: #333;font-size: 12px;text-align: center;'>$ 0</td><td style='padding: 0.75rem 2rem;border-bottom: 1px solid #e3ebf3;color: #333;font-size: 12px;text-align: center;'>$ 50.000</td><td style='padding: 0.75rem 2rem;border-bottom: 1px solid #e3ebf3;color: #333;font-size: 12px;text-align: center;'>$ 60.000</td></tr>
-   		
+   <tbody >   		
+   		".$lista_datos."
    	</tbody>
    	<tfoot>
                 <tr>
@@ -662,10 +658,11 @@ $contenidoTabla="<div style='text-align: center;'>
 
 
                 </tr>
+
 	</tfoot>
 	
 </table>
-</div>";
+</div> ";
 
 
 include (APPPATH."libraries\dendor\autoload.php");

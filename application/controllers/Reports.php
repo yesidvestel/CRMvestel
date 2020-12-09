@@ -259,7 +259,7 @@ class Reports extends CI_Controller
             $data['lista_mes_actual']=$lista4;
 
 
-           
+           $data['lista_datos']=$this->statements_para_pdf();
 
 
         $this->load->view('reports/sacar_pdf', $data);
@@ -328,6 +328,33 @@ class Reports extends CI_Controller
             echo '<tr><td>' . $row['date'] . '</td><td>' . $row['note'] . '</td><td>' . amountFormat($row['debit']) . '</td><td>' . amountFormat($row['credit']) . '</td><td>' . amountFormat($balance) . '</td></tr>';
             }
         }
+
+    }
+    public function statements_para_pdf()
+    {
+
+        $pay_acc = $this->input->post('pay_acc');
+        $trans_type = $this->input->post('trans_type');
+        $sdate = $this->input->post('sdate');
+        $edate = $this->input->post('edate');
+        $list = $this->reports->get_statements($pay_acc, $trans_type, $sdate, $edate);
+        $balance = 0;
+        $var_lista="";
+        $conteo=0;
+        foreach ($list as $row) {
+            $balance += $row['credit'] - $row['debit'];
+            if($row['estado']!="Anulada"){
+                $conteo++;
+                if($conteo%2==0){
+                    $texto_style="style='padding: 0.75rem 2rem;border-bottom: 1px solid #e3ebf3;color: #333;font-size: 12px;text-align: center;'";    
+                }else{
+                    $texto_style="style='padding: 0.75rem 2rem;border-bottom: 1px solid #e3ebf3;color: #333;font-size: 12px;background-color: rgba(0, 0, 0, 0.05);text-align: center;'";                
+                }
+                
+                $var_lista.= '<tr><td '.$texto_style.'>' . $row['date'] . '</td><td '.$texto_style.'>' . $row['note'] . '</td><td '.$texto_style.'>' . amountFormat($row['debit']) . '</td><td '.$texto_style.'>' . amountFormat($row['credit']) . '</td><td '.$texto_style.'>' . amountFormat($balance) . '</td></tr>';
+            }
+        }
+        return $var_lista;
 
     }
 
