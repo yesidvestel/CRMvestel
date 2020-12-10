@@ -38,11 +38,6 @@ function isNumber(evt) {
     return true;
 }
 
-
-
-
-
-
 $(document).ready(function () {
 
 
@@ -62,6 +57,8 @@ $(document).ready(function () {
             }
         });
     });
+	
+   
 
     $("#supplier-box").keyup(function () {
         $.ajax({
