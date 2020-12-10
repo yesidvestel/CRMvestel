@@ -227,7 +227,20 @@
                     "orderable": false,
                 },
             ],
-			"order": [[ 2, "desc" ]]
+			"order": [[ 2, "desc" ]],
+                "language": {
+                    "info": "Viendo Pagina _PAGE_ de _PAGES_",
+                    "zeroRecords": "No se encontraron resultados",
+                    "processing": "Procesando...",
+                    "lengthMenu": "Mostrar _MENU_ registros",
+                    "search": "Buscar:",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Último",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    },
+                }
 
         });
         //miniDash();
