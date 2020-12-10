@@ -154,13 +154,13 @@ class Reports extends CI_Controller
             
             //obteniendo datos mes actual
             $dia_inicial_mes_actual = date("Y-m-01 00:00:00");
-            $dia_final_de_mes_actual=date("Y-m-t 00:00:00", strtotime($dia_inicial_mes_actual));
+            $dia_final_de_mes_actual=date("Y-m-t 23:00:00", strtotime($dia_inicial_mes_actual));
             $lista_mes_actual = $this->reports->get_statements($pay_acc, $trans_type, $dia_inicial_mes_actual, $dia_final_de_mes_actual);
             //end obteniendo datos mes actual
             $data['lista_mes_actual']=$lista_mes_actual;
             //obteniendo datos mes anterior
             $dia_inicial_mes_anterior=date("Y-m", strtotime("- 1 month"))."-01";
-            $dia_final_de_mes_anterior=date("Y-m-t 00:00:00", strtotime($dia_inicial_mes_anterior));
+            $dia_final_de_mes_anterior=date("Y-m-t 23:00:00", strtotime($dia_inicial_mes_anterior));
             $lista_mes_anterior = $this->reports->get_statements($pay_acc, $trans_type, $dia_inicial_mes_anterior, $dia_final_de_mes_anterior);
             //obteniendo datos mes actual
             
