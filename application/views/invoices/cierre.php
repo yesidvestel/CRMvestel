@@ -52,21 +52,21 @@
                             <div class="form-group row">
 
                                 <label class="col-sm-3 control-label"
-                                       for="sdate"><?php echo $this->lang->line('From Date') ?></label>
+                                       for="sdate2">Fecha</label>
 
                                 <div class="col-sm-4">
                                     <input type="text" class="form-control required"
-                                           placeholder="Start Date" name="sdate" id="sdate"
-                                            autocomplete="false">
+                                           placeholder="Start Date" name="sdate" id="sdate2"
+                                            autocomplete="false" >
                                 </div>
                             </div>
-                            <div class="form-group row">
+                            <div class="form-group row" hidden="true" >
 
                                 <label class="col-sm-3 control-label"
                                        for="edate"><?php echo $this->lang->line('To Date') ?></label>
 
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control required"
+                                    <input type="text" class="form-control"
                                            placeholder="End Date" name="edate"
                                            data-toggle="datepicker" autocomplete="false">
                                 </div>
@@ -90,7 +90,10 @@
         </div>
     </div>
 </article>
+<?php //se hizo el cambio de fecha en el archivo views/fixed/footer ?>
 <script type="text/javascript">
         $('#cuentas_ option[value="4"]').remove();
         $('#cuentas_ option[value="5"]').remove();
+        //
+        
 </script>

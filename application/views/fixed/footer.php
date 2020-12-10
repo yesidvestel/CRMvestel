@@ -5,6 +5,11 @@
     $('[data-toggle="datepicker"]').datepicker('setDate', new Date());
     $('#sdate').datepicker({autoHide: true, format: '<?php echo $this->config->item('dformat2'); ?>'});
     $('#sdate').datepicker('setDate', '<?php echo dateformat(date('Y-m-d', strtotime('-30 days', strtotime(date('Y-m-d'))))); ?>');
+
+    $('#sdate2').datepicker({autoHide: true, format: '<?php echo $this->config->item('dformat2'); ?>'});
+    $('#sdate2').datepicker('setDate', '<?php echo dateformat(date('Y-m-d')); ?>');
+
+
     $('.date30').datepicker('setDate', '<?php echo dateformat(date('Y-m-d', strtotime('-30 days', strtotime(date('Y-m-d'))))); ?>');
 
 

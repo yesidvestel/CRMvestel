@@ -131,7 +131,8 @@ class Reports extends CI_Controller
         //codigo listar
             
             
-            
+            $datex=new DateTime($sdate);
+            $edate=$datex->format('Y-m-d')." 23:59:00";
             
             $list = $this->reports->get_statements($pay_acc, $trans_type, $sdate, $edate);
             
@@ -205,7 +206,9 @@ class Reports extends CI_Controller
 
         //codigo listar
           $data['fecha']=$sdate;  
-            
+             //hice esto para hacer que el cierre sea de un dia si se desea reestablecer a entre fechas solo comentar la linea 57;
+              $datex=new DateTime($sdate);
+            $edate=$datex->format('Y-m-d')." 23:59:00";
             
             
             $list = $this->reports->get_statements($pay_acc, $trans_type, $sdate, $edate);
@@ -319,6 +322,9 @@ class Reports extends CI_Controller
         $trans_type = $this->input->post('ty');
         $sdate = datefordatabase($this->input->post('sd'));
         $edate = datefordatabase($this->input->post('ed'));
+          $datex=new DateTime($sdate);
+            $edate=$datex->format('Y-m-d')." 23:59:00";
+            
         $list = $this->reports->get_statements($pay_acc, $trans_type, $sdate, $edate);
         $balance = 0;
 
@@ -337,6 +343,9 @@ class Reports extends CI_Controller
         $trans_type = $this->input->post('trans_type');
         $sdate = $this->input->post('sdate');
         $edate = $this->input->post('edate');
+          $datex=new DateTime($sdate);
+            $edate=$datex->format('Y-m-d')." 23:59:00";
+            
         $list = $this->reports->get_statements($pay_acc, $trans_type, $sdate, $edate);
         $balance = 0;
         $var_lista="";

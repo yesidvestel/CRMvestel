@@ -52,7 +52,7 @@ class Reports_model extends CI_Model
 
     public function get_statements($pay_acc, $trans_type, $sdate, $edate)
     {
-
+       
         if ($trans_type == 'All') {
             $where = "acid='$pay_acc' AND (DATE(date) BETWEEN '$sdate' AND '$edate')  ";
         } else {
