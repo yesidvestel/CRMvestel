@@ -361,8 +361,10 @@ class Tickets Extends CI_Controller
                     $x=intval($producto->product_price);
                     $x=($x/30)*$diferencia->days;
                     $total+=$x;
-                    $datay['price']=$x;
-                    $datay['subtotal']=$x;
+					$datay['price']=$x;
+                    $datay['tax']=19;
+					$datay['totaltax']=3992;
+					$datay['subtotal']=$x+$datay['totaltax'];
                     if($ticket->detalle=="Instalacion" && $ticket->id_factura==null){
                         $this->db->insert('invoice_items',$datay);
                     }

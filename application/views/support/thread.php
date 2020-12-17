@@ -248,6 +248,7 @@
                                     for="pmethod">Paquete</label>
                             <select id="estadoid" name="paquete" class="form-control mb-1" onchange="funcion_status();">
 								<option value="">-</option>
+								<option value="1Mega">1Mega</option>
 								<option value="2Megas">2Megas</option>
                                 <option value="3Megas">3Megas</option>
                                 <option value="5Megas">5Megas</option>
