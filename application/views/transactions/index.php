@@ -14,7 +14,7 @@
                 <tr>
 
                     <th><?php echo $this->lang->line('Date') ?></th>
-                    <th><?php echo $this->lang->line('Account') ?></th>
+                    <th><?php echo $this->lang->line('') ?>Caja</th>
                     <th><?php echo $this->lang->line('Debit') ?></th>
                     <th><?php echo $this->lang->line('Credit') ?></th>
                     <th><?php echo $this->lang->line('') ?>Usuario</th>
@@ -32,7 +32,7 @@
                 <tfoot>
                 <tr>
                     <th><?php echo $this->lang->line('Date') ?></th>
-                    <th><?php echo $this->lang->line('Account') ?></th>
+                    <th><?php echo $this->lang->line('') ?>Caja</th>
                     <th><?php echo $this->lang->line('Debit') ?></th>
                     <th><?php echo $this->lang->line('Credit') ?></th>
                     <th><?php echo $this->lang->line('') ?>Usuario</th>
