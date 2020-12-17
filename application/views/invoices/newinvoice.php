@@ -297,7 +297,7 @@
                                         } ?>
 
                                     </select></td>
-								<td colspan="2">Combo 
+								<td colspan="2">Internet 
 								<select name="combo" class="selectpicker form-control">
 										<option value="no">No</option>
 										<option value="1Mega">1 Mega</option>

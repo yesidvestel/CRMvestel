@@ -17,7 +17,8 @@
                     <th><?php echo $this->lang->line('Account') ?></th>
                     <th><?php echo $this->lang->line('Debit') ?></th>
                     <th><?php echo $this->lang->line('Credit') ?></th>
-                    <th><?php echo $this->lang->line('') ?>Sede</th>
+                    <th><?php echo $this->lang->line('') ?>Usuario</th>
+					<th>Cuenta</th>
                     <th><?php echo $this->lang->line('Method') ?></th>
                     <th>Estado</th>
                     <th><?php echo $this->lang->line('Action') ?></th>
@@ -34,7 +35,8 @@
                     <th><?php echo $this->lang->line('Account') ?></th>
                     <th><?php echo $this->lang->line('Debit') ?></th>
                     <th><?php echo $this->lang->line('Credit') ?></th>
-                    <th><?php echo $this->lang->line('') ?>Sede</th>
+                    <th><?php echo $this->lang->line('') ?>Usuario</th>
+					<th>Cuenta</th>
                     <th><?php echo $this->lang->line('Method') ?></th>
                     <th>Estado</th>
                     <th><?php echo $this->lang->line('Action') ?></th>
@@ -62,6 +64,20 @@
                     "orderable": true,
                 },
             ],
+		   "order": [[ 2, "desc" ]],
+                "language": {
+                    "info": "Pagina _PAGE_ de _PAGES_",
+                    "zeroRecords": "No se encontraron resultados",
+                    "processing": "Procesando...",
+                    "lengthMenu": "Mostrar _MENU_ registros",
+                    "search": "Buscar:",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Último",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    },
+                }
         });
     });
 </script>

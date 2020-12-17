@@ -710,6 +710,7 @@ class Transactions extends CI_Controller
             $row[] = amountFormat($prd->debit);
             $row[] = amountFormat($prd->credit);
             $row[] = $prd->payer;
+			$row[] = $prd->tid;
             $row[] = $this->lang->line($prd->method);
             $row[] = "<span id='estado_".$prd->id."'>".$prd->estado."</span>";
             $texto="";

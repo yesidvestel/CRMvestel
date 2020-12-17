@@ -316,7 +316,7 @@
 
                                 </select></td>
                          <tr class="sub_c" style="display: table-row;">
-							 <td colspan="2">Combo
+							 <td colspan="2">Internet
 							 <select name="combo" class="selectpicker form-control">
 										<option value="<?php echo $invoice['combo']; ?>">--<?php echo $invoice['combo']; ?></option>
 								 		<option value="no">No</option>
