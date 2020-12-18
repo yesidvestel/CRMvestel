@@ -22,7 +22,7 @@ class Transactions_model extends CI_Model
 {
     var $table = 'transactions';
     var $column_order = array('date', 'acid', 'debit', 'credit', 'payer', 'method');
-    var $column_search = array('id', 'account', 'payer');
+    var $column_search = array('id', 'payer', 'method', 'tid', 'account', 'payer');
     var $order = array('id' => 'desc');
     var $opt = '';
 

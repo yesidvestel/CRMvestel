@@ -155,7 +155,7 @@
 
                         </div>
                         <div class="col-md-6 col-sm-12 text-xs-center text-md-right">
-                            <h2 ><?php echo $this->lang->line('INVOICE') ?></h2>
+                            <h2 ><?php echo $this->lang->line('') ?>Estado de Cuenta</h2>
                             <ul class="pb-1"> <?php echo $this->config->item('prefix') . ' #' . $invoice['tid'] . '</p>
                             <ul class="pb-1">'.Sede .': ' . $invoice['refer'] . '</p>'; ?>
                             <ul class="px-0 list-unstyled">
