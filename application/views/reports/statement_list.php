@@ -72,19 +72,33 @@
 		$array_bancos=array("Bancolombia" => array('cantidad' => 0,"monto"=>0 ),"BBVA"=>array('cantidad' => 0,"monto"=>0 ));
 		$array_resumen_tipo_servicio= array('Internet' => array('cantidad' => 0,"monto"=>0 ),"Television"=> array('cantidad' => 0,"monto"=>0 ));
 		$array_efectivo=array("cantidad"=>0,"monto"=>0);
+
 		foreach ($lista as $key => $value) { 
 			$invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
 			$invoice_items=$this->db->get_where('invoice_items',array('tid' =>$value['tid']))->result_array();
-			foreach ($invoice_items as $key => $item_invoic) {
-				//recorro y pregunto si tiene iva o no el item para la primera tabla
-				if($item_invoic['totaltax']!="0"){
-					$cuantos_prod_con_iva_hay++;
-					$monto_iva_prod_con_iva_hay=$monto_iva_prod_con_iva_hay+intval($item_invoic['totaltax']);
-					$monto_prod_con_iva_hay=$monto_prod_con_iva_hay+intval($item_invoic['price']);
-				}else{
-					$cuantos_prod_sin_iva_hay++;
-					$monto_prod_sin_iva_hay=$monto_prod_sin_iva_hay+intval($item_invoic['price']);
+//resumen por cobranza
+			if($invoice->tax==0){
+				$monto_prod_sin_iva_hay+=intval($value['credit']);
+				$cuantos_prod_sin_iva_hay++;
+			}else{
+				$cuantos_prod_con_iva_hay++;
+				if($value['credit']!=0){
+					$valor_parcial=intval($value['credit']);
+					$valor_total=intval($invoice->total);
+					$cuanto_porcentaje=($valor_parcial*100)/$valor_total;
+					$cuanto_iva=intval($invoice->tax);
+					$cuanto_iva=($cuanto_iva*$cuanto_porcentaje)/100;
+					$cuanto_iva=intval($cuanto_iva);
+					
+					$valor_parcial=$valor_parcial-$cuanto_iva;
+					//montos
+					$monto_prod_con_iva_hay+=$valor_parcial;
+					$monto_iva_prod_con_iva_hay+=$cuanto_iva;
 				}
+			}
+//end resumen por cobranza
+			foreach ($invoice_items as $key => $item_invoic) {
+				
 				//para la Resumen por Servicios
 				if($item_invoic['product']=="1Mega" ||$item_invoic['product']=="1 Mega"){
 			 		$var_cuenta_planes['1Mega']++;
@@ -176,7 +190,10 @@
 			}
 
 
+			$var_prueba1+=intval($value['credit']);
+			var_dump("TID= ".$invoice->tid."  ValorTotal =".$var_prueba1." valor_invoice=".$invoice->total);
 		 } 
+ 			var_dump($var_prueba1);
 		 //tabla 1
 		 $tabla_total_cobranza_monto=$monto_prod_sin_iva_hay+$monto_prod_con_iva_hay+$monto_iva_prod_con_iva_hay;
 		//end tabla 1
