@@ -128,10 +128,10 @@ $array_afiliaciones=array();
 			if($value['method']=="Bank"){
 				if($value['nombre_banco']=="Bancolombia"){
 					$array_bancos['Bancolombia']['cantidad']++;
-					$array_bancos['Bancolombia']['monto']+=intval($invoice->subtotal);
+					$array_bancos['Bancolombia']['monto']+=intval($value['credit']);
 				}else{
 					$array_bancos['BBVA']['cantidad']++;
-					$array_bancos['BBVA']['monto']+=intval($invoice->subtotal);
+					$array_bancos['BBVA']['monto']+=intval($value['credit']);
 				}
 			}else if($value['method']=="Cash"){
 				$array_efectivo['cantidad']++;
