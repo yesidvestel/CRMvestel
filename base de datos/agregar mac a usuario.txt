@@ -1,0 +1,1 @@
+se agrega casilla macequipo a customers penultima fila

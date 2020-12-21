@@ -270,6 +270,41 @@ class Tickets Extends CI_Controller
             echo json_encode(array('status' => 'Error', 'message' => $this->lang->line('ERROR')));
         }
     }
+	public function asig_equipo()
+    {
+        $id = $this->input->post('iduser');
+        $mac = $this->input->post('mac');
+		$idequipo = $this->input->post('idequipo');
+		$this->db->set('macequipo', $mac);		
+        $this->db->where('id', $id);
+        $this->db->update('customers');
+		
+		$this->db->set('asignado', $id);		
+        $this->db->where('id', $idequipo);
+        $this->db->update('equipos');
+
+        echo json_encode(array('status' => 'Success', 'message' =>
+            $this->lang->line('UPDATED'), 'pstatus' => $status));
+    }
+	public function dev_equipo()
+    {
+        $id = $this->input->post('iduser');
+        $nota = $this->input->post('nota');
+		$estado = $this->input->post('estado');
+		$codigo = $this->input->post('codigo');
+		$this->db->set('macequipo', 'sin asignar');		
+        $this->db->where('id', $id);
+        $this->db->update('customers');
+		
+		$this->db->set('observacion', $nota);
+		$this->db->set('estado', $estado);
+		$this->db->set('asignado', 'null');
+        $this->db->where('codigo', $codigo);
+        $this->db->update('equipos');
+
+        echo json_encode(array('status' => 'Success', 'message' =>
+            $this->lang->line('UPDATED'), 'pstatus' => $status));
+    }
 
     public function update_status()
     {

@@ -304,17 +304,32 @@
                                                 class="icon-file-text2"></i> <?php echo $this->lang->line('View Invoices') ?></a>
 
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4" style="margin-top: 5px;">
                                     <a href="<?php echo base_url('customers/transactions?id=' . $details['id']) ?>"
                                        class="btn btn-success btn-lg"><i
                                                 class="icon-money3"></i> <?php echo $this->lang->line('View Transactions') ?>
                                     </a>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4" style="margin-top: 5px;">
                                     <a href="<?php echo base_url('quote/create?id=' . $details['id']) ?>"
                                        class="btn btn-primary btn-lg"><i
                                                 class="icon-ticket"></i> Generar ticket
                                     </a>
+                                </div>						
+								
+								<div class="col-md-4" style="margin-top: 5px;">
+
+                                    <a href="<?php echo base_url('customers/soporte?id=' . $details['id']) ?>"
+                                       class="btn btn-success btn-lg" style="border-right-width: 11px;"><i
+                                                class="icon-file-text2"></i> Ver Tickets </a>
+
+                                </div>
+								<div class="col-md-4" style="margin-top: 5px;">
+
+                                    <a href="<?php echo base_url('customers/equipos?id=' . $details['id']) ?>"
+                                       class="btn btn-primary btn-lg" style="border-right-width: 22px;border-left-width: 22px;"><i
+                                                class="icon-file-text2"></i> Ver Equipos</a>
+
                                 </div>
                             </div>
                             <hr>

@@ -332,6 +332,104 @@ class Customers extends CI_Controller
         //output to json format
         echo json_encode($output);
     }
+	public function suporlist()
+    {
+
+		$cid = $this->input->post('cid');
+        $list = $this->customers->supor_table($cid);
+        $data = array();
+        // $no = $_POST['start'];
+        $no = $this->input->post('start');
+
+        foreach ($list as $ticket) {
+            $row = array();
+            $no++;			
+            $row[] = $no;			
+			$row[] = $ticket->idt;
+            $row[] = $ticket->subject;
+			$row[] = $ticket->detalle;
+            $row[] = $ticket->created;          
+			$row[] = $ticket->fecha_final;			
+          if($ticket->id_factura !=null){
+                $row[]='<a href="'.base_url("invoices/view?id=".$ticket->id_factura).'">'.$ticket->id_factura.'</a>';
+            }else{
+                 $row[]="Sin Factura";
+            }
+
+            if($ticket->asignado!=null){
+                $tecnico=$this->db->get_where('aauth_users',array('id'=>$ticket->asignado))->row();
+                $row[]=$tecnico->username;
+            }else{
+                $row[] = "--";    
+            }
+			
+			$row[] = '<span class="st-' . $ticket->status . '">' . $ticket->status . '</span>';
+            $row[] = '<a href="' . base_url('tickets/thread/?id=' . $ticket->idt) . '" class="btn btn-success btn-xs"><i class="icon-file-text"></i> ' . $this->lang->line('View') . '</a> ';
+
+            
+
+            $data[] = $row;
+        }
+
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->customers->supor_count_all($cid),
+            "recordsFiltered" => $this->customers->sup_count_filtered($cid),
+            "data" => $data,
+        );
+        //output to json format
+        echo json_encode($output);
+    }
+	public function equipolist()
+    {
+
+		$cid = $this->input->post('cid');
+        $list = $this->customers->equipo_table($cid);
+        $data = array();
+        // $no = $_POST['start'];
+        $no = $this->input->post('start');
+
+        foreach ($list as $prd) {
+            $no++;
+            $row = array();
+            $row[] = $no;
+           	$pid = $prd->id;
+			$row[] = $prd->codigo;
+            $row[] = $prd->mac;
+            $row[] = $prd->serial;
+			$row[] = $prd->estado;			
+			$row[] = $prd->marca;            
+            $data[] = $row;
+        }
+
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->customers->equi_count_all($cid),
+            "recordsFiltered" => $this->customers->equi_count_filtered($cid),
+            "data" => $data,
+        );
+        //output to json format
+        echo json_encode($output);
+    }
+	public function dev_equipo()
+    {
+        $id = $this->input->post('iduser');
+        $nota = $this->input->post('nota');
+		$estado = $this->input->post('estado');
+		$codigo = $this->input->post('codigo');
+		$this->db->set('macequipo', 'sin asignar');		
+        $this->db->where('id', $id);
+        $this->db->update('customers');
+		
+		$this->db->set('observacion', $nota);
+		$this->db->set('estado', $estado);
+		$this->db->set('asignado', 0);
+        $this->db->where('codigo', $codigo);
+        $this->db->update('equipos');
+
+        echo json_encode(array('status' => 'Success', 'message' =>
+            $this->lang->line('UPDATED'), 'pstatus' => $status));
+    }
 
     public function inv_list()
     {
@@ -382,13 +480,34 @@ class Customers extends CI_Controller
         $this->load->view('customers/transactions', $data);
         $this->load->view('fixed/footer');
     }
+	public function soporte()
+    {
+
+		$custid = $this->input->get('id');
+        $data['details'] = $this->customers->details($custid);        
+        $head['usernm'] = $this->aauth->get_user()->username;
+        $head['title'] = 'View Customer Transactions';
+        $this->load->view('fixed/header', $head);
+        $this->load->view('customers/tickets', $data);
+        $this->load->view('fixed/footer');
+    }
+	public function equipos()
+    {
+
+		$custid = $this->input->get('id');
+        $data['details'] = $this->customers->details($custid);        
+        $head['usernm'] = $this->aauth->get_user()->username;
+        $head['title'] = 'View Customer Transactions';
+        $this->load->view('fixed/header', $head);
+        $this->load->view('customers/equipos', $data);
+        $this->load->view('fixed/footer');
+    }
 
     public function invoices()
     {
 
 		$custid = $this->input->get('id');
         $data['details'] = $this->customers->details($custid);
-
         $data['money'] = $this->customers->money_details($custid);
         $head['usernm'] = $this->aauth->get_user()->username;
         $head['title'] = 'View Customer Invoices';

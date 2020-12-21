@@ -11,6 +11,19 @@ function selectCustomer(cid, cname, cadd1, cadd2, ph, email) {
     $("#customer-box-result").hide();
     $("#customer").show();
 }
+function selectEquipo(cid, cname, cadd1, cadd2, ph, email) {
+
+
+    $('#customer_id').val(cid);
+    $('#customer_name').html('<strong>'+cname+'</strong>');
+    $('#customer_name').val(cname);
+    $('#customer_address1').html('<strong>'+cadd1+'<br>'+cadd2+'</strong>');
+    $('#customer_phone').html('Phone: <strong>'+ph+'</strong><br>Email: <strong>'+email+'</strong>');
+    $("#customer-box").val();
+
+    $("#equipo-box-result").hide();
+    $("#customer").show();
+}
 
 function selectSupplier(cid, cname, cadd1, cadd2, ph, email) {
 
@@ -53,6 +66,23 @@ $(document).ready(function () {
                 $("#customer-box-result").show();
                 $("#customer-box-result").html(data);
                 $("#customer-box").css("background", "none");
+
+            }
+        });
+    });
+	
+	$("#equipo-box").keyup(function () {
+        $.ajax({
+            type: "GET",
+            url: baseurl + 'search_products/bus_equipo',
+            data: 'keyword=' + $(this).val(),
+            beforeSend: function () {
+                $("#equipo-box").css("background", "#FFF url(" + baseurl + "assets/custom/load-ring.gif) no-repeat 165px");
+            },
+            success: function (data) {
+                $("#equipo-box-result").show();
+                $("#equipo-box-result").html(data);
+                $("#equipo-box").css("background", "none");
 
             }
         });
@@ -825,6 +855,17 @@ $(document).on('click', "#submit_model2", function (e) {
     var o_data =  $("#form_model2").serialize();
     var action_url= $('#form_model2 #action-url').val();
     $("#pop_model2").modal('hide');
+
+    saveMData(o_data,action_url);
+
+
+});
+$(document).on('click', "#submit_model3", function (e) {
+    e.preventDefault();
+
+    var o_data =  $("#form_model3").serialize();
+    var action_url= $('#form_model3 #action-url').val();
+    $("#pop_model3").modal('hide');
 
     saveMData(o_data,action_url);
 

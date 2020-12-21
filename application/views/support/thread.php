@@ -37,7 +37,8 @@
 				echo '<br><strong>Celular:</strong> ' . $thread_info['celular'];
 				echo '<br><strong>Direccion:</strong> ' . $thread_info['nomenclatura'].' '. $thread_info['numero1']. $thread_info['adicionauno'].' N°'. $thread_info['numero2']. $thread_info['adicional2'].' - '. $thread_info['numero3'];
 				echo '<br><strong>Barrio:</strong> ' . $thread_info['barrio'];
-                echo '<br><strong>Estado:</strong> <span id="pstatus">' . $thread_info['status'];		
+                echo '<br><strong>Estado:</strong> <span id="pstatus">' . $thread_info['status'];
+				echo '<br><strong>Equipo Asignado:</strong> <span id="pstatus">' . $thread_info['macequipo'];
                 ?></p>
 				
 
@@ -75,9 +76,7 @@
                 <?php } ?>
             </tbody>
         </table>
-			<div align="center">
-			<a href="#pop_model" data-toggle="modal" onclick="funcion_status();" data-remote="false" class="btn btn-sm btn-cyan mb-1" title="Change Status"
-                ><span class="icon-tab"></span> CAMBIAR ESTADO</a></div>
+						
             <?php foreach ($thread_list as $row) { ?>
 
 
@@ -104,44 +103,11 @@
             <h5><?php echo $this->lang->line('Your Response') ?></h5>
             <hr>
 			
-			<div class="form-group row">
-                               
-        <div class="col-sm-10">
-			<label class="col-sm-4 col-form-label" for="name">Nombre del articulo</label> 
-            <select class="form-control select-box" id="lista_productos" name="lista_productos[]" multiple="multiple" style="width: 100%;">
-                <?php foreach ($lista_productos_tecnico as $key => $producto) { ?>
-                    <option value="<?=$producto['pid']?>"  data-qty="<?=$producto['qty']?>" data-pid="<?=$producto['pid']?>" data-product_name="<?=$producto['product_name']?>" ><?=$producto['product_name']?></option>
-               <?php } ?>
-            </select>
-        </div>
-                     </div>   
-                     <table width="80%" style="text-align: center;" class="table-responsive tfr my_stripe">
-                            <thead >
-                                <tr>
-                                    <th style="text-align: center;" width="10%">PID</th>
-                                    <th style="text-align: center;" width="30%">Nombre</th>
-                                    <th style="text-align: center;" width="20%">Cantidad Tot.</th>
-                                    <th style="text-align: center;" width="20%">Valor a Transferir</th>
-                                </tr>
-                            </thead>
-                            <tbody id="itemsx">
-                                <tr id="remover_fila">
-                                    <td>PID</td>
-                                    <td>Nombre</td>
-                                    <td>##</td>
-                                    <td><input type="number" name="" data-max="5" data-pid="0" class="form-control" onfocusout="validar_numeros(this);" disabled></td>   
-                                </tr>
-                            </tbody>
-                        </table>
-                        <div align="center"><input  type="button" class="btn " style="background-color: #767676;color: aliceblue;"  value="Agregar Material a la Orden" onclick="guardar_productos()"></div>
-            <div class="form-group row">
-
-                <label class="col-sm-2 control-label" for="edate"><?php echo $this->lang->line('Reply') ?></label>
+			
+            <div class="form-group row">               
 
                 <div class="col-sm-12">
-                        <textarea class="summernote"
-                                  placeholder=" Message"
-                                  autocomplete="false" rows="10" name="content"></textarea>
+                        <textarea class="summernote" placeholder=" Message" autocomplete="false" rows="10" name="content"></textarea>
                 </div>
             </div>
 	   
@@ -162,16 +128,26 @@
 
                 <label class="col-sm-2 col-form-label"></label>
 
-                <div class="col-sm-4">
-                    <input type="submit" id="document_add" class="btn btn-success margin-bottom"
-                           value="<?php echo $this->lang->line('Update') ?>" data-loading-text="Updating...">
+                <div class="col-sm-2">
+                    <input type="submit" id="document_add" class="btn btn- btn-blue mb-1"
+                           value="DOCUMENTAR" data-loading-text="Updating...">
                 </div>
+				<div class="col-sm-2">			
+		 	<a href="#pop_model2" data-toggle="modal" onclick="funcion_status();" data-remote="false" class="btn btn- btn-green mb-1" title="Change Status"
+                > ASIGNAR EQUIPO</a></div>
+				<div class="col-sm-2">
+			<a href="#pop_model3" data-toggle="modal" onclick="funcion_status();" data-remote="false" class="btn btn- btn-orange mb-1" title="Change Status">ASIGNAR MATERIAL</a></div>
+				<div class="col-sm-2">
+			<a href="#pop_model" data-toggle="modal" onclick="funcion_status();" data-remote="false" class="btn btn- btn-red mb-1" title="Change Status"><span class="icon-tab"></span> CAMBIAR ESTADO</a></div>
+				
             </div>
 
 
             </form>
         </div>
+			
     </div>
+
 </article>
 <script type="text/javascript">
     $(function () {
@@ -219,6 +195,7 @@
             }
     }
 </script>
+
 <div id="pop_model" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -264,7 +241,6 @@
                             <input type="date" class="form-control" id="fecha_final" onchange="funcion_fecha()" name="fecha_final">
                         </div>
                     </div>
-
                     <div class="modal-footer">
                         <input type="hidden" class="form-control required"
                                name="tid" id="invoiceid" value="<?php echo $thread_info['idt'] ?>">
@@ -273,6 +249,97 @@
                         <input type="hidden" id="action-url" value="tickets/update_status">
                         <button type="button" class="btn btn-primary"
                                 id="submit_model"><?php echo $this->lang->line('Change Status'); ?></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="pop_model2" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Asignar Equipo</h4>
+            </div>
+
+            <div class="modal-body">
+                <form id="form_model2">
+
+
+                    <div class="form-group row">
+                    <div class="frmSearch">
+						<label for="cst" class="caption col-sm-2 col-form-label">Burcar equipo</label>
+                        <div class="col-sm-6">
+							<input type="hidden" name="iduser" value="<?php echo $thread_info['id'] ?>"></input>
+							<input type="text" class="form-control" name="cst" id="equipo-box" placeholder="Ingrese mac del equipo" autocomplete="off"/>
+                            <div id="equipo-box-result"></div>
+                        </div>
+                    </div>
+
+                </div>
+			<div id="customerpanel" class="form-group row">
+                    <label for="toBizName"
+                           class="caption col-sm-2 col-form-label">Equipo mac<span
+                                style="color: red;">*</span></label>
+                    <div class="col-sm-6"><input type="hidden" name="idequipo" id="customer_id" value="0">
+                        <input type="text" class="form-control" name="mac" id="customer_name">
+                    </div>
+                </div>
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">Volver</button>
+                        <input type="hidden" id="action-url" value="tickets/asig_equipo">
+                        <button type="button" class="btn btn-primary"
+                                id="submit_model2">Asignar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="pop_model3" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Asignar Material</h4>
+            </div>
+			<div class="modal-body">
+                <form id="form_model2">
+
+            <div class="form-group row">
+                               
+        <div class="col-sm-10">
+			<label class="col-sm-4 col-form-label" for="name">Nombre del articulo</label> 
+            <select class="form-control select-box" id="lista_productos" name="lista_productos[]" multiple="multiple" style="width: 100%;">
+                <?php foreach ($lista_productos_tecnico as $key => $producto) { ?>
+                    <option value="<?=$producto['pid']?>"  data-qty="<?=$producto['qty']?>" data-pid="<?=$producto['pid']?>" data-product_name="<?=$producto['product_name']?>" ><?=$producto['product_name']?></option>
+               <?php } ?>
+            </select>
+        </div>
+                     </div>   
+                     <table width="80%" style="text-align: center;" class="table-responsive tfr my_stripe">
+                            <thead >
+                                <tr>
+                                    <th style="text-align: center;" width="10%">PID</th>
+                                    <th style="text-align: center;" width="30%">Nombre</th>
+                                    <th style="text-align: center;" width="20%">Cantidad Tot.</th>
+                                    <th style="text-align: center;" width="20%">Valor a Transferir</th>
+                                </tr>
+                            </thead>
+                            <tbody id="itemsx">
+                                <tr id="remover_fila">
+                                    <td>PID</td>
+                                    <td>Nombre</td>
+                                    <td>##</td>
+                                    <td><input type="number" name="" data-max="5" data-pid="0" class="form-control" onfocusout="validar_numeros(this);" disabled></td>   
+                                </tr>
+                            </tbody>
+                        </table>
+					    <br>
+                        <input  type="button" class="btn btn-primary" value="Agregar" onclick="guardar_productos()">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Volver</button>
+                                               
                     </div>
                 </form>
             </div>

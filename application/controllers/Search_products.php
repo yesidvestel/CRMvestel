@@ -123,7 +123,32 @@ class Search_products extends CI_Controller
         }
 
     }
+	public function bus_equipo()
+    {
+        $result = array();
+        $out = array();
+        $name = $this->input->get('keyword', true);
 
+
+        if ($name) {
+            $query = $this->db->query("SELECT id,mac,estado,asignado FROM equipos WHERE UPPER(id)  LIKE '" . strtoupper($name) . "%' OR UPPER(mac)  LIKE '%" . strtoupper($name) . "%' OR UPPER(estado)  LIKE '" . strtoupper($name) ."%' LIMIT 6");
+
+            $result = $query->result_array();
+
+            echo '<ol>';
+            $i = 1;
+            foreach ($result as $row) {
+
+
+                echo "<li onClick=\"selectEquipo('" . $row['id'] . "','" . $row['mac'] . " ','" . $row['estado'] . " ','" . $row['asignado'] . "','" . $row['documento'] . "','" . $row['celular'] . "','" . $row['email'] . "')\"><span>$i</span><p>" . $row['mac'] . " &nbsp; &nbsp  " . $row['estado'] . "&nbsp; &nbsp  " . $row['asignado'] . "</p></li>";
+                $i++;
+            } 
+            echo '</ol>';
+
+
+        }
+
+    }
 
     public function supplier()
     {

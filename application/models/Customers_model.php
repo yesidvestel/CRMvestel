@@ -26,10 +26,16 @@ class Customers_model extends CI_Model
     var $column_search = array('id','abonado','name', 'celular', 'documento', 'unoapellido', 'email');
     var $trans_column_order = array('date', 'debit', 'credit', 'account', null);
     var $trans_column_search = array('id', 'date');
+	var $sup_column_order = array('idt', 'subject', 'detalle','created','fecha_final', 'id_factura', 'status', null);
+    var $sup_column_search = array('idt','subject', 'detalle','created','fecha_final', 'id_factura', 'status');
+	var $equi_column_search = array('id', 'codigo');
+	var $equi_column_order = array('null', 'codigo', 'mac', 'serial', 'estado', 'marca', null);
     var $inv_column_order = array(null, 'tid', 'name', 'invoicedate', 'total', 'status', null);
     var $inv_column_search = array('tid', 'name', 'invoicedate', 'total');
     var $order = array('id' => 'desc');
     var $inv_order = array('invoices.tid' => 'desc');
+	var $sup_order = array('tickets.idt' => 'desc');
+	var $equi_order = array('equipos.id' => 'desc');
 
 
     private function _get_datatables_query($id = '')
@@ -406,6 +412,15 @@ class Customers_model extends CI_Model
         $query = $this->db->get();
         return $query->result();
     }
+	function supor_table($id)
+    {
+        $this->_sup_datatables_query($id);
+        if ($_POST['length'] != -1)
+            $this->db->limit($_POST['length'], $_POST['start']);
+        $query = $this->db->get();
+        return $query->result();
+    }
+	
 
 
     private function _get_trans_table_query($id)
@@ -458,6 +473,15 @@ class Customers_model extends CI_Model
         }
         return $query->num_rows($id = '');
     }
+	function sup_count_filtered($id = '')
+    {
+        $this->_sup_datatables_query($id);
+        $query = $this->db->get();
+        if ($id != '') {
+            $this->db->where('cid', $id);
+        }
+        return $query->num_rows($id = '');
+    }
 
     public function trans_count_all($id = '')
     {
@@ -465,6 +489,16 @@ class Customers_model extends CI_Model
         $query = $this->db->get();
         if ($id != '') {
             $this->db->where('payerid', $id);
+        }
+
+
+    }
+	public function supor_count_all($id = '')
+    {
+        $this->_sup_datatables_query($id);
+        $query = $this->db->get();
+        if ($id != '') {
+            $this->db->where('cid', $id);
         }
 
 
@@ -505,6 +539,106 @@ class Customers_model extends CI_Model
             $order = $this->inv_order;
             $this->db->order_by(key($order), $order[key($order)]);
         }
+    }
+	private function _sup_datatables_query($id)
+    {
+
+        $this->db->from('tickets');
+        $this->db->where('tickets.cid', $id);
+        $this->db->join('customers', 'tickets.cid=customers.id', 'left');
+
+        $i = 0;
+
+        foreach ($this->sup_column_search as $item) // loop column
+        {
+            if ($_POST['search']['value']) // if datatable send POST for search
+            {
+
+                if ($i === 0) // first loop
+                {
+                    $this->db->group_start(); // open bracket. query Where with OR clause better with bracket. because maybe can combine with other WHERE with AND.
+                    $this->db->like($item, $_POST['search']['value']);
+                } else {
+                    $this->db->or_like($item, $_POST['search']['value']);
+                }
+
+                if (count($this->sup_column_search) - 1 == $i) //last loop
+                    $this->db->group_end(); //close bracket
+            }
+            $i++;
+        }
+
+        if (isset($_POST['order'])) // here order processing
+        {
+            $this->db->order_by($this->sup_column_order[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);
+        } else if (isset($this->sup_order)) {
+            $order = $this->sup_order;
+            $this->db->order_by(key($order), $order[key($order)]);
+        }
+    }
+	//busqueda equipo
+	private function _equi_datatables_query($id)
+    {
+
+        $this->db->from('equipos');
+        $this->db->where('equipos.asignado', $id);
+        $this->db->join('customers', 'equipos.asignado=customers.id', 'left');
+
+        $i = 0;
+
+        foreach ($this->equi_column_search as $item) // loop column
+        {
+            if ($_POST['search']['value']) // if datatable send POST for search
+            {
+
+                if ($i === 0) // first loop
+                {
+                    $this->db->group_start(); // open bracket. query Where with OR clause better with bracket. because maybe can combine with other WHERE with AND.
+                    $this->db->like($item, $_POST['search']['value']);
+                } else {
+                    $this->db->or_like($item, $_POST['search']['value']);
+                }
+
+                if (count($this->equi_column_search) - 1 == $i) //last loop
+                    $this->db->group_end(); //close bracket
+            }
+            $i++;
+        }
+
+        if (isset($_POST['order'])) // here order processing
+        {
+            $this->db->order_by($this->equi_column_order[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);
+        } else if (isset($this->equi_order)) {
+            $order = $this->equi_order;
+            $this->db->order_by(key($order), $order[key($order)]);
+        }
+    }
+	function equipo_table($id)
+    {
+        $this->_equi_datatables_query($id);
+        if ($_POST['length'] != -1)
+            $this->db->limit($_POST['length'], $_POST['start']);
+        $query = $this->db->get();
+        return $query->result();
+    }
+	public function equi_count_all($id = '')
+    {
+        $this->_equi_datatables_query($id);
+        $query = $this->db->get();
+        if ($id != '') {
+            $this->db->where('abonado', $id);
+        }
+
+
+    }
+	function equi_count_filtered($id = '')
+    {
+        $this->_equi_datatables_query($id);
+        $query = $this->db->get();
+        if ($id != '') {
+            $this->db->where('abonado', $id);
+        }
+        return $query->num_rows($id = '');
     }
 
     function inv_datatables($id)
