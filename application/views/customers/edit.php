@@ -46,7 +46,7 @@
                             <input type="text" class="form-control margin-bottom  required" name="unoapellido" value="<?php echo $customer['unoapellido'] ?>" id="mcustomer_unoapellido">
                         </div>
                         <div class="col-sm-3">
-                            <input type="text" class="form-control margin-bottom  required" name="dosapellido" value="<?php echo $customer['dosapellido'] ?>"id="mcustomer_apellidos">
+                            <input type="text" class="form-control margin-bottom" name="dosapellido" value="<?php echo $customer['dosapellido'] ?>"id="mcustomer_apellidos">
                         </div>
                     </div>
                     <div class="form-group row">
