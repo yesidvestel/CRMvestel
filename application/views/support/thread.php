@@ -76,7 +76,7 @@
                 <?php } ?>
             </tbody>
         </table>
-						
+		<hr>		
             <?php foreach ($thread_list as $row) { ?>
 
 
@@ -141,7 +141,7 @@
 			<a href="#pop_model" data-toggle="modal" onclick="funcion_status();" data-remote="false" class="btn btn- btn-red mb-1" title="Change Status"><span class="icon-tab"></span> CAMBIAR ESTADO</a></div>
 				
             </div>
-
+				
 
             </form>
         </div>
@@ -305,7 +305,7 @@
                 <h4 class="modal-title">Asignar Material</h4>
             </div>
 			<div class="modal-body">
-                <form id="form_model2">
+                <form id="form_model3">
 
             <div class="form-group row">
                                

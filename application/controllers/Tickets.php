@@ -286,25 +286,7 @@ class Tickets Extends CI_Controller
         echo json_encode(array('status' => 'Success', 'message' =>
             $this->lang->line('UPDATED'), 'pstatus' => $status));
     }
-	public function dev_equipo()
-    {
-        $id = $this->input->post('iduser');
-        $nota = $this->input->post('nota');
-		$estado = $this->input->post('estado');
-		$codigo = $this->input->post('codigo');
-		$this->db->set('macequipo', 'sin asignar');		
-        $this->db->where('id', $id);
-        $this->db->update('customers');
-		
-		$this->db->set('observacion', $nota);
-		$this->db->set('estado', $estado);
-		$this->db->set('asignado', 'null');
-        $this->db->where('codigo', $codigo);
-        $this->db->update('equipos');
-
-        echo json_encode(array('status' => 'Success', 'message' =>
-            $this->lang->line('UPDATED'), 'pstatus' => $status));
-    }
+	
 
     public function update_status()
     {
@@ -316,6 +298,12 @@ class Tickets Extends CI_Controller
 		$idfactura = $ticket->id_factura;
         $data;
 		$detalle = $this->input->post('detalle');
+		$est_afiliacion = $ticket->id_invoice;		
+		//cambiar estado afiliacion
+		$this->db->set('ron', 'Activo');
+        $this->db->where('tid', $est_afiliacion);
+        $this->db->update('invoices');
+
 		
         foreach ($invoice[0] as $key => $value) {
             if($key!='id' && $key!='pmethod' && $key!='status' && $key!='pamnt'){
@@ -357,9 +345,9 @@ class Tickets Extends CI_Controller
 
         $datay['tid']=$data['tid'];
         $datay['qty']=1;
-        $datay['tax']=0;
+        $datay['tax']=19;
         $datay['discount']=0;
-        $datay['totaltax']=0;
+        
         $datay['totaldiscount']=0;			
                 if($data['combo']!==no){
                     if($data['combo']==='3Megas'){
@@ -394,11 +382,12 @@ class Tickets Extends CI_Controller
                     $datay['product']=$producto->product_name;
 					$datay['qty']=1;
                     $x=intval($producto->product_price);
-                    $x=($x/30)*$diferencia->days;
+                    $x=($x/30)*$diferencia->days;					
+                    $y=(3992/30)*$diferencia->days;
                     $total+=$x;
 					$datay['price']=$x;
                     $datay['tax']=19;
-					$datay['totaltax']=3992;
+					$datay['totaltax']=$y;
 					$datay['subtotal']=$x+$datay['totaltax'];
                     if($ticket->detalle=="Instalacion" && $ticket->id_factura==null){
                         $this->db->insert('invoice_items',$datay);
@@ -423,14 +412,20 @@ class Tickets Extends CI_Controller
                 
                
         //end cod x
+		
         
         $data['subtotal']=$total;
-        $data['total']=$total;
+		$data['tax']=$datay['totaltax']++;
+        $data['total']=$data['subtotal']+$data['tax'];
         //no haga ni insert ni update si no es instalacion y tambien si ya existe una factura
         $msg1="";
         if($ticket->detalle=="Instalacion" && $ticket->id_factura==null){
             $this->db->insert('invoices',$data);    
             $dataz['id_factura']=$data['tid'];
+			//actualizar estado usuario
+				$this->db->set('usu_estado', 'Activo');
+        		$this->db->where('id', $ticket->cid);
+        		$this->db->update('customers');
         }else{
             $msg1="no redirect";        
 		}
@@ -466,6 +461,10 @@ class Tickets Extends CI_Controller
 			$this->db->set('ron', 'Activo');
         	$this->db->where('tid', $idfactura);
         	$this->db->update('invoices');
+			//actualizar estado usuario
+				$this->db->set('usu_estado', 'Activo');
+        		$this->db->where('id', $ticket->cid);
+        		$this->db->update('customers');
 		}
 		if($ticket->detalle=="Reconexion Internet"){
 			$paquete = $this->input->post('paquete');
@@ -473,6 +472,10 @@ class Tickets Extends CI_Controller
 			$this->db->set('ron', 'Activo');
         	$this->db->where('tid', $idfactura);
         	$this->db->update('invoices');
+			//actualizar estado usuario
+				$this->db->set('usu_estado', 'Activo');
+        		$this->db->where('id', $ticket->cid);
+        		$this->db->update('customers');
 		}
 		if($ticket->detalle=="Reconexion Television"){
 			$paquete = $this->input->post('paquete');
@@ -480,6 +483,10 @@ class Tickets Extends CI_Controller
 			$this->db->set('ron', 'Activo');
         	$this->db->where('tid', $idfactura);
         	$this->db->update('invoices');
+			//actualizar estado usuario
+				$this->db->set('usu_estado', 'Activo');
+        		$this->db->where('id', $ticket->cid);
+        		$this->db->update('customers');
 		}
 		if($ticket->detalle=="Corte Combo"){
 			//agregar reconexion
@@ -501,6 +508,10 @@ class Tickets Extends CI_Controller
 				$this->db->set('combo', 'no');
         		$this->db->where('tid', $idfactura);
         		$this->db->update('invoices');
+			//actualizar estado usuario
+				$this->db->set('usu_estado', 'Cortado');
+        		$this->db->where('id', $ticket->cid);
+        		$this->db->update('customers');
 		}
 		if($ticket->detalle=="Corte Internet"){
 			//agregar reconexion
@@ -521,6 +532,10 @@ class Tickets Extends CI_Controller
 				$this->db->set('combo', 'no');			
         		$this->db->where('tid', $idfactura);
         		$this->db->update('invoices');
+			//actualizar estado usuario
+				$this->db->set('usu_estado', 'Cortado');
+        		$this->db->where('id', $ticket->cid);
+        		$this->db->update('customers');
 		}
 		if($ticket->detalle=="Corte Television"){
 			//agregar reconexion
@@ -541,6 +556,10 @@ class Tickets Extends CI_Controller
 				$this->db->set('television', 'no');			
         		$this->db->where('tid', $idfactura);
         		$this->db->update('invoices');
+			//actualizar estado usuario
+				$this->db->set('usu_estado', 'Cortado');
+        		$this->db->where('id', $ticket->cid);
+        		$this->db->update('customers');
 		}
 		
 		if($ticket->detalle=="Suspencion Combo"){			
@@ -549,18 +568,30 @@ class Tickets Extends CI_Controller
 			$this->db->set('combo', 'no');
         	$this->db->where('tid', $idfactura);
         	$this->db->update('invoices');
+			//actualizar estado usuario
+				$this->db->set('usu_estado', 'Suspendido');
+        		$this->db->where('id', $ticket->cid);
+        		$this->db->update('customers');
 		}
 		if($ticket->detalle=="Suspencion Television"){			
 			$this->db->set('ron', 'Activo');
 			$this->db->set('television', 'no');			
         	$this->db->where('tid', $idfactura);
         	$this->db->update('invoices');
+			//actualizar estado usuario
+				$this->db->set('usu_estado', 'Suspendido');
+        		$this->db->where('id', $ticket->cid);
+        		$this->db->update('customers');
 		}
 		if($ticket->detalle=="Suspencion Internet"){			
 			$this->db->set('ron', 'Activo');
 			$this->db->set('combo', 'no');			
         	$this->db->where('tid', $idfactura);
         	$this->db->update('invoices');
+			//actualizar estado usuario
+				$this->db->set('usu_estado', 'Suspendido');
+        		$this->db->where('id', $ticket->cid);
+        		$this->db->update('customers');
 		}
 		
         $dataz['status']=$status;
