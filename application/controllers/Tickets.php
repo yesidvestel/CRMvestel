@@ -298,6 +298,12 @@ class Tickets Extends CI_Controller
 		$idfactura = $ticket->id_factura;
         $data;
 		$detalle = $this->input->post('detalle');
+		$est_afiliacion = $ticket->id_invoice;		
+		//cambiar estado afiliacion
+		$this->db->set('ron', 'Activo');
+        $this->db->where('tid', $est_afiliacion);
+        $this->db->update('invoices');
+
 		
         foreach ($invoice[0] as $key => $value) {
             if($key!='id' && $key!='pmethod' && $key!='status' && $key!='pamnt'){
@@ -339,9 +345,9 @@ class Tickets Extends CI_Controller
 
         $datay['tid']=$data['tid'];
         $datay['qty']=1;
-        $datay['tax']=0;
+        $datay['tax']=19;
         $datay['discount']=0;
-        $datay['totaltax']=0;
+        
         $datay['totaldiscount']=0;			
                 if($data['combo']!==no){
                     if($data['combo']==='3Megas'){
@@ -376,11 +382,12 @@ class Tickets Extends CI_Controller
                     $datay['product']=$producto->product_name;
 					$datay['qty']=1;
                     $x=intval($producto->product_price);
-                    $x=($x/30)*$diferencia->days;
+                    $x=($x/30)*$diferencia->days;					
+                    $y=(3992/30)*$diferencia->days;
                     $total+=$x;
 					$datay['price']=$x;
                     $datay['tax']=19;
-					$datay['totaltax']=3992;
+					$datay['totaltax']=$y;
 					$datay['subtotal']=$x+$datay['totaltax'];
                     if($ticket->detalle=="Instalacion" && $ticket->id_factura==null){
                         $this->db->insert('invoice_items',$datay);
@@ -407,7 +414,8 @@ class Tickets Extends CI_Controller
         //end cod x
         
         $data['subtotal']=$total;
-        $data['total']=$total;
+		$data['tax']=$datay['totaltax']++;
+        $data['total']=$data['subtotal']+$data['tax'];
         //no haga ni insert ni update si no es instalacion y tambien si ya existe una factura
         $msg1="";
         if($ticket->detalle=="Instalacion" && $ticket->id_factura==null){
