@@ -786,7 +786,7 @@
             <div class="modal-body">
                 <form id="form_model2">
 
-
+					<input type="hidden" value="<?php echo $invoice['csd'] ?>" name="usuario"></input>
                     <div class="row">
                         <div class="col-xs-12 mb-1"><label
                                     for="pmethod"><?php echo $this->lang->line('Mark As') ?></label>

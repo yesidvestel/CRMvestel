@@ -107,7 +107,6 @@
                     	<div class="col-sm-4">
 						<input type="text" class="form-control required"
                                                    placeholder="Billing Date" name="nacimiento"
-                                                   data-toggle="datepicker"
                                                    autocomplete="false" value="<?php echo $customer['nacimiento'] ?>" >
                         
 						</div>

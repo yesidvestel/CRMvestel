@@ -293,7 +293,10 @@ class Invoices extends CI_Controller
                 $data2['section']='';
                 $data2['id_invoice']=$invocieno;
                 $this->db->insert('tickets',$data2);
-
+				//actualizar estado usuario
+				$this->db->set('usu_estado', 'Instalar');
+        		$this->db->where('id', $customer_id);
+        		$this->db->update('customers');
                 
                     
 				}
@@ -335,6 +338,7 @@ class Invoices extends CI_Controller
 	 public function rec_status()
     {
         $tid = $this->input->post('tid');
+		$usr = $this->input->post('usuario');
         $status = $this->input->post('status');
 		$tv = $this->input->post('television');
 		$int = $this->input->post('internet');
@@ -343,7 +347,11 @@ class Invoices extends CI_Controller
         $this->db->set('ron', $status);
         $this->db->where('tid', $tid);
         $this->db->update('invoices');
-
+		 
+		 //estado usuario
+		$this->db->set('usu_estado', $status);
+        $this->db->where('id', $usr);
+        $this->db->update('customers');
         echo json_encode(array('status' => 'Success', 'message' =>
             $this->lang->line('UPDATED'), 'pstatus' => $status));
     }

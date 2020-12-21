@@ -44,7 +44,7 @@
                                     <h5><?php echo $this->lang->line('Balance Summary') ?></h5>
                                     <ul class="list-group list-group-flush">
 										<li class="list-group-item">
-											<span class="tag tag-default tag-pill bg-primary float-xs-right"><?php echo $due['ron']?></span>
+											<span class="tag tag-default tag-pill bg-primary float-xs-right"><?php echo $details['usu_estado']?></span>
 											Estado Servicio
                                         </li>
                                         <li class="list-group-item">
@@ -165,17 +165,17 @@
                                 </div>
                     
                             </div>
-                            <hr>
+							<hr>
                             <div class="row m-t-lg">
                                 <div class="col-md-2">
-                                    <strong><?php echo $this->lang->line('') ?>Empresa:</strong>
+                                    <strong>Documento:</strong>
                                 </div>
                                 <div class="col-md-10">
-                                    <?php echo $details['company'] ?>
+                                    <?php echo $details['tipo_documento'] .". ". $details['documento'] ?>
                                 </div>
 
                             </div>
-                            <hr>
+							<hr>
                             <div class="row m-t-lg">
                                 <div class="col-md-2">
                                     <strong><?php echo $this->lang->line('') ?>Celular:</strong>
@@ -186,7 +186,7 @@
 
                             </div>
                             <hr>
-                            <div class="row m-t-lg">
+							<div class="row m-t-lg">
                                 <div class="col-md-2">
                                     <strong><?php echo $this->lang->line('') ?>Celular ADI:</strong>
                                 </div>
@@ -196,7 +196,7 @@
 
                             </div>
                             <hr>
-                            <div class="row m-t-lg">
+							<div class="row m-t-lg">
                                 <div class="col-md-2">
                                     <strong><?php echo $this->lang->line('') ?>Correo:</strong>
                                 </div>
@@ -206,6 +206,19 @@
 
                             </div>
 							<hr>
+                            <div class="row m-t-lg">
+                                <div class="col-md-2">
+                                    <strong><?php echo $this->lang->line('') ?>Empresa:</strong>
+                                </div>
+                                <div class="col-md-10">
+                                    <?php echo $details['company'] ?>
+                                </div>
+
+                            </div>
+                            
+                            <hr>
+                            
+                            
                             <div class="row m-t-lg">
                                 <div class="col-md-2">
                                     <strong><?php echo $this->lang->line('') ?>Fecha de nacimiento:</strong>
@@ -225,16 +238,7 @@
                                 </div>
 
                             </div>
-                            <hr>
-                            <div class="row m-t-lg">
-                                <div class="col-md-2">
-                                    <strong>Documento:</strong>
-                                </div>
-                                <div class="col-md-10">
-                                    <?php echo $details['tipo_documento'] .". ". $details['documento'] ?>
-                                </div>
-
-                            </div>
+                            
                             <hr>
                             <div class="row m-t-lg">
                                 <div class="col-md-2">
