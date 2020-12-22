@@ -97,6 +97,8 @@
 				}
 			}
 //end resumen por cobranza
+			$sumatoria_items=0;
+			$items_tocados=array();
 			foreach ($invoice_items as $key => $item_invoic) {
 				$valor_parcial=intval($value['credit']);
 				$valor_total=intval($invoice->total);
@@ -109,7 +111,8 @@
 			 			$cuanto_porcentaje_item_en_invoice=($valor_item*100)/$valor_total;
 			 			$valor_item=($valor_parcial*$cuanto_porcentaje_item_en_invoice)/100;
 			 			$var_cuenta_planes_montos['1MegaMonto']+=$valor_item;	
-			 			
+			 			$sumatoria_items+=$valor_item;
+			 			$items_tocados['1MegaMonto']=true;
 			 		}
 			 		
 
@@ -126,7 +129,8 @@
 			 			$cuanto_porcentaje_item_en_invoice=($valor_item*100)/$valor_total;
 			 			$valor_item=($valor_parcial*$cuanto_porcentaje_item_en_invoice)/100;
 			 			$var_cuenta_planes_montos['2MegasMonto']+=$valor_item;	
-			 			
+			 			$sumatoria_items+=$valor_item;
+			 			$items_tocados['2MegasMonto']=true;
 			 		}
 
 					
@@ -142,7 +146,8 @@
 			 			$cuanto_porcentaje_item_en_invoice=($valor_item*100)/$valor_total;
 			 			$valor_item=($valor_parcial*$cuanto_porcentaje_item_en_invoice)/100;
 			 			$var_cuenta_planes_montos['3MegasMonto']+=$valor_item;	
-			 			
+			 			$sumatoria_items+=$valor_item;
+			 			$items_tocados['3MegasMonto']=true;
 			 		}
 
 					//resumen tipo servicio
@@ -156,7 +161,8 @@
 			 			$cuanto_porcentaje_item_en_invoice=($valor_item*100)/$valor_total;
 			 			$valor_item=($valor_parcial*$cuanto_porcentaje_item_en_invoice)/100;
 			 			$var_cuenta_planes_montos['5MegasMonto']+=$valor_item;	
-			 			
+			 			$sumatoria_items+=$valor_item;
+			 			$items_tocados['5MegasMonto']=true;
 			 		}
 
 					//resumen tipo servicio
@@ -170,7 +176,8 @@
 			 			$cuanto_porcentaje_item_en_invoice=($valor_item*100)/$valor_total;
 			 			$valor_item=($valor_parcial*$cuanto_porcentaje_item_en_invoice)/100;
 			 			$var_cuenta_planes_montos['10MegasMonto']+=$valor_item;	
-			 			
+			 			$sumatoria_items+=$valor_item;
+			 			$items_tocados['10MegasMonto']=true;
 			 		}
 
 					//resumen tipo servicio
@@ -183,11 +190,11 @@
 			 					
 			 			$cuanto_porcentaje_item_en_invoice=($valor_item*100)/$valor_total;
 			 			$valor_item=($valor_parcial*$cuanto_porcentaje_item_en_invoice)/100;
-			 				
-			 			
 						$array_reconexiones['monto']+=$valor_item;
+						$sumatoria_items+=$valor_item;
+						$items_tocados['array_reconexiones']="monto";
 			 		}
-					//var_dump("sub=".$var_prueba2);
+					
 				}else{
 					if(strpos(strtolower($item_invoic['product']), "afilia")!==false ){
 						if($value['credit']!=0){
@@ -203,7 +210,8 @@
 						}else{
 							$array_afiliaciones[$item_invoic['product']]=array('cuenta_afiliacion' => intval($cuenta_afiliacion),"monto_afiliacion"=> $valor_item);
 						}
-						
+						$sumatoria_items+=$valor_item;
+						$items_tocados['array_afiliaciones']=$item_invoic['product'];
 					  }
 
 					}else if(strpos(strtolower($item_invoic['product']), "tele")!==false){
@@ -213,34 +221,31 @@
 					 			$cuanto_porcentaje_item_en_invoice=($valor_item*100)/$valor_total;
 					 			$valor_item=($valor_parcial*$cuanto_porcentaje_item_en_invoice)/100;
 					 			$var_cuenta_planes_montos['TelevisionMonto']+=$valor_item;	
-					 			
+					 			$sumatoria_items+=$valor_item;
+					 			$items_tocados['TelevisionMonto']=true;
 					 		}
 					}else{
 						if($value['credit']!=0){
 					 					
-					 			$cuanto_porcentaje_item_en_invoice=($valor_item*100)/$valor_total;
-					 			$valor_item=($valor_parcial*$cuanto_porcentaje_item_en_invoice)/100;
-					 		
-						$cuenta_afiliacion=1;
-						$monto_afiliacion=0;
-						if(isset($array_afiliaciones[$item_invoic['product']])) {
-							$array_afiliaciones[$item_invoic['product']]['cuenta_afiliacion']++;
-							$array_afiliaciones[$item_invoic['product']]['monto_afiliacion']+=$valor_item;
-						}else{
-							$array_afiliaciones[$item_invoic['product']]=array('cuenta_afiliacion' => intval($cuenta_afiliacion),"monto_afiliacion"=> $valor_item);
+					 		if($valor_item!=0){
+					 			$items_tocados['array_afiliaciones']=$item_invoic['product'];
+					 		}
+						 			$cuanto_porcentaje_item_en_invoice=($valor_item*100)/$valor_total;
+						 			$valor_item=($valor_parcial*$cuanto_porcentaje_item_en_invoice)/100;
+						 		
+							$cuenta_afiliacion=1;
+							$monto_afiliacion=0;
+							if(isset($array_afiliaciones[$item_invoic['product']])) {
+								$array_afiliaciones[$item_invoic['product']]['cuenta_afiliacion']++;
+								$array_afiliaciones[$item_invoic['product']]['monto_afiliacion']+=$valor_item;
+							}else{
+								$array_afiliaciones[$item_invoic['product']]=array('cuenta_afiliacion' => intval($cuenta_afiliacion),"monto_afiliacion"=> $valor_item);
+							}
+							$sumatoria_items+=$valor_item;
+
 						}
-						}
-						var_dump("id =".$value['id']." |"."id ".$item_invoic['id']." | ".$item_invoic['subtotal']." | credit = ".$value['credit']);	
 
-						/*debo sumar todos los resultados de item y al final de la iteracion
-	de todos ayar la diferencia entre esta suma y el total del credito
-	luego entonces repartir tal diferencia entre todos los items
-
-	lo importante es llegar al valor total del credito en cada factura
-
-	la incongruencia esta en los valores de las variables de array_afiliaciones
-	pero del ultimo else osea aqui esta el problema 
-	*/
+						/*saldo anterior se muestra aqui*/
 					}
 					
 				}
@@ -268,16 +273,44 @@
 					 			$var_prueba3+=$valor_item;	
 					 			
 					 		}
-					 		var_dump("prue = ".$var_prueba3);
+					 		//var_dump("prue = ".$var_prueba3);
+			}
+			if($sumatoria_items<$value['credit'] ){
+				$diference=$value['credit']-$sumatoria_items;
+				if($diference>1){
+					$conteo=count($items_tocados);
+					$valores_por_cada_uno=$diference/$conteo;
+					foreach ($items_tocados as $key1 => $value2) {
+						if($key1=="array_reconexiones"){
+							$array_reconexiones['monto']+=$valores_por_cada_uno;
+						}else if($key1=="array_afiliaciones"){
+							$array_afiliaciones[$value2]['monto_afiliacion']+=$valores_por_cada_uno;
+						}else{
+							$var_cuenta_planes_montos[$key1]+=$valores_por_cada_uno;
+						}
+					}
+					var_dump($items_tocados);
+					//var_dump("sum = ".$sumatoria_items." | credit=".$value['credit']." id=".$value['tid']);	
+				}
+
+				$items_tocados=array();
+				
+			}else if($sumatoria_items>$value['credit'] ){
+				//falta programar este pedaso de cuando los items suman mas que el valor de la factura OJO
+				//OJO
+				//OJO
+				//OJO
+				//OJO 
+				var_dump("sum = ".$sumatoria_items." | credit=".$value['credit']." id=".$value['tid']);	
 			}
 			
-			$ticket = $this->db->select("*")->from('tickets')->where("id_invoice=".$value['tid']." or id_factura=".$value['tid'])->get();
-			$varx =$ticket->result();
+			/*$ticket = $this->db->select("*")->from('tickets')->where("id_invoice=".$value['tid']." or id_factura=".$value['tid'])->get();
+			//$varx =$ticket->result();
 			
 			if(strpos(strtolower($varx[0]->detalle),'reconexi')!==false){
-					$array_reconexiones['cantidad']++;
-					$array_reconexiones['monto']+=$value['credit'];
-			}
+					//$array_reconexiones['cantidad']++;
+					//$array_reconexiones['monto']+=$value['credit'];
+			}*/
 
 			if($value['method']=="Bank"){
 				if($value['nombre_banco']=="Bancolombia"){
