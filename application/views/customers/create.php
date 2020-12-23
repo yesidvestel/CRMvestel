@@ -201,6 +201,7 @@
                                                 	<option value="Carrera">Carrera</option>
                                                   	<option value="Diagonal">Diagonal</option>
                                                 	<option value="Transversal">Transversal</option>
+													<option value="Manzana">Manzana</option>
                                             </select>
                         
 						</div>
