@@ -44,21 +44,39 @@ $array_afiliaciones=array();
 				}
 			}
 			//end resumen por cobranza
-
+			$sumatoria_items=0;
+			$items_tocados=array();
 			foreach ($invoice_items as $key => $item_invoic) {
 				//recorro y pregunto si tiene iva o no el item para la primera tabla
-				
+				$valor_parcial=intval($value['credit']);
+				$valor_total=intval($invoice->total);
+				$valor_item=intval($item_invoic['subtotal']);
 				//para la Resumen por Servicios
 				if($item_invoic['product']=="1Mega" ||$item_invoic['product']=="1 Mega"){
 			 		$var_cuenta_planes['1Mega']++;
-			 		$var_cuenta_planes_montos['1MegaMonto']+=intval($item_invoic['subtotal']);
+			 		if($value['credit']!=0){
+			 					
+			 			$cuanto_porcentaje_item_en_invoice=($valor_item*100)/$valor_total;
+			 			$valor_item=($valor_parcial*$cuanto_porcentaje_item_en_invoice)/100;
+			 			$var_cuenta_planes_montos['1MegaMonto']+=$valor_item;	
+			 			$sumatoria_items+=$valor_item;
+			 			$items_tocados['1MegaMonto']=true;
+			 		}
 			 		//resumen tipo servicio
 			 		$array_resumen_tipo_servicio['Internet']['cantidad']++;
 			 		$array_resumen_tipo_servicio['Internet']['monto']+=intval($item_invoic['subtotal']);
 
 				}else if($item_invoic['product']=="2Megas" ||$item_invoic['product']=="2 Megas"){
 					$var_cuenta_planes['2Megas']++;
-					$var_cuenta_planes_montos['2MegasMonto']+=intval($item_invoic['subtotal']);
+
+					if($value['credit']!=0){
+			 					
+			 			$cuanto_porcentaje_item_en_invoice=($valor_item*100)/$valor_total;
+			 			$valor_item=($valor_parcial*$cuanto_porcentaje_item_en_invoice)/100;
+			 			$var_cuenta_planes_montos['2MegasMonto']+=$valor_item;	
+			 			$sumatoria_items+=$valor_item;
+			 			$items_tocados['2MegasMonto']=true;
+			 		}
 
 					//resumen tipo servicio
 			 		$array_resumen_tipo_servicio['Internet']['cantidad']++;
@@ -66,7 +84,14 @@ $array_afiliaciones=array();
 
 				}else if($item_invoic['product']=="3Megas"|| $item_invoic['product']=="3 Megas"){
 					$var_cuenta_planes['3Megas']++;
-					$var_cuenta_planes_montos['3MegasMonto']+=intval($item_invoic['subtotal']);
+					if($value['credit']!=0){
+			 					
+			 			$cuanto_porcentaje_item_en_invoice=($valor_item*100)/$valor_total;
+			 			$valor_item=($valor_parcial*$cuanto_porcentaje_item_en_invoice)/100;
+			 			$var_cuenta_planes_montos['3MegasMonto']+=$valor_item;	
+			 			$sumatoria_items+=$valor_item;
+			 			$items_tocados['3MegasMonto']=true;
+			 		}
 
 					//resumen tipo servicio
 			 		$array_resumen_tipo_servicio['Internet']['cantidad']++;
@@ -74,7 +99,14 @@ $array_afiliaciones=array();
 
 				}else if($item_invoic['product']=="5Megas"||$item_invoic['product']=="5 Megas"){
 					$var_cuenta_planes['5Megas']++;
-					$var_cuenta_planes_montos['5MegasMonto']+=intval($item_invoic['subtotal']);
+					if($value['credit']!=0){
+			 					
+			 			$cuanto_porcentaje_item_en_invoice=($valor_item*100)/$valor_total;
+			 			$valor_item=($valor_parcial*$cuanto_porcentaje_item_en_invoice)/100;
+			 			$var_cuenta_planes_montos['5MegasMonto']+=$valor_item;	
+			 			$sumatoria_items+=$valor_item;
+			 			$items_tocados['5MegasMonto']=true;
+			 		}
 
 					//resumen tipo servicio
 			 		$array_resumen_tipo_servicio['Internet']['cantidad']++;
@@ -82,26 +114,83 @@ $array_afiliaciones=array();
 
 				}else if($item_invoic['product']=="10Megas"||$item_invoic['product']=="10 Megas"){
 					$var_cuenta_planes['10Megas']++;
-					$var_cuenta_planes_montos['10MegasMonto']+=intval($item_invoic['subtotal']);
+					if($value['credit']!=0){
+			 					
+			 			$cuanto_porcentaje_item_en_invoice=($valor_item*100)/$valor_total;
+			 			$valor_item=($valor_parcial*$cuanto_porcentaje_item_en_invoice)/100;
+			 			$var_cuenta_planes_montos['10MegasMonto']+=$valor_item;	
+			 			$sumatoria_items+=$valor_item;
+			 			$items_tocados['10MegasMonto']=true;
+			 		}
 
 					//resumen tipo servicio
 			 		$array_resumen_tipo_servicio['Internet']['cantidad']++;
 			 		$array_resumen_tipo_servicio['Internet']['monto']+=intval($item_invoic['subtotal']);
 
-				}
-				//le coloque asi primero para que la afiliacion teve no se entrelase con la sola tev mensual que es diferente
-				if(strpos(strtolower($item_invoic['product']), "afilia")!==false){
-					$cuenta_afiliacion=1;
-					$monto_afiliacion=1;
-					if(isset($array_afiliaciones[$item_invoic['product']])) {
-						$array_afiliaciones[$item_invoic['product']]['cuenta_afiliacion']++;
-						$array_afiliaciones[$item_invoic['product']]['monto_afiliacion']+=intval($item_invoic['subtotal']);
+				}else if(strpos(strtolower($item_invoic['product']), "reconexi")!==false){
+					$array_reconexiones['cantidad']++;
+					if($value['credit']!=0){
+			 					
+			 			$cuanto_porcentaje_item_en_invoice=($valor_item*100)/$valor_total;
+			 			$valor_item=($valor_parcial*$cuanto_porcentaje_item_en_invoice)/100;
+						$array_reconexiones['monto']+=$valor_item;
+						$sumatoria_items+=$valor_item;
+						$items_tocados['array_reconexiones']="monto";
+			 		}
+					
+				}else{
+					if(strpos(strtolower($item_invoic['product']), "afilia")!==false ){
+						if($value['credit']!=0){
+					 					
+					 			$cuanto_porcentaje_item_en_invoice=($valor_item*100)/$valor_total;
+					 			$valor_item=($valor_parcial*$cuanto_porcentaje_item_en_invoice)/100;
+					 		
+						$cuenta_afiliacion=1;
+						$monto_afiliacion=0;
+						if(isset($array_afiliaciones[$item_invoic['product']])) {
+							$array_afiliaciones[$item_invoic['product']]['cuenta_afiliacion']++;
+							$array_afiliaciones[$item_invoic['product']]['monto_afiliacion']+=$valor_item;
+						}else{
+							$array_afiliaciones[$item_invoic['product']]=array('cuenta_afiliacion' => intval($cuenta_afiliacion),"monto_afiliacion"=> $valor_item);
+						}
+						$sumatoria_items+=$valor_item;
+						$items_tocados['array_afiliaciones']=$item_invoic['product'];
+					  }
+
+					}else if(strpos(strtolower($item_invoic['product']), "tele")!==false){
+							$var_cuenta_planes['Television']++;
+							if($value['credit']!=0){
+					 					
+					 			$cuanto_porcentaje_item_en_invoice=($valor_item*100)/$valor_total;
+					 			$valor_item=($valor_parcial*$cuanto_porcentaje_item_en_invoice)/100;
+					 			$var_cuenta_planes_montos['TelevisionMonto']+=$valor_item;	
+					 			$sumatoria_items+=$valor_item;
+					 			$items_tocados['TelevisionMonto']=true;
+					 		}
 					}else{
-						$array_afiliaciones[$item_invoic['product']]=array('cuenta_afiliacion' => intval($cuenta_afiliacion),"monto_afiliacion"=> intval($item_invoic['subtotal']));
+						if($value['credit']!=0){
+					 					
+					 		if($valor_item!=0){
+					 			$items_tocados['array_afiliaciones']=$item_invoic['product'];
+					 		}
+						 			$cuanto_porcentaje_item_en_invoice=($valor_item*100)/$valor_total;
+						 			$valor_item=($valor_parcial*$cuanto_porcentaje_item_en_invoice)/100;
+						 		
+							$cuenta_afiliacion=1;
+							$monto_afiliacion=0;
+							if(isset($array_afiliaciones[$item_invoic['product']])) {
+								$array_afiliaciones[$item_invoic['product']]['cuenta_afiliacion']++;
+								$array_afiliaciones[$item_invoic['product']]['monto_afiliacion']+=$valor_item;
+							}else{
+								$array_afiliaciones[$item_invoic['product']]=array('cuenta_afiliacion' => intval($cuenta_afiliacion),"monto_afiliacion"=> $valor_item);
+							}
+							$sumatoria_items+=$valor_item;
+
+						}
+
+						/*saldo anterior se muestra aqui*/
 					}
-				}else if(strpos(strtolower($item_invoic['product']), "tele")!==false){
-					$var_cuenta_planes['Television']++;
-					$var_cuenta_planes_montos['TelevisionMonto']+=intval($item_invoic['subtotal']);
+					
 				}
 
 				//resumen por tipo servicio
@@ -116,14 +205,47 @@ $array_afiliaciones=array();
 				
 
 			}
-			
-			$ticket = $this->db->select("*")->from('tickets')->where("id_invoice=".$value['tid']." or id_factura=".$value['tid'])->get();
-			$varx =$ticket->result();
-			
-			if(strpos(strtolower($varx[0]->detalle),'reconexi')!==false){
-					$array_reconexiones['cantidad']++;
-					$array_reconexiones['monto']+=intval($invoice->subtotal);
+
+			if($sumatoria_items<$value['credit'] ){
+				$diference=$value['credit']-$sumatoria_items;
+				if($diference>1){
+					$conteo=count($items_tocados);
+					$valores_por_cada_uno=$diference/$conteo;
+					foreach ($items_tocados as $key1 => $value2) {
+						if($key1=="array_reconexiones"){
+							$array_reconexiones['monto']+=$valores_por_cada_uno;
+						}else if($key1=="array_afiliaciones"){
+							$array_afiliaciones[$value2]['monto_afiliacion']+=$valores_por_cada_uno;
+						}else{
+							$var_cuenta_planes_montos[$key1]+=$valores_por_cada_uno;
+						}
+					}
+					
+					//var_dump("sum = ".$sumatoria_items." | credit=".$value['credit']." id=".$value['tid']);	
+				}
+
+				
+				
+			}else if($sumatoria_items>$value['credit'] ){
+				//cuando los items suman mas que el valor de la factura
+				$diference=$sumatoria_items-$value['credit'];
+				if($diference>1){
+					$conteo=count($items_tocados);
+					$valores_por_cada_uno=$diference/$conteo;
+					foreach ($items_tocados as $key1 => $value2) {
+						if($key1=="array_reconexiones"){
+							$array_reconexiones['monto']-=$valores_por_cada_uno;
+						}else if($key1=="array_afiliaciones"){
+							$array_afiliaciones[$value2]['monto_afiliacion']-=$valores_por_cada_uno;
+						}else{
+							$var_cuenta_planes_montos[$key1]-=$valores_por_cada_uno;
+						}
+					}
+				
+				}
+				
 			}
+			$items_tocados=array();
 
 			if($value['method']=="Bank"){
 				if($value['nombre_banco']=="Bancolombia"){
