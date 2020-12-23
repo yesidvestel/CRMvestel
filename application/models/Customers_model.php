@@ -430,7 +430,7 @@ class Customers_model extends CI_Model
 
 
         $this->db->where('payerid', $id);
-        //$this->db->where('ext', 2);
+        $this->db->where('ext', '0');
 
         $i = 0;
 
