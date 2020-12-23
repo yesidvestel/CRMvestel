@@ -257,7 +257,7 @@ $array_afiliaciones=array();
 				}
 			}else if($value['method']=="Cash"){
 				$array_efectivo['cantidad']++;
-				$array_efectivo['monto']+=intval($invoice->subtotal);
+				$array_efectivo['monto']+=$value['credit'];
 			}
 
 
@@ -295,7 +295,7 @@ $array_afiliaciones=array();
 
 					foreach ($lista_mes_actual as $key => $val1) {
 						$inv1 = $this->db->get_where("invoices",array("tid"=>$val1['tid']))->row(); 
-						$valores_mes_actual['monto']+=intval($inv1->subtotal);
+						$valores_mes_actual['monto']+=$val1['credit'];
 
 						$invoice_items = $this->db->get_where("invoice_items",array('tid' => $val1['tid'] ))->result_array();
 						foreach ($invoice_items as $key => $item_invoic) {
@@ -333,7 +333,7 @@ $array_afiliaciones=array();
 
 					foreach ($lista_mes_anterior as $key => $val1) {
 						$inv1 = $this->db->get_where("invoices",array("tid"=>$val1['tid']))->row(); 
-						$valores_mes_anterior['monto']+=intval($inv1->subtotal);
+						$valores_mes_anterior['monto']+=$val1['credit'];
 
 						$invoice_items = $this->db->get_where("invoice_items",array('tid' => $val1['tid'] ))->result_array();
 
