@@ -219,6 +219,7 @@
                         <div class="col-sm-2">
                             <select class="form-control" name="adicionauno">
 													<option value="<?php echo $customer['adicionauno'] ?>"><?php echo $customer['adicionauno'] ?></option>
+													<option value=""></option>
                                                     <option value="bis">bis</option>
                                                 	<option value="a">a</option>
                                                   	<option value="b">b</option>
@@ -241,6 +242,7 @@
                         <div class="col-sm-1">
                             <select class="col-sm-1 form-control" name="adicional2">
 													<option value="<?php echo $customer['adicional2'] ?>"><?php echo $customer['adicional2'] ?></option>
+													<option value=""></option>
                                                     <option value="bis">bis</option>
                                                 	<option value="a">a</option>
                                                   	<option value="b">b</option>
