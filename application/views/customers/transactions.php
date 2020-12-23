@@ -40,6 +40,7 @@
                     <th><?php echo $this->lang->line('Credit') ?></th>
                     <th><?php echo $this->lang->line('Account') ?></th>
                     <th><?php echo $this->lang->line('Payer') ?></th>
+					<th>Estado</th>
                     <th><?php echo $this->lang->line('Method') ?></th>
                     <th><?php echo $this->lang->line('Action') ?></th>
 
@@ -56,6 +57,7 @@
                     <th><?php echo $this->lang->line('Credit') ?></th>
                     <th><?php echo $this->lang->line('Account') ?></th>
                     <th><?php echo $this->lang->line('Payer') ?></th>
+					<th>Estado</th>
                     <th><?php echo $this->lang->line('Method') ?></th>
                     <th><?php echo $this->lang->line('Action') ?></th>
                 </tr>

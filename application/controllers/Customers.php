@@ -317,6 +317,7 @@ class Customers extends CI_Controller
             $row[] = amountFormat($prd->credit);
             $row[] = $prd->account;
             $row[] = $prd->payer;
+			$row[] = $prd->estado;
             $row[] = $this->lang->line($prd->method);
 
             $row[] = '<a href="' . base_url() . 'transactions/view?id=' . $pid . '" class="btn btn-primary btn-xs"><span class="icon-eye"></span>  '.$this->lang->line('View').'</a> <a href="#" data-object-id="' . $pid . '" class="btn btn-danger btn-xs delete-object"><span class="icon-bin"></span>  '.$this->lang->line('Delete').'</a>';
