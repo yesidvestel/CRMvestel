@@ -276,7 +276,7 @@ class Reports extends CI_Controller
 
 
            $data['lista_datos']=$this->statements_para_pdf();
-
+           $data['caja']=$this->input->post('caja');
 
         $this->load->view('reports/sacar_pdf', $data);
     }

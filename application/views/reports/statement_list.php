@@ -448,6 +448,7 @@
 		<input type="hidden" name="trans_type" value="<?=$datos_informe['trans_type']?>">
 		<input type="hidden" name="sdate" value="<?=$datos_informe['sdate']?>">
 		<input type="hidden" name="edate" value="<?=$datos_informe['edate']?>">
+		<input type="hidden" name="caja" value="<?=$filter[5]?>">
 
 		<button class="btn btn-primary" style="margin-left: 3px;">Sacar Pdf</button>
 	
