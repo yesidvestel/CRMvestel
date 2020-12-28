@@ -679,39 +679,131 @@
 						$valores_mes_anterior['monto']+=$val1['credit'];
 
 						$invoice_items = $this->db->get_where("invoice_items",array('tid' => $val1['tid'] ))->result_array();
-
+						$sumatoria_items=0;
+						$items_tocados=array();
 						foreach ($invoice_items as $key => $item_invoic) {
-							
+						$valor_parcial=intval($val1['credit']);
+						$valor_total=intval($inv1->total);
+						$valor_item=intval($item_invoic['subtotal']);
 							if($item_invoic['product']=="1Mega" ||$item_invoic['product']=="1 Mega"){
-						 		$valores_mes_anterior['Internet']['cantidad']++;
-						 		$valores_mes_anterior['Internet']['monto']+=intval($item_invoic['subtotal']);
+
+						 		if($val1['credit']!=0){
+						 			$valores_mes_anterior['Internet']['cantidad']++;
+						 			$cuanto_porcentaje_item_en_invoice=($valor_item*100)/$valor_total;
+									$valor_item=($valor_parcial*$cuanto_porcentaje_item_en_invoice)/100;
+									$valores_mes_anterior['Internet']['monto']+=$valor_item;
+									$sumatoria_items+=$valor_item;
+									$items_tocados['Internet']=true;
+						 		}
+						 		
 
 							}else if($item_invoic['product']=="2Megas" ||$item_invoic['product']=="2 Megas"){
-								$valores_mes_anterior['Internet']['cantidad']++;
-						 		$valores_mes_anterior['Internet']['monto']+=intval($item_invoic['subtotal']);
+								
+						 		if($val1['credit']!=0){
+						 			$valores_mes_anterior['Internet']['cantidad']++;
+						 			$cuanto_porcentaje_item_en_invoice=($valor_item*100)/$valor_total;
+									$valor_item=($valor_parcial*$cuanto_porcentaje_item_en_invoice)/100;
+									$valores_mes_anterior['Internet']['monto']+=$valor_item;
+									$sumatoria_items+=$valor_item;
+									$items_tocados['Internet']=true;
+						 		}
 
 							}else if($item_invoic['product']=="3Megas"|| $item_invoic['product']=="3 Megas"){
-								$valores_mes_anterior['Internet']['cantidad']++;
-						 		$valores_mes_anterior['Internet']['monto']+=intval($item_invoic['subtotal']);
+								
+						 		if($val1['credit']!=0){
+						 			$valores_mes_anterior['Internet']['cantidad']++;
+						 			$cuanto_porcentaje_item_en_invoice=($valor_item*100)/$valor_total;
+									$valor_item=($valor_parcial*$cuanto_porcentaje_item_en_invoice)/100;
+									$valores_mes_anterior['Internet']['monto']+=$valor_item;
+									$sumatoria_items+=$valor_item;
+									$items_tocados['Internet']=true;
+						 		}
 
 							}else if($item_invoic['product']=="5Megas"||$item_invoic['product']=="5 Megas"){
-								$valores_mes_anterior['Internet']['cantidad']++;
-						 		$valores_mes_anterior['Internet']['monto']+=intval($item_invoic['subtotal']);
+								
+						 		if($val1['credit']!=0){
+						 			$valores_mes_anterior['Internet']['cantidad']++;
+						 			$cuanto_porcentaje_item_en_invoice=($valor_item*100)/$valor_total;
+									$valor_item=($valor_parcial*$cuanto_porcentaje_item_en_invoice)/100;
+									$valores_mes_anterior['Internet']['monto']+=$valor_item;
+									$sumatoria_items+=$valor_item;
+									$items_tocados['Internet']=true;
+						 		}
 
 							}else if($item_invoic['product']=="10Megas"||$item_invoic['product']=="10 Megas"){
-								$valores_mes_anterior['Internet']['cantidad']++;
-						 		$valores_mes_anterior['Internet']['monto']+=intval($item_invoic['subtotal']);
+								
+								if($val1['credit']!=0){
+									$valores_mes_anterior['Internet']['cantidad']++;
+						 			$cuanto_porcentaje_item_en_invoice=($valor_item*100)/$valor_total;
+									$valor_item=($valor_parcial*$cuanto_porcentaje_item_en_invoice)/100;
+									$valores_mes_anterior['Internet']['monto']+=$valor_item;
+									$sumatoria_items+=$valor_item;
+									$items_tocados['Internet']=true;
+						 		}
+						 		
+							}else if(strpos(strtolower($item_invoic['product']), "tele")!==false){
+								
+								if($val1['credit']!=0){
+									$valores_mes_anterior['Television']['cantidad']++;
+						 			$cuanto_porcentaje_item_en_invoice=($valor_item*100)/$valor_total;
+									$valor_item=($valor_parcial*$cuanto_porcentaje_item_en_invoice)/100;
+									$valores_mes_anterior['Television']['monto']+=$valor_item;
+									$sumatoria_items+=$valor_item;
+									$items_tocados['Television']=true;
+						 		}
+								
+							}else {
+								
+						 		if($val1['credit']!=0){
+						 			$valores_mes_anterior['Internet']['cantidad']++;
+						 			$cuanto_porcentaje_item_en_invoice=($valor_item*100)/$valor_total;
+									$valor_item=($valor_parcial*$cuanto_porcentaje_item_en_invoice)/100;
+									$valores_mes_anterior['Internet']['monto']+=$valor_item;
+									$sumatoria_items+=$valor_item;
+									$items_tocados['Internet']=true;
+						 		}
 							}
 
-							if(strpos(strtolower($item_invoic['product']), "tele")!==false){
-								$valores_mes_anterior['Television']['cantidad']++;
-								$valores_mes_anterior['Television']['monto']+=intval($item_invoic['subtotal']);
-							}else if(strpos(strtolower($item_invoic['product']), "afilia")!==false){
-								$valores_mes_anterior['Internet']['cantidad']++;
-						 		$valores_mes_anterior['Internet']['monto']+=intval($item_invoic['subtotal']);
-							}
+
 
 						}
+						//sumatorias
+						if($sumatoria_items<$val1['credit'] ){
+							$diference=$val1['credit']-$sumatoria_items;
+							if($diference>1){
+								$conteo=count($items_tocados);					
+								$valores_por_cada_uno=$diference/$conteo;
+								foreach ($items_tocados as $key1 => $value2) {
+									if($key1=="Internet"){
+										$valores_mes_anterior['Internet']['monto']+=$valores_por_cada_uno;
+									}else{
+										$valores_mes_anterior['Television']['monto']+=$valores_por_cada_uno;
+									}
+								}
+								
+								//var_dump("sum = ".$sumatoria_items." | credit=".$value['credit']." id=".$value['tid']);	
+							}
+
+				
+				
+						}else if($sumatoria_items>$val1['credit'] ){
+							//cuando los items suman mas que el valor de la factura
+							$diference=$sumatoria_items-$val1['credit'];
+							if($diference>1){
+								$conteo=count($items_tocados);
+								$valores_por_cada_uno=$diference/$conteo;
+								foreach ($items_tocados as $key1 => $value2) {
+									if($key1=="Internet"){
+										$valores_mes_anterior['Internet']['monto']-=$valores_por_cada_uno;
+									}else{
+										$valores_mes_anterior['Television']['monto']-=$valores_por_cada_uno;
+									}
+								}
+							
+							}
+							
+						}
+						//end sumatorias
 					}
 
 
