@@ -396,7 +396,7 @@ $array_afiliaciones=array();
 									$cuenta_anulaciones[$anul->detalle]['cantidad']++;
 									
 									$invoce = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row();
-									$cuenta_anulaciones[$anul->detalle]['monto']+=intval($invoce->subtotal);
+									$cuenta_anulaciones[$anul->detalle]['monto']+=intval($value['credit']);
 									
 								}
 
