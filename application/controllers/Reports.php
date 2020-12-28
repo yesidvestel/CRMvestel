@@ -342,8 +342,9 @@ class Reports extends CI_Controller
         $balance = 0;
 
         foreach ($list as $row) {
-            $balance += $row['credit'] - $row['debit'];
+            
             if($row['estado']!="Anulada"){
+                $balance += $row['credit'] - $row['debit'];
             echo '<tr><td>' . $row['date'] . '</td><td>' . $row['note'] . '</td><td>' . amountFormat($row['debit']) . '</td><td>' . amountFormat($row['credit']) . '</td><td>' . amountFormat($balance) . '</td></tr>';
             }
         }
@@ -364,8 +365,9 @@ class Reports extends CI_Controller
         $var_lista="";
         $conteo=0;
         foreach ($list as $row) {
-            $balance += $row['credit'] - $row['debit'];
+            
             if($row['estado']!="Anulada"){
+                $balance += $row['credit'] - $row['debit'];
                 $conteo++;
                 if($conteo%2==0){
                     $texto_style="style='padding: 0.75rem 2rem;border-bottom: 1px solid #e3ebf3;color: #333;font-size: 12px;text-align: center;'";    
@@ -373,7 +375,7 @@ class Reports extends CI_Controller
                     $texto_style="style='padding: 0.75rem 2rem;border-bottom: 1px solid #e3ebf3;color: #333;font-size: 12px;background-color: rgba(0, 0, 0, 0.05);text-align: center;'";                
                 }
                 
-                $var_lista.= '<tr><td '.$texto_style.'>' . $row['date'] . '</td><td '.$texto_style.'>' . $row['note'] . '</td><td '.$texto_style.'>' . amountFormat($row['debit']) . '</td><td '.$texto_style.'>' . amountFormat($row['credit']) . '</td><td '.$texto_style.'>' . amountFormat($balance) . '</td></tr>';
+                $var_lista.= '<tr><td '.$texto_style.'>' . $row['date'] .'</td><td '.$texto_style.'>' . $row['note'] . '</td><td '.$texto_style.'>' . amountFormat($row['debit']) . '</td><td '.$texto_style.'>' . amountFormat($row['credit']) . '</td><td '.$texto_style.'>' . amountFormat($balance) . '</td></tr>';
             }
         }
         return $var_lista;
