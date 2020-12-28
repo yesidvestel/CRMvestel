@@ -122,6 +122,7 @@
     $.post(baseurl+action_url,{deleteid:o_data,anulacion:anulacion},function(data){
         alert("Transferencia anulada");
         $("#estado_"+o_data).text("Anulada");
+        $("#anula"+o_data).data("detalle",anulacion);
     },'json');
 
 });
