@@ -153,21 +153,28 @@ class Reports extends CI_Controller
             $data['lista_anulaciones']=$anulaciones;
             
             //obteniendo datos mes actual
-            $dia_inicial_mes_actual = date("Y-m-01 00:00:00");
-            $dia_final_de_mes_actual=date("Y-m-t 23:00:00", strtotime($dia_inicial_mes_actual));
+            $dia_inicial_mes_actual = date($datex->format("Y-m")."-01 00:00:00");
+            $dia_final_de_mes_actual=date($datex->format("Y-m")."-t 23:00:00", strtotime($dia_inicial_mes_actual));
             $lista_mes_actual = $this->reports->get_statements($pay_acc, $trans_type, $dia_inicial_mes_actual, $dia_final_de_mes_actual);
             //end obteniendo datos mes actual
             $data['lista_mes_actual']=$lista_mes_actual;
             //obteniendo datos mes anterior
-            $dia_inicial_mes_anterior=date("Y-m", strtotime("- 1 month"))."-01";
+            $xdate=strtotime($datex->format("Y-m-d")." 00:00:00");
+            
+
+            $dia_inicial_mes_anterior=date("Y-m", strtotime("-1 month", $xdate))."-01";
             $dia_final_de_mes_anterior=date("Y-m-t 23:00:00", strtotime($dia_inicial_mes_anterior));
+            
+            
+            
             $lista_mes_anterior = $this->reports->get_statements($pay_acc, $trans_type, $dia_inicial_mes_anterior, $dia_final_de_mes_anterior);
-            //obteniendo datos mes actual
+            //obteniendo datos mes anterior
             
             $data['lista_mes_anterior']=$lista_mes_anterior;
         //fin codigo listar
-            $data['texto_mes_actual']=$this->reports->devolver_nombre_mes(date("m"))." ".date("Y");
-            $data['texto_mes_anterior']=$this->reports->devolver_nombre_mes(date("m", strtotime("- 1 month")))." ".date("Y", strtotime("- 1 month"));
+            $data['texto_mes_actual']=$this->reports->devolver_nombre_mes($datex->format('m'))." ".$datex->format('Y');
+            $d1=new DateTime($dia_inicial_mes_anterior);
+            $data['texto_mes_anterior']=$this->reports->devolver_nombre_mes($d1->format("m"))." ".$d1->format("Y");
 
             $list3 =array();
             foreach ($lista_mes_anterior as $key => $value) {
@@ -229,22 +236,28 @@ class Reports extends CI_Controller
             }
             $data['lista_anulaciones']=$anulaciones;
             
-            //obteniendo datos mes actual
-            $dia_inicial_mes_actual = date("Y-m-01 00:00:00");
-            $dia_final_de_mes_actual=date("Y-m-t 00:00:00", strtotime($dia_inicial_mes_actual));
+            $dia_inicial_mes_actual = date($datex->format("Y-m")."-01 00:00:00");
+            $dia_final_de_mes_actual=date($datex->format("Y-m")."-t 23:00:00", strtotime($dia_inicial_mes_actual));
             $lista_mes_actual = $this->reports->get_statements($pay_acc, $trans_type, $dia_inicial_mes_actual, $dia_final_de_mes_actual);
             //end obteniendo datos mes actual
             $data['lista_mes_actual']=$lista_mes_actual;
             //obteniendo datos mes anterior
-            $dia_inicial_mes_anterior=date("Y-m", strtotime("- 1 month"))."-01";
-            $dia_final_de_mes_anterior=date("Y-m-t 00:00:00", strtotime($dia_inicial_mes_anterior));
+            $xdate=strtotime($datex->format("Y-m-d")." 00:00:00");
+            
+
+            $dia_inicial_mes_anterior=date("Y-m", strtotime("-1 month", $xdate))."-01";
+            $dia_final_de_mes_anterior=date("Y-m-t 23:00:00", strtotime($dia_inicial_mes_anterior));
+            
+            
+            
             $lista_mes_anterior = $this->reports->get_statements($pay_acc, $trans_type, $dia_inicial_mes_anterior, $dia_final_de_mes_anterior);
-            //obteniendo datos mes actual
+            //obteniendo datos mes anterior
             
             $data['lista_mes_anterior']=$lista_mes_anterior;
         //fin codigo listar
-            $data['texto_mes_actual']=$this->reports->devolver_nombre_mes(date("m"))." ".date("Y");
-            $data['texto_mes_anterior']=$this->reports->devolver_nombre_mes(date("m", strtotime("- 1 month")))." ".date("Y", strtotime("- 1 month"));
+            $data['texto_mes_actual']=$this->reports->devolver_nombre_mes($datex->format('m'))." ".$datex->format('Y');
+            $d1=new DateTime($dia_inicial_mes_anterior);
+            $data['texto_mes_anterior']=$this->reports->devolver_nombre_mes($d1->format("m"))." ".$d1->format("Y");
 
             $list3 =array();
             foreach ($lista_mes_anterior as $key => $value) {
