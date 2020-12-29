@@ -25,78 +25,106 @@ class Dashboard_model extends CI_Model
         parent::__construct();
      }
 
-    public function todayInvoice($today)
+    public function todayInvoice($today, $sede)
     {
 
         $where = "DATE(invoicedate) ='$today'";
         $this->db->where($where);
+		if ($sede != ''){
+        $this->db->where('refer', $sede);
+		}
         $this->db->from('invoices');
         return $this->db->count_all_results();
 
     }
 
-    public function todaySales($today)
+    public function todaySales($today, $sede)
     {
-		$sede = "DATE(invoicedate)='Yopal'";
-        $where = "DATE(refer) ='$today'";
+		
+        $where = "DATE(invoicedate) ='$today'";
         $this->db->select_sum('total');
         $this->db->from('invoices');
-        $this->db->where($where,$sede);
+        $this->db->where($where);
+		if ($sede != ''){
+        $this->db->where('refer', $sede);
+		}
         $query = $this->db->get();
         return $query->row()->total;
     }
 
-    public function todayInexp($today)
+    public function todayInexp($today, $sede)
     {	
-		$sede = "DATE(invoicedate)='Mocoa'";
+		//$sede = "DATE(invoicedate)='$today'";
         $this->db->select('SUM(debit) as debit,SUM(credit) as credit', FALSE);
         $this->db->where("DATE(date) ='$today'");
-        $this->db->where("type!='Transfer'",$sede);
+        $this->db->where('account', $sede);
         $this->db->from('transactions');
         $query = $this->db->get();
         return $query->row_array();
     }
 
-    public function recent_payments()
+    public function recent_payments($sede)
     {
         $this->db->limit(10);
         $this->db->order_by('id', 'DESC');
         $this->db->from('transactions');
+		if ($sede != ''){
+        $this->db->where('account', $sede);
+		}
         $query = $this->db->get();
         return $query->result_array();
     }
 
-    public function stock()
+    public function stock($sede)
     {
+		if ($sede == ''){
         $query = $this->db->query("SELECT * FROM products WHERE qty<=alert ORDER BY product_name ASC");
         return $query->result_array();
+		} if ($sede == 'Yopal'){
+		$query = $this->db->query("SELECT * FROM products WHERE qty<=alert AND warehouse='2' ORDER BY product_name ASC");
+        return $query->result_array();	
+		} if ($sede == 'Monterrey'){
+		$query = $this->db->query("SELECT * FROM products WHERE qty<=alert AND warehouse='3' ORDER BY product_name ASC");
+        return $query->result_array();	
+		} if ($sede == 'Mocoa'){
+		$query = $this->db->query("SELECT * FROM products WHERE qty<=alert AND warehouse='4' ORDER BY product_name ASC");
+        return $query->result_array();	
+		} 
     }
 
 
-    public function todayItems($today)
+    public function todayItems($today, $sede)
     {
 
         $where = "DATE(invoicedate) ='$today'";
         $this->db->select_sum('items');
         $this->db->from('invoices');
         $this->db->where($where);
+		if ($sede != ''){
+        $this->db->where('refer', $sede);
+		}
         $query = $this->db->get();
 
         return $query->row()->items;
     }
 
 
-    public function incomeChart($today, $month, $year)
+    public function incomeChart($today, $month, $year, $sede)
     {
-
+		if ($sede ==''){
         $query = $this->db->query("SELECT SUM(credit) AS total,date FROM transactions WHERE ((DATE(date) BETWEEN DATE('$year-$month-01') AND CURDATE()) AND type='Income') GROUP BY date DESC");
+        return $query->result_array();
+		}
+		$query = $this->db->query("SELECT SUM(credit) AS total,date FROM transactions WHERE ((DATE(date) BETWEEN DATE('$year-$month-01') AND CURDATE()) AND type='Income' AND account='$sede') GROUP BY date DESC");
         return $query->result_array();
     }
 
-    public function expenseChart($today, $month, $year)
+    public function expenseChart($today, $month, $year, $sede)
     {
-
+		if ($sede ==''){
         $query = $this->db->query("SELECT SUM(debit) AS total,date FROM transactions WHERE ((DATE(date) BETWEEN DATE('$year-$month-01') AND CURDATE()) AND type='Expense') GROUP BY date DESC");
+		}
+		$query = $this->db->query("SELECT SUM(debit) AS total,date FROM transactions WHERE ((DATE(date) BETWEEN DATE('$year-$month-01') AND CURDATE()) AND type='Expense' AND account='$sede') GROUP BY date DESC");
         return $query->result_array();
     }
 
@@ -108,35 +136,43 @@ class Dashboard_model extends CI_Model
     }
 
 
-    public function monthlyInvoice($month, $year)
+    public function monthlyInvoice($month, $year, $sede)
     {
-		$sede = "DATE(refer)='Mocoa'";
+		
         $where = "DATE(invoicedate) BETWEEN '$year-$month-01' AND '$year-$month-31'";
-        $this->db->where($where,$sede);
+		if ($sede != '') {
+        $this->db->where('refer',$sede);
+		}
         $this->db->from('invoices');
         return $this->db->count_all_results();
 
     }
 
-    public function monthlySales($month, $year)
+    public function monthlySales($month, $year, $sede)
     {
 		
         $where = "DATE(invoicedate) BETWEEN '$year-$month-01' AND '$year-$month-31'";
         $this->db->select_sum('total');
         $this->db->from('invoices');
         $this->db->where($where);
+		if ($sede != '') {
+        $this->db->where('refer',$sede);
+		}
         $query = $this->db->get();
         return $query->row()->total;
     }
 
 
-    public function recentInvoices()
+    public function recentInvoices($sede)
     {
-
+		
+		$query = $this->db->query("SELECT i.tid,i.invoicedate,i.total,i.status,c.name
+		FROM invoices AS i LEFT JOIN customers AS c ON i.csd=c.id ORDER BY i.tid DESC LIMIT 10");
+		if ($sede != ''){
         $query = $this->db->query("SELECT i.tid,i.invoicedate,i.total,i.status,c.name
-FROM invoices AS i LEFT JOIN customers AS c ON i.csd=c.id
-
-ORDER BY i.tid DESC LIMIT 10");
+		FROM invoices AS i LEFT JOIN customers AS c ON i.csd=c.id WHERE refer='$sede' ORDER BY i.tid DESC LIMIT 10");
+		}
+		
         return $query->result_array();
 
     }

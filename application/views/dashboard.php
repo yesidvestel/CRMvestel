@@ -21,7 +21,23 @@
         </div>
         <div class="content-body"><!-- stats -->
             <div class="row">
-                <div class="col-xl-3 col-md-6 col-xs-12">
+				<div class="col-xl-3 col-md-3 col-xs-12">
+					<a href="<?php echo base_url('dashboard/index')?>">
+						<input type="text" class="btn btn-primary btn-md" value="TODAS"></a>
+				</div>
+				<div class="col-xl-3 col-md-12 col-xs-12">
+					<a href="<?php echo base_url('dashboard/index?sede=Yopal')?>">
+						<input type="text" class="btn btn-primary btn-md" value="YOPAL"></a>
+				</div>
+				<div class="col-xl-3 col-md-12 col-xs-12">
+				<a href="<?php echo base_url('dashboard/index?sede=Monterrey')?>">
+						<input type="text" class="btn btn-primary btn-md" value="MONTERREY"></a>
+				</div>
+				<div class="col-xl-3 col-md-12 col-xs-12">
+					<a href="<?php echo base_url('dashboard/index?sede=Mocoa')?>">
+						<input type="text" class="btn btn-primary btn-md" value="MOCOA"></a>
+				</div>
+                <div class="col-xl-3 col-md-6 col-xs-12">										
                     <div class="card">
                         <div class="card-body">
                             <div class="card-block">
@@ -497,6 +513,16 @@
             fillOpacity: 0.4,
         });
 
+
+    }
+	function filtrar(){
+        var sede=$("#sede option:selected").val();        
+        if(sede==""){
+            tb.ajax.url( baseurl+'dashboard/index' ).load();     
+        }else{
+            tb.ajax.url( baseurl+'dashboard/index?refer='+sede ).load();   
+        }
+       
 
     }
 

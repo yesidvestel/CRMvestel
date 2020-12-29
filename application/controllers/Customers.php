@@ -431,6 +431,53 @@ class Customers extends CI_Controller
         echo json_encode(array('status' => 'Success', 'message' =>
             $this->lang->line('UPDATED'), 'pstatus' => $status));
     }
+	public function act_titular()
+    {
+        $id = $this->input->post('iduser');
+        $nombres = $this->input->post('dtosantes');
+		$doc_anterior = $this->input->post('doc1');
+		$tcliente = $this->input->post('tcliente');
+		$tdocumento = $this->input->post('tdocumento');
+		$bill_due_date = datefordatabase($this->input->post('fecha'));
+		$fecha = $bill_due_date;
+		$observacion = $this->input->post('observacion');
+		$nom1 = $this->input->post('nom1');
+        $nom2 = $this->input->post('nom2');
+		$ape1 = $this->input->post('ape1');
+		$ape2 = $this->input->post('ape2');
+		$cel = $this->input->post('cel');
+		$tipo_cliente = $this->input->post('tipo_cliente');
+		$tipo_documento = $this->input->post('tipo_documento');
+		$doc2 = $this->input->post('doc2');
+		
+		
+		$data2 = array(			
+			'name' => $nom1,
+			'dosnombre' => $nom2,
+			'unoapellido' => $ape1,
+			'dosapellido' => $ape2,
+			'celular' => $cel,
+			'tipo_cliente' => $tipo_cliente,
+			'tipo_documento' => $tipo_documento,
+			'documento' => $doc2);
+        $this->db->where('id', $id);
+        $this->db->update('customers', $data2);
+		
+		$data1 = array(				
+			'id_user' => $id,
+			'nombres' => $nombres,
+			'tcliente' => $tcliente,
+			'tdocumento' => $tdocumento,
+			'documento2' => $doc_anterior,
+			'fecha' => $fecha,
+			'observacion' => $observacion);		
+        $this->db->insert('historiales', $data1);
+		$this->db->insert_id();
+		
+
+        echo json_encode(array('status' => 'Success', 'message' =>
+            $this->lang->line('UPDATED'), 'pstatus' => $status));
+    }
 
     public function inv_list()
     {

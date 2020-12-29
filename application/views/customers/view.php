@@ -335,6 +335,13 @@
                                                 class="icon-file-text2"></i> Ver Equipos</a>
 
                                 </div>
+								<div class="col-md-4" style="margin-top: 5px;">
+
+                                    <a href="#pop_model2" data-toggle="modal" onclick="funcion_status();" data-remote="false" 
+                                       class="btn btn-success btn-lg" style="border-right-width: 7px;"><i
+                                                class="icon-file-text2"></i> Cambio Titular </a>
+
+                                </div>
                             </div>
                             <hr>
                             <h5 class="text-xs-center">Wallet Recharge/<?php echo $this->lang->line('Payment History') ?></h5>
@@ -431,6 +438,114 @@
             
             
             
+        </div>
+    </div>
+</div>
+
+<div id="pop_model2" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Cambio de Titular</h4>
+            </div>
+			<div class="row m-t-lg">
+				<div class="col-md-6">
+				<label for="cst" class="col-sm-6 col-form-label">DATOS ACTUALES</label>
+					</div>
+			</div>
+			<hr>
+            <div class="modal-body">
+                <form id="form_model2">
+					<div class="form-group row">						
+                    <div class="frmSearch">
+						<label for="cst" class="caption col-sm-2 col-form-label">Nombres</label>
+                        <div class="col-sm-6">
+							<input type="hidden" name="iduser" value="<?php echo $details['id'] ?>"></input>
+							<input type="text" class="form-control" name="dtosantes" value="<?php echo $details['name'] .' '. $details['dosnombre'].' '. $details['unoapellido'].' '. $details['dosapellido'] ?>" disabled/>
+                        </div>
+                    </div>
+
+                </div>
+				<div id="customerpanel" class="form-group row">
+                    <label for="toBizName" class="caption col-sm-2 col-form-label">Documento</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" name="doc1" value="<?php echo $details['documento'] ?>" disabled />
+                    </div>
+					<input type="hidden" name="tcliente" value="<?php echo $details['tipo_cliente'] ?>">
+					<input type="hidden" name="tdocumento" value="<?php echo $details['tipo_documento'] ?>">
+					<input type="hidden" class="form-control required" placeholder="Billing Date" name="fecha" data-toggle="datepicker" autocomplete="false">
+                </div>
+				<hr>
+				<div class="row m-t-lg">
+					<div class="col-md-6">
+					<label for="cst" class="col-sm-8 col-form-label">DATOS NUEVOS</label>
+					</div>
+				</div>
+				<hr>
+				<div id="customerpanel" class="form-group row">
+                    <label for="toBizName" class="caption col-sm-2 col-form-label">Nombres</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" name="nom1" placeholder="1er Nombre" />
+                    </div>
+					<div class="col-sm-3">
+                        <input type="text" class="form-control" name="nom2" placeholder="2do Nombre" />
+                    </div>
+                </div>
+				<div id="customerpanel" class="form-group row">
+                    <label for="toBizName" class="caption col-sm-2 col-form-label">Apellidos</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" name="ape1" placeholder="1er Apellido" />
+                    </div>
+					<div class="col-sm-3">
+                        <input type="text" class="form-control" name="ape2" placeholder="2do Apellido" />
+                    </div>
+                </div>
+				<div id="customerpanel" class="form-group row">
+                    <label for="toBizName" class="caption col-sm-2 col-form-label">Tipo</label>
+                    <div class="col-sm-3">
+                        <select class="form-control" name="tipo_cliente">
+													<option value="Natural">Natural</option>
+                                                	<option value="Juridico">Juridico</option>
+                                                  	<option value="Gubernamental">Gubernamental</option>
+                                                	<option value="Militar">Militar</option>
+                                            </select>
+                    </div>
+					<div class="col-sm-3">
+                        <select class="form-control" name="tipo_documento">
+													<option value="CC">CC</option>
+                                                	<option value="CE">CE</option>
+                                                  	<option value="NIT">NIT</option>
+                                                	<option value="PAS">PAS</option>
+                                            </select>
+                    </div>			
+                </div>
+				<div id="customerpanel" class="form-group row">
+                    <label for="toBizName" class="caption col-sm-2 col-form-label">Documento</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" name="doc2" placeholder="Numero documento" />
+                    </div>
+                </div>
+				<div id="customerpanel" class="form-group row">
+                    <label for="toBizName" class="caption col-sm-2 col-form-label">Celular</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" name="cel" placeholder="Numero celular" />
+                    </div>
+                </div>
+				<div id="customerpanel" class="form-group row">
+                    <label for="toBizName" class="caption col-sm-2 col-form-label">Observacion</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" name="observ" placeholder="detalles" />
+                    </div>
+                </div>
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">Volver</button>
+                        <input type="hidden" id="action-url" value="customers/act_titular">
+                        <button type="button" class="btn btn-primary"
+                                id="submit_model2">Realizar</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>
