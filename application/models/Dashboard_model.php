@@ -123,6 +123,7 @@ class Dashboard_model extends CI_Model
     {
 		if ($sede ==''){
         $query = $this->db->query("SELECT SUM(debit) AS total,date FROM transactions WHERE ((DATE(date) BETWEEN DATE('$year-$month-01') AND CURDATE()) AND type='Expense') GROUP BY date DESC");
+		return $query->result_array();
 		}
 		$query = $this->db->query("SELECT SUM(debit) AS total,date FROM transactions WHERE ((DATE(date) BETWEEN DATE('$year-$month-01') AND CURDATE()) AND type='Expense' AND account='$sede') GROUP BY date DESC");
         return $query->result_array();
