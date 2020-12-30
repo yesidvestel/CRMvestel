@@ -210,6 +210,13 @@ class Products extends CI_Controller
     {
         $id = $this->input->post('deleteid');
         if ($id) {
+            $transferencia = $this->db->select("*")->from("transferencias")->where("producto_a=".$id." OR producto_b=".$id)->get()->result();
+
+            foreach ($transferencia as $key => $value) {
+                $this->db->delete('transferencias', array('id_transferencia' => $value->id_transferencia));
+                  
+            }
+
             $this->db->delete('products', array('pid' => $id));
             echo json_encode(array('status' => 'Success', 'message' => $this->lang->line('DELETED')));
         } else {
