@@ -365,7 +365,7 @@ class Tickets Extends CI_Controller
                     }
                     $producto = $this->db->get_where('products',array('pid'=>$datay['pid']))->row();
                     $x=intval($producto->product_price);
-                    $x=($x/30)*$diferencia->days;
+                    $x=($x/31)*$diferencia->days;
                     $total+=$x;
                     $datay['product']=$producto->product_name;
 					$datay['qty']=1;
@@ -382,8 +382,8 @@ class Tickets Extends CI_Controller
                     $datay['product']=$producto->product_name;
 					$datay['qty']=1;
                     $x=intval($producto->product_price);
-                    $x=($x/30)*$diferencia->days;					
-                    $y=(3992/30)*$diferencia->days;
+                    $x=($x/31)*$diferencia->days;					
+                    $y=(3992/31)*$diferencia->days;
                     $total+=$x;
 					$datay['price']=$x;
                     $datay['tax']=19;
@@ -399,7 +399,7 @@ class Tickets Extends CI_Controller
                     $datay['product']=$producto->product_name;
 					$datay['qty']=1;
                     $x=intval($producto->product_price);
-                    $x=($x/30)*$diferencia->days;
+                    $x=($x/31)*$diferencia->days;
                     $total+=$x;
                     $datay['price']=$x;
                     $datay['subtotal']=$x;
