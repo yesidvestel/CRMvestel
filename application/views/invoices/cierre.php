@@ -91,7 +91,7 @@
     </div>
 </article>
 <?php //se hizo el cambio de fecha en el archivo views/fixed/footer ?>
-<script type="text/javascript">
+<!--<script type="text/javascript">
         $('#cuentas_ option[value="4"]').remove();
         $('#cuentas_ option[value="5"]').remove();
         //
