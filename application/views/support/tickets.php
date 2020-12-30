@@ -145,6 +145,7 @@
 					<th>Usuario</th>
                     <th>Factura</th>
 					<th>Asignado</th>
+					<th>Sede</th>
 					<th>Estado</th>
                     <th>Accion</th>
 					

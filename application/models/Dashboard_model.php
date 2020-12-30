@@ -166,15 +166,17 @@ class Dashboard_model extends CI_Model
 
     public function recentInvoices($sede)
     {
-		
+		if ($sede == ''){
 		$query = $this->db->query("SELECT i.tid,i.invoicedate,i.total,i.status,c.name
 		FROM invoices AS i LEFT JOIN customers AS c ON i.csd=c.id ORDER BY i.tid DESC LIMIT 10");
-		if ($sede != ''){
+		return $query->result_array();
+		}
         $query = $this->db->query("SELECT i.tid,i.invoicedate,i.total,i.status,c.name
 		FROM invoices AS i LEFT JOIN customers AS c ON i.csd=c.id WHERE refer='$sede' ORDER BY i.tid DESC LIMIT 10");
-		}
+		return $query->result_array();
 		
-        return $query->result_array();
+		
+        
 
     }
 
