@@ -95,23 +95,38 @@ class Transactions extends CI_Controller
         $ids_facturas =$this->input->post('facturas_seleccionadas');
             $x="";
         $array_facturas=explode("-", $ids_facturas);
-        $monto=0;
-        if(count($array_facturas)==1){
-            $monto=$this->input->post('amount');
-        }else{
-            $sumatoria=0;
+        $monto=$this->input->post('amount');
+        $valor_restante_monto=0;
+        $montos=array();
+        $array_facturas2=array();
+        
             foreach ($array_facturas as $key => $id_factura) {
-                $factura_var = $this->db->get_where('invoices',array('tid'=>$id_factura))->row();                
+                $factura_var = $this->db->get_where('invoices',array('tid'=>$id_factura))->row();                                
+                
+                $valor_restante_monto=$monto-$factura_var->total;
 
+                if($valor_restante_monto>=0){
+                    $montos[$id_factura]=$factura_var->total;
+                    $array_facturas2[]=$id_factura;
+                    $monto=$valor_restante_monto;
+                }else if($monto>0){
+                    $montos[$id_factura]=$monto;
+                    $array_facturas2[]=$id_factura;
+                    $monto=$valor_restante_monto;
+                }
+
+                
             }
-        }
-        foreach ($array_facturas as $key => $id_factura) {
+
+            
+        
+        foreach ($array_facturas2 as $key => $id_factura) {
 
             $factura_var = $this->db->get_where('invoices',array('tid'=>$id_factura))->row();
             $customer=$this->db->get_where('customers',array('id'=>$factura_var->csd))->row();
             //codigo copiado
              $tid = $id_factura;
-        $amount = $monto;
+        $amount = $montos[$id_factura];
         $paydate = $this->input->post('paydate');
         $note = $this->input->post('shortnote');
         $pmethod = $this->input->post('pmethod');
