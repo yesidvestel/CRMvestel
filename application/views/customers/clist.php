@@ -18,7 +18,8 @@
                         <th><?php echo $this->lang->line('Name') ?></th>
 						<th>Celular</th>
 						<th>Cedula</th>
-                        <th><?php echo $this->lang->line('Address') ?></th> 
+                        <th><?php echo $this->lang->line('Address') ?></th>
+						<th>Estado</th>
                         <th><?php echo $this->lang->line('Settings') ?></th>
 
 
@@ -34,7 +35,8 @@
                         <th><?php echo $this->lang->line('Name') ?></th>
 						<th>Celular</th>
 						<th>Cedula</th>
-                        <th><?php echo $this->lang->line('Address') ?></th> 
+                        <th><?php echo $this->lang->line('Address') ?></th>
+						<th>Estado</th>
                         <th><?php echo $this->lang->line('Settings') ?></th>
 
 
@@ -62,6 +64,7 @@
                     'orderable': false,
                 },
             ],
+			
         });
     });
 </script>
