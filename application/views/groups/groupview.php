@@ -22,6 +22,7 @@
                     <th><?php echo $this->lang->line('Name') ?></th>
 					<th>Celular</th>
                     <th><?php echo $this->lang->line('Address') ?></th>
+					<th>Estado</th>
                     <th><?php echo $this->lang->line('Settings') ?></th>
 
 
@@ -38,6 +39,7 @@
                     <th><?php echo $this->lang->line('Name') ?></th>
 					<th>Celular</th>
                     <th><?php echo $this->lang->line('Address') ?></th>
+					<th>Estado</th>
                     <th><?php echo $this->lang->line('Settings') ?></th>
                 </tr>
                 </tfoot>
@@ -66,9 +68,12 @@
                     "targets": [0], //first column / numbering column
                     "orderable": false, //set not orderable
                 },
-            ],
+				
+            ],	
+			
 
         });
+		
 
     });
 </script>

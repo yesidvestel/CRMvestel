@@ -70,6 +70,20 @@
                     "orderable": false, //set not orderable
                 },
             ],
+			"order": [[ 2, "desc" ]],
+                "language": {
+                    "info": "Pagina _PAGE_ de _PAGES_",
+                    "zeroRecords": "No se encontraron resultados",
+                    "processing": "Procesando...",
+                    "lengthMenu": "Mostrar _MENU_ registros",
+                    "search": "Buscar:",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Último",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    },
+                }
 
         });
 
