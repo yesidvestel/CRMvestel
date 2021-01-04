@@ -249,23 +249,21 @@
         var total = 0;
         var x="";
         $(".facturas_para_pagar:checked").each(function(index){
-            
-            if($(this).data('status')=="due"){
-                 x= $("#facturas_seleccionadas").val();
-                total+=parseInt($(this).data('total'));
-                if(x==""){
+            x= $("#facturas_seleccionadas").val();
+            total+=parseInt($(this).data('total'));
+            if(x==""){
                     x+=$(this).data('idfacturas');
-                }else{
+            }else{
                     x+="-"+$(this).data('idfacturas');
-                }
-                $("#facturas_seleccionadas").val(x);    
             }
-           
+            $("#facturas_seleccionadas").val(x);             
         });  
         if(x==""){
-            $("#rmpay").val(total_facturas);
+            $("#rmpay").val("0");
+            $("#submitpayment2").attr("disabled",true);
         }else{
             $("#rmpay").val(total);
+            $("#submitpayment2").removeAttr("disabled");
         }
         
 

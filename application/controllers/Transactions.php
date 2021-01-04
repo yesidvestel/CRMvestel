@@ -103,16 +103,21 @@ class Transactions extends CI_Controller
             foreach ($array_facturas as $key => $id_factura) {
                 $factura_var = $this->db->get_where('invoices',array('tid'=>$id_factura))->row();                                
                 
-                $valor_restante_monto=$monto-$factura_var->total;
+                $total_factura=$factura_var->total;
+                if($factura_var->status=="partial"){
+                    $total_factura=$factura_var->total-$factura_var->pamnt;
+                }
+                $valor_restante_monto=$monto-$total_factura;
 
                 if($valor_restante_monto>=0){
-                    $montos[$id_factura]=$factura_var->total;
+                    $montos[$id_factura]=$total_factura;
                     $array_facturas2[]=$id_factura;
                     $monto=$valor_restante_monto;
-                }else if($monto>0){
+                }else if($monto>0 && $factura_var->status!="partial"){
                     $montos[$id_factura]=$monto;
                     $array_facturas2[]=$id_factura;
-                    $monto=$valor_restante_monto;
+                    $monto=$valor_restante_monto;  
+                    
                 }
 
                 

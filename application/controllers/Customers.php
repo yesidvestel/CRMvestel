@@ -492,9 +492,15 @@ class Customers extends CI_Controller
             $no++;
             $row = array();
             if($invoices->ron=="Cortado"){
-                $row[] = 'Cortado';    
+                $row[] = '<a href="'.base_url().'invoices/view?id='.$invoices->tid.'">Cortado</a>';
+            }else if($invoices->status=="paid"){
+                $row[]="";
             }else{
-            $row[] = '<input type="checkbox" name="x" class="facturas_para_pagar" data-total=" '.$invoices->total.'" data-idfacturas="'.$invoices->tid.'" data-status="'.$invoices->status.'" style="cursor:pointer; margin-left: 9px;" ></input>';    
+                $total_factura=$invoices->total;
+                if($invoices->status=="partial"){
+                    $total_factura=$invoices->total-$invoices->pamnt;
+                }
+                $row[] = '<input type="checkbox" name="x" class="facturas_para_pagar" data-total=" '.$total_factura.'" data-idfacturas="'.$invoices->tid.'" data-status="'.$invoices->status.'" style="cursor:pointer; margin-left: 9px;" ></input>';    
             }
 			
             $row[] = $no;
