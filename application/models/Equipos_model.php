@@ -23,7 +23,7 @@ class Equipos_model extends CI_Model
 
     var $table = 'equipos';	
     var $column_order = array(null, 'codigo','mac', 'serial', 'estado', 'asignado', 'marca', null); //set column field database for datatable orderable
-    var $column_search = array('codigo', 'mac','serial','estado','asignado','marca'); //Establecer base de datos de campo de columna para la tabla de datos
+    var $column_search = array('codigo', 'mac','serial','estado','almacen','asignado','marca'); //Establecer base de datos de campo de columna para la tabla de datos
     var $order = array('id' => 'desc'); // default order
 	
     public function __construct()
@@ -34,15 +34,11 @@ class Equipos_model extends CI_Model
 	// Consulta para tabla de equipos
 	 private function _get_datatables_query($id = '')
     {
-         $this->db->from($this->table);
-		 if ($id != ''){
-			 $this->db->from($this->table);			 
-            $this->db->join('almacen_equipos', 'almacen_equipos.id = equipos.almacen');
-			 if ($id > 0) {
-			 $this->db->where("almacen_equipos.id = $id");
-			 }
-		 }
          
+			$this->db->from($this->table);            
+		 if ($id > 0) {
+			 $this->db->where("almacen = $id");
+		 }        
         $i = 0;
         foreach ($this->column_search as $item) // loop column 
         {
@@ -73,10 +69,10 @@ class Equipos_model extends CI_Model
         }
     }
 
-    function get_datatables($id = '', $w = '')
+    function get_datatables($id = '')
     {
         if ($id > 0) {
-            $this->_get_datatables_query($id, $w);
+            $this->_get_datatables_query($id);
         } else {
             $this->_get_datatables_query();
         }
@@ -100,10 +96,10 @@ class Equipos_model extends CI_Model
         }
     }
 
-    function count_filtered($id, $w = '')
+    function count_filtered($id)
     {
         if ($id > 0) {
-            $this->_get_datatables_query($id, $w);
+            $this->_get_datatables_query($id);
         } else {
             $this->_get_datatables_query();
         }

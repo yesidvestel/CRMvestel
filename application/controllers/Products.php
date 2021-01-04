@@ -129,8 +129,12 @@ class Products extends CI_Controller
     }
 	public function equipos_list()
     {
-        $alid = $this->input->get('id');			
+        $alid = $this->input->get('id');
+		if ($alid > 0){
         $list = $this->equipos->get_datatables($alid);
+		} else {
+		$list = $this->equipos->get_datatables();
+		}
         $data = array();
         $no = $this->input->post('start');
 		
@@ -146,7 +150,7 @@ class Products extends CI_Controller
             $row[]= 'Sin asignar';
 			}else{ $row[] = $prd->asignado;}
 			$row[] = $prd->marca;			
-            $row[] = '<a href="' . base_url() . 'products/editequipoview?id=' . $prd->id . '" class="btn btn-primary btn-xs"><span class="icon-pencil"></span> ' . $this->lang->line('Edit') . '</a> <a href="#" data-object-id="' . $pid . '" class="btn btn-danger btn-xs  delete-object"><span class="icon-bin"></span> ' . $this->lang->line('Delete') . '</a>';
+            $row[] = '<a href="' . base_url() . 'products/editequipoview?id=' . $prd->id . '" class="btn btn-primary btn-xs"><span class="icon-pencil"></span> ' . $this->lang->line('Edit') . '</a> <a href="#" data-object-id="' . $prd->id  . '" class="btn btn-danger btn-xs  delete-object"><span class="icon-bin"></span> ' . $this->lang->line('Delete') . '</a>';
             $data[] = $row;
         }
 		
