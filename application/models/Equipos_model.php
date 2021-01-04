@@ -32,21 +32,17 @@ class Equipos_model extends CI_Model
         $this->load->database();
     }
 	// Consulta para tabla de equipos
-	 private function _get_datatables_query($id = '', $w = '')
+	 private function _get_datatables_query($id = '')
     {
-        if ($w) {
-            $this->db->from($this->table);
+         $this->db->from($this->table);
+		 if ($id != ''){
+			 $this->db->from($this->table);			 
             $this->db->join('almacen_equipos', 'almacen_equipos.id = equipos.almacen');
-            if ($id > 0) {
-                $this->db->where("almacen_equipos.id = $id");
-            }
-        } else {
-            $this->db->from($this->table);
-            //$this->db->join('product_cat', 'product_cat.id = products.pcat');
-            if ($id > 0) {
-                $this->db->where("almacen = $id");
-            } 
-        }
+			 if ($id > 0) {
+			 $this->db->where("almacen_equipos.id = $id");
+			 }
+		 }
+         
         $i = 0;
         foreach ($this->column_search as $item) // loop column 
         {

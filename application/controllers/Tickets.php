@@ -330,7 +330,7 @@ class Tickets Extends CI_Controller
             $var_mes ='m';
         }
         
-        $date_fecha_corte=new DateTime(date('Y-'.$var_mes.'-27'));
+        $date_fecha_corte=new DateTime(date('Y-'.$var_mes.'-31'));
         
         $diferencia = $date_fecha_final->diff($date_fecha_corte);
         $data['invoicedate']=$date_fecha_final->format("Y-m-d");

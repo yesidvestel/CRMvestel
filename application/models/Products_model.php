@@ -21,10 +21,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Products_model extends CI_Model
 {
 
-    var $table = 'products';	
+    var $table = 'products';
+	var $table2 = 'equipos';
     var $column_order = array(null, 'product_name', 'qty', 'product_code', 'title', 'product_price', null, 'mac', 'serial'); //set column field database for datatable orderable
     var $column_search = array('product_name', 'product_code'); //Establecer base de datos de campo de columna para la tabla de datos
-    var $order = array('pid' => 'desc'); // default order	
+	var $column_search_equi = array('id', 'codigo','proveedor','almacen','mac','serial','llegada','final','marca','asignado','estado','observacion');
+	var $column_order_equi = array(null, 'id', 'codigo','mac','serial','estado','asignado','marca','null');
+    var $order = array('pid' => 'desc'); // default order
+	var $order_equi = array('id' => 'desc'); 
     public function __construct()
     {
         parent::__construct();
@@ -87,6 +91,56 @@ class Products_model extends CI_Model
             $this->db->limit($this->input->post('length'), $this->input->post('start'));
         $query = $this->db->get();
         return $query->result();
+    }
+	function equi_get_datatables($id = '', $w = '')
+    {
+        if ($id > 0) {
+            $this->equi_get_datatables_query($id, $w);
+        } else {
+            $this->equi_get_datatables_query();
+        }
+        if ($this->input->post('length') != -1)
+            $this->db->limit($this->input->post('length'), $this->input->post('start'));
+        $query = $this->db->get();
+        return $query->result();
+    }
+	 private function equi_get_datatables_query($id = '', $w = '')
+    {
+        if ($w) {
+            $this->db->from($this->table2);
+            $this->db->join('almacen_equipos', 'almacen_equipos.id = equipos.almacen');
+            if ($id > 0) {
+                $this->db->where("almacen_equipos.id = $id");
+            }
+        }
+        $i = 0;
+        foreach ($this->column_search_equi as $item) // loop column 
+        {
+            $search = $this->input->post('search');
+            $value = $search['value'];
+            if ($value) // if datatable send POST for search
+            {
+                if ($i === 0) // first loop
+                {
+                    $this->db->group_start(); // open bracket. query Where with OR clause better with bracket. because maybe can combine with other WHERE with AND.
+                    $this->db->like($item, $value);
+                } else {
+                    $this->db->or_like($item, $value);
+                }
+
+                if (count($this->column_search_equi) - 1 == $i) //last loop
+                    $this->db->group_end(); //close bracket
+            }
+            $i++;
+        }
+        $search = $this->input->post('order');
+        if ($search) // here order processing
+        {
+            $this->db->order_by($this->column_order_equi[$search['0']['column']], $search['0']['dir']);
+        } else if (isset($this->order_equi)) {
+            $order = $this->order_equi;
+            $this->db->order_by(key($order), $order[key($order)]);
+        }
     }
 	
 	public function codigoequipo()

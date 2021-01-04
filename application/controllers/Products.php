@@ -129,22 +129,15 @@ class Products extends CI_Controller
     }
 	public function equipos_list()
     {
-        $alid = $this->input->get('id');
-
-        if ($alid > 0) {
-            $list = $this->equipos->get_datatables($alid);
-        } else {
-			
-            $list = $this->equipos->get_datatables();
-        }
+        $alid = $this->input->get('id');			
+        $list = $this->equipos->get_datatables($alid);
         $data = array();
         $no = $this->input->post('start');
 		
         foreach ($list as $prd) {
             $no++;
             $row = array();
-            $row[] = $no;
-           	$pid = $prd->id;
+            $row[] = $no;           	
 			$row[] = $prd->codigo;
             $row[] = $prd->mac;
             $row[] = $prd->serial;
@@ -153,14 +146,14 @@ class Products extends CI_Controller
             $row[]= 'Sin asignar';
 			}else{ $row[] = $prd->asignado;}
 			$row[] = $prd->marca;			
-            $row[] = '<a href="' . base_url() . 'products/editequipoview?id=' . $pid . '" class="btn btn-primary btn-xs"><span class="icon-pencil"></span> ' . $this->lang->line('Edit') . '</a> <a href="#" data-object-id="' . $pid . '" class="btn btn-danger btn-xs  delete-object"><span class="icon-bin"></span> ' . $this->lang->line('Delete') . '</a>';
+            $row[] = '<a href="' . base_url() . 'products/editequipoview?id=' . $prd->id . '" class="btn btn-primary btn-xs"><span class="icon-pencil"></span> ' . $this->lang->line('Edit') . '</a> <a href="#" data-object-id="' . $pid . '" class="btn btn-danger btn-xs  delete-object"><span class="icon-bin"></span> ' . $this->lang->line('Delete') . '</a>';
             $data[] = $row;
         }
 		
         $output = array(
             "draw" => $_POST['draw'],
-            "recordsTotal" => $this->products->count_all($alid),
-            "recordsFiltered" => $this->products->count_filtered($alid),
+            "recordsTotal" => $this->equipos->count_all($alid),
+            "recordsFiltered" => $this->equipos->count_filtered($alid),
             "data" => $data,
         );
         //output to json format
