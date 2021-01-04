@@ -95,16 +95,27 @@ class Transactions extends CI_Controller
         $ids_facturas =$this->input->post('facturas_seleccionadas');
             $x="";
         $array_facturas=explode("-", $ids_facturas);
+        $monto=0;
+        if(count($array_facturas)==1){
+            $monto=$this->input->post('amount');
+        }else{
+            $sumatoria=0;
+            foreach ($array_facturas as $key => $id_factura) {
+                $factura_var = $this->db->get_where('invoices',array('tid'=>$id_factura))->row();                
+
+            }
+        }
         foreach ($array_facturas as $key => $id_factura) {
 
             $factura_var = $this->db->get_where('invoices',array('tid'=>$id_factura))->row();
             $customer=$this->db->get_where('customers',array('id'=>$factura_var->csd))->row();
             //codigo copiado
              $tid = $id_factura;
-        $amount = $factura_var->total;
+        $amount = $monto;
         $paydate = $this->input->post('paydate');
         $note = $this->input->post('shortnote');
         $pmethod = $this->input->post('pmethod');
+        $banco = $this->input->post('banco');
         $acid = $this->input->post('account');
         $cid = $factura_var->csd;
         $cname = $customer->name;
@@ -133,7 +144,33 @@ class Transactions extends CI_Controller
                 $this->db->update('customers');
             }
         }
+        $id_banco=null;
+        if($pmethod!="Bank"){
+            $banco=null;
+        }else{
+            if($banco=="Bancolombia"){
+                $cuenta = $this->db->select("*")->from('accounts')->like('holder','Bancolombia','both')->get();
+                $cuenta = $cuenta->result();
+                if($cuenta!=null){
+                    $id_banco=$cuenta[0]->id;
+                    $mas=intval($cuenta[0]->lastbal)+intval($amount);
+                    $data5['lastbal']=$mas;
+                    $this->db->update('accounts',$data5,array('id' =>$id_banco ));    
+                }
+                
+            }else{
+                $cuenta = $this->db->select("*")->from('accounts')->like('holder','BBVA','both')->get();
+                $cuenta = $cuenta->result();
+                if($cuenta!=null){
+                    $id_banco=$cuenta[0]->id;
+                    $mas=intval($cuenta[0]->lastbal)+intval($amount);
+                    $data5['lastbal']=$mas;
+                    $this->db->update('accounts',$data5,array('id' =>$id_banco ));    
+                }
+                
 
+            }
+        }        
     $data = array(
             'acid' => $acid,
             'account' => $account['holder'],
@@ -147,7 +184,9 @@ class Transactions extends CI_Controller
             'eid' => $this->aauth->get_user()->id,
             'tid' => $tid,
             'note' => $note,
-            'ext' => 0
+            'ext' => 0,
+            'nombre_banco'=>$banco,
+            'id_banco'=>$id_banco
         );
 
         $this->db->insert('transactions', $data);

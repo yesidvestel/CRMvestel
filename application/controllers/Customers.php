@@ -490,7 +490,12 @@ class Customers extends CI_Controller
         foreach ($list as $invoices) {
             $no++;
             $row = array();
-			$row[] = '<input type="checkbox" name="x" class="facturas_para_pagar" data-total=" '.$invoices->total.'" data-idfacturas="'.$invoices->tid.'" data-status="'.$invoices->status.'" style="cursor:pointer; margin-left: 9px;" ></input>';
+            if($invoices->ron=="Cortado"){
+                $row[] = 'Cortado';    
+            }else{
+            $row[] = '<input type="checkbox" name="x" class="facturas_para_pagar" data-total=" '.$invoices->total.'" data-idfacturas="'.$invoices->tid.'" data-status="'.$invoices->status.'" style="cursor:pointer; margin-left: 9px;" ></input>';    
+            }
+			
             $row[] = $no;
             $row[] = $invoices->tid;
             $row[] = $invoices->name;
