@@ -435,13 +435,13 @@ class Customers extends CI_Controller
 	public function act_titular()
     {
         $id = $this->input->post('iduser');
-        $nombres = $this->input->post('dtosantes');
-		$doc_anterior = $this->input->post('doc1');
+        $nombres = $this->input->post('dtosantes2');
+		$doc_anterior = $this->input->post('doc12');
 		$tcliente = $this->input->post('tcliente');
 		$tdocumento = $this->input->post('tdocumento');
 		$bill_due_date = datefordatabase($this->input->post('fecha'));
 		$fecha = $bill_due_date;
-		$observacion = $this->input->post('observacion');
+		$observacion = $this->input->post('observ');
 		$nom1 = $this->input->post('nom1');
         $nom2 = $this->input->post('nom2');
 		$ape1 = $this->input->post('ape1');
@@ -463,7 +463,8 @@ class Customers extends CI_Controller
 			'documento' => $doc2);
         $this->db->where('id', $id);
         $this->db->update('customers', $data2);
-		
+		$dt1=new DateTime($fecha);
+        $fecha=$dt1->format("Y-m-d");
 		$data1 = array(				
 			'id_user' => $id,
 			'nombres' => $nombres,
@@ -472,8 +473,8 @@ class Customers extends CI_Controller
 			'documento2' => $doc_anterior,
 			'fecha' => $fecha,
 			'observacion' => $observacion);		
-        $this->db->insert('historiales', $data1);
-		$this->db->insert_id();
+       $this->db->insert('historiales', $data1);
+		
 		
 
         echo json_encode(array('status' => 'Success', 'message' =>

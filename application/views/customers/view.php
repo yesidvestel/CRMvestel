@@ -463,6 +463,7 @@
                         <div class="col-sm-6">
 							<input type="hidden" name="iduser" value="<?php echo $details['id'] ?>"></input>
 							<input type="text" class="form-control" name="dtosantes" value="<?php echo $details['name'] .' '. $details['dosnombre'].' '. $details['unoapellido'].' '. $details['dosapellido'] ?>" disabled/>
+                            <input type="hidden" class="form-control" name="dtosantes2" value="<?php echo $details['name'] .' '. $details['dosnombre'].' '. $details['unoapellido'].' '. $details['dosapellido'] ?>" />
                         </div>
                     </div>
 
@@ -471,6 +472,7 @@
                     <label for="toBizName" class="caption col-sm-2 col-form-label">Documento</label>
                     <div class="col-sm-6">
                         <input type="text" class="form-control" name="doc1" value="<?php echo $details['documento'] ?>" disabled />
+                        <input type="hidden" class="form-control" name="doc12" value="<?php echo $details['documento'] ?>" />
                     </div>
 					<input type="hidden" name="tcliente" value="<?php echo $details['tipo_cliente'] ?>">
 					<input type="hidden" name="tdocumento" value="<?php echo $details['tipo_documento'] ?>">
