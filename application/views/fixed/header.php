@@ -402,10 +402,7 @@
                     <ul class="menu-content">
 						<li>
                             <a href="<?php echo base_url(); ?>quote/create"><?php echo $this->lang->line(''); ?>Nuevo ticket</a>
-                        </li>
-                        <li>
-                            <a href="<?php echo base_url(); ?>tickets/?filter=Pendiente"><?php echo $this->lang->line('UnSolved') ?></a>
-                        </li>
+                        </li>                        
                         <li>
                             <a href="<?php echo base_url(); ?>tickets"><?php echo $this->lang->line('Manage Tickets') ?></a>
                         </li>
@@ -846,6 +843,24 @@
                         <li>
                             <a href="<?php echo base_url(); ?>clientgroup"><?php echo $this->lang->line('Manage Groups') ?></a>
                         </li>
+                    </ul>
+                </li>
+			<!--- SOPORTE TECNICO --->
+                <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "tickets") {
+                    echo ' open';
+                } ?>">
+                    <a href=""> <i class="icon-ticket"></i><span
+                                class="menu-title"><?php echo $this->lang->line('Support Tickets') ?></span><i
+                                class="fa arrow"></i> </a>
+                    <ul class="menu-content">
+						<li>
+                            <a href="<?php echo base_url(); ?>quote/create"><?php echo $this->lang->line(''); ?>Nuevo ticket</a>
+                        </li>                        
+                        <li>
+                            <a href="<?php echo base_url(); ?>tickets"><?php echo $this->lang->line('Manage Tickets') ?></a>
+                        </li>
+
+
                     </ul>
                 </li>
 			<!--- PROVEDORES--->

@@ -318,7 +318,7 @@ class Tickets Extends CI_Controller
         //ssss
         $date_fecha_final = new DateTime($fecha_final);
         $var_mes ;
-        if(intval($date_fecha_final->format('d')) >=27){
+        if(intval($date_fecha_final->format('d')) >=31){
             $ms =intval($date_fecha_final->format('m'));
             if($ms==12){
                 $var_mes='1';
