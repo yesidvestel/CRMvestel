@@ -41,8 +41,9 @@
             </div>
             <a href="#part_payment" onclick="cargar_facturas()" data-toggle="modal" data-remote="false" data-type="reminder"
                                    class="btn btn-large btn-success mb-1" title="Partial Payment"
-                                ><span class="icon-money"></span> <?php echo $this->lang->line('Make Payment') ?> </a>
+                                ><span class="icon-money"></span> <?php echo $this->lang->line('Make Payment') ?> </a><span id="span_facturas">&nbsp;Facturas a pagar</span>
                                 <br><a href="#" class="btn btn-primary" onclick="filtrar_facturas()">Filtrar Facturas Sin Pagar</a>
+
             <hr>
 
             <table id="invoices" class="table-striped" cellspacing="0" width="100%">
@@ -231,20 +232,23 @@
     var total_facturas="<?=$due['total']-$due['pamnt']?>";
    
     function cargar_facturas(){
-        console.log("asd");
+        
         $("#facturas_seleccionadas").val("");
         var total = 0;
         var x="";
-        $(".facturas_para_pagar:checked").each(function(index){
-            x= $("#facturas_seleccionadas").val();
-            total+=parseInt($(this).data('total'));
+        $(".facturas_para_pagar:checked").each(function(index){            
+            total+=parseInt($(this).data('total'));            
+        });
+
+        $(lista_facturas).each(function(index){
             if(x==""){
-                    x+=$(this).data('idfacturas');
+                x=this;
             }else{
-                    x+="-"+$(this).data('idfacturas');
+                x+="-"+this;
             }
-            $("#facturas_seleccionadas").val(x);             
-        });  
+        });
+        $("#facturas_seleccionadas").val(x);
+        
         if(x==""){
             $("#rmpay").val("0");
             $("#submitpayment2").attr("disabled",true);
@@ -256,6 +260,7 @@
 
     }
 
+
 $("#seleccion_banco").hide();
     function metodo_de_pago_select(){
         if($("#select_metodo_de_pago option:selected").val()=="Bank"){
@@ -264,5 +269,36 @@ $("#seleccion_banco").hide();
             $("#seleccion_banco").hide();
         }
     }
+
+let lista_facturas=[];
+ function agregar_factura(elemento){
+        var indice_elemento=lista_facturas.indexOf($(elemento).data("idfacturas"));
+        
+        if(indice_elemento==-1){
+                if(elemento.checked==true){
+                    lista_facturas.push($(elemento).data("idfacturas"));                   
+                }
+        }else{
+            if(elemento.checked==false){
+                lista_facturas.splice(indice_elemento,1);
+            }
+        }
+       var y="";
+        $(lista_facturas).each(function(index){
+            if(y==""){
+                y=this;
+            }else{
+                y+=","+this;
+            }
+        });
+        if(y==""){
+            $("#span_facturas").hide();
+        }else{
+            $("#span_facturas").text(" Orden Facturas a Pagar : "+y);
+            $("#span_facturas").show();
+        }
+        
+    }
+    $("#span_facturas").hide();
     
 </script>

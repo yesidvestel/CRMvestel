@@ -270,7 +270,7 @@ class Transactions extends CI_Controller
             //$this->lang->line('Transaction has been added'), 'pstatus' => $this->lang->line($status), 'activity' => $activitym, 'amt' => $totalrm, 'ttlpaid' => $paid_amount));
             //codigo cop fin
         }
-        echo json_encode(array('status'=>"Success"));
+        echo json_encode(array('status'=>"Success",'message' =>$this->lang->line('Transaction has been added')));
     }
     public function payinvoice()
     {

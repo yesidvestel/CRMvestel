@@ -500,7 +500,7 @@ class Customers extends CI_Controller
                 if($invoices->status=="partial"){
                     $total_factura=$invoices->total-$invoices->pamnt;
                 }
-                $row[] = '<input type="checkbox" name="x" class="facturas_para_pagar" data-total=" '.$total_factura.'" data-idfacturas="'.$invoices->tid.'" data-status="'.$invoices->status.'" style="cursor:pointer; margin-left: 9px;" ></input>';    
+                $row[] = '<input type="checkbox" name="x" class="facturas_para_pagar" data-total=" '.$total_factura.'" data-idfacturas="'.$invoices->tid.'" data-status="'.$invoices->status.'" style="cursor:pointer; margin-left: 9px;" onclick="agregar_factura(this)" ></input>';    
             }
 			
             $row[] = $no;
