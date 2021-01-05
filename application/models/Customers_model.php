@@ -510,6 +510,10 @@ class Customers_model extends CI_Model
 
         $this->db->from('invoices');
         $this->db->where('invoices.csd', $id);
+        if(isset($_GET['filtrar'])){
+            $this->db->where('invoices.status', 'due');    
+        }
+        
         $this->db->join('customers', 'invoices.csd=customers.id', 'left');
 
         $i = 0;

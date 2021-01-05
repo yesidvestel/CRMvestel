@@ -191,8 +191,9 @@
     $lista_invoices[$key]['nombres_cus']=$customer->name." ".$customer->unoapellido;
 } ?>
 <script type="text/javascript">
+    var tb;
     $(document).ready(function () {
-        $('#invoices').DataTable({
+       tb= $('#invoices').DataTable({
             'processing': true,
             'serverSide': true,
             'stateSave': true,
@@ -223,22 +224,8 @@
 });
 
     function filtrar_facturas(){
-        datax=jQuery.parseJSON('<?php echo json_encode($lista_invoices);?>');
-        var datos="";
-
-        $(datax).each(function(index,value){
-             console.log(value);
-             var clase ="st-due";
-             var texto ="Pendiente"
-                if(value.status=="paid"){
-                    clase="st-paid";
-                    texto="resivido";
-                }
-                //falta terminar
-                datos+=' <tr role="row" class="odd"><td>'+value.id+'</td><td>'+value.tid+'</td><td>'+value.nombres_cus+' </td><td>'+value.invoicedate+'</td><td><span class="st-Instalar">'+value.ron+'</span></td><td>$ '+value.total+'</td><td class="sorting_1"><span class="'+clase+'">'+texto+'</span></td><td><a href="'+baseurl+'invoices/view?id='+value.tid+'" class="btn btn-success btn-xs"><i class="icon-file-text"></i> Ver</a> &nbsp; <a href="'+baseurl+'invoices/printinvoice?id='+value.tid+'&amp;d=1" class="btn btn-info btn-xs" title="Download"><span class="icon-download"></span></a>&nbsp; &nbsp;<a href="#" data-object-id="'+value.id+'" class="btn btn-danger btn-xs delete-object"><span class="icon-trash"></span></a></td><td><input type="checkbox" name="x" class="form-check-input facturas_para_pagar" data-status="'+value.status+'" data-total="'+value.total+'" data-idfacturas="'+value.tid+'" style="cursor:pointer"></td></tr> '
-        });
-        var table = $('#tbody1').html(datos);
-        
+       
+        tb.ajax.url( baseurl+'customers/inv_list?cid=<?php echo $_GET['id'] ?>&filtrar=si').load();     
     }
 
     var total_facturas="<?=$due['total']-$due['pamnt']?>";
