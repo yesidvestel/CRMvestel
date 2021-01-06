@@ -331,7 +331,7 @@ class Transactions extends CI_Controller
         if($pmethod!="Bank"){
             $banco=null;
         }else{
-            if($banco=="Bancolombia"){
+            /*if($banco=="Bancolombia"){
                 $cuenta = $this->db->select("*")->from('accounts')->like('holder','Bancolombia','both')->get();
                 $cuenta = $cuenta->result();
                 if($cuenta!=null){
@@ -352,7 +352,7 @@ class Transactions extends CI_Controller
                 }
                 
 
-            }
+            }*/
         }
     $data = array(
             'acid' => $acid,
