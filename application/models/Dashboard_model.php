@@ -144,6 +144,7 @@ class Dashboard_model extends CI_Model
 		if ($sede != '') {
         $this->db->where('refer',$sede);
 		}
+		$this->db->where($where);
         $this->db->from('invoices');
         return $this->db->count_all_results();
 
