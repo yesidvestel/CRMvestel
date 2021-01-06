@@ -140,7 +140,8 @@
 					<th>N° orden</th>	
                     <th><?php echo $this->lang->line('Subject') ?></th>
 					<th>Detalle</th>
-                    <th>F/creada</th>                    
+                    <th>F/creada</th>
+					<th>F/cierre</th>
 					<th>Abonado</th>
 					<th>Usuario</th>
                     <th>Factura</th>
