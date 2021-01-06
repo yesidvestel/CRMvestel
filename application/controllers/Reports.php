@@ -144,6 +144,15 @@ class Reports extends CI_Controller
                 
             }
             $data['lista']=$lista2;
+
+            $cuenta1 = $this->reports->get_statements(6, $trans_type, $sdate, $edate);
+            $cuenta2 = $this->reports->get_statements(7, $trans_type, $sdate, $edate);
+            $cuenta3 = $this->reports->get_statements(8, $trans_type, $sdate, $edate);
+            $data['cuenta1']=$cuenta1;
+            $data['cuenta2']=$cuenta1;
+            $data['cuenta3']=$cuenta1;
+
+
             $anulaciones=array();
             foreach ($list as $key => $value) {
                 if($value["estado"]=="Anulada"){

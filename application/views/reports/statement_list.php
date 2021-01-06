@@ -271,13 +271,13 @@
 			$items_tocados=array();
 
 			if($value['method']=="Bank"){
-				if($value['nombre_banco']=="Bancolombia"){
+				/*if($value['nombre_banco']=="Bancolombia"){
 					$array_bancos['Bancolombia']['cantidad']++;
 					$array_bancos['Bancolombia']['monto']+=intval($value['credit']);
 				}else{
 					$array_bancos['BBVA']['cantidad']++;
 					$array_bancos['BBVA']['monto']+=intval($value['credit']);
-				}
+				}*/
 			}else if($value['method']=="Cash"){
 				$array_efectivo['cantidad']++;
 				$array_efectivo['monto']+=$value['credit'];
@@ -287,6 +287,22 @@
 			//$var_prueba1+=intval($value['credit']);
 			//var_dump("TID= ".$invoice->tid."  ValorTotal =".$var_prueba1." valor_invoice=".$invoice->total);
 		 }
+		 //bancos
+		 foreach ($cuenta1 as $key => $value) {
+		 	if($value['estado']!="Anulada"){
+		 		$array_bancos['Bancolombia']['cantidad']++;
+				$array_bancos['Bancolombia']['monto']+=$value['credit'];
+		 	}
+		 }
+		 foreach ($cuenta2 as $key => $value) {
+		 	$array_bancos['Bancolombia']['cantidad']++;
+			$array_bancos['Bancolombia']['monto']+=$value['credit'];
+		 }
+		 foreach ($cuenta3 as $key => $value) {
+		 	$array_bancos['Bancolombia']['cantidad']++;
+			$array_bancos['Bancolombia']['monto']+=$value['credit'];
+		 }
+		 //end bancos
 
 		 //resumen por tipo de servicio
 		 foreach ($lista as $key => $val1) {
@@ -737,7 +753,8 @@
 
 						}
 						//sumatorias
-						if($sumatoria_items<$val1['credit'] ){
+						$conteo=count($items_tocados);					
+						if($sumatoria_items<$val1['credit'] && $conteo!=0){
 							$diference=$val1['credit']-$sumatoria_items;
 							if($diference>1){
 								$conteo=count($items_tocados);					
@@ -870,7 +887,8 @@
 
 						}
 						//sumatorias
-						if($sumatoria_items<$val1['credit'] ){
+						$conteo=count($items_tocados);
+						if($sumatoria_items<$val1['credit'] && $conteo!=0){
 							$diference=$val1['credit']-$sumatoria_items;
 							if($diference>1){
 								$conteo=count($items_tocados);					
