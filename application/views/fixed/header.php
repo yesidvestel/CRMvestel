@@ -869,6 +869,24 @@
                             data-original-title="Stock"
                             class="icon-ellipsis icon-ellipsis"></i>
                 </li>
+			<li class="nav-item has-sub <?php if ($this->uri->segment(1) == "equipos") {
+                    echo ' open';
+                } ?>">
+                    <a href=""> <i class="icon-wifi3"></i><span
+                                class="menu-title"><?php echo $this->lang->line('') ?>Redes</span><i
+                                class="fa arrow"></i> </a>
+                    <ul class="menu-content">
+						<li>
+                            <a href="<?php echo base_url(); ?>products/equipoadd"><?php echo $this->lang->line('') ?>Ingreso de Equipo</a>
+                        </li>
+						<li>
+                            <a href="<?php echo base_url(); ?>products/equipos"><?php echo $this->lang->line('') ?>Administrar equipos</a>
+                        </li>
+						<li>
+                            <a href="<?php echo base_url(); ?>productcategory/almacen">Bodega equipos</a>
+                        </li>
+					</ul>
+				</li>
                 <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "products") {
                     echo ' open';
                 } ?>">
