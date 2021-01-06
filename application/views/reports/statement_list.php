@@ -69,7 +69,7 @@
 	//end productos sin iva
 //end tabla total cobranza
 		$array_reconexiones=array('cantidad' =>0 ,"monto"=>0 );
-		$array_bancos=array("Bancolombia" => array('cantidad' => 0,"monto"=>0 ),"BBVA"=>array('cantidad' => 0,"monto"=>0 ));
+		$array_bancos=array("BANCOLOMBIA TV" => array('cantidad' => 0,"monto"=>0 ),"BANCOLOMBIA TELECOMUNICACIONES"=>array('cantidad' => 0,"monto"=>0 ),"BANCOLOMBIA CUENTA CORRIENTE"=>array('cantidad' => 0,"monto"=>0 ));
 		$array_resumen_tipo_servicio= array('Internet' => array('cantidad' => 0,"monto"=>0 ),"Television"=> array('cantidad' => 0,"monto"=>0 ));
 		$array_efectivo=array("cantidad"=>0,"monto"=>0);
 
@@ -290,17 +290,36 @@
 		 //bancos
 		 foreach ($cuenta1 as $key => $value) {
 		 	if($value['estado']!="Anulada"){
-		 		$array_bancos['Bancolombia']['cantidad']++;
-				$array_bancos['Bancolombia']['monto']+=$value['credit'];
+		 		
+		 		$invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
+		 		$invoice->refer=str_replace(" ","",$invoice->refer);		 				 		
+		 		if($invoice->refer==$filter[5]){		 			
+		 			$array_bancos['BANCOLOMBIA TV']['cantidad']++;
+					$array_bancos['BANCOLOMBIA TV']['monto']+=$value['credit'];	
+		 		}
 		 	}
 		 }
-		 foreach ($cuenta2 as $key => $value) {
-		 	$array_bancos['Bancolombia']['cantidad']++;
-			$array_bancos['Bancolombia']['monto']+=$value['credit'];
+		 
+		 foreach ($cuenta2 as $key => $value) {		 	
+		 	if($value['estado']!="Anulada"){
+			 	$invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
+				$invoice->refer=str_replace(" ","",$invoice->refer);
+			 	if($invoice->refer==$filter[5]){
+			 		$array_bancos['BANCOLOMBIA TELECOMUNICACIONES']['cantidad']++;
+					$array_bancos['BANCOLOMBIA TELECOMUNICACIONES']['monto']+=$value['credit'];
+				}
+			}
 		 }
-		 foreach ($cuenta3 as $key => $value) {
-		 	$array_bancos['Bancolombia']['cantidad']++;
-			$array_bancos['Bancolombia']['monto']+=$value['credit'];
+		 
+		 foreach ($cuenta3 as $key => $value) {		 	
+		 	if($value['estado']!="Anulada"){
+			 	$invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
+			 	$invoice->refer=str_replace(" ","",$invoice->refer);
+			 	if($invoice->refer==$filter[5]){
+			 		$array_bancos['BANCOLOMBIA CUENTA CORRIENTE']['cantidad']++;
+					$array_bancos['BANCOLOMBIA CUENTA CORRIENTE']['monto']+=$value['credit'];
+				}
+			}
 		 }
 		 //end bancos
 
@@ -524,20 +543,25 @@
 				<tbody>
 					<tr>
 						<td>Bancolombia</td>
-						<td style="text-align: center"><?=$array_bancos['Bancolombia']['cantidad']?></td>
-						<td style="text-align: center"><?="$ ".number_format($array_bancos['Bancolombia']['monto'],0,",",".")?></td>
+						<td style="text-align: center"><?=$array_bancos['BANCOLOMBIA TV']['cantidad']?></td>
+						<td style="text-align: center"><?="$ ".number_format($array_bancos['BANCOLOMBIA TV']['monto'],0,",",".")?></td>
 					</tr>
 					<tr>
 						<td>BBVA colombia</td>
-						<td style="text-align: center"><?=$array_bancos['BBVA']['cantidad']?></td>
-						<td style="text-align: center"><?="$ ".number_format($array_bancos['BBVA']['monto'],0,",",".")?></td>
-					</tr>					
+						<td style="text-align: center"><?=$array_bancos['BANCOLOMBIA TELECOMUNICACIONES']['cantidad']?></td>
+						<td style="text-align: center"><?="$ ".number_format($array_bancos['BANCOLOMBIA TELECOMUNICACIONES']['monto'],0,",",".")?></td>
+					</tr>
+					<tr>
+						<td>BANCOLOMBIA CUENTA CORRIENTE</td>
+						<td style="text-align: center"><?=$array_bancos['BANCOLOMBIA CUENTA CORRIENTE']['cantidad']?></td>
+						<td style="text-align: center"><?="$ ".number_format($array_bancos['BANCOLOMBIA CUENTA CORRIENTE']['monto'],0,",",".")?></td>
+					</tr>				
 				</tbody>
 				<tfoot>
 					<tr>
 						<th class="pie">TOTAL COBRANZA</th>
-						<th class="pie"><?= $array_bancos['Bancolombia']['cantidad']+$array_bancos['BBVA']['cantidad'] ?></th>
-						<th class="pie"><?= "$ ".number_format($array_bancos['Bancolombia']['monto']+$array_bancos['BBVA']['monto'],0,",",".") ?></th>			
+						<th class="pie"><?= $array_bancos['BANCOLOMBIA TV']['cantidad']+$array_bancos['BANCOLOMBIA TELECOMUNICACIONES']['cantidad']+$array_bancos['BANCOLOMBIA CUENTA CORRIENTE']['cantidad'] ?></th>
+						<th class="pie"><?= "$ ".number_format($array_bancos['BANCOLOMBIA TV']['monto']+$array_bancos['BANCOLOMBIA TELECOMUNICACIONES']['monto']+$array_bancos['BANCOLOMBIA CUENTA CORRIENTE']['monto'],0,",",".") ?></th>			
 					</tr>
 				</tfoot>
 			</table>
@@ -983,8 +1007,8 @@
 					</tr>
 					<tr>
 						<td>Transferencia</td>
-						<td style="text-align: center"><?=$array_bancos['Bancolombia']['cantidad']+$array_bancos['BBVA']['cantidad']?></td>
-						<td style="text-align: center"><?="$ ".number_format($array_bancos['Bancolombia']['monto']+$array_bancos['BBVA']['monto'],0,",",".")?></td>
+						<td style="text-align: center"><?=$array_bancos['BANCOLOMBIA TV']['cantidad']+$array_bancos['BANCOLOMBIA TELECOMUNICACIONES']['cantidad']+$array_bancos['BANCOLOMBIA CUENTA CORRIENTE']['cantidad']?></td>
+						<td style="text-align: center"><?="$ ".number_format($array_bancos['BANCOLOMBIA TV']['monto']+$array_bancos['BANCOLOMBIA TELECOMUNICACIONES']['monto']+$array_bancos['BANCOLOMBIA CUENTA CORRIENTE']['monto'],0,",",".")?></td>
 					</tr>
 					<tr>
 						<td>Cheque</td>
@@ -1006,8 +1030,8 @@
 				<tfoot>
 					<tr>
 						<th class="pie">TOTAL FORMA PAGO</th>
-						<th class="pie"><?=$array_efectivo['cantidad']+$array_bancos['Bancolombia']['cantidad']+$array_bancos['BBVA']['cantidad']?></th>
-						<th class="pie"><?="$ ".number_format($array_efectivo['monto']+$array_bancos['Bancolombia']['monto']+$array_bancos['BBVA']['monto'],0,",",".")?></th>			
+						<th class="pie"><?=$array_efectivo['cantidad']+$array_bancos['BANCOLOMBIA TV']['cantidad']+$array_bancos['BANCOLOMBIA TELECOMUNICACIONES']['cantidad']+$array_bancos['BANCOLOMBIA CUENTA CORRIENTE']['cantidad']?></th>
+						<th class="pie"><?="$ ".number_format($array_efectivo['monto']+$array_bancos['BANCOLOMBIA TV']['monto']+$array_bancos['BANCOLOMBIA TELECOMUNICACIONES']['monto']+$array_bancos['BANCOLOMBIA CUENTA CORRIENTE']['monto'],0,",",".")?></th>			
 					</tr>
 				</tfoot>
 			</table>

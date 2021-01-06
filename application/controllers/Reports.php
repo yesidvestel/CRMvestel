@@ -149,8 +149,8 @@ class Reports extends CI_Controller
             $cuenta2 = $this->reports->get_statements(7, $trans_type, $sdate, $edate);
             $cuenta3 = $this->reports->get_statements(8, $trans_type, $sdate, $edate);
             $data['cuenta1']=$cuenta1;
-            $data['cuenta2']=$cuenta1;
-            $data['cuenta3']=$cuenta1;
+            $data['cuenta2']=$cuenta2;
+            $data['cuenta3']=$cuenta3;
 
 
             $anulaciones=array();
