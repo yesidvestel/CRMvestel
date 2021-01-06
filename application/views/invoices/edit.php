@@ -319,10 +319,12 @@
 							 <td colspan="2">Internet
 							 <select name="combo" class="selectpicker form-control">
 										<option value="<?php echo $invoice['combo']; ?>">--<?php echo $invoice['combo']; ?></option>
-								 		<option value="no">No</option>
-                                        <option value="3 Megas">3 Megas</option>
-										<option value="5 Megas">5 Megas</option>
-										<option value="10 Megas">10 Megas</option>
+								 		<option value="no">No</option>							 		
+                                        <option value="1Mega">1 Mega</option>
+										<option value="2Megas">2 Megas</option>
+                                        <option value="3Megas">3 Megas</option>
+										<option value="5Megas">5 Megas</option>
+										<option value="10Megas">10 Megas</option>
                                     </select></td>
                             <td align="right" colspan="6"><input type="submit" class="btn btn-success sub-btn" value="<?php echo $this->lang->line('Update') ?>"
                                                                  id="submit-data" data-loading-text="Updating...">
