@@ -542,12 +542,12 @@
 				</thead>
 				<tbody>
 					<tr>
-						<td>Bancolombia</td>
+						<td>BANCOLOMBIA TV</td>
 						<td style="text-align: center"><?=$array_bancos['BANCOLOMBIA TV']['cantidad']?></td>
 						<td style="text-align: center"><?="$ ".number_format($array_bancos['BANCOLOMBIA TV']['monto'],0,",",".")?></td>
 					</tr>
 					<tr>
-						<td>BBVA colombia</td>
+						<td>BANCOLOMBIA TELECOMUNICACIONES</td>
 						<td style="text-align: center"><?=$array_bancos['BANCOLOMBIA TELECOMUNICACIONES']['cantidad']?></td>
 						<td style="text-align: center"><?="$ ".number_format($array_bancos['BANCOLOMBIA TELECOMUNICACIONES']['monto'],0,",",".")?></td>
 					</tr>
