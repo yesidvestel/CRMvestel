@@ -21,7 +21,7 @@
                         <div class="form-group row">
 
                             <label class="col-sm-2 col-form-label"
-                                   for="name"><?php echo $this->lang->line('Company Name') ?></label>
+                                   for="name"><?php echo $this->lang->line('Company') ?></label>
 
                             <div class="col-sm-10">
                                 <input type="text" placeholder="Name"
@@ -56,7 +56,7 @@
                         <div class="form-group row">
 
                             <label class="col-sm-2 col-form-label"
-                                   for="city"><?php echo $this->lang->line('Region') ?></label>
+                                   for="city">Dep</label>
 
                             <div class="col-sm-10">
                                 <input type="text" placeholder="city"
@@ -74,19 +74,7 @@
                                        class="form-control margin-bottom  required" name="country"
                                        value="<?php echo $company['country'] ?>">
                             </div>
-                        </div>
-
-                        <div class="form-group row">
-
-                            <label class="col-sm-2 col-form-label"
-                                   for="postbox"><?php echo $this->lang->line('PostBox') ?></label>
-
-                            <div class="col-sm-10">
-                                <input type="text" placeholder="PostBox"
-                                       class="form-control margin-bottom  required" name="postbox"
-                                       value="<?php echo $company['postbox'] ?>">
-                            </div>
-                        </div>
+                        </div>                       
 
                         <div class="form-group row">
 
@@ -113,7 +101,7 @@
                         <div class="form-group row">
 
                             <label class="col-sm-2 col-form-label"
-                                   for="email"><?php echo $this->lang->line('Tax') ?> ID </label>
+                                   for="email">Nit</label>
 
                             <div class="col-sm-10">
                                 <input type="text" placeholder="TAX ID"
