@@ -56,7 +56,7 @@
                         <div class="form-group row">
 
                             <label class="col-sm-2 col-form-label"
-                                   for="city"><?php echo $this->lang->line('Region') ?></label>
+                                   for="city">Departamento</label>
 
                             <div class="col-sm-10">
                                 <input type="text" placeholder="city"
@@ -79,7 +79,7 @@
                         <div class="form-group row">
 
                             <label class="col-sm-2 col-form-label"
-                                   for="postbox"><?php echo $this->lang->line('PostBox') ?></label>
+                                   for="postbox">Nit</label>
 
                             <div class="col-sm-10">
                                 <input type="text" placeholder="PostBox"
@@ -110,17 +110,7 @@
                                        value="<?php echo $company['email'] ?>">
                             </div>
                         </div>
-                        <div class="form-group row">
-
-                            <label class="col-sm-2 col-form-label"
-                                   for="email"><?php echo $this->lang->line('Tax') ?> ID </label>
-
-                            <div class="col-sm-10">
-                                <input type="text" placeholder="TAX ID"
-                                       class="form-control margin-bottom" name="taxid"
-                                       value="<?php echo $company['taxid'] ?>">
-                            </div>
-                        </div>
+                        
 
 
                         <div class="form-group row">

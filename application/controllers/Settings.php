@@ -49,10 +49,9 @@ class Settings extends CI_Controller
             $address = $this->input->post('address');
             $city = $this->input->post('city');
             $region = $this->input->post('region');
-            $country = $this->input->post('country');
+            $country = $this->input->post('country');            
             $postbox = $this->input->post('postbox');
-            $taxid = $this->input->post('taxid');
-            $this->settings->update_company(1, $name, $phone, $email, $address, $city, $region, $country, $postbox, $taxid);
+            $this->settings->update_company(1, $name, $phone, $email, $address, $city, $region, $country, $postbox);
 
         } else {
 
