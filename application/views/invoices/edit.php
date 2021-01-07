@@ -326,6 +326,13 @@
 										<option value="5Megas">5 Megas</option>
 										<option value="10Megas">10 Megas</option>
                                     </select></td>
+							 <td colspan="2">Punto Adicional 
+								<select name="puntos" class="selectpicker form-control">
+										<option value="<?php echo $invoice['puntos']; ?>">--<?php echo $invoice['puntos']; ?></option>
+										<option value="0">no</option>
+										<?php for ($i=1;$i<=15;$i++){
+										echo '<option value="'.$i.'">'.$i.'</option>';}?>
+                                    </select></td>
                             <td align="right" colspan="6"><input type="submit" class="btn btn-success sub-btn" value="<?php echo $this->lang->line('Update') ?>"
                                                                  id="submit-data" data-loading-text="Updating...">
                             </td>

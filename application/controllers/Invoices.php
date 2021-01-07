@@ -127,6 +127,7 @@ class Invoices extends CI_Controller
         $refer = $this->input->post('refer');
 		$television = $this->input->post('television');
 		$combo = $this->input->post('combo');
+		$puntos = $this->input->post('puntos');
         $total = $this->input->post('total');
         $project = $this->input->post('prjid');
         $total_tax = 0;
@@ -278,7 +279,8 @@ class Invoices extends CI_Controller
 			'term' => $pterms, 
 			'multi' => $currency, 
 			'television' => $television, 
-			'combo' => $combo);
+			'combo' => $combo,
+			'puntos' => $puntos);
 
         if ($flag == true) {
             $this->db->insert_batch('invoice_items', $productlist);
@@ -507,6 +509,7 @@ class Invoices extends CI_Controller
         $refer = $this->input->post('refer');
 		$television = $this->input->post('television');
 		$combo = $this->input->post('combo');
+		$puntos = $this->input->post('puntos');
         $total = $this->input->post('total');
         $total_tax = 0;
         $total_discount = 0;
@@ -661,6 +664,7 @@ class Invoices extends CI_Controller
 			'refer' => $refer,
 			'television' => $television,
 			'combo' => $combo,
+			'puntos' => $puntos,
 			'term' => $pterms,
 			'multi' => $currency);
         $this->db->set($data);

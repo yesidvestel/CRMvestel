@@ -256,7 +256,11 @@
 											if ($invoice['combo'] == no ){
 													echo '';
 												} else{
-													echo ' mas '.$invoice['combo'];}?>
+													echo ' mas '.$invoice['combo'];}
+											if ($invoice['puntos'] == 0 ){
+													echo '';
+												} else{
+													echo ' mas '.$invoice['puntos'].' puntos adicionales';}?>
                                         </code>
 										<p class="lead mt-1"><br>Nota:</p>
 										 <code>

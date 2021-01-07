@@ -42,7 +42,7 @@ class Settings_model extends CI_Model
             'address' => $address,
             'city' => $city,
             'region' => $region,
-            'country' => $country,			           
+            'country' => $country,		           
             'postbox' => $postbox
         );
 

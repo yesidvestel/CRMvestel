@@ -375,6 +375,9 @@ class Tickets Extends CI_Controller
                     $total+=$x;
                     $datay['product']=$producto->product_name;
 					$datay['qty']=1;
+					$tax2+=$datay['totaltax'];
+					$datay['tax']=0;
+					$datay['totaltax']=0;
                     $datay['price']=$x;
                     $datay['subtotal']=$x;     
                     if($ticket->detalle=="Instalacion" && $ticket->id_factura==null){
@@ -391,10 +394,28 @@ class Tickets Extends CI_Controller
                     $x=($x/31)*$diferencia->days;					
                     $y=(3992/31)*$diferencia->days;
                     $total+=$x;
+					$tax2+=$datay['totaltax'];
 					$datay['price']=$x;
                     $datay['tax']=19;
 					$datay['totaltax']=$y;
 					$datay['subtotal']=$x+$datay['totaltax'];
+                    if($ticket->detalle=="Instalacion" && $ticket->id_factura==null){
+                        $this->db->insert('invoice_items',$datay);
+                    }
+				}
+					if($data['puntos']!=='0'){                
+                    $producto = $this->db->get_where('products',array('pid'=>69))->row();
+                    $datay['pid']=$producto->pid;
+                    $datay['product']=$producto->product_name;
+					$datay['qty']=$data['puntos'];
+                    $x=intval($producto->product_price);
+                    $x=($x/31)*$diferencia->days;
+                    $total+=$x*$datay['qty'];
+					$tax2+=$datay['totaltax'];
+					$datay['tax']=0;
+					$datay['totaltax']=0;
+					$datay['price']=$x;
+					$datay['subtotal']=$x*$datay['qty'];
                     if($ticket->detalle=="Instalacion" && $ticket->id_factura==null){
                         $this->db->insert('invoice_items',$datay);
                     }
@@ -421,7 +442,7 @@ class Tickets Extends CI_Controller
 		
         
         $data['subtotal']=$total;
-		$data['tax']=$datay['totaltax']++;
+		$data['tax']=$tax2;
         $data['total']=$data['subtotal']+$data['tax'];
         //no haga ni insert ni update si no es instalacion y tambien si ya existe una factura
         $msg1="";
