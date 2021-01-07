@@ -33,7 +33,7 @@ class Settings_model extends CI_Model
     }
 
 
-    public function update_company($id, $name, $phone, $email, $address, $city, $region, $country, $taxid)
+    public function update_company($id, $name, $phone, $email, $address, $city, $region, $country, $postbox)
     {
         $data = array(
             'cname' => $name,
@@ -43,7 +43,7 @@ class Settings_model extends CI_Model
             'city' => $city,
             'region' => $region,
             'country' => $country,			           
-            'taxid' => $taxid
+            'postbox' => $postbox
         );
 
 
