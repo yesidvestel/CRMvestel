@@ -404,7 +404,7 @@ class Tickets Extends CI_Controller
                     }
 				}
 					if($data['puntos']!=='0'){                
-                    $producto = $this->db->get_where('products',array('pid'=>69))->row();
+                    $producto = $this->db->get_where('products',array('pid'=>158))->row();
                     $datay['pid']=$producto->pid;
                     $datay['product']=$producto->product_name;
 					$datay['qty']=$data['puntos'];

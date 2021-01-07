@@ -254,10 +254,11 @@ class Importequipo extends CI_Controller
 						$datax['refer']=$array[18];						
 						$datax['television']=$array[19];
 						$datax['combo']=$array[20];
-						$datax['term']=$array[21];
-						$datax['rec']=$array[22];
-						$datax['ron']=$array[23];
-						$datax['multi']=$array[24];
+						$datax['puntos']=$array[21];
+						$datax['term']=$array[22];
+						$datax['rec']=$array[23];
+						$datax['ron']=$array[24];
+						$datax['multi']=$array[25];
 						//servicios agregados
 						$lista_de_invoice_items = $this->db->select('*')->from('invoice_items')->get()->result();
 						$datay['tid']=$datax['tid'];
@@ -304,6 +305,17 @@ class Importequipo extends CI_Controller
 								$datay['totaltax']=3992;
 								$datay['subtotal']=$x+$datay['totaltax'];
 								$this->db->insert('invoice_items',$datay);
+							}
+							if($datax['puntos']!=='0'){                
+								$producto = $this->db->get_where('products',array('pid'=>158))->row();
+								$datay['pid']=$producto->pid;
+								$datay['product']=$producto->product_name;
+								$datay['qty']=$datax['puntos'];
+								$x=intval($producto->product_price);
+								$datay['tax']=0;
+								$datay['totaltax']=0;
+								$datay['price']=$x;
+								$datay['subtotal']=$x*$datay['qty'];									
 							}
 							
                         
