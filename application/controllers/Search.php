@@ -84,7 +84,7 @@ class Search extends CI_Controller
 
 
         if ($name) {
-            $query = $this->db->query("SELECT id,abonado, name,documento,company,celular,email FROM customers WHERE UPPER(name)  LIKE '" . strtoupper($name) . "%' OR UPPER(documento) LIKE  '" . strtoupper($name) . "%' OR UPPER(abonado) LIKE  '" . strtoupper($name). "%' LIMIT 6");
+            $query = $this->db->query("SELECT id,abonado, name,unoapellido,documento,company,celular,email,ciudad FROM customers WHERE UPPER(name)  LIKE '" . strtoupper($name) . "%' OR UPPER(documento) LIKE  '" . strtoupper($name) . "%' OR UPPER(abonado) LIKE  '" . strtoupper($name). "%' LIMIT 6");
 
             $result = $query->result_array();
 
@@ -97,8 +97,8 @@ class Search extends CI_Controller
                     <a href="' . base_url('customers/view?id=' . $row['id']) . '" class="list-group-item">  <div class="media">
                         <div class="media-left valign-middle"><i class="icon-user1 icon-bg-circle bg-cyan"></i></div>
                         <div class="media-body">
-                          <h6 class="media-heading">' . $row['name'] .$row['unoapellido']. '</h6>
-                          <p class="notification-text font-small-3 text-muted">' . $row['documento'] . ',' . $row['celular'] . '</p><small><i class="icon-phone"></i> ' . $row['unoapellido'] . '</small>
+                          <h6 class="media-heading">' . $row['name'] .' '.$row['unoapellido']. '</h6>
+                          <p class="notification-text font-small-3 text-muted">' . $row['abonado'] . ',' . $row['documento'] .',' . $row['ciudad'] . '</p><small><i class="icon-phone"></i> ' . $row['celular'] . '</small>
                         </div>
                       </div></a>
                  
