@@ -55,6 +55,7 @@
 	$array_afiliaciones=array();
 	$var_cuenta_planes=array("1Mega"=>0,"2Megas"=>0,"3Megas"=>0,"5Megas"=>0,"10Megas"=>0,"Television"=>0); 
 	$var_cuenta_planes_montos=array("1MegaMonto"=>0,"2MegasMonto"=>0,"3MegasMonto"=>0,"5MegasMonto"=>0,"10MegasMonto"=>0,"TelevisionMonto"=>0); 
+	$television1=array('monto' => 0, 'iva'=>0);
 //tabla total cobranza
 	//productos con iva
 		$cuantos_prod_con_iva_hay=0;
@@ -77,25 +78,7 @@
 			$invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
 			$invoice_items=$this->db->get_where('invoice_items',array('tid' =>$value['tid']))->result_array();
 //resumen por cobranza
-			if($invoice->tax==0){
-				$monto_prod_sin_iva_hay+=intval($value['credit']);
-				$cuantos_prod_sin_iva_hay++;
-			}else{
-				$cuantos_prod_con_iva_hay++;
-				if($value['credit']!=0){
-					$valor_parcial=intval($value['credit']);
-					$valor_total=intval($invoice->total);
-					$cuanto_porcentaje=($valor_parcial*100)/$valor_total;
-					$cuanto_iva=intval($invoice->tax);
-					$cuanto_iva=($cuanto_iva*$cuanto_porcentaje)/100;
-					$cuanto_iva=intval($cuanto_iva);
-					
-					$valor_parcial=$valor_parcial-$cuanto_iva;
-					//montos
-					$monto_prod_con_iva_hay+=$valor_parcial;
-					$monto_iva_prod_con_iva_hay+=$cuanto_iva;
-				}
-			}
+			
 //end resumen por cobranza
 			$sumatoria_items=0;
 			$items_tocados=array();
@@ -199,6 +182,13 @@
 					 			$valor_item=($valor_parcial*$cuanto_porcentaje_item_en_invoice)/100;
 					 			$var_cuenta_planes_montos['TelevisionMonto']+=$valor_item;	
 					 			$sumatoria_items+=$valor_item;
+
+					 			$cuanto_porcentaje=($valor_parcial*100)/$valor_total;
+								$cuanto_iva=$invoice->tax;
+								$cuanto_iva=($cuanto_iva*$cuanto_porcentaje)/100;
+								$cuanto_iva=$cuanto_iva;
+								$television1['monto']+=$valor_item;
+								$television1['iva']+=$cuanto_iva;
 					 			$items_tocados['TelevisionMonto']=true;
 					 		}
 					}else{
@@ -229,6 +219,8 @@
 				
 				
 			}
+			//termina foreach items invoices
+			
 			if($sumatoria_items<$value['credit'] ){
 				$diference=$value['credit']-$sumatoria_items;
 				if($diference>1){
@@ -245,6 +237,7 @@
 					}
 					
 					//var_dump("sum = ".$sumatoria_items." | credit=".$value['credit']." id=".$value['tid']);	
+
 				}
 
 				
@@ -268,7 +261,31 @@
 				}
 				
 			}
+		
+			if($invoice->tax==0){
+				//$monto_prod_sin_iva_hay+=intval($value['credit']);
+				//$cuantos_prod_sin_iva_hay++;
+			}else{
+				$cuantos_prod_con_iva_hay++;
+				/*if($value['credit']!=0){					
+					$valor_parcial=intval($value['credit']);
+					$valor_total=intval($invoice->total);
+					$cuanto_porcentaje=($valor_parcial*100)/$valor_total;
+					$cuanto_iva=intval($invoice->tax);
+					$cuanto_iva=($cuanto_iva*$cuanto_porcentaje)/100;
+					$cuanto_iva=intval($cuanto_iva);
+					
+					$valor_parcial=$valor_parcial-$cuanto_iva;
+					//montos
+					//$monto_prod_con_iva_hay+=$valor_parcial;
+					//$monto_iva_prod_con_iva_hay+=$cuanto_iva;
+				}*/
+			}
+
+
 			$items_tocados=array();
+
+
 
 			if($value['method']=="Bank"){
 				/*if($value['nombre_banco']=="Bancolombia"){
@@ -286,7 +303,12 @@
 
 			//$var_prueba1+=intval($value['credit']);
 			//var_dump("TID= ".$invoice->tid."  ValorTotal =".$var_prueba1." valor_invoice=".$invoice->total);
-		 }
+		 }//termina foreach de lista
+		 $monto_prod_con_iva_hay=$television1['monto']-$television1['iva'];
+		 $monto_iva_prod_con_iva_hay=$television1['iva'];
+
+		 
+		 
 		 //bancos
 		 foreach ($cuenta1 as $key => $value) {
 		 	if($value['estado']!="Anulada"){
@@ -456,6 +478,9 @@
 						//end sumatorias
 
 					}
+					$cuantos_prod_sin_iva_hay=$array_resumen_tipo_servicio['Internet']['cantidad'];
+					$monto_prod_sin_iva_hay= ($array_resumen_tipo_servicio['Internet']['monto']+$array_resumen_tipo_servicio['Television']['monto'])-($monto_prod_con_iva_hay+$monto_iva_prod_con_iva_hay);
+
 
 		 //fin resumen por tipo de servicio 
  			//var_dump($var_prueba1);
@@ -518,7 +543,7 @@
 						<td>Base</td><td style="text-align: center"><?=$cuantos_prod_con_iva_hay?></td><td style="text-align: center"><?="$ ".number_format($monto_prod_con_iva_hay,0,",",".")?></td>
 					</tr>
 					<tr>
-						<td>iva</td><td style="text-align: center"><?=$cuantos_prod_con_iva_hay?></td><td style="text-align: center"><?="$ ".number_format($monto_iva_prod_con_iva_hay,0,",",".")?></td>
+						<td>iva</td><td style="text-align: center"></td><td style="text-align: center"><?="$ ".number_format($monto_iva_prod_con_iva_hay,0,",",".")?></td>
 					</tr>
 					
 				</tbody>

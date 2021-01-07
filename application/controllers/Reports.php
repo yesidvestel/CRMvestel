@@ -143,7 +143,7 @@ class Reports extends CI_Controller
                 }
                 
             }
-            $data['lista']=$lista2;
+            
 
             $cuenta1 = $this->reports->get_statements(6, $trans_type, $sdate, $edate);
             $cuenta2 = $this->reports->get_statements(7, $trans_type, $sdate, $edate);
@@ -151,10 +151,41 @@ class Reports extends CI_Controller
             $data['cuenta1']=$cuenta1;
             $data['cuenta2']=$cuenta2;
             $data['cuenta3']=$cuenta3;
-
-
+            $caja1=$this->db->get_where('accounts',array('id' =>$pay_acc))->row();
+            foreach ($cuenta1 as $key => $value) {
+                if($value['estado']!="Anulada"){
+                    
+                    $invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
+                    $invoice->refer=str_replace(" ","",$invoice->refer);                                
+                    if($invoice->refer==$caja1->holder){                    
+                        $lista2[]=$value;
+                        
+                    }
+                }
+            }
+         
+         foreach ($cuenta2 as $key => $value) {         
+            if($value['estado']!="Anulada"){
+                $invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
+                $invoice->refer=str_replace(" ","",$invoice->refer);
+                if($invoice->refer==$caja1->holder){
+                    $lista2[]=$value;
+                }
+            }
+         }
+         
+         foreach ($cuenta3 as $key => $value) {         
+            if($value['estado']!="Anulada"){
+                $invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
+                $invoice->refer=str_replace(" ","",$invoice->refer);
+                if($invoice->refer==$caja1->holder){
+                    $lista2[]=$value;
+                }
+            }
+         }
+         $data['lista']=$lista2;
             $anulaciones=array();
-            foreach ($list as $key => $value) {
+            foreach ($list as $key => $caja1->holder) {
                 if($value["estado"]=="Anulada"){
                     $anulaciones[]=$value;
                 }
