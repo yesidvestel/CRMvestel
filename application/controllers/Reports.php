@@ -294,7 +294,7 @@ class Reports extends CI_Controller
             $data['cuenta2']=$cuenta2;
             $data['cuenta3']=$cuenta3;
             $caja1=$this->db->get_where('accounts',array('id' =>$pay_acc))->row();
-            
+
             foreach ($cuenta1 as $key => $value) {
                 $invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
                 $invoice->refer=str_replace(" ","",$invoice->refer);                                
@@ -447,7 +447,40 @@ class Reports extends CI_Controller
             
         $list = $this->reports->get_statements($pay_acc, $trans_type, $sdate, $edate);
         $balance = 0;
-
+            $cuenta1 = $this->reports->get_statements(6, $trans_type, $sdate, $edate);
+            $cuenta2 = $this->reports->get_statements(7, $trans_type, $sdate, $edate);
+            $cuenta3 = $this->reports->get_statements(8, $trans_type, $sdate, $edate);
+            $caja1=$this->db->get_where('accounts',array('id' =>$pay_acc))->row();
+            foreach ($cuenta1 as $key => $value) {
+                $invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
+                $invoice->refer=str_replace(" ","",$invoice->refer);                                
+                if($value['estado']!="Anulada"){                
+                    if($invoice->refer==$caja1->holder){                    
+                        $list[]=$value;
+                        
+                    }
+                }
+            }
+         
+         foreach ($cuenta2 as $key => $value) {         
+            $invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
+            $invoice->refer=str_replace(" ","",$invoice->refer);
+            if($value['estado']!="Anulada"){                
+                if($invoice->refer==$caja1->holder){
+                    $list[]=$value;
+                }
+            }
+         }
+         
+         foreach ($cuenta3 as $key => $value) {         
+            $invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
+            $invoice->refer=str_replace(" ","",$invoice->refer);
+            if($value['estado']!="Anulada"){
+                if($invoice->refer==$caja1->holder){
+                    $list[]=$value;
+                }
+            }
+         }
         foreach ($list as $row) {
             
             if($row['estado']!="Anulada"){
@@ -468,6 +501,40 @@ class Reports extends CI_Controller
             $edate=$datex->format('Y-m-d')." 23:59:00";
             
         $list = $this->reports->get_statements($pay_acc, $trans_type, $sdate, $edate);
+        $cuenta1 = $this->reports->get_statements(6, $trans_type, $sdate, $edate);
+            $cuenta2 = $this->reports->get_statements(7, $trans_type, $sdate, $edate);
+            $cuenta3 = $this->reports->get_statements(8, $trans_type, $sdate, $edate);
+            $caja1=$this->db->get_where('accounts',array('id' =>$pay_acc))->row();
+            foreach ($cuenta1 as $key => $value) {
+                $invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
+                $invoice->refer=str_replace(" ","",$invoice->refer);                                
+                if($value['estado']!="Anulada"){                
+                    if($invoice->refer==$caja1->holder){                    
+                        $list[]=$value;
+                        
+                    }
+                }
+            }
+         
+         foreach ($cuenta2 as $key => $value) {         
+            $invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
+            $invoice->refer=str_replace(" ","",$invoice->refer);
+            if($value['estado']!="Anulada"){                
+                if($invoice->refer==$caja1->holder){
+                    $list[]=$value;
+                }
+            }
+         }
+         
+         foreach ($cuenta3 as $key => $value) {         
+            $invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
+            $invoice->refer=str_replace(" ","",$invoice->refer);
+            if($value['estado']!="Anulada"){
+                if($invoice->refer==$caja1->holder){
+                    $list[]=$value;
+                }
+            }
+         }
         $balance = 0;
         $var_lista="";
         $conteo=0;
