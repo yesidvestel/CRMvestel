@@ -263,38 +263,13 @@
 			}
 		
 			if($invoice->tax==0){
-				//$monto_prod_sin_iva_hay+=intval($value['credit']);
-				//$cuantos_prod_sin_iva_hay++;
+				
 			}else{
 				$cuantos_prod_con_iva_hay++;
-				/*if($value['credit']!=0){					
-					$valor_parcial=intval($value['credit']);
-					$valor_total=intval($invoice->total);
-					$cuanto_porcentaje=($valor_parcial*100)/$valor_total;
-					$cuanto_iva=intval($invoice->tax);
-					$cuanto_iva=($cuanto_iva*$cuanto_porcentaje)/100;
-					$cuanto_iva=intval($cuanto_iva);
-					
-					$valor_parcial=$valor_parcial-$cuanto_iva;
-					//montos
-					//$monto_prod_con_iva_hay+=$valor_parcial;
-					//$monto_iva_prod_con_iva_hay+=$cuanto_iva;
-				}*/
 			}
-
-
 			$items_tocados=array();
-
-
-
 			if($value['method']=="Bank"){
-				/*if($value['nombre_banco']=="Bancolombia"){
-					$array_bancos['Bancolombia']['cantidad']++;
-					$array_bancos['Bancolombia']['monto']+=intval($value['credit']);
-				}else{
-					$array_bancos['BBVA']['cantidad']++;
-					$array_bancos['BBVA']['monto']+=intval($value['credit']);
-				}*/
+			
 			}else if($value['method']=="Cash"){
 				$array_efectivo['cantidad']++;
 				$array_efectivo['monto']+=$value['credit'];

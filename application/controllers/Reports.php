@@ -143,7 +143,12 @@ class Reports extends CI_Controller
                 }
                 
             }
-            
+            $anulaciones=array();
+            foreach ($list as $key => $value) {
+                if($value["estado"]=="Anulada"){
+                    $anulaciones[]=$value;
+                }
+            }
 
             $cuenta1 = $this->reports->get_statements(6, $trans_type, $sdate, $edate);
             $cuenta2 = $this->reports->get_statements(7, $trans_type, $sdate, $edate);
@@ -153,81 +158,89 @@ class Reports extends CI_Controller
             $data['cuenta3']=$cuenta3;
             $caja1=$this->db->get_where('accounts',array('id' =>$pay_acc))->row();
             foreach ($cuenta1 as $key => $value) {
-                if($value['estado']!="Anulada"){
-                    
-                    $invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
-                    $invoice->refer=str_replace(" ","",$invoice->refer);                                
+                $invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
+                $invoice->refer=str_replace(" ","",$invoice->refer);                                
+                if($value['estado']!="Anulada"){                
                     if($invoice->refer==$caja1->holder){                    
                         $lista2[]=$value;
                         
+                    }
+                }else{
+                    if($invoice->refer==$caja1->holder){                    
+                        $anulaciones[]=$value;                        
                     }
                 }
             }
          
          foreach ($cuenta2 as $key => $value) {         
-            if($value['estado']!="Anulada"){
-                $invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
-                $invoice->refer=str_replace(" ","",$invoice->refer);
+            $invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
+            $invoice->refer=str_replace(" ","",$invoice->refer);
+            if($value['estado']!="Anulada"){                
                 if($invoice->refer==$caja1->holder){
                     $lista2[]=$value;
                 }
+            }else{
+                    if($invoice->refer==$caja1->holder){                    
+                        $anulaciones[]=$value;
+                    }
             }
          }
          
          foreach ($cuenta3 as $key => $value) {         
+            $invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
+            $invoice->refer=str_replace(" ","",$invoice->refer);
             if($value['estado']!="Anulada"){
-                $invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
-                $invoice->refer=str_replace(" ","",$invoice->refer);
                 if($invoice->refer==$caja1->holder){
                     $lista2[]=$value;
                 }
+            }else{
+                    if($invoice->refer==$caja1->holder){                    
+                        $anulaciones[]=$value; 
+                    }
             }
          }
          $data['lista']=$lista2;
-            $anulaciones=array();
-            foreach ($list as $key => $caja1->holder) {
-                if($value["estado"]=="Anulada"){
-                    $anulaciones[]=$value;
-                }
-            }
-            $data['lista_anulaciones']=$anulaciones;
+         $data['lista_anulaciones']=$anulaciones;
             
             //obteniendo datos mes actual
             $dia_inicial_mes_actual = date($datex->format("Y-m")."-01 00:00:00");
             $dia_final_de_mes_actual=date($datex->format("Y-m")."-t 23:00:00", strtotime($dia_inicial_mes_actual));
-            $lista_mes_actual = $this->reports->get_statements($pay_acc, $trans_type, $dia_inicial_mes_actual, $dia_final_de_mes_actual);
+            
             //end obteniendo datos mes actual
-            $data['lista_mes_actual']=$lista_mes_actual;
+            
             //obteniendo datos mes anterior
             $xdate=strtotime($datex->format("Y-m-d")." 00:00:00");
-            
-
-            $dia_inicial_mes_anterior=date("Y-m", strtotime("-1 month", $xdate))."-01";
+            $dia_inicial_mes_anterior=date("Y-m", strtotime("-1 month", $xdate))."-01 00:00:00";
             $dia_final_de_mes_anterior=date("Y-m-t 23:00:00", strtotime($dia_inicial_mes_anterior));
-            
-            
-            
-            $lista_mes_anterior = $this->reports->get_statements($pay_acc, $trans_type, $dia_inicial_mes_anterior, $dia_final_de_mes_anterior);
-            //obteniendo datos mes anterior
-            
-            $data['lista_mes_anterior']=$lista_mes_anterior;
         //fin codigo listar
             $data['texto_mes_actual']=$this->reports->devolver_nombre_mes($datex->format('m'))." ".$datex->format('Y');
             $d1=new DateTime($dia_inicial_mes_anterior);
             $data['texto_mes_anterior']=$this->reports->devolver_nombre_mes($d1->format("m"))." ".$d1->format("Y");
 
+            
+            //mes anterior
             $list3 =array();
-            foreach ($lista_mes_anterior as $key => $value) {
-                if($value['estado']!="Anulada"){
+            $fecha_inicial=strtotime($dia_inicial_mes_anterior);
+            $fecha_final=strtotime($dia_final_de_mes_anterior);
+            foreach ($lista2 as $key => $value) {
+                $invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
+                $fecha_invoice=strtotime($invoice->invoicedate);
+                if ($fecha_invoice>=$fecha_inicial && $fecha_invoice<=$fecha_final) {
                     $list3[]=$value;
                 }
             }
             $data['lista_mes_anterior']=$list3;
+            //mes actual
+            $fecha_inicial=strtotime($dia_inicial_mes_actual);
+            $fecha_final=strtotime($dia_final_de_mes_actual);
             $lista4=array();
-            foreach ($lista_mes_actual as $key => $value) {
-                if($value['estado']!="Anulada"){
+            foreach ($lista2 as $key => $value) {
+                $invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
+                $fecha_invoice=strtotime($invoice->invoicedate);
+                if($fecha_invoice>=$fecha_inicial && $fecha_invoice<=$fecha_final){
                     $lista4[]=$value;
                 }
+                
             }
             $data['lista_mes_actual']=$lista4;
 
@@ -267,53 +280,107 @@ class Reports extends CI_Controller
                 }
                 
             }
-            $data['lista']=$lista2;
             $anulaciones=array();
             foreach ($list as $key => $value) {
                 if($value["estado"]=="Anulada"){
                     $anulaciones[]=$value;
                 }
             }
-            $data['lista_anulaciones']=$anulaciones;
+
+            $cuenta1 = $this->reports->get_statements(6, $trans_type, $sdate, $edate);
+            $cuenta2 = $this->reports->get_statements(7, $trans_type, $sdate, $edate);
+            $cuenta3 = $this->reports->get_statements(8, $trans_type, $sdate, $edate);
+            $data['cuenta1']=$cuenta1;
+            $data['cuenta2']=$cuenta2;
+            $data['cuenta3']=$cuenta3;
+            $caja1=$this->db->get_where('accounts',array('id' =>$pay_acc))->row();
             
+            foreach ($cuenta1 as $key => $value) {
+                $invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
+                $invoice->refer=str_replace(" ","",$invoice->refer);                                
+                if($value['estado']!="Anulada"){                
+                    if($invoice->refer==$caja1->holder){                    
+                        $lista2[]=$value;
+                        
+                    }
+                }else{
+                    if($invoice->refer==$caja1->holder){                    
+                        $anulaciones[]=$value;                        
+                    }
+                }
+            }
+         
+         foreach ($cuenta2 as $key => $value) {         
+            $invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
+            $invoice->refer=str_replace(" ","",$invoice->refer);
+            if($value['estado']!="Anulada"){                
+                if($invoice->refer==$caja1->holder){
+                    $lista2[]=$value;
+                }
+            }else{
+                    if($invoice->refer==$caja1->holder){                    
+                        $anulaciones[]=$value;
+                    }
+            }
+         }
+         
+         foreach ($cuenta3 as $key => $value) {         
+            $invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
+            $invoice->refer=str_replace(" ","",$invoice->refer);
+            if($value['estado']!="Anulada"){
+                if($invoice->refer==$caja1->holder){
+                    $lista2[]=$value;
+                }
+            }else{
+                    if($invoice->refer==$caja1->holder){                    
+                        $anulaciones[]=$value; 
+                    }
+            }
+         }
+         $data['lista']=$lista2;
+         $data['lista_anulaciones']=$anulaciones;
+            
+            //obteniendo datos mes actual
             $dia_inicial_mes_actual = date($datex->format("Y-m")."-01 00:00:00");
             $dia_final_de_mes_actual=date($datex->format("Y-m")."-t 23:00:00", strtotime($dia_inicial_mes_actual));
-            $lista_mes_actual = $this->reports->get_statements($pay_acc, $trans_type, $dia_inicial_mes_actual, $dia_final_de_mes_actual);
+            
             //end obteniendo datos mes actual
-            $data['lista_mes_actual']=$lista_mes_actual;
+            
             //obteniendo datos mes anterior
             $xdate=strtotime($datex->format("Y-m-d")." 00:00:00");
-            
-
-            $dia_inicial_mes_anterior=date("Y-m", strtotime("-1 month", $xdate))."-01";
+            $dia_inicial_mes_anterior=date("Y-m", strtotime("-1 month", $xdate))."-01 00:00:00";
             $dia_final_de_mes_anterior=date("Y-m-t 23:00:00", strtotime($dia_inicial_mes_anterior));
-            
-            
-            
-            $lista_mes_anterior = $this->reports->get_statements($pay_acc, $trans_type, $dia_inicial_mes_anterior, $dia_final_de_mes_anterior);
-            //obteniendo datos mes anterior
-            
-            $data['lista_mes_anterior']=$lista_mes_anterior;
         //fin codigo listar
             $data['texto_mes_actual']=$this->reports->devolver_nombre_mes($datex->format('m'))." ".$datex->format('Y');
             $d1=new DateTime($dia_inicial_mes_anterior);
             $data['texto_mes_anterior']=$this->reports->devolver_nombre_mes($d1->format("m"))." ".$d1->format("Y");
 
+            
+            //mes anterior
             $list3 =array();
-            foreach ($lista_mes_anterior as $key => $value) {
-                if($value['estado']!="Anulada"){
+            $fecha_inicial=strtotime($dia_inicial_mes_anterior);
+            $fecha_final=strtotime($dia_final_de_mes_anterior);
+            foreach ($lista2 as $key => $value) {
+                $invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
+                $fecha_invoice=strtotime($invoice->invoicedate);
+                if ($fecha_invoice>=$fecha_inicial && $fecha_invoice<=$fecha_final) {
                     $list3[]=$value;
                 }
             }
             $data['lista_mes_anterior']=$list3;
+            //mes actual
+            $fecha_inicial=strtotime($dia_inicial_mes_actual);
+            $fecha_final=strtotime($dia_final_de_mes_actual);
             $lista4=array();
-            foreach ($lista_mes_actual as $key => $value) {
-                if($value['estado']!="Anulada"){
+            foreach ($lista2 as $key => $value) {
+                $invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
+                $fecha_invoice=strtotime($invoice->invoicedate);
+                if($fecha_invoice>=$fecha_inicial && $fecha_invoice<=$fecha_final){
                     $lista4[]=$value;
                 }
+                
             }
             $data['lista_mes_actual']=$lista4;
-
 
            $data['lista_datos']=$this->statements_para_pdf();
            $data['caja']=$this->input->post('caja');
