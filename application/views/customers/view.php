@@ -371,7 +371,7 @@
                         			</tr>';
 									}else{
 										echo '<tr>
-                            		<td>' . $row['fecha'] . '</td><td>' . $row['tipos'] . '</td><td>' . $row['nombres'] .$row['idn']. '</td>
+                            		<td>' . $row['fecha'] . '</td><td>' . $row['tipos'] . '</td><td>' . $row['nombres'] . '</td>
 									<td><a class="btn btn-danger" onclick="eliminar_documento(' .$row['idn'].')" > <i class="icon-trash-o "></i></a></td>
                         			</tr>';
 										$i++;
