@@ -683,9 +683,9 @@ class Customers_model extends CI_Model
     public function activity($id)
     {
         $this->db->select('*');
-        $this->db->from('meta_data');
-        $this->db->where('type', 21);
-        $this->db->where('rid', $id);
+        $this->db->from('historiales');
+        //$this->db->where('type', 21);
+        $this->db->where('id_user', $id);
         $query = $this->db->get();
         return $query->result_array();
     }

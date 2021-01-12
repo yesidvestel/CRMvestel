@@ -344,23 +344,34 @@
                                 </div>
                             </div>
                             <hr>
-                            <h5 class="text-xs-center">Wallet Recharge/<?php echo $this->lang->line('Payment History') ?></h5>
+                            <h5 class="text-xs-center col-md-10">OBSERVACIONES</h5>
+							<div class="col-md-1">
+
+                                    <a href="#pop_model" data-toggle="modal" onclick="funcion_status();" data-remote="false" class="btn btn-success btn-lg" style="border-right-width: -2px;border-bottom-width: 0px;border-top-width: 0px;border-right-width: 0px;border-left-width: 0px;margin-top: -10;margin-bottom: 2px;padding-top: 5px;padding-bottom: 5px;">
+										 + </a>
+
+                                </div>
                             <table class="table table-striped">
                                 <thead>
                                 <tr>
-                                    <th><?php echo $this->lang->line('Amount') ?></th>
-                                    <th><?php echo $this->lang->line('Note') ?></th>
+                                    <th >Fecha</th>
+                                    <th>Tipo</th>
+									<th>Detalle</th>
 
 
                                 </tr>
                                 </thead>
                                 <tbody id="activity">
                                 <?php foreach ($activity as $row) {
-
+									if ($row['tipos']=='Cambio Titular'){
                                     echo '<tr>
-                            <td>' . amountFormat($row['col1']) . '</td><td>' . $row['col2'] . '</td>
-                           
-                        </tr>';
+                            		<td>' . $row['fecha'] . '</td><td>' . $row['tipos'] . '</td><td>' . $row['nombres'].', '.$row['tdocumento'] .': '.$row['documento2'] . '</td>
+                        			</tr>';
+									}else{
+										echo '<tr>
+                            		<td>' . $row['fecha'] . '</td><td>' . $row['tipos'] . '</td><td>' . $row['nombres'] . '</td>
+                        			</tr>';
+									}
                                 } ?>
 
                                 </tbody>
@@ -476,7 +487,7 @@
                     </div>
 					<input type="hidden" name="tcliente" value="<?php echo $details['tipo_cliente'] ?>">
 					<input type="hidden" name="tdocumento" value="<?php echo $details['tipo_documento'] ?>">
-					<input type="hidden" class="form-control required" placeholder="Billing Date" name="fecha" data-toggle="datepicker" autocomplete="false">
+					<input type="hidden" class="form-control" placeholder="Billing Date" name="fecha" data-toggle="datepicker" autocomplete="false">
                 </div>
 				<hr>
 				<div class="row m-t-lg">
@@ -545,6 +556,48 @@
                         <input type="hidden" id="action-url" value="customers/act_titular">
                         <button type="button" class="btn btn-primary"
                                 id="submit_model2">Realizar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="pop_model" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Observacion</h4>
+            </div>			
+            <div class="modal-body">
+                <form id="form_model">
+					<div class="form-group row">						
+                    <div class="frmSearch">
+						<label for="cst" class="caption col-sm-2 col-form-label">Tipo</label>
+                        <div class="col-sm-6">
+							<input type="hidden" name="iduser2" value="<?php echo $details['id'] ?>"></input>
+							<select class="form-control" name="tipo">
+													<option value="Sobre Cuenta">Sobre Cuenta</option>
+                                                	<option value="Sobre Datos">Sobre Datos</option>
+                                                  	<option value="Sobre Equipo">Sobre Equipo</option>
+                                                	<option value="Otros">Otros</option>
+                                            </select>
+                        </div>
+                    </div>
+
+                </div>
+				<div class="form-group row">
+                    <label for="toBizName" class="caption col-sm-2 col-form-label">Detalles</label>
+                    <div class="col-sm-10">                        
+                        <textarea class="summernote" placeholder=" Message" autocomplete="false" rows="10" name="detalle2"></textarea>
+						<input type="hidden" class="form-control" placeholder="Billing Date" name="fecha2" data-toggle="datepicker" autocomplete="false">
+                    </div>					
+                </div>	
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">Volver</button>
+                        <input type="hidden" id="action-url" value="customers/obser">
+                        <button type="button" class="btn btn-primary"
+                                id="submit_model">Realizar</button>
                     </div>
                 </form>
             </div>

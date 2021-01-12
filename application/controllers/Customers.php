@@ -467,6 +467,7 @@ class Customers extends CI_Controller
         $fecha=$dt1->format("Y-m-d");
 		$data1 = array(				
 			'id_user' => $id,
+			'tipos' => 'Cambio Titular',
 			'nombres' => $nombres,
 			'tcliente' => $tcliente,
 			'tdocumento' => $tdocumento,
@@ -474,6 +475,30 @@ class Customers extends CI_Controller
 			'fecha' => $fecha,
 			'observacion' => $observacion);		
        $this->db->insert('historiales', $data1);
+		
+		
+
+        echo json_encode(array('status' => 'Success', 'message' =>
+            $this->lang->line('UPDATED'), 'pstatus' => $status));
+    }
+	public function obser()
+    {
+        $id = $this->input->post('iduser2');
+        $tipo = $this->input->post('tipo');
+		$detalle = $this->input->post('detalle2');
+		$fcha = $this->input->post('fecha2');
+		$dt1=new DateTime($fcha);
+        $fecha=$dt1->format("Y-m-d");
+		$datos = array(				
+			'id_user' => $id,
+			'tipos' => $tipo,
+			'nombres' => $detalle,
+			'tcliente' => '',
+			'tdocumento' => '',
+			'documento2' => '',
+			'fecha' => $fecha,
+			'observacion' => '');		
+       $this->db->insert('historiales', $datos);
 		
 		
 
