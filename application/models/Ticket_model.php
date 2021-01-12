@@ -172,9 +172,9 @@ class Ticket_model extends CI_Model
     {
 
         $query = $this->db->query("SELECT
-				COUNT(IF( status = 'Pendiente', id, NULL)) AS Pendiente,
-				COUNT(IF( status = 'Realizando', id, NULL)) AS Realizando,
-				COUNT(IF( status = 'Resuelto', id, NULL)) AS Resuelto
+				COUNT(IF( status = 'Pendiente', idt, NULL)) AS Pendiente,
+				COUNT(IF( status = 'Realizando', idt, NULL)) AS Realizando,
+				COUNT(IF( status = 'Resuelto', idt, NULL)) AS Resuelto
 				FROM tickets ");
         echo json_encode($query->result_array());
 

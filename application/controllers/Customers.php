@@ -283,6 +283,16 @@ class Customers extends CI_Controller
             echo json_encode(array('status' => 'Error', 'message' => 'Error!'));
         }
     }
+	public function delete_obs()
+    {  
+        $id = $this->input->post('deleteid');
+
+        if ($this->customers->deleteobs($id)) {
+            echo json_encode(array('status' => 'Success', 'message' => $this->lang->line('DELETED')));
+        } else {
+            echo json_encode(array('status' => 'Error', 'message' => $this->lang->line('ERROR')));
+        }
+    }
 
     public function displaypic()
     {

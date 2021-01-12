@@ -357,6 +357,7 @@
                                     <th >Fecha</th>
                                     <th>Tipo</th>
 									<th>Detalle</th>
+									<th>Accion</th>
 
 
                                 </tr>
@@ -366,11 +367,14 @@
 									if ($row['tipos']=='Cambio Titular'){
                                     echo '<tr>
                             		<td>' . $row['fecha'] . '</td><td>' . $row['tipos'] . '</td><td>' . $row['nombres'].', '.$row['tdocumento'] .': '.$row['documento2'] . '</td>
+									<td><a class="btn btn-danger" onclick="eliminar_documento(' .$row['idn'].')" > <i class="icon-trash-o "></i></a></td>
                         			</tr>';
 									}else{
 										echo '<tr>
-                            		<td>' . $row['fecha'] . '</td><td>' . $row['tipos'] . '</td><td>' . $row['nombres'] . '</td>
+                            		<td>' . $row['fecha'] . '</td><td>' . $row['tipos'] . '</td><td>' . $row['nombres'] .$row['idn']. '</td>
+									<td><a class="btn btn-danger" onclick="eliminar_documento(' .$row['idn'].')" > <i class="icon-trash-o "></i></a></td>
                         			</tr>';
+										$i++;
 									}
                                 } ?>
 
@@ -658,6 +662,14 @@
 
 
     });
-
+function eliminar_documento(id){
+        var confirmacion = confirm("Deseas Eliminar esta Observacion?");
+        if(confirmacion==true){
+            $.post(baseurl+"customers/delete_obs",{deleteid:id},function (data){
+                alert("Observacion Eliminada...");                
+                window.location.reload();
+            },'json');
+      }
+    }
 
 </script>

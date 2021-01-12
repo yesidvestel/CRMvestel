@@ -401,6 +401,11 @@ class Customers_model extends CI_Model
         $this->db->delete('users', array('cid' => $id));
         return $this->db->delete('customers', array('id' => $id));
     }
+	public function deleteobs($id)
+    {
+        $this->db->delete('historiales', array('idn' => $id));
+        return true;    
+    }
 
 
     //transtables
