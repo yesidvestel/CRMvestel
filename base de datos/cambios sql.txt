@@ -1,3 +1,3 @@
-ALTER TABLE `crm`.`invoices` 
-ADD COLUMN `puntos` int NULL DEFAULT NULL AFTER `combo`;
+ALTER TABLE `crm`.`historiales` 
+ADD COLUMN `tipos` int NULL DEFAULT NULL AFTER `id_user`;
 
