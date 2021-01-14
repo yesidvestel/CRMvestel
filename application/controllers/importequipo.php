@@ -216,6 +216,7 @@ class Importequipo extends CI_Controller
         $nombre_archivo = $this->input->post('name');
         $tipo_archivo = $_FILES['cargar_csv']['type'];
         $tamano_archivo = $_FILES['cargar_csv']['size'];
+		
 		$bill_date = datefordatabase($array[1]);
 		$bill_date_2 = datefordatabase($array[2]);
         //comprobacion de extencion
@@ -259,6 +260,7 @@ class Importequipo extends CI_Controller
 						$datax['rec']=$array[23];
 						$datax['ron']=$array[24];
 						$datax['multi']=$array[25];
+						$saldo = $array[26];
 						//servicios agregados
 						$lista_de_invoice_items = $this->db->select('*')->from('invoice_items')->get()->result();
 						$datay['tid']=$datax['tid'];
@@ -315,7 +317,20 @@ class Importequipo extends CI_Controller
 								$datay['tax']=0;
 								$datay['totaltax']=0;
 								$datay['price']=$x;
-								$datay['subtotal']=$x*$datay['qty'];									
+								$datay['subtotal']=$x*$datay['qty'];
+								$this->db->insert('invoice_items',$datay);
+							}
+							if($saldo!==0){                
+								$producto = $this->db->get_where('products',array('pid'=>153))->row();
+								$datay['pid']=$producto->pid;
+								$datay['product']=$producto->product_name;
+								$datay['qty']=1;
+								$x=intval($array[26]);
+								$datay['tax']=0;
+								$datay['totaltax']=0;
+								$datay['price']=$x;
+								$datay['subtotal']=$x;
+								$this->db->insert('invoice_items',$datay);
 							}
 							
                         
