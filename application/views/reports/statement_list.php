@@ -289,7 +289,10 @@
 		 	if($value['estado']!="Anulada"){
 		 		
 		 		$invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
-		 		$invoice->refer=str_replace(" ","",$invoice->refer);		 				 		
+		 		if($invoice->refer!=null){
+		 			$invoice->refer=str_replace(" ","",$invoice->refer);		 				 			
+		 		}
+		 		
 		 		if($invoice->refer==$filter[5]){		 			
 		 			$array_bancos['BANCOLOMBIA TV']['cantidad']++;
 					$array_bancos['BANCOLOMBIA TV']['monto']+=$value['credit'];	
@@ -300,7 +303,9 @@
 		 foreach ($cuenta2 as $key => $value) {		 	
 		 	if($value['estado']!="Anulada"){
 			 	$invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
-				$invoice->refer=str_replace(" ","",$invoice->refer);
+				if($invoice->refer!=null){
+		 			$invoice->refer=str_replace(" ","",$invoice->refer);		 				 			
+		 		}
 			 	if($invoice->refer==$filter[5]){
 			 		$array_bancos['BANCOLOMBIA TELECOMUNICACIONES']['cantidad']++;
 					$array_bancos['BANCOLOMBIA TELECOMUNICACIONES']['monto']+=$value['credit'];
@@ -311,7 +316,9 @@
 		 foreach ($cuenta3 as $key => $value) {		 	
 		 	if($value['estado']!="Anulada"){
 			 	$invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
-			 	$invoice->refer=str_replace(" ","",$invoice->refer);
+			 	if($invoice->refer!=null){
+		 			$invoice->refer=str_replace(" ","",$invoice->refer);		 				 			
+		 		}
 			 	if($invoice->refer==$filter[5]){
 			 		$array_bancos['BANCOLOMBIA CUENTA CORRIENTE']['cantidad']++;
 					$array_bancos['BANCOLOMBIA CUENTA CORRIENTE']['monto']+=$value['credit'];
@@ -501,6 +508,7 @@
 			 <hr>
             <p><?php echo $this->lang->line('') ?>Caja : <?php echo $filter[5] ?></p>
             <hr>
+            <?php if($datos_informe['trans_type']!="Expense"){ ?>
 			 <div class="col-sm-6">
 			<h6><?php echo $this->lang->line('') ?>Resumen Cobranza</h6>
 				 
@@ -974,7 +982,10 @@
 				</tfoot>
 			</table>
         </div>
-			 <div class="col-sm-6">            
+    	<?php } ?>
+
+			 <div class="col-sm-6">       
+			 <?php if($datos_informe['trans_type']!="Expense"){ ?>     
 			<h6><?php echo $this->lang->line('') ?>Resumen por Forma de pago</h6>
 			<table class="party">
 				<thead>
@@ -1179,6 +1190,88 @@
 					</tr>
 				</tfoot>
 			</table>
+			<hr>
+			<?php } ?>
+			<?php 
+			$cuenta_ordenes= array('cantidad' =>0 ,"monto"=>0);
+			$cuenta_t1= array('cantidad' =>0 ,"monto"=>0);
+			$cuenta_t2= array('cantidad' =>0 ,"monto"=>0);
+			$cuenta_t3= array('cantidad' =>0 ,"monto"=>0);
+				foreach ($ordenes_compra as $key => $value) {
+					$cuenta_ordenes['cantidad']++;
+					$cuenta_ordenes['monto']+=$value['debit'];
+
+				}
+				foreach ($ordenes_compra_c1 as $key => $value) {
+					
+					if(strpos(strtolower($value['note']), strtolower($filter[5]))!==false){
+						$cuenta_t1['cantidad']++;
+						$cuenta_t1['monto']+=$value['credit'];
+					}
+					
+				}
+				foreach ($ordenes_compra_c2 as $key => $value) {
+					if(strpos(strtolower($value['note']), strtolower($filter[5]))!==false){
+						$cuenta_t2['cantidad']++;
+						$cuenta_t2['monto']+=$value['credit'];
+					}
+				}
+				foreach ($ordenes_compra_c3 as $key => $value) {
+					if(strpos(strtolower($value['note']), strtolower($filter[5]))!==false){
+						$cuenta_t3['cantidad']++;
+						$cuenta_t3['monto']+=$value['credit'];
+					}
+				}
+
+			 ?>
+
+			 <?php if($datos_informe['trans_type']=="All" || $datos_informe['trans_type']=="Expense"){ ?>
+			<h6>Resumen Egresos</h6>
+			<table class="party">
+				<thead>
+					<tr>
+						<th>DESCRIPCION</th>
+						<th>CANT</th>
+						<th>MONTO</th>			
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Pago Orden de Compra</td>
+						<td style="text-align: center"><?=$cuenta_ordenes['cantidad']?></td>
+						<td style="text-align: center;padding: 1px;"><?="$ ".number_format($cuenta_ordenes['monto'],0,",",".")?></td>
+					</tr>
+					<?php if($cuenta_t1['cantidad']!=0){ ?>
+					<tr>
+						<td>BANCOLOMBIA TV</td>
+						<td style="text-align: center"><?=$cuenta_t1['cantidad']?></td>
+						<td style="text-align: center;padding: 1px;"><?="$ ".number_format($cuenta_t1['monto'],0,",",".")?></td>
+					</tr>
+					<?php } ?>
+					<?php if($cuenta_t2['cantidad']!=0){ ?>
+					<tr>
+						<td>BANCOLOMBIA TELECOMUNICACIONES</td>
+						<td style="text-align: center"><?=$cuenta_t2['cantidad']?></td>
+						<td style="text-align: center;padding: 1px;"><?="$ ".number_format($cuenta_t2['monto'],0,",",".")?></td>
+					</tr>
+					<?php } ?>
+					<?php if($cuenta_t3['cantidad']!=0){ ?>
+					<tr>
+						<td>BANCOLOMBIA CUENTA CORRIENTE</td>
+						<td style="text-align: center"><?=$cuenta_t3['cantidad']?></td>
+						<td style="text-align: center;padding: 1px;"><?="$ ".number_format($cuenta_t3['monto'],0,",",".")?></td>
+					</tr>				
+					<?php } ?>	
+				</tbody>
+				<tfoot>
+					<tr>
+						<th class="pie">TOTAL TIPO DE SERVICIOS</th>
+						<th class="pie"><?=$cuenta_ordenes['cantidad']+$cuenta_t1['cantidad']+$cuenta_t2['cantidad']+$cuenta_t3['cantidad']?></th>
+						<th class="pie" style="padding: 1px;"><?="$ ".number_format($cuenta_ordenes['monto']+$cuenta_t1['monto']+$cuenta_t2['monto']+$cuenta_t3['monto'],0,",",".") ?></th>			
+					</tr>
+				</tfoot>
+			</table>
+			<?php } ?>
         </div>
 		
     </div>

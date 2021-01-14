@@ -238,7 +238,9 @@ $array_afiliaciones=array();
 		 	if($value['estado']!="Anulada"){
 		 		
 		 		$invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
-		 		$invoice->refer=str_replace(" ","",$invoice->refer);		 				 		
+		 		if($invoice->refer!=null){
+		 			$invoice->refer=str_replace(" ","",$invoice->refer);		 				 			
+		 		}		 				 		
 		 		if($invoice->refer==$caja){		 			
 		 			$array_bancos['BANCOLOMBIA TV']['cantidad']++;
 					$array_bancos['BANCOLOMBIA TV']['monto']+=$value['credit'];	
@@ -249,7 +251,9 @@ $array_afiliaciones=array();
 		 foreach ($cuenta2 as $key => $value) {		 	
 		 	if($value['estado']!="Anulada"){
 			 	$invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
-				$invoice->refer=str_replace(" ","",$invoice->refer);
+				if($invoice->refer!=null){
+		 			$invoice->refer=str_replace(" ","",$invoice->refer);		 				 			
+		 		}
 			 	if($invoice->refer==$caja){
 			 		$array_bancos['BANCOLOMBIA TELECOMUNICACIONES']['cantidad']++;
 					$array_bancos['BANCOLOMBIA TELECOMUNICACIONES']['monto']+=$value['credit'];
@@ -260,7 +264,9 @@ $array_afiliaciones=array();
 		 foreach ($cuenta3 as $key => $value) {		 	
 		 	if($value['estado']!="Anulada"){
 			 	$invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
-			 	$invoice->refer=str_replace(" ","",$invoice->refer);
+			 	if($invoice->refer!=null){
+		 			$invoice->refer=str_replace(" ","",$invoice->refer);		 				 			
+		 		}
 			 	if($invoice->refer==$caja){
 			 		$array_bancos['BANCOLOMBIA CUENTA CORRIENTE']['cantidad']++;
 					$array_bancos['BANCOLOMBIA CUENTA CORRIENTE']['monto']+=$value['credit'];
