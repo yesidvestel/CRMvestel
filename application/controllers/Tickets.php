@@ -323,24 +323,20 @@ class Tickets Extends CI_Controller
         $data['ron']='Activo';
         //ssss
         $date_fecha_final = new DateTime($fecha_final);
-        $var_mes ;
-        if(intval($date_fecha_final->format('d')) >=31){
-            $ms =intval($date_fecha_final->format('m'));
-            if($ms==12){
-                $var_mes='1';
-            }else{
-                $var_mes=$ms+1;    
-            }
-            
-        }else{
-            $var_mes ='m';
+        
+        $xdate=strtotime($date_fecha_final->format("Y-m-d")." 00:00:00");
+        //$dia_inicial_mes_anterior=date("Y-m", strtotime("-+ month", $xdate))."-01 00:00:00";
+        $dia_final_de_mes=date("Y-m-t 23:00:00", $xdate);
+        $date_fecha_corte=new DateTime($dia_final_de_mes);
+        if($date_fecha_final->format("d")==$date_fecha_corte->format("d")){
+            $d1=date($date_fecha_final->format("Y-m-d"));
+           $date_fecha_final= new DateTime(date("Y-m-d",strtotime($d1." - 1 days")));
         }
-        
-        $date_fecha_corte=new DateTime(date('Y-'.$var_mes.'-31'));
-        
+
         $diferencia = $date_fecha_final->diff($date_fecha_corte);
         $data['invoicedate']=$date_fecha_final->format("Y-m-d");
         $data['invoiceduedate']=$date_fecha_corte->format('Y-m-d');
+        
         //ya tengo la diferencia entre las fechas ahora tengo que cojer el valortotal y dividirlo por los dias para obtener el valor de la factura que se cambia en $data['total'] y se insertan los datos al igual con cada item luego lo mando a http://localhost/CRMvestel/invoices/view?id=ticket->id_factura
         //end sss
         // lista_de_invoice_items es la lista de itemes para insertar
