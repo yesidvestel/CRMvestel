@@ -287,18 +287,18 @@ class Invoices extends CI_Controller
             if ($this->db->insert('invoices', $data)) {
 				if (($television !== no) || $combo !== no){
                 $data2['subject']='servicio';
-					//Tipo de instalacion
-					if ($television == 'Television' AND $combo == no){
-					$data2['detalle']='Instalacion Television';
-						}if ($television == no AND $combo !== no){
-							$data2['detalle']='Instalacion de Internet '.$combo.'';
-							}if ($television == 'Television' AND $combo !== no){
-								$data2['detalle']='Instalacion Television mas '.$combo.'';
-					}
+				$data2['detalle']='Instalacion';	
                 $data2['created']=$bill_date;
                 $data2['cid']=$customer_id;
                 $data2['status']='Pendiente';
-                $data2['section']='';
+                //Tipo de instalacion
+					if ($television == 'Television' AND $combo == no){
+					$data2['section']='Instalacion Television';
+						}if ($television == no AND $combo !== no){
+							$data2['section']='Instalacion de Internet '.$combo.'';
+							}if ($television == 'Television' AND $combo !== no){
+								$data2['section']='Instalacion Television mas '.$combo.'';
+					}
                 $data2['id_invoice']=$invocieno;
                 $this->db->insert('tickets',$data2);
 				//actualizar estado usuario
