@@ -616,6 +616,28 @@ class Tickets Extends CI_Controller
         		$this->db->where('id', $ticket->cid);
         		$this->db->update('customers');
 		}
+		if($ticket->detalle=="Toma Adicional"){
+			$punto = $this->input->post('puntos');
+			$producto2 = $this->db->get_where('products',array('pid'=>69))->row();
+				$data2['tid']=$idfactura;
+				$data2['pid']=$producto2->pid;
+                $data2['product']=$producto2->product_name;
+				$x=intval($producto2->product_price);
+                $x=($x/31)*$diferencia->days;
+                $data2['price']=$x;
+				$data2['qty']=$punto;
+				$valorit = $x*$punto;
+                $data2['subtotal']=$valorit;			
+            	$this->db->insert('invoice_items',$data2);
+			//actualizar factura
+			$factura = $this->db->get_where('invoices',array('tid'=>$idfactura))->row();
+				$this->db->set('subtotal', $factura->subtotal+$valorit);
+				$this->db->set('total', $factura->total+$valorit);
+				$this->db->set('items', $factura->items+1);
+				$this->db->set('puntos', $punto);							
+        		$this->db->where('tid', $idfactura);
+        		$this->db->update('invoices');			
+		}
 		
         $dataz['status']=$status;
         $dataz['fecha_final']=$fecha_final;
