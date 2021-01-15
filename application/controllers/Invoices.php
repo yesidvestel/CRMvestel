@@ -286,9 +286,15 @@ class Invoices extends CI_Controller
             $this->db->insert_batch('invoice_items', $productlist);
             if ($this->db->insert('invoices', $data)) {
 				if (($television !== no) || $combo !== no){
-
                 $data2['subject']='servicio';
-				$data2['detalle']='Instalacion';
+					//Tipo de instalacion
+					if ($television == 'Television' AND $combo == no){
+					$data2['detalle']='Instalacion Television';
+						}if ($television == no AND $combo !== no){
+							$data2['detalle']='Instalacion de Internet '.$combo.'';
+							}if ($television == 'Television' AND $combo !== no){
+								$data2['detalle']='Instalacion Television mas '.$combo.'';
+					}
                 $data2['created']=$bill_date;
                 $data2['cid']=$customer_id;
                 $data2['status']='Pendiente';
