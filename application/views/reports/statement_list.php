@@ -220,11 +220,11 @@
 				
 			}
 			//termina foreach items invoices
-			
-			if($sumatoria_items<$value['credit'] ){
+			$conteo=count($items_tocados);
+			if($sumatoria_items<$value['credit'] && $conteo!=0 ){
 				$diference=$value['credit']-$sumatoria_items;
 				if($diference>1){
-					$conteo=count($items_tocados);
+					
 					$valores_por_cada_uno=$diference/$conteo;
 					foreach ($items_tocados as $key1 => $value2) {
 						if($key1=="array_reconexiones"){
@@ -422,10 +422,11 @@
 
 						}
 						//sumatorias
-						if($sumatoria_items<$val1['credit'] ){
+						$conteo=count($items_tocados);					
+						if($sumatoria_items<$val1['credit'] && $conteo!=0 ){
 							$diference=$val1['credit']-$sumatoria_items;
 							if($diference>1){
-								$conteo=count($items_tocados);					
+								
 								$valores_por_cada_uno=$diference/$conteo;
 								foreach ($items_tocados as $key1 => $value2) {
 									if($key1=="Internet"){
@@ -1194,15 +1195,33 @@
 			<?php } ?>
 			<?php 
 			$cuenta_ordenes= array('cantidad' =>0 ,"monto"=>0);
-			$cuenta_t1= array('cantidad' =>0 ,"monto"=>0);
-			$cuenta_t2= array('cantidad' =>0 ,"monto"=>0);
-			$cuenta_t3= array('cantidad' =>0 ,"monto"=>0);
+			$cuenta_transaccions= array('cantidad' =>0 ,"monto"=>0);	
+			$cuenta_tr1=array('cantidad' =>0 ,"monto"=>0);
+			//$cuenta_t1= array('cantidad' =>0 ,"monto"=>0);
+			//$cuenta_t2= array('cantidad' =>0 ,"monto"=>0);
+			//$cuenta_t3= array('cantidad' =>0 ,"monto"=>0);
+
 				foreach ($ordenes_compra as $key => $value) {
-					$cuenta_ordenes['cantidad']++;
-					$cuenta_ordenes['monto']+=$value['debit'];
+					if($value['cat']=="Compra"){
+						$cuenta_transaccions['cantidad']++;
+						$cuenta_transaccions['monto']=$value['debit'];
+					}else{
+						$cuenta_ordenes['cantidad']++;
+						$cuenta_ordenes['monto']+=$value['debit'];
+					}
+					
 
 				}
-				foreach ($ordenes_compra_c1 as $key => $value) {
+				foreach ($tr1 as $key => $value) {
+					
+					if(strpos(strtolower($value['note']), strtolower($filter[5]))!==false){
+						$cuenta_tr1['cantidad']++;
+						$cuenta_tr1['monto']+=$value['debit'];
+					}
+					
+				}
+				
+				/*foreach ($ordenes_compra_c1 as $key => $value) {
 					
 					if(strpos(strtolower($value['note']), strtolower($filter[5]))!==false){
 						$cuenta_t1['cantidad']++;
@@ -1221,7 +1240,7 @@
 						$cuenta_t3['cantidad']++;
 						$cuenta_t3['monto']+=$value['credit'];
 					}
-				}
+				}*/
 
 			 ?>
 
@@ -1241,33 +1260,27 @@
 						<td style="text-align: center"><?=$cuenta_ordenes['cantidad']?></td>
 						<td style="text-align: center;padding: 1px;"><?="$ ".number_format($cuenta_ordenes['monto'],0,",",".")?></td>
 					</tr>
-					<?php if($cuenta_t1['cantidad']!=0){ ?>
+					<?php if($cuenta_tr1['cantidad']!=0){ ?>
 					<tr>
-						<td>BANCOLOMBIA TV</td>
-						<td style="text-align: center"><?=$cuenta_t1['cantidad']?></td>
-						<td style="text-align: center;padding: 1px;"><?="$ ".number_format($cuenta_t1['monto'],0,",",".")?></td>
+						<td>Transferencias</td>
+						<td style="text-align: center"><?=$cuenta_tr1['cantidad']?></td>
+						<td style="text-align: center;padding: 1px;"><?="$ ".number_format($cuenta_tr1['monto'],0,",",".")?></td>
 					</tr>
 					<?php } ?>
-					<?php if($cuenta_t2['cantidad']!=0){ ?>
+					<?php if($cuenta_transaccions['cantidad']!=0){ ?>
 					<tr>
-						<td>BANCOLOMBIA TELECOMUNICACIONES</td>
-						<td style="text-align: center"><?=$cuenta_t2['cantidad']?></td>
-						<td style="text-align: center;padding: 1px;"><?="$ ".number_format($cuenta_t2['monto'],0,",",".")?></td>
+						<td>Transacciones</td>
+						<td style="text-align: center"><?=$cuenta_transaccions['cantidad']?></td>
+						<td style="text-align: center;padding: 1px;"><?="$ ".number_format($cuenta_transaccions['monto'],0,",",".")?></td>
 					</tr>
 					<?php } ?>
-					<?php if($cuenta_t3['cantidad']!=0){ ?>
-					<tr>
-						<td>BANCOLOMBIA CUENTA CORRIENTE</td>
-						<td style="text-align: center"><?=$cuenta_t3['cantidad']?></td>
-						<td style="text-align: center;padding: 1px;"><?="$ ".number_format($cuenta_t3['monto'],0,",",".")?></td>
-					</tr>				
-					<?php } ?>	
+					
 				</tbody>
 				<tfoot>
 					<tr>
 						<th class="pie">TOTAL TIPO DE SERVICIOS</th>
-						<th class="pie"><?=$cuenta_ordenes['cantidad']+$cuenta_t1['cantidad']+$cuenta_t2['cantidad']+$cuenta_t3['cantidad']?></th>
-						<th class="pie" style="padding: 1px;"><?="$ ".number_format($cuenta_ordenes['monto']+$cuenta_t1['monto']+$cuenta_t2['monto']+$cuenta_t3['monto'],0,",",".") ?></th>			
+						<th class="pie"><?=$cuenta_ordenes['cantidad']+$cuenta_tr1['cantidad']+$cuenta_transaccions['cantidad']?></th>
+						<th class="pie" style="padding: 1px;"><?="$ ".number_format($cuenta_ordenes['monto']+$cuenta_tr1['monto']+$cuenta_transaccions['monto'],0,",",".") ?></th>			
 					</tr>
 				</tfoot>
 			</table>

@@ -146,7 +146,6 @@ class Reports extends CI_Controller
             foreach ($ordenes_compra_c1 as $key => $value) {
                 $purchase=$this->reports->db->get_where('purchase',array('tid' =>$value['tid']))->row();
                 if($purchase->refer!=null){
-
                     $purchase->refer=str_replace(" ","",$purchase->refer);                                    
                     if($purchase->refer==$caja1->holder){
                         $ordenes_compra[]=$value;
@@ -179,17 +178,21 @@ class Reports extends CI_Controller
 
 
             }
-            $ordenes_compra_c1=$this->reports->get_statements(6, "Transfer", $sdate, $edate);
-            $ordenes_compra_c2=$this->reports->get_statements(7, "Transfer", $sdate, $edate);
-            $ordenes_compra_c3=$this->reports->get_statements(8, "Transfer", $sdate, $edate);
+            $tr1=$this->reports->get_statements($pay_acc, "Transfer", $sdate, $edate);
+            //$ordenes_compra_c1=$this->reports->get_statements(6, "Transfer", $sdate, $edate);
+            //$ordenes_compra_c2=$this->reports->get_statements(7, "Transfer", $sdate, $edate);
+            //$ordenes_compra_c3=$this->reports->get_statements(8, "Transfer", $sdate, $edate);
 
             //var_dump($ordenes_compra_c1);
             //var_dump($ordenes_compra_c2);
             //var_dump($ordenes_compra_c3);
             $data['ordenes_compra']=$ordenes_compra;
-            $data['ordenes_compra_c1']=$ordenes_compra_c1;
-            $data['ordenes_compra_c2']=$ordenes_compra_c2;
-            $data['ordenes_compra_c3']=$ordenes_compra_c3;
+            $data['tr1']=$tr1;
+            //$data['ordenes_compra_c1']=$ordenes_compra_c1;
+            //$data['ordenes_compra_c2']=$ordenes_compra_c2;
+            //$data['ordenes_compra_c3']=$ordenes_compra_c3;
+
+            
             //end egresos
             $lista2=array();
             foreach ($list as $key => $value) {
@@ -540,11 +543,11 @@ class Reports extends CI_Controller
                                 $list[]=$value;
                             }
                         }
-                }else if($value['type']=="Transfer"){
+                }/*else if($value['type']=="Transfer"){
                     if(strpos(strtolower($value['note']), strtolower($caja1->holder))!==false){
 						$list[]=$value;
 					}
-                }
+                }*/
 
             }
          
@@ -568,11 +571,11 @@ class Reports extends CI_Controller
                             $list[]=$value;
                         }
                     }
-            }else if($value['type']=="Transfer"){
+            }/*else if($value['type']=="Transfer"){
                 if(strpos(strtolower($value['note']), strtolower($caja1->holder))!==false){
                     $list[]=$value;
                 }
-            }
+            }*/
          }
          
          foreach ($cuenta3 as $key => $value) {         
@@ -595,23 +598,23 @@ class Reports extends CI_Controller
                             $list[]=$value;
                         }
                     }
-            }else if($value['type']=="Transfer"){
+            }/*else if($value['type']=="Transfer"){
                 if(strpos(strtolower($value['note']), strtolower($caja1->holder))!==false){
                     $list[]=$value;
                 }
-            }
+            }*/
          }
          //transferencias para cuando solo son debito caso especial
          if($trans_type=="Expense"){
-            $cuenta1 = $this->reports->get_statements(6, "Transfer", $sdate, $edate);
-            $cuenta2 = $this->reports->get_statements(7, "Transfer", $sdate, $edate);
-            $cuenta3 = $this->reports->get_statements(8, "Transfer", $sdate, $edate);
+            $cuenta1 = $this->reports->get_statements($pay_acc, "Transfer", $sdate, $edate);
+            //$cuenta2 = $this->reports->get_statements(7, "Transfer", $sdate, $edate);
+            //$cuenta3 = $this->reports->get_statements(8, "Transfer", $sdate, $edate);
             foreach ($cuenta1 as $key => $value) {            
                     if(strpos(strtolower($value['note']), strtolower($caja1->holder))!==false){
                         $list[]=$value;
                     }
              }
-             foreach ($cuenta2 as $key => $value) {            
+             /*foreach ($cuenta2 as $key => $value) {            
                 if(strpos(strtolower($value['note']), strtolower($caja1->holder))!==false){
                     $list[]=$value;
                 }
@@ -620,7 +623,7 @@ class Reports extends CI_Controller
                 if(strpos(strtolower($value['note']), strtolower($caja1->holder))!==false){
                     $list[]=$value;
                 }
-            }
+            }*/
          
          }
         foreach ($list as $row) {
