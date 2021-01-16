@@ -5,13 +5,50 @@
 
             <div class="message"></div>
         </div>
-        <div class="grid_3 grid_4">
-            <h5><?php echo $this->lang->line('Client Group') . '- ' . $group['title'] ?></h5> <a href="#sendMail"
-                                                                                                 data-toggle="modal"
-                                                                                                 data-remote="false"
-                                                                                                 class="btn btn-primary btn-sm"><i
-                        class="fa fa-envelope"></i> <?php echo $this->lang->line('Send Group Message') ?> </a>
+		 <div class="card card-block sameheight-item">
 
+                        
+                            <div class="form-group row">
+								<label class="col-sm-12 col-form-label"
+                                       for="pay_cat"><h5>FILTRAR</h5></label>
+                                <label class="col-sm-2 col-form-label"
+                                       for="pay_cat">Tecnico</label>
+
+                                <div class="col-sm-6">
+                                    <select name="tec" class="form-control" id="estado">
+                                        <option value=''>Todos</option>
+                                        <option value='Activos'>Activos</option>
+										<option value='Cortados'>Cortados</option>
+                                    </select>
+                                </div>
+                            </div>
+							<div class="form-group row">
+                                <label class="col-sm-2 col-form-label"
+                                       for="pay_cat">Estado</label>
+
+                                <div class="col-sm-6">
+                                    <select name="trans_type" class="form-control" id="depar">
+                                        <option value=''>Todas</option>
+                                        <option value='CASANARE'>CASANARE</option>
+                                        <option value='MOCOA'>MOCOA</option>
+                                    </select>
+                                </div>								
+                            </div>
+							<div class="form-group row">
+                                <label class="col-sm-3 col-form-label" for="pay_cat"></label>
+
+                                <div class="col-sm-4">
+                                    <input type="button" class="btn btn-primary btn-md" value="VER" onclick="filtrar()">
+
+
+                                </div>
+                            </div>
+                        
+                    </div>
+        <div class="grid_3 grid_4">
+            <h5><?php echo $this->lang->line('Client Group') . '- ' . $group['title'] ?></h5> 
+			<a href="#sendMail" data-toggle="modal" data-remote="false" class="btn btn-primary btn-sm"><i
+                        class="fa fa-envelope"></i> <?php echo $this->lang->line('Send Group Message') ?> </a>
             <hr>
             <table id="fclientstable" class="table-striped" cellspacing="0" width="100%">
                 <thead>
@@ -170,4 +207,15 @@
             alert($('.summernote').val());
         });
     });
+	function filtrar(){
+        var estado=$("#estado option:selected").val();
+        var depar =$("#depar option:selected").val();
+        if(estado=="" && depar==""){
+            tb.ajax.url( baseurl+'clientgroup/grouplist?id=' ).load();     
+        }else{
+            tb.ajax.url( baseurl+'clientgroup/grouplist?estado='+estado+"&depar="+depar+"&id=" ).load();     
+        }
+       
+
+    }
 </script>

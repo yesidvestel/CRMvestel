@@ -51,7 +51,7 @@ class Clientgroup extends CI_Controller
     public function groupview()
     {
         $head['usernm'] = $this->aauth->get_user()->username;
-        $id = $this->input->get('id');
+        $id = $this->input->get('id');		
         $data['group'] = $this->clientgroup->details($id);
         $head['title'] = 'Group View';
         $this->load->view('fixed/header', $head);

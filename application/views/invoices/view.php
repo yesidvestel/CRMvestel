@@ -177,7 +177,7 @@
 
                                 <li class="text-bold-800"><a
                                             href="<?php echo base_url('customers/view?id=' . $invoice['cid']) ?>"><strong
-                                                class="invoice_a"><?php echo ucwords($invoice['name']) .' '.ucwords($invoice['apellidos']).'</strong></a></li><li>' .$invoice['tipo_documento'].': '. $invoice['documento'] .  '</li><li>'.Celular .': ' . $invoice['celular'] . '</li><li>'.$this->lang->line('Email') .': ' . $invoice['email'];
+                                                class="invoice_a"><?php echo ucwords($invoice['name']) .' '.ucwords($invoice['unoapellido']).'</strong></a></li><li>' .$invoice['tipo_documento'].': '. $invoice['documento'] .  '</li><li>'.Celular .': ' . $invoice['celular'] . '</li><li>'.$this->lang->line('Email') .': ' . $invoice['email'];
                                     if ($invoice['taxid']) echo '</li><li>' . $this->lang->line('Tax') . ' ID: ' . $invoice['taxid']
                                                 ?>
                                 </li>
@@ -519,7 +519,7 @@
                                     for="shortnote"><?php echo $this->lang->line('Note') ?></label>
                             <input type="text" class="form-control"
                                    name="shortnote" placeholder="Short note"
-                                   value="Pago de la factura #<?php echo $invoice['tid'] ?>"></div>
+                                   value="Pago de factura #<?php echo $invoice['tid'] .' '.$invoice['name'].' '.$invoice['unoapellido'].' '.$invoice['documento'] ?>"></div>
                     </div>
 					<?php if ($invoice['ron']=='Cortado') { ?>
 					<div class="row">

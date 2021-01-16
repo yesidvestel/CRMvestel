@@ -606,6 +606,7 @@ class Customers extends CI_Controller
         $data['details'] = $this->customers->details($custid);
         $data['money'] = $this->customers->money_details($custid);
         $head['usernm'] = $this->aauth->get_user()->username;
+		$data['invoice'] = $this->customers->invoice_details($custid, $this->limited);
         $head['title'] = 'View Customer Invoices';
 		$data['due'] = $this->customers->due_details($custid);
 		$this->load->model('accounts_model');

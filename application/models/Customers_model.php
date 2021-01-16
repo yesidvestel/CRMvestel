@@ -23,7 +23,7 @@ class Customers_model extends CI_Model
 
     var $table = 'customers';
     var $column_order = array(null, 'name', 'address', 'email', 'phone', null);
-    var $column_search = array('id','abonado','name', 'celular', 'documento', 'unoapellido', 'email');
+    var $column_search = array('id','abonado','name', 'celular', 'documento', 'unoapellido', 'email','usu_estado');
     var $trans_column_order = array('date', 'debit', 'credit', 'account', null);
     var $trans_column_search = array('id', 'date');
 	var $sup_column_order = array('idt', 'subject', 'detalle','created','fecha_final', 'id_factura', 'status', null);
@@ -84,6 +84,18 @@ class Customers_model extends CI_Model
             $this->db->limit($this->input->post('length'), $this->input->post('start'));
         $query = $this->db->get();
         return $query->result();
+    }
+	public function invoice_details($custid)
+    {
+
+        $this->db->select('invoices.*,customers.*,customers.id AS cid');
+        $this->db->from('invoices');
+        $this->db->where('invoices.tid', $custid);        
+        $this->db->join('customers', 'invoices.csd = customers.id', 'left');
+        
+        $query = $this->db->get();
+        return $query->row_array();
+
     }
 
     function count_filtered($id = '')
