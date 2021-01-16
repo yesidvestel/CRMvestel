@@ -39,10 +39,9 @@
                     </div>
                 </div>
             </div>
-            <a href="#part_payment" onclick="cargar_facturas()" data-toggle="modal" data-remote="false" data-type="reminder"
-                                   class="btn btn-large btn-success mb-1" title="Partial Payment"
-                                ><span class="icon-money"></span> <?php echo $this->lang->line('Make Payment') ?> </a><span id="span_facturas">&nbsp;Facturas a pagar</span>
-                                <br><a href="#" class="btn btn-primary" onclick="filtrar_facturas()">Filtrar Facturas Sin Pagar</a>
+            <a href="#part_payment" onclick="cargar_facturas()" data-toggle="modal" data-remote="false" data-type="reminder" class="btn btn-large btn-success mb-1" title="Partial Payment">
+				<span class="icon-money"></span> <?php echo $this->lang->line('Make Payment') ?> </a><span id="span_facturas">&nbsp;Facturas a pagar</span>
+                <br><a href="#" class="btn btn-primary" onclick="filtrar_facturas()">Filtrar Facturas Sin Pagar</a>
 
             <hr>
 
@@ -161,12 +160,13 @@
                                 ?>
                             </select></div>
                     </div>
-                    <div class="row">
+                    <div class="row">						
                         <div class="col-xs-12 mb-1"><label
                                     for="shortnote"><?php echo $this->lang->line('Note') ?></label>
                             <input id="in_shortnote" type="text" class="form-control"
                                    name="shortnote" placeholder="Short note"
-                                   value="Payment for invoice #<?php echo $invoice['tid'] ?>"></div>
+                                   value="Pago de factura # <?=$facturas_seleccionadas?><?php echo $details['name'].' '.$details['unoapellido'].' '.$details['documento']?>">
+						
                     </div>
 
                     <div class="modal-footer">
@@ -175,9 +175,7 @@
                                name="tid" id="invoiceid" value="<?php echo $invoice['tid'] ?>">
                         <button type="button" class="btn btn-default"
                                 data-dismiss="modal"><?php echo $this->lang->line('Close') ?></button>
-                        <input type="hidden" name="cid" value="<?php echo $invoice['cid'] ?>"><input type="hidden"
-                                                                                                     name="cname"
-                                                                                                     value="<?php echo $invoice['name'] ?>">
+                        <input type="hidden" name="cid" value="<?php echo $invoice['cid'] ?>"><input type="hidden" name="cname" value="<?php echo $invoice['name'] ?>">
                         <button type="button" class="btn btn-primary"
                                 id="submitpayment2"><?php echo $this->lang->line('Make Payment'); ?></button>
                     </div>
