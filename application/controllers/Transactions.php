@@ -190,7 +190,8 @@ class Transactions extends CI_Controller
                 
 
             }
-        }        
+        }
+        $note="Pago de la factura #".$tid;        
     $data = array(
             'acid' => $acid,
             'account' => $account['holder'],

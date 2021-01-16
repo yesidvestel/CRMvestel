@@ -164,7 +164,7 @@
                     <div class="row">
                         <div class="col-xs-12 mb-1"><label
                                     for="shortnote"><?php echo $this->lang->line('Note') ?></label>
-                            <input type="text" class="form-control"
+                            <input id="in_shortnote" type="text" class="form-control"
                                    name="shortnote" placeholder="Short note"
                                    value="Payment for invoice #<?php echo $invoice['tid'] ?>"></div>
                     </div>
@@ -296,6 +296,7 @@ let lista_facturas=[];
         }else{
             $("#span_facturas").text(" Orden Facturas a Pagar : "+y);
             $("#span_facturas").show();
+            $("#in_shortnote").val("Pago de la factura #"+y);
         }
         
     }
