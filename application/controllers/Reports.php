@@ -179,20 +179,10 @@ class Reports extends CI_Controller
 
             }
             $tr1=$this->reports->get_statements($pay_acc, "Transfer", $sdate, $edate);
-            //$ordenes_compra_c1=$this->reports->get_statements(6, "Transfer", $sdate, $edate);
-            //$ordenes_compra_c2=$this->reports->get_statements(7, "Transfer", $sdate, $edate);
-            //$ordenes_compra_c3=$this->reports->get_statements(8, "Transfer", $sdate, $edate);
 
-            //var_dump($ordenes_compra_c1);
-            //var_dump($ordenes_compra_c2);
-            //var_dump($ordenes_compra_c3);
             $data['ordenes_compra']=$ordenes_compra;
             $data['tr1']=$tr1;
-            //$data['ordenes_compra_c1']=$ordenes_compra_c1;
-            //$data['ordenes_compra_c2']=$ordenes_compra_c2;
-            //$data['ordenes_compra_c3']=$ordenes_compra_c3;
 
-            
             //end egresos
             $lista2=array();
             foreach ($list as $key => $value) {
@@ -334,10 +324,56 @@ class Reports extends CI_Controller
              //hice esto para hacer que el cierre sea de un dia si se desea reestablecer a entre fechas solo comentar la linea 57;
               $datex=new DateTime($sdate);
             $edate=$datex->format('Y-m-d')." 23:59:00";
-            
+            $caja1=$this->db->get_where('accounts',array('id' =>$pay_acc))->row();
             
             $list = $this->reports->get_statements($pay_acc, $trans_type, $sdate, $edate);
+            //egresos
+                 $ordenes_compra=$this->reports->get_statements($pay_acc, "Expense", $sdate, $edate);//listo gastos en esta cuenta
+            $ordenes_compra_c1=$this->reports->get_statements(6, "Expense", $sdate, $edate);
+            $ordenes_compra_c2=$this->reports->get_statements(7, "Expense", $sdate, $edate);
+            $ordenes_compra_c3=$this->reports->get_statements(8, "Expense", $sdate, $edate);
+
+            //falta agregar las transferencias echas 
             
+            foreach ($ordenes_compra_c1 as $key => $value) {
+                $purchase=$this->reports->db->get_where('purchase',array('tid' =>$value['tid']))->row();
+                if($purchase->refer!=null){
+                    $purchase->refer=str_replace(" ","",$purchase->refer);                                    
+                    if($purchase->refer==$caja1->holder){
+                        $ordenes_compra[]=$value;
+                    }
+                }
+
+
+            }
+            foreach ($ordenes_compra_c2 as $key => $value) {
+                $purchase=$this->reports->db->get_where('purchase',array('tid' =>$value['tid']))->row();
+                if($purchase->refer!=null){
+
+                    $purchase->refer=str_replace(" ","",$purchase->refer);                                    
+                    if($purchase->refer==$caja1->holder){
+                        $ordenes_compra[]=$value;
+                    }
+                }
+
+
+            }
+            foreach ($ordenes_compra_c3 as $key => $value) {
+                $purchase=$this->reports->db->get_where('purchase',array('tid' =>$value['tid']))->row();
+                if($purchase->refer!=null){
+
+                    $purchase->refer=str_replace(" ","",$purchase->refer);                                    
+                    if($purchase->refer==$caja1->holder){
+                        $ordenes_compra[]=$value;
+                    }
+                }
+
+
+            }
+            $tr1=$this->reports->get_statements($pay_acc, "Transfer", $sdate, $edate);
+            $data['ordenes_compra']=$ordenes_compra;
+            $data['tr1']=$tr1;
+            //end egresos
             $lista2=array();
             foreach ($list as $key => $value) {
                 if($value['estado']!="Anulada"){
@@ -358,7 +394,7 @@ class Reports extends CI_Controller
             $data['cuenta1']=$cuenta1;
             $data['cuenta2']=$cuenta2;
             $data['cuenta3']=$cuenta3;
-            $caja1=$this->db->get_where('accounts',array('id' =>$pay_acc))->row();
+            
 
             foreach ($cuenta1 as $key => $value) {
                 $invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
@@ -543,11 +579,7 @@ class Reports extends CI_Controller
                                 $list[]=$value;
                             }
                         }
-                }/*else if($value['type']=="Transfer"){
-                    if(strpos(strtolower($value['note']), strtolower($caja1->holder))!==false){
-						$list[]=$value;
-					}
-                }*/
+                }
 
             }
          
@@ -571,11 +603,7 @@ class Reports extends CI_Controller
                             $list[]=$value;
                         }
                     }
-            }/*else if($value['type']=="Transfer"){
-                if(strpos(strtolower($value['note']), strtolower($caja1->holder))!==false){
-                    $list[]=$value;
-                }
-            }*/
+            }
          }
          
          foreach ($cuenta3 as $key => $value) {         
@@ -598,32 +626,18 @@ class Reports extends CI_Controller
                             $list[]=$value;
                         }
                     }
-            }/*else if($value['type']=="Transfer"){
-                if(strpos(strtolower($value['note']), strtolower($caja1->holder))!==false){
-                    $list[]=$value;
-                }
-            }*/
+            }
          }
          //transferencias para cuando solo son debito caso especial
          if($trans_type=="Expense"){
             $cuenta1 = $this->reports->get_statements($pay_acc, "Transfer", $sdate, $edate);
-            //$cuenta2 = $this->reports->get_statements(7, "Transfer", $sdate, $edate);
-            //$cuenta3 = $this->reports->get_statements(8, "Transfer", $sdate, $edate);
+
             foreach ($cuenta1 as $key => $value) {            
                     if(strpos(strtolower($value['note']), strtolower($caja1->holder))!==false){
                         $list[]=$value;
                     }
              }
-             /*foreach ($cuenta2 as $key => $value) {            
-                if(strpos(strtolower($value['note']), strtolower($caja1->holder))!==false){
-                    $list[]=$value;
-                }
-             }
-             foreach ($cuenta3 as $key => $value) {            
-                if(strpos(strtolower($value['note']), strtolower($caja1->holder))!==false){
-                    $list[]=$value;
-                }
-            }*/
+           
          
          }
         foreach ($list as $row) {
@@ -651,40 +665,85 @@ class Reports extends CI_Controller
             $cuenta3 = $this->reports->get_statements(8, $trans_type, $sdate, $edate);
             $caja1=$this->db->get_where('accounts',array('id' =>$pay_acc))->row();
             foreach ($cuenta1 as $key => $value) {
-                $invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
-                 if($invoice->refer!=null){
-                    $invoice->refer=str_replace(" ","",$invoice->refer);                                    
-                }                                
-                if($value['estado']!="Anulada"){                
-                    if($invoice->refer==$caja1->holder){                    
-                        $list[]=$value;
-                        
+               if($value['type']=="Income"){
+                    $invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
+                    if($invoice->refer!=null){
+                        $invoice->refer=str_replace(" ","",$invoice->refer);                                    
                     }
+                    if($value['estado']!="Anulada"){                
+                        if($invoice->refer==$caja1->holder){                    
+                            $list[]=$value;                        
+                        }
+                    }
+                }else if($value['type']=="Expense"){
+                    $purchase=$this->reports->db->get_where('purchase',array('tid' =>$value['tid']))->row();
+                        if($purchase->refer!=null){
+
+                            $purchase->refer=str_replace(" ","",$purchase->refer);                                    
+                            if($purchase->refer==$caja1->holder){
+                                $list[]=$value;
+                            }
+                        }
                 }
             }
          
          foreach ($cuenta2 as $key => $value) {         
-            $invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
-             if($invoice->refer!=null){
+             if($value['type']=="Income"){
+                $invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
+                if($invoice->refer!=null){
                     $invoice->refer=str_replace(" ","",$invoice->refer);                                    
                 }
-            if($value['estado']!="Anulada"){                
-                if($invoice->refer==$caja1->holder){
-                    $list[]=$value;
+                if($value['estado']!="Anulada"){                
+                    if($invoice->refer==$caja1->holder){                    
+                        $list[]=$value;                        
+                    }
                 }
+            }else if($value['type']=="Expense"){
+                $purchase=$this->reports->db->get_where('purchase',array('tid' =>$value['tid']))->row();
+                    if($purchase->refer!=null){
+
+                        $purchase->refer=str_replace(" ","",$purchase->refer);                                    
+                        if($purchase->refer==$caja1->holder){
+                            $list[]=$value;
+                        }
+                    }
             }
          }
          
          foreach ($cuenta3 as $key => $value) {         
-            $invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
-             if($invoice->refer!=null){
+             if($value['type']=="Income"){
+                $invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
+                if($invoice->refer!=null){
                     $invoice->refer=str_replace(" ","",$invoice->refer);                                    
                 }
-            if($value['estado']!="Anulada"){
-                if($invoice->refer==$caja1->holder){
-                    $list[]=$value;
+                if($value['estado']!="Anulada"){                
+                    if($invoice->refer==$caja1->holder){                    
+                        $list[]=$value;                        
+                    }
                 }
+            }else if($value['type']=="Expense"){
+                $purchase=$this->reports->db->get_where('purchase',array('tid' =>$value['tid']))->row();
+                    if($purchase->refer!=null){
+
+                        $purchase->refer=str_replace(" ","",$purchase->refer);                                    
+                        if($purchase->refer==$caja1->holder){
+                            $list[]=$value;
+                        }
+                    }
             }
+         }
+
+          //transferencias para cuando solo son debito caso especial
+         if($trans_type=="Expense"){
+            $cuenta1 = $this->reports->get_statements($pay_acc, "Transfer", $sdate, $edate);
+            
+            foreach ($cuenta1 as $key => $value) {            
+                    if(strpos(strtolower($value['note']), strtolower($caja1->holder))!==false){
+                        $list[]=$value;
+                    }
+             }
+             
+         
          }
         $balance = 0;
         $var_lista="";

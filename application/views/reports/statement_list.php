@@ -1278,7 +1278,7 @@
 				</tbody>
 				<tfoot>
 					<tr>
-						<th class="pie">TOTAL TIPO DE SERVICIOS</th>
+						<th class="pie">TOTAL Egresos</th>
 						<th class="pie"><?=$cuenta_ordenes['cantidad']+$cuenta_tr1['cantidad']+$cuenta_transaccions['cantidad']?></th>
 						<th class="pie" style="padding: 1px;"><?="$ ".number_format($cuenta_ordenes['monto']+$cuenta_tr1['monto']+$cuenta_transaccions['monto'],0,",",".") ?></th>			
 					</tr>

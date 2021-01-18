@@ -173,11 +173,11 @@ $array_afiliaciones=array();
 
 
 			}//final foreach items_invoice
-
-			if($sumatoria_items<$value['credit'] ){
+			$conteo=count($items_tocados);
+			if($sumatoria_items<$value['credit'] && $conteo!=0 ){
 				$diference=$value['credit']-$sumatoria_items;
 				if($diference>1){
-					$conteo=count($items_tocados);
+					
 					$valores_por_cada_uno=$diference/$conteo;
 					foreach ($items_tocados as $key1 => $value2) {
 						if($key1=="array_reconexiones"){
@@ -370,10 +370,11 @@ $array_afiliaciones=array();
 
 						}
 						//sumatorias
-						if($sumatoria_items<$val1['credit'] ){
+						$conteo=count($items_tocados);					
+						if($sumatoria_items<$val1['credit'] && $conteo!=0 ){
 							$diference=$val1['credit']-$sumatoria_items;
 							if($diference>1){
-								$conteo=count($items_tocados);					
+								
 								$valores_por_cada_uno=$diference/$conteo;
 								foreach ($items_tocados as $key1 => $value2) {
 									if($key1=="Internet"){
@@ -710,6 +711,34 @@ $array_afiliaciones=array();
 
 
 			//end calculo tablas meses
+
+					  //egresos
+
+                    $cuenta_ordenes= array('cantidad' =>0 ,"monto"=>0);
+					$cuenta_transaccions= array('cantidad' =>0 ,"monto"=>0);	
+					$cuenta_tr1=array('cantidad' =>0 ,"monto"=>0);
+
+					foreach ($ordenes_compra as $key => $value) {
+						if($value['cat']=="Compra"){
+							$cuenta_transaccions['cantidad']++;
+							$cuenta_transaccions['monto']=$value['debit'];
+						}else{
+							$cuenta_ordenes['cantidad']++;
+							$cuenta_ordenes['monto']+=$value['debit'];
+						}
+						
+
+					}
+				foreach ($tr1 as $key => $value) {
+					
+					if(strpos(strtolower($value['note']), strtolower($caja))!==false){
+						$cuenta_tr1['cantidad']++;
+						$cuenta_tr1['monto']+=$value['debit'];
+					}
+					
+				}
+				
+                    //end egresos
  //afiliaciones
                     $var_cuenta_afiliaciones=0;
                     $var_monto_afiliaciones=0;
@@ -724,6 +753,8 @@ $array_afiliaciones=array();
                         </tr>';
                     }
                     //end afiliaciones
+
+                  
 					
 //datos pdf para abajo
 
@@ -1092,6 +1123,37 @@ $contenidoTabla="<div style='text-align: center;'>
 						</tr>
 					</tfoot>
 			</table>
+			<br>
+			<h6 style='font-size: 1rem;margin-bottom: 0.5rem;font-family: inherit;font-weight: 500;line-height: 1.2;color: inherit;margin-top: 10px;'>Resumen Egresos</h6>
+			<table style='border-collapse: collapse;border: 1px solid #5F5F5F;border-spacing: 2px;'>
+					<thead>
+						<tr >
+							<th style='background: #555;color: #fff;text-transform: uppercase;text-align: center;font-size: 14px;padding: 10px;'>
+							DESCRIPCION</th>
+							<th style='background: #555;color: #fff;text-transform: uppercase;text-align: center;font-size: 14px;padding: 10px;'>
+							CANT</th>
+							<th style='background: #555;color: #fff;text-transform: uppercase;text-align: center;font-size: 14px;padding: 10px;'>
+							MONTO</th>	
+						</tr>
+					</thead>
+					<tbody>
+						<tr >
+							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Pago Orden de Compra</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>".$cuenta_ordenes['cantidad']."</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 1px;'>"."$ ".number_format($cuenta_ordenes['monto'],0,",",".")."</td>
+						</tr>
+						".(($cuenta_tr1['cantidad']!=0)? "<tr><td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Transferencias</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>".$cuenta_tr1['cantidad']."</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 1px;'>"."$ ".number_format($cuenta_tr1['monto'],0,",",".")."</td></tr>" : "")."
+						".(($cuenta_transaccions['cantidad']!=0)? "<tr><td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Transacciones</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>".$cuenta_transaccions['cantidad']."</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 1px;'>"."$ ".number_format($cuenta_transaccions['monto'],0,",",".")."</td></tr>" : "")."
+						
+						
+					</tbody>
+					<tfoot>
+						<tr>
+							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;' >TOTAL Egresos</th>
+							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'>".($cuenta_ordenes['cantidad']+$cuenta_tr1['cantidad']+$cuenta_transaccions['cantidad'])."</th>
+							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 1px;'>".("$ ".number_format($cuenta_ordenes['monto']+$cuenta_tr1['monto']+$cuenta_transaccions['monto'],0,",","."))."</th>			
+						</tr>
+					</tfoot>
+			</table>
+
 		</td>
 	</tr>
 	<tr>
