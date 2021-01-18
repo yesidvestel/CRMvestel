@@ -191,7 +191,11 @@ class Transactions extends CI_Controller
 
             }
         }
-        $note="Pago de la factura #".$tid." ".$customer->name." ".$customer->unoapellido." ".$customer->documento;        
+			if ($pmethod==Cash){
+        $note="Pago de la factura #".$tid." ".$customer->name." ".$customer->unoapellido." ".$customer->documento." metodo: efectivo";
+			}if ($pmethod==Bank){
+			$note="Pago de la factura #".$tid." ".$customer->name." ".$customer->unoapellido." ".$customer->documento." metodo: Consignacion";	
+			}
     $data = array(
             'acid' => $acid,
             'account' => $account['holder'],
@@ -287,6 +291,11 @@ class Transactions extends CI_Controller
         $paydate = $this->input->post('paydate');
         $note = $this->input->post('shortnote');
         $pmethod = $this->input->post('pmethod');
+		if ($pmethod=='Cash'){
+			$metodo = 'Efectivo';
+		}if ($pmethod=='Bank'){
+			$metodo = 'Transferencia';
+		}
         $banco = $this->input->post('banco');
         $acid = $this->input->post('account');
         $cid = $this->input->post('cid');
@@ -365,9 +374,9 @@ class Transactions extends CI_Controller
             'payerid' => $cid,
             'method' => $pmethod,
             'date' => $paydate,
-            'eid' => $this->aauth->get_user()->id,
+            'eid' => $this->aauth->get_user()->id,		
             'tid' => $tid,
-            'note' => $note,
+            'note' => $note.'Metodo: '.$metodo,
             'ext' => 0,
             'nombre_banco'=>$banco,
             'id_banco'=>$id_banco

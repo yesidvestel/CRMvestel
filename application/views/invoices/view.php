@@ -519,7 +519,8 @@
                                     for="shortnote"><?php echo $this->lang->line('Note') ?></label>
                             <input type="text" class="form-control"
                                    name="shortnote" placeholder="Short note"
-                                   value="Pago de factura #<?php echo $invoice['tid'] .' '.$invoice['name'].' '.$invoice['unoapellido'].' '.$invoice['documento'] ?>"></div>
+                                   value="Pago de factura #<?php echo $invoice['tid'] .' '.$invoice['name'].' '.$invoice['unoapellido'].' '.$invoice['documento'] ?>
+										  "></div>
                     </div>
 					<?php if ($invoice['ron']=='Cortado') { ?>
 					<div class="row">
