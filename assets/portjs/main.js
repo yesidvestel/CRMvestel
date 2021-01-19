@@ -137,7 +137,8 @@ $(function(){
         // Set input values
         $('#title').val(data.event ? data.event.title : '');        
         $('#description').val(data.event ? data.event.description : '');
-        $('#color').val(data.event ? data.event.color : '#3a87ad');
+		$('#rol').val(data.event ? data.event.rol : '');
+        $('#color').val(data.event ? data.event.color : '#3a87ad');		
         // Create Butttons
         $.each(data.buttons, function(index, button){
             $('.modal-footer').prepend('<button type="button" id="' + button.id  + '" class="btn ' + button.css + '">' + button.label + '</button>')
@@ -148,11 +149,12 @@ $(function(){
 
     // Handle Click on Add Button
     $('.modal').on('click', '#add-event',  function(e){
-        if(validator(['title', 'description'])) {
+        if(validator(['title', 'description', 'rol'])) {
             $.post(base_url+'events/addEvent', {
                 title: $('#title').val(),
                 description: $('#description').val(),
                 color: $('#color').val(),
+				rol: $('#rol').val(),
                 start: $('#start').val(),
                 end: $('#end').val()
             }, function(result){
@@ -167,12 +169,13 @@ $(function(){
 
     // Handle click on Update Button
     $('.modal').on('click', '#update-event',  function(e){
-        if(validator(['title', 'description'])) {
+        if(validator(['title', 'description', 'rol'])) {
             $.post(base_url+'events/updateEvent', {
                 id: currentEvent._id,
                 title: $('#title').val(),
                 description: $('#description').val(),
-                color: $('#color').val()
+                color: $('#color').val(),
+				rol: $('#rol').val()
             }, function(result){
                 $('.alert').addClass('alert-success').text('Event updated successfuly');
                 $('.modal').modal('hide');

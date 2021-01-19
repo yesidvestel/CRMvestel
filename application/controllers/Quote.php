@@ -47,7 +47,7 @@ class Quote extends CI_Controller
 		$data['facturalist'] = $this->ticket->factura_list($custid);
         $data['currency'] = $this->quote->currencies();
         $data['customergrouplist'] = $this->customers->group_list();
-        $data['lastinvoice'] = $this->quote->lastquote();
+        $data['lastquote'] = $this->quote->lastquote();
         $data['terms'] = $this->quote->billingterms();
         $head['title'] = "New Quote";
         $head['usernm'] = $this->aauth->get_user()->username;
@@ -92,14 +92,18 @@ class Quote extends CI_Controller
     public function action()
     {
 
-        $customer_id = $this->input->post('customer_id');		
+        $customer_id = $this->input->post('customer_id');
+		$nticket = $this->input->post('ticketnumero');
         $subject = $this->input->post('subject');
         $detalle = $this->input->post('detalle');
         $created = $this->input->post('created');
         $section = $this->input->post('section');
 		$factura = $this->input->post('factura');
+		$agendar = $this->input->post('agendar');
+		$fagenda = $this->input->post('f_agenda');
+		$hora = $this->input->post('hora');
         if ($customer_id) {
-        	$this->quote->addticket($customer_id, $subject, $detalle, $created, $section, $factura);
+        	$this->quote->addticket($customer_id, $nticket, $subject, $detalle, $created, $section, $factura,$agendar,$fagenda,$hora);
 			
 		}
 

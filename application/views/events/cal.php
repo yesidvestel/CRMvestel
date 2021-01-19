@@ -52,6 +52,12 @@
                             <textarea class="form-control" id="description" name="description"></textarea>
                         </div>
                     </div>
+					<div class="row form-group">
+                        <label class="col-md-4 control-label" for="rol">Asignado</label>
+                        <div class="col-md-8">
+                            <input id="rol" name="rol" type="text" class="form-control input-md" readonly/>
+                        </div>
+                    </div>
                     <div class="row form-group">
                         <label class="col-md-4 control-label" for="color"><?php echo $this->lang->line('Color')  ?></label>
                         <div class="col-md-4">

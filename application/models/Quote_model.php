@@ -20,11 +20,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Quote_model extends CI_Model
 {
-    var $table = 'quotes';
-	
-    var $column_order = array(null, 'tid', 'name', 'invoicedate', 'total', 'status', null);
-    var $column_search = array('tid', 'name', 'invoicedate', 'total');
-    var $order = array('tid' => 'desc');
+    var $table = 'tickets';	
+    var $column_order = array(null,'codigo', 'subject', 'detalle', null);
+    var $column_search = array('codigo', 'subject', 'detalle');
+    var $order = array('codigo' => 'desc');
 
     public function __construct()
     {
@@ -33,13 +32,13 @@ class Quote_model extends CI_Model
 
     public function lastquote()
     {
-        $this->db->select('id');
+        $this->db->select('codigo');
         $this->db->from($this->table);
-        $this->db->order_by('id', 'DESC');
+        $this->db->order_by('codigo', 'DESC');
         $this->db->limit(1);
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
-            return $query->row()->n_orden;
+            return $query->row()->codigo;
         } else {
             return 1000;
         }
@@ -174,10 +173,13 @@ class Quote_model extends CI_Model
         $query = $this->db->get();
         return $query->row_array();
     }
-	public function addticket($customer_id, $subject, $detalle, $created, $section, $factura)
+	public function addticket($customer_id, $nticket, $subject, $detalle, $created, $section, $factura, $agendar, $fagenda, $hora)
     {
 		$bill_llegada = datefordatabase($created);
-        $data = array(			
+		
+		$start = datefordatabase($fagenda);
+        $data = array(
+			'codigo' => $nticket,
             'subject' => $subject,
             'detalle' => $detalle,
             'created' => $bill_llegada,
@@ -188,15 +190,28 @@ class Quote_model extends CI_Model
             'id_invoice' => 'null',
             'id_factura' => $factura,          
         );
-
+		
         if ($this->db->insert('tickets', $data)) {
+			//agregar agenda
+			
+		if ($agendar==si){
+		$data2 = array(
+			'idorden' => $nticket,
+			'title' => $detalle.' '.$hora.' Orden #'.$nticket,
+            'start' => $start,
+            'end' => '',
+            'description' => strip_tags($section),
+            'color' => '#4CB0CB'
+		);		
+		$this->db->insert('events', $data2);
+		}
             echo json_encode(array('status' => 'Success', 'message' =>
                 $this->lang->line('ADDED')));
         } else {
             echo json_encode(array('status' => 'Error', 'message' =>
                 $this->lang->line('ERROR')));
         }
-
+		
     }
 
     public function convert($id)

@@ -1,3 +1,6 @@
-ALTER TABLE `crm`.`historiales` 
-ADD COLUMN `tipos` int NULL DEFAULT NULL AFTER `id_user`;
+ALTER TABLE `crm`.`tickets` 
+ADD COLUMN `codigo` int NULL DEFAULT NULL AFTER `idt`;
 
+ALTER TABLE `crm`.`events` 
+ADD COLUMN `idorden` int NULL DEFAULT NULL AFTER `id`;
+ADD COLUMN `rol` VARCHAR(20) NOT NULL AFTER `rid

@@ -168,7 +168,7 @@
 					foreach ($tecnicoslista as $row) {
 						$cid = $row['id'];
 						$title = $row['username'];
-						echo "<option value='$cid'>$title</option>";
+						echo "<option value='$title'>$title</option>";
 					}
 					?>
 			</select>
@@ -283,6 +283,7 @@
     });
     function asignar_tecnico (){
         var id_tecnico_seleccionado=$("#tecnicos").val();
+	
         $.post(baseurl+"tickets/asignar_ordenes",{id_tecnico_seleccionado:id_tecnico_seleccionado,lista:lista_ordenes},function(data){
 
                 if(data=="correcto"){

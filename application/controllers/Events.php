@@ -66,8 +66,8 @@ class Events extends CI_Controller
         $end = $this->input->post('end');
         $description = $this->input->post('description');
         $color = $this->input->post('color');
-
-        $result = $this->events_model->addEvent($title, $start, $end, $description, $color);
+		$rol = $this->input->post('rol');
+        $result = $this->events_model->addEvent($title, $start, $end, $description, $color, $rol);
 
     }
 
@@ -78,7 +78,8 @@ class Events extends CI_Controller
         $id = $this->input->post('id');
         $description = $this->input->post('description');
         $color = $this->input->post('color');
-        $result = $this->events_model->updateEvent($id, $title, $description, $color);
+		$rol = $this->input->post('rol');
+        $result = $this->events_model->updateEvent($id, $title, $description, $color, $rol);
         echo $result;
     }
 

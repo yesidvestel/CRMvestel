@@ -25,24 +25,25 @@ class Events_model extends CI_Model
     /*Read the data from DB */
     public function getEvents($start, $end)
     {
-
-        $sql = "SELECT * FROM events WHERE events.start BETWEEN ? AND ? ORDER BY events.start ASC";
+		$us = $this->aauth->get_user()->roleid;
+		$tec = $this->aauth->get_user()->username;
+        $sql = "SELECT * FROM events  WHERE rol='$tec' OR $us=4 AND events.start BETWEEN ? AND ? ORDER BY events.start  ASC ";
         return $this->db->query($sql, array($start, $end))->result();
-
+		
     }
 
     /*Create new events */
 
-    public function addEvent($title, $start, $end, $description, $color)
+    public function addEvent($title, $start, $end, $description, $color, $rol)
     {
 
         $data = array(
             'title' => $title,
             'start' => $start,
             'end' => $end,
-
             'description' => $description,
-            'color' => $color
+            'color' => $color,
+			'rol' => $rol
         );
 
         if ($this->db->insert('events', $data)) {
@@ -54,11 +55,11 @@ class Events_model extends CI_Model
 
     /*Update  event */
 
-    public function updateEvent($id, $title, $description, $color)
+    public function updateEvent($id, $title, $description, $color, $rol)
     {
 
-        $sql = "UPDATE events SET title = ?, description = ?, color = ? WHERE id = ?";
-        $this->db->query($sql, array($title, $description, $color, $id));
+        $sql = "UPDATE events SET title = ?, description = ?, color = ?, rol = ? WHERE id = ?";
+        $this->db->query($sql, array($title, $description, $color, $rol, $id));
         return ($this->db->affected_rows() != 1) ? false : true;
     }
 

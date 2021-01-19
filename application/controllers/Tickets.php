@@ -95,8 +95,8 @@ class Tickets Extends CI_Controller
             $row = array();
             $no++;			
             $row[] = $no;
-			$row[] = '<input id="input_'.$ticket->idt.'" type="checkbox" style="margin-left: 9px;cursor:pointer;" onclick="asignar_orden(this)" data-id="'.$ticket->idt.'">';
-			$row[] = $ticket->idt;
+			$row[] = '<input id="input_'.$ticket->codigo.'" type="checkbox" style="margin-left: 9px;cursor:pointer;" onclick="asignar_orden(this)" data-id="'.$ticket->codigo.'">';
+			$row[] = $ticket->codigo;
             $row[] = $ticket->subject;
 			$row[] = $ticket->detalle;
             $row[] = $ticket->created;
@@ -117,8 +117,8 @@ class Tickets Extends CI_Controller
             }
 
             if($ticket->asignado!=null){
-                $tecnico=$this->db->get_where('aauth_users',array('id'=>$ticket->asignado))->row();
-                $row[]=$tecnico->username;
+                //$tecnico=$this->db->get_where('aauth_users',array('id'=>$ticket->asignado))->row();
+                $row[]=$ticket->asignado;
             }else{
                 $row[] = "--";    
             }
@@ -144,8 +144,12 @@ class Tickets Extends CI_Controller
     public function asignar_ordenes(){
         foreach ($_POST['lista'] as $key => $id_orden) {
             $datos['asignado']=$_POST['id_tecnico_seleccionado'];
-            $condicion['idt']=$id_orden;
+            $condicion['codigo']=$id_orden;
             $this->db->update('tickets',$datos,$condicion);
+			
+			$data2['rol']=$_POST['id_tecnico_seleccionado'];
+			$condicion2['idorden']=$id_orden;
+			$this->db->update('events',$data2,$condicion2);
         }
         echo "correcto";
     }
