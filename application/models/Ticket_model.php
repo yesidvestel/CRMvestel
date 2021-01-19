@@ -24,8 +24,8 @@ class Ticket_model extends CI_Model
 
     //documents list
 	var $table = 'customers';
-    var $doccolumn_order = array(null, null, 'idt', 'subject', 'detalle', 'created', 'abonado', 'id_factura', 'ciudad','status', null);
-    var $doccolumn_search = array('idt', 'subject', 'detalle', 'created', 'abonado', 'id_factura', 'ciudad','status',);
+    var $doccolumn_order = array(null, null, 'codigo', 'subject', 'detalle', 'created', 'abonado', 'id_factura', 'ciudad','status', null);
+    var $doccolumn_search = array('idt', 'codigo', 'detalle', 'created', 'abonado', 'id_factura', 'ciudad','status',);
 
 
     public function thread_list($id)
