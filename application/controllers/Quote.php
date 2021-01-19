@@ -221,14 +221,15 @@ class Quote extends CI_Controller
     public function editaction()
     {
 
-        $customer_id = $this->input->post('customer_id');		
+        $customer_id = $this->input->post('customer_id');
+		$nticket = $this->input->post('ticketnumero');
         $subject = $this->input->post('subject');
         $detalle = $this->input->post('detalle');
         $created = $this->input->post('created');
         $section = $this->input->post('section');
 		$factura = $this->input->post('factura'); 
-        $bill_date = datefordatabase($created);        
-        $data = array('subject' => $subject, 'detalle' => $detalle, 'created' => $bill_date, 'section' => $section, 'id_factura' => $factura);
+        $bill_date = datefordatabase($created);       
+        $data = array('codigo' => $nticket, 'subject' => $subject, 'detalle' => $detalle, 'created' => $bill_date, 'section' => $section, 'id_factura' => $factura);
         $this->db->set($data);
         $this->db->where('idt', $customer_id);
 		$this->db->update('tickets');

@@ -44,8 +44,8 @@
 
 
                                 <div class="form-group row">
-									<?php /*?><input type="hidden" class="form-control" placeholder="Invoice #" name="ticketnumero"
-                                                   value="<?php echo $lastinvoice + 1 ?>" readonly></input><?php */?>
+									<input type="text" class="form-control" placeholder="Invoice #" name="ticketnumero"
+                                                   value="<?php echo $thread_info['codigo'] ?>"></input>
                                     <div class="col-sm-12"><h3
                                                 class="title"><?php echo $this->lang->line('') ?>Propiedades de orden</h3>
                                     </div>
