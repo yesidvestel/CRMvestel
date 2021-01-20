@@ -363,7 +363,9 @@ class Tickets Extends CI_Controller
                     }else if($data['combo']==='5Megas'){
                         $datay['pid']=25;
 					}else if($data['combo']==='5MegasSolo'){
-                        $datay['pid']=171;
+                        $datay['pid']=171;					
+                    }else if($data['combo']==='5MegasD'){
+                        $datay['pid']=223;					
                     }else if($data['combo']==='10Megas'){
                         $datay['pid']=26;
 					}else if($data['combo']==='10MegasSolo'){
