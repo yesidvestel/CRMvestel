@@ -368,6 +368,8 @@ class Tickets Extends CI_Controller
                         $datay['pid']=26;
 					}else if($data['combo']==='10MegasSolo'){
                         $datay['pid']=172;
+                    }else if($data['combo']==='50Megas'){
+                        $datay['pid']=222;
                     }
                     $producto = $this->db->get_where('products',array('pid'=>$datay['pid']))->row();
                     $x=intval($producto->product_price);
