@@ -59,6 +59,132 @@ class Invoices extends CI_Controller
         $this->load->view('invoices/newinvoice', $data);
         $this->load->view('fixed/footer');
     }	
+     public function generar_facturas()
+    {
+        $this->load->model('customers_model', 'customers');
+        $this->load->model('transactions_model');
+        $head['title'] = "Generar Facturas";        
+        $data['accounts'] = $this->transactions_model->acc_list();
+        $head['usernm'] = $this->aauth->get_user()->username;
+        $this->load->view('fixed/header', $head);
+        $this->load->view('invoices/generar_facturas', $data);
+        $this->load->view('fixed/footer');
+    }
+    public function generar_facturas_action(){
+        $caja1=$this->db->get_where('accounts',array('id' =>$_POST['pay_acc']))->row();
+        $customers = $this->db->get_where("customers", array('usu_estado' =>"Activo","ciudad"=>$caja1->holder))->result_array();
+        $ciudades= array();
+        $sdate=$this->input->post("sdate");
+        $date1= new DateTime($sdate);
+        $sdate1=$date1->format("Y-m-d");
+        $time_sdate1=strtotime($sdate1);
+        $d=0;
+        foreach ($customers as $key => $value) {
+            $invoices = $this->db->select("*")->from("invoices")->where('csd='.$value['id'])->order_by('invoicedate',"DESC")->get()->result();
+            echo "<br>";
+            var_dump("customer = ".$value['id']." |");
+            $_customer_factura_creada=false;
+            foreach ($invoices as $key => $value2) {
+                $time_dateinv=strtotime($value2->invoicedate);
+                $dtime2=new DateTime($value2->invoicedate);
+                if($time_dateinv>$time_sdate1){
+                    $_customer_factura_creada=true;
+                    echo "Ya tiene factura ".$sdate1." | ".$value2->invoicedate;
+                }else if($date1->format("Y-m")==$dtime2->format("Y-m")){
+                    $_customer_factura_creada=true;
+                    echo "Ya tiene factura 2 ".$sdate1." | ".$value2->invoicedate;
+                }else{                                                                                    
+                    $internet="";
+                    $television="";
+                    $_tiene_internet=false;
+                    $_tiene_television=false;
+                    if($value2->combo!="no" ){                    
+                        $_tiene_internet=true;
+                        $internet=$value2->combo;
+                        if($value2->television!="no" ){
+                            $_tiene_television=true;
+                        }
+                    }else if($value2->television!="no"){
+                        $_tiene_television=true;
+                    }
+                    
+                    $lista_items=$this->db->get_where("invoice_items", array('tid' => $value2->tid))->result_array();
+                    foreach ($lista_items as $key => $item_invoic) {
+                        if(strpos(strtolower($item_invoic['product']), "reconexi")!==false){
+
+                        }else if(strpos(strtolower($item_invoic['product']), "afiliaci")!==false){
+                            
+                        }else{
+                            if(strpos(strtolower($item_invoic['product']), "tele")!==false){
+                                $_tiene_television=true;
+                            }
+
+                            if($item_invoic['product']=="1Mega" ||$item_invoic['product']=="1 Mega"){
+                                $_tiene_internet=true;
+                                $internet=$item_invoic['product'];
+                            }else if($item_invoic['product']=="2Megas" ||$item_invoic['product']=="2 Megas"){
+                                $_tiene_internet=true;
+                                $internet=$item_invoic['product'];
+                            }else if($item_invoic['product']=="3Megas"|| $item_invoic['product']=="3 Megas"){
+                                $_tiene_internet=true;
+                                $internet=$item_invoic['product'];
+                            }else if($item_invoic['product']=="5Megas"||$item_invoic['product']=="5 Megas"){
+                                $_tiene_internet=true;
+                                $internet=$item_invoic['product'];
+                            }else if($item_invoic['product']=="10Megas"||$item_invoic['product']=="10 Megas"){
+                                $_tiene_internet=true;
+                                $internet=$item_invoic['product'];
+                            }
+
+                        }
+                    }
+                    if($_customer_factura_creada==false){
+                        if($_tiene_television==true || $_tiene_internet==true){
+                            $internet_data= array();
+                            $television_data= array();
+                            
+                            if($_tiene_television==true){
+                                if(strpos(strtolower($caja1->holder), strtolower("mocoa"))!==false){
+                                    $tv_product= $this->db->get_where("products", array('pid' => "159"))->row();
+                                    $television_data['price']=$tv_product->product_price;
+                                    $television_data['subtotal']=$tv_product->product_price;
+                                    $television_data['totaltax']=0;
+                                    $television_data['tax']=0;
+                                    $television_data['product']="Television";
+                                }else{
+                                    $tv_product= $this->db->get_where("products", array('pid' => "159"))->row();
+                                    $x1=3992+$tv_product->product_price;
+                                    $television_data['price']=$tv_product->product_price;
+                                    $television_data['subtotal']=$x1;
+                                    $television_data['totaltax']=3992;
+                                    $television_data['tax']=$tv_product->taxrate;
+                                    if(strpos(strtolower($caja1->holder), strtolower("yopal"))!==false){
+                                        $television_data['product']="Television Yopal";
+                                    }else{
+                                        $television_data['product']="Television";
+                                    }
+                                }
+                                
+
+                            }                                                                                    
+                            //estan listos los datos de tv item invoice falta llenar los campos faltantes 
+                            //falta llenar los datos de internet y posteriormente insertar
+                            $_customer_factura_creada=true;
+                        }
+                    }
+
+
+                }   
+                
+            }
+            
+
+        }
+        
+        
+
+        var_dump($x1);
+    }
 
     //edit invoice
     public function edit()
