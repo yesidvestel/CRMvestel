@@ -224,7 +224,7 @@
 
             <?php if ($this->aauth->get_user()->roleid > 4) { ?>
                 <li class="navigation-header"><span
-                            data-i18n="nav.category.support"> <?php echo $this->lang->line('sales') ?></span><i
+                            data-i18n="nav.category.support">Cobranza</span><i
                             data-toggle="tooltip"
                             data-placement="right"
                             data-original-title="Sales"
@@ -777,7 +777,7 @@
                     echo ' open';
                 } ?>">
                     <a href=""> <i class="icon-plus"></i> <span
-                                class="menu-title"><?php echo $this->lang->line('sales') ?>
+                                class="menu-title">Cobranza
 						
 						<!-- MENU FACTURACION-->
 						
@@ -792,6 +792,9 @@
 
                         <li>
                             <a href="<?php echo base_url(); ?>quote"><?php echo $this->lang->line('Manage Quotes'); ?></a>
+                        </li>
+						<li>
+                            <a href="<?php echo base_url(); ?>reports/cierre">Cierre</a>
                         </li>
                     </ul>
                 </li>
