@@ -305,7 +305,7 @@
                                         <option value="3Megas">3 Megas</option>
 										<option value="5Megas">5 Megas</option>
 										<option value="10Megas">10 Megas</option>
-										
+										<option value="50Megas">50 Megas</option>
                                     </select></td>
 								<td colspan="2">Punto Adicional 
 								<select name="puntos" class="selectpicker form-control">

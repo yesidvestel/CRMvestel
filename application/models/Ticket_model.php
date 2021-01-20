@@ -153,6 +153,7 @@ class Ticket_model extends CI_Model
 
             }
         }
+		
         $this->db->delete('tickets_th', array('tid' => $id));
         return true;
     }
