@@ -101,7 +101,7 @@
 											foreach ($tecnicoslista as $row) {
 												$cid = $row['id'];
 												$title = $row['username'];
-												echo "<option value='$cid'>$title</option>";
+												echo "<option value='$title'>$title</option>";
 											}
 											?>
                                     </select>

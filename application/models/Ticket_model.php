@@ -197,7 +197,7 @@ class Ticket_model extends CI_Model
          if ($filt2['estado'] != '') {
             $this->db->where('status=', $filt2['estado']);
         }
-        if($filt2['tecnico']!=0){
+        if($filt2['tecnico']!=''){
          $this->db->where('asignado=', $filt2['tecnico']);   
         }
 		$this->db->join('customers', 'tickets.cid=customers.id', 'left');
