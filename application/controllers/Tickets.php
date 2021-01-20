@@ -346,7 +346,7 @@ class Tickets Extends CI_Controller
         // lista_de_invoice_items es la lista de itemes para insertar
         $lista_de_invoice_items = $this->db->select('*')->from('invoice_items')->where("tid='".$ticket->id_invoice."' && ( pid =23 or pid =27)")->get()->result();
         $total=0;
-
+		$tax2=0;
         //cod x
 
         $datay['tid']=$data['tid'];
@@ -417,7 +417,7 @@ class Tickets Extends CI_Controller
                     $total+=$x*$datay['qty'];
 					$tax2+=$datay['totaltax'];
 					$datay['tax']=0;
-					$datay['totaltax']=0;
+					$datay['totaltax']='';
 					$datay['price']=$x;
 					$datay['subtotal']=$x*$datay['qty'];
                     if($ticket->detalle=="Instalacion" && $ticket->id_factura==null){
@@ -432,8 +432,11 @@ class Tickets Extends CI_Controller
                     $x=intval($producto->product_price);
                     $x=($x/31)*$diferencia->days;
                     $total+=$x;
+					$tax2+=$datay['totaltax'];
                     $datay['price']=$x;
+					$datay['totaltax']='';
                     $datay['subtotal']=$x;
+					
                     if($ticket->detalle=="Instalacion" && $ticket->id_factura==null){
                         $this->db->insert('invoice_items',$datay);
                     }
@@ -446,7 +449,7 @@ class Tickets Extends CI_Controller
 		
         
         $data['subtotal']=$total;
-		$data['tax']=$tax2;
+		$data['tax']=$y;
         $data['total']=$data['subtotal']+$data['tax'];
         //no haga ni insert ni update si no es instalacion y tambien si ya existe una factura
         $msg1="";
