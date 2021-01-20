@@ -300,7 +300,8 @@ class Tickets Extends CI_Controller
 
     public function update_status()
     {
-        $tid = $this->input->post('tid');		
+        $this->load->model('tools_model', 'tools');
+		$tid = $this->input->post('tid');		
         $status = $this->input->post('status');
         $fecha_final = $this->input->post('fecha_final');        
         $ticket = $this->db->get_where('tickets', array('idt' => $tid))->row();
@@ -313,7 +314,17 @@ class Tickets Extends CI_Controller
 		$this->db->set('ron', 'Activo');
         $this->db->where('tid', $est_afiliacion);
         $this->db->update('invoices');
-
+		//alerta de revision
+		$stdate2 = datefordatabase($fecha_final);
+		$name = 'Revisar soporte';
+		$estado = 'Due';
+		$priority = 'Low';
+		$stdate = $stdate2;
+		$tdate = '';
+		$employee = 32;
+		$assign = $this->aauth->get_user()->id;
+		$content = 'Revisar orden #'.$ticket->codigo;
+		$this->tools->addtask($name, $estado, $priority, $stdate, $tdate, $employee, $assign, $content);
 		
         foreach ($invoice[0] as $key => $value) {
             if($key!='id' && $key!='pmethod' && $key!='status' && $key!='pamnt'){
@@ -346,7 +357,7 @@ class Tickets Extends CI_Controller
         // lista_de_invoice_items es la lista de itemes para insertar
         $lista_de_invoice_items = $this->db->select('*')->from('invoice_items')->where("tid='".$ticket->id_invoice."' && ( pid =23 or pid =27)")->get()->result();
         $total=0;
-
+		$tax2=0;
         //cod x
 
         $datay['tid']=$data['tid'];
@@ -363,11 +374,15 @@ class Tickets Extends CI_Controller
                     }else if($data['combo']==='5Megas'){
                         $datay['pid']=25;
 					}else if($data['combo']==='5MegasSolo'){
-                        $datay['pid']=171;
+                        $datay['pid']=171;					
+                    }else if($data['combo']==='5MegasD'){
+                        $datay['pid']=223;					
                     }else if($data['combo']==='10Megas'){
                         $datay['pid']=26;
 					}else if($data['combo']==='10MegasSolo'){
                         $datay['pid']=172;
+                    }else if($data['combo']==='50Megas'){
+                        $datay['pid']=222;
                     }
                     $producto = $this->db->get_where('products',array('pid'=>$datay['pid']))->row();
                     $x=intval($producto->product_price);
@@ -413,7 +428,7 @@ class Tickets Extends CI_Controller
                     $total+=$x*$datay['qty'];
 					$tax2+=$datay['totaltax'];
 					$datay['tax']=0;
-					$datay['totaltax']=0;
+					$datay['totaltax']='';
 					$datay['price']=$x;
 					$datay['subtotal']=$x*$datay['qty'];
                     if($ticket->detalle=="Instalacion" && $ticket->id_factura==null){
@@ -428,8 +443,11 @@ class Tickets Extends CI_Controller
                     $x=intval($producto->product_price);
                     $x=($x/31)*$diferencia->days;
                     $total+=$x;
+					$tax2+=$datay['totaltax'];
                     $datay['price']=$x;
+					$datay['totaltax']='';
                     $datay['subtotal']=$x;
+					
                     if($ticket->detalle=="Instalacion" && $ticket->id_factura==null){
                         $this->db->insert('invoice_items',$datay);
                     }
@@ -442,7 +460,7 @@ class Tickets Extends CI_Controller
 		
         
         $data['subtotal']=$total;
-		$data['tax']=$tax2;
+		$data['tax']=$y;
         $data['total']=$data['subtotal']+$data['tax'];
         //no haga ni insert ni update si no es instalacion y tambien si ya existe una factura
         $msg1="";
@@ -647,6 +665,8 @@ class Tickets Extends CI_Controller
         $dataz['fecha_final']=$fecha_final;
         
         $this->db->update('tickets',$dataz,array('idt'=>$tid));
+		
+		
         
         echo json_encode(array('msg1'=>$msg1,'tid'=>$data['tid'],'status' => 'Success', 'message' =>
             $this->lang->line('UPDATED'), 'pstatus' => $status));

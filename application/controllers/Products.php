@@ -108,6 +108,7 @@ class Products extends CI_Controller
             $row = array();
             $row[] = $no;
             $pid = $prd->pid;
+			$row[] = $pid;
             $row[] = $prd->product_name;
             $row[] = $prd->qty;
             $row[] = $prd->product_code;

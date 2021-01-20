@@ -20,7 +20,8 @@
                             <div class="card-block">
                                 <div class="media">
                                     <div class="media-body text-xs-left">
-                                        <h3 class="pink" id="dash_0"></h3>
+										<?php $numero_asignados= $this->db->select('count(idt) as numero')->from('tickets')->where('status="Pendiente"')->get()->result(); ?>
+                                        <h3 class="pink"><?=$numero_asignados[0]->numero?></h3>
                                         <span><?php echo $this->lang->line('Waiting') ?></span>
                                     </div>
                                     <div class="media-right media-middle">
@@ -37,7 +38,8 @@
                             <div class="card-block">
                                 <div class="media">
                                     <div class="media-body text-xs-left">
-                                        <h3 class="indigo" id="dash_1"></h3>
+										<?php $numero_asignados= $this->db->select('count(idt) as numero')->from('tickets')->where('status="Realizando"')->get()->result(); ?>
+                                        <h3 class="indigo"><?=$numero_asignados[0]->numero?></h3>
                                         <span><?php echo $this->lang->line('Processing') ?></span>
                                     </div>
                                     <div class="media-right media-middle">
@@ -54,7 +56,8 @@
                             <div class="card-block">
                                 <div class="media">
                                     <div class="media-body text-xs-left">
-                                        <h3 class="green" id="dash_2"></h3>
+										<?php $numero_asignados= $this->db->select('count(idt) as numero')->from('tickets')->where('status="Resuelto"')->get()->result(); ?>
+                                        <h3 class="green"><?=$numero_asignados[0]->numero?></h3>
                                         <span><?php echo $this->lang->line('Solved') ?></span>
                                     </div>
                                     <div class="media-right media-middle">
@@ -101,7 +104,7 @@
 											foreach ($tecnicoslista as $row) {
 												$cid = $row['id'];
 												$title = $row['username'];
-												echo "<option value='$cid'>$title</option>";
+												echo "<option value='$title'>$title</option>";
 											}
 											?>
                                     </select>

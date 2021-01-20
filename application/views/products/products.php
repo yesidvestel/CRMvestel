@@ -68,6 +68,7 @@
                 <thead>
                 <tr>
                     <th>#</th>
+					<th>ID</th>
                     <th><?php echo $this->lang->line('Name') ?></th>
                     <th><?php echo $this->lang->line('Qty') ?></th>
                     <th><?php echo $this->lang->line('Code') ?></th>
@@ -83,6 +84,7 @@
                 <tfoot>
                 <tr>
                     <th>#</th>
+					<th>ID</th>
                     <th><?php echo $this->lang->line('Name') ?></th>
                     <th><?php echo $this->lang->line('Qty') ?></th>
                     <th><?php echo $this->lang->line('Code') ?></th>

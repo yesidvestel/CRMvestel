@@ -410,8 +410,10 @@ class Invoices extends CI_Controller
 
         if ($flag == true) {
             $this->db->insert_batch('invoice_items', $productlist);
+			$tidactualmasuno= $this->db->select('max(codigo)+1 as codigo')->from('tickets')->get()->result();
             if ($this->db->insert('invoices', $data)) {
 				if (($television !== no) || $combo !== no){
+				$data2['codigo']=$tidactualmasuno[0]->codigo;	
                 $data2['subject']='servicio';
 				$data2['detalle']='Instalacion';	
                 $data2['created']=$bill_date;

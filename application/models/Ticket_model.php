@@ -68,6 +68,14 @@ class Ticket_model extends CI_Model
         $query = $this->db->get();
         return $query->row_array();
     }
+	public function thread_agen($codigo)
+    {
+        $this->db->select('*');
+        $this->db->from('events');        
+        $this->db->where('events.idorden', $codigo);
+        $query = $this->db->get();
+        return $query->row_array();
+    }
 	public function barrios_list($id)
     { 
 		$this->db->select('*');
@@ -145,6 +153,7 @@ class Ticket_model extends CI_Model
 
             }
         }
+		
         $this->db->delete('tickets_th', array('tid' => $id));
         return true;
     }
@@ -197,7 +206,7 @@ class Ticket_model extends CI_Model
          if ($filt2['estado'] != '') {
             $this->db->where('status=', $filt2['estado']);
         }
-        if($filt2['tecnico']!=0){
+        if($filt2['tecnico']!=''){
          $this->db->where('asignado=', $filt2['tecnico']);   
         }
 		$this->db->join('customers', 'tickets.cid=customers.id', 'left');

@@ -91,10 +91,10 @@ class Tools_model extends CI_Model
         return $query->num_rows();
     }
 
-    public function addtask($name, $status, $priority, $stdate, $tdate, $employee, $assign, $content)
+    public function addtask($name, $estado, $priority, $stdate, $tdate, $employee, $assign, $content)
     {
 
-        $data = array('tdate' => date('Y-m-d H:i:s'), 'name' => $name, 'status' => $status, 'start' => $stdate, 'duedate' => $tdate, 'description' => $content, 'eid' => $employee, 'aid' => $assign, 'related' => 0, 'priority' => $priority, 'rid' => 0);
+        $data = array('tdate' => date('Y-m-d H:i:s'), 'name' => $name, 'status' => $estado, 'start' => $stdate, 'duedate' => $tdate, 'description' => $content, 'eid' => $employee, 'aid' => $assign, 'related' => 0, 'priority' => $priority, 'rid' => 0);
         return $this->db->insert('todolist', $data);
     }
 
@@ -140,7 +140,7 @@ class Tools_model extends CI_Model
     {
 
         $query = $this->db->query("SELECT
-				COUNT(IF( status = 'Due', id, NULL)) AS Due,
+				COUNT(IF( status = 'Pendiente', id, NULL)) AS Pendiente,
 				COUNT(IF( status = 'Progress', id, NULL)) AS Progress,
 				COUNT(IF( status = 'Done', id, NULL)) AS Done
 				COUNT(IF( status = 'end', id, NULL)) AS end
