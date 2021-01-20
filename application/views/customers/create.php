@@ -221,6 +221,9 @@
                                                 	<option value="c">c</option>
                                                     <option value="d">d</option>
                                                     <option value="e">e</option>
+													<option value="f">f</option>
+													<option value="g">g</option>
+													<option value="h">h</option>
                                                     <option value="a bis">a bis</option>
                                                     <option value="b bis">b bis</option>
                                                     <option value="c bis">c bis</option>
@@ -246,6 +249,9 @@
                                                 	<option value="c">c</option>
                                                     <option value="d">d</option>
                                                     <option value="e">e</option>
+													<option value="f">f</option>
+													<option value="g">g</option>
+													<option value="h">h</option>
                                                     <option value="a bis">a bis</option>
                                                     <option value="b bis">b bis</option>
                                                     <option value="c bis">c bis</option>
