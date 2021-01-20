@@ -95,7 +95,52 @@
 											<input name="factura" value="<?php echo $thread_info['id_factura'] ?>" class="form-control mb-1"></input>
 										</div>
                                         </div>
-                                    </div>                                
+                                    </div>
+								<div class="form-group row">									
+                                    <div class="col-sm-12">										
+										<h3 class="title">Agendar</h3>
+                                    </div>
+                                </div>
+								<div class="form-group row">
+									<div class="col-sm-4">
+										<label for="invociedate" class="caption">Agendar</label>
+										<div class="input-group">
+										<select name="agendar" id="agendar" class="form-control mb-1">
+												<option value='no'>No</option>
+												<option value='si'>Si</option>
+											</select>
+										</div>
+                                        </div>
+                                    <div class="col-sm-4">
+										<label for="invociedate" class="caption">Fecha a realizar</label>
+
+                                        <div class="input-group">
+                                            <div class="input-group-addon"><span class="icon-calendar4"
+                                                                                 aria-hidden="true"></span></div>
+                                            <input type="text" class="form-control"
+                                                   placeholder="Billing Date" name="f_agenda"
+                                                   data-toggle="datepicker"
+                                                   autocomplete="false">
+											
+                                        </div>
+										
+                                    
+                                </div>
+									<div class="col-sm-4">
+										<label for="invociedate" class="caption">Hora</label>
+
+                                        <div class="input-group">
+                                            <div class="input-group-addon"><span class="icon-calendar4"
+                                                                                 aria-hidden="true"></span></div>
+                                            <input type="text" class="form-control"
+                                           placeholder="End Date" name="hora"
+                                            autocomplete="false" value="<?php echo date("H").":".date("i") ?>">
+											
+                                        </div>
+										
+                                    
+                                </div>
+                                    </div>
 							</div>
                         </div>
 

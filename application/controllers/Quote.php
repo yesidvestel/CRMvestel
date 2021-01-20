@@ -60,11 +60,14 @@ class Quote extends CI_Controller
     //edit invoice
     public function edit()
     {
-        $this->load->model('ticket_model', 'ticket');        
+        $this->load->model('ticket_model', 'ticket');
         $thread_id = intval($this->input->get('id'));
+		$ticket = $this->db->get_where('tickets', array('idt' => $thread_id))->row();
+		$codigo = $ticket->codigo;
         $data['id'] = $tid;
         $data['title'] = "Quote $tid";
         $data['thread_info'] = $this->ticket->thread_info($thread_id);
+		$data['thread_agen'] = $this->ticket->thread_agen($codigo);
         $data['thread_list'] = $this->ticket->thread_list($thread_id);
 		$data['facturalist'] = $this->ticket->factura_list($thread_id);
         $head['title'] = "Edit Quote #$tid";
@@ -223,6 +226,9 @@ class Quote extends CI_Controller
 
         $customer_id = $this->input->post('customer_id');
 		$nticket = $this->input->post('ticketnumero');
+		$agendar = $this->input->post('agendar');
+		$fagenda = $this->input->post('f_agenda');
+		$hora = $this->input->post('hora');
         $subject = $this->input->post('subject');
         $detalle = $this->input->post('detalle');
         $created = $this->input->post('created');
@@ -233,6 +239,17 @@ class Quote extends CI_Controller
         $this->db->set($data);
         $this->db->where('idt', $customer_id);
 		$this->db->update('tickets');
+		$start = datefordatabase($fagenda);
+		if ($agendar==si){
+		$data2 = array(
+			'idorden' => $nticket,
+			'title' => $detalle.' '.$hora.' Orden #'.$nticket,
+            'start' => $start,            
+            'description' => strip_tags($section)            
+		);
+		$this->db->where('idorden', $nticket);
+		$this->db->update('events', $data2);
+		}
 
         echo json_encode(array('status' => 'Success', 'message' =>
             $this->lang->line('UPDATED'), 'pstatus' => $status));

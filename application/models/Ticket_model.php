@@ -68,6 +68,14 @@ class Ticket_model extends CI_Model
         $query = $this->db->get();
         return $query->row_array();
     }
+	public function thread_agen($codigo)
+    {
+        $this->db->select('*');
+        $this->db->from('events');        
+        $this->db->where('events.idorden', $codigo);
+        $query = $this->db->get();
+        return $query->row_array();
+    }
 	public function barrios_list($id)
     { 
 		$this->db->select('*');
