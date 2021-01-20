@@ -300,7 +300,8 @@ class Tickets Extends CI_Controller
 
     public function update_status()
     {
-        $tid = $this->input->post('tid');		
+        $this->load->model('tools_model', 'tools');
+		$tid = $this->input->post('tid');		
         $status = $this->input->post('status');
         $fecha_final = $this->input->post('fecha_final');        
         $ticket = $this->db->get_where('tickets', array('idt' => $tid))->row();
@@ -313,7 +314,17 @@ class Tickets Extends CI_Controller
 		$this->db->set('ron', 'Activo');
         $this->db->where('tid', $est_afiliacion);
         $this->db->update('invoices');
-
+		//alerta de revision
+		$stdate2 = datefordatabase($fecha_final);
+		$name = 'Revisar soporte';
+		$estado = 'Due';
+		$priority = 'Low';
+		$stdate = $stdate2;
+		$tdate = '';
+		$employee = 32;
+		$assign = $this->aauth->get_user()->id;
+		$content = 'Revisar orden #'.$ticket->codigo;
+		$this->tools->addtask($name, $estado, $priority, $stdate, $tdate, $employee, $assign, $content);
 		
         foreach ($invoice[0] as $key => $value) {
             if($key!='id' && $key!='pmethod' && $key!='status' && $key!='pamnt'){
@@ -654,6 +665,8 @@ class Tickets Extends CI_Controller
         $dataz['fecha_final']=$fecha_final;
         
         $this->db->update('tickets',$dataz,array('idt'=>$tid));
+		
+		
         
         echo json_encode(array('msg1'=>$msg1,'tid'=>$data['tid'],'status' => 'Success', 'message' =>
             $this->lang->line('UPDATED'), 'pstatus' => $status));

@@ -22,7 +22,7 @@
                                 <div class="media">
                                     <div class="media-body text-xs-left">
                                         <h3 class="pink" id="dash_0"></h3>
-                                        <span><?php echo $this->lang->line('Due') ?></span>
+                                        <span>Pendiente</span>
                                     </div>
                                     <div class="media-right media-middle">
                                         <i class="icon-clock3 pink font-large-2 float-xs-right"></i>
