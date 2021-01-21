@@ -117,43 +117,62 @@ class Invoices extends CI_Controller
                         }else{
                             if(strpos(strtolower($item_invoic['product']), "tele")!==false){
                                 $_tiene_television=true;
+                            }else{
+                                if($item_invoic['product']=="1Mega" ||$item_invoic['product']=="1 Mega"){
+                                    $_tiene_internet=true;
+                                    $internet="1 Mega";
+                                }else if($item_invoic['product']=="2Megas" ||$item_invoic['product']=="2 Megas"){
+                                    $_tiene_internet=true;
+                                    $internet="2 Megas";
+                                }else if($item_invoic['product']=="3Megas"|| $item_invoic['product']=="3 Megas"){
+                                    $_tiene_internet=true;
+                                    $internet="3 Megas";
+                                }else if($item_invoic['product']=="5Megas"||$item_invoic['product']=="5 Megas"){
+                                    $_tiene_internet=true;
+                                    $internet="5 Megas";
+                                }else if($item_invoic['product']=="10Megas"||$item_invoic['product']=="10 Megas"){
+                                    $_tiene_internet=true;
+                                    $internet="10 Megas";
+                                }else if($item_invoic['product']=="50Megas"||$item_invoic['product']=="50 Megas"){
+                                    $_tiene_internet=true;
+                                    $internet="50 Megas";
+                                }else if($item_invoic['product']=="3MegasSolo"){
+                                    $_tiene_internet=true;
+                                    $internet="3MegasSolo";
+                                }else if($item_invoic['product']=="5MegasSolo"){
+                                    $_tiene_internet=true;
+                                    $internet="5MegasSolo";
+                                }else if($item_invoic['product']=="10MegasSolo"){
+                                    $_tiene_internet=true;
+                                    $internet="10MegasSolo";
+                                }else if($item_invoic['product']=="5MegasD"){
+                                    $_tiene_internet=true;
+                                    $internet="5MegasD";
+                                }
                             }
 
-                            if($item_invoic['product']=="1Mega" ||$item_invoic['product']=="1 Mega"){
-                                $_tiene_internet=true;
-                                $internet=$item_invoic['product'];
-                            }else if($item_invoic['product']=="2Megas" ||$item_invoic['product']=="2 Megas"){
-                                $_tiene_internet=true;
-                                $internet=$item_invoic['product'];
-                            }else if($item_invoic['product']=="3Megas"|| $item_invoic['product']=="3 Megas"){
-                                $_tiene_internet=true;
-                                $internet=$item_invoic['product'];
-                            }else if($item_invoic['product']=="5Megas"||$item_invoic['product']=="5 Megas"){
-                                $_tiene_internet=true;
-                                $internet=$item_invoic['product'];
-                            }else if($item_invoic['product']=="10Megas"||$item_invoic['product']=="10 Megas"){
-                                $_tiene_internet=true;
-                                $internet=$item_invoic['product'];
-                            }
+                            
 
                         }
                     }
                     if($_customer_factura_creada==false){
-                        if($_tiene_television==true || $_tiene_internet==true){
+                      
                             $internet_data= array();
                             $television_data= array();
                             
                             if($_tiene_television==true){
                                 if(strpos(strtolower($caja1->holder), strtolower("mocoa"))!==false){
                                     $tv_product= $this->db->get_where("products", array('pid' => "159"))->row();
+                                    $television_data['pid']=$tv_product->pid;
                                     $television_data['price']=$tv_product->product_price;
                                     $television_data['subtotal']=$tv_product->product_price;
                                     $television_data['totaltax']=0;
                                     $television_data['tax']=0;
                                     $television_data['product']="Television";
                                 }else{
-                                    $tv_product= $this->db->get_where("products", array('pid' => "159"))->row();
+                                    $tv_product= $this->db->get_where("products", array('pid' => "27"))->row();
                                     $x1=3992+$tv_product->product_price;
+                                    $television_data['pid']=$tv_product->pid;
                                     $television_data['price']=$tv_product->product_price;
                                     $television_data['subtotal']=$x1;
                                     $television_data['totaltax']=3992;
@@ -164,13 +183,62 @@ class Invoices extends CI_Controller
                                         $television_data['product']="Television";
                                     }
                                 }
+                                $television_data['qty']=1;
+                                $television_data['discount']=0;                                
+                                $television_data['totaldiscount']=0;
                                 
 
                             }                                                                                    
                             //estan listos los datos de tv item invoice falta llenar los campos faltantes 
                             //falta llenar los datos de internet y posteriormente insertar
+                            if($internet=="1Mega" ||$internet=="1 Mega"){
+                                $_tiene_internet=true;
+                                $internet="1 Mega";
+                            }else if($internet=="2Megas" ||$internet=="2 Megas"){
+                                $_tiene_internet=true;
+                                $internet="2 Megas";
+                            }else if($internet=="3Megas"|| $internet=="3 Megas"){
+                                $_tiene_internet=true;
+                                $internet="3 Megas";
+                            }else if($internet=="5Megas"||$internet=="5 Megas"){
+                                $_tiene_internet=true;
+                                $internet="5 Megas";
+                            }else if($internet=="10Megas"||$internet=="10 Megas"){
+                                $_tiene_internet=true;
+                                $internet="10 Megas";
+                            }else if($internet=="50Megas"||$internet=="50 Megas"){
+                                $_tiene_internet=true;
+                                $internet="50 Megas";
+                            }else if($internet=="3MegasSolo"){
+                                $_tiene_internet=true;
+                                $internet="3MegasSolo";
+                            }else if($internet=="5MegasSolo"){
+                                $_tiene_internet=true;
+                                $internet="5MegasSolo";
+                            }else if($internet=="10MegasSolo"){
+                                $_tiene_internet=true;
+                                $internet="10MegasSolo";
+                            }else if($internet=="5MegasD"){
+                                $_tiene_internet=true;
+                                $internet="5MegasD";
+                            }
+
+                            if($_tiene_internet==true){
+                                $producto_internet=$this->db->get_where("products", array('product_name' =>$internet))->row();
+                                $internet_data['pid']=$producto_internet->pid;
+                                $internet_data['product']=$producto_internet->product_name;
+                                $internet_data['qty']=1;
+                                $internet_data['price']=$producto_internet->product_price;
+                                $internet_data['tax']=0;
+                                $internet_data['discount']=0;
+                                $internet_data['subtotal']=$producto_internet->product_price;
+                                $internet_data['totaldiscount']=0;
+                                $internet_data['totaltax']=0;
+                            }
+                            //falta los puntos no se olvide hacer igual que en tickets y luego preguntar que alli se valora cada uno en ves de despues de 3 puntos
+                            //y crear el invoice
                             $_customer_factura_creada=true;
-                        }
+                        
                     }
 
 
