@@ -108,6 +108,7 @@
 										<select name="agendar" id="agendar" class="form-control mb-1">
 												<option value='no'>No</option>
 												<option value='si'>Si</option>
+												<option value="actualizar">Actualizar</option>
 											</select>
 										</div>
                                         </div>

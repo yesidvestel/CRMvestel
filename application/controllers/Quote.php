@@ -240,16 +240,27 @@ class Quote extends CI_Controller
         $this->db->where('idt', $customer_id);
 		$this->db->update('tickets');
 		$start = datefordatabase($fagenda);
-		if ($agendar==si){
-		$data2 = array(
-			'idorden' => $nticket,
-			'title' => $detalle.' '.$hora.' Orden #'.$nticket,
-            'start' => $start,            
-            'description' => strip_tags($section)            
-		);
-		$this->db->where('idorden', $nticket);
-		$this->db->update('events', $data2);
-		}
+			
+			if ($agendar==actualizar){
+				$data2 = array(					
+					'title' => $detalle.' '.$hora.' Orden #'.$nticket,
+					'start' => $start,            
+					'description' => strip_tags($section)           
+				);
+				$this->db->where('idorden', $nticket);
+				$this->db->update('events', $data2);
+			}
+			if ($agendar==si){
+				$data2 = array(
+					'idorden' => $nticket,
+					'title' => $detalle.' '.$hora.' Orden #'.$nticket,
+					'start' => $start,            
+					'description' => strip_tags($section)           
+				);
+				$this->db->insert('events', $data2);
+			}
+		
+		
 
         echo json_encode(array('status' => 'Success', 'message' =>
             $this->lang->line('UPDATED'), 'pstatus' => $status));
