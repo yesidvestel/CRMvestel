@@ -303,8 +303,9 @@ class Tickets Extends CI_Controller
         $this->load->model('tools_model', 'tools');
 		$tid = $this->input->post('tid');		
         $status = $this->input->post('status');
-        $fecha_final = $this->input->post('fecha_final');        
-        $ticket = $this->db->get_where('tickets', array('idt' => $tid))->row();
+        $fecha_final = $this->input->post('fecha_final'); 
+		$ticket = $this->db->get_where('tickets', array('idt' => $tid))->row();
+		$usuario = $this->db->get_where('customers', array('id' => $ticket->cid))->row();
         $invoice = $this->db->get_where('invoices',array('tid'=>$ticket->id_invoice))->result_array();
 		$idfactura = $ticket->id_factura;
         $data;
@@ -314,18 +315,21 @@ class Tickets Extends CI_Controller
 		$this->db->set('ron', 'Activo');
         $this->db->where('tid', $est_afiliacion);
         $this->db->update('invoices');
+		
 		//alerta de revision
+		$ciudad = $usuario->ciudad;
+		if($ciudad==YOPAL || $ciudad==Yopal){
 		$stdate2 = datefordatabase($fecha_final);
 		$name = 'Revisar soporte';
 		$estado = 'Due';
 		$priority = 'Low';
 		$stdate = $stdate2;
-		$tdate = '';
-		$employee = 32;
+		$tdate = '';		
+		$employee = 8;
 		$assign = $this->aauth->get_user()->id;
 		$content = 'Revisar orden #'.$ticket->codigo;
 		$this->tools->addtask($name, $estado, $priority, $stdate, $tdate, $employee, $assign, $content);
-		
+		}
         foreach ($invoice[0] as $key => $value) {
             if($key!='id' && $key!='pmethod' && $key!='status' && $key!='pamnt'){
              $data[$key]=$value;
@@ -667,7 +671,6 @@ class Tickets Extends CI_Controller
         $this->db->update('tickets',$dataz,array('idt'=>$tid));
 		
 		
-        
         echo json_encode(array('msg1'=>$msg1,'tid'=>$data['tid'],'status' => 'Success', 'message' =>
             $this->lang->line('UPDATED'), 'pstatus' => $status));
 		

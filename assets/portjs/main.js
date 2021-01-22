@@ -113,15 +113,15 @@ $(function(){
                     delete: {
                         id: 'delete-event',
                         css: 'btn-danger',
-                        label: 'Delete'
+                        label: 'Borrar'
                     },
                     update: {
                         id: 'update-event',
                         css: 'btn-success',
-                        label: 'Update'
+                        label: 'Actualizar'
                     }
                 },
-                title: 'Edit Event "' + calEvent.title + '"',
+                title: 'Editar Evento "' + calEvent.title + '"',
                 event: calEvent
             });
         }

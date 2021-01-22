@@ -241,7 +241,7 @@ class Ticket_model extends CI_Model
 
     function ticket_count_filtered($filt)
     {
-		 $x_prueba=array('estado'=>"",'tecnico'=>0);
+		 $x_prueba=array('estado'=>"",'tecnico'=>"");
         $this->ticket_datatables_query($filt,$x_prueba);
         $query = $this->db->get();
         return $query->num_rows();
@@ -266,7 +266,7 @@ class Ticket_model extends CI_Model
     }
 
     public function ticket_count_all($filt)
-    {   $x_prueba=array('estado'=>"",'tecnico'=>0);
+    {   $x_prueba=array('estado'=>"",'tecnico'=>"");
         $this->ticket_datatables_query($filt,$x_prueba);
         $query = $this->db->get();
         return $query->num_rows();

@@ -10,7 +10,7 @@
 
 
 <script src='<?php echo base_url(); ?>assets/portjs/main.js'></script>
-
+<script src='<?php echo base_url(); ?>assets/portjs/locales/es.js'></script>
 
 <article class="content">
     <div class="card card-block">
@@ -63,17 +63,24 @@
                         <div class="col-md-4">
                             <input id="color" name="color" type="text" class="form-control input-md"
                                    readonly="readonly"/>
-                            <span class="help-block">Click to pick a color</span>
+                            <span class="help-block">Haga click para elegir un color</span>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $this->lang->line('Cancel')  ?></button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
             </div>
         </div>
     </div>
 </div>
-
+<script>
+...
+var calendar = new Calenar(calendarEl, {
+  locale: 'es'
+});
+...
+calendar.setOption('locale', 'es');
+</script>
 
 
