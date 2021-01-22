@@ -325,7 +325,7 @@ class Tickets Extends CI_Controller
 		$priority = 'Low';
 		$stdate = $stdate2;
 		$tdate = '';		
-		$employee = 8;
+		$employee = 32;
 		$assign = $this->aauth->get_user()->id;
 		$content = 'Revisar orden #'.$ticket->codigo;
 		$this->tools->addtask($name, $estado, $priority, $stdate, $tdate, $employee, $assign, $content);
@@ -340,6 +340,7 @@ class Tickets Extends CI_Controller
         $data['tid']=$tidactualmasuno[0]->tid;
         $data['status']='due';
         $data['ron']='Activo';
+		$data['refer']=$ciudad;
         //ssss
         $date_fecha_final = new DateTime($fecha_final);
         
