@@ -78,24 +78,25 @@ class Invoices extends CI_Controller
         $date1= new DateTime($sdate);
         $sdate1=$date1->format("Y-m-d");
         $time_sdate1=strtotime($sdate1);
-        $d=0;
+        $customers_afectados=array();
         foreach ($customers as $key => $value) {
             $invoices = $this->db->select("*")->from("invoices")->where('csd='.$value['id'])->order_by('invoicedate',"DESC")->get()->result();
-            echo "<br>";
-            var_dump("customer = ".$value['id']." |");
+            //echo "<br>";
+            //var_dump("customer = ".$value['id']." |");
             $_customer_factura_creada=false;
             foreach ($invoices as $key => $value2) {
                 $time_dateinv=strtotime($value2->invoicedate);
                 $dtime2=new DateTime($value2->invoicedate);
                 if($time_dateinv>$time_sdate1){
                     $_customer_factura_creada=true;
-                    echo "Ya tiene factura ".$sdate1." | ".$value2->invoicedate;
+                    //echo "Ya tiene factura ".$sdate1." | ".$value2->invoicedate;
                 }else if($date1->format("Y-m")==$dtime2->format("Y-m")){
                     $_customer_factura_creada=true;
-                    echo "Ya tiene factura 2 ".$sdate1." | ".$value2->invoicedate;
+                   // echo "Ya tiene factura 2 ".$sdate1." | ".$value2->invoicedate;
                 }else{                                                                                    
                     $internet="";
                     $television="";
+                    $puntos=0;
                     $_tiene_internet=false;
                     $_tiene_television=false;
                     if($value2->combo!="no" ){                    
@@ -107,6 +108,9 @@ class Invoices extends CI_Controller
                     }else if($value2->television!="no"){
                         $_tiene_television=true;
                     }
+                    if($value2->puntos!=null && $value2->puntos!=0){
+                                $puntos=$value2->puntos;
+                        }
                     
                     $lista_items=$this->db->get_where("invoice_items", array('tid' => $value2->tid))->result_array();
                     foreach ($lista_items as $key => $item_invoic) {
@@ -148,6 +152,8 @@ class Invoices extends CI_Controller
                                 }else if($item_invoic['product']=="5MegasD"){
                                     $_tiene_internet=true;
                                     $internet="5MegasD";
+                                }else if($item_invoic['product']=="Punto Adicional"){
+                                    $puntos=$item_invoic['qty'];
                                 }
                             }
 
@@ -159,7 +165,13 @@ class Invoices extends CI_Controller
                       
                             $internet_data= array();
                             $television_data= array();
-                            
+                            $factura_data=array();
+                            $tidactualmasuno= $this->db->select('max(tid)+1 as tid')->from('invoices')->get()->result();
+                            //esta data es de la nueva factura para insertar
+                            $factura_data['tid']=$tidactualmasuno[0]->tid;
+                            $factura_data['tax']=0;
+                            $factura_data['total']=0;
+                            $factura_data['subtotal']=0;
                             if($_tiene_television==true){
                                 if(strpos(strtolower($caja1->holder), strtolower("mocoa"))!==false){
                                     $tv_product= $this->db->get_where("products", array('pid' => "159"))->row();
@@ -169,6 +181,8 @@ class Invoices extends CI_Controller
                                     $television_data['totaltax']=0;
                                     $television_data['tax']=0;
                                     $television_data['product']="Television";
+                                    $factura_data['subtotal']=$tv_product->product_price;
+                                    $factura_data['total']=$tv_product->product_price;
                                 }else{
                                     $tv_product= $this->db->get_where("products", array('pid' => "27"))->row();
                                     $x1=3992+$tv_product->product_price;
@@ -177,16 +191,24 @@ class Invoices extends CI_Controller
                                     $television_data['subtotal']=$x1;
                                     $television_data['totaltax']=3992;
                                     $television_data['tax']=$tv_product->taxrate;
+                                    $factura_data['tax']=3992;
+                                    $factura_data['subtotal']=$tv_product->product_price;
+                                    $factura_data['total']=$x1;
+
                                     if(strpos(strtolower($caja1->holder), strtolower("yopal"))!==false){
                                         $television_data['product']="Television Yopal";
                                     }else{
                                         $television_data['product']="Television";
                                     }
                                 }
+                                $television_data['tid']=$factura_data['tid'];
                                 $television_data['qty']=1;
                                 $television_data['discount']=0;                                
                                 $television_data['totaldiscount']=0;
                                 
+                                    $this->db->insert("invoice_items",$television_data);
+                                
+
 
                             }                                                                                    
                             //estan listos los datos de tv item invoice falta llenar los campos faltantes 
@@ -225,6 +247,7 @@ class Invoices extends CI_Controller
 
                             if($_tiene_internet==true){
                                 $producto_internet=$this->db->get_where("products", array('product_name' =>$internet))->row();
+                                $internet_data['tid']=$factura_data['tid'];
                                 $internet_data['pid']=$producto_internet->pid;
                                 $internet_data['product']=$producto_internet->product_name;
                                 $internet_data['qty']=1;
@@ -234,10 +257,78 @@ class Invoices extends CI_Controller
                                 $internet_data['subtotal']=$producto_internet->product_price;
                                 $internet_data['totaldiscount']=0;
                                 $internet_data['totaltax']=0;
+                                $factura_data['subtotal']+=$producto_internet->product_price;
+                                $factura_data['total']+=$producto_internet->product_price;
+                                
+                                    $this->db->insert("invoice_items",$internet_data);
+                                
                             }
+                            $puntos_data= array();
+                            if($puntos!=0){
+                                $punto_adicional=$this->db->get_where("products", array('product_name' =>"Punto Adicional"))->row();
+                                $puntos_data['pid']=$punto_adicional->pid;
+                                $puntos_data['product']=$punto_adicional->product_name;
+                                $puntos_data['qty']=$puntos;
+                                $puntos_data['price']=$punto_adicional->product_price;
+                                $puntos_data['tax']=0;
+                                $puntos_data['discount']=0;
+                                $puntos_data['subtotal']=$punto_adicional->product_price*$puntos;
+                                $puntos_data['totaldiscount']=0;
+                                $puntos_data['totaltax']=0;
+                                $factura_data['subtotal']+=$puntos_data['subtotal'];
+                                $factura_data['total']+=$puntos_data['subtotal'];
+                                
+                                    $this->db->insert("invoice_items",$puntos_data);
+                                
+                            }
+                            $factura_data['puntos']=$puntos;
+
                             //falta los puntos no se olvide hacer igual que en tickets y luego preguntar que alli se valora cada uno en ves de despues de 3 puntos
                             //y crear el invoice
-                            $_customer_factura_creada=true;
+                            if($factura_data['total']!=0){
+                                $dia_final_de_mes=date("Y-m-t 23:00:00", $time_sdate1);
+                                $date_fecha_corte=new DateTime($dia_final_de_mes);
+                                
+                                $factura_data['invoicedate']=$sdate1;
+                                $factura_data['invoiceduedate']=$date_fecha_corte->format("Y-m-d");
+                                $factura_data['discount']=0;
+                                $factura_data['notes']=$value2->notes;
+                                $factura_data['status']="due";
+                                $factura_data['csd']=$value2->csd;
+                                $factura_data['eid']=$value2->eid;
+                                $factura_data['pamnt']=0;
+                                $factura_data['items']=$value2->items;
+                                $factura_data['taxstatus']=$value2->taxstatus;
+                                $factura_data['discstatus']=$value2->discstatus;
+                                $factura_data['format_discount']=$value2->format_discount;
+                                $factura_data['refer']=$value2->refer;
+                                if($_tiene_television==true){
+                                    $factura_data['television']="Television";
+                                }else{
+                                    $factura_data['television']="no";
+                                }
+                                if($_tiene_internet==true){
+                                    $factura_data['combo']=str_replace(" ","",$internet);
+                                }else{
+                                    $factura_data['combo']="no";
+                                }
+                                $factura_data['term']=$value2->term;
+                                $factura_data['rec']=$value2->rec;
+                                $factura_data['ron']=$value2->ron;
+                                $factura_data['multi']=$value2->multi;
+                                
+                                    $this->db->insert("invoices",$factura_data);
+                                    $customers_afectados[]=array('csd' => $value2->csd,"tid"=>$factura_data['tid'],"nombres"=>$value['name']." ".$value['unoapellido'],"celular"=>$value['celular'],"cedula"=>$value['documento']);
+                                    
+                                    //var_dump("INSERTADO");
+                                    //var_dump($factura_data);
+                                                           
+                                $_customer_factura_creada=true;
+                            }
+
+
+
+                            
                         
                     }
 
@@ -251,7 +342,14 @@ class Invoices extends CI_Controller
         
         
 
-        var_dump($x1);
+        $this->load->model('customers_model', 'customers');
+        //$this->load->model('transactions_model');
+        $head['title'] = "Generar Facturas";        
+        $data['customers_afectados'] = $customers_afectados;
+        $head['usernm'] = $this->aauth->get_user()->username;
+        $this->load->view('fixed/header', $head);
+        $this->load->view('invoices/facturas_generadas', $data);
+        $this->load->view('fixed/footer');
     }
 
     //edit invoice
