@@ -292,7 +292,7 @@ class Invoices extends CI_Controller
                                 $factura_data['invoicedate']=$sdate1;
                                 $factura_data['invoiceduedate']=$date_fecha_corte->format("Y-m-d");
                                 $factura_data['discount']=0;
-                                $factura_data['notes']=$value2->notes;
+                                $factura_data['notes']="";
                                 $factura_data['status']="due";
                                 $factura_data['csd']=$value2->csd;
                                 $factura_data['eid']=$value2->eid;

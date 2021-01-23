@@ -24,7 +24,7 @@
                     </thead>
                     <tbody>
                         <?php foreach ($customers_afectados as $key => $cs) { ?>
-                        <tr role="row" class="even"><td><a href="<?=base_url()?>customers/view?id=<?=$cs['csd']?>"><?=$cs['nombres']?></a></td><td><?=$cs['celular']?></td><td><?=$cs['cedula']?></td><td><a href="<?=base_url()?>customers/invoices?id=<?=$cs['csd']?>" class="btn btn-info btn-sm"><span class="icon-eye"></span>  Facturas</a> <a href="<?=base_url()?>invoices/view?id=<?=$cs['csd']?>" class="btn btn-info btn-sm"><span class="icon-eye"></span>  Factura Creada</a></td></tr>
+                        <tr role="row" class="even"><td><a href="<?=base_url()?>customers/view?id=<?=$cs['csd']?>"><?=$cs['nombres']?></a></td><td><?=$cs['celular']?></td><td><?=$cs['cedula']?></td><td><a href="<?=base_url()?>customers/invoices?id=<?=$cs['csd']?>" class="btn btn-info btn-sm"><span class="icon-eye"></span>  Facturas</a> <a href="<?=base_url()?>invoices/view?id=<?=$cs['tid']?>" class="btn btn-info btn-sm"><span class="icon-eye"></span>  Factura Creada</a></td></tr>
                         <?php } ?>
                     </tbody>
 
