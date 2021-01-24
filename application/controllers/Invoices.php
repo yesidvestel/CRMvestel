@@ -71,16 +71,19 @@ class Invoices extends CI_Controller
         $this->load->view('fixed/footer');
     }
     public function generar_facturas_action(){
+        set_time_limit(3000);
         $caja1=$this->db->get_where('accounts',array('id' =>$_POST['pay_acc']))->row();
-        $customers = $this->db->get_where("customers", array('usu_estado' =>"Activo","ciudad"=>$caja1->holder))->result_array();
+        $customers = $this->db->get_where("customers", array("usu_estado!="=>'Suspendido',"usu_estado!="=>'Instalar',"usu_estado!="=>'Cortado',"ciudad"=>$caja1->holder))->result_array();
         $ciudades= array();
         $sdate=$this->input->post("sdate");
         $date1= new DateTime($sdate);
         $sdate1=$date1->format("Y-m-d");
         $time_sdate1=strtotime($sdate1);
         $customers_afectados=array();
+
         foreach ($customers as $key => $value) {
             $invoices = $this->db->select("*")->from("invoices")->where('csd='.$value['id'])->order_by('invoicedate',"DESC")->get()->result();
+            
             //echo "<br>";
             //var_dump("customer = ".$value['id']." |");
             $_customer_factura_creada=false;
@@ -292,7 +295,7 @@ class Invoices extends CI_Controller
                                 $factura_data['invoicedate']=$sdate1;
                                 $factura_data['invoiceduedate']=$date_fecha_corte->format("Y-m-d");
                                 $factura_data['discount']=0;
-                                $factura_data['notes']="";
+                                $factura_data['notes']=".";
                                 $factura_data['status']="due";
                                 $factura_data['csd']=$value2->csd;
                                 $factura_data['eid']=$value2->eid;
@@ -346,10 +349,52 @@ class Invoices extends CI_Controller
         //$this->load->model('transactions_model');
         $head['title'] = "Generar Facturas";        
         $data['customers_afectados'] = $customers_afectados;
+        $data['fecha'] = $sdate1;
+        $data['pay_acc'] = $caja1->holder;
         $head['usernm'] = $this->aauth->get_user()->username;
         $this->load->view('fixed/header', $head);
         $this->load->view('invoices/facturas_generadas', $data);
         $this->load->view('fixed/footer');
+    }
+
+    public function lista_facturas_generadas(){
+
+        $lista_invoices=$this->db->get_where("invoices", array('invoicedate' =>$_GET['fecha'],"refer"=>$_GET['pay_acc'],"notes"=>"."))->result_array();
+        $no = $this->input->post('start');
+        $data=array();
+        $x=0;
+        $minimo=$this->input->post('start');
+        $maximo=$minimo+10;
+        foreach ($lista_invoices as $key => $value) {
+            
+            if($x>=$minimo && $x<$maximo){
+                $no++;
+                $customers = $this->db->get_where("customers", array('id' => $value['csd']))->row();
+                $row = array();
+                $row[] = $no;
+                //$row[] = $customers->abonado;
+                $row[] = '<a href="customers/view?id=' . $customers->id . '">' . $customers->name ." ". $customers->unoapellido. '</a>';
+                $row[] = $customers->celular;
+                $row[] = $customers->documento;
+                //$row[] = $customers->nomenclatura . ' ' . $customers->numero1 . $customers->adicionauno.' Nº '.$customers->numero2.$customers->adicional2.' - '.$customers->numero3;
+                //$row[] = $customers->usu_estado;
+                $row[] = '<a href="'.base_url().'customers/invoices?id='.$value['csd'].'" class="btn btn-info btn-sm"><span class="icon-eye"></span>  Facturas</a> <a href="'.base_url().'invoices/view?id='.$value['tid'].'" class="btn btn-info btn-sm"><span class="icon-eye"></span>  Factura Creada</a>';
+                $data[] = $row;
+
+            }
+            $x++;
+             
+             
+        }
+
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => count($lista_invoices),
+            "recordsFiltered" => count($lista_invoices),
+            "data" => $data,
+        );
+        //output to json format
+        echo json_encode($output);
     }
 
     //edit invoice

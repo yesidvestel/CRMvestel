@@ -8,11 +8,13 @@
         <div class="grid_3 grid_4">
             <h6><?php echo $this->lang->line('') ?>Facturas Generadas</h6>
              <hr>
+            
+
             <div class="table-responsive">
                 <table id="clientstable" class="table-striped" cellspacing="0" width="100%">
                     <thead>
                     <tr>
-                       
+                       <th>#</th>
                         <th><?php echo $this->lang->line('Name') ?></th>
                         <th>Celular</th>
                         <th>Cedula</th>
@@ -23,15 +25,13 @@
                     </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($customers_afectados as $key => $cs) { ?>
-                        <tr role="row" class="even"><td><a href="<?=base_url()?>customers/view?id=<?=$cs['csd']?>"><?=$cs['nombres']?></a></td><td><?=$cs['celular']?></td><td><?=$cs['cedula']?></td><td><a href="<?=base_url()?>customers/invoices?id=<?=$cs['csd']?>" class="btn btn-info btn-sm"><span class="icon-eye"></span>  Facturas</a> <a href="<?=base_url()?>invoices/view?id=<?=$cs['tid']?>" class="btn btn-info btn-sm"><span class="icon-eye"></span>  Factura Creada</a></td></tr>
-                        <?php } ?>
+                      
                     </tbody>
 
                     <tfoot>
                     <tr>
                        
-                        
+                        <th>#</th>
                         <th><?php echo $this->lang->line('Name') ?></th>
                         <th>Celular</th>
                         <th>Cedula</th>
@@ -47,7 +47,7 @@
         </div>
     </div>
 </article>
-<!--<script type="text/javascript">
+<script type="text/javascript">
     $(document).ready(function () {
         $('#clientstable').DataTable({
             'processing': true,
@@ -55,7 +55,7 @@
             'stateSave': true,
             'order': [],
             'ajax': {
-                'url': "<?php echo site_url('customers/load_list')?>",
+                'url': "<?php echo site_url('invoices/lista_facturas_generadas?fecha='.$fecha.'&pay_acc='.$pay_acc)?>",
                 'type': 'POST'
             },
             'columnDefs': [
@@ -67,5 +67,5 @@
             
         });
     });
-</script>-->
+</script>
 
