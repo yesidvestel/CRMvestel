@@ -307,7 +307,7 @@
     function filtrar(){
         var tecnico=$("#tecnicos2 option:selected").val();
         var estado =$("#estados option:selected").val();
-        if(tecnico==0 && estado==""){
+        if(tecnico=="" && estado==""){
             tb.ajax.url( baseurl+'tickets/tickets_load_list?stat=' ).load();     
         }else{
             var id1=$("#tecnicos2 option:selected").data("id");
