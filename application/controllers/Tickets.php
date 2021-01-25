@@ -87,6 +87,8 @@ class Tickets Extends CI_Controller
     public function tickets_load_list()
     {
         $filt = $this->input->get('stat');
+        $users12=$this->db->get_where("aauth_users", array('username' => $_GET['tecnico']))->row();
+        $_GET['tecnico']=$users12->id;
         $list = $this->ticket->ticket_datatables($filt,$_GET);
         $data = array();
         $no = $this->input->post('start');
