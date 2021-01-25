@@ -73,7 +73,7 @@ class Invoices extends CI_Controller
     public function generar_facturas_action(){
         set_time_limit(3000);
         $caja1=$this->db->get_where('accounts',array('id' =>$_POST['pay_acc']))->row();
-        $customers = $this->db->get_where("customers", array("usu_estado!="=>'Suspendido',"usu_estado!="=>'Instalar',"usu_estado!="=>'Cortado',"ciudad"=>$caja1->holder))->result_array();
+        $customers = $this->db->get_where("customers", array("usu_estado"=>'Activo',"ciudad"=>$caja1->holder))->result_array();
         $ciudades= array();
         $sdate=$this->input->post("sdate");
         $date1= new DateTime($sdate);
