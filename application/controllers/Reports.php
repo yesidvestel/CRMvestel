@@ -318,7 +318,7 @@ class Reports extends CI_Controller
         //$data['income'] = $this->reports->incomestatement();
         //$head['title'] = "Account Statement";
         //$head['usernm'] = $this->aauth->get_user()->username;
-
+$data['datos_informe']=array("trans_type"=>$trans_type);
         //codigo listar
           $data['fecha']=$sdate;  
              //hice esto para hacer que el cierre sea de un dia si se desea reestablecer a entre fechas solo comentar la linea 57;

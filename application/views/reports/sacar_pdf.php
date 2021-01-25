@@ -770,6 +770,7 @@ $contenidoTabla="<div style='text-align: center;'>
 <p style='margin-top: 0;margin-bottom: 1rem;display: block;margin-block-start: 1em;margin-block-end: 1em;margin-inline-start: 0px;margin-inline-end: 0px;'>Caja : ".$caja."</p>
 <hr style='margin-top: 1rem;margin-bottom: 1rem;border: 0;border-top: 1px solid rgba(0, 0, 0, 0.1);'>
 <table>
+".(($datos_informe['trans_type']!='Expense') ? "
 	<tr>
 		<td style='vertical-align: top;'>
 			<h6 style='font-size: 1rem;margin-bottom: 0.5rem;font-family: inherit;font-weight: 500;line-height: 1.2;color: inherit;margin-top: 0;'>Resumen Cobranza</h6>
@@ -895,6 +896,8 @@ $contenidoTabla="<div style='text-align: center;'>
 			
 		</td>
 	</tr>
+	":"")."
+".(($datos_informe['trans_type']!='Expense') ? "
 	<tr>
 		<td>
 			
@@ -936,7 +939,10 @@ $contenidoTabla="<div style='text-align: center;'>
 			</table>
 		</td>
 	</tr>
+	":"")."
+
 	<tr>
+	".(($datos_informe['trans_type']!='Expense') ? "
 		<td style='vertical-align: top;'>
 			<h6 style='font-size: 1rem;margin-bottom: 0.5rem;font-family: inherit;font-weight: 500;line-height: 1.2;color: inherit;margin-top: 10px;'>Resumen por Servicios</h6>
 			<table style='border-collapse: collapse;border: 1px solid #5F5F5F;border-spacing: 2px;'>
@@ -1030,7 +1036,9 @@ $contenidoTabla="<div style='text-align: center;'>
 			</table>
 		</td>
 		<td></td>
+		":"")."
 		<td style='vertical-align: top;'>
+		".(($datos_informe['trans_type']!='Expense') ? "
 			<h6 style='font-size: 1rem;margin-bottom: 0.5rem;font-family: inherit;font-weight: 500;line-height: 1.2;color: inherit;margin-top: 10px;'>Resumen de cargos cobrados <br>por meses INTERNET</h6>
 			<table style='border-collapse: collapse;border: 1px solid #5F5F5F;border-spacing: 2px;'>
 					<thead>
@@ -1124,6 +1132,8 @@ $contenidoTabla="<div style='text-align: center;'>
 					</tfoot>
 			</table>
 			<br>
+			":"")."
+			".(($datos_informe['trans_type']!='Income') ? "
 			<h6 style='font-size: 1rem;margin-bottom: 0.5rem;font-family: inherit;font-weight: 500;line-height: 1.2;color: inherit;margin-top: 10px;'>Resumen Egresos</h6>
 			<table style='border-collapse: collapse;border: 1px solid #5F5F5F;border-spacing: 2px;'>
 					<thead>
@@ -1153,6 +1163,7 @@ $contenidoTabla="<div style='text-align: center;'>
 						</tr>
 					</tfoot>
 			</table>
+			":"")."
 
 		</td>
 	</tr>
