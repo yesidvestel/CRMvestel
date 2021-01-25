@@ -191,9 +191,8 @@ class Ticket_model extends CI_Model
  
 
     function ticket_datatables($filt,$filt2)
-    {	
-		$x_prueba=array('estado'=>"",'tecnico'=>"");
-        $this->ticket_datatables_query($filt,$filt2,$x_prueba);
+    {
+        $this->ticket_datatables_query($filt,$filt2);
         if ($this->input->post('length') != -1)
             $this->db->limit($this->input->post('length'), $this->input->post('start'));
         $query = $this->db->get();
@@ -207,7 +206,7 @@ class Ticket_model extends CI_Model
          if ($filt2['estado'] != '') {
             $this->db->where('status=', $filt2['estado']);
         }
-        if($filt2['tecnico']!=''){
+        if($filt2['tecnico']!='' && $filt2['tecnico']!='0' && $filt2['tecnico']!='undefined'){
          $this->db->where('asignado=', $filt2['tecnico']);   
         }
 		$this->db->join('customers', 'tickets.cid=customers.id', 'left');
