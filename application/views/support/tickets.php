@@ -311,7 +311,7 @@
             tb.ajax.url( baseurl+'tickets/tickets_load_list?stat=' ).load();     
         }else{
             var id1=$("#tecnicos2 option:selected").data("id");
-            tb.ajax.url( baseurl+"tickets/tickets_load_list?tecnico="+id1+"&estado="+estado+"&tec1="+tecnico+"&stat=" ).load();     
+            tb.ajax.url( baseurl+"tickets/tickets_load_list?tecnico="+tecnico+"&estado="+estado+"&tec1="+id1+"&stat=" ).load();     
         }
        
 
