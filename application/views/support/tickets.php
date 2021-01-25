@@ -104,7 +104,7 @@
 											foreach ($tecnicoslista as $row) {
 												$cid = $row['id'];
 												$title = $row['username'];
-												echo "<option value='$title'>$title</option>";
+												echo "<option value='$title' data-id='$cid'>$title</option>";
 											}
 											?>
                                     </select>
@@ -310,7 +310,8 @@
         if(tecnico==0 && estado==""){
             tb.ajax.url( baseurl+'tickets/tickets_load_list?stat=' ).load();     
         }else{
-            tb.ajax.url( baseurl+'tickets/tickets_load_list?tecnico='+tecnico+"&estado="+estado+"&stat=" ).load();     
+            var id1=$("#tecnicos2 option:selected").data("id");
+            tb.ajax.url( baseurl+"tickets/tickets_load_list?tecnico="+id1+"&estado="+estado+"&tec1="+tecnico+"&stat=" ).load();     
         }
        
 
