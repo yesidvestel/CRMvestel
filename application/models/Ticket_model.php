@@ -191,8 +191,9 @@ class Ticket_model extends CI_Model
  
 
     function ticket_datatables($filt,$filt2)
-    {
-        $this->ticket_datatables_query($filt,$filt2);
+    {	
+		$x_prueba=array('estado'=>"",'tecnico'=>"");
+        $this->ticket_datatables_query($filt,$filt2,$x_prueba);
         if ($this->input->post('length') != -1)
             $this->db->limit($this->input->post('length'), $this->input->post('start'));
         $query = $this->db->get();

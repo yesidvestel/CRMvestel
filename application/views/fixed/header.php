@@ -409,6 +409,7 @@
                         <li>
                             <a href="<?php echo base_url(); ?>tickets"><?php echo $this->lang->line('Manage Tickets') ?></a>
                         </li>
+						
 
 
                     </ul>
