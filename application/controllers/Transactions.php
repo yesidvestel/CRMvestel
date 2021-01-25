@@ -309,8 +309,11 @@ class Transactions extends CI_Controller
         $this->db->where('id', $acid);
         $query = $this->db->get();
         $account = $query->row_array();
+		//generar reconexion
+		$tidactualmasuno= $this->db->select('max(codigo)+1 as tid')->from('tickets')->get()->result();
 		if ($reconexion==si){
-			$data2['subject']='servicio';
+				$data2['codigo']=$tidactualmasuno[0]->tid;
+				$data2['subject']='servicio';
 				$data2['detalle']=$tipo;
                 $data2['created']=$paydate;
                 $data2['cid']=$cid;
