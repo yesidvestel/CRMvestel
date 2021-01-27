@@ -186,22 +186,52 @@ class Tickets Extends CI_Controller
                 $config['allowed_types'] = 'docx|docs|txt|pdf|xls|png|jpg|gif';
                 $config['max_size'] = 3000;
                 $config['file_name'] = time() . $attach;
-                $this->load->library('upload', $config);
+                $crear=true;
+              
+                if(empty($_SESSION['archivo_subido'])){
+                    $_SESSION['archivo_subido']=$attach;
+                    $_SESSION['id_ticket']=$thread_id;    
+                }else{
+                    if($_SESSION['archivo_subido']==$attach && $id_ticket!=$_SESSION['id_ticket']){
+                        $crear=false;
+                    }else{
+                      $_SESSION['archivo_subido']=$attach;     
+                      $_SESSION['id_ticket']=$thread_id;
+                    }
+                }
+    
+                if($crear){
+                    $this->load->library('upload', $config);
 
-                if (!$this->upload->do_upload('userfile')) {
-                    $data['response'] = 0;
-                    $data['responsetext'] = 'File Upload Error';
+                    if (!$this->upload->do_upload('userfile')) {
+                        $data['response'] = 0;
+                        $data['responsetext'] = 'File Upload Error';
 
-                } else {
-                    $data['response'] = 1;
-                    $data['responsetext'] = 'Reply Added Successfully.';
-                    $filename = $this->upload->data()['file_name'];
-                    $this->ticket->addreply($thread_id, $message, $filename);
+                    } else {
+                        $data['response'] = 1;
+                        $data['responsetext'] = 'Reply Added Successfully.';
+                        $filename = $this->upload->data()['file_name'];
+                        $this->ticket->addreply($thread_id, $message, $filename);
+                    }
                 }
             } else {
-                $this->ticket->addreply($thread_id, $message, '');
-                $data['response'] = 1;
-                $data['responsetext'] = 'Reply Added Successfully.';
+                $crear=true;
+                if(empty($_SESSION['mensaje_subido'])){
+                    $_SESSION['mensaje_subido']=$message;
+                    $_SESSION['id_ticket']=$thread_id;    
+                }else{
+                    if($_SESSION['mensaje_subido']==$message && $id_ticket!=$_SESSION['id_ticket']){
+                        $crear=false;
+                    }else{
+                      $_SESSION['mensaje_subido']=$message;     
+                      $_SESSION['id_ticket']=$thread_id;
+                    }
+                }
+                if($crear){
+                    $this->ticket->addreply($thread_id, $message, '');
+                    $data['response'] = 1;
+                    $data['responsetext'] = 'Reply Added Successfully.';
+                }
             }
 
             $data['thread_info'] = $this->ticket->thread_info($thread_id);
