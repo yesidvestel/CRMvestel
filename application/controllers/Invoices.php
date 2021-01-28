@@ -595,7 +595,11 @@ class Invoices extends CI_Controller
         //Invoice Data
         $bill_date = datefordatabase($invoicedate);
         $bill_due_date = datefordatabase($invocieduedate);
-
+		if (($television !== no) || $combo !== no){
+			$estado = 'Instalar';
+		}else{
+			$estado = '';
+		}
         $data = array(
 			'tid' => $invocieno, 
 			'invoicedate' => $bill_date, 
@@ -617,7 +621,8 @@ class Invoices extends CI_Controller
 			'multi' => $currency, 
 			'television' => $television, 
 			'combo' => $combo,
-			'puntos' => $puntos);
+			'puntos' => $puntos,
+			'ron' => $estado);
 
         if ($flag == true) {
             $this->db->insert_batch('invoice_items', $productlist);
@@ -639,6 +644,7 @@ class Invoices extends CI_Controller
 								$data2['section']='Instalacion Television mas '.$combo.'';
 					}
                 $data2['id_invoice']=$invocieno;
+				$data2['id_factura']=null;
                 $this->db->insert('tickets',$data2);
 				//actualizar estado usuario
 				$this->db->set('usu_estado', 'Instalar');
