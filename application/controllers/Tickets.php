@@ -430,7 +430,7 @@ class Tickets Extends CI_Controller
 					$datay['totaltax']=0;
                     $datay['price']=$x;
                     $datay['subtotal']=$x;     
-                    if($ticket->detalle=="Instalacion" && $ticket->id_factura==null){
+                    if($ticket->detalle=="Instalacion" && $ticket->id_factura==null && $status=="Resuelto"){
                         $this->db->insert('invoice_items',$datay);    
                     }
                 }
@@ -449,7 +449,7 @@ class Tickets Extends CI_Controller
                     $datay['tax']=19;
 					$datay['totaltax']=$y;
 					$datay['subtotal']=$x+$datay['totaltax'];
-                    if($ticket->detalle=="Instalacion" && $ticket->id_factura==null){
+                    if($ticket->detalle=="Instalacion" && $ticket->id_factura==null && $status=="Resuelto"){
                         $this->db->insert('invoice_items',$datay);
                     }
 				}
@@ -466,7 +466,7 @@ class Tickets Extends CI_Controller
 					$datay['totaltax']='';
 					$datay['price']=$x;
 					$datay['subtotal']=$x*$datay['qty'];
-                    if($ticket->detalle=="Instalacion" && $ticket->id_factura==null){
+                    if($ticket->detalle=="Instalacion" && $ticket->id_factura==null && $status=="Resuelto"){
                         $this->db->insert('invoice_items',$datay);
                     }
                 }
@@ -483,7 +483,7 @@ class Tickets Extends CI_Controller
 					$datay['totaltax']='';
                     $datay['subtotal']=$x;
 					
-                    if($ticket->detalle=="Instalacion" && $ticket->id_factura==null){
+                    if($ticket->detalle=="Instalacion" && $ticket->id_factura==null && $status=="Resuelto"){
                         $this->db->insert('invoice_items',$datay);
                     }
                 }
@@ -499,7 +499,7 @@ class Tickets Extends CI_Controller
         $data['total']=$data['subtotal']+$data['tax'];
         //no haga ni insert ni update si no es instalacion y tambien si ya existe una factura
         $msg1="";
-        if($ticket->detalle=="Instalacion" && $ticket->id_factura==null){
+        if($ticket->detalle=="Instalacion" && $ticket->id_factura==null && $status=="Resuelto"){
             $this->db->insert('invoices',$data);    
             $dataz['id_factura']=$data['tid'];
 			//actualizar estado usuario
