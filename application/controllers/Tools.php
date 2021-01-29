@@ -68,7 +68,7 @@ class Tools Extends CI_Controller
         if ($this->input->post()) {
             $id = $this->input->post('id');
             $name = $this->input->post('name');
-            $status = $this->input->post('status');
+            $estado = $this->input->post('status');
             $priority = $this->input->post('priority');
             $stdate = $this->input->post('staskdate');
             $tdate = $this->input->post('taskdate');
@@ -77,7 +77,7 @@ class Tools Extends CI_Controller
             $stdate = datefordatabase($stdate);
             $tdate = datefordatabase($tdate);
 
-            if ($this->tools->edittask($id, $name, $status, $priority, $stdate, $tdate, $employee, $content)) {
+            if ($this->tools->edittask($id, $name, $estado, $priority, $stdate, $tdate, $employee, $content)) {
                 echo json_encode(array('status' => 'Success', 'message' => $this->lang->line('UPDATED')));
             } else {
                 echo json_encode(array('status' => 'Error', 'message' => $this->lang->line('ERROR')));
@@ -103,9 +103,9 @@ class Tools Extends CI_Controller
     public function save_addtask()
     {
         $name = $this->input->post('name');
-        $status = $this->input->post('status');
+        $estado = $this->input->post('status');
         $priority = $this->input->post('priority');
-        $estado = $this->input->post('staskdate');
+        $stdate = $this->input->post('staskdate');
         $tdate = $this->input->post('taskdate');
         $employee = $this->input->post('employee');
         $content = $this->input->post('content');
