@@ -302,16 +302,19 @@
 										<option value="no">No</option>
 										<option value="1Mega">1 Mega</option>
 										<option value="2Megas">2 Megas</option>
-                                        <option value="3Megas">3 Megas</option>
-										<option value="5Megas">5 Megas</option>
+                                        <option value="3Megas">3 Megas en Combo</option>
+										<option value="3MegasSolo">3 Megas</option>
+										<option value="5Megas">5 Megas en Combo</option>
+										<option value="5MegasSolo">5 Megas</option>
 										<option value="5MegasD">5 Megas Dedicadas</option>
-										<option value="10Megas">10 Megas</option>
+										<option value="10Megas">10 Megas en combo</option>
+										<option value="10MegasSolo">10 Megas</option>
 										<option value="50Megas">50 Megas</option>
                                     </select></td>
 								<td colspan="2">Punto Adicional 
 								<select name="puntos" class="selectpicker form-control">
 										<option value="0">no</option>
-										<?php for ($i=1;$i<=15;$i++){
+										<?php for ($i=1;$i<=20;$i++){
 										echo '<option value="'.$i.'">'.$i.'</option>';}?>
                                     </select></td>
                                 <td align="right" colspan="6"><input type="submit" class="btn btn-success sub-btn" value="<?php echo $this->lang->line('Generate Invoice') ?> " id="submit-data" data-loading-text="Creating...">
