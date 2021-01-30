@@ -814,6 +814,7 @@
                             <select name="television" class="form-control mb-1">
                                 <option value="<?php echo $invoice['television'] ?>">-><?php echo $invoice['television'] ?></option>
                                 <option value="no">Suspender</option>
+								<option value="Television">Agregar</option>
                             </select>
                         </div>
 						<div class="col-xs-6 mb-1"><label

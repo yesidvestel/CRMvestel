@@ -673,6 +673,76 @@ class Tickets Extends CI_Controller
         		$this->db->where('id', $ticket->cid);
         		$this->db->update('customers');
 		}
+		if($ticket->detalle=="Reinstalacion Television"){			
+			$producto = $this->db->get_where('products',array('pid'=>27))->row();
+					$datay['tid']=$idfactura;
+                    $datay['pid']=$producto->pid;
+                    $datay['product']=$producto->product_name;
+					$datay['qty']=1;
+                    $x=intval($producto->product_price);
+                    $x=($x/31)*$diferencia->days;					
+                    $y=(3992/31)*$diferencia->days;
+                    $total+=$x;
+					$tax2+=$datay['totaltax'];
+					$datay['price']=$x;
+                    $datay['tax']=19;
+					$datay['totaltax']=$y;
+					$datay['subtotal']=$x+$datay['totaltax'];                    
+                    $this->db->insert('invoice_items',$datay);
+            $factura = $this->db->get_where('invoices',array('tid'=>$idfactura))->row();
+				$this->db->set('subtotal', $factura->subtotal+$total);
+				$this->db->set('tax', $factura->tax+$tax2);
+				$this->db->set('total', $factura->total+$total+$tax2);				       			
+        		$this->db->where('tid', $idfactura);
+        		$this->db->update('invoices');
+			
+		}
+		if($ticket->detalle=="Reinstalacion Internet"){	
+		$factura = $this->db->get_where('invoices',array('tid'=>$idfactura))->row();
+		$datay['tid']=$idfactura;
+        $datay['qty']=1;
+        $datay['tax']=0;
+        $datay['discount']=0;        
+        $datay['totaldiscount']=0;			
+                if($data['combo']!==no){
+                    if($factura->combo==='3Megas'){
+                        $datay['pid']=24;
+					}else if($factura->combo==='3MegasSolo'){
+                        $datay['pid']=170;
+                    }else if($factura->combo==='5Megas'){
+                        $datay['pid']=25;
+					}else if($factura->combo==='5MegasSolo'){
+                        $datay['pid']=171;					
+                    }else if($factura->combo==='5MegasD'){
+                        $datay['pid']=223;					
+                    }else if($factura->combo==='10Megas'){
+                        $datay['pid']=26;
+					}else if($factura->combo==='10MegasSolo'){
+                        $datay['pid']=172;
+                    }else if($factura->combo==='50Megas'){
+                        $datay['pid']=222;
+                    }
+                    $producto = $this->db->get_where('products',array('pid'=>$datay['pid']))->row();
+                    $x=intval($producto->product_price);
+                    $x=($x/31)*$diferencia->days;
+                    $total=$x;
+                    $datay['product']=$producto->product_name;
+					$datay['qty']=1;
+					$tax2+=$datay['totaltax'];
+					$datay['tax']=0;
+					$datay['totaltax']=0;
+                    $datay['price']=$x;
+                    $datay['subtotal']=$x;     
+                    $this->db->insert('invoice_items',$datay);
+                }
+            
+				$this->db->set('subtotal', $factura->subtotal+$total);
+				$this->db->set('tax', $factura->tax);
+				$this->db->set('total', $factura->total+$total);				       			
+        		$this->db->where('tid', $idfactura);
+        		$this->db->update('invoices');
+			
+		}
 		if($ticket->detalle=="Toma Adicional"){
 			$punto = $this->input->post('puntos');
 			$producto2 = $this->db->get_where('products',array('pid'=>69))->row();
