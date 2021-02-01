@@ -700,10 +700,12 @@ class Invoices extends CI_Controller
         $this->db->set('ron', $status);
         $this->db->where('tid', $tid);
         //$this->db->update('invoices');		 
-		$cuenta = $this->db->get_where('invoices',array('tid'=>$tid))->row();
-		$tidactualmasuno= $this->db->select('max(codigo)+1 as codigo')->from('tickets')->get()->result();
-		if ($this->db->update('invoices')) {			
-				if ($tv !== no && $int !== no ){
+		
+		
+		if ($this->db->update('invoices')) {	
+            $cuenta = $this->db->get_where('invoices',array('tid'=>$tid))->row();		
+            $tidactualmasuno= $this->db->select('max(codigo)+1 as codigo')->from('tickets')->get()->result();
+			if ($tv !== no && $int !== no ){
 				$data2['codigo']=$tidactualmasuno[0]->codigo;	
                 $data2['subject']='servicio';					
                 $data2['created']=$cuenta->invoicedate;
