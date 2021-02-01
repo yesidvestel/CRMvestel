@@ -267,6 +267,7 @@ class Invoices extends CI_Controller
                             $puntos_data= array();
                             if($puntos!=0){
                                 $punto_adicional=$this->db->get_where("products", array('product_name' =>"Punto Adicional"))->row();
+                                $puntos_data['tid']=$factura_data['tid'];
                                 $puntos_data['pid']=$punto_adicional->pid;
                                 $puntos_data['product']=$punto_adicional->product_name;
                                 $puntos_data['qty']=$puntos;
