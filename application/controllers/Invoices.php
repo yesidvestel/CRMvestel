@@ -198,11 +198,9 @@ class Invoices extends CI_Controller
                                     $factura_data['subtotal']=$tv_product->product_price;
                                     $factura_data['total']=$x1;
 
-                                    if(strpos(strtolower($caja1->holder), strtolower("yopal"))!==false){
-                                        $television_data['product']="Television Yopal";
-                                    }else{
+                                    
                                         $television_data['product']="Television";
-                                    }
+                                    
                                 }
                                 $television_data['tid']=$factura_data['tid'];
                                 $television_data['qty']=1;
