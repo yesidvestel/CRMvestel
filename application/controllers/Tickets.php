@@ -705,7 +705,11 @@ class Tickets Extends CI_Controller
         $datay['discount']=0;        
         $datay['totaldiscount']=0;			
                 if($data['combo']!==no){
-                    if($factura->combo==='3Megas'){
+                    if($factura->combo==='1Mega'){
+                        $datay['pid']=125;
+                    }else if($factura->combo==='2Megas'){
+                        $datay['pid']=126;
+                    }else if($factura->combo==='3Megas'){
                         $datay['pid']=24;
 					}else if($factura->combo==='3MegasSolo'){
                         $datay['pid']=170;
@@ -734,6 +738,7 @@ class Tickets Extends CI_Controller
                     $datay['price']=$x;
                     $datay['subtotal']=$x;     
                     $this->db->insert('invoice_items',$datay);
+
                 }
             
 				$this->db->set('subtotal', $factura->subtotal+$total);

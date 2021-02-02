@@ -812,21 +812,22 @@
 						<div class="col-xs-6 mb-1"><label
                                     for="pmethod">Television</label>
                             <select name="television" class="form-control mb-1">
-                                <option value="<?php echo $invoice['television'] ?>">-><?php echo $invoice['television'] ?></option>
-                                <option value="no">Suspender</option>
-								<option value="Television">Agregar</option>
+                                <option value="por_defecto">-><?php echo $invoice['television'] ?></option>
+                                
+                            <option <?=($invoice['television']=="no")? 'hidden' :''?> value="no">Suspender</option>
+								<option <?=($invoice['television']=="Television")? 'hidden' :''?> value="Television">Agregar</option>
                             </select>
                         </div>
 						<div class="col-xs-6 mb-1"><label
                                     for="pmethod">Internet</label>
                             <select name="internet" class="form-control mb-1">
-                                <option value="<?php echo $invoice['combo'] ?>">-><?php echo $invoice['combo'] ?></option>
-								<option value="no">Suspender</option>
-                                <option value="1Mega">1Mega</option>
-								<option value="2Megas">2Megas</option>
-								<option value="3Megas">3Megas</option>
-								<option value="5Megas">5Megas</option>
-								<option value="10Megas">10Megas</option>
+                                <option value="por_defecto">-><?php echo $invoice['combo'] ?></option>
+								<option <?=($invoice['combo']=="no")? 'hidden' :''?> value="no">Suspender</option>
+                                <option <?=($invoice['combo']=="1Mega")? 'hidden' :''?> value="1Mega">1Mega</option>
+								<option <?=($invoice['combo']=="2Megas")? 'hidden' :''?> value="2Megas">2Megas</option>
+								<option <?=($invoice['combo']=="3Megas")? 'hidden' :''?> value="3Megas">3Megas</option>
+								<option <?=($invoice['combo']=="5Megas")? 'hidden' :''?> value="5Megas">5Megas</option>
+								<option <?=($invoice['combo']=="10Megas")? 'hidden' :''?> value="10Megas">10Megas</option>
                             </select>
                         </div>						
 						
