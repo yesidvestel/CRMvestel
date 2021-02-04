@@ -147,7 +147,8 @@ class Customers_model extends CI_Model
         $this->db->select('SUM(debit) AS debit,SUM(credit) AS credit');
         $this->db->from('transactions');
         $this->db->where('payerid', $custid);
-		$this->db->where('ext', '0');
+		$this->db->where('estado' , null);
+		$this->db->where('ext', '0');		
         $query = $this->db->get();
         return $query->row_array();
     }
