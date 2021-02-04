@@ -415,6 +415,7 @@
                     <input type="submit" id="submit-data" class="btn btn-success margin-bottom"
                            value="<?php echo $this->lang->line('Add customer') ?>" data-loading-text="Adding...">
                     <input type="hidden" value="customers/addcustomer" id="action-url">
+                    <a class="btn btn-success" href="<?=base_url()?>customers/conectar_microtik"  >Conectar</a>
                 </div>
             </div>
 

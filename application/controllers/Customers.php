@@ -58,6 +58,31 @@ class Customers extends CI_Controller
         $this->load->view('customers/create', $data);
         $this->load->view('fixed/footer');
     }
+    public function conectar_microtik(){
+        include (APPPATH."libraries\RouterosAPI.php");
+        set_time_limit(3000);
+         $API = new RouterosAPI();
+        $API->debug = true;
+        
+        if ($API->connect('190.14.233.186:8728', 'soporte.yopal', 'duber123')) {
+
+         $API->comm("/ppp/secret/add", array(
+              "name"     => "user_prueba_duber",
+              "password" => "user_prueba_duber",
+              "remote-address" => "172.16.1.10",
+              "comment"  => "{new VPN user}",
+              "service"  => "pppoe",
+           ));
+        
+
+
+         $API->disconnect();
+
+        }else{
+            echo "no conecto";
+        }
+
+    }
 	
 	public function ciudades_list()
 	{ 
