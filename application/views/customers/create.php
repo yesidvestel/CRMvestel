@@ -314,7 +314,7 @@
 					<hr>
                         <div class="input-group">
                             <label class="display-inline-block custom-control custom-radio ml-1">
-                                <input type="checkbox" name="customer1" class="custom-control-input" id="copy_address">
+                                <input type="checkbox" name="customer1" class="custom-control-input" id="copy_address" onchange="selecciona_para_agregar()">
                                 <span class="custom-control-indicator"></span>
                                 <span class="custom-control-description ml-0"><?php echo $this->lang->line('') ?>Integrar al sistema</span>
                             </label>
@@ -334,7 +334,7 @@
 						
                         <div class="col-sm-12">
                             <input type="text" placeholder="Name"
-                                   class="form-control margin-bottom" name="name_s" id="mcustomer_name_s"> 
+                                   class="form-control margin-bottom" name="name_s" id="mcustomer_name_s" onkeyup="selecciona_para_agregar()"> 
                         </div>
                     </div>
 
@@ -349,10 +349,10 @@
                         </div>                    
                     	<div class="col-sm-6">                       
                         <input type="text" 
-                                   class="form-control margin-bottom" name="contra" id="mcustomer_documento_s">
+                                   class="form-control margin-bottom" name="contra" id="mcustomer_documento_s" onkeyup="selecciona_para_agregar()">
 						</div>
                         <div class="col-sm-6">
-                            <select class=" col-sm-2 form-control"  id="discountFormat" name="servicio">
+                            <select class=" col-sm-2 form-control"  id="discountFormatServicio" name="servicio">
 													<option value="pppoe">pppoe</option>
                                                     <option value="pptp">pptp</option>
                                                 	
@@ -371,12 +371,12 @@
                         </div>
                     
                    		 <div class="col-sm-6">
-							<select class=" col-sm-2 form-control"  id="discountFormat" name="perfil" onchange="cambia2()">
+							<select class=" col-sm-2 form-control"  id="discountFormatPerfil" name="perfil" onchange="cambia2()">
 													<option value="-">-</option>
                                             </select>                       
 						</div>
                         <div class="col-sm-6">
-                            <select class=" col-sm-2 form-control"  id="discountFormat" name="Iplocal">
+                            <select class=" col-sm-2 form-control"  id="discountFormatIpLocal" name="Iplocal">
 													<option value="-">-</option>
                                             </select>
                         </div>
@@ -393,11 +393,11 @@
                     
                     	<div class="col-sm-6">
 							<input type="text" placeholder="Region"
-                                   class="form-control margin-bottom" name="Ipremota" id="Ipremota" value="10.0.0.3">
+                                   class="form-control margin-bottom" name="Ipremota" id="Ipremota" value="10.0.0.3" onkeyup="selecciona_para_agregar()">
                         </div>
                         <div class="col-sm-6">
                             <input type="text" placeholder="Barrio y codigo usuario"
-                                   class="form-control margin-bottom" name="comentario" id="mcustomer_comentario_s">
+                                   class="form-control margin-bottom" name="comentario" id="mcustomer_comentario_s" onkeyup="selecciona_para_agregar()">
                         </div>
                     </div>
                     
@@ -415,7 +415,7 @@
                     <input type="submit" id="submit-data" class="btn btn-success margin-bottom"
                            value="<?php echo $this->lang->line('Add customer') ?>" data-loading-text="Adding...">
                     <input type="hidden" value="customers/addcustomer" id="action-url">
-                    <a class="btn btn-success" href="<?=base_url()?>customers/conectar_microtik"  >Conectar</a>
+                    <!--<a class="btn btn-success" href="<?=base_url()?>customers/conectar_microtik"  >Conectar</a>-->
                 </div>
             </div>
 
@@ -425,6 +425,25 @@
     </div>
 </article>
 <script type="text/javascript">
+    function selecciona_para_agregar(){
+        var elemento=document.getElementById("copy_address");
+        //console.log($("#discountFormatServicio").val());
+        if(elemento.checked==true){
+            var desabilitar=false;
+            //console.log($("#mcustomer_name_s").val());
+            if($("#mcustomer_name_s").val()=="" || $("#mcustomer_documento_s").val()=="" || $("#discountFormatPerfil").val()=="-" || $("#discountFormatPerfil").val()=="Seleccine..." || $("#discountFormatIpLocal").val()=="-" || $("#Ipremota").val()=="" || $("#mcustomer_comentario_s").val()==""){
+                desabilitar=true;
+            }
+            if(desabilitar){
+                $("#submit-data").attr("disabled", true);    
+            }else{
+                $("#submit-data").removeAttr("disabled");    
+            }
+            
+        }else{
+            $("#submit-data").removeAttr("disabled");
+        }
+    }
 function ShowSelected()
 {
 /* Para obtener el valor */
@@ -491,6 +510,7 @@ alert(selected);
 											document.formulario1.Iplocal.options[0].text="-"											
 								}
 								document.formulario1.Iplocal.options[0].selected = true;
+                                selecciona_para_agregar();
 							}
 	var ciudad_Casanare = new Array ("-","Yopal","Monterrey","Villanueva");
 	var ciudad_Putumayo = new Array ("-","Mocoa");	

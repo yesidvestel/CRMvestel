@@ -70,6 +70,8 @@ class Customers extends CI_Controller
               "name"     => "user_prueba_duber",
               "password" => "user_prueba_duber",
               "remote-address" => "172.16.1.10",
+              "local-address" => "10.0.0.1",
+              "profile" => "5Megas",
               "comment"  => "{new VPN user}",
               "service"  => "pppoe",
            ));

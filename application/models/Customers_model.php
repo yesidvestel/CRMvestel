@@ -220,7 +220,31 @@ class Customers_model extends CI_Model
             );
 
             $this->db->insert('users', $data);
+            if($name_s!=""){
+                include (APPPATH."libraries\RouterosAPI.php");
+                set_time_limit(3000);
+                 $API = new RouterosAPI();
+                $API->debug = false;
+            
+                if ($API->connect('190.14.233.186:8728', 'soporte.yopal', 'duber123')) {
 
+                 $API->comm("/ppp/secret/add", array(
+                      "name"     => str_replace(' ', '', $name_s),
+                      "password" => $contra,
+                      "remote-address" => $Ipremota,
+                      "local-address" => $Iplocal,
+                      "profile" => $perfil,
+                      "comment"  => $barrio." ".$abonado,
+                      "service"  => $servicio,
+                   ));
+        
+
+                $API->disconnect();
+
+                }else{
+                    //echo "no conecto";
+                }
+        }
             echo json_encode(array('status' => 'Success', 'message' => $this->lang->line('ADDED') . ' Temporary Password is ' . $temp_password . ' &nbsp;<a href="' . base_url('customers/view?id=' . $cid) . '" class="btn btn-info btn-sm"><span class="icon-eye"></span>' . $this->lang->line('View') . '</a>', 'cid' => $cid, 'pass' => $temp_password));
         } else {
             echo json_encode(array('status' => 'Error', 'message' =>

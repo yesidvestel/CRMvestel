@@ -1019,6 +1019,13 @@ $("#copy_address").change(function ()
         $('#region_s').val($('#region').val());
         $('#mcustomer_country_s').val($('#mcustomer_country').val());
         $('#postbox_s').val($('#postbox').val());
+        if($("#mcustomer_name_s").val()=="" || $("#mcustomer_documento_s").val()=="" || $("#discountFormatPerfil").val()=="-" || $("#discountFormatPerfil").val()=="Seleccine..." || $("#discountFormatIpLocal").val()=="-" || $("#Ipremota").val()=="" || $("#mcustomer_comentario_s").val()==""){
+            $("#submit-data").attr("disabled", true);    
+        }else{
+            $("#submit-data").removeAttr("disabled");
+        }
+
+
     }
     else{
         $('#mcustomer_name_s').val('');
@@ -1029,6 +1036,7 @@ $("#copy_address").change(function ()
         $('#region_s').val('');
         $('#mcustomer_country_s').val('');
         $('#postbox_s').val('');
+        $("#submit-data").removeAttr("disabled");
     }
 });
 
