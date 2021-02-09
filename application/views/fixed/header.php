@@ -1050,27 +1050,55 @@
 
                     </ul>
                 </li>
-			<li class="navigation-header"><span>MATERIALES</span><i
+			<!--- MENU INVENTARIOS--->
+			
+                <li class="navigation-header"><span><?php echo $this->lang->line('Stock') ?></span><i
                             data-toggle="tooltip" data-placement="right"
                             data-original-title="Stock"
                             class="icon-ellipsis icon-ellipsis"></i>
                 </li>
-			
-					
-                <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "purchase") {
+				<li class="nav-item has-sub <?php if ($this->uri->segment(1) == "equipos") {
                     echo ' open';
                 } ?>">
-					
-					
-                    <a href=""> <i class="icon-file"></i><span
-                                class="menu-title"> <?php echo $this->lang->line('Purchase Order') ?> </span><i
+                    <a href=""> <i class="icon-wifi3"></i><span
+                                class="menu-title"><?php echo $this->lang->line('') ?>Redes</span><i
+                                class="fa arrow"></i> </a>
+                    <ul class="menu-content">
+						<li>
+                            <a href="<?php echo base_url(); ?>products/equipoadd"><?php echo $this->lang->line('') ?>Ingreso de Equipo</a>
+                        </li>
+						<li>
+                            <a href="<?php echo base_url(); ?>products/equipos"><?php echo $this->lang->line('') ?>Administrar equipos</a>
+                        </li>
+						<li>
+                            <a href="<?php echo base_url(); ?>productcategory/almacen">Bodega equipos</a>
+                        </li>
+					</ul>
+				</li>
+                <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "products") {
+                    echo ' open';
+                } ?>">
+                    <a href=""> <i class="icon-truck2"></i><span
+                                class="menu-title"><?php echo $this->lang->line('') ?>Inventarios</span><i
                                 class="fa arrow"></i> </a>
                     <ul class="menu-content">
                         <li>
-                            <a href="<?php echo base_url(); ?>purchase/create"><?php echo $this->lang->line('New Order') ?></a>
+                            <a href="<?php echo base_url(); ?>products/add"><?php echo $this->lang->line('') ?>Ingreso de material</a>
+                        </li>
+						
+                        <li>
+                            <a href="<?php echo base_url(); ?>products"><?php echo $this->lang->line('') ?>Administrar material</a>
+                        </li>
+						
+                        <li>
+                            <a href="<?php echo base_url(); ?>productcategory"><?php echo $this->lang->line('') ?>Categoria de material</a>
                         </li>
                         <li>
-                            <a href="<?php echo base_url(); ?>purchase"><?php echo $this->lang->line('Manage Orders') ?></a>
+                            <a href="<?php echo base_url(); ?>productcategory/warehouse"><?php echo $this->lang->line('Warehouses') ?></a>
+                        </li>
+						
+                        <li>
+                            <a href="<?php echo base_url(); ?>products/stock_transfer"><?php echo $this->lang->line('') ?>Traspasos</a>
                         </li>
                     </ul>
                 </li>
