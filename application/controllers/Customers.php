@@ -145,13 +145,14 @@ class Customers extends CI_Controller
         if ($API->connect('190.14.233.186:8728', 'soporte.yopal', 'duber123')) {
 
          $API->comm("/ppp/secret/add", array(
-              "name"     => "user_prueba_duber",
-              "password" => "user_prueba_duber",
-              "remote-address" => "172.16.1.10",
-              "local-address" => "10.0.0.1",
+              "name"     => "user_prueba_duber_disabled",
+              "password" => "user_prueba_duber_disabled",
+              "remote-address" => "172.16.1.11",
+              "local-address" => "10.0.0.5",
               "profile" => "5Megas",
               "comment"  => "{new VPN user}",
               "service"  => "pppoe",
+              "disabled"=>"yes"
            ));
         
 
@@ -160,6 +161,38 @@ class Customers extends CI_Controller
 
         }else{
             echo "no conecto";
+        }
+
+    }
+    public function conectar_microtik_edicion(){
+        include (APPPATH."libraries\RouterosAPI.php");
+        set_time_limit(3000);
+         $API = new RouterosAPI();
+        $API->debug = true;
+        
+        if ($API->connect('190.14.233.186:8728', 'soporte.yopal', 'duber123')) {
+
+            $arrID=$API->comm("/ppp/secret/getall", 
+                  array(
+                  ".proplist"=> ".id",
+                  "?name" => "user_prueba_duber_disabled",
+                  ));
+
+            $API->comm("/ppp/secret/set",
+              array(
+                   ".id" => $arrID[0][".id"],
+                   "disabled"  => "no",
+                   )
+              );
+
+            var_dump($arrID);
+        
+
+
+         $API->disconnect();
+
+        }else{
+           
         }
 
     }
