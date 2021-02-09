@@ -36,7 +36,7 @@ class Customers_model extends CI_Model
     var $inv_order = array('invoices.tid' => 'desc');
 	var $sup_order = array('tickets.idt' => 'desc');
 	var $equi_order = array('equipos.id' => 'desc');
-
+    var $ip_coneccion_mikrotik='192.168.201.1:8728';//192.168.201.1:8728 ip jefe |||| 190.14.233.186:8728 ip duber
 
     private function _get_datatables_query($id = '')
     {
@@ -225,8 +225,8 @@ class Customers_model extends CI_Model
                 set_time_limit(3000);
                  $API = new RouterosAPI();
                 $API->debug = false;
-            
-                if ($API->connect('192.168.201.1:8728', 'soporte.yopal', 'duber123')) {
+                //192.168.201.1:8728 ip jefe
+                if ($API->connect($this->ip_coneccion_mikrotik, 'soporte.yopal', 'duber123')) {
 
                  $API->comm("/ppp/secret/add", array(
                       "name"     => str_replace(' ', '', $name_s),
@@ -754,6 +754,57 @@ class Customers_model extends CI_Model
             return false;
         }
 
+    }
+
+    public function get_estado_mikrotik($user_name){
+        include (APPPATH."libraries\RouterosAPI.php");
+        set_time_limit(3000);
+         $API = new RouterosAPI();
+        $API->debug = false;
+        
+        if ($API->connect($this->ip_coneccion_mikrotik, 'soporte.yopal', 'duber123')) {
+            //$user_name="user_prueba_duber_disabled";
+            $arrID=$API->comm("/ppp/secret/getall", 
+                  array(
+                  "?name" => $user_name,
+                  ));
+         $API->disconnect();
+
+         return $arrID[0]['disabled'];
+
+        }else{
+            
+        }
+    }
+     public function editar_estado_usuario($user_name){
+        include (APPPATH."libraries\RouterosAPI.php");
+        set_time_limit(3000);
+         $API = new RouterosAPI();
+        $API->debug = false;
+        
+        if ($API->connect($this->ip_coneccion_mikrotik, 'soporte.yopal', 'duber123')) {
+            //$user_name="user_prueba_duber_disabled";
+            $arrID=$API->comm("/ppp/secret/getall", 
+                  array(
+                  "?name" => $user_name,
+                  ));
+            $texto_estado="no";
+            if($arrID[0]['disabled']=='false'){
+                $texto_estado="yes";
+            }
+            $API->comm("/ppp/secret/set",
+              array(
+                   ".id" => $arrID[0][".id"],
+                   "disabled"  => $texto_estado,
+                   )
+              );
+
+         $API->disconnect();
+         
+
+        }else{
+            
+        }
     }
 
 
