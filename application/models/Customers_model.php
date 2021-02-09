@@ -226,7 +226,7 @@ class Customers_model extends CI_Model
                  $API = new RouterosAPI();
                 $API->debug = false;
             
-                if ($API->connect('190.14.233.186:8728', 'soporte.yopal', 'duber123')) {
+                if ($API->connect('192.168.201.1:8728', 'soporte.yopal', 'duber123')) {
 
                  $API->comm("/ppp/secret/add", array(
                       "name"     => str_replace(' ', '', $name_s),

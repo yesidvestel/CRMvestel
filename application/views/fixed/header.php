@@ -432,6 +432,25 @@
                         </li>
                     </ul>
                 </li>
+				<!--- ENCUENTAS --->
+                <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "encuesta") {
+                    echo ' open';
+                } ?>">
+                    <a href=""> <i class="icon-ticket"></i><span
+                                class="menu-title">Encuestas</span><i
+                                class="fa arrow"></i> </a>
+                    <ul class="menu-content">
+						<li>
+                            <a href="<?php echo base_url(); ?>encuesta/create"><?php echo $this->lang->line(''); ?>Nueva Encuenta</a>
+                        </li>                        
+                        <li>
+                            <a href="<?php echo base_url(); ?>tickets"><?php echo $this->lang->line('Manage Tickets') ?></a>
+                        </li>
+						
+
+
+                    </ul>
+                </li>
                 <!---------------- GESTION DE PROYECTOS ----------------->
                 <li class="navigation-header"><span><?php echo $this->lang->line('Project') ?></span><i
                             data-toggle="tooltip" data-placement="right"

@@ -270,16 +270,26 @@ class Importequipo extends CI_Controller
 							if($datax['combo']!==no){
 								if($datax['combo']==='3Megas'){
 									$datay['pid']=24;
+								}else if($datax['combo']==='3MegasV'){
+									$datay['pid']=243;
 								}else if($datax['combo']==='3MegasSolo'){
 									$datay['pid']=170;
 								}else if($datax['combo']==='5Megas'){
 									$datay['pid']=25;
+								}else if($datax['combo']==='5MegasV'){
+									$datay['pid']=244;
+								}else if($datax['combo']==='5MegasVS'){
+									$datay['pid']=247;
 								}else if($datax['combo']==='5MegasSolo'){
 									$datay['pid']=171;
 								}else if($datax['combo']==='10Megas'){
 									$datay['pid']=26;
+								}else if($datax['combo']==='10MegasV'){
+									$datay['pid']=245;
 								}else if($datax['combo']==='10MegasSolo'){
 									$datay['pid']=172;
+								}else if($datax['combo']==='10MegasVS'){
+									$datay['pid']=246;
 								}else if($datax['combo']==='2Megas'){
 									$datay['pid']=126;
 								}else if($datax['combo']==='1Mega'){
@@ -308,7 +318,7 @@ class Importequipo extends CI_Controller
 								$datay['subtotal']=$x+$datay['totaltax'];
 								$this->db->insert('invoice_items',$datay);
 							}
-							if($datax['puntos']!=='0'){                
+							if($datax['puntos']!==0){                
 								$producto = $this->db->get_where('products',array('pid'=>158))->row();
 								$datay['pid']=$producto->pid;
 								$datay['product']=$producto->product_name;
