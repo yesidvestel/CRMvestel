@@ -293,7 +293,7 @@
                                for="customergroup"><?php echo $this->lang->line('') ?>Sede</label></h6>
 						
                         <div class="col-sm-12">
-                            <select name="customergroup" class="form-control"  onchange="cambia()">
+                            <select id="id_sede" name="customergroup" class="form-control"  onchange="cambia()">
                                 <?php
 
                                 foreach ($customergrouplist as $row) {
@@ -392,8 +392,10 @@
                         </div>
                     
                     	<div class="col-sm-6">
-							<input type="text" placeholder="Region"
-                                   class="form-control margin-bottom" name="Ipremota" id="Ipremota" value="10.0.0.3" onkeyup="selecciona_para_agregar()">
+							<input disabled="disabled" type="text" placeholder="Ip remota"
+                                   class="form-control margin-bottom" name="Ipremota" id="Ipremota" value="" onkeyup="selecciona_para_agregar()">
+                                   <input style="display: none;" type="text" placeholder="Region"
+                                   class="form-control margin-bottom" name="Ipremota2" id="Ipremota2" value="">
                         </div>
                         <div class="col-sm-6">
                             <input type="text" placeholder="Barrio y codigo usuario"
@@ -425,6 +427,9 @@
     </div>
 </article>
 <script type="text/javascript">
+    var remote_ip_yopal="<?=$ips_remotas['yopal']?>";
+    var remote_ip_villanueva="<?=$ips_remotas['villanueva']?>";
+    var remote_ip_monterrey="<?=$ips_remotas['monterrey']?>";
     function selecciona_para_agregar(){
         var elemento=document.getElementById("copy_address");
         //console.log($("#discountFormatServicio").val());
@@ -460,6 +465,7 @@ alert(selected);
 	var perfil_2 = new Array ("Seleccine...","3Megas","5Megas","10Megas","MOROSOS");
 	var perfil_3 = new Array ("Seleccine...","3MEGAS","5MEGAS","10MEGAS","MOROSOS");
 	var perfil_4 = new Array ("Seleccine...","3Megas","5Megas","10Megas","Cortados");
+    var perfil_5 = new Array ("Seleccine...","3Megas","5Megas","10Megas","Cortados");
 							//crear funcion que ejecute el cambio
 							function cambia(){
 								var customergroup;
@@ -483,6 +489,16 @@ alert(selected);
 											document.formulario1.perfil.options[0].text="-"											
 								}
 								document.formulario1.perfil.options[0].selected = true;
+                                if(customergroup=="2"){
+                                    $("#Ipremota").val(remote_ip_yopal);
+                                    $("#Ipremota2").val(remote_ip_yopal);
+                                }else if(customergroup=="3"){
+                                    $("#Ipremota").val(remote_ip_villanueva);
+                                    $("#Ipremota2").val(remote_ip_villanueva);
+                                }else if(customergroup=="4"){
+                                    $("#Ipremota").val(remote_ip_monterrey);
+                                    $("#Ipremota2").val(remote_ip_monterrey);
+                                }
 							}	
 	var Iplocal_2 = new Array ("10.0.0.1");
 	var Iplocal_3 = new Array ("80.0.0.1");
@@ -511,6 +527,7 @@ alert(selected);
 								}
 								document.formulario1.Iplocal.options[0].selected = true;
                                 selecciona_para_agregar();
+
 							}
 	var ciudad_Casanare = new Array ("-","Yopal","Monterrey","Villanueva");
 	var ciudad_Putumayo = new Array ("-","Mocoa");	
