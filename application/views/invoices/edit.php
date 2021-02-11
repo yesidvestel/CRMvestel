@@ -5,7 +5,7 @@
 
             <div class="message"></div>
         </div>
-        <form method="post" id="data_form">
+        <form method="post" id="data_form" name="formulario2">
 
 
             <div class="row">
@@ -109,7 +109,7 @@
                                     <div class="input-group">
                                         <div class="input-group-addon"><span class="icon-bookmark-o"
                                                                              aria-hidden="true"></span></div>
-										<select name="refer" class="form-control">
+										<select name="refer" class="form-control" onchange="cambia()">
 											<option value="<?php echo $invoice['refer'] ?>">--<?php echo $invoice['refer'] ?>--</option>
 											<option value="Yopal">Yopal</option>
 											<option value="Monterrey">Monterrey</option>
@@ -319,17 +319,7 @@
 							 <td colspan="2">Internet
 							 <select name="combo" class="selectpicker form-control">
 										<option value="<?php echo $invoice['combo']; ?>">--<?php echo $invoice['combo']; ?></option>
-								 		<option value="no">No</option>							 		
-                                        <option value="1Mega">1 Mega</option>
-										<option value="2Megas">2 Megas</option>
-                                        <option value="3Megas">3 Megas en Combo</option>
-										<option value="3MegasSolo">3 Megas</option>
-										<option value="5Megas">5 Megas en Combo</option>
-										<option value="5MegasSolo">5 Megas</option>
-										<option value="5MegasD">5 Megas Dedicadas</option>
-										<option value="10Megas">10 Megas en combo</option>
-										<option value="10MegasSolo">10 Megas</option>
-										<option value="50Megas">50 Megas</option>
+								 		<option value="-">-</option>							 	
                                     </select></td>
 							 <td colspan="2">Punto Adicional 
 								<select name="puntos" class="selectpicker form-control">
@@ -596,3 +586,32 @@
 </div>
 
 <script type="text/javascript"> $('.editdate').datepicker({autoHide: true, format: '<?php echo $this->config->item('dformat2'); ?>'});</script>
+<script type="text/javascript">	
+	var combo_Yopal = new Array ("no","1Mega","2Megas","3Megas","3MegasSolo","5Megas","5MegasSolo","10Megas","10MegasSolo");
+	var combo_Monterrey = new Array ("no","1Mega","2Megas","3Megas","3MegasSolo","5Megas","5MegasSolo","5MegasD","10Megas","10MegasSolo","50Megas");
+	var combo_Villanueva = new Array ("no","1Mega","3MegasV","3MegasVS","5MegasV","5MegasVS","5MegasVD","10MegasV","10MegasVS","50MegasV");
+							//crear funcion que ejecute el cambio
+							function cambia(){
+								var refer;
+								refer = document.formulario2.refer[document.formulario2.refer.			selectedIndex].value;
+								//se verifica la seleccion dada
+								if(refer!=0){
+									mis_opts=eval("combo_"+refer);
+									//definimos cuantas obciones hay
+									num_opts=mis_opts.length;
+									//marcamos obciones en el selector
+									document.formulario2.combo.length = num_opts;
+									//colocamos las obciones array
+									for(i=0; i<num_opts; i++){
+										document.formulario2.combo.options[i].value=mis_opts[i];
+										document.formulario2.combo.options[i].text=mis_opts[i];
+									}
+										}else{
+											//resultado si no hay obciones
+											document.formulario2.combo.length = 1;
+											document.formulario2.combo.options[0].value="-"
+											document.formulario2.combo.options[0].text="-"											
+								}
+								document.formulario2.combo.options[0].selected = true;
+							}	
+</script>
