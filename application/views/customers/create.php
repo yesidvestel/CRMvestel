@@ -314,7 +314,7 @@
 					<hr>
                         <div class="input-group">
                             <label class="display-inline-block custom-control custom-radio ml-1">
-                                <input type="checkbox" name="customer1" class="custom-control-input" id="copy_address" onchange="selecciona_para_agregar()">
+                                <input type="checkbox" name="customer1" class="custom-control-input" id="copy_address" >
                                 <span class="custom-control-indicator"></span>
                                 <span class="custom-control-description ml-0"><?php echo $this->lang->line('') ?>Integrar al sistema</span>
                             </label>
@@ -334,7 +334,8 @@
 						
                         <div class="col-sm-12">
                             <input type="text" placeholder="Name"
-                                   class="form-control margin-bottom" name="name_s" id="mcustomer_name_s" onkeyup="selecciona_para_agregar()"> 
+                                   class="form-control margin-bottom" name="name_s" id="mcustomer_name_s" onblur="selecciona_para_agregar()" > 
+                                   <span id="msg_error_username" style="color: red;visibility :hidden">Este Nombre de Usuario Ya Existe</span>
                         </div>
                     </div>
 
@@ -436,9 +437,12 @@
         if(elemento.checked==true){
             var desabilitar=false;
             //console.log($("#mcustomer_name_s").val());
+            validar_user_name();
             if($("#mcustomer_name_s").val()=="" || $("#mcustomer_documento_s").val()=="" || $("#discountFormatPerfil").val()=="-" || $("#discountFormatPerfil").val()=="Seleccine..." || $("#discountFormatIpLocal").val()=="-" || $("#Ipremota").val()=="" || $("#mcustomer_comentario_s").val()==""){
                 desabilitar=true;
             }
+           
+            
             if(desabilitar){
                 $("#submit-data").attr("disabled", true);    
             }else{
@@ -449,6 +453,26 @@
             $("#submit-data").removeAttr("disabled");
         }
     }
+
+function validar_user_name(){
+     var username=$("#mcustomer_name_s").val();
+        if(username!=""){
+            $.post(baseurl+"customers/validar_user_name",{username:username},function(data){
+                if(data=="disponible"){
+                    $("#msg_error_username").css("visibility","hidden");
+                    if($("#mcustomer_name_s").val()=="" || $("#mcustomer_documento_s").val()=="" || $("#discountFormatPerfil").val()=="-" || $("#discountFormatPerfil").val()=="Seleccine..." || $("#discountFormatIpLocal").val()=="-" || $("#Ipremota").val()=="" || $("#mcustomer_comentario_s").val()==""){
+                         $("#submit-data").attr("disabled", true);    
+
+                    }else{
+                        $("#submit-data").removeAttr("disabled");    
+                    }
+                }else{
+                    $("#msg_error_username").css("visibility","visible");
+                    $("#submit-data").attr("disabled", true);    
+                }
+            });
+        }
+}
 function ShowSelected()
 {
 /* Para obtener el valor */

@@ -326,6 +326,17 @@ class Customers extends CI_Controller
         $this->customers->editar_estado_usuario($_GET['username']);
         redirect(base_url()."customers/view?id=".$_GET['id_cm']);
     }
+
+    public function validar_user_name(){
+        $resultado =$this->customers->validar_user_name($_POST['username']);
+        if($resultado==null){
+            echo "disponible";
+        }else{
+            echo "existe";
+        }
+       
+        
+    }
     //edit section
     public function edit()
     {

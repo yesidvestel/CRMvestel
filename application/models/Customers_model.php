@@ -776,6 +776,26 @@ class Customers_model extends CI_Model
             
         }
     }
+     public function validar_user_name($user_name){
+        include (APPPATH."libraries\RouterosAPI.php");
+        set_time_limit(3000);
+         $API = new RouterosAPI();
+        $API->debug = false;
+        
+        if ($API->connect($this->ip_coneccion_mikrotik, 'soporte.yopal', 'duber123')) {
+            //$user_name="user_prueba_duber_disabled";
+            $arrID=$API->comm("/ppp/secret/getall", 
+                  array(
+                  "?name" => $user_name,
+                  ));
+         $API->disconnect();
+
+        return $arrID[0]['.id'];
+
+        }else{
+            
+        }
+    }
      public function editar_estado_usuario($user_name){
         include (APPPATH."libraries\RouterosAPI.php");
         set_time_limit(3000);

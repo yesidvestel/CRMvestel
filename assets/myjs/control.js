@@ -1019,12 +1019,19 @@ $("#copy_address").change(function ()
         $('#region_s').val($('#region').val());
         $('#mcustomer_country_s').val($('#mcustomer_country').val());
         $('#postbox_s').val($('#postbox').val());
+        var desabilitar=false;
+        desabilitar = validar_user_name();
         if($("#mcustomer_name_s").val()=="" || $("#mcustomer_documento_s").val()=="" || $("#discountFormatPerfil").val()=="-" || $("#discountFormatPerfil").val()=="Seleccine..." || $("#discountFormatIpLocal").val()=="-" || $("#Ipremota").val()=="" || $("#mcustomer_comentario_s").val()==""){
-            $("#submit-data").attr("disabled", true);    
-        }else{
-            $("#submit-data").removeAttr("disabled");
+             desabilitar=true;
         }
 
+        if(desabilitar){
+              $("#submit-data").attr("disabled", true);    
+        }else{
+              $("#submit-data").removeAttr("disabled");    
+        }
+
+        
 
     }
     else{
@@ -1039,4 +1046,35 @@ $("#copy_address").change(function ()
         $("#submit-data").removeAttr("disabled");
     }
 });
+$("#copy_address_edit").change(function ()
+{
+    if($(this).prop("checked") == true){
+       // alert("Checkbox is checked." );
+        //$('#mcustomer_name_s').val($('#mcustomer_name').val()+$('#mcustomer_unoapellido').val());
+        $('#mcustomer_documento_s').val($('#mcustomer_documento').val());
+        $('#mcustomer_email_s').val($('#mcustomer_email').val());
+        $('#mcustomer_address1_s').val($('#mcustomer_address1').val());
+        $('#mcustomer_comentario_s').val($('#cmbBarrios').val());
+        $('#region_s').val($('#region').val());
+        $('#mcustomer_country_s').val($('#mcustomer_country').val());
+        $('#postbox_s').val($('#postbox').val());
+        if($("#mcustomer_name_s").val()=="" || $("#mcustomer_documento_s").val()=="" || $("#discountFormatPerfil").val()=="-" || $("#discountFormatPerfil").val()=="Seleccine..." || $("#discountFormatIpLocal").val()=="-" || $("#Ipremota").val()=="" || $("#mcustomer_comentario_s").val()==""){
+            $("#submit-data").attr("disabled", true);    
+        }else{
+            $("#submit-data").removeAttr("disabled");
+        }
 
+
+    }
+    else{
+       // $('#mcustomer_name_s').val('');
+        $('#mcustomer_phone_s').val('');
+        $('#mcustomer_email_s').val('');
+        $('#mcustomer_address1_s').val('');
+        $('#mcustomer_city_s').val('');
+        $('#region_s').val('');
+        $('#mcustomer_country_s').val('');
+        $('#postbox_s').val('');
+        $("#submit-data").removeAttr("disabled");
+    }
+});
