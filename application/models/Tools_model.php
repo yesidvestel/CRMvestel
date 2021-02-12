@@ -91,10 +91,10 @@ class Tools_model extends CI_Model
         return $query->num_rows();
     }
 
-    public function addtask($name, $estado, $priority, $stdate, $tdate, $employee, $assign, $content)
+    public function addtask($name, $estado, $priority, $stdate, $tdate, $employee, $assign, $content, $ordenn)
     {
 
-        $data = array('tdate' => date('Y-m-d H:i:s'), 'name' => $name, 'status' => $estado, 'start' => $stdate, 'duedate' => $tdate, 'description' => $content, 'eid' => $employee, 'aid' => $assign, 'related' => 0, 'priority' => $priority, 'rid' => 0);
+        $data = array('tdate' => date('Y-m-d H:i:s'), 'name' => $name, 'status' => $estado, 'start' => $stdate, 'duedate' => $tdate, 'description' => $content, 'idorden' => $ordenn, 'eid' => $employee, 'aid' => $assign, 'related' => 0, 'priority' => $priority, 'rid' => 0);
         return $this->db->insert('todolist', $data);
     }
 

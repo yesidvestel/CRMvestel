@@ -354,11 +354,12 @@ class Tickets Extends CI_Controller
 		$estado = 'Due';
 		$priority = 'Low';
 		$stdate = $stdate2;
-		$tdate = '';		
+		$tdate = '';	
 		$employee = 32;
 		$assign = $this->aauth->get_user()->id;
 		$content = 'Revisar orden #'.$ticket->codigo;
-		$this->tools->addtask($name, $estado, $priority, $stdate, $tdate, $employee, $assign, $content);
+		$ordenn = $ticket->codigo;
+		$this->tools->addtask($name, $estado, $priority, $stdate, $tdate, $employee, $assign, $content, $ordenn);
 		}
         foreach ($invoice[0] as $key => $value) {
             if($key!='id' && $key!='pmethod' && $key!='status' && $key!='pamnt'){

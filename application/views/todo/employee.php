@@ -104,13 +104,24 @@
 
                         </div>
                     </div>
+					<div class="row">
+                        <div class="col-xs-12 mb-1"><?php echo $this->lang->line('Assigned to') ?> <span id="idorden"></span>
+
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col-xs-12 mb-1"><?php echo $this->lang->line('Assigned by') ?> <strong><span
                                         id="assign"></span></strong>
 
                         </div>
                     </div>
+					<div class="col-md-4" style="margin-top: 5px;">
+									
+                                    <a href="<?php echo base_url('encuesta/create?id='. $task['idorden']) ?>"
+                                       class="btn btn-primary btn-lg" style="border-right-width: 22px;border-left-width: 22px;"><i
+                                                class="icon-file-text2"></i> Encuesta</a>
 
+                                </div>
                     <div class="modal-footer">
                         <input type="hidden" class="form-control"
                                name="tid" id="taskid" value="">
@@ -167,8 +178,8 @@
                 data: {'tid': id},
                 dataType: 'json',
                 success: function (data) {
-
-                    $('#description').html(data.description);
+					$('#idorden').html(data.idorden);
+                    $('#description').html(data.description);					
                     $('#task_title').html(data.name);
                     $('#employee').html(data.employee);
                     $('#assign').html(data.assign);

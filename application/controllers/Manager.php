@@ -60,7 +60,7 @@ class Manager Extends CI_Controller
 
         $task = $this->manager->viewtask($id);
 
-        echo json_encode(array('name' => $task['name'], 'description' => $task['description'], 'employee' => $task['emp'], 'assign' => $task['assign'], 'priority' => $task['priority']));
+        echo json_encode(array('name' => $task['name'], 'description' => $task['description'], 'idorden' => $task['idorden'],'employee' => $task['emp'], 'assign' => $task['assign'], 'priority' => $task['priority']));
     }
 
 

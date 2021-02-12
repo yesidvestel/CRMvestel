@@ -137,7 +137,7 @@ class Tools Extends CI_Controller
 
         $task = $this->tools->viewtask($id);
 
-        echo json_encode(array('name' => $task['name'], 'description' => $task['description'], 'employee' => $task['emp'], 'assign' => $task['assign'], 'priority' => $task['priority']));
+        echo json_encode(array('name' => $task['name'], 'description' => $task['description'], 'employee' => $task['emp'], 'idorden' => $task['idorden'], 'assign' => $task['assign'], 'priority' => $task['priority']));
     }
 
     public function task_stats()
