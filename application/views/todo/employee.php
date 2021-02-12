@@ -117,7 +117,7 @@
                     </div>
 					<div class="col-md-4" style="margin-top: 5px;">
 									
-                                    <a href="<?php echo base_url('encuesta/create?id='. $task['idorden']) ?>"
+                                    <a id="link_id_encuesta" href="<?php echo base_url('encuesta/create?id=') ?>"
                                        class="btn btn-primary btn-lg" style="border-right-width: 22px;border-left-width: 22px;"><i
                                                 class="icon-file-text2"></i> Encuesta</a>
 
@@ -184,6 +184,7 @@
                     $('#employee').html(data.employee);
                     $('#assign').html(data.assign);
                     $('#priority').html(data.priority);
+                    $("#link_id_encuesta").attr("href",baseurl+"encuesta/create?id="+data.idorden);
                 }
 
             });
