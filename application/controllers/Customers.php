@@ -164,6 +164,47 @@ class Customers extends CI_Controller
         }
 
     }
+    public function conectar_microtik_activos(){
+        //para desactivar
+        include (APPPATH."libraries\RouterosAPI.php");
+        set_time_limit(3000);
+         $API = new RouterosAPI();
+        $API->debug = true;
+        
+        if ($API->connect('190.14.233.186:8728', 'soporte.yopal', 'duber123')) {
+
+          $arrID=$API->comm("/ppp/active/getall", 
+                  array(
+                    ".proplist"=> ".id",
+                  "?name" => "PaolaJimenez",
+                  ));
+        $API->comm("/ppp/active/remove",
+            array(
+                ".id" => $arrID[0][".id"],
+                )
+            );
+        //var_dump($arrID);
+        $arrID=$API->comm("/ppp/secret/getall", 
+                  array(
+                  ".proplist"=> ".id",
+                  "?name" => "PaolaJimenez",
+                  ));
+        $API->comm("/ppp/secret/set",
+              array(
+                   ".id" => $arrID[0][".id"],
+                   "disabled"  => "yes",
+                   )
+              );
+        //var_dump($arrID);
+
+
+         $API->disconnect();
+
+        }else{
+            echo "no conecto";
+        }
+
+    }
     public function conectar_microtik_edicion(){
         include (APPPATH."libraries\RouterosAPI.php");
         set_time_limit(3000);

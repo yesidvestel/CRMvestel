@@ -788,16 +788,39 @@ class Customers_model extends CI_Model
                   array(
                   "?name" => $user_name,
                   ));
-            $texto_estado="no";
+          
+            
             if($arrID[0]['disabled']=='false'){
-                $texto_estado="yes";
+               $secret_id=$arrID[0][".id"];
+               $arrID=$API->comm("/ppp/active/getall", 
+                  array(
+                    ".proplist"=> ".id",
+                  "?name" => $user_name,
+                  ));
+                $API->comm("/ppp/active/remove",
+                    array(
+                        ".id" => $arrID[0][".id"],
+                        )
+                    );
+
+                $API->comm("/ppp/secret/set",
+                  array(
+                       ".id" => $secret_id,
+                       "disabled"  => "yes",
+                       )
+                  );  
+                //var_dump($secret_id);
+                //var_dump($arrID[0][".id"]);
+                
+            }else{
+                $API->comm("/ppp/secret/set",
+                  array(
+                       ".id" => $arrID[0][".id"],
+                       "disabled"  => "no",
+                       )
+                  );    
             }
-            $API->comm("/ppp/secret/set",
-              array(
-                   ".id" => $arrID[0][".id"],
-                   "disabled"  => $texto_estado,
-                   )
-              );
+            
 
          $API->disconnect();
          
