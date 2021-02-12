@@ -482,10 +482,11 @@
                         <div class="col-xs-6">
                             <div class="input-group">
                                 <div class="input-group-addon"><span class="icon-calendar4"
-                                                                     aria-hidden="true"></span></div>
-                                <input type="text" class="form-control required"
-                                       placeholder="Billing Date" name="paydate"
-                                       data-toggle="datepicker">
+                                                                                 aria-hidden="true"></span></div>
+                                            <input type="text" class="form-control required"
+                                                   placeholder="Billing Date" name="paydate"
+                                                   data-toggle="datepicker"
+                                                   autocomplete="false">
                             </div>
                         </div>
                     </div>
@@ -541,6 +542,7 @@
                             </select></div>
                     </div>
 					<div class="row">
+						<?php if ($invoice['refer']=='Monterrey' || $invoice['refer']=='Yopal') { ?>
                         <div class="col-xs-12 mb-1"><label
                                     for="shortnote">Paquete</label>
                              <select name="paquete" class="form-control mb-1">
@@ -550,7 +552,18 @@
 								<option value="3Megas">3Megas</option>
 								<option value="5Megas">5Megas</option>
 								<option value="10Megas">10Megas</option>
-                            </select></div>
+                            </select></div><?php } ?>
+						<?php if ($invoice['refer']=='Villanueva') { ?>
+						<div class="col-xs-12 mb-1"><label
+                                    for="shortnote">Paquete</label>
+                             <select name="paquete" class="form-control mb-1">
+                                <option value="no">No villanueva</option>
+                                <option value="1Mega">1Mega</option>								
+								<option value="3MegasV">3Megas</option>
+								<option value="5MegasV">5Megas</option>
+								<option value="5MegasVD">5MegasD</option>
+								<option value="10MegasV">10Megas</option>
+                            </select></div><?php } ?>
                     </div>
 					<?php } ?>
                     <div class="modal-footer">
@@ -820,6 +833,7 @@
                         </div>
 						<div class="col-xs-6 mb-1"><label
                                     for="pmethod">Internet</label>
+							<?php if ($invoice['refer']=='Monterrey' || $invoice['refer']=='Yopal') { ?>
                             <select name="internet" class="form-control mb-1">
                                 <option value="por_defecto">-><?php echo $invoice['combo'] ?></option>
 								<option <?=($invoice['combo']=="no")? 'hidden' :''?> value="no">Suspender</option>
@@ -827,8 +841,20 @@
 								<option <?=($invoice['combo']=="2Megas")? 'hidden' :''?> value="2Megas">2Megas</option>
 								<option <?=($invoice['combo']=="3Megas")? 'hidden' :''?> value="3Megas">3Megas</option>
 								<option <?=($invoice['combo']=="5Megas")? 'hidden' :''?> value="5Megas">5Megas</option>
+								<option <?=($invoice['combo']=="5MegasD")? 'hidden' :''?> value="5MegasD">5MegasD</option>
 								<option <?=($invoice['combo']=="10Megas")? 'hidden' :''?> value="10Megas">10Megas</option>
-                            </select>
+								<option <?=($invoice['combo']=="50Megas")? 'hidden' :''?> value="50Megas">50Megas</option>
+                            </select><?php } ?>
+							<?php if ($invoice['refer']=='Villanueva') { ?>
+							<select name="internet" class="form-control mb-1">
+                                <option value="por_defecto">-><?php echo $invoice['combo'] ?></option>
+								<option <?=($invoice['combo']=="no")? 'hidden' :''?> value="no">Suspender</option>
+                                <option <?=($invoice['combo']=="1Mega")? 'hidden' :''?> value="1Mega">1Mega</option>								
+								<option <?=($invoice['combo']=="3Megas")? 'hidden' :''?> value="3MegasV">3Megas</option>
+								<option <?=($invoice['combo']=="5MegasV")? 'hidden' :''?> value="5MegasV">5Megas</option>
+								<option <?=($invoice['combo']=="5MegasVD")? 'hidden' :''?> value="5MegasVD">5MegasD</option>
+								<option <?=($invoice['combo']=="10MegasV")? 'hidden' :''?> value="10MegasV">10Megas</option>
+                            </select><?php } ?>
                         </div>						
 						
 						
