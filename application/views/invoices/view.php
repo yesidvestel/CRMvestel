@@ -833,7 +833,7 @@
                         </div>
 						<div class="col-xs-6 mb-1"><label
                                     for="pmethod">Internet</label>
-							<?php if ($invoice['refer']=='Monterrey' || $invoice['refer']=='Yopal') { ?>
+							<?php if ($invoice['refer']=='Monterrey' OR $invoice['refer']=='monterrey' OR $invoice['refer']=='Yopal') { ?>
                             <select name="internet" class="form-control mb-1">
                                 <option value="por_defecto">-><?php echo $invoice['combo'] ?></option>
 								<option <?=($invoice['combo']=="no")? 'hidden' :''?> value="no">Suspender</option>

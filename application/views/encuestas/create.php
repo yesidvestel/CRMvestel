@@ -12,15 +12,19 @@
                 <hr>
 
 
-               <p class="card card-block"><?php echo '<strong>Creado el: </strong> ' . $thread_info['created'];
+               <p class="card card-block"><?php echo '<strong>Fecha orden: </strong> ' . $thread_info['created'];
+				echo '<br><strong>Abonado:</strong> ' . $thread_info['abonado'];
                 echo '<br><strong>Usuario:</strong> ' . $thread_info['name'] .' '. $thread_info['unoapellido'];
+				echo '<br><strong>Documento:</strong> ' . $thread_info['documento'];
 				echo '<br><strong>Celular:</strong> ' . $thread_info['celular'];
 				echo '<br><strong>Direccion:</strong> ' . $thread_info['nomenclatura'].' '. $thread_info['numero1']. $thread_info['adicionauno'].' N°'. $thread_info['numero2']. $thread_info['adicional2'].' - '. $thread_info['numero3'];
 				echo '<br><strong>Barrio:</strong> ' . $thread_info['barrio'];
                 echo '<br><strong>Estado:</strong> <span id="pstatus">' . $thread_info['status'];
-				echo '<br><strong>Equipo Asignado:</strong> <span id="pstatus">' . $thread_info['macequipo'];
+				echo '<br><strong>Tecnico Asignado:</strong> <span id="pstatus">' . $thread_info['asignado'];
                 ?></p>
+				<?php echo '<code class="card card-block"><h5 style="text-decoration: underline;">' .$thread_info['detalle'].'</h5>'.strip_tags($thread_info['section'],'<p>')?></code>
 					<hr>
+					<?php if (strpos($thread_info['subject'], "servicio")!==false) {?>
                     <label class="col-sm-6 col-form-label" for="name">¿presentación del técnico en el momento de llegar a la vivienda?</label>
 
                     <div class="col-sm-6 col-form-label">						
@@ -166,9 +170,17 @@
                                                 <span class="custom-control-indicator"></span>
                                                 <span class="custom-control-description ml-0">No</span>
                                             </label>
-											
                     </div>
+                
                 </div>
+				<label class="col-sm-6 col-form-label" for="name">Observacion</label>
+				<div class="col-sm-6 col-form-label">
+					<div class="col-sm-12">
+							<textarea class="summernote" placeholder="Algun detalle adicional" autocomplete="false" rows="2" cols="50" name="nota"></textarea>
+					</div>
+				</div>
+				<?php } ?>
+				<?php if (strpos($thread_info['subject'], "reclamo")!==false) {?>
                 <label class="col-sm-6 col-form-label" for="name">¿presentación del técnico en el momento de llegar a la vivienda?</label>
 
                     <div class="col-sm-6 col-form-label">						
@@ -317,12 +329,18 @@
 											
                     </div>
                 </div>
-
-
+				<label class="col-sm-6 col-form-label" for="name">Observacion</label>
+				<div class="col-sm-6 col-form-label">
+					<div class="col-sm-12">
+							<textarea class="summernote" placeholder="Algun detalle adicional" autocomplete="false" rows="2" cols="50" name="nota"></textarea>
+					</div>
+				</div>
+				<?php } ?>
+				
                 <div class="form-group row">
-
+					
                     <label class="col-sm-2 col-form-label"></label>
-
+					
                     <div class="col-sm-4">
                         <input type="submit" id="submit-data" class="btn btn-success margin-bottom"
                                value="<?php echo $this->lang->line('Add') ?>" data-loading-text="Adding...">

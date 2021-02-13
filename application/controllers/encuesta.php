@@ -48,11 +48,18 @@ class encuesta extends CI_Controller
 
     public function create()
     {
+		
+		$this->load->model('ticket_model', 'ticket');
         $data['customergrouplist'] = $this->supplier->group_list();
+		$codigo = $this->input->get('id');
+		$ticket = $this->db->get_where('tickets',array('codigo'=>$codigo))->row();
+		$thread_id = $ticket->idt;
+		$data['thread_info'] = $this->ticket->thread_info($thread_id);
+		$data['thread_list'] = $this->ticket->thread_list($thread_id);
         $head['usernm'] = $this->aauth->get_user()->username;
         $head['title'] = 'Nueva Encuesta';
         $this->load->view('fixed/header', $head);
-        $this->load->view('encuestas/create');
+        $this->load->view('encuestas/create',$data);
         $this->load->view('fixed/footer');
     }
 

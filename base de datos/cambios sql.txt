@@ -1,5 +1,5 @@
-ALTER TABLE `crm`.`tickets` 
-ADD COLUMN `codigo` int NULL DEFAULT NULL AFTER `idt`;
+ALTER TABLE `crm`.`todolist` 
+ADD COLUMN `idorden` int NULL DEFAULT NULL AFTER `description`;
 
 ALTER TABLE `crm`.`events` 
 ADD COLUMN `idorden` int NULL DEFAULT NULL AFTER `id`;
