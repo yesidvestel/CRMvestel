@@ -110,10 +110,11 @@ class Tools Extends CI_Controller
         $employee = $this->input->post('employee');
         $content = $this->input->post('content');
         $assign = $this->aauth->get_user()->id;
+		$ordenn = '';
         $stdate = datefordatabase($stdate);
         $tdate = datefordatabase($tdate);
 
-        if ($this->tools->addtask($name, $estado, $priority, $stdate, $tdate, $employee, $assign, $content)) {
+        if ($this->tools->addtask($name, $estado, $priority, $stdate, $tdate, $employee, $assign, $content, $ordenn)) {
             echo json_encode(array('status' => 'Success', 'message' => $this->lang->line('New Task Added')));
         } else {
             echo json_encode(array('status' => 'Error', 'message' => $this->lang->line('ERROR')));
