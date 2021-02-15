@@ -1,6 +1,34 @@
-ALTER TABLE `crm`.`todolist` 
-ADD COLUMN `idorden` int NULL DEFAULT NULL AFTER `description`;
+CREATE TABLE `encuestas` (
+  `id` int(50) NOT NULL,
+  `idemp` int(10) NOT NULL,
+  `idtec` varchar(50) NOT NULL,
+  `norden` int(10) NOT NULL,
+  `detalle` varchar(100) NOT NULL,
+  `presentacion` int(10) NOT NULL,
+  `trato` int(10) NOT NULL,
+  `estado` int(10) NOT NULL,
+  `tiempo` text NOT NULL,
+  `recomendar` text NOT NULL,
+  `observacion` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-ALTER TABLE `crm`.`events` 
-ADD COLUMN `idorden` int NULL DEFAULT NULL AFTER `id`;
-ADD COLUMN `rol` VARCHAR(20) NOT NULL AFTER `rid
+--
+-- Índices para tablas volcadas
+--
+
+--
+-- Indices de la tabla `encuestas`
+--
+ALTER TABLE `encuestas`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `encuestas`
+--
+ALTER TABLE `encuestas`
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT;
+COMMIT;

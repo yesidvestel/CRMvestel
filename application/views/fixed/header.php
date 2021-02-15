@@ -444,7 +444,7 @@
                             <a href="<?php echo base_url(); ?>encuesta/create"><?php echo $this->lang->line(''); ?>Nueva Encuenta</a>
                         </li>                        
                         <li>
-                            <a href="<?php echo base_url(); ?>tickets"><?php echo $this->lang->line('Manage Tickets') ?></a>
+                            <a href="<?php echo base_url(); ?>encuesta/index"><?php echo $this->lang->line('Manage Tickets') ?></a>
                         </li>
 						
 

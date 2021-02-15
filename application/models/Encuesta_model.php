@@ -18,12 +18,12 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Supplier_model extends CI_Model
+class encuesta_model extends CI_Model
 {
 
-    var $table = 'supplier';
-    var $column_order = array(null, 'name', 'address', 'email', 'phone', null);
-    var $column_search = array('name', 'phone', 'address', 'city', 'email');
+    var $table = 'encuestas';
+    var $column_order = array(null, 'norden', 'idtec', 'idemp', 'presentacion', 'trato', 'estado', 'tiempo', 'recomendar', 'observacion');
+    var $column_search = array('norden', 'idtec', 'idemp', 'presentacion', 'trato', 'estado', 'tiempo', 'recomendar', 'observacion');
     var $trans_column_order = array('date', 'debit', 'credit', 'account', null);
     var $trans_column_search = array('id', 'date');
     var $inv_column_order = array(null, 'tid', 'name', 'invoicedate', 'total', 'status', null);
@@ -36,9 +36,7 @@ class Supplier_model extends CI_Model
     {
 
         $this->db->from($this->table);
-        if ($id != '') {
-            $this->db->where('gid', $id);
-        }
+        
         $i = 0;
 
         foreach ($this->column_search as $item) // loop column
@@ -130,24 +128,27 @@ class Supplier_model extends CI_Model
     }
 
 
-    public function add($name, $nit, $company, $phone, $email, $address, $city, $region, $cuenta, $typo, $banco)
+    public function add($us, $emp, $codigo, $detalle, $presentar, $trato, $estado, $tiempo, $recomendar, $obs)
     {
         $data = array(
-            'name' => $name,
-			'nit' => $nit,
-            'company' => $company,
-            'phone' => $phone,
-            'email' => $email,
-            'address' => $address,
-            'city' => $city,
-            'region' => $region,
-            'cuenta' => $cuenta,
-            'typo' => $typo,
-            'banco' => $banco
+            'idemp' => $us,
+			'idtec' => $emp,
+            'norden' => $codigo,
+            'detalle' => $detalle,
+            'presentacion' => $presentar,
+            'trato' => $trato,
+            'estado' => $estado,
+            'tiempo' => $tiempo,
+            'recomendar' => $recomendar,
+            'observacion' => $obs           
 
         );
-
-        if ($this->db->insert('supplier', $data)) {
+			//cambiar estado de tarea
+			$this->db->set('status', 'Done');
+			$this->db->where('idorden', $codigo);
+			$this->db->update('todolist');
+	
+        if ($this->db->insert('encuestas', $data)) {
             $cid = $this->db->insert_id();
             echo json_encode(array('status' => 'Success', 'message' =>
                 $this->lang->line('UPDATED') . ' <a href="' . base_url('supplier/view?id=' . $cid) . '" class="btn btn-info btn-sm"><span class="icon-eye"></span> ' . $this->lang->line('View') . '</a>', 'cid' => $cid));
@@ -156,7 +157,7 @@ class Supplier_model extends CI_Model
                 $this->lang->line('ERROR')));
         }
 
-    }
+	}
 
 
     public function edit($id, $name, $nit, $company, $phone, $email, $address, $city, $region, $cuenta, $typo, $banco)

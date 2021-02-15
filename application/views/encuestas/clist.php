@@ -13,11 +13,16 @@
                 <thead>
                 <tr>
                     <th>#</th>
-                    <th><?php echo $this->lang->line('Name') ?></th>
-                    <th><?php echo $this->lang->line('Address') ?></th>
-                    <th><?php echo $this->lang->line('Email') ?></th>
-                    <th><?php echo $this->lang->line('Phone') ?></th>
-                    <th><?php echo $this->lang->line('Settings') ?></th>
+                    <th>Orden #</th>
+                    <th>Tecnico</th>
+                    <th>Realizado por</th>
+                    <th>Presentacion</th>
+                    <th>Trato</th>
+					<th>Estado</th>
+					<th>Tiempo</th>
+					<th>Recomendaria</th>
+					<th>Observacion</th>
+					
 
 
                 </tr>
@@ -28,11 +33,15 @@
                 <tfoot>
                 <tr>
                     <th>#</th>
-                    <th><?php echo $this->lang->line('Name') ?></th>
-                    <th><?php echo $this->lang->line('Address') ?></th>
-                    <th><?php echo $this->lang->line('Email') ?></th>
-                    <th><?php echo $this->lang->line('Phone') ?></th>
-                    <th><?php echo $this->lang->line('Settings') ?></th>
+                    <th>Orden #</th>
+                    <th>Tecnico</th>
+                    <th>Realizado por</th>
+                    <th>Presentacion</th>
+                    <th>Trato</th>
+					<th>Estado</th>
+					<th>Tiempo</th>
+					<th>Recomendaria</th>
+					<th>Observacion</th>
 
 
                 </tr>
@@ -50,7 +59,7 @@
             'stateSave': true,
             'order': [],
             'ajax': {
-                'url': "<?php echo site_url('supplier/load_list')?>",
+                'url': "<?php echo site_url('encuesta/load_list')?>",
                 'type': 'POST'
             },
             'columnDefs': [

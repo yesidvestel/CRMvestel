@@ -24,8 +24,11 @@
                 ?></p>
 				<?php echo '<code class="card card-block"><h5 style="text-decoration: underline;">' .$thread_info['detalle'].'</h5>'.strip_tags($thread_info['section'],'<p>')?></code>
 					<hr>
+					<input type="hidden" name="tecnico" value="<?php echo $thread_info['asignado'] ?>"></input>
+					<input type="hidden" name="norden" value="<?php echo $thread_info['codigo'] ?>"></input>
+					<input type="hidden" name="detalle" value="<?php echo $thread_info['detalle'] ?>"></input>
 					<?php if (strpos($thread_info['subject'], "servicio")!==false) {?>
-                    <label class="col-sm-6 col-form-label" for="name">¿presentación del técnico en el momento de llegar a la vivienda?</label>
+                    <label class="col-sm-6 col-form-label">¿presentación del técnico en el momento de llegar a la vivienda?</label>
 
                     <div class="col-sm-6 col-form-label">						
                                         <div class="input-group">
@@ -61,7 +64,7 @@
                                             </label>
                     </div>
                 </div>
-                <label class="col-sm-6 col-form-label" for="name">¿El trato del técnico durante la instalación del servicio?</label>
+                <label class="col-sm-6 col-form-label">¿El trato del técnico durante la instalación del servicio?</label>
 
                     <div class="col-sm-6 col-form-label">						
                                         <div class="input-group">
@@ -99,7 +102,7 @@
                 </div>
                 
 
-                <label class="col-sm-6 col-form-label" for="name">¿Cómo quedo instalado el servicio en la vivienda?</label>
+                <label class="col-sm-6 col-form-label">¿Cómo quedo instalado el servicio en la vivienda?</label>
 
                     <div class="col-sm-6 col-form-label">						
                                         <div class="input-group">
@@ -135,7 +138,7 @@
                                             </label>
                     </div>
                 </div>
-                 <label class="col-sm-6 col-form-label" for="name">¿Piensa usted que fue oportuno el tiempo en la instalación del servicio?</label>
+                 <label class="col-sm-6 col-form-label">¿Piensa usted que fue oportuno el tiempo en la instalación del servicio?</label>
 
                     <div class="col-sm-6 col-form-label">						
                                         <div class="input-group">
@@ -154,7 +157,7 @@
 											
                     </div>
                 </div>
-					<label class="col-sm-6 col-form-label" for="name">¿Usted recomendaría nuestro servicio? </label>
+					<label class="col-sm-6 col-form-label">¿Usted recomendaría nuestro servicio? </label>
 
                     <div class="col-sm-6 col-form-label">						
                                         <div class="input-group">
@@ -173,15 +176,10 @@
                     </div>
                 
                 </div>
-				<label class="col-sm-6 col-form-label" for="name">Observacion</label>
-				<div class="col-sm-6 col-form-label">
-					<div class="col-sm-12">
-							<textarea class="summernote" placeholder="Algun detalle adicional" autocomplete="false" rows="2" cols="50" name="nota"></textarea>
-					</div>
-				</div>
+				
 				<?php } ?>
 				<?php if (strpos($thread_info['subject'], "reclamo")!==false) {?>
-                <label class="col-sm-6 col-form-label" for="name">¿presentación del técnico en el momento de llegar a la vivienda?</label>
+                <label class="col-sm-6 col-form-label">¿presentación del técnico en el momento de llegar a la vivienda?</label>
 
                     <div class="col-sm-6 col-form-label">						
                                         <div class="input-group">
@@ -217,7 +215,7 @@
                                             </label>
                     </div>
                 </div>
-                <label class="col-sm-6 col-form-label" for="name">¿El trato del técnico durante la revisión del servicio? </label>
+                <label class="col-sm-6 col-form-label">¿El trato del técnico durante la revisión del servicio? </label>
 
                     <div class="col-sm-6 col-form-label">						
                                         <div class="input-group">
@@ -255,7 +253,7 @@
                 </div>
                 
 
-                <label class="col-sm-6 col-form-label" for="name">¿Cómo quedo el servicio después de la revisión?</label>
+                <label class="col-sm-6 col-form-label">¿Cómo quedo el servicio después de la revisión?</label>
 
                     <div class="col-sm-6 col-form-label">						
                                         <div class="input-group">
@@ -291,7 +289,7 @@
                                             </label>
                     </div>
                 </div>
-                 <label class="col-sm-6 col-form-label" for="name">¿Piensa que fue oportuno el tiempo en la revisión del servicio?</label>
+                 <label class="col-sm-6 col-form-label">¿Piensa que fue oportuno el tiempo en la revisión del servicio?</label>
 
                     <div class="col-sm-6 col-form-label">						
                                         <div class="input-group">
@@ -310,7 +308,7 @@
 											
                     </div>
                 </div>
-					<label class="col-sm-6 col-form-label" for="name">¿recomendaría nuestro servicio? </label>
+					<label class="col-sm-6 col-form-label">¿recomendaría nuestro servicio? </label>
 
                     <div class="col-sm-6 col-form-label">						
                                         <div class="input-group">
@@ -329,13 +327,14 @@
 											
                     </div>
                 </div>
-				<label class="col-sm-6 col-form-label" for="name">Observacion</label>
+				
+				<?php } ?>
+				<label class="col-sm-6 col-form-label">Observacion</label>
 				<div class="col-sm-6 col-form-label">
 					<div class="col-sm-12">
-							<textarea class="summernote" placeholder="Algun detalle adicional" autocomplete="false" rows="2" cols="50" name="nota"></textarea>
+							<textarea class="summernote" placeholder="Algun detalle adicional" autocomplete="false" rows="2" cols="50" name="observacion"></textarea>
 					</div>
 				</div>
-				<?php } ?>
 				
                 <div class="form-group row">
 					
@@ -344,7 +343,7 @@
                     <div class="col-sm-4">
                         <input type="submit" id="submit-data" class="btn btn-success margin-bottom"
                                value="<?php echo $this->lang->line('Add') ?>" data-loading-text="Adding...">
-                        <input type="hidden" value="supplier/addsupplier" id="action-url">
+                        <input type="hidden" value="encuesta/addencuesta" id="action-url">
                     </div>
                 </div>
 

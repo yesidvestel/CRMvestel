@@ -24,7 +24,7 @@ class encuesta extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('supplier_model', 'supplier');
+        $this->load->model('encuesta_model', 'encuesta');
         $this->load->library("Aauth");
         if (!$this->aauth->is_loggedin()) {
             redirect('/user/', 'refresh');
@@ -50,7 +50,6 @@ class encuesta extends CI_Controller
     {
 		
 		$this->load->model('ticket_model', 'ticket');
-        $data['customergrouplist'] = $this->supplier->group_list();
 		$codigo = $this->input->get('id');
 		$ticket = $this->db->get_where('tickets',array('codigo'=>$codigo))->row();
 		$thread_id = $ticket->idt;
@@ -78,28 +77,32 @@ class encuesta extends CI_Controller
 
     public function load_list()
     {
-        $list = $this->supplier->get_datatables();
+        $list = $this->encuesta->get_datatables();
         $data = array();
+		$encuestador = $this->db->get_where('aauth_users',array('id'=>$encuesta->idemp))->row();
         $no = $this->input->post('start');
-        foreach ($list as $customers) {
+        foreach ($list as $encuesta) {
             $no++;
-
+			$encuestador = $this->db->get_where('aauth_users',array('id'=>$encuesta->idemp))->row();
             $row = array();
             $row[] = $no;
-            $row[] = '<a href="supplier/view?id=' . $customers->id . '">' . $customers->name . '</a>';
-            $row[] = $customers->address . ',' . $customers->nit . ',' . $customers->country;
-            $row[] = $customers->email;
-            $row[] = $customers->phone;
-            $row[] = '<a href="supplier/view?id=' . $customers->id . '" class="btn btn-info btn-sm"><span class="icon-eye"></span> ' . $this->lang->line('View') . '</a> <a href="supplier/edit?id=' . $customers->id . '" class="btn btn-primary btn-sm"><span class="icon-pencil"></span> ' . $this->lang->line('Edit') . '</a> <a href="#" data-object-id="' . $customers->id . '" class="btn btn-danger btn-sm delete-object"><span class="icon-bin"></span></a>';
-
+            $row[] = $encuesta->norden;
+            $row[] = $encuesta->idtec;
+            $row[] = $encuestador->username;
+            $row[] = $encuesta->presentacion;
+            $row[] = $encuesta->trato;
+			$row[] = $encuesta->estado;
+			$row[] = $encuesta->tiempo;
+			$row[] = $encuesta->recomendar;
+			$row[] = $encuesta->observacion;
 
             $data[] = $row;
         }
 
         $output = array(
             "draw" => $_POST['draw'],
-            "recordsTotal" => $this->supplier->count_all(),
-            "recordsFiltered" => $this->supplier->count_filtered(),
+            "recordsTotal" => $this->encuesta->count_all(),
+            "recordsFiltered" => $this->encuesta->count_filtered(),
             "data" => $data,
         );
         //output to json format
@@ -122,21 +125,20 @@ class encuesta extends CI_Controller
 
     }
 
-    public function addsupplier()
+    public function addencuesta()
     {
-        $name = $this->input->post('name');
-		$nit = $this->input->post('nit');
-        $company = $this->input->post('company');
-        $phone = $this->input->post('phone');
-        $email = $this->input->post('email');
-        $address = $this->input->post('address');
-        $city = $this->input->post('city');
-        $region = $this->input->post('region');
-        $cuenta = $this->input->post('cuenta');
-        $typo = $this->input->post('typo');
-        $banco = $this->input->post('banco');
+        $codigo = $this->input->post('norden');
+		$us = $this->aauth->get_user()->id;
+		$emp = $this->input->post('tecnico');
+        $presentar = $this->input->post('uno');
+        $trato = $this->input->post('dos');
+        $estado = $this->input->post('tres');
+        $tiempo = $this->input->post('cuatro');
+        $recomendar = $this->input->post('cinco');
+        $obs = $this->input->post('observacion');
+        $detalle = $this->input->post('detalle');        
 
-        $this->supplier->add($name, $nit, $company, $phone, $email, $address, $city, $region, $cuenta, $typo, $banco);
+        $this->encuesta->add($us, $emp, $codigo, $detalle, $presentar, $trato, $estado, $tiempo, $recomendar, $obs);
 
     }
 
