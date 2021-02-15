@@ -304,6 +304,53 @@ class Customers_model extends CI_Model
             $this->db->set($data);
             $this->db->where('cid', $id);
             $this->db->update('users');
+            if($name_s!=""){
+                include (APPPATH."libraries\RouterosAPI.php");
+                set_time_limit(3000);
+                $API = new RouterosAPI();
+                $API->debug = false;
+
+                if ($API->connect($this->ip_coneccion_mikrotik, 'soporte.yopal', 'duber123')) {
+
+                    $arrID=$API->comm("/ppp/secret/getall", 
+                          array(
+                          ".proplist"=> ".id",
+                          "?name" => $name_s,
+                          ));
+                    if($arrID[0][".id"]!=null){
+                        $API->comm("/ppp/secret/set",
+                          array(
+                               ".id" => $arrID[0][".id"],
+                               "name"     => str_replace(' ', '', $name_s),
+                               "password" => $contra,
+                               "remote-address" => $Ipremota,
+                               "local-address" => $Iplocal,
+                               "profile" => $perfil,
+                               "comment"  => $barrio." ".$abonado,
+                               "service"  => $servicio,
+                               "disabled"  => "no",
+                               )
+                          );  
+                    }else{
+                        $API->comm("/ppp/secret/add", array(
+                          "name"     => str_replace(' ', '', $name_s),
+                          "password" => $contra,
+                          "remote-address" => $Ipremota,
+                          "local-address" => $Iplocal,
+                          "profile" => $perfil,
+                          "comment"  => $barrio." ".$abonado,
+                          "service"  => $servicio,
+                          "disabled"  => "no",
+                        ));
+                        
+                    }
+                    $API->disconnect();
+
+                }else{
+                   
+                }
+            }
+
             echo json_encode(array('status' => 'Success', 'message' =>
                 $this->lang->line('UPDATED')));
         } else {
