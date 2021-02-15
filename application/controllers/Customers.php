@@ -215,17 +215,17 @@ class Customers extends CI_Controller
 
             $arrID=$API->comm("/ppp/secret/getall", 
                   array(
-                  ".proplist"=> ".id",
-                  "?name" => "user_prueba_duber_disabled",
+                  //".proplist"=> ".id",
+                  "?name" => "PaolaJimenez",
                   ));
 
-            $API->comm("/ppp/secret/set",
+           /* $API->comm("/ppp/secret/set",
               array(
                    ".id" => $arrID[0][".id"],
                    "disabled"  => "no",
                    )
               );
-
+*/
             var_dump($arrID);
         
 

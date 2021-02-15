@@ -322,11 +322,15 @@
 
                 <div class="col-md-6">
                     <h5><?php echo $this->lang->line('') ?>DATOS DE INTEGRACION</h5>
+                     <?php $edit="";
+                        if($customer['name_s']!="" && $customer['name_s']!=null){
+                            //$edit="_edit";
+                        } ?>
                     <div class="form-group row">
 					<hr>
                         <div class="input-group">
                             <label class="display-inline-block custom-control custom-radio ml-1">
-                                <input type="checkbox" name="customer1" class="custom-control-input" id="copy_address">
+                                <input type="checkbox" name="customer1" class="custom-control-input" id="copy_address<?=$edit?>">
                                 <span class="custom-control-indicator"></span>
                                 <span class="custom-control-description ml-0"><?php echo $this->lang->line('') ?>Integrar al sistema</span>
                             </label>
@@ -337,7 +341,7 @@
                             <?php echo $this->lang->line("") ?>Ingrese los datos para integrar USUARIO con el SISTEMA
                         </div>
                     </div>
-                    
+
 
                     <div class="form-group row">
 
@@ -361,7 +365,7 @@
                         </div>                    
                     	<div class="col-sm-6">                       
                         <input type="text" placeholder="phone"
-                                   class="form-control margin-bottom" name="contra" value="<?php echo $customer['contra'] ?>" id="mcustomer_documento_s">
+                                   class="form-control margin-bottom" name="contra" value="<?php echo $customer['contra'] ?>" id="mcustomer_documento_s" onkeyup="selecciona_para_agregar()">
 						</div>
                         <div class="col-sm-6">
                             <select class=" col-sm-2 form-control"  id="discountFormat" name="servicio">
@@ -384,12 +388,12 @@
                         </div>
                     
                    		 <div class="col-sm-6">
-							<select class=" col-sm-2 form-control"  id="discountFormat" name="perfil" onchange="cambia2()">
+							<select class=" col-sm-2 form-control"  id="discountFormatPerfil" name="perfil" onchange="cambia2()">
 													<option value="<?php echo $customer['perfil'] ?>"><?php echo $customer['perfil'] ?></option>
                                             </select>                       
 						</div>
                         <div class="col-sm-6">
-                            <select class=" col-sm-2 form-control"  id="discountFormat" name="Iplocal">
+                            <select class=" col-sm-2 form-control"  id="discountFormatIplocal" name="Iplocal">
 													<option value="<?php echo $customer['Iplocal'] ?>"><?php echo $customer['Iplocal'] ?></option>
                                             </select>
                         </div>
@@ -406,7 +410,7 @@
                     
                     	<div class="col-sm-6">
 							<input type="text" placeholder="Region"
-                                   class="form-control margin-bottom" name="Ipremota" id="Ipremota" value="<?php echo $customer['Ipremota'] ?>">
+                                   class="form-control margin-bottom" name="Ipremota" id="Ipremota" value="<?php echo $customer['Ipremota'] ?>" onkeyup="selecciona_para_agregar()">
                         </div>
                         <div class="col-sm-6">
                             <input type="text" placeholder="Barrio y codigo usuario"
@@ -435,6 +439,44 @@
     </div>
 </article>
 <script type="text/javascript">
+    function selecciona_para_agregar(){
+        var elemento=document.getElementById("copy_address<?=$edit?>");
+        //console.log($("#discountFormatServicio").val());
+        if(elemento.checked==true){
+            var desabilitar=false;
+            //console.log($("#mcustomer_name_s").val());
+            if($("#mcustomer_name_s").val()=="" || $("#mcustomer_documento_s").val()=="" || $("#discountFormatPerfil").val()=="-" || $("#discountFormatPerfil").val()=="Seleccine..." || $("#discountFormatIpLocal").val()=="-" || $("#Ipremota").val()=="" || $("#mcustomer_comentario_s").val()==""){
+                desabilitar=true;
+            }
+            if(desabilitar){
+                $("#submit-data").attr("disabled", true);    
+            }else{
+                $("#submit-data").removeAttr("disabled");    
+            }
+            
+        }else{
+            $("#submit-data").removeAttr("disabled");
+        }
+    }
+     function selecciona_para_agregar_edit(){
+        var elemento=document.getElementById("copy_address_edit");
+        //console.log($("#discountFormatServicio").val());
+        if(elemento.checked==true){
+            var desabilitar=false;
+            //console.log($("#mcustomer_name_s").val());
+            if($("#mcustomer_documento_s").val()=="" || $("#discountFormatPerfil").val()=="-" || $("#discountFormatPerfil").val()=="Seleccine..." || $("#discountFormatIpLocal").val()=="-" || $("#Ipremota").val()==""){
+                desabilitar=true;
+            }
+            if(desabilitar){
+                $("#submit-data").attr("disabled", true);    
+            }else{
+                $("#submit-data").removeAttr("disabled");    
+            }
+            
+        }else{
+            $("#submit-data").removeAttr("disabled");
+        }
+    }
 function ShowSelected()
 {
 /* Para obtener el valor */
