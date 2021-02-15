@@ -324,8 +324,9 @@
                     <h5><?php echo $this->lang->line('') ?>DATOS DE INTEGRACION</h5>
                      <?php $edit="";
                         if($customer['name_s']!="" && $customer['name_s']!=null){
-                            //$edit="_edit";
-                        } ?>
+                            $edit="_edit";
+                            echo "<script>var usuario_existe=true</script>";
+                        }else{echo "<script>var usuario_existe=false</script>";} ?>
                     <div class="form-group row">
 					<hr>
                         <div class="input-group">
@@ -350,7 +351,8 @@
 						
                         <div class="col-sm-12">
                             <input type="text" placeholder="Name"
-                                   class="form-control margin-bottom" name="name_s" value="<?php echo $customer['name_s'] ?>" id="mcustomer_name_s">
+                                   class="form-control margin-bottom" name="name_s" value="<?php echo $customer['name_s'] ?>" id="mcustomer_name_s" onblur="selecciona_para_agregar()" >
+                                   <span id="msg_error_username" style="color: red;visibility :hidden">Este Nombre de Usuario Ya Existe</span>
                         </div>
                     </div>
 
@@ -439,12 +441,21 @@
     </div>
 </article>
 <script type="text/javascript">
+     var remote_ip_yopal="<?=$ips_remotas['yopal']?>";
+    var remote_ip_villanueva="<?=$ips_remotas['villanueva']?>";
+    var remote_ip_monterrey="<?=$ips_remotas['monterrey']?>";
+    var sede_default="<?=$customergroup['id']?>";
+    var ip_default="<?=$customer['Ipremota']?>";
+    var user_name_default="<?=$customer['name_s']?>";
     function selecciona_para_agregar(){
         var elemento=document.getElementById("copy_address<?=$edit?>");
         //console.log($("#discountFormatServicio").val());
         if(elemento.checked==true){
             var desabilitar=false;
             //console.log($("#mcustomer_name_s").val());
+            validar_user_name();
+            
+
             if($("#mcustomer_name_s").val()=="" || $("#mcustomer_documento_s").val()=="" || $("#discountFormatPerfil").val()=="-" || $("#discountFormatPerfil").val()=="Seleccine..." || $("#discountFormatIpLocal").val()=="-" || $("#Ipremota").val()=="" || $("#mcustomer_comentario_s").val()==""){
                 desabilitar=true;
             }
@@ -458,25 +469,30 @@
             $("#submit-data").removeAttr("disabled");
         }
     }
-     function selecciona_para_agregar_edit(){
-        var elemento=document.getElementById("copy_address_edit");
-        //console.log($("#discountFormatServicio").val());
-        if(elemento.checked==true){
-            var desabilitar=false;
-            //console.log($("#mcustomer_name_s").val());
-            if($("#mcustomer_documento_s").val()=="" || $("#discountFormatPerfil").val()=="-" || $("#discountFormatPerfil").val()=="Seleccine..." || $("#discountFormatIpLocal").val()=="-" || $("#Ipremota").val()==""){
-                desabilitar=true;
-            }
-            if(desabilitar){
-                $("#submit-data").attr("disabled", true);    
-            }else{
-                $("#submit-data").removeAttr("disabled");    
-            }
-            
-        }else{
-            $("#submit-data").removeAttr("disabled");
+     function validar_user_name(){
+     var username=$("#mcustomer_name_s").val();
+        if(username!="" && user_name_default!=username){
+            $.post(baseurl+"customers/validar_user_name",{username:username},function(data){
+                if(data=="disponible"){
+                    $("#msg_error_username").css("visibility","hidden");
+                    if($("#mcustomer_name_s").val()=="" || $("#mcustomer_documento_s").val()=="" || $("#discountFormatPerfil").val()=="-" || $("#discountFormatPerfil").val()=="Seleccine..." || $("#discountFormatIpLocal").val()=="-" || $("#Ipremota").val()=="" || $("#mcustomer_comentario_s").val()==""){
+                         $("#submit-data").attr("disabled", true);    
+
+                    }else{
+                        $("#submit-data").removeAttr("disabled");    
+                    }
+                }else{
+                    $("#msg_error_username").css("visibility","visible");
+                    $("#submit-data").attr("disabled", true);    
+                }
+            });
         }
-    }
+
+        if(username==user_name_default){
+                $("#submit-data").removeAttr("disabled");    
+                $("#msg_error_username").css("visibility","hidden");
+        }
+}
 function ShowSelected()
 {
 /* Para obtener el valor */
@@ -516,6 +532,22 @@ alert(selected);
 											document.formulario1.perfil.options[0].text="-"											
 								}
 								document.formulario1.perfil.options[0].selected = true;
+                                if(customergroup==sede_default && user_name_default!=""){
+                                    
+                                    $("#Ipremota").val(ip_default);
+                                    //$("#Ipremota2").val(ip_default);
+                                }else{
+                                    if(customergroup=="2"){
+                                        $("#Ipremota").val(remote_ip_yopal);
+                                       // $("#Ipremota2").val(remote_ip_yopal);
+                                    }else if(customergroup=="3"){
+                                        $("#Ipremota").val(remote_ip_villanueva);
+                                        //$("#Ipremota2").val(remote_ip_villanueva);
+                                    }else if(customergroup=="4"){
+                                        $("#Ipremota").val(remote_ip_monterrey);
+                                       // $("#Ipremota2").val(remote_ip_monterrey);
+                                    }
+                                }   
 							}	
 	var Iplocal_2 = new Array ("10.0.0.1");
 	var Iplocal_3 = new Array ("80.0.0.1");
@@ -543,6 +575,7 @@ alert(selected);
 											document.formulario1.Iplocal.options[0].text="-"											
 								}
 								document.formulario1.Iplocal.options[0].selected = true;
+                                selecciona_para_agregar();
 							}		
 				
 	var ciudad_Casanare = new Array ("-","Yopal","Monterrey","Villanueva");

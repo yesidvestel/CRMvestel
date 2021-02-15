@@ -54,84 +54,8 @@ class Customers extends CI_Controller
 		$data['codigo'] = $this->customers->codigouser();
         $head['title'] = 'Create Customer';		 
 		$data['departamentos'] = $this->customers->departamentos_list();
-        $ips_remotas = array('yopal' =>'10.0.0.2', "monterrey"=>'10.1.100.2','villanueva'=>"80.0.0.2" );	
-        $customers_yopal=$this->db->get_where("customers",array('ciudad'=>"yopal","Ipremota!="=>null,"Ipremota!="=>""))->result_array();
-        $customers_monterrey=$this->db->get_where("customers",array('ciudad'=>"monterrey","Ipremota!="=>null,"Ipremota!="=>""))->result_array();
-        $customers_villanueva=$this->db->get_where("customers",array('ciudad'=>"villanueva","Ipremota!="=>null,"Ipremota!="=>""))->result_array();
-        $x=0;$y=2;
-        foreach ($customers_yopal as $key => $cm) {
-            
-            $desarticulacion_ip=explode(".",$cm['Ipremota'] );
-            if(count($desarticulacion_ip)==4){
-                
-                if($desarticulacion_ip[2]==$x){
-                    if($desarticulacion_ip[3]>$y){
-                        $y=$desarticulacion_ip[3];
-                    }
-                }else if($desarticulacion_ip[2]>$x){
-                    $x=$desarticulacion_ip[2];
-                    $y=$desarticulacion_ip[3];
-                }
-            }
-
-        }
-        if($y==254){
-            $x++;
-            $y=0;
-        }else{
-            $y++;
-        }
-        $ips_remotas['yopal']="10.0.".$x.".".$y;
         
-        $x=100;$y=2;
-        foreach ($customers_monterrey as $key => $cm) {
-            
-            $desarticulacion_ip=explode(".",$cm['Ipremota'] );
-            if(count($desarticulacion_ip)==4){
-                
-                if($desarticulacion_ip[2]==$x){
-                    if($desarticulacion_ip[3]>$y){
-                        $y=$desarticulacion_ip[3];
-                    }
-                }else if($desarticulacion_ip[2]>$x){
-                    $x=$desarticulacion_ip[2];
-                    $y=$desarticulacion_ip[3];
-                }
-            }
-
-        }
-        if($y==254){
-            $x++;
-            $y=0;
-        }else{
-            $y++;
-        }
-        $ips_remotas['monterrey']="10.1.".$x.".".$y;
-        $x=0;$y=2;
-        foreach ($customers_villanueva as $key => $cm) {
-            
-            $desarticulacion_ip=explode(".",$cm['Ipremota'] );
-            if(count($desarticulacion_ip)==4){
-                
-                if($desarticulacion_ip[2]==$x){
-                    if($desarticulacion_ip[3]>$y){
-                        $y=$desarticulacion_ip[3];
-                    }
-                }else if($desarticulacion_ip[2]>$x){
-                    $x=$desarticulacion_ip[2];
-                    $y=$desarticulacion_ip[3];
-                }
-            }
-
-        }
-        if($y==254){
-            $x++;
-            $y=0;
-        }else{
-            $y++;
-        }
-        $ips_remotas['villanueva']="80.0.".$x.".".$y;
-        $data['ips_remotas']=$ips_remotas;
+        $data['ips_remotas']=$this->customers->devolver_ips_proximas();
         $this->load->view('fixed/header', $head);
         $this->load->view('customers/create', $data);
         $this->load->view('fixed/footer');
@@ -352,6 +276,7 @@ class Customers extends CI_Controller
         $head['usernm'] = $this->aauth->get_user()->username;
         $head['title'] = 'Edit Customer';	
 		$data['departamentoslist'] = $this->customers->departamentos_list();		
+        $data['ips_remotas']=$this->customers->devolver_ips_proximas();
         $this->load->view('fixed/header', $head);
         $this->load->view('customers/edit', $data);
         $this->load->view('fixed/footer');

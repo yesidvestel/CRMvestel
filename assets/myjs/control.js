@@ -1050,7 +1050,9 @@ $("#copy_address_edit").change(function ()
 {
     if($(this).prop("checked") == true){
        // alert("Checkbox is checked." );
-        //$('#mcustomer_name_s').val($('#mcustomer_name').val()+$('#mcustomer_unoapellido').val());
+        if(usuario_existe){
+            $('#mcustomer_name_s').val($('#mcustomer_name').val()+$('#mcustomer_unoapellido').val());
+        }
         $('#mcustomer_documento_s').val($('#mcustomer_documento').val());
         $('#mcustomer_email_s').val($('#mcustomer_email').val());
         $('#mcustomer_address1_s').val($('#mcustomer_address1').val());
@@ -1058,10 +1060,16 @@ $("#copy_address_edit").change(function ()
         $('#region_s').val($('#region').val());
         $('#mcustomer_country_s').val($('#mcustomer_country').val());
         $('#postbox_s').val($('#postbox').val());
+        var desabilitar=false;
+        desabilitar = validar_user_name();
         if($("#mcustomer_name_s").val()=="" || $("#mcustomer_documento_s").val()=="" || $("#discountFormatPerfil").val()=="-" || $("#discountFormatPerfil").val()=="Seleccine..." || $("#discountFormatIpLocal").val()=="-" || $("#Ipremota").val()=="" || $("#mcustomer_comentario_s").val()==""){
-            $("#submit-data").attr("disabled", true);    
+             desabilitar=true;
+        }
+
+        if(desabilitar){
+              $("#submit-data").attr("disabled", true);    
         }else{
-            $("#submit-data").removeAttr("disabled");
+              $("#submit-data").removeAttr("disabled");    
         }
 
 
