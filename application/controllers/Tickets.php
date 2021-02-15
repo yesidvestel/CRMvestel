@@ -348,9 +348,9 @@ class Tickets Extends CI_Controller
 		
 		//alerta de revision
 		$ciudad = $usuario->ciudad;
-		
+		if ($status=='Resuelto'){
 		$stdate2 = datefordatabase($fecha_final);
-		$name = 'Revisar soporte';
+		$name = 'Revisar orden #'.$ticket->codigo;
 		$estado = 'Due';
 		$priority = 'Low';
 		$stdate = $stdate2;
@@ -364,7 +364,7 @@ class Tickets Extends CI_Controller
 		$content = 'Revisar orden #'.$ticket->codigo;
 		$ordenn = $ticket->codigo;
 		$this->tools->addtask($name, $estado, $priority, $stdate, $tdate, $employee, $assign, $content, $ordenn);
-		
+		}
         foreach ($invoice[0] as $key => $value) {
             if($key!='id' && $key!='pmethod' && $key!='status' && $key!='pamnt'){
              $data[$key]=$value;

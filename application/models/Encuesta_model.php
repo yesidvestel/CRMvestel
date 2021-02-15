@@ -151,7 +151,7 @@ class encuesta_model extends CI_Model
         if ($this->db->insert('encuestas', $data)) {
             $cid = $this->db->insert_id();
             echo json_encode(array('status' => 'Success', 'message' =>
-                $this->lang->line('UPDATED') . ' <a href="' . base_url('supplier/view?id=' . $cid) . '" class="btn btn-info btn-sm"><span class="icon-eye"></span> ' . $this->lang->line('View') . '</a>', 'cid' => $cid));
+                $this->lang->line('UPDATED') . ' <a href="' . base_url('encuesta/index') . '" class="btn btn-info btn-sm"><span class="icon-eye"></span> ' . $this->lang->line('View') . '</a>', 'cid' => $cid));
         } else {
             echo json_encode(array('status' => 'Error', 'message' =>
                 $this->lang->line('ERROR')));
