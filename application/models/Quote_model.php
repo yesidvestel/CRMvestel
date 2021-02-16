@@ -178,6 +178,7 @@ class Quote_model extends CI_Model
 		$bill_llegada = datefordatabase($created);
 		
 		$start = datefordatabase($fagenda);
+        $nticket=($this->lastquote())+1;
         $data = array(
 			'codigo' => $nticket,
             'subject' => $subject,
