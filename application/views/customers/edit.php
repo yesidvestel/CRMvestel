@@ -471,8 +471,9 @@
     }
      function validar_user_name(){
      var username=$("#mcustomer_name_s").val();
+     var sede=$("#id_sede").val();
         if(username!="" && user_name_default!=username){
-            $.post(baseurl+"customers/validar_user_name",{username:username},function(data){
+            $.post(baseurl+"customers/validar_user_name",{username:username,sede:sede},function(data){
                 if(data=="disponible"){
                     $("#msg_error_username").css("visibility","hidden");
                     if($("#mcustomer_name_s").val()=="" || $("#mcustomer_documento_s").val()=="" || $("#discountFormatPerfil").val()=="-" || $("#discountFormatPerfil").val()=="Seleccine..." || $("#discountFormatIpLocal").val()=="-" || $("#Ipremota").val()=="" || $("#mcustomer_comentario_s").val()==""){
@@ -547,7 +548,8 @@ alert(selected);
                                         $("#Ipremota").val(remote_ip_monterrey);
                                        // $("#Ipremota2").val(remote_ip_monterrey);
                                     }
-                                }   
+                                }
+                                selecciona_para_agregar();   
 							}	
 	var Iplocal_2 = new Array ("10.0.0.1");
 	var Iplocal_3 = new Array ("80.0.0.1");

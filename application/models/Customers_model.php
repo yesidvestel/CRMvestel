@@ -36,7 +36,7 @@ class Customers_model extends CI_Model
     var $inv_order = array('invoices.tid' => 'desc');
 	var $sup_order = array('tickets.idt' => 'desc');
 	var $equi_order = array('equipos.id' => 'desc');
-    var $ip_coneccion_mikrotik='192.168.201.1:8728';//192.168.201.1:8728 ip jefe |||| 190.14.233.186:8728 ip duber
+    //var $ip_coneccion_mikrotik='190.14.233.186:8728';//192.168.201.1:8728 ip jefe |||| 190.14.233.186:8728 ip duber
 
     private function _get_datatables_query($id = '')
     {
@@ -163,6 +163,17 @@ class Customers_model extends CI_Model
         return $query->row_array();
     }
 
+    public function get_ip_coneccion_microtik_por_sede($id_sede){
+        if($id_sede==2){//yopal
+            return "190.14.233.186:8728";
+        }else if($id_sede==3){//Villanueva
+            return "190.14.238.114:8728";
+        }else if($id_sede==4){//Monterrey
+            return "190.14.248.42:8728";
+        }else{//default
+            return "190.14.233.186:8728";
+        }
+    }
 
     public function add($abonado, $name, $dosnombre, $unoapellido, $dosapellido, $company, $celular, $celular2, $email, $nacimiento, $tipo_cliente, $tipo_documento, $documento, $departamento, $ciudad, $localidad, $barrio, $nomenclatura, $numero1, $adicionauno, $numero2, $adicional2, $numero3, $residencia, $referencia, $customergroup, $name_s, $contra, $servicio, $perfil, $Iplocal, $Ipremota, $comentario)
     {
@@ -231,7 +242,7 @@ class Customers_model extends CI_Model
                  $API = new RouterosAPI();
                 $API->debug = false;
                 //192.168.201.1:8728 ip jefe
-                if ($API->connect($this->ip_coneccion_mikrotik, 'soporte.yopal', 'duber123')) {
+                if ($API->connect($this->get_ip_coneccion_microtik_por_sede($customergroup), 'api.crmvestel', 'duber123')) {
 
                  $API->comm("/ppp/secret/add", array(
                       "name"     => str_replace(' ', '', $name_s),
@@ -320,7 +331,7 @@ class Customers_model extends CI_Model
                 $API = new RouterosAPI();
                 $API->debug = false;
 
-                if ($API->connect($this->ip_coneccion_mikrotik, 'soporte.yopal', 'duber123')) {
+                if ($API->connect($this->get_ip_coneccion_microtik_por_sede($customergroup), 'api.crmvestel', 'duber123')) {
 
                     $arrID=$API->comm("/ppp/secret/getall", 
                           array(
@@ -813,13 +824,13 @@ class Customers_model extends CI_Model
 
     }
 
-    public function get_estado_mikrotik($user_name){
+    public function get_estado_mikrotik($user_name,$id_sede){
         include (APPPATH."libraries\RouterosAPI.php");
         set_time_limit(3000);
          $API = new RouterosAPI();
         $API->debug = false;
         
-        if ($API->connect($this->ip_coneccion_mikrotik, 'soporte.yopal', 'duber123')) {
+        if ($API->connect($this->get_ip_coneccion_microtik_por_sede($id_sede), 'api.crmvestel', 'duber123')) {
             //$user_name="user_prueba_duber_disabled";
             $arrID=$API->comm("/ppp/secret/getall", 
                   array(
@@ -833,13 +844,13 @@ class Customers_model extends CI_Model
             
         }
     }
-     public function validar_user_name($user_name){
+     public function validar_user_name($user_name,$id_sede){
         include (APPPATH."libraries\RouterosAPI.php");
         set_time_limit(3000);
          $API = new RouterosAPI();
         $API->debug = false;
         
-        if ($API->connect($this->ip_coneccion_mikrotik, 'soporte.yopal', 'duber123')) {
+        if ($API->connect($this->get_ip_coneccion_microtik_por_sede($id_sede), 'api.crmvestel', 'duber123')) {
             //$user_name="user_prueba_duber_disabled";
             $arrID=$API->comm("/ppp/secret/getall", 
                   array(
@@ -853,13 +864,13 @@ class Customers_model extends CI_Model
             
         }
     }
-     public function editar_estado_usuario($user_name){
+     public function editar_estado_usuario($user_name,$id_sede){
         include (APPPATH."libraries\RouterosAPI.php");
         set_time_limit(3000);
          $API = new RouterosAPI();
         $API->debug = false;
         
-        if ($API->connect($this->ip_coneccion_mikrotik, 'soporte.yopal', 'duber123')) {
+        if ($API->connect($this->get_ip_coneccion_microtik_por_sede($id_sede), 'api.crmvestel', 'duber123')) {
             //$user_name="user_prueba_duber_disabled";
             $arrID=$API->comm("/ppp/secret/getall", 
                   array(
