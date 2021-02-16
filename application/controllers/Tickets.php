@@ -407,35 +407,35 @@ class Tickets Extends CI_Controller
         
         $datay['totaldiscount']=0;			
                 if($data['combo']!==no){
-                    if($factura->combo==='1Mega'){
+                    if($data['combo']==='1Mega'){
                         $datay['pid']=125;
-                    }else if($factura->combo==='2Megas'){
+                    }else if($data['combo']==='2Megas'){
                         $datay['pid']=126;
-                    }else if($factura->combo==='3Megas'){
+                    }else if($data['combo']==='3Megas'){
                         $datay['pid']=24;
-					}else if($factura->combo==='3MegasV'){
+					}else if($data['combo']==='3MegasV'){
                         $datay['pid']=243;
-					}else if($factura->combo==='3MegasSolo'){
+					}else if($data['combo']==='3MegasSolo'){
                         $datay['pid']=170;
-                    }else if($factura->combo==='5Megas'){
+                    }else if($data['combo']==='5Megas'){
                         $datay['pid']=25;
-					}else if($factura->combo==='5MegasV'){
+					}else if($data['combo']==='5MegasV'){
                         $datay['pid']=244;
-					}else if($factura->combo==='5MegasVS'){
+					}else if($data['combo']==='5MegasVS'){
                         $datay['pid']=247;
-					}else if($factura->combo==='5MegasSolo'){
+					}else if($data['combo']==='5MegasSolo'){
                         $datay['pid']=171;					
-                    }else if($factura->combo==='5MegasD'){
+                    }else if($data['combo']==='5MegasD'){
                         $datay['pid']=223;					
-                    }else if($factura->combo==='10Megas'){
+                    }else if($data['combo']==='10Megas'){
                         $datay['pid']=26;
-					}else if($factura->combo==='10MegasV'){
+					}else if($data['combo']==='10MegasV'){
                         $datay['pid']=245;
-					}else if($factura->combo==='10MegasVS'){
+					}else if($data['combo']==='10MegasVS'){
                         $datay['pid']=246;
-					}else if($factura->combo==='10MegasSolo'){
+					}else if($data['combo']==='10MegasSolo'){
                         $datay['pid']=172;
-                    }else if($factura->combo==='50Megas'){
+                    }else if($data['combo']==='50Megas'){
                         $datay['pid']=222;
                     }
                     $producto = $this->db->get_where('products',array('pid'=>$datay['pid']))->row();
