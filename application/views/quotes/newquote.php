@@ -44,7 +44,7 @@
 
 
                                 <div class="form-group row">
-									<input type="hidden" class="form-control"  name="ticketnumero"
+									<input type="text" class="form-control"  name="ticketnumero"
                                                    value="<?php echo $lastquote+1 ?>"></input>
                                     <div class="col-sm-12"><h3
                                                 class="title"><?php echo $this->lang->line('') ?>Propiedades de orden</h3>
