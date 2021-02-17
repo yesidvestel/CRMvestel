@@ -199,7 +199,7 @@ class Quote_model extends CI_Model
 		$data2 = array(
 			'idorden' => $nticket,
 			'title' => $detalle.' '.$hora.' Orden #'.$nticket,
-            'start' => $start,
+            'start' => date($start .$hora),
             'end' => '',
             'description' => strip_tags($section),
             'color' => '#4CB0CB'

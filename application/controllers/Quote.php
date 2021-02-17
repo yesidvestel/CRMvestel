@@ -104,7 +104,7 @@ class Quote extends CI_Controller
 		$factura = $this->input->post('factura');
 		$agendar = $this->input->post('agendar');
 		$fagenda = $this->input->post('f_agenda');
-		$hora = $this->input->post('hora');
+		$hora = date($this->input->post('hora'));
         if ($customer_id) {
         	$this->quote->addticket($customer_id, $nticket, $subject, $detalle, $created, $section, $factura,$agendar,$fagenda,$hora);
 			

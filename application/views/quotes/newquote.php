@@ -132,7 +132,7 @@
                                             <input type="text" class="form-control"
                                                    placeholder="Billing Date" name="f_agenda"
                                                    data-toggle="datepicker"
-                                                   autocomplete="false">
+                                                   autocomplete="false" >
 											
                                         </div>
 										
@@ -146,7 +146,7 @@
                                                                                  aria-hidden="true"></span></div>
                                             <input type="text" class="form-control"
                                            placeholder="End Date" name="hora"
-                                            autocomplete="false" value="<?php echo date("H").":".date("i") ?>">
+                                            autocomplete="false" value="<?php echo date("H:i:s") ?>">
 											
                                         </div>
 										
