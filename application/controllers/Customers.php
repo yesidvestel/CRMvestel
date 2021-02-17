@@ -477,7 +477,7 @@ class Customers extends CI_Controller
             $row = array();
             $no++;			
             $row[] = $no;			
-			$row[] = $ticket->idt;
+			$row[] = $ticket->codigo;
             $row[] = $ticket->subject;
 			$row[] = $ticket->detalle;
             $row[] = $ticket->created;          

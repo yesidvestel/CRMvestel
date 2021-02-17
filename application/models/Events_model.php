@@ -34,10 +34,11 @@ class Events_model extends CI_Model
 
     /*Create new events */
 
-    public function addEvent($title, $start, $end, $description, $color, $rol)
+    public function addEvent($idorden, $title, $start, $end, $description, $color, $rol)
     {
 
         $data = array(
+			'idorden' => $idorden,
             'title' => $title,
             'start' => $start,
             'end' => $end,

@@ -55,14 +55,14 @@
 					<div class="row form-group">
                         <label class="col-md-4 control-label" for="rol">Asignado</label>
                         <div class="col-md-8">
-                            <input id="rol" name="rol" type="text" class="form-control input-md" readonly/>
+                            <input id="rol" name="rol" type="text" class="form-control input-md" />
                         </div>
                     </div>
                     <div class="row form-group">
                         <label class="col-md-4 control-label" for="color"><?php echo $this->lang->line('Color')  ?></label>
                         <div class="col-md-4">
-                            <input id="color" name="color" type="text" class="form-control input-md"
-                                   readonly="readonly"/>
+                            <input id="color" name="color" type="color" class="form-control"
+                                   />
                             <span class="help-block">Haga click para elegir un color</span>
                         </div>
                     </div>

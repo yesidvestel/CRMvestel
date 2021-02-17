@@ -61,13 +61,14 @@ class Events extends CI_Controller
     /*Add new event */
     public function addEvent()
     {
+		$idorden = '';
         $title = $this->input->post('title');
         $start = $this->input->post('start');
         $end = $this->input->post('end');
         $description = $this->input->post('description');
         $color = $this->input->post('color');
 		$rol = $this->input->post('rol');
-        $result = $this->events_model->addEvent($title, $start, $end, $description, $color, $rol);
+        $result = $this->events_model->addEvent($idorden, $title, $start, $end, $description, $color, $rol);
 
     }
 
