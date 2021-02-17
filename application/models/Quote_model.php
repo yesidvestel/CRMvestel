@@ -177,7 +177,7 @@ class Quote_model extends CI_Model
     {
 		$bill_llegada = datefordatabase($created);
 		
-		$start = datefordatabase($fagenda);
+		$start = new DateTime($fagenda);
         $nticket=($this->lastquote())+1;
         $data = array(
 			'codigo' => $nticket,
@@ -199,7 +199,7 @@ class Quote_model extends CI_Model
 		$data2 = array(
 			'idorden' => $nticket,
 			'title' => $detalle.' '.$hora.' Orden #'.$nticket,
-            'start' => date($start .$hora),
+            'start' => date($start->format("Y-m-d")." ".$hora),
             'end' => '',
             'description' => strip_tags($section),
             'color' => '#4CB0CB'
@@ -212,6 +212,7 @@ class Quote_model extends CI_Model
             echo json_encode(array('status' => 'Error', 'message' =>
                 $this->lang->line('ERROR')));
         }
+        
 		
     }
 
