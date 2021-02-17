@@ -552,6 +552,13 @@ class Customers extends CI_Controller
 		$this->db->set('macequipo', 'sin asignar');		
         $this->db->where('id', $id);
         $this->db->update('customers');
+		//guardar historial
+		$data1 = array(				
+			'id_user' => $id,
+			'tipos' => 'Devolucion Equipo',			
+			'fecha' => date("Y-m-d"),
+			'observacion' => 'Codigo: '.$codigo.' Motivo '.$nota);		
+       $this->db->insert('historiales', $data1);
 		
 		$this->db->set('observacion', $nota);
 		$this->db->set('estado', $estado);
