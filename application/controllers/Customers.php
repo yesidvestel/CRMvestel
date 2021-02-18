@@ -209,7 +209,7 @@ class Customers extends CI_Controller
         $data['due'] = $this->customers->due_details($custid);
         $head['usernm'] = $this->aauth->get_user()->username;
         $data['activity']=$this->customers->activity($custid);
-       // $data['estado_mikrotik']=$this->customers->get_estado_mikrotik($data['details']['name_s'],$data['details']['gid']);
+        $data['estado_mikrotik']=$this->customers->get_estado_mikrotik($data['details']['name_s'],$data['details']['gid']);
         $head['title'] = 'View Customer';
         $this->load->view('fixed/header', $head);
         $this->load->view('customers/view', $data);
