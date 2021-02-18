@@ -1,3 +1,29 @@
+﻿Cambios para seleccionar sede
+ALTER TABLE `aauth_users` ADD `sede_accede` VARCHAR(25) NULL AFTER `picture`;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+------------------------------------------
+
+
 CREATE TABLE `encuestas` (
   `id` int(50) NOT NULL,
   `idemp` int(10) NOT NULL,

@@ -86,5 +86,17 @@ class Dashboard extends CI_Controller
             $this->load->view('invoices/invoices');
             $this->load->view('fixed/footer');
         }
+        //cambios para preguntar desde que sede se conecta para configurar ips en mikrotik
+        $this->load->model('customers_model', 'customers');
+        $datax['sede_accede']=$this->aauth->get_user()->sede_accede;
+        $datax['customergrouplist'] = $this->customers->group_list();
+        $this->load->view('fixed/pregunta_sede_se_conecta',$datax);
+    }
+    public function guardar_sede_user_se_conecta(){
+        
+        $id=$this->aauth->get_user()->id;
+        $datax['sede_accede']=$_POST['sede'];
+        $this->db->update("aauth_users",$datax,array('id' =>$id));        
+        
     }
 }
