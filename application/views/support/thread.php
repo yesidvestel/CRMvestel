@@ -1,7 +1,8 @@
 <article class="content">
 	
     <div class="card card-block">
-        <?php $lista_productos_orden=$this->db->get_where('transferencia_products_orden',array('tickets_id'=>$id_orden_n))->result_array(); ?>
+        <?php $lista_productos_orden=$this->db->get_where('transferencia_products_orden',array('tickets_id'=>$id_orden_n))->result_array();
+		$traslados=$this->db->get_where('temporales',array('corden'=>$thread_info['codigo']))->row();?>
         
         
     </div>
@@ -34,6 +35,8 @@
 			
             <p class="card card-block"><?php echo '<strong>Creado el: </strong> ' . $thread_info['created'];
                 echo '<br><strong>Usuario:</strong> ' . $thread_info['name'] .' '. $thread_info['unoapellido'];
+				echo '<br><strong>Documento:</strong> ' . $thread_info['documento'];
+				echo '<br><strong>Abonado:</strong> ' . $thread_info['abonado'];
 				echo '<br><strong>Celular:</strong> ' . $thread_info['celular'];
 				echo '<br><strong>Direccion:</strong> ' . $thread_info['nomenclatura'].' '. $thread_info['numero1']. $thread_info['adicionauno'].' N°'. $thread_info['numero2']. $thread_info['adicional2'].' - '. $thread_info['numero3'];
 				echo '<br><strong>Barrio:</strong> ' . $thread_info['barrio'];
@@ -46,7 +49,9 @@
         <!--</code>
 			<table  class="table table-hover table-condensed" width="100%"> -->
 
-			<?php echo '<h4>Detalles:</h4><code class="card card-block"><h5 style="text-decoration: underline;">' .$thread_info['detalle'].'</h5>'.strip_tags($thread_info['section'],'<p>')?>
+			<?php echo '<h4>Detalles:</h4><code class="card card-block"><h5 style="text-decoration: underline;">' .$thread_info['detalle'].'</h5>'.strip_tags($thread_info['section'],'<p>');
+	
+	if ($thread_info['detalle']=='Traslado'){ echo $traslados->nomenclatura.' '.$traslados->nuno.$traslados->auno.' Nº '.$traslados->ndos.$traslados->ados.' - '.$traslados->ntres;}?>
 		</code>		
 			
 					

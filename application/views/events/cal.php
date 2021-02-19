@@ -61,7 +61,7 @@
                     <div class="row form-group">
                         <label class="col-md-4 control-label" for="color"><?php echo $this->lang->line('Color')  ?></label>
                         <div class="col-md-4">
-                            <input id="color" name="color" type="color" class="form-control"
+                            <input id="color" name="color" type="text" class="form-control"
                                    />
                             <span class="help-block">Haga click para elegir un color</span>
                         </div>

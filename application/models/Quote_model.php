@@ -173,7 +173,7 @@ class Quote_model extends CI_Model
         $query = $this->db->get();
         return $query->row_array();
     }
-	public function addticket($customer_id, $nticket, $subject, $detalle, $created, $section, $factura, $agendar, $fagenda, $hora)
+	public function addticket($customer_id, $nticket, $subject, $detalle, $created, $section, $factura, $agendar, $fagenda, $hora,$nomen,$nuno,$auno,$ndos,$ados,$ntres,$local,$barrio)
     {
 		$bill_llegada = datefordatabase($created);
 		
@@ -206,6 +206,21 @@ class Quote_model extends CI_Model
 		);		
 		$this->db->insert('events', $data2);
 		}
+			if ($detalle=='Traslado'){
+				$data3 = array(
+				'corden' => $nticket,
+				'nomenclatura' => $nomen,
+				'nuno' => $nuno,
+				'auno' => $auno,
+				'ndos' => $ndos,
+				'ados' => $ados,
+				'ntres' => $ntres,
+				'localidad' => $local,
+				'barrio' => $barrio
+			);		
+			$this->db->insert('temporales', $data3);
+				
+			}
             echo json_encode(array('status' => 'Success', 'message' =>
                 $this->lang->line('ADDED')));
         } else {

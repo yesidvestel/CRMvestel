@@ -660,7 +660,23 @@ class Tickets Extends CI_Controller
         		$this->db->where('id', $ticket->cid);
         		$this->db->update('customers');
 		}
-		
+		if($ticket->detalle=="Traslado"){
+			$codigo = $ticket->codigo;
+			$traslados=$this->db->get_where('temporales',array('corden'=>$codigo))->row();
+			$datat = array(
+				'localidad' => $traslados->localidad,
+				'barrio' => $traslados->barrio,
+			  	'nomenclatura' => $traslados->nomenclatura,
+				'numero1' => $traslados->nuno,
+				'adicionauno' => $traslados->auno,
+				'nomero2' => $traslados->ndos,
+				'adicional2' => $traslados->ados,
+				'numero3' => $traslados->ntres				
+			);
+			//actualizar estado usuario				
+        		$this->db->where('id', $ticket->cid);
+        		$this->db->update('customers', $datat);
+		}
 		if($ticket->detalle=="Suspencion Combo"){			
 			$this->db->set('ron', 'Suspendido');
 			$this->db->set('television', 'no');
