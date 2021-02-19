@@ -463,7 +463,7 @@ class Tickets Extends CI_Controller
                     }
                 }
                 
-                if($data['television']!==no AND $data['refer']!==Mocoa || $tv!==no){                
+                if($data['television']!==no AND $data['refer']!==Mocoa || $tv!==no && $ciudad!==Mocoa){                
                     $producto = $this->db->get_where('products',array('pid'=>27))->row();
                     $datay['pid']=$producto->pid;
                     $datay['product']=$producto->product_name;
@@ -498,7 +498,7 @@ class Tickets Extends CI_Controller
                         $this->db->insert('invoice_items',$datay);
                     }
                 }
-				if($data['television']!==no AND $data['refer']==Mocoa || $tv!==no){                
+				if($data['television']!==no AND $data['refer']==Mocoa || $tv!==no && $ciudad==Mocoa){                
                     $producto = $this->db->get_where('products',array('pid'=>159))->row();
                     $datay['pid']=$producto->pid;
                     $datay['product']=$producto->product_name;

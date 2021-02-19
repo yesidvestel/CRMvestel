@@ -245,7 +245,7 @@
 										<div class="input-group">
 											
 											<select name="localidad" class="form-control mb-1" onChange="cambia5()">
-												<?php if ($details['ciudad']==='YOPAL'){ ?>
+												<?php if ($details['ciudad']==='Yopal'){ ?>
 												<option value='-'>-</option>
 												<option value='ComunaI'>ComunaI</option>
 												<option value='ComunaII'>ComunaII</option>
@@ -293,7 +293,7 @@
 									<label for="invociedate" class="caption">Internet</label>
 										<div class="input-group">									
 											<select name="inter" class="form-control mb-1">
-												<?php if ($details['ciudad']==='YOPAL' || $details['ciudad']==='Monterrey' ){ ?>
+												<?php if ($details['ciudad']==='Yopal' || $details['ciudad']==='Monterrey' ){ ?>
 												<option value="no">No</option>
 												<option value="1Mega">1Mega</option>
 												<option value="2Megas">2Megas</option>
