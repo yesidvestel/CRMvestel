@@ -164,8 +164,8 @@ class Customers_model extends CI_Model
     }
 
     public function get_ip_coneccion_microtik_por_sede($id_sede){
-        $this->load->library("Aauth");
-        $id_sede=$this->aauth->get_user()->sede_accede;
+        //$this->load->library("Aauth");
+        //$id_sede=$this->aauth->get_user()->sede_accede;
         if($id_sede==2){//yopal
             return "190.14.233.186:8728";
         }else if($id_sede==3){//Villanueva
