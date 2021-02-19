@@ -45,6 +45,10 @@ class Customers_model extends CI_Model
         if ($id != '') {
             $this->db->where('gid', $id);
         }
+        if ($_GET['estado'] != '') {
+            $this->db->where('usu_estado=', $_GET['estado']);
+        }
+
         $i = 0;
 
         foreach ($this->column_search as $item) // loop column

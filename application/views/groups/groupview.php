@@ -12,19 +12,21 @@
 								<label class="col-sm-12 col-form-label"
                                        for="pay_cat"><h5>FILTRAR</h5></label>
                                 <label class="col-sm-2 col-form-label"
-                                       for="pay_cat">Tecnico</label>
+                                       for="pay_cat">Estado</label>
 
                                 <div class="col-sm-6">
                                     <select name="tec" class="form-control" id="estado">
                                         <option value=''>Todos</option>
-                                        <option value='Activos'>Activos</option>
-										<option value='Cortados'>Cortados</option>
+                                        <option value='Activo'>Activos</option>
+										<option value='Cortado'>Cortados</option>
+                                        <option value='Suspendido'>Suspendidos</option>
+                                        <option value='Instalar'>Instalar</option>
                                     </select>
                                 </div>
                             </div>
 							<div class="form-group row">
                                 <label class="col-sm-2 col-form-label"
-                                       for="pay_cat">Estado</label>
+                                       for="pay_cat">Tecnico</label>
 
                                 <div class="col-sm-6">
                                     <select name="trans_type" class="form-control" id="depar">
@@ -85,9 +87,10 @@
     </div>
 </article>
 <script type="text/javascript">
+    var tb;
     $(document).ready(function () {
 
-        $('#fclientstable').DataTable({
+        tb=$('#fclientstable').DataTable({
 
             "processing": true, //Feature control the processing indicator.
             "serverSide": true, //Feature control DataTables' server-side processing mode.
@@ -209,11 +212,13 @@
     });
 	function filtrar(){
         var estado=$("#estado option:selected").val();
-        var depar =$("#depar option:selected").val();
+        //var depar =$("#depar option:selected").val();
         if(estado=="" && depar==""){
+            console.log("asdasd");
             tb.ajax.url( baseurl+'clientgroup/grouplist?id=' ).load();     
         }else{
-            tb.ajax.url( baseurl+'clientgroup/grouplist?estado='+estado+"&depar="+depar+"&id=" ).load();     
+            
+            tb.ajax.url( baseurl+'clientgroup/grouplist?estado='+estado+"&id=<?=$_GET['id']?>" ).load();     
         }
        
 
