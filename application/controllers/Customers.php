@@ -135,12 +135,12 @@ class Customers extends CI_Controller
          $API = new RouterosAPI();
         $API->debug = true;
         
-        if ($API->connect('190.14.233.186:8728', 'soporte.yopal', 'duber123')) {
+        if ($API->connect('190.14.233.186:8728', 'api.crmvestel', 'duber123')) {
 
             $arrID=$API->comm("/ppp/secret/getall", 
                   array(
                   //".proplist"=> ".id",
-                  "?name" => "PaolaJimenez",
+                  "?name" => "duberduber",
                   ));
 
            /* $API->comm("/ppp/secret/set",
@@ -209,7 +209,7 @@ class Customers extends CI_Controller
         $data['due'] = $this->customers->due_details($custid);
         $head['usernm'] = $this->aauth->get_user()->username;
         $data['activity']=$this->customers->activity($custid);
-       // $data['estado_mikrotik']=$this->customers->get_estado_mikrotik($data['details']['name_s'],$data['details']['gid']);
+        $data['estado_mikrotik']=$this->customers->get_estado_mikrotik($data['details']['name_s'],$data['details']['gid']);
         $head['title'] = 'View Customer';
         $this->load->view('fixed/header', $head);
         $this->load->view('customers/view', $data);
