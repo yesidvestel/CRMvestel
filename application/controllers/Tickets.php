@@ -669,7 +669,7 @@ class Tickets Extends CI_Controller
 			  	'nomenclatura' => $traslados->nomenclatura,
 				'numero1' => $traslados->nuno,
 				'adicionauno' => $traslados->auno,
-				'nomero2' => $traslados->ndos,
+				'numero2' => $traslados->ndos,
 				'adicional2' => $traslados->ados,
 				'numero3' => $traslados->ntres				
 			);
