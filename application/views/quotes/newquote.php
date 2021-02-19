@@ -32,7 +32,7 @@
                                         Celular: <?php echo $details['celular'] ?>
                                     </div>
 									<div class="clientinfo">
-                                        Direccion: <?php echo $details['nomenclatura'] ?> <?php echo $details['numero1'] ?><?php echo $details['adicionauno'] ?> Nยบ <?php echo $details['numero2'] ?> <?php echo $details['adicional2'] ?> - <?php echo $details['numero3'] ?>
+                                        Direccion: <?php echo $details['nomenclatura'] ?> <?php echo $details['numero1'] ?><?php echo $details['adicionauno'] ?> N <?php echo $details['numero2'] ?> <?php echo $details['adicional2'] ?> - <?php echo $details['numero3'] ?>
                                     </div>
                                     <hr>                                    
                                 </div>
@@ -95,7 +95,7 @@
 										<label for="invociedate" class="caption">Factura mes</label>
 										<div class="input-group">
 										<select name="factura" id="tecnicos" class="form-control mb-1">
-												<option value=''>-</option>
+												<option value='null'>-</option>
 												<?php
 													foreach ($facturalist as $row) {
 														$cid = $row['id'];
@@ -272,6 +272,60 @@
 										<div class="input-group">									
 											<select name="barrio" class="form-control mb-1">
 												<option value="-">-</option>
+											</select>
+										</div>
+                                   </div>
+								</div>
+								<div class="form-group row" id="Instalacion">	
+                                    <div class="col-sm-12">
+										<h3 class="title">Asignar servicio</h3>
+                                    </div>
+									<div class="col-sm-4">
+									<label for="invociedate" class="caption">Television</label>
+										<div class="input-group">									
+											<select name="tele" class="form-control mb-1">
+												<option value="no">No</option>
+                                        		<option value="Television">Si</option>
+											</select>
+										</div>
+                                   </div>
+									<div class="col-sm-4">
+									<label for="invociedate" class="caption">Internet</label>
+										<div class="input-group">									
+											<select name="inter" class="form-control mb-1">
+												<?php if ($details['ciudad']==='YOPAL' || $details['ciudad']==='Monterrey' ){ ?>
+												<option value="no">No</option>
+												<option value="1Mega">1Mega</option>
+												<option value="2Megas">2Megas</option>
+												<option value="3Megas">3Megas</option>
+												<option value="3MegasSolo">3Megas Solo</option>
+												<option value="5Megas">5Megas</option>
+												<option value="5MegasD">5Megas Dedicado</option>
+												<option value="5MegasSolo">5Megas Solo</option>
+												<option value="10Megas">10Megas</option>
+												<option value="10MegasSolo">10Megas Solo</option>
+												<option value="50Megas">50Megas</option>
+												<?php }if ($details['ciudad']==='Villanueva'){ ?>
+												<option value="no">No</option>	
+												<option value="2MegasV">2Megas</option>
+												<option value="3MegasV">3Megas</option>
+												<option value="5MegasV">5Megas</option>
+												<option value="5MegasVD">5Megas Dedicado</option>
+												<option value="5MegasVS">5Megas Solo</option>
+												<option value="10MegasV">10Megas</option>
+												<option value="10MegasVS">10Megas Solo</option>
+												<option value="50MegasV">50Megas</option>
+												<?php } ?>
+											</select>
+										</div>
+                                   </div>
+									<div class="col-sm-4">
+									<label for="invociedate" class="caption">Puntos</label>
+										<div class="input-group">									
+											<select name="punto" class="form-control mb-1">
+												<option value="0">no</option>
+													<?php for ($i=1;$i<=20;$i++){
+													echo '<option value="'.$i.'">'.$i.'</option>';}?>
 											</select>
 										</div>
                                    </div>

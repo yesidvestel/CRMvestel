@@ -337,6 +337,10 @@ class Tickets Extends CI_Controller
 		$ticket = $this->db->get_where('tickets', array('idt' => $tid))->row();
 		$usuario = $this->db->get_where('customers', array('id' => $ticket->cid))->row();
         $invoice = $this->db->get_where('invoices',array('tid'=>$ticket->id_invoice))->result_array();
+		$temporal=$this->db->get_where('temporales',array('corden'=>$ticket->codigo))->row();
+		$tv = $temporal->tv;
+		$inter = $temporal->internet;
+		$ptos = $temporal->puntos;
 		$idfactura = $ticket->id_factura;
         $data;
 		$detalle = $this->input->post('detalle');
@@ -399,43 +403,48 @@ class Tickets Extends CI_Controller
         $total=0;
 		$tax2=0;
         //cod x
-
+		if ($ticket->codigo===$temporal->corden){
+			$data['csd']=$ticket->cid;
+			$data['television']=$temporal->tv;
+			$data['combo']=$temporal->internet;
+			$data['puntos']=$temporal->puntos;
+		}
         $datay['tid']=$data['tid'];
         $datay['qty']=1;
         $datay['tax']=19;
         $datay['discount']=0;
         
         $datay['totaldiscount']=0;			
-                if($data['combo']!==no){
-                    if($data['combo']==='1Mega'){
+                if($data['combo']!==no || $inter===no){
+                    if($data['combo']==='1Mega' || $inter==='1Mega'){
                         $datay['pid']=125;
-                    }else if($data['combo']==='2Megas'){
+                    }else if($data['combo']==='2Megas' || $inter==='2Megas'){
                         $datay['pid']=126;
-                    }else if($data['combo']==='3Megas'){
+                    }else if($data['combo']==='3Megas'|| $inter==='3Megas'){
                         $datay['pid']=24;
-					}else if($data['combo']==='3MegasV'){
+					}else if($data['combo']==='3MegasV'|| $inter==='3MegasV'){
                         $datay['pid']=243;
-					}else if($data['combo']==='3MegasSolo'){
+					}else if($data['combo']==='3MegasSolo' || $inter==='3MegasSolo'){
                         $datay['pid']=170;
-                    }else if($data['combo']==='5Megas'){
+                    }else if($data['combo']==='5Megas' || $inter==='5Megas'){
                         $datay['pid']=25;
-					}else if($data['combo']==='5MegasV'){
+					}else if($data['combo']==='5MegasV'|| $inter==='5MegasV'){
                         $datay['pid']=244;
-					}else if($data['combo']==='5MegasVS'){
+					}else if($data['combo']==='5MegasVS'|| $inter==='5MegasVS'){
                         $datay['pid']=247;
-					}else if($data['combo']==='5MegasSolo'){
+					}else if($data['combo']==='5MegasSolo'|| $inter==='5MegasSolo'){
                         $datay['pid']=171;					
-                    }else if($data['combo']==='5MegasD'){
+                    }else if($data['combo']==='5MegasD'|| $inter==='5MegasD'){
                         $datay['pid']=223;					
-                    }else if($data['combo']==='10Megas'){
+                    }else if($data['combo']==='10Megas'|| $inter==='10Megas'){
                         $datay['pid']=26;
-					}else if($data['combo']==='10MegasV'){
+					}else if($data['combo']==='10MegasV'|| $inter==='10MegasV'){
                         $datay['pid']=245;
-					}else if($data['combo']==='10MegasVS'){
+					}else if($data['combo']==='10MegasVS'|| $inter==='10MegasVS'){
                         $datay['pid']=246;
-					}else if($data['combo']==='10MegasSolo'){
+					}else if($data['combo']==='10MegasSolo'|| $inter==='10MegasSolo'){
                         $datay['pid']=172;
-                    }else if($data['combo']==='50Megas'){
+                    }else if($data['combo']==='50Megas'|| $inter==='50Megas'){
                         $datay['pid']=222;
                     }
                     $producto = $this->db->get_where('products',array('pid'=>$datay['pid']))->row();
@@ -449,12 +458,12 @@ class Tickets Extends CI_Controller
 					$datay['totaltax']=0;
                     $datay['price']=$x;
                     $datay['subtotal']=$x;     
-                    if($ticket->detalle=="Instalacion" && $ticket->id_factura==null && $status=="Resuelto"){
+                    if($ticket->detalle=="Instalacion" && $ticket->id_factura==null || $ticket->id_factura==0 && $status=="Resuelto"){
                         $this->db->insert('invoice_items',$datay);    
                     }
                 }
                 
-                if($data['television']!==no AND $data['refer']!==Mocoa){                
+                if($data['television']!==no AND $data['refer']!==Mocoa || $tv!==no){                
                     $producto = $this->db->get_where('products',array('pid'=>27))->row();
                     $datay['pid']=$producto->pid;
                     $datay['product']=$producto->product_name;
@@ -468,11 +477,11 @@ class Tickets Extends CI_Controller
                     $datay['tax']=19;
 					$datay['totaltax']=$y;
 					$datay['subtotal']=$x+$datay['totaltax'];
-                    if($ticket->detalle=="Instalacion" && $ticket->id_factura==null && $status=="Resuelto"){
+                    if($ticket->detalle=="Instalacion" && $ticket->id_factura==null || $ticket->id_factura==0 && $status=="Resuelto"){
                         $this->db->insert('invoice_items',$datay);
                     }
 				}
-					if($data['puntos']!=='0'){                
+					if($data['puntos']!=='0' || $ptos!=='0'){                
                     $producto = $this->db->get_where('products',array('pid'=>158))->row();
                     $datay['pid']=$producto->pid;
                     $datay['product']=$producto->product_name;
@@ -485,11 +494,11 @@ class Tickets Extends CI_Controller
 					$datay['totaltax']='';
 					$datay['price']=$x;
 					$datay['subtotal']=$x*$datay['qty'];
-                    if($ticket->detalle=="Instalacion" && $ticket->id_factura==null && $status=="Resuelto"){
+                    if($ticket->detalle=="Instalacion" && $ticket->id_factura==null || $ticket->id_factura==0 && $status=="Resuelto"){
                         $this->db->insert('invoice_items',$datay);
                     }
                 }
-				if($data['television']!==no AND $data['refer']==Mocoa){                
+				if($data['television']!==no AND $data['refer']==Mocoa || $tv!==no){                
                     $producto = $this->db->get_where('products',array('pid'=>159))->row();
                     $datay['pid']=$producto->pid;
                     $datay['product']=$producto->product_name;
@@ -502,7 +511,7 @@ class Tickets Extends CI_Controller
 					$datay['totaltax']='';
                     $datay['subtotal']=$x;
 					
-                    if($ticket->detalle=="Instalacion" && $ticket->id_factura==null && $status=="Resuelto"){
+                    if($ticket->detalle=="Instalacion" && $ticket->id_factura==null || $ticket->id_factura==0 && $status=="Resuelto"){
                         $this->db->insert('invoice_items',$datay);
                     }
                 }
@@ -518,7 +527,7 @@ class Tickets Extends CI_Controller
         $data['total']=$data['subtotal']+$data['tax'];
         //no haga ni insert ni update si no es instalacion y tambien si ya existe una factura
         $msg1="";
-        if($ticket->detalle=="Instalacion" && $ticket->id_factura==null && $status=="Resuelto"){
+        if($ticket->detalle=="Instalacion" && $ticket->id_factura==null || $ticket->id_factura==0 && $status=="Resuelto"){
             $this->db->insert('invoices',$data);    
             $dataz['id_factura']=$data['tid'];
 			//actualizar estado usuario

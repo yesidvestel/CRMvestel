@@ -113,8 +113,11 @@ class Quote extends CI_Controller
 		$local = $this->input->post('localidad');
 		$barrio = $this->input->post('barrio');
 		$hora = date($this->input->post('hora'));
+		$tv = $this->input->post('tele');
+		$inter = $this->input->post('inter');
+		$punto = $this->input->post('punto');
         if ($customer_id) {
-        	$this->quote->addticket($customer_id, $nticket, $subject, $detalle, $created, $section, $factura,$agendar,$fagenda,$hora,$nomen,$nuno,$auno,$ndos,$ados,$ntres,$local,$barrio);
+        	$this->quote->addticket($customer_id, $nticket, $subject, $detalle, $created, $section, $factura,$agendar,$fagenda,$hora,$nomen,$nuno,$auno,$ndos,$ados,$ntres,$local,$barrio,$tv,$inter,$punto);
 			
 		}
 
