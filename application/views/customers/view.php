@@ -47,6 +47,10 @@
 											<span class="tag tag-default tag-pill bg-primary float-xs-right"><?php echo $details['usu_estado']?></span>
 											Estado Servicio
                                         </li>
+										<li class="list-group-item">
+											<span class="tag tag-default tag-pill bg-primary float-xs-right"><?php if ($due['television']!==no){ echo $due['television'];} if ($due['combo']!==no){ echo ' + '.$due['combo'];}if ($due['puntos']!=='0'){ echo ' + '.$due['puntos'].' Puntos';}?></span>
+											Servicios
+                                        </li>
                                         <li class="list-group-item">
                                             <span class="tag tag-default tag-pill bg-primary float-xs-right"><?php echo amountFormat($money['credit']) ?></span>
                                             <?php echo $this->lang->line('Income') ?>
