@@ -436,7 +436,7 @@
                 <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "encuesta") {
                     echo ' open';
                 } ?>">
-                    <a href=""> <i class="icon-ticket"></i><span
+                    <a href=""> <i class="icon-android-clipboard"></i><span
                                 class="menu-title">Encuestas</span><i
                                 class="fa arrow"></i> </a>
                     <ul class="menu-content">
@@ -871,6 +871,25 @@
                         </li>
                     </ul>
                 </li>
+			<!--- ENCUENTAS --->
+                <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "encuesta") {
+                    echo ' open';
+                } ?>">
+                    <a href=""> <i class="icon-android-clipboard"></i><span
+                                class="menu-title">Encuestas</span><i
+                                class="fa arrow"></i> </a>
+                    <ul class="menu-content">
+						<li>
+                            <a href="<?php echo base_url(); ?>encuesta/create"><?php echo $this->lang->line(''); ?>Nueva Encuenta</a>
+                        </li>                        
+                        <li>
+                            <a href="<?php echo base_url(); ?>encuesta/index"><?php echo $this->lang->line('Manage Tickets') ?></a>
+                        </li>
+						
+
+
+                    </ul>
+                </li>
 			<!--- SOPORTE TECNICO --->
                 <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "tickets") {
                     echo ' open';
@@ -913,6 +932,7 @@
                         </li>
 					</ul>
 				</li>
+				
                 <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "products") {
                     echo ' open';
                 } ?>">
