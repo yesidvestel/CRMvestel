@@ -29,13 +29,13 @@
                                        for="pay_cat">Direccion</label>
 
                                 <div class="col-sm-6">
-                                    <select name="trans_type" class="form-control" id="depar">
+                                    <select name="trans_type" class="form-control" id="sel_dir_personalizada" onclick="act_sel_dir_personalizada()">
                                         <option value=''>Todas</option>
                                         <option value='Personalizada'>Personalizada</option>
                                     </select>
                                 </div>								
                             </div>
-                            <div id="direccion_personalizada">
+                            <div id="div_direccion_personalizada">
                                     <div class="form-group row">
                                         
                                         
@@ -343,8 +343,8 @@
 	function filtrar(){
         var estado=$("#estado option:selected").val();
         //var depar =$("#depar option:selected").val();
-        if(estado=="" && depar==""){
-            console.log("asdasd");
+        if(estado==""){
+            
             tb.ajax.url( baseurl+'clientgroup/grouplist?id=' ).load();     
         }else{
             
@@ -353,4 +353,85 @@
        
 
     }
-</script>
+    $("#div_direccion_personalizada").hide();
+    function act_sel_dir_personalizada(){
+        var sel_dir_personalizada= $("#sel_dir_personalizada option:selected").val();
+        if(sel_dir_personalizada==""){
+            $("#div_direccion_personalizada").hide();
+        }else{
+            $("#div_direccion_personalizada").show();
+        }
+    }
+
+    var ciudad_Casanare = new Array ("-","Yopal","Monterrey","Villanueva");
+    var ciudad_Putumayo = new Array ("-","Mocoa");  
+    console.log(ciudad_Casanare);
+                            //crear funcion que ejecute el cambio
+                            function cambia3(){
+                                var departamento;
+                                departamento = $("#departamentos option:selected").val();
+                                //se verifica la seleccion dada
+                                if(departamento!=0){
+                                    mis_opts=eval("ciudad_"+departamento);
+                                    $("#cmbCiudades").find('option').remove().end();
+                                    for (var i = 0; i < mis_opts.length; i++) {
+                                        $('#cmbCiudades').append(new Option(mis_opts[i], mis_opts[i]));
+                                    }
+                                }else{
+                                    $("#cmbCiudades").find('option').remove().end();
+                                    $('#cmbCiudades').append(new Option("-", "-"));
+                                }
+                             
+                            }
+    var localidad_Yopal = new Array ("-","ComunaI","ComunaII","ComunaIII","ComunaIV","ComunaV","ComunaVI");
+    var localidad_Monterrey = new Array ("-","Ninguno");
+    var localidad_Villanueva = new Array ("-","SinLocalidad");
+    var localidad_Mocoa = new Array ("-","Ninguna");
+                            //crear funcion que ejecute el cambio
+                            function cambia4(){
+                                var ciudad;
+                                ciudad = $("#cmbCiudades option:selected").val();
+                                //se verifica la seleccion dada
+                                if(ciudad!=0 && ciudad!="-"){
+                                    mis_opts=eval("localidad_"+ciudad);
+                                    $("#cmbLocalidades").find('option').remove().end();
+                                    for (var i = 0; i < mis_opts.length; i++) {
+                                        $('#cmbLocalidades').append(new Option(mis_opts[i], mis_opts[i]));
+                                    }
+                                    
+                                }else{
+                                    $("#cmbLocalidades").find('option').remove().end();
+                                    $('#cmbLocalidades').append(new Option("-", "-"));                                           
+                                }
+                                
+                            }
+
+                            var barrio_ComunaI = new Array ("-","Bello horizonte","Brisas del Cravo","El Batallon","El Centro","El Libertador","La Corocora","La Estrella bon Habitad","la Pradera","Luis Hernandez Vargas","San Martin","La Arboleda");
+    var barrio_ComunaII = new Array ("-","El Triunfo","Comfacasanare","Conjunto Residencial Comfaboy","El Bicentenario","El Remanso","Juan Pablo","La Floresta","Los Andes","Los Helechos","Los Heroes","Maria Milena","Puerta Amarilla","Valle de los guarataros","Villa Benilda","Barcelona","Ciudad Jardín","Juan Hernando Urrego","Unión San Carlos","Laureles","Villa Natalia");
+    var barrio_ComunaIII = new Array ("-","20 De Julio","Aerocivil","El Gavan","El Oasis","El Recuerdo","La Amistad","Maria Paz","Mastranto II","Provivienda");
+    var barrio_ComunaIV = new Array ("-","1ro de Mayo","Araguaney","Vencedores","Casiquiare","El Bosque","La Campiña","La Esperanza","Las Palmeras","Paraíso","Villa Rocío");
+    var barrio_ComunaV = new Array ("-","Ciudad del Carmen","Ciudadela San Jorge","El Laguito","El Nogal","El Portal","El Progreso","La Primavera","Los Almendros","Maranatha","Montecarlo","Nuevo Hábitat","Nuevo Hábitat II","Nuevo Milenio","San Mateo","Villa Nelly","Villa Vargas","Villas de Chavinave");
+    var barrio_ComunaVI = new Array ("-","Villa Lucia","Villa Salomé 1","Xiruma","Llano Vargas","Bosques de Sirivana","Bosques de Guarataros","Villa David","Getsemaní","Villa Salomé 2","Las americas","Puente Raudal","Camoruco");
+    var barrio_Ninguno = new Array ("-","Palmeras","Pradera","Esperanza","Villa del prado","Primavera","Nuevo milenio","San jose","Centro","Panorama","Alfonso lopez","Rivera de san andres","Rosales","Nuevo horizonte","La roca","Paomera","Floresta","Alcaravanes","Morichito","Villa santiago","15 de octubre","Glorieta","Olimpico","Brisas del tua","Guaira","Esteros","Villa del bosque","Villa mariana","Guadalupe","Leche miel","Lanceros","Paraiso","El caney","Villa daniela","Julia luz","Los esteros");
+    var barrio_SinLocalidad = new Array ("-","Banquetas","Bella Vista","Bello Horizonte","Brisas del Agua Clara","Brisas del Upia I","Brisas del Upia II","Buenos Aires","Caricare","Centro","Ciudadela la Virgen","Comuneros","El Bosque","El Morichal","El Morichalito","El Portal","Fundadores","La floresta","Las Vegas","Mirador","Palmeras","Panorama","Paraiso I","Paraiso II","Progreso","Quintas del Camino Real","Villa Alejandra","Villa Campestre","Villa Estampa","Villa Luz","Villa del Palmar","Villa Mariana","Villa de los angeles");
+    var barrio_Ninguna = new Array ("-","Venecia","Villa Caimaron","Villa Colombia","Villa Daniela","Villa del Norte","Villa del rio","Villa Diana","Villa Natalia","Villa Nueva","Palermo","Paraiso","Peñan","Pinos","Piñayaco","Placer","Plaza de Mercado","Prados","Progreso","Rumipamba","San Andres","San Agustin","San Fernando","San Francisco","La Loma","La union","Las Vegas","Libertador","Loma","Los Angeles","Miraflores","Modelo","Naranjito","Nueva Floresta","Obrero 1","Obrero 2","Olimpico","Pablo VI","Pablo VI bajo");
+                            //crear funcion que ejecute el cambio
+                            function cambia5(){
+                                var localidad;
+                                localidad = $("#cmbLocalidades option:selected").val();
+                                //se verifica la seleccion dada
+                                if(localidad!=0 && ciudad!="-"){
+                                    mis_opts=eval("barrio_"+localidad);
+                                    //definimos cuantas obciones hay
+                                    $("#cmbBarrios").find('option').remove().end();
+                                    for (var i = 0; i < mis_opts.length; i++) {
+                                        $('#cmbBarrios').append(new Option(mis_opts[i], mis_opts[i]));
+                                    }
+                                }else{
+                                //resultado si no hay obciones
+                                    $("#cmbBarrios").find('option').remove().end();
+                                    $('#cmbBarrios').append(new Option("-", "-"));                                              
+                                }
+                                
+                            }
+</script>                   
