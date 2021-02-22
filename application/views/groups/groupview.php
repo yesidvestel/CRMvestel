@@ -39,25 +39,24 @@
                                     <div class="form-group row">
                                         
                                         
-                                        <div class="col-sm-6">
-                                             <h6><label class="col-sm-6 col-form-label"
-                                                   for="departamento"><?php echo $this->lang->line('') ?>Departamento</label></h6>
                                         
-                                            <?php echo $this->lang->line('departamentos') ?> 
-                                            <select id="departamentos"  class="selectpicker form-control" name="departamento" id="mcustomer_country" onchange="cambia3()">
-                                                <option value="0">seleccione</option>
-                                                <option value="Casanare">Casanare</option>
-                                                <option value="Putumayo">Putumayo</option>
-                                            </select>
-                                        
-                                        </div> 
 
-                                        <div class="col-sm-6">
+                                        <div class="col-sm-12">
                                             <h6><label class="col-sm-2 col-form-label"
                                                for="ciudad"><?php echo $this->lang->line('') ?>Ciudad</label></h6>
                                             <div id="ciudades">
                                                 <select id="cmbCiudades" class="selectpicker form-control" name="ciudad" onChange="cambia4()">                                
-                                                <option value="0">-</option>
+                                                    <?php if($_GET['id']=="1"){?>
+                                                        <option value="0">-</option>
+                                                    <?php }else if($_GET['id']=="2"){ ?>
+                                                        <option value="Yopal">Yopal</option>
+                                                    <?php }else if($_GET['id']=="3"){ ?>
+                                                        <option value="Villanueva">Villanueva</option>
+                                                    <?php }else if($_GET['id']=="4"){ ?>
+                                                        <option value="Monterrey">Monterrey</option>
+                                                    <?php }else if($_GET['id']=="5"){ ?>
+                                                        <option value="Mocoa">Mocoa</option>
+                                                    <?php } ?>
                                                 </select>
                                             </div>
                                                
@@ -132,7 +131,7 @@
                                                                     <option value="d bis">d bis</option>
                                                             </select>
                                         </div>
-                                        <div class="col-sm-1" style="margin-left: -10px;">
+                                        <div class="col-sm-1" style="margin-left: -10px; width: 2%">
                                             <label class="col-form-label" for="Nº">Nº</label>
                                         </div>
                                         <div class="col-sm-2" style="margin-left: 14px;">
@@ -363,30 +362,12 @@
         }
     }
 
-    var ciudad_Casanare = new Array ("-","Yopal","Monterrey","Villanueva");
-    var ciudad_Putumayo = new Array ("-","Mocoa");  
-    console.log(ciudad_Casanare);
-                            //crear funcion que ejecute el cambio
-                            function cambia3(){
-                                var departamento;
-                                departamento = $("#departamentos option:selected").val();
-                                //se verifica la seleccion dada
-                                if(departamento!=0){
-                                    mis_opts=eval("ciudad_"+departamento);
-                                    $("#cmbCiudades").find('option').remove().end();
-                                    for (var i = 0; i < mis_opts.length; i++) {
-                                        $('#cmbCiudades').append(new Option(mis_opts[i], mis_opts[i]));
-                                    }
-                                }else{
-                                    $("#cmbCiudades").find('option').remove().end();
-                                    $('#cmbCiudades').append(new Option("-", "-"));
-                                }
-                             
-                            }
+   
     var localidad_Yopal = new Array ("-","ComunaI","ComunaII","ComunaIII","ComunaIV","ComunaV","ComunaVI");
     var localidad_Monterrey = new Array ("-","Ninguno");
     var localidad_Villanueva = new Array ("-","SinLocalidad");
     var localidad_Mocoa = new Array ("-","Ninguna");
+     cambia4();
                             //crear funcion que ejecute el cambio
                             function cambia4(){
                                 var ciudad;
@@ -420,7 +401,7 @@
                                 var localidad;
                                 localidad = $("#cmbLocalidades option:selected").val();
                                 //se verifica la seleccion dada
-                                if(localidad!=0 && ciudad!="-"){
+                                if(localidad!=0 && localidad!="-"){
                                     mis_opts=eval("barrio_"+localidad);
                                     //definimos cuantas obciones hay
                                     $("#cmbBarrios").find('option').remove().end();
