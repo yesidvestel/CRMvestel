@@ -98,6 +98,7 @@
                                     
                                         <div class="col-sm-2">
                                         <select class="form-control"  id="nomenclatura" name="nomenclatura">
+                                                                    <option value="-">-</option>
                                                                     <option value="Calle">Calle</option>
                                                                     <option value="Carrera">Carrera</option>
                                                                     <option value="Diagonal">Diagonal</option>
@@ -342,10 +343,7 @@
 	function filtrar(){
         var estado=$("#estado option:selected").val();
         //var depar =$("#depar option:selected").val();
-        if(estado==""){
-            
-            tb.ajax.url( baseurl+'clientgroup/grouplist?id=' ).load();     
-        }else{
+      
             var localidad= $("#cmbLocalidades option:selected").val();
             var barrio= $("#cmbBarrios option:selected").val();
             var nomenclatura= $("#nomenclatura option:selected").val();
@@ -355,8 +353,9 @@
             var numero2= $("#numero2").val();
             var adicional2= $("#adicional2 option:selected").val();
             var numero3= $("#numero3").val();
-            tb.ajax.url( baseurl+'clientgroup/grouplist?estado='+estado+"&id=<?=$_GET['id']?>&localidad="+localidad+"&barrio="+barrio+"&nomenclatura="+nomenclatura+"&numero1="+$numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3).load();     
-        }
+            var direccion = $("#sel_dir_personalizada option:selected").val();
+            tb.ajax.url( baseurl+'clientgroup/grouplist?estado='+estado+"&id=<?=$_GET['id']?>&localidad="+localidad+"&barrio="+barrio+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion).load();     
+        
        
 
     }

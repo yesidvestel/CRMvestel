@@ -45,10 +45,36 @@ class Customers_model extends CI_Model
         if ($id != '') {
             $this->db->where('gid', $id);
         }
-        if ($_GET['estado'] != '') {
+        if ($_GET['estado'] != '' && $_GET['estado'] != null) {
             $this->db->where('usu_estado=', $_GET['estado']);
         }
+        if ($_GET['direccion'] =="Personalizada"){ 
+            if ($_GET['localidad'] != '' && $_GET['localidad'] != '-') {
+                $this->db->where('localidad=', $_GET['localidad']);
+            }
 
+            if ($_GET['barrio'] != '' && $_GET['barrio'] != '-') {
+                $this->db->where('barrio=', $_GET['barrio']);
+            }
+            if ($_GET['nomenclatura'] != '' && $_GET['nomenclatura'] != '-') {
+                $this->db->where('nomenclatura=', $_GET['nomenclatura']);
+            }
+            if ($_GET['numero1'] != '') {
+                $this->db->where('numero1=', $_GET['numero1']);
+            }
+            if ($_GET['adicionauno'] != '' && $_GET['adicionauno'] != '-') {
+                $this->db->where('adicionauno=', $_GET['adicionauno']);
+            }
+            if ($_GET['numero2'] != '' && $_GET['numero2'] != '-') {
+                $this->db->where('numero2=', $_GET['numero2']);
+            }
+            if ($_GET['adicional2'] != '' && $_GET['adicional2'] != '-') {
+                $this->db->where('adicional2=', $_GET['adicional2']);
+            }
+            if ($_GET['numero3'] != '' && $_GET['numero3'] != '-') {
+                $this->db->where('numero3=', $_GET['numero3']);
+            }
+        }
         $i = 0;
 
         foreach ($this->column_search as $item) // loop column
