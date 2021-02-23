@@ -97,7 +97,7 @@
                                         
                                     
                                         <div class="col-sm-2">
-                                        <select class="form-control"  id="discountFormat" name="nomenclatura">
+                                        <select class="form-control"  id="nomenclatura" name="nomenclatura">
                                                                     <option value="Calle">Calle</option>
                                                                     <option value="Carrera">Carrera</option>
                                                                     <option value="Diagonal">Diagonal</option>
@@ -107,11 +107,11 @@
                                         
                                         </div>
                                         <div class="col-sm-2">
-                                            <input type="text" placeholder="Numero"
+                                            <input type="text" placeholder="Numero" id="numero1" 
                                                    class="form-control margin-bottom" name="numero1">
                                         </div>
                                         <div class="col-sm-2">
-                                            <select class="form-control" name="adicionauno">
+                                            <select class="form-control" id="adicionauno" name="adicionauno">
                                                                     <option value=""></option>
                                                                     <option value="bis">bis</option>
                                                                     <option value="sur">sur</option>
@@ -136,10 +136,10 @@
                                         </div>
                                         <div class="col-sm-2" style="margin-left: 14px;">
                                             <input type="text" placeholder="Numero"
-                                                   class="form-control margin-bottom" name="numero2" style="margin-left: -20px;">
+                                                   class="form-control margin-bottom" id="numero2" name="numero2" style="margin-left: -20px;">
                                         </div>
                                         <div class="col-sm-2" style="margin-left: -30px;margin-right: -20px;">
-                                            <select class="col-sm-1 form-control" name="adicional2">
+                                            <select class="col-sm-1 form-control" id="adicional2" name="adicional2">
                                                                     <option value=""></option>
                                                                     <option value="bis">bis</option>
                                                                     <option value="sur">sur</option>
@@ -346,8 +346,16 @@
             
             tb.ajax.url( baseurl+'clientgroup/grouplist?id=' ).load();     
         }else{
+            var localidad= $("#cmbLocalidades option:selected").val();
+            var barrio= $("#cmbBarrios option:selected").val();
+            var nomenclatura= $("#nomenclatura option:selected").val();
+            var numero1= $("#numero1").val();
             
-            tb.ajax.url( baseurl+'clientgroup/grouplist?estado='+estado+"&id=<?=$_GET['id']?>" ).load();     
+            var adicionauno= $("#adicionauno option:selected").val();
+            var numero2= $("#numero2").val();
+            var adicional2= $("#adicional2 option:selected").val();
+            var numero3= $("#numero3").val();
+            tb.ajax.url( baseurl+'clientgroup/grouplist?estado='+estado+"&id=<?=$_GET['id']?>&localidad="+localidad+"&barrio="+barrio+"&nomenclatura="+nomenclatura+"&numero1="+$numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3).load();     
         }
        
 
