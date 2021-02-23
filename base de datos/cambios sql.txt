@@ -1,5 +1,5 @@
 ﻿Cambios para seleccionar sede
-ALTER TABLE `aauth_users` ADD `sede_accede` VARCHAR(25) NULL AFTER `picture`;
+ALTER TABLE `tickets` ADD `par` INT(10) NULL AFTER `asignado`;
 
 
 
