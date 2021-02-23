@@ -390,7 +390,7 @@
 
             <div class="modal-body">
                 <form id="form_model4">
-					<input type="text" class="form-control required"
+					<input type="hidden" class="form-control required"
                                name="id" value="<?php echo $thread_info['idt'] ?>">
 
                     <div class="form-group row">
