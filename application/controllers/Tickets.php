@@ -326,7 +326,72 @@ class Tickets Extends CI_Controller
         echo json_encode(array('status' => 'Success', 'message' =>
             $this->lang->line('UPDATED'), 'pstatus' => $status));
     }
-	
+	public function dividir()
+    {
+        $id = $this->input->post('id');
+		$ticket = $this->db->get_where('tickets', array('idt' => $id))->result_array();
+		$ticket2 = $this->db->get_where('tickets', array('idt' => $id))->row();
+		$invoice = $this->db->get_where('invoices',array('tid'=>$ticket2->id_invoice))->row();
+		$temporal = $this->db->get_where('temporales',array('corden'=>$ticket2->codigo))->row();
+		$codmasuno= $this->db->select('max(codigo)+1 as codigo')->from('tickets')->get()->result();
+		$parmasuno= $this->db->select('max(par)+1 as par')->from('tickets')->get()->result();
+		$servicio = $this->input->post('servicio');
+		//confirmar si hay afiliacion
+		if ($ticket2->id_invoice==='0'){
+			$tv = $temporal->tv;
+			$inter = $temporal->internet;
+		}else{
+			$tv = $invoice->television;
+			$inter = $invoice->combo;
+		}
+		//confirmar paquete a instalar
+        if ($servicio==='television'){
+			$this->db->set('corden', $codmasuno[0]->codigo);
+			$this->db->set('tv', 'no');		
+        	$this->db->set('internet', $inter);
+        	if ($this->db->insert('temporales')){
+        	$this->db->set('internet', 'no');
+			$this->db->where('corden', $ticket2->codigo);
+        	$this->db->update('temporales');}
+			$tele = $tv;
+			$net = 'no';
+			$detalle = 'Reinstalacion Internet';
+		}if ($servicio==='internet'){
+			$this->db->set('corden', $codmasuno[0]->codigo);
+			$this->db->set('tv', $tv);		
+        	$this->db->set('internet', 'no');
+        	if ($this->db->insert('temporales')){
+			$this->db->set('tv', 'no');
+			$this->db->where('corden', $ticket2->codigo);
+        	$this->db->update('temporales');}
+			$tele = 'no';
+			$net = $inter;
+			$detalle = 'Reinstalacion Television';
+		}
+		//datos de duplicado
+		foreach ($ticket[0] as $key => $value) {
+            if($key!='idt' && $key!='detalle'  && $key!='status' && $key!='par'){
+             $datat[$key]=$value;
+            }
+        }
+		$datat['codigo']=$codmasuno[0]->codigo;
+		$datat['detalle']=$detalle;
+		$datat['status']='Pendiente';
+		$datat['par']=$parmasuno[0]->par;
+        $this->db->insert('tickets',$datat);
+		//agregar par de tickets
+		$this->db->set('par', $parmasuno[0]->par);		
+        $this->db->where('idt', $id);
+        $this->db->update('tickets');
+		//actualizar servicios asignados en factura
+		$this->db->set('television', $tele);
+		$this->db->set('combo', $net);
+        $this->db->where('tid', $ticket2->id_invoice);
+        $this->db->update('invoices');
+
+        echo json_encode(array('status' => 'Success', 'message' =>
+            $this->lang->line('UPDATED'), 'pstatus' => $status));
+    }
 
     public function update_status()
     {
@@ -534,6 +599,11 @@ class Tickets Extends CI_Controller
 				$this->db->set('usu_estado', 'Activo');
         		$this->db->where('id', $ticket->cid);
         		$this->db->update('customers');
+				//id factura si se dividio orden
+				$this->db->set('id_factura', $data['tid']);							
+        		$this->db->where('par', $ticket->par);
+				//$this->db->where('codigo'!== $ticket->codigo);
+        		$this->db->update('tickets');
         }else{
             $msg1="no redirect";        
 		}
@@ -829,6 +899,8 @@ class Tickets Extends CI_Controller
         $dataz['fecha_final']=$fecha_final;
         
         $this->db->update('tickets',$dataz,array('idt'=>$tid));
+				
+		
 		
 		
         echo json_encode(array('msg1'=>$msg1,'tid'=>$data['tid'],'status' => 'Success', 'message' =>

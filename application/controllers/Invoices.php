@@ -665,13 +665,7 @@ class Invoices extends CI_Controller
                 $data2['cid']=$customer_id;
                 $data2['status']='Pendiente';
                 //Tipo de instalacion
-					if ($television == 'Television' AND $combo == no){
-					$data2['section']='Instalacion Television';
-						}if ($television == no AND $combo !== no){
-							$data2['section']='Instalacion de Internet '.$combo.'';
-							}if ($television == 'Television' AND $combo !== no){
-								$data2['section']='Instalacion Television mas '.$combo.'';
-					}
+					
                 $data2['id_invoice']=$invocieno;
 				$data2['id_factura']=null;
                 $this->db->insert('tickets',$data2);

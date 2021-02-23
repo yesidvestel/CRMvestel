@@ -871,6 +871,17 @@ $(document).on('click', "#submit_model3", function (e) {
 
 
 });
+$(document).on('click', "#submit_model4", function (e) {
+    e.preventDefault();
+
+    var o_data =  $("#form_model4").serialize();
+    var action_url= $('#form_model4 #action-url').val();
+    $("#pop_model4").modal('hide');
+
+    saveMData(o_data,action_url);
+
+
+});
 function saveMData(o_data,action_url) {
 
     var errorNum = farmCheck();

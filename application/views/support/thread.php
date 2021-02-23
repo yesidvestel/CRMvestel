@@ -2,7 +2,8 @@
 	
     <div class="card card-block">
         <?php $lista_productos_orden=$this->db->get_where('transferencia_products_orden',array('tickets_id'=>$id_orden_n))->result_array();
-		$traslados=$this->db->get_where('temporales',array('corden'=>$thread_info['codigo']))->row();?>
+		$traslados=$this->db->get_where('temporales',array('corden'=>$thread_info['codigo']))->row();
+		$factura=$this->db->get_where('invoices',array('tid'=>$thread_info['id_invoice']))->row();?>
         
         
     </div>
@@ -37,7 +38,7 @@
                 echo '<br><strong>Usuario:</strong> ' . $thread_info['name'] .' '. $thread_info['unoapellido'];
 				echo '<br><strong>Documento:</strong> ' . $thread_info['documento'];
 				echo '<br><strong>Abonado:</strong> ' . $thread_info['abonado'];
-				echo '<br><strong>Celular:</strong> ' . $thread_info['celular'];
+				echo '<br><strong>Celular:</strong> ' . $thread_info['celular'].$thread_info['id_invoice'];
 				echo '<br><strong>Direccion:</strong> ' . $thread_info['nomenclatura'].' '. $thread_info['numero1']. $thread_info['adicionauno'].' N°'. $thread_info['numero2']. $thread_info['adicional2'].' - '. $thread_info['numero3'];
 				echo '<br><strong>Barrio:</strong> ' . $thread_info['barrio'];
                 echo '<br><strong>Estado:</strong> <span id="pstatus">' . $thread_info['status'];
@@ -52,7 +53,13 @@
 			<?php echo '<h4>Detalles:</h4><code class="card card-block"><h5 style="text-decoration: underline;">' .$thread_info['detalle'].'</h5>'.strip_tags($thread_info['section'],'<p>');
 	
 	if ($thread_info['detalle']=='Traslado'){ echo $traslados->nomenclatura.' '.$traslados->nuno.$traslados->auno.' Nº '.$traslados->ndos.$traslados->ados.' - '.$traslados->ntres;}?>
-	<?php if ($thread_info['detalle']=='Instalacion'){ echo $traslados->tv.' '.$traslados->internet.' '.$traslados->puntos.' Puntos';}?>
+	<?php if ($thread_info['detalle']=='Instalacion' ){ if ($thread_info['id_invoice']!=='0')
+					{ echo $factura->television.' '.$factura->combo.' '.$factura->puntos.' Puntos';}else{
+						echo $traslados->tv.' '.$traslados->internet.' '.$traslados->puntos.' Puntos';}
+	
+}if (strpos($thread_info['detalle'], "Reinstalacion")!==false){
+	echo $traslados->tv.' '.$traslados->internet.' '.$traslados->puntos.' Puntos';
+}?>
 			
 		</code>		
 			
@@ -133,19 +140,25 @@
 
             <div class="form-group row">
 
-                <label class="col-sm-2 col-form-label"></label>
+                <label class="col-sm-1 col-form-label"></label>
 
                 <div class="col-sm-2">
                     <input type="submit" id="document_add" class="btn btn- btn-blue mb-1"
                            value="DOCUMENTAR" data-loading-text="Updating...">
                 </div>
 				<div class="col-sm-2">			
-		 	<a href="#pop_model2" data-toggle="modal" onclick="funcion_status();" data-remote="false" class="btn btn- btn-green mb-1" title="Change Status"
-                > ASIGNAR EQUIPO</a></div>
+		 			<a href="#pop_model2" data-toggle="modal" onclick="funcion_status();" data-remote="false" class="btn btn- btn-green mb-1" title="Change Status"
+                	> ASIGNAR EQUIPO</a>
+				</div>
 				<div class="col-sm-2">
-			<a href="#pop_model3" data-toggle="modal" onclick="funcion_status();" data-remote="false" class="btn btn- btn-orange mb-1" title="Change Status">ASIGNAR MATERIAL</a></div>
+					<a href="#pop_model3" data-toggle="modal" onclick="funcion_status();" data-remote="false" class="btn btn- btn-orange mb-1" title="Change Status">ASIGNAR MATERIAL</a>
+				</div>
 				<div class="col-sm-2">
-			<a href="#pop_model" data-toggle="modal" onclick="funcion_status();" data-remote="false" class="btn btn- btn-red mb-1" title="Change Status"><span class="icon-tab"></span> CAMBIAR ESTADO</a></div>
+					<a href="#pop_model" data-toggle="modal" onclick="funcion_status();" data-remote="false" class="btn btn- btn-red mb-1" title="Change Status"><span class="icon-tab"></span> CAMBIAR ESTADO</a>
+				</div>
+				<div class="col-sm-2">
+					<a href="#pop_model4" data-toggle="modal" onclick="funcion_status();" data-remote="false" class="btn btn- btn-black mb-1" title="Change Status"><span></span> DIVIDIR ORDEN</a>
+				</div>
 				
             </div>
 				
@@ -361,6 +374,41 @@
                         <input  type="button" class="btn btn-primary" value="Agregar" onclick="guardar_productos()">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Volver</button>
                                                
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="pop_model4" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Dividir Orden</h4>
+            </div>
+
+            <div class="modal-body">
+                <form id="form_model4">
+					<input type="text" class="form-control required"
+                               name="id" value="<?php echo $thread_info['idt'] ?>">
+
+                    <div class="form-group row">
+                    <div class="frmSearch">
+						<label for="cst" class="caption col-sm-2">Servicio a Instalar</label>
+                        <div class="col-sm-6">
+							<select name="servicio" class="form-control mb-1">
+								<option value="television">Television</option>
+								<option value="internet">Internet</option>
+                            </select>
+                        </div>
+                    </div>
+                	</div>
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">Volver</button>
+					<input type="hidden" id="action-url" value="tickets/dividir"></input>
+                        <button type="button" class="btn btn-primary"
+                                id="submit_model4">Dividir</button>
                     </div>
                 </form>
             </div>
