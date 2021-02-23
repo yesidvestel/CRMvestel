@@ -214,8 +214,11 @@
                 </tfoot>
             </table>
         </div>
+        <a href="<?=base_url()?>clientgroup/explortar_a_excel" class="btn btn-primary btn-md">Exportar a CSV</a>
     </div>
+
 </article>
+
 <script type="text/javascript">
     var tb;
     $(document).ready(function () {
