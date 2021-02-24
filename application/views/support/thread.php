@@ -189,9 +189,21 @@
 </script>
 
 <script type="text/javascript">
+    var estado_actual="<?=$thread_info['status']?>";
+    function validar_estado(){
+        var status_selected= $('#estadoid option:selected').text();
+        if(estado_actual==status_selected){
+            $("#submit_model").prop("disabled","true");
+        }else{
+            if(estado_actual=="Realizando" && status_selected=="Resuelto"){
+              $("#submit_model").prop("disabled","true");  
+            }
+        }
+    }
     function funcion_status(){
         //aqui estoy toca terminar esto de que muestre y n el div
         var x= $('#estadoid option:selected').text();
+        
         if(x!='Resuelto'){
             $("#fecha_final_div").css('visibility','hidden');
             $("#submit_model").removeAttr("disabled");
@@ -199,6 +211,7 @@
             $("#fecha_final_div").css('visibility','visible');    
              $("#submit_model").prop("disabled","true");
         }
+        validar_estado();
         
     }
     <?php $fec=new DateTime($thread_info['created'] );  ?>
@@ -213,6 +226,7 @@
             }else{
                 $("#submit_model").removeAttr("disabled");
             }
+            validar_estado();
     }
 </script>
 
