@@ -135,7 +135,14 @@ $(function(){
         // Clear buttons except Cancel
         $('.modal-footer button:not(".btn-default")').remove();
         // Set input values
-        $("#ver_orden_id").attr("href",baseurl+"tickets/thread/?id="+data.event.idt);
+        try {
+            $("#ver_orden_id").attr("href",baseurl+"tickets/thread/?id="+data.event.idt);
+        }
+        catch (e) {
+       
+        }
+        
+        
 		$('#idorden').val(data.event ? data.event.idorden : '');
         $('#title').val(data.event ? data.event.title : '');        
         $('#description').val(data.event ? data.event.description : '');
