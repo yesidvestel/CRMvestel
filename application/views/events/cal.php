@@ -40,7 +40,7 @@
                         <label class="col-md-4 control-label" for="title"><?php echo $this->lang->line('Add Event')  ?></label>
 
                     </div>
-					<input id="idorden" name="idorden" type="text" class="form-control input-md"/>
+					<input id="idorden" name="idorden" type="text" style="visibility: hidden;" class="form-control input-md"/>
                     <div class="row form-group">
                         <label class="col-md-4 control-label" for="title"><?php echo $this->lang->line('Title')  ?></label>
                         <div class="col-md-8">
@@ -70,7 +70,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-				<a href="<?php echo base_url('tickets/thread?id=' . $details['id']) ?>"><button type="button" class="btn btn-default">Ver orden</button></a>
+				<a href="<?php echo base_url('tickets/thread?id=' . $details['id']) ?>" id="ver_orden_id"><button type="button" class="btn btn-default">Ver orden</button></a>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
             </div>
         </div>
