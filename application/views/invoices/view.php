@@ -833,7 +833,9 @@
                         </div>
 						<div class="col-xs-6 mb-1"><label
                                     for="pmethod">Internet</label>
-							<?php if ($invoice['refer']=='Yopal') { ?>
+                                    
+                            <?php $refer_var =strtolower(str_replace(' ', '', $invoice['refer'])); ?>
+							<?php if ($refer_var=='yopal') {?>
                             <select name="internet" class="form-control mb-1">
                                 <option value="por_defecto">-><?php echo $invoice['combo'] ?></option>
 								<option <?=($invoice['combo']=="no")? 'hidden' :''?> value="no">Suspender</option>
@@ -845,7 +847,7 @@
 								<option <?=($invoice['combo']=="10Megas")? 'hidden' :''?> value="10Megas">10Megas</option>
 								<option <?=($invoice['combo']=="50Megas")? 'hidden' :''?> value="50Megas">50Megas</option>
                             </select><?php } ?>
-							<?php if ($invoice['refer']=='Monterrey' OR $invoice['refer']=='monterrey') { ?>
+							<?php if ($refer_var=='monterrey') { ?>
                             <select name="internet" class="form-control mb-1">
                                 <option value="por_defecto">-><?php echo $invoice['combo'] ?></option>
 								<option <?=($invoice['combo']=="no")? 'hidden' :''?> value="no">Suspender</option>
@@ -857,7 +859,7 @@
 								<option <?=($invoice['combo']=="10Megas")? 'hidden' :''?> value="10Megas">10Megas</option>
 								<option <?=($invoice['combo']=="50Megas")? 'hidden' :''?> value="50Megas">50Megas</option>
                             </select><?php } ?>
-							<?php if ($invoice['refer']=='Villanueva') { ?>
+							<?php if ($refer_var=='villanueva') { ?>
 							<select name="internet" class="form-control mb-1">
                                 <option value="por_defecto">-><?php echo $invoice['combo'] ?></option>
 								<option <?=($invoice['combo']=="no")? 'hidden' :''?> value="no">Suspender</option>
