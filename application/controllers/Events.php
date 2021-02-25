@@ -61,7 +61,7 @@ class Events extends CI_Controller
     /*Add new event */
     public function addEvent()
     {
-		$idorden = '';
+		$idorden = $this->input->post('idorden');
         $title = $this->input->post('title');
         $start = $this->input->post('start');
         $end = $this->input->post('end');
@@ -76,11 +76,12 @@ class Events extends CI_Controller
     public function updateEvent()
     {
         $title = $this->input->post('title');
+		$idorden = $this->input->post('idorden');
         $id = $this->input->post('id');
         $description = $this->input->post('description');
         $color = $this->input->post('color');
 		$rol = $this->input->post('rol');
-        $result = $this->events_model->updateEvent($id, $title, $description, $color, $rol);
+        $result = $this->events_model->updateEvent($id, $idorden, $title, $description, $color, $rol);
         echo $result;
     }
 

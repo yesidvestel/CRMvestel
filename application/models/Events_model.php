@@ -56,11 +56,11 @@ class Events_model extends CI_Model
 
     /*Update  event */
 
-    public function updateEvent($id, $title, $description, $color, $rol)
+    public function updateEvent($id, $idorden, $title, $description, $color, $rol)
     {
 
-        $sql = "UPDATE events SET title = ?, description = ?, color = ?, rol = ? WHERE id = ?";
-        $this->db->query($sql, array($title, $description, $color, $rol, $id));
+        $sql = "UPDATE events SET idorden = ?, title = ?, description = ?, color = ?, rol = ? WHERE id = ?";
+        $this->db->query($sql, array($idorden, $title, $description, $color, $rol, $id));
         return ($this->db->affected_rows() != 1) ? false : true;
     }
 

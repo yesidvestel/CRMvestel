@@ -135,6 +135,7 @@ $(function(){
         // Clear buttons except Cancel
         $('.modal-footer button:not(".btn-default")').remove();
         // Set input values
+		$('#idorden').val(data.event ? data.event.idorden : '');
         $('#title').val(data.event ? data.event.title : '');        
         $('#description').val(data.event ? data.event.description : '');
 		$('#rol').val(data.event ? data.event.rol : '');
@@ -149,8 +150,9 @@ $(function(){
 
     // Handle Click on Add Button
     $('.modal').on('click', '#add-event',  function(e){
-        if(validator(['title', 'description', 'rol'])) {
+        if(validator(['idorden', 'title', 'description', 'rol'])) {
             $.post(base_url+'events/addEvent', {
+				idorden: $('#idorden').val(),
                 title: $('#title').val(),
                 description: $('#description').val(),
                 color: $('#color').val(),
@@ -169,9 +171,10 @@ $(function(){
 
     // Handle click on Update Button
     $('.modal').on('click', '#update-event',  function(e){
-        if(validator(['title', 'description', 'rol'])) {
+        if(validator(['idorden', 'title', 'description', 'rol'])) {
             $.post(base_url+'events/updateEvent', {
                 id: currentEvent._id,
+				idorden: $('#idorden').val(),
                 title: $('#title').val(),
                 description: $('#description').val(),
                 color: $('#color').val(),
