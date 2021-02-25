@@ -70,7 +70,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-				<a href="<?php echo base_url('tickets/thread?id=' . $details['id']) ?>" id="ver_orden_id"><button type="button" class="btn btn-default">Ver orden</button></a>
+				<a href="<?php echo base_url('tickets/thread?id=') ?>" id="ver_orden_id"><button type="button" class="btn btn-default" style="background-color:skyblue;color: white">Ver orden</button></a>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
             </div>
         </div>
