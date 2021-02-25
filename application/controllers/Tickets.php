@@ -110,7 +110,7 @@ class Tickets Extends CI_Controller
                 $row[]='<a href="'.base_url("customers/view?id=".$ticket->cid).'">'.$ticket->abonado.'</a>';
             }
 			$row[] = $ticket->name;
-          if($ticket->id_factura !=null){
+          if($ticket->id_factura !=null || $ticket->id_factura !==0 ){
                 $row[]='<a href="'.base_url("invoices/view?id=".$ticket->id_factura).'">'.$ticket->id_factura.'</a>';
             }else{
                  $row[]="Sin Factura";
@@ -433,6 +433,10 @@ class Tickets Extends CI_Controller
 		$content = 'Revisar orden #'.$ticket->codigo;
 		$ordenn = $ticket->codigo;
 		$this->tools->addtask($name, $estado, $priority, $stdate, $tdate, $employee, $assign, $content, $ordenn);
+			//cambio color al finalizar
+			$this->db->set('color', '#a3a3a3');
+        	$this->db->where('idorden', $ticket->codigo);
+        	$this->db->update('events');
 		}
         foreach ($invoice[0] as $key => $value) {
             if($key!='id' && $key!='pmethod' && $key!='status' && $key!='pamnt'){
