@@ -17,7 +17,8 @@
  */
 
 defined('BASEPATH') OR exit('No direct script access allowed');
-
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 class Clientgroup extends CI_Controller
 {
     public function __construct()
@@ -47,7 +48,18 @@ class Clientgroup extends CI_Controller
         $this->load->view('fixed/footer');
     }
     public function explortar_a_excel(){
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+        $sheet->setCellValue('A1', 'Sl.No');
+        $writer = new Xlsx($spreadsheet);
+        $filename = 'Report';
 
+        ob_end_clean();
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="'. $filename .'.xlsx"'); 
+        header('Cache-Control: max-age=0');
+
+        $writer->save('php://output');
        
 
     }
