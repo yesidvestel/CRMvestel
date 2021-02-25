@@ -38,7 +38,7 @@
                 echo '<br><strong>Usuario:</strong> ' . $thread_info['name'] .' '. $thread_info['unoapellido'];
 				echo '<br><strong>Documento:</strong> ' . $thread_info['documento'];
 				echo '<br><strong>Abonado:</strong> ' . $thread_info['abonado'];
-				echo '<br><strong>Celular:</strong> ' . $thread_info['celular'].$thread_info['id_invoice'];
+				echo '<br><strong>Celular:</strong> ' . $thread_info['celular'];
 				echo '<br><strong>Direccion:</strong> ' . $thread_info['nomenclatura'].' '. $thread_info['numero1']. $thread_info['adicionauno'].' N°'. $thread_info['numero2']. $thread_info['adicional2'].' - '. $thread_info['numero3'];
 				echo '<br><strong>Barrio:</strong> ' . $thread_info['barrio'];
                 echo '<br><strong>Estado:</strong> <span id="pstatus">' . $thread_info['status'];
