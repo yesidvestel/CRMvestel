@@ -45,10 +45,10 @@ class Customers_model extends CI_Model
         if ($id != '') {
             $this->db->where('gid', $id);
         }
-        if ($_GET['estado'] != '' && $_GET['estado'] != null) {
+        if (isset($_GET['estado']) && $_GET['estado'] != '' && $_GET['estado'] != null) {
             $this->db->where('usu_estado=', $_GET['estado']);
         }
-        if ($_GET['direccion'] =="Personalizada"){ 
+        if (isset($_GET['direccion']) &&$_GET['direccion'] =="Personalizada"){ 
             if ($_GET['localidad'] != '' && $_GET['localidad'] != '-') {
                 $this->db->where('localidad=', $_GET['localidad']);
             }
