@@ -450,7 +450,7 @@ class Transactions extends CI_Controller
 
 
         echo json_encode(array('status' => 'Success', 'message' =>
-            $this->lang->line('Transaction has been added'), 'pstatus' => $this->lang->line($status), 'activity' => $activitym, 'amt' => $totalrm, 'ttlpaid' => $paid_amount));
+            $this->lang->line('Transaction has been added'), 'pstatus' => $this->lang->line($status), 'activity' => $activitym, 'amt' => $totalrm, 'ttlpaid' => $paid_amount,"tid"=>$tid));
     } 
 
 

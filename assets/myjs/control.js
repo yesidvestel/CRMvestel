@@ -200,10 +200,12 @@ function payInvoice(pyurl) {
                     $('#rmpay').val(data.amt);
                     $('#paymade').text(data.ttlpaid);
                     $('#paydue').text(data.amt);
-                    var urlx=baseurl+'transactions/payinvoicemultiple';
-                    location.reload();
+                    var urlx=baseurl+'transactions/payinvoice';
+                    
                     if(pyurl==urlx){
-
+                        window.location.replace(baseurl+"invoices/printinvoice?id="+data.tid);
+                    }else{
+                        location.reload();
                     }
                 } else {
                     $("#notify .message").html("<strong>" + data.status + "</strong>: " + data.message);
