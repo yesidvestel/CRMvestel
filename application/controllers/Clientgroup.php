@@ -17,12 +17,11 @@
  */
 
 defined('BASEPATH') OR exit('No direct script access allowed');
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 class Clientgroup extends CI_Controller
 {
     public function __construct()
     {
+
         parent::__construct();
         $this->load->model('clientgroup_model', 'clientgroup');
         $this->load->model('customers_model', 'customers');
@@ -48,18 +47,71 @@ class Clientgroup extends CI_Controller
         $this->load->view('fixed/footer');
     }
     public function explortar_a_excel(){
-        $spreadsheet = new Spreadsheet();
-        $sheet = $spreadsheet->getActiveSheet();
-        $sheet->setCellValue('A1', 'Sl.No');
-        $writer = new Xlsx($spreadsheet);
-        $filename = 'Report';
+        
+         //$CI->router->config->config['composer_autoload']='vendor/autoload.php';
+         //$this->config->item("composer_autoload","vendor/autoload.php");
+         //$this->config->load('breadcrumbs');
+        //$_SESSION['varx']=true;
+        //$this->config->load('config'); 
+        //$CI=get_instance();
+        //$CI->registry->set("composer_autoload", "vendor/autoload.php");
+        //$this->config->set_item('composer_autoload', 'vendor/autoload.php');
+        
+         //var_dump($this->config->item("composer_autoload"));
+         
+        //var_dump($config['composer_autoload']);
+        //include_once("php_xlsxwriter/xlsxwriter.class.php");
+        $this->load->library('Excel');
+    
+    //define column headers
+    $headers = array('Product Id' => 'string', 'Price' => 'string', 'Sale Price' => 'string', 'Sales Count' => 'string', 'string' => 'string');
+    
+    //fetch data from database
+    //$salesinfo = $this->product_model->get_salesinfo();
+    
+    //create writer object
+    $writer = new Excel();
+    
+        //meta data info
+   // $keywords = array('xlsx','MySQL','Codeigniter');
+    $writer->setTitle('Sales Information for Products');
+    $writer->setSubject('Report generated using Codeigniter and XLSXWriter');
+    $writer->setAuthor('https://roytuts.com');
+    $writer->setCompany('https://roytuts.com');
+    $writer->setKeywords($keywords);
+    $writer->setDescription('Sales information for products');
+    $writer->setTempDir(sys_get_temp_dir());
+    
+    //write headers
+    $writer->writeSheetHeader('Sheet1', $headers);
+    
+    //write rows to sheet1
+    
+        $writer->writeSheetRow('Sheet1',array("ss", "asd", "asd", "asd", "asd"));
+    
+    
+    $fileLocation = 'salesinfo.xlsx';
+    
+    //write to xlsx file
+    $writer->writeToFile($fileLocation);
+    //echo $writer->writeToString();
+    
+    //force download
+    header('Content-Description: File Transfer');
+    header("Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+    header("Content-Disposition: attachment; filename=".basename($fileLocation));
+    header("Content-Transfer-Encoding: binary");
+    header("Expires: 0");
+    header("Pragma: public");
+    header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+    header('Content-Length: ' . filesize($fileLocation)); //Remove
 
-        ob_end_clean();
-        header('Content-Type: application/vnd.ms-excel');
-        header('Content-Disposition: attachment;filename="'. $filename .'.xlsx"'); 
-        header('Cache-Control: max-age=0');
+    ob_clean();
+    flush();
 
-        $writer->save('php://output');
+    readfile($fileLocation);
+    unlink($fileLocation);
+    exit(0);
        
 
     }
