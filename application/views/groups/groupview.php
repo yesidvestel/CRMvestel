@@ -33,6 +33,7 @@
                                         <option value=''>Todos</option>
                                         <option value='Internet'>Internet</option>
                                         <option value='TV'>TV</option>
+                                        <option value='Combo'>Combo</option>
                                     </select>
                                 </div>                              
                             </div>
