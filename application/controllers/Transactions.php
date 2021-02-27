@@ -243,13 +243,13 @@ class Transactions extends CI_Controller
             $totalrm = $totalrm - $amount;
         } else {
 
-            $today = $invresult->invoiceduedate;
-            $addday = $invresult->rec;
+            //$today = $invresult->invoiceduedate;
+            //$addday = $invresult->rec;
 
 
-            $ndate = date("Y-m-d", strtotime($today . " +" . $addday . 's'));
+            //$ndate = date("Y-m-d", strtotime($today . " +" . $addday . 's'));
 
-            $this->db->set('invoiceduedate', $ndate);
+            //$this->db->set('invoiceduedate', $ndate);
             $this->db->set('pmethod', $pmethod);
             $this->db->set('pamnt', "pamnt+$amount", FALSE);
             $this->db->set('status', 'paid');
@@ -416,14 +416,14 @@ class Transactions extends CI_Controller
 			
         } else {
 
-            $today = $invresult->invoiceduedate;
-            $addday = $invresult->rec;
+            //$today = $invresult->invoiceduedate;
+            //$addday = $invresult->rec;
 
 
-            $ndate = date("Y-m-d", strtotime($today . " +" . $addday . 's'));
+            //$ndate = date("Y-m-d", strtotime($today . " +" . $addday . 's'));
 			
 
-            $this->db->set('invoiceduedate', $ndate);
+            //$this->db->set('invoiceduedate', $ndate);
             $this->db->set('pmethod', $pmethod);
             $this->db->set('pamnt', "pamnt+$amount", FALSE);
             $this->db->set('status', 'paid');
@@ -617,13 +617,13 @@ class Transactions extends CI_Controller
             $totalrm = $totalrm - $amount;
         } else {
 
-            $today = $invresult->invoiceduedate;
-            $addday = $invresult->rec;
+            //$today = $invresult->invoiceduedate;
+            //$addday = $invresult->rec;
 
 
-            $ndate = date("Y-m-d", strtotime($today . " +" . $addday . 's'));
+            //$ndate = date("Y-m-d", strtotime($today . " +" . $addday . 's'));
 
-            $this->db->set('invoiceduedate', $ndate);
+            //$this->db->set('invoiceduedate', $ndate);
             $this->db->set('pmethod', $pmethod);
             $this->db->set('pamnt', "pamnt+$amount", FALSE);
             $this->db->set('status', 'paid');
