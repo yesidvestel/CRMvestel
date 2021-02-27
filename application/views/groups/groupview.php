@@ -24,6 +24,18 @@
                                     </select>
                                 </div>
                             </div>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label"
+                                       for="pay_cat">Servicio</label>
+
+                                <div class="col-sm-6">
+                                    <select name="trans_type" class="form-control" id="sel_servicios">
+                                        <option value=''>Todos</option>
+                                        <option value='Internet'>Internet</option>
+                                        <option value='TV'>TV</option>
+                                    </select>
+                                </div>                              
+                            </div>
 							<div class="form-group row">
                                 <label class="col-sm-2 col-form-label"
                                        for="pay_cat">Direccion</label>
@@ -214,7 +226,7 @@
                 </tfoot>
             </table>
         </div>
-        <a href="<?=base_url()?>clientgroup/explortar_a_excel" class="btn btn-primary btn-md">Exportar a Excel .XLSX</a>
+        <a href="#" onclick="redirect_to_export()" class="btn btn-primary btn-md">Exportar a Excel .XLSX</a>
     </div>
 
 </article>
@@ -344,8 +356,8 @@
         });
     });
 	function filtrar(){
-        var estado=$("#estado option:selected").val();
-        //var depar =$("#depar option:selected").val();
+            var estado=$("#estado option:selected").val();
+           
       
             var localidad= $("#cmbLocalidades option:selected").val();
             var barrio= $("#cmbBarrios option:selected").val();
@@ -357,9 +369,29 @@
             var adicional2= $("#adicional2 option:selected").val();
             var numero3= $("#numero3").val();
             var direccion = $("#sel_dir_personalizada option:selected").val();
-            tb.ajax.url( baseurl+'clientgroup/grouplist?estado='+estado+"&id=<?=$_GET['id']?>&localidad="+localidad+"&barrio="+barrio+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion).load();     
+            var sel_servicios = $("#sel_servicios option:selected").val();
+            tb.ajax.url( baseurl+'clientgroup/grouplist?estado='+estado+"&id=<?=$_GET['id']?>&localidad="+localidad+"&barrio="+barrio+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios).load();     
         
        
+
+    }
+    function redirect_to_export(){
+         var estado=$("#estado option:selected").val();
+           
+      
+            var localidad= $("#cmbLocalidades option:selected").val();
+            var barrio= $("#cmbBarrios option:selected").val();
+            var nomenclatura= $("#nomenclatura option:selected").val();
+            var numero1= $("#numero1").val();
+            
+            var adicionauno= $("#adicionauno option:selected").val();
+            var numero2= $("#numero2").val();
+            var adicional2= $("#adicional2 option:selected").val();
+            var numero3= $("#numero3").val();
+            var direccion = $("#sel_dir_personalizada option:selected").val();
+            var sel_servicios = $("#sel_servicios option:selected").val();
+            var url_redirect=baseurl+'clientgroup/explortar_a_excel?estado='+estado+"&id=<?=$_GET['id']?>&localidad="+localidad+"&barrio="+barrio+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios;
+            window.location.replace(url_redirect);
 
     }
     $("#div_direccion_personalizada").hide();

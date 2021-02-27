@@ -75,6 +75,11 @@ class Customers_model extends CI_Model
                 $this->db->where('numero3=', $_GET['numero3']);
             }
         }
+        if (isset($_GET['sel_servicios']) && $_GET['sel_servicios'] != '' && $_GET['sel_servicios'] != null) {
+            if($_GET['sel_servicios']=="Internet"){
+               // $this->db->where('combo=', "no");
+            }
+        }
         $i = 0;
 
         foreach ($this->column_search as $item) // loop column

@@ -48,23 +48,44 @@ class Clientgroup extends CI_Controller
     }
     public function explortar_a_excel(){
         
-         //$CI->router->config->config['composer_autoload']='vendor/autoload.php';
-         //$this->config->item("composer_autoload","vendor/autoload.php");
-         //$this->config->load('breadcrumbs');
-        //$_SESSION['varx']=true;
-        //$this->config->load('config'); 
-        //$CI=get_instance();
-        //$CI->registry->set("composer_autoload", "vendor/autoload.php");
-        //$this->config->set_item('composer_autoload', 'vendor/autoload.php');
+        $datos=array("gid"=>$_GET['id']);
+        if (isset($_GET['estado']) && $_GET['estado'] != '' && $_GET['estado'] != null) {
+            $datos["usu_estado"]=$_GET['estado'];
+            
+        }
+        if (isset($_GET['direccion']) &&$_GET['direccion'] =="Personalizada"){ 
+            if ($_GET['localidad'] != '' && $_GET['localidad'] != '-') {
+                $datos["localidad"]=$_GET['localidad'];            
+            }
+            if ($_GET['barrio'] != '' && $_GET['barrio'] != '-') {
+                $datos["barrio"]=$_GET['barrio'];                
+            }
+            if ($_GET['nomenclatura'] != '' && $_GET['nomenclatura'] != '-') {
+                $datos["nomenclatura"]=$_GET['nomenclatura'];                
+            }
+            if ($_GET['numero1'] != '') {
+                $datos["numero1"]=$_GET['numero1'];                
+            }
+            if ($_GET['adicionauno'] != '' && $_GET['adicionauno'] != '-') {
+                $datos["adicionauno"]=$_GET['adicionauno'];                
+            }
+            if ($_GET['numero2'] != '' && $_GET['numero2'] != '-') {
+                $datos["numero2"]=$_GET['numero2'];                
+            }
+            if ($_GET['adicional2'] != '' && $_GET['adicional2'] != '-') {
+                $datos["adicional2"]=$_GET['adicional2'];
+            }
+            if ($_GET['numero3'] != '' && $_GET['numero3'] != '-') {
+                $datos["numero3"]=$_GET['numero3'];
+            }
+        }
+        $lista_customers=$this->db->get_where("customers",$datos)->result_array();
+        $cust_group=$this->db->get_where("customers_group",array('id' => $_GET['id']))->row();
         
-         //var_dump($this->config->item("composer_autoload"));
-         
-        //var_dump($config['composer_autoload']);
-        //include_once("php_xlsxwriter/xlsxwriter.class.php");
         $this->load->library('Excel');
     
     //define column headers
-    $headers = array('Product Id' => 'string', 'Price' => 'string', 'Sale Price' => 'string', 'Sales Count' => 'string', 'string' => 'string');
+    $headers = array('Abonado' => 'string', 'Nombre' => 'string', 'Celular' => 'string', 'Direccion' => 'string', 'Estado' => 'string');
     
     //fetch data from database
     //$salesinfo = $this->product_model->get_salesinfo();
@@ -73,24 +94,39 @@ class Clientgroup extends CI_Controller
     $writer = new Excel();
     
         //meta data info
-   // $keywords = array('xlsx','MySQL','Codeigniter');
-    $writer->setTitle('Sales Information for Products');
-    $writer->setSubject('Report generated using Codeigniter and XLSXWriter');
-    $writer->setAuthor('https://roytuts.com');
-    $writer->setCompany('https://roytuts.com');
+    $keywords = array('xlsx','CUSTOMERS','VESTEL');
+    $writer->setTitle('Reporte Customers '.$cust_group->title);
+    $writer->setSubject('');
+    $writer->setAuthor('VESTEL');
+    $writer->setCompany('VESTEL');
     $writer->setKeywords($keywords);
-    $writer->setDescription('Sales information for products');
+    $writer->setDescription('Reporte Customers '.$cust_group->title);
     $writer->setTempDir(sys_get_temp_dir());
     
-    //write headers
-    $writer->writeSheetHeader('Sheet1', $headers);
+    //write headers el primer campo que es nombre de la hoja de excel deve de coincidir en writeSheetHeader y writeSheetRow para tener en cuenta si se piensan agregar otras hojas o algo por el estilo
+    $writer->writeSheetHeader('Customers '.$cust_group->title, $headers,$col_options = array(
+
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+));
     
     //write rows to sheet1
+    foreach ($lista_customers as $key => $customer) {
+            $direccion= $customer['nomenclatura'] . ' ' . $customer['numero1'] . $customer['adicionauno'].' Nº '.$customer['numero2'].$customer['adicional2'].' - '.$customer['numero3'];
+            $writer->writeSheetRow('Customers '.$cust_group->title,array($customer['abonado'], $customer['name'], $customer['celular'], $direccion, $customer['usu_estado']));
+    }
+        
+        
     
-        $writer->writeSheetRow('Sheet1',array("ss", "asd", "asd", "asd", "asd"));
-    
-    
-    $fileLocation = 'salesinfo.xlsx';
+    $fecha_actual= date("d-m-Y");
+    $dia= date("N");
+    $this->load->model('reports_model', 'reports');
+    $fecha_actual=$this->reports->obtener_dia($dia)." ".$fecha_actual;
+    $fileLocation = 'Customers '.$cust_group->title.' '.$fecha_actual.'.xlsx';
     
     //write to xlsx file
     $writer->writeToFile($fileLocation);
@@ -151,7 +187,9 @@ class Clientgroup extends CI_Controller
 
 
             $data[] = $row;
+            
         }
+        //para el filtro replico el for each pero por un for y reacomodo los items de a 10 cubriendo espacios en blanco
 
         $output = array(
             "draw" => $_POST['draw'],
