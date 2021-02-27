@@ -337,6 +337,9 @@ class Tickets Extends CI_Controller
 		$parmasuno= $this->db->select('max(par)+1 as par')->from('tickets')->get()->result();
 		$servicio = $this->input->post('servicio');
 		//confirmar si hay afiliacion
+        if($parmasuno[0]->par==null|| $parmasuno[0]->par==0 ||$parmasuno[0]->par==''){
+            $parmasuno[0]->par=1;
+        }
 		if ($ticket2->id_invoice==='0'){
 			$tv = $temporal->tv;
 			$inter = $temporal->internet;
