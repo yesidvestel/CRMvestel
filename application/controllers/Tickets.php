@@ -610,7 +610,9 @@ class Tickets Extends CI_Controller
 				$this->db->set('id_factura', $data['tid']);							
         		$this->db->where('par', $ticket->par);
 				//$this->db->where('codigo'!== $ticket->codigo);
-        		$this->db->update('tickets');
+                if($ticket->par!=null){
+        		  $this->db->update('tickets');
+                }
         }else{
             $msg1="no redirect";        
 		}
