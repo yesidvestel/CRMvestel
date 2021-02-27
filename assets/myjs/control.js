@@ -203,7 +203,7 @@ function payInvoice(pyurl) {
                     var urlx=baseurl+'transactions/payinvoice';
                     
                     if(pyurl==urlx){
-                        window.location.replace(baseurl+"invoices/printinvoice?id="+data.tid);
+                        //window.location.replace(baseurl+"invoices/printinvoice?id="+data.tid);
                     }else{
                         location.reload();
                     }
