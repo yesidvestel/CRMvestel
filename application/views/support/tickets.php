@@ -122,6 +122,21 @@
                                     </select>
                                 </div>								
                             </div>
+				 			<div class="form-group row">
+                                <label class="col-sm-2 col-form-label"
+                                       for="pay_cat">Fecha</label>
+
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control required"
+                                           placeholder="Start Date" name="sdate" id="sdate"
+                                            autocomplete="false">
+                                </div>
+								<div class="col-sm-2">
+									<input type="text" class="form-control required"
+                                           placeholder="End Date" name="edate" id="edate"
+                                           data-toggle="datepicker" autocomplete="false">
+								</div>
+                            </div>
 							<div class="form-group row">
                                 <label class="col-sm-3 col-form-label" for="pay_cat"></label>
 

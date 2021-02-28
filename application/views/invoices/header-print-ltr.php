@@ -1,29 +1,26 @@
 <table>
         <tr>
-            <td class="myco">
-                <img src="<?php echo base_url('userfiles/company/' . $this->config->item('logo')) ?>"
-                     style="max-width:200px;max-height:180px; margin:20px">
-            </td>
+            
             <td>
 
             </td>
             <td class="myw">
 			<table class="top_sum">
                  <tr>
-                       <td colspan="1" class="t_center"><h2 ><?php echo $this->lang->line('Invoice') ?></h2><br><br></td>
+                       <td colspan="1" class="t_center"><h2 ><?php echo $this->config->item('ctitle') ?></h2><br></td>
                     </tr>
 			<tr>
-            <td><?php echo $this->lang->line('Invoice') ?></td><td><?php echo $this->config->item('prefix') . ' #' . $invoice['tid'] ?></td>
+            <td class="t_center"><?php echo $this->config->item('address') ?></td>
 			</tr>
 			<tr>
-            <td><?php echo $this->lang->line('Invoice Date') ?></td><td><?php echo dateformat($invoice['invoicedate']) ?></td>
+            <td class="t_center">Nit: <?php echo $this->config->item('postbox') ?></td>
 			</tr>
 			<tr>
-            <td><?php echo $this->lang->line('Due Date') ?></td><td><?php echo dateformat($invoice['invoiceduedate']) ?></td>
+            <td class="t_center"><?php echo $this->config->item('phone') ?></td>
 			</tr>
 			<?php if($invoice['refer']) { ?>
 			<tr>
-            <td><?php echo $this->lang->line('') ?>Sede</td><td><?php echo $invoice['refer'] ?></td>
+            <td class="t_center"><?php echo $this->lang->line('') .'Sede: '. $invoice['refer'] ?></td>
 			</tr>
 			<?php } ?>
 			</table>

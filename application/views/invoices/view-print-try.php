@@ -9,7 +9,7 @@
 			font-family: 'Helvetica';
         }
         .invoice-box {
-            width: 100%;
+            width: 210mm;
             height: 297mm;
             margin: auto;
             padding: 4mm;
@@ -46,31 +46,27 @@
         }
 
         .sign1 {
-            text-align: center;
+            text-align: right;
             font-size: 10pt;
             margin-right: 90pt;
-			width: 100%;
         }
 
         .sign2 {
-            text-align: center;
+            text-align: right;
             font-size: 10pt;
             margin-right: 115pt;
-			width: 100%;
         }
 
         .sign3 {
-            text-align: center;
+            text-align: right;
             font-size: 10pt;
             margin-right: 115pt;
-			width: 100%;
         }
 
         .terms {
             font-size: 9pt;
             line-height: 16pt;
 			margin-right:20pt;
-			width: 100%;
         }
 
         .invoice-box table td {
@@ -132,18 +128,17 @@
         }
 
         .myco {
-            width: 40mm;
+            width: 400pt;
         }
 
         .myco2 {
-            width: 20mm;
+            width: 300pt;
         }
 
         .myw {
-            width: 100%;
+            width: 240pt;
             font-size: 14pt;
             line-height: 14pt;
-			text-align: center;
 
         }
 
@@ -162,7 +157,7 @@
         }
 
         .t_center {
-            text-align: center;
+            text-align: right;
 
         }
 		.party {
@@ -181,23 +176,27 @@
     <br>
     <table class="party">
         <thead>
-        <tr>
-         
+        <tr class="heading">
+            <td> <?php echo $this->lang->line('Our Info') ?>:</td>
+
+            <td><?php echo $this->lang->line('Customer') ?>:</td>
         </tr>
         </thead>
         <tbody>
         <tr>
+            <td><strong><?php echo $this->config->item('ctitle'); ?></strong><br>
+                <?php echo
+                    $this->config->item('address') . '<br>' . $this->config->item('city') . ', ' . $this->config->item('region') .'<br>'. $this->config->item('country'). ' -  ' . $this->config->item('postbox') . '<br>'.$this->lang->line('Phone').': ' . $this->config->item('phone') . '<br> '.$this->lang->line('Email').': ' . $this->config->item('email');
+                if ($this->config->item('taxno')) echo '<br>' . $this->lang->line('Tax') . ' ID: ' . $this->config->item('taxno');
+                ?>
+            </td>
+
             <td>
-				<?php echo '<strong>'.ucwords($invoice['name']) .' '.ucwords($invoice['unoapellido']) . '</strong><br>';
+                <?php echo '<strong>'.ucwords($invoice['name']) .' '.ucwords($invoice['apellidos']) . '</strong><br>';
                 if ($invoice['company']) echo $invoice['company'] . '<br>';
                  echo $invoice['tipo_documento'] .': '.$invoice['documento'].'<br>'.Celular.': ' . $invoice['celular'] . '<br>' . $this->lang->line('Email') . ' : ' . $invoice['email'];
                 if ($invoice['taxid']) echo '<br>' . $this->lang->line('Tax') . ' ID: ' . $invoice['taxid'];
                 ?>
-				
-            </td>
-
-            <td>
-                
             </td>
         </tr><?php if ($invoice['name_s']) { ?>
 
@@ -217,24 +216,51 @@
                 <?php echo $this->lang->line('Description') ?>
             </td>
 
-            
+            <td>
+                <?php echo $this->lang->line('Price') ?>
+            </td>
+            <td>
+                <?php echo $this->lang->line('Qty') ?>
+            </td>
+
+            <?php if ($invoice['tax'] > 0) echo '<td>' . $this->lang->line('Tax') . '</td>';
+
+            if ($invoice['discount'] > 0) echo '<td>' . $this->lang->line('Discount') . '</td>'; ?>
             <td class="t_center">
                 <?php echo $this->lang->line('SubTotal') ?>
             </td>
         </tr>
 
         <?php
-        
-			setlocale(LC_TIME, "spanish");
-			$f1 = date(" F ",strtotime($invoice['invoicedate']));
+        $fill = true;
+        $sub_t=0;
+        foreach ($products as $row) {
+
+            $cols = 3;
+			
+            if ($fill == true) {
+                $flag = ' mfill';				
+            } else {
+                $flag = '';
+            }
+            $sub_t+=$row['price']*$row['qty'];
+			
+
             echo '<tr class="item' . $flag . '"> 
-                        <td>' . strftime("%B", strtotime($f1)). ' CTA:'. $invoice['tid'].'</td>';
-            echo '<td class="t_center">' . amountExchange( $invoice['total']) . '</td>
+                            <td>' . $row['product'] . '</td>
+							<td style="width:12%;">' . amountExchange($row['price'],$invoice['multi']) . '</td>
+                            <td style="width:6%;" >' . $row['qty'] . '</td>   ';
+            if ($invoice['tax'] > 0)  { $cols++; echo '<td style="width:16%;">' . amountExchange($row['totaltax'], $invoice['multi']) . ' <span class="tax">(' . amountFormat_s($row['tax']) . '%)</span></td>'; }
+            if ($invoice['discount'] > 0) {   $cols++; echo ' <td style="width:16%;">' . amountExchange($row['totaldiscount'], $invoice['multi']) . '</td>'; }
+            echo '<td class="t_center">' . amountExchange($row['subtotal'], $invoice['multi']) . '</td>
                         </tr>';
-           
+           if($row['product_des'])  { $cc=$cols+1; echo '<tr class="item' . $flag . ' descr"> 
+                            <td colspan="'.$cc.'">' . $row['product_des'] . '<br>&nbsp;</td>
+							
+                        </tr>'; }
             $fill = !$fill;
           
-        
+        }
 
   if ($invoice['shipping'] > 0) { $cols++;}
 
@@ -247,7 +273,9 @@
 
        
         <tr>
-            
+            <td class="myco2" rowspan="<?php echo $cols ?>"><br><br><br>
+                <p><?php echo '<strong>' . $this->lang->line('Status') . ': ' . $this->lang->line(ucwords($invoice['status'])).'</strong></p><br><p>' . $this->lang->line('Total Amount') . ': ' . amountExchange($invoice['total'], $invoice['multi']) . '</p><br><p>' . $this->lang->line('Paid Amount') . ': ' . amountExchange($invoice['pamnt'], $invoice['multi']); ?></p>
+            </td>
             <td><strong><?php echo $this->lang->line('Summary') ?>:</strong></td>
             <td></td>
 
@@ -256,11 +284,18 @@
         <tr class="f_summary">
 
 
-            <td>Cantidad Total:</td>
+            <td><?php echo $this->lang->line('SubTotal') ?>:</td>
 
-            <td><?php echo amountExchange($invoice['total']); ?></td>
+            <td><?php echo amountExchange($sub_t, $invoice['multi']); ?></td>
         </tr>
-        <?php 
+        <?php if ($invoice['tax'] > 0) {
+            echo '<tr>        
+
+            <td> ' . $this->lang->line('Total Tax') . ' :</td>
+
+            <td>' . amountExchange($invoice['tax'], $invoice['multi']) . '</td>
+        </tr>';
+        }
         if ($invoice['discount'] > 0) {
             echo '<tr>
 
@@ -271,17 +306,23 @@
         </tr>';
 
         }
-		    
+		    if ($invoice['shipping'] > 0) {
+            echo '<tr>
+
+
+            <td>' . $this->lang->line('Shipping') . ':</td>
+
+            <td>' . amountExchange($invoice['shipping'], $invoice['multi']) . '</td>
+        </tr>';
+
+        }
         ?>
         <tr>
-			<td><?php echo $this->lang->line('Paid Amount')?></td>
 
-            <td><?php echo amountExchange($invoice['pamnt']); ?></td>
-		</tr><tr>
+
             <td><?php echo $this->lang->line('Balance Due') ?>:</td>
 
             <td><strong><?php $rming = $invoice['total'] - $invoice['pamnt'];
-			
     if ($rming < 0) {
         $rming = 0;
 
@@ -289,9 +330,7 @@
     echo amountExchange($rming, $invoice['multi']);
     echo '</strong></td>
 		</tr>
-		</table><br>
-		<strong>' . $this->lang->line('Status') . ': ' . $this->lang->line(ucwords($invoice['status'])).'</strong>
-		<div class="sign1"><img src="' . FCPATH . 'userfiles/employee_sign/' . $employee['sign'] . '" width="160" height="50" border="0" alt=""></div><div class="sign2">(' . $employee['name'] . ')</div><div class="sign3">' . user_role($employee['roleid']) . '</div> <div class="terms">' . $invoice['notes'] . '<hr><strong>' . $this->lang->line('Terms') . ':</strong>';
+		</table><br><div class="sign">'.$this->lang->line('Authorized person').'</div><div class="sign1"><img src="' . FCPATH . 'userfiles/employee_sign/' . $employee['sign'] . '" width="160" height="50" border="0" alt=""></div><div class="sign2">(' . $employee['name'] . ')</div><div class="sign3">' . user_role($employee['roleid']) . '</div> <div class="terms">' . $invoice['notes'] . '<hr><strong>' . $this->lang->line('Terms') . ':</strong><br>';
 
     echo '<strong>' . $invoice['termtit'] . '</strong><br>' . $invoice['terms'];
     ?></div>

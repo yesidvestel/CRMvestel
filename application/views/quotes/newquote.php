@@ -97,11 +97,14 @@
 										<select name="factura" id="tecnicos" class="form-control mb-1">
 												<option value='null'>-</option>
 												<?php
+											
 													foreach ($facturalist as $row) {
 														$cid = $row['id'];
 														$title = $row['tid'];
-														$mes = $row['invoicedate'];
-														echo "<option value='$title'>$title" . date(" F, Y",strtotime($mes))." </option>";
+														setlocale(LC_TIME, "spanish");
+														$mes = date(" F ",strtotime($row['invoicedate']));
+														
+														echo "<option value='$title'>$title".' '. strftime("%B del %Y", strtotime($mes))." </option>";
 													}
 													?>
 											</select>
