@@ -149,7 +149,7 @@
                                                                                  aria-hidden="true"></span></div>
                                             <input type="text" class="form-control"
                                            placeholder="End Date" name="hora"
-                                            autocomplete="false" value="<?php echo date("H:i") ?>">
+                                            autocomplete="false" value="<?php echo date("g:i a") ?>">
 											
                                         </div>
 										

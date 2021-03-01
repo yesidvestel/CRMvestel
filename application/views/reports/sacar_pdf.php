@@ -757,16 +757,26 @@ $array_afiliaciones=array();
                   
 					
 //datos pdf para abajo
-
+			$fecha = $this->aauth->get_user()->fcierre;
+		 	$horaC =  $this->aauth->get_user()->hcierre;
+			$horaA = $this->aauth->get_user()->hinicio;
+			$horas = date("g:i a",strtotime($horaA));
+			$horas2 = date("g:i a",strtotime($horaC));
+			$cajero = $this->aauth->get_user()->username;
 $contenidoTabla="<div style='text-align: center;'>
 <img style='display:block;margin:auto;' src='".base_url()."userfiles/theme/logo-header.png'>
 </div>
 
 
 <div style='tablad'>
-<h6 style='font-size: 1rem;margin-bottom: 0.5rem;font-family: inherit;font-weight: 500;line-height: 1.2;color: inherit;margin-top: 0;'>Estado de Caja</h6>
+<h6 style='font-size: 1rem;margin-bottom: 0.5rem;font-family: inherit;font-weight: 500;line-height: 1.2;color: inherit;margin-top: 0;'>Cierre de Caja</h6>
 <hr style='margin-top: 1rem;margin-bottom: 1rem;border: 0;border-top: 1px solid rgba(0, 0, 0, 0.1);'>
+
 <p style='margin-top: 0;margin-bottom: 1rem;display: block;margin-block-start: 1em;margin-block-end: 1em;margin-inline-start: 0px;margin-inline-end: 0px;'>Caja : ".$caja."</p>
+<p style='margin-top: 0;margin-bottom: 1rem;display: block;margin-block-start: 1em;margin-block-end: 1em;margin-inline-start: 0px;margin-inline-end: 0px;'>fecha : ".$fecha."</p>
+<p style='margin-top: 0;margin-bottom: 1rem;display: block;margin-block-start: 1em;margin-block-end: 1em;margin-inline-start: 0px;margin-inline-end: 0px;'>Hora Apertura : ".$horas."</p>
+<p style='margin-top: 0;margin-bottom: 1rem;display: block;margin-block-start: 1em;margin-block-end: 1em;margin-inline-start: 0px;margin-inline-end: 0px;'>Hora Cierre : ".$horas2."</p>
+<p style='margin-top: 0;margin-bottom: 1rem;display: block;margin-block-start: 1em;margin-block-end: 1em;margin-inline-start: 0px;margin-inline-end: 0px;'>Cajero : ".$cajero."</p>
 <hr style='margin-top: 1rem;margin-bottom: 1rem;border: 0;border-top: 1px solid rgba(0, 0, 0, 0.1);'>
 <table>
 ".(($datos_informe['trans_type']!='Expense') ? "

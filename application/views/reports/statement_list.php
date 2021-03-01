@@ -481,8 +481,12 @@
 			//end sobre afiliaciones
 		 	
 		 	//tabla resumen por servicios total final
-
-		 
+			$fecha = $this->aauth->get_user()->fcierre;
+		 	$horaC =  $this->aauth->get_user()->hcierre;
+			$horaA = $this->aauth->get_user()->hinicio;
+			$horas = date("g:i a",strtotime($horaA));
+			$horas2 = date("g:i a",strtotime($horaC));
+			$cajero = $this->aauth->get_user()->username;
 		 ?>
 
 <article class="content">
@@ -505,10 +509,15 @@
 		 <div class="card card-block">
 
         
-            <h6><?php echo $this->lang->line('') ?>Estado de Caja</h6>
+            <h6><?php echo $this->lang->line('') ?>Cierre de Caja</h6>
 			 <hr>
-            <p><?php echo $this->lang->line('') ?>Caja : <?php echo $filter[5] ?></p>
-            <hr>
+			 
+            <p class="col-sm-6"><?php echo $this->lang->line('') ?>Caja : <?php echo $filter[5] ?></p>
+			 <p class="col-sm-6">Fecha: <?php echo date($fecha) ?></p>
+			 <p class="col-sm-6">Hora apertura: <?php echo $horas ?></p>
+			 <p class="col-sm-6">Hora cierre: <?php echo $horas2 ?></p>
+			 <p class="col-sm-6">Cajero: <?php echo $cajero ?></p>
+            <hr class="col-sm-12">
             <?php if($datos_informe['trans_type']!="Expense"){ ?>
 			 <div class="col-sm-6">
 			<h6><?php echo $this->lang->line('') ?>Resumen Cobranza</h6>

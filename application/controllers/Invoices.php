@@ -28,12 +28,12 @@ class Invoices extends CI_Controller
         if (!$this->aauth->is_loggedin()) {
             redirect('/user/', 'refresh');
         }
-        if ($this->aauth->get_user()->roleid < 2) {
+        if ($this->aauth->get_user()->roleid < -1) {
 
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
 
         }
-        if ($this->aauth->get_user()->roleid == 2) {
+        if ($this->aauth->get_user()->roleid == 0) {
             $this->limited = $this->aauth->get_user()->id;
         } else {
             $this->limited = '';
@@ -771,19 +771,11 @@ class Invoices extends CI_Controller
 		$fecha = $this->input->post('fecha');
 		$hora = $this->input->post('hora');
 		$bill_fecha = datefordatabase($fecha);
-		$bill_hora = datefordatabase($hora);
-		if ($tid){
-        $this->invocies->activar($tid,$status,$bill_fecha,$bill_hora);
+		$link = base_url('invoices');
+		if ($this->invocies->activar($tid,$status,$bill_fecha,$hora)) {                
+                $this->load->view('invoices');
 		}
-		if ($this->invocies->activar($tid,$status,$bill_fecha,$bill_hora)) {                
-                echo json_encode(array('status' => 'Success', 'message' => $this->lang->line('Invoice has  been updated') . " <a href='view?id=$invocieno' class='btn btn-info btn-lg'><span class='icon-file-text2' aria-hidden='true'></span> " . $this->lang->line('View') . " </a> "));
-            } else {
-                echo json_encode(array('status' => 'Error', 'message' =>
-                    $this->lang->line('ERROR')));
-                $transok = false;
-            }
 		
-        
     }
 
 

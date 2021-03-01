@@ -1,8 +1,9 @@
 ﻿Cambios para seleccionar sede
-ALTER TABLE `tickets` ADD `par` INT(10) NULL AFTER `asignado`;
-
-
-
+ALTER TABLE `tickets` 
+ADD `finicial` DATE() NULL AFTER `ip_address`;
+ADD `hinicial` TIME() NULL AFTER `finicial`;
+ADD `fcierre` DATE() NULL AFTER `hinicial`;
+ADD `hcierre` TIME() NULL AFTER `fcierre`;
 
 
 
