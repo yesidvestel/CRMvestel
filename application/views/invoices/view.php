@@ -18,7 +18,7 @@
                             $link = base_url('billing/view?id=' . $invoice['tid'] . '&token=' . $validtoken);
                             if ($invoice['status'] != 'Anulado') { ?>
                                 <div class="title-action">
-								<?php if ($this->aauth->get_user()->roleid > 4) { ?>
+								<?php if ($this->aauth->get_user()->roleid > 3) { ?>
                                 <a href="<?php echo 'edit?id=' . $invoice['tid']; ?>" class="btn btn-warning mb-1"><i
                                             class="icon-pencil"></i> <?php echo $this->lang->line('Edit Invoice') ?></a><?php } ?>
 
