@@ -201,9 +201,14 @@ function payInvoice(pyurl) {
                     $('#paymade').text(data.ttlpaid);
                     $('#paydue').text(data.amt);
                     var urlx=baseurl+'transactions/payinvoice';
-                    
+                    var urly=baseurl+'transactions/payinvoicemultiple';
                     if(pyurl==urlx){
                         //window.location.replace(baseurl+"invoices/printinvoice?id="+data.tid);
+                    }else{
+                        location.reload();
+                    }
+                    if(pyurl==urly){
+                        window.location.replace(baseurl+"invoices/printinvoice?id="+data.id_fact_pagadas);
                     }else{
                         location.reload();
                     }

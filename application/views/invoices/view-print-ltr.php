@@ -231,7 +231,11 @@
                         <td>' . strftime("%B", strtotime($f1)). ' CTA:'. $invoice['tid'].'</td>';
             echo '<td class="t_center">' . amountExchange( $invoice['total']) . '</td>
                         </tr>';
-           
+           foreach ($lista_invoices as $key => $factura) {
+                $f1 = date(" F ",strtotime($factura['invoicedate']));
+            echo '<tr class="item' . $flag . '"> <td>' . strftime("%B", strtotime($f1)). ' CTA:'. $factura['tid'].'</td>';
+            echo '<td class="t_center">' . amountExchange( $factura['total']) . '</td></tr>';
+            }
             $fill = !$fill;
           
         
@@ -258,7 +262,7 @@
 
             <td>Cantidad Total:</td>
 
-            <td><?php echo amountExchange($invoice['total']); ?></td>
+            <td><?php echo amountExchange($invoice['total2']); ?></td>
         </tr>
         <?php 
         if ($invoice['discount'] > 0) {
@@ -267,7 +271,7 @@
 
             <td>' . $this->lang->line('Total Discount') . ':</td>
 
-            <td>' . amountExchange($invoice['discount'], $invoice['multi']) . '</td>
+            <td>' . amountExchange($invoice['discount2'], $invoice['multi2']) . '</td>
         </tr>';
 
         }
@@ -276,17 +280,17 @@
         <tr>
 			<td><?php echo $this->lang->line('Paid Amount')?></td>
 
-            <td><?php echo amountExchange($invoice['pamnt']); ?></td>
+            <td><?php echo amountExchange($invoice['pamnt2']); ?></td>
 		</tr><tr>
             <td><?php echo $this->lang->line('Balance Due') ?>:</td>
 
-            <td><strong><?php $rming = $invoice['total'] - $invoice['pamnt'];
+            <td><strong><?php $rming = $invoice['total2'] - $invoice['pamnt2'];
 			
     if ($rming < 0) {
         $rming = 0;
 
     }
-    echo amountExchange($rming, $invoice['multi']);
+    echo amountExchange($rming, $invoice['multi2']);
     echo '</strong></td>
 		</tr>
 		</table><br>

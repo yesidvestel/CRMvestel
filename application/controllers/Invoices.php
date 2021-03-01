@@ -853,14 +853,36 @@ class Invoices extends CI_Controller
     public function printinvoice()
     {
 
-        $tid = intval($this->input->get('id'));
+        $tid = $this->input->get('id');
+        $lista= explode(",",$tid);
+        $tid=$lista[0];
 
         $data['id'] = $tid;
         $data['title'] = "Invoice $tid";
         $data['invoice'] = $this->invocies->invoice_details($tid, $this->limited);
         if ($data['invoice']) $data['products'] = $this->invocies->invoice_products($tid);
         if ($data['invoice']) $data['employee'] = $this->invocies->employee($data['invoice']['eid']);
-
+        
+        
+        
+                $data['invoice']['total2']=$data['invoice']['total'];
+                $data['invoice']['discount2']=$data['invoice']['discount'];
+                $data['invoice']['multi2']=$data['invoice']['multi'];
+                $data['invoice']['pamnt2']=$data['invoice']['pamnt'];
+                $data['lista_invoices']= array();
+        foreach ($lista as $key => $id_factura) {
+            if($key!=0){
+                $inv=$this->invocies->invoice_details($id_factura, $this->limited);
+                $data['lista_invoices'][]=$inv;
+                $data['invoice']['total2']+=$inv['total'];
+                $data['invoice']['discount2']+=$inv['discount'];
+                $data['invoice']['multi2']+=$inv['multi'];
+                $data['invoice']['pamnt2']+=$inv['pamnt'];
+                //$data['invoice']['termtit2'].=$inv['terms'];
+               
+            }
+        }
+        
         ini_set('memory_limit', '64M');
 
         $html = $this->load->view('invoices/view-print-'.LTR, $data, true);
@@ -881,6 +903,8 @@ class Invoices extends CI_Controller
         } else {
             $pdf->Output('Invoice_#' . $tid . '.pdf', 'I');
         }
+
+
 
 
     }
