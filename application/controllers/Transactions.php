@@ -124,9 +124,13 @@ class Transactions extends CI_Controller
             }
 
             
-        
+        $id_fact_pagadas="";
         foreach ($array_facturas2 as $key => $id_factura) {
-
+            if($id_fact_pagadas==""){
+                $id_fact_pagadas="".$id_factura;
+            }else{
+                $id_fact_pagadas.=",".$id_factura;
+            }
             $factura_var = $this->db->get_where('invoices',array('tid'=>$id_factura))->row();
             $customer=$this->db->get_where('customers',array('id'=>$factura_var->csd))->row();
             //codigo copiado
@@ -275,7 +279,7 @@ class Transactions extends CI_Controller
             //$this->lang->line('Transaction has been added'), 'pstatus' => $this->lang->line($status), 'activity' => $activitym, 'amt' => $totalrm, 'ttlpaid' => $paid_amount));
             //codigo cop fin
         }
-        echo json_encode(array('status'=>"Success",'message' =>$this->lang->line('Transaction has been added')));
+        echo json_encode(array('status'=>"Success",'message' =>$this->lang->line('Transaction has been added'),"id_fact_pagadas"=>$id_fact_pagadas));
     }
     public function payinvoice()
     {
