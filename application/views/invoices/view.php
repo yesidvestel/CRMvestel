@@ -18,14 +18,14 @@
                             $link = base_url('billing/view?id=' . $invoice['tid'] . '&token=' . $validtoken);
                             if ($invoice['status'] != 'Anulado') { ?>
                                 <div class="title-action">
-
+								<?php if ($this->aauth->get_user()->roleid > 4) { ?>
                                 <a href="<?php echo 'edit?id=' . $invoice['tid']; ?>" class="btn btn-warning mb-1"><i
-                                            class="icon-pencil"></i> <?php echo $this->lang->line('Edit Invoice') ?></a>
+                                            class="icon-pencil"></i> <?php echo $this->lang->line('Edit Invoice') ?></a><?php } ?>
 
                                 <a href="#part_payment" data-toggle="modal" data-remote="false" data-type="reminder"
                                    class="btn btn-large btn-success mb-1" title="Partial Payment"
                                 ><span class="icon-money"></span> <?php echo $this->lang->line('Make Payment') ?> </a>
-
+								
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-primary dropdown-toggle mb-1"
                                             data-toggle="dropdown"
@@ -104,14 +104,15 @@
                                 <a href="<?php echo $link; ?>" class="btn btn-brown mb-1"><i
                                             class="icon-earth"></i> <?php echo $this->lang->line('Preview') ?>
                                 </a>
-
+								
                                 <a href="#pop_model" data-toggle="modal" data-remote="false"
                                    class="btn btn-large btn-cyan mb-1" title="Change Status"
                                 ><span class="icon-tab"></span> <?php echo $this->lang->line('Change Status') ?></a>
+								<?php if ($this->aauth->get_user()->roleid > 4) { ?>
                                 <a href="#pop_model2" data-toggle="modal" data-remote="false"
                                    class="btn btn-large btn-orange mb-1" title="Change Status"
                                 ><span class="icon-tab"></span> <?php echo $invoice['ron'] ?> </a>
-								<?php if ($this->aauth->get_user()->roleid > 4) { ?>	
+								<?php} if ($this->aauth->get_user()->roleid > 4) { ?>	
                                 <a href="#cancel-bill" class="btn btn-danger mb-1" id="cancel-bill"><i
                                             class="icon-minus-circle"> </i> <?php echo $this->lang->line('') ?>Anular
                                 </a>

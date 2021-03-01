@@ -1013,6 +1013,9 @@
 						
                     <i class="icon-arrow"></i></span></a>
                     <ul class="menu-content">
+						<li>
+                            <a href="<?php echo base_url(); ?>invoices/apertura">Apertura</a>
+                        </li>
                         <li>
                             <a href="<?php echo base_url(); ?>invoices/create"><?php echo $this->lang->line('New Invoice'); ?></a>
                         </li>
@@ -1020,8 +1023,8 @@
                             <a href="<?php echo base_url(); ?>invoices"><?php echo $this->lang->line('Manage Invoices'); ?></a>
                         </li>
 
-                        <li>
-                            <a href="<?php echo base_url(); ?>quote"><?php echo $this->lang->line('Manage Quotes'); ?></a>
+						<li>
+                            <a href="<?php echo base_url(); ?>reports/cierre">Cierre</a>
                         </li>
                     </ul>
                 </li>
@@ -1042,8 +1045,7 @@
                         <li>
                             <a href="<?php echo base_url(); ?>customers/create"><?php echo $this->lang->line('') ?>Nuevo Usuario</a>
                         </li>
-                        <li>
-                            <a href="<?php echo base_url(); ?>customers"><?php echo $this->lang->line('') ?>Administrar Usuarios</a>
+                        
                         <li>
                             <a href="<?php echo base_url(); ?>clientgroup"><?php echo $this->lang->line('Manage Groups') ?></a>
                         </li>

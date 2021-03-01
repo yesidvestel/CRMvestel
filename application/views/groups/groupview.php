@@ -206,7 +206,9 @@
                     <th><?php echo $this->lang->line('Address') ?></th>
 					<th>Estado</th>
                     <th><?php echo $this->lang->line('Settings') ?></th>
-
+					<?php if ($this->aauth->get_user()->roleid > 4) { ?>
+					<th>Config</th>
+					<?php } ?>
 
                 </tr>
                 </thead>
@@ -223,6 +225,9 @@
                     <th><?php echo $this->lang->line('Address') ?></th>
 					<th>Estado</th>
                     <th><?php echo $this->lang->line('Settings') ?></th>
+					<?php if ($this->aauth->get_user()->roleid > 4) { ?>
+					<th>Config</th>
+					<?php } ?>
                 </tr>
                 </tfoot>
             </table>

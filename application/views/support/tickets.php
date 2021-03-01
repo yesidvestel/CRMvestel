@@ -167,7 +167,9 @@
 					<th>Sede</th>
 					<th>Estado</th>
                     <th>Accion</th>
-					
+					<?php if ($this->aauth->get_user()->roleid > 4) { ?>
+					<th>Config</th>
+					<?php } ?>
 
                 </tr>
                 </thead>
