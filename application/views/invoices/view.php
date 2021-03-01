@@ -108,11 +108,11 @@
                                 <a href="#pop_model" data-toggle="modal" data-remote="false"
                                    class="btn btn-large btn-cyan mb-1" title="Change Status"
                                 ><span class="icon-tab"></span> <?php echo $this->lang->line('Change Status') ?></a>
-								<?php if ($this->aauth->get_user()->roleid > 4) { ?>
+								
                                 <a href="#pop_model2" data-toggle="modal" data-remote="false"
                                    class="btn btn-large btn-orange mb-1" title="Change Status"
                                 ><span class="icon-tab"></span> <?php echo $invoice['ron'] ?> </a>
-								<?php} if ($this->aauth->get_user()->roleid > 4) { ?>	
+								<?php if ($this->aauth->get_user()->roleid > 4) { ?>	
                                 <a href="#cancel-bill" class="btn btn-danger mb-1" id="cancel-bill"><i
                                             class="icon-minus-circle"> </i> <?php echo $this->lang->line('') ?>Anular
                                 </a>
