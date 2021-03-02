@@ -997,6 +997,19 @@
                                 class="menu-title"> <?php echo $this->lang->line('Calendar') ?></span></a></li>
 			<li><a href="<?php echo base_url(); ?>tools/documents"><i class="icon-android-download"></i><span
                                 class="menu-title"><?php echo $this->lang->line('Documents') ?></span></a></li>
+			<!--menu importacion-->
+			<li class="nav-item has-sub <?php if ($this->uri->segment(1) == "import") {
+                    echo ' open';
+                } ?>">
+                    <a href=""> <i class="icon-road2"></i><span
+                                class="menu-title"> <?php echo $this->lang->line('Import') ?> </span><i
+                                class="fa arrow"></i> </a>
+                    <ul class="menu-content">
+						<li>
+                            <a href="<?php echo base_url(); ?>importequipo/equipos"><?php echo $this->lang->line(''); ?>Importar Equipos</a>
+                        </li>
+					</ul>
+                </li>
 		
 
 <?php } ?>

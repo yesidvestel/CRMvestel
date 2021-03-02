@@ -484,8 +484,8 @@
 			$fecha = $this->aauth->get_user()->fcierre;
 		 	$horaC =  $this->aauth->get_user()->hcierre;
 			$horaA = $this->aauth->get_user()->hinicio;
-			$horas = date("g:i a",strtotime($horaA));
-			$horas2 = date("g:i a",strtotime($horaC));
+			$horas = date("g:i a",strtotime($horaC));
+			$horas2 = date("g:i a",strtotime($horaA));
 			$cajero = $this->aauth->get_user()->username;
 		 ?>
 
