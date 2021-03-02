@@ -854,10 +854,12 @@ class Invoices extends CI_Controller
 
         $data['id'] = $tid;
         $data['title'] = "Invoice $tid";
+
         $data['invoice'] = $this->invocies->invoice_details($tid, $this->limited);
         if ($data['invoice']) $data['products'] = $this->invocies->invoice_products($tid);
         if ($data['invoice']) $data['employee'] = $this->invocies->employee($data['invoice']['eid']);
-        
+        $this->load->model('customers_model', 'customers');
+        $data['due'] = $this->customers->due_details($data['invoice']['csd']);
         
         
                 $data['invoice']['total2']=$data['invoice']['total'];

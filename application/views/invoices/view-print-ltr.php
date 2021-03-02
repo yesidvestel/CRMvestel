@@ -284,7 +284,7 @@
 		</tr><tr>
             <td><?php echo $this->lang->line('Balance Due') ?>:</td>
 
-            <td><strong><?php $rming = $invoice['total2'] - $invoice['pamnt2'];
+            <td><strong><?php $rming = $due['total']-$due['pamnt'];
 			
     if ($rming < 0) {
         $rming = 0;
