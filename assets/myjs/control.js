@@ -203,12 +203,12 @@ function payInvoice(pyurl) {
                     var urlx=baseurl+'transactions/payinvoice';
                     var urly=baseurl+'transactions/payinvoicemultiple';
                     if(pyurl==urlx){
-                        //window.location.replace(baseurl+"invoices/printinvoice?id="+data.tid);
-                    }else{
+                        window.open(baseurl+"invoices/printinvoice?id="+data.tid, '_blank');
                         location.reload();
-                    }
-                    if(pyurl==urly){
-                        window.location.replace(baseurl+"invoices/printinvoice?id="+data.id_fact_pagadas);
+                    }else if(pyurl==urly){
+                        window.open(baseurl+"invoices/printinvoice?id="+data.id_fact_pagadas,"_blank");
+                        window.location.replace(baseurl+"customers/invoices?id="+id_customer+"&fac_pag="+data.id_fact_pagadas);
+                        //window.location.replace(baseurl+"invoices/printinvoice?id="+data.id_fact_pagadas);
                     }else{
                         location.reload();
                     }

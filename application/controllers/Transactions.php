@@ -279,7 +279,8 @@ class Transactions extends CI_Controller
             //$this->lang->line('Transaction has been added'), 'pstatus' => $this->lang->line($status), 'activity' => $activitym, 'amt' => $totalrm, 'ttlpaid' => $paid_amount));
             //codigo cop fin
         }
-        echo json_encode(array('status'=>"Success",'message' =>$this->lang->line('Transaction has been added'),"id_fact_pagadas"=>$id_fact_pagadas));
+        $link ="<a href='".base_url()."invoices/printinvoice?id=".$id_fact_pagadas."' class='btn btn-info btn-lg'><span class='icon-file-text2' aria-hidden='true'></span>Ver PDF Facturas Pagadas</a>";
+        echo json_encode(array('status'=>"Success",'message' =>$this->lang->line('Transaction has been added ').$link,"id_fact_pagadas"=>$id_fact_pagadas));
     }
     public function payinvoice()
     {

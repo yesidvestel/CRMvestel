@@ -191,6 +191,8 @@
 } ?>
 <script type="text/javascript">
     var tb;
+    var fac_pagadas="<?= (isset($_GET['fac_pag'])) ? $_GET['fac_pag'] : '' ?>";
+    var id_customer="<?=$_GET['id']?>";
     $(document).ready(function () {
        tb= $('#invoices').DataTable({
             'processing': true,
@@ -209,7 +211,13 @@
                 },
             ],
         });
- 
+    
+        if(fac_pagadas!=""){
+            var link="<a href='"+baseurl+"invoices/printinvoice?id="+fac_pagadas+"' class='btn btn-info btn-lg' target='_blank'><span class='icon-file-text2' aria-hidden='true'></span>Ver PDF Facturas Pagadas</a>";
+            $("#notify .message").html("<strong>" + "Success" + "</strong>: " + " "+link);
+            $("#notify").removeClass("alert-danger").addClass("alert-success").fadeIn();
+            $("html, body").scrollTop($("body").offset().top);
+        }
         
 
     });
