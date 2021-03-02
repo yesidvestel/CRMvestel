@@ -17,8 +17,10 @@
                 <div class="col-md-6">
                     <div class="card card-block sameheight-item">
 
+
                         <form  action="<?php echo base_url() ?>Invoices/activar" method="post" role="form" id="form_apertura" >
 							<input type="hidden" class="form-control" placeholder="Invoice #" name="iduser" id="iduser" value="<?php echo $employee['id'] ?>">
+
                             
                             <div class="form-group row">
 								
@@ -26,11 +28,12 @@
                                        for="pay_cat"><?php echo $this->lang->line('') ?>Caja</label>
 
                                 <div class="col-sm-9">
+
                                     <select name="perfil" class="form-control" id="perfil">
-                                        <option value='2'><?php echo $this->lang->line('') ?>Yopal </option>
-                                        <option value='1'><?php echo $this->lang->line('') ?>Monterrey</option>
-                                        <option value='0'><?php echo $this->lang->line('') ?>Villanueva</option>
-										<option value='-1'><?php echo $this->lang->line('') ?>Mocoa</option>
+                                        <option value='5'><?php echo $this->lang->line('') ?>Yopal </option>
+                                        <option value='4'><?php echo $this->lang->line('') ?>Monterrey</option>
+                                        <option value='4'><?php echo $this->lang->line('') ?>Villanueva</option>
+										<option value='4'><?php echo $this->lang->line('') ?>Mocoa</option>
                                     </select>
 
 
@@ -44,7 +47,7 @@
                                 <div class="col-sm-4">
                                     <input type="text" class="form-control required"
                                            placeholder="Start Date" name="fecha" id="sdate"
-                                            autocomplete="false" disabled>
+                                            autocomplete="false">
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -55,7 +58,7 @@
                                 <div class="col-sm-4">
                                     <input type="text" class="form-control required"
                                            placeholder="End Date" id="hora" name="hora"
-                                            autocomplete="false" value="<?php echo date("H").":".date("i") ?>" disabled>
+                                            autocomplete="false" value="<?php echo date("g:i a") ?>" disabled>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -87,7 +90,7 @@
         console.log
         $.post(baseurl+"Invoices/activar",{iduser:iduser,perfil:perfil,fecha:fecha,hora:hora},function(data){
                 $("#notify .message").html("<strong>" + data.status + "</strong>: " + data.message);
-                $("#notify").removeClass("alert-success").addClass("alert-danger").fadeIn();
+                $("#notify").removeClass("alert-danger").addClass("alert-success").fadeIn();
                 $("html, body").scrollTop($("body").offset().top);
         },'json');
         

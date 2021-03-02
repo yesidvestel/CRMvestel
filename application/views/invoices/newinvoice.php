@@ -306,7 +306,7 @@
 								<td colspan="2">Punto Adicional 
 								<select name="puntos" class="selectpicker form-control">
 										<option value="0">no</option>
-										<?php for ($i=1;$i<=20;$i++){
+										<?php for ($i=1;$i<=30;$i++){
 										echo '<option value="'.$i.'">'.$i.'</option>';}?>
                                     </select></td>
                                 <td align="right" colspan="6"><input type="submit" class="btn btn-success sub-btn" value="<?php echo $this->lang->line('Generate Invoice') ?> " id="submit-data" data-loading-text="Creating...">

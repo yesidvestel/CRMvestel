@@ -1,5 +1,16 @@
 ﻿Cambios para seleccionar sede
-ALTER TABLE `tickets` ADD `par` INT(10) NULL AFTER `asignado`;
+ALTER TABLE `tickets` 
+ADD `finicial` DATE() NULL AFTER `ip_address`;
+ADD `hinicial` TIME() NULL AFTER `finicial`;
+ADD `fcierre` DATE() NULL AFTER `hinicial`;
+ADD `hcierre` TIME() NULL AFTER `fcierre`;
+
+creo que el sql deve de ser asi puesto que ip_adres es de la tabla aauth_users
+
+ALTER TABLE `aauth_users` ADD `finicial` DATE NULL AFTER `ip_address`;
+ALTER TABLE `aauth_users` ADD `hinicial` TIME NULL AFTER `finicial`;
+ALTER TABLE `aauth_users` ADD `fcierre` DATE NULL AFTER `hinicial`;
+ALTER TABLE `aauth_users` ADD `hcierre` TIME NULL AFTER `fcierre`;
 
 
 

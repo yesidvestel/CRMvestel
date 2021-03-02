@@ -81,17 +81,22 @@ class Invoices_model extends CI_Model
         return $query->result_array();
 
     }
-	public function activar($tid,$status,$bill_fecha,$bill_hora)
+	public function activar($tid,$status,$bill_fecha,$hora)
     {
 		$data = array(
+			'finicial' => $bill_fecha,
+			'hinicial' => $hora,
 			'roleid' => $status,
-            'fechainicial' => $bill_fecha,
-			'horainicial' => $bill_hora,
 			);
-		$this->db->set($data);
+		//$this->db->set($data);
         $this->db->where('id', $tid);
-		$this->db->update('aauth_users');
-
+        if($this->db->update('aauth_users', $data)){
+            return true;    
+        }else{
+            return false;
+        }
+		
+        
     }
 	
 

@@ -1152,7 +1152,32 @@
 		
 
 <?php } ?>
-				   	
+			<!--apertura-->
+			<?php if ($this->aauth->get_user()->roleid == 0) { ?>
+                <li class="navigation-header"><span
+                            data-i18n="nav.category.support">Cobranza</span><i
+                            data-toggle="tooltip"
+                            data-placement="right"
+                            data-original-title="Sales"
+                            class="icon-ellipsis icon-ellipsis"></i>
+                </li>
+                <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "invoices" OR $this->uri->segment(1) == "quote") {
+                    echo ' open';
+                } ?>">
+                    <a href=""> <i class="icon-plus"></i> <span
+                                class="menu-title"><?php echo $this->lang->line('sales') ?>
+						
+						<!-- MENU FACTURACION-->
+						
+                    <i class="icon-arrow"></i></span></a>
+                    <ul class="menu-content">
+						<li>
+                            <a href="<?php echo base_url(); ?>invoices/apertura">Apertura</a>
+                        </li>
+                        
+                    </ul>
+                </li>
+			<?php } ?>
         </ul>
 		
 		

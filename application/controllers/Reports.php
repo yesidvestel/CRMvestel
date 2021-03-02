@@ -492,7 +492,19 @@ $data['datos_informe']=array("trans_type"=>$trans_type);
            $data['lista_datos']=$this->statements_para_pdf();
            $data['caja']=$this->input->post('caja');
 
-        $this->load->view('reports/sacar_pdf', $data);
+        if ($this->load->view('reports/sacar_pdf', $data)){
+			$iduser = $this->aauth->get_user()->id;
+			$fecha = date("Y-m-d");
+			$hora = date("H:i");
+			$datec = array(
+				'fcierre' => $fecha,
+				'hcierre' => $hora,
+				'roleid' => '0'
+			);
+			$this->db->where('id', $iduser);
+			$this->db->update('aauth_users', $datec);
+			$this->load->view('dashboard');
+		}
     }
 
     public function customerviewstatement()
