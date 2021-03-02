@@ -773,7 +773,7 @@ class Invoices extends CI_Controller
 		$bill_fecha = datefordatabase($fecha);
 		$link = base_url('invoices');
 		if ($this->invocies->activar($tid,$status,$bill_fecha,$hora)) {                
-                  echo json_encode(array('status' => 'Success', 'message' => $this->lang->line('Invoice has  been updated') . " <a href='".$link."' class='btn btn-info btn-lg'><span class='icon-file-text2' aria-hidden='true'></span> " . $this->lang->line('View') . " </a> "));
+                  echo json_encode(array('status' => 'Success', 'message' => 'Apertura realiza ir a las vistas' . " <a href='".$link."' class='btn btn-info btn-lg'><span class='icon-file-text2' aria-hidden='true'></span> " . 'Ir' . " </a> "));
 		}else{
              echo json_encode(array('status' => 'Error', 'message' =>
                     $this->lang->line('ERROR')));

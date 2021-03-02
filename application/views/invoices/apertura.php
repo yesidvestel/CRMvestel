@@ -30,10 +30,10 @@
                                 <div class="col-sm-9">
 
                                     <select name="perfil" class="form-control" id="perfil">
-                                        <option value='5'><?php echo $this->lang->line('') ?>Yopal </option>
-                                        <option value='4'><?php echo $this->lang->line('') ?>Monterrey</option>
-                                        <option value='4'><?php echo $this->lang->line('') ?>Villanueva</option>
-										<option value='4'><?php echo $this->lang->line('') ?>Mocoa</option>
+                                        <option value='3'><?php echo $this->lang->line('') ?>Yopal </option>
+                                        <option value='3'><?php echo $this->lang->line('') ?>Monterrey</option>
+                                        <option value='3'><?php echo $this->lang->line('') ?>Villanueva</option>
+										<option value='3'><?php echo $this->lang->line('') ?>Mocoa</option>
                                     </select>
 
 
