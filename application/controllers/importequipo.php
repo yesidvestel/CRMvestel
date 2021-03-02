@@ -32,7 +32,7 @@ class Importequipo extends CI_Controller
             exit;
         }
 
-        if ($this->aauth->get_user()->roleid < 5) {
+        if ($this->aauth->get_user()->roleid < 3) {
 
             exit('Not Allowed!');
         }
