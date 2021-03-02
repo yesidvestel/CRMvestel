@@ -136,7 +136,7 @@ class Invoices extends CI_Controller
                                     $internet="3 Megas";
                                 }else if($item_invoic['product']=="5Megas"||$item_invoic['product']=="5 Megas"){
                                     $_tiene_internet=true;
-                                    $internet="5 Megas";
+                                    $internet="5Megas";
                                 }else if($item_invoic['product']=="10Megas"||$item_invoic['product']=="10 Megas"){
                                     $_tiene_internet=true;
                                     $internet="10 Megas";
@@ -240,7 +240,7 @@ class Invoices extends CI_Controller
                                 $internet="3 Megas";
                             }else if($internet=="5Megas"||$internet=="5 Megas"){
                                 $_tiene_internet=true;
-                                $internet="5 Megas";
+                                $internet="5Megas";
                             }else if($internet=="10Megas"||$internet=="10 Megas"){
                                 $_tiene_internet=true;
                                 $internet="10 Megas";
@@ -259,19 +259,19 @@ class Invoices extends CI_Controller
                             }else if($internet=="5MegasD"){
                                 $_tiene_internet=true;
                                 $internet="5MegasD";
-                            }else if($item_invoic['product']=="3MegasV"){
+                            }else if($internet=="3MegasV"){
                                 $_tiene_internet=true;
                                 $internet="3MegasV";
-                            }else if($item_invoic['product']=="5MegasV"){
+                            }else if($internet=="5MegasV"){
                                 $_tiene_internet=true;
                                 $internet="5MegasV";
-                            }else if($item_invoic['product']=="5MegasVS"){
+                            }else if($internet=="5MegasVS"){
                                 $_tiene_internet=true;
                                 $internet="5MegasVS";
-                            }else if($item_invoic['product']=="10MegasV"){
+                            }else if($internet=="10MegasV"){
                                 $_tiene_internet=true;
                                 $internet="10MegasV";
-                            }else if($item_invoic['product']=="10MegasVS"){
+                            }else if($internet=="10MegasVS"){
                                 $_tiene_internet=true;
                                 $internet="10MegasVS";
                             }
