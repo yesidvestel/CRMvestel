@@ -497,7 +497,7 @@
 		<input type="hidden" name="edate" value="<?=$datos_informe['edate']?>">
 		<input type="hidden" name="caja" value="<?=$filter[5]?>">
 
-		<button class="btn btn-primary" style="margin-left: 3px;">Sacar Pdf</button>
+		<button class="btn btn-primary" style="margin-left: 3px;" onclick="window.location.replace(baseurl+'invoices/apertura');">Sacar Pdf</button>
 	
 	</form>
     <div class="card card-block">
