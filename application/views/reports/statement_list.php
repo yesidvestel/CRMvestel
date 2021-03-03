@@ -483,10 +483,10 @@
 		 	//tabla resumen por servicios total final
 			$fecha = $this->aauth->get_user()->fcierre;
 		 	$horaC =  $this->aauth->get_user()->hcierre;
-			$horaA = $this->aauth->get_user()->hinicio;
-			$horas = date("g:i a",strtotime($horaC));
-			$horas2 = date("g:i a",strtotime($horaA));
-			$cajero = $this->aauth->get_user()->username;
+			$horaA = $this->aauth->get_user()->hinicial;
+			$horas = date("g:i a",strtotime($horaA));
+			$horas2 = date("g:i a",strtotime($horaC));
+			$cajero = $this->aauth->get_user()->username;			
 		 ?>
 
 <article class="content">
@@ -497,7 +497,7 @@
 		<input type="hidden" name="edate" value="<?=$datos_informe['edate']?>">
 		<input type="hidden" name="caja" value="<?=$filter[5]?>">
 
-		<button class="btn btn-primary" style="margin-left: 3px;" onclick="window.location.replace(baseurl+'invoices/apertura');">Sacar Pdf</button>
+		<button class="btn btn-primary" style="margin-left: 3px;" onclick="enviar_a_apertura()">Sacar Pdf</button>
 	
 	</form>
     <div class="card card-block">
@@ -1361,4 +1361,10 @@
 
         });
     });
+    function enviar_a_apertura(){
+    	setTimeout(function(){
+    		window.location.href=baseurl+'invoices/apertura';
+    	},2000);
+    	
+    }
 </script>

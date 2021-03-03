@@ -127,6 +127,20 @@ class Reports extends CI_Controller
         $head['usernm'] = $this->aauth->get_user()->username;
 
 
+        //datos para fechas de cierre 
+            $iduser = $this->aauth->get_user()->id;
+            $fecha = date("Y-m-d");
+            $hora = date("H:i");
+            $datec = array(
+                'fcierre' => $fecha,
+                'hcierre' => $hora,
+                //'roleid' => '0'
+            );
+            $this->db->where('id', $iduser);
+            $this->db->update('aauth_users', $datec);
+            //$this->load->view('dashboard');
+        //fin datos para fechas cierre
+
         $data['datos_informe']=array("pay_acc"=>$pay_acc,"trans_type"=>$trans_type,"sdate"=>$sdate,"edate"=>$edate);
         //codigo listar
             
@@ -491,20 +505,18 @@ $data['datos_informe']=array("trans_type"=>$trans_type);
 
            $data['lista_datos']=$this->statements_para_pdf();
            $data['caja']=$this->input->post('caja');
-
-        if ($this->load->view('reports/sacar_pdf', $data)){
-			$iduser = $this->aauth->get_user()->id;
-			$fecha = date("Y-m-d");
-			$hora = date("H:i");
-			$datec = array(
-				'fcierre' => $fecha,
-				'hcierre' => $hora,
-				'roleid' => '0'
-			);
-			$this->db->where('id', $iduser);
-			$this->db->update('aauth_users', $datec);
-			$this->load->view('dashboard');
-		}
+           //cambiando rol usario
+            $iduser = $this->aauth->get_user()->id;        
+            $datec = array(
+                //'fcierre' => $fecha,
+                //'hcierre' => $hora,
+                'roleid' => '0'
+            );
+            $this->db->where('id', $iduser);
+            $this->db->update('aauth_users', $datec);
+            // fin cambiando rol usario
+           $this->load->view('reports/sacar_pdf', $data);
+        
     }
 
     public function customerviewstatement()
