@@ -1,10 +1,10 @@
 <!doctype html>
 <?php 
-if ($due['television']!==0){
+if ($due['television']!==no){
 		$producto = $this->db->get_where('products',array('pid'=>27))->row();
 		$totaltv = $producto->product_price+3992;
 	
-}if ($due['combo']!==0){
+}if ($due['combo']!==no){
 	if($due['combo']==='1Mega'){
                         $pid=125;
                     }else if($due['combo']==='2Megas'){
@@ -46,7 +46,7 @@ $fcontrato = $details['f_contrato'];
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Print Purchase Order #<?php echo $invoice['tid'] ?></title>
+    <title>Contrato # <?php echo $details['documento'] ?></title>
     <style>	
         body {
             color: #2B2000;
@@ -229,7 +229,7 @@ $fcontrato = $details['f_contrato'];
       <td style="width: 24%"><img src="<?php echo FCPATH . 'userfiles/company/' . $this->config->item('logo') ?>" style="max-width:20%;"></td>
       <td class="end1" style="width: 25%"><h2>CONTRATO ÚNICO DE <br>SERVICIOS FIJOS </h2>No. <span style="border-bottom: 1px solid;"><?php echo $details['documento'] ?></span></td>
 		<td rowspan="8" style="width: 2%"></td>
-      <td colspan="2" rowspan="3" style="width: 49%; text-align: justify;">
+      <td colspan="2" rowspan="3" style="width: 48%; text-align: justify;">
 		  
 		 <h4>TERMINACIÓN</h4>
 		Usted puede terminar el contrato en cualquier momento sin penalidades. Para esto debe
