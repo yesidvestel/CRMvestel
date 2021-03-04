@@ -49,12 +49,12 @@ class Customers_model extends CI_Model
 
         if (isset($_GET['sel_servicios']) && $_GET['sel_servicios'] != '' && $_GET['sel_servicios'] != null) {
             $this->db->join("invoices as inv1","cus1.id=inv1.csd and inv1.tid=(select max(tid) from invoices as inv2 where inv2.csd=cus1.id and ((inv2.combo !='no' and inv2.combo !='' and inv2.combo !='-') or  (inv2.television !='no' and inv2.television !='' and inv2.television !='-')))");
-            if($_GET['sel_servicios']=="Internet"){
-               
-            }else if($_GET['sel_servicios']=="TV"){
-               
-            }else if($_GET['sel_servicios']=="TV"){
-               
+            if($_GET['sel_servicios']=="Internet" || $_GET['sel_servicios']=="Combo"){
+                $this->db->where('combo!=',"no" );
+                $this->db->where('combo!=',"" );
+                $this->db->where('combo!=',"-" );   
+            }else if($_GET['sel_servicios']=="TV" || $_GET['sel_servicios']=="Combo"){
+               $this->db->where('television=',"television" );                
             }
         }
         if ($id != '') {
