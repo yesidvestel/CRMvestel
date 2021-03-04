@@ -60,6 +60,17 @@ class Customers extends CI_Controller
         $this->load->view('customers/create', $data);
         $this->load->view('fixed/footer');
     }
+    public function firmadigital(){
+         $head['usernm'] = $this->aauth->get_user()->username;
+        
+        $head['title'] = 'Firma Digital Customer';      
+        
+        
+        
+       // $this->load->view('fixed/header', $head);
+        $this->load->view('customers/firma_digital', $data);
+        //$this->load->view('fixed/footer');
+    }
     public function conectar_microtik(){
         include (APPPATH."libraries\RouterosAPI.php");
         set_time_limit(3000);
