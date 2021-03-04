@@ -2,7 +2,7 @@
 <?php 
 if ($due['television']!==0){
 		$producto = $this->db->get_where('products',array('pid'=>27))->row();
-		$totaltv = $producto->product_price;
+		$totaltv = $producto->product_price+3992;
 	
 }if ($due['combo']!==0){
 	if($due['combo']==='1Mega'){
@@ -313,7 +313,7 @@ $fcontrato = $details['f_contrato'];
 		  Identificación: <span style="border-bottom: 1px solid;"><?php echo $details['tipo_documento'].' '.$details['documento'] ?></span><br><br>
 		Correo electrónico: <span style="border-bottom: 1px solid;"><?php echo $details['email'] ?></span><br><br>
 		Teléfono de contacto: <span style="border-bottom: 1px solid;"><?php echo $details['celular'] ?></span><br><br>
-		Dirección de servicio: <span style="border-bottom: 1px solid;"><?php echo $details['barrio'] ?></span> Estrato: <span style="border-bottom: 1px solid;"><?php echo $details[''] ?></span><br><br>
+		Dirección de servicio: <span style="border-bottom: 1px solid;"><?php echo $details['barrio'] ?></span> Estrato: <span style="border-bottom: 1px solid;"><?php echo $details['estrato'] ?></span><br><br>
 		Departamento: <span style="border-bottom: 1px solid;"><?php echo $details['departamento'] ?></span> Municipio: <span style="border-bottom: 1px solid;"><?php echo $details['ciudad'] ?></span><br><br>
 		Dirección suscriptor: <span style="border-bottom: 1px solid;"><?php echo $details['nomenclatura'].' '.$details['numero1'].$details['adicionauno'].' # '.$details['numero2'].$details['adicional2'].' - '.$details['numero3'] ?></span>
 		</td>
@@ -357,8 +357,7 @@ $fcontrato = $details['f_contrato'];
 		En caso de suspensión del servicio por mora en el pago, podremos cobrarle un valor por
 		reconexión que corresponderá estrictamente a los costos asociados a la operación de
 		reconexión. En caso de servicios empaquetados procede máximo un cobro de reconexión por
-		cada tipo de conexión empleado en la prestación de los servicios. Costo reconexión
-		$__________________________
+		cada tipo de conexión empleado en la prestación de los servicios. Costo reconexión por servicio es de <span style="border-bottom: 1px solid;"><?php echo amountFormat(12000)?></span>
 		</td>
       
     </tr>
