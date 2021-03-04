@@ -654,7 +654,7 @@ class Customers extends CI_Controller
 		$data['details'] = $this->customers->details($custid);
 		$data['due'] = $this->customers->due_details($custid);
         $data['id'] = $custid;
-        $data['title'] = "Purchase $custid";
+        $data['title'] = "Contrato $custid";
         
         $data['invoice']['multi'] = 0;
 
@@ -673,9 +673,9 @@ class Customers extends CI_Controller
 
         if ($this->input->get('d')) {
 
-            $pdf->Output('Purchase_#' . $custid . '.pdf', 'D');
+            $pdf->Output('Contrato_#' . $custid . '.pdf', 'D');
         } else {
-            $pdf->Output('Purchase_#' . $custid . '.pdf', 'I');
+            $pdf->Output('Contrato_#' . $custid . '.pdf', 'I');
         }
 
 
