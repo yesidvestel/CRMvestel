@@ -133,6 +133,27 @@
                                    class="form-control margin-bottom" name="documento" value="<?php echo $customer['documento'] ?>" id="mcustomer_documento">
                         </div>
                     </div>
+					<div class="form-group row">
+						<h6><label class="col-sm-6 col-form-label"><?php echo $this->lang->line('') ?>Estrato</label></h6>
+						<h6><label class="col-sm-6 col-form-label"><?php echo $this->lang->line('') ?>Fecha contrato</label></h6>
+						<div class="col-sm-6 ">
+                            <select name="estrato" class="form-control" >
+								<option value="<?php echo $customer['estrato'] ?>"><?php echo $customer['estrato'] ?></option>
+								<option value="Estrato 1">Estrato 1</option>
+								<option value="Estrato 2">Estrato 2</option>
+								<option value="Estrato 3">Estrato 3</option>
+								<option value="Estrato 4">Estrato 4</option>
+								<option value="Estrato 5">Estrato 5</option>
+								<option value="Estrato 6">Estrato 6</option>
+								<option value="Estrato 7">Estrato 7</option>
+								<option value="Estrato 8">Estrato 8</option>
+							</select>
+                        </div>
+						<div class="col-sm-6">
+                            <input type="text"class="form-control margin-bottom" name="fcontrato" value="<?php echo $customer['f_contrato'] ?>">
+                        </div>
+						
+					</div>
                     <hr>
                     <h5><?php echo $this->lang->line('') ?>DATOS DE RESIDENCIA</h5>
                     <hr>

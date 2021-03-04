@@ -299,6 +299,8 @@ class Customers extends CI_Controller
         $tipo_cliente = $this->input->post('tipo_cliente');
         $tipo_documento = $this->input->post('tipo_documento');
         $documento = $this->input->post('documento');
+		$fcontrato = date("Y-m-d");
+		$estrato = $this->input->post('estrato');
         $departamento = $this->input->post('departamento');
         $ciudad = $this->input->post('ciudad');
         $localidad = $this->input->post('localidad');
@@ -319,7 +321,7 @@ class Customers extends CI_Controller
 		$Iplocal = $this->input->post('Iplocal');
 		$Ipremota = $this->input->post('Ipremota2');
 		$comentario = $this->input->post('comentario');
-        $this->customers->add($abonado, $name, $dosnombre, $unoapellido, $dosapellido, $company, $celular, $celular2, $email, $nacimiento, $tipo_cliente, $tipo_documento, $documento, $departamento, $ciudad, $localidad, $barrio, $nomenclatura, $numero1, $adicionauno, $numero2, $adicional2, $numero3, $residencia, $referencia, $customergroup, $name_s, $contra, $servicio, $perfil, $Iplocal, $Ipremota, $comentario);
+        $this->customers->add($abonado, $name, $dosnombre, $unoapellido, $dosapellido, $company, $celular, $celular2, $email, $nacimiento, $tipo_cliente, $tipo_documento, $documento, $fcontrato, $estrato, $departamento, $ciudad, $localidad, $barrio, $nomenclatura, $numero1, $adicionauno, $numero2, $adicional2, $numero3, $residencia, $referencia, $customergroup, $name_s, $contra, $servicio, $perfil, $Iplocal, $Ipremota, $comentario);
 
     }
 
@@ -340,6 +342,8 @@ class Customers extends CI_Controller
         $tipo_cliente = $this->input->post('tipo_cliente');
         $tipo_documento = $this->input->post('tipo_documento');
         $documento = $this->input->post('documento');
+		$fcontrato = $this->input->post('fcontrato');
+		$estrato = $this->input->post('estrato');
         $departamento = $this->input->post('departamento');
         $ciudad = $this->input->post('ciudad');
         $localidad = $this->input->post('localidad');
@@ -361,7 +365,7 @@ class Customers extends CI_Controller
 		$Ipremota = $this->input->post('Ipremota');
 		$comentario = $this->input->post('comentario');
         if ($id) {
-            $this->customers->edit($id, $abonado, $name, $dosnombre, $unoapellido, $dosapellido, $company, $celular, $celular2, $email, $nacimiento, $tipo_cliente, $tipo_documento, $documento, $departamento, $ciudad, $localidad, $barrio, $nomenclatura, $numero1, $adicionauno, $numero2, $adicional2, $numero3, $residencia, $referencia, $customergroup, $name_s, $contra, $servicio, $perfil, $Iplocal, $Ipremota, $comentario);
+            $this->customers->edit($id, $abonado, $name, $dosnombre, $unoapellido, $dosapellido, $company, $celular, $celular2, $email, $nacimiento, $tipo_cliente, $tipo_documento, $documento, $fcontrato, $estrato, $departamento, $ciudad, $localidad, $barrio, $nomenclatura, $numero1, $adicionauno, $numero2, $adicional2, $numero3, $residencia, $referencia, $customergroup, $name_s, $contra, $servicio, $perfil, $Iplocal, $Ipremota, $comentario);
         }
    
     }
@@ -641,6 +645,40 @@ class Customers extends CI_Controller
 
         echo json_encode(array('status' => 'Success', 'message' =>
             $this->lang->line('UPDATED'), 'pstatus' => $status));
+    }
+	public function printpdf()
+    {
+
+        $custid = $this->input->get('id');
+		$tid = $custid;
+		$data['details'] = $this->customers->details($custid);
+		$data['due'] = $this->customers->due_details($custid);
+        $data['id'] = $custid;
+        $data['title'] = "Purchase $custid";
+        
+        $data['invoice']['multi'] = 0;
+
+        ini_set('memory_limit', '64M');
+
+        $html = $this->load->view('customers/view-print-'.RTL, $data, true);
+
+        //PDF Rendering
+        $this->load->library('pdf_contrato');
+
+        $pdf = $this->pdf_contrato->load();
+
+        $pdf->SetHTMLFooter('<table width="100%" style="vertical-align: bottom; font-family: serif; font-size: 8pt; color: #959595; font-weight: bold; font-style: italic;"><tr><td width="33%"><span style="font-weight: bold; font-style: italic;">{DATE j-m-Y}</span></td><td width="33%" align="center" style="font-weight: bold; font-style: italic;">{PAGENO}/{nbpg}</td><td width="33%" style="text-align: right; ">#' . $custid . '</td></tr></table>');
+
+        $pdf->WriteHTML($html);
+
+        if ($this->input->get('d')) {
+
+            $pdf->Output('Purchase_#' . $custid . '.pdf', 'D');
+        } else {
+            $pdf->Output('Purchase_#' . $custid . '.pdf', 'I');
+        }
+
+
     }
 
     public function inv_list()

@@ -212,7 +212,7 @@ class Customers_model extends CI_Model
         }
     }
 
-    public function add($abonado, $name, $dosnombre, $unoapellido, $dosapellido, $company, $celular, $celular2, $email, $nacimiento, $tipo_cliente, $tipo_documento, $documento, $departamento, $ciudad, $localidad, $barrio, $nomenclatura, $numero1, $adicionauno, $numero2, $adicional2, $numero3, $residencia, $referencia, $customergroup, $name_s, $contra, $servicio, $perfil, $Iplocal, $Ipremota, $comentario)
+    public function add($abonado, $name, $dosnombre, $unoapellido, $dosapellido, $company, $celular, $celular2, $email, $nacimiento, $tipo_cliente, $tipo_documento, $documento, $fcontrato, $estrato, $departamento, $ciudad, $localidad, $barrio, $nomenclatura, $numero1, $adicionauno, $numero2, $adicional2, $numero3, $residencia, $referencia, $customergroup, $name_s, $contra, $servicio, $perfil, $Iplocal, $Ipremota, $comentario)
     {
         $data = array(
 			'abonado' => $abonado,
@@ -228,6 +228,8 @@ class Customers_model extends CI_Model
             'tipo_cliente' => $tipo_cliente,
             'tipo_documento' => $tipo_documento,
             'documento' => $documento,
+			'f_contrato' => $fcontrato,
+			'estrato' => $estrato,
             'departamento' => $departamento,
             'ciudad' => $ciudad,
             'localidad' => $localidad,
@@ -308,7 +310,7 @@ class Customers_model extends CI_Model
     }
 
 
-    public function edit($id, $abonado, $name, $dosnombre, $unoapellido, $dosapellido, $company, $celular, $celular2, $email, $nacimiento, $tipo_cliente, $tipo_documento, $documento, $departamento, $ciudad, $localidad, $barrio, $nomenclatura, $numero1, $adicionauno, $numero2, $adicional2, $numero3, $residencia, $referencia, $customergroup, $name_s, $contra, $servicio, $perfil, $Iplocal, $Ipremota, $comentario)
+    public function edit($id, $abonado, $name, $dosnombre, $unoapellido, $dosapellido, $company, $celular, $celular2, $email, $nacimiento, $tipo_cliente, $tipo_documento, $documento, $fcontrato, $estrato, $departamento, $ciudad, $localidad, $barrio, $nomenclatura, $numero1, $adicionauno, $numero2, $adicional2, $numero3, $residencia, $referencia, $customergroup, $name_s, $contra, $servicio, $perfil, $Iplocal, $Ipremota, $comentario)
     {
         $data = array(
 			'abonado' => $abonado,
@@ -324,6 +326,8 @@ class Customers_model extends CI_Model
             'tipo_cliente' => $tipo_cliente,
             'tipo_documento' => $tipo_documento,
             'documento' => $documento,
+			'f_contrato' => $fcontrato,
+			'estrato'	=> $estrato,
             'departamento' => $departamento,
             'ciudad' => $ciudad,
             'localidad' => $localidad,

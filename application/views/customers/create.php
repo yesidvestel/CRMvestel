@@ -131,9 +131,25 @@
                                    class="form-control margin-bottom" name="documento" id="mcustomer_documento">
                         </div>
                     </div>
-                    <hr>
-                    <h5><?php echo $this->lang->line('') ?>Datos de residencia</h5>
-                    <hr>
+					<div class="form-group row">
+						<h6><label class="col-sm-12 col-form-label"><?php echo $this->lang->line('') ?>Estrato</label></h6>
+					
+						<div class="col-sm-4 ">
+                            <select name="estrato" class="form-control" >
+								<option value="Estrato 1">Estrato 1</option>
+								<option value="Estrato 2">Estrato 2</option>
+								<option value="Estrato 3">Estrato 3</option>
+								<option value="Estrato 4">Estrato 4</option>
+								<option value="Estrato 5">Estrato 5</option>
+								<option value="Estrato 6">Estrato 6</option>
+								<option value="Estrato 7">Estrato 7</option>
+								<option value="Estrato 8">Estrato 8</option>
+							</select>
+                        </div>
+					</div>
+                    <hr class="col-sm-12">
+                    <h5 class="col-sm-12"><?php echo $this->lang->line('') ?>Datos de residencia</h5>
+                    <hr class="col-sm-12">
                     <div class="form-group row">
 						
 						

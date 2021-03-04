@@ -305,6 +305,17 @@
 
                             </div>
                             <hr>
+							<div class="row m-t-lg">
+                                <div class="col-md-2">
+                                    <strong>Contrato:</strong>
+                                </div>
+                                <div class="col-md-10">
+                                   <a class="btn btn-primary btn-lg"
+                                           href="<?php echo 'printpdf?id=' . $details['id']; ?>"><?php echo $this->lang->line('Print') ?></a>
+                                </div>
+
+                            </div>
+                            <hr>
                             <div class="row mt-3">
                                 <div class="col-md-4">
 
