@@ -11,7 +11,8 @@ ALTER TABLE `aauth_users` ADD `finicial` DATE NULL AFTER `ip_address`;
 ALTER TABLE `aauth_users` ADD `hinicial` TIME NULL AFTER `finicial`;
 ALTER TABLE `aauth_users` ADD `fcierre` DATE NULL AFTER `hinicial`;
 ALTER TABLE `aauth_users` ADD `hcierre` TIME NULL AFTER `fcierre`;
-
+ALTER TABLE `customers` ADD `f_contrato` DATE NULL AFTER `documento`;
+ALTER TABLE `customers` ADD `estrato` VARCHAR(20) NULL AFTER `f_contrato`;
 
 
 
