@@ -173,6 +173,9 @@ class Clientgroup extends CI_Controller
         $data = array();
         $no = $this->input->post('start');
         foreach ($list as $customers) {
+            if(isset($customers->idx)){
+                $customers->id=$customers->idx;
+            }
             $no++;
 
             $row = array();

@@ -41,9 +41,24 @@ class Customers_model extends CI_Model
     private function _get_datatables_query($id = '')
     {
 
-        $this->db->from($this->table);
+        if (isset($_GET['sel_servicios']) && $_GET['sel_servicios'] != '' && $_GET['sel_servicios'] != null) {
+            $this->db->select("*,cus1.id as idx");
+            
+        }
+        $this->db->from($this->table." as cus1");
+
+        if (isset($_GET['sel_servicios']) && $_GET['sel_servicios'] != '' && $_GET['sel_servicios'] != null) {
+            $this->db->join("invoices as inv1","cus1.id=inv1.csd and inv1.tid=(select max(tid) from invoices as inv2 where inv2.csd=cus1.id and ((inv2.combo !='no' and inv2.combo !='' and inv2.combo !='-') or  (inv2.television !='no' and inv2.television !='' and inv2.television !='-')))");
+            if($_GET['sel_servicios']=="Internet"){
+               
+            }else if($_GET['sel_servicios']=="TV"){
+               
+            }else if($_GET['sel_servicios']=="TV"){
+               
+            }
+        }
         if ($id != '') {
-            $this->db->where('gid', $id);
+            $this->db->where('cus1.gid', $id);
         }
         if (isset($_GET['estado']) && $_GET['estado'] != '' && $_GET['estado'] != null) {
             $this->db->where('usu_estado=', $_GET['estado']);
@@ -75,11 +90,7 @@ class Customers_model extends CI_Model
                 $this->db->where('numero3=', $_GET['numero3']);
             }
         }
-        if (isset($_GET['sel_servicios']) && $_GET['sel_servicios'] != '' && $_GET['sel_servicios'] != null) {
-            if($_GET['sel_servicios']=="Internet"){
-               // $this->db->where('combo=', "no");
-            }
-        }
+        
         $i = 0;
 
         foreach ($this->column_search as $item) // loop column
@@ -88,6 +99,12 @@ class Customers_model extends CI_Model
             $value = $search['value'];
             if ($value) // if datatable send POST for search
             {
+
+                if (isset($_GET['sel_servicios']) && $_GET['sel_servicios'] != '' && $_GET['sel_servicios'] != null) {
+                    if($item=="id"){
+                        $item="cus1.id";
+                    }
+                }
 
                 if ($i === 0) // first loop
                 {
@@ -105,10 +122,10 @@ class Customers_model extends CI_Model
         $search = $this->input->post('order');
         if ($search) // here order processing
         {
-            $this->db->order_by($this->column_order[$search['0']['column']], $search['0']['dir']);
+            $this->db->order_by("cus1.".$this->column_order[$search['0']['column']], $search['0']['dir']);
         } else if (isset($this->order)) {
             $order = $this->order;
-            $this->db->order_by(key($order), $order[key($order)]);
+            $this->db->order_by("cus1.".key($order), $order[key($order)]);
         }
     }
 
