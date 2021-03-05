@@ -61,15 +61,20 @@ class Customers extends CI_Controller
         $this->load->view('fixed/footer');
     }
     public function firmadigital(){
-         $head['usernm'] = $this->aauth->get_user()->username;
-        
-        $head['title'] = 'Firma Digital Customer';      
-        
-        
-        
+        $data['id']=$_GET['id'];
        // $this->load->view('fixed/header', $head);
         $this->load->view('customers/firma_digital', $data);
         //$this->load->view('fixed/footer');
+    }
+      public function save_firma(){
+        //print_r($_POST);
+        $img = $_POST['base64'];
+        $img = str_replace('data:image/png;base64,', '', $img);
+        $fileData = base64_decode($img);
+        $fileName = 'assets/firmas_digitales/'.$_POST['customer_id'].'.png';
+
+        file_put_contents($fileName, $fileData);
+        redirect(base_url()."customers/view?id=".$_POST['customer_id']);
     }
     public function conectar_microtik(){
         include (APPPATH."libraries\RouterosAPI.php");
