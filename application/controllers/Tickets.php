@@ -422,7 +422,7 @@ class Tickets Extends CI_Controller
 		
 		//alerta de revision
 		$ciudad = $usuario->ciudad;
-		if ($status=='Resuelto'){
+		if ($status==='Resuelto' && $ticket->detalle==='Instalacion'){
 		$stdate2 = datefordatabase($fecha_final);
 		$name = 'Revisar orden #'.$ticket->codigo;
 		$estado = 'Due';
@@ -432,7 +432,9 @@ class Tickets Extends CI_Controller
 		if($ciudad==YOPAL || $ciudad==Yopal){
 		$employee = 32;
 		}if($ciudad==Monterrey){
-			$employee = 26;
+			$employee = 33;
+		}if($ciudad==Villanueva){
+			$employee = 30;
 		}
 		$assign = $this->aauth->get_user()->id;
 		$content = 'Revisar orden #'.$ticket->codigo;
