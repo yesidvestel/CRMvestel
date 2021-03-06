@@ -208,7 +208,7 @@ class Customers_model extends CI_Model
         public function due_details($custid)
     {
 
-       $this->db->select('*, SUM(total) AS total,SUM(pamnt) AS pamnt,MAX(television) AS television,MAX(combo) AS combo,MAX(puntos) AS puntos');
+       $this->db->select('*, SUM(total) AS total,SUM(pamnt) AS pamnt,MAX(television) AS television,MAX(combo) AS combo,MAX(puntos) AS puntos,MAX(ron) AS estado');
         $this->db->from('invoices');
         $this->db->where('csd', $custid);
         $query = $this->db->get();

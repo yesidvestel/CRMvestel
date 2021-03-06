@@ -44,7 +44,7 @@
                                     <h5><?php echo $this->lang->line('Balance Summary') ?></h5>
                                     <ul class="list-group list-group-flush">
 										<li class="list-group-item">
-											<span class="tag tag-default tag-pill bg-primary float-xs-right"><?php echo $details['usu_estado']?></span>
+											<span class="tag tag-default tag-pill bg-primary float-xs-right"><?php echo $due['estado']?></span>
 											Estado Servicio
                                         </li>
 										<li class="list-group-item">
