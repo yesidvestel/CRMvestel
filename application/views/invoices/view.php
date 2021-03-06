@@ -524,7 +524,7 @@
                                    value="Pago de factura #<?php echo $invoice['tid'] .' '.$invoice['name'].' '.$invoice['unoapellido'].' '.$invoice['documento'] ?>
 										  "></div>
                     </div>
-					<?php if ($invoice['ron']=='Cortado') { ?>
+					<?php if ($invoice['ron']=='Cortado' || $invoice['rec']=='1') { ?>
 					<div class="row">
                         <div class="col-xs-12 mb-1"><label
                                     for="shortnote">Generar Reconexion</label>

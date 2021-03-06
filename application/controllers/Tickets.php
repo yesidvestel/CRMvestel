@@ -532,7 +532,7 @@ class Tickets Extends CI_Controller
 					$datay['totaltax']=0;
                     $datay['price']=$x;
                     $datay['subtotal']=$x;     
-                    if($ticket->detalle=="Instalacion" && $ticket->id_factura==null || $ticket->id_factura==0 && $status=="Resuelto"){
+                    if($ticket->detalle=="Instalacion" && $ticket->id_factura==null  && $status=="Resuelto" || $ticket->id_factura==0 || $ticket->detalle=="Reconexion Combo2" || $ticket->detalle=="Reconexion Television2" || $ticket->detalle=="Reconexion Internet2"){
                         $this->db->insert('invoice_items',$datay);    
                     }
                 }
@@ -551,7 +551,7 @@ class Tickets Extends CI_Controller
                     $datay['tax']=19;
 					$datay['totaltax']=$y;
 					$datay['subtotal']=$x+$datay['totaltax'];
-                    if($ticket->detalle=="Instalacion" && $ticket->id_factura==null || $ticket->id_factura==0 && $status=="Resuelto"){
+                    if($ticket->detalle=="Instalacion" && $ticket->id_factura==null || $ticket->id_factura==0 && $status=="Resuelto" || $ticket->detalle=="Reconexion Combo2" || $ticket->detalle=="Reconexion Television2" || $ticket->detalle=="Reconexion Internet2"){
                         $this->db->insert('invoice_items',$datay);
                     }
 				}
@@ -568,7 +568,7 @@ class Tickets Extends CI_Controller
 					$datay['totaltax']='';
 					$datay['price']=$x;
 					$datay['subtotal']=$x*$datay['qty'];
-                    if($ticket->detalle=="Instalacion" && $ticket->id_factura==null || $ticket->id_factura==0 && $status=="Resuelto"){
+                    if($ticket->detalle=="Instalacion" && $ticket->id_factura==null || $ticket->id_factura==0 && $status=="Resuelto" || $ticket->detalle=="Reconexion Combo2" || $ticket->detalle=="Reconexion Television2" || $ticket->detalle=="Reconexion Internet2"){
                         $this->db->insert('invoice_items',$datay);
                     }
                 }
@@ -585,7 +585,7 @@ class Tickets Extends CI_Controller
 					$datay['totaltax']='';
                     $datay['subtotal']=$x;
 					
-                    if($ticket->detalle=="Instalacion" && $ticket->id_factura==null || $ticket->id_factura==0 && $status=="Resuelto"){
+                    if($ticket->detalle=="Instalacion" && $ticket->id_factura==null || $ticket->id_factura==0 && $status=="Resuelto" || $ticket->detalle=="Reconexion Combo2" || $ticket->detalle=="Reconexion Television2" || $ticket->detalle=="Reconexion Internet2"){
                         $this->db->insert('invoice_items',$datay);
                     }
                 }
@@ -601,7 +601,7 @@ class Tickets Extends CI_Controller
         $data['total']=$data['subtotal']+$data['tax'];
         //no haga ni insert ni update si no es instalacion y tambien si ya existe una factura
         $msg1="";
-        if($ticket->detalle=="Instalacion" && $ticket->id_factura==null || $ticket->id_factura==0 && $status=="Resuelto"){
+        if($ticket->detalle=="Instalacion" && $ticket->id_factura==null || $ticket->id_factura==0 && $status=="Resuelto" || $ticket->detalle=="Reconexion Combo2" || $ticket->detalle=="Reconexion Television2" || $ticket->detalle=="Reconexion Internet2"){
             $this->db->insert('invoices',$data);    
             $dataz['id_factura']=$data['tid'];
 			//actualizar estado usuario
@@ -654,7 +654,7 @@ class Tickets Extends CI_Controller
 				$this->db->set('usu_estado', 'Activo');
         		$this->db->where('id', $ticket->cid);
         		$this->db->update('customers');
-		}
+		}		
 		if($ticket->detalle=="Reconexion Internet"){
 			$paquete = $this->input->post('paquete');
 			$this->db->set('combo', $paquete);			
@@ -703,7 +703,7 @@ class Tickets Extends CI_Controller
         		$this->db->update('customers');
 		}
 		if($ticket->detalle=="Corte Internet"){
-			//agregar reconexion
+			//agregar reconexion			
 			$producto2 = $this->db->get_where('products',array('pid'=>162))->row();
 				$data2['tid']=$idfactura;
 				$data2['pid']=$producto2->pid;
@@ -717,7 +717,12 @@ class Tickets Extends CI_Controller
 				$this->db->set('subtotal', $factura->subtotal+$producto2->product_price);
 				$this->db->set('total', $factura->total+$producto2->product_price);
 				$this->db->set('items', $factura->items+1);
+			if ($factura->television===no){
 				$this->db->set('ron', 'Cortado');
+			}else{
+				$this->db->set('ron', 'Activo');
+			}
+				$this->db->set('rec', '1');
 				$this->db->set('combo', 'no');			
         		$this->db->where('tid', $idfactura);
         		$this->db->update('invoices');
@@ -741,7 +746,12 @@ class Tickets Extends CI_Controller
 				$this->db->set('subtotal', $factura->subtotal+$producto2->product_price);
 				$this->db->set('total', $factura->total+$producto2->product_price);
 				$this->db->set('items', $factura->items+1);
+			if ($factura->combo===no){
 				$this->db->set('ron', 'Cortado');
+			}else{
+				$this->db->set('ron', 'Activo');
+			}
+				$this->db->set('rec', '1');	
 				$this->db->set('television', 'no');			
         		$this->db->where('tid', $idfactura);
         		$this->db->update('invoices');

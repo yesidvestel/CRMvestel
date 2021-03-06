@@ -314,10 +314,21 @@ class Transactions extends CI_Controller
         $this->db->where('id', $acid);
         $query = $this->db->get();
         $account = $query->row_array();
+		$factura = $this->db->get_where('invoices',array('tid'=>$tid))->row();
+		$fcuenta = $factura->invoicedate;
+		$mes1 = date("Y-m",strtotime($fcuenta));
+		$mes2 = date("Y-m");
+		if ($tipo==='Reconexion Combo'){
+			$tv = 'Television';
+		}if ($tipo==='Reconexion Television'){
+			$tv = 'Television';
+		}if ($tipo==='Reconexion Internet'){
+			$tv = 'no';
+		}
 		//generar reconexion
 		$tidactualmasuno= $this->db->select('max(codigo)+1 as tid')->from('tickets')->get()->result();
-		if ($reconexion==si){
-				$data2['codigo']=$tidactualmasuno[0]->tid;
+		if ($reconexion==si && $mes2===$mes1){
+			$data2['codigo']=$tidactualmasuno[0]->tid;
 				$data2['subject']='servicio';
 				$data2['detalle']=$tipo;
                 $data2['created']=$paydate;
@@ -326,6 +337,22 @@ class Transactions extends CI_Controller
                 $data2['section']=$paquete;
                 $data2['id_factura']=$tid;
                 $this->db->insert('tickets',$data2);
+		}else{
+				$data2['codigo']=$tidactualmasuno[0]->tid;
+				$data2['subject']='servicio';
+				$data2['detalle']=$tipo.'2';
+                $data2['created']=$paydate;
+                $data2['cid']=$cid;
+                $data2['status']='Pendiente';
+                $data2['section']=$paquete;
+                $data2['id_factura']='';
+                $this->db->insert('tickets',$data2);
+				$data4 = array(
+				'corden' => $data2['codigo'],
+				'tv' => $tv,
+				'internet' => $paquete,				
+			);		
+			$this->db->insert('temporales', $data4);
 			}
 
         if($pmethod=='Balance'){
