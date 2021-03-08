@@ -337,7 +337,7 @@ class Transactions extends CI_Controller
                 $data2['section']=$paquete;
                 $data2['id_factura']=$tid;
                 $this->db->insert('tickets',$data2);
-		}else{
+		}if ($reconexion==si && $mes2>$mes1){
 				$data2['codigo']=$tidactualmasuno[0]->tid;
 				$data2['subject']='servicio';
 				$data2['detalle']=$tipo.'2';
