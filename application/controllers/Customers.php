@@ -76,6 +76,33 @@ class Customers extends CI_Controller
         file_put_contents($fileName, $fileData);
         redirect(base_url()."customers/view?id=".$_POST['customer_id']);
     }
+    public function subir_huella(){
+        $data['id']=$_GET['id'];
+        $head['usernm'] = $this->aauth->get_user()->username;
+        $head['title'] = 'Create Customer';  
+        if(!empty($_POST)){
+            if (isset($_FILES['archivo_huella']) && $_FILES['archivo_huella']['error'] === UPLOAD_ERR_OK) {
+                $fileTmpPath = $_FILES['archivo_huella']['tmp_name'];
+                $fileName = $_FILES['archivo_huella']['name'];
+                $fileSize = $_FILES['archivo_huella']['size'];
+                $fileType = $_FILES['archivo_huella']['type'];
+                $fileNameCmps = explode(".", $fileName);
+                $fileExtension = strtolower(end($fileNameCmps));
+                $newFileName = 'Huella_CUS_'.$_POST['id'].'.png';
+                $allowedfileExtensions = array('jpg', 'gif', 'png', 'zip', 'txt', 'xls', 'doc');
+                $uploadFileDir = './assets/huellas_digitales/';
+                $dest_path = $uploadFileDir . $newFileName;
+                move_uploaded_file($fileTmpPath, $dest_path);
+                redirect(base_url()."customers/view?id=".$_POST['id']);
+            }
+            
+        } else{
+        $this->load->view('fixed/header',$head);
+        $this->load->view('customers/subir_huella',$data);
+        $this->load->view('fixed/footer');    
+        } 
+        
+    }
     public function conectar_microtik(){
         include (APPPATH."libraries\RouterosAPI.php");
         set_time_limit(3000);
