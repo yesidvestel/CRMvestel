@@ -292,7 +292,7 @@ $fcontrato = $details['f_contrato'];
 		  <table width="100%" border="1">
   <tbody>
     <tr>
-      <td align="center"><img height="130px" src="<?=base_url()?>assets/firmas_digitales/<?=$id?>.png"><br>Con esta firma acepta recibir la factura solo por medios electrónicos</td>
+      <td align="center"><img height="130px" src="<?=base_url()?>assets/firmas_digitales/<?=$id?>.png"></img><br>Con esta firma acepta recibir la factura solo por medios electrónicos</td>
     </tr>
   </tbody>
 </table>
