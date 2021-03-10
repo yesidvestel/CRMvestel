@@ -1,0 +1,5 @@
+se debe descomprimir el archivo Digital-Persona-SDK-master.zip
+
+https://github.com/iamonuwa/Digital-Persona-SDK
+
+y ejecutar el instalador que esta en a carpeta sdk
