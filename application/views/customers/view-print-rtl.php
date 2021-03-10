@@ -631,7 +631,7 @@ $fcontrato = $details['f_contrato'];
 		menores de edad. ___ 3. Abstenerse de usar las redes globales de información para divulgación
 		de material ilegal con menores de edad. __ 4. Establecer mecanismos técnicos de bloqueo por
 		medio de los cuales los usuarios se puedan proteger a sí mismos o a sus hijos de material ilegal,
-		ofensivo o indeseable en relación con menores de edad.
+		ofensivo o indeseable en relación con menores de edad. DUBER BORRAR
 		</td>
       
     </tr>
