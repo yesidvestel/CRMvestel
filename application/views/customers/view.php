@@ -361,6 +361,13 @@
                                                 class="icon-file-text2"></i> Cambio Titular </a>
 
                                 </div>
+								<div class="col-md-4" style="margin-top: 5px;">
+
+                                    <a href="<?php echo base_url('llamadas/index?id=' . $details['id']) ?>"
+                                       class="btn btn-primary btn-lg" style="border-right-width: 15px;border-left-width: 22px;"><i
+                                                class="icon-mobile-phone"></i> Llamadas</a>
+
+                                </div>
                             </div>
                             <hr>
                             <h5 class="text-xs-center col-md-10">OBSERVACIONES</h5>
