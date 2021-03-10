@@ -543,7 +543,8 @@
                             </select></div>
                     </div>
 					<div class="row">
-						<?php if ($invoice['refer']=='Monterrey' || $invoice['refer']=='Yopal' || $invoice['refer']=='YOPAL') { ?>
+						<?php $refer_var =strtolower(str_replace(' ', '', $invoice['refer'])); ?>
+						<?php if ($invoice['refer']=='Monterrey' || $refer_var=='yopal' || $invoice['refer']=='YOPAL') { ?>
                         <div class="col-xs-12 mb-1"><label
                                     for="shortnote">Paquete</label>
                              <select name="paquete" class="form-control mb-1">
