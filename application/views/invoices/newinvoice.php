@@ -769,7 +769,7 @@ alert(selected);
 <script type="text/javascript">	
 	var combo_Yopal = new Array ("no","1Mega","2Megas","3Megas","3MegasSolo","5Megas","5MegasSolo","10Megas","10MegasSolo","15Megas","15MegasSolo","20Megas","20MegasSolo");
 	var combo_Monterrey = new Array ("no","1Mega","2Megas","3Megas","3MegasSolo","5Megas","5MegasSolo","5MegasD","10Megas","10MegasSolo","50Megas");
-	var combo_Villanueva = new Array ("no","1Mega","3MegasV","3MegasVS","5MegasV","5MegasVS","5MegasVD","10MegasV","10MegasVS","50MegasV");
+	var combo_Villanueva = new Array ("no","1Mega","3MegasV","3MegasVS","5MegasV","5MegasVS","5MegasVD","10MegasV","10MegasVS","30MegasV","50MegasV");
 							//crear funcion que ejecute el cambio
 							function cambia(){
 								var refer;
