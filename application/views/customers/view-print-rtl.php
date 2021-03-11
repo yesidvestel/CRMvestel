@@ -234,7 +234,7 @@ $fcontrato = $details['f_contrato'];
 		 <h4>TERMINACIÓN</h4>
 		Usted puede terminar el contrato en cualquier momento sin penalidades. Para esto debe
 		realizar una solicitud a través de cualquiera de nuestros Medios de Atención mínimo 3 días
-		hábiles antes del corte de facturación (su corte de facturación es el día de cada mes). Si
+		hábiles antes del corte de facturación (su corte de facturación es el día 21 de cada mes). Si
 		presenta la solicitud con una anticipación menor, la terminación del servicio se dará en el
 		siguiente periodo de facturación.
 		Así mismo, usted puede cancelar cualquiera de los servicios contratados, para lo que le
@@ -280,8 +280,7 @@ $fcontrato = $details['f_contrato'];
       <td colspan="2" style="text-align: justify">
 		  <h4>EL SERVICIO</h4>
 			Con este contrato nos comprometemos a prestarle los servicios que usted elija*:
-			Telefonía fija Internet fijo Televisión
-			Servicios adicionales <span style="border-bottom: 1px solid;"><?php if ($due['television']!==no){ echo $due['television'];} if ($due['combo']!==no){ echo ' + '.$due['combo'];}if ($due['puntos']!=='0'){ echo ' + '.$due['puntos'].' Puntos';} ?></span>
+			Internet fijo Televisión Servicios adicionales <span style="border-bottom: 1px solid;"><?php if ($due['television']!==no){ echo $due['television'];} if ($due['combo']!==no){ echo ' + '.$due['combo'];}if ($due['puntos']!=='0'){ echo ' + '.$due['puntos'].' Puntos';} ?></span>
 			
 			Usted se compromete a pagar oportunamente el precio acordado. El servicio se activará a
 			más tardar el día <span style="border-bottom: 1px solid;"><?php echo date("d/m/Y",strtotime($fcontrato."+ 3 days")) ?></span>			
@@ -334,9 +333,9 @@ $fcontrato = $details['f_contrato'];
 		2. Presente cualquier queja, petición/reclamo o recurso a través de estos medios y le
 		responderemos en máximo 15 días hábiles.<br>
 		3. Si no respondemos es porque aceptamos su petición o reclamo. Esto se llama silencio
-		administrativo positivo y aplica para internet y telefonía.<br>
+		administrativo positivo y aplica para internet.<br>
 		<h6>Si no está de acuerdo con nuestra respuesta</h6>
-		4. Cuando su queja o petición sea por los servicios de telefonía y/o internet, y esté relacionada
+		4. Cuando su queja o petición sea por los servicios de internet, y esté relacionada
 		con actos de negativa del contrato, suspensión del servicio, terminación del contrato, corte y
 		facturación; usted puede insistir en su solicitud ante nosotros, dentro de los 10 días hábiles
 		siguientes a la respuesta, y pedir que si no llegamos a una solución satisfactoria para usted,
@@ -350,9 +349,6 @@ $fcontrato = $details['f_contrato'];
 		posible. Si desde el punto de vista técnico no es viable el traslado del servicio, usted puede
 		ceder su contrato a un tercero o terminarlo pagando el valor de la cláusula de permanencia
 		mínima si está vigente.
-		<h6>LARGA DISTANCIA (TELEFONÍA)</h6>
-		Nos comprometemos a usar el operador de larga distancia que usted nos indique para lo cual
-		debe marcar el código de larga distancia del operador que elija.
 		<h6>COBRO POR RECONEXIÓN DEL SERVICIO</h6>
 		En caso de suspensión del servicio por mora en el pago, podremos cobrarle un valor por
 		reconexión que corresponderá estrictamente a los costos asociados a la operación de
@@ -567,8 +563,8 @@ $fcontrato = $details['f_contrato'];
 		productos contratados. En todo caso el tratamiento de mis datos personales debe estar sujeto
 		a la protección establecidas en la Ley 1581 de 2012, sus decretos reglamentarios y las normas
 		que los modifiquen así como a la Política de Datos Personales establecida en el Manual interno
-		de tratamiento de datos datos personales de VESTEL S.A.S., que se encuentra disponible en
-		____________________ enlace donde va a quedar disponible. En cualquier momento podré
+		de tratamiento de datos personales de VESTEL S.A.S., que se encuentra disponible en
+		www.vestel.com.co enlace donde va a quedar disponible. En cualquier momento podré
 		ejercer los derechos establecidos en estas normas y particularmente modificar y/o revocar la
 		autorización prestada o solicitar la supresión parcial o definitiva de mis datos personales. Las
 		solicitudes de supresión y/o revocación de la autorización de datos personales no proceden
