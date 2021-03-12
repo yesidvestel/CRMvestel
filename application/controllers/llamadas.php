@@ -138,6 +138,7 @@ class llamadas extends CI_Controller
         $notes = $this->input->post('notes');
 
         $this->llamadas->add($iduser, $tllamada, $trespuesta, $drespuesta, $responsable, $fecha, $hra, $notes);
+        echo json_encode(array('status' => 'Success', 'message' => "Agregado Exitoso"));
 
     }
 

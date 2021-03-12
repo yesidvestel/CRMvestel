@@ -133,7 +133,7 @@ class llamadas_model extends CI_Model
         $data = array(
             'iduser' => $iduser,
 			'tllamada' => $tllamada,
-            'trespeusta' => $trespuesta,
+            'trespuesta' => $trespuesta,
             'drespuesta' => $drespuesta,
             'responsable' => $responsable,
             'fcha' => $fecha,
