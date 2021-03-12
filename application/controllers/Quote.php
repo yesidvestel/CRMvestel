@@ -112,12 +112,13 @@ class Quote extends CI_Controller
 		$ntres = $this->input->post('numero3');
 		$local = $this->input->post('localidad');
 		$barrio = $this->input->post('barrio');
-		$hora = date($this->input->post('hora'));
+		$hora = $this->input->post('hora');
+		$hora2 = date("H:i",strtotime($this->input->post('hora')));
 		$tv = $this->input->post('tele');
 		$inter = $this->input->post('inter');
 		$punto = $this->input->post('punto');
         if ($customer_id) {
-        	$this->quote->addticket($customer_id, $nticket, $subject, $detalle, $created, $section, $factura,$agendar,$fagenda,$hora,$nomen,$nuno,$auno,$ndos,$ados,$ntres,$local,$barrio,$tv,$inter,$punto);
+        	$this->quote->addticket($customer_id, $nticket, $subject, $detalle, $created, $section, $factura,$agendar,$fagenda,$hora,$hora2,$nomen,$nuno,$auno,$ndos,$ados,$ntres,$local,$barrio,$tv,$inter,$punto);
 			
 		}
 
@@ -239,7 +240,8 @@ class Quote extends CI_Controller
 		$nticket = $this->input->post('ticketnumero');
 		$agendar = $this->input->post('agendar');
 		$fagenda = $this->input->post('f_agenda');
-		$hora = $this->input->post('hora');
+		$hora2 = $this->input->post('hora');
+		$hora = date("H:i",strtotime($hora2));
         $subject = $this->input->post('subject');
         $detalle = $this->input->post('detalle');
         $created = $this->input->post('created');
@@ -250,12 +252,12 @@ class Quote extends CI_Controller
         $this->db->set($data);
         $this->db->where('idt', $customer_id);
 		$this->db->update('tickets');
-		$start = datefordatabase($fagenda);
+		$start = date("Y-m-d",strtotime($fagenda));
 			
 			if ($agendar==actualizar){
 				$data2 = array(					
-					'title' => $detalle.' '.$hora.' Orden #'.$nticket,
-					'start' => $start,            
+					'title' => $detalle.' '.$hora2.' Orden #'.$nticket,
+					'start' => $start.' '.$hora,            
 					'description' => strip_tags($section)           
 				);
 				$this->db->where('idorden', $nticket);
@@ -264,8 +266,8 @@ class Quote extends CI_Controller
 			if ($agendar==si){
 				$data2 = array(
 					'idorden' => $nticket,
-					'title' => $detalle.' '.$hora.' Orden #'.$nticket,
-					'start' => $start,            
+					'title' => $detalle.' '.$hora2.' Orden #'.$nticket,
+					'start' => $start.' '.$hora,            
 					'description' => strip_tags($section)           
 				);
 				$this->db->insert('events', $data2);

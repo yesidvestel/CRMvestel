@@ -134,7 +134,7 @@ class llamadas extends CI_Controller
         $responsable = $this->input->post('responsable');
         $fcha = $this->input->post('fcha');
 		$fecha = datefordatabase($fcha);
-        $hra = $this->input->post('hra');
+        $hra = date("H:m",strtotime($this->input->post('hra')));
         $notes = $this->input->post('notes');
 
         $this->llamadas->add($iduser, $tllamada, $trespuesta, $drespuesta, $responsable, $fecha, $hra, $notes);
