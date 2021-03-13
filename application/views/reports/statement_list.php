@@ -87,7 +87,7 @@
 				$valor_total=intval($invoice->total);
 				$valor_item=intval($item_invoic['subtotal']);
 				//para la Resumen por Servicios
-				if($item_invoic['product']=="1Mega" ||$item_invoic['product']=="1 Mega"){
+				if(strpos(strtolower(str_replace(" ","",$item_invoic['product'])), "1mega")!==false){
 			 		
 			 		if($value['credit']!=0 && $valor_item!=0){
 			 		$var_cuenta_planes['1Mega']++;			
@@ -99,7 +99,7 @@
 
 			 		}
 
-				}else if($item_invoic['product']=="2Megas" ||$item_invoic['product']=="2 Megas"){
+				}else if(strpos(strtolower(str_replace(" ","",$item_invoic['product'])), "2megas")!==false){
 					
 
 					if($value['credit']!=0 && $valor_item!=0){
@@ -111,7 +111,7 @@
 			 			$items_tocados['2MegasMonto']=true;
 			 		}
 
-				}else if($item_invoic['product']=="3Megas"|| $item_invoic['product']=="3 Megas"){
+				}else if(strpos(strtolower(str_replace(" ","",$item_invoic['product'])), "3megas")!==false){
 					
 					if($value['credit']!=0 && $valor_item!=0){
 			 		$var_cuenta_planes['3Megas']++;			
@@ -122,7 +122,7 @@
 			 			$items_tocados['3MegasMonto']=true;
 			 		}
 
-				}else if($item_invoic['product']=="5Megas"||$item_invoic['product']=="5 Megas"){
+				}else if(strpos(strtolower(str_replace(" ","",$item_invoic['product'])), "5megas")!==false){
 					
 					if($value['credit']!=0 && $valor_item!=0){
 			 		$var_cuenta_planes['5Megas']++;			
@@ -133,7 +133,7 @@
 			 			$items_tocados['5MegasMonto']=true;
 			 		}
 
-				}else if($item_invoic['product']=="10Megas"||$item_invoic['product']=="10 Megas"){
+				}else if(strpos(strtolower(str_replace(" ","",$item_invoic['product'])), "10megas")!==false ){
 					
 					if($value['credit']!=0 && $valor_item!=0){
 			 		$var_cuenta_planes['10Megas']++;			
