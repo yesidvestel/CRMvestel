@@ -33,7 +33,7 @@ $array_afiliaciones=array();
 				$valor_total=intval($invoice->total);
 				$valor_item=intval($item_invoic['subtotal']);
 				//para la Resumen por Servicios
-				if($item_invoic['product']=="1Mega" ||$item_invoic['product']=="1 Mega"){
+				if(strpos(strtolower(str_replace(" ","",$item_invoic['product'])), "1mega")!==false){
 			 		
 			 		if($value['credit']!=0 && $valor_item!=0){
 			 		$var_cuenta_planes['1Mega']++;			
@@ -45,7 +45,7 @@ $array_afiliaciones=array();
 			 		}
 			 		
 
-				}else if($item_invoic['product']=="2Megas" ||$item_invoic['product']=="2 Megas"){
+				}else if(strpos(strtolower(str_replace(" ","",$item_invoic['product'])), "2megas")!==false){
 					
 
 					if($value['credit']!=0 && $valor_item!=0){
@@ -59,7 +59,7 @@ $array_afiliaciones=array();
 
 					
 
-				}else if($item_invoic['product']=="3Megas"|| $item_invoic['product']=="3 Megas"){
+				}else if(strpos(strtolower(str_replace(" ","",$item_invoic['product'])), "3megas")!==false){
 					
 					if($value['credit']!=0 && $valor_item!=0){
 			 		$var_cuenta_planes['3Megas']++;			
@@ -72,7 +72,7 @@ $array_afiliaciones=array();
 
 					
 
-				}else if($item_invoic['product']=="5Megas"||$item_invoic['product']=="5 Megas"){
+				}else if(strpos(strtolower(str_replace(" ","",$item_invoic['product'])), "5megas")!==false){
 					
 					if($value['credit']!=0 && $valor_item!=0){
 			 		$var_cuenta_planes['5Megas']++;			
@@ -85,7 +85,7 @@ $array_afiliaciones=array();
 
 					
 
-				}else if($item_invoic['product']=="10Megas"||$item_invoic['product']=="10 Megas"){
+				}else if(strpos(strtolower(str_replace(" ","",$item_invoic['product'])), "10megas")!==false){
 					
 					if($value['credit']!=0 && $valor_item!=0){
 			 		$var_cuenta_planes['10Megas']++;			
@@ -97,6 +97,50 @@ $array_afiliaciones=array();
 			 		}
 
 					
+
+				}else if( strpos(strtolower($item_invoic['product']), "15")!==false && strpos(strtolower($item_invoic['product']), "megas")!==false ){
+					
+					if($value['credit']!=0 && $valor_item!=0){
+			 		$var_cuenta_planes['15Megas']++;			
+			 			$cuanto_porcentaje_item_en_invoice=($valor_item*100)/$valor_total;
+			 			$valor_item=($valor_parcial*$cuanto_porcentaje_item_en_invoice)/100;
+			 			$var_cuenta_planes_montos['15MegasMonto']+=$valor_item;	
+			 			$sumatoria_items+=$valor_item;
+			 			$items_tocados['15MegasMonto']=true;
+			 		}
+
+				}else if(strpos(strtolower($item_invoic['product']), "20")!==false && strpos(strtolower($item_invoic['product']), "megas")!==false){
+					
+					if($value['credit']!=0 && $valor_item!=0){
+			 		$var_cuenta_planes['20Megas']++;			
+			 			$cuanto_porcentaje_item_en_invoice=($valor_item*100)/$valor_total;
+			 			$valor_item=($valor_parcial*$cuanto_porcentaje_item_en_invoice)/100;
+			 			$var_cuenta_planes_montos['20MegasMonto']+=$valor_item;	
+			 			$sumatoria_items+=$valor_item;
+			 			$items_tocados['20MegasMonto']=true;
+			 		}
+
+				}else if(strpos(strtolower($item_invoic['product']), "30")!==false && strpos(strtolower($item_invoic['product']), "megas")!==false){
+					
+					if($value['credit']!=0 && $valor_item!=0){
+			 		$var_cuenta_planes['30Megas']++;			
+			 			$cuanto_porcentaje_item_en_invoice=($valor_item*100)/$valor_total;
+			 			$valor_item=($valor_parcial*$cuanto_porcentaje_item_en_invoice)/100;
+			 			$var_cuenta_planes_montos['30MegasMonto']+=$valor_item;	
+			 			$sumatoria_items+=$valor_item;
+			 			$items_tocados['30MegasMonto']=true;
+			 		}
+
+				}else if(strpos(strtolower($item_invoic['product']), "50")!==false && strpos(strtolower($item_invoic['product']), "megas")!==false){
+					
+					if($value['credit']!=0 && $valor_item!=0){
+			 		$var_cuenta_planes['50Megas']++;			
+			 			$cuanto_porcentaje_item_en_invoice=($valor_item*100)/$valor_total;
+			 			$valor_item=($valor_parcial*$cuanto_porcentaje_item_en_invoice)/100;
+			 			$var_cuenta_planes_montos['50MegasMonto']+=$valor_item;	
+			 			$sumatoria_items+=$valor_item;
+			 			$items_tocados['50MegasMonto']=true;
+			 		}
 
 				}else if(strpos(strtolower($item_invoic['product']), "reconexi")!==false){
 					
@@ -975,6 +1019,10 @@ $contenidoTabla="<div style='text-align: center;'>
 						".(($var_cuenta_planes['5Megas']!=0)? "<tr ><td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Internet 5MG</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>".$var_cuenta_planes['5Megas']."</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 1px;'>"."$ ".number_format($var_cuenta_planes_montos['5MegasMonto'],0,",",".")."</td></tr>":"")."
 						
 						".(($var_cuenta_planes['10Megas']!=0)? "<tr ><td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Internet 10MG</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>".$var_cuenta_planes['10Megas']."</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 1px;'>"."$ ".number_format($var_cuenta_planes_montos['10MegasMonto'],0,",",".")."</td></tr>":"")."
+						".(($var_cuenta_planes['15Megas']!=0)? "<tr ><td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Internet 10MG</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>".$var_cuenta_planes['15Megas']."</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 1px;'>"."$ ".number_format($var_cuenta_planes_montos['15MegasMonto'],0,",",".")."</td></tr>":"")."
+						".(($var_cuenta_planes['20Megas']!=0)? "<tr ><td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Internet 10MG</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>".$var_cuenta_planes['20Megas']."</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 1px;'>"."$ ".number_format($var_cuenta_planes_montos['20MegasMonto'],0,",",".")."</td></tr>":"")."
+						".(($var_cuenta_planes['30Megas']!=0)? "<tr ><td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Internet 10MG</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>".$var_cuenta_planes['30Megas']."</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 1px;'>"."$ ".number_format($var_cuenta_planes_montos['30MegasMonto'],0,",",".")."</td></tr>":"")."
+						".(($var_cuenta_planes['50Megas']!=0)? "<tr ><td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Internet 10MG</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>".$var_cuenta_planes['50Megas']."</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 1px;'>"."$ ".number_format($var_cuenta_planes_montos['50MegasMonto'],0,",",".")."</td></tr>":"")."
 						
 						".(($var_cuenta_planes['Television']!=0)? "<tr ><td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Television</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>".$var_cuenta_planes['Television']."</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 1px;'>"."$ ".number_format($var_cuenta_planes_montos['TelevisionMonto'],0,",",".")."</td></tr>":"")."
 						<tr>
