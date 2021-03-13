@@ -169,6 +169,8 @@
 			var optionArray = ["|","Excelente","Bueno","Regular","Malo"];
 		}else if (respuesta.value == "Recuperacion Contestada"){
 			var optionArray = ["|","Acuerdo de Pago","Cliente inconforme","Informado","No va a pagar","Va a pagar"];
+		}else if (respuesta.value == "Contestada"){
+			var optionArray = ["|","Acuerdo de pago","Cliente inconforme","Informado","No va a pagar","Va a pagar"];
 		}else if (respuesta.value == "sin Contestar"){
 			var optionArray = ["|","Correo de Voz","Numero no esta en uso","Timbra pero no contestan"];
 		}
