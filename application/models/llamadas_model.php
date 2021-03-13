@@ -21,22 +21,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class llamadas_model extends CI_Model
 {
 
-    var $table = 'encuestas';
-    var $column_order = array(null, 'norden', 'idtec', 'idemp', 'presentacion', 'trato', 'estado', 'tiempo', 'recomendar', 'observacion');
-    var $column_search = array('norden', 'idtec', 'idemp', 'presentacion', 'trato', 'estado', 'tiempo', 'recomendar', 'observacion');
-    var $trans_column_order = array('date', 'debit', 'credit', 'account', null);
-    var $trans_column_search = array('id', 'date');
-    var $inv_column_order = array(null, 'tid', 'name', 'invoicedate', 'total', 'status', null);
-    var $inv_column_search = array('tid', 'name', 'invoicedate', 'total');
+    var $table = 'llamadas';
+    var $column_order = array(null, 'id', 'fcha', 'hra', 'responsable','tllamada','trespuesta','drespuesta','notes');
+    var $column_search = array('id', 'fcha', 'hra', 'responsable','tllamada','trespuesta','drespuesta','notes');
     var $order = array('id' => 'desc');
-    var $inv_order = array('purchase.tid' => 'desc');
+    
 
 
-    private function _get_datatables_query($id = '')
+    private function _get_datatables_query($id)
     {
 
         $this->db->from($this->table);
-        
+        $this->db->where('iduser', $id);
         $i = 0;
 
         foreach ($this->column_search as $item) // loop column
@@ -69,31 +65,31 @@ class llamadas_model extends CI_Model
         }
     }
 
-    function get_datatables($id = '')
+    function get_datatables($id)
     {
         $this->_get_datatables_query($id);
         if ($this->input->post('length') != -1)
-            $this->db->limit($this->input->post('length'), $this->input->post('start'));
+            $this->db->limit($_POST['length'], $_POST['start']);
         $query = $this->db->get();
         return $query->result();
     }
 
     function count_filtered($id = '')
     {
-        $this->_get_datatables_query();
+        $this->_get_datatables_query($id);
         $query = $this->db->get();
         if ($id != '') {
-            $this->db->where('gid', $id);
+            $this->db->where('iduser', $id);
         }
         return $query->num_rows($id = '');
     }
 
     public function count_all($id = '')
     {
-        $this->_get_datatables_query();
+        $this->_get_datatables_query($id);
         $query = $this->db->get();
         if ($id != '') {
-            $this->db->where('gid', $id);
+            $this->db->where('iduser', $id);
         }
         return $query->num_rows($id = '');
     }

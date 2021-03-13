@@ -18,14 +18,13 @@
                 <thead>
                 <tr>
                     <th>#</th>
-                    <th>Orden #</th>
-                    <th>Tecnico</th>
+                    <th>Llamada #</th>
+                    <th>Fecha</th>
+                    <th>Hora</th>
                     <th>Realizado por</th>
-                    <th>Presentacion</th>
-                    <th>Trato</th>
-					<th>Estado</th>
-					<th>Tiempo</th>
-					<th>Recomendaria</th>
+                    <th>Tpo Llamada</th>
+					<th>Tpo respuesta</th>
+					<th>Detalle</th>					
 					<th>Observacion</th>
 					
 
@@ -38,14 +37,13 @@
                 <tfoot>
                 <tr>
                     <th>#</th>
-                    <th>Orden #</th>
-                    <th>Tecnico</th>
+                    <th>Llamada #</th>
+                    <th>Fecha</th>
+                    <th>Hora</th>
                     <th>Realizado por</th>
-                    <th>Presentacion</th>
-                    <th>Trato</th>
-					<th>Estado</th>
-					<th>Tiempo</th>
-					<th>Recomendaria</th>
+                    <th>Tpo Llamada</th>
+					<th>Tpo respuesta</th>
+					<th>Detalle</th>					
 					<th>Observacion</th>
 
 
@@ -190,8 +188,10 @@
             'stateSave': true,
             'order': [],
             'ajax': {
-                'url': "<?php echo site_url('encuesta/load_list')?>",
-                'type': 'POST'
+                'url': "<?php echo site_url('llamadas/load_list')?>",
+                'type': 'POST',
+				'data': {'cid':<?php echo $_GET['id'] ?> }
+				
             },
             'columnDefs': [
                 {

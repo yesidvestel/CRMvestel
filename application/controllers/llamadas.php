@@ -77,32 +77,31 @@ class llamadas extends CI_Controller
 
     public function load_list()
     {
-        $list = $this->llamadas->get_datatables();
+		$id = $this->input->post('cid');
+        $list = $this->llamadas->get_datatables($id);
         $data = array();
-		$encuestador = $this->db->get_where('aauth_users',array('id'=>$encuesta->idemp))->row();
         $no = $this->input->post('start');
         foreach ($list as $encuesta) {
             $no++;
-			$encuestador = $this->db->get_where('aauth_users',array('id'=>$encuesta->idemp))->row();
             $row = array();
             $row[] = $no;
-            $row[] = $encuesta->norden;
-            $row[] = $encuesta->idtec;
-            $row[] = $encuestador->username;
-            $row[] = $encuesta->presentacion;
-            $row[] = $encuesta->trato;
-			$row[] = $encuesta->estado;
-			$row[] = $encuesta->tiempo;
-			$row[] = $encuesta->recomendar;
-			$row[] = $encuesta->observacion;
+            $row[] = $encuesta->id;
+            $row[] = date("d/m/Y", strtotime($encuesta->fcha));
+            $row[] = date("g:i a", strtotime($encuesta->hra));
+            $row[] = $encuesta->responsable;
+            $row[] = $encuesta->tllamada;
+			$row[] = $encuesta->trespuesta;
+			$row[] = $encuesta->drespuesta;
+			$row[] = $encuesta->notes;
+			
 
             $data[] = $row;
         }
 
         $output = array(
             "draw" => $_POST['draw'],
-            "recordsTotal" => $this->llamadas->count_all(),
-            "recordsFiltered" => $this->llamdas->count_filtered(),
+            "recordsTotal" => $this->llamadas->count_all($id),
+            "recordsFiltered" => $this->llamadas->count_filtered($id),
             "data" => $data,
         );
         //output to json format
