@@ -980,6 +980,34 @@
                 </li>
 			 <li><a href="<?php echo base_url(); ?>tools/todo"><i class="icon-android-done-all"></i><span
                                 class="menu-title"> <?php echo $this->lang->line('') ?>Listado de Tareas</span></a></li>
+			<!--- TESORERIA--->
+			
+                <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "transactions") {
+                    echo ' open';
+                } ?>">
+                    <a href=""> <i class="icon-exchange"></i><span
+                                class="menu-title"> <?php echo $this->lang->line('') ?>Tesoreria</span><i
+                                class="fa arrow"></i> </a>
+                    <ul class="menu-content">
+                        <li>
+                            <a href="<?php echo base_url(); ?>transactions"><?php echo $this->lang->line('View Transactions') ?></a>
+                        </li>
+                        <li>
+                            <a href="<?php echo base_url(); ?>transactions/add"><?php echo $this->lang->line('New Transaction') ?></a>
+                        </li>
+                        <li>
+                            <a href="<?php echo base_url(); ?>transactions/transfer"><?php echo $this->lang->line('New Transfer') ?></a>
+                        </li>
+                        <li>
+                            <a href="<?php echo base_url(); ?>transactions/income"><?php echo $this->lang->line('Income'); ?></a>
+                        </li>
+                        <li>
+                            <a href="<?php echo base_url(); ?>transactions/expense"><?php echo $this->lang->line('Expense') ?></a>
+                        </li>
+
+
+                    </ul>
+                </li>
 			
 			<!---- diverso--->
 			
