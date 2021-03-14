@@ -209,6 +209,23 @@ class Ticket_model extends CI_Model
         if($filt2['tecnico']!='' && $filt2['tecnico']!='0' && $filt2['tecnico']!='undefined'){
          $this->db->where('asignado=', $filt2['tecnico']);   
         }
+        
+        if($filt2['opcselect']!=''){
+
+            $dateTime= new DateTime($filt2['sdate']);
+            $sdate=$dateTime->format("Y-m-d");
+            $dateTime= new DateTime($filt2['edate']);
+            $edate=$dateTime->format("Y-m-d");
+            if($opcselect=="fcreada"){
+                $this->db->where('created>=', $sdate);   
+                $this->db->where('created<=', $edate);       
+            }else{
+                $this->db->where('fecha_final>=', $sdate);   
+                $this->db->where('fecha_final<=', $edate);       
+            }
+            
+        }
+
 		$this->db->join('customers', 'tickets.cid=customers.id', 'left');
         $i = 0;
 
@@ -242,7 +259,7 @@ class Ticket_model extends CI_Model
     function ticket_count_filtered($filt)
     {
 		 $x_prueba=array('estado'=>"",'tecnico'=>"");
-        $this->ticket_datatables_query($filt,$x_prueba);
+        $this->ticket_datatables_query($filt,$_GET);
         $query = $this->db->get();
         return $query->num_rows();
     }
@@ -267,7 +284,7 @@ class Ticket_model extends CI_Model
 
     public function ticket_count_all($filt)
     {   $x_prueba=array('estado'=>"",'tecnico'=>"");
-        $this->ticket_datatables_query($filt,$x_prueba);
+        $this->ticket_datatables_query($filt,$_GET);
         $query = $this->db->get();
         return $query->num_rows();
     }

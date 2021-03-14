@@ -12,7 +12,11 @@
 
     $('.date30').datepicker('setDate', '<?php echo dateformat(date('Y-m-d', strtotime('-30 days', strtotime(date('Y-m-d'))))); ?>');
 
-
+    if(typeof editar_datepickerts === 'function') {
+        //ejecucion de funcion para cambiar fechas como sdate3 o como se le coloque pues se esta ejecutando al momento oportuno para hacer la edicion que se desee; solo es crear esta funcion en donde se quiera manejar fechas y listo mirar el ejemplo de views/support/tickets.php
+        editar_datepickerts('<?php echo $this->config->item('dformat2'); ?>','<?php echo dateformat(date('Y-m-d', strtotime('-30 days', strtotime(date('Y-m-d'))))); ?>');    
+    }
+    
 </script>
 <script src="<?php echo base_url(); ?>assets/myjs/jquery-ui.js"></script>
 <script src="<?php echo base_url(); ?>assets/vendors/js/ui/perfect-scrollbar.jquery.min.js"

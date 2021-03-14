@@ -122,9 +122,21 @@
                                     </select>
                                 </div>								
                             </div>
-				 			<div class="form-group row">
+                            <div class="form-group row">
                                 <label class="col-sm-2 col-form-label"
-                                       for="pay_cat">Fecha</label>
+                                       for="pay_cat">Fechas</label>
+
+                                <div class="col-sm-6">
+                                    <select name="trans_type" class="form-control" id="fechas" onchange="filtrado_fechas()">
+                                        <option value=''>Todas</option>
+                                        <option value='fcreada'>Fecha Creada</option>
+                                        <option value='fcierre'>Fecha Cierre</option>
+                                    </select>
+                                </div>                              
+                            </div>
+				 			<div class="form-group row" id="div_fechas" style="display: none">
+                                <label class="col-sm-2 col-form-label"
+                                       for="pay_cat" id="label_fechas">Fecha Creada</label>
 
                                 <div class="col-sm-2">
                                     <input type="text" class="form-control required"
@@ -137,6 +149,7 @@
                                            data-toggle="datepicker" autocomplete="false">
 								</div>
                             </div>
+                           
 							<div class="form-group row">
                                 <label class="col-sm-3 col-form-label" for="pay_cat"></label>
 
@@ -269,7 +282,30 @@
 
  
 
+     
+
+       
     });
+ /*  lo comento porque no fue necesario, porque puedo validar solo con una serie de fechas y no necesito estos campos pero lo dejo porque es funcional para futuras ediciones con fecha
+    
+    function editar_datepickerts(formato,fecha){
+        $('#sdate3').datepicker({autoHide: true, format: formato});
+        $('#sdate3').datepicker('setDate', fecha);
+    }
+*/
+  function  filtrado_fechas(){
+        var opcion_seleccionada=$("#fechas option:selected").val();
+        if(opcion_seleccionada=="fcreada"){
+            $("#div_fechas").show();
+            $("#label_fechas").text("Fecha Creada")
+        }else if(opcion_seleccionada=="fcierre"){
+            $("#label_fechas").text("Fecha Cierre")
+            $("#div_fechas").show();
+        }else{
+            $("#div_fechas").hide();
+        }
+    }
+
     let lista_ordenes=[];
     function asignar_orden(elemento){
         var indice_elemento=lista_ordenes.indexOf($(elemento).data("id"));
@@ -324,11 +360,14 @@
     function filtrar(){
         var tecnico=$("#tecnicos2 option:selected").val();
         var estado =$("#estados option:selected").val();
-        if(tecnico=="" && estado==""){
+        var sdate =$("#sdate").val();
+        var edate =$("#edate").val();
+        var opcion_seleccionada=$("#fechas option:selected").val();
+        if(tecnico=="" && estado=="" && opcion_seleccionada==""){
             tb.ajax.url( baseurl+'tickets/tickets_load_list?stat=' ).load();     
         }else{
             var id1=$("#tecnicos2 option:selected").data("id");
-            tb.ajax.url( baseurl+"tickets/tickets_load_list?tecnico="+tecnico+"&estado="+estado+"&tec1="+id1+"&stat=" ).load();     
+            tb.ajax.url( baseurl+"tickets/tickets_load_list?sdate="+sdate+"&edate="+edate+"&opcselect="+opcion_seleccionada+"&tecnico="+tecnico+"&estado="+estado+"&tec1="+id1+"&stat=" ).load();     
         }
        
 
