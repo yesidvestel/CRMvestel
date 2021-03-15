@@ -134,12 +134,57 @@ class Invoices extends CI_Controller
                                 }else if($item_invoic['product']=="3Megas"|| $item_invoic['product']=="3 Megas"){
                                     $_tiene_internet=true;
                                     $internet="3 Megas";
+                                }else if($item_invoic['product']=="3MegasVC"|| $item_invoic['product']=="3 MegasVC"){
+                                    $_tiene_internet=true;
+                                    $internet="3MegasVC";
+                                }else if($item_invoic['product']=="3MegasV"|| $item_invoic['product']=="3 MegasV"){
+                                    $_tiene_internet=true;
+                                    $internet="3MegasV";
+                                }else if($item_invoic['product']=="3MegasSolo"|| $item_invoic['product']=="3 MegasSolo"){
+                                    $_tiene_internet=true;
+                                    $internet="3MegasSolo";
                                 }else if($item_invoic['product']=="5Megas"||$item_invoic['product']=="5 Megas"){
                                     $_tiene_internet=true;
                                     $internet="5Megas";
+                                }else if($item_invoic['product']=="5MegasVS"||$item_invoic['product']=="5MegasVS"){
+                                    $_tiene_internet=true;
+                                    $internet="5MegasVS";
+                                }else if($item_invoic['product']=="5MegasV"||$item_invoic['product']=="5MegasV"){
+                                    $_tiene_internet=true;
+                                    $internet="5MegasV";
+                                }else if($item_invoic['product']=="5 Megas Dedicadas"){
+                                    $_tiene_internet=true;
+                                    $internet="5 Megas Dedicadas";
+                                }else if($item_invoic['product']=="5MegasSolo"){
+                                    $_tiene_internet=true;
+                                    $internet="5MegasSolo";
                                 }else if($item_invoic['product']=="10Megas"||$item_invoic['product']=="10 Megas"){
                                     $_tiene_internet=true;
                                     $internet="10 Megas";
+                                }else if($item_invoic['product']=="10MegasSolo"){
+                                    $_tiene_internet=true;
+                                    $internet="10MegasSolo";
+                                }else if($item_invoic['product']=="10MegasV"){
+                                    $_tiene_internet=true;
+                                    $internet="10MegasV";
+                                }else if($item_invoic['product']=="10MegasVS"){
+                                    $_tiene_internet=true;
+                                    $internet="10MegasVS";
+                                }else if($item_invoic['product']=="15MegasSolo"){
+                                    $_tiene_internet=true;
+                                    $internet="15MegasSolo";
+                                }else if($item_invoic['product']=="15Megas"){
+                                    $_tiene_internet=true;
+                                    $internet="15Megas";
+                                }else if($item_invoic['product']=="20Megas"){
+                                    $_tiene_internet=true;
+                                    $internet="20Megas";
+                                }else if($item_invoic['product']=="20MegasSolo"){
+                                    $_tiene_internet=true;
+                                    $internet="20MegasSolo";
+                                }else if($item_invoic['product']=="30MegasV"){
+                                    $_tiene_internet=true;
+                                    $internet="30MegasV";
                                 }else if($item_invoic['product']=="50Megas"||$item_invoic['product']=="50 Megas"){
                                     $_tiene_internet=true;
                                     $internet="50 Megas";
@@ -155,21 +200,6 @@ class Invoices extends CI_Controller
                                 }else if($item_invoic['product']=="5MegasD"){
                                     $_tiene_internet=true;
                                     $internet="5MegasD";
-                                }else if($item_invoic['product']=="3MegasV"){
-                                    $_tiene_internet=true;
-                                    $internet="3MegasV";
-                                }else if($item_invoic['product']=="5MegasV"){
-                                    $_tiene_internet=true;
-                                    $internet="5MegasV";
-                                }else if($item_invoic['product']=="5MegasVS"){
-                                    $_tiene_internet=true;
-                                    $internet="5MegasVS";
-                                }else if($item_invoic['product']=="10MegasV"){
-                                    $_tiene_internet=true;
-                                    $internet="10MegasV";
-                                }else if($item_invoic['product']=="10MegasVS"){
-                                    $_tiene_internet=true;
-                                    $internet="10MegasVS";
                                 }else if($item_invoic['product']=="Punto Adicional"){
                                     $puntos=$item_invoic['qty'];
                                 }
@@ -244,6 +274,12 @@ class Invoices extends CI_Controller
                             }else if($internet=="10Megas"||$internet=="10 Megas"){
                                 $_tiene_internet=true;
                                 $internet="10 Megas";
+                            }else if($internet=="15Megas"||$internet=="15 Megas"){
+                                $_tiene_internet=true;
+                                $internet="15Megas";
+                            }else if($internet=="20Megas"||$internet=="20 Megas"){
+                                $_tiene_internet=true;
+                                $internet="20Megas";
                             }else if($internet=="50Megas"||$internet=="50 Megas"){
                                 $_tiene_internet=true;
                                 $internet="50 Megas";
