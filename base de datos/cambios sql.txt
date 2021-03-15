@@ -13,8 +13,11 @@ ALTER TABLE `aauth_users` ADD `fcierre` DATE NULL AFTER `hinicial`;
 ALTER TABLE `aauth_users` ADD `hcierre` TIME NULL AFTER `fcierre`;
 ALTER TABLE `customers` ADD `f_contrato` DATE NULL AFTER `documento`;
 ALTER TABLE `customers` ADD `estrato` VARCHAR(20) NULL AFTER `f_contrato`;
-
-
+//nuevos campos tabla equipos
+ALTER TABLE `equipos` ADD `t_instalacion` VARCHAR(10) NULL AFTER `marca`;
+ALTER TABLE `equipos` ADD `puerto` INT NULL AFTER `t_instalacion`;
+ALTER TABLE `equipos` ADD `vlan` INT NULL AFTER `puerto`;
+ALTER TABLE `equipos` ADD `nat` INT NULL AFTER `vlan`;
 
 
 

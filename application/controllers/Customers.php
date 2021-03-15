@@ -577,7 +577,11 @@ class Customers extends CI_Controller
             $row[] = $prd->mac;
             $row[] = $prd->serial;
 			$row[] = $prd->estado;			
-			$row[] = $prd->marca;            
+			$row[] = $prd->marca;
+			$row[] = $prd->t_instalacion;
+			$row[] = $prd->vlan;
+			$row[] = $prd->nat;
+			$row[] = $prd->puerto;
             $data[] = $row;
         }
 
@@ -606,12 +610,18 @@ class Customers extends CI_Controller
 			'fecha' => date("Y-m-d"),
 			'observacion' => 'Codigo: '.$codigo.' Motivo '.$nota);		
        $this->db->insert('historiales', $data1);
-		
-		$this->db->set('observacion', $nota);
-		$this->db->set('estado', $estado);
-		$this->db->set('asignado', 0);
+		//actualizar equipo
+		$datae = array(
+				't_instalacion' => null,
+				'puerto' => null,
+			  	'vlan' => null,
+				'nat' => null,
+				'asignado' => null,
+				'estado' => $estado,
+				'observacion' => $nota
+			);
         $this->db->where('codigo', $codigo);
-        $this->db->update('equipos');
+        $this->db->update('equipos', $datae);
 
         echo json_encode(array('status' => 'Success', 'message' =>
             $this->lang->line('UPDATED'), 'pstatus' => $status));

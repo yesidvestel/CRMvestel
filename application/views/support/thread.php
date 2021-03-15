@@ -3,7 +3,8 @@
     <div class="card card-block">
         <?php $lista_productos_orden=$this->db->get_where('transferencia_products_orden',array('tickets_id'=>$id_orden_n))->result_array();
 		$traslados=$this->db->get_where('temporales',array('corden'=>$thread_info['codigo']))->row();
-		$factura=$this->db->get_where('invoices',array('tid'=>$thread_info['id_invoice']))->row();?>
+		$factura=$this->db->get_where('invoices',array('tid'=>$thread_info['id_invoice']))->row();
+		$equipo=$this->db->get_where('equipos',array('mac'=>$thread_info['macequipo']))->row();?>
         
         
     </div>
@@ -43,7 +44,7 @@
 				echo '<br><strong>Barrio:</strong> ' . $thread_info['barrio'];
                 echo '<br><strong>Estado:</strong> <span id="pstatus">' . $thread_info['status'];
 				echo '<br><strong>Servicios Contratados:</strong> <span id="pstatus">' . $factura->television.' '.$factura->combo;
-				echo '<br><strong>Equipo Asignado:</strong> <span id="pstatus">' . $thread_info['macequipo'];
+				echo '<br><strong>Equipo Asignado:</strong> <span id="pstatus">' . $thread_info['macequipo'].'<strong>'.$equipo->t_instalacion.'</strong><strong> V:</strong>'.$equipo->vlan.'<strong> N:</strong>'.$equipo->nat.'<strong> PN:</strong>'.$equipo->puerto;
                 ?></p>
 				
 
@@ -314,33 +315,68 @@
 
             <div class="modal-body">
                 <form id="form_model2">
-
-
-                    <div class="form-group row">
-                    <div class="frmSearch">
-						<label for="cst" class="caption col-sm-2 col-form-label">Burcar equipo</label>
-                        <div class="col-sm-6">
+                    <div class="frmSearch col-sm-6">
+						<label for="cst" class="caption col-form-label">Burcar equipo</label>
+                        <div class="">
 							<input type="hidden" name="iduser" value="<?php echo $thread_info['id'] ?>"></input>
 							<input type="text" class="form-control" name="cst" id="equipo-box" placeholder="Ingrese mac del equipo" autocomplete="off"/>
                             <div id="equipo-box-result"></div>
                         </div>
                     </div>
-
-                </div>
-			<div id="customerpanel" class="form-group row">
-                    <label for="toBizName"
-                           class="caption col-sm-2 col-form-label">Equipo mac<span
-                                style="color: red;">*</span></label>
-                    <div class="col-sm-6"><input type="hidden" name="idequipo" id="customer_id" value="0">
+				<div class="frmSearch col-sm-6">
+                    <label class="caption col-form-label">Equipo mac<span style="color: red;">*</span></label>
+                    <div class="">
+						<input type="hidden" name="idequipo" id="customer_id" value="0">
                         <input type="text" class="form-control" name="mac" id="customer_name">
                     </div>
                 </div>
+				<div class="frmSearch col-sm-6">
+                        <label for="pmethod" class="caption col-form-label">Tipo de instalacion</label>
+						<div>
+                            <select name="tinstalacion" class="form-control mb-1" onchange="funcion_status();">
+								<option value="null">-</option>
+								<option value="EOC">EOC</option>
+								<option value="FTTH">FTTH</option>
+                            </select>
+                        </div>
+                </div>
+				
+				<div class="frmSearch col-sm-6">
+                        <label for="pmethod" class="caption col-form-label">Vlan</label>
+						<div class="">
+                            <select name="vlan" class="form-control mb-1" onchange="funcion_status();">
+								<option value="null">-</option>
+								<?php for ($i=1;$i<=16;$i++){
+								echo '<option value="'.$i*'10'.'">'.$i*'10'.'</option>';
+								}?>
+                            </select>
+                        </div>
+                    </div>
+				<div class="frmSearch col-sm-6">
+                        <label for="pmethod" class="caption col-form-label">Caja Nat</label>
+						<div class="">
+                            <input type="text" class="form-control mb-1" name="nat" placeholder="Numero de caja NAT"></input>
+                        </div>
+                    </div>
+			<div class="frmSearch col-sm-6">
+                        <label for="pmethod" class="caption col-form-label">Puerto Nat</label>
+						<div>
+                            <select name="puerto" class="form-control mb-1" onchange="funcion_status();">
+								<option value="null">-</option>
+								<?php for ($i=1;$i<=16;$i++){
+								echo '<option value="'.$i.'">'.$i.'</option>';}?>
+                            </select>
+                        </div>
+                    </div>
+					<br>
                         <button type="button" class="btn btn-default"
                                 data-dismiss="modal">Volver</button>
                         <input type="hidden" id="action-url" value="tickets/asig_equipo">
                         <button type="button" class="btn btn-primary"
                                 id="submit_model2">Asignar</button>
+			
                     </div>
+		
                 </form>
             </div>
         </div>
