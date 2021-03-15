@@ -184,11 +184,16 @@
         </div>
     </div>
 </div>
-<?php $lista_invoices=$this->db->order_by('status','DESC')->get_where('invoices')->result_array(); ?>
-<?php foreach ($lista_invoices as $key => $value) {
-    $customer = $this->db->get_where('customers',array('id'=>$value['csd']));
-    $lista_invoices[$key]['nombres_cus']=$customer->name." ".$customer->unoapellido;
-} ?>
+
+<?php /*
+    $lista_invoices=$this->db->order_by('status','DESC')->get_where('invoices')->result_array();
+    foreach ($lista_invoices as $key => $value) {
+        $customer = $this->db->get_where('customers',array('id'=>$value['csd']));
+        $lista_invoices[$key]['nombres_cus']=$customer->name." ".$customer->unoapellido;
+    } 
+    */
+    //quito esto porque esta generando error y no se porque esta no le veo la logica
+?>
 <script type="text/javascript">
     var tb;
     var fac_pagadas="<?= (isset($_GET['fac_pag'])) ? $_GET['fac_pag'] : '' ?>";
