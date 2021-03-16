@@ -152,9 +152,15 @@ class Products extends CI_Controller
 			}else{ $row[] = $prd->asignado;}
 			$row[] = $prd->marca;
 			$row[] = $prd->t_instalacion;
+			if ($prd->vlan!=='0'){
 			$row[] = $prd->vlan;
+			}else{$row[]= 'N/A';}
+			if ($prd->nat!=='0'){
 			$row[] = $prd->nat;
+			}else{$row[]= 'N/A';}
+			if ($prd->puerto!=='0'){
 			$row[] = $prd->puerto;
+			}else{$row[]= 'N/A';}	
             $row[] = '<a href="' . base_url() . 'products/editequipoview?id=' . $prd->id . '" class="btn btn-primary btn-xs"><span class="icon-pencil"></span> ' . $this->lang->line('Edit') . '</a> <a href="#" data-object-id="' . $prd->id  . '" class="btn btn-danger btn-xs  delete-object"><span class="icon-bin"></span> ' . $this->lang->line('Delete') . '</a>';
             $data[] = $row;
         }

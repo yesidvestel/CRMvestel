@@ -32,7 +32,7 @@ class Pdf_invoice
 
         require_once APPPATH . '/third_party/vendor/autoload.php';
 
-        $mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => [80, 297], 'margin_left' => 5, 'margin_right' => 5, 'margin_top' => 45, 'margin_bottom' => 12]);
+        $mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => [80, 225], 'margin_left' => 5, 'margin_right' => 5, 'margin_top' => 50, 'margin_bottom' => 12]);
 
         //$mpdf->SetDirectionality('RTL');
         $mpdf->autoScriptToLang = true;

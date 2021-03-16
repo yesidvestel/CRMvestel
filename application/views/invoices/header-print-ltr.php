@@ -22,6 +22,9 @@
 			<tr>
             <td class="t_center"><?php echo $this->lang->line('') .'Sede: '. $invoice['refer'] ?></td>
 			</tr>
+			<tr>
+				<td class="t_center"><?php echo date("d/m/Y").' '.date("g:i a") ?></td>
+			</tr>
 			<?php } ?>
 			</table>
 

@@ -579,9 +579,15 @@ class Customers extends CI_Controller
 			$row[] = $prd->estado;			
 			$row[] = $prd->marca;
 			$row[] = $prd->t_instalacion;
+			if ($prd->vlan!=='0'){
 			$row[] = $prd->vlan;
+			}else{$row[]= 'N/A';}
+			if ($prd->nat!=='0'){
 			$row[] = $prd->nat;
+			}else{$row[]= 'N/A';}
+			if ($prd->puerto!=='0'){
 			$row[] = $prd->puerto;
+			}else{$row[]= 'N/A';}
             $data[] = $row;
         }
 
@@ -686,12 +692,12 @@ class Customers extends CI_Controller
 		$datos = array(				
 			'id_user' => $id,
 			'tipos' => $tipo,
-			'nombres' => $detalle,
+			'nombres' => '',
 			'tcliente' => '',
 			'tdocumento' => '',
 			'documento2' => '',
 			'fecha' => $fecha,
-			'observacion' => '');		
+			'observacion' => $detalle);		
        $this->db->insert('historiales', $datos);
 		
 		
