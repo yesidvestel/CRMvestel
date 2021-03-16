@@ -665,6 +665,10 @@ class Invoices extends CI_Controller
 		}else{
 			$estado = '';
 		}
+        if($pterms==null){
+            $pterms=0;
+        }
+
         $data = array(
 			'tid' => $invocieno, 
 			'invoicedate' => $bill_date, 
