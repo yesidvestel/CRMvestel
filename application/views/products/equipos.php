@@ -78,6 +78,10 @@
                     <th>Estado</th>
                     <th>Asignado a:</th>
 					<th>Marca</th>
+					<th>T/po sistema</th>
+					<th>Vlan</th>
+					<th>Nat</th>
+					<th>P/to Nat</th>
                     <th><?php echo $this->lang->line('Settings') ?></th>
                 </tr>
                 </thead>
@@ -93,6 +97,10 @@
                     <th>Estado</th>
                     <th>Asignado a:</th>
 					<th>Marca</th>
+					<th>T/po sistema</th>
+					<th>Vlan</th>
+					<th>Nat</th>
+					<th>P/to Nat</th>
                     <th><?php echo $this->lang->line('Settings') ?></th>
                 </tr>
                 </tfoot>

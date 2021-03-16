@@ -316,14 +316,24 @@ class Tickets Extends CI_Controller
     {
         $id = $this->input->post('iduser');
         $mac = $this->input->post('mac');
+		$tinstalacion = $this->input->post('tinstalacion');
+		$puerto = $this->input->post('puerto');
+		$vlan = $this->input->post('vlan');
+		$nat = $this->input->post('nat');
 		$idequipo = $this->input->post('idequipo');
 		$this->db->set('macequipo', $mac);		
         $this->db->where('id', $id);
         $this->db->update('customers');
-		
-		$this->db->set('asignado', $id);		
+		//datos de equipo
+		$datae = array(
+				't_instalacion' => $tinstalacion,
+				'puerto' => $puerto,
+			  	'vlan' => $vlan,
+				'nat' => $nat,
+				'asignado' => $id			
+			);	
         $this->db->where('id', $idequipo);
-        $this->db->update('equipos');
+        $this->db->update('equipos', $datae);
 
         echo json_encode(array('status' => 'Success', 'message' =>
             $this->lang->line('UPDATED'), 'pstatus' => $status));
