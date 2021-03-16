@@ -215,6 +215,7 @@
         <tr class="heading">
             <td>
                 <?php echo $this->lang->line('Description') ?>
+                
             </td>
 
             
@@ -227,10 +228,21 @@
         
 			setlocale(LC_TIME, "spanish");
 			$f1 = date(" F ",strtotime($invoice['invoicedate']));
-            echo '<tr class="item' . $flag . '"> 
-                        <td>' . strftime("%B", strtotime($f1)). ' CTA:'. $invoice['tid'].'</td>';
-            echo '<td class="t_center">' . amountExchange( $invoice['total']) . '</td>
-                        </tr>';
+            if(count($lista_invoices)>0){
+                    echo '<tr class="item' . $flag . '"> 
+                                <td>' . strftime("%B", strtotime($f1)). ' CTA:'. $invoice['tid'].'</td>';
+                    echo '<td class="t_center">' . amountExchange( $invoice['total']) . '</td>
+                                </tr>';
+                }else{
+                    $lista_items=$this->db->get_where("invoice_items",array('tid' => $invoice['tid']))->result();
+                    foreach ($lista_items as $key => $value) {
+                        echo '<tr class="item' . $flag . '"> 
+                                <td>'.$value->product.'</td>';
+                        echo '<td class="t_center">' . amountExchange( $value->subtotal) . '</td>
+                                </tr>';
+                    }
+
+                }
            foreach ($lista_invoices as $key => $factura) {
                 $f1 = date(" F ",strtotime($factura['invoicedate']));
             echo '<tr class="item' . $flag . '"> <td>' . strftime("%B", strtotime($f1)). ' CTA:'. $factura['tid'].'</td>';
