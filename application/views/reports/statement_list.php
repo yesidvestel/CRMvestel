@@ -1278,14 +1278,12 @@
 			$cuenta_ordenes= array('cantidad' =>0 ,"monto"=>0);
 			$cuenta_transaccions= array('cantidad' =>0 ,"monto"=>0);	
 			$cuenta_tr1=array('cantidad' =>0 ,"monto"=>0);
-			//$cuenta_t1= array('cantidad' =>0 ,"monto"=>0);
-			//$cuenta_t2= array('cantidad' =>0 ,"monto"=>0);
-			//$cuenta_t3= array('cantidad' =>0 ,"monto"=>0);
+			
 
 				foreach ($ordenes_compra as $key => $value) {
 					if($value['cat']=="Compra"){
 						$cuenta_transaccions['cantidad']++;
-						$cuenta_transaccions['monto']=$value['debit'];
+						$cuenta_transaccions['monto']+=$value['debit'];
 					}else{
 						$cuenta_ordenes['cantidad']++;
 						$cuenta_ordenes['monto']+=$value['debit'];
@@ -1302,26 +1300,7 @@
 					
 				}
 				
-				/*foreach ($ordenes_compra_c1 as $key => $value) {
-					
-					if(strpos(strtolower($value['note']), strtolower($filter[5]))!==false){
-						$cuenta_t1['cantidad']++;
-						$cuenta_t1['monto']+=$value['credit'];
-					}
-					
-				}
-				foreach ($ordenes_compra_c2 as $key => $value) {
-					if(strpos(strtolower($value['note']), strtolower($filter[5]))!==false){
-						$cuenta_t2['cantidad']++;
-						$cuenta_t2['monto']+=$value['credit'];
-					}
-				}
-				foreach ($ordenes_compra_c3 as $key => $value) {
-					if(strpos(strtolower($value['note']), strtolower($filter[5]))!==false){
-						$cuenta_t3['cantidad']++;
-						$cuenta_t3['monto']+=$value['credit'];
-					}
-				}*/
+				
 
 			 ?>
 

@@ -765,7 +765,7 @@ $array_afiliaciones=array();
 					foreach ($ordenes_compra as $key => $value) {
 						if($value['cat']=="Compra"){
 							$cuenta_transaccions['cantidad']++;
-							$cuenta_transaccions['monto']=$value['debit'];
+							$cuenta_transaccions['monto']+=$value['debit'];
 						}else{
 							$cuenta_ordenes['cantidad']++;
 							$cuenta_ordenes['monto']+=$value['debit'];
