@@ -289,25 +289,25 @@ class Customers extends CI_Controller
         echo json_encode($output);
     }
     public function load_morosos(){
-        $lista_invoices=$this->db->get_where("invoices", array('invoicedate' =>$_GET['fecha'],"refer"=>$_GET['pay_acc'],"notes"=>"."))->result_array();
+        $lista_customers=$this->db->get_where("customers")->result_array();
         $no = $this->input->post('start');
         $data=array();
         $x=0;
         $minimo=$this->input->post('start');
         $maximo=$minimo+10;
-        foreach ($lista_invoices as $key => $value) {
+        foreach ($lista_customers as $key => $customers) {
             
             if($x>=$minimo && $x<$maximo){
                 $no++;
-                $customers = $this->db->get_where("customers", array('id' => $value['csd']))->row();
+                $lista_invoices = $this->db->get_where("invoices", array('csd' => $value['id']))->row();
                 $row = array();
                 $row[] = $no;
-                //$row[] = $customers->abonado;
+                $row[] = $customers->abonado;
                 $row[] = '<a href="customers/view?id=' . $customers->id . '">' . $customers->name ." ". $customers->unoapellido. '</a>';
                 $row[] = $customers->celular;
                 $row[] = $customers->documento;
-                //$row[] = $customers->nomenclatura . ' ' . $customers->numero1 . $customers->adicionauno.' Nº '.$customers->numero2.$customers->adicional2.' - '.$customers->numero3;
-                //$row[] = $customers->usu_estado;
+                $row[] = $customers->nomenclatura . ' ' . $customers->numero1 . $customers->adicionauno.' Nº '.$customers->numero2.$customers->adicional2.' - '.$customers->numero3;
+                $row[] = $customers->usu_estado;
                 $row[] = '<a href="'.base_url().'customers/invoices?id='.$value['csd'].'" class="btn btn-info btn-sm"><span class="icon-eye"></span>  Facturas</a> <a href="'.base_url().'invoices/view?id='.$value['tid'].'" class="btn btn-info btn-sm"><span class="icon-eye"></span>  Factura Creada</a>';
                 $data[] = $row;
 
