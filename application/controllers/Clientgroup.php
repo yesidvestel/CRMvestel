@@ -47,39 +47,58 @@ class Clientgroup extends CI_Controller
         $this->load->view('fixed/footer');
     }
     public function explortar_a_excel(){
-        
-        $datos=array("gid"=>$_GET['id']);
+        if (isset($_GET['sel_servicios']) && $_GET['sel_servicios'] != '' && $_GET['sel_servicios'] != null) {
+            $this->db->select("*,cus1.id as idx");
+        }
+
+        $this->db->from("customers as cus1");
+
+        if (isset($_GET['sel_servicios']) && $_GET['sel_servicios'] != '' && $_GET['sel_servicios'] != null) {
+            $this->db->join("invoices as inv1","cus1.id=inv1.csd and inv1.tid=(select max(tid) from invoices as inv2 where inv2.csd=cus1.id and ((inv2.combo !='no' and inv2.combo !='' and inv2.combo !='-') or  (inv2.television !='no' and inv2.television !='' and inv2.television !='-')))");
+            if($_GET['sel_servicios']=="Internet" || $_GET['sel_servicios']=="Combo"){
+                $this->db->where('combo!=',"no" );
+                $this->db->where('combo!=',"" );
+                $this->db->where('combo!=',"-" );   
+            }else if($_GET['sel_servicios']=="TV" || $_GET['sel_servicios']=="Combo"){
+               $this->db->where('television=',"television" );                
+            }
+        }
+        if ($_GET['id'] != '') {
+            $this->db->where('cus1.gid', $_GET['id']);
+        }
         if (isset($_GET['estado']) && $_GET['estado'] != '' && $_GET['estado'] != null) {
-            $datos["usu_estado"]=$_GET['estado'];
-            
+            $this->db->where('usu_estado=', $_GET['estado']);
         }
         if (isset($_GET['direccion']) &&$_GET['direccion'] =="Personalizada"){ 
             if ($_GET['localidad'] != '' && $_GET['localidad'] != '-') {
-                $datos["localidad"]=$_GET['localidad'];            
+                $this->db->where('localidad=', $_GET['localidad']);
             }
+
             if ($_GET['barrio'] != '' && $_GET['barrio'] != '-') {
-                $datos["barrio"]=$_GET['barrio'];                
+                $this->db->where('barrio=', $_GET['barrio']);
             }
             if ($_GET['nomenclatura'] != '' && $_GET['nomenclatura'] != '-') {
-                $datos["nomenclatura"]=$_GET['nomenclatura'];                
+                $this->db->where('nomenclatura=', $_GET['nomenclatura']);
             }
             if ($_GET['numero1'] != '') {
-                $datos["numero1"]=$_GET['numero1'];                
+                $this->db->where('numero1=', $_GET['numero1']);
             }
             if ($_GET['adicionauno'] != '' && $_GET['adicionauno'] != '-') {
-                $datos["adicionauno"]=$_GET['adicionauno'];                
+                $this->db->where('adicionauno=', $_GET['adicionauno']);
             }
             if ($_GET['numero2'] != '' && $_GET['numero2'] != '-') {
-                $datos["numero2"]=$_GET['numero2'];                
+                $this->db->where('numero2=', $_GET['numero2']);
             }
             if ($_GET['adicional2'] != '' && $_GET['adicional2'] != '-') {
-                $datos["adicional2"]=$_GET['adicional2'];
+                $this->db->where('adicional2=', $_GET['adicional2']);
             }
             if ($_GET['numero3'] != '' && $_GET['numero3'] != '-') {
-                $datos["numero3"]=$_GET['numero3'];
+                $this->db->where('numero3=', $_GET['numero3']);
             }
         }
-        $lista_customers=$this->db->get_where("customers",$datos)->result_array();
+
+
+        $lista_customers=$this->db->get()->result();
         $cust_group=$this->db->get_where("customers_group",array('id' => $_GET['id']))->row();
         
         $this->load->library('Excel');
@@ -116,8 +135,8 @@ class Clientgroup extends CI_Controller
     
     //write rows to sheet1
     foreach ($lista_customers as $key => $customer) {
-            $direccion= $customer['nomenclatura'] . ' ' . $customer['numero1'] . $customer['adicionauno'].' Nº '.$customer['numero2'].$customer['adicional2'].' - '.$customer['numero3'];
-            $writer->writeSheetRow('Customers '.$cust_group->title,array($customer['abonado'], $customer['name'], $customer['celular'], $direccion, $customer['usu_estado']));
+            $direccion= $customer->nomenclatura . ' ' . $customer->numero1 . $customer->adicionauno.' Nº '.$customer->numero2.$customer->adicional2.' - '.$customer->numero3;
+            $writer->writeSheetRow('Customers '.$cust_group->title,array($customer->abonado, $customer->name, $customer->celular, $direccion, $customer->usu_estado));
     }
         
         
