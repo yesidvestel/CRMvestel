@@ -288,7 +288,44 @@ class Customers extends CI_Controller
         //output to json format
         echo json_encode($output);
     }
+    public function load_morosos(){
+        $lista_invoices=$this->db->get_where("invoices", array('invoicedate' =>$_GET['fecha'],"refer"=>$_GET['pay_acc'],"notes"=>"."))->result_array();
+        $no = $this->input->post('start');
+        $data=array();
+        $x=0;
+        $minimo=$this->input->post('start');
+        $maximo=$minimo+10;
+        foreach ($lista_invoices as $key => $value) {
+            
+            if($x>=$minimo && $x<$maximo){
+                $no++;
+                $customers = $this->db->get_where("customers", array('id' => $value['csd']))->row();
+                $row = array();
+                $row[] = $no;
+                //$row[] = $customers->abonado;
+                $row[] = '<a href="customers/view?id=' . $customers->id . '">' . $customers->name ." ". $customers->unoapellido. '</a>';
+                $row[] = $customers->celular;
+                $row[] = $customers->documento;
+                //$row[] = $customers->nomenclatura . ' ' . $customers->numero1 . $customers->adicionauno.' Nº '.$customers->numero2.$customers->adicional2.' - '.$customers->numero3;
+                //$row[] = $customers->usu_estado;
+                $row[] = '<a href="'.base_url().'customers/invoices?id='.$value['csd'].'" class="btn btn-info btn-sm"><span class="icon-eye"></span>  Facturas</a> <a href="'.base_url().'invoices/view?id='.$value['tid'].'" class="btn btn-info btn-sm"><span class="icon-eye"></span>  Factura Creada</a>';
+                $data[] = $row;
 
+            }
+            $x++;
+             
+             
+        }
+
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => count($lista_invoices),
+            "recordsFiltered" => count($lista_invoices),
+            "data" => $data,
+        );
+        //output to json format
+        echo json_encode($output);
+    }
     public function edita_estado_usuario(){
         $this->customers->editar_estado_usuario($_GET['username'],$_GET['id_sede']);
         redirect(base_url()."customers/view?id=".$_GET['id_cm']);

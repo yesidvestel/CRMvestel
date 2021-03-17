@@ -6,6 +6,28 @@
             <div class="message"></div>
         </div>
         <div class="grid_3 grid_4">
+                            <div class="form-group row">
+                                <label class="col-sm-12 col-form-label"
+                                       for="pay_cat"><h5>FILTRAR</h5></label>
+                                <label class="col-sm-2 col-form-label"
+                                       for="pay_cat">Deudores Morosos</label>
+
+                                <div class="col-sm-6">
+                                    <select name="tec" class="form-control" id="deudores">
+                                        <option value=''>Todos</option>
+                                        <option value='Si'>Morosos</option>
+                                    </select>
+                                </div>
+                            </div>
+                                <div class="form-group row">
+                                <label class="col-sm-3 col-form-label" for="pay_cat"></label>
+
+                                <div class="col-sm-4">
+                                    <input type="button" class="btn btn-primary btn-md" value="VER" onclick="filtrar()">
+
+
+                                </div>
+                            </div>
             <h5><?php echo $this->lang->line('') ?>USUARIOS</h5>
 
             <hr>
@@ -48,8 +70,9 @@
     </div>
 </article>
 <script type="text/javascript">
+    var tb;
     $(document).ready(function () {
-        $('#clientstable').DataTable({
+        tb=$('#clientstable').DataTable({
             'processing': true,
             'serverSide': true,
             'stateSave': true,
@@ -67,6 +90,13 @@
 			
         });
     });
+    function filtrar(){
+        var morosos=$("#deudores option:selected");
+        if(morosos=="Si"){
+            tb.ajax.url( baseurl+'customers/load_morosos').load();
+        }
+        
+    }
 </script>
 <div id="delete_model" class="modal fade">
     <div class="modal-dialog">
