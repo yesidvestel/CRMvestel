@@ -289,38 +289,66 @@ class Customers extends CI_Controller
         echo json_encode($output);
     }
     public function load_morosos(){
-        $lista_customers=$this->db->get_where("customers")->result_array();
+        $lista_customers=$this->db->select("*")->from("customers")->get()->result();
         $no = $this->input->post('start');
         $data=array();
         $x=0;
         $minimo=$this->input->post('start');
         $maximo=$minimo+10;
+        $descontar=0;
         foreach ($lista_customers as $key => $customers) {
-            
-            if($x>=$minimo && $x<$maximo){
-                $no++;
-                $lista_invoices = $this->db->get_where("invoices", array('csd' => $value['id']))->row();
-                $row = array();
-                $row[] = $no;
-                $row[] = $customers->abonado;
-                $row[] = '<a href="customers/view?id=' . $customers->id . '">' . $customers->name ." ". $customers->unoapellido. '</a>';
-                $row[] = $customers->celular;
-                $row[] = $customers->documento;
-                $row[] = $customers->nomenclatura . ' ' . $customers->numero1 . $customers->adicionauno.' Nº '.$customers->numero2.$customers->adicional2.' - '.$customers->numero3;
-                $row[] = $customers->usu_estado;
-                $row[] = '<a href="'.base_url().'customers/invoices?id='.$value['csd'].'" class="btn btn-info btn-sm"><span class="icon-eye"></span>  Facturas</a> <a href="'.base_url().'invoices/view?id='.$value['tid'].'" class="btn btn-info btn-sm"><span class="icon-eye"></span>  Factura Creada</a>';
-                $data[] = $row;
-
+            $due=$this->customers->due_details($customers->id);
+            $debe_customer=$due['total']-$due['pamnt'];
+            $lista_invoices = $this->db->from("invoices")->where("csd",$customers->id)->order_by('invoicedate',"DESC")->get()->result();
+            $customer_moroso=false;
+            if($debe_customer==0){
+                $customer_moroso=false;
+            }else{
+                $fact_valida=false;
+                foreach ($lista_invoices as $key => $invoice) {
+                    
+                    if($invoice->combo!="no" && $invoice->combo!="" && $invoice->combo!="-"){
+                        $fact_valida=true;
+                    }
+                    if($invoice->television!="no" && $invoice->television!="" && $invoice->television!="-"){
+                        $fact_valida=true;
+                    }
+                    if($fact_valida && $debe_customer>$invoice->total){
+                        $customer_moroso=true;
+                        break;
+                    }
+                }    
             }
-            $x++;
-             
+            
+            if($customer_moroso){
+                if($x>=$minimo && $x<$maximo){
+                    $no++;                
+                    
+                    $row = array();
+                    
+                            $row[] = $no;
+                            $row[] = $customers->abonado;
+                            $row[] = '<a href="customers/view?id=' . $customers->id . '">' . $customers->name ." ". $customers->unoapellido. '</a>';
+                            $row[] = $customers->celular;
+                            $row[] = $customers->documento;
+                            $row[] = $customers->nomenclatura . ' ' . $customers->numero1 . $customers->adicionauno.' Nº '.$customers->numero2.$customers->adicional2.' - '.$customers->numero3;
+                            $row[] = $customers->usu_estado;
+                            $row[] = '<a href="customers/view?id=' . $customers->id . '" class="btn btn-info btn-sm"><span class="icon-eye"></span>  '.$this->lang->line('View').'</a> <a href="customers/edit?id=' . $customers->id . '" class="btn btn-primary btn-sm"><span class="icon-pencil"></span>  '.$this->lang->line('Edit').'</a> <a href="#" data-object-id="' . $customers->id . '" class="btn btn-danger btn-sm delete-object"><span class="icon-bin"></span></a>';
+                        $data[] = $row;
+                    
+
+                }
+                $x++;
+            }else{
+                $descontar++;
+            }
              
         }
 
         $output = array(
             "draw" => $_POST['draw'],
-            "recordsTotal" => count($lista_invoices),
-            "recordsFiltered" => count($lista_invoices),
+            "recordsTotal" => count($lista_customers)-$descontar,
+            "recordsFiltered" => count($lista_customers)-$descontar,
             "data" => $data,
         );
         //output to json format

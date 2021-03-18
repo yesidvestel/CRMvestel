@@ -91,9 +91,11 @@
         });
     });
     function filtrar(){
-        var morosos=$("#deudores option:selected");
+        var morosos=$("#deudores option:selected").val();
         if(morosos=="Si"){
             tb.ajax.url( baseurl+'customers/load_morosos').load();
+        }else{
+            tb.ajax.url( baseurl+'customers/load_list').load();
         }
         
     }
