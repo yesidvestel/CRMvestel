@@ -28,6 +28,7 @@
 
                                 </div>
                             </div>
+                                                    
             <h5><?php echo $this->lang->line('') ?>USUARIOS</h5>
 
             <hr>

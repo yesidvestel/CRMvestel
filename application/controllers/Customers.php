@@ -313,8 +313,17 @@ class Customers extends CI_Controller
                     if($invoice->television!="no" && $invoice->television!="" && $invoice->television!="-"){
                         $fact_valida=true;
                     }
-                    if($fact_valida && $debe_customer>$invoice->total){
+                    if(!$fact_valida){
+                            $query=$this->db->query('SELECT * FROM `invoice_items` WHERE tid='.$invoice->tid.' and (product like "%mega%" or product like "%tele%")')->result_array();
+                            if(count($query)!=0){
+                                $fact_valida=true;
+                            }
+                    }
+
+                    if($fact_valida && $debe_customer>$invoice->total && $customer_moroso==false){
                         $customer_moroso=true;
+                        break;                    
+                    }else if($fact_valida && $debe_customer<=$invoice->total){
                         break;
                     }
                 }    
