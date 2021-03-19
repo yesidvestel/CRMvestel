@@ -173,7 +173,7 @@ class Quote_model extends CI_Model
         $query = $this->db->get();
         return $query->row_array();
     }
-	public function addticket($customer_id, $nticket, $subject, $detalle, $created, $section, $factura, $agendar, $fagenda, $hora,$hora2,$nomen,$nuno,$auno,$ndos,$ados,$ntres,$local,$barrio,$tv,$inter,$punto)
+	public function addticket($customer_id, $nticket, $subject, $detalle, $created, $section, $factura, $agendar, $fagenda, $hora,$hora2,$nomen,$nuno,$auno,$ndos,$ados,$ntres,$local,$barrio,$recider, $refer,$tv,$inter,$punto)
     {
 		$bill_llegada = datefordatabase($created);
 		
@@ -216,7 +216,9 @@ class Quote_model extends CI_Model
 				'ados' => $ados,
 				'ntres' => $ntres,
 				'localidad' => $local,
-				'barrio' => $barrio
+				'barrio' => $barrio,
+				'residencia' => $recider,
+				'referencia' => $refer
 			);		
 			$this->db->insert('temporales', $data3);
 			}

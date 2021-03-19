@@ -112,13 +112,15 @@ class Quote extends CI_Controller
 		$ntres = $this->input->post('numero3');
 		$local = $this->input->post('localidad');
 		$barrio = $this->input->post('barrio');
+		$recider = $this->input->post('residencia');
+		$refer = $this->input->post('referencia');
 		$hora = $this->input->post('hora');
 		$hora2 = date("H:i",strtotime($this->input->post('hora')));
 		$tv = $this->input->post('tele');
 		$inter = $this->input->post('inter');
 		$punto = $this->input->post('punto');
         if ($customer_id) {
-        	$this->quote->addticket($customer_id, $nticket, $subject, $detalle, $created, $section, $factura,$agendar,$fagenda,$hora,$hora2,$nomen,$nuno,$auno,$ndos,$ados,$ntres,$local,$barrio,$tv,$inter,$punto);
+        	$this->quote->addticket($customer_id, $nticket, $subject, $detalle, $created, $section, $factura,$agendar,$fagenda,$hora,$hora2,$nomen,$nuno,$auno,$ndos,$ados,$ntres,$local,$barrio,$recider, $refer, $tv,$inter,$punto);
 			
 		}
 
@@ -246,14 +248,54 @@ class Quote extends CI_Controller
         $detalle = $this->input->post('detalle');
         $created = $this->input->post('created');
         $section = $this->input->post('section');
-		$factura = $this->input->post('factura'); 
+		$factura = $this->input->post('factura');
+		$nomen = $this->input->post('nomenclatura');
+		$nuno = $this->input->post('numero1');
+		$auno = $this->input->post('adicional1');
+		$ndos = $this->input->post('numero2');
+		$ados = $this->input->post('adicional2');
+		$ntres = $this->input->post('numero3');
+		$local = $this->input->post('localidad');
+		$barrio = $this->input->post('barrio');
+		$recider = $this->input->post('residencia');
+		$refer = $this->input->post('referencia');
+		$tv = $this->input->post('tele');
+		$inter = $this->input->post('inter');
+		$punto = $this->input->post('punto');
         $bill_date = datefordatabase($created);       
         $data = array('codigo' => $nticket, 'subject' => $subject, 'detalle' => $detalle, 'created' => $bill_date, 'section' => $section, 'id_factura' => $factura);
         $this->db->set($data);
         $this->db->where('idt', $customer_id);
 		$this->db->update('tickets');
+		//traslado
+		if ($detalle==='Traslado'){
+			$data3 = array(					
+					'nomenclatura' => $nomen,
+					'nuno' => $nuno,            
+					'auno' => $auno,
+					'ndos' => $ndos,
+					'ados' => $ados,
+					'ntres' => $ntres,
+					'localidad' => $local,
+					'barrio' => $barrio,
+					'residencia' => $recider,
+					'referencia' => $refer
+				);
+				$this->db->where('corden', $nticket);
+				$this->db->update('temporales', $data3);
+		}
+		//instalacion
+		if ($detalle==='Instalacion'){
+			$data3 = array(					
+					'tv' => $tv,
+					'internet' => $inter,            
+					'puntos' => $punto
+				);
+				$this->db->where('corden', $nticket);
+				$this->db->update('temporales', $data3);
+		}
 		$start = date("Y-m-d",strtotime($fagenda));
-			
+			//agenda
 			if ($agendar==actualizar){
 				$data2 = array(					
 					'title' => $detalle.' '.$hora2.' Orden #'.$nticket,

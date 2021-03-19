@@ -278,6 +278,23 @@
 											</select>
 										</div>
                                    </div>
+								<div class="col-sm-6">
+									<label for="invociedate" class="caption">Recidencia</label>
+										<div class="input-group">									
+											<select class="form-control" name="residencia">
+													<option value="Casa">Casa</option>
+                                                	<option value="Apartamento">Apartamento</option>
+                                                  	<option value="Edificio">Edificio</option>
+                                                	<option value="Oficina">Oficina</option>
+                                            </select>
+										</div>
+                                   </div>
+								<div class="col-sm-6">
+									<label for="invociedate" class="caption">Referencia</label>
+                                        <div class="input-group">
+												<input type="text" class="form-control margin-bottom" name="referencia">
+                                		</div>
+									</div>
 								</div>
 								<div class="form-group row" id="Instalacion">	
                                     <div class="col-sm-12">

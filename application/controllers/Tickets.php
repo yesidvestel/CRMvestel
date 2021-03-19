@@ -796,7 +796,9 @@ class Tickets Extends CI_Controller
 				'adicionauno' => $traslados->auno,
 				'numero2' => $traslados->ndos,
 				'adicional2' => $traslados->ados,
-				'numero3' => $traslados->ntres				
+				'numero3' => $traslados->ntres,
+				'residencia' => $traslados->residencia,
+				'referencia' => $traslados->referencia,
 			);
 			//actualizar estado usuario				
         		$this->db->where('id', $ticket->cid);
