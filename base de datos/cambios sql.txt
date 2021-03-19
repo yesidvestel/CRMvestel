@@ -18,7 +18,9 @@ ALTER TABLE `equipos` ADD `t_instalacion` VARCHAR(10) NULL AFTER `marca`;
 ALTER TABLE `equipos` ADD `puerto` INT NULL AFTER `t_instalacion`;
 ALTER TABLE `equipos` ADD `vlan` INT NULL AFTER `puerto`;
 ALTER TABLE `equipos` ADD `nat` INT NULL AFTER `vlan`;
-
+//nuevos campos tabla 
+ALTER TABLE `temporales` ADD `residencia` VARCHAR(50) NULL AFTER `barrio`;
+ALTER TABLE `temporales` ADD `referencia` VARCHAR(50) NULL AFTER `residencia`;
 
 
 
