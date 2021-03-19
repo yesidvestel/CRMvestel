@@ -224,6 +224,85 @@ class Clientgroup extends CI_Controller
         //output to json format
         echo json_encode($output);
     }
+    public function load_morosos(){
+        $lista_customers=$this->db->select("*")->from("customers")->where("gid",$_GET['id'])->get()->result();
+        $no = $this->input->post('start');
+        $data=array();
+        $x=0;
+        $minimo=$this->input->post('start');
+        $maximo=$minimo+10;
+        $descontar=0;
+        foreach ($lista_customers as $key => $customers) {
+            $due=$this->customers->due_details($customers->id);
+            $debe_customer=$due['total']-$due['pamnt'];
+            $lista_invoices = $this->db->from("invoices")->where("csd",$customers->id)->order_by('invoicedate',"DESC")->get()->result();
+            $customer_moroso=false;
+            if($debe_customer==0){
+                $customer_moroso=false;
+            }else{
+                $fact_valida=false;
+                foreach ($lista_invoices as $key => $invoice) {
+                    
+                    if($invoice->combo!="no" && $invoice->combo!="" && $invoice->combo!="-"){
+                        $fact_valida=true;
+                    }
+                    if($invoice->television!="no" && $invoice->television!="" && $invoice->television!="-"){
+                        $fact_valida=true;
+                    }
+                    if(!$fact_valida){
+                            $query=$this->db->query('SELECT * FROM `invoice_items` WHERE tid='.$invoice->tid.' and (product like "%mega%" or product like "%tele%")')->result_array();
+                            if(count($query)!=0){
+                                $fact_valida=true;
+                            }
+                    }
+
+                    if($fact_valida && $debe_customer>$invoice->total && $customer_moroso==false){
+                        $customer_moroso=true;
+                        break;                    
+                    }else if($fact_valida && $debe_customer<=$invoice->total){
+                        break;
+                    }
+                }    
+            }
+            
+            if($customer_moroso){
+                if($x>=$minimo && $x<$maximo){
+                    $no++;                
+                    
+                    $row = array();
+                    
+                            $row[] = $no;
+                            $row[] = $customers->abonado;
+                            $row[] = $customers->documento;
+                            $row[] = '<a href="' . $base . 'view?id=' . $customers->id . '">' . $customers->name . ' </a>';
+                            $row[] = $customers->celular;           
+                            $row[] = $customers->nomenclatura . ' ' . $customers->numero1 . $customers->adicionauno.' Nº '.$customers->numero2.$customers->adicional2.' - '.$customers->numero3;
+                            $row[] = $customers->usu_estado;
+                            $row[] = '<a href="' . $base . 'edit?id=' . $customers->id . '" class="btn btn-success btn-sm"><span class="icon-pencil"></span> '.$this->lang->line('Edit').'</a>';
+                            if ($this->aauth->get_user()->roleid > 4) {
+                            $row[] = '<a href="#" data-object-id="' . $customers->id . '" class="btn btn-danger btn-sm delete-object"><span class="icon-bin"></span></a>';
+                            }
+
+                        $data[] = $row;
+                    
+
+                }
+                $x++;
+            }else{
+                $descontar++;
+            }
+             
+        }
+
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => count($lista_customers)-$descontar,
+            "recordsFiltered" => count($lista_customers)-$descontar,
+            "data" => $data,
+        );
+        //output to json format
+        echo json_encode($output);
+    }
 
     public function create()
     {

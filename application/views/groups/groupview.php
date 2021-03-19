@@ -179,6 +179,18 @@
                                         </div>
                                     </div>
                             </div>
+                             <div class="form-group row">
+                                
+                                <label class="col-sm-2 col-form-label"
+                                       for="pay_cat">Deudores Morosos</label>
+
+                                <div class="col-sm-6">
+                                    <select name="tec" class="form-control" id="deudores">
+                                        <option value=''>Todos</option>
+                                        <option value='Si'>Morosos</option>
+                                    </select>
+                                </div>
+                            </div>
 							<div class="form-group row">
                                 <label class="col-sm-3 col-form-label" for="pay_cat"></label>
 
@@ -197,7 +209,7 @@
             <hr>
             <table id="fclientstable" class="table-striped" cellspacing="0" width="100%">
                 <thead>
-                <tr>
+                <tr id="thead_tr">
                     <th>#</th>
 					<th>Abonado</th>
 					<th>Cedula</th>
@@ -216,7 +228,7 @@
                 </tbody>
 
                 <tfoot>
-                <tr>
+                <tr id="tfoot_tr">
                     <th>#</th>
 					<th>Abonado</th>
 					<th>Cedula</th>
@@ -376,7 +388,13 @@
             var numero3= $("#numero3").val();
             var direccion = $("#sel_dir_personalizada option:selected").val();
             var sel_servicios = $("#sel_servicios option:selected").val();
-            tb.ajax.url( baseurl+'clientgroup/grouplist?estado='+estado+"&id=<?=$_GET['id']?>&localidad="+localidad+"&barrio="+barrio+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios).load();     
+            var morosos=$("#deudores option:selected").val();
+            if(morosos=="Si"){
+                tb.ajax.url( baseurl+'clientgroup/load_morosos?id=<?=$_GET['id']?>').load();
+            }else{
+                tb.ajax.url( baseurl+'clientgroup/grouplist?estado='+estado+"&id=<?=$_GET['id']?>&localidad="+localidad+"&barrio="+barrio+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios).load();         
+            }
+            
         
        
 
