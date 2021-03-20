@@ -731,11 +731,11 @@ $lang['Repeat on'] = "Repita en
 $lang['Add Event'] = "AÃ±adir evento
 ";
 $lang['Disable'] = "Inhabilitar";
-$lang['Transaction has been'] = "¡La transacción ha sido agregada exitosamente!
+$lang['Transaction has been'] = "La transaccion ha sido agregada exitosamente!
 ";
-$lang['Module'] = "Módulo
+$lang['Module'] = "Modulo
 ";
-$lang['Activity Email'] = "Correo electrónico de actividad
+$lang['Activity Email'] = "Correo electroico de actividad
 ";
 $lang['Support Signature'] = "Firma de soporte
 ";

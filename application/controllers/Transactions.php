@@ -982,8 +982,7 @@ class Transactions extends CI_Controller
         $date = datefordatabase($date);
 
         if ($this->transactions->addtrans($payer_id, $payer_name, $pay_acc, $date, $debit, $credit, $pay_type, $pay_cat, $paymethod, $note, $this->aauth->get_user()->id)) {
-            echo json_encode(array('status' => 'Success', 'message' =>
-                $this->lang->line('Transaction has been')));
+            echo json_encode(array('status' => 'Success', 'message' => $this->lang->line('Transaction has been')));
         } else {
             echo json_encode(array('status' => 'Error', 'message' =>
                 'Error!'));
