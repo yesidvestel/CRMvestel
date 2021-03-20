@@ -246,7 +246,6 @@
 									<div class="col-sm-6">
 									<label for="invociedate" class="caption">Localidad</label>
 										<div class="input-group">
-											
 											<select name="localidad" class="form-control mb-1" onChange="cambia5()">
 												<?php if ($details['ciudad']==='Yopal'){ ?>
 												<option value='-'>-</option>
