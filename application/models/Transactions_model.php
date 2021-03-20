@@ -21,8 +21,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Transactions_model extends CI_Model
 {
     var $table = 'transactions';
-    var $column_order = array('date', 'acid', 'debit', 'credit', 'payer', 'method');
-    var $column_search = array('id', 'payer', 'method', 'tid', 'account', 'payer');
+    var $column_order = array('date', 'acid', 'debit', 'credit', 'payer', 'method', 'estado');
+    var $column_search = array('id', 'date', 'acid', 'debit', 'credit', 'payer', 'method', 'estado');
     var $order = array('id' => 'desc');
     var $opt = '';
 
