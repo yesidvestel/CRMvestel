@@ -237,6 +237,7 @@ class Clientgroup extends CI_Controller
             $debe_customer=$due['total']-$due['pamnt'];
             $lista_invoices = $this->db->from("invoices")->where("csd",$customers->id)->order_by('invoicedate',"DESC")->get()->result();
             $customer_moroso=false;
+            $valor_ultima_factura=0;
             if($debe_customer==0){
                 $customer_moroso=false;
             }else{
@@ -258,6 +259,7 @@ class Clientgroup extends CI_Controller
 
                     if($fact_valida && $debe_customer>$invoice->total && $customer_moroso==false){
                         $customer_moroso=true;
+                        $valor_ultima_factura=$invoice->total;
                         break;                    
                     }else if($fact_valida && $debe_customer<=$invoice->total){
                         break;
@@ -278,7 +280,7 @@ class Clientgroup extends CI_Controller
                             $row[] = $customers->celular;           
                             $row[] = $customers->nomenclatura . ' ' . $customers->numero1 . $customers->adicionauno.' Nº '.$customers->numero2.$customers->adicional2.' - '.$customers->numero3;
                             $row[] = $customers->usu_estado;
-                            $row[] = '<a href="' . $base . 'edit?id=' . $customers->id . '" class="btn btn-success btn-sm"><span class="icon-pencil"></span> '.$this->lang->line('Edit').'</a>';
+                            $row[] = '<a href="' . $base . 'edit?id=' . $customers->id . '" class="btn btn-success btn-sm"><span class="icon-pencil"></span> '.$this->lang->line('Edit').'</a>&nbsp;<a style="margin-top:1px;" title="Total Deuda : '.amountFormat($debe_customer).' , Total Ultima Factura : '.amountFormat($valor_ultima_factura).'" href="#" class="btn btn-info btn-sm" onclick="event.preventDefault();mostrar_informacion(this);" data-url="'.base_url().'customers/invoices?id='.$customers->id.'"><span class="icon-money"></span>&nbsp;Deuda</a>';
                             if ($this->aauth->get_user()->roleid > 4) {
                             $row[] = '<a href="#" data-object-id="' . $customers->id . '" class="btn btn-danger btn-sm delete-object"><span class="icon-bin"></span></a>';
                             }

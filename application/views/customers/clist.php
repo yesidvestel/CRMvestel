@@ -70,6 +70,25 @@
         </div>
     </div>
 </article>
+<div id="informcion" class="modal fade">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Informacion</h4>
+            </div>
+
+            <div class="modal-body" >
+                 <h1 id="h1_info"></h1>
+                 <a id="link_facturas" target="_blank" class="btn btn-info btn-sm" href=""><span class="icon-eye"></span>&nbsp;Ver Facturas del Customer</a>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $this->lang->line('Close') ?> </button>
+                
+            </div>
+        </div>
+    </div>
+</div>
 <script type="text/javascript">
     var tb;
     $(document).ready(function () {
@@ -90,7 +109,9 @@
             ],
 			
         });
+
     });
+   
     function filtrar(){
         var morosos=$("#deudores option:selected").val();
         if(morosos=="Si"){
@@ -100,6 +121,17 @@
         }
         
     }
+    function mostrar_informacion(link){
+        $("#link_facturas").attr('href',$(link).data("url"));
+        $("#h1_info").text($(link).attr("title"));
+        $("#informcion").modal("show");
+    }
+     window.addEventListener("keyup", function(event){
+    var codigo = event.keyCode || event.which;
+        if (codigo == 27){
+            $("#informcion").modal("hide");
+        }
+    }, false);
 </script>
 <div id="delete_model" class="modal fade">
     <div class="modal-dialog">
