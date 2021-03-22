@@ -231,8 +231,12 @@
 
                                         <div class="col-sm-6">
                                             <select name="tec" class="form-control" id="deudores">
-                                                <option value=''>Todos</option>
-                                                <option value='Si'>Morosos</option>
+                                                <option value=''>Todo</option>
+                                                <option value='1mes'>Corriente</option>
+                                                <option value='masdeunmes'>Mas del Mes</option>
+                                                <option value='2meses'>Mas de 2 meses</option>
+                                                <option value='3y4meses'>Mas de 3 y 4 meses</option>
+                                                <option value='Todos'>Todos los Deudores</option>
                                             </select>
                                         </div>
                                     </div>
@@ -477,8 +481,8 @@
             var direccion = $("#sel_dir_personalizada option:selected").val();
             var sel_servicios = $("#sel_servicios option:selected").val();
             var morosos=$("#deudores option:selected").val();
-            if(morosos=="Si"){
-                tb.ajax.url( baseurl+'clientgroup/load_morosos?id=<?=$_GET['id']?>').load();               
+            if(morosos!=""){
+                tb.ajax.url( baseurl+'clientgroup/load_morosos?id=<?=$_GET['id']?>&morosos='+morosos).load();               
             }else{
                 tb.ajax.url( baseurl+'clientgroup/grouplist?estado='+estado+"&id=<?=$_GET['id']?>&localidad="+localidad+"&barrio="+barrio+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios).load();         
             }

@@ -256,14 +256,49 @@ class Clientgroup extends CI_Controller
                                 $fact_valida=true;
                             }
                     }
-
-                    if($fact_valida && $debe_customer>$invoice->total && $customer_moroso==false){
-                        $customer_moroso=true;
-                        $valor_ultima_factura=$invoice->total;
-                        break;                    
-                    }else if($fact_valida && $debe_customer<=$invoice->total){
-                        break;
+                    if($_GET['morosos']=="1mes"){
+                        if($fact_valida && $debe_customer==$invoice->total && $customer_moroso==false){
+                            $customer_moroso=true;
+                            $valor_ultima_factura=$invoice->total;
+                            break;                    
+                        }else if($fact_valida){
+                            break;
+                        }
+                    }else if($_GET['morosos']=="masdeunmes"){
+                        if($fact_valida && $debe_customer>$invoice->total && $customer_moroso==false){
+                            $customer_moroso=true;
+                            $valor_ultima_factura=$invoice->total;
+                            break;                    
+                        }else if($fact_valida){
+                            break;
+                        }
+                    }else if($_GET['morosos']=="2meses"){
+                        if($fact_valida && $debe_customer>=($invoice->total*2) && $customer_moroso==false){
+                            $customer_moroso=true;
+                            $valor_ultima_factura=$invoice->total;
+                            break;                    
+                        }else if($fact_valida){
+                            break;
+                        }
+                    }else if($_GET['morosos']=="3y4meses"){
+                        if($fact_valida && $debe_customer>=($invoice->total*3) && $customer_moroso==false){
+                            $customer_moroso=true;
+                            $valor_ultima_factura=$invoice->total;
+                            break;                    
+                        }else if($fact_valida){
+                            break;
+                        }
+                    }else if($_GET['morosos']=="Todos"){
+                        if($fact_valida && $debe_customer>=$invoice->total && $customer_moroso==false){
+                            $customer_moroso=true;
+                            $valor_ultima_factura=$invoice->total;
+                            break;                    
+                        }else if($fact_valida){
+                            break;
+                        }
                     }
+
+                    
                 }    
             }
             
