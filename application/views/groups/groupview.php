@@ -5,193 +5,253 @@
 
             <div class="message"></div>
         </div>
-		 <div class="card card-block sameheight-item">
+		 
+            <!-- paneles -->
+            <div class="card">
+                    <div class="card-body">
+                        <div class="card-block">
+                            <label class="col-sm-12 col-form-label"
+                                       for="pay_cat"><h5>FILTRAR </h5> </label>
 
-                        
-                            <div class="form-group row">
-								<label class="col-sm-12 col-form-label"
-                                       for="pay_cat"><h5>FILTRAR</h5></label>
-                                <label class="col-sm-2 col-form-label"
-                                       for="pay_cat">Estado</label>
+                            <ul class="nav nav-tabs nav-justified">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="active-tab" data-toggle="tab" href="#active"
+                                       aria-controls="active"
+                                       aria-expanded="true">Estado</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="link-tab" data-toggle="tab" href="#link"
+                                       aria-controls="link"
+                                       aria-expanded="false">Servicio</a>
+                                </li>
 
-                                <div class="col-sm-6">
-                                    <select name="tec" class="form-control" id="estado">
-                                        <option value=''>Todos</option>
-                                        <option value='Activo'>Activos</option>
-										<option value='Cortado'>Cortados</option>
-                                        <option value='Suspendido'>Suspendidos</option>
-                                        <option value='Instalar'>Instalar</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-sm-2 col-form-label"
-                                       for="pay_cat">Servicio</label>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="thread-tab" data-toggle="tab" href="#thread"
+                                       aria-controls="thread">Direccion</a>
+                                </li>
 
-                                <div class="col-sm-6">
-                                    <select name="trans_type" class="form-control" id="sel_servicios">
-                                        <option value=''>Todos</option>
-                                        <option value='Internet'>Internet</option>
-                                        <option value='TV'>TV</option>
-                                        <option value='Combo'>Combo</option>
-                                    </select>
-                                </div>                              
-                            </div>
-							<div class="form-group row">
-                                <label class="col-sm-2 col-form-label"
-                                       for="pay_cat">Direccion</label>
-
-                                <div class="col-sm-6">
-                                    <select name="trans_type" class="form-control" id="sel_dir_personalizada" onclick="act_sel_dir_personalizada()">
-                                        <option value=''>Todas</option>
-                                        <option value='Personalizada'>Personalizada</option>
-                                    </select>
-                                </div>								
-                            </div>
-                            <div id="div_direccion_personalizada">
+                                <li class="nav-item">
+                                    <a class="nav-link" id="milestones-tab" data-toggle="tab" href="#milestones"
+                                       aria-controls="milestones"> Morosos</a>
+                                </li>
+                               <!-- <li class="nav-item">
+                                    <a class="nav-link" id="thread-tab" data-toggle="tab" href="#activities"
+                                       aria-controls="activities">Otro Filtro</a>
+                                </li>-->
+                               
+                            </ul>
+                            <div class="tab-content px-1 pt-1">
+                                <div role="tabpanel" class="tab-pane fade active in" id="active" aria-labelledby="active-tab" aria-expanded="true">
                                     <div class="form-group row">
+                                            
+                                        <label class="col-sm-2 col-form-label"
+                                               for="pay_cat">Estado</label>
+
+                                        <div class="col-sm-6">
+                                            <select name="tec" class="form-control" id="estado">
+                                                <option value=''>Todos</option>
+                                                <option value='Activo'>Activos</option>
+                                                <option value='Cortado'>Cortados</option>
+                                                <option value='Suspendido'>Suspendidos</option>
+                                                <option value='Instalar'>Instalar</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="tab-pane fade" id="link" role="tabpanel" aria-labelledby="link-tab" aria-expanded="false">
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 col-form-label"
+                                                   for="pay_cat">Servicio</label>
+
+                                            <div class="col-sm-6">
+                                                <select name="trans_type" class="form-control" id="sel_servicios">
+                                                    <option value=''>Todos</option>
+                                                    <option value='Internet'>Internet</option>
+                                                    <option value='TV'>TV</option>
+                                                    <option value='Combo'>Combo</option>
+                                                </select>
+                                            </div>                              
+                                        </div>
+                                </div>
+                                <!--thread-->
+                                <div class="tab-pane fade" id="thread" role="tabpanel" aria-labelledby="thread-tab" aria-expanded="false">
+
+                                        <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label"
+                                               for="pay_cat">Direccion</label>
+
+                                        <div class="col-sm-6">
+                                            <select name="trans_type" class="form-control" id="sel_dir_personalizada" onclick="act_sel_dir_personalizada()">
+                                                <option value=''>Todas</option>
+                                                <option value='Personalizada'>Personalizada</option>
+                                            </select>
+                                        </div>                              
+                                    </div>
+                                    <div id="div_direccion_personalizada">
+                                            <div class="form-group row">
                                         
                                         
                                         
 
-                                        <div class="col-sm-12">
-                                            <h6><label class="col-sm-2 col-form-label"
-                                               for="ciudad"><?php echo $this->lang->line('') ?>Ciudad</label></h6>
-                                            <div id="ciudades">
-                                                <select id="cmbCiudades" class="selectpicker form-control" name="ciudad" onChange="cambia4()">                                
-                                                    <?php if($_GET['id']=="1"){?>
+                                            <div class="col-sm-12">
+                                                <h6><label class="col-sm-2 col-form-label"
+                                                   for="ciudad"><?php echo $this->lang->line('') ?>Ciudad</label></h6>
+                                                <div id="ciudades">
+                                                    <select id="cmbCiudades" class="selectpicker form-control" name="ciudad" onChange="cambia4()">                                
+                                                        <?php if($_GET['id']=="1"){?>
+                                                            <option value="0">-</option>
+                                                        <?php }else if($_GET['id']=="2"){ ?>
+                                                            <option value="Yopal">Yopal</option>
+                                                        <?php }else if($_GET['id']=="3"){ ?>
+                                                            <option value="Villanueva">Villanueva</option>
+                                                        <?php }else if($_GET['id']=="4"){ ?>
+                                                            <option value="Monterrey">Monterrey</option>
+                                                        <?php }else if($_GET['id']=="5"){ ?>
+                                                            <option value="Mocoa">Mocoa</option>
+                                                        <?php } ?>
+                                                    </select>
+                                                </div>
+                                                   
+                                            </div>
+                                          
+                                           
+                                        </div>
+                                            <div class="form-group row"> 
+                                            
+                                                <div class="col-sm-6">
+                                                    <h6><label class="col-sm-2 col-form-label"
+                                                       for="localidad"><?php echo $this->lang->line('') ?>Localidad</label></h6>
+                                                    <div id="localidades">
+                                                        <select id="cmbLocalidades"  class="selectpicker form-control" name="localidad" onChange="cambia5()">
                                                         <option value="0">-</option>
-                                                    <?php }else if($_GET['id']=="2"){ ?>
-                                                        <option value="Yopal">Yopal</option>
-                                                    <?php }else if($_GET['id']=="3"){ ?>
-                                                        <option value="Villanueva">Villanueva</option>
-                                                    <?php }else if($_GET['id']=="4"){ ?>
-                                                        <option value="Monterrey">Monterrey</option>
-                                                    <?php }else if($_GET['id']=="5"){ ?>
-                                                        <option value="Mocoa">Mocoa</option>
-                                                    <?php } ?>
-                                                </select>
+                                                        </select>
+                                                    </div>
+                                                       
+                                                </div>
+                                                
+                                                <div class="col-sm-6">
+                                                    <h6><label class="col-sm-2 col-form-label"
+                                                       for="barrio"><?php echo $this->lang->line('') ?>Barrio</label></h6>
+                                                    <div id="barrios">
+                                                        <select id="cmbBarrios" class="selectpicker form-control" name="barrio" >
+                                                        <option value="0">-</option>
+                                                        </select>
+                                                    </div>
+                                                       
+                                                </div>
+                                                 
                                             </div>
-                                               
-                                        </div>
-                                      
-                                       
-                                    </div>
-                                    <div class="form-group row"> 
-                                    
-                                        <div class="col-sm-6">
-                                            <h6><label class="col-sm-2 col-form-label"
-                                               for="localidad"><?php echo $this->lang->line('') ?>Localidad</label></h6>
-                                            <div id="localidades">
-                                                <select id="cmbLocalidades"  class="selectpicker form-control" name="localidad" onChange="cambia5()">
-                                                <option value="0">-</option>
-                                                </select>
+                                            <div class="form-group row">
+
+                                                <h6><label class="col-sm-12 col-form-label"
+                                                       for="city"><?php echo $this->lang->line('') ?>Direccion</label></h6>
+
+                                                
+                                            
+                                                <div class="col-sm-2">
+                                                <select class="form-control"  id="nomenclatura" name="nomenclatura">
+                                                                            <option value="-">-</option>
+                                                                            <option value="Calle">Calle</option>
+                                                                            <option value="Carrera">Carrera</option>
+                                                                            <option value="Diagonal">Diagonal</option>
+                                                                            <option value="Transversal">Transversal</option>
+                                                                            <option value="Manzana">Manzana</option>
+                                                                    </select>
+                                                
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <input type="text" placeholder="Numero" id="numero1" 
+                                                           class="form-control margin-bottom" name="numero1">
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <select class="form-control" id="adicionauno" name="adicionauno">
+                                                                            <option value=""></option>
+                                                                            <option value="bis">bis</option>
+                                                                            <option value="sur">sur</option>
+                                                                            <option value="a">a</option>
+                                                                            <option value="a">a sur</option>
+                                                                            <option value="b">b</option>
+                                                                            <option value="a">b sur</option>
+                                                                            <option value="c">c</option>
+                                                                            <option value="d">d</option>
+                                                                            <option value="e">e</option>
+                                                                            <option value="f">f</option>
+                                                                            <option value="g">g</option>
+                                                                            <option value="h">h</option>
+                                                                            <option value="a bis">a bis</option>
+                                                                            <option value="b bis">b bis</option>
+                                                                            <option value="c bis">c bis</option>
+                                                                            <option value="d bis">d bis</option>
+                                                                    </select>
+                                                </div>
+                                                <div class="col-sm-1" style="margin-left: -10px; width: 2%">
+                                                    <label class="col-form-label" for="Nº">Nº</label>
+                                                </div>
+                                                <div class="col-sm-2" style="margin-left: 14px;">
+                                                    <input type="text" placeholder="Numero"
+                                                           class="form-control margin-bottom" id="numero2" name="numero2" style="margin-left: -20px;">
+                                                </div>
+                                                <div class="col-sm-2" style="margin-left: -30px;margin-right: -20px;">
+                                                    <select class="col-sm-1 form-control" id="adicional2" name="adicional2">
+                                                                            <option value=""></option>
+                                                                            <option value="bis">bis</option>
+                                                                            <option value="sur">sur</option>
+                                                                            <option value="a">a</option>
+                                                                            <option value="a sur">a sur</option>
+                                                                            <option value="b">b</option>
+                                                                            <option value="b sur">b sur</option>
+                                                                            <option value="c">c</option>
+                                                                            <option value="d">d</option>
+                                                                            <option value="e">e</option>
+                                                                            <option value="f">f</option>
+                                                                            <option value="g">g</option>
+                                                                            <option value="h">h</option>
+                                                                            <option value="a bis">a bis</option>
+                                                                            <option value="b bis">b bis</option>
+                                                                            <option value="c bis">c bis</option>
+                                                                            <option value="d bis">d bis</option>
+                                                                    </select>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <input type="text" placeholder="Numero"
+                                                           class="form-control margin-bottom" name="numero3" id="numero3">
+                                                </div>
                                             </div>
-                                               
-                                        </div>
-                                        
-                                        <div class="col-sm-6">
-                                            <h6><label class="col-sm-2 col-form-label"
-                                               for="barrio"><?php echo $this->lang->line('') ?>Barrio</label></h6>
-                                            <div id="barrios">
-                                                <select id="cmbBarrios" class="selectpicker form-control" name="barrio" >
-                                                <option value="0">-</option>
-                                                </select>
-                                            </div>
-                                               
-                                        </div>
-                                         
                                     </div>
-                                    <div class="form-group row">
 
-                                        <h6><label class="col-sm-12 col-form-label"
-                                               for="city"><?php echo $this->lang->line('') ?>Direccion</label></h6>
-
-                                        
-                                    
-                                        <div class="col-sm-2">
-                                        <select class="form-control"  id="nomenclatura" name="nomenclatura">
-                                                                    <option value="-">-</option>
-                                                                    <option value="Calle">Calle</option>
-                                                                    <option value="Carrera">Carrera</option>
-                                                                    <option value="Diagonal">Diagonal</option>
-                                                                    <option value="Transversal">Transversal</option>
-                                                                    <option value="Manzana">Manzana</option>
-                                                            </select>
-                                        
-                                        </div>
-                                        <div class="col-sm-2">
-                                            <input type="text" placeholder="Numero" id="numero1" 
-                                                   class="form-control margin-bottom" name="numero1">
-                                        </div>
-                                        <div class="col-sm-2">
-                                            <select class="form-control" id="adicionauno" name="adicionauno">
-                                                                    <option value=""></option>
-                                                                    <option value="bis">bis</option>
-                                                                    <option value="sur">sur</option>
-                                                                    <option value="a">a</option>
-                                                                    <option value="a">a sur</option>
-                                                                    <option value="b">b</option>
-                                                                    <option value="a">b sur</option>
-                                                                    <option value="c">c</option>
-                                                                    <option value="d">d</option>
-                                                                    <option value="e">e</option>
-                                                                    <option value="f">f</option>
-                                                                    <option value="g">g</option>
-                                                                    <option value="h">h</option>
-                                                                    <option value="a bis">a bis</option>
-                                                                    <option value="b bis">b bis</option>
-                                                                    <option value="c bis">c bis</option>
-                                                                    <option value="d bis">d bis</option>
-                                                            </select>
-                                        </div>
-                                        <div class="col-sm-1" style="margin-left: -10px; width: 2%">
-                                            <label class="col-form-label" for="Nº">Nº</label>
-                                        </div>
-                                        <div class="col-sm-2" style="margin-left: 14px;">
-                                            <input type="text" placeholder="Numero"
-                                                   class="form-control margin-bottom" id="numero2" name="numero2" style="margin-left: -20px;">
-                                        </div>
-                                        <div class="col-sm-2" style="margin-left: -30px;margin-right: -20px;">
-                                            <select class="col-sm-1 form-control" id="adicional2" name="adicional2">
-                                                                    <option value=""></option>
-                                                                    <option value="bis">bis</option>
-                                                                    <option value="sur">sur</option>
-                                                                    <option value="a">a</option>
-                                                                    <option value="a sur">a sur</option>
-                                                                    <option value="b">b</option>
-                                                                    <option value="b sur">b sur</option>
-                                                                    <option value="c">c</option>
-                                                                    <option value="d">d</option>
-                                                                    <option value="e">e</option>
-                                                                    <option value="f">f</option>
-                                                                    <option value="g">g</option>
-                                                                    <option value="h">h</option>
-                                                                    <option value="a bis">a bis</option>
-                                                                    <option value="b bis">b bis</option>
-                                                                    <option value="c bis">c bis</option>
-                                                                    <option value="d bis">d bis</option>
-                                                            </select>
-                                        </div>
-                                        <div class="col-sm-2">
-                                            <input type="text" placeholder="Numero"
-                                                   class="form-control margin-bottom" name="numero3" id="numero3">
-                                        </div>
-                                    </div>
-                            </div>
-                             <div class="form-group row">
-                                
-                                <label class="col-sm-2 col-form-label"
-                                       for="pay_cat">Deudores Morosos</label>
-
-                                <div class="col-sm-6">
-                                    <select name="tec" class="form-control" id="deudores">
-                                        <option value=''>Todos</option>
-                                        <option value='Si'>Morosos</option>
-                                    </select>
                                 </div>
+                                <!--thread-->
+                                <!--milestones-->
+                                <div class="tab-pane fade" id="milestones" role="tabpanel" aria-labelledby="milestones-tab" aria-expanded="false">
+                                    <div class="form-group row">
+                                
+                                        <label class="col-sm-2 col-form-label"
+                                               for="pay_cat">Deudores Morosos</label>
+
+                                        <div class="col-sm-6">
+                                            <select name="tec" class="form-control" id="deudores">
+                                                <option value=''>Todos</option>
+                                                <option value='Si'>Morosos</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <!--milestones-->
+                                <!--otro filtro 
+                                <div class="tab-pane fade" id="activities" role="tabpanel" aria-labelledby="activities-tab" aria-expanded="false">
+
+                                </div>
+                                activities-->
+                                
+                                
+
+
                             </div>
-							<div class="form-group row">
+                        </div>
+                    </div>
+                    <div class="form-group row">
                                 <label class="col-sm-3 col-form-label" for="pay_cat"></label>
 
                                 <div class="col-sm-4">
@@ -200,8 +260,13 @@
 
                                 </div>
                             </div>
+                </div>
+                <!-- fin paneles -->
                         
-                    </div>
+                           
+							
+                        
+                    
         <div class="grid_3 grid_4">
             <h5><?php echo $this->lang->line('Client Group') . '- ' . $group['title'] ?></h5> 
 			<a href="#sendMail" data-toggle="modal" data-remote="false" class="btn btn-primary btn-sm"><i
