@@ -895,7 +895,7 @@ function saveMData(o_data,action_url) {
 
     if (errorNum > 0) {
         $("#notify").removeClass("alert-success").addClass("alert-danger").fadeIn();
-        $("#notify .message").html("<strong>Error</strong>");
+        $("#notify .message").html("<strong>Error, Campo requerido vacio</strong>");
         $("html, body").animate({scrollTop: $('#notify').offset().top}, 1000);
     } else {
         jQuery.ajax({
