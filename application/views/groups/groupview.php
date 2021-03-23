@@ -32,7 +32,7 @@
 
                                 <li class="nav-item">
                                     <a class="nav-link" id="milestones-tab" data-toggle="tab" href="#milestones"
-                                       aria-controls="milestones"> Morosos</a>
+                                       aria-controls="milestones"> Cuenta</a>
                                 </li>
                                <!-- <li class="nav-item">
                                     <a class="nav-link" id="thread-tab" data-toggle="tab" href="#activities"
@@ -227,7 +227,7 @@
                                     <div class="form-group row">
                                 
                                         <label class="col-sm-2 col-form-label"
-                                               for="pay_cat">Deudores Morosos</label>
+                                               for="pay_cat">Estado de Cuenta</label>
 
                                         <div class="col-sm-6">
                                             <select name="tec" class="form-control" id="deudores">
