@@ -11,8 +11,8 @@
                 <div class="row wrapper white-bg page-heading">
                     <div class="col-md-4">
                         <div class="card card-block">
-                            <h4 class="text-xs-center"><?php  echo  strtoupper($details['name']." ".$details['apellidos']) ?></h4>
-                            <div class="ibox-content mt-2">
+                            <h4 class="text-xs-center"><?php  echo  strtoupper($details['name']." ".$details['unoapellido']) ?></h4>
+                            <div class="ibox-content mt-2 " align="center">
                                 <img alt="image" id="dpic" class="img-responsive"
                                      src="<?php echo base_url('userfiles/customers/') . $details['picture'] ?>">
                             </div>
@@ -90,7 +90,6 @@
 								</div>                  
                                <div id="progress" class="progress1">
                                     <div class="progress-bar progress-bar-success"></div>
-                                     
                                 </div>
                                 
                             </div>

@@ -691,7 +691,7 @@ class Tickets Extends CI_Controller
 		}
 		if($ticket->detalle=="Corte Combo"){
 			//agregar reconexion
-			$producto2 = $this->db->get_where('products',array('pid'=>169))->row();
+			$producto2 = $this->db->get_where('products',array('product_name'=>'Reconexion Combo'))->row();
 				$data2['tid']=$idfactura;
 				$data2['pid']=$producto2->pid;
                 $data2['product']=$producto2->product_name;
@@ -715,8 +715,14 @@ class Tickets Extends CI_Controller
         		$this->db->update('customers');
 		}
 		if($ticket->detalle=="Corte Internet"){
-			//agregar reconexion			
-			$producto2 = $this->db->get_where('products',array('pid'=>162))->row();
+			$factura = $this->db->get_where('invoices',array('tid'=>$idfactura))->row();
+			$producto2 = $this->db->get_where('products',array('product_name'=>'Reconexión Internet'))->row();
+			if ($factura->television===no){
+				//actualizar estado usuario
+				$this->db->set('usu_estado', 'Cortado');
+        		$this->db->where('id', $ticket->cid);
+        		$this->db->update('customers');
+				//agregar reconexion	
 				$data2['tid']=$idfactura;
 				$data2['pid']=$producto2->pid;
                 $data2['product']=$producto2->product_name;
@@ -725,35 +731,29 @@ class Tickets Extends CI_Controller
                 $data2['subtotal']=$producto2->product_price;			
             	$this->db->insert('invoice_items',$data2);
 			//actualizar factura
-			$factura = $this->db->get_where('invoices',array('tid'=>$idfactura))->row();
 				$this->db->set('subtotal', $factura->subtotal+$producto2->product_price);
 				$this->db->set('total', $factura->total+$producto2->product_price);
 				$this->db->set('items', $factura->items+1);
-			if ($factura->television===no){
 				$this->db->set('ron', 'Cortado');
-				//actualizar estado usuario
-				$this->db->set('usu_estado', 'Cortado');
-        		$this->db->where('id', $ticket->cid);
-        		$this->db->update('customers');
+				$this->db->set('combo', 'no');
+				$this->db->where('tid', $idfactura);
+        		$this->db->update('invoices');
 			}else{
+				//generar reconexion estando activo
 				$this->db->set('ron', 'Activo');
-				//actualizar estado usuario
-				$this->db->set('usu_estado', 'Activo');
-        		$this->db->where('id', $ticket->cid);
-        		$this->db->update('customers');
-			}
 				$this->db->set('rec', '1');
 				$this->db->set('combo', 'no');			
         		$this->db->where('tid', $idfactura);
         		$this->db->update('invoices');
-			//actualizar estado usuario
-				$this->db->set('usu_estado', 'Cortado');
+				//actualizar estado usuario
+				$this->db->set('usu_estado', 'Activo');
         		$this->db->where('id', $ticket->cid);
         		$this->db->update('customers');
+			}
 		}
 		if($ticket->detalle=="Corte Television"){
 			//agregar reconexion
-			$producto2 = $this->db->get_where('products',array('pid'=>161))->row();
+			$producto2 = $this->db->get_where('products',array('product_name'=>'Reconexión Television'))->row();
 				$data2['tid']=$idfactura;
 				$data2['pid']=$producto2->pid;
                 $data2['product']=$producto2->product_name;
@@ -766,23 +766,31 @@ class Tickets Extends CI_Controller
 				$this->db->set('subtotal', $factura->subtotal+$producto2->product_price);
 				$this->db->set('total', $factura->total+$producto2->product_price);
 				$this->db->set('items', $factura->items+1);
+				$this->db->where('tid', $idfactura);
+        		$this->db->update('invoices');
 			if ($factura->combo===no){
 				$this->db->set('ron', 'Cortado');
+				$this->db->set('television', 'no');
+				$this->db->where('tid', $idfactura);
+        		$this->db->update('invoices');
 				//actualizar estado usuario
 				$this->db->set('usu_estado', 'Cortado');
         		$this->db->where('id', $ticket->cid);
         		$this->db->update('customers');
 			}else{
+				//actualizar factura
 				$this->db->set('ron', 'Activo');
+				//para generar reconexion
+				$this->db->set('rec', '1');	
+				$this->db->set('television', 'no');			
+        		$this->db->where('tid', $idfactura);
+        		$this->db->update('invoices');
 				//actualizar estado usuario
 				$this->db->set('usu_estado', 'Activo');
         		$this->db->where('id', $ticket->cid);
         		$this->db->update('customers');
 			}
-				$this->db->set('rec', '1');	
-				$this->db->set('television', 'no');			
-        		$this->db->where('tid', $idfactura);
-        		$this->db->update('invoices');
+				
 			
 		}
 		if($ticket->detalle=="Traslado"){
