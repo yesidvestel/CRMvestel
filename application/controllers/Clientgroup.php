@@ -250,12 +250,17 @@ class Clientgroup extends CI_Controller
                     if($invoice->television!="no" && $invoice->television!="" && $invoice->television!="-"){
                         $fact_valida=true;
                     }
-                    if(!$fact_valida){
-                            $query=$this->db->query('SELECT * FROM `invoice_items` WHERE tid='.$invoice->tid.' and (product like "%mega%" or product like "%tele%")')->result_array();
+                   // if(!$fact_valida){
+                            $query=$this->db->query('SELECT * FROM `invoice_items` WHERE tid='.$invoice->tid.' and (product like "%mega%" or product like "%tele%" or product like "%punto adicional%")')->result_array();
                             if(count($query)!=0){
                                 $fact_valida=true;
+                                $suma=0;
+                                foreach ($query as $key => $value) {
+                                    $suma+=$value['subtotal'];
+                                }
+                                $invoice->total=$suma;
                             }
-                    }
+                   // }
                     if($_GET['morosos']=="1mes"){
                         if($fact_valida && $debe_customer==$invoice->total && $customer_moroso==false){
                             $customer_moroso=true;
