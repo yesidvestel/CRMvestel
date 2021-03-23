@@ -100,6 +100,8 @@
 							<input type="text" class="form-control" name="responsable" autocomplete="off" value="<?php echo $this->aauth->get_user()->username ?>" readonly></input>
                         </div>
 					</div>
+                    </div>
+                    <div class="form-group row" style="margin-top: -20px;">
 					<div class="frmSearch col-sm-6">
 						<label for="cst" class="caption  col-form-label">Fecha</label>
 						<div>
