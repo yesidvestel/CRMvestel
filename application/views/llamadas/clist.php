@@ -69,8 +69,8 @@
                     <div class="frmSearch col-sm-6">
 						<label for="cst" class="caption  col-form-label">Tipo de llamada</label>
 						<div>
-							<select class="form-control" name="tllamada" id="tipo" onchange="change(this.id,'respuesta')">
-								<option value="-">-</option>
+							<select class="form-control required" name="tllamada" id="tipo" onchange="change(this.id,'respuesta')" required>
+								<option value="">seleccione</option>
 								<option value="Para Venta">Para Venta</option>
 								<option value="Control de Calidad">Control de Calidad</option>
 								<option value="Para Recuperacion">Para Recuperacion</option>
@@ -81,44 +81,42 @@
 					<div class="frmSearch col-sm-6">
 						<label for="cst" class="caption  col-form-label">Tipo de respuesta</label>
 						<div>
-							<select class="form-control" name="trespuesta" id="respuesta" onchange="change2(this.id,'detalle')">
-								<option value="-">-</option>
+							<select class="form-control required" name="trespuesta" id="respuesta" onchange="change2(this.id,'detalle')" required>
+								<option value="">seleccione</option>
                            </select>
                         </div>
 					</div>
                     <div class="frmSearch col-sm-6">
-						<label for="cst" class="caption  col-form-label">Detalle de respuesta</label>
+						<label for="cst" class="caption  col-form-label ">Detalle de respuesta</label>
 						<div>
-							<select class="form-control" name="drespuesta" id="detalle">
-								<option value="-">-</option>
+							<select class="form-control required" name="drespuesta" id="detalle">
+								<option value="">seleccione</option>
                            </select>
                         </div>
 					</div>
                     <div class="frmSearch col-sm-6">
 						<label for="cst" class="caption  col-form-label">Responsable</label>
 						<div>
-							<input type="text" class="form-control" name="responsable" id="equipo-box" placeholder="Ingrese mac del equipo" autocomplete="off" value="<?php echo $this->aauth->get_user()->username ?>" readonly></input>
-                            <div id="equipo-box-result"></div>
+							<input type="text" class="form-control" name="responsable" autocomplete="off" value="<?php echo $this->aauth->get_user()->username ?>" readonly></input>
                         </div>
 					</div>
 					<div class="frmSearch col-sm-6">
 						<label for="cst" class="caption  col-form-label">Fecha</label>
 						<div>
 							<input type="text" class="form-control" name="fcha" autocomplete="off" value="<?php echo date("Y/m/d") ?>" readonly/>
-                            <div id="equipo-box-result"></div>
                         </div>
 					</div>
 					<div class="frmSearch col-sm-6">
 						<label for="cst" class="caption  col-form-label">Hora</label>
 						<div>
 							<input type="hidden" name="iduser" value="<?php echo $this->input->get('id') ?>"></input>
-							<input type="text" class="form-control" name="hra" placeholder="Ingrese mac del equipo" autocomplete="off" value="<?php echo date("g:i a") ?>" readonly/>                            
+							<input type="text" class="form-control" name="hra" autocomplete="off" value="<?php echo date("g:i a") ?>" readonly/>                            
                         </div>
 					</div>
 					<div class="frmSearch col-sm-12">
 						<label for="cst" class="caption  col-form-label">Observacion</label>
 						<div>
-							<textarea class="form-control" name="notes" rows="2"></textarea>
+							<textarea class="form-control required" name="notes" rows="2"></textarea>
                         </div>
 					</div>
 
@@ -142,13 +140,13 @@
 		respuesta.value = "";
 		respuesta.innerHTML ="";
 		if(tipo.value == "Para Venta"){			
-			var optionArray = ["|","Venta Contestada","sin Contestar"];
+			var optionArray = ["","Venta Contestada","sin Contestar"];
 		}else if (tipo.value == "Control de Calidad"){
-			var optionArray = ["|","Control Contestado","sin Contestar"];
+			var optionArray = ["","Control Contestado","sin Contestar"];
 		}else if (tipo.value == "Para Recuperacion"){
-			var optionArray = ["|","Recuperacion Contestada","sin Contestar"];
+			var optionArray = ["","Recuperacion Contestada","sin Contestar"];
 		}else if (tipo.value == "Recibida"){
-			var optionArray = ["|","Contestada","sin Contestar"];
+			var optionArray = ["","Contestada","sin Contestar"];
 		};
 	for(option = 0;option < optionArray.length; option++){
     var pair = optionArray[option].split("|");
@@ -164,15 +162,15 @@
 		detalle.value = "";
 		detalle.innerHTML ="";
 		if(respuesta.value == "Venta Contestada"){			
-			var optionArray = ["|","Solo Tv","Tv + 5MB","Tv + 10MB","Tv + 15MB","10MB","15MB"];
+			var optionArray = ["","Solo Tv","Tv + 5MB","Tv + 10MB","Tv + 15MB","10MB","15MB"];
 		}else if (respuesta.value == "Control Contestado"){
-			var optionArray = ["|","Excelente","Bueno","Regular","Malo"];
+			var optionArray = ["","Excelente","Bueno","Regular","Malo"];
 		}else if (respuesta.value == "Recuperacion Contestada"){
-			var optionArray = ["|","Acuerdo de Pago","Cliente inconforme","Informado","No va a pagar","Va a pagar"];
+			var optionArray = ["","Acuerdo de Pago","Cliente inconforme","Informado","No va a pagar","Va a pagar"];
 		}else if (respuesta.value == "Contestada"){
-			var optionArray = ["|","Acuerdo de pago","Cliente inconforme","Informado","No va a pagar","Va a pagar"];
+			var optionArray = ["","Acuerdo de pago","Cliente inconforme","Informado","No va a pagar","Va a pagar"];
 		}else if (respuesta.value == "sin Contestar"){
-			var optionArray = ["|","Correo de Voz","Numero no esta en uso","Timbra pero no contestan"];
+			var optionArray = ["","Correo de Voz","Numero no esta en uso","Timbra pero no contestan"];
 		}
 		
 	for(option = 0;option < optionArray.length; option++){
