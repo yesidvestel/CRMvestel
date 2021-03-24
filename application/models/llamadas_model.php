@@ -285,10 +285,13 @@ class llamadas_model extends CI_Model
 
     }
 
-    private function _inv_datatables_query($id)
+    private function _inv_datatables_query($cid)
     {
 
         $this->db->from($this->table);
+		if($cid['tecnico']!='' && $cid['tecnico']!='0' && $cid['tecnico']!='undefined'){
+         $this->db->where('responsable=', $cid['tecnico']);   
+        }
         $i = 0;
 
         foreach ($this->inv_column_search as $item) // loop column
@@ -319,26 +322,26 @@ class llamadas_model extends CI_Model
         }
     }
 
-    function inv_datatables($id)
+    function inv_datatables($cid)
     {
-        $this->_inv_datatables_query($id);
+        $this->_inv_datatables_query($cid);
         if ($_POST['length'] != -1)
             $this->db->limit($_POST['length'], $_POST['start']);
         $query = $this->db->get();
         return $query->result();
     }
 
-    function inv_count_filtered($id)
+    function inv_count_filtered($cid)
     {
-        $this->_inv_datatables_query($id);
+        $this->_inv_datatables_query($cid);
         $query = $this->db->get();
         return $query->num_rows();
     }
 
-    public function inv_count_all($id)
+    public function inv_count_all($cid)
     {
-        $this->db->from('purchase');
-        $this->db->where('csd', $id);
+        $this->db->from('llamadas');
+        $this->db->where('id', $id);
         return $this->db->count_all_results();
     }
 	public function llamada_delete($id)

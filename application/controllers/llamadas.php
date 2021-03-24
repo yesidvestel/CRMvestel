@@ -190,7 +190,7 @@ class llamadas extends CI_Controller
 
     public function translist()
     {
-        $cid = $this->input->post('cid');
+        $cid = $this->input->get('tecnico');
         $list = $this->supplier->trans_table($cid);
         $data = array();
         // $no = $_POST['start'];
@@ -286,8 +286,8 @@ class llamadas extends CI_Controller
     public function list_llamadas()
     {
         $custid = $this->input->get('id');
-        //$data['details'] = $this->supplier->details($custid);
-
+        $this->load->model('ticket_model', 'ticket');
+		$data['tecnicoslista'] = $this->ticket->tecnico_list();
         //$data['money'] = $this->supplier->money_details($custid);
         $head['usernm'] = $this->aauth->get_user()->username;
         $head['title'] = 'View Supplier Invoices';

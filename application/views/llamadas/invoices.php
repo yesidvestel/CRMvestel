@@ -6,31 +6,82 @@
             <div class="message"></div>
         </div>
         <div class="grid_3 grid_4 animated fadeInRight table-responsive">
-            <h5><?php echo $this->lang->line('Orders') ?></h5>
+            <h5>Llamadas</h5>
 
             <hr>
-            <div class="card card-block">
-                <h4><?php echo $this->lang->line('Supplier Details') ?></h4>
-                <hr>
-                <div class="row m-t-lg">
-                    <div class="col-md-1">
-                        <strong><?php echo $this->lang->line('Name') ?></strong>
-                    </div>
-                    <div class="col-md-10">
-                        <?php echo $details['name'] ?>
-                    </div>
+            <div class="card card-block sameheight-item">
 
-                </div>
-                <div class="row m-t-lg">
-                    <div class="col-md-1">
-                        <strong><?php echo $this->lang->line('') ?>Email</strong>
-                    </div>
-                    <div class="col-md-10">
-                        <?php echo $details['email'] ?>
-                    </div>
+                        
+                            <div class="form-group row">
+								<label class="col-sm-12 col-form-label"
+                                       for="pay_cat"><h5>FILTRAR</h5></label>
+                                <label class="col-sm-2 col-form-label"
+                                       for="pay_cat">Realizadas por</label>
 
-                </div>
-            </div>
+                                <div class="col-sm-6">
+                                    <select name="tec" class="form-control" id="tecnicos2">
+                                        <option value='0'>Todos</option>
+                                        <?php
+											foreach ($tecnicoslista as $row) {
+												$cid = $row['id'];
+												$title = $row['username'];
+												echo "<option value='$title' data-id='$title'>$title</option>";
+											}
+											?>
+                                    </select>
+                                </div>
+                            </div>
+							<div class="form-group row">
+                                <label class="col-sm-2 col-form-label"
+                                       for="pay_cat">Estado</label>
+
+                                <div class="col-sm-6">
+                                    <select name="trans_type" class="form-control" id="estados">
+                                        <option value=''>Todas</option>
+                                        <option value='Pendiente'>Pendiente</option>
+                                        <option value='Resuelto'>Resuelto</option>
+                                    </select>
+                                </div>								
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label"
+                                       for="pay_cat">Fechas</label>
+
+                                <div class="col-sm-6">
+                                    <select name="trans_type" class="form-control" id="fechas" onchange="filtrado_fechas()">
+                                        <option value=''>Todas</option>
+                                        <option value='fcreada'>Fecha Creada</option>
+                                        <option value='fcierre'>Fecha Cierre</option>
+                                    </select>
+                                </div>                              
+                            </div>
+				 			<div class="form-group row" id="div_fechas" style="display: none">
+                                <label class="col-sm-2 col-form-label"
+                                       for="pay_cat" id="label_fechas">Fecha Creada</label>
+
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control required"
+                                           placeholder="Start Date" name="sdate" id="sdate"
+                                            autocomplete="false">
+                                </div>
+								<div class="col-sm-2">
+									<input type="text" class="form-control required"
+                                           placeholder="End Date" name="edate" id="edate"
+                                           data-toggle="datepicker" autocomplete="false">
+								</div>
+                            </div>
+                           
+							<div class="form-group row">
+                                <label class="col-sm-3 col-form-label" for="pay_cat"></label>
+
+                                <div class="col-sm-4">
+                                    <input type="button" class="btn btn-primary btn-md" value="VER" onclick="filtrar()">
+
+
+                                </div>
+                            </div>
+                        
+                    </div>
             <hr>
             <table id="invoices" class="table-striped" cellspacing="0" width="100%">
                 <thead>
@@ -118,4 +169,16 @@
         });
 
     });
+	function filtrar(){
+        var tecnico=$("#tecnicos2 option:selected").val();
+        var opcion_seleccionada=$("#fechas option:selected").val();
+        if(tecnico==""){
+            tb.ajax.url( baseurl+'llamadas/inv_list' ).load();     
+        }else{
+            var id1=$("#tecnicos2 option:selected").data("id");
+            tb.ajax.url( baseurl+"llamadas/inv_list?tecnico="+tecnico ).load();     
+        }
+       
+
+    }
 </script>
