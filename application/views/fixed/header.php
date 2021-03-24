@@ -441,14 +441,14 @@
                                 class="fa arrow"></i> </a>
                     <ul class="menu-content">
 						<li>
+                            <a href="<?php echo base_url(); ?>llamadas/list_llamadas"><?php echo $this->lang->line(''); ?>Lista de llamadas</a>
+                        </li> 
+						<li>
                             <a href="<?php echo base_url(); ?>encuesta/create"><?php echo $this->lang->line(''); ?>Nueva Encuenta</a>
                         </li>                        
                         <li>
                             <a href="<?php echo base_url(); ?>encuesta/index"><?php echo $this->lang->line('Manage Tickets') ?></a>
                         </li>
-						
-
-
                     </ul>
                 </li>
                 <!---------------- GESTION DE PROYECTOS ----------------->

@@ -223,33 +223,50 @@ class llamadas extends CI_Controller
     public function inv_list()
     {
         $cid = $this->input->post('cid');
-        $list = $this->supplier->inv_datatables($cid);
+        $list = $this->llamadas->inv_datatables($cid);
         $data = array();
 
         $no = $this->input->post('start');
 
-        foreach ($list as $invoices) {
+        foreach ($list as $llamada) {
             $no++;
             $row = array();
             $row[] = $no;
-            $row[] = $invoices->tid;
-            $row[] = $invoices->name;
-            $row[] = $invoices->invoicedate;
-            $row[] = amountFormat($invoices->total);
-            $row[] = '<span class="st-' . $invoices->status . '">' . $this->lang->line(ucwords($invoices->status)) . '</span>';
-            $row[] = '<a href="' . base_url("purchase/view?id=$invoices->tid") . '" class="btn btn-success btn-xs"><i class="icon-file-text"></i> ' . $this->lang->line('View') . '</a> &nbsp; <a href="' . base_url("purchase/printinvoice?id=$invoices->tid") . '&d=1" class="btn btn-info btn-xs"  title="Download"><span class="icon-download"></span></a>&nbsp; &nbsp;<a href="#" data-object-id="' . $invoices->tid . '" class="btn btn-danger btn-xs delete-object"><span class="icon-trash"></span></a>';
+            $row[] = date("d/m/Y", strtotime($llamada->fcha));
+            $row[] = date("g:i a", strtotime($llamada->hra));
+            $row[] = $llamada->responsable;
+            $row[] = $llamada->tllamada;
+			$row[] = $llamada->trespuesta;
+			$row[] = $llamada->drespuesta;
+			$row[] = $llamada->notes;
+            $row[] = '<a href="' . base_url("purchase/view?id=$invoices->tid") . '" class="btn btn-success btn-xs"><i class="icon-file-text"></i> ' . $this->lang->line('View').' Usuario' . '</a> &nbsp; &nbsp;<a href="#" data-object-id="' . $llamada->id . '" class="btn btn-danger btn-xs delete-object"><span class="icon-trash"></span></a>';
 
             $data[] = $row;
         }
 
         $output = array(
             "draw" => $_POST['draw'],
-            "recordsTotal" => $this->supplier->inv_count_all($cid),
-            "recordsFiltered" => $this->supplier->inv_count_filtered($cid),
+            "recordsTotal" => $this->llamadas->inv_count_all($cid),
+            "recordsFiltered" => $this->llamadas->inv_count_filtered($cid),
             "data" => $data,
         );
         //output to json format
         echo json_encode($output);
+
+    }
+	public function delete_i()
+    {
+        $id = $this->input->post('deleteid');
+
+        if ($this->llamadas->llamada_delete($id)) {
+            echo json_encode(array('status' => 'Success', 'message' =>
+                "Purchase Order #$id has been deleted successfully!"));
+
+        } else {
+
+            echo json_encode(array('status' => 'Error', 'message' =>
+                "There is an error! Purchase has not deleted."));
+        }
 
     }
 
@@ -266,16 +283,16 @@ class llamadas extends CI_Controller
         $this->load->view('fixed/footer');
     }
 
-    public function invoices()
+    public function list_llamadas()
     {
         $custid = $this->input->get('id');
-        $data['details'] = $this->supplier->details($custid);
+        //$data['details'] = $this->supplier->details($custid);
 
-        $data['money'] = $this->supplier->money_details($custid);
+        //$data['money'] = $this->supplier->money_details($custid);
         $head['usernm'] = $this->aauth->get_user()->username;
         $head['title'] = 'View Supplier Invoices';
         $this->load->view('fixed/header', $head);
-        $this->load->view('supplier/invoices', $data);
+        $this->load->view('llamadas/invoices', $data);
         $this->load->view('fixed/footer');
     }
 

@@ -867,46 +867,18 @@ class Tickets Extends CI_Controller
         		$this->db->update('invoices');
 			
 		}
+		//nuevo servicio
 		if($ticket->detalle=="Reinstalacion Internet"){	
 		$factura = $this->db->get_where('invoices',array('tid'=>$idfactura))->row();
 		$datay['tid']=$idfactura;
         $datay['qty']=1;
         $datay['tax']=0;
         $datay['discount']=0;        
-        $datay['totaldiscount']=0;			
+        $datay['totaldiscount']=0;
+			//agregar servicio nuevo
                 if($data['combo']!==no){
-                    if($factura->combo==='1Mega'){
-                        $datay['pid']=125;
-                    }else if($factura->combo==='2Megas'){
-                        $datay['pid']=126;
-                    }else if($factura->combo==='3Megas'){
-                        $datay['pid']=24;
-					}else if($factura->combo==='3MegasV'){
-                        $datay['pid']=243;
-					}else if($factura->combo==='3MegasSolo'){
-                        $datay['pid']=170;
-                    }else if($factura->combo==='5Megas'){
-                        $datay['pid']=25;
-					}else if($factura->combo==='5MegasV'){
-                        $datay['pid']=244;
-					}else if($factura->combo==='5MegasVS'){
-                        $datay['pid']=247;
-					}else if($factura->combo==='5MegasSolo'){
-                        $datay['pid']=171;					
-                    }else if($factura->combo==='5MegasD'){
-                        $datay['pid']=223;					
-                    }else if($factura->combo==='10Megas'){
-                        $datay['pid']=26;
-					}else if($factura->combo==='10MegasV'){
-                        $datay['pid']=245;
-					}else if($factura->combo==='10MegasVS'){
-                        $datay['pid']=246;
-					}else if($factura->combo==='10MegasSolo'){
-                        $datay['pid']=172;
-                    }else if($factura->combo==='50Megas'){
-                        $datay['pid']=222;
-                    }
-                    $producto = $this->db->get_where('products',array('pid'=>$datay['pid']))->row();
+                    $producto = $this->db->get_where('products',array('product_name'=>$factura->combo))->row();
+					$datay['pid']=$producto->pid;
                     $x=intval($producto->product_price);
                     $x=($x/31)*$diferencia->days;
                     $total=$x;

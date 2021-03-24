@@ -288,10 +288,7 @@ class llamadas_model extends CI_Model
     private function _inv_datatables_query($id)
     {
 
-        $this->db->from('purchase');
-        $this->db->where('purchase.csd', $id);
-        $this->db->join('supplier', 'purchase.csd=supplier.id', 'left');
-
+        $this->db->from($this->table);
         $i = 0;
 
         foreach ($this->inv_column_search as $item) // loop column
@@ -344,7 +341,17 @@ class llamadas_model extends CI_Model
         $this->db->where('csd', $id);
         return $this->db->count_all_results();
     }
+	public function llamada_delete($id)
+    {
 
+        $this->db->trans_start();
+        $this->db->delete('llamadas', array('id' => $id));
+        if ($this->db->trans_complete()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     public function group_info($id)
     {
 

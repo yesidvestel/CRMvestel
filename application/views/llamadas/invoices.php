@@ -35,12 +35,14 @@
             <table id="invoices" class="table-striped" cellspacing="0" width="100%">
                 <thead>
                 <tr>
-                    <th><?php echo $this->lang->line('No') ?></th>
-                    <th><?php echo $this->lang->line('Order') ?> #</th>
-                    <th><?php echo $this->lang->line('Supplier') ?></th>
-                    <th><?php echo $this->lang->line('Date') ?></th>
-                    <th><?php echo $this->lang->line('Total') ?></th>
-                    <th class="no-sort"><?php echo $this->lang->line('Status') ?></th>
+                    <th>#</th>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                    <th>Realizado por</th>
+                    <th>Tpo Llamada</th>
+					<th>Tpo respuesta</th>
+					<th>Detalle</th>					
+					<th>Observacion</th>
                     <th class="no-sort"><?php echo $this->lang->line('Settings') ?></th>
 
 
@@ -51,12 +53,14 @@
 
                 <tfoot>
                 <tr>
-                    <th><?php echo $this->lang->line('No') ?></th>
-                    <th><?php echo $this->lang->line('Order') ?> #</th>
-                    <th><?php echo $this->lang->line('Supplier') ?></th>
-                    <th><?php echo $this->lang->line('Date') ?></th>
-                    <th><?php echo $this->lang->line('Total') ?></th>
-                    <th class="no-sort"><?php echo $this->lang->line('Status') ?></th>
+                    <th>#</th>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                    <th>Realizado por</th>
+                    <th>Tpo Llamada</th>
+					<th>Tpo respuesta</th>
+					<th>Detalle</th>					
+					<th>Observacion</th>
                     <th class="no-sort"><?php echo $this->lang->line('Settings') ?></th>
 
                 </tr>
@@ -82,7 +86,7 @@
             </div>
             <div class="modal-footer">
                 <input type="hidden" id="object-id" value="">
-                <input type="hidden" id="action-url" value="purchase/delete_i">
+                <input type="hidden" id="action-url" value="llamadas/delete_i">
                 <button type="button" data-dismiss="modal" class="btn btn-primary"
                         id="delete-confirm"><?php echo $this->lang->line('Delete') ?></button>
                 <button type="button" data-dismiss="modal"
@@ -100,9 +104,9 @@
             "serverSide": true,
             "order": [],
             "ajax": {
-                "url": "<?php echo site_url('supplier/inv_list')?>",
+                "url": "<?php echo site_url('llamadas/inv_list')?>",
                 "type": "POST",
-                "data": {'cid':<?php echo $_GET['id'] ?> }
+                //"data": {'cid':<?php echo $_GET['id'] ?> }
             },
             "columnDefs": [
                 {
