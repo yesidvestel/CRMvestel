@@ -162,7 +162,7 @@ class llamadas extends CI_Controller
     }
 
 
-    public function delete_i()
+   /* public function delete_i()
     {
         $id = $this->input->post('deleteid');
 
@@ -171,7 +171,7 @@ class llamadas extends CI_Controller
         } else {
             echo json_encode(array('status' => 'Error', 'message' => $this->lang->line('ERROR')));
         }
-    }
+    }*/
 
     public function displaypic()
     {
