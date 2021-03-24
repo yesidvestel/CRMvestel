@@ -287,7 +287,7 @@ class llamadas_model extends CI_Model
 
     private function _inv_datatables_query($cid)
     {
-
+		//traer llamadas
         $this->db->from($this->table);
 		if($_GET['tecnico']!='' && $_GET['tecnico']!='0' && $_GET['tecnico']!='undefined'){
          $this->db->where('responsable=', $_GET['tecnico']);   
