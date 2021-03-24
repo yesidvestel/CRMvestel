@@ -14,7 +14,7 @@
                     <h5><?php echo $this->lang->line('') ?>Datos personales</h5>
                     <hr>
                     <div class="form-group row">
-						<input type="hidden" placeholder="Material nombre" class="form-control margin-bottom  required" name="abonado" value="<?php echo $codigo + 1 ?>">
+						<input type="text" placeholder="Material nombre" class="form-control margin-bottom  required" name="abonado" value="<?php echo $codigo + 1 ?>">
 						<div class="col-sm-3">
                         	<h6><label class="col-form-label"
                                for="name"><?php echo $this->lang->line('') ?>1er Nombre</label></h6>
