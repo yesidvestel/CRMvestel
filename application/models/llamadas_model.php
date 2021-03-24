@@ -289,12 +289,18 @@ class llamadas_model extends CI_Model
     {
 
         $this->db->from($this->table);
-		if($cid['tecnico']!='' && $cid['tecnico']!='0' && $cid['tecnico']!='undefined'){
-         $this->db->where('responsable=', $cid['tecnico']);   
+		if($_GET['tecnico']!='' && $_GET['tecnico']!='0' && $_GET['tecnico']!='undefined'){
+         $this->db->where('responsable=', $_GET['tecnico']);   
+        }
+        if($_GET['filtro_fecha']!='' && $_GET['filtro_fecha']!='undefined'){
+            $fecha_incial= new DateTime($_GET['sdate']);
+            $fecha_final= new DateTime($_GET['edate']);
+         $this->db->where('fcha>=', $fecha_incial->format("Y-m-d"));   
+         $this->db->where('fcha<=', $fecha_final->format("Y-m-d"));   
         }
         $i = 0;
 
-        foreach ($this->inv_column_search as $item) // loop column
+        foreach ($this->column_search as $item) // loop column
         {
             if ($_POST['search']['value']) // if datatable send POST for search
             {
@@ -341,7 +347,7 @@ class llamadas_model extends CI_Model
     public function inv_count_all($cid)
     {
         $this->db->from('llamadas');
-        $this->db->where('id', $id);
+        $this->db->where('id', $cid);
         return $this->db->count_all_results();
     }
 	public function llamada_delete($id)

@@ -51,7 +51,7 @@
                                     <select name="trans_type" class="form-control" id="fechas" onchange="filtrado_fechas()">
                                         <option value=''>Todas</option>
                                         <option value='fcreada'>Fecha Creada</option>
-                                        <option value='fcierre'>Fecha Cierre</option>
+                                        
                                     </select>
                                 </div>                              
                             </div>
@@ -148,16 +148,17 @@
     </div>
 </div>
 <script type="text/javascript">
+    var table;
     $(document).ready(function () {
 
-        var table = $('#invoices').DataTable({
+        table = $('#invoices').DataTable({
             "processing": true,
             "serverSide": true,
             "order": [],
             "ajax": {
                 "url": "<?php echo site_url('llamadas/inv_list')?>",
                 "type": "POST",
-                //"data": {'cid':<?php echo $_GET['id'] ?> }
+                //"data": {'cid':<?php //echo $_GET['id'] ?> }
             },
             "columnDefs": [
                 {
@@ -172,13 +173,24 @@
 	function filtrar(){
         var tecnico=$("#tecnicos2 option:selected").val();
         var opcion_seleccionada=$("#fechas option:selected").val();
-        if(tecnico==""){
-            tb.ajax.url( baseurl+'llamadas/inv_list' ).load();     
+        var edate=$("#edate").val();
+        var sdate=$("#sdate").val();
+        if(tecnico=="" && opcion_seleccionada==""){
+            table.ajax.url( baseurl+'llamadas/inv_list' ).load();     
         }else{
-            var id1=$("#tecnicos2 option:selected").data("id");
-            tb.ajax.url( baseurl+"llamadas/inv_list?tecnico="+tecnico ).load();     
+            //var tec=$("#tecnicos2 option:selected").data("id");
+            table.ajax.url( baseurl+"llamadas/inv_list?tecnico="+tecnico+"&edate="+edate+"&sdate="+sdate+"&filtro_fecha="+opcion_seleccionada ).load();     
         }
        
 
+    }
+     function  filtrado_fechas(){
+        var opcion_seleccionada=$("#fechas option:selected").val();
+        if(opcion_seleccionada=="fcreada"){
+            $("#div_fechas").show();
+            $("#label_fechas").text("Fecha Creada")
+        }else{
+            $("#div_fechas").hide();
+        }
     }
 </script>

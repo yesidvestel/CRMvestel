@@ -239,7 +239,7 @@ class llamadas extends CI_Controller
 			$row[] = $llamada->trespuesta;
 			$row[] = $llamada->drespuesta;
 			$row[] = $llamada->notes;
-            $row[] = '<a href="' . base_url("purchase/view?id=$invoices->tid") . '" class="btn btn-success btn-xs"><i class="icon-file-text"></i> ' . $this->lang->line('View').' Usuario' . '</a> &nbsp; &nbsp;<a href="#" data-object-id="' . $llamada->id . '" class="btn btn-danger btn-xs delete-object"><span class="icon-trash"></span></a>';
+            $row[] = '<a href="' . base_url("purchase/view?id=$llamada->iduser") . '" class="btn btn-success btn-xs"><i class="icon-file-text"></i> ' . $this->lang->line('View').' Usuario' . '</a> &nbsp; &nbsp;<a href="#" data-object-id="' . $llamada->id . '" class="btn btn-danger btn-xs delete-object"><span class="icon-trash"></span></a>';
 
             $data[] = $row;
         }
