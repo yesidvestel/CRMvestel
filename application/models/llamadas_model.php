@@ -293,6 +293,7 @@ class llamadas_model extends CI_Model
          $this->db->where('responsable=', $_GET['tecnico']);   
         }
         if($_GET['filtro_fecha']!='' && $_GET['filtro_fecha']!='undefined'){
+            
             $fecha_incial= new DateTime($_GET['sdate']);
             $fecha_final= new DateTime($_GET['edate']);
          $this->db->where('fcha>=', $fecha_incial->format("Y-m-d"));   
