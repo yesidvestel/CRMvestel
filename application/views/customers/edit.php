@@ -241,6 +241,7 @@
                             <select class="col-sm-1 form-control" name="adicional2">
 									<option value="<?php echo $customer['adicional2'] ?>"><?php echo $customer['adicional2'] ?></option>
 									<option value=""></option>
+									<option value="Lote">Lote</option>
 									<option value="bis">bis</option>
 									<option value="a">a</option>
 									<option value="b">b</option>

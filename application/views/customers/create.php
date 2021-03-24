@@ -233,6 +233,7 @@
                         <div class="col-sm-2 mb-1">
                             <select class="col-sm-1 form-control" name="adicional2">
 													<option value=""></option>
+													<option value="Lote">Lote</option>
                                                     <option value="bis">bis</option>
 													<option value="sur">sur</option>
                                                 	<option value="a">a</option>
