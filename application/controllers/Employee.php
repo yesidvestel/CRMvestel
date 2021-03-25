@@ -102,7 +102,6 @@ class Employee extends CI_Controller
         $city = $this->input->post('city');
         $region = $this->input->post('region');
         $country = $this->input->post('country');
-        $postbox = $this->input->post('postbox');
 
 
         $a = $this->aauth->create_user($email, $password, $username);
@@ -113,7 +112,7 @@ class Employee extends CI_Controller
             if ($nuid > 0) {
 
 
-                $this->employee->add_employee($nuid, (string)$this->aauth->get_user($a)->username, $name, $roleid, $phone, $address, $city, $region, $country, $postbox);
+                $this->employee->add_employee($nuid, (string)$this->aauth->get_user($a)->username, $name, $roleid, $phone, $address, $city, $region, $country);
 
             }
 
@@ -329,8 +328,7 @@ class Employee extends CI_Controller
             $city = $this->input->post('city');
             $region = $this->input->post('region');
             $country = $this->input->post('country');
-            $postbox = $this->input->post('postbox');
-            $this->employee->update_employee($eid, $name, $phone, $phonealt, $address, $city, $region, $country, $postbox);
+            $this->employee->update_employee($eid, $name, $phone, $phonealt, $address, $city, $region, $country);
 
         } else {
             $head['usernm'] = $this->aauth->get_user($id)->username;
