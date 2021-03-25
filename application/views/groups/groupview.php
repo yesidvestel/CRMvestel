@@ -11,7 +11,7 @@
                     <div class="card-body">
                         <div class="card-block">
                             <label class="col-sm-12 col-form-label"
-                                       for="pay_cat"><h5>FILTRAR </h5> </label>
+                                       for="pay_cat"><h5>FILTRAR </h5> </label> 
 
                             <ul class="nav nav-tabs nav-justified">
                                 <li class="nav-item">
@@ -278,14 +278,14 @@
             <hr>
             <table id="fclientstable" class="table-striped" cellspacing="0" width="100%">
                 <thead>
-                <tr id="thead_tr">
+                <tr >
                     <th>#</th>
 					<th>Abonado</th>
 					<th>Cedula</th>
                     <th><?php echo $this->lang->line('Name') ?></th>
 					<th>Celular</th>
                     <th><?php echo $this->lang->line('Address') ?></th>
-					<th>Estado</th>
+					<th id="despues_de_thead">Estado</th>
                     <th><?php echo $this->lang->line('Settings') ?></th>
 					<?php if ($this->aauth->get_user()->roleid > 4) { ?>
 					<th>Config</th>
@@ -297,14 +297,14 @@
                 </tbody>
 
                 <tfoot>
-                <tr id="tfoot_tr">
+                <tr >
                     <th>#</th>
 					<th>Abonado</th>
 					<th>Cedula</th>
                     <th><?php echo $this->lang->line('Name') ?></th>
 					<th>Celular</th>
                     <th><?php echo $this->lang->line('Address') ?></th>
-					<th>Estado</th>
+					<th id="despues_de_tfoot">Estado</th>
                     <th><?php echo $this->lang->line('Settings') ?></th>
 					<?php if ($this->aauth->get_user()->roleid > 4) { ?>
 					<th>Config</th>
@@ -440,6 +440,41 @@
     </div>
 </div>
 <script type="text/javascript">
+    var columnasAgregadas=false;
+    function nuevas_columnas(){
+        if(!columnasAgregadas){
+              tb.destroy();
+              $("#despues_de_thead").after("<th class='cols_adicionadas'>Suscripcion</th>");
+              $("#despues_de_tfoot").after("<th class='cols_adicionadas'>Suscripcion</th>");
+              $("#despues_de_thead").after("<th class='cols_adicionadas'>Deuda</th>");
+              $("#despues_de_tfoot").after("<th class='cols_adicionadas'>Deuda</th>");
+              var morosos=$("#deudores option:selected").val();
+              tb=$('#fclientstable').DataTable({
+
+                "processing": true, //Feature control the processing indicator.
+                "serverSide": true, //Feature control DataTables' server-side processing mode.
+                "order": [], //Initial no order.
+
+                // Load data for the table's content from an Ajax source
+                "ajax": {
+                    "url": "<?php echo site_url('clientgroup/load_morosos') . '?id=' . $group['id']; ?>&morosos="+morosos,
+                    "type": "POST"
+                },
+
+                //Set column definition initialisation properties.
+                "columnDefs": [
+                    {
+                        "targets": [0], //first column / numbering column
+                        "orderable": false, //set not orderable
+                    },
+                    
+                ],  
+                
+
+            });
+              columnasAgregadas=true;
+      }
+    }
 
     $(function () {
         $('.summernote').summernote({
@@ -482,7 +517,11 @@
             var sel_servicios = $("#sel_servicios option:selected").val();
             var morosos=$("#deudores option:selected").val();
             if(morosos!=""){
-                tb.ajax.url( baseurl+'clientgroup/load_morosos?id=<?=$_GET['id']?>&morosos='+morosos).load();               
+                if(columnasAgregadas){
+                    tb.ajax.url( baseurl+'clientgroup/load_morosos?id=<?=$_GET['id']?>&morosos='+morosos+"&estado="+estado+"&localidad="+localidad+"&barrio="+barrio+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios).load();               
+                }else{
+                    nuevas_columnas();
+                }
             }else{
                 tb.ajax.url( baseurl+'clientgroup/grouplist?estado='+estado+"&id=<?=$_GET['id']?>&localidad="+localidad+"&barrio="+barrio+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios).load();         
             }

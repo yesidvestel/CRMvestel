@@ -225,7 +225,43 @@ class Clientgroup extends CI_Controller
         echo json_encode($output);
     }
     public function load_morosos(){
-        $lista_customers=$this->db->select("*")->from("customers")->where("gid",$_GET['id'])->get()->result();
+        $this->db->select("*");
+        $this->db->from("customers");        
+        $this->db->where("gid",$_GET['id']);
+        if (isset($_GET['estado']) && $_GET['estado'] != '' && $_GET['estado'] != null) {
+            $this->db->where('usu_estado=', $_GET['estado']);
+        }
+        if (isset($_GET['direccion']) &&$_GET['direccion'] =="Personalizada"){ 
+            if ($_GET['localidad'] != '' && $_GET['localidad'] != '-' && $_GET['localidad'] != '0') {
+                $this->db->where('localidad=', $_GET['localidad']);
+            }
+
+            if ($_GET['barrio'] != '' && $_GET['barrio'] != '-' && $_GET['barrio'] != '0') {
+                $this->db->where('barrio=', $_GET['barrio']);
+            }
+            if ($_GET['nomenclatura'] != '' && $_GET['nomenclatura'] != '-') {
+                $this->db->where('nomenclatura=', $_GET['nomenclatura']);
+            }
+            if ($_GET['numero1'] != '') {
+                $this->db->where('numero1=', $_GET['numero1']);
+            }
+            if ($_GET['adicionauno'] != '' && $_GET['adicionauno'] != '-') {
+                $this->db->where('adicionauno=', $_GET['adicionauno']);
+            }
+            if ($_GET['numero2'] != '' && $_GET['numero2'] != '-') {
+                $this->db->where('numero2=', $_GET['numero2']);
+            }
+            if ($_GET['adicional2'] != '' && $_GET['adicional2'] != '-') {
+                $this->db->where('adicional2=', $_GET['adicional2']);
+            }
+            if ($_GET['numero3'] != '' && $_GET['numero3'] != '-') {
+                $this->db->where('numero3=', $_GET['numero3']);
+            }
+        }
+        $lista_customers=$this->db->get()->result();
+
+
+
         $no = $this->input->post('start');
         $data=array();
         $x=0;
@@ -238,6 +274,8 @@ class Clientgroup extends CI_Controller
             $lista_invoices = $this->db->from("invoices")->where("csd",$customers->id)->order_by('invoicedate',"DESC")->get()->result();
             $customer_moroso=false;
             $valor_ultima_factura=0;
+            $_var_tiene_internet=false;
+            $_var_tiene_tv=false;
             if($debe_customer==0){
                 $customer_moroso=false;
             }else{
@@ -246,9 +284,11 @@ class Clientgroup extends CI_Controller
                     
                     if($invoice->combo!="no" && $invoice->combo!="" && $invoice->combo!="-"){
                         $fact_valida=true;
+                        $_var_tiene_internet=true;
                     }
                     if($invoice->television!="no" && $invoice->television!="" && $invoice->television!="-"){
                         $fact_valida=true;
+                        $_var_tiene_tv=true;
                     }
                    // if(!$fact_valida){
                             $query=$this->db->query('SELECT * FROM `invoice_items` WHERE tid='.$invoice->tid.' and (product like "%mega%" or product like "%tele%" or product like "%punto adicional%")')->result_array();
@@ -306,7 +346,23 @@ class Clientgroup extends CI_Controller
                     
                 }    
             }
-            
+            //filtro por servicios con morosos
+            if($customer_moroso && isset($_GET['sel_servicios']) && $_GET['sel_servicios'] != '' && $_GET['sel_servicios'] != null ){
+                //aunque sea moroso pero para aplicar el filtro se va a cambiar la variable moroso
+                //falta agregar a las variables _var_tiene_internet y _var_tiene_tv
+                if($_GET['sel_servicios']=="Internet" && !$_var_tiene_internet){
+                            $customer_moroso=false;                        
+                }else if($_GET['sel_servicios']=="TV" && !$_var_tiene_tv){//preguntar que si solo debe de filtrar los que tienen tv o si tiene tv pero tambien internet lo puede listar lo mismo con la de internet
+                            $customer_moroso=false;     
+                }else if($_GET['sel_servicios']=="Combo" ){
+                    if(!$_var_tiene_internet || !$_var_tiene_tv){
+                        $customer_moroso=false;
+                    }
+                }
+
+            }
+            //end fitro por servicios con morosos 
+
             if($customer_moroso){
                 if($x>=$minimo && $x<$maximo){
                     $no++;                
@@ -320,10 +376,13 @@ class Clientgroup extends CI_Controller
                             $row[] = $customers->celular;           
                             $row[] = $customers->nomenclatura . ' ' . $customers->numero1 . $customers->adicionauno.' Nº '.$customers->numero2.$customers->adicional2.' - '.$customers->numero3;
                             $row[] = $customers->usu_estado;
-                            $row[] = '<a href="' . $base . 'edit?id=' . $customers->id . '" class="btn btn-success btn-sm"><span class="icon-pencil"></span> '.$this->lang->line('Edit').'</a>&nbsp;<a style="margin-top:1px;" title="Total Deuda : '.amountFormat($debe_customer).' , Total Ultima Factura : '.amountFormat($valor_ultima_factura).'" href="#" class="btn btn-info btn-sm" onclick="event.preventDefault();mostrar_informacion(this);" data-url="'.base_url().'customers/invoices?id='.$customers->id.'"><span class="icon-money"></span>&nbsp;Deuda</a>';
+                            $row[] = amountFormat($debe_customer);
+                            $row[] = amountFormat($valor_ultima_factura);
+                            $row[] = '<a href="' . base_url() . 'customers/edit?id=' . $customers->id . '" class="btn btn-success btn-sm"><span class="icon-pencil"></span> '.$this->lang->line('Edit').'</a>&nbsp;<a style="margin-top:1px;" title="Total Deuda : '.amountFormat($debe_customer).' , Total Ultima Factura : '.amountFormat($valor_ultima_factura).'" href="#" class="btn btn-info btn-sm" onclick="event.preventDefault();mostrar_informacion(this);" data-url="'.base_url().'customers/invoices?id='.$customers->id.'"><span class="icon-money"></span>&nbsp;Deuda</a>';
                             if ($this->aauth->get_user()->roleid > 4) {
                             $row[] = '<a href="#" data-object-id="' . $customers->id . '" class="btn btn-danger btn-sm delete-object"><span class="icon-bin"></span></a>';
                             }
+                            
 
                         $data[] = $row;
                     
