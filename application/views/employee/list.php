@@ -20,7 +20,9 @@
                     <th>Role</th>
                     <th><?php echo $this->lang->line('Status') ?></th>
                     <th><?php echo $this->lang->line('Actions') ?></th>
-
+					<?php if ($this->aauth->get_user()->roleid == 5) {
+					echo "<th>Admin</th>";
+						}?>
 
                 </tr>
                 </thead>
@@ -40,15 +42,18 @@
                     } else {
                         $status = 'Active';
                         $btn = "<a href='#' data-object-id='" . $aid . "' class='btn btn-orange btn-xs delete-object' title='Disable'><i class='icon-eye-slash'></i> " . $this->lang->line('Disable') ."</a>";
-                    }
+                    }					
 
                     echo "<tr>
                     <td>$i</td>
                     <td>$name</td>
                     <td>$role</td>                 
                     <td>$status</td>
-                    <td><a href='" . base_url("employee/view?id=$aid") . "' class='btn btn-success btn-xs'><i class='icon-file-text'></i> " . $this->lang->line('View') ."</a>&nbsp;&nbsp;$btn&nbsp;&nbsp;<a href='#pop_model' data-toggle='modal' data-remote='false' data-object-id='" . $aid . "' class='btn btn-danger btn-xs delemp' title='Delete'><i class='icon-trash-o'></i></a></td></tr>";
+                    <td><a href='" . base_url("employee/view?id=$aid") . "' class='btn btn-success btn-xs'><i class='icon-file-text'></i> " . $this->lang->line('View') ."</a></td>";
+					if ($this->aauth->get_user()->roleid == 5) {
+					echo "<td>$btn&nbsp;&nbsp;<a href='#pop_model' data-toggle='modal' data-remote='false' data-object-id='" . $aid . "' class='btn btn-danger btn-xs delemp' title='Delete'><i class='icon-trash-o'></i></a></td></tr>";
                     $i++;
+					}
                 }
                 ?>
                 </tbody>
@@ -59,6 +64,9 @@
                     <th>Role</th>
                     <th><?php echo $this->lang->line('Status') ?></th>
                     <th><?php echo $this->lang->line('Actions') ?></th>
+					<?php if ($this->aauth->get_user()->roleid == 5) {
+					echo "<th>Admin</th>";
+						}?>
                 </tr>
                 </tfoot>
             </table>

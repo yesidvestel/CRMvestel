@@ -1041,6 +1041,11 @@
                         </li>
 					</ul>
                 </li>
+			<li class="navigation-header"><span>Configure</span><i data-toggle="tooltip" data-placement="right" data-original-title="Configure" class="icon-ellipsis icon-ellipsis"></i>
+            </li>
+			<li><a href="<?php echo base_url(); ?>employee"><i class="icon-users"></i><span
+                                class="menu-title"> <?php echo $this->lang->line('Employees') ?></span></a>
+                </li>
 		
 
 <?php } ?>
