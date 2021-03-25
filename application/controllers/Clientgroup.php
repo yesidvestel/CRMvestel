@@ -352,15 +352,26 @@ class Clientgroup extends CI_Controller
                         }else if($fact_valida){
                             break;
                         }
+                    }else if($_GET['morosos']==""){
+                        if($fact_valida){
+                            $customer_moroso=true;
+                            $valor_ultima_factura=$invoice->total;
+                            break;
+                        }
+
                     }
 
                     
                 }    
             }
             //filtro por servicios con morosos
-            if($customer_moroso && isset($_GET['sel_servicios']) && $_GET['sel_servicios'] != '' && $_GET['sel_servicios'] != null ){
+            if(isset($_GET['sel_servicios']) && $_GET['sel_servicios'] != '' && $_GET['sel_servicios'] != null ){
                 //aunque sea moroso pero para aplicar el filtro se va a cambiar la variable moroso
-                //falta agregar a las variables _var_tiene_internet y _var_tiene_tv segun los invoice items
+               
+                if($_GET['morosos']==""){//para que muestre todos si esta seleccionada esta opcion, probar si colocando esta condicion encima del if funciona bien para eliminar y dejar solo una
+                    $customer_moroso=true;
+                }
+
                 if($_GET['sel_servicios']=="Internet" && !$_var_tiene_internet){
                             $customer_moroso=false;                        
                 }else if($_GET['sel_servicios']=="TV" && !$_var_tiene_tv){//preguntar que si solo debe de filtrar los que tienen tv o si tiene tv pero tambien internet lo puede listar lo mismo con la de internet
@@ -371,6 +382,10 @@ class Clientgroup extends CI_Controller
                     }
                 }
 
+            }else{
+                if($_GET['morosos']==""){//para que muestre todos si esta seleccionada esta opcion
+                    $customer_moroso=true;
+                }
             }
             //end fitro por servicios con morosos 
 

@@ -531,15 +531,15 @@
             var direccion = $("#sel_dir_personalizada option:selected").val();
             var sel_servicios = $("#sel_servicios option:selected").val();
             var morosos=$("#deudores option:selected").val();
-            if(morosos!=""){
+            //if(morosos!=""){
                 if(columnasAgregadas){
                     tb.ajax.url( baseurl+'clientgroup/load_morosos?id=<?=$_GET['id']?>&morosos='+morosos+"&estado="+estado+"&localidad="+localidad+"&barrio="+barrio+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios).load();               
                 }else{
                     nuevas_columnas();
                 }
-            }else{
+           /* }else{
                 tb.ajax.url( baseurl+'clientgroup/grouplist?estado='+estado+"&id=<?=$_GET['id']?>&localidad="+localidad+"&barrio="+barrio+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios).load();         
-            }
+            }*/
             
         
        
