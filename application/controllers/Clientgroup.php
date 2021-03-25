@@ -298,6 +298,16 @@ class Clientgroup extends CI_Controller
                                 $suma=0;
                                 foreach ($query as $key => $value) {
                                     $suma+=$value['subtotal'];
+                                    //si se selecciona el filtro por servicios realiza este filtro
+                                    if(isset($_GET['sel_servicios']) && $_GET['sel_servicios'] != '' && $_GET['sel_servicios'] != null){
+                                        if(strpos(strtolower($value['product']),"mega" )!==false){
+                                            $_var_tiene_internet=true;
+                                        }
+                                        if(strpos(strtolower($value['product']),"television" )!==false){
+                                            $_var_tiene_tv=true;   
+                                        }
+                                    }
+
                                 }
                                 $invoice->total=$suma;
                             }

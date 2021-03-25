@@ -449,6 +449,21 @@
               $("#despues_de_thead").after("<th class='cols_adicionadas'>Deuda</th>");
               $("#despues_de_tfoot").after("<th class='cols_adicionadas'>Deuda</th>");
               var morosos=$("#deudores option:selected").val();
+
+              var estado=$("#estado option:selected").val();
+           
+      
+                var localidad= $("#cmbLocalidades option:selected").val();
+                var barrio= $("#cmbBarrios option:selected").val();
+                var nomenclatura= $("#nomenclatura option:selected").val();
+                var numero1= $("#numero1").val();
+                
+                var adicionauno= $("#adicionauno option:selected").val();
+                var numero2= $("#numero2").val();
+                var adicional2= $("#adicional2 option:selected").val();
+                var numero3= $("#numero3").val();
+                var direccion = $("#sel_dir_personalizada option:selected").val();
+                var sel_servicios = $("#sel_servicios option:selected").val();
               tb=$('#fclientstable').DataTable({
 
                 "processing": true, //Feature control the processing indicator.
@@ -457,7 +472,7 @@
 
                 // Load data for the table's content from an Ajax source
                 "ajax": {
-                    "url": "<?php echo site_url('clientgroup/load_morosos') . '?id=' . $group['id']; ?>&morosos="+morosos,
+                    "url": "<?php echo site_url('clientgroup/load_morosos') . '?id=' . $group['id']; ?>&morosos="+morosos+"&estado="+estado+"&localidad="+localidad+"&barrio="+barrio+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios,
                     "type": "POST"
                 },
 
