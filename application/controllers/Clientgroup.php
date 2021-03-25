@@ -47,6 +47,7 @@ class Clientgroup extends CI_Controller
         $this->load->view('fixed/footer');
     }
     public function explortar_a_excel(){
+        
         if (isset($_GET['sel_servicios']) && $_GET['sel_servicios'] != '' && $_GET['sel_servicios'] != null) {
             $this->db->select("*,cus1.id as idx");
         }
@@ -349,7 +350,7 @@ class Clientgroup extends CI_Controller
             //filtro por servicios con morosos
             if($customer_moroso && isset($_GET['sel_servicios']) && $_GET['sel_servicios'] != '' && $_GET['sel_servicios'] != null ){
                 //aunque sea moroso pero para aplicar el filtro se va a cambiar la variable moroso
-                //falta agregar a las variables _var_tiene_internet y _var_tiene_tv
+                //falta agregar a las variables _var_tiene_internet y _var_tiene_tv segun los invoice items
                 if($_GET['sel_servicios']=="Internet" && !$_var_tiene_internet){
                             $customer_moroso=false;                        
                 }else if($_GET['sel_servicios']=="TV" && !$_var_tiene_tv){//preguntar que si solo debe de filtrar los que tienen tv o si tiene tv pero tambien internet lo puede listar lo mismo con la de internet
