@@ -52,15 +52,15 @@
 
 				//if(_options.allowUnicode) CHARSETS.specialSet = _unicodeSpecialSet;
 				if(_options.noUpper) 	cases.push({"regex": "(?=" + CHARSETS.upperCaseSet + ")",  																				"message": "Password can't contain an Upper Case Letter"});
-				else 					cases.push({"regex": "(?=" + ("[" + CHARSETS.upperCaseSet + "][^" + CHARSETS.upperCaseSet + "]*").repeat(_options.minUpperCase) + ")", 	"message": "Password must contain at least " + _options.minUpperCase + " Upper Case Letters."});
+				else 					cases.push({"regex": "(?=" + ("[" + CHARSETS.upperCaseSet + "][^" + CHARSETS.upperCaseSet + "]*").repeat(_options.minUpperCase) + ")", 	"message": "La contraseña debe contener al menos " + _options.minUpperCase + " Letra mayúscula."});
 				if(_options.noLower) 	cases.push({"regex": "(?=" + CHARSETS.lowerCaseSet + ")",  																				"message": "Password can't contain a Lower Case Letter"});
-				else 					cases.push({"regex": "(?=" + ("[" + CHARSETS.lowerCaseSet + "][^" + CHARSETS.lowerCaseSet + "]*").repeat(_options.minLowerCase) + ")", 	"message": "Password must contain at least " + _options.minLowerCase + " Lower Case Letters."});
+				else 					cases.push({"regex": "(?=" + ("[" + CHARSETS.lowerCaseSet + "][^" + CHARSETS.lowerCaseSet + "]*").repeat(_options.minLowerCase) + ")", 	"message": "La contraseña debe contener al menos " + _options.minLowerCase + " Letra minuscula."});
 				if(_options.noDigit) 	cases.push({"regex": "(?=" + CHARSETS.digitSet + ")", 																					"message": "Password can't contain a Number"});
-				else 					cases.push({"regex": "(?=" + ("[" + CHARSETS.digitSet + "][^" + CHARSETS.digitSet + "]*").repeat(_options.minDigits) + ")", 			"message": "Password must contain at least " + _options.minDigits + " Digits."});
+				else 					cases.push({"regex": "(?=" + ("[" + CHARSETS.digitSet + "][^" + CHARSETS.digitSet + "]*").repeat(_options.minDigits) + ")", 			"message": "La contraseña debe contener al menos " + _options.minDigits + " Dígito."});
 				if(_options.noSpecial) 	cases.push({"regex": "(?=" + CHARSETS.specialSet + ")", 																				"message": "Password can't contain a Special Character"});
-				else 					cases.push({"regex": "(?=" + ("[" + CHARSETS.specialSet + "][^" + CHARSETS.specialSet + "]*").repeat(_options.minSpecial) + ")", 		"message": "Password must contain at least " + _options.minSpecial + " Special Characters."});
+				else 					cases.push({"regex": "(?=" + ("[" + CHARSETS.specialSet + "][^" + CHARSETS.specialSet + "]*").repeat(_options.minSpecial) + ")", 		"message": "La contraseña debe contener al menos " + _options.minSpecial + " Caracteres especiales."});
 
-				cases.push({"regex":"[" + charsetToString() + "]{" + _options.minLength + ",}", "message":"Password must contain at least " + _options.minLength + " characters but not more than 12 characters."});
+				cases.push({"regex":"[" + charsetToString() + "]{" + _options.minLength + ",}", "message":"La contraseña debe contener al menos " + _options.minLength + " caracteres pero no más de 12 caracteres."});
 
 				return cases;
 			}
@@ -80,10 +80,10 @@
 					}
 				});
 				if(_options.failRepeats && $(_element).val().search(new RegExp("(.)" + (".*\\1").repeat(_options.maxRepeats - 1), "gi")) != -1) {
-					failedCases.push("Password can not contain " + _options.maxRepeats + " of the same character case insensitive.");
+					failedCases.push("La contraseña no puede contener " + _options.maxRepeats + " del mismo carácter no distingue entre mayúsculas y minúsculas.");
 				}
 				if(_options.failConsecutive && $(_element).val().search(new RegExp("(?=(.)" + ("\\1").repeat(_options.maxConsecutive) + ")", "g")) != -1) {
-					failedCases.push("Password can't contain the same character more than " + _options.maxConsecutive + " times in a row.");
+					failedCases.push("La contraseña no puede contener el mismo carácter más de " + _options.maxConsecutive + " veces seguidas.");
 				}
 				
 				//Determine if valid
