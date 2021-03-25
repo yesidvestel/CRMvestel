@@ -51,7 +51,7 @@
                                        for="name"><?php echo $this->lang->line('Name') ?></label>
 
                                 <div class="col-sm-10">
-                                    <input type="text" placeholder="Name"
+                                    <input type="text" placeholder="Nombre completo"
                                            class="form-control margin-bottom  required" name="name"
                                            value="<?php echo $user['name'] ?>">
                                 </div>
@@ -64,7 +64,7 @@
                                        for="address"><?php echo $this->lang->line('Address') ?></label>
 
                                 <div class="col-sm-10">
-                                    <input type="text" placeholder="address"
+                                    <input type="text" placeholder="Direccion completa"
                                            class="form-control margin-bottom" name="address"
                                            value="<?php echo $user['address'] ?>">
                                 </div>
@@ -75,7 +75,7 @@
                                        for="city"><?php echo $this->lang->line('City') ?></label>
 
                                 <div class="col-sm-10">
-                                    <input type="text" placeholder="city"
+                                    <input type="text" placeholder="Ciudad"
                                            class="form-control margin-bottom" name="city"
                                            value="<?php echo $user['city'] ?>">
                                 </div>
@@ -86,7 +86,7 @@
                                        for="country"><?php echo $this->lang->line('Country') ?></label>
 
                                 <div class="col-sm-10">
-                                    <input type="text" placeholder="Country"
+                                    <input type="text" placeholder="Pais"
                                            class="form-control margin-bottom" name="country"
                                            value="<?php echo $user['country'] ?>">
                                 </div>
@@ -95,21 +95,10 @@
                             <div class="form-group row">
 
                                 <label class="col-sm-2 col-form-label"
-                                       for="postbox"><?php echo $this->lang->line('Postbox') ?></label>
-
-                                <div class="col-sm-10">
-                                    <input type="text" placeholder="Postbox"
-                                           class="form-control margin-bottom" name="postbox"
-                                           value="<?php echo $user['postbox'] ?>">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-
-                                <label class="col-sm-2 col-form-label"
                                        for="phone"><?php echo $this->lang->line('Phone') ?></label>
 
                                 <div class="col-sm-10">
-                                    <input type="text" placeholder="phone"
+                                    <input type="text" placeholder="Numero Principal"
                                            class="form-control margin-bottom" name="phone"
                                            value="<?php echo $user['phone'] ?>">
                                 </div>
@@ -120,7 +109,7 @@
                                        for="phone"><?php echo $this->lang->line('Phone') ?> (Alt)</label>
 
                                 <div class="col-sm-10">
-                                    <input type="text" placeholder="altphone"
+                                    <input type="text" placeholder="Numero alternativo"
                                            class="form-control margin-bottom" name="phonealt"
                                            value="<?php echo $user['phonealt'] ?>">
                                 </div>

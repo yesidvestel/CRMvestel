@@ -59,12 +59,11 @@
 
                                         <div class="col-sm-5">
                                             <select name="roleid" class="form-control margin-bottom">
+                                                <option value="5">Super usuario</option>
                                                 <option value="4">Administrativo</option>
-                                                <option value="3">Tecnico</option>
-                                                <option value="5">Super Usuario </option>
-                                                <option value="2">Sales Team</option>
-                                                <option value="1">Inventory Manager</option>
-                                                <option value="-1">Project Manager</option>
+                                                <option value="3">Caja y ventas</option>
+                                                <option value="2">Tecnicos</option>
+                                                
                                             </select>
                                         </div>
                                     </div>
@@ -80,7 +79,7 @@
                                            for="name"><?php echo $this->lang->line('Name') ?></label>
 
                                     <div class="col-sm-10">
-                                        <input type="text" placeholder="Name"
+                                        <input type="text" placeholder="Nombre completo"
                                                class="form-control margin-bottom required" name="name"
                                                placeholder="Full name">
                                     </div>
@@ -91,7 +90,7 @@
                                            for="address"><?php echo $this->lang->line('Address') ?></label>
 
                                     <div class="col-sm-10">
-                                        <input type="text" placeholder="address"
+                                        <input type="text" placeholder="Direccion completa"
                                                class="form-control margin-bottom" name="address">
                                     </div>
                                 </div>
@@ -101,17 +100,17 @@
                                            for="city"><?php echo $this->lang->line('City') ?></label>
 
                                     <div class="col-sm-10">
-                                        <input type="text" placeholder="City"
+                                        <input type="text" placeholder="Ciudad"
                                                class="form-control margin-bottom" name="city">
                                     </div>
                                 </div>
                                 <div class="form-group row">
 
                                     <label class="col-sm-2 col-form-label"
-                                           for="city"><?php echo $this->lang->line('Region') ?></label>
+                                           for="city">Departamento</label>
 
                                     <div class="col-sm-10">
-                                        <input type="text" placeholder="Region"
+                                        <input type="text" placeholder="Departamento"
                                                class="form-control margin-bottom" name="region">
                                     </div>
                                 </div>
@@ -121,7 +120,7 @@
                                            for="country"><?php echo $this->lang->line('Country') ?></label>
 
                                     <div class="col-sm-10">
-                                        <input type="text" placeholder="Country"
+                                        <input type="text"
                                                class="form-control margin-bottom" name="country">
                                     </div>
                                 </div>
@@ -129,20 +128,10 @@
                                 <div class="form-group row">
 
                                     <label class="col-sm-2 col-form-label"
-                                           for="postbox"><?php echo $this->lang->line('Postbox') ?></label>
+                                           for="phone">Celular</label>
 
                                     <div class="col-sm-10">
-                                        <input type="text" placeholder="Postbox"
-                                               class="form-control margin-bottom" name="postbox">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-
-                                    <label class="col-sm-2 col-form-label"
-                                           for="phone"><?php echo $this->lang->line('Phone') ?></label>
-
-                                    <div class="col-sm-10">
-                                        <input type="text" placeholder="phone"
+                                        <input type="text"
                                                class="form-control margin-bottom" name="phone">
                                     </div>
                                 </div>

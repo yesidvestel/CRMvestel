@@ -54,7 +54,7 @@ class Employee_model extends CI_Model
         return $query->row_array();
     }
 
-    public function update_employee($id, $name, $phone, $phonealt, $address, $city, $region, $country, $postbox)
+    public function update_employee($id, $name, $phone, $phonealt, $address, $city, $region, $country)
     {
         $data = array(
             'name' => $name,
@@ -64,7 +64,6 @@ class Employee_model extends CI_Model
             'city' => $city,
             'region' => $region,
             'country' => $country,
-            'postbox' => $postbox
         );
 
 
@@ -309,7 +308,7 @@ class Employee_model extends CI_Model
     }
 
 
-    public function add_employee($id, $username, $name, $roleid, $phone, $address, $city, $region, $country, $postbox)
+    public function add_employee($id, $username, $name, $roleid, $phone, $address, $city, $region, $country)
     {
         $data = array(
             'id' => $id,
@@ -319,7 +318,6 @@ class Employee_model extends CI_Model
             'city' => $city,
             'region' => $region,
             'country' => $country,
-            'postbox' => $postbox,
             'phone' => $phone
         );
 

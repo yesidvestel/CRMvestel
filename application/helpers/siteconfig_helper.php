@@ -45,16 +45,16 @@ function user_role($id = 5)
 {  $ci =& get_instance();
     switch ($id) {
         case 5:
-            return $ci->lang->line('Business Owner');
+            return $ci->lang->line('super user');
             break;
         case 4:
-            return $ci->lang->line('Business Manager');
+            return $ci->lang->line('administracion');
             break;
         case 3:
-            return $ci->lang->line('Sales Manager');
+            return $ci->lang->line('cash and sales');
             break;
         case 2:
-            return $ci->lang->line('Sales Person');
+            return $ci->lang->line('technicians');
             break;
         case 1:
             return $ci->lang->line('Inventory Manager');

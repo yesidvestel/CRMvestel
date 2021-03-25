@@ -3,11 +3,11 @@
         <div class="">
             <div class="col-md-4">
                 <div class="card card-block">
-                    <div class="ibox-title">
+                    <div class="ibox-title" align="center">
                         <h5><?php echo $this->lang->line('Employee Details') ?></h5>
                     </div>
                     <div>
-                        <div class="ibox-content no-padding border-left-right">
+                        <div class="ibox-content no-padding border-left-right" align="center">
                             <img alt="image" class="img-responsive"
                                  src="<?php echo base_url('userfiles/employee/' . $employee['picture']); ?>">
                         </div>
@@ -32,7 +32,7 @@
                             </div>
                             <div class="row m-t-lg">
                                 <div class="col-md-12">
-                                    <strong><?php echo $this->lang->line('Region') ?>
+                                    <strong>Departamento
                                         : </strong><?php echo $employee['region'] ?>
                                 </div>
 
@@ -41,13 +41,6 @@
                                 <div class="col-md-12">
                                     <strong><?php echo $this->lang->line('Country') ?>
                                         : </strong><?php echo $employee['country'] ?>
-                                </div>
-
-                            </div>
-                            <div class="row m-t-lg">
-                                <div class="col-md-12">
-                                    <strong><?php echo $this->lang->line('PostBox') ?>
-                                        : </strong><?php echo $employee['postbox'] ?>
                                 </div>
 
                             </div>
