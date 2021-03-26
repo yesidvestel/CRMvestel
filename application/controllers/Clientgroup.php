@@ -350,13 +350,31 @@ class Clientgroup extends CI_Controller
                             break;
                         }
                     }else if($_GET['morosos']=="Todos"){
-                        if($fact_valida && $debe_customer>=$invoice->total && $customer_moroso==false){
+                        if($fact_valida && $debe_customer>0 && $customer_moroso==false){
                             $customer_moroso=true;
                             $valor_ultima_factura=$invoice->total;
                             break;                    
                         }else if($fact_valida){
                             break;
                         }
+                    }else if($_GET['morosos']=="saldoaFavor"){
+                        if($fact_valida && $debe_customer<0 && $customer_moroso==false){
+                            $customer_moroso=true;
+                            $valor_ultima_factura=$invoice->total;
+                            break;                    
+                        }else if($fact_valida){
+                            break;
+                        }
+
+                    }else if($_GET['morosos']=="al Dia"){
+                        if($fact_valida && $debe_customer==0 && $customer_moroso==false){
+                            $customer_moroso=true;
+                            $valor_ultima_factura=$invoice->total;
+                            break;                    
+                        }else if($fact_valida){
+                            break;
+                        }
+
                     }else if($_GET['morosos']==""){
                         if($fact_valida){
                             $customer_moroso=true;
