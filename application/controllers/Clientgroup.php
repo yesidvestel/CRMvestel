@@ -48,34 +48,18 @@ class Clientgroup extends CI_Controller
     }
     public function explortar_a_excel(){
         
-        if (isset($_GET['sel_servicios']) && $_GET['sel_servicios'] != '' && $_GET['sel_servicios'] != null) {
-            $this->db->select("*,cus1.id as idx");
-        }
-
-        $this->db->from("customers as cus1");
-
-        if (isset($_GET['sel_servicios']) && $_GET['sel_servicios'] != '' && $_GET['sel_servicios'] != null) {
-            $this->db->join("invoices as inv1","cus1.id=inv1.csd and inv1.tid=(select max(tid) from invoices as inv2 where inv2.csd=cus1.id and ((inv2.combo !='no' and inv2.combo !='' and inv2.combo !='-') or  (inv2.television !='no' and inv2.television !='' and inv2.television !='-')))");
-            if($_GET['sel_servicios']=="Internet" || $_GET['sel_servicios']=="Combo"){
-                $this->db->where('combo!=',"no" );
-                $this->db->where('combo!=',"" );
-                $this->db->where('combo!=',"-" );   
-            }else if($_GET['sel_servicios']=="TV" || $_GET['sel_servicios']=="Combo"){
-               $this->db->where('television=',"television" );                
-            }
-        }
-        if ($_GET['id'] != '') {
-            $this->db->where('cus1.gid', $_GET['id']);
-        }
+        $this->db->select("*");
+        $this->db->from("customers");        
+        $this->db->where("gid",$_GET['id']);
         if (isset($_GET['estado']) && $_GET['estado'] != '' && $_GET['estado'] != null) {
             $this->db->where('usu_estado=', $_GET['estado']);
         }
         if (isset($_GET['direccion']) &&$_GET['direccion'] =="Personalizada"){ 
-            if ($_GET['localidad'] != '' && $_GET['localidad'] != '-') {
+            if ($_GET['localidad'] != '' && $_GET['localidad'] != '-' && $_GET['localidad'] != '0') {
                 $this->db->where('localidad=', $_GET['localidad']);
             }
 
-            if ($_GET['barrio'] != '' && $_GET['barrio'] != '-') {
+            if ($_GET['barrio'] != '' && $_GET['barrio'] != '-' && $_GET['barrio'] != '0') {
                 $this->db->where('barrio=', $_GET['barrio']);
             }
             if ($_GET['nomenclatura'] != '' && $_GET['nomenclatura'] != '-') {
@@ -97,15 +81,173 @@ class Clientgroup extends CI_Controller
                 $this->db->where('numero3=', $_GET['numero3']);
             }
         }
-
-
         $lista_customers=$this->db->get()->result();
         $cust_group=$this->db->get_where("customers_group",array('id' => $_GET['id']))->row();
+        
+        //codigo para hacer filtros por mora y servicios
+
+        $lista_customers2=array();
+        
+        foreach ($lista_customers as $key => $customers) {
+            $due=$this->customers->due_details($customers->id);
+            $debe_customer=$due['total']-$due['pamnt'];
+            $lista_invoices = $this->db->from("invoices")->where("csd",$customers->id)->order_by('invoicedate',"DESC")->get()->result();
+            $customer_moroso=false;
+            $valor_ultima_factura=0;
+            $_var_tiene_internet=false;
+            $_var_tiene_tv=false;
+            if($debe_customer==0){
+                $customer_moroso=false;
+            }
+                $fact_valida=false;
+                foreach ($lista_invoices as $key => $invoice) {
+                    
+                    if($invoice->combo!="no" && $invoice->combo!="" && $invoice->combo!="-"){
+                        $fact_valida=true;
+                        $_var_tiene_internet=true;
+                    }
+                    if($invoice->television!="no" && $invoice->television!="" && $invoice->television!="-"){
+                        $fact_valida=true;
+                        $_var_tiene_tv=true;
+                    }
+                   // if(!$fact_valida){
+                            $query=$this->db->query('SELECT * FROM `invoice_items` WHERE tid='.$invoice->tid.' and (product like "%mega%" or product like "%tele%" or product like "%punto adicional%")')->result_array();
+                            if(count($query)!=0){
+                                $fact_valida=true;
+                                $suma=0;
+                                foreach ($query as $key => $value) {
+                                    if(strpos(strtolower($value['product']),"reconexi" )!==false || strpos(strtolower($value['product']),"afiliaci" )!==false){
+                                            
+                                    }else{
+                                        $suma+=$value['subtotal'];    
+                                    }
+                                    
+                                    //si se selecciona el filtro por servicios realiza este filtro
+                                    if(isset($_GET['sel_servicios']) && $_GET['sel_servicios'] != '' && $_GET['sel_servicios'] != null){
+                                        if(strpos(strtolower($value['product']),"mega" )!==false){
+                                            $_var_tiene_internet=true;
+                                        }
+                                        if(strpos(strtolower($value['product']),"television" )!==false){
+                                            $_var_tiene_tv=true;   
+                                        }
+                                    }
+
+                                }
+                                $invoice->total=$suma;
+                            }
+                   // }
+                    if($_GET['morosos']=="1mes"){
+                        if($fact_valida && $debe_customer==$invoice->total && $customer_moroso==false){
+                            $customer_moroso=true;
+                            $valor_ultima_factura=$invoice->total;
+                            break;                    
+                        }else if($fact_valida){
+                            break;
+                        }
+                    }else if($_GET['morosos']=="masdeunmes"){
+                        if($fact_valida && $debe_customer>$invoice->total && $customer_moroso==false){
+                            $customer_moroso=true;
+                            $valor_ultima_factura=$invoice->total;
+                            break;                    
+                        }else if($fact_valida){
+                            break;
+                        }
+                    }else if($_GET['morosos']=="2meses"){
+                        if($fact_valida && $debe_customer>=($invoice->total*2) && $customer_moroso==false){
+                            $customer_moroso=true;
+                            $valor_ultima_factura=$invoice->total;
+                            break;                    
+                        }else if($fact_valida){
+                            break;
+                        }
+                    }else if($_GET['morosos']=="3y4meses"){
+                        if($fact_valida && $debe_customer>=($invoice->total*3) && $customer_moroso==false){
+                            $customer_moroso=true;
+                            $valor_ultima_factura=$invoice->total;
+                            break;                    
+                        }else if($fact_valida){
+                            break;
+                        }
+                    }else if($_GET['morosos']=="Todos"){
+                        if($fact_valida && $debe_customer>0 && $customer_moroso==false){
+                            $customer_moroso=true;
+                            $valor_ultima_factura=$invoice->total;
+                            break;                    
+                        }else if($fact_valida){
+                            break;
+                        }
+                    }else if($_GET['morosos']=="saldoaFavor"){
+                        if($fact_valida && $debe_customer<0 && $customer_moroso==false){
+                            $customer_moroso=true;
+                            $valor_ultima_factura=$invoice->total;
+                            break;                    
+                        }else if($fact_valida){
+                            break;
+                        }
+
+                    }else if($_GET['morosos']=="al Dia"){
+                        if($fact_valida && $debe_customer==0 && $customer_moroso==false){
+                            $customer_moroso=true;
+                            $valor_ultima_factura=$invoice->total;
+                            break;                    
+                        }else if($fact_valida){
+                            break;
+                        }
+
+                    }else if($_GET['morosos']==""){
+                        if($fact_valida){
+                            $customer_moroso=true;
+                            $valor_ultima_factura=$invoice->total;
+                            break;
+                        }
+
+                    }
+
+                    
+                }    
+            
+            //filtro por servicios con morosos
+            if(isset($_GET['sel_servicios']) && $_GET['sel_servicios'] != '' && $_GET['sel_servicios'] != null ){
+                //aunque sea moroso pero para aplicar el filtro se va a cambiar la variable moroso
+               
+                if($_GET['morosos']==""){//para que muestre todos si esta seleccionada esta opcion, probar si colocando esta condicion encima del if funciona bien para eliminar y dejar solo una
+                    $customer_moroso=true;
+                }
+
+                if($_GET['sel_servicios']=="Internet" && !$_var_tiene_internet){
+                            $customer_moroso=false;                        
+                }else if($_GET['sel_servicios']=="TV" && !$_var_tiene_tv){//preguntar que si solo debe de filtrar los que tienen tv o si tiene tv pero tambien internet lo puede listar lo mismo con la de internet
+                            $customer_moroso=false;     
+                }else if($_GET['sel_servicios']=="Combo" ){
+                    if(!$_var_tiene_internet || !$_var_tiene_tv){
+                        $customer_moroso=false;
+                    }
+                }
+
+            }else{
+                if($_GET['morosos']==""){//para que muestre todos si esta seleccionada esta opcion
+                    $customer_moroso=true;
+                }
+            }
+            //end fitro por servicios con morosos 
+
+            if($customer_moroso){
+                $customers->deuda=$debe_customer;
+                $customers->suscripcion=$valor_ultima_factura;            
+                $lista_customers2[] = $customers;
+            }else{
+
+            }
+             
+        }
+        //fin codigo para hacer filtros por mora y servicios
+
+
         
         $this->load->library('Excel');
     
     //define column headers
-    $headers = array('Abonado' => 'string', 'Nombre' => 'string', 'Celular' => 'string', 'Direccion' => 'string', 'Estado' => 'string');
+    $headers = array('Abonado' => 'string', 'Nombre' => 'string', 'Celular' => 'string', 'Direccion' => 'string', 'Estado' => 'string','Deuda' => 'string','Suscripcion' => 'string');
     
     //fetch data from database
     //$salesinfo = $this->product_model->get_salesinfo();
@@ -132,12 +274,13 @@ class Clientgroup extends CI_Controller
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ));
     
     //write rows to sheet1
-    foreach ($lista_customers as $key => $customer) {
+    foreach ($lista_customers2 as $key => $customer) {
             $direccion= $customer->nomenclatura . ' ' . $customer->numero1 . $customer->adicionauno.' Nº '.$customer->numero2.$customer->adicional2.' - '.$customer->numero3;
-            $writer->writeSheetRow('Customers '.$cust_group->title,array($customer->abonado, $customer->name, $customer->celular, $direccion, $customer->usu_estado));
+            $writer->writeSheetRow('Customers '.$cust_group->title,array($customer->abonado, $customer->name, $customer->celular, $direccion, $customer->usu_estado,$customer->deuda,$customer->suscripcion));
     }
         
         
