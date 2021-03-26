@@ -279,7 +279,7 @@ class Clientgroup extends CI_Controller
             $_var_tiene_tv=false;
             if($debe_customer==0){
                 $customer_moroso=false;
-            }else{
+            }
                 $fact_valida=false;
                 foreach ($lista_invoices as $key => $invoice) {
                     
@@ -368,7 +368,7 @@ class Clientgroup extends CI_Controller
 
                     
                 }    
-            }
+            
             //filtro por servicios con morosos
             if(isset($_GET['sel_servicios']) && $_GET['sel_servicios'] != '' && $_GET['sel_servicios'] != null ){
                 //aunque sea moroso pero para aplicar el filtro se va a cambiar la variable moroso
