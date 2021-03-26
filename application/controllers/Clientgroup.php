@@ -297,7 +297,12 @@ class Clientgroup extends CI_Controller
                                 $fact_valida=true;
                                 $suma=0;
                                 foreach ($query as $key => $value) {
-                                    $suma+=$value['subtotal'];
+                                    if(strpos(strtolower($value['product']),"reconexi" )!==false || strpos(strtolower($value['product']),"afiliaci" )!==false){
+                                            
+                                    }else{
+                                        $suma+=$value['subtotal'];    
+                                    }
+                                    
                                     //si se selecciona el filtro por servicios realiza este filtro
                                     if(isset($_GET['sel_servicios']) && $_GET['sel_servicios'] != '' && $_GET['sel_servicios'] != null){
                                         if(strpos(strtolower($value['product']),"mega" )!==false){
