@@ -422,25 +422,7 @@
     </div>
 </div>
 
-<div id="informcion" class="modal fade">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Informacion</h4>
-            </div>
 
-            <div class="modal-body" >
-                 <h1 id="h1_info"></h1>
-                 <a id="link_facturas" target="_blank" class="btn btn-info btn-sm" href=""><span class="icon-eye"></span>&nbsp;Ver Facturas del Customer</a>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $this->lang->line('Close') ?> </button>
-                
-            </div>
-        </div>
-    </div>
-</div>
 <script type="text/javascript">
     var columnasAgregadas=false;
     function nuevas_columnas(){
@@ -538,6 +520,7 @@
                     tb.ajax.url( baseurl+'clientgroup/load_morosos?id=<?=$_GET['id']?>&morosos='+morosos+"&estado="+estado+"&localidad="+localidad+"&barrio="+barrio+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios).load();               
                 }else{
                     nuevas_columnas();
+                    $("option[value=100]").text("Todo");
                 }
            /* }else{
                 tb.ajax.url( baseurl+'clientgroup/grouplist?estado='+estado+"&id=<?=$_GET['id']?>&localidad="+localidad+"&barrio="+barrio+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios).load();         
@@ -547,17 +530,8 @@
        
 
     }
-    function mostrar_informacion(link){
-        $("#h1_info").text($(link).attr("title"));
-        $("#link_facturas").attr('href',$(link).data("url"));
-        $("#informcion").modal("show");
-    }
-    window.addEventListener("keyup", function(event){
-    var codigo = event.keyCode || event.which;
-        if (codigo == 27){
-            $("#informcion").modal("hide");
-        }
-    }, false);
+ 
+ 
     function redirect_to_export(){
          var estado=$("#estado option:selected").val();
            

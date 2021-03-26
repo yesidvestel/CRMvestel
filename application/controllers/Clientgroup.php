@@ -413,7 +413,7 @@ class Clientgroup extends CI_Controller
             //end fitro por servicios con morosos 
 
             if($customer_moroso){
-                if($x>=$minimo && $x<$maximo){
+                if(($x>=$minimo && $x<$maximo) || $_POST['length']=="100"){
                     $no++;                
                     
                     $row = array();
@@ -427,7 +427,7 @@ class Clientgroup extends CI_Controller
                             $row[] = $customers->usu_estado;
                             $row[] = amountFormat($debe_customer);
                             $row[] = amountFormat($valor_ultima_factura);
-                            $row[] = '<a href="' . base_url() . 'customers/edit?id=' . $customers->id . '" class="btn btn-success btn-sm"><span class="icon-pencil"></span> '.$this->lang->line('Edit').'</a>&nbsp;<a style="margin-top:1px;" title="Total Deuda : '.amountFormat($debe_customer).' , Total Ultima Factura : '.amountFormat($valor_ultima_factura).'" href="#" class="btn btn-info btn-sm" onclick="event.preventDefault();mostrar_informacion(this);" data-url="'.base_url().'customers/invoices?id='.$customers->id.'"><span class="icon-money"></span>&nbsp;Deuda</a>';
+                            $row[] = '<a href="' . base_url() . 'customers/edit?id=' . $customers->id . '" class="btn btn-success btn-sm"><span class="icon-pencil"></span> '.$this->lang->line('Edit').'</a>&nbsp;<a style="margin-top:1px;" target="_blanck" class="btn btn-info btn-sm"  href="'.base_url().'customers/invoices?id='.$customers->id.'"><span class="icon-eye"></span>&nbsp;Facturas</a>';
                             if ($this->aauth->get_user()->roleid > 4) {
                             $row[] = '<a href="#" data-object-id="' . $customers->id . '" class="btn btn-danger btn-sm delete-object"><span class="icon-bin"></span></a>';
                             }
@@ -437,17 +437,21 @@ class Clientgroup extends CI_Controller
                     
 
                 }
+
                 $x++;
             }else{
                 $descontar++;
             }
              
         }
-
+        $var_recordsFiltered=count($lista_customers)-$descontar;
+        if($_POST['length']=="100"){
+            $var_recordsFiltered=0;
+        }
         $output = array(
             "draw" => $_POST['draw'],
             "recordsTotal" => count($lista_customers)-$descontar,
-            "recordsFiltered" => count($lista_customers)-$descontar,
+            "recordsFiltered" => $var_recordsFiltered,
             "data" => $data,
         );
         //output to json format
