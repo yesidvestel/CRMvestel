@@ -250,6 +250,7 @@ class Customers extends CI_Controller
 		$data['barrio'] = $this->customers->group_barrio($data['details']['barrio']);
         $data['money'] = $this->customers->money_details($custid);
         $data['due'] = $this->customers->due_details($custid);
+        $data['servicios'] = $this->customers->servicios_detail($custid);
         $head['usernm'] = $this->aauth->get_user()->username;
         $data['activity']=$this->customers->activity($custid);
         $data['estado_mikrotik']=$this->customers->get_estado_mikrotik($data['details']['name_s'],$data['details']['gid']);

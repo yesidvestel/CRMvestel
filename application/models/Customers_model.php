@@ -214,6 +214,63 @@ class Customers_model extends CI_Model
         $query = $this->db->get();
         return $query->row_array();
     }
+         public function servicios_detail($custid)
+    {
+        $lista_invoices = $this->db->from("invoices")->where("csd",$custid)->order_by('invoicedate',"DESC")->get()->result();
+        $customer_moroso=false;
+        $valor_ultima_factura=0;
+        $_var_tiene_internet=false;
+        $_var_tiene_tv=false;
+
+        $servicios= array('television' =>"no",'combo' =>"no");
+        foreach ($lista_invoices as $key => $invoice) {
+            if($invoice->combo!="no" && $invoice->combo!="" && $invoice->combo!="-"){
+                        $fact_valida=true;
+                        $_var_tiene_internet=true;
+                        $servicios['combo']=$invoice->combo;
+            }
+            if($invoice->television!="no" && $invoice->television!="" && $invoice->television!="-"){
+                        $fact_valida=true;
+                        $_var_tiene_tv=true;
+                        $servicios['television']=$invoice->television;
+            }
+            $query=$this->db->query('SELECT * FROM `invoice_items` WHERE tid='.$invoice->tid.' and (product like "%mega%" or product like "%tele%" or product like "%punto adicional%")')->result_array();
+                            if(count($query)!=0){
+                                $fact_valida=true;
+                                $suma=0;
+                                foreach ($query as $key => $value) {
+                                  
+                                    //si se selecciona el filtro por servicios realiza este filtro
+                                        if(strpos(strtolower($value['product']),"reconexi" )!==false || strpos(strtolower($value['product']),"afiliaci" )!==false){
+                                                
+                                        }else{
+                                            $suma+=$value['subtotal'];    
+                                        }
+
+                                        if(strpos(strtolower($value['product']),"mega" )!==false){
+                                             $_var_tiene_internet=true;
+                                             $servicios['combo']=$value['product'];
+                                        }
+                                        if(strpos(strtolower($value['product']),"reconexi" )!==false || strpos(strtolower($value['product']),"afiliaci" )!==false){
+                                            
+                                        }else if(strpos(strtolower($value['product']),"television" )!==false){
+                                            $servicios['television']=$value['product'];
+                                            $_var_tiene_tv=true;   
+                                        }
+                                    
+
+                                }
+                                $invoice->total=$suma;
+                     }
+                if($fact_valida){
+                    break;
+                }
+
+
+        }
+        return $servicios;
+        
+    }
 
     public function get_ip_coneccion_microtik_por_sede($id_sede){
         //$this->load->library("Aauth");
