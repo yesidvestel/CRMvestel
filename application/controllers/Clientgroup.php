@@ -26,7 +26,7 @@ class Clientgroup extends CI_Controller
         parent::__construct();
         $this->load->model('clientgroup_model', 'clientgroup');
         $this->load->model('customers_model', 'customers');
-        $this->load->library('session');       
+               
         $this->load->library("Aauth");
         if (!$this->aauth->is_loggedin()) {
             redirect('/user/', 'refresh');
