@@ -291,6 +291,13 @@ class Customers extends CI_Controller
     }
     public function load_morosos(){
         ini_set('memory_limit', '250M');
+        if($this->input->post('start')!="0"){
+            
+            $this->list_data_precargada();
+            
+        }else{
+
+        $listax=array();
         $this->db->select("*");
         $this->db->from("customers");        
         
@@ -518,11 +525,17 @@ class Customers extends CI_Controller
                 }
 
                 $x++;
+                $customers->debe_customer=$debe_customer;
+                $customers->valor_ultima_factura=$valor_ultima_factura;
+                $listax[]=$customers;
             }else{
                 $descontar++;
             }
              
         }
+
+        $datax['datos']=json_encode($listax);
+        $this->db->update("filtros_historial",$datax, array("id"=>$this->aauth->get_user()->id));
         $var_recordsFiltered=count($lista_customers)-$descontar;
         if($_POST['length']=="100"){
             $var_recordsFiltered=0;
@@ -531,6 +544,53 @@ class Customers extends CI_Controller
             "draw" => $_POST['draw'],
             "recordsTotal" => count($lista_customers)-$descontar,
             "recordsFiltered" => $var_recordsFiltered,
+            "data" => $data,
+        );
+        //output to json format
+        echo json_encode($output);
+      }
+    }
+    public function list_data_precargada(){
+        $no = $this->input->post('start');
+        $data=array();
+        $x=0;
+        $minimo=$this->input->post('start');
+        $maximo=$minimo+10;
+        $descontar=0;
+        $lista=$this->db->get_where("filtros_historial",array('id' =>$this->aauth->get_user()->id))->row();
+        $lista2=json_decode($lista->datos);
+        
+        foreach ($lista2 as $key => $customers) {
+            
+            if(($x>=$minimo && $x<$maximo) || $_POST['length']=="100"){
+                     $no++;                
+                    
+                    $row = array();
+                            $row[] = $no;
+                            $row[] = $customers->abonado;
+                            $row[] = '<a href="customers/view?id=' . $customers->id . '">' . $customers->name ." ". $customers->unoapellido. '</a>';
+                            $row[] = $customers->celular;
+                            $row[] = $customers->documento;
+                            $row[] = $customers->nomenclatura . ' ' . $customers->numero1 . $customers->adicionauno.' Nº '.$customers->numero2.$customers->adicional2.' - '.$customers->numero3;
+                            $row[] = $customers->usu_estado;
+                            $row[] = amountFormat($customers->debe_customer);
+                            $row[] = amountFormat($customers->valor_ultima_factura);
+                            $row[] = '<a href="customers/view?id=' . $customers->id . '" class="btn btn-info btn-sm"><span class="icon-eye"></span>  '.$this->lang->line('View').'</a> <a href="customers/edit?id=' . $customers->id . '" class="btn btn-primary btn-sm"><span class="icon-pencil"></span>  '.$this->lang->line('Edit').'</a> <a href="#" data-object-id="' . $customers->id . '" class="btn btn-danger btn-sm delete-object"><span class="icon-bin"></span></a>';                            
+
+                            
+
+                        $data[] = $row;
+                    
+
+                }
+
+                $x++;
+        }
+
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => count($lista2),
+            "recordsFiltered" => count($lista2),
             "data" => $data,
         );
         //output to json format
