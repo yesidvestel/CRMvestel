@@ -1,5 +1,5 @@
 <style>
-.st-Activo, .st-Instalar , .st-Cortado, .st-Suspendido, .st-anulado, .st-exonerado
+.st-Activo, .st-Instalar , .st-Cortado, .st-Suspendido, .st-anulado, .st-Exonerado
 {
     text-transform: uppercase;
     color: #fff;
@@ -9,27 +9,23 @@
 }
 .st-Activo
 {
- background-color: #3C3;
+ background-color: #4EAA28;
 }
 .st-Instalar
 {
- background-color: #FC3;
+ background-color: #A49F20;
 }
 .st-Cortado
 {
- background-color: #F33;
+ background-color: #A4282A;
 }
 .st-Suspendido
 {
- background-color: #36F;
+ background-color: #2224A3;
 }
-.st-anulado
+.st-Exonerado
 {
- background-color: #000;
-}
-.st-exonerado
-{
- background-color: gray;
+ background-color: #24A9AB;
 }
 </style>
 <article class="content content items-list-page">
