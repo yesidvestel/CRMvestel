@@ -84,6 +84,7 @@
                                                 <option value='Cortado'>Cortados</option>
                                                 <option value='Suspendido'>Suspendidos</option>
                                                 <option value='Instalar'>Instalar</option>
+												<option value='Exonerado'>Exonerado</option>
                                             </select>
                                         </div>
                                     </div>
