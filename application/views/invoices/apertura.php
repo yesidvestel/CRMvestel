@@ -1,3 +1,4 @@
+<script type="text/javascript" src="<?=base_url()?>assets/myjs/cookie.js"></script>
 <article class="content">
     <div class="card card-block">
         <div id="notify" class="alert alert-success" style="display:none;">
@@ -87,12 +88,23 @@
         var perfil=$("#perfil option:selected").val();
         var fecha=$("#sdate").val();
         var hora=$("#hora").val();
-        console.log
+        
         $.post(baseurl+"Invoices/activar",{iduser:iduser,perfil:perfil,fecha:fecha,hora:hora},function(data){
+                Cookies.set('mostrar_mensaje','si',{expires: 1});
+                location.reload();                
                 $("#notify .message").html("<strong>" + data.status + "</strong>: " + data.message);
                 $("#notify").removeClass("alert-danger").addClass("alert-success").fadeIn();
                 $("html, body").scrollTop($("body").offset().top);
         },'json');
+
+        
         
     });
+if(Cookies.get('mostrar_mensaje')=="si"){
+        var link=baseurl+"invoices";
+                $("#notify .message").html("<strong>Success </strong>: Apertura realiza ir a las vistas <a href='"+link+"' class='btn btn-info btn-lg'><span class='icon-file-text2' aria-hidden='true'></span> Ir</a> ");
+                $("#notify").removeClass("alert-danger").addClass("alert-success").fadeIn();
+                $("html, body").scrollTop($("body").offset().top);
+                Cookies.remove('mostrar_mensaje');
+        }
 </script>
