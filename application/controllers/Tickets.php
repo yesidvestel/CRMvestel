@@ -42,11 +42,12 @@ class Tickets Extends CI_Controller
 
     public function index()
     {
-		
+		$this->load->model("customers_model","customers");
         $head['usernm'] = $this->aauth->get_user()->username;
         $head['title'] = 'Support Tickets';
 		$data['tecnicoslista'] = $this->ticket->tecnico_list();
         $data['totalt'] = $this->ticket->ticket_count_all('');
+        $data['listaclientgroups'] = $this->customers->group_list();
         $this->load->view('fixed/header', $head);
         $this->load->view('support/tickets', $data);
         $this->load->view('fixed/footer');

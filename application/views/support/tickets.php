@@ -149,6 +149,22 @@
                                            data-toggle="datepicker" autocomplete="false">
 								</div>
                             </div>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label"
+                                       for="sede_sel">Ciudad</label>
+
+                                <div class="col-sm-6">
+                                    <select name="sede_sel" class="form-control" id="sede_sel">                                        
+                                        <option value="">Todo</option>
+                                        <?php 
+                                                foreach ($listaclientgroups as $key => $sede) {
+                                                    echo "<option value='".$sede['id']."'>".$sede['title']."</option>";
+                                                }
+
+                                         ?>                                        
+                                    </select>
+                                </div>                              
+                            </div>
                            
 							<div class="form-group row">
                                 <label class="col-sm-3 col-form-label" for="pay_cat"></label>
@@ -363,11 +379,12 @@
         var sdate =$("#sdate").val();
         var edate =$("#edate").val();
         var opcion_seleccionada=$("#fechas option:selected").val();
-        if(tecnico=="" && estado=="" && opcion_seleccionada==""){
+        var sede_filtrar=$("#sede_sel option:selected").val();
+        if(tecnico=="" && estado=="" && opcion_seleccionada=="" && ciudad_filtrar==""){
             tb.ajax.url( baseurl+'tickets/tickets_load_list?stat=' ).load();     
         }else{
             var id1=$("#tecnicos2 option:selected").data("id");
-            tb.ajax.url( baseurl+"tickets/tickets_load_list?sdate="+sdate+"&edate="+edate+"&opcselect="+opcion_seleccionada+"&tecnico="+tecnico+"&estado="+estado+"&tec1="+id1+"&stat=" ).load();     
+            tb.ajax.url( baseurl+"tickets/tickets_load_list?sdate="+sdate+"&edate="+edate+"&opcselect="+opcion_seleccionada+"&tecnico="+tecnico+"&estado="+estado+"&tec1="+id1+"&sede_filtrar="+sede_filtrar+"&stat=" ).load();     
         }
        
 
