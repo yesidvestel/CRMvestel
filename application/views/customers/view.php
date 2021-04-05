@@ -140,7 +140,7 @@
                     </div>
                     <div class="col-md-8">
                         <div class="card card-block">
-                            <h4><?php echo $this->lang->line('Customer Details') ?></h4>
+                            <h4>Detalles de Usuario</h4>
                             <hr>
                             <div class="row m-t-lg">
                                 <div class="col-md-2">

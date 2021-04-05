@@ -1,3 +1,33 @@
+<style>
+.st-Activo, .st-Instalar , .st-Cortado, .st-Suspendido, .st-anulado
+{
+text-transform: capitalize;
+    color: #fff;
+    padding: 4px;
+    border-radius: 11px;
+    font-size: 10px;
+}
+.st-Activo
+{
+ background-color: #3C3;
+}
+.st-Instalar
+{
+ background-color: #FC3;
+}
+.st-Cortado
+{
+ background-color: #F33;
+}
+.st-Suspendido
+{
+ background-color: #36F;
+}
+.st-anulado
+{
+ background-color: #000;
+}
+</style>
 <article class="content content items-list-page">
     <div class="card card-block">
         <div id="notify" class="alert alert-success" style="display:none;">
