@@ -1,11 +1,11 @@
 <style>
 .st-Activo, .st-Instalar , .st-Cortado, .st-Suspendido, .st-anulado
 {
-text-transform: capitalize;
+	text-transform: uppercase;
     color: #fff;
     padding: 4px;
     border-radius: 11px;
-    font-size: 10px;
+    font-size: 15px;
 }
 .st-Activo
 {
