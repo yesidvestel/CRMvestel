@@ -411,6 +411,7 @@ class Tickets Extends CI_Controller
     public function update_status()
     {
         $this->load->model('tools_model', 'tools');
+        $this->load->model('customers_model', 'customers');
 		$tid = $this->input->post('tid');		
         $status = $this->input->post('status');
         $fecha_final = $this->input->post('fecha_final'); 
@@ -627,6 +628,9 @@ class Tickets Extends CI_Controller
                 if($ticket->par!=null){
         		  $this->db->update('tickets');
                 }
+                //mikrotik
+                $customerx=$this->db->get_where("customers",array('id' =>$ticket->cid ))->row();
+                $this->customers->activar_estado_usuario($customerx->name_s,$customerx->gid);
         }else{
             $msg1="no redirect";        
 		}
@@ -666,6 +670,9 @@ class Tickets Extends CI_Controller
 				$this->db->set('usu_estado', 'Activo');
         		$this->db->where('id', $ticket->cid);
         		$this->db->update('customers');
+             //mikrotik
+                $customerx=$this->db->get_where("customers",array('id' =>$ticket->cid ))->row();
+                $this->customers->activar_estado_usuario($customerx->name_s,$customerx->gid);
 		}		
 		if($ticket->detalle=="Reconexion Internet"){
 			$paquete = $this->input->post('paquete');
@@ -677,6 +684,9 @@ class Tickets Extends CI_Controller
 				$this->db->set('usu_estado', 'Activo');
         		$this->db->where('id', $ticket->cid);
         		$this->db->update('customers');
+                 //mikrotik
+                $customerx=$this->db->get_where("customers",array('id' =>$ticket->cid ))->row();
+                $this->customers->activar_estado_usuario($customerx->name_s,$customerx->gid);
 		}
 		if($ticket->detalle=="Reconexion Television"){
 			$paquete = $this->input->post('paquete');
@@ -713,6 +723,10 @@ class Tickets Extends CI_Controller
 				$this->db->set('usu_estado', 'Cortado');
         		$this->db->where('id', $ticket->cid);
         		$this->db->update('customers');
+
+                 //mikrotik
+                $customerx=$this->db->get_where("customers",array('id' =>$ticket->cid ))->row();
+                $this->customers->desactivar_estado_usuario($customerx->name_s,$customerx->gid);
 		}
 		if($ticket->detalle=="Corte Internet"){
 			$factura = $this->db->get_where('invoices',array('tid'=>$idfactura))->row();
@@ -738,6 +752,7 @@ class Tickets Extends CI_Controller
 				$this->db->set('combo', 'no');
 				$this->db->where('tid', $idfactura);
         		$this->db->update('invoices');
+
 			}else{
 				//generar reconexion estando activo
 				$this->db->set('ron', 'Activo');
@@ -750,6 +765,9 @@ class Tickets Extends CI_Controller
         		$this->db->where('id', $ticket->cid);
         		$this->db->update('customers');
 			}
+             //mikrotik
+                $customerx=$this->db->get_where("customers",array('id' =>$ticket->cid ))->row();
+                $this->customers->desactivar_estado_usuario($customerx->name_s,$customerx->gid);
 		}
 		if($ticket->detalle=="Corte Television"){
 			//agregar reconexion
@@ -822,6 +840,9 @@ class Tickets Extends CI_Controller
 				$this->db->set('usu_estado', 'Suspendido');
         		$this->db->where('id', $ticket->cid);
         		$this->db->update('customers');
+                 //mikrotik
+                $customerx=$this->db->get_where("customers",array('id' =>$ticket->cid ))->row();
+                $this->customers->desactivar_estado_usuario($customerx->name_s,$customerx->gid);
 		}
 		if($ticket->detalle=="Suspencion Television"){			
 			$this->db->set('ron', 'Activo');
@@ -842,6 +863,9 @@ class Tickets Extends CI_Controller
 				$this->db->set('usu_estado', 'Suspendido');
         		$this->db->where('id', $ticket->cid);
         		$this->db->update('customers');
+                 //mikrotik
+                $customerx=$this->db->get_where("customers",array('id' =>$ticket->cid ))->row();
+                $this->customers->desactivar_estado_usuario($customerx->name_s,$customerx->gid);
 		}
 		if($ticket->detalle=="Reinstalacion Television"){			
 			$producto = $this->db->get_where('products',array('pid'=>27))->row();
@@ -898,6 +922,10 @@ class Tickets Extends CI_Controller
 				$this->db->set('total', $factura->total+$total);				       			
         		$this->db->where('tid', $idfactura);
         		$this->db->update('invoices');
+
+                  //mikrotik
+                $customerx=$this->db->get_where("customers",array('id' =>$ticket->cid ))->row();
+                $this->customers->activar_estado_usuario($customerx->name_s,$customerx->gid);
 			
 		}
 		if($ticket->detalle=="Toma Adicional"){
