@@ -413,6 +413,8 @@ class Clientgroup extends CI_Controller
                 $this->db->where('numero3=', $_GET['numero3']);
             }
         }
+
+        $this->db->order_by('id', 'DESC');
         $lista_customers=$this->db->get()->result();
 
 
@@ -578,7 +580,7 @@ class Clientgroup extends CI_Controller
                             $row[] = '<a href="view?id=' . $customers->id . '">' . $customers->name . ' </a>';
                             $row[] = $customers->celular;           
                             $row[] = $customers->nomenclatura . ' ' . $customers->numero1 . $customers->adicionauno.' Nº '.$customers->numero2.$customers->adicional2.' - '.$customers->numero3;
-                            $row[] = $customers->usu_estado;
+                            $row[] = '<span class="st-'.$customers->usu_estado. '">' .$customers->usu_estado. '</span>';
                             $row[] = amountFormat($debe_customer);
                             $row[] = amountFormat($valor_ultima_factura);
                             $row[] = '<a href="' . base_url() . 'customers/edit?id=' . $customers->id . '" class="btn btn-success btn-sm"><span class="icon-pencil"></span> '.$this->lang->line('Edit').'</a>&nbsp;<a style="margin-top:1px;" target="_blanck" class="btn btn-info btn-sm"  href="'.base_url().'customers/invoices?id='.$customers->id.'"><span class="icon-eye"></span>&nbsp;Facturas</a>';
@@ -642,7 +644,7 @@ class Clientgroup extends CI_Controller
                             $row[] = '<a href="view?id=' . $customers->id . '">' . $customers->name . ' </a>';
                             $row[] = $customers->celular;           
                             $row[] = $customers->nomenclatura . ' ' . $customers->numero1 . $customers->adicionauno.' Nº '.$customers->numero2.$customers->adicional2.' - '.$customers->numero3;
-                            $row[] = $customers->usu_estado;
+                            $row[] = '<span class="st-'.$customers->usu_estado. '">' .$customers->usu_estado. '</span>';
                             $row[] = amountFormat($customers->debe_customer);
                             $row[] = amountFormat($customers->valor_ultima_factura);
                             $row[] = '<a href="' . base_url() . 'customers/edit?id=' . $customers->id . '" class="btn btn-success btn-sm"><span class="icon-pencil"></span> '.$this->lang->line('Edit').'</a>&nbsp;<a style="margin-top:1px;" target="_blanck" class="btn btn-info btn-sm"  href="'.base_url().'customers/invoices?id='.$customers->id.'"><span class="icon-eye"></span>&nbsp;Facturas</a>';
