@@ -749,7 +749,7 @@ class Transactions extends CI_Controller
     public function cancelpurchase()
     {
 
-        if ($this->aauth->get_user()->roleid < 3) {
+        if ($this->aauth->get_user()->roleid < 2) {
 
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
 
@@ -794,7 +794,7 @@ class Transactions extends CI_Controller
 
     public function translist()
     {
-        if ($this->aauth->get_user()->roleid < 4) {
+        if ($this->aauth->get_user()->roleid < 2) {
 
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
 
@@ -841,7 +841,7 @@ class Transactions extends CI_Controller
     // Category
     public function categories()
     {
-        if ($this->aauth->get_user()->roleid < 5) {
+        if ($this->aauth->get_user()->roleid < 2) {
 
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
 
@@ -857,7 +857,7 @@ class Transactions extends CI_Controller
 
     public function createcat()
     {
-        if ($this->aauth->get_user()->roleid < 5) {
+        if ($this->aauth->get_user()->roleid < 2) {
 
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
 
@@ -873,7 +873,7 @@ class Transactions extends CI_Controller
     public function editcat()
     {
 
-        if ($this->aauth->get_user()->roleid < 5) {
+        if ($this->aauth->get_user()->roleid < 2) {
 
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
 
@@ -895,7 +895,7 @@ class Transactions extends CI_Controller
     public function save_createcat()
     {
 
-        if ($this->aauth->get_user()->roleid < 5) {
+        if ($this->aauth->get_user()->roleid < 2) {
 
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
 
@@ -915,7 +915,7 @@ class Transactions extends CI_Controller
 
     public function editcatsave()
     {
-        if ($this->aauth->get_user()->roleid < 5) {
+        if ($this->aauth->get_user()->roleid < 2) {
 
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
 
@@ -940,7 +940,7 @@ class Transactions extends CI_Controller
 
     public function delete_cat()
     {
-        if ($this->aauth->get_user()->roleid < 5) {
+        if ($this->aauth->get_user()->roleid < 2) {
 
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
 
@@ -957,7 +957,7 @@ class Transactions extends CI_Controller
 
     public function save_trans()
     {
-        if ($this->aauth->get_user()->roleid < 4) {
+        if ($this->aauth->get_user()->roleid < 2) {
 
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
 
