@@ -29,7 +29,7 @@ class Purchase extends CI_Controller
             redirect('/user/', 'refresh');
         }
 
-        if ($this->aauth->get_user()->roleid < 3) {
+        if ($this->aauth->get_user()->roleid < 2) {
 
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
 

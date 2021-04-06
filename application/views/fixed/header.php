@@ -1121,6 +1121,25 @@
 
                     </ul>
                 </li>
+			<!---ORDENES DE SERVICIOS --->
+			
+                <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "purchase") {
+                    echo ' open';
+                } ?>">
+					
+					
+                    <a href=""> <i class="icon-file"></i><span
+                                class="menu-title"> <?php echo $this->lang->line('Purchase Order') ?> </span><i
+                                class="fa arrow"></i> </a>
+                    <ul class="menu-content">
+                        <li>
+                            <a href="<?php echo base_url(); ?>purchase/create"><?php echo $this->lang->line('New Order') ?></a>
+                        </li>
+                        <li>
+                            <a href="<?php echo base_url(); ?>purchase"><?php echo $this->lang->line('Manage Orders') ?></a>
+                        </li>
+                    </ul>
+                </li>
 			<!--- MENU INVENTARIOS--->
 			
                 <li class="navigation-header"><span><?php echo $this->lang->line('Stock') ?></span><i
