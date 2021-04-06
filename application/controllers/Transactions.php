@@ -489,7 +489,7 @@ class Transactions extends CI_Controller
     public function paypurchase()
     {
 
-        if ($this->aauth->get_user()->roleid < 3) {
+        if ($this->aauth->get_user()->roleid < 2) {
 
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
 
@@ -993,7 +993,7 @@ class Transactions extends CI_Controller
 
     public function save_transfer()
     {
-        if ($this->aauth->get_user()->roleid < 4) {
+        if ($this->aauth->get_user()->roleid < 2) {
 
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
 
@@ -1036,7 +1036,7 @@ class Transactions extends CI_Controller
 
     public function income()
     {
-        if ($this->aauth->get_user()->roleid < 4) {
+        if ($this->aauth->get_user()->roleid < 2) {
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
         }
         $head['title'] = "Income Transaction";
@@ -1048,7 +1048,7 @@ class Transactions extends CI_Controller
 
     public function expense()
     {
-        if ($this->aauth->get_user()->roleid < 4) {
+        if ($this->aauth->get_user()->roleid < 2) {
 
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
 
@@ -1063,7 +1063,7 @@ class Transactions extends CI_Controller
 
     public function view()
     {
-        if ($this->aauth->get_user()->roleid < 4) {
+        if ($this->aauth->get_user()->roleid < 2) {
 
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
 
@@ -1086,7 +1086,7 @@ class Transactions extends CI_Controller
 
     public function print_t()
     {
-        if ($this->aauth->get_user()->roleid < 4) {
+        if ($this->aauth->get_user()->roleid < 2) {
 
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
 
