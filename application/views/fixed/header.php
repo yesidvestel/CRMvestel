@@ -1173,7 +1173,23 @@
                         </li>
                     </ul>
                 </li>
+			<!--- TESORERIA--->
 			
+                <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "transactions") {
+                    echo ' open';
+                } ?>">
+                    <a href=""> <i class="icon-exchange"></i><span
+                                class="menu-title"> <?php echo $this->lang->line('') ?>Tesoreria</span><i
+                                class="fa arrow"></i> </a>
+                    <ul class="menu-content">
+                        <li>
+                            <a href="<?php echo base_url(); ?>transactions/add"><?php echo $this->lang->line('New Transaction') ?></a>
+                        </li>
+                        <li>
+                            <a href="<?php echo base_url(); ?>transactions/transfer"><?php echo $this->lang->line('New Transfer') ?></a>
+                        </li>
+                    </ul>
+                </li>
 			
 			<!---------------- GESTION DE PROYECTOS ----------------->
                 <li class="navigation-header"><span>PROYECTOS</span><i

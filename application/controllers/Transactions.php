@@ -38,7 +38,7 @@ class Transactions extends CI_Controller
 
     public function index()
     {
-        if ($this->aauth->get_user()->roleid < 4) {
+        if ($this->aauth->get_user()->roleid < 2) {
 
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
 
@@ -53,7 +53,7 @@ class Transactions extends CI_Controller
 
     public function add()
     {
-        if ($this->aauth->get_user()->roleid < 4) {
+        if ($this->aauth->get_user()->roleid < 2) {
 
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
 
@@ -70,7 +70,7 @@ class Transactions extends CI_Controller
 
     public function transfer()
     {
-        if ($this->aauth->get_user()->roleid < 4) {
+        if ($this->aauth->get_user()->roleid < 2) {
 
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
 
