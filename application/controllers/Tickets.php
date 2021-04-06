@@ -618,6 +618,7 @@ class Tickets Extends CI_Controller
         //no haga ni insert ni update si no es instalacion y tambien si ya existe una factura
         $msg1="";
         if($ticket->detalle=="Instalacion" && $ticket->id_factura==null || $ticket->id_factura==0 && $status=="Resuelto" || $ticket->detalle=="Reconexion Combo2" || $ticket->detalle=="Reconexion Television2" || $ticket->detalle=="Reconexion Internet2"){
+            $customerx=$this->db->get_where("customers",array('id' =>$ticket->cid ))->row();
             $this->db->insert('invoices',$data);    
             $dataz['id_factura']=$data['tid'];
 			//actualizar estado usuario
@@ -632,7 +633,7 @@ class Tickets Extends CI_Controller
         		  $this->db->update('tickets');
                 }
                 //mikrotik
-                $customerx=$this->db->get_where("customers",array('id' =>$ticket->cid ))->row();
+                
                 $this->customers->activar_estado_usuario($customerx->name_s,$customerx->gid);
         }else{
             $msg1="no redirect";        
