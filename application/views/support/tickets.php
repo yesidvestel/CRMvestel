@@ -88,85 +88,146 @@
             </div>
 
 
-			 <div class="card card-block sameheight-item">
+			
+                    <!-- paneles -->
+            <div class="card">
+                    <div class="card-body">
+                        <div class="card-block">
+                            <label class="col-sm-12 col-form-label"
+                                       for="pay_cat"><h5>FILTRAR </h5> </label> 
 
-                        
-                            <div class="form-group row">
-								<label class="col-sm-12 col-form-label"
-                                       for="pay_cat"><h5>FILTRAR</h5></label>
-                                <label class="col-sm-2 col-form-label"
-                                       for="pay_cat">Tecnico</label>
+                            <ul class="nav nav-tabs nav-justified">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="active-tab" data-toggle="tab" href="#active"
+                                       aria-controls="active"
+                                       aria-expanded="true">Tecnico</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="link-tab" data-toggle="tab" href="#link"
+                                       aria-controls="link"
+                                       aria-expanded="false">Estado</a>
+                                </li>
 
-                                <div class="col-sm-6">
-                                    <select name="tec" class="form-control" id="tecnicos2">
-                                        <option value='0'>Todos</option>
-                                        <?php
-											foreach ($tecnicoslista as $row) {
-												$cid = $row['id'];
-												$title = $row['username'];
-												echo "<option value='$title' data-id='$cid'>$title</option>";
-											}
-											?>
-                                    </select>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="thread-tab" data-toggle="tab" href="#thread"
+                                       aria-controls="thread">Fechas</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" id="milestones-tab" data-toggle="tab" href="#milestones"
+                                       aria-controls="milestones"> Sede</a>
+                                </li>
+                               <!-- <li class="nav-item">
+                                    <a class="nav-link" id="thread-tab" data-toggle="tab" href="#activities"
+                                       aria-controls="activities">Otro Filtro</a>
+                                </li>-->
+                               
+                            </ul>
+                            <div class="tab-content px-1 pt-1">
+                                <div role="tabpanel" class="tab-pane fade active in" id="active" aria-labelledby="active-tab" aria-expanded="true">
+                                    <div class="form-group row">
+                                        
+                                        <label class="col-sm-2 col-form-label"
+                                               for="pay_cat">Tecnico</label>
+
+                                        <div class="col-sm-6">
+                                            <select name="tec" class="form-control" id="tecnicos2">
+                                                <option value='0'>Todos</option>
+                                                <?php
+                                                    foreach ($tecnicoslista as $row) {
+                                                        $cid = $row['id'];
+                                                        $title = $row['username'];
+                                                        echo "<option value='$title' data-id='$cid'>$title</option>";
+                                                    }
+                                                    ?>
+                                            </select>
+                                        </div>
+                                    </div>
+
                                 </div>
-                            </div>
-							<div class="form-group row">
-                                <label class="col-sm-2 col-form-label"
-                                       for="pay_cat">Estado</label>
+                                <div class="tab-pane fade" id="link" role="tabpanel" aria-labelledby="link-tab" aria-expanded="false">
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 col-form-label"
+                                                   for="pay_cat">Estado</label>
 
-                                <div class="col-sm-6">
-                                    <select name="trans_type" class="form-control" id="estados">
-                                        <option value=''>Todas</option>
-                                        <option value='Pendiente'>Pendiente</option>
-                                        <option value='Resuelto'>Resuelto</option>
-                                    </select>
-                                </div>								
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-sm-2 col-form-label"
-                                       for="pay_cat">Fechas</label>
-
-                                <div class="col-sm-6">
-                                    <select name="trans_type" class="form-control" id="fechas" onchange="filtrado_fechas()">
-                                        <option value=''>Todas</option>
-                                        <option value='fcreada'>Fecha Creada</option>
-                                        <option value='fcierre'>Fecha Cierre</option>
-                                    </select>
-                                </div>                              
-                            </div>
-				 			<div class="form-group row" id="div_fechas" style="display: none">
-                                <label class="col-sm-2 col-form-label"
-                                       for="pay_cat" id="label_fechas">Fecha Creada</label>
-
-                                <div class="col-sm-2">
-                                    <input type="text" class="form-control required"
-                                           placeholder="Start Date" name="sdate" id="sdate"
-                                            autocomplete="false">
+                                            <div class="col-sm-6">
+                                                <select name="trans_type" class="form-control" id="estados">
+                                                    <option value=''>Todas</option>
+                                                    <option value='Pendiente'>Pendiente</option>
+                                                    <option value='Resuelto'>Resuelto</option>
+                                                </select>
+                                            </div>                              
+                                        </div>    
                                 </div>
-								<div class="col-sm-2">
-									<input type="text" class="form-control required"
-                                           placeholder="End Date" name="edate" id="edate"
-                                           data-toggle="datepicker" autocomplete="false">
-								</div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-sm-2 col-form-label"
-                                       for="sede_sel">Ciudad</label>
+                                <!--thread-->
+                                <div class="tab-pane fade" id="thread" role="tabpanel" aria-labelledby="thread-tab" aria-expanded="false">
 
-                                <div class="col-sm-6">
-                                    <select name="sede_sel" class="form-control" id="sede_sel">                                        
-                                        <option value="">Todo</option>
-                                        <?php 
-                                                foreach ($listaclientgroups as $key => $sede) {
-                                                    echo "<option value='".$sede['id']."'>".$sede['title']."</option>";
-                                                }
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label"
+                                               for="pay_cat">Fechas</label>
 
-                                         ?>                                        
-                                    </select>
-                                </div>                              
+                                        <div class="col-sm-6">
+                                            <select name="trans_type" class="form-control" id="fechas" onchange="filtrado_fechas()">
+                                                <option value=''>Todas</option>
+                                                <option value='fcreada'>Fecha Creada</option>
+                                                <option value='fcierre'>Fecha Cierre</option>
+                                            </select>
+                                        </div>                              
+                                    </div>
+                                    <div class="form-group row" id="div_fechas" style="display: none">
+                                        <label class="col-sm-2 col-form-label"
+                                               for="pay_cat" id="label_fechas">Fecha Creada</label>
+
+                                        <div class="col-sm-2">
+                                            <input type="text" class="form-control required"
+                                                   placeholder="Start Date" name="sdate" id="sdate"
+                                                    autocomplete="false">
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <input type="text" class="form-control required"
+                                                   placeholder="End Date" name="edate" id="edate"
+                                                   data-toggle="datepicker" autocomplete="false">
+                                        </div>
+                                    </div>
+                                   
+
+                                </div>
+                                <!--thread-->
+                                <!--milestones-->
+                                <div class="tab-pane fade" id="milestones" role="tabpanel" aria-labelledby="milestones-tab" aria-expanded="false">
+                                     
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 col-form-label"
+                                                   for="sede_sel">Sede</label>
+
+                                            <div class="col-sm-6">
+                                                <select name="sede_sel" class="form-control" id="sede_sel">                                        
+                                                    <option value="">Todo</option>
+                                                    <?php 
+                                                            foreach ($listaclientgroups as $key => $sede) {
+                                                                echo "<option value='".$sede['id']."'>".$sede['title']."</option>";
+                                                            }
+
+                                                     ?>                                        
+                                                </select>
+                                            </div>                              
+                                        </div>
+
+                                </div>
+                                <!--milestones-->
+                                <!--otro filtro 
+                                <div class="tab-pane fade" id="activities" role="tabpanel" aria-labelledby="activities-tab" aria-expanded="false">
+
+                                </div>
+                                activities-->
+                                
+                                
+
+
                             </div>
-                           
-							<div class="form-group row">
+                        </div>
+                    </div>
+                    <div class="form-group row">
                                 <label class="col-sm-3 col-form-label" for="pay_cat"></label>
 
                                 <div class="col-sm-4">
@@ -175,8 +236,8 @@
 
                                 </div>
                             </div>
-                        
-                    </div>
+                </div>
+                <!-- fin paneles -->
 
 			<div class="table-responsive">
             <table id="doctable" class="table table-hover" cellspacing="0" width="100%">

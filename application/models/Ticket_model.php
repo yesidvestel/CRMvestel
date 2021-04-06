@@ -216,7 +216,7 @@ class Ticket_model extends CI_Model
             $sdate=$dateTime->format("Y-m-d");
             $dateTime= new DateTime($filt2['edate']);
             $edate=$dateTime->format("Y-m-d");
-            if($opcselect=="fcreada"){
+            if($filt2['opcselect']=="fcreada"){
                 $this->db->where('created>=', $sdate);   
                 $this->db->where('created<=', $edate);       
             }else{
