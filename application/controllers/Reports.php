@@ -286,33 +286,38 @@ class Reports extends CI_Controller
             $d1=new DateTime($dia_inicial_mes_anterior);
             $data['texto_mes_anterior']=$this->reports->devolver_nombre_mes($d1->format("m"))." ".$d1->format("Y");
 
+            //meses anteriores list
             
+            //resumen por meses code
             //mes anterior
             $list3 =array();
-            $fecha_inicial=strtotime($dia_inicial_mes_anterior);
-            $fecha_final=strtotime($dia_final_de_mes_anterior);
+            $fecha_inicial_m_anterior=strtotime($dia_inicial_mes_anterior);
+            $fecha_final_m_anterior=strtotime($dia_final_de_mes_anterior);
+           
+            //mes actual
+            $fecha_inicial_m_actual=strtotime($dia_inicial_mes_actual);
+            $fecha_final_m_actual=strtotime($dia_final_de_mes_actual);
+            $lista4=array();
+           
+            //resumen por meses code end
+            //new code
+      
+            $lista_meses_anteriores=array();
             foreach ($lista2 as $key => $value) {
                 $invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
                 $fecha_invoice=strtotime($invoice->invoicedate);
-                if ($fecha_invoice>=$fecha_inicial && $fecha_invoice<=$fecha_final) {
+                if ($fecha_invoice>=$fecha_inicial_m_anterior && $fecha_invoice<=$fecha_final_m_anterior) {
                     $list3[]=$value;
+                }else if($fecha_invoice>=$fecha_inicial_m_actual && $fecha_invoice<=$fecha_final_m_actual){
+                    $lista4[]=$value;
+                }else{
+                    $lista_meses_anteriores[]=$value;
                 }
             }
             $data['lista_mes_anterior']=$list3;
-            //mes actual
-            $fecha_inicial=strtotime($dia_inicial_mes_actual);
-            $fecha_final=strtotime($dia_final_de_mes_actual);
-            $lista4=array();
-            foreach ($lista2 as $key => $value) {
-                $invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
-                $fecha_invoice=strtotime($invoice->invoicedate);
-                if($fecha_invoice>=$fecha_inicial && $fecha_invoice<=$fecha_final){
-                    $lista4[]=$value;
-                }
-                
-            }
             $data['lista_mes_actual']=$lista4;
-
+            $data['lista_meses_anteriores']=$lista_meses_anteriores;
+        //end new code
 
 
         $this->load->view('fixed/header', $head);
