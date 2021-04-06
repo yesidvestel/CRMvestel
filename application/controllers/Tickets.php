@@ -457,9 +457,11 @@ class Tickets Extends CI_Controller
         	$this->db->where('idorden', $ticket->codigo);
         	$this->db->update('events');
 		}
-        foreach ($invoice[0] as $key => $value) {
-            if($key!='id' && $key!='pmethod' && $key!='status' && $key!='pamnt'){
-             $data[$key]=$value;
+        if(isset($invoice[0])){
+            foreach ($invoice[0] as $key => $value) {
+                if($key!='id' && $key!='pmethod' && $key!='status' && $key!='pamnt'){
+                 $data[$key]=$value;
+                }
             }
         }
         $tidactualmasuno= $this->db->select('max(tid)+1 as tid')->from('invoices')->get()->result();
