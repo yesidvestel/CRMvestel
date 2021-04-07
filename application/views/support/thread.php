@@ -59,7 +59,7 @@
 					{ echo $factura->television.' '.$factura->combo.' '.$factura->puntos.' Puntos';}else{
 						echo $traslados->tv.' '.$traslados->internet.' '.$traslados->puntos.' Puntos';}
 	
-}if (strpos($thread_info['detalle'], "Reinstalacion")!==false){
+}if (strpos($thread_info['detalle'], "Agregar")!==false){
 	echo $traslados->tv.' '.$traslados->internet.' '.$traslados->puntos.' Puntos';
 }?>
 			

@@ -294,6 +294,23 @@ class Quote extends CI_Controller
 				$this->db->where('corden', $nticket);
 				$this->db->update('temporales', $data3);
 		}
+		//agregar servicio
+		if ($detalle==='AgregarTelevision'){
+			$data3 = array(					
+					'tv' => $tv,            
+					'puntos' => $punto
+				);
+				$this->db->where('corden', $nticket);
+				$this->db->update('temporales', $data3);
+		}
+		
+		if ($detalle==='AgregarInternet'){
+			$data3 = array(
+					'internet' => $inter, 
+				);
+				$this->db->where('corden', $nticket);
+				$this->db->update('temporales', $data3);
+		}
 		$start = date("Y-m-d",strtotime($fagenda));
 			//agenda
 			if ($agendar==actualizar){

@@ -871,8 +871,8 @@ class Tickets Extends CI_Controller
                 $customerx=$this->db->get_where("customers",array('id' =>$ticket->cid ))->row();
                 $this->customers->desactivar_estado_usuario($customerx->name_s,$customerx->gid);
 		}
-		if($ticket->detalle=="Reinstalacion Television"){			
-			$producto = $this->db->get_where('products',array('pid'=>27))->row();
+		if($ticket->detalle=="AgregarTelevision"){			
+			$producto = $this->db->get_where('products',array('product_name'=>'Television'))->row();
 					$datay['tid']=$idfactura;
                     $datay['pid']=$producto->pid;
                     $datay['product']=$producto->product_name;
@@ -890,13 +890,15 @@ class Tickets Extends CI_Controller
             $factura = $this->db->get_where('invoices',array('tid'=>$idfactura))->row();
 				$this->db->set('subtotal', $factura->subtotal+$total);
 				$this->db->set('tax', $factura->tax+$tax2);
-				$this->db->set('total', $factura->total+$total+$tax2);				       			
+				$this->db->set('total', $factura->total+$total+$tax2);
+				$this->db->set('television', 'Television');
+				$this->db->set('puntos', $ptos);
         		$this->db->where('tid', $idfactura);
         		$this->db->update('invoices');
 			
 		}
 		//nuevo servicio
-		if($ticket->detalle=="Reinstalacion Internet"){	
+		if($ticket->detalle=="AgregarInternet"){	
 		$factura = $this->db->get_where('invoices',array('tid'=>$idfactura))->row();
 		$datay['tid']=$idfactura;
         $datay['qty']=1;
@@ -905,7 +907,7 @@ class Tickets Extends CI_Controller
         $datay['totaldiscount']=0;
 			//agregar servicio nuevo
                 if($data['combo']!==no){
-                    $producto = $this->db->get_where('products',array('product_name'=>$factura->combo))->row();
+                    $producto = $this->db->get_where('products',array('product_name'=>$inter))->row();
 					$datay['pid']=$producto->pid;
                     $x=intval($producto->product_price);
                     $x=($x/31)*$diferencia->days;
@@ -923,7 +925,8 @@ class Tickets Extends CI_Controller
             
 				$this->db->set('subtotal', $factura->subtotal+$total);
 				$this->db->set('tax', $factura->tax);
-				$this->db->set('total', $factura->total+$total);				       			
+				$this->db->set('total', $factura->total+$total);
+				$this->db->set('combo', $inter);
         		$this->db->where('tid', $idfactura);
         		$this->db->update('invoices');
 
