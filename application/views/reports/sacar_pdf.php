@@ -275,6 +275,28 @@ $array_afiliaciones=array();
 
 
 		 } //final foreach lista
+
+		 //reparticion de afiliacion combo 
+		 if(isset($array_afiliaciones['Afiliación Combo'])){
+			 
+			 $rep_tv=($array_afiliaciones['Afiliación Combo']['monto_afiliacion']*40)/100;
+			 $rep_internet=($array_afiliaciones['Afiliación Combo']['monto_afiliacion']*60)/100;
+			 
+			 $array_afiliaciones['Afiliación Television']['monto_afiliacion']+=$rep_tv;
+			 $array_afiliaciones['Afiliación Television']['cuenta_afiliacion']+=$array_afiliaciones['Afiliación Combo']['cuenta_afiliacion'];
+			 
+			 if(isset($array_afiliaciones['Afiliación  Internet '])){
+			 	$array_afiliaciones['Afiliación  Internet ']['monto_afiliacion']+=$rep_internet;
+			 	$array_afiliaciones['Afiliación  Internet ']['cuenta_afiliacion']+=$array_afiliaciones['Afiliación Combo']['cuenta_afiliacion'];	
+			 }else{
+			 	$array_afiliaciones['Afiliación Internet']['monto_afiliacion']+=$rep_internet;	
+			 	$array_afiliaciones['Afiliación Internet']['cuenta_afiliacion']+=$array_afiliaciones['Afiliación Combo']['cuenta_afiliacion'];
+			 }
+			 
+			 unset($array_afiliaciones['Afiliación Combo']);
+			 
+		}//end reparticion afilizacion combo
+		
 		 $monto_prod_con_iva_hay=$television1['monto']-$television1['iva'];
 		 $monto_iva_prod_con_iva_hay=$television1['iva'];
 //bancos
