@@ -764,36 +764,9 @@ class Invoices extends CI_Controller
         }
         $this->db->set('ron', $status);
         $this->db->where('tid', $tid);
-        //$this->db->update('invoices');		 
-		
-		
-		if ($this->db->update('invoices')) {	
-            $cuenta = $this->db->get_where('invoices',array('tid'=>$tid))->row();		
-            $tidactualmasuno= $this->db->select('max(codigo)+1 as codigo')->from('tickets')->get()->result();
-			
-				$data2['codigo']=$tidactualmasuno[0]->codigo;	
-                $data2['subject']='servicio';					
-                $data2['created']=$cuenta->invoicedate;
-                $data2['cid']=$usr;
-                $data2['status']='Pendiente';
-                //Tipo de instalacion
-                $insertar=false;
-					if ($tv=="Television"){
-						$data2['detalle']='Reinstalacion Television';
-						$data2['section']='Instalacion Television';
-                        $insertar=true;
-					}else if ($int!="no" && $int!="por_defecto"){
-							$data2['detalle']='Reinstalacion Internet';
-							$data2['section']='Instalacion de Internet '.$int.'';
-                            $insertar=true;
-					}
-                $data2['id_invoice']=null;
-				$data2['id_factura']=$tid;
-                if($insertar){
-                    $this->db->insert('tickets',$data2);
-                }
-							
-		}
+        //$this->db->update('invoices');
+		$this->db->update('invoices');	
+            
 		 //estado usuario
 		$this->db->set('usu_estado', $status);
         $this->db->where('id', $usr);
