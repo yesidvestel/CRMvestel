@@ -487,6 +487,7 @@ $array_afiliaciones=array();
 			//calculo tablas meses
 						$valores_mes_actual= array('cantidad' =>0 , 'monto'=>0,'Internet'=> array('cantidad' => 0,"monto"=>0),"Television"=> array('cantidad' =>0 ,"monto"=>0 ));
 					$valores_mes_anterior= array('cantidad' =>0 , 'monto'=>0,'Internet'=> array('cantidad' => 0,"monto"=>0),"Television"=> array('cantidad' =>0 ,"monto"=>0 ));
+					$valores_meses_anteriores= array('cantidad' =>0 , 'monto'=>0,'Internet'=> array('cantidad' => 0,"monto"=>0),"Television"=> array('cantidad' =>0 ,"monto"=>0 ));
 
 					foreach ($lista_mes_actual as $key => $val1) {
 						$inv1 = $this->db->get_where("invoices",array("tid"=>$val1['tid']))->row(); 
@@ -744,6 +745,139 @@ $array_afiliaciones=array();
 										$valores_mes_anterior['Internet']['monto']-=$valores_por_cada_uno;
 									}else{
 										$valores_mes_anterior['Television']['monto']-=$valores_por_cada_uno;
+									}
+								}
+							
+							}
+							
+						}
+						//end sumatorias
+					}
+					//meses anteriores
+					foreach ($lista_meses_anteriores as $key => $val1) {
+						$inv1 = $this->db->get_where("invoices",array("tid"=>$val1['tid']))->row(); 
+						$valores_meses_anteriores['monto']+=$val1['credit'];
+
+						$invoice_items = $this->db->get_where("invoice_items",array('tid' => $val1['tid'] ))->result_array();
+						$sumatoria_items=0;
+						$items_tocados=array();
+						foreach ($invoice_items as $key => $item_invoic) {
+						$valor_parcial=intval($val1['credit']);
+						$valor_total=intval($inv1->total);
+						$valor_item=intval($item_invoic['subtotal']);
+							if($item_invoic['product']=="1Mega" ||$item_invoic['product']=="1 Mega"){
+
+						 		if($val1['credit']!=0 && $valor_item!=0){
+						 			$valores_meses_anteriores['Internet']['cantidad']++;
+						 			$cuanto_porcentaje_item_en_invoice=($valor_item*100)/$valor_total;
+									$valor_item=($valor_parcial*$cuanto_porcentaje_item_en_invoice)/100;
+									$valores_meses_anteriores['Internet']['monto']+=$valor_item;
+									$sumatoria_items+=$valor_item;
+									$items_tocados['Internet']=true;
+						 		}
+						 		
+
+							}else if($item_invoic['product']=="2Megas" ||$item_invoic['product']=="2 Megas"){
+								
+						 		if($val1['credit']!=0 && $valor_item!=0){
+						 			$valores_meses_anteriores['Internet']['cantidad']++;
+						 			$cuanto_porcentaje_item_en_invoice=($valor_item*100)/$valor_total;
+									$valor_item=($valor_parcial*$cuanto_porcentaje_item_en_invoice)/100;
+									$valores_meses_anteriores['Internet']['monto']+=$valor_item;
+									$sumatoria_items+=$valor_item;
+									$items_tocados['Internet']=true;
+						 		}
+
+							}else if($item_invoic['product']=="3Megas"|| $item_invoic['product']=="3 Megas"){
+								
+						 		if($val1['credit']!=0 && $valor_item!=0){
+						 			$valores_meses_anteriores['Internet']['cantidad']++;
+						 			$cuanto_porcentaje_item_en_invoice=($valor_item*100)/$valor_total;
+									$valor_item=($valor_parcial*$cuanto_porcentaje_item_en_invoice)/100;
+									$valores_meses_anteriores['Internet']['monto']+=$valor_item;
+									$sumatoria_items+=$valor_item;
+									$items_tocados['Internet']=true;
+						 		}
+
+							}else if($item_invoic['product']=="5Megas"||$item_invoic['product']=="5 Megas"){
+								
+						 		if($val1['credit']!=0 && $valor_item!=0){
+						 			$valores_meses_anteriores['Internet']['cantidad']++;
+						 			$cuanto_porcentaje_item_en_invoice=($valor_item*100)/$valor_total;
+									$valor_item=($valor_parcial*$cuanto_porcentaje_item_en_invoice)/100;
+									$valores_meses_anteriores['Internet']['monto']+=$valor_item;
+									$sumatoria_items+=$valor_item;
+									$items_tocados['Internet']=true;
+						 		}
+
+							}else if($item_invoic['product']=="10Megas"||$item_invoic['product']=="10 Megas"){
+								
+								if($val1['credit']!=0 && $valor_item!=0){
+									$valores_meses_anteriores['Internet']['cantidad']++;
+						 			$cuanto_porcentaje_item_en_invoice=($valor_item*100)/$valor_total;
+									$valor_item=($valor_parcial*$cuanto_porcentaje_item_en_invoice)/100;
+									$valores_meses_anteriores['Internet']['monto']+=$valor_item;
+									$sumatoria_items+=$valor_item;
+									$items_tocados['Internet']=true;
+						 		}
+						 		
+							}else if(strpos(strtolower($item_invoic['product']), "tele")!==false){
+								
+								if($val1['credit']!=0 && $valor_item!=0){
+									$valores_meses_anteriores['Television']['cantidad']++;
+						 			$cuanto_porcentaje_item_en_invoice=($valor_item*100)/$valor_total;
+									$valor_item=($valor_parcial*$cuanto_porcentaje_item_en_invoice)/100;
+									$valores_meses_anteriores['Television']['monto']+=$valor_item;
+									$sumatoria_items+=$valor_item;
+									$items_tocados['Television']=true;
+						 		}
+								
+							}else {
+								
+						 		if($val1['credit']!=0 && $valor_item!=0){
+						 			$valores_meses_anteriores['Internet']['cantidad']++;
+						 			$cuanto_porcentaje_item_en_invoice=($valor_item*100)/$valor_total;
+									$valor_item=($valor_parcial*$cuanto_porcentaje_item_en_invoice)/100;
+									$valores_meses_anteriores['Internet']['monto']+=$valor_item;
+									$sumatoria_items+=$valor_item;
+									$items_tocados['Internet']=true;
+						 		}
+							}
+
+
+
+						}
+						//sumatorias
+						$conteo=count($items_tocados);
+						if($sumatoria_items<$val1['credit'] && $conteo!=0){
+							$diference=$val1['credit']-$sumatoria_items;
+							if($diference>1){
+								$conteo=count($items_tocados);					
+								$valores_por_cada_uno=$diference/$conteo;
+								foreach ($items_tocados as $key1 => $value2) {
+									if($key1=="Internet"){
+										$valores_meses_anteriores['Internet']['monto']+=$valores_por_cada_uno;
+									}else{
+										$valores_meses_anteriores['Television']['monto']+=$valores_por_cada_uno;
+									}
+								}
+								
+								//var_dump("sum = ".$sumatoria_items." | credit=".$value['credit']." id=".$value['tid']);	
+							}
+
+				
+				
+						}else if($sumatoria_items>$val1['credit'] ){
+							//cuando los items suman mas que el valor de la factura
+							$diference=$sumatoria_items-$val1['credit'];
+							if($diference>1){
+								$conteo=count($items_tocados);
+								$valores_por_cada_uno=$diference/$conteo;
+								foreach ($items_tocados as $key1 => $value2) {
+									if($key1=="Internet"){
+										$valores_meses_anteriores['Internet']['monto']-=$valores_por_cada_uno;
+									}else{
+										$valores_meses_anteriores['Television']['monto']-=$valores_por_cada_uno;
 									}
 								}
 							
@@ -1080,14 +1214,17 @@ $contenidoTabla="<div style='text-align: center;'>
 						<tr>
 							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>".$texto_mes_anterior."</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>".($valores_mes_anterior['Internet']['cantidad']+$valores_mes_anterior['Television']['cantidad'])."</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 1px;'>"."$ ".number_format($valores_mes_anterior['monto'],0,",",".")."</td>
 						</tr>
+						<tr>
+							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Meses Anteriores</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>".($valores_meses_anteriores['Internet']['cantidad']+$valores_meses_anteriores['Television']['cantidad'])."</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 1px;'>"."$ ".number_format($valores_meses_anteriores['monto'],0,",",".")."</td>
+						</tr>
 					
 						
 					</tbody>
 					<tfoot>
 						<tr>
 							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;' >TOTAL COBRANZA<br>POR MESES</th>
-							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'>".($valores_mes_actual['Internet']['cantidad']+$valores_mes_anterior['Internet']['cantidad']+$valores_mes_actual['Television']['cantidad']+$valores_mes_anterior['Television']['cantidad'])."</th>
-							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 1px;'>"."$ ".number_format($valores_mes_actual['monto']+$valores_mes_anterior['monto'],0,",",".") ."</th>			
+							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'>".($valores_mes_actual['Internet']['cantidad']+$valores_mes_anterior['Internet']['cantidad']+$valores_meses_anteriores['Internet']['cantidad']+$valores_mes_actual['Television']['cantidad']+$valores_mes_anterior['Television']['cantidad']+$valores_meses_anteriores['Television']['cantidad'])."</th>
+							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 1px;'>"."$ ".number_format($valores_mes_actual['monto']+$valores_mes_anterior['monto']+$valores_meses_anteriores['monto'],0,",",".") ."</th>			
 						</tr>
 					</tfoot>
 			</table>
@@ -1115,14 +1252,17 @@ $contenidoTabla="<div style='text-align: center;'>
 						<tr>
 							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>".$texto_mes_anterior."</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>".$valores_mes_anterior['Internet']['cantidad']."</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 1px;'>"."$ ".number_format($valores_mes_anterior['Internet']['monto'],0,",",".")."</td>
 						</tr>
+						<tr>
+							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Meses Anteriores</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>".$valores_meses_anteriores['Internet']['cantidad']."</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 1px;'>"."$ ".number_format($valores_meses_anteriores['Internet']['monto'],0,",",".")."</td>
+						</tr>
 					
 						
 					</tbody>
 					<tfoot>
 						<tr>
 							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;' >TOTAL COBRANZA<br>POR MESES</th>
-							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'>".($valores_mes_actual['Internet']['cantidad']+$valores_mes_anterior['Internet']['cantidad'])."</th>
-							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 1px;'>".("$ ".number_format($valores_mes_actual['Internet']['monto']+$valores_mes_anterior['Internet']['monto'],0,",",".") )."</th>			
+							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'>".($valores_mes_actual['Internet']['cantidad']+$valores_mes_anterior['Internet']['cantidad']+$valores_meses_anteriores['Internet']['cantidad'])."</th>
+							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 1px;'>".("$ ".number_format($valores_mes_actual['Internet']['monto']+$valores_mes_anterior['Internet']['monto']+$valores_meses_anteriores['Internet']['monto'],0,",",".") )."</th>			
 						</tr>
 					</tfoot>
 			</table>
@@ -1146,14 +1286,17 @@ $contenidoTabla="<div style='text-align: center;'>
 						<tr>
 							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>".$texto_mes_anterior."</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>".$valores_mes_anterior['Television']['cantidad']."</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 1px;'>"."$ ".number_format($valores_mes_anterior['Television']['monto'],0,",",".")."</td>
 						</tr>
+						<tr>
+							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Meses Anteriores</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>".$valores_meses_anteriores['Television']['cantidad']."</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 1px;'>"."$ ".number_format($valores_meses_anteriores['Television']['monto'],0,",",".")."</td>
+						</tr>
 					
 						
 					</tbody>
 					<tfoot>
 						<tr>
 							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;' >TOTAL COBRANZA<br>POR MESES</th>
-							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'>".($valores_mes_actual['Television']['cantidad']+$valores_mes_anterior['Television']['cantidad'])."</th>
-							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 1px;'>".("$ ".number_format($valores_mes_actual['Television']['monto']+$valores_mes_anterior['Television']['monto'],0,",","."))."</th>			
+							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'>".($valores_mes_actual['Television']['cantidad']+$valores_mes_anterior['Television']['cantidad']+$valores_meses_anteriores['Television']['cantidad'])."</th>
+							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 1px;'>".("$ ".number_format($valores_mes_actual['Television']['monto']+$valores_mes_anterior['Television']['monto']+$valores_meses_anteriores['Television']['monto'],0,",","."))."</th>			
 						</tr>
 					</tfoot>
 			</table>
