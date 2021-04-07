@@ -886,10 +886,16 @@ class Invoices extends CI_Controller
     {
 
         $tid = $this->input->get('id');
+        $is_multiple = false;
+        if(!empty($this->input->get('multiple'))){
+                $is_multiple=true;
+        }
+        
         $lista= explode(",",$tid);
         $tid=$lista[0];
 
         $data['id'] = $tid;
+        $data['is_multiple'] = $is_multiple;
         $data['title'] = "Invoice $tid";
 
         $data['invoice'] = $this->invocies->invoice_details($tid, $this->limited);
