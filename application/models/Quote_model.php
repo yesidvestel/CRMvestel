@@ -202,7 +202,8 @@ class Quote_model extends CI_Model
             'start' => date($start->format("Y-m-d")." ".$hora2),
             'end' => '',
             'description' => strip_tags($section),
-            'color' => '#4CB0CB'
+            'color' => '#4CB0CB',
+			'asigno' => $this->aauth->get_user()->id
 		);		
 		$this->db->insert('events', $data2);
 		}

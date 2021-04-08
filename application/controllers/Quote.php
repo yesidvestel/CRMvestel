@@ -317,7 +317,8 @@ class Quote extends CI_Controller
 				$data2 = array(					
 					'title' => $detalle.' '.$hora2.' Orden #'.$nticket,
 					'start' => $start.' '.$hora,            
-					'description' => strip_tags($section)           
+					'description' => strip_tags($section),
+					'asigno' => $this->aauth->get_user()->id
 				);
 				$this->db->where('idorden', $nticket);
 				$this->db->update('events', $data2);
@@ -327,7 +328,8 @@ class Quote extends CI_Controller
 					'idorden' => $nticket,
 					'title' => $detalle.' '.$hora2.' Orden #'.$nticket,
 					'start' => $start.' '.$hora,            
-					'description' => strip_tags($section)           
+					'description' => strip_tags($section),
+					'asigno' => $this->aauth->get_user()->id
 				);
 				$this->db->insert('events', $data2);
 			}

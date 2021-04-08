@@ -21,7 +21,7 @@ ALTER TABLE `equipos` ADD `nat` INT NULL AFTER `vlan`;
 //nuevos campos tabla 
 ALTER TABLE `temporales` ADD `residencia` VARCHAR(50) NULL AFTER `barrio`;
 ALTER TABLE `temporales` ADD `referencia` VARCHAR(50) NULL AFTER `residencia`;
-
+ALTER TABLE `events` ADD `asigno` INT NULL AFTER `rol`;
 
 
 

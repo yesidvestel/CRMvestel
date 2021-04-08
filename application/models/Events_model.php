@@ -27,7 +27,8 @@ class Events_model extends CI_Model
     {
 		$us = $this->aauth->get_user()->roleid;
 		$tec = $this->aauth->get_user()->username;
-        $sql = "SELECT * FROM events inner join tickets on tickets.codigo=events.idorden WHERE rol='$tec' OR $us>=4 AND events.start BETWEEN ? AND ? ORDER BY events.start  ASC ";
+		$idagendor = $this->aauth->get_user()->id;
+        $sql = "SELECT * FROM events inner join tickets on tickets.codigo=events.idorden WHERE rol='$tec' OR $us>=4 OR asigno='$idagendor' AND events.start BETWEEN ? AND ? ORDER BY events.start  ASC ";
         return $this->db->query($sql, array($start, $end))->result();
 		
     }
