@@ -1,3 +1,33 @@
+<style>
+.st-Activo, .st-Instalar , .st-Cortado, .st-Suspendido, .st-Exonerado
+{
+	text-transform: uppercase;
+    color: #fff;
+    padding: 4px;
+    border-radius: 11px;
+    font-size: 15px;
+}
+.st-Activo
+{
+ background-color: #4EAA28;
+}
+.st-Instalar
+{
+ background-color: #A49F20;
+}
+.st-Cortado
+{
+ background-color: #A4282A;
+}
+.st-Suspendido
+{
+ background-color: #2224A3;
+}
+.st-Exonerado
+{
+ background-color: #24A9AB;
+}
+</style>
 <div class="app-content content container-fluid">
     <div class="content-wrapper">
         <div id="notify" class="alert alert-success" style="display:none;">
@@ -44,7 +74,7 @@
                                     <h5><?php echo $this->lang->line('Balance Summary') ?></h5>
                                     <ul class="list-group list-group-flush">
 										<li class="list-group-item">
-											<span class="tag tag-default tag-pill bg-primary float-xs-right"><?php echo $due['estado']?></span>
+											<span class="tag tag-default tag-pill float-xs-right st-<?php echo $due['estado']?>"><?php echo $due['estado']?></span>
 											Estado Servicio
                                         </li>
 										<li class="list-group-item">
