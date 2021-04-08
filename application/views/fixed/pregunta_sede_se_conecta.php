@@ -4,7 +4,7 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Recibe un saludo de Bienvenida...</h4>
+                <h4 class="modal-title">Recibe un saludo de Bienvenida En Vestel trabajamos con Lógica, Ética y Estética...</h4>
             </div>
             <div class="modal-body">
                 <p>¿Desde que sede estas accediendo? </p>

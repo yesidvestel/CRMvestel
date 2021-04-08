@@ -340,6 +340,70 @@
 										</div>
                                    </div>
 								</div>
+								<div class="form-group row" id="AgregarTelevision">	
+                                    <div class="col-sm-12">
+										<h3 class="title">Asignar servicio</h3>
+                                    </div>
+									<div class="col-sm-4">
+									<label for="invociedate" class="caption">Television</label>
+										<div class="input-group">									
+											<select name="tele" class="form-control mb-1">
+												<option value="<?php echo $temporales->tv ?>"><?php echo $temporales->tv ?></option>
+												<option value="no">No</option>
+                                        		<option value="Television">Si</option>
+											</select>
+										</div>
+                                   </div>
+									<div class="col-sm-4">
+									<label for="invociedate" class="caption">Puntos</label>
+										<div class="input-group">									
+											<select name="punto" class="form-control mb-1">
+												<option value="<?php echo $temporales->puntos ?>"><?php echo $temporales->puntos ?></option>
+												<option value="0">no</option>
+													<?php for ($i=1;$i<=20;$i++){
+													echo '<option value="'.$i.'">'.$i.'</option>';}?>
+											</select>
+										</div>
+                                   </div>
+								</div>
+								<div class="form-group row" id="AgregarInternet">	
+                                    <div class="col-sm-12">
+										<h3 class="title">Asignar servicio</h3>
+                                    </div>
+									<div class="col-sm-4">
+									<label for="invociedate" class="caption">Internet</label>
+										<div class="input-group">									
+											<select name="inter" class="form-control mb-1">
+												<?php if ($thread_info['ciudad']==='Yopal' || $thread_info['ciudad']==='Monterrey' ){ ?>
+												<option value="<?php echo $temporales->internet ?>"><?php echo $temporales->internet ?></option>
+												<option value="no">No</option>
+												<option value="1Mega">1Mega</option>
+												<option value="2Megas">2Megas</option>
+												<option value="3Megas">3Megas</option>
+												<option value="3MegasSolo">3Megas Solo</option>
+												<option value="5Megas">5Megas</option>
+												<option value="5MegasD">5Megas Dedicado</option>
+												<option value="5MegasSolo">5Megas Solo</option>
+												<option value="10Megas">10Megas</option>
+												<option value="10MegasSolo">10Megas Solo</option>
+												<option value="50Megas">50Megas</option>
+												<?php }if ($thread_info['ciudad']==='Villanueva'){ ?>
+												<option value="<?php echo $temporales->internet ?>"><?php echo $temporales->internet ?></option>
+												<option value="no">No</option>	
+												<option value="2MegasV">2Megas</option>
+												<option value="3MegasV">3Megas</option>
+												<option value="5MegasV">5Megas</option>
+												<option value="5MegasVD">5Megas Dedicado</option>
+												<option value="5MegasVS">5Megas Solo</option>
+												<option value="10MegasV">10Megas</option>
+												<option value="10MegasVS">10Megas Solo</option>
+												<option value="50MegasV">50Megas</option>
+												<?php } ?>
+											</select>
+										</div>
+                                   </div>
+									
+								</div>
                               </div>  
 							</div>
                         </div>
@@ -392,7 +456,7 @@
         });
     });
 	// selecion de orden
-	var perfil_servicio = new Array ("Seleccine...","Instalacion","Reinstalacion","Traslado","Subir 5 Mg","Subir 10 Mg","Bajar 5 Mg","Bajar 3 Mg","Cambio de equipo","Equipo adicional","Reconexion Combo","Reconexion Internet","Reconexion Television","Suspencion Combo","Suspencion Internet","Suspencion Television","Corte Combo","Corte Internet","Corte Television");
+	var perfil_servicio = new Array ("Seleccine...","AgregarInternet","AgregarTelevision","Instalacion","Reinstalacion","Traslado","Subir 5 Mg","Subir 10 Mg","Bajar 5 Mg","Bajar 3 Mg","Cambio de equipo","Equipo adicional","Reconexion Combo","Reconexion Internet","Reconexion Television","Suspencion Combo","Suspencion Internet","Suspencion Television","Corte Combo","Corte Internet","Corte Television");
 	var perfil_reclamo = new Array ("Seleccine...","Revision de Internet","Revision de television","Otros");	
 							//crear funcion que ejecute el cambio
 							function cambia(){

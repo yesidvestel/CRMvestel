@@ -206,7 +206,7 @@ function payInvoice(pyurl) {
                         window.open(baseurl+"invoices/printinvoice?id="+data.tid, '_blank');
                         location.reload();
                     }else if(pyurl==urly){
-                        window.open(baseurl+"invoices/printinvoice?id="+data.id_fact_pagadas,"_blank");
+                        window.open(baseurl+"invoices/printinvoice?multiple=si&id="+data.id_fact_pagadas,"_blank");
                         window.location.replace(baseurl+"customers/invoices?id="+id_customer+"&fac_pag="+data.id_fact_pagadas);
                         //window.location.replace(baseurl+"invoices/printinvoice?id="+data.id_fact_pagadas);
                     }else{

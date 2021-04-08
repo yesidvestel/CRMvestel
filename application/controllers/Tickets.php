@@ -126,11 +126,10 @@ class Tickets Extends CI_Controller
 			$row[] = $ticket->ciudad;
 			$row[] = '<span class="st-' . $ticket->status . '">' . $ticket->status . '</span>';
             $row[] = '<a href="' . base_url('tickets/thread/?id=' . $ticket->idt) . '" class="btn btn-success btn-xs"><i class="icon-file-text"></i> ' . $this->lang->line('View') . '</a>';
-			if ($this->aauth->get_user()->roleid > 3) {
-			$row[] ='<a href="' . base_url('quote/edit/?id=' . $ticket->idt) . '" class="btn btn-primary btn-sm"><i class="icon-pencil"></i> ' . 'Editar' . '</a> <a class="btn btn-danger" onclick="eliminar_ticket('.$ticket->idt.')" > <i class="icon-trash-o "></i> </a>';}
-
-            
-
+			if ($this->aauth->get_user()->roleid >= 3) {
+			$row[] ='<a href="' . base_url('quote/edit/?id=' . $ticket->idt) . '" class="btn btn-primary btn-sm"><i class="icon-pencil"></i> ' . 'Editar' . '</a>';}
+			if ($this->aauth->get_user()->roleid > 2) {
+			$row[] =	'<a class="btn btn-danger" onclick="eliminar_ticket('.$ticket->idt.')" > <i class="icon-trash-o "></i> </a>';}
             $data[] = $row;
         }
 
@@ -736,8 +735,14 @@ class Tickets Extends CI_Controller
 			$factura = $this->db->get_where('invoices',array('tid'=>$idfactura))->row();
 			$producto2 = $this->db->get_where('products',array('product_name'=>'Reconexión Internet'))->row();
 			if ($factura->television===no){
+				$nestado = 'Cortado';
+				$reconexion = '0';
+			}else{
+				$nestado = 'Activo';
+				$reconexion = '1';
+			}
 				//actualizar estado usuario
-				$this->db->set('usu_estado', 'Cortado');
+				$this->db->set('usu_estado', $nestado);
         		$this->db->where('id', $ticket->cid);
         		$this->db->update('customers');
 				//agregar reconexion	
@@ -752,23 +757,13 @@ class Tickets Extends CI_Controller
 				$this->db->set('subtotal', $factura->subtotal+$producto2->product_price);
 				$this->db->set('total', $factura->total+$producto2->product_price);
 				$this->db->set('items', $factura->items+1);
-				$this->db->set('ron', 'Cortado');
+				$this->db->set('ron', $nestado);
+				$this->db->set('rec', $reconexion);
 				$this->db->set('combo', 'no');
 				$this->db->where('tid', $idfactura);
         		$this->db->update('invoices');
 
-			}else{
-				//generar reconexion estando activo
-				$this->db->set('ron', 'Activo');
-				$this->db->set('rec', '1');
-				$this->db->set('combo', 'no');			
-        		$this->db->where('tid', $idfactura);
-        		$this->db->update('invoices');
-				//actualizar estado usuario
-				$this->db->set('usu_estado', 'Activo');
-        		$this->db->where('id', $ticket->cid);
-        		$this->db->update('customers');
-			}
+			
              //mikrotik
                 $customerx=$this->db->get_where("customers",array('id' =>$ticket->cid ))->row();
                 $this->customers->desactivar_estado_usuario($customerx->name_s,$customerx->gid);
@@ -848,31 +843,43 @@ class Tickets Extends CI_Controller
                 $customerx=$this->db->get_where("customers",array('id' =>$ticket->cid ))->row();
                 $this->customers->desactivar_estado_usuario($customerx->name_s,$customerx->gid);
 		}
-		if($ticket->detalle=="Suspencion Television"){			
-			$this->db->set('ron', 'Activo');
+		if($ticket->detalle=="Suspencion Television"){
+			$factura = $this->db->get_where('invoices',array('tid'=>$idfactura))->row();
+			if ($factura->combo===no){
+				$status = 'Suspendido';
+			}else{
+				$status = 'Activo';
+			}
+			$this->db->set('ron', $status);
 			$this->db->set('television', 'no');			
         	$this->db->where('tid', $idfactura);
         	$this->db->update('invoices');
 			//actualizar estado usuario
-				$this->db->set('usu_estado', 'Suspendido');
+				$this->db->set('usu_estado', $status);
         		$this->db->where('id', $ticket->cid);
         		$this->db->update('customers');
 		}
-		if($ticket->detalle=="Suspencion Internet"){			
-			$this->db->set('ron', 'Activo');
+		if($ticket->detalle=="Suspencion Internet"){
+			$factura = $this->db->get_where('invoices',array('tid'=>$idfactura))->row();
+			if ($factura->television===no){
+				$status = 'Suspendido';
+			}else{
+				$status = 'Activo';
+			}
+			$this->db->set('ron', $status);
 			$this->db->set('combo', 'no');			
         	$this->db->where('tid', $idfactura);
         	$this->db->update('invoices');
 			//actualizar estado usuario
-				$this->db->set('usu_estado', 'Suspendido');
+				$this->db->set('usu_estado', $status);
         		$this->db->where('id', $ticket->cid);
         		$this->db->update('customers');
                  //mikrotik
                 $customerx=$this->db->get_where("customers",array('id' =>$ticket->cid ))->row();
                 $this->customers->desactivar_estado_usuario($customerx->name_s,$customerx->gid);
 		}
-		if($ticket->detalle=="Reinstalacion Television"){			
-			$producto = $this->db->get_where('products',array('pid'=>27))->row();
+		if($ticket->detalle=="AgregarTelevision"){			
+			$producto = $this->db->get_where('products',array('product_name'=>'Television'))->row();
 					$datay['tid']=$idfactura;
                     $datay['pid']=$producto->pid;
                     $datay['product']=$producto->product_name;
@@ -890,13 +897,15 @@ class Tickets Extends CI_Controller
             $factura = $this->db->get_where('invoices',array('tid'=>$idfactura))->row();
 				$this->db->set('subtotal', $factura->subtotal+$total);
 				$this->db->set('tax', $factura->tax+$tax2);
-				$this->db->set('total', $factura->total+$total+$tax2);				       			
+				$this->db->set('total', $factura->total+$total+$tax2);
+				$this->db->set('television', 'Television');
+				$this->db->set('puntos', $ptos);
         		$this->db->where('tid', $idfactura);
         		$this->db->update('invoices');
 			
 		}
 		//nuevo servicio
-		if($ticket->detalle=="Reinstalacion Internet"){	
+		if($ticket->detalle=="AgregarInternet"){	
 		$factura = $this->db->get_where('invoices',array('tid'=>$idfactura))->row();
 		$datay['tid']=$idfactura;
         $datay['qty']=1;
@@ -905,7 +914,7 @@ class Tickets Extends CI_Controller
         $datay['totaldiscount']=0;
 			//agregar servicio nuevo
                 if($data['combo']!==no){
-                    $producto = $this->db->get_where('products',array('product_name'=>$factura->combo))->row();
+                    $producto = $this->db->get_where('products',array('product_name'=>$inter))->row();
 					$datay['pid']=$producto->pid;
                     $x=intval($producto->product_price);
                     $x=($x/31)*$diferencia->days;
@@ -923,7 +932,8 @@ class Tickets Extends CI_Controller
             
 				$this->db->set('subtotal', $factura->subtotal+$total);
 				$this->db->set('tax', $factura->tax);
-				$this->db->set('total', $factura->total+$total);				       			
+				$this->db->set('total', $factura->total+$total);
+				$this->db->set('combo', $inter);
         		$this->db->where('tid', $idfactura);
         		$this->db->update('invoices');
 

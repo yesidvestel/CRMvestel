@@ -294,13 +294,31 @@ class Quote extends CI_Controller
 				$this->db->where('corden', $nticket);
 				$this->db->update('temporales', $data3);
 		}
+		//agregar servicio
+		if ($detalle==='AgregarTelevision'){
+			$data3 = array(					
+					'tv' => $tv,            
+					'puntos' => $punto
+				);
+				$this->db->where('corden', $nticket);
+				$this->db->update('temporales', $data3);
+		}
+		
+		if ($detalle==='AgregarInternet'){
+			$data3 = array(
+					'internet' => $inter, 
+				);
+				$this->db->where('corden', $nticket);
+				$this->db->update('temporales', $data3);
+		}
 		$start = date("Y-m-d",strtotime($fagenda));
 			//agenda
 			if ($agendar==actualizar){
 				$data2 = array(					
 					'title' => $detalle.' '.$hora2.' Orden #'.$nticket,
 					'start' => $start.' '.$hora,            
-					'description' => strip_tags($section)           
+					'description' => strip_tags($section),
+					'asigno' => $this->aauth->get_user()->id
 				);
 				$this->db->where('idorden', $nticket);
 				$this->db->update('events', $data2);
@@ -310,7 +328,8 @@ class Quote extends CI_Controller
 					'idorden' => $nticket,
 					'title' => $detalle.' '.$hora2.' Orden #'.$nticket,
 					'start' => $start.' '.$hora,            
-					'description' => strip_tags($section)           
+					'description' => strip_tags($section),
+					'asigno' => $this->aauth->get_user()->id
 				);
 				$this->db->insert('events', $data2);
 			}

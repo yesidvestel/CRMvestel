@@ -118,7 +118,7 @@
 					<div class="frmSearch col-sm-12">
 						<label for="cst" class="caption  col-form-label">Observacion</label>
 						<div>
-							<textarea class="form-control required" name="notes" rows="2"></textarea>
+							<textarea class="form-control required" name="notes" rows="2" style="text-transform:lowercase"></textarea>
                         </div>
 					</div>
 

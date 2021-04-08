@@ -228,7 +228,7 @@
         
 			setlocale(LC_TIME, "spanish");
 			$f1 = date(" F ",strtotime($invoice['invoicedate']));
-            if(count($lista_invoices)>0){
+            if(count($lista_invoices)>0 || $is_multiple){
                     echo '<tr class="item' . $flag . '"> 
                                 <td>' . strftime("%B", strtotime($f1)). ' CTA:'. $invoice['tid'].'</td>';
                     echo '<td class="t_center">' . amountExchange( $invoice['total']) . '</td>

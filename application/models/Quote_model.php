@@ -202,7 +202,8 @@ class Quote_model extends CI_Model
             'start' => date($start->format("Y-m-d")." ".$hora2),
             'end' => '',
             'description' => strip_tags($section),
-            'color' => '#4CB0CB'
+            'color' => '#4CB0CB',
+			'asigno' => $this->aauth->get_user()->id
 		);		
 		$this->db->insert('events', $data2);
 		}
@@ -222,11 +223,28 @@ class Quote_model extends CI_Model
 			);		
 			$this->db->insert('temporales', $data3);
 			}
+			//servicio instalacion
 			if ($detalle=='Instalacion'){
 				$data4 = array(
 				'corden' => $nticket,
 				'tv' => $tv,
 				'internet' => $inter,
+				'puntos' => $punto
+			);		
+			$this->db->insert('temporales', $data4);
+			}
+			//agregar servicios
+			if ($detalle=='AgregarInternet'){
+				$data4 = array(
+				'corden' => $nticket,
+				'internet' => $inter,
+			);		
+			$this->db->insert('temporales', $data4);
+			}
+			if ($detalle=='AgregarTelevision'){
+				$data4 = array(
+				'corden' => $nticket,
+				'tv' => $tv,
 				'puntos' => $punto
 			);		
 			$this->db->insert('temporales', $data4);
