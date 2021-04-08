@@ -80,6 +80,7 @@
 //resumen por cobranza
 			
 //end resumen por cobranza
+			if(intval($invoice->total)!=0){
 			$sumatoria_items=0;
 			$items_tocados=array();
 			foreach ($invoice_items as $key => $item_invoic) {
@@ -318,7 +319,7 @@
 				$array_efectivo['cantidad']++;
 				$array_efectivo['monto']+=$value['credit'];
 			}
-
+}
 
 			//$var_prueba1+=intval($value['credit']);
 			//var_dump("TID= ".$invoice->tid."  ValorTotal =".$var_prueba1." valor_invoice=".$invoice->total);
@@ -396,7 +397,7 @@
 		 //resumen por tipo de servicio
 		 foreach ($lista as $key => $val1) {
 						$inv1 = $this->db->get_where("invoices",array("tid"=>$val1['tid']))->row(); 
-						
+						if(intval($inv1->total)!=0){
 
 						$invoice_items = $this->db->get_where("invoice_items",array('tid' => $val1['tid'] ))->result_array();
 						$sumatoria_items=0;
@@ -525,7 +526,7 @@
 							
 						}
 						//end sumatorias
-
+					  }//end validacion invoice->total !=0
 					}
 					$cuantos_prod_sin_iva_hay=$array_resumen_tipo_servicio['Internet']['cantidad'];
 					$monto_prod_sin_iva_hay= ($array_resumen_tipo_servicio['Internet']['monto']+$array_resumen_tipo_servicio['Television']['monto'])-($monto_prod_con_iva_hay+$monto_iva_prod_con_iva_hay);
@@ -1066,6 +1067,7 @@
 					//meses anteriores
 					foreach ($lista_meses_anteriores as $key => $val1) {
 						$inv1 = $this->db->get_where("invoices",array("tid"=>$val1['tid']))->row(); 
+						if(intval($inv1->total)!=0){
 						$valores_meses_anteriores['monto']+=$val1['credit'];
 
 						$invoice_items = $this->db->get_where("invoice_items",array('tid' => $val1['tid'] ))->result_array();
@@ -1195,6 +1197,7 @@
 							
 						}
 						//end sumatorias
+					  }//end validacion invoice->total !=0
 					}
 
 
