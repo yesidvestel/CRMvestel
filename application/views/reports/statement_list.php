@@ -319,7 +319,7 @@
 				$array_efectivo['cantidad']++;
 				$array_efectivo['monto']+=$value['credit'];
 			}
-}
+}//end invoice->total !=0
 
 			//$var_prueba1+=intval($value['credit']);
 			//var_dump("TID= ".$invoice->tid."  ValorTotal =".$var_prueba1." valor_invoice=".$invoice->total);

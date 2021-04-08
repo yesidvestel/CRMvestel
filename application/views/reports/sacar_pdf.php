@@ -24,7 +24,7 @@ $array_afiliaciones=array();
 		foreach ($lista as $key => $value) { 
 			$invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
 			$invoice_items=$this->db->get_where('invoice_items',array('tid' =>$value['tid']))->result_array();
-			
+			if(intval($invoice->total)!=0){
 			$sumatoria_items=0;
 			$items_tocados=array();
 			foreach ($invoice_items as $key => $item_invoic) {
@@ -272,7 +272,7 @@ $array_afiliaciones=array();
 				$array_efectivo['cantidad']++;
 				$array_efectivo['monto']+=$value['credit'];
 			}
-
+		   }//end invoice->total !=0
 
 		 } //final foreach lista
 
@@ -344,7 +344,7 @@ $array_afiliaciones=array();
 		 //resumen por tipo de servicio
 		 foreach ($lista as $key => $val1) {
 						$inv1 = $this->db->get_where("invoices",array("tid"=>$val1['tid']))->row(); 
-						
+						if(intval($inv1->total)!=0){
 
 						$invoice_items = $this->db->get_where("invoice_items",array('tid' => $val1['tid'] ))->result_array();
 						$sumatoria_items=0;
@@ -473,6 +473,7 @@ $array_afiliaciones=array();
 							
 						}
 						//end sumatorias
+						}//end validacion invoice->total !=0
 
 					}
 	$cuantos_prod_sin_iva_hay=$array_resumen_tipo_servicio['Internet']['cantidad'];
@@ -778,6 +779,7 @@ $array_afiliaciones=array();
 					//meses anteriores
 					foreach ($lista_meses_anteriores as $key => $val1) {
 						$inv1 = $this->db->get_where("invoices",array("tid"=>$val1['tid']))->row(); 
+						if(intval($inv1->total)!=0){
 						$valores_meses_anteriores['monto']+=$val1['credit'];
 
 						$invoice_items = $this->db->get_where("invoice_items",array('tid' => $val1['tid'] ))->result_array();
@@ -907,6 +909,7 @@ $array_afiliaciones=array();
 							
 						}
 						//end sumatorias
+					  }//end validacion invoice->total !=0
 					}
 
 
