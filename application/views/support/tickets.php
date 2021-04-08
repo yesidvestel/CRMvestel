@@ -260,6 +260,9 @@
 					<?php if ($this->aauth->get_user()->roleid >= 3) { ?>
 					<th>Config</th>
 					<?php } ?>
+					<?php if ($this->aauth->get_user()->roleid > 3) { ?>
+					<th>Admin</th>
+					<?php } ?>
 
                 </tr>
                 </thead>
