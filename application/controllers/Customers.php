@@ -1176,6 +1176,36 @@ class Customers extends CI_Controller
             $this->load->view('fixed/footer');
         }
     }
-
+    function prueba_api(){
+        /* API URL */
+        $url = 'https://siigonube.siigo.com:50050/connect/token';
+             
+        /* Init cURL resource */
+        $ch = curl_init($url);            
+        /* Array Parameter Data */
+        $data =  array('grant_type'=>'password', 'username'=>'VESGATELEVISIONSAS\\VESGAT17681@apionmicrosoft.com','password'=>')QP>x3(9dN','scope'=>'WebApi offline_access');            
+        /* set the content type json */
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                    'Content-Type: application/x-www-form-urlencoded',
+                    'Authorization: Basic U2lpZ29XZWI6QUJBMDhCNkEtQjU2Qy00MEE1LTkwQ0YtN0MxRTU0ODkxQjYx',
+                    'Accept: application/json'
+                ));
+         /* pass encoded JSON string to the POST fields */
+        curl_setopt($ch, CURLOPT_POST, 4);        
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));        
+        /* set return type json */
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        /* execute request */
+        $result = curl_exec($ch);
+         $err = curl_error($ch);  
+        /* close cURL resource */
+        curl_close($ch);
+        var_dump($result);
+        if ($err)
+         {
+              var_dump($err);
+         }
+    }
 
 }
