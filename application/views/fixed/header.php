@@ -1049,7 +1049,7 @@
 		
 
 <?php } ?>
-			<!------ MENU PARA TECNICOS------->
+			<!------ MENU PARA CAJAS------->
 			
 			<?php if ($this->aauth->get_user()->roleid == 3) { ?>
 			<li class="nav-item has-sub <?php if ($this->uri->segment(1) == "invoices" OR $this->uri->segment(1) == "quote") {
@@ -1210,6 +1210,111 @@
                     </ul>
                 </li>
 			
+			<!---------------- GESTION DE PROYECTOS ----------------->
+                <li class="navigation-header"><span>PROYECTOS</span><i
+                            data-toggle="tooltip" data-placement="right"
+                            data-original-title="Balance"
+                            class="icon-ellipsis icon-ellipsis"></i>
+                </li>
+			 <li><a href="<?php echo base_url(); ?>tools/todo"><i class="icon-android-done-all"></i><span
+                                class="menu-title"> <?php echo $this->lang->line('') ?>Listado de Tareas</span></a></li>
+			
+			<!---- diverso--->
+			
+			<li class="navigation-header"><span>DIVERSOS</span><i
+                            data-toggle="tooltip" data-placement="right"
+                            data-original-title="Miscellaneous"
+                            class="icon-ellipsis icon-ellipsis"></i>
+                </li>
+			
+			<li><a href="<?php echo base_url(); ?>tools/notes"><i class="icon-android-clipboard"></i><span
+                                class="menu-title"> <?php echo $this->lang->line('Notes') ?></span></a></li>
+
+
+                <li><a href="<?php echo base_url(); ?>events"><i class="icon-calendar2"></i><span
+                                class="menu-title"> <?php echo $this->lang->line('Calendar') ?></span></a></li>
+		
+
+<?php } ?>
+			<!------ MENU PARA TECNICOS------->
+			
+			<?php if ($this->aauth->get_user()->roleid == 2) { ?>
+			
+			<li class="navigation-header"><span><?php echo $this->lang->line('CRM') ?></span><i
+                            data-toggle="tooltip" data-placement="right"
+                            data-original-title="CRM"
+                            class="icon-ellipsis icon-ellipsis"></i>
+                </li>
+                <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "customers") {
+                    echo ' open';
+                } ?>">
+                    <a href=""> <i class="icon-group"></i><span
+                                class="menu-title"> <?php echo $this->lang->line('') ?>Usuarios</span><i
+                                class="fa arrow"></i> </a>
+					<!---ADMINISTRADOR DE USUARIOS--->
+					
+                    <ul class="menu-content">
+                        <li>
+                            <a href="<?php echo base_url(); ?>clientgroup"><?php echo $this->lang->line('Manage Groups') ?></a>
+                        </li>
+                    </ul>
+                </li>
+			<!--- SOPORTE TECNICO --->
+                <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "tickets") {
+                    echo ' open';
+                } ?>">
+                    <a href=""> <i class="icon-ticket"></i><span
+                                class="menu-title"><?php echo $this->lang->line('Support Tickets') ?></span><i
+                                class="fa arrow"></i> </a>
+                    <ul class="menu-content">
+                        <li>
+                            <a href="<?php echo base_url(); ?>tickets"><?php echo $this->lang->line('Manage Tickets') ?></a>
+                        </li>
+
+
+                    </ul>
+                </li>
+			<!--- MENU INVENTARIOS--->
+			
+                <li class="navigation-header"><span><?php echo $this->lang->line('Stock') ?></span><i
+                            data-toggle="tooltip" data-placement="right"
+                            data-original-title="Stock"
+                            class="icon-ellipsis icon-ellipsis"></i>
+                </li>
+				<li class="nav-item has-sub <?php if ($this->uri->segment(1) == "equipos") {
+                    echo ' open';
+                } ?>">
+                    <a href=""> <i class="icon-wifi3"></i><span
+                                class="menu-title"><?php echo $this->lang->line('') ?>Redes</span><i
+                                class="fa arrow"></i> </a>
+                    <ul class="menu-content">
+						<li>
+                            <a href="<?php echo base_url(); ?>products/equipos"><?php echo $this->lang->line('') ?>Administrar equipos</a>
+                        </li>
+						<li>
+                            <a href="<?php echo base_url(); ?>productcategory/almacen">Bodega equipos</a>
+                        </li>
+					</ul>
+				</li>
+                <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "products") {
+                    echo ' open';
+                } ?>">
+                    <a href=""> <i class="icon-truck2"></i><span
+                                class="menu-title"><?php echo $this->lang->line('') ?>Inventarios</span><i
+                                class="fa arrow"></i> </a>
+                    <ul class="menu-content">
+                        <li>
+                            <a href="<?php echo base_url(); ?>products"><?php echo $this->lang->line('') ?>Administrar material</a>
+                        </li>
+						
+                        <li>
+                            <a href="<?php echo base_url(); ?>productcategory"><?php echo $this->lang->line('') ?>Categoria de material</a>
+                        </li>
+                        <li>
+                            <a href="<?php echo base_url(); ?>productcategory/warehouse"><?php echo $this->lang->line('Warehouses') ?></a>
+                        </li>
+                    </ul>
+                </li>
 			<!---------------- GESTION DE PROYECTOS ----------------->
                 <li class="navigation-header"><span>PROYECTOS</span><i
                             data-toggle="tooltip" data-placement="right"
