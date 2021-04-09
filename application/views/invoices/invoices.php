@@ -84,7 +84,7 @@ text-transform: lowercase;
 					<th>sede</th>
                     <th class="no-sort"><?php echo $this->lang->line('') ?>Pago</th>
                     <th class="no-sort"><?php echo $this->lang->line('Settings') ?></th>
-					<?php if ($this->aauth->get_user()->roleid > 4) { ?>
+					<?php if ($this->aauth->get_user()->roleid > 3) { ?>
 					<th><?php echo $this->lang->line('') ?>Eliminar</th>
 					<?php } ?>
                 </tr>

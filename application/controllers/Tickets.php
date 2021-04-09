@@ -443,9 +443,9 @@ class Tickets Extends CI_Controller
 		if($ciudad==YOPAL || $ciudad==Yopal){
 		$employee = 32;
 		}if($ciudad==Monterrey){
-			$employee = 33;
+			$employee = 52;
 		}if($ciudad==Villanueva){
-			$employee = 30;
+			$employee = 46;
 		}
 		$assign = $this->aauth->get_user()->id;
 		$content = 'Revisar orden #'.$ticket->codigo;
