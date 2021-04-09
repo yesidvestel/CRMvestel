@@ -153,7 +153,8 @@ $(function(){
             $('.modal-footer').prepend('<button type="button" id="' + button.id  + '" class="btn ' + button.css + '">' + button.label + '</button>')
         })
         //Show Modal
-        $('.modal').modal('show');
+        $('.modal').not("#modal_sede").modal('show');
+
     }
 
     // Handle Click on Add Button
