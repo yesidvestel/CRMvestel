@@ -1,5 +1,5 @@
 ﻿ALTER TABLE `anulaciones` ADD `razon_anulacion` TEXT NOT NULL AFTER `transactions_id`;
-
+ALTER TABLE `anulaciones` ADD `usuario_anula` VARCHAR(100) NOT NULL AFTER `razon_anulacion`;
 
 
 Cambios para seleccionar sede

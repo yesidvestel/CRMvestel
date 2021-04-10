@@ -102,6 +102,8 @@
                     <label>Razon</label>
                     <textarea class="form-control" id="razon_anulacion" name="razon_anulacion"></textarea>
                 </div>
+                <br>
+                <h5 id="usuario_anula">Usuario que realizo la anulacion : </h5>
 
             </div>
             <div class="modal-footer">
@@ -140,6 +142,7 @@
         var estado=$("#estado_"+$(link).data("object-id")).text();
         var detalle_estado=$(link).data("detalle");
         var razon_anulacion=$(link).data("razon_anulacion");
+        var usuario_anula=$(link).data("usuario_anula");
         if(estado=="Anulada"){
             $("#texto1").text("Esta Transaccion ya fue anulada por...");
             if(detalle_estado=="Cobranza Efectiva"){
@@ -151,9 +154,15 @@
             }
             $("#razon_anulacion").val(razon_anulacion);
             $("#delete-confirm_002").attr("disabled",true);
+            if(usuario_anula==""){
+                usuario_anula="no registrado";
+            }
+            $("#usuario_anula").text("Usuario que realizo la anulacion : "+usuario_anula);
+            $("#usuario_anula").show();
         }else{
             $("#texto1").text("¿Seguro que quieres anular esta transacción? El saldo de la cuenta se ajustará.");
             $("#razon_anulacion").val("");
+            $("#usuario_anula").hide();
             $('#ck1').prop("checked", true);
             $("#delete-confirm_002").removeAttr("disabled");
         }
