@@ -1321,15 +1321,11 @@
 						} 
 
 					?>
-					<tr>
-						<td>Cobranza efectiva</td>
-						<td style="text-align: center"><?=$cuenta_anulaciones['Cobranza Efectiva']['cantidad']?></td>
-						<td style="text-align: center"><?="$ ".number_format($cuenta_anulaciones['Cobranza Efectiva']['monto'],0,",",".")?></td>
-					</tr>
+					
 					<tr>
 						<td>Anulado de cierre</td>
-						<td style="text-align: center"><?=$cuenta_anulaciones['Anulado de Cierre']['cantidad']?></td>
-						<td style="text-align: center"><?="$ ".number_format($cuenta_anulaciones['Anulado de Cierre']['monto'],0,",",".")?></td>
+						<td style="text-align: center"><?=$cuenta_anulaciones['Anulado de Cierre']['cantidad']+$cuenta_anulaciones['Cobranza Efectiva']['cantidad']?></td>
+						<td style="text-align: center"><?="$ ".number_format($cuenta_anulaciones['Anulado de Cierre']['monto']+$cuenta_anulaciones['Cobranza Efectiva']['monto'],0,",",".")?></td>
 					</tr>
 					<tr>
 						<td>Anulado de otros cierres</td>
@@ -1337,9 +1333,9 @@
 						<td style="text-align: center"><?="$ ".number_format($cuenta_anulaciones['Anulado de otros Cierres']['monto'],0,",",".")?></td>
 					</tr>
 					<tr>
-						<td>Total Anulaciones</td>
-						<td style="text-align: center"><?=$cuenta_anulaciones['Cobranza Efectiva']['cantidad']+$cuenta_anulaciones['Anulado de Cierre']['cantidad']+$cuenta_anulaciones['Anulado de otros Cierres']['cantidad']?></td>
-						<td style="text-align: center"><?="$ ".number_format($cuenta_anulaciones['Cobranza Efectiva']['monto']+$cuenta_anulaciones['Anulado de Cierre']['monto']+$cuenta_anulaciones['Anulado de otros Cierres']['monto'],0,",",".")?></td>
+						<td>Cobranza Efectiva</td>
+						<td style="text-align: center"></td>
+						<td style="text-align: center"><?="$ ".number_format($tabla_total_cobranza_monto+($cuenta_anulaciones['Cobranza Efectiva']['monto']+$cuenta_anulaciones['Anulado de Cierre']['monto']+$cuenta_anulaciones['Anulado de otros Cierres']['monto']),0,",",".")?></td>
 					</tr>
 					
 					
@@ -1347,8 +1343,8 @@
 				<tfoot>
 					<tr>
 						<th class="pie">COBRADO - ANULADO DE OTRAS FECHAS</th>
-						<th class="pie"><?=$cuenta_anulaciones['Cobranza Efectiva']['cantidad']+$cuenta_anulaciones['Anulado de Cierre']['cantidad']+$cuenta_anulaciones['Anulado de otros Cierres']['cantidad']?></th>
-						<th class="pie"><?="$ ".number_format($tabla_total_cobranza_monto-($cuenta_anulaciones['Cobranza Efectiva']['monto']+$cuenta_anulaciones['Anulado de Cierre']['monto']+$cuenta_anulaciones['Anulado de otros Cierres']['monto']),0,",",".")?></th>			
+						<th class="pie"></th>
+						<th class="pie"><?="$ ".number_format($tabla_total_cobranza_monto,0,",",".")?></th>			
 					</tr>
 				</tfoot>
 			</table>

@@ -1131,24 +1131,21 @@ $contenidoTabla="<div style='text-align: center;'>
 					</thead>
 					<tbody>
 						<tr >
-							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Cobranza efectiva</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>".$cuenta_anulaciones['Cobranza Efectiva']['cantidad']."</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 1px;'>"."$ ".number_format($cuenta_anulaciones['Cobranza Efectiva']['monto'],0,",",".")."</td>
-						</tr>
-						<tr>
-							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Anulado de cierre</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>".$cuenta_anulaciones['Anulado de Cierre']['cantidad']."</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 1px;'>"."$ ".number_format($cuenta_anulaciones['Anulado de Cierre']['monto'],0,",",".")."</td>
+							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Anulado de cierre</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>".($cuenta_anulaciones['Anulado de Cierre']['cantidad']+$cuenta_anulaciones['Cobranza Efectiva']['cantidad'])."</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 1px;'>"."$ ".number_format($cuenta_anulaciones['Anulado de Cierre']['monto']+$cuenta_anulaciones['Cobranza Efectiva']['monto'],0,",",".")."</td>
 						</tr>
 						<tr>
 							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Anulado de otros cierres</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>".$cuenta_anulaciones['Anulado de otros Cierres']['cantidad']."</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 1px;'>"."$ ".number_format($cuenta_anulaciones['Anulado de otros Cierres']['monto'],0,",",".")."</td>
 						</tr>
 						<tr>
-							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Total Anulaciones</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>".($cuenta_anulaciones['Cobranza Efectiva']['cantidad']+$cuenta_anulaciones['Anulado de Cierre']['cantidad']+$cuenta_anulaciones['Anulado de otros Cierres']['cantidad'])."</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 1px;'>"."$ ".number_format($cuenta_anulaciones['Cobranza Efectiva']['monto']+$cuenta_anulaciones['Anulado de Cierre']['monto']+$cuenta_anulaciones['Anulado de otros Cierres']['monto'],0,",",".")."</td>
+							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Cobranza efectiva</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'></td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 1px;'>"."$ ".number_format($tabla_total_cobranza_monto+($cuenta_anulaciones['Cobranza Efectiva']['monto']+$cuenta_anulaciones['Anulado de Cierre']['monto']+$cuenta_anulaciones['Anulado de otros Cierres']['monto']),0,",",".")."</td>
 						</tr>
 						
 					</tbody>
 					<tfoot>
 						<tr>
 							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;' >COBRADO - ANULADO<br>DE OTRAS FECHAS</th>
-							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'>".($cuenta_anulaciones['Cobranza Efectiva']['cantidad']+$cuenta_anulaciones['Anulado de Cierre']['cantidad']+$cuenta_anulaciones['Anulado de otros Cierres']['cantidad'])."</th>
-							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 1px;'>".("$ ".number_format($tabla_total_cobranza_monto-($cuenta_anulaciones['Cobranza Efectiva']['monto']+$cuenta_anulaciones['Anulado de Cierre']['monto']+$cuenta_anulaciones['Anulado de otros Cierres']['monto']),0,",","."))."</th>			
+							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'></th>
+							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 1px;'>".("$ ".number_format($tabla_total_cobranza_monto,0,",","."))."</th>			
 						</tr>
 					</tfoot>
 			</table>
