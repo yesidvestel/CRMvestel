@@ -960,7 +960,7 @@ $array_afiliaciones=array();
                   
 					
 //datos pdf para abajo
-			$fecha = $this->aauth->get_user()->fcierre;
+			$fecha2 = new DateTime($fecha);
 		 	$horaC =  $this->aauth->get_user()->hcierre;
 			$horaA = $this->aauth->get_user()->hinicial;
 			$horas = date("g:i a",strtotime($horaA));
@@ -976,7 +976,7 @@ $contenidoTabla="<div style='text-align: center;'>
 <hr style='margin-top: 1rem;margin-bottom: 1rem;border: 0;border-top: 1px solid rgba(0, 0, 0, 0.1);'>
 
 <p style='margin-top: 0;margin-bottom: 1rem;display: block;margin-block-start: 1em;margin-block-end: 1em;margin-inline-start: 0px;margin-inline-end: 0px;'>Caja : ".$caja."</p>
-<p style='margin-top: 0;margin-bottom: 1rem;display: block;margin-block-start: 1em;margin-block-end: 1em;margin-inline-start: 0px;margin-inline-end: 0px;'>fecha : ".$fecha."</p>
+<p style='margin-top: 0;margin-bottom: 1rem;display: block;margin-block-start: 1em;margin-block-end: 1em;margin-inline-start: 0px;margin-inline-end: 0px;'>fecha : ".($fecha2->format('Y-m-d'))."</p>
 <p style='margin-top: 0;margin-bottom: 1rem;display: block;margin-block-start: 1em;margin-block-end: 1em;margin-inline-start: 0px;margin-inline-end: 0px;'>Hora Apertura : ".$horas."</p>
 <p style='margin-top: 0;margin-bottom: 1rem;display: block;margin-block-start: 1em;margin-block-end: 1em;margin-inline-start: 0px;margin-inline-end: 0px;'>Hora Cierre : ".$horas2."</p>
 <p style='margin-top: 0;margin-bottom: 1rem;display: block;margin-block-start: 1em;margin-block-end: 1em;margin-inline-start: 0px;margin-inline-end: 0px;'>Cajero : ".$cajero."</p>

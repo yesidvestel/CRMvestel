@@ -93,7 +93,7 @@
             <div class="modal-body">
                 <p id="texto1">¿Seguro que quieres anular esta transacción? El saldo de la cuenta se ajustará.</p>
                 <div >
-                    <input style="cursor: pointer" id="ck1" type="radio" name="anulacion" value="Cobranza Efectiva" checked>&nbspCobranza Efectiva<br>
+                    
                     <input style="cursor: pointer" id="ck2" type="radio" name="anulacion" value="Anulado de Cierre">&nbspAnulado de Cierre<br>
                     <input style="cursor: pointer" id="ck3" type="radio" name="anulacion" value="Anulado de otros Cierres">&nbspAnulado de otros Cierres<br>
                 </div>
@@ -146,7 +146,7 @@
         if(estado=="Anulada"){
             $("#texto1").text("Esta Transaccion ya fue anulada por...");
             if(detalle_estado=="Cobranza Efectiva"){
-                    $('#ck1').prop("checked", true);
+                    $('#ck2').prop("checked", true);
             }else if(detalle_estado=="Anulado de Cierre"){
                     $('#ck2').prop("checked", true);
             }else{
@@ -163,7 +163,7 @@
             $("#texto1").text("¿Seguro que quieres anular esta transacción? El saldo de la cuenta se ajustará.");
             $("#razon_anulacion").val("");
             $("#usuario_anula").hide();
-            $('#ck1').prop("checked", true);
+            $('#ck2').prop("checked", true);
             $("#delete-confirm_002").removeAttr("disabled");
         }
         

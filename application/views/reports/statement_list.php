@@ -548,7 +548,7 @@
 			//end sobre afiliaciones
 		 	
 		 	//tabla resumen por servicios total final
-			$fecha = $this->aauth->get_user()->fcierre;
+			$fecha = new DateTime($datos_informe['sdate']);
 		 	$horaC =  $this->aauth->get_user()->hcierre;
 			$horaA = $this->aauth->get_user()->hinicial;
 			$horas = date("g:i a",strtotime($horaA));
@@ -580,7 +580,7 @@
 			 <hr>
 			 
             <p class="col-sm-6"><?php echo $this->lang->line('') ?>Caja : <?php echo $filter[5] ?></p>
-			 <p class="col-sm-6">Fecha: <?php echo date($fecha) ?></p>
+			 <p class="col-sm-6">Fecha: <?php echo $fecha->format("Y-m-d") ?></p>
 			 <p class="col-sm-6">Hora apertura: <?php echo $horas ?></p>
 			 <p class="col-sm-6">Hora cierre: <?php echo $horas2 ?></p>
 			 <p class="col-sm-6">Cajero: <?php echo $cajero ?></p>
