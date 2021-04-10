@@ -112,7 +112,7 @@ class Ticket_model extends CI_Model
     }
 	public function tecnico_list()
     {
-        $query = $this->db->query("SELECT id,username FROM aauth_users WHERE UPPER(roleid) >= '3'");
+        $query = $this->db->query("SELECT id,username FROM aauth_users WHERE UPPER(roleid) >= '1'");
         return $query->result_array();		
 		
     }
