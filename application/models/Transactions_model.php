@@ -265,6 +265,7 @@ class Transactions_model extends CI_Model
 }       
         $dataa['fecha_hora']=date("Y-m-d 00:00:00");
         $dataa['detalle']=$this->input->post("anulacion");
+        $dataa['razon_anulacion']=$this->input->post("razon_anulacion");
         $dataa['transactions_id']=$id;
         $this->db->insert('anulaciones',$dataa);
 

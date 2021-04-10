@@ -1,4 +1,8 @@
-﻿Cambios para seleccionar sede
+﻿ALTER TABLE `anulaciones` ADD `razon_anulacion` TEXT NOT NULL AFTER `transactions_id`;
+
+
+
+Cambios para seleccionar sede
 ALTER TABLE `tickets` 
 ADD `finicial` DATE() NULL AFTER `ip_address`;
 ADD `hinicial` TIME() NULL AFTER `finicial`;

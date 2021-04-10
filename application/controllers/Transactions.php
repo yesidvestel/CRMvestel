@@ -821,7 +821,7 @@ class Transactions extends CI_Controller
             if($prd->estado!=null){
                 $anulacion = $this->db->get_where("anulaciones",array("transactions_id"=>$prd->id))->row();
 
-                $texto='data-detalle="'.$anulacion->detalle.'"';
+                $texto='data-detalle="'.$anulacion->detalle.'" data-razon_anulacion="'.$anulacion->razon_anulacion.'"';
             }
             $row[] = '<a href="' . base_url() . 'transactions/view?id=' . $pid . '" class="btn btn-primary btn-xs"><span class="icon-eye"></span>  '.$this->lang->line('View').'</a> <a href="' . base_url() . 'transactions/print_t?id=' . $pid . '" class="btn btn-info btn-xs"  title="Print"><span class="icon-print"></span></a>&nbsp; &nbsp;<a id="anula'.$pid.'" href="#" data-object-id="' . $pid . '" class="btn btn-danger btn-xs" onclick="abrir_modal(this);" '.$texto.'><span class="icon-bin"></span></a>';
             $data[] = $row;
