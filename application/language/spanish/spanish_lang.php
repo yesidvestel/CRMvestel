@@ -53,6 +53,7 @@ $lang['BalanceSheet'] = "Hoja de balance";
 $lang['Account Statements'] = "Declaraciones de cuenta";
 $lang['Transactions'] = "Actas";
 $lang['View Transactions'] = "Ver transacciones";
+$lang['View Anulations'] = "Ver anulaciones";
 $lang['New Transaction'] = "Nueva transacción";
 $lang['New Transfer'] = "Nueva transferencia";
 $lang['Miscellaneous'] = "Diverso";

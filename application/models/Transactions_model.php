@@ -38,6 +38,9 @@ class Transactions_model extends CI_Model
                 $this->db->where('type', 'Expense');
                 break;
         }
+
+        $this->db->where("estado!=","Anulada");
+        $this->db->or_where("estado IS NULL",NULL);
         $i = 0;
         foreach ($this->column_search as $item) // loop column
         {
@@ -79,33 +82,16 @@ class Transactions_model extends CI_Model
 
     function count_filtered()
     {
-        $this->db->from('transactions');
-        switch ($this->opt) {
-            case 'income':
-                $this->db->where('type', 'Income');
-                break;
-            case 'expense':
-                $this->db->where('type', 'Expense');
-                break;
-
-        }
+        $this->_get_datatables_query();
         $query = $this->db->get();
         return $query->num_rows();
     }
 
     public function count_all()
     {
-        $this->db->from($this->table);
-        switch ($this->opt) {
-            case 'income':
-                $this->db->where('type', 'Income');
-                break;
-            case 'expense':
-                $this->db->where('type', 'Expense');
-                break;
-
-        }
-        return $this->db->count_all_results();
+       $this->_get_datatables_query();
+        $query = $this->db->get();
+        return $query->num_rows();  
     }
 
     public function categories()

@@ -6,7 +6,7 @@
             <div class="message"></div>
         </div>
         <div class="grid_3 grid_4 table-responsive animated fadeInRight">
-            <h5><?php echo $this->lang->line('Transactions') ?></h5>
+            <h5>Transacciones Anuladas</h5>
 
             <hr>
             <table id="trans_table" class="display" cellspacing="0" width="100%">
@@ -21,6 +21,8 @@
 					<th>Cuenta</th>
                     <th><?php echo $this->lang->line('Method') ?></th>
                     <th>Estado</th>
+                    <th>Observacion</th>
+                    <th>Usuario Anulo</th>
                     <th><?php echo $this->lang->line('Action') ?></th>
 
 
@@ -39,6 +41,8 @@
 					<th>Cuenta</th>
                     <th><?php echo $this->lang->line('Method') ?></th>
                     <th>Estado</th>
+                    <th>Observacion</th>
+                    <th>Usuario Anulo</th>
                     <th><?php echo $this->lang->line('Action') ?></th>
 
 
@@ -55,7 +59,7 @@
             "serverSide": true,
             "stateSave": true,
             "ajax": {
-                "url": "<?php echo site_url('transactions/translist')?>",
+                "url": "<?php echo site_url('transactions/anullist')?>",
                 "type": "POST"
             },
             "columnDefs": [

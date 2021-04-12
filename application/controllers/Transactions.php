@@ -50,6 +50,20 @@ class Transactions extends CI_Controller
         $this->load->view('fixed/footer');
 
     }
+     public function anulaciones()
+    {
+        if ($this->aauth->get_user()->roleid < 2) {
+
+            exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
+
+        }
+        $head['title'] = "Transaction";
+        $head['usernm'] = $this->aauth->get_user()->username;
+        $this->load->view('fixed/header', $head);
+        $this->load->view('transactions/anulaciones');
+        $this->load->view('fixed/footer');
+
+    }
 
     public function add()
     {
@@ -836,7 +850,52 @@ class Transactions extends CI_Controller
         //output to json format
         echo json_encode($output);
     }
+public function anullist()
+    {
+        if ($this->aauth->get_user()->roleid < 2) {
 
+            exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
+
+        }
+        $this->load->model('anulaciones_model', 'anulaciones');
+        $ttype = $this->input->get('type');
+        $list = $this->anulaciones->get_datatables($ttype);
+        $data = array();
+        // $no = $_POST['start'];
+        $no = $this->input->post('start');
+        foreach ($list as $prd) {
+            $no++;
+            $row = array();
+            $pid = $prd->id;
+            $row[] = dateformat($prd->date);
+            $row[] = $prd->account;
+            $row[] = amountFormat($prd->debit);
+            $row[] = amountFormat($prd->credit);
+            $row[] = $prd->payer;
+            $row[] = $prd->tid;
+            $row[] = $this->lang->line($prd->method);
+            $row[] = "<span id='estado_".$prd->id."'>".$prd->estado."</span>";
+            $row[] = $prd->razon_anulacion;
+            $row[] = $prd->usuario_anula;
+            $texto="";
+            if($prd->estado!=null){
+                $anulacion = $this->db->get_where("anulaciones",array("transactions_id"=>$prd->id))->row();
+
+                $texto='data-detalle="'.$anulacion->detalle.'" data-razon_anulacion="'.$anulacion->razon_anulacion.'" data-usuario_anula="'.$anulacion->usuario_anula.'"';
+            }
+            $row[] = '<a href="' . base_url() . 'transactions/view?id=' . $pid . '" class="btn btn-primary btn-xs"><span class="icon-eye"></span>  '.$this->lang->line('View').'</a> <a href="' . base_url() . 'transactions/print_t?id=' . $pid . '" class="btn btn-info btn-xs"  title="Print"><span class="icon-print"></span></a>';
+            $data[] = $row;
+        }
+
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->anulaciones->count_all(),
+            "recordsFiltered" => $this->anulaciones->count_filtered(),
+            "data" => $data,
+        );
+        //output to json format
+        echo json_encode($output);
+    }
 
     // Category
     public function categories()
