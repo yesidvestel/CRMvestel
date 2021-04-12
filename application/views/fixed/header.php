@@ -998,6 +998,9 @@
                         <li>
                             <a href="<?php echo base_url(); ?>transactions"><?php echo $this->lang->line('View Transactions') ?></a>
                         </li>
+						<li>
+                            <a href="<?php echo base_url(); ?>transactions/anulaciones"><?php echo $this->lang->line('View Anulations') ?></a>
+                        </li>
                         <li>
                             <a href="<?php echo base_url(); ?>transactions/add"><?php echo $this->lang->line('New Transaction') ?></a>
                         </li>
