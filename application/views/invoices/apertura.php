@@ -43,11 +43,11 @@
                             <div class="form-group row">
 
                                 <label class="col-sm-3 control-label"
-                                       for="sdate"><?php echo $this->lang->line('From Date') ?></label>
+                                       for="sdate2"><?php echo $this->lang->line('From Date') ?></label>
 
                                 <div class="col-sm-4">
                                     <input type="text" class="form-control required"
-                                           placeholder="Start Date" name="fecha" id="sdate"
+                                           placeholder="Start Date" name="fecha" id="sdate2"
                                             autocomplete="false">
                                 </div>
                             </div>
@@ -86,7 +86,7 @@
         event.preventDefault();
         var iduser=$("#iduser").val();
         var perfil=$("#perfil option:selected").val();
-        var fecha=$("#sdate").val();
+        var fecha=$("#sdate2").val();
         var hora=$("#hora").val();
         
         $.post(baseurl+"Invoices/activar",{iduser:iduser,perfil:perfil,fecha:fecha,hora:hora},function(data){
