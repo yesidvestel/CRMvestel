@@ -72,7 +72,7 @@ class Invoices extends CI_Controller
     }
     public function generar_facturas_action(){
         set_time_limit(3000);
-        $this->load->model('customers_model', 'customers');
+        
         $caja1=$this->db->get_where('accounts',array('id' =>$_POST['pay_acc']))->row();
         $customers = $this->db->get_where("customers", array("usu_estado"=>'Activo',"ciudad"=>$caja1->holder))->result_array();
         $ciudades= array();
@@ -213,8 +213,7 @@ class Invoices extends CI_Controller
                     }
                     if($_customer_factura_creada==false){
 
-                            //$datos_monetarios=$this->customers->due_details($value['id']);
-                            //$total_due_customer=$datos_monetarios['total']-$datos_monetarios['pamnt'];
+                            
                             $internet_data= array();
                             $television_data= array();
                             $factura_data=array();
@@ -389,19 +388,7 @@ class Invoices extends CI_Controller
                                 $factura_data['ron']=$value2->ron;
                                 $factura_data['multi']=$value2->multi;
                                 
-                                    //aqui validare para la creacion de las transacciones y todo ese cuento.
-                                    /*if($total_due_customer<0){
-                                        if(abs($total_due_customer)<$factura_data['total']){
-                                             $factura_data['status']="partial";
-                                             //$factura_data['pamnt']=abs($total_due_customer);
-                                             $factura_data['pmethod']="Cash";
-                                        }else if(abs($total_due_customer)>=$factura_data['total']){
-                                             $factura_data['status']="paid";
-                                             //$factura_data['pamnt']=abs($total_due_customer);
-                                             $factura_data['pmethod']="Cash";
-                                        }
-                                        //se debe identificar la factura para quitarle saldo y asi se refleje correctamente el que se añade a esta factura y ver porque le esta colocando todo el saldo                                 
-                                    }*/
+                                    
 
 
                                     $this->db->insert("invoices",$factura_data);
