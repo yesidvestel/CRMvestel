@@ -72,6 +72,7 @@ class Invoices extends CI_Controller
     }
     public function generar_facturas_action(){
         set_time_limit(3000);
+        $this->load->model('customers_model', 'customers');
         $caja1=$this->db->get_where('accounts',array('id' =>$_POST['pay_acc']))->row();
         $customers = $this->db->get_where("customers", array("usu_estado"=>'Activo',"ciudad"=>$caja1->holder))->result_array();
         $ciudades= array();
@@ -81,8 +82,9 @@ class Invoices extends CI_Controller
         $time_sdate1=strtotime($sdate1);
         $customers_afectados=array();
 
-        foreach ($customers as $key => $value) {
+        foreach ($customers as $key => $value) {            
             $invoices = $this->db->select("*")->from("invoices")->where('csd='.$value['id'])->order_by('invoicedate',"DESC")->get()->result();
+            
             
             //echo "<br>";
             //var_dump("customer = ".$value['id']." |");
@@ -210,7 +212,9 @@ class Invoices extends CI_Controller
                         }
                     }
                     if($_customer_factura_creada==false){
-                      
+
+                            //$datos_monetarios=$this->customers->due_details($value['id']);
+                            //$total_due_customer=$datos_monetarios['total']-$datos_monetarios['pamnt'];
                             $internet_data= array();
                             $television_data= array();
                             $factura_data=array();
@@ -385,6 +389,21 @@ class Invoices extends CI_Controller
                                 $factura_data['ron']=$value2->ron;
                                 $factura_data['multi']=$value2->multi;
                                 
+                                    //aqui validare para la creacion de las transacciones y todo ese cuento.
+                                    /*if($total_due_customer<0){
+                                        if(abs($total_due_customer)<$factura_data['total']){
+                                             $factura_data['status']="partial";
+                                             //$factura_data['pamnt']=abs($total_due_customer);
+                                             $factura_data['pmethod']="Cash";
+                                        }else if(abs($total_due_customer)>=$factura_data['total']){
+                                             $factura_data['status']="paid";
+                                             //$factura_data['pamnt']=abs($total_due_customer);
+                                             $factura_data['pmethod']="Cash";
+                                        }
+                                        //se debe identificar la factura para quitarle saldo y asi se refleje correctamente el que se añade a esta factura y ver porque le esta colocando todo el saldo                                 
+                                    }*/
+
+
                                     $this->db->insert("invoices",$factura_data);
                                     $customers_afectados[]=array('csd' => $value2->csd,"tid"=>$factura_data['tid'],"nombres"=>$value['name']." ".$value['unoapellido'],"celular"=>$value['celular'],"cedula"=>$value['documento']);
                                     
@@ -392,6 +411,8 @@ class Invoices extends CI_Controller
                                     //var_dump($factura_data);
                                                            
                                 $_customer_factura_creada=true;
+
+                                
                             }
 
 
@@ -404,6 +425,45 @@ class Invoices extends CI_Controller
                 }   
                 
             }
+            //codigo para pagar con saldo ya existente
+          /*  $invoices = $this->db->select("*")->from("invoices")->where('csd='.$value['id'])->order_by('invoicedate',"DESC")->get()->result();
+            $lista_para_pagos_adelantados=array();
+            $lista_para_pagos_faltantes=array();
+            $saldo_dispo_total=0;
+            foreach ($invoices as $key => $inv) {
+                if($inv->pamnt>$inv->total){
+                    $saldo_dispo=$inv->total-$inv->pamnt;
+                    $saldo_dispo_total+=$saldo_dispo;
+                    $lista_para_pagos_adelantados[]= array("tid"=>$inv->tid,"saldo_disponible"=>$saldo_dispo);
+                }else if($inv->status=="due" || $inv->status=="partial"){
+                    $lista_para_pagos_faltantes[]=array("tid"=>$inv->tid,"status"=>$inv->status,"pamnt"=>$tid->pamnt,"total"=>$tid->total);
+                }
+            }
+
+            if(count($lista_para_pagos_faltantes!=0) && $saldo_dispo_total!=0 && $value['id']==5605){
+                foreach ($lista_para_pagos_adelantados as $key => $valuey) {
+                    foreach ($lista_para_pagos_faltantes as $key => $pag) {                        
+                        if($valuey['saldo_disponible']>=$pag['total']){//parte en la que sea mayor el saldo diponible completada parcialmente falta hacer lo de dividir transacciones
+                            $data['pamnt']=$pag['total'];
+                            $data['status']="paid";
+                            $valuey['saldo_disponible']-=$pag['total'];
+                             $data['pmethod']="Cash";
+                            $this->db->update("invoices",$data,array('tid' =>$pag['tid']));
+                            $data= array();
+                            $data['pamnt']=$pag['total'];
+                            $this->db->update("invoices",$data,array('tid' =>$valuey['tid']));
+                        }else{//parte en la que sea menor el saldo diponible completada es decir pago parcial falta todo 
+                            $data['pamnt']=$valuey['saldo_disponible'];
+                            $valuey['saldo_disponible']=0;
+                            //revisar toda la logica en si 
+                        }
+
+
+                    }
+                }
+            }
+*/
+            //end codigo para pagar con saldo ya existente
             
 
         }
