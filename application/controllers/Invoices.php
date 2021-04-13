@@ -71,7 +71,7 @@ class Invoices extends CI_Controller
         $this->load->view('fixed/footer');
     }
     public function generar_facturas_action(){
-        set_time_limit(3000);
+        set_time_limit(6000);
         
         $caja1=$this->db->get_where('accounts',array('id' =>$_POST['pay_acc']))->row();
         $customers = $this->db->get_where("customers", array("usu_estado"=>'Activo',"ciudad"=>$caja1->holder))->result_array();
@@ -412,32 +412,43 @@ class Invoices extends CI_Controller
                 }   
                 
             }
-            //codigo para pagar con saldo ya existente
-          /*  $invoices = $this->db->select("*")->from("invoices")->where('csd='.$value['id'])->order_by('invoicedate',"DESC")->get()->result();
+           /* //codigo para pagar con saldo ya existente
+            $invoices = $this->db->select("*")->from("invoices")->where('csd='.$value['id'])->order_by('invoicedate',"DESC")->get()->result();
             $lista_para_pagos_adelantados=array();
             $lista_para_pagos_faltantes=array();
             $saldo_dispo_total=0;
             foreach ($invoices as $key => $inv) {
                 if($inv->pamnt>$inv->total){
-                    $saldo_dispo=$inv->total-$inv->pamnt;
+                    $saldo_dispo=$inv->pamnt-$inv->total;
                     $saldo_dispo_total+=$saldo_dispo;
-                    $lista_para_pagos_adelantados[]= array("tid"=>$inv->tid,"saldo_disponible"=>$saldo_dispo);
+                    $lista_para_pagos_adelantados[]= array("tid"=>$inv->tid,"saldo_disponible"=>$saldo_dispo,"pamnt"=>$inv->pamnt);
                 }else if($inv->status=="due" || $inv->status=="partial"){
-                    $lista_para_pagos_faltantes[]=array("tid"=>$inv->tid,"status"=>$inv->status,"pamnt"=>$tid->pamnt,"total"=>$tid->total);
+                    $total_a_cubrir=$inv->total;
+                    if($inv->status=="partial"){
+                        $total_a_cubrir=$total_a_cubrir-$inv->pamnt;
+                    }
+                    $lista_para_pagos_faltantes[]=array("tid"=>$inv->tid,"status"=>$inv->status,"pamnt"=>$inv->pamnt,"total_a_cubrir"=>$total_a_cubrir,"total"=>$inv->total);
                 }
             }
 
+            
+
             if(count($lista_para_pagos_faltantes!=0) && $saldo_dispo_total!=0 && $value['id']==5605){
+                var_dump($lista_para_pagos_adelantados);
+                var_dump($lista_para_pagos_faltantes);
                 foreach ($lista_para_pagos_adelantados as $key => $valuey) {
                     foreach ($lista_para_pagos_faltantes as $key => $pag) {                        
-                        if($valuey['saldo_disponible']>=$pag['total']){//parte en la que sea mayor el saldo diponible completada parcialmente falta hacer lo de dividir transacciones
-                            $data['pamnt']=$pag['total'];
+                        if($valuey['saldo_disponible']>=$pag['total_a_cubrir']){//parte en la que sea mayor el saldo diponible completada parcialmente falta hacer lo de dividir transacciones
+                            $data= array();
+                            $data['pamnt']=$pag['total_a_cubrir']+$pag['pamnt'];
                             $data['status']="paid";
-                            $valuey['saldo_disponible']-=$pag['total'];
+                            $lista_para_pagos_adelantados[$key]['saldo_disponible']-=$pag['total_a_cubrir'];
                              $data['pmethod']="Cash";
                             $this->db->update("invoices",$data,array('tid' =>$pag['tid']));
                             $data= array();
-                            $data['pamnt']=$pag['total'];
+                            $data['pamnt']=$valuey['pamnt']-$pag['total_a_cubrir'];
+                            $lista_para_pagos_adelantados[$key]['pamnt']=$data['pamnt'];
+                            $valuey['pamnt']=$data['pamnt'];
                             $this->db->update("invoices",$data,array('tid' =>$valuey['tid']));
                         }else{//parte en la que sea menor el saldo diponible completada es decir pago parcial falta todo 
                             $data['pamnt']=$valuey['saldo_disponible'];
