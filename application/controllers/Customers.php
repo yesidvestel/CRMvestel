@@ -291,11 +291,11 @@ class Customers extends CI_Controller
     }
     public function load_morosos(){
         ini_set('memory_limit', '250M');
-        if($this->input->post('start')!="0"){
+        /*if($this->input->post('start')!="0"){
             
             $this->list_data_precargada();
             
-        }else{
+        }else{*/
 
         $listax=array();
         $this->db->select("*");
@@ -525,17 +525,17 @@ class Customers extends CI_Controller
                 }
 
                 $x++;
-                $customers->debe_customer=$debe_customer;
-                $customers->valor_ultima_factura=$valor_ultima_factura;
-                $listax[]=$customers;
+                //$customers->debe_customer=$debe_customer;
+                //$customers->valor_ultima_factura=$valor_ultima_factura;
+                //$listax[]=$customers;
             }else{
                 $descontar++;
             }
              
         }
 
-        $datax['datos']=json_encode($listax);
-        $this->db->update("filtros_historial",$datax, array("id"=>$this->aauth->get_user()->id));
+        //$datax['datos']=json_encode($listax);
+        //$this->db->update("filtros_historial",$datax, array("id"=>$this->aauth->get_user()->id));
         $var_recordsFiltered=count($lista_customers)-$descontar;
         if($_POST['length']=="100"){
             $var_recordsFiltered=0;
@@ -548,7 +548,7 @@ class Customers extends CI_Controller
         );
         //output to json format
         echo json_encode($output);
-      }
+      
     }
     public function list_data_precargada(){
         $no = $this->input->post('start');
