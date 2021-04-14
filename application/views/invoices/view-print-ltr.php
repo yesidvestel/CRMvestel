@@ -167,6 +167,7 @@
         }
 		.party {
 		border: #ccc 1px solid;
+        margin-top: -50px;
 		}
 
 
@@ -265,12 +266,14 @@
                         }else{
                             $cantidad_total_a_restar+=$valor;
                         }
-
+                    $porcentaje=($cantidad_total_a_restar*100)/$invoice['total'];
                     $lista_items=$this->db->get_where("invoice_items",array('tid' => $invoice['tid']))->result();
+
                     foreach ($lista_items as $key => $value) {
+                        $valor_item=($porcentaje*$value->subtotal)/100;
                         echo '<tr class="item' . $flag . '"> 
                                 <td>'.$value->product.'</td>';
-                        echo '<td class="t_center">' . amountExchange( $value->subtotal) . '</td>
+                        echo '<td class="t_center">' . amountExchange( $valor_item) . '</td>
                                 </tr>';
                                // $cantidad_total+=$value->subtotal;
                     }

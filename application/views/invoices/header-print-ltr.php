@@ -15,9 +15,9 @@
 			<tr>
             <td class="t_center">Nit: <?php echo $this->config->item('postbox') ?></td>
 			</tr>
-			<tr>
-            <td class="t_center"><?php echo $this->config->item('phone') ?></td>
-			</tr>
+			<!--<tr>
+            <td class="t_center"><?php //echo $this->config->item('phone') ?></td>
+			</tr> -->
 			<?php if($invoice['refer']) { ?>
 			<tr>
             <td class="t_center"><?php echo $this->lang->line('') .'Sede: '. $invoice['refer'] ?></td>
