@@ -236,9 +236,14 @@
                 if(count($transacciones)!=0){                    
                     $valor1=intval($transacciones[0]['credit']);
                     if($valor1!=$invoice['total']){
-                        $valor-=$valor1;
+                        //$valor=$valor-$valor1;
+                        $valor=$valor1;
+                        $cantidad_total_a_restar+=$valor1;
+                    }else{
                         $cantidad_total_a_restar+=$valor1;
                     }
+                }else{
+                    $cantidad_total_a_restar+=$valor;
                 }
                 
                     echo '<tr class="item' . $flag . '"> 
@@ -246,13 +251,28 @@
                     echo '<td class="t_center">' . amountExchange($valor) . '</td>
                                 </tr>';
                 }else{
+                     $transacciones = $this->db->order_by("id","DESC")->get_where("transactions",array("tid"=>$invoice['tid']))->result_array();
+                        $valor=$invoice['total'];
+                        if(count($transacciones)!=0){                    
+                            $valor1=intval($transacciones[0]['credit']);
+                            if($valor1!=$invoice['total']){
+                                //$valor=$valor-$valor1;
+                                $valor=$valor1;
+                                $cantidad_total_a_restar+=$valor1;
+                            }else{
+                                $cantidad_total_a_restar+=$valor1;
+                            }
+                        }else{
+                            $cantidad_total_a_restar+=$valor;
+                        }
+
                     $lista_items=$this->db->get_where("invoice_items",array('tid' => $invoice['tid']))->result();
                     foreach ($lista_items as $key => $value) {
                         echo '<tr class="item' . $flag . '"> 
                                 <td>'.$value->product.'</td>';
                         echo '<td class="t_center">' . amountExchange( $value->subtotal) . '</td>
                                 </tr>';
-                                $cantidad_total+=$value->subtotal;
+                               // $cantidad_total+=$value->subtotal;
                     }
 
                 }
@@ -264,7 +284,11 @@
                     if($valor1!=$factura['total']){
                         $valor-=$valor1;
                         $cantidad_total_a_restar+=$valor1;
+                    }else{
+                        $cantidad_total_a_restar+=$valor1;
                     }
+                }else{
+                    $cantidad_total_a_restar+=$valor;
                 }
                 //$cantidad_total+=$factura['total'];
                 
@@ -307,8 +331,7 @@
 
 
             <td>Cantidad Total:</td>
-
-            <td><?php echo amountExchange(($invoice['total2']+$cantidad_total)-$cantidad_total_a_restar); ?></td>
+            <td><?php echo amountExchange(($cantidad_total)+$cantidad_total_a_restar); ?></td>
         </tr>
         <?php 
         if ($invoice['discount'] > 0) {
@@ -326,7 +349,7 @@
         <tr>
 			<td><?php echo $this->lang->line('Paid Amount')?></td>
 
-            <td><?php echo amountExchange($invoice['pamnt2']-$cantidad_total_a_restar); ?></td>
+            <td><?php echo amountExchange($cantidad_total_a_restar); ?></td>
 		</tr><tr>
             <td><?php echo $this->lang->line('Balance Due') ?>:</td>
 
