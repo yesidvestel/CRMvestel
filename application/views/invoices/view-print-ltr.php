@@ -284,12 +284,13 @@
                 $valor=$factura['total'];
                 if(count($transacciones)!=0){                    
                     $valor1=intval($transacciones[0]['credit']);
-                    if($valor1!=$factura['total']){
-                        $valor-=$valor1;
+                    if($valor1!=$factura['total']){                       
                         $cantidad_total_a_restar+=$valor1;
                     }else{
                         $cantidad_total_a_restar+=$valor1;
                     }
+                     $valor=$valor1;
+
                 }else{
                     $cantidad_total_a_restar+=$valor;
                 }
@@ -305,9 +306,11 @@
                 
                     $saldo_a_pagar=$factura['total']-$factura['pamnt'];
                     $cantidad_total+=$saldo_a_pagar;
+                    if($factura['status']!="partial"){
                     $f1 = date(" F ",strtotime($factura['invoicedate']));
                     echo '<tr class="item' . $flag . '"> <td><b><em>' . strftime("%B", strtotime($f1)). ' CTA:'. $factura['tid'].'</em></b></td>';
                     echo '<td class="t_center"><b><em>' . amountExchange( $saldo_a_pagar) . '</em></b></td></tr>';
+                    }
                 
             }
           
