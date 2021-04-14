@@ -313,11 +313,14 @@ class Quote extends CI_Controller
 		}
 		$start = date("Y-m-d",strtotime($fagenda));
 			//agenda
+		$boleta = $this->db->get_where('tickets', array('codigo' => $nticket))->row();
 			if ($agendar==actualizar){
+				
 				$data2 = array(					
 					'title' => $detalle.' '.$hora2.' Orden #'.$nticket,
 					'start' => $start.' '.$hora,            
 					'description' => strip_tags($section),
+					'rol' => $boleta->asignado,
 					'asigno' => $this->aauth->get_user()->id
 				);
 				$this->db->where('idorden', $nticket);
@@ -329,6 +332,7 @@ class Quote extends CI_Controller
 					'title' => $detalle.' '.$hora2.' Orden #'.$nticket,
 					'start' => $start.' '.$hora,            
 					'description' => strip_tags($section),
+					'rol' => $boleta->asignado,
 					'asigno' => $this->aauth->get_user()->id
 				);
 				$this->db->insert('events', $data2);
