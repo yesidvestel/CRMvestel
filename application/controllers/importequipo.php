@@ -167,11 +167,32 @@ class Importequipo extends CI_Controller
                         $datax['celular']=$array[6];
                         $datax['celular2']=$array[7];
                         $datax['email']=$array[8];
-                        $datax['nacimiento']=date("Y-m-d",strtotime($array[9]));
+                        
+                        $array[9]=str_replace("/", "-", $array[9]);
+                        
+                        try {
+                            $datetimex=new DateTime($array[9]);    
+                            $datax['nacimiento']=$this->check($datetimex->format("Y-m-d"));
+                        } catch (Exception $e) {
+                            $datax['nacimiento']=null;    
+                        }
+                        
+
                         $datax['tipo_cliente']=$array[10];
 						$datax['tipo_documento']=$array[11];
 						$datax['documento']=$array[12];
-						$datax['f_contrato']=date("Y-m-d",strtotime($array[13]));
+                        //$dat=date("13-06-2017");
+                        
+                        $array[13]=str_replace("/", "-", $array[13]);
+                        try {
+                        $datetimex=new DateTime($array[13]);    
+                        $datax['f_contrato']=$this->check($datetimex->format("Y-m-d"));
+                        } catch (Exception $e) {
+                            $datetimex=null;
+                            $datax['f_contrato']=null;
+                        }
+                        
+						
 						$datax['estrato']=$array[14];
 						$datax['departamento']=$array[15];
 						$datax['ciudad']=$array[16];
@@ -201,6 +222,9 @@ class Importequipo extends CI_Controller
                         $usuarios = $this->db->get_where('customers',array('abonado'=>$datax['abonado']))->row();
                         if(!isset($usuarios)){
                           $this->db->insert('customers',$datax);
+                            //var_dump("insert :".$datax['abonado']);
+                        }else{
+                            //var_dump($datax['nacimiento']." ".$da);
                         }
                     }$i++;
 					}if ($tipo==='Actualizar'){
@@ -214,10 +238,12 @@ class Importequipo extends CI_Controller
                         $datax['celular']=$array[7];
                         $datax['celular2']=$array[8];
                         $datax['email']=$array[9];
+                        $array[10]=str_replace("/", "-", $array[10]);
                         $datax['nacimiento']=date("Y-m-d",strtotime($array[10]));
                         $datax['tipo_cliente']=$array[11];
 						$datax['tipo_documento']=$array[12];
 						$datax['documento']=$array[13];
+                        $array[14]=str_replace("/", "-", $array[14]);
 						$datax['f_contrato']=date("Y-m-d",strtotime($array[14]));
 						$datax['estrato']=$array[15];
 						$datax['departamento']=$array[16];
@@ -264,6 +290,14 @@ class Importequipo extends CI_Controller
         }
         
     }
+
+  public  function check($x) {
+    if (date('Y-m-d', strtotime($x)) == $x) {
+      return $x;
+    } else {
+      return null;
+    }
+}
 	 public function facturas_upload()
     {
         //datos del arhivo enviado por post
