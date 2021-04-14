@@ -15,23 +15,23 @@
             padding: 4mm;
             border: 0;
             font-size: 12pt;
-            line-height: 14pt;
+            line-height: 12pt;
             color: #000;
         }
 
         table {
             width: 100%;
-            line-height: 16pt;
+            line-height: 14pt;
             text-align: left;
 			border-collapse: collapse;
         }
 
         .plist tr td {
-            line-height: 12pt;
+            line-height: 5pt;
         }
 
         .subtotal tr td {
-            line-height: 10pt;
+            line-height: 5pt;
 		    padding: 6pt;
         }
 
@@ -68,7 +68,7 @@
 
         .terms {
             font-size: 9pt;
-            line-height: 16pt;
+            line-height: 2pt;
 			margin-right:20pt;
 			width: 100%;
         }
@@ -175,11 +175,11 @@
 
 <body>
 
-<div class="invoice-box">
+<div class="invoice-box" >
 
 
     <br>
-    <table class="party">
+    <table class="party" >
         <thead>
         <tr>
          
@@ -187,10 +187,10 @@
         </thead>
         <tbody>
         <tr>
-            <td>
+            <td >
 				<?php echo '<strong>'.ucwords($invoice['name']) .' '.ucwords($invoice['unoapellido']) . '</strong><br>';
                 if ($invoice['company']) echo $invoice['company'] . '<br>';
-                 echo $invoice['tipo_documento'] .': '.$invoice['documento'].'<br>'.Celular.': ' . $invoice['celular'] . '<br>' . $this->lang->line('Email') . ' : ' . $invoice['email'];
+                 echo $invoice['tipo_documento'] .': '.$invoice['documento'].'<br>'. $this->lang->line('Email') . ' : ' . $invoice['email'];
                 if ($invoice['taxid']) echo '<br>' . $this->lang->line('Tax') . ' ID: ' . $invoice['taxid'];
                 ?>
 				
@@ -225,13 +225,25 @@
         </tr>
 
         <?php
-        
+            $cantidad_total_a_restar=0;
+            $cantidad_total=0;
 			setlocale(LC_TIME, "spanish");
 			$f1 = date(" F ",strtotime($invoice['invoicedate']));
             if(count($lista_invoices)>0 || $is_multiple){
+                //$cantidad_total+=$invoice['total'];
+                $transacciones = $this->db->order_by("id","DESC")->get_where("transactions",array("tid"=>$invoice['tid']))->result_array();
+                $valor=$invoice['total'];
+                if(count($transacciones)!=0){                    
+                    $valor1=intval($transacciones[0]['credit']);
+                    if($valor1!=$invoice['total']){
+                        $valor-=$valor1;
+                        $cantidad_total_a_restar+=$valor1;
+                    }
+                }
+                
                     echo '<tr class="item' . $flag . '"> 
                                 <td>' . strftime("%B", strtotime($f1)). ' CTA:'. $invoice['tid'].'</td>';
-                    echo '<td class="t_center">' . amountExchange( $invoice['total']) . '</td>
+                    echo '<td class="t_center">' . amountExchange($valor) . '</td>
                                 </tr>';
                 }else{
                     $lista_items=$this->db->get_where("invoice_items",array('tid' => $invoice['tid']))->result();
@@ -240,15 +252,36 @@
                                 <td>'.$value->product.'</td>';
                         echo '<td class="t_center">' . amountExchange( $value->subtotal) . '</td>
                                 </tr>';
+                                $cantidad_total+=$value->subtotal;
                     }
 
                 }
            foreach ($lista_invoices as $key => $factura) {
+            $transacciones = $this->db->order_by("id","DESC")->get_where("transactions",array("tid"=>$factura['tid']))->result_array();
+                $valor=$factura['total'];
+                if(count($transacciones)!=0){                    
+                    $valor1=intval($transacciones[0]['credit']);
+                    if($valor1!=$factura['total']){
+                        $valor-=$valor1;
+                        $cantidad_total_a_restar+=$valor1;
+                    }
+                }
+                //$cantidad_total+=$factura['total'];
                 $f1 = date(" F ",strtotime($factura['invoicedate']));
             echo '<tr class="item' . $flag . '"> <td>' . strftime("%B", strtotime($f1)). ' CTA:'. $factura['tid'].'</td>';
             echo '<td class="t_center">' . amountExchange( $factura['total']) . '</td></tr>';
             }
             $fill = !$fill;
+
+            foreach ($lista_de_facturas_sin_pagar as $key => $factura) {
+                
+                    $saldo_a_pagar=$factura['total']-$factura['pamnt'];
+                    $cantidad_total+=$saldo_a_pagar;
+                    $f1 = date(" F ",strtotime($factura['invoicedate']));
+                    echo '<tr class="item' . $flag . '"> <td><b><em>' . strftime("%B", strtotime($f1)). ' CTA:'. $factura['tid'].'</em></b></td>';
+                    echo '<td class="t_center"><b><em>' . amountExchange( $saldo_a_pagar) . '</em></b></td></tr>';
+                
+            }
           
         
 
@@ -274,7 +307,7 @@
 
             <td>Cantidad Total:</td>
 
-            <td><?php echo amountExchange($invoice['total2']); ?></td>
+            <td><?php echo amountExchange(($invoice['total2']+$cantidad_total)-$cantidad_total_a_restar); ?></td>
         </tr>
         <?php 
         if ($invoice['discount'] > 0) {
@@ -292,7 +325,7 @@
         <tr>
 			<td><?php echo $this->lang->line('Paid Amount')?></td>
 
-            <td><?php echo amountExchange($invoice['pamnt2']); ?></td>
+            <td><?php echo amountExchange($invoice['pamnt2']-$cantidad_total_a_restar); ?></td>
 		</tr><tr>
             <td><?php echo $this->lang->line('Balance Due') ?>:</td>
 

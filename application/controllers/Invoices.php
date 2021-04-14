@@ -412,8 +412,8 @@ class Invoices extends CI_Controller
                 }   
                 
             }
-           /* //codigo para pagar con saldo ya existente
-            $invoices = $this->db->select("*")->from("invoices")->where('csd='.$value['id'])->order_by('invoicedate',"DESC")->get()->result();
+            //codigo para pagar con saldo ya existente
+ /*           $invoices = $this->db->select("*")->from("invoices")->where('csd='.$value['id'])->order_by('invoicedate',"DESC")->get()->result();
             $lista_para_pagos_adelantados=array();
             $lista_para_pagos_faltantes=array();
             $saldo_dispo_total=0;
@@ -953,7 +953,9 @@ class Invoices extends CI_Controller
                
             }
         }
-        
+
+        $lista_de_facturas_sin_pagar=$this->db->query('SELECT * FROM `invoices` WHERE csd="'.$data['invoice']['csd'].'" and (status="partial" or status="due")')->result_array();
+        $data['lista_de_facturas_sin_pagar']=$lista_de_facturas_sin_pagar;
         ini_set('memory_limit', '64M');
 
         $html = $this->load->view('invoices/view-print-'.LTR, $data, true);
