@@ -829,7 +829,7 @@ class Tickets Extends CI_Controller
         		$this->db->where('id', $ticket->cid);
         		$this->db->update('customers', $datat);
 		}
-		if($ticket->detalle=="Suspencion Combo"){			
+		if($ticket->detalle=="Suspension Combo"){			
 			$this->db->set('ron', 'Suspendido');
 			$this->db->set('television', 'no');
 			$this->db->set('combo', 'no');
@@ -843,7 +843,7 @@ class Tickets Extends CI_Controller
                 $customerx=$this->db->get_where("customers",array('id' =>$ticket->cid ))->row();
                 $this->customers->desactivar_estado_usuario($customerx->name_s,$customerx->gid);
 		}
-		if($ticket->detalle=="Suspencion Television"){
+		if($ticket->detalle=="Suspension Television"){
 			$factura = $this->db->get_where('invoices',array('tid'=>$idfactura))->row();
 			if ($factura->combo===no){
 				$status = 'Suspendido';
@@ -859,7 +859,7 @@ class Tickets Extends CI_Controller
         		$this->db->where('id', $ticket->cid);
         		$this->db->update('customers');
 		}
-		if($ticket->detalle=="Suspencion Internet"){
+		if($ticket->detalle=="Suspension Internet"){
 			$factura = $this->db->get_where('invoices',array('tid'=>$idfactura))->row();
 			if ($factura->television===no){
 				$status = 'Suspendido';
