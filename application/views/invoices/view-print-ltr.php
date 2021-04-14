@@ -267,6 +267,7 @@
                     }
                 }
                 //$cantidad_total+=$factura['total'];
+                
                 $f1 = date(" F ",strtotime($factura['invoicedate']));
             echo '<tr class="item' . $flag . '"> <td>' . strftime("%B", strtotime($f1)). ' CTA:'. $factura['tid'].'</td>';
             echo '<td class="t_center">' . amountExchange( $factura['total']) . '</td></tr>';
