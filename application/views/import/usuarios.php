@@ -30,13 +30,25 @@
                         <input type="file" name="cargar_csv" accept=".csv" size="15"/>(csv format only)
                     </div>
                 </div>
+				 <div class="form-group row">
+
+                    <label class="col-sm-2 col-form-label"
+                           for="product_cat">tipo</label>
+
+                    <div class="col-sm-2">
+                        <select class="form-control" name="tipo">
+									<option value="Insertar">Insertar</option>
+									<option value="Actualizar">Actualizar</option>
+							   </select>
+                    </div>
+                </div>
                 <div class="form-group row">
 
                     <label class="col-sm-2 col-form-label"
                            for="product_cat">Nombre Archivo</label>
 
-                    <div class="col-sm-6">
-                        <input type="text" name="name">
+                    <div class="col-sm-2">
+                        <input class="form-control" type="text" name="name">
                     </div>
                 </div>
 

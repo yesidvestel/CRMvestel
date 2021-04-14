@@ -138,6 +138,7 @@ class Importequipo extends CI_Controller
     {
         //datos del arhivo enviado por post
         $nombre_archivo = $this->input->post('name');
+		$tipo = $this->input->post('tipo');
         $tipo_archivo = $_FILES['cargar_csv']['type'];
         $tamano_archivo = $_FILES['cargar_csv']['size'];
 		$bill_date = datefordatabase($array[9]);        
@@ -155,6 +156,7 @@ class Importequipo extends CI_Controller
                     //separacion de la linea por ; en un array
                     $array = explode(";",$linea);
                     //comprovacion de que no sea la primera linea porque la destine para el encabezado en la generacion y que el primer dato del array tiene que ser diferente a nada y tambien un entero
+					if ($tipo==='Insertar'){
                     if($i!=0 && strcasecmp($array[0],"")!=false){
                         $datax['abonado']=$array[0];
                         $datax['name']=$array[1];
@@ -165,40 +167,90 @@ class Importequipo extends CI_Controller
                         $datax['celular']=$array[6];
                         $datax['celular2']=$array[7];
                         $datax['email']=$array[8];
-                        $datax['nacimiento']=$bill_date;
+                        $datax['nacimiento']=date("Y-m-d",strtotime($array[9]));
                         $datax['tipo_cliente']=$array[10];
 						$datax['tipo_documento']=$array[11];
 						$datax['documento']=$array[12];
-						$datax['departamento']=$array[13];
-						$datax['ciudad']=$array[14];
-						$datax['localidad']=$array[15];
-						$datax['barrio']=$array[16];
-						$datax['nomenclatura']=$array[17];
-						$datax['numero1']=$array[18];						
-						$datax['adicionauno']=$array[19];
-						$datax['numero2']=$array[20];
-						$datax['adicional2']=$array[21];
-						$datax['numero3']=$array[22];
-						$datax['residencia']=$array[23];
-						$datax['referencia']=$array[24];
-						$datax['picture']='example.png';
-						$datax['gid']=$array[25];
-						$datax['name_s']=$array[26];
-						$datax['contra']=$array[27];
-						$datax['servicio']=$array[28];
-						$datax['perfil']=$array[29];
-						$datax['Iplocal']=$array[30];
-						$datax['Ipremota']=$array[31];
-						$datax['comentario']=$array[32];
-						$datax['macequipo']=$array[33];
-						$datax['usu_estado']=$array[34];
-						$datax['balance']=$array[35];                        
+						$datax['f_contrato']=date("Y-m-d",strtotime($array[13]));
+						$datax['estrato']=$array[14];
+						$datax['departamento']=$array[15];
+						$datax['ciudad']=$array[16];
+						$datax['localidad']=$array[17];
+						$datax['barrio']=$array[18];
+						$datax['nomenclatura']=$array[19];
+						$datax['numero1']=$array[20];						
+						$datax['adicionauno']=$array[21];
+						$datax['numero2']=$array[22];
+						$datax['adicional2']=$array[23];
+						$datax['numero3']=$array[24];
+						$datax['residencia']=$array[25];
+						$datax['referencia']=$array[26];
+						$datax['picture']=$array[27];
+						$datax['gid']=$array[28];
+						$datax['name_s']=$array[29];
+						$datax['contra']=$array[30];
+						$datax['servicio']=$array[31];
+						$datax['perfil']=$array[32];
+						$datax['Iplocal']=$array[33];
+						$datax['Ipremota']=$array[34];
+						$datax['comentario']=$array[35];
+						$datax['macequipo']=$array[36];
+						$datax['usu_estado']=$array[37];
+						$datax['balance']=$array[38];                        
                         
                         $usuarios = $this->db->get_where('customers',array('abonado'=>$datax['abonado']))->row();
                         if(!isset($usuarios)){
                           $this->db->insert('customers',$datax);
                         }
+                    }$i++;
+					}if ($tipo==='Actualizar'){
+                    if($i!=0 && strcasecmp($array[0],"")!=false){
+                        $datax['abonado']=$array[1];
+                        $datax['name']=$array[2];
+                        $datax['dosnombre']=$array[3];
+                        $datax['unoapellido']=$array[4];
+                        $datax['dosapellido']=$array[5];
+                        $datax['company']=$array[6];
+                        $datax['celular']=$array[7];
+                        $datax['celular2']=$array[8];
+                        $datax['email']=$array[9];
+                        $datax['nacimiento']=date("Y-m-d",strtotime($array[10]));
+                        $datax['tipo_cliente']=$array[11];
+						$datax['tipo_documento']=$array[12];
+						$datax['documento']=$array[13];
+						$datax['f_contrato']=date("Y-m-d",strtotime($array[14]));
+						$datax['estrato']=$array[15];
+						$datax['departamento']=$array[16];
+						$datax['ciudad']=$array[17];
+						$datax['localidad']=$array[18];
+						$datax['barrio']=$array[19];
+						$datax['nomenclatura']=$array[20];
+						$datax['numero1']=$array[21];						
+						$datax['adicionauno']=$array[22];
+						$datax['numero2']=$array[23];
+						$datax['adicional2']=$array[24];
+						$datax['numero3']=$array[25];
+						$datax['residencia']=$array[26];
+						$datax['referencia']=$array[27];
+						$datax['picture']=$array[28];
+						$datax['gid']=$array[29];
+						$datax['name_s']=$array[30];
+						$datax['contra']=$array[31];
+						$datax['servicio']=$array[32];
+						$datax['perfil']=$array[33];
+						$datax['Iplocal']=$array[34];
+						$datax['Ipremota']=$array[35];
+						$datax['comentario']=$array[36];
+						$datax['macequipo']=$array[37];
+						$datax['usu_estado']=$array[38];
+						$datax['balance']=$array[39];                        
+                        
+                        
+							$this->db->where('id', $array[0]);
+                          	$this->db->update('customers',$datax);
+                        
                     }
+					}
                     //aumento indice en cada iteracion
                     $i++;
                 }

@@ -38,3 +38,8 @@ application/cache/nyujik
 application/cache/qweer
 application/cache/tyghsd
 application/cache/ujjvbs
+application/third_party/vendor/mpdf/mpdf/tmp/ttfontdata/dejavusanscondensedBI.GDEFdata.json
+*.dat
+application/third_party/vendor/mpdf/mpdf/tmp/ttfontdata/dejavusanscondensedBI.GPOSdata.json
+application/third_party/vendor/mpdf/mpdf/tmp/ttfontdata/dejavusanscondensedBI.GSUBdata.json
+application/third_party/vendor/mpdf/mpdf/tmp/ttfontdata/dejavusanscondensedBI.mtx.json
