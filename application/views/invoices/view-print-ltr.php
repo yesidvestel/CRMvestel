@@ -270,7 +270,12 @@
                     $lista_items=$this->db->get_where("invoice_items",array('tid' => $invoice['tid']))->result();
 
                     foreach ($lista_items as $key => $value) {
-                        $valor_item=($porcentaje*$value->subtotal)/100;
+                        if($invoice['status']=="paid"){
+                            $valor_item=($porcentaje*$value->subtotal)/100;    
+                        }else{
+                            $valor_item=$value->subtotal;
+                        }
+                        
                         echo '<tr class="item' . $flag . '"> 
                                 <td>'.$value->product.'</td>';
                         echo '<td class="t_center">' . amountExchange( $valor_item) . '</td>
