@@ -249,7 +249,7 @@ class Clientgroup extends CI_Controller
         $this->load->library('Excel');
     
     //define column headers
-    $headers = array('Abonado' => 'string', 'Nombre' => 'string', 'Celular' => 'string', 'Direccion' => 'string', 'Estado' => 'string','Deuda' => 'string','Suscripcion' => 'string');
+    $headers = array('Abonado' => 'string','Cedula' => 'string', 'Nombre' => 'string', 'Celular' => 'string', 'Direccion' => 'string','Barrio' => 'string', 'Estado' => 'string','Deuda' => 'string','Suscripcion' => 'string');
     
     //fetch data from database
     //$salesinfo = $this->product_model->get_salesinfo();
@@ -277,12 +277,14 @@ class Clientgroup extends CI_Controller
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ));
     
     //write rows to sheet1
     foreach ($lista_customers2 as $key => $customer) {
             $direccion= $customer->nomenclatura . ' ' . $customer->numero1 . $customer->adicionauno.' Nº '.$customer->numero2.$customer->adicional2.' - '.$customer->numero3;
-            $writer->writeSheetRow('Customers '.$cust_group->title,array($customer->abonado, $customer->name, $customer->celular, $direccion, $customer->usu_estado,$customer->deuda,$customer->suscripcion));
+            $writer->writeSheetRow('Customers '.$cust_group->title,array($customer->abonado,$customer->documento ,$customer->name, $customer->celular, $direccion,$customer->barrio ,$customer->usu_estado,$customer->deuda,$customer->suscripcion));
     }
         
         
