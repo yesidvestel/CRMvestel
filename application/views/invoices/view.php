@@ -516,28 +516,31 @@
 								<?php 
 								$sede = $this->aauth->get_user()->sede_accede;
 								$perfil = $this->aauth->get_user()->roleid;
-								if ($sede==2){
+								if ($sede==2 && $perfil!==4){
 									echo '<option value="3">Yopal / 001</option>
 										  <option value="6">BANCOLOMBIA TV / 07620266706</option>
 										  <option value="7">BANCOLOMBIA TELECOMUNICACIONES / 629-000240-32</option>
 										  <option value="8">BANCOLOMBIA CUENTA CORRIENTE / 30500000473</option>';
-								}if ($sede==4){
+								}if ($sede==4 && $perfil!==4){
 									echo '<option value="5">Monterrey / 003</option>
 										  <option value="6">BANCOLOMBIA TV / 07620266706</option>
 										  <option value="7">BANCOLOMBIA TELECOMUNICACIONES / 629-000240-32</option>
 										  <option value="8">BANCOLOMBIA CUENTA CORRIENTE / 30500000473</option>';
-								}if ($sede==3){
+								}if ($sede==3 && $perfil!==4){
 									echo '<option value="9">Villanueva / 004</option>
 										  <option value="6">BANCOLOMBIA TV / 07620266706</option>
 										  <option value="7">BANCOLOMBIA TELECOMUNICACIONES / 629-000240-32</option>
 										  <option value="8">BANCOLOMBIA CUENTA CORRIENTE / 30500000473</option>';
-								}if ($sede==5){
+								}if ($sede==5 && $perfil!==4){
 									echo '<option value="4">Mocoa / 002</option>
 										  <option value="6">BANCOLOMBIA TV / 07620266706</option>
 										  <option value="7">BANCOLOMBIA TELECOMUNICACIONES / 629-000240-32</option>
 										  <option value="8">BANCOLOMBIA CUENTA CORRIENTE / 30500000473</option>';
 								}if ($perfil>=4){
-									echo '<option value="4">Mocoa / 002</option>
+									echo '<option value="3">Yopal / 001</option>
+										  <option value="5">Monterrey / 003</option>
+										  <option value="9">Villanueva / 004</option>
+										  <option value="4">Mocoa / 002</option>
 										  <option value="6">BANCOLOMBIA TV / 07620266706</option>
 										  <option value="7">BANCOLOMBIA TELECOMUNICACIONES / 629-000240-32</option>
 										  <option value="8">BANCOLOMBIA CUENTA CORRIENTE / 30500000473</option>';
