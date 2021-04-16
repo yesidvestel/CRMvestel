@@ -318,6 +318,7 @@
                     <th><?php echo $this->lang->line('Name') ?></th>
 					<th>Celular</th>
                     <th><?php echo $this->lang->line('Address') ?></th>
+                    <th>Barrio</th>
 					<th id="despues_de_thead">Estado</th>
                     <th><?php echo $this->lang->line('Settings') ?></th>
 					<?php if ($this->aauth->get_user()->roleid > 4) { ?>
@@ -337,6 +338,7 @@
                     <th><?php echo $this->lang->line('Name') ?></th>
 					<th>Celular</th>
                     <th><?php echo $this->lang->line('Address') ?></th>
+                    <th>Barrio</th>
 					<th id="despues_de_tfoot">Estado</th>
                     <th><?php echo $this->lang->line('Settings') ?></th>
 					<?php if ($this->aauth->get_user()->roleid > 4) { ?>
