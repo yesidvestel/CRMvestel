@@ -413,7 +413,7 @@ class Invoices extends CI_Controller
                 
             }
             //codigo para pagar con saldo ya existente
- /*           $invoices = $this->db->select("*")->from("invoices")->where('csd='.$value['id'])->order_by('invoicedate',"DESC")->get()->result();
+/*            $invoices = $this->db->select("*")->from("invoices")->where('csd='.$value['id'])->order_by('invoicedate',"DESC")->get()->result();
             $lista_para_pagos_adelantados=array();
             $lista_para_pagos_faltantes=array();
             $saldo_dispo_total=0;
@@ -434,22 +434,56 @@ class Invoices extends CI_Controller
             
 
             if(count($lista_para_pagos_faltantes!=0) && $saldo_dispo_total!=0 && $value['id']==5605){
-                var_dump($lista_para_pagos_adelantados);
-                var_dump($lista_para_pagos_faltantes);
+
                 foreach ($lista_para_pagos_adelantados as $key => $valuey) {
                     foreach ($lista_para_pagos_faltantes as $key => $pag) {                        
                         if($valuey['saldo_disponible']>=$pag['total_a_cubrir']){//parte en la que sea mayor el saldo diponible completada parcialmente falta hacer lo de dividir transacciones
+                            $tr = $this->db->get_where("transactions", array("tid"=>$valuey['tid'],"credit"=>$valuey['pamnt']))->row();
+
                             $data= array();
                             $data['pamnt']=$pag['total_a_cubrir']+$pag['pamnt'];
                             $data['status']="paid";
                             $lista_para_pagos_adelantados[$key]['saldo_disponible']-=$pag['total_a_cubrir'];
                              $data['pmethod']="Cash";
-                            $this->db->update("invoices",$data,array('tid' =>$pag['tid']));
+                            //$this->db->update("invoices",$data,array('tid' =>$pag['tid']));
                             $data= array();
                             $data['pamnt']=$valuey['pamnt']-$pag['total_a_cubrir'];
                             $lista_para_pagos_adelantados[$key]['pamnt']=$data['pamnt'];
-                            $valuey['pamnt']=$data['pamnt'];
-                            $this->db->update("invoices",$data,array('tid' =>$valuey['tid']));
+                            $valuey['pamnt']=$data['pamnt'];                            
+                            //$this->db->update("invoices",$data,array('tid' =>$valuey['tid']));                            
+                            //editando transaccion
+                            $data_transaccion=array();                            
+                            $data_transaccion['credit']=$valuey['pamnt'];
+                            $this->db->update("transactions",$data_transaccion,array('id' =>$tr->id));
+                            
+                            //creando transacciones
+                            $data_transaccion['acid']=$tr->acid;
+                            $data_transaccion['account']=$tr->account;
+                            $data_transaccion['type']=$tr->type;
+                            $data_transaccion['cat']=$tr->cat;
+                            $data_transaccion['debit']=$tr->debit;
+                            $data_transaccion['credit']=$pag['total_a_cubrir'];
+                            $data_transaccion['payer']=$tr->payer;
+                            $data_transaccion['payerid']=$tr->payerid;
+                            $data_transaccion['method']=$tr->method;
+                            $data_transaccion['date']=$tr->date;
+                            $data_transaccion['tid']=$pag['tid'];
+
+                            
+
+                            $data_transaccion['eid']=$tr->eid;
+                            $data_transaccion['note']=$tr->note;
+                            $data_transaccion['note'] = str_replace("".$tr->tid."", $pag['tid'], $data_transaccion['note']);
+
+
+                            $data_transaccion['ext']=$tr->ext;
+                            $data_transaccion['nombre_banco']=$tr->nombre_banco;
+                            $data_transaccion['id_banco']=$tr->id_banco;
+                            $data_transaccion['estado']=$tr->estado;
+
+
+                            $this->db->insert("transactions",$data_transaccion);
+
                         }else{//parte en la que sea menor el saldo diponible completada es decir pago parcial falta todo 
                             $data['pamnt']=$valuey['saldo_disponible'];
                             $valuey['saldo_disponible']=0;
