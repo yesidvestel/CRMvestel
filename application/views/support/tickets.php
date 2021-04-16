@@ -107,6 +107,11 @@
                                        aria-controls="link"
                                        aria-expanded="false">Estado</a>
                                 </li>
+								<li class="nav-item">
+                                    <a class="nav-link" id="detalle-tab" data-toggle="tab" href="#detalle"
+                                       aria-controls="detalle"
+                                       aria-expanded="false">Detalle</a>
+                                </li>
 
                                 <li class="nav-item">
                                     <a class="nav-link" id="thread-tab" data-toggle="tab" href="#thread"
@@ -155,6 +160,41 @@
                                                     <option value=''>Todas</option>
                                                     <option value='Pendiente'>Pendiente</option>
                                                     <option value='Resuelto'>Resuelto</option>
+                                                </select>
+                                            </div>                              
+                                        </div>    
+                                </div>
+								<div class="tab-pane fade" id="detalle" role="tabpanel" aria-labelledby="detalle-tab" aria-expanded="false">
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 col-form-label"
+                                                   for="pay_cat">Detalle de orden</label>
+
+                                            <div class="col-sm-6">
+                                                <select name="trans_type" class="form-control" id="detalle">
+                                                   	<option value=''>Todas</option>
+                                                   	<option value='AgregarInternet'>AgregarInternet</option>
+                                                  	<option value='AgregarTelevision'>AgregarTelevision</option>
+													<option value='Bajar 5 Mg'>Bajar 5 Mg</option>
+													<option value='Bajar 3 Mg'>Bajar 3 Mg</option>
+													<option value='Cambio de equipo'>Cambio de equipo</option>
+													<option value='Corte Combo'>Corte Combo</option>
+													<option value='Corte Internet'>Corte Internet</option>
+													<option value='Corte Television'>Corte Television</option>
+													<option value='Equipo adicional'>Equipo adicional</option>
+													<option value='Instalacion'>Instalacion</option>
+													<option value='Punto nuevo'>Punto nuevo</option>
+													<option value='Revision de Internet'>Revision de Internet</option>
+													<option value='Revision de television'>Revision de television</option>
+													<option value='Reconexion Combo'>Reconexion Combo</option>
+													<option value='Reconexion Internet'>Reconexion Internet</option>
+													<option value='Reconexion Television'>Reconexion Television</option>
+													<option value='Subir 5 Mg'>Subir 5 Mg</option>
+													<option value='Subir 10 Mg'>Subir 10 Mg</option>
+													<option value='Suspension Combo'>Suspension Combo</option>
+													<option value='Suspension Internet'>Suspension Internet</option>
+													<option value='Suspension Television'>Suspension Television</option>
+													<option value='Traslado'>Traslado</option>
+													<option value='Toma Adicional'>Toma Adicional</option>
                                                 </select>
                                             </div>                              
                                         </div>    
@@ -440,6 +480,7 @@
     function filtrar(){
         var tecnico=$("#tecnicos2 option:selected").val();
         var estado =$("#estados option:selected").val();
+		var detalle =$("#detalle option:selected").val();
         var sdate =$("#sdate").val();
         var edate =$("#edate").val();
         var opcion_seleccionada=$("#fechas option:selected").val();
@@ -448,7 +489,7 @@
             tb.ajax.url( baseurl+'tickets/tickets_load_list?stat=' ).load();     
         }else{
             var id1=$("#tecnicos2 option:selected").data("id");
-            tb.ajax.url( baseurl+"tickets/tickets_load_list?sdate="+sdate+"&edate="+edate+"&opcselect="+opcion_seleccionada+"&tecnico="+tecnico+"&estado="+estado+"&tec1="+id1+"&sede_filtrar="+sede_filtrar+"&stat=" ).load();     
+            tb.ajax.url( baseurl+"tickets/tickets_load_list?sdate="+sdate+"&edate="+edate+"&opcselect="+opcion_seleccionada+"&tecnico="+tecnico+"&estado="+estado+"&detalle="+detalle+"&tec1="+id1+"&sede_filtrar="+sede_filtrar+"&stat=" ).load();     
         }
        
 

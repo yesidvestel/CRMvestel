@@ -229,7 +229,9 @@ class Ticket_model extends CI_Model
         if($filt2['sede_filtrar']!=""){
             $this->db->where('gid', $filt2['sede_filtrar']);       
         }
-
+		if($filt2['detalle']!=""){
+            $this->db->where('detalle', $filt2['detalle']);       
+        }
 		$this->db->join('customers', 'tickets.cid=customers.id', 'left');
         $i = 0;
 

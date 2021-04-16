@@ -461,7 +461,7 @@
         });
     });
 	// selecion de orden
-	var perfil_servicio = new Array ("Seleccine...","Instalacion","AgregarInternet","AgregarTelevision","Traslado","Subir 5 Mg","Subir 10 Mg","Bajar 5 Mg","Bajar 3 Mg","Cambio de equipo","Equipo adicional","Reconexion Combo","Reconexion Internet","Reconexion Television","Suspension Combo","Suspension Internet","Suspension Television","Corte Combo","Corte Internet","Corte Television","Toma Adicional","Punto nuevo");
+	var perfil_servicio = new Array ("Seleccine...","AgregarInternet","AgregarTelevision","Bajar 5 Mg","Bajar 3 Mg","Cambio de equipo","Corte Combo","Corte Internet","Corte Television","Equipo adicional","Instalacion","Punto nuevo","Reconexion Combo","Reconexion Internet","Reconexion Television","Subir 5 Mg","Subir 10 Mg","Suspension Combo","Suspension Internet","Suspension Television","Traslado","Toma Adicional");
 	var perfil_reclamo = new Array ("Seleccine...","Revision de Internet","Revision de television","Otros");	
 							//crear funcion que ejecute el cambio
 							function cambia(){
