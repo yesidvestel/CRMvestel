@@ -1457,19 +1457,21 @@
 			
 
 				foreach ($ordenes_compra as $key => $value) {
-					if($value['cat']=="Compra"){
-						$cuenta_transaccions['cantidad']++;
-						$cuenta_transaccions['monto']+=$value['debit'];
-					}else{
-						$cuenta_ordenes['cantidad']++;
-						$cuenta_ordenes['monto']+=$value['debit'];
+					if($value['estado']!="Anulada"){
+						if($value['cat']=="Compra"){
+							$cuenta_transaccions['cantidad']++;
+							$cuenta_transaccions['monto']+=$value['debit'];
+						}else{
+							$cuenta_ordenes['cantidad']++;
+							$cuenta_ordenes['monto']+=$value['debit'];
+						}
 					}
 					
 
 				}
 				foreach ($tr1 as $key => $value) {
 					
-					if(strpos(strtolower($value['note']), strtolower($filter[5]))!==false){
+					if(strpos(strtolower($value['note']), strtolower($filter[5]))!==false && $value['estado']!="Anulada"){
 						$cuenta_tr1['cantidad']++;
 						$cuenta_tr1['monto']+=$value['debit'];
 					}
