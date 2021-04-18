@@ -71,7 +71,7 @@ class Invoices extends CI_Controller
         $this->load->view('fixed/footer');
     }
     public function generar_facturas_action(){
-        set_time_limit(6000);
+        set_time_limit(10000);
         
         $caja1=$this->db->get_where('accounts',array('id' =>$_POST['pay_acc']))->row();
         $customers = $this->db->get_where("customers", array("usu_estado"=>'Activo',"ciudad"=>$caja1->holder))->result_array();
@@ -438,26 +438,29 @@ class Invoices extends CI_Controller
                 foreach ($lista_para_pagos_adelantados as $key => $valuey) {
                     foreach ($lista_para_pagos_faltantes as $key => $pag) {                        
                         if($valuey['saldo_disponible']>=$pag['total_a_cubrir']){//parte en la que sea mayor el saldo diponible completada parcialmente falta hacer lo de dividir transacciones
-                            $tr = $this->db->get_where("transactions", array("tid"=>$valuey['tid'],"credit"=>$valuey['pamnt']))->row();
 
+                            $tr = $this->db->get_where("transactions", array("tid"=>$valuey['tid'],"credit"=>$valuey['pamnt']))->row();
+                            //actualizando datos de la factura a pagar
                             $data= array();
                             $data['pamnt']=$pag['total_a_cubrir']+$pag['pamnt'];
                             $data['status']="paid";
                             $lista_para_pagos_adelantados[$key]['saldo_disponible']-=$pag['total_a_cubrir'];
                              $data['pmethod']="Cash";
-                            //$this->db->update("invoices",$data,array('tid' =>$pag['tid']));
+                            $this->db->update("invoices",$data,array('tid' =>$pag['tid']));
+                            //actualizando datos del invoice que contiene el pago adelantado
                             $data= array();
                             $data['pamnt']=$valuey['pamnt']-$pag['total_a_cubrir'];
                             $lista_para_pagos_adelantados[$key]['pamnt']=$data['pamnt'];
                             $valuey['pamnt']=$data['pamnt'];                            
-                            //$this->db->update("invoices",$data,array('tid' =>$valuey['tid']));                            
-                            //editando transaccion
+                            $this->db->update("invoices",$data,array('tid' =>$valuey['tid']));                            
+                            //editando transaccion que contiene el pago adelantado
                             $data_transaccion=array();                            
                             $data_transaccion['credit']=$valuey['pamnt'];
                             $this->db->update("transactions",$data_transaccion,array('id' =>$tr->id));
                             
-                            //creando transacciones
+                            //creando transaccion
                             $data_transaccion['acid']=$tr->acid;
+                            
                             $data_transaccion['account']=$tr->account;
                             $data_transaccion['type']=$tr->type;
                             $data_transaccion['cat']=$tr->cat;
@@ -469,12 +472,13 @@ class Invoices extends CI_Controller
                             $data_transaccion['date']=$tr->date;
                             $data_transaccion['tid']=$pag['tid'];
 
-                            
+                           // var_dump($tr);
 
                             $data_transaccion['eid']=$tr->eid;
                             $data_transaccion['note']=$tr->note;
                             $data_transaccion['note'] = str_replace("".$tr->tid."", $pag['tid'], $data_transaccion['note']);
-
+                            $data_transaccion['note']=$data_transaccion['note']." #adelantado_de_tr_id=".$tr->id;
+                            //var_dump(" note ".$data_transaccion['note']);
 
                             $data_transaccion['ext']=$tr->ext;
                             $data_transaccion['nombre_banco']=$tr->nombre_banco;
@@ -484,10 +488,57 @@ class Invoices extends CI_Controller
 
                             $this->db->insert("transactions",$data_transaccion);
 
-                        }else{//parte en la que sea menor el saldo diponible completada es decir pago parcial falta todo 
-                            $data['pamnt']=$valuey['saldo_disponible'];
-                            $valuey['saldo_disponible']=0;
-                            //revisar toda la logica en si 
+                        }else if($valuey['saldo_disponible']>50){//parte en la que sea menor el saldo diponible completada es decir pago parcial falta todo 
+                            $tr = $this->db->get_where("transactions", array("tid"=>$valuey['tid'],"credit"=>$valuey['pamnt']))->row();
+                            //actualizando datos de la factura a pagar
+                            $data= array();
+                            $data['pamnt']=$valuey['saldo_disponible']+$pag['pamnt'];
+                            $data['status']="paid";
+                            $lista_para_pagos_adelantados[$key]['saldo_disponible']=0;
+                             $data['pmethod']="Cash";
+                            $this->db->update("invoices",$data,array('tid' =>$pag['tid']));
+                            //actualizando datos del invoice que contiene el pago adelantado
+                            $data= array();
+                            $data['pamnt']=$valuey['pamnt']-$valuey['saldo_disponible'];
+                            $lista_para_pagos_adelantados[$key]['pamnt']=$data['pamnt'];
+                            $valuey['pamnt']=$data['pamnt'];                            
+                            $this->db->update("invoices",$data,array('tid' =>$valuey['tid']));                            
+                            //editando transaccion que contiene el pago adelantado
+                            $data_transaccion=array();                            
+                            $data_transaccion['credit']=$valuey['pamnt'];
+                            $this->db->update("transactions",$data_transaccion,array('id' =>$tr->id));
+                            
+                            //creando transaccion
+                            $data_transaccion['acid']=$tr->acid;
+                            
+                            $data_transaccion['account']=$tr->account;
+                            $data_transaccion['type']=$tr->type;
+                            $data_transaccion['cat']=$tr->cat;
+                            $data_transaccion['debit']=$tr->debit;
+                            $data_transaccion['credit']=$valuey['saldo_disponible'];
+                            $data_transaccion['payer']=$tr->payer;
+                            $data_transaccion['payerid']=$tr->payerid;
+                            $data_transaccion['method']=$tr->method;
+                            $data_transaccion['date']=$tr->date;
+                            $data_transaccion['tid']=$pag['tid'];
+
+                           // var_dump($tr);
+
+                            $data_transaccion['eid']=$tr->eid;
+                            $data_transaccion['note']=$tr->note;
+                            $data_transaccion['note'] = str_replace("".$tr->tid."", $pag['tid'], $data_transaccion['note']);
+                            $data_transaccion['note']=$data_transaccion['note']." #adelantado_de_tr_id=".$tr->id;
+                            //var_dump(" note ".$data_transaccion['note']);
+
+                            $data_transaccion['ext']=$tr->ext;
+                            $data_transaccion['nombre_banco']=$tr->nombre_banco;
+                            $data_transaccion['id_banco']=$tr->id_banco;
+                            $data_transaccion['estado']=$tr->estado;
+
+
+                            $this->db->insert("transactions",$data_transaccion);
+                            
+
                         }
 
 
