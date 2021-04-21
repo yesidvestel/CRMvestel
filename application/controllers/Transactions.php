@@ -45,11 +45,16 @@ class Transactions extends CI_Controller
         }
         $head['title'] = "Transaction";
         $head['usernm'] = $this->aauth->get_user()->username;
+        $data= array();
+        if(isset($_GET['id_tr'])){
+            $data['id_tr']=$_GET['id_tr'];
+        }
         $this->load->view('fixed/header', $head);
-        $this->load->view('transactions/index');
+        $this->load->view('transactions/index',$data);
         $this->load->view('fixed/footer');
 
     }
+
      public function anulaciones()
     {
         if ($this->aauth->get_user()->roleid < 2) {

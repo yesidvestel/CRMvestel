@@ -38,9 +38,15 @@ class Transactions_model extends CI_Model
                 $this->db->where('type', 'Expense');
                 break;
         }
+        if($_GET['id_tr']){
+            $this->db->where("id",$_GET['id_tr']);
+            $this->db->where("estado",null);
+        }else{
+            $this->db->where("estado!=","Anulada");
+        $this->db->or_where("estado IS NULL",NULL);    
+        }
 
-        $this->db->where("estado!=","Anulada");
-        $this->db->or_where("estado IS NULL",NULL);
+        
         $i = 0;
         foreach ($this->column_search as $item) // loop column
         {
@@ -225,42 +231,63 @@ class Transactions_model extends CI_Model
         $this->db->from('transactions');
         $this->db->where('id', $id);
         $query = $this->db->get();
-        $trans = $query->row_array();
-        $amt = $trans['debit'];
-		$crt = $trans['credit'];
+        $transaction_var = $query->row_array();
+        $amt = $transaction_var['debit'];
+		$crt = $transaction_var['credit'];
         $this->db->set('lastbal', "lastbal-$amt", FALSE);
-        $this->db->where('id', $trans['acid']);
+        $this->db->where('id', $transaction_var['acid']);
         $this->db->update('accounts');
-		//echo $trans['tid'];
-		if($trans['tid']>0) {
-    	switch ($trans['ext']) {
+		//echo $transaction_var['tid'];
+		if($transaction_var['tid']>0) {
+    	switch ($transaction_var['ext']) {
         case 0 :
 
             $this->db->set('pamnt', "pamnt-$crt", FALSE);
-            $this->db->where('tid', $trans['tid']);
+            $this->db->where('tid', $transaction_var['tid']);
             $this->db->update('invoices');
             break;
 
         case 1 :
             $this->db->set('pamnt', "pamnt-$amt", FALSE);
-            $this->db->where('tid', $trans['tid']);
+            $this->db->where('tid', $transaction_var['tid']);
             $this->db->update('purchase');
             break;
 
     }
 }       
+
+    //validando que sea un transaccion en la que se pague una factura
+    if($transaction_var['tid']!=null && $transaction_var['tid']!='' && $transaction_var['tid']!=0){
+        $invoice = $this->db->get_where("invoices",array('tid' => $transaction_var['tid']))->row();
+        $data_invoice['pamnt']=$invoice->pamnt-$transaction_var['total'];
+        if($data_invoice['pamnt']<=0){
+            $data_invoice['pamnt']=0;
+            $data_invoice['status']="due";
+        }else{
+            $data_invoice['status']="partial";
+        }
+
+        $this->db->update("invoices",$data_invoice,array('tid' =>$invoice->tid));
+
+    }
+
+//insertando datos en anulaciones
         $dataa['fecha_hora']=date("Y-m-d 00:00:00");
         $dataa['detalle']=$this->input->post("anulacion");
         $dataa['razon_anulacion']=$this->input->post("razon_anulacion");
         $dataa['usuario_anula']=$this->aauth->get_user()->username;
         $dataa['transactions_id']=$id;
         $this->db->insert('anulaciones',$dataa);
-
+//actualizando transacciones
         $datat['estado']="Anulada";
         $this->db->update("transactions",$datat,array("id"=>$id));
 
-        $this->db->delete('transactions', array('id' => $id));
-        return array('status' => 'Success', 'message' => "Transferencia Anulada");
+        $var1="0";
+        if(isset($_GET['id_tr'])){
+            $var1=$transaction_var['tid'];
+        }
+        //$this->db->delete('transactions', array('id' => $id));
+        return array('status' => 'Success', 'message' => "Transferencia Anulada","id_inv"=>$var1);
 
 
     }
