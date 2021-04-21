@@ -258,16 +258,28 @@ class Transactions_model extends CI_Model
 
     //validando que sea un transaccion en la que se pague una factura
     if($transaction_var['tid']!=null && $transaction_var['tid']!='' && $transaction_var['tid']!=0){
-        $invoice = $this->db->get_where("invoices",array('tid' => $transaction_var['tid']))->row();
-        $data_invoice['pamnt']=$invoice->pamnt-$transaction_var['total'];
-        if($data_invoice['pamnt']<=0){
-            $data_invoice['pamnt']=0;
-            $data_invoice['status']="due";
-        }else{
-            $data_invoice['status']="partial";
-        }
+        if($transaction_var['cat']=="Sales"){
+            $invoice = $this->db->get_where("invoices",array('tid' => $transaction_var['tid']))->row();
+            $data_invoice['pamnt']=$invoice->pamnt-$transaction_var['total'];
+            if($data_invoice['pamnt']<=0){
+                $data_invoice['pamnt']=0;
+                $data_invoice['status']="due";
+            }else{
+                $data_invoice['status']="partial";
+            }
 
-        $this->db->update("invoices",$data_invoice,array('tid' =>$invoice->tid));
+            $this->db->update("invoices",$data_invoice,array('tid' =>$invoice->tid));
+        }else if($transaction_var['cat']=="Purchase"){
+                $purchase = $this->db->get_where("purchase",array('tid' => $transaction_var['tid']))->row();
+                $data_purchase['pamnt']=$purchase->pamnt-$transaction_var['total'];
+                if($data_purchase['pamnt']<=0){
+                    $data_purchase['pamnt']=0;
+                    $data_purchase['status']="due";
+                }else{
+                    $data_purchase['status']="partial";
+                }
+                $this->db->update("purchase",$data_purchase,array('tid' =>$purchase->tid));
+        }
 
     }
 
