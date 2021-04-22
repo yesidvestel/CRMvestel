@@ -50,12 +50,18 @@
 </article>
 <script type="text/javascript">
     $(document).ready(function () {
+        <?php 
+         $url1="transactions/translist";
+            if(isset($_GET['id_tr'])){
+                $url1="transactions/translist?id_tr=".$_GET['id_tr'];
+            }
+         ?>
        $('#trans_table').DataTable({
             "processing": true,
             "serverSide": true,
             "stateSave": true,
             "ajax": {
-                "url": "<?php echo site_url('transactions/translist')?>",
+                "url": "<?php echo site_url($url1)?>",
                 "type": "POST"
             },
             "columnDefs": [
@@ -126,12 +132,18 @@
     var action_url= $('#action-url').val();
     var razon_anulacion= $('#razon_anulacion').val();
     
-    
+    var id_tr="<?=isset($_GET['id_tr'])? $_GET['id_tr']:''?>";
+    if(id_tr!="" && id_tr!=null){
+        action_url+="?id_tr="+id_tr;
+    }
 
     $.post(baseurl+action_url,{deleteid:o_data,anulacion:anulacion,razon_anulacion:razon_anulacion},function(data){
         alert("Transferencia anulada");
         $("#estado_"+o_data).text("Anulada");
         $("#anula"+o_data).data("detalle",anulacion);
+        if(data.id_inv!=0){
+            window.location.replace(baseurl+"invoices/view?id="+data.id_inv);
+        }
     },'json');
 
 });

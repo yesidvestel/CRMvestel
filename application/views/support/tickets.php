@@ -138,6 +138,7 @@
                                         <div class="col-sm-6">
                                             <select name="tec" class="form-control" id="tecnicos2">
                                                 <option value='0'>Todos</option>
+                                                <option value='Sin Asignar'>Sin Asignar</option>
                                                 <?php
                                                     foreach ($tecnicoslista as $row) {
                                                         $cid = $row['id'];

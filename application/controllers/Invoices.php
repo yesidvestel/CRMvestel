@@ -413,7 +413,7 @@ class Invoices extends CI_Controller
                 
             }
             //codigo para pagar con saldo ya existente
-/*            $invoices = $this->db->select("*")->from("invoices")->where('csd='.$value['id'])->order_by('invoicedate',"DESC")->get()->result();
+/*            $invoices = $this->db->select("*")->from("invoices")->where('csd='.$value['id'])->order_by('invoicedate',"ASC")->get()->result();
             $lista_para_pagos_adelantados=array();
             $lista_para_pagos_faltantes=array();
             $saldo_dispo_total=0;
@@ -427,24 +427,35 @@ class Invoices extends CI_Controller
                     if($inv->status=="partial"){
                         $total_a_cubrir=$total_a_cubrir-$inv->pamnt;
                     }
-                    $lista_para_pagos_faltantes[]=array("tid"=>$inv->tid,"status"=>$inv->status,"pamnt"=>$inv->pamnt,"total_a_cubrir"=>$total_a_cubrir,"total"=>$inv->total);
+                    $lista_para_pagos_faltantes[]=array("tid"=>$inv->tid,"status"=>$inv->status,"pamnt"=>$inv->pamnt,"total_a_cubrir"=>$total_a_cubrir,"total"=>$inv->total,"factura_totalizada"=>false);
                 }
             }
 
+            /* datos para probar en local
+                  delete from invoice_items where tid=37503;
+                    delete from invoices where tid=37503;
+                    update invoices set pamnt=64000 where tid=26261;
+                    update invoices set pamnt=50000, status="partial" where tid=7549;
+                    update transactions set credit="64000.00" where id=24870;
+
+
+
             
 
-            if(count($lista_para_pagos_faltantes!=0) && $saldo_dispo_total!=0 && $value['id']==5605){
+            if(count($lista_para_pagos_faltantes!=0) && $saldo_dispo_total!=0 && $value['id']==5605){//&& $value['id']==5605
 
                 foreach ($lista_para_pagos_adelantados as $key => $valuey) {
-                    foreach ($lista_para_pagos_faltantes as $key => $pag) {                        
-                        if($valuey['saldo_disponible']>=$pag['total_a_cubrir']){//parte en la que sea mayor el saldo diponible completada parcialmente falta hacer lo de dividir transacciones
+                    foreach ($lista_para_pagos_faltantes as $key2 => $pag) { 
+                    var_dump($valuey['saldo_disponible']." total=".$pag['total_a_cubrir']);                       
+                        if($valuey['saldo_disponible']>=$pag['total_a_cubrir'] && $pag['factura_totalizada']==false){//parte en la que sea mayor el saldo diponible completada parcialmente falta hacer lo de dividir transacciones
 
-                            $tr = $this->db->get_where("transactions", array("tid"=>$valuey['tid'],"credit"=>$valuey['pamnt']))->row();
+                            $tr = $this->db->get_where("transactions", array("tid"=>$valuey['tid'],"credit"=>$valuey['pamnt'],"cat!="=>"Purchase"))->row();
                             //actualizando datos de la factura a pagar
                             $data= array();
                             $data['pamnt']=$pag['total_a_cubrir']+$pag['pamnt'];
                             $data['status']="paid";
                             $lista_para_pagos_adelantados[$key]['saldo_disponible']-=$pag['total_a_cubrir'];
+                            $valuey['saldo_disponible']=$lista_para_pagos_adelantados[$key]['saldo_disponible'];
                              $data['pmethod']="Cash";
                             $this->db->update("invoices",$data,array('tid' =>$pag['tid']));
                             //actualizando datos del invoice que contiene el pago adelantado
@@ -456,6 +467,13 @@ class Invoices extends CI_Controller
                             //editando transaccion que contiene el pago adelantado
                             $data_transaccion=array();                            
                             $data_transaccion['credit']=$valuey['pamnt'];
+
+                            if(strpos(strtolower($tr->note), strtolower("credito_inicial"))!==false){
+                                
+                            }else{
+                                $data_transaccion['note']=$tr->note." #credito_inicial=".$tr->credit;    
+                            }                        
+
                             $this->db->update("transactions",$data_transaccion,array('id' =>$tr->id));
                             
                             //creando transaccion
@@ -488,14 +506,22 @@ class Invoices extends CI_Controller
 
                             $this->db->insert("transactions",$data_transaccion);
 
-                        }else if($valuey['saldo_disponible']>50){//parte en la que sea menor el saldo diponible completada es decir pago parcial falta todo 
-                            $tr = $this->db->get_where("transactions", array("tid"=>$valuey['tid'],"credit"=>$valuey['pamnt']))->row();
+                            //desactivar row para que no sea mas iterada si ya se cubrio la deuda
+                            $data_transaccion['factura_totalizada']=true;
+                            $pag['factura_totalizada']=true;
+                            $lista_para_pagos_faltantes[$key2]['factura_totalizada']=true;
+
+                        }else if($valuey['saldo_disponible']>50 && $pag['factura_totalizada']==false){//parte en la que sea menor el saldo diponible completada es decir pago parcial 
+                            $tr = $this->db->get_where("transactions", array("tid"=>$valuey['tid'],"credit"=>$valuey['pamnt'],"cat!="=>"Purchase"))->row();
                             //actualizando datos de la factura a pagar
                             $data= array();
                             $data['pamnt']=$valuey['saldo_disponible']+$pag['pamnt'];
-                            $data['status']="paid";
+                            $data['status']="partial";
                             $lista_para_pagos_adelantados[$key]['saldo_disponible']=0;
+                            $valuey['total_a_cubrir']=0;
                              $data['pmethod']="Cash";
+                             $lista_para_pagos_faltantes[$key2]['total_a_cubrir']=$data['total']-$data['pamnt'];//paso necesario para cuando se pretenda pagar con dos saldos adelantados y no alcance el primero a totalizar la deuda
+                             $pag['total_a_cubrir']=$lista_para_pagos_faltantes[$key2]['total_a_cubrir'];
                             $this->db->update("invoices",$data,array('tid' =>$pag['tid']));
                             //actualizando datos del invoice que contiene el pago adelantado
                             $data= array();
@@ -506,6 +532,13 @@ class Invoices extends CI_Controller
                             //editando transaccion que contiene el pago adelantado
                             $data_transaccion=array();                            
                             $data_transaccion['credit']=$valuey['pamnt'];
+
+                            if(strpos(strtolower($tr->note), strtolower("credito_inicial"))!==false){
+                                
+                            }else{
+                                $data_transaccion['note']=$tr->note." #credito_inicial=".$tr->credit;    
+                            }  
+
                             $this->db->update("transactions",$data_transaccion,array('id' =>$tr->id));
                             
                             //creando transaccion
@@ -537,6 +570,8 @@ class Invoices extends CI_Controller
 
 
                             $this->db->insert("transactions",$data_transaccion);
+
+
                             
 
                         }

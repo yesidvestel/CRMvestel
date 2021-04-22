@@ -339,6 +339,11 @@
                             </thead>
                             <tbody id="activity">
                             <?php foreach ($activity as $row) {
+                                if($row['estado']=="Anulada" ){
+                                    $row['note']="<span style='color:red;'>Transaccion Anulada</span>";
+                                }else if($this->aauth->get_user()->roleid>=4){
+                                    $row['note'].=", <a style='color:blue;' href='".base_url()."transactions/index?id_tr=".$row['id']."'>Ir a Anular<a/>";
+                                }
 
                                 echo '<tr>
                             <td>' . $row['date'] . '</td>

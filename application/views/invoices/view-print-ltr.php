@@ -232,7 +232,7 @@
 			$f1 = date(" F ",strtotime($invoice['invoicedate']));
             if(count($lista_invoices)>0 || $is_multiple){
                 //$cantidad_total+=$invoice['total'];
-                $transacciones = $this->db->order_by("id","DESC")->get_where("transactions",array("tid"=>$invoice['tid']))->result_array();
+                $transacciones = $this->db->order_by("id","DESC")->get_where("transactions",array("tid"=>$invoice['tid'],"estado"=>"null"))->result_array();
                 $valor=$invoice['total'];
                 if(count($transacciones)!=0){                    
                     $valor1=intval($transacciones[0]['credit']);
@@ -252,7 +252,7 @@
                     echo '<td class="t_center">' . amountExchange($valor) . '</td>
                                 </tr>';
                 }else{
-                     $transacciones = $this->db->order_by("id","DESC")->get_where("transactions",array("tid"=>$invoice['tid']))->result_array();
+                     $transacciones = $this->db->order_by("id","DESC")->get_where("transactions",array("tid"=>$invoice['tid'],"estado"=>null))->result_array();
                         $valor=$invoice['total'];
                         if(count($transacciones)!=0){                    
                             $valor1=intval($transacciones[0]['credit']);
@@ -285,7 +285,7 @@
 
                 }
            foreach ($lista_invoices as $key => $factura) {
-            $transacciones = $this->db->order_by("id","DESC")->get_where("transactions",array("tid"=>$factura['tid']))->result_array();
+            $transacciones = $this->db->order_by("id","DESC")->get_where("transactions",array("tid"=>$factura['tid'],"estado"=>null))->result_array();
                 $valor=$factura['total'];
                 if(count($transacciones)!=0){                    
                     $valor1=intval($transacciones[0]['credit']);
