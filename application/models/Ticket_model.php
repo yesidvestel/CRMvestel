@@ -207,7 +207,12 @@ class Ticket_model extends CI_Model
             $this->db->where('status=', $filt2['estado']);
         }
         if($filt2['tecnico']!='' && $filt2['tecnico']!='0' && $filt2['tecnico']!='undefined'){
-         $this->db->where('asignado=', $filt2['tecnico']);   
+            if($filt2['tecnico']=="Sin Asignar"){
+                $this->db->where('asignado=', '');   
+            }else{
+                $this->db->where('asignado=', $filt2['tecnico']);          
+            }
+         
         }
         
         if($filt2['opcselect']!=''){
