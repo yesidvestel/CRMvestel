@@ -161,7 +161,7 @@
                                     <?php echo $details['Ipremota'] ?>                                    
                                 </div>
                                 <div class="col-md-6">
-                                    <?php echo $barrio['barrio'] ?>                                    
+                                    <?php echo $barrio['comentario'] ?>                                    
                                 </div>
                                 
                                 
