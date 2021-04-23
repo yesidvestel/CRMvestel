@@ -248,7 +248,20 @@
                 }else{
                     $cantidad_total_a_restar+=$valor;
                 }
-                
+
+                        if($invoice['status']=="paid"){
+                            
+                        }else{
+
+                            $valor=$invoice['total'];
+                            if(count($transacciones)>=2 && $invoice['status']=="partial"){
+                                //valor de lo que falta mas la transaccion realizada
+                                $valor=($invoice['total']-$invoice['pamnt'])+$transacciones[0]['credit'];
+                            }
+
+                        }
+
+
                     echo '<tr class="item' . $flag . '"> 
                                 <td>' . strftime("%B", strtotime($f1)). ' CTA:'. $invoice['tid'].'</td>';
                     echo '<td class="t_center">' . amountExchange($valor) . '</td>
@@ -267,7 +280,7 @@
                             }
                         }else{
                             $cantidad_total_a_restar+=$valor;
-                        }
+                        }                
                     $porcentaje=($cantidad_total_a_restar*100)/$invoice['total'];
                     $lista_items=$this->db->get_where("invoice_items",array('tid' => $invoice['tid']))->result();
 
@@ -276,6 +289,13 @@
                             $valor_item=($porcentaje*$value->subtotal)/100;    
                         }else{
                             $valor_item=$value->subtotal;
+                            if(count($transacciones)>=2 && $invoice['status']=="partial"){
+                                //valor de lo que falta mas la transaccion realizada
+                                $valorx=($invoice['total']-$invoice['pamnt'])+$transacciones[0]['credit'];
+                                $porcentaje2=($valorx*100)/$invoice['total'];
+                                $valor_item=($porcentaje2*$value->subtotal)/100;    
+
+                            }
                         }
                         
                         echo '<tr class="item' . $flag . '"> 
@@ -303,10 +323,24 @@
                     $cantidad_total_a_restar+=$valor;
                 }
                 //$cantidad_total+=$factura['total'];
-                
+
+
+                //aplicacion de caso en que se pague con mas de dos transacciones una facatura
+                if($factura['status']=="paid"){
+                            
+                        }else{
+
+                            $valor=$factura['total'];
+                            if(count($transacciones)>=2 && $factura['status']=="partial"){
+                                //valor de lo que falta mas la transaccion realizada
+                                $valor=($factura['total']-$factura['pamnt'])+$transacciones[0]['credit'];
+                            }
+
+                        }
+                        //end 
                 $f1 = date(" F ",strtotime($factura['invoicedate']));
             echo '<tr class="item' . $flag . '"> <td>' . strftime("%B", strtotime($f1)). ' CTA:'. $factura['tid'].'</td>';
-            echo '<td class="t_center">' . amountExchange( $factura['total']) . '</td></tr>';
+            echo '<td class="t_center">' . amountExchange( $valor) .'</td></tr>';
             }
             $fill = !$fill;
 
