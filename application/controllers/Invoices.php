@@ -426,7 +426,6 @@ class Invoices extends CI_Controller
                 if(($inv->status=="due" || $inv->status=="partial") && $inv->pamnt==$inv->total){
                     $this->db->update("invoices",array('status' =>"paid"),array("id"=>$inv->id));
                     $inv->status="paid";   
-                    var_dump($inv->id);
                 }
 
                 if($inv->pamnt>$inv->total){
