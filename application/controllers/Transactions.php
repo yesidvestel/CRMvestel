@@ -137,8 +137,12 @@ class Transactions extends CI_Controller
                     $array_facturas2[]=$id_factura;
                     $monto=$valor_restante_monto;  
                     
+                }else if($valor_restante_monto<0 && $monto>0 && $factura_var->status=="partial"){
+                    $montos[$id_factura]=$monto;
+                    $array_facturas2[]=$id_factura;
+                    $monto=$valor_restante_monto;  
+                    break;
                 }
-
                 
             }
 
@@ -149,7 +153,7 @@ class Transactions extends CI_Controller
                 $id_fact_pagadas="".$id_factura;
             }else{
                 $id_fact_pagadas.=",".$id_factura;
-            }
+            }            
             $factura_var = $this->db->get_where('invoices',array('tid'=>$id_factura))->row();
             $customer=$this->db->get_where('customers',array('id'=>$factura_var->csd))->row();
             //codigo copiado
