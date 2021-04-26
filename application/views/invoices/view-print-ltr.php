@@ -407,12 +407,15 @@
         $rming = 0;
 
     }
+	$user = $this->aauth->get_user()->username;
+	$perfil = $this->aauth->get_user()->roleid;
+	$rol = user_role($perfil);
     echo amountExchange($rming, $invoice['multi2']);
     echo '</strong></td>
 		</tr>
 		</table><br>
 		<strong>' . $this->lang->line('Status') . ': ' . $this->lang->line(ucwords($invoice['status'])).'</strong>
-		<div class="sign1"><img src="' . FCPATH . 'userfiles/employee_sign/' . $employee['sign'] . '" width="160" height="50" border="0" alt=""></div><div class="sign2">(' . $employee['name'] . ')</div><div class="sign3">' . user_role($employee['roleid']) . '</div> <div class="terms">' . $invoice['notes'] . '<hr><strong>' . $this->lang->line('Terms') . ':</strong>';
+		<div class="sign2">(' . $user . ')</div><div class="sign3">' . user_role($perfil) . '</div> <div class="terms">' . $invoice['notes'] . '<hr><strong>' . $this->lang->line('Terms') . ':</strong>';
 
     echo '<strong>' . $invoice['termtit'] . '</strong><br>' . $invoice['terms'];
     ?></div>
