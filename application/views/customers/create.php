@@ -605,9 +605,10 @@ alert(selected);
 									//marcamos obciones en el selector
 									document.formulario1.barrio.length = num_opts;
 									//colocamos las obciones array
+                                    mis_opts=mis_opts.sort();
 									for(i=0; i<num_opts; i++){
-										document.formulario1.barrio.options[i].value=mis_opts.sort[i];
-										document.formulario1.barrio.options[i].text=mis_opts.sort[i];
+										document.formulario1.barrio.options[i].value=mis_opts[i];
+										document.formulario1.barrio.options[i].text=mis_opts[i];
 									}
 										}else{
 											//resultado si no hay obciones
