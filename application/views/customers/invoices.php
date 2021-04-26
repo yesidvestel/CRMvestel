@@ -35,7 +35,7 @@
                     <strong>TOTAL</strong>
                     </div>
                     <div class="col-md-10">
-                    <?php echo amountFormat($due['total']-$due['pamnt']) ?>
+                    <?php echo amountFormat(($due['total']-$due['pamnt'])+$money['debit']) ?>
                     </div>
                 </div>
             </div>
