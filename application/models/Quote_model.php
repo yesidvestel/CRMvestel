@@ -194,11 +194,12 @@ class Quote_model extends CI_Model
 		
         if ($this->db->insert('tickets', $data)) {
 			//agregar agenda
-			
+		$boleta = $this->db->get_where('tickets', array('codigo' => $nticket))->row();
+		$abonado = $this->db->get_where('customers', array('id' => $boleta->cid))->row();
 		if ($agendar==si){
 		$data2 = array(
 			'idorden' => $nticket,
-			'title' => $detalle.' '.$hora.' Orden #'.$nticket,
+			'title' => $detalle.' '.$hora.' Usuario #'.$abonado->abonado,
             'start' => date($start->format("Y-m-d")." ".$hora2),
             'end' => '',
             'description' => strip_tags($section),
