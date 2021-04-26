@@ -1176,14 +1176,15 @@ class Customers extends CI_Controller
             $this->load->view('fixed/footer');
         }
     }
-    function prueba_api(){
+    public function prueba_api(){
         /* API URL */
         $url = 'https://siigonube.siigo.com:50050/connect/token';
              
         /* Init cURL resource */
         $ch = curl_init($url);            
         /* Array Parameter Data */
-        $data =  array('grant_type'=>'password', 'username'=>'VESGATELEVISIONSAS\\VESGAT17681@apionmicrosoft.com','password'=>')QP>x3(9dN','scope'=>'WebApi offline_access');            
+        $data =  array('grant_type'=>'password', 'username'=>'VESGATELEVISIONSAS\\VESGAT17681@apionmicrosoft.com','password'=>')QP>x3(9dN','scope'=>'WebApi offline_access');
+        // $data =  array('grant_type'=>'password', 'username'=>'VesgaTelecomunicacionesSAS\\VesgaT49791@apionmicrosoft.com','password'=>'h1U~@r339B','scope'=>'WebApi offline_access');            
         /* set the content type json */
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
@@ -1192,7 +1193,7 @@ class Customers extends CI_Controller
                     'Accept: application/json'
                 ));
          /* pass encoded JSON string to the POST fields */
-        curl_setopt($ch, CURLOPT_POST, 4);        
+        //curl_setopt($ch, CURLOPT_POST, 4); al parecer esta linea no es necesaria        
         curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));        
         /* set return type json */
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -1201,11 +1202,51 @@ class Customers extends CI_Controller
          $err = curl_error($ch);  
         /* close cURL resource */
         curl_close($ch);
-        var_dump($result);
+        $result =json_decode($result);
+        var_dump($result->access_token);
+        $_SESSION['token_var']=$result->access_token;
+        $_SESSION['token_2']=$result->refresh_token;
+        $_SESSION['fecha']=date("Y-m-d H:i:s");
         if ($err)
          {
               var_dump($err);
          }
+    }
+    public function guardar_factura(){
+        //var_dump($_SESSION['token_var']);
+        $url = "http://siigoapi.azure-api.net/siigo/api/v1/Invoice/Save?namespace=1";
+        $data= $this->customers->getClientData();
+        $data=json_decode($data);
+        /* Init cURL resource */
+        $ch = curl_init($url); 
+         /* set the content type json */
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                    'Authorization: Bearer {'.$_SESSION["token_var"].'}',
+                    'Content-Type: application/json',
+                    'Ocp-Apim-Subscription-Key: 56d5dea1b4754903a4c1adf6f514d5cc'
+                ));
+
+        /* pass encoded JSON string to the POST fields */
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));        
+        /* set return type json */
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        /* execute request */
+        $result = curl_exec($ch);
+         $err = curl_error($ch);  
+        /* close cURL resource */
+        curl_close($ch);
+        $result =json_decode($result);
+        var_dump($result);
+        
+        
+        if ($err)
+         {
+              var_dump($err);
+         }
+        
+        
     }
 
 }

@@ -1185,6 +1185,113 @@ class Customers_model extends CI_Model
         $ips_remotas['villanueva']="80.0.".$x.".".$y;
         return $ips_remotas;
     }
+    public function getClientData(){
+        $data_json_string='{
+    "Header": {
+        "Id": 0,
+        "DocCode": 45558,
+        "Number": 0,
+        "EmailToSend": null,
+        "DocDate": "20200203",
+        "MoneyCode": "COP",
+        "ExchangeValue": 0,
+        "DiscountValue": 0,
+        "VATTotalValue": 7246.51,
+        "ConsumptionTaxTotalValue": 0,
+        "TaxDiscTotalValue": 4195.35,
+        "RetVATTotalID": -1,
+        "RetVATTotalPercentage": -1,
+        "RetVATTotalValue": 0,
+        "RetICATotalID": -1,
+        "RetICATotalValue": 0,
+        "RetICATotaPercentage": -1,
+        "TotalValue": 41190.7,
+        "TotalBase": 38139.54,
+        "SalesmanIdentification": "963852741",
+        "Observations": "Registro automático API",
+        "Account": {
+            "IsSocialReason": true,
+            "FullName": "Prueba Prueba",
+            "FirstName": "Prueba",
+            "LastName": "Prueb",
+            "IdTypeCode": "120009",
+            "Identification": "123456789",
+            "CheckDigit": 0,
+            "BranchOffice": 0,
+            "IsVATCompanyType": false,
+            "City": {
+                "CountryCode": "Co",
+                "StateCode": "11",
+                "CityCode": "11001"
+            },
+            "Address": "Dirección Tercero prueba",
+            "Phone": {
+                "Indicative": 0,
+                "Number": 9466474,
+                "Extention": 0
+            }
+        },
+        "Contact": {
+            "Code": 1,
+            "Phone1": {
+                "Indicative": 1,
+                "Number": 6359150,
+                "Extention": 1320
+            },
+            "Mobile": {
+                "Indicative": 0,
+                "Number": 0,
+                "Extention": 0
+            },
+            "EMail": "joao@prueba.com",
+            "FirstName": "Contacto",
+            "LastName": "JOAO",
+            "IsPrincipal": true,
+            "Gender": 1,
+            "BirthDate": ""
+        },
+        "CostCenterCode": "",
+        "SubCostCenterCode": ""
+    },
+    "Items": [
+        {
+            "ProductCode": "Item-2",
+            "Description": "Descripción producto",
+            "GrossValue": 38139.54,
+            "BaseValue": 38139.54,
+            "Quantity": 2,
+            "UnitValue": 19069.77,
+            "DiscountValue": 0,
+            "DiscountPercentage": 0,
+            "TaxAddName": "IVA 19%",
+            "TaxAddId": 3440,
+            "TaxAddValue": 7246.51,
+            "TaxAddPercentage": 19,
+            "TaxDiscountName": "Retefuente 11%",
+            "TaxDiscountId": 3446,
+            "TaxDiscountValue": 4195.35,
+            "TaxDiscountPercentage": 11,
+            "TotalValue": 41190.7,
+            "ProductSubType": 0,
+            "TaxAdd2Name": "",
+            "TaxAdd2Id": -1,
+            "TaxAdd2Value": 0,
+            "TaxAdd2Percentage": 0,
+            "WareHouseCode": null,
+            "SalesmanIdentification": null
+        }
+    ],
+    "Payments": [
+        {
+            "PaymentMeansCode": 2035,
+            "Value": 41190.7,
+            "DueDate": "20200321",
+            "DueQuote": 0
+        }
+    ]
+}';
+return $data_json_string;
+    }
 
 
 }
