@@ -622,6 +622,7 @@ alert(selected);
 									num_opts=mis_opts.length;
 									//marcamos obciones en el selector
 									document.formulario1.barrio.length = num_opts;
+									mis_opts=mis_opts.sort();
 									//colocamos las obciones array
 									for(i=0; i<num_opts; i++){
 										document.formulario1.barrio.options[i].value=mis_opts[i];
