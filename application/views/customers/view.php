@@ -82,7 +82,7 @@
 											Servicios
                                         </li>
                                         <li class="list-group-item">
-                                            <span class="tag tag-default tag-pill bg-primary float-xs-right"><?php echo amountFormat($money['credit']) ?></span>
+                                            <span class="tag tag-default tag-pill bg-primary float-xs-right"><?php echo amountFormat($money['credit']-$money['debit']) ?></span>
                                             <?php echo $this->lang->line('Income') ?>
 											
                                         </li>
@@ -92,7 +92,7 @@
                                         </li>
 
                                         <li class="list-group-item">
-                                            <span class="tag tag-default tag-pill bg-danger float-xs-right"><?php echo amountFormat($due['total']-$due['pamnt']) ?></span>
+                                            <span class="tag tag-default tag-pill bg-danger float-xs-right"><?php echo amountFormat(($due['total']-$due['pamnt'])+$money['debit']) ?></span>
                                             <?php echo $this->lang->line('Total Due') ?>
 											
                                         </li>
