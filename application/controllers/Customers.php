@@ -1183,8 +1183,8 @@ class Customers extends CI_Controller
         /* Init cURL resource */
         $ch = curl_init($url);            
         /* Array Parameter Data */
-        $data =  array('grant_type'=>'password', 'username'=>'VESGATELEVISIONSAS\\VESGAT17681@apionmicrosoft.com','password'=>')QP>x3(9dN','scope'=>'WebApi offline_access');
-        // $data =  array('grant_type'=>'password', 'username'=>'VesgaTelecomunicacionesSAS\\VesgaT49791@apionmicrosoft.com','password'=>'h1U~@r339B','scope'=>'WebApi offline_access');            
+        //$data =  array('grant_type'=>'password', 'username'=>'VESGATELEVISIONSAS\\VESGAT17681@apionmicrosoft.com','password'=>')QP>x3(9dN','scope'=>'WebApi offline_access');
+         $data =  array('grant_type'=>'password', 'username'=>'VesgaTelecomunicacionesSAS\\VesgaT49791@apionmicrosoft.com','password'=>'h1U~@r339B','scope'=>'WebApi offline_access');            
         /* set the content type json */
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
@@ -1224,7 +1224,7 @@ class Customers extends CI_Controller
         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
                     'Authorization: Bearer {'.$_SESSION["token_var"].'}',
                     'Content-Type: application/json',
-                    'Ocp-Apim-Subscription-Key: 56d5dea1b4754903a4c1adf6f514d5cc'
+                    'Ocp-Apim-Subscription-Key: 38c6a1bdfbb948d182f03fe232ab310b'
                 ));
 
         /* pass encoded JSON string to the POST fields */
