@@ -125,8 +125,7 @@ class SiigoAPI
                 ],
                 CURLOPT_POSTFIELDS => $invoiceData,
             ];
-            list($httpCode, $resp)
-                = $this->cReq->curlPost($url, [], $cOptions);
+            list($httpCode, $resp)= $this->cReq->curlPost($url, [], $cOptions);
             if ($httpCode === 401) {
                 $this->getAuth();
             }
@@ -134,13 +133,27 @@ class SiigoAPI
         } while ($i < 2 && $httpCode === 401);
         _log("Envío de factura finalizado [$httpCode]");
 
-        return $resp;
+        return array('respuesta' => $resp,"httpCode"=>$httpCode );
     }
 
-    public function accionar($api){
+    public function accionar($api,$invoiceData){
     	
         var_dump($api->getInvoices(1));
-        $invoiceData = file_get_contents(dirname(__FILE__) . '/siigo_folder/invoice.json');
-        var_dump($api->saveInvoice($invoiceData));
+        //$invoiceData = file_get_contents(dirname(__FILE__) . '/siigo_folder/invoice.json');
+        $respuesta=$api->saveInvoice($invoiceData);
+        echo "<br>";
+        var_dump($respuesta);
+        echo "<br>";
+        var_dump($respuesta['httpCode']);
+        if(strpos($respuesta['respuesta'],"198")!==false){//200 es enviado, 400 es error
+        	echo "Agregar +1";
+        }
+        if($respuesta['httpCode']==200 ||$respuesta['httpCode']==100){//100
+        	echo "Factura Guardada";
+        }else{
+        	echo "Ubo algun error";
+        }
+        
+        
     }
 }
