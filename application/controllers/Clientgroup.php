@@ -249,7 +249,7 @@ class Clientgroup extends CI_Controller
         $this->load->library('Excel');
     
     //define column headers
-    $headers = array('Abonado' => 'string','Cedula' => 'string', 'Nombre' => 'string', 'Celular' => 'string', 'Direccion' => 'string','Barrio' => 'string', 'Estado' => 'string','Deuda' => 'string','Suscripcion' => 'string');
+    $headers = array('Abonado' => 'string','Cedula' => 'string', 'Nombre' => 'string', 'Celular' => 'string', 'Direccion' => 'string','Barrio' => 'string', 'Estado' => 'string','Deuda' => 'integer','Suscripcion' => 'integer');
     
     //fetch data from database
     //$salesinfo = $this->product_model->get_salesinfo();
