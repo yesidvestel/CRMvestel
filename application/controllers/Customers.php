@@ -1249,4 +1249,10 @@ class Customers extends CI_Controller
         
     }
 
+    public function integracion(){
+        $this->load->library('SiigoAPI');
+        $api = new SiigoAPI();
+        $api->accionar($api);        
+    }
+
 }

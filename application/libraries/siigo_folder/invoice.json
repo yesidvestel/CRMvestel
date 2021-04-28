@@ -1,0 +1,104 @@
+{
+    "Header": {
+        "Id": 0,
+        "DocCode": 10913,
+        "Number": 502,
+        "EmailToSend": null,
+        "DocDate": "20210427",
+        "MoneyCode": "COP",
+        "ExchangeValue": 0,
+        "DiscountValue": 0,
+        "VATTotalValue": 7246.51,
+        "ConsumptionTaxTotalValue": 0,
+        "TaxDiscTotalValue": 0,
+        "RetVATTotalID": -1,
+        "RetVATTotalPercentage": -1,
+        "RetVATTotalValue": 0,
+        "RetICATotalID": -1,
+        "RetICATotalValue": 0,
+        "RetICATotaPercentage": -1,
+        "TotalValue": 32246.51,
+        "TotalBase": 25000.00,
+        "SalesmanIdentification": "963852741",
+        "Observations": "Registro automático API",
+        "Account": {
+            "IsSocialReason": true,
+            "FullName": "JANNINI MAZIEL ESTUPIÑAN ALFONSO",
+            "FirstName": "JANNINI",
+            "LastName": "ESTUPIÑAN",
+            "IdTypeCode": "13",
+            "Identification": "1118197537",
+            "CheckDigit": 0,
+            "BranchOffice": 0,
+            "IsVATCompanyType": false,
+            "City": {
+                "CountryCode": "Co",
+                "StateCode": "11",
+                "CityCode": "11001"
+            },
+            "Address": "Dirección Tercero prueba",
+            "Phone": {
+                "Indicative": 0,
+                "Number": 9466474,
+                "Extention": 0
+            }
+        },
+        "Contact": {
+            "Code": 1,
+            "Phone1": {
+                "Indicative": 1,
+                "Number": 6359150,
+                "Extention": 1320
+            },
+            "Mobile": {
+                "Indicative": 0,
+                "Number": 0,
+                "Extention": 0
+            },
+            "EMail": "joao@prueba.com",
+            "FirstName": "Contacto",
+            "LastName": "JOAO",
+            "IsPrincipal": true,
+            "Gender": 1,
+            "BirthDate": ""
+        },
+        "CostCenterCode": "",
+        "SubCostCenterCode": ""
+    },
+    "Items": [
+        {
+            "ProductCode": "T02",
+            "Description": "Descripción producto",
+            "GrossValue": 25000.00,
+            "BaseValue": 25000.00,
+            "Quantity": 1,
+            "UnitValue": 25000.00,
+            "DiscountValue": 0,
+            "DiscountPercentage": 0,
+            "TaxAddName": "IVA 19%",
+            "TaxAddId": 5869,
+            "TaxAddValue": 7246.51,
+            "TaxAddPercentage": 19,
+            "TaxDiscountName": "Retefuente 11%",
+            "TaxDiscountId": 5871,
+            "TaxDiscountValue": 0,
+            "TaxDiscountPercentage": 11,
+            "TotalValue": 32246.51,
+            "ProductSubType": 0,
+            "TaxAdd2Name": "",
+            "TaxAdd2Id": -1,
+            "TaxAdd2Value": 0,
+            "TaxAdd2Percentage": 0,
+            "WareHouseCode": null,
+            "SalesmanIdentification": 963852741
+        }
+    ],
+    "Payments": [
+        {
+            "PaymentMeansCode": 2512,
+            "Value": 32246.51,
+            "DueDate": "20210427",
+            "DueQuote": 0
+        }
+    ]
+}
