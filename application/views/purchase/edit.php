@@ -98,6 +98,7 @@
                                                 	<option value="Yopal">Yopal</option>
                                                   	<option value="Monterrey">Monterrey</option>
                                                 	<option value="Villanueva">Villanueva</option>
+													<option value="Mocoa">Mocoa</option>
                                             </select>
                                                
                                     </div>
