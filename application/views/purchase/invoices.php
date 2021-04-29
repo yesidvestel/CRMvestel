@@ -45,6 +45,7 @@ text-transform: capitalize;
                     <th>Order #</th>
                     <th><?php echo $this->lang->line('Supplier') ?></th>
                     <th><?php echo $this->lang->line('Date') ?></th>
+					<th>Detalle</th>
                     <th><?php echo $this->lang->line('Amount') ?></th>
                     <th>Sede</th>
                     <th><?php echo $this->lang->line('Status') ?></th>
@@ -62,6 +63,7 @@ text-transform: capitalize;
                     <th>Order #</th>
                     <th><?php echo $this->lang->line('Supplier') ?></th>
                     <th><?php echo $this->lang->line('Date') ?></th>
+					<th>Detalle</th>
                     <th><?php echo $this->lang->line('Amount') ?></th>
                     <th>Sede</th>
                     <th><?php echo $this->lang->line('Status') ?></th>
