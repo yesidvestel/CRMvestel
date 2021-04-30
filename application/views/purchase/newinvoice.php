@@ -287,8 +287,7 @@
                                 </td>
                             </tr>
                             <tr class="sub_c" style="display: table-row;">
-                                <td colspan="2"><?php echo $this->lang->line('Payment Terms') ?> <select name="pterms"
-                                                                                                         class="selectpicker form-control"><?php foreach ($terms as $row) {
+                                <td colspan="2"><?php echo $this->lang->line('Payment Terms') ?> <select name="pterms" class="selectpicker form-control"><?php foreach ($terms as $row) {
                                             echo '<option value="' . $row['id'] . '">' . $row['title'] . '</option>';
                                         } ?>
 

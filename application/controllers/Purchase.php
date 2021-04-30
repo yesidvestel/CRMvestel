@@ -269,6 +269,7 @@ class Purchase extends CI_Controller
             $row[] = $invoices->tid;
             $row[] = $invoices->name;
             $row[] = dateformat($invoices->invoicedate);
+			$row[] = $invoices->notes;
             $row[] = amountFormat($invoices->total);
 			$row[] = $invoices->refer;
             $row[] = '<span class="st-' . $invoices->status . '">' . $invoices->status . '</span>';			
