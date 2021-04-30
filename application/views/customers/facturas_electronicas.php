@@ -6,7 +6,8 @@
             <div class="message"></div>
         </div>
         <div class="grid_3 grid_4 animated fadeInRight table-responsive">
-            <h5>Facturas Electronicas Cusmores</h5>
+            <h5>Facturas Electronicas Customer</h5>
+            <a style="color: white" class="btn btn-primary" onclick="openModal()" >Generar Factura Electronica</a>
 
             <hr>
             <table id="invoices" class="table-striped" cellspacing="0" width="100%">
@@ -40,26 +41,53 @@
 
 
 </article>
-<div id="delete_model" class="modal fade">
+<div id="generar_factura" class="modal fade">
     <div class="modal-dialog">
-     <?php if ($this->aauth->get_user()->roleid > 4) { ?>
+     <form id="" method="post" action="<?=base_url()?>facturasElectronicas/guardar">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title"><?php echo $this->lang->line('Delete Order') ?></h4>
+                <h4 class="modal-bodytitle">Generar Factura Electronica</h4>
             </div>
+
             <div class="modal-body">
-                <p><?php echo $this->lang->line('delete this order') ?></p>
+                
+                <div class="form-group row">
+
+                    <label class="col-sm-3 control-label"
+                           for="sdate2">Fecha</label>
+
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control required"
+                               placeholder="Start Date" name="sdate" id="sdate2"
+                                autocomplete="false" onclick="editar_z_index();" >
+                    </div>
+
+                </div>
+                <div class="form-group row">
+
+                    <label class="col-sm-3 control-label"
+                           for="sdate2">Servicios</label>
+                    <div  class="col-sm-9">
+                    <select id="servicios" name="servicios" class="form-control">
+                        <option>Television</option>
+                        <option>Internet</option>
+                        <option>Combo</option>
+                    </select>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
-                <input type="hidden" id="object-id" value="">
-                <input type="hidden" id="action-url" value="purchase/delete_i">
-                <button type="button" data-dismiss="modal" class="btn btn-primary" id="delete-confirm">Delete</button>
+                <input type="hidden" id="object-id" name="id" value="<?=$_GET['id']?>">
+                <input type="hidden" id="action-url" value="facturasElectronicas/generar">
+                <button type="submit"  class="btn btn-primary" >Generar</button>
                 <button type="button" data-dismiss="modal" class="btn">Cancel</button>
             </div>
+
         </div>
-        <?php } ?>
+        </form>
+        
     </div>
 </div>
 <script type="text/javascript">
@@ -83,4 +111,10 @@
         });
 
     });
+    function openModal(){
+        $("#generar_factura").modal("show");
+    }
+    function editar_z_index(){
+        $(".datepicker-container,datepicker-dropdown").css("z-index","5000");
+    }
 </script>

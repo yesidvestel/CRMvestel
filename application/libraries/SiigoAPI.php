@@ -138,7 +138,7 @@ class SiigoAPI
 
     public function accionar($api,$invoiceData){
     	
-        var_dump($api->getInvoices(1));
+        //var_dump($api->getInvoices(1));
         //$invoiceData = file_get_contents(dirname(__FILE__) . '/siigo_folder/invoice.json');
         $respuesta=$api->saveInvoice($invoiceData);
         echo "<br>";

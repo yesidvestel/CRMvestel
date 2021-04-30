@@ -21,8 +21,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Facturas_electronicas_model extends CI_Model
 {
     var $table = 'facturacion_electronica_siigo';
-    var $column_order = array(null, 'consecutivo_siigo', 'fecha', 'customer_id', 'invoice_id', 'servicios_facturados', "s1TotalValue","s1TaxValue");
-    var $column_search = array(null, 'consecutivo_siigo', 'fecha', 'customer_id', 'invoice_id', 'servicios_facturados', "s1TotalValue","s1TaxValue");
+    var $column_order = array('consecutivo_siigo', 'fecha', 'customer_id', 'invoice_id', 'servicios_facturados', "s1TotalValue","s1TaxValue");
+    var $column_search = array('consecutivo_siigo', 'fecha', 'customer_id', 'invoice_id', 'servicios_facturados', "s1TotalValue","s1TaxValue");
     var $order = array('fecha' => 'desc');
 
     public function __construct()
@@ -38,6 +38,9 @@ class Facturas_electronicas_model extends CI_Model
 
         $this->db->from($this->table);
         //$this->db->join('supplier', 'purchase.csd=supplier.id', 'left');
+        if(isset($_GET['id']) && $_GET['id']!=""){
+           $this->db->where("customer_id",$_GET['id']); 
+        }
 
         $i = 0;
 

@@ -80,4 +80,32 @@ class facturasElectronicas extends CI_Controller
         echo json_encode($output);
 
     }
+    public function guardar(){
+    	$this->load->library('SiigoAPI');
+        $api = new SiigoAPI();
+        $this->load->model("customers_model","customers");
+        $dataApi= $this->customers->getClientData();
+        $dataApi=json_decode($dataApi);
+        $consecutivo_siigo=$this->db->select("max(consecutivo_siigo)+1 as consecutivo_siigo")->from("facturacion_electronica_siigo")->get()->result();
+        $dataApi->Header->Number=$consecutivo_siigo[0]->consecutivo_siigo;
+        //customer data and facturacion_electronica_siigo table insert
+        $customer = $this->db->get_where("customers",array('id' =>$_POST['id']))->row();
+        //data siigo api
+       	$dataApi->Header->Account->FullName=strtoupper($customer->name." ".$customer->dosnombre." ".$customer->unoapellido." ".$customer->dosapellido);       	
+       	$dataApi->Header->Account->FullName=str_replace("?", "Ñ", $dataApi->Header->Account->FullName);
+       	$dataApi->Header->Account->FirstName=strtoupper(str_replace("?", "Ñ",$customer->name));
+       	$dataApi->Header->Account->LastName=strtoupper(str_replace("?", "Ñ",$customer->unoapellido));
+       	$dataApi->Header->Account->Identification=$customer->documento;
+       	//falta los datos de contacto;y saldos
+       	var_dump($dataApi->Header->Account->Identification);
+        var_dump($dataApi->Header->Number);
+        //facturacion_electronica_siigo table insert
+        $dataInsert=array();
+        $dataInsert['consecutivo_siigo']=$dataApi->Header->Number;
+        $dataInsert['fecha']=$_POST['sdate'];//falta cambiarle el formato
+        $dataInsert['customer_id']=$_POST['id'];
+        // end customer data facturacion_electronica_siigo table insert
+        $dataApi=json_encode($dataApi);        
+        //$api->accionar($api,$dataApi); 
+    }
 }

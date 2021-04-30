@@ -404,7 +404,7 @@
                                 </div>
                                 <div class="col-md-4" style="margin-top: 5px;">
 
-                                    <a href="<?php echo base_url('customers/facturas_electronicas?id=' . $details['id']) ?>"
+                                    <a href="<?php echo base_url('facturasElectronicas?id=' . $details['id']) ?>"
                                        class="btn btn-success btn-lg" style="border-right-width: 15px;border-left-width: 22px;"><i
                                                 class="icon-file-text2"></i> Facturas Electronicas</a>
 
