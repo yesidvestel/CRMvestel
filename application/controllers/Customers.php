@@ -1254,7 +1254,7 @@ class Customers extends CI_Controller
         $api = new SiigoAPI();
         $data= $this->customers->getClientData();
         $data=json_decode($data);
-        $data->Header->Number=509;
+        $data->Header->Number=510;
         $data=json_encode($data);
         //var_dump($data->Header->Number);
         $api->accionar($api,$data);        

@@ -402,6 +402,13 @@
                                                 class="icon-mobile-phone"></i> Llamadas</a>
 
                                 </div>
+                                <div class="col-md-4" style="margin-top: 5px;">
+
+                                    <a href="<?php echo base_url('customers/facturas_electronicas?id=' . $details['id']) ?>"
+                                       class="btn btn-success btn-lg" style="border-right-width: 15px;border-left-width: 22px;"><i
+                                                class="icon-file-text2"></i> Facturas Electronicas</a>
+
+                                </div>
                             </div>
                             <hr>
                             <h5 class="text-xs-center col-md-10">OBSERVACIONES</h5>

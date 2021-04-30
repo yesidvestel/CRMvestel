@@ -1221,8 +1221,8 @@ class Customers_model extends CI_Model
             "IsVATCompanyType": false,
             "City": {
                 "CountryCode": "Co",
-                "StateCode": "11",
-                "CityCode": "11001"
+                "StateCode": "85",
+                "CityCode": "85001"
             },
             "Address": "Dirección Tercero prueba",
             "Phone": {
@@ -1243,7 +1243,7 @@ class Customers_model extends CI_Model
                 "Number": 0,
                 "Extention": 0
             },
-            "EMail": "joao@prueba.com",
+            "EMail": "pesca@prueba.com",
             "FirstName": "Contacto",
             "LastName": "JOAO",
             "IsPrincipal": true,
