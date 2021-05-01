@@ -96,14 +96,35 @@ class facturasElectronicas extends CI_Controller
        	$dataApi->Header->Account->FirstName=strtoupper(str_replace("?", "Ñ",$customer->name));
        	$dataApi->Header->Account->LastName=strtoupper(str_replace("?", "Ñ",$customer->unoapellido));
        	$dataApi->Header->Account->Identification=$customer->documento;
-       	//falta los datos de contacto;y saldos
-       	var_dump($dataApi->Header->Account->Identification);
+       	if(strpos(strtolower($customer->ciudad),"monterrey" )!==false){
+           	$dataApi->Header->Account->City->CityCode="85162";	                                 
+        }else if(strpos(strtolower($customer->ciudad),"villanueva" )!==false){
+           	$dataApi->Header->Account->City->CityCode="85440";	                                 
+        }else if(strpos(strtolower($customer->ciudad),"mocoa" )!==false){
+           	$dataApi->Header->Account->City->StateCode="86";	                                 
+           	$dataApi->Header->Account->City->CityCode="86001";
+        }
+
+        $dataApi->Header->Account->Address=$customer->nomenclatura . ' ' . $customer->numero1 . $customer->adicionauno.' Nº '.$customer->numero2.$customer->adicional2.' - '.$customer->numero3;
+        $dataApi->Header->Account->Phone->Number=$customer->celular;
+        $dataApi->Header->Contact->Phone1->Number=$customer->celular2;
+        $dataApi->Header->Contact->EMail=$customer->email;
+        $dataApi->Header->Contact->FirstName=$dataApi->Header->Account->FirstName;
+        $dataApi->Header->Contact->LastName=$dataApi->Header->Account->LastName;
+        $dateTime=new DateTime($_POST['sdate']);
+        $dataApi->Header->DocDate=$dateTime->format("Ymd");
+        $dataApi->Payments[0]->DueDate=$dateTime->format("Ymd");
+       	//falta el manejo de los saldos saldos
+       	var_dump($dateTime->format("Ymd"));
+       	var_dump($dataApi->Payments[0]->DueDate);
         var_dump($dataApi->Header->Number);
-        //facturacion_electronica_siigo table insert
+        var_dump($dataApi->Header->Account->Phone->Number);
+        //facturacion_electronica_siigo table insert        
         $dataInsert=array();
         $dataInsert['consecutivo_siigo']=$dataApi->Header->Number;
-        $dataInsert['fecha']=$_POST['sdate'];//falta cambiarle el formato
+        $dataInsert['fecha']=$dateTime->format("Y-m-d");
         $dataInsert['customer_id']=$_POST['id'];
+        $dataInsert['servicios_facturados']=$_POST['servicios'];
         // end customer data facturacion_electronica_siigo table insert
         $dataApi=json_encode($dataApi);        
         //$api->accionar($api,$dataApi); 

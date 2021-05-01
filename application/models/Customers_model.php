@@ -1227,16 +1227,16 @@ class Customers_model extends CI_Model
             "Address": "Dirección Tercero prueba",
             "Phone": {
                 "Indicative": 0,
-                "Number": 9466474,
+                "Number": 0,
                 "Extention": 0
             }
         },
         "Contact": {
             "Code": 1,
             "Phone1": {
-                "Indicative": 1,
-                "Number": 6359150,
-                "Extention": 1320
+                "Indicative": 0,
+                "Number": 0,
+                "Extention": 0
             },
             "Mobile": {
                 "Indicative": 0,
