@@ -108,17 +108,34 @@ class facturasElectronicas extends CI_Controller
         $dataApi->Header->Account->Address=$customer->nomenclatura . ' ' . $customer->numero1 . $customer->adicionauno.' Nº '.$customer->numero2.$customer->adicional2.' - '.$customer->numero3;
         $dataApi->Header->Account->Phone->Number=$customer->celular;
         $dataApi->Header->Contact->Phone1->Number=$customer->celular2;
-        $dataApi->Header->Contact->EMail=$customer->email;
+        $dataApi->Header->Contact->Mobile->Number=$customer->celular;
+        if($customer->email!=""){
+        	$dataApi->Header->Contact->EMail=$customer->email;
+        }
+        //$dataApi->Header->Contact->EMail=$customer->email;//genera error sirve de validacion para mandar al final del desarrollo alertas con los posibles errores para que contacten con el desarrollador osease yo en caso tal
         $dataApi->Header->Contact->FirstName=$dataApi->Header->Account->FirstName;
         $dataApi->Header->Contact->LastName=$dataApi->Header->Account->LastName;
         $dateTime=new DateTime($_POST['sdate']);
         $dataApi->Header->DocDate=$dateTime->format("Ymd");
         $dataApi->Payments[0]->DueDate=$dateTime->format("Ymd");
        	//falta el manejo de los saldos saldos
-       	var_dump($dateTime->format("Ymd"));
+        if($_POST['servicios']=="Television"){
+        	$dataApi->Items[0]->Description="Servicio de Televisión por Cable";
+        	//agregar valores reales de televicion deacuerdo a que en diferentes a yopal cambia el valor
+        }else if($_POST['servicios']=="Internet"){
+        	//falta esta parte identificar el paquete de internet del usuario y agregar sus valores
+        }
+
+        if($_POST['servicios']=="Combo"){
+        	//agregar valores reales de televicion deacuerdo a que en diferentes a yopal cambia el valor
+        	//falta esta parte identificar el paquete de internet del usuario y agregar sus valores
+        	$dataApi->Items[0]->Description="Servicio de Televisión por Cable";
+        }
+
+       	/*var_dump($dateTime->format("Ymd"));
        	var_dump($dataApi->Payments[0]->DueDate);
         var_dump($dataApi->Header->Number);
-        var_dump($dataApi->Header->Account->Phone->Number);
+        var_dump($dataApi->Header->Account->Phone->Number);*/
         //facturacion_electronica_siigo table insert        
         $dataInsert=array();
         $dataInsert['consecutivo_siigo']=$dataApi->Header->Number;
@@ -126,7 +143,29 @@ class facturasElectronicas extends CI_Controller
         $dataInsert['customer_id']=$_POST['id'];
         $dataInsert['servicios_facturados']=$_POST['servicios'];
         // end customer data facturacion_electronica_siigo table insert
-        $dataApi=json_encode($dataApi);        
-        //$api->accionar($api,$dataApi); 
+        $dataApi=json_encode($dataApi); 
+        //var_dump($dataApi);
+        $retorno = $api->accionar($api,$dataApi); 
+
+        if($retorno['mensaje']=="Factura Guardada"){
+        	$this->db->insert("facturacion_electronica_siigo",$dataInsert);
+        }else{
+        	$error_era_consecutivo=false;
+        	for ($i=1; $i < 10 ; $i++) { 
+        		$dataApi=json_decode($dataApi);
+        		$dataApi->Header->Number= intval($dataApi->Header->Number)+$i;
+        		$dataApi=json_encode($dataApi);
+				$retorno2 = $api->accionar($api,$dataApi);         		
+				if($retorno2['mensaje']=="Factura Guardada"){
+        			$this->db->insert("facturacion_electronica_siigo",$dataInsert);
+        			$error_era_consecutivo=true;
+        			$i=11;
+        			break;
+        		}
+        	}
+        	if($error_era_consecutivo==false){
+        		var_dump($retorno['respuesta']);
+        	}
+        }
     }
 }

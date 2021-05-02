@@ -71,9 +71,9 @@
                            for="sdate2">Servicios</label>
                     <div  class="col-sm-9">
                     <select id="servicios" name="servicios" class="form-control">
-                        <option>Television</option>
-                        <option>Internet</option>
-                        <option>Combo</option>
+                        <option value="Television">Television</option>
+                        <option value="Internet">Internet</option>
+                        <option value="Combo">Combo</option>
                     </select>
                     </div>
                 </div>
