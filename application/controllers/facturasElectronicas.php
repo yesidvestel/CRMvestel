@@ -84,7 +84,13 @@ class facturasElectronicas extends CI_Controller
     	$this->load->library('SiigoAPI');
         $api = new SiigoAPI();
         $this->load->model("customers_model","customers");
-        $dataApi= $this->customers->getClientData();
+        $dataApi;
+        if($_POST['servicios']=="Combo"){
+        	$dataApi= $this->customers->getClientData2Productos();
+        }else{
+        	$dataApi= $this->customers->getClientData();
+        }
+        
         $dataApi=json_decode($dataApi);
         $consecutivo_siigo=$this->db->select("max(consecutivo_siigo)+1 as consecutivo_siigo")->from("facturacion_electronica_siigo")->get()->result();
         $dataApi->Header->Number=$consecutivo_siigo[0]->consecutivo_siigo;
@@ -131,18 +137,45 @@ class facturasElectronicas extends CI_Controller
         		foreach ($lista_de_productos as $key => $prod) {
         			$prod->product_name=strtolower(str_replace(" ", "",$prod->product_name ));
         			if($prod->product_name==$array_servicios['combo']){
-        				var_dump($prod->product_name);
+        				//var_dump($prod->product_name);
+        				$dataApi->Items[0]->ProductCode="I01";
         				if($prod->product_name=="3megasvc"){
+        					//valores para generar iva
+        					$valor_iva="3800";
+        					$dataApi->Items[0]->TaxAddName="IVA 19%";
+	        				$dataApi->Items[0]->TaxAddId="5869";
+	        				$dataApi->Items[0]->TaxAddValue=$valor_iva;
+	        				$dataApi->Items[0]->TaxAddPercentage="19";	
+	        				$dataApi->Header->VATTotalValue=$valor_iva;
+							//total
+							$dataApi->Payments[0]->Value=$prod->product_price;
+        					$dataApi->Items[0]->TotalValue=$prod->product_price;
+        					$dataApi->Header->TotalValue=$prod->product_price;
+        					//valores restados
+        					$dataApi->Items[0]->UnitValue=$prod->product_price-$valor_iva;
+        					$dataApi->Items[0]->BaseValue=$prod->product_price-$valor_iva;
+        					$dataApi->Items[0]->GrossValue=$prod->product_price-$valor_iva;
+
+        					$dataApi->Header->TotalBase=$prod->product_price-$valor_iva;
 
         				}else{
+        					//valores para no generar iva
         					$dataApi->Items[0]->TaxAddName="";
 	        				$dataApi->Items[0]->TaxAddId="-1";
 	        				$dataApi->Items[0]->TaxAddValue="0";
 	        				$dataApi->Items[0]->TaxAddPercentage="0";	
+	        				$dataApi->Header->VATTotalValue="0";	
 	        				//valores de total;
         					$dataApi->Payments[0]->Value=$prod->product_price;
         					$dataApi->Items[0]->TotalValue=$prod->product_price;
         					$dataApi->Header->TotalValue=$prod->product_price;
+
+        					$dataApi->Items[0]->UnitValue=$prod->product_price;
+        					$dataApi->Items[0]->BaseValue=$prod->product_price;
+        					$dataApi->Items[0]->GrossValue=$prod->product_price;
+
+        					$dataApi->Header->TotalBase=$prod->product_price;	
+
         				}
         				
         				
@@ -157,6 +190,63 @@ class facturasElectronicas extends CI_Controller
         	//agregar valores reales de televicion deacuerdo a que en diferentes a yopal cambia el valor
         	//falta esta parte identificar el paquete de internet del usuario y agregar sus valores
         	$dataApi->Items[0]->Description="Servicio de Televisión por Cable";
+
+        	//valores de internet
+
+        	$array_servicios=$this->customers->servicios_detail($customer->id);
+        	if($array_servicios['combo']!="no"){
+        		$dataApi->Items[1]->Description="Servicio de Internet ".$array_servicios['combo'];
+        		$lista_de_productos=$this->db->from("products")->like("product_name","mega","both")->get()->result();
+        		$array_servicios['combo']=strtolower(str_replace(" ", "",$array_servicios['combo'] ));
+        		foreach ($lista_de_productos as $key => $prod) {
+        			$prod->product_name=strtolower(str_replace(" ", "",$prod->product_name ));
+        			if($prod->product_name==$array_servicios['combo']){
+        				//var_dump($prod->product_name);
+        				$dataApi->Items[1]->ProductCode="I01";
+        				if($prod->product_name=="3megasvc"){
+        					//valores para generar iva
+        					$valor_iva="3800";
+        					$dataApi->Items[1]->TaxAddName="IVA 19%";
+	        				$dataApi->Items[1]->TaxAddId="5869";
+	        				$dataApi->Items[1]->TaxAddValue=$valor_iva;
+	        				$dataApi->Items[1]->TaxAddPercentage="19";	
+	        				$dataApi->Header->VATTotalValue=$valor_iva+$dataApi->Header->VATTotalValue;
+							//total
+							$dataApi->Payments[0]->Value=$prod->product_price+$dataApi->Payments[0]->Value;
+        					$dataApi->Items[1]->TotalValue=$prod->product_price;
+        					$dataApi->Header->TotalValue=$prod->product_price+$dataApi->Header->TotalValue;//total de todo con iva
+        					//valores restados
+        					$dataApi->Items[1]->UnitValue=$prod->product_price-$valor_iva;
+        					$dataApi->Items[1]->BaseValue=$prod->product_price-$valor_iva;
+        					$dataApi->Items[1]->GrossValue=$prod->product_price-$valor_iva;
+
+        					$dataApi->Header->TotalBase=($prod->product_price-$valor_iva)+$dataApi->Header->TotalBase;//total de todo sin iva
+
+        				}else{
+        					//valores para no generar iva
+        					$dataApi->Items[1]->TaxAddName="";
+	        				$dataApi->Items[1]->TaxAddId="-1";
+	        				$dataApi->Items[1]->TaxAddValue="0";
+	        				$dataApi->Items[1]->TaxAddPercentage="0";	
+	        				//$dataApi->Header->VATTotalValue="0";	//se comenta porque se mantiene el de la tv
+	        				//valores de total;
+        					$dataApi->Payments[0]->Value=$prod->product_price+$dataApi->Payments[0]->Value;
+        					$dataApi->Items[1]->TotalValue=$prod->product_price;
+        					$dataApi->Header->TotalValue=$prod->product_price+$dataApi->Header->TotalValue;//total de todo con iva
+							//valores restados
+        					$dataApi->Items[1]->UnitValue=$prod->product_price;
+        					$dataApi->Items[1]->BaseValue=$prod->product_price;
+        					$dataApi->Items[1]->GrossValue=$prod->product_price;
+
+        					$dataApi->Header->TotalBase=$prod->product_price+$dataApi->Header->TotalBase;//total de todo sin iva	
+
+        				}
+        				
+        				
+        				break;
+        			}
+        		}
+        	}
         }
 
        	/*var_dump($dateTime->format("Ymd"));
@@ -172,10 +262,11 @@ class facturasElectronicas extends CI_Controller
         // end customer data facturacion_electronica_siigo table insert
         $dataApi=json_encode($dataApi); 
         //var_dump($dataApi);
-        /*$retorno = $api->accionar($api,$dataApi); 
+        $retorno = $api->accionar($api,$dataApi); 
 
         if($retorno['mensaje']=="Factura Guardada"){
         	$this->db->insert("facturacion_electronica_siigo",$dataInsert);
+        	
         }else{
         	$error_era_consecutivo=false;
         	for ($i=1; $i < 10 ; $i++) { 
@@ -193,6 +284,6 @@ class facturasElectronicas extends CI_Controller
         	if($error_era_consecutivo==false){
         		var_dump($retorno['respuesta']);
         	}
-        }*/
+        }
     }
 }
