@@ -123,6 +123,33 @@ class facturasElectronicas extends CI_Controller
         	$dataApi->Items[0]->Description="Servicio de Televisión por Cable";
         	//agregar valores reales de televicion deacuerdo a que en diferentes a yopal cambia el valor
         }else if($_POST['servicios']=="Internet"){
+        	$array_servicios=$this->customers->servicios_detail($customer->id);
+        	if($array_servicios['combo']!="no"){
+        		$dataApi->Items[0]->Description="Servicio de Internet ".$array_servicios['combo'];
+        		$lista_de_productos=$this->db->from("products")->like("product_name","mega","both")->get()->result();
+        		$array_servicios['combo']=strtolower(str_replace(" ", "",$array_servicios['combo'] ));
+        		foreach ($lista_de_productos as $key => $prod) {
+        			$prod->product_name=strtolower(str_replace(" ", "",$prod->product_name ));
+        			if($prod->product_name==$array_servicios['combo']){
+        				var_dump($prod->product_name);
+        				if($prod->product_name=="3megasvc"){
+
+        				}else{
+        					$dataApi->Items[0]->TaxAddName="";
+	        				$dataApi->Items[0]->TaxAddId="-1";
+	        				$dataApi->Items[0]->TaxAddValue="0";
+	        				$dataApi->Items[0]->TaxAddPercentage="0";	
+	        				//valores de total;
+        					$dataApi->Payments[0]->Value=$prod->product_price;
+        					$dataApi->Items[0]->TotalValue=$prod->product_price;
+        					$dataApi->Header->TotalValue=$prod->product_price;
+        				}
+        				
+        				
+        				break;
+        			}
+        		}
+        	}
         	//falta esta parte identificar el paquete de internet del usuario y agregar sus valores
         }
 
@@ -145,7 +172,7 @@ class facturasElectronicas extends CI_Controller
         // end customer data facturacion_electronica_siigo table insert
         $dataApi=json_encode($dataApi); 
         //var_dump($dataApi);
-        $retorno = $api->accionar($api,$dataApi); 
+        /*$retorno = $api->accionar($api,$dataApi); 
 
         if($retorno['mensaje']=="Factura Guardada"){
         	$this->db->insert("facturacion_electronica_siigo",$dataInsert);
@@ -166,6 +193,6 @@ class facturasElectronicas extends CI_Controller
         	if($error_era_consecutivo==false){
         		var_dump($retorno['respuesta']);
         	}
-        }
+        }*/
     }
 }
