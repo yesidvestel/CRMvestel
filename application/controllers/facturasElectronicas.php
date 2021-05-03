@@ -94,6 +94,10 @@ class facturasElectronicas extends CI_Controller
         $dataApi=json_decode($dataApi);
         $consecutivo_siigo=$this->db->select("max(consecutivo_siigo)+1 as consecutivo_siigo")->from("facturacion_electronica_siigo")->get()->result();
         $dataApi->Header->Number=$consecutivo_siigo[0]->consecutivo_siigo;
+
+        if($dataApi->Header->Number=="1" || $dataApi->Header->Number==NULL || $dataApi->Header->Number=="0"){
+        	$dataApi->Header->Number=500;
+        }
         //customer data and facturacion_electronica_siigo table insert
         $customer = $this->db->get_where("customers",array('id' =>$_POST['id']))->row();
         //data siigo api
@@ -272,13 +276,14 @@ class facturasElectronicas extends CI_Controller
         	for ($i=1; $i < 10 ; $i++) { 
         		$dataApi=json_decode($dataApi);
         		$dataApi->Header->Number= intval($dataApi->Header->Number)+$i;
+        		$dataInsert['consecutivo_siigo']=$dataApi->Header->Number;
         		$dataApi=json_encode($dataApi);
 				$retorno2 = $api->accionar($api,$dataApi);         		
 				if($retorno2['mensaje']=="Factura Guardada"){
         			$this->db->insert("facturacion_electronica_siigo",$dataInsert);
         			$error_era_consecutivo=true;
         			$i=11;
-        			redirect(base_url."facturasElectronicas?id=".$customer->id);
+        			redirect("facturasElectronicas?id=".$customer->id);
         			break;
         		}
         	}
