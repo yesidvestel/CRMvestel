@@ -29,7 +29,7 @@ class Customers extends CI_Controller
         if (!$this->aauth->is_loggedin()) {
             redirect('/user/', 'refresh');
         }
-        if ($this->aauth->get_user()->roleid < 3) {
+        if ($this->aauth->get_user()->roleid < 1) {
 
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
 
