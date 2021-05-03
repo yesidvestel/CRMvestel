@@ -138,7 +138,7 @@ class SiigoAPI
 
     public function accionar($api,$invoiceData){
     	
-        var_dump($api->getInvoices(1));
+        //var_dump($api->getInvoices(1));
         //$invoiceData = file_get_contents(dirname(__FILE__) . '/siigo_folder/invoice.json');
         $respuesta=$api->saveInvoice($invoiceData);
         echo "<br>";
@@ -146,12 +146,12 @@ class SiigoAPI
         echo "<br>";
         var_dump($respuesta['httpCode']);
         if(strpos($respuesta['respuesta'],"198")!==false){//200 es enviado, 400 es error
-        	echo "Agregar +1";
+        	return  array('respuesta' =>$respuesta['respuesta'],"mensaje" =>"Ubo algun error") ;
         }
-        if($respuesta['httpCode']==200 ||$respuesta['httpCode']==100){//100
-        	echo "Factura Guardada";
+        if($respuesta['httpCode']==200 ||$respuesta['httpCode']==100){//100            
+        	return array('respuesta' =>$respuesta['respuesta'],"mensaje" =>"Factura Guardada");
         }else{
-        	echo "Ubo algun error";
+        	return array('respuesta' =>$respuesta['respuesta'],"mensaje" =>"Ubo algun error");//falta imprimir en un alter el error
         }
         
         

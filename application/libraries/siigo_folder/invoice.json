@@ -33,8 +33,8 @@
             "IsVATCompanyType": false,
             "City": {
                 "CountryCode": "Co",
-                "StateCode": "11",
-                "CityCode": "11001"
+                "StateCode": "85",
+                "CityCode": "85001"
             },
             "Address": "Dirección Tercero prueba",
             "Phone": {
