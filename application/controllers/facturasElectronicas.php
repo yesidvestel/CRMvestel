@@ -266,7 +266,7 @@ class facturasElectronicas extends CI_Controller
 
         if($retorno['mensaje']=="Factura Guardada"){
         	$this->db->insert("facturacion_electronica_siigo",$dataInsert);
-        	
+        	redirect("facturasElectronicas?id=".$customer->id);
         }else{
         	$error_era_consecutivo=false;
         	for ($i=1; $i < 10 ; $i++) { 
@@ -278,6 +278,7 @@ class facturasElectronicas extends CI_Controller
         			$this->db->insert("facturacion_electronica_siigo",$dataInsert);
         			$error_era_consecutivo=true;
         			$i=11;
+        			redirect(base_url."facturasElectronicas?id=".$customer->id);
         			break;
         		}
         	}

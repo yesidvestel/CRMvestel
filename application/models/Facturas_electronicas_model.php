@@ -23,7 +23,7 @@ class Facturas_electronicas_model extends CI_Model
     var $table = 'facturacion_electronica_siigo';
     var $column_order = array('consecutivo_siigo', 'fecha', 'customer_id', 'invoice_id', 'servicios_facturados', "s1TotalValue","s1TaxValue");
     var $column_search = array('consecutivo_siigo', 'fecha', 'customer_id', 'invoice_id', 'servicios_facturados', "s1TotalValue","s1TaxValue");
-    var $order = array('fecha' => 'desc');
+    var $order = array('consecutivo_siigo' => 'desc');
 
     public function __construct()
     {
