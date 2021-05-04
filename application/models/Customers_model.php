@@ -222,7 +222,7 @@ class Customers_model extends CI_Model
         $_var_tiene_internet=false;
         $_var_tiene_tv=false;
 
-        $servicios= array('television' =>"no",'combo' =>"no");
+        $servicios= array('television' =>"no",'combo' =>"no","estado"=>"Activo");
         foreach ($lista_invoices as $key => $invoice) {
             if($invoice->combo!="no" && $invoice->combo!="" && $invoice->combo!="-"){
                         $fact_valida=true;
@@ -263,9 +263,25 @@ class Customers_model extends CI_Model
                                 $invoice->total=$suma;
                      }
                 if($fact_valida){
+                    if($invoice->ron=="Suspendido"){
+                        $servicios['television']="no";
+                        $servicios['combo']="no";
+                        $servicios['estado']="Suspendido";
+                    }else if($servicios['television']!="no" ||$servicios['combo']!="no"){
+
+                        if($servicios['television']!="no" && $invoice->television=="no"){
+                            $servicios['television']="no";
+                            $servicios['estado']="Television suspendida";
+                        }
+                        if($servicios['combo']!="no" && $invoice->combo=="no"){
+                            $servicios['combo']="no";
+                            $servicios['estado']="Internet suspendido";
+                        }
+
+                    }
                     break;
                 }
-
+            
 
         }
         return $servicios;
