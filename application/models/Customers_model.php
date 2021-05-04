@@ -222,7 +222,7 @@ class Customers_model extends CI_Model
         $_var_tiene_internet=false;
         $_var_tiene_tv=false;
 
-        $servicios= array('television' =>"no",'combo' =>"no","estado"=>"Activo");
+        $servicios= array('television' =>"no",'combo' =>"no","estado"=>"Inactivo");
         foreach ($lista_invoices as $key => $invoice) {
             if($invoice->combo!="no" && $invoice->combo!="" && $invoice->combo!="-"){
                         $fact_valida=true;
@@ -234,35 +234,9 @@ class Customers_model extends CI_Model
                         $_var_tiene_tv=true;
                         $servicios['television']=$invoice->television;
             }
-            $query=$this->db->query('SELECT * FROM `invoice_items` WHERE tid='.$invoice->tid.' and (product like "%mega%" or product like "%tele%" or product like "%punto adicional%")')->result_array();
-                            if(count($query)!=0){
-                                $fact_valida=true;
-                                $suma=0;
-                                foreach ($query as $key => $value) {
-                                  
-                                    //si se selecciona el filtro por servicios realiza este filtro
-                                        if(strpos(strtolower($value['product']),"reconexi" )!==false || strpos(strtolower($value['product']),"afiliaci" )!==false){
-                                                
-                                        }else{
-                                            $suma+=$value['subtotal'];    
-                                        }
-
-                                        if(strpos(strtolower($value['product']),"mega" )!==false){
-                                             $_var_tiene_internet=true;
-                                             $servicios['combo']=$value['product'];
-                                        }
-                                        if(strpos(strtolower($value['product']),"reconexi" )!==false || strpos(strtolower($value['product']),"afiliaci" )!==false){
-                                            
-                                        }else if(strpos(strtolower($value['product']),"television" )!==false){
-                                            $servicios['television']=$value['product'];
-                                            $_var_tiene_tv=true;   
-                                        }
-                                    
-
-                                }
-                                $invoice->total=$suma;
-                     }
+            
                 if($fact_valida){
+                    $servicios['estado']=$invoice->ron;
                     if($invoice->ron=="Suspendido"){
                         $servicios['television']="no";
                         $servicios['combo']="no";

@@ -132,6 +132,8 @@ class facturasElectronicas extends CI_Controller
         if($_POST['servicios']=="Television"){
         	$dataApi->Items[0]->Description="Servicio de Televisión por Cable";
         	//agregar valores reales de televicion deacuerdo a que en diferentes a yopal cambia el valor
+
+            //falta verificar el caso de la tv de mocoa que cambian los valores
         }else if($_POST['servicios']=="Internet"){
         	$array_servicios=$this->customers->servicios_detail($customer->id);
         	if($array_servicios['combo']!="no"){

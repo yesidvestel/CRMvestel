@@ -103,7 +103,7 @@ class Clientgroup extends CI_Controller
             }
                 $fact_valida=false;
                 foreach ($lista_invoices as $key => $invoice) {
-                    
+                    $suma=0;
                     if($invoice->combo!="no" && $invoice->combo!="" && $invoice->combo!="-"){
                         $fact_valida=true;
                         $_var_tiene_internet=true;
@@ -112,8 +112,35 @@ class Clientgroup extends CI_Controller
                         $fact_valida=true;
                         $_var_tiene_tv=true;
                     }
+
+                    if($fact_valida){
+                        if($_var_tiene_tv){
+                            if(str_replace(" ", "", $invoice->refer)=="Mocoa"){
+                                $producto=$this->db->get_where('products', array("pid"=>"159"))->row();
+                                $suma+=$producto->product_price;
+                            }else{
+                                $producto=$this->db->get_where('products', array("pid"=>"27"))->row();
+                                $suma+=$producto->product_price+3992;
+                            }
+                            
+                        }
+
+                        if($_var_tiene_internet){
+                            $lista_de_productos=$this->db->from("products")->like("product_name","mega","both")->get()->result();
+                            $var_e=strtolower(str_replace(" ", "",$invoice->combo));
+                            foreach ($lista_de_productos as $key => $prod) {
+                                $prod->product_name=strtolower(str_replace(" ", "",$prod->product_name ));
+                                if($prod->product_name==$var_e){
+                                    $suma+=$prod->product_price;                                    
+                                    break;
+                                }
+                            }
+                        }
+                        
+                    }
+                    $invoice->total=$suma;
                    // if(!$fact_valida){
-                            $query=$this->db->query('SELECT * FROM `invoice_items` WHERE tid='.$invoice->tid.' and (product like "%mega%" or product like "%tele%" or product like "%punto adicional%")')->result_array();
+                        /*    $query=$this->db->query('SELECT * FROM `invoice_items` WHERE tid='.$invoice->tid.' and (product like "%mega%" or product like "%tele%" or product like "%punto adicional%")')->result_array();
                             if(count($query)!=0){
                                 $fact_valida=true;
                                 $suma=0;
@@ -136,7 +163,7 @@ class Clientgroup extends CI_Controller
 
                                 }
                                 $invoice->total=$suma;
-                            }
+                            }*/
                    // }
                     if($_GET['morosos']=="1mes"){
                         if($fact_valida && $debe_customer==$invoice->total && $customer_moroso==false){
@@ -441,7 +468,7 @@ class Clientgroup extends CI_Controller
             }
                 $fact_valida=false;
                 foreach ($lista_invoices as $key => $invoice) {
-                    
+                    $suma=0;
                     if($invoice->combo!="no" && $invoice->combo!="" && $invoice->combo!="-"){
                         $fact_valida=true;
                         $_var_tiene_internet=true;
@@ -450,8 +477,35 @@ class Clientgroup extends CI_Controller
                         $fact_valida=true;
                         $_var_tiene_tv=true;
                     }
+
+                    if($fact_valida){
+                        if($_var_tiene_tv){
+                            if(str_replace(" ", "", $invoice->refer)=="Mocoa"){
+                                $producto=$this->db->get_where('products', array("pid"=>"159"))->row();
+                                $suma+=$producto->product_price;
+                            }else{
+                                $producto=$this->db->get_where('products', array("pid"=>"27"))->row();
+                                $suma+=$producto->product_price+3992;
+                            }
+                            
+                        }
+
+                        if($_var_tiene_internet){
+                            $lista_de_productos=$this->db->from("products")->like("product_name","mega","both")->get()->result();
+                            $var_e=strtolower(str_replace(" ", "",$invoice->combo));
+                            foreach ($lista_de_productos as $key => $prod) {
+                                $prod->product_name=strtolower(str_replace(" ", "",$prod->product_name ));
+                                if($prod->product_name==$var_e){
+                                    $suma+=$prod->product_price;                                    
+                                    break;
+                                }
+                            }
+                        }
+                        
+                    }
+                    $invoice->total=$suma;
                    // if(!$fact_valida){
-                            $query=$this->db->query('SELECT * FROM `invoice_items` WHERE tid='.$invoice->tid.' and (product like "%mega%" or product like "%tele%" or product like "%punto adicional%")')->result_array();
+                          /*  $query=$this->db->query('SELECT * FROM `invoice_items` WHERE tid='.$invoice->tid.' and (product like "%mega%" or product like "%tele%" or product like "%punto adicional%")')->result_array();
                             if(count($query)!=0){
                                 $fact_valida=true;
                                 $suma=0;
@@ -474,7 +528,7 @@ class Clientgroup extends CI_Controller
 
                                 }
                                 $invoice->total=$suma;
-                            }
+                            }*/
                    // }
                     if($_GET['morosos']=="1mes"){
                         if($fact_valida && $debe_customer==$invoice->total && $customer_moroso==false){
