@@ -356,7 +356,7 @@
 									<div class="col-sm-4">
 									<label for="invociedate" class="caption">Television</label>
 										<div class="input-group">									
-											<select name="tele" class="form-control mb-1">
+											<select name="teleB" class="form-control mb-1">
 												<option value="no">No</option>
                                         		<option value="Television">Si</option>
 											</select>
@@ -365,7 +365,7 @@
 									<div class="col-sm-4">
 									<label for="invociedate" class="caption">Puntos</label>
 										<div class="input-group">									
-											<select name="punto" class="form-control mb-1">
+											<select name="puntoB" class="form-control mb-1">
 												<option value="0">no</option>
 													<?php for ($i=1;$i<=20;$i++){
 													echo '<option value="'.$i.'">'.$i.'</option>';}?>
@@ -380,7 +380,7 @@
 									<div class="col-sm-4">
 									<label for="invociedate" class="caption">Internet</label>
 										<div class="input-group">									
-											<select name="inter" class="form-control mb-1">
+											<select name="interB" class="form-control mb-1">
 												<?php if ($details['ciudad']==='Yopal' || $details['ciudad']==='Monterrey' ){ ?>
 												<option value="no">No</option>
 												<option value="1Mega">1Mega</option>

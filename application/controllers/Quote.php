@@ -119,6 +119,16 @@ class Quote extends CI_Controller
 		$tv = $this->input->post('tele');
 		$inter = $this->input->post('inter');
 		$punto = $this->input->post('punto');
+     
+     if($detalle=="AgregarInternet"){
+            $inter = $this->input->post('interB');
+            $tv="no";
+     }else if($detalle=="AgregarTelevision"){
+            $tv = $this->input->post('teleB');
+            $inter="no";
+            $punto = $this->input->post('puntoB');            
+     }        
+        
         if ($customer_id) {
         	$this->quote->addticket($customer_id, $nticket, $subject, $detalle, $created, $section, $factura,$agendar,$fagenda,$hora,$hora2,$nomen,$nuno,$auno,$ndos,$ados,$ntres,$local,$barrio,$recider, $refer, $tv,$inter,$punto);
 			
