@@ -281,6 +281,7 @@
                 <!-- fin paneles -->
 
 			<div class="table-responsive">
+				<a href="#" onclick="redirect_to_export()" class="btn btn-primary btn-md">Exportar a Excel .XLSX</a>
             <table id="doctable" class="table table-hover" cellspacing="0" width="100%">
                 <thead>
                 <tr>
@@ -493,6 +494,18 @@
             tb.ajax.url( baseurl+"tickets/tickets_load_list?sdate="+sdate+"&edate="+edate+"&opcselect="+opcion_seleccionada+"&tecnico="+tecnico+"&estado="+estado+"&detalle="+detalle+"&tec1="+id1+"&sede_filtrar="+sede_filtrar+"&stat=" ).load();     
         }
        
+
+    }
+	function redirect_to_export(){
+         var tecnico=$("#tecnicos2 option:selected").val();
+        var estado =$("#estados option:selected").val();
+		var detalle =$("#detalle option:selected").val();
+        var sdate =$("#sdate").val();
+        var edate =$("#edate").val();
+        var opcion_seleccionada=$("#fechas option:selected").val();
+        var sede_filtrar=$("#sede_sel option:selected").val();
+            var url_redirect=baseurl+'tickets/explortar_a_excel?sdate='+sdate+"&edate="+edate+"&opcselect="+opcion_seleccionada+"&tecnico="+tecnico+"&estado="+estado+"&detalle="+detalle+"&tec1="+id1+"&sede_filtrar="+sede_filtrar+"&id=<?=$_GET['id']?>";
+            window.location.replace(url_redirect);
 
     }
 </script>
