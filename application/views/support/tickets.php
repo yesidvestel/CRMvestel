@@ -504,7 +504,8 @@
         var edate =$("#edate").val();
         var opcion_seleccionada=$("#fechas option:selected").val();
         var sede_filtrar=$("#sede_sel option:selected").val();
-            var url_redirect=baseurl+'tickets/explortar_a_excel?sdate='+sdate+"&edate="+edate+"&opcselect="+opcion_seleccionada+"&tecnico="+tecnico+"&estado="+estado+"&detalle="+detalle+"&tec1="+id1+"&sede_filtrar="+sede_filtrar+"&id=<?=$_GET['id']?>";
+        var id1=$("#tecnicos2 option:selected").data("id");
+        var url_redirect=baseurl+'tickets/explortar_a_excel?sdate='+sdate+"&edate="+edate+"&opcselect="+opcion_seleccionada+"&tecnico="+tecnico+"&estado="+estado+"&detalle="+detalle+"&tec1="+id1+"&sede_filtrar="+sede_filtrar+"&id=<?=$_GET['id']?>";
             window.location.replace(url_redirect);
 
     }

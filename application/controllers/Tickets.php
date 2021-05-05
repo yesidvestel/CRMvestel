@@ -341,14 +341,22 @@ class Tickets Extends CI_Controller
 	public function explortar_a_excel(){
         
         $this->db->select("*");
-        $this->db->from("tickets");        
+        $this->db->from("tickets");  
+        $this->db->order_by("idt","DESC");      
         //$this->db->where("idt",$_GET['id']);
         $lista_tickets=$this->db->get()->result();
         $this->load->library('Excel');
 		$lista_tickets2=array();
     
     //define column headers
-    $headers = array('Abonado' => 'string','Cedula' => 'string', 'Nombre' => 'string', 'Celular' => 'string', 'Direccion' => 'string','Barrio' => 'string', 'Estado' => 'string','Deuda' => 'integer','Suscripcion' => 'integer');
+    $headers = array('N° Orden' => 'string',
+        'Tema' => 'string', 
+        'Detalle' => 'string', 
+        'Fecha Creada' => 'string', 
+        'Usario ID' => 'string',
+        'Estado' => 'string', 
+        'Section' => 'string',
+        'Fecha Cierre' => 'string');
     
     //fetch data from database
     //$salesinfo = $this->product_model->get_salesinfo();
@@ -367,7 +375,7 @@ class Tickets Extends CI_Controller
     $writer->setTempDir(sys_get_temp_dir());
     
     //write headers el primer campo que es nombre de la hoja de excel deve de coincidir en writeSheetHeader y writeSheetRow para tener en cuenta si se piensan agregar otras hojas o algo por el estilo
-    $writer->writeSheetHeader('Customers '.$headers = array(
+    $writer->writeSheetHeader('Tickets ',$headers,$col_options = array(
 
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
@@ -377,12 +385,19 @@ class Tickets Extends CI_Controller
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
-['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+
 ));
     
     //write rows to sheet1
-    foreach ($lista_tickets2 as $key => $tickets) {
-            $writer->writeSheetRow('Customers '.$headers = array($tickets->codigo,$tickets->subject ,$tickets->detalle, $tickets->created,$tickets->cid ,$tickets->status,$tickets->section,$tickets->fecha_final));
+    foreach ($lista_tickets as $key => $tickets) {
+        if($tickets->codigo=="" || $tickets->codigo==null){
+            $tickets->codigo="Sin Codigo";
+        }
+        if($tickets->fecha_final == '0000-00-00' || $tickets->fecha_final == '' || $tickets->fecha_final == null){
+            $tickets->fecha_final="Sin Realizar";
+        }
+            $writer->writeSheetRow('Tickets ',array($tickets->codigo,$tickets->subject ,$tickets->detalle, $tickets->created,$tickets->cid ,$tickets->status,$tickets->section,$tickets->fecha_final));
+        
     }
         
         
