@@ -272,7 +272,16 @@ class Quote extends CI_Controller
 		$tv = $this->input->post('tele');
 		$inter = $this->input->post('inter');
 		$punto = $this->input->post('punto');
-        $bill_date = datefordatabase($created);       
+        $bill_date = datefordatabase($created);
+        if($detalle=="AgregarInternet"){
+            $inter = $this->input->post('interB');
+            $tv="no";
+         }else if($detalle=="AgregarTelevision"){
+                $tv = $this->input->post('teleB');
+                $inter="no";
+                $punto = $this->input->post('puntoB');            
+         }      
+               
         $data = array('codigo' => $nticket, 'subject' => $subject, 'detalle' => $detalle, 'created' => $bill_date, 'section' => $section, 'id_factura' => $factura);
         $this->db->set($data);
         $this->db->where('idt', $customer_id);

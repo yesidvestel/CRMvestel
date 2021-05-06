@@ -347,7 +347,7 @@
 									<div class="col-sm-4">
 									<label for="invociedate" class="caption">Television</label>
 										<div class="input-group">									
-											<select name="tele" class="form-control mb-1">
+											<select name="teleB" class="form-control mb-1">
 												<option value="<?php echo $temporales->tv ?>"><?php echo $temporales->tv ?></option>
 												<option value="no">No</option>
                                         		<option value="Television">Si</option>
@@ -357,7 +357,7 @@
 									<div class="col-sm-4">
 									<label for="invociedate" class="caption">Puntos</label>
 										<div class="input-group">									
-											<select name="punto" class="form-control mb-1">
+											<select name="puntoB" class="form-control mb-1">
 												<option value="<?php echo $temporales->puntos ?>"><?php echo $temporales->puntos ?></option>
 												<option value="0">no</option>
 													<?php for ($i=1;$i<=20;$i++){
@@ -373,7 +373,7 @@
 									<div class="col-sm-4">
 									<label for="invociedate" class="caption">Internet</label>
 										<div class="input-group">									
-											<select name="inter" class="form-control mb-1">
+											<select name="interB" class="form-control mb-1">
 												<?php if ($thread_info['ciudad']==='Yopal' || $thread_info['ciudad']==='Monterrey' ){ ?>
 												<option value="<?php echo $temporales->internet ?>"><?php echo $temporales->internet ?></option>
 												<option value="no">No</option>
