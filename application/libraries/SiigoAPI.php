@@ -39,8 +39,8 @@ class SiigoAPI
         _log("Obteniendo autorización");
         $postFields = [
             "grant_type" => "password",
-            "username" => 'VesgaTelecomunicacionesSAS\\VesgaT49791@apionmicrosoft.com',
-            "password" => 'h1U~@r339B',
+            "username" => 'VESGATELEVISIONSAS\\VESGAT17681@apionmicrosoft.com',
+            "password" => ')QP>x3(9dN',
             "scope" => "WebApi offline_access",
         ];
         $cOptions = [
@@ -144,6 +144,7 @@ class SiigoAPI
         echo "<br>";
         var_dump($respuesta);
         echo "<br>";
+        
         var_dump($respuesta['httpCode']);
         if(strpos($respuesta['respuesta'],"198")!==false){//200 es enviado, 400 es error
         	return  array('respuesta' =>$respuesta['respuesta'],"mensaje" =>"Ubo algun error") ;

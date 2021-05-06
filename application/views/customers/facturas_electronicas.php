@@ -13,7 +13,7 @@
             <table id="invoices" class="table-striped" cellspacing="0" width="100%">
                 <thead>
                 <tr> <th>#</th>
-                    <th>consecutivo siigo</th>
+                    <th>id</th>
                     <th><?php echo $this->lang->line('Date') ?></th>
                     <th>Customer</th>
                     <th>Factura</th>
@@ -27,7 +27,7 @@
 
                 <tfoot>
                 <tr> <th>#</th>
-                    <th>consecutivo siigo</th>
+                    <th>id</th>
                     <th><?php echo $this->lang->line('Date') ?></th>
                     <th>Customer</th>
                     <th>Factura</th>

@@ -1179,8 +1179,7 @@ class Customers_model extends CI_Model
         $data_json_string='{
     "Header": {
         "Id": 0,
-        "DocCode": 10913,
-        "Number": 503,
+        "DocCode": 12434,
         "EmailToSend": null,
         "DocDate": "20210427",
         "MoneyCode": "COP",
@@ -1245,7 +1244,7 @@ class Customers_model extends CI_Model
     },
     "Items": [
         {
-            "ProductCode": "T02",
+            "ProductCode": "001",
             "Description": "Descripción producto",
             "GrossValue": 21008,
             "BaseValue": 21008,
@@ -1254,7 +1253,7 @@ class Customers_model extends CI_Model
             "DiscountValue": 0,
             "DiscountPercentage": 0,
             "TaxAddName": "IVA 19%",
-            "TaxAddId": 5869,
+            "TaxAddId": 6688,
             "TaxAddValue": 3992,
             "TaxAddPercentage": 19,
             "TaxDiscountName": "",
@@ -1273,7 +1272,7 @@ class Customers_model extends CI_Model
     ],
     "Payments": [
         {
-            "PaymentMeansCode": 2512,
+            "PaymentMeansCode": 2863,
             "Value": 25000,
             "DueDate": "20210427",
             "DueQuote": 0
@@ -1287,8 +1286,8 @@ public function getClientData2Productos(){
         $data_json_string='{
     "Header": {
         "Id": 0,
-        "DocCode": 10913,
-        "Number": 503,
+        "DocCode": 12434,
+        
         "EmailToSend": null,
         "DocDate": "20210427",
         "MoneyCode": "COP",
@@ -1353,7 +1352,7 @@ public function getClientData2Productos(){
     },
     "Items": [
         {
-            "ProductCode": "T02",
+            "ProductCode": "001",
             "Description": "Descripción producto",
             "GrossValue": 21008,
             "BaseValue": 21008,
@@ -1362,7 +1361,7 @@ public function getClientData2Productos(){
             "DiscountValue": 0,
             "DiscountPercentage": 0,
             "TaxAddName": "IVA 19%",
-            "TaxAddId": 5869,
+            "TaxAddId": 6688,
             "TaxAddValue": 3992,
             "TaxAddPercentage": 19,
             "TaxDiscountName": "",
@@ -1378,7 +1377,7 @@ public function getClientData2Productos(){
             "WareHouseCode": null,
             "SalesmanIdentification": 963852741
         },{
-            "ProductCode": "T02",
+            "ProductCode": "l01",
             "Description": "Descripción producto",
             "GrossValue": 21008,
             "BaseValue": 21008,
@@ -1387,7 +1386,7 @@ public function getClientData2Productos(){
             "DiscountValue": 0,
             "DiscountPercentage": 0,
             "TaxAddName": "IVA 19%",
-            "TaxAddId": 5869,
+            "TaxAddId": 6688,
             "TaxAddValue": 3992,
             "TaxAddPercentage": 19,
             "TaxDiscountName": "",
@@ -1406,7 +1405,7 @@ public function getClientData2Productos(){
     ],
     "Payments": [
         {
-            "PaymentMeansCode": 2512,
+            "PaymentMeansCode": 2863,
             "Value": 25000,
             "DueDate": "20210427",
             "DueQuote": 0

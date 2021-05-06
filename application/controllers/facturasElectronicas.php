@@ -56,7 +56,7 @@ class facturasElectronicas extends CI_Controller
             $no++;
             $row = array();
             $row[] = $no;
-            $row[] = $facturas->consecutivo_siigo;
+            $row[] = $facturas->id;
             $row[] = dateformat($facturas->fecha);
             $row[] = $facturas->customer_id;
             if($facturas->invoice_id=="" || $facturas->invoice_id==null || $facturas->invoice_id=="")
@@ -92,12 +92,12 @@ class facturasElectronicas extends CI_Controller
         }
         
         $dataApi=json_decode($dataApi);
-        $consecutivo_siigo=$this->db->select("max(consecutivo_siigo)+1 as consecutivo_siigo")->from("facturacion_electronica_siigo")->get()->result();
-        $dataApi->Header->Number=$consecutivo_siigo[0]->consecutivo_siigo;
+        //$consecutivo_siigo=$this->db->select("max(consecutivo_siigo)+1 as consecutivo_siigo")->from("facturacion_electronica_siigo")->get()->result();
+        /*$dataApi->Header->Number=$consecutivo_siigo[0]->consecutivo_siigo;
 
         if($dataApi->Header->Number=="1" || $dataApi->Header->Number==NULL || $dataApi->Header->Number=="0"){
         	$dataApi->Header->Number=500;
-        }
+        }*/
         //customer data and facturacion_electronica_siigo table insert
         $customer = $this->db->get_where("customers",array('id' =>$_POST['id']))->row();
         //data siigo api
@@ -144,7 +144,7 @@ class facturasElectronicas extends CI_Controller
         			$prod->product_name=strtolower(str_replace(" ", "",$prod->product_name ));
         			if($prod->product_name==$array_servicios['combo']){
         				//var_dump($prod->product_name);
-        				$dataApi->Items[0]->ProductCode="I01";
+        				$dataApi->Items[0]->ProductCode="l01";
         				if($prod->product_name=="3megasvc"){
         					//valores para generar iva
         					$valor_iva="3800";
@@ -208,7 +208,7 @@ class facturasElectronicas extends CI_Controller
         			$prod->product_name=strtolower(str_replace(" ", "",$prod->product_name ));
         			if($prod->product_name==$array_servicios['combo']){
         				//var_dump($prod->product_name);
-        				$dataApi->Items[1]->ProductCode="I01";
+        				$dataApi->Items[1]->ProductCode="l01";
         				if($prod->product_name=="3megasvc"){
         					//valores para generar iva
         					$valor_iva="3800";
@@ -261,7 +261,7 @@ class facturasElectronicas extends CI_Controller
         var_dump($dataApi->Header->Account->Phone->Number);*/
         //facturacion_electronica_siigo table insert        
         $dataInsert=array();
-        $dataInsert['consecutivo_siigo']=$dataApi->Header->Number;
+        $dataInsert['consecutivo_siigo']=0;
         $dataInsert['fecha']=$dateTime->format("Y-m-d");
         $dataInsert['customer_id']=$_POST['id'];
         $dataInsert['servicios_facturados']=$_POST['servicios'];
@@ -274,7 +274,7 @@ class facturasElectronicas extends CI_Controller
         	$this->db->insert("facturacion_electronica_siigo",$dataInsert);
         	redirect("facturasElectronicas?id=".$customer->id);
         }else{
-        	$error_era_consecutivo=false;
+        	/*$error_era_consecutivo=false;
         	for ($i=1; $i < 10 ; $i++) { 
         		$dataApi=json_decode($dataApi);
         		$dataApi->Header->Number= intval($dataApi->Header->Number)+$i;
@@ -288,10 +288,10 @@ class facturasElectronicas extends CI_Controller
         			redirect("facturasElectronicas?id=".$customer->id);
         			break;
         		}
-        	}
-        	if($error_era_consecutivo==false){
+        	}*/
+        	//if($error_era_consecutivo==false){
         		var_dump($retorno['respuesta']);
-        	}
+        	//}
         }
     }
 }
