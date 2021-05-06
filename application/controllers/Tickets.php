@@ -124,6 +124,7 @@ class Tickets Extends CI_Controller
                 $row[] = "--";    
             }
 			$row[] = $ticket->ciudad;
+			$row[] = $ticket->barrio;
 			$row[] = '<span class="st-' . $ticket->status . '">' . $ticket->status . '</span>';
             $row[] = '<a href="' . base_url('tickets/thread/?id=' . $ticket->idt) . '" class="btn btn-success btn-xs"><i class="icon-file-text"></i> ' . $this->lang->line('View') . '</a>';
 			if ($this->aauth->get_user()->roleid >= 3) {
