@@ -358,12 +358,21 @@ class Tickets Extends CI_Controller
 		if ($_GET['sede_filtrar'] != '' && $_GET['sede_filtrar'] != '-' && $_GET['sede_filtrar'] != '0') {
                 $this->db->where('gid=', $_GET['sede_filtrar']);
            }
-		if ($_GET['sdate'] != '' && $_GET['sdate'] != '-' && $_GET['sdate'] != '0') {
-                $this->db->where('created=', $_GET['sdate']);
-           }
-		if ($_GET['edate'] != '' && $_GET['edate'] != '-' && $_GET['edate'] != '0') {
-                $this->db->where('fecha_final=', $_GET['edate']);
-           }
+		if($_GET['opcselect']!=''){
+
+            $dateTime= new DateTime($_GET['sdate']);
+            $sdate=$dateTime->format("Y-m-d");
+            $dateTime= new DateTime($_GET['edate']);
+            $edate=$dateTime->format("Y-m-d");
+            if($_GET['opcselect']=="fcreada"){
+                $this->db->where('created>=', $sdate);   
+                $this->db->where('created<=', $edate);       
+            }else{
+                $this->db->where('fecha_final>=', $sdate);   
+                $this->db->where('fecha_final<=', $edate);       
+            }
+            
+        }
         //$this->db->where("idt",$_GET['id']);
         $lista_tickets=$this->db->get()->result();
         $this->load->library('Excel');
