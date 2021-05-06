@@ -342,12 +342,33 @@ class Tickets Extends CI_Controller
 	public function explortar_a_excel(){
         
         $this->db->select("*");
-        $this->db->from("tickets");  
-        $this->db->order_by("idt","DESC");      
+        $this->db->from("tickets");
+		$this->db->join('customers', 'tickets.cid=customers.id', 'left');
+        $this->db->order_by("idt","DESC");
+		//$usuario=$this->db->get_where("customers",array('id' => $_GET['id']))->row();
+		if ($_GET['detalle'] != '' && $_GET['detalle'] != '-' && $_GET['detalle'] != '0') {
+                $this->db->where('detalle=', $_GET['detalle']);
+            }
+		if ($_GET['tecnico'] != '' && $_GET['tecnico'] != '-' && $_GET['tecnico'] != '0') {
+                $this->db->where('asignado=', $_GET['tecnico']);
+            }
+		if ($_GET['estado'] != '' && $_GET['estado'] != '-' && $_GET['estado'] != '0') {
+                $this->db->where('status=', $_GET['estado']);
+            }
+		if ($_GET['sede_filtrar'] != '' && $_GET['sede_filtrar'] != '-' && $_GET['sede_filtrar'] != '0') {
+                $this->db->where('gid=', $_GET['sede_filtrar']);
+           }
+		if ($_GET['sdate'] != '' && $_GET['sdate'] != '-' && $_GET['sdate'] != '0') {
+                $this->db->where('created=', $_GET['sdate']);
+           }
+		if ($_GET['edate'] != '' && $_GET['edate'] != '-' && $_GET['edate'] != '0') {
+                $this->db->where('fecha_final=', $_GET['edate']);
+           }
         //$this->db->where("idt",$_GET['id']);
         $lista_tickets=$this->db->get()->result();
         $this->load->library('Excel');
 		$lista_tickets2=array();
+		
     
     //define column headers
     $headers = array('N° Orden' => 'string',
