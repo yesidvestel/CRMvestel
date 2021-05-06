@@ -149,7 +149,7 @@ class SiigoAPI
         if(strpos($respuesta['respuesta'],"198")!==false){//200 es enviado, 400 es error
         	return  array('respuesta' =>$respuesta['respuesta'],"mensaje" =>"Ubo algun error") ;
         }
-        if($respuesta['httpCode']==200 ||$respuesta['httpCode']==100){//100            
+        if($respuesta['httpCode']==200 ||$respuesta['httpCode']==100 || $respuesta['httpCode']==0){//100            
         	return array('respuesta' =>$respuesta['respuesta'],"mensaje" =>"Factura Guardada");
         }else{
         	return array('respuesta' =>$respuesta['respuesta'],"mensaje" =>"Ubo algun error");//falta imprimir en un alter el error
