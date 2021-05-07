@@ -110,7 +110,7 @@ class Tickets Extends CI_Controller
 			if($ticket->cid !=null){
                 $row[]='<a href="'.base_url("customers/view?id=".$ticket->cid).'">'.$ticket->abonado.'</a>';
             }
-			$row[] = $ticket->name;
+			$row[] = $ticket->name.' '.$ticket->unoapellido;
           if($ticket->id_factura !=null || $ticket->id_factura !==0 ){
                 $row[]='<a href="'.base_url("invoices/view?id=".$ticket->id_factura).'">'.$ticket->id_factura.'</a>';
             }else{
@@ -383,11 +383,14 @@ class Tickets Extends CI_Controller
     $headers = array('N° Orden' => 'string',
         'Tema' => 'string', 
         'Detalle' => 'string', 
-        'Fecha Creada' => 'string', 
-        'Usario ID' => 'string',
+        'Fecha Creada' => 'string',
+		'Fecha Cierre' => 'string',
+        'Abonado' => 'string',
+		'Usuario' => 'string',			 
         'Estado' => 'string', 
-        'Section' => 'string',
-        'Fecha Cierre' => 'string');
+        'Observacion' => 'string',
+		'Barrio' => 'string',
+        'Sede' => 'string');
     
     //fetch data from database
     //$salesinfo = $this->product_model->get_salesinfo();
@@ -397,12 +400,12 @@ class Tickets Extends CI_Controller
     
         //meta data info
     $keywords = array('xlsx','CUSTOMERS','VESTEL');
-    $writer->setTitle('Reporte Customers ');
+    $writer->setTitle('Reporte Tickets ');
     $writer->setSubject('');
     $writer->setAuthor('VESTEL');
     $writer->setCompany('VESTEL');
     $writer->setKeywords($keywords);
-    $writer->setDescription('Reporte Customers ');
+    $writer->setDescription('Reporte Tickets ');
     $writer->setTempDir(sys_get_temp_dir());
     
     //write headers el primer campo que es nombre de la hoja de excel deve de coincidir en writeSheetHeader y writeSheetRow para tener en cuenta si se piensan agregar otras hojas o algo por el estilo
@@ -416,18 +419,23 @@ class Tickets Extends CI_Controller
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
-
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ));
     
     //write rows to sheet1
+	
     foreach ($lista_tickets as $key => $tickets) {
+		$obsv = str_replace('<p>','',$tickets->section);
+		$obsv2 = str_replace('</p>','',$obsv);
         if($tickets->codigo=="" || $tickets->codigo==null){
             $tickets->codigo="Sin Codigo";
         }
         if($tickets->fecha_final == '0000-00-00' || $tickets->fecha_final == '' || $tickets->fecha_final == null){
             $tickets->fecha_final="Sin Realizar";
         }
-            $writer->writeSheetRow('Tickets ',array($tickets->codigo,$tickets->subject ,$tickets->detalle, $tickets->created,$tickets->cid ,$tickets->status,$tickets->section,$tickets->fecha_final));
+            $writer->writeSheetRow('Tickets ',array($tickets->codigo,$tickets->subject ,$tickets->detalle, $tickets->created,$tickets->fecha_final,$tickets->abonado ,$tickets->name.' '.$tickets->unoapellido,$tickets->status,$obsv2,$tickets->barrio,$tickets->ciudad));
         
     }
         
@@ -437,7 +445,7 @@ class Tickets Extends CI_Controller
     $dia= date("N");
     $this->load->model('reports_model', 'reports');
     $fecha_actual=$this->reports->obtener_dia($dia)." ".$fecha_actual;
-    $fileLocation = 'Customers '.$fecha_actual.'.xlsx';
+    $fileLocation = 'Tickets '.$fecha_actual.'.xlsx';
     
     //write to xlsx file
     $writer->writeToFile($fileLocation);

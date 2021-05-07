@@ -306,8 +306,9 @@
                     
         <div class="grid_3 grid_4">
             <h5><?php echo $this->lang->line('Client Group') . '- ' . $group['title'] ?></h5> 
-			<a href="#sendMail" data-toggle="modal" data-remote="false" class="btn btn-primary btn-sm"><i
+			<a href="#sendMail" data-toggle="modal" data-remote="false" class="btn btn-primary btn-md"><i
                         class="fa fa-envelope"></i> <?php echo $this->lang->line('Send Group Message') ?> </a>
+			<a href="#" onclick="redirect_to_export()" class="btn btn-success btn-md">Exportar a Excel .XLSX</a>
             <hr>
             <table id="fclientstable" class="table-striped" cellspacing="0" width="100%">
                 <thead>
@@ -348,7 +349,7 @@
                 </tfoot>
             </table>
         </div>
-        <a href="#" onclick="redirect_to_export()" class="btn btn-primary btn-md">Exportar a Excel .XLSX</a>
+        
     </div>
 
 </article>
