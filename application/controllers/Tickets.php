@@ -389,7 +389,8 @@ class Tickets Extends CI_Controller
 		'Usuario' => 'string',			 
         'Estado' => 'string', 
         'Observacion' => 'string',
-		'Barrio' => 'string',
+		'Asignado' => 'string',
+		'Barrio' => 'string',					 
         'Sede' => 'string');
     
     //fetch data from database
@@ -422,6 +423,7 @@ class Tickets Extends CI_Controller
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ));
     
     //write rows to sheet1
@@ -435,7 +437,7 @@ class Tickets Extends CI_Controller
         if($tickets->fecha_final == '0000-00-00' || $tickets->fecha_final == '' || $tickets->fecha_final == null){
             $tickets->fecha_final="Sin Realizar";
         }
-            $writer->writeSheetRow('Tickets ',array($tickets->codigo,$tickets->subject ,$tickets->detalle, $tickets->created,$tickets->fecha_final,$tickets->abonado ,$tickets->name.' '.$tickets->unoapellido,$tickets->status,$obsv2,$tickets->barrio,$tickets->ciudad));
+            $writer->writeSheetRow('Tickets ',array($tickets->codigo,$tickets->subject ,$tickets->detalle, $tickets->created,$tickets->fecha_final,$tickets->abonado ,$tickets->name.' '.$tickets->unoapellido,$tickets->status,$obsv2,$tickets->asignado,$tickets->barrio,$tickets->ciudad));
         
     }
         
