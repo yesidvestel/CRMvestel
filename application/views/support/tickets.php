@@ -420,9 +420,9 @@
         var opcion_seleccionada=$("#fechas option:selected").val();
         if(opcion_seleccionada=="fcreada"){
             $("#div_fechas").show();
-            $("#label_fechas").text("Fecha Creada")
+            $("#label_fechas").text("Fecha Creada");
         }else if(opcion_seleccionada=="fcierre"){
-            $("#label_fechas").text("Fecha Cierre")
+            $("#label_fechas").text("Fecha Cierre");
             $("#div_fechas").show();
         }else{
             $("#div_fechas").hide();

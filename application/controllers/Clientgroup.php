@@ -630,7 +630,7 @@ class Clientgroup extends CI_Controller
                     $no++;                
                     
                     $row = array();
-                    
+                        $money=$this->customers->money_details($customers->id);
                             $row[] = $no;
                             $row[] = $customers->abonado;
                             $row[] = $customers->documento;
@@ -641,6 +641,7 @@ class Clientgroup extends CI_Controller
                             $row[] = '<span class="st-'.$customers->usu_estado. '">' .$customers->usu_estado. '</span>';
                             $row[] = amountFormat($debe_customer);
                             $row[] = amountFormat($valor_ultima_factura);
+                            $row[] = amountFormat($money['credit']-$money['debit']);
                             $row[] = '<a href="' . base_url() . 'customers/edit?id=' . $customers->id . '" class="btn btn-success btn-sm"><span class="icon-pencil"></span> '.$this->lang->line('Edit').'</a>&nbsp;<a style="margin-top:1px;" target="_blanck" class="btn btn-info btn-sm"  href="'.base_url().'customers/invoices?id='.$customers->id.'"><span class="icon-eye"></span>&nbsp;Facturas</a>';
                             if ($this->aauth->get_user()->roleid > 4) {
                             $row[] = '<a href="#" data-object-id="' . $customers->id . '" class="btn btn-danger btn-sm delete-object"><span class="icon-bin"></span></a>';
@@ -655,6 +656,7 @@ class Clientgroup extends CI_Controller
                 $x++;
                 $customers->debe_customer=$debe_customer;
                 $customers->valor_ultima_factura=$valor_ultima_factura;
+                $customers->ingreso=$money['credit']-$money['debit'];
                 $listax[]=$customers;
                 
             }else{
@@ -663,7 +665,7 @@ class Clientgroup extends CI_Controller
              
         }
         
-        $datax['datos']=json_encode($listax);
+        $datax['datos']=json_encode($listax);//cuanto esto falle por ser muchos customers y toque buscar una solucion seria guardarlo en dos campos mitad y mitad es decir el count /2 serian los items a guardar en datoa y en dato b el resto de igual forma en el proceso de lectura se leen los dos y de unifican en una sola variable
         $this->db->update("filtros_historial",$datax, array("id"=>$this->aauth->get_user()->id));
         $var_recordsFiltered=count($lista_customers)-$descontar;
         if($_POST['length']=="100"){
@@ -695,7 +697,7 @@ class Clientgroup extends CI_Controller
                      $no++;                
                     
                     $row = array();
-                    
+                        $money=$this->customers->money_details($customers->id);
                             $row[] = $no;
                             $row[] = $customers->abonado;
                             $row[] = $customers->documento;
@@ -706,6 +708,7 @@ class Clientgroup extends CI_Controller
                             $row[] = $customers->barrio;
                             $row[] = amountFormat($customers->debe_customer);
                             $row[] = amountFormat($customers->valor_ultima_factura);
+                            $row[] = amountFormat($customers->ingreso);
                             $row[] = '<a href="' . base_url() . 'customers/edit?id=' . $customers->id . '" class="btn btn-success btn-sm"><span class="icon-pencil"></span> '.$this->lang->line('Edit').'</a>&nbsp;<a style="margin-top:1px;" target="_blanck" class="btn btn-info btn-sm"  href="'.base_url().'customers/invoices?id='.$customers->id.'"><span class="icon-eye"></span>&nbsp;Facturas</a>';
                             if ($this->aauth->get_user()->roleid > 4) {
                             $row[] = '<a href="#" data-object-id="' . $customers->id . '" class="btn btn-danger btn-sm delete-object"><span class="icon-bin"></span></a>';

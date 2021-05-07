@@ -64,6 +64,10 @@
                                     <a class="nav-link" id="milestones-tab" data-toggle="tab" href="#milestones"
                                        aria-controls="milestones"> Cuenta</a>
                                 </li>
+                                 <li class="nav-item">
+                                    <a class="nav-link" id="ingreso-tab" data-toggle="tab" href="#ingreso"
+                                       aria-controls="ingreso"> Ingreso</a>
+                                </li>
                                <!-- <li class="nav-item">
                                     <a class="nav-link" id="thread-tab" data-toggle="tab" href="#activities"
                                        aria-controls="activities">Otro Filtro</a>
@@ -276,11 +280,37 @@
 
                                 </div>
                                 <!--milestones-->
-                                <!--otro filtro 
-                                <div class="tab-pane fade" id="activities" role="tabpanel" aria-labelledby="activities-tab" aria-expanded="false">
+                                
+                                <div class="tab-pane fade" id="ingreso" role="tabpanel" aria-labelledby="ingreso-tab" aria-expanded="false">
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label"
+                                               for="pay_cat">Fechas</label>
 
+                                        <div class="col-sm-6">
+                                            <select name="trans_type" class="form-control" id="fechas" onchange="filtrado_fechas()">
+                                                <option value=''>Todas</option>
+                                                <option value='fcreada'>Por Ingreso</option>
+                                                
+                                            </select>
+                                        </div>                              
+                                    </div>
+                                    <div class="form-group row" id="div_fechas" style="display: none">
+                                        <label class="col-sm-2 col-form-label"
+                                               for="pay_cat" id="label_fechas">Por Ingreso</label>
+
+                                        <div class="col-sm-2">
+                                            <input type="text" class="form-control required"
+                                                   placeholder="Start Date" name="sdate" id="sdate"
+                                                    autocomplete="false">
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <input type="text" class="form-control required"
+                                                   placeholder="End Date" name="edate" id="edate"
+                                                   data-toggle="datepicker" autocomplete="false">
+                                        </div>
+                                    </div>
                                 </div>
-                                activities-->
+                                
                                 
                                 
 
@@ -458,14 +488,30 @@
 
 
 <script type="text/javascript">
+
+    function  filtrado_fechas(){
+        var opcion_seleccionada=$("#fechas option:selected").val();
+        if(opcion_seleccionada=="fcreada"){
+            $("#div_fechas").show();
+            $("#label_fechas").text("Fecha Creada")
+        }else if(opcion_seleccionada=="fcierre"){
+            $("#label_fechas").text("Fecha Cierre")
+            $("#div_fechas").show();
+        }else{
+            $("#div_fechas").hide();
+        }
+    }
     var columnasAgregadas=false;
     function nuevas_columnas(){
         if(!columnasAgregadas){
               tb.destroy();
+              $("#despues_de_thead").after("<th class='cols_adicionadas'>Ingreso</th>");
+              $("#despues_de_tfoot").after("<th class='cols_adicionadas'>Ingreso</th>");
               $("#despues_de_thead").after("<th class='cols_adicionadas'>Suscripcion</th>");
               $("#despues_de_tfoot").after("<th class='cols_adicionadas'>Suscripcion</th>");
               $("#despues_de_thead").after("<th class='cols_adicionadas'>Deuda</th>");
               $("#despues_de_tfoot").after("<th class='cols_adicionadas'>Deuda</th>");
+
               var morosos=$("#deudores option:selected").val();
 
               var estado=$("#estado option:selected").val();
