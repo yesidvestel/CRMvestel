@@ -281,7 +281,7 @@
                 <!-- fin paneles -->
 
 			<div class="table-responsive">
-				<a href="#" onclick="redirect_to_export()" class="btn btn-primary btn-md">Exportar a Excel .XLSX</a>
+				<a href="#" onclick="redirect_to_export()" class="btn btn-success btn-md">Exportar a Excel .XLSX</a>
             <table id="doctable" class="table table-hover" cellspacing="0" width="100%">
                 <thead>
                 <tr>
