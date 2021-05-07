@@ -320,6 +320,7 @@
 			</div>
 			<div class="col-xs-3 mb-1">
 			<select name="asignado" id="tecnicos" class="form-control mb-1">
+				<option value="">-</option>
 				<?php
 					foreach ($tecnicoslista as $row) {
 						$cid = $row['id'];
