@@ -970,32 +970,32 @@ class Tickets Extends CI_Controller
 		if($ticket->detalle=="Suspension Television"){
 			$factura = $this->db->get_where('invoices',array('tid'=>$idfactura))->row();
 			if ($factura->combo===no){
-				$status = 'Suspendido';
+				$status2 = 'Suspendido';
 			}else{
-				$status = 'Activo';
+				$status2 = 'Activo';
 			}
-			$this->db->set('ron', $status);
+			$this->db->set('ron', $status2);
 			$this->db->set('television', 'no');			
         	$this->db->where('tid', $idfactura);
         	$this->db->update('invoices');
 			//actualizar estado usuario
-				$this->db->set('usu_estado', $status);
+				$this->db->set('usu_estado', $status2);
         		$this->db->where('id', $ticket->cid);
         		$this->db->update('customers');
 		}
 		if($ticket->detalle=="Suspension Internet"){
 			$factura = $this->db->get_where('invoices',array('tid'=>$idfactura))->row();
 			if ($factura->television===no){
-				$status = 'Suspendido';
+				$status2 = 'Suspendido';
 			}else{
-				$status = 'Activo';
+				$status2 = 'Activo';
 			}
-			$this->db->set('ron', $status);
+			$this->db->set('ron', $status2);
 			$this->db->set('combo', 'no');			
         	$this->db->where('tid', $idfactura);
         	$this->db->update('invoices');
 			//actualizar estado usuario
-				$this->db->set('usu_estado', $status);
+				$this->db->set('usu_estado', $status2);
         		$this->db->where('id', $ticket->cid);
         		$this->db->update('customers');
                  //mikrotik
@@ -1091,7 +1091,6 @@ class Tickets Extends CI_Controller
 		
         $dataz['status']=$status;
         $dataz['fecha_final']=$fecha_final;
-        
         $this->db->update('tickets',$dataz,array('idt'=>$tid));
 				
 		
