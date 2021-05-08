@@ -462,7 +462,7 @@ class Clientgroup extends CI_Controller
         $descontar=0;
         foreach ($lista_customers as $key => $customers) {
             $due=$this->customers->due_details($customers->id);
-            $money=$this->customers->money_details($customers->id);
+            $money=$this->customers->money_details($customers->id);//para poder arreglar el tema de la velocidad de carga esta ligado con este proceso la solucion a la que llegamos es crear los campos debit y credit en customers y en cada proceso del sistema en los que se cree elimine o editen transacciones se debe de editar el valor de customers;
             $customers->money=$money['credit']-$money['debit'];
             $debe_customer=($due['total']-$due['pamnt'])+$money['debit'];//se agrego el campo de money debit por el item de gastos que se mencino en fechas anteriores
 
@@ -640,7 +640,7 @@ class Clientgroup extends CI_Controller
                     $no++;                
                     
                     $row = array();
-                        $money=$this->customers->money_details($customers->id);
+                        //$money=$this->customers->money_details($customers->id);
                             $row[] = $no;
                             $row[] = $customers->abonado;
                             $row[] = $customers->documento;
