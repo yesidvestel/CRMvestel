@@ -407,7 +407,7 @@ class Clientgroup extends CI_Controller
     }
     
     public function load_morosos(){ 
-        
+        set_time_limit(3000);
         if($this->input->post('start')!="0"){
             
             $this->list_data_precargada();
