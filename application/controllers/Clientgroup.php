@@ -49,7 +49,7 @@ class Clientgroup extends CI_Controller
         $this->load->view('fixed/footer');
     }
     public function explortar_a_excel(){
-        
+        set_time_limit(3000);
         $this->db->select("*");
         $this->db->from("customers");        
         $this->db->where("gid",$_GET['id']);
@@ -92,7 +92,9 @@ class Clientgroup extends CI_Controller
         
         foreach ($lista_customers as $key => $customers) {
             $due=$this->customers->due_details($customers->id);
-            $debe_customer=$due['total']-$due['pamnt'];
+            $money=$this->customers->money_details($customers->id);
+            $customers->money=$money['credit']-$money['debit'];
+            $debe_customer=($due['total']-$due['pamnt'])+$money['debit'];//se agrego el campo de money debit por el item de gastos que se mencino en fechas anteriores
             $lista_invoices = $this->db->from("invoices")->where("csd",$customers->id)->order_by('invoicedate',"DESC")->get()->result();
             $customer_moroso=false;
             $valor_ultima_factura=0;
@@ -112,7 +114,9 @@ class Clientgroup extends CI_Controller
                         $fact_valida=true;
                         $_var_tiene_tv=true;
                     }
-
+                    if($invoice->ron=="Suspendido"){
+                        $fact_valida=true;
+                    }
                     if($fact_valida){
                         if($_var_tiene_tv){
                             if(str_replace(" ", "", $invoice->refer)=="Mocoa"){
@@ -276,7 +280,7 @@ class Clientgroup extends CI_Controller
         $this->load->library('Excel');
     
     //define column headers
-    $headers = array('Abonado' => 'string','Cedula' => 'string', 'Nombre' => 'string', 'Celular' => 'string', 'Direccion' => 'string','Barrio' => 'string', 'Estado' => 'string','Deuda' => 'integer','Suscripcion' => 'integer');
+    $headers = array('Abonado' => 'string','Cedula' => 'string', 'Nombre' => 'string', 'Celular' => 'string', 'Direccion' => 'string','Barrio' => 'string', 'Estado' => 'string','Deuda' => 'integer','Suscripcion' => 'integer','Ingreso' => 'integer');
     
     //fetch data from database
     //$salesinfo = $this->product_model->get_salesinfo();
@@ -306,12 +310,13 @@ class Clientgroup extends CI_Controller
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ));
     
     //write rows to sheet1
-    foreach ($lista_customers2 as $key => $customer) {
+    foreach ($lista_customers2 as $key => $customer) {            
             $direccion= $customer->nomenclatura . ' ' . $customer->numero1 . $customer->adicionauno.' Nº '.$customer->numero2.$customer->adicional2.' - '.$customer->numero3;
-            $writer->writeSheetRow('Customers '.$cust_group->title,array($customer->abonado,$customer->documento ,$customer->name, $customer->celular, $direccion,$customer->barrio ,$customer->usu_estado,$customer->deuda,$customer->suscripcion));
+            $writer->writeSheetRow('Customers '.$cust_group->title,array($customer->abonado,$customer->documento ,$customer->name, $customer->celular, $direccion,$customer->barrio ,$customer->usu_estado,$customer->deuda,$customer->suscripcion,$customer->money));
     }
         
         
@@ -457,7 +462,10 @@ class Clientgroup extends CI_Controller
         $descontar=0;
         foreach ($lista_customers as $key => $customers) {
             $due=$this->customers->due_details($customers->id);
-            $debe_customer=$due['total']-$due['pamnt'];
+            $money=$this->customers->money_details($customers->id);
+            $customers->money=$money['credit']-$money['debit'];
+            $debe_customer=($due['total']-$due['pamnt'])+$money['debit'];//se agrego el campo de money debit por el item de gastos que se mencino en fechas anteriores
+
             $lista_invoices = $this->db->from("invoices")->where("csd",$customers->id)->order_by('invoicedate',"DESC")->get()->result();
             $customer_moroso=false;
             $valor_ultima_factura=0;
@@ -477,7 +485,9 @@ class Clientgroup extends CI_Controller
                         $fact_valida=true;
                         $_var_tiene_tv=true;
                     }
-
+                    if($invoice->ron=="Suspendido"){
+                        $fact_valida=true;
+                    }
                     if($fact_valida){
                         if($_var_tiene_tv){
                             if(str_replace(" ", "", $invoice->refer)=="Mocoa"){
@@ -697,7 +707,7 @@ class Clientgroup extends CI_Controller
                      $no++;                
                     
                     $row = array();
-                        $money=$this->customers->money_details($customers->id);
+                        
                             $row[] = $no;
                             $row[] = $customers->abonado;
                             $row[] = $customers->documento;

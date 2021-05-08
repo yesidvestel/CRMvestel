@@ -239,7 +239,7 @@ class Customers_model extends CI_Model
             }
             
                 if($fact_valida){
-                    var_dump($invoice->ron);
+                    //var_dump($invoice->ron);
                     $servicios['estado']=$invoice->ron;
                     if($invoice->ron=="Suspendido"){
                         $servicios['television']="no";
