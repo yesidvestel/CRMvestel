@@ -289,14 +289,14 @@
                                         <div class="col-sm-6">
                                             <select name="trans_type" class="form-control" id="fechas" onchange="filtrado_fechas()">
                                                 <option value=''>Todas</option>
-                                                <option value='fcreada'>Por Ingreso</option>
+                                                <option value='fecha_ingreso'>De los ingresos</option>
                                                 
                                             </select>
                                         </div>                              
                                     </div>
                                     <div class="form-group row" id="div_fechas" style="display: none">
                                         <label class="col-sm-2 col-form-label"
-                                               for="pay_cat" id="label_fechas">Por Ingreso</label>
+                                               for="pay_cat" id="label_fechas">De los ingresos</label>
 
                                         <div class="col-sm-2">
                                             <input type="text" class="form-control required"
@@ -491,12 +491,9 @@
 
     function  filtrado_fechas(){
         var opcion_seleccionada=$("#fechas option:selected").val();
-        if(opcion_seleccionada=="fcreada"){
+        if(opcion_seleccionada=="fecha_ingreso"){
             $("#div_fechas").show();
-            $("#label_fechas").text("Fecha Creada")
-        }else if(opcion_seleccionada=="fcierre"){
-            $("#label_fechas").text("Fecha Cierre")
-            $("#div_fechas").show();
+            
         }else{
             $("#div_fechas").hide();
         }
@@ -528,6 +525,10 @@
                 var numero3= $("#numero3").val();
                 var direccion = $("#sel_dir_personalizada option:selected").val();
                 var sel_servicios = $("#sel_servicios option:selected").val();
+
+                var ingreso_select=$("#fechas option:selected").val();
+                var sdate=$("#sdate").val();
+                var edate=$("#edate").val();
               tb=$('#fclientstable').DataTable({
 
                 "processing": true, //Feature control the processing indicator.
@@ -536,7 +537,7 @@
 
                 // Load data for the table's content from an Ajax source
                 "ajax": {
-                    "url": "<?php echo site_url('clientgroup/load_morosos') . '?id=' . $group['id']; ?>&morosos="+morosos+"&estado="+estado+"&localidad="+localidad+"&barrio="+barrio+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios,
+                    "url": "<?php echo site_url('clientgroup/load_morosos') . '?id=' . $group['id']; ?>&morosos="+morosos+"&estado="+estado+"&localidad="+localidad+"&barrio="+barrio+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate,
                     "type": "POST"
                 },
 
@@ -595,9 +596,13 @@
             var direccion = $("#sel_dir_personalizada option:selected").val();
             var sel_servicios = $("#sel_servicios option:selected").val();
             var morosos=$("#deudores option:selected").val();
+
+            var ingreso_select=$("#fechas option:selected").val();
+            var sdate=$("#sdate").val();
+            var edate=$("#edate").val();
             //if(morosos!=""){
                 if(columnasAgregadas){
-                    tb.ajax.url( baseurl+'clientgroup/load_morosos?id=<?=$_GET['id']?>&morosos='+morosos+"&estado="+estado+"&localidad="+localidad+"&barrio="+barrio+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios).load();               
+                    tb.ajax.url( baseurl+'clientgroup/load_morosos?id=<?=$_GET['id']?>&morosos='+morosos+"&estado="+estado+"&localidad="+localidad+"&barrio="+barrio+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate).load();               
                 }else{
                     nuevas_columnas();
                     $("option[value=100]").text("Todo");

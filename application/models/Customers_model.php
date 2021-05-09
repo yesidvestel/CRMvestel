@@ -200,7 +200,16 @@ class Customers_model extends CI_Model
         $this->db->from('transactions');
         $this->db->where('payerid', $custid);
 		$this->db->where('estado' , null);
-		$this->db->where('ext', '0');		
+		$this->db->where('ext', '0');
+        if(isset($_GET['ingreso_select']) && $_GET['ingreso_select']!="" && $_GET['ingreso_select']!=null){
+                $dateTime= new DateTime($_GET['sdate']);
+                $sdate=$dateTime->format("Y-m-d");
+                $dateTime= new DateTime($_GET['edate']);
+                $edate=$dateTime->format("Y-m-d");
+
+                $this->db->where("date>=",$sdate);
+                $this->db->where("date<=",$edate);
+        }
         $query = $this->db->get();
         return $query->row_array();
     }
