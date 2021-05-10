@@ -633,7 +633,12 @@
             var direccion = $("#sel_dir_personalizada option:selected").val();
             var sel_servicios = $("#sel_servicios option:selected").val();
             var morosos=$("#deudores option:selected").val();
-            var url_redirect=baseurl+'clientgroup/explortar_a_excel?estado='+estado+"&id=<?=$_GET['id']?>&localidad="+localidad+"&barrio="+barrio+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&morosos="+morosos;
+
+            var ingreso_select=$("#fechas option:selected").val();
+            var sdate=$("#sdate").val();
+            var edate=$("#edate").val();
+            
+            var url_redirect=baseurl+'clientgroup/explortar_a_excel?estado='+estado+"&id=<?=$_GET['id']?>&localidad="+localidad+"&barrio="+barrio+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&morosos="+morosos+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate;
             window.location.replace(url_redirect);
 
     }
