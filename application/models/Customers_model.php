@@ -243,7 +243,7 @@ class Customers_model extends CI_Model
                         $_var_tiene_tv=true;
                         $servicios['television']=$invoice->television;
             }
-            if($invoice->ron=="Suspendido"){
+            if($invoice->ron!="" && $invoice->ron!=null){
                         $fact_valida=true;
             }
             

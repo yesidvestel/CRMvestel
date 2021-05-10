@@ -114,7 +114,7 @@ class Clientgroup extends CI_Controller
                         $fact_valida=true;
                         $_var_tiene_tv=true;
                     }
-                    if($invoice->ron=="Suspendido"){
+                    if($invoice->ron!="" && $invoice->ron!=null){
                         $fact_valida=true;
                     }
                     if($fact_valida){
@@ -485,7 +485,7 @@ class Clientgroup extends CI_Controller
                         $fact_valida=true;
                         $_var_tiene_tv=true;
                     }
-                    if($invoice->ron=="Suspendido"){
+                    if($invoice->ron!="" && $invoice->ron!=null){
                         $fact_valida=true;
                     }
                     if($fact_valida){
@@ -714,8 +714,8 @@ class Clientgroup extends CI_Controller
                             $row[] = '<a href="'.base_url().'customers/view?id=' . $customers->id . '">' . $customers->name . ' </a>';
                             $row[] = $customers->celular;           
                             $row[] = $customers->nomenclatura . ' ' . $customers->numero1 . $customers->adicionauno.' Nº '.$customers->numero2.$customers->adicional2.' - '.$customers->numero3;
-                            $row[] = '<span class="st-'.$customers->usu_estado. '">' .$customers->usu_estado. '</span>';
                             $row[] = $customers->barrio;
+                            $row[] = '<span class="st-'.$customers->usu_estado. '">' .$customers->usu_estado. '</span>';
                             $row[] = amountFormat($customers->debe_customer);
                             $row[] = amountFormat($customers->valor_ultima_factura);
                             $row[] = amountFormat($customers->ingreso);
