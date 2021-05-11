@@ -489,6 +489,25 @@
     </div>
 </div>
 
+<div id="alert_modal" class="modal fade">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Informacion</h4>
+            </div>
+
+            <div class="modal-body" id="body_modal">
+               <p>Ah ocurrido un error por la cantidad de registros, se va a segmentar por paginas automaticamente, seleccionando la 1</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal"><?php echo $this->lang->line('Close') ?> </button>
+                
+            </div>
+        </div>
+    </div>
+</div>
 
 <script type="text/javascript">
 
@@ -542,7 +561,12 @@
                 // Load data for the table's content from an Ajax source
                 "ajax": {
                     "url": "<?php echo site_url('clientgroup/load_morosos') . '?id=' . $group['id']; ?>&morosos="+morosos+"&estado="+estado+"&localidad="+localidad+"&barrio="+barrio+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&pagination_start="+pagination_start+"&pagination_end="+pagination_end,
-                    "type": "POST"
+                    "type": "POST",
+                    error: function (xhr, error, code)
+                    {
+                        $("#alert_modal").modal("show");
+                        filtrar(1);
+                    }
                 },
 
                 //Set column definition initialisation properties.
