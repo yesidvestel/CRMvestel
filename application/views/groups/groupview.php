@@ -322,7 +322,7 @@
                                 <label class="col-sm-3 col-form-label" for="pay_cat"></label>
 
                                 <div class="col-sm-4">
-                                    <input type="button" class="btn btn-primary btn-md" value="VER" onclick="filtrar()">
+                                    <input type="button" class="btn btn-primary btn-md" value="VER" onclick="filtrar(0);">
 
 
                                 </div>
@@ -378,6 +378,9 @@
                 </tr>
                 </tfoot>
             </table>
+            <div style="float: right;">
+            <a  id="pagination_0" onclick="filtrar(0)" >All&nbsp;&nbsp;&nbsp;&nbsp;</a><a  id="pagination_1" data-start="<?=$array_pagination['1']['start']?>" data-end="<?=$array_pagination['1']['end']?>" onclick="filtrar(1)">1&nbsp;&nbsp;&nbsp;&nbsp;</a><a  id="pagination_2" data-start="<?=$array_pagination['2']['start']?>" data-end="<?=$array_pagination['2']['end']?>" onclick="filtrar(2)">2&nbsp;&nbsp;&nbsp;&nbsp;</a>
+            </div>
         </div>
         
     </div>
@@ -498,6 +501,7 @@
             $("#div_fechas").hide();
         }
     }
+
     var columnasAgregadas=false;
     function nuevas_columnas(){
         if(!columnasAgregadas){
@@ -537,7 +541,7 @@
 
                 // Load data for the table's content from an Ajax source
                 "ajax": {
-                    "url": "<?php echo site_url('clientgroup/load_morosos') . '?id=' . $group['id']; ?>&morosos="+morosos+"&estado="+estado+"&localidad="+localidad+"&barrio="+barrio+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate,
+                    "url": "<?php echo site_url('clientgroup/load_morosos') . '?id=' . $group['id']; ?>&morosos="+morosos+"&estado="+estado+"&localidad="+localidad+"&barrio="+barrio+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&pagination_start="+pagination_start+"&pagination_end="+pagination_end,
                     "type": "POST"
                 },
 
@@ -580,7 +584,10 @@
 
         
     });
-	function filtrar(){
+    var pagination_start="";
+    var pagination_end="";
+     
+	function filtrar($pagination_id){
             var estado=$("#estado option:selected").val();
            
       
@@ -600,9 +607,31 @@
             var ingreso_select=$("#fechas option:selected").val();
             var sdate=$("#sdate").val();
             var edate=$("#edate").val();
+            
+            if($pagination_id==0){
+                pagination_start="";
+                pagination_end="";
+            }else{
+                pagination_start=$("#pagination_"+$pagination_id).data("start");
+                pagination_end=$("#pagination_"+$pagination_id).data("end");                                              
+                //color:blue;font-weight:900
+            }
+            
+                for (var i = 0; i <= 2; i++) {
+                    
+                    if(i!=$pagination_id){
+                        $("#pagination_"+i).css("color","");
+                        $("#pagination_"+i).css("font-weight","");        
+                    }else{
+                        $("#pagination_"+$pagination_id).css("color","blue");
+                        $("#pagination_"+$pagination_id).css("font-weight","900");
+                    }
+                }
+
+             
             //if(morosos!=""){
                 if(columnasAgregadas){
-                    tb.ajax.url( baseurl+'clientgroup/load_morosos?id=<?=$_GET['id']?>&morosos='+morosos+"&estado="+estado+"&localidad="+localidad+"&barrio="+barrio+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate).load();               
+                    tb.ajax.url( baseurl+'clientgroup/load_morosos?id=<?=$_GET['id']?>&morosos='+morosos+"&estado="+estado+"&localidad="+localidad+"&barrio="+barrio+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&pagination_start="+pagination_start+"&pagination_end="+pagination_end).load();               
                 }else{
                     nuevas_columnas();
                     $("option[value=100]").text("Todo");
@@ -637,7 +666,7 @@
             var ingreso_select=$("#fechas option:selected").val();
             var sdate=$("#sdate").val();
             var edate=$("#edate").val();
-            
+
             var url_redirect=baseurl+'clientgroup/explortar_a_excel?estado='+estado+"&id=<?=$_GET['id']?>&localidad="+localidad+"&barrio="+barrio+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&morosos="+morosos+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate;
             window.location.replace(url_redirect);
 

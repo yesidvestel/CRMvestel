@@ -357,6 +357,19 @@ class Clientgroup extends CI_Controller
         $id = $this->input->get('id');		
         $data['group'] = $this->clientgroup->details($id);
         $head['title'] = 'Group View';
+        
+        $this->db->select("*");
+        $this->db->from("customers");        
+        $this->db->where("gid",$_GET['id']);
+        $this->db->order_by('id', 'DESC');
+        $lista_customers=$this->db->get()->result();
+        $total=count($lista_customers);
+        $x=intval($total/2);
+        //var_dump($x);
+        $array= array('1' => array('start' => $lista_customers[0]->id,'end' => $lista_customers[$x]->id),'2' => array('start' => $lista_customers[$x+1]->id,'end' => $lista_customers[$total-1]->id));
+        $data['array_pagination']=$array;
+        //var_dump($array);
+
         $this->load->view('fixed/header', $head);
         $this->load->view('groups/groupview', $data);
         $this->load->view('fixed/footer');
@@ -407,7 +420,7 @@ class Clientgroup extends CI_Controller
     }
     
     public function load_morosos(){ 
-        set_time_limit(3000);
+        set_time_limit(6000);
         if($this->input->post('start')!="0"){
             
             $this->list_data_precargada();
@@ -448,10 +461,16 @@ class Clientgroup extends CI_Controller
                 $this->db->where('numero3=', $_GET['numero3']);
             }
         }
-
+        if($_GET['pagination_start']!="" && $_GET['pagination_start']!=null){
+                $this->db->where('id<',$_GET['pagination_start']);
+                $this->db->where("id>",$_GET['pagination_end']);    
+                //eh pensado una forma mucho mas compleja para realizar esto y es atraves de multihilo o multitarea algo muy complejo pero con tiempo seria bueno intentarlo
+        }
+        
         $this->db->order_by('id', 'DESC');
-        $lista_customers=$this->db->get()->result();
 
+        $lista_customers=$this->db->get()->result();
+        
 
 
         $no = $this->input->post('start');
