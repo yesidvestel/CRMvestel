@@ -30,11 +30,13 @@ class Transactions_model extends CI_Model
     {
 
         $this->db->from($this->table);
+
         switch ($this->opt) {
             case 'income':
                 $this->db->where('type', 'Income');
                 break;
             case 'expense':
+                //var_dump($this->opt);
                 $this->db->where('type', 'Expense');
                 break;
         }
@@ -42,8 +44,8 @@ class Transactions_model extends CI_Model
             $this->db->where("id",$_GET['id_tr']);
             $this->db->where("estado",null);
         }else{
-            $this->db->where("estado!=","Anulada");
-        $this->db->or_where("estado IS NULL",NULL);    
+            //$this->db->where("estado!=","Anulada");
+        $this->db->where("estado IS NULL",NULL);    
         }
 
         
