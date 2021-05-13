@@ -108,6 +108,7 @@
 													}
 													?>
 											</select>
+											<code>* Seleccionar factura de servicios mes actual si no es instalacion</code>
 										</div>
                                         </div>
                                     </div>

@@ -294,6 +294,8 @@
 					<th>F/cierre</th>
 					<th>Abonado</th>
 					<th>Usuario</th>
+					<th>documento</th>
+					<th>Observacion</th>
                     <th>Factura</th>
 					<th>Asignado</th>
 					<th>Sede</th>

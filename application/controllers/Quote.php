@@ -281,8 +281,29 @@ class Quote extends CI_Controller
                 $inter="no";
                 $punto = $this->input->post('puntoB');            
          }      
-               
-        $data = array('codigo' => $nticket, 'subject' => $subject, 'detalle' => $detalle, 'created' => $bill_date, 'section' => $section, 'id_factura' => $factura);
+         if ($tv=='no' || $tv==''){
+				$tv2 = '';
+			}else{
+				$tv2 = $tv;
+			}
+			if ($inter=='no' || $inter==''){
+				$int2 = '';
+			}else{
+				$int2 = ' + '.$inter;
+			}
+			if ($punto=='0' || $punto==''){
+				$pto2 = '';
+			}else{
+				$pto2 = ' + '.$punto.' Puntos';
+			}    
+        $data = array(
+			'codigo' => $nticket, 
+			'subject' => $subject, 
+			'detalle' => $detalle, 
+			'created' => $bill_date, 
+			'section' => $section.$tv2.$int2.$pto2,
+			'id_factura' => $factura
+		);
         $this->db->set($data);
         $this->db->where('idt', $customer_id);
 		$this->db->update('tickets');

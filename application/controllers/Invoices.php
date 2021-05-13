@@ -895,6 +895,21 @@ class Invoices extends CI_Controller
         if ($flag == true) {
             $this->db->insert_batch('invoice_items', $productlist);
 			$tidactualmasuno= $this->db->select('max(codigo)+1 as codigo')->from('tickets')->get()->result();
+			if ($television=='no'){
+				$tv = '';
+			}else{
+				$tv = $television;
+			}
+			if ($combo=='no'){
+				$int = '';
+			}else{
+				$int = ' + '.$combo;
+			}
+			if ($puntos=='0'){
+				$pto = '';
+			}else{
+				$pto = ' + '.$puntos.' Puntos';
+			}
             if ($this->db->insert('invoices', $data)) {
 				if (($television !== no) || $combo !== no){
 				$data2['codigo']=$tidactualmasuno[0]->codigo;	
@@ -903,6 +918,7 @@ class Invoices extends CI_Controller
                 $data2['created']=$bill_date;
                 $data2['cid']=$customer_id;
                 $data2['status']='Pendiente';
+				$data2['section']=$tv.$int.$pto;	
                 //Tipo de instalacion
 					
                 $data2['id_invoice']=$invocieno;

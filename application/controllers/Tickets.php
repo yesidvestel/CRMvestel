@@ -91,8 +91,11 @@ class Tickets Extends CI_Controller
         $list = $this->ticket->ticket_datatables($filt,$_GET);
         $data = array();
         $no = $this->input->post('start');
-
+		$obsv = str_replace('<p>','',$tickets->section);
+		$obsv2 = str_replace('</p>','',$obsv);
         foreach ($list as $ticket) {
+			$obsv = str_replace('<p>','',$ticket->section);
+			$obsv2 = str_replace('</p>','',$obsv);
             $row = array();
             $no++;			
             $row[] = $no;
@@ -111,6 +114,8 @@ class Tickets Extends CI_Controller
                 $row[]='<a href="'.base_url("customers/view?id=".$ticket->cid).'">'.$ticket->abonado.'</a>';
             }
 			$row[] = $ticket->name.' '.$ticket->unoapellido;
+			$row[] = $ticket->documento;
+			$row[] = $obsv2;
           if($ticket->id_factura !=null || $ticket->id_factura !==0 ){
                 $row[]='<a href="'.base_url("invoices/view?id=".$ticket->id_factura).'">'.$ticket->id_factura.'</a>';
             }else{

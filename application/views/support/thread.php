@@ -55,13 +55,7 @@
 			<?php echo '<h4>Detalles:</h4><code class="card card-block"><h5 style="text-decoration: underline;">' .$thread_info['detalle'].'</h5>'.strip_tags($thread_info['section'],'<p>');
 	
 	if ($thread_info['detalle']=='Traslado'){ echo $traslados->nomenclatura.' '.$traslados->nuno.$traslados->auno.' Nº '.$traslados->ndos.$traslados->ados.' - '.$traslados->ntres.'/'.$traslados->residencia.' '.$traslados->referencia;}?>
-	<?php if ($thread_info['detalle']=='Instalacion' ){ if ($thread_info['id_invoice']!=='0')
-					{ echo $factura->television.' '.$factura->combo.' '.$factura->puntos.' Puntos';}else{
-						echo $traslados->tv.' '.$traslados->internet.' '.$traslados->puntos.' Puntos';}
 	
-}if (strpos($thread_info['detalle'], "Agregar")!==false){
-	echo $traslados->tv.' '.$traslados->internet.' '.$traslados->puntos.' Puntos';
-}?>
 			
 		</code>		
 			
