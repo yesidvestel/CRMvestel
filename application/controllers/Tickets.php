@@ -791,6 +791,10 @@ class Tickets Extends CI_Controller
             $this->db->set('combo', $profile);
             $this->db->where('tid', $idfactura);
             $this->db->update('invoices');
+
+            $this->db->set('perfil', $profile);
+            $this->db->where('id', $ticket->cid);
+            $this->db->update('customers');
         }
 		if($ticket->detalle=="Subir 15 Mg" || $ticket->detalle=="Bajar 15 Mg"){          
              $profile="15Megas";
@@ -806,6 +810,10 @@ class Tickets Extends CI_Controller
             $this->db->set('combo', $profile);
             $this->db->where('tid', $idfactura);
             $this->db->update('invoices');
+
+            $this->db->set('perfil', $profile);
+            $this->db->where('id', $ticket->cid);
+            $this->db->update('customers');
         }
 		if($ticket->detalle=="Subir 10 Mg" || $ticket->detalle=="Bajar 10 Mg"){			
 			 $profile="10Megas";
@@ -821,6 +829,10 @@ class Tickets Extends CI_Controller
             $this->db->set('combo', $profile);
         	$this->db->where('tid', $idfactura);
         	$this->db->update('invoices');
+
+            $this->db->set('perfil', $profile);
+            $this->db->where('id', $ticket->cid);
+            $this->db->update('customers');
 		}
         if($ticket->detalle=="Subir 5 Mg" || $ticket->detalle=="Bajar 5 Mg"){         
              $profile="5Megas";
@@ -836,6 +848,10 @@ class Tickets Extends CI_Controller
             $this->db->set('combo', $profile);
             $this->db->where('tid', $idfactura);
             $this->db->update('invoices');
+
+            $this->db->set('perfil', $profile);
+            $this->db->where('id', $ticket->cid);
+            $this->db->update('customers');
         }
         
 		
