@@ -498,6 +498,35 @@ class Customers_model extends CI_Model
         }
 
     }
+    public function edit_profile_mikrotik($id_sede,$name_s,$profile){
+        include (APPPATH."libraries\RouterosAPI.php");
+                set_time_limit(3000);
+                $API = new RouterosAPI();
+                $API->debug = false;
+        if ($API->connect($this->get_ip_coneccion_microtik_por_sede($id_sede), 'api.crmvestel', 'duber123')) {
+                $arrID=$API->comm("/ppp/secret/getall", 
+                          array(
+                          ".proplist"=> ".id",
+                          "?name" => $name_s,
+                          ));
+                    if($arrID[0][".id"]!=null){
+                        $API->comm("/ppp/secret/set",
+                          array(
+                               ".id" => $arrID[0][".id"],
+                               //"name"     => str_replace(' ', '', $name_s),
+                               //"password" => $contra,
+                               //"remote-address" => $Ipremota,
+                               //"local-address" => $Iplocal,
+                               "profile" => $profile,
+                               //"comment"  => $barrio." ".$abonado,
+                               //"service"  => $servicio,
+                               "disabled"  => "no",
+                               )
+                          );  
+                    }
+            }
+
+    }
 
     public function changepassword($id, $password)
     {

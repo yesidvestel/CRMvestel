@@ -775,31 +775,69 @@ class Tickets Extends CI_Controller
         }else{
             $msg1="no redirect";        
 		}
-		if($ticket->detalle=="Subir 5 Mg"){			
-			$this->db->set('combo', '5Megas');
+        $customer=$this->db->get_where("customers",array('id' =>$ticket->cid))->row();
+        if($ticket->detalle=="Subir 20 Mg"){
+            $profile="20Megas";
+            if($customer->gid==2){//yopal
+                $profile="20Megas";
+            }else if($customer->gid==3){//villanueva
+                $profile="20MegasV";
+            }else if($customer->gid==4){//monterrey
+                $profile="20Megas";
+            }
+            $this->customers->edit_profile_mikrotik($customer->gid,$customer->name_s,$profile);
+            $this->db->set('combo', $profile);
+            $this->db->where('tid', $idfactura);
+            $this->db->update('invoices');
+        }
+		if($ticket->detalle=="Subir 15 Mg" || $ticket->detalle=="Bajar 15 Mg"){          
+             $profile="15Megas";
+            if($customer->gid==2){//yopal
+                $profile="15Megas";
+            }else if($customer->gid==3){//villanueva
+                $profile="15MegasV";
+            }else if($customer->gid==4){//monterrey
+                $profile="15Megas";
+            }
+
+            $this->customers->edit_profile_mikrotik($customer->gid,$customer->name_s,$profile);
+            $this->db->set('combo', $profile);
+            $this->db->where('tid', $idfactura);
+            $this->db->update('invoices');
+        }
+		if($ticket->detalle=="Subir 10 Mg" || $ticket->detalle=="Bajar 10 Mg"){			
+			 $profile="10Megas";
+            if($customer->gid==2){//yopal
+                $profile="10Megas";
+            }else if($customer->gid==3){//villanueva
+                $profile="10MegasV";
+            }else if($customer->gid==4){//monterrey
+                $profile="10Megas";
+            }
+
+            $this->customers->edit_profile_mikrotik($customer->gid,$customer->name_s,$profile);
+            $this->db->set('combo', $profile);
         	$this->db->where('tid', $idfactura);
         	$this->db->update('invoices');
 		}
-		if($ticket->detalle=="Subir 10 Mg"){			
-			$this->db->set('combo', '10Megas');
-        	$this->db->where('tid', $idfactura);
-        	$this->db->update('invoices');
-		}
-		if($ticket->detalle=="Bajar 5 Mg"){			
-			$this->db->set('combo', '5Megas');
-        	$this->db->where('tid', $idfactura);
-        	$this->db->update('invoices');
-		}
-		if($ticket->detalle=="Bajar 3 Mg"){			
-			$this->db->set('combo', '3Megas');
-        	$this->db->where('tid', $idfactura);
-        	$this->db->update('invoices');
-		}
-		if($ticket->detalle=="Bajar 3 Mg"){			
-			$this->db->set('combo', '3Megas');
-        	$this->db->where('tid', $idfactura);
-        	$this->db->update('invoices');
-		}
+        if($ticket->detalle=="Subir 5 Mg" || $ticket->detalle=="Bajar 5 Mg"){         
+             $profile="5Megas";
+            if($customer->gid==2){//yopal
+                $profile="5Megas";
+            }else if($customer->gid==3){//villanueva
+                $profile="5MegasV";
+            }else if($customer->gid==4){//monterrey
+                $profile="5Megas";
+            }
+
+            $this->customers->edit_profile_mikrotik($customer->gid,$customer->name_s,$profile);
+            $this->db->set('combo', $profile);
+            $this->db->where('tid', $idfactura);
+            $this->db->update('invoices');
+        }
+        
+		
+		
 		if($ticket->detalle=="Reconexion Combo"){
 			$paquete = $this->input->post('paquete');
 			$this->db->set('combo', $paquete);
