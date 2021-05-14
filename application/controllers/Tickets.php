@@ -825,7 +825,7 @@ class Tickets Extends CI_Controller
             if($customer->gid==2){//yopal
                 $profile="10Megas";
             }else if($customer->gid==3){//villanueva
-                $profile="10MegasV";
+                $profile="10MEGAS";
             }else if($customer->gid==4){//monterrey
                 $profile="10Megas";
             }
@@ -844,7 +844,7 @@ class Tickets Extends CI_Controller
             if($customer->gid==2){//yopal
                 $profile="5Megas";
             }else if($customer->gid==3){//villanueva
-                $profile="5MegasV";
+                $profile="5MEGAS";
             }else if($customer->gid==4){//monterrey
                 $profile="5Megas";
             }
