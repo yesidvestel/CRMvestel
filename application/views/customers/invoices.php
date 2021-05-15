@@ -201,6 +201,53 @@
                                    value="Pago de factura # <?=$facturas_seleccionadas?><?php echo $details['name'].' '.$details['unoapellido'].' '.$details['documento']?>">
 						
                     </div>
+                    </div>
+                        <div id="div_reconexion_cortados"  >
+                    <div class="row">
+                        <div class="col-xs-12 mb-1"><label
+                                    for="shortnote">Generar Reconexion</label>
+                             <select name="reconexion" class="form-control mb-1">
+                                <option value="no">No</option>
+                                <option value="si">Si</option>
+                            </select></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 mb-1"><label
+                                    for="shortnote">Tipo de reconexion</label>
+                             <select name="tipo" class="form-control mb-1">
+                                <option value="Reconexion Combo">TV + Internet</option>
+                                <option value="Reconexion Internet">Internet</option>
+                                <option value="Reconexion Television">Television</option> 
+                            </select></div>
+                    </div>
+                    <div class="row">
+                        
+                        <div class="col-xs-12 mb-1" id="div_yopal_monterrey"><label
+                                    for="shortnote">Paquete</label>
+                             <select name="paquete" class="form-control mb-1">
+                                <option value="no">No</option>
+                                <option value="1Mega">1Mega</option>
+                                <option value="2Megas">2Megas</option>
+                                <option value="3Megas">3Megas</option>
+                                <option value="5Megas">5Megas</option>
+                                <option value="10Megas">10Megas</option>
+                            </select></div>
+                        
+                        <div class="col-xs-12 mb-1" id="div_villanueva"><label
+                                    for="shortnote">Paquete</label>
+                             <select name="paquete" class="form-control mb-1">
+                                <option value="no">No villanueva</option>
+                                <option value="1Mega">1Mega</option>                                
+                                <option value="3MegasV">3Megas</option>
+                                <option value="5MegasV">5Megas</option>
+                                <option value="5MegasVD">5MegasD</option>
+                                <option value="10MegasV">10Megas</option>
+                            </select></div>
+                    </div>
+                    
+                    </div>
+                    
+                
 
                     <div class="modal-footer">
                         <input type="text" name="facturas_seleccionadas" hidden id="facturas_seleccionadas">
@@ -232,6 +279,7 @@
     var fac_pagadas="<?= (isset($_GET['fac_pag'])) ? $_GET['fac_pag'] : '' ?>";
     var id_customer="<?=$_GET['id']?>";
     $(document).ready(function () {
+        $("#div_reconexion_cortados").hide();
        tb= $('#invoices').DataTable({
             'processing': true,
             'serverSide': true,
@@ -280,8 +328,14 @@
         $("#facturas_seleccionadas").val("");
         var total = 0;
         var x="";
+        var cortados=false;
+        var refer="yopal";
         $(".facturas_para_pagar:checked").each(function(index){            
             total+=parseInt($(this).data('total'));            
+            if($(this).data("ron")=="cortado"){
+                cortados=true;
+                refer=$(this).data("refer");
+            }
         });
 
         $(lista_facturas).each(function(index){
@@ -291,6 +345,20 @@
                 x+="-"+this;
             }
         });
+
+        if(cortados==true){
+            $("#div_reconexion_cortados").show();
+            if(refer=="villanueva"){
+                    $("#div_yopal_monterrey").hide();
+                    $("#div_villanueva").show();
+            }else{
+                $("#div_yopal_monterrey").show();
+                $("#div_villanueva").hide();
+            }
+            
+        }else{
+            $("#div_reconexion_cortados").hide();
+        }
         $("#facturas_seleccionadas").val(x);
         
         if(x==""){

@@ -1087,7 +1087,12 @@ class Customers extends CI_Controller
             $no++;
             $row = array();
             if($invoices->ron=="Cortado"){
-                $row[] = '<a href="'.base_url().'invoices/view?id='.$invoices->tid.'">Cortado</a>';
+                $total_factura=$invoices->total;
+                $refer_var =strtolower(str_replace(' ', '', $invoices->refer));
+                if($invoices->status=="partial"){
+                    $total_factura=$invoices->total-$invoices->pamnt;
+                }
+                $row[] = '<a href="'.base_url().'invoices/view?id='.$invoices->tid.'">Cortado</a><input type="checkbox" name="x" class="facturas_para_pagar" data-total=" '.$total_factura.'" data-idfacturas="'.$invoices->tid.'" data-status="'.$invoices->status.'" data-ron="cortado" data-refer="'.$refer_var.'" style="cursor:pointer; margin-left: 9px;" onclick="agregar_factura(this)" ></input>';
             }else if($invoices->status=="paid"){
                 $row[]="";
             }else{
@@ -1095,7 +1100,7 @@ class Customers extends CI_Controller
                 if($invoices->status=="partial"){
                     $total_factura=$invoices->total-$invoices->pamnt;
                 }
-                $row[] = '<input type="checkbox" name="x" class="facturas_para_pagar" data-total=" '.$total_factura.'" data-idfacturas="'.$invoices->tid.'" data-status="'.$invoices->status.'" style="cursor:pointer; margin-left: 9px;" onclick="agregar_factura(this)" ></input>';    
+                $row[] = '<input type="checkbox" name="x" class="facturas_para_pagar" data-total=" '.$total_factura.'" data-idfacturas="'.$invoices->tid.'" data-status="'.$invoices->status.'" data-ron="no" data-refer="" style="cursor:pointer; margin-left: 9px;" onclick="agregar_factura(this)" ></input>';    
             }
 			
             $row[] = $no;
