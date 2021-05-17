@@ -174,6 +174,66 @@ class Transactions extends CI_Controller
         $query = $this->db->get();
         $account = $query->row_array();
 
+        $reconexion = $this->input->post('reconexion');
+        
+        $tipo = $this->input->post('tipo');
+        
+        if($reconexion=="si"){
+            $factura_asociada = $this->input->post('factura_asociada');    
+     if($factura_asociada==$factura_var->tid){
+        $fcuenta = $factura_var->invoicedate;
+        $paquete="no";
+        $var1 = $this->input->post('paquete_yopal_monterrey');
+        $var2 = $this->input->post('paquete_villanueva');
+        if($var1!="no"){
+            $paquete=$var1;    
+        }else if($var2!="no"){
+            $paquete=$var2;    
+        }else{
+            $paquete = "no";    
+        }
+        
+
+        $mes1 = date("Y-m",strtotime($fcuenta));
+        $mes2 = date("Y-m");
+        if ($tipo==='Reconexion Combo'){
+            $tv = 'Television';
+        }if ($tipo==='Reconexion Television'){
+            $tv = 'Television';
+        }if ($tipo==='Reconexion Internet'){
+            $tv = 'no';
+        }
+        //generar reconexion
+        $tidactualmasuno= $this->db->select('max(codigo)+1 as tid')->from('tickets')->get()->result();
+        if ($reconexion==si && $mes2===$mes1){
+            $data2['codigo']=$tidactualmasuno[0]->tid;
+                $data2['subject']='servicio';
+                $data2['detalle']=$tipo;
+                $data2['created']=$paydate;
+                $data2['cid']=$cid;
+                $data2['status']='Pendiente';
+                $data2['section']=$paquete;
+                $data2['id_factura']=$tid;
+                $this->db->insert('tickets',$data2);
+        }if ($reconexion==si && $mes2>$mes1){
+                $data2['codigo']=$tidactualmasuno[0]->tid;
+                $data2['subject']='servicio';
+                $data2['detalle']=$tipo.'2';
+                $data2['created']=$paydate;
+                $data2['cid']=$cid;
+                $data2['status']='Pendiente';
+                $data2['section']=$paquete;
+                $data2['id_factura']='';
+                $this->db->insert('tickets',$data2);
+                $data4 = array(
+                'corden' => $data2['codigo'],
+                'tv' => $tv,
+                'internet' => $paquete,             
+            );      
+            $this->db->insert('temporales', $data4);
+            }
+        }
+}
         if($pmethod=='Balance'){
 
             $customer = $this->transactions->check_balance($cid);

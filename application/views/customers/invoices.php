@@ -206,9 +206,16 @@
                     <div class="row">
                         <div class="col-xs-12 mb-1"><label
                                     for="shortnote">Generar Reconexion</label>
-                             <select name="reconexion" class="form-control mb-1">
+                             <select name="reconexion" id="reconexion" class="form-control mb-1" onchange="visualizar_div_asociadas()">
                                 <option value="no">No</option>
                                 <option value="si">Si</option>
+                            </select></div>
+                    </div>
+                    <div class="row" id="div_facturas_asociadas">
+                        <div class="col-xs-12 mb-1"><label
+                                    for="shortnote">Factura de Corte Asociada</label>
+                             <select id="factura_asociada" name="factura_asociada" class="form-control mb-1">
+                                
                             </select></div>
                     </div>
                     <div class="row">
@@ -224,7 +231,7 @@
                         
                         <div class="col-xs-12 mb-1" id="div_yopal_monterrey"><label
                                     for="shortnote">Paquete</label>
-                             <select name="paquete" class="form-control mb-1">
+                             <select name="paquete_yopal_monterrey" class="form-control mb-1">
                                 <option value="no">No</option>
                                 <option value="1Mega">1Mega</option>
                                 <option value="2Megas">2Megas</option>
@@ -235,7 +242,7 @@
                         
                         <div class="col-xs-12 mb-1" id="div_villanueva"><label
                                     for="shortnote">Paquete</label>
-                             <select name="paquete" class="form-control mb-1">
+                             <select name="paquete_villanueva" class="form-control mb-1">
                                 <option value="no">No villanueva</option>
                                 <option value="1Mega">1Mega</option>                                
                                 <option value="3MegasV">3Megas</option>
@@ -280,6 +287,7 @@
     var id_customer="<?=$_GET['id']?>";
     $(document).ready(function () {
         $("#div_reconexion_cortados").hide();
+        $("#div_facturas_asociadas").hide();
        tb= $('#invoices').DataTable({
             'processing': true,
             'serverSide': true,
@@ -316,6 +324,14 @@
 
 });
 
+function visualizar_div_asociadas(){
+    if($("#reconexion option:selected").val()=="si"){
+        $("#div_facturas_asociadas").show();
+    }else{
+        $("#div_facturas_asociadas").hide();
+    }
+}
+
     function filtrar_facturas(){
        
         tb.ajax.url( baseurl+'customers/inv_list?cid=<?php echo $_GET['id'] ?>&filtrar=si').load();     
@@ -330,11 +346,14 @@
         var x="";
         var cortados=false;
         var refer="yopal";
+        $("#div_facturas_asociadas").find("option").remove();
         $(".facturas_para_pagar:checked").each(function(index){            
             total+=parseInt($(this).data('total'));            
             if($(this).data("ron")=="cortado"){
                 cortados=true;
                 refer=$(this).data("refer");
+                var idfact=$(this).data("idfacturas");
+                $("#factura_asociada").append("<option value='"+idfact+"'>"+idfact+"</option>");
             }
         });
 
@@ -348,6 +367,7 @@
 
         if(cortados==true){
             $("#div_reconexion_cortados").show();
+            visualizar_div_asociadas();
             if(refer=="villanueva"){
                     $("#div_yopal_monterrey").hide();
                     $("#div_villanueva").show();
@@ -358,6 +378,7 @@
             
         }else{
             $("#div_reconexion_cortados").hide();
+            $("#reconexion").val("no");
         }
         $("#facturas_seleccionadas").val(x);
         

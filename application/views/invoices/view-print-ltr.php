@@ -27,7 +27,7 @@
         }
 
         .plist tr td {
-            line-height: 5pt;
+            line-height: 9pt;
         }
 
         .subtotal tr td {
