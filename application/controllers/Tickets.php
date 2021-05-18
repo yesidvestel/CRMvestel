@@ -570,7 +570,8 @@ class Tickets Extends CI_Controller
 		$idfactura = $ticket->id_factura;
         $data;
 		$detalle = $this->input->post('detalle');
-		$est_afiliacion = $ticket->id_invoice;		
+		$est_afiliacion = $ticket->id_invoice;	
+        $customer=$this->db->get_where("customers",array('id' =>$ticket->cid))->row();	
 		//cambiar estado afiliacion
 		$this->db->set('ron', 'Activo');
         $this->db->where('tid', $est_afiliacion);
@@ -782,7 +783,8 @@ class Tickets Extends CI_Controller
         }else{
             $msg1="no redirect";        
 		}
-        $customer=$this->db->get_where("customers",array('id' =>$ticket->cid))->row();
+        //var_dump($ticket->cid);
+        //$customer=$this->db->get_where("customers",array('id' =>$ticket->cid))->row();
         if($ticket->detalle=="Subir 20 Mg"){
             $profile="20Megas";
             if($customer->gid==2){//yopal
