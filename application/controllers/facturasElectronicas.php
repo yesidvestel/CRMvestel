@@ -119,9 +119,10 @@ class facturasElectronicas extends CI_Controller
         $dataApi->Header->Account->Phone->Number=$customer->celular;
         $dataApi->Header->Contact->Phone1->Number=$customer->celular2;
         $dataApi->Header->Contact->Mobile->Number=$customer->celular;
-        if($customer->email!=""){
+        /*if($customer->email!=""){
         	$dataApi->Header->Contact->EMail=$customer->email;
-        }
+        }*/
+        $dataApi->Header->Contact->EMail="vestelsas@gmail.com";
         //$dataApi->Header->Contact->EMail=$customer->email;//genera error sirve de validacion para mandar al final del desarrollo alertas con los posibles errores para que contacten con el desarrollador osease yo en caso tal
         $dataApi->Header->Contact->FirstName=$dataApi->Header->Account->FirstName;
         $dataApi->Header->Contact->LastName=$dataApi->Header->Account->LastName;
