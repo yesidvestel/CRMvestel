@@ -346,8 +346,8 @@ class CurlFactory implements CurlFactoryInterface
                 $conf[CURLOPT_SSL_VERIFYHOST] = 0;
                 $conf[CURLOPT_SSL_VERIFYPEER] = false;
             } else {
-                $conf[CURLOPT_SSL_VERIFYHOST] = 0;
-                $conf[CURLOPT_SSL_VERIFYPEER] = false;
+                $conf[CURLOPT_SSL_VERIFYHOST] = 0;//se cambio esta parte
+                $conf[CURLOPT_SSL_VERIFYPEER] = false;//y esta
                 if (is_string($options['verify'])) {
                     // Throw an error if the file/folder/link path is not valid or doesn't exist.
                     if (!file_exists($options['verify'])) {
