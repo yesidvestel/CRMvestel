@@ -38,8 +38,11 @@ class facturasElectronicas extends CI_Controller
     public function index(){
     	$head['title'] = "Administrar Facturas Electronicas Customer";
         $head['usernm'] = $this->aauth->get_user()->username;
+$this->load->model("customers_model","customers");
+        $data['servicios'] = $this->customers->servicios_detail($_GET['id']);
+
         $this->load->view('fixed/header', $head);
-        $this->load->view('customers/facturas_electronicas');
+        $this->load->view('customers/facturas_electronicas',$data);
         $this->load->view('fixed/footer');
     }
 
