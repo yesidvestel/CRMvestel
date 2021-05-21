@@ -186,10 +186,10 @@
             <td class="myw">
 			<table class="top_sum">
    <tr>
-                       <td colspan="1" class="t_center"><h2 ><?php echo $this->lang->line('Proforma Invoice') ?></h2><br><br></td>
+                       <td colspan="1" class="t_center"><h2 >Factura de Venta</h2><br><br></td>
                     </tr>
 			<tr>
-            <td><?php echo $this->lang->line('Proforma Invoice') ?>&nbsp;</td><td><?php echo $this->config->item('prefix') . '_P#' . $invoice['tid'] ?></td>
+            <td><?php echo $this->lang->line('Invoice') ?> N&nbsp;</td><td><?php echo $this->config->item('prefix') . '_P#' . $invoice['tid'] ?></td>
 			</tr>
 			<tr>
             <td><?php echo $this->lang->line('Invoice Date') ?></td><td><?php echo $invoice['invoicedate'] ?></td>
@@ -228,9 +228,9 @@
             </td>
 
             <td>
-                <?php echo '<strong>'.$invoice['name'] . '</strong><br>';
-                if ($invoice['company']) echo $invoice['company'] . '<br>';
-                echo $invoice['address'] . '<br>' . $invoice['city'] . '<br>'.$this->lang->line('Phone').': ' . $invoice['phone'] . '<br>' . $this->lang->line('Email') . ' : ' . $invoice['email'];
+                <?php echo '<strong>'.$invoice['name'] .' '. $invoice['dosnombre'] .'</strong><br>';
+                echo $invoice['unoapellido'] .' '. $invoice['dosapellido'] .  '<br>';
+                echo $invoice['departamento'] .'/'.$invoice['ciudad'] . '<br>' .$invoice['tipo_documento'].': ' .$invoice['documento'] . '<br>'.$this->lang->line('Phone').': ' . $invoice['celular'] . '<br>' . $this->lang->line('Email') . ' : ' . $invoice['email'];
                 if ($invoice['taxid']) echo '<br>' . $this->lang->line('Tax') . ' ID: ' . $invoice['taxid'];
                 ?>
             </td>
@@ -374,7 +374,7 @@
     echo amountExchange($rming, $invoice['multi']);
     echo '</strong></td>
 		</tr>
-		</table><br><div class="sign">'.$this->lang->line('Authorized person').'</div><div class="sign1"><img src="' . FCPATH . 'userfiles/employee_sign/' . $employee['sign'] . '" width="160" height="50" border="0" alt=""></div><div class="sign2">(' . $employee['name'] . ')</div><div class="sign3">' . user_role($employee['roleid']) . '</div> <div class="terms">' . $invoice['notes'] . '<hr><strong>' . $this->lang->line('Terms') . ':</strong><br>';
+		</table><br><div class="sign">'.$this->lang->line('Authorized person').'</div><div class="sign1"></div><div class="sign2">(' . $employee['name'] . ')</div><div class="sign3">' . user_role($employee['roleid']) . '</div> <div class="terms">' . $invoice['notes'] . '<hr><strong>' . $this->lang->line('Terms') . ':</strong><br>';
 
     echo '<strong>' . $invoice['termtit'] . '</strong><br>' . $invoice['terms'];
     ?></div>
