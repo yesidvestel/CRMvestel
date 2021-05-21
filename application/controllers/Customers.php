@@ -1289,12 +1289,14 @@ class Customers extends CI_Controller
     public function integracion(){
         $this->load->library('SiigoAPI');
         $api = new SiigoAPI();
-        $data= $this->customers->getClientData();
-        $data=json_decode($data);
-        $data->Header->Number=510;
-        $data=json_encode($data);
+        $x=json_decode($api->getAuth());
+        var_dump($x->access_token);
+        //$data= $this->customers->getClientData();
+        //$data=json_decode($data);
+        //$data->Header->Number=510;
+        //$data=json_encode($data);
         //var_dump($data->Header->Number);
-        $api->accionar($api,$data);        
+        //$api->accionar($api,$data);        
     }
     public function integracion_cellvoz(){
         $this->load->library('CellVozApi');
