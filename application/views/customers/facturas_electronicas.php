@@ -71,9 +71,15 @@
                            for="sdate2">Servicios</label>
                     <div  class="col-sm-9">
                     <select id="servicios" name="servicios" class="form-control">
+                        <?php if($servicios['television']!="no"){ ?>
                         <option value="Television">Television</option>
+                        <?php } ?>
+                        <?php if($servicios['combo']!="no"){ ?>
                         <option value="Internet">Internet</option>
+                        <?php } ?>
+                        <?php if($servicios['combo']!="no" && $servicios['television']!="no"){ ?>
                         <option value="Combo">Combo</option>
+                        <?php } ?>
                     </select>
                     </div>
                 </div>
@@ -81,7 +87,9 @@
             <div class="modal-footer">
                 <input type="hidden" id="object-id" name="id" value="<?=$_GET['id']?>">
                 <input type="hidden" id="action-url" value="facturasElectronicas/generar">
-                <button type="submit"  class="btn btn-primary" >Generar</button>
+                <?php if($servicios['estado']!="Suspendido" || $servicios['estado']!="suspendido") {?>
+                    <button type="submit"  class="btn btn-primary" >Generar</button>
+                <?php } ?>
                 <button type="button" data-dismiss="modal" class="btn">Cancel</button>
             </div>
 
@@ -98,7 +106,7 @@
             "serverSide": true,
             "order": [],
             "ajax": {
-                "url": "<?php echo site_url('facturasElectronicas/ajax_list')?>",
+                "url": "<?php echo site_url('facturasElectronicas/ajax_list?id='.$_GET['id'])?>",
                 "type": "POST"
             },
             "columnDefs": [

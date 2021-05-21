@@ -1274,7 +1274,7 @@ class Customers_model extends CI_Model
                 "Number": 0,
                 "Extention": 0
             },
-            "EMail": "pesca@prueba.com",
+            "EMail": "vestelsas@gmail.com",
             "FirstName": "Contacto",
             "LastName": "JOAO",
             "IsPrincipal": true,
@@ -1382,7 +1382,7 @@ public function getClientData2Productos(){
                 "Number": 0,
                 "Extention": 0
             },
-            "EMail": "pesca@prueba.com",
+            "EMail": "vestelsas@gmail.com",
             "FirstName": "Contacto",
             "LastName": "JOAO",
             "IsPrincipal": true,

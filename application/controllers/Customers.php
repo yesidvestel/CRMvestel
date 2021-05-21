@@ -1296,5 +1296,11 @@ class Customers extends CI_Controller
         //var_dump($data->Header->Number);
         $api->accionar($api,$data);        
     }
+    public function integracion_cellvoz(){
+        $this->load->library('CellVozApi');
+        $api = new CellVozApi();
+        $api->getToken();
+               
+    }
 
 }

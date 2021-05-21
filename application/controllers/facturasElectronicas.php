@@ -38,8 +38,11 @@ class facturasElectronicas extends CI_Controller
     public function index(){
     	$head['title'] = "Administrar Facturas Electronicas Customer";
         $head['usernm'] = $this->aauth->get_user()->username;
+$this->load->model("customers_model","customers");
+        $data['servicios'] = $this->customers->servicios_detail($_GET['id']);
+
         $this->load->view('fixed/header', $head);
-        $this->load->view('customers/facturas_electronicas');
+        $this->load->view('customers/facturas_electronicas',$data);
         $this->load->view('fixed/footer');
     }
 
@@ -119,9 +122,10 @@ class facturasElectronicas extends CI_Controller
         $dataApi->Header->Account->Phone->Number=$customer->celular;
         $dataApi->Header->Contact->Phone1->Number=$customer->celular2;
         $dataApi->Header->Contact->Mobile->Number=$customer->celular;
-        if($customer->email!=""){
+        /*if($customer->email!=""){
         	$dataApi->Header->Contact->EMail=$customer->email;
-        }
+        }*/
+        $dataApi->Header->Contact->EMail="vestelsas@gmail.com";
         //$dataApi->Header->Contact->EMail=$customer->email;//genera error sirve de validacion para mandar al final del desarrollo alertas con los posibles errores para que contacten con el desarrollador osease yo en caso tal
         $dataApi->Header->Contact->FirstName=$dataApi->Header->Account->FirstName;
         $dataApi->Header->Contact->LastName=$dataApi->Header->Account->LastName;
