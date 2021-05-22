@@ -1314,7 +1314,7 @@ class Customers_model extends CI_Model
     ],
     "Payments": [
         {
-            "PaymentMeansCode": 2864,
+            "PaymentMeansCode": 2863,
             "Value": 25000,
             "DueDate": "20210427",
             "DueQuote": 0
@@ -1447,7 +1447,7 @@ public function getClientData2Productos(){
     ],
     "Payments": [
         {
-            "PaymentMeansCode": 2864,
+            "PaymentMeansCode": 2863,
             "Value": 25000,
             "DueDate": "20210427",
             "DueQuote": 0
