@@ -41,8 +41,27 @@ class Customers extends CI_Controller
 
         $head['usernm'] = $this->aauth->get_user()->username;
         $head['title'] = 'Customers';
+
+        $this->db->select("*");
+        $this->db->from("customers");        
+        
+        $this->db->order_by('id', 'DESC');
+        $lista_customers=$this->db->get()->result();
+        $total=count($lista_customers);
+        $x=intval($total/7);
+        //var_dump($x);
+        $array= array('1' => array('start' => $lista_customers[0]->id,'end' => $lista_customers[$x]->id),//11
+            '2' => array('start' => $lista_customers[$x+1]->id,'end' => $lista_customers[$x*2]->id),//12-22
+            '3' => array('start' => $lista_customers[($x*2)+1]->id,'end' => $lista_customers[$x*3]->id),//23-33
+            '4' => array('start' => $lista_customers[($x*3)+1]->id,'end' => $lista_customers[$x*4]->id),//34-44
+            '5' => array('start' => $lista_customers[($x*4)+1]->id,'end' => $lista_customers[$x*5]->id),//45-55
+            '6' => array('start' => $lista_customers[($x*5)+1]->id,'end' => $lista_customers[$x*6]->id),//56-66
+            '7' => array('start' => $lista_customers[($x*6)+1]->id,'end' => $lista_customers[$total-1]->id),//
+        );
+        $data['array_pagination']=$array;
+
         $this->load->view('fixed/header', $head);
-        $this->load->view('customers/clist');
+        $this->load->view('customers/clist',$data);
         $this->load->view('fixed/footer');
     }
 
@@ -291,11 +310,11 @@ class Customers extends CI_Controller
     }
     public function load_morosos(){
         ini_set('memory_limit', '250M');
-        /*if($this->input->post('start')!="0"){
+        if($this->input->post('start')!="0"){
             
             $this->list_data_precargada();
             
-        }else{*/
+        }else{
 
         $listax=array();
         $this->db->select("*");
@@ -348,6 +367,13 @@ class Customers extends CI_Controller
                 $this->db->where('numero3=', $_GET['numero3']);
             }
         }
+
+         if($_GET['pagination_start']!="" && $_GET['pagination_start']!=null){
+                $this->db->where('id<',$_GET['pagination_start']);
+                $this->db->where("id>",$_GET['pagination_end']);    
+                //eh pensado una forma mucho mas compleja para realizar esto y es atraves de multihilo o multitarea algo muy complejo pero con tiempo seria bueno intentarlo
+        }
+        $this->db->order_by('id', 'DESC');
         $lista_customers=$this->db->get()->result();
 
 
@@ -380,7 +406,9 @@ class Customers extends CI_Controller
                         $fact_valida=true;
                         $_var_tiene_tv=true;
                     }
-
+                    if($invoice->ron!="" && $invoice->ron!=null){
+                        $fact_valida=true;
+                    }
                     if($fact_valida){
                         if($_var_tiene_tv){
                             if(str_replace(" ", "", $invoice->refer)=="Mocoa"){
@@ -553,17 +581,17 @@ class Customers extends CI_Controller
                 }
 
                 $x++;
-                //$customers->debe_customer=$debe_customer;
-                //$customers->valor_ultima_factura=$valor_ultima_factura;
-                //$listax[]=$customers;
+                $customers->debe_customer=$debe_customer;
+                $customers->valor_ultima_factura=$valor_ultima_factura;
+                $listax[]=$customers;
             }else{
                 $descontar++;
             }
              
         }
 
-        //$datax['datos']=json_encode($listax);
-        //$this->db->update("filtros_historial",$datax, array("id"=>$this->aauth->get_user()->id));
+        $datax['datos']=json_encode($listax);
+        $this->db->update("filtros_historial",$datax, array("id"=>$this->aauth->get_user()->id));
         $var_recordsFiltered=count($lista_customers)-$descontar;
         if($_POST['length']=="100"){
             $var_recordsFiltered=0;
@@ -576,7 +604,7 @@ class Customers extends CI_Controller
         );
         //output to json format
         echo json_encode($output);
-      
+      }
     }
     public function list_data_precargada(){
         $no = $this->input->post('start');

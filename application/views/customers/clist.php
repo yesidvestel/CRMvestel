@@ -290,7 +290,7 @@
                                 <label class="col-sm-3 col-form-label" for="pay_cat"></label>
 
                                 <div class="col-sm-4">
-                                    <input type="button" class="btn btn-primary btn-md" value="VER" onclick="filtrar()">
+                                    <input type="button" class="btn btn-primary btn-md" value="VER" onclick="filtrar(1)">
 
 
                                 </div>
@@ -334,6 +334,16 @@
                     </tr>
                     </tfoot>
                 </table>
+                 <div style="float: right;">Seccionamiento ->
+                    <a  id="pagination_1" data-start="<?=$array_pagination['1']['start']?>" data-end="<?=$array_pagination['1']['end']?>" onclick="filtrar(1)">1&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                    <a  id="pagination_2" data-start="<?=$array_pagination['2']['start']?>" data-end="<?=$array_pagination['2']['end']?>" onclick="filtrar(2)">2&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                    <a  id="pagination_3" data-start="<?=$array_pagination['3']['start']?>" data-end="<?=$array_pagination['3']['end']?>" onclick="filtrar(3)">3&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                    <a  id="pagination_4" data-start="<?=$array_pagination['4']['start']?>" data-end="<?=$array_pagination['4']['end']?>" onclick="filtrar(4)">4&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                    <a  id="pagination_5" data-start="<?=$array_pagination['5']['start']?>" data-end="<?=$array_pagination['5']['end']?>" onclick="filtrar(5)">5&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                    <a  id="pagination_6" data-start="<?=$array_pagination['6']['start']?>" data-end="<?=$array_pagination['6']['end']?>" onclick="filtrar(6)">6&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                    <a  id="pagination_7" data-start="<?=$array_pagination['7']['start']?>" data-end="<?=$array_pagination['7']['end']?>" onclick="filtrar(7)">7&nbsp;&nbsp;&nbsp;&nbsp;</a>
+
+            </div>
             </div>
         </div>
     </div>
@@ -413,7 +423,7 @@
 
                 // Load data for the table's content from an Ajax source
                 "ajax": {
-                    "url": "<?php echo site_url('customers/load_morosos') . '?id=' . $group['id']; ?>&morosos="+morosos+"&estado="+estado+"&ciudad="+ciudadx+"&localidad="+localidad+"&barrio="+barrio+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios,
+                    "url": "<?php echo site_url('customers/load_morosos') . '?id=' . $group['id']; ?>&morosos="+morosos+"&estado="+estado+"&ciudad="+ciudadx+"&localidad="+localidad+"&barrio="+barrio+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&pagination_start="+pagination_start+"&pagination_end="+pagination_end,
                     "type": "POST"
                 },
 
@@ -431,7 +441,9 @@
               columnasAgregadas=true;
       }
     }
-    function filtrar(){
+    var pagination_start="";
+    var pagination_end="";
+    function filtrar($pagination_id){
           var estado=$("#estado option:selected").val();
            
             var ciudadx= $("#cmbCiudades option:selected").val();
@@ -447,9 +459,27 @@
             var direccion = $("#sel_dir_personalizada option:selected").val();
             var sel_servicios = $("#sel_servicios option:selected").val();
             var morosos=$("#deudores option:selected").val();
+
+
+                pagination_start=$("#pagination_"+$pagination_id).data("start");
+                pagination_end=$("#pagination_"+$pagination_id).data("end");                                              
+                //color:blue;font-weight:900
+            
+            
+                for (var i = 0; i <= 7; i++) {
+                    
+                    if(i!=$pagination_id){
+                        $("#pagination_"+i).css("color","");
+                        $("#pagination_"+i).css("font-weight","");        
+                    }else{
+                        $("#pagination_"+$pagination_id).css("color","blue");
+                        $("#pagination_"+$pagination_id).css("font-weight","900");
+                    }
+                }
+
             //if(morosos!=""){
                 if(columnasAgregadas){
-                    tb.ajax.url( baseurl+'customers/load_morosos?id=<?=$_GET['id']?>&morosos='+morosos+"&estado="+estado+"&ciudad="+ciudadx+"&localidad="+localidad+"&barrio="+barrio+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios).load();               
+                    tb.ajax.url( baseurl+'customers/load_morosos?id=<?=$_GET['id']?>&morosos='+morosos+"&estado="+estado+"&ciudad="+ciudadx+"&localidad="+localidad+"&barrio="+barrio+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&pagination_start="+pagination_start+"&pagination_end="+pagination_end).load();               
                 }else{
                     nuevas_columnas();
                     $("option[value=100]").text("Todo");
