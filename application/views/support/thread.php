@@ -3,7 +3,7 @@
     <div class="card card-block">
         <?php $lista_productos_orden=$this->db->get_where('transferencia_products_orden',array('tickets_id'=>$id_orden_n))->result_array();
 		$traslados=$this->db->get_where('temporales',array('corden'=>$thread_info['codigo']))->row();
-		$factura=$this->db->get_where('invoices',array('tid'=>$thread_info['id_invoice']))->row();
+		$factura=$this->db->get_where('invoices',array('tid'=>(($thread_info['id_invoice']==0 || $thread_info['id_invoice']==null || $thread_info['id_invoice']=="")? $thread_info['id_factura'] : "")))->row();
 		$equipo=$this->db->get_where('equipos',array('mac'=>$thread_info['macequipo']))->row();?>
         
         
