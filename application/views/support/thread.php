@@ -35,7 +35,18 @@
 		
         <div class="grid_3 grid_4"><h4><?php echo $thread_info['subject'] ?> </h4>			
 			
-            <p class="card card-block"><?php echo '<strong>Creado el: </strong> ' . $thread_info['created'];
+            <p class="card card-block"><?php
+				if ($factura->television!=='no'){
+					$tv = $factura->television;
+				}else{
+					$tv = '';
+				}
+				if ($factura->combo!=='no'){
+					$inter = $factura->combo;
+				}else{
+					$inter = '';
+				}
+				echo '<strong>Creado el: </strong> ' . $thread_info['created'];
                 echo '<br><strong>Usuario:</strong> ' . $thread_info['name'] .' '. $thread_info['unoapellido'];
 				echo '<br><strong>Documento:</strong> ' . $thread_info['documento'];
 				echo '<br><strong>Abonado:</strong> ' . $thread_info['abonado'];
@@ -43,7 +54,7 @@
 				echo '<br><strong>Direccion:</strong> ' . $thread_info['nomenclatura'].' '. $thread_info['numero1']. $thread_info['adicionauno'].' N°'. $thread_info['numero2']. $thread_info['adicional2'].' - '. $thread_info['numero3'];
 				echo '<br><strong>Barrio:</strong> ' . $thread_info['barrio'];
                 echo '<br><strong>Estado:</strong> <span id="pstatus">' . $thread_info['status'];
-				echo '<br><strong>Servicios Contratados:</strong> <span id="pstatus">' . $factura->television.' '.$factura->combo;
+				echo '<br><strong>Servicios Contratados:</strong> <span id="pstatus">' . $tv.' '.$inter;
 				echo '<br><strong>Equipo Asignado:</strong> <span id="pstatus">' . $thread_info['macequipo'].'<strong>'.$equipo->t_instalacion.'</strong><strong> V:</strong>'.$equipo->vlan.'<strong> N:</strong>'.$equipo->nat.'<strong> PN:</strong>'.$equipo->puerto;
                 ?></p>
 				
