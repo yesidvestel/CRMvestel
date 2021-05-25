@@ -363,10 +363,18 @@ class Clientgroup extends CI_Controller
         $this->db->where("gid",$_GET['id']);
         $this->db->order_by('id', 'DESC');
         $lista_customers=$this->db->get()->result();
+        
         $total=count($lista_customers);
-        $x=intval($total/2);
+        $x=intval($total/7);
         //var_dump($x);
-        $array= array('1' => array('start' => $lista_customers[0]->id,'end' => $lista_customers[$x]->id),'2' => array('start' => $lista_customers[$x+1]->id,'end' => $lista_customers[$total-1]->id));
+        $array= array('1' => array('start' => $lista_customers[0]->id,'end' => $lista_customers[$x]->id),//11
+            '2' => array('start' => $lista_customers[$x+1]->id,'end' => $lista_customers[$x*2]->id),//12-22
+            '3' => array('start' => $lista_customers[($x*2)+1]->id,'end' => $lista_customers[$x*3]->id),//23-33
+            '4' => array('start' => $lista_customers[($x*3)+1]->id,'end' => $lista_customers[$x*4]->id),//34-44
+            '5' => array('start' => $lista_customers[($x*4)+1]->id,'end' => $lista_customers[$x*5]->id),//45-55
+            '6' => array('start' => $lista_customers[($x*5)+1]->id,'end' => $lista_customers[$x*6]->id),//56-66
+            '7' => array('start' => $lista_customers[($x*6)+1]->id,'end' => $lista_customers[$total-1]->id),//
+        );
         $data['array_pagination']=$array;
         //var_dump($array);
 
@@ -462,8 +470,8 @@ class Clientgroup extends CI_Controller
             }
         }
         if($_GET['pagination_start']!="" && $_GET['pagination_start']!=null){
-                $this->db->where('id<',$_GET['pagination_start']);
-                $this->db->where("id>",$_GET['pagination_end']);    
+                $this->db->where('id<=',$_GET['pagination_start']);
+                $this->db->where("id>=",$_GET['pagination_end']);    
                 //eh pensado una forma mucho mas compleja para realizar esto y es atraves de multihilo o multitarea algo muy complejo pero con tiempo seria bueno intentarlo
         }
         

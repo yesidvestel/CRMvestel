@@ -322,7 +322,7 @@
                                 <label class="col-sm-3 col-form-label" for="pay_cat"></label>
 
                                 <div class="col-sm-4">
-                                    <input type="button" class="btn btn-primary btn-md" value="VER" onclick="filtrar(0);">
+                                    <input type="button" class="btn btn-primary btn-md" value="VER" onclick="filtrar(1);">
 
 
                                 </div>
@@ -378,8 +378,15 @@
                 </tr>
                 </tfoot>
             </table>
-            <div style="float: right;">
-            <a  id="pagination_0" onclick="filtrar(0)" >All&nbsp;&nbsp;&nbsp;&nbsp;</a><a  id="pagination_1" data-start="<?=$array_pagination['1']['start']?>" data-end="<?=$array_pagination['1']['end']?>" onclick="filtrar(1)">1&nbsp;&nbsp;&nbsp;&nbsp;</a><a  id="pagination_2" data-start="<?=$array_pagination['2']['start']?>" data-end="<?=$array_pagination['2']['end']?>" onclick="filtrar(2)">2&nbsp;&nbsp;&nbsp;&nbsp;</a>
+            <div style="float: right;" id="pagination_div">
+            Seccionamiento ->
+                    <a  id="pagination_1" data-start="<?=$array_pagination['1']['start']?>" data-end="<?=$array_pagination['1']['end']?>" onclick="filtrar(1)">1&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                    <a  id="pagination_2" data-start="<?=$array_pagination['2']['start']?>" data-end="<?=$array_pagination['2']['end']?>" onclick="filtrar(2)">2&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                    <a  id="pagination_3" data-start="<?=$array_pagination['3']['start']?>" data-end="<?=$array_pagination['3']['end']?>" onclick="filtrar(3)">3&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                    <a  id="pagination_4" data-start="<?=$array_pagination['4']['start']?>" data-end="<?=$array_pagination['4']['end']?>" onclick="filtrar(4)">4&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                    <a  id="pagination_5" data-start="<?=$array_pagination['5']['start']?>" data-end="<?=$array_pagination['5']['end']?>" onclick="filtrar(5)">5&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                    <a  id="pagination_6" data-start="<?=$array_pagination['6']['start']?>" data-end="<?=$array_pagination['6']['end']?>" onclick="filtrar(6)">6&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                    <a  id="pagination_7" data-start="<?=$array_pagination['7']['start']?>" data-end="<?=$array_pagination['7']['end']?>" onclick="filtrar(7)">7&nbsp;&nbsp;&nbsp;&nbsp;</a>
             </div>
         </div>
         
@@ -390,7 +397,7 @@
 <script type="text/javascript">
     var tb;
     $(document).ready(function () {
-
+$("#pagination_div").hide();
         tb=$('#fclientstable').DataTable({
 
             "processing": true, //Feature control the processing indicator.
@@ -583,8 +590,7 @@
                     "type": "POST",
                     error: function (xhr, error, code)
                     {
-                        $("#alert_modal").modal("show");
-                        filtrar(1);
+                        
                     }
                 },
 
@@ -650,6 +656,7 @@
     var pagination_end="";
      
 	function filtrar($pagination_id){
+        $("#pagination_div").show();
             var estado=$("#estado option:selected").val();
            
       
@@ -670,16 +677,12 @@
             var sdate=$("#sdate").val();
             var edate=$("#edate").val();
             
-            if($pagination_id==0){
-                pagination_start="";
-                pagination_end="";
-            }else{
-                pagination_start=$("#pagination_"+$pagination_id).data("start");
+            pagination_start=$("#pagination_"+$pagination_id).data("start");
                 pagination_end=$("#pagination_"+$pagination_id).data("end");                                              
                 //color:blue;font-weight:900
-            }
             
-                for (var i = 0; i <= 2; i++) {
+            
+                for (var i = 0; i <= 7; i++) {
                     
                     if(i!=$pagination_id){
                         $("#pagination_"+i).css("color","");
