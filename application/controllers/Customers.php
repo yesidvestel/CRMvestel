@@ -1329,10 +1329,7 @@ class Customers extends CI_Controller
     public function integracion_cellvoz(){
         $this->load->library('CellVozApi');
         $api = new CellVozApi();
-        $retorno=$api->getToken();
-        echo "<br><br><br>";
-        
-        
+        $retorno=$api->getToken();                
         $api->enviar_msm($retorno->getToken());
                
     }

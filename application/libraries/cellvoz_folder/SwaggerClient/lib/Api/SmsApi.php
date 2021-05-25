@@ -290,7 +290,7 @@ class SmsApi
                 'Missing the required parameter $body when calling sms'
             );
         }
-        echo "token<br>";
+        //echo "token<br>";
 //$this->config->setAccessToken("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJnZXJlbmNpYUB2ZXN0ZWwuY29tLmNvIiwidXNlciI6eyJuYW1lcyI6bnVsbCwiYWNjb3VudCI6bnVsbCwiaWR2Ijo2OTUzLCJpZHMiOjcwNjgsInRpcG9DbGllbnRlIjozMiwic2FsZG8iOjg3NzI5LCJjdWVudGEiOiIwMDQ4NjgwMDQzMCIsImVtcHJlc2EiOiJWRVNHQSBURUxFQ09NVU5JQ0FDSU9ORVMgUyBBIFMiLCJub21icmUiOiJWRVNHQSBURUxFQ09NVU5JQ0FDSU9ORVMgUyBBIFMiLCJyYXpvblNvY2lhbCI6IlZFU0dBIFRFTEVDT01VTklDQUNJT05FUyBTIEEgUyIsInRpcG9QYWdvIjoiUHJlcGFnbyIsImNpdWRhZCI6ImJvZ290YSIsImRpcmVjY2lvbiI6ImNhbGxlIDk0YSAxMy00MiIsImRvY3VtZW50byI6Ijg0NDAwNDk3OSIsImVtYWlsIjoiZ2VyZW5jaWFAdmVzdGVsLmNvbS5jbyIsInRlbGVmb25vIjoiMzEwNjA5NTY3NSIsImNvcnRlIjoiMTk4OC0wMS0wMSIsInRpcG9TdWJ1c3VhcmlvIjpudWxsLCJjbGF2ZSI6bnVsbH0sImlhdCI6MTYyMTg5MjA3OSwiZXhwIjoxNjIxOTc4NDc5fQ.PLKj3_aYp02YyRhko3PNdii0ab8sf5nAXhuDn_KkN-g");//el api key
 //$this->config->setApiKey("0","a163f063dc8605d0faaa0d50ff43a9254034020b");
         //$this->config->setUsername("00486800430");
@@ -353,6 +353,7 @@ class SmsApi
             // // this endpoint requires Bearer token
             if ($this->config->getAccessToken() !== null) {
             $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+            $headers['api-key'] = '8529863e6706e0659cb610dfaded9c36db43e989';
             }
 
         $defaultHeaders = [];

@@ -12,7 +12,6 @@ class CellVozApi
 	public function __construct()
     {
     }
-
     public function getToken(){
     	$AuthApi = new AuthApi();
 		$login = new Login( array('account' =>"00486800430","password"=>"Admin2019"));
@@ -20,10 +19,15 @@ class CellVozApi
 		return $x;
     }
     public function enviar_msm($token){
+    	echo "<br>";
+    	var_dump("token=> ".$token);
+    	echo "<br>";
+        echo "<br>";
+        echo "<br>";
     	$config = Swagger\Client\Configuration::getDefaultConfiguration()->setAccessToken($token);
-    	$config->setApiKey(0,"a163f063dc8605d0faaa0d50ff43a9254034020b");
+    	//$config->setApiKey("api-key","8529863e6706e0659cb610dfaded9c36db43e989");
     	$SmsApi= new SmsApi(new GuzzleHttp\Client(),$config);
-    	$SMSRequest= new SMSRequest(array("number"=>"573142349563","message"=>"Hola Duber Confia en el ABBA KADOSH, Ve a la iglesia el gran rey"));
+    	$SMSRequest= new SMSRequest(array("number"=>"573142349563","message"=>"MENSAJE PARA ENVIAR Duber"));
 
 
     	try {
