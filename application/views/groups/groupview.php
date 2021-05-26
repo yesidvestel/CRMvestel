@@ -338,6 +338,9 @@
             <h5><?php echo $this->lang->line('Client Group') . '- ' . $group['title'] ?></h5> 
 			<a href="#sendMail" data-toggle="modal" data-remote="false" class="btn btn-primary btn-md"><i
                         class="fa fa-envelope"></i> <?php echo $this->lang->line('Send Group Message') ?> </a>
+                        <a href="#sendSms" data-toggle="modal" data-remote="false" class="btn btn-primary btn-md"><i
+                        class="fa fa-envelope"></i> Mensaje por SMS</a>
+
 			<a href="#" onclick="redirect_to_export()" class="btn btn-success btn-md">Exportar a Excel .XLSX</a>
             <hr>
             <table id="fclientstable" class="table-striped" cellspacing="0" width="100%">
@@ -494,6 +497,24 @@ $("#pagination_div").hide();
                     </div>
                     <div class="row">
                         <div class="col-xs-12 mb-1"><label
+                                    for="plantillas">Plantillas</label>
+                        <select id="plantillas" class="form-control">
+                            <option value="">-</option>
+                            <?php foreach ($plantillas as $key => $value) {
+                                echo "<option value='".$value['other']."'>".$value['name']."</option>";
+                            } ?>
+                        </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 mb-1"><label
+                                    for="number">numero de telefono</label>
+                            <input type="text" class="form-control"
+                                   name="number" id="number">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 mb-1"><label
                                     for="shortnote"><?php echo $this->lang->line('Message') ?></label>
                             <textarea name="text" class="summernote" id="contents" title="Contents"></textarea></div>
                     </div>
@@ -510,6 +531,71 @@ $("#pagination_div").hide();
                         data-dismiss="modal"><?php echo $this->lang->line('Close') ?> </button>
                 <button type="button" class="btn btn-primary"
                         id="sendNow"><?php echo $this->lang->line('Send') ?> </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="sendSms" class="modal fade">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title"><?php echo $this->lang->line('Email to group') ?> </h4>
+            </div>
+
+            <div class="modal-body" id="emailbody">
+                <form id="sendSMS_form">
+
+
+                    <div class="row">
+                        <div class="col-xs-12 mb-1"><label
+                                    for="shortnote"><?php echo $this->lang->line('Group Name') ?> </label>
+                            <input type="text" class="form-control"
+                                   value="<?php echo $group['title'] ?>"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 mb-1"><label
+                                    for="shortnote"><?php echo $this->lang->line('Subject') ?></label>
+                            <input type="text" class="form-control"
+                                   name="subject2" id="subject2">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 mb-1"><label
+                                    for="plantillas">Plantillas</label>
+                        <select id="plantillas2" class="form-control">
+                            <option value="">-</option>
+                            <?php foreach ($plantillas as $key => $value) {
+                                echo "<option value='".$value['other']."'>".$value['name']."</option>";
+                            } ?>
+                        </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 mb-1"><label
+                                    for="number">numero de telefono</label>
+                            <input type="text" class="form-control"
+                                   name="number2" id="number2">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 mb-1"><label
+                                    for="shortnote"><?php echo $this->lang->line('Message') ?></label>
+                            <textarea name="text2" class="summernote" id="contents2" title="Contents"></textarea></div>
+                    </div>
+
+                    <input type="hidden" class="form-control"
+                           name="gid" value="<?php echo $group['id'] ?>">
+                    <input type="hidden" id="action-urlSMS" value="clientgroup/sendGroupSms">
+
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal"><?php echo $this->lang->line('Close') ?> </button>
+                <button type="button" class="btn btn-primary"
+                        id="sendNow2" onclick="enviar_SMS()"><?php echo $this->lang->line('Send') ?> </button>
             </div>
         </div>
     </div>
@@ -545,6 +631,13 @@ $("#pagination_div").hide();
         }else{
             $("#div_fechas").hide();
         }
+    }
+    function enviar_SMS(){
+         var o_data =  $("#sendSMS_form").serialize();
+        var action_url= $('#action-urlSMS').val();
+
+
+        sendMail_g(o_data,action_url);
     }
 
     var columnasAgregadas=false;

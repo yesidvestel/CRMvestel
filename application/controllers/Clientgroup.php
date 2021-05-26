@@ -377,7 +377,9 @@ class Clientgroup extends CI_Controller
         );
         $data['array_pagination']=$array;
         //var_dump($array);
-
+        $this->load->model('templates_model','templates');
+        $data['plantillas'] = $this->templates->get_template(30,36);
+        //var_dump($data['plantillas']);
         $this->load->view('fixed/header', $head);
         $this->load->view('groups/groupview', $data);
         $this->load->view('fixed/footer');
@@ -842,5 +844,23 @@ class Clientgroup extends CI_Controller
         $recipients = $this->clientgroup->recipients($id);
         $this->load->model('communication_model');
         $this->communication_model->group_email($recipients, $subject, $message, $attachmenttrue, $attachment);
+    }
+    public function sendGroupSms()
+    {
+        /*$id = $this->input->post('gid');
+        $subject = $this->input->post('subject');
+        $message = $this->input->post('text');
+        $attachmenttrue = false;
+        $attachment = '';
+        $recipients = $this->clientgroup->recipients($id);
+        $this->load->model('communication_model');
+        $this->communication_model->group_email($recipients, $subject, $message, $attachmenttrue, $attachment);*/
+        var_dump($_POST);
+        $message = $this->input->post('text2');
+        $number = $this->input->post('number2');
+        $this->load->library('CellVozApi');
+        $api = new CellVozApi();
+        $retorno=$api->getToken();                
+        $api->enviar_msm($retorno->getToken(),$number,$message);
     }
 }
