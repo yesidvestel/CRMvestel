@@ -35,7 +35,84 @@ class Transactions extends CI_Controller
 
         }
     }
+	public function explortar_a_excel(){
+        
+        $this->db->select("*");
+        $this->db->from("transactions");
+		$this->db->join('customers', 'tickets.cid=customers.id', 'left');
+		$this->db->where('type', 'Expense');
+        $this->db->order_by("id","DESC");
+        $lista_debito=$this->db->get()->result();
+        $this->load->library('Excel');
+		$lista_debito2=array();
+		
+    
+    //define column headers
+    $headers = array(
+        'Fecha' => 'string', 
+        'Cuenta' => 'string');
+    
+    //fetch data from database
+    //$salesinfo = $this->product_model->get_salesinfo();
+    
+    //create writer object
+    $writer = new Excel();
+    
+        //meta data info
+    $keywords = array('xlsx','CUSTOMERS','VESTEL');
+    $writer->setTitle('Reporte debitos ');
+    $writer->setSubject('');
+    $writer->setAuthor('VESTEL');
+    $writer->setCompany('VESTEL');
+    $writer->setKeywords($keywords);
+    $writer->setDescription('Reporte Debito ');
+    $writer->setTempDir(sys_get_temp_dir());
+    
+    //write headers el primer campo que es nombre de la hoja de excel deve de coincidir en writeSheetHeader y writeSheetRow para tener en cuenta si se piensan agregar otras hojas o algo por el estilo
+    $writer->writeSheetHeader('Debito ',$headers,$col_options = array(
 
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+));
+    
+    //write rows to sheet1
+	
+    foreach ($lista_debito as $key => $debito) {
+            $writer->writeSheetRow('Debito ',array($debito->cat,$debito->account));
+        
+    }
+        
+        
+    
+    $fecha_actual= date("d-m-Y");
+    $dia= date("N");
+    $this->load->model('reports_model', 'reports');
+    $fecha_actual=$this->reports->obtener_dia($dia)." ".$fecha_actual;
+    $fileLocation = 'Debito '.$fecha_actual.'.xlsx';
+    
+    //write to xlsx file
+    $writer->writeToFile($fileLocation);
+    //echo $writer->writeToString();
+    
+    //force download
+    header('Content-Description: File Transfer');
+    header("Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+    header("Content-Disposition: attachment; filename=".basename($fileLocation));
+    header("Content-Transfer-Encoding: binary");
+    header("Expires: 0");
+    header("Pragma: public");
+    header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+    header('Content-Length: ' . filesize($fileLocation)); //Remove
+
+    ob_clean();
+    flush();
+
+    readfile($fileLocation);
+    unlink($fileLocation);
+    exit(0);
+       
+
+    }
     public function index()
     {
         if ($this->aauth->get_user()->roleid < 2) {
