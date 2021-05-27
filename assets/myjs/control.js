@@ -821,7 +821,15 @@ function sendMail_g(o_data,action_url) {
             data: o_data,
             dataType: 'json',
             success: function (data) {
-                if (data.status == "Success") {
+                if(data.status=="Success-sms"){
+                    $("#notify2 .message2").html("<strong>" + data.status + "</strong>: " + data.message);
+                    $("#notify2").removeClass("alert-danger").removeClass("alert-warning").addClass("alert-success").fadeIn();
+                    $("html, body").animate({scrollTop: $('#notify2').offset().top}, 1000);
+                }else if(data.status=="Error-sms"){
+                        $("#notify2 .message2").html("<strong>" + data.status + "</strong>: " + data.message);
+                        $("#notify2").removeClass("alert-success").removeClass("alert-warning").addClass("alert-danger").fadeIn();
+                        $("html, body").animate({scrollTop: $('body').offset().top}, 1000);
+                }else if (data.status == "Success") {
                     $("#notify .message").html("<strong>" + data.status + "</strong>: " + data.message);
                     $("#notify").removeClass("alert-danger").addClass("alert-success").fadeIn();
                     $("html, body").animate({scrollTop: $('#notify').offset().top}, 1000);

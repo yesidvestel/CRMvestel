@@ -32,7 +32,7 @@ class CellVozApi
 
     	try {
     $result = $SmsApi->sms($SMSRequest);
-    print_r($result);
+    return $result;
 } catch (Exception $e) {
     echo 'Exception when calling SmsApi->sms: ', $e->getMessage(), PHP_EOL;
 }

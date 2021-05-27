@@ -855,12 +855,39 @@ class Clientgroup extends CI_Controller
         $recipients = $this->clientgroup->recipients($id);
         $this->load->model('communication_model');
         $this->communication_model->group_email($recipients, $subject, $message, $attachmenttrue, $attachment);*/
-        var_dump($_POST);
+        //var_dump($_POST);
         $message = $this->input->post('text2');
         $number = $this->input->post('number2');
         $this->load->library('CellVozApi');
         $api = new CellVozApi();
-        $retorno=$api->getToken();                
-        $api->enviar_msm($retorno->getToken(),$number,$message);
+        $retorno=$api->getToken(); 
+        $valido=false;
+        $alerta=" ";
+        if(is_integer(intval($number)) && strlen($number)==10){
+            $valido=true;
+        }else{
+            $alerta.="Numero no valido <br> ";
+            $valido=false;
+        }
+        if($message==""){
+            $alerta.=" Mensaje no puede ser vacio";
+            $valido=false;
+        }else{
+
+        }
+        
+        if ($valido) {
+            $var=$api->enviar_msm($retorno->getToken(),$number,$message);
+
+            if($var->getMessage()=="Enviado"){
+                echo json_encode(array('status' => 'Success-sms', 'message' => 'SMS Enviado Con Exito'));    
+            }else{
+                echo json_encode(array('status' => 'Error-sms', 'message' => $var->getMessage()));    
+            }
+            
+        } else {
+            echo json_encode(array('status' => 'Error-sms', 'message' => $alerta));
+        }               
+        
     }
 }

@@ -546,20 +546,12 @@ $("#pagination_div").hide();
             <div class="modal-body" id="emailbody">
                 <form id="sendSMS_form">
 
+<div id="notify2" class="alert alert-success" style="display:none;">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
 
-                    <div class="row">
-                        <div class="col-xs-12 mb-1"><label
-                                    for="shortnote"><?php echo $this->lang->line('Group Name') ?> </label>
-                            <input type="text" class="form-control"
-                                   value="<?php echo $group['title'] ?>"></div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-12 mb-1"><label
-                                    for="shortnote"><?php echo $this->lang->line('Subject') ?></label>
-                            <input type="text" class="form-control"
-                                   name="subject2" id="subject2">
-                        </div>
-                    </div>
+            <div class="message2"></div>
+        </div>
+                    
                     <div class="row">
                         <div class="col-xs-12 mb-1"><label
                                     for="plantillas">Plantillas</label>
@@ -575,13 +567,13 @@ $("#pagination_div").hide();
                         <div class="col-xs-12 mb-1"><label
                                     for="number">numero de telefono</label>
                             <input type="text" class="form-control"
-                                   name="number2" id="number2">
+                                   name="number2" id="number2" maxlength="10" minlength="10" >
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-xs-12 mb-1"><label
                                     for="shortnote"><?php echo $this->lang->line('Message') ?></label>
-                            <textarea name="text2" class="summernote" id="contents2" title="Contents"></textarea></div>
+                            <textarea name="text2" class="form-control" maxlength="140" id="contents2" title="Contents"></textarea></div>
                     </div>
 
                     <input type="hidden" class="form-control"
@@ -633,6 +625,11 @@ $("#pagination_div").hide();
         }
     }
     function enviar_SMS(){
+
+        $("#notify2 .message2").html("<strong> Enviando</strong>: enviando");
+                    $("#notify2").removeClass("alert-danger").removeClass("alert-success").addClass("alert-warning").fadeIn();
+                    $("html, body").animate({scrollTop: $('#notify2').offset().top}, 1000);
+
          var o_data =  $("#sendSMS_form").serialize();
         var action_url= $('#action-urlSMS').val();
 
