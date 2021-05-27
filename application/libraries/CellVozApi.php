@@ -18,17 +18,17 @@ class CellVozApi
 		$x=$AuthApi->login($login);
 		return $x;
     }
-    public function enviar_msm($token){
-    	echo "<br>";
+    public function enviar_msm($token,$number,$mensaje){
+    	/*echo "<br>";
     	var_dump("token=> ".$token);
     	echo "<br>";
         echo "<br>";
-        echo "<br>";
+        echo "<br>";*/
     	$config = Swagger\Client\Configuration::getDefaultConfiguration()->setAccessToken($token);
     	//$config->setApiKey("api-key","8529863e6706e0659cb610dfaded9c36db43e989");
     	$SmsApi= new SmsApi(new GuzzleHttp\Client(),$config);
-    	$SMSRequest= new SMSRequest(array("number"=>"573142349563","message"=>"MENSAJE PARA ENVIAR Duber"));
-
+    	//$SMSRequest= new SMSRequest(array("number"=>"573142349563","message"=>"MENSAJE PARA ENVIAR Duber"));
+        $SMSRequest= new SMSRequest(array("number"=>"57".$number,"message"=>$mensaje));
 
     	try {
     $result = $SmsApi->sms($SMSRequest);
