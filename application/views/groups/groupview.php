@@ -555,7 +555,7 @@ $("#pagination_div").hide();
                     <div class="row">
                         <div class="col-xs-12 mb-1"><label
                                     for="plantillas">Plantillas</label>
-                        <select id="plantillas2" class="form-control">
+                        <select id="plantillas2" class="form-control" onchange="cargar_plantilla()">
                             <option value="">-</option>
                             <?php foreach ($plantillas as $key => $value) {
                                 echo "<option value='".$value['other']."'>".$value['name']."</option>";
@@ -623,6 +623,11 @@ $("#pagination_div").hide();
         }else{
             $("#div_fechas").hide();
         }
+    }
+    function cargar_plantilla(){
+        var text=$("#plantillas2 option:selected").val();
+        
+        $("#contents2").val(text);
     }
     function enviar_SMS(){
 
