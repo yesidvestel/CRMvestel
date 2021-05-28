@@ -39,7 +39,7 @@ class Transactions extends CI_Controller
         
         $this->db->select("*");
         $this->db->from("transactions");
-		$this->db->join('customers', 'tickets.cid=customers.id', 'left');
+		//$this->db->join('customers', 'tickets.cid=customers.id', 'left');
 		$this->db->where('type', 'Expense');
         $this->db->order_by("id","DESC");
         $lista_debito=$this->db->get()->result();
@@ -50,7 +50,12 @@ class Transactions extends CI_Controller
     //define column headers
     $headers = array(
         'Fecha' => 'string', 
-        'Cuenta' => 'string');
+        'Cuenta' => 'string',
+		'Valor' => 'integer',
+		'Motivo' => 'string',
+		'Orden N' => 'string',
+		'Detalle' => 'string',
+		'Metodo' => 'string');
     
     //fetch data from database
     //$salesinfo = $this->product_model->get_salesinfo();
@@ -73,12 +78,18 @@ class Transactions extends CI_Controller
 
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ));
     
     //write rows to sheet1
 	
     foreach ($lista_debito as $key => $debito) {
-            $writer->writeSheetRow('Debito ',array($debito->cat,$debito->account));
+		$fecha = date("d/m/Y",strtotime($debito->date));
+            $writer->writeSheetRow('Debito ',array($fecha,$debito->account,$debito->debit,$debito->playerid,$debito->tid,$debito->note,$debito->method));
         
     }
         
