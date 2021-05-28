@@ -88,7 +88,7 @@ class Transactions extends CI_Controller
     //write rows to sheet1
 	
     foreach ($lista_debito as $key => $debito) {
-		$fecha = date("d-m-Y",strtotime($debito->date));
+		$fecha = date("d/m/Y",strtotime($debito->date));
             $writer->writeSheetRow('Debito ',array($fecha,$debito->account,$debito->debit,$debito->playerid,$debito->tid,$debito->note,$debito->method));
         
     }
