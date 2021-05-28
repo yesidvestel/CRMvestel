@@ -346,6 +346,7 @@
             <table id="fclientstable" class="table-striped" cellspacing="0" width="100%">
                 <thead>
                 <tr >
+                    <th>SMS</th>
                     <th>#</th>
 					<th>Abonado</th>
 					<th>Cedula</th>
@@ -366,6 +367,7 @@
 
                 <tfoot>
                 <tr >
+                    <th>SMS</th>
                     <th>#</th>
 					<th>Abonado</th>
 					<th>Cedula</th>
@@ -840,6 +842,57 @@ $("#pagination_div").hide();
             $("#div_direccion_personalizada").show();
         }
     }
+
+    //seleccion multiple
+
+    let lista_customers_sms=[];
+ function agregar_customer_envio_sms(elemento){
+        var indice_elemento=lista_customers_sms.indexOf($(elemento).data("id-customer"));
+        
+        if(indice_elemento==-1){
+                if(elemento.checked==true){
+                    lista_customers_sms.push($(elemento).data("id-customer"));                   
+                }
+        }else{
+            if(elemento.checked==false){
+                lista_customers_sms.splice(indice_elemento,1);
+            }
+        }
+      /* var y="";
+        $(lista_customers_sms).each(function(index){
+            if(y==""){
+                y=this;
+            }else{
+                y+=","+this;
+            }
+        });
+        if(y==""){
+            $("#span_facturas").hide();
+        }else{
+            $("#span_facturas").text(" Orden Facturas a Pagar : "+y);
+            $("#span_facturas").show();
+            $("#in_shortnote").val("Pago de la factura #"+y);
+        }*/
+        
+    }
+    
+$("#fclientstable").on('draw.dt',function (){
+        $(lista_customers_sms).each(function(index,value){
+            var checked_seleccionado=document.getElementById("input_"+value);            
+            try{
+                if(checked_seleccionado.checked==false){
+                        console.log("si esta imprimiendo todo esta bien Gloria Al Dios Altisimo Jesus de Nazaret.");
+                        $(checked_seleccionado).prop("checked",true);
+
+                }
+            }catch(error){
+
+            }
+            
+        });
+
+    });
+    //end seleccion multiple
 
    
     var localidad_Yopal = new Array ("-","ComunaI","ComunaII","ComunaIII","ComunaIV","ComunaV","ComunaVI");

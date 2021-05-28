@@ -401,6 +401,7 @@ class Clientgroup extends CI_Controller
             $no++;
 
             $row = array();
+            $row[] = '<input id="input_'.$customers->id.'" type="checkbox" name="x" class="clientes_para_enviar_sms" data-id-customer="'.$customers->id.'"  data-celular="'.$customers->celular.'" style="cursor:pointer; margin-left: 9px;" onclick="agregar_customer_envio_sms(this)" ></input>';    
             $row[] = $no;
 			$row[] = $customers->abonado;
 			$row[] = $customers->documento;
@@ -670,6 +671,7 @@ class Clientgroup extends CI_Controller
                     
                     $row = array();
                         //$money=$this->customers->money_details($customers->id);
+                            $row[] = '<input id="input_'.$customers->id.'" type="checkbox" name="x" class="clientes_para_enviar_sms" data-id-customer="'.$customers->id.'"  data-celular="'.$customers->celular.'" style="cursor:pointer; margin-left: 9px;" onclick="agregar_customer_envio_sms(this)" ></input>';    
                             $row[] = $no;
                             $row[] = $customers->abonado;
                             $row[] = $customers->documento;
@@ -736,7 +738,7 @@ class Clientgroup extends CI_Controller
                      $no++;                
                     
                     $row = array();
-                        
+                            $row[] = '<input id="input_'.$customers->id.'" type="checkbox" name="x" class="clientes_para_enviar_sms" data-id-customer="'.$customers->id.'"  data-celular="'.$customers->celular.'" style="cursor:pointer; margin-left: 9px;" onclick="agregar_customer_envio_sms(this)" ></input>';    
                             $row[] = $no;
                             $row[] = $customers->abonado;
                             $row[] = $customers->documento;
