@@ -385,6 +385,7 @@
             </table>
             <div style="float: right;" id="pagination_div">
             Seccionamiento ->
+                        <a  id="pagination_0" onclick="filtrar(0)" >All&nbsp;&nbsp;&nbsp;&nbsp;</a>
                     <a  id="pagination_1" data-start="<?=$array_pagination['1']['start']?>" data-end="<?=$array_pagination['1']['end']?>" onclick="filtrar(1)">1&nbsp;&nbsp;&nbsp;&nbsp;</a>
                     <a  id="pagination_2" data-start="<?=$array_pagination['2']['start']?>" data-end="<?=$array_pagination['2']['end']?>" onclick="filtrar(2)">2&nbsp;&nbsp;&nbsp;&nbsp;</a>
                     <a  id="pagination_3" data-start="<?=$array_pagination['3']['start']?>" data-end="<?=$array_pagination['3']['end']?>" onclick="filtrar(3)">3&nbsp;&nbsp;&nbsp;&nbsp;</a>
@@ -780,9 +781,14 @@ $("#pagination_div").hide();
             var ingreso_select=$("#fechas option:selected").val();
             var sdate=$("#sdate").val();
             var edate=$("#edate").val();
-            
-            pagination_start=$("#pagination_"+$pagination_id).data("start");
+            if($pagination_id==0){
+                pagination_end="";
+                pagination_start="";
+            }else{
+                pagination_start=$("#pagination_"+$pagination_id).data("start");
                 pagination_end=$("#pagination_"+$pagination_id).data("end");                                              
+            }
+
                 //color:blue;font-weight:900
             
             
