@@ -338,7 +338,7 @@
             <h5><?php echo $this->lang->line('Client Group') . '- ' . $group['title'] ?></h5> 
 			<a href="#sendMail" data-toggle="modal" data-remote="false" class="btn btn-primary btn-md"><i
                         class="fa fa-envelope"></i> <?php echo $this->lang->line('Send Group Message') ?> </a>
-                        <a href="#sendSms" data-toggle="modal" data-remote="false" class="btn btn-primary btn-md"><i
+                        <a href=""  class="btn btn-primary btn-md" onclick="abrir_modal_sms(event)"><i
                         class="fa fa-envelope"></i> Mensaje por SMS</a>
 
 			<a href="#" onclick="redirect_to_export()" class="btn btn-success btn-md">Exportar a Excel .XLSX</a>
@@ -565,11 +565,18 @@ $("#pagination_div").hide();
                         </select>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row" id="div_numero_individual">
                         <div class="col-xs-12 mb-1"><label
-                                    for="number">numero de telefono</label>
+                                    for="number">Numero de telefono individual</label>
                             <input type="text" class="form-control"
                                    name="number2" id="number2" maxlength="10" minlength="10" >
+                        </div>
+                    </div>
+                    <div class="row" id="div_envio_masivo">
+                        <div class="col-xs-12 mb-1"><label
+                                    for="number">Numeros envio masivo</label>
+                            <input type="text" class="form-control" readonly="true" 
+                                   name="numerosMasivos" id="numerosMasivo" minlength="10" >
                         </div>
                     </div>
                     <div class="row">
@@ -844,14 +851,35 @@ $("#pagination_div").hide();
     }
 
     //seleccion multiple
+function abrir_modal_sms(e){
+    e.preventDefault();
+    $("#sendSms").modal("show");
+    var lista_cadena="";
+    $(lista_customers_sms).each(function(index,value){
+        if(lista_cadena!=""){
+            lista_cadena=lista_cadena+","+value;    
+        }else{
+            lista_cadena=value;    
+        }
+        
+    });
 
+    if(lista_cadena==""){
+        $("#div_envio_masivo").hide();
+        $("#div_numero_individual").show();
+    }else{
+        $("#div_envio_masivo").show();
+        $("#div_numero_individual").hide();
+    }
+    $("#numerosMasivo").val(lista_cadena);
+}
     let lista_customers_sms=[];
  function agregar_customer_envio_sms(elemento){
-        var indice_elemento=lista_customers_sms.indexOf($(elemento).data("id-customer"));
+        var indice_elemento=lista_customers_sms.indexOf($(elemento).data("celular"));
         
         if(indice_elemento==-1){
                 if(elemento.checked==true){
-                    lista_customers_sms.push($(elemento).data("id-customer"));                   
+                    lista_customers_sms.push($(elemento).data("celular"));                   
                 }
         }else{
             if(elemento.checked==false){

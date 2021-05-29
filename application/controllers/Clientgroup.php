@@ -865,12 +865,22 @@ class Clientgroup extends CI_Controller
         $retorno=$api->getToken(); 
         $valido=false;
         $alerta=" ";
-        if(is_integer(intval($number)) && strlen($number)==10){
-            $valido=true;
+        if($_POST['numerosMasivo']==""){
+
+            if(is_integer(intval($number)) && strlen($number)==10){
+                $valido=true;
+            }else{
+                $alerta.="Numero no valido <br> ";
+                $valido=false;
+            }
         }else{
-            $alerta.="Numero no valido <br> ";
-            $valido=false;
+
+            //falta validar cada numero que sea de 10 dijitos y letra o si no borrarlo y si no hay ninguno valido, enviar alerta y tambien dar informacion de los que se excluyeron
+            //y leer todo el codigo de la libreria metodo a metodo para ver como puedo aplicar los componentes json necesarios para el envio de mensajes masivos enves de individuales;        
+            //Con la Ayuda de Dios lo saco jejejeje :)
+            //pero mañana con el favor de el ...
         }
+
         if($message==""){
             $alerta.=" Mensaje no puede ser vacio";
             $valido=false;
@@ -889,7 +899,7 @@ class Clientgroup extends CI_Controller
             
         } else {
             echo json_encode(array('status' => 'Error-sms', 'message' => $alerta));
-        }               
+        }              
         
     }
 }
