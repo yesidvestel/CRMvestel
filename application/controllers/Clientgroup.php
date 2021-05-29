@@ -913,4 +913,9 @@ class Clientgroup extends CI_Controller
         
         var_dump("Exito");
     }
+    public function prueba_envio_masivo_sms_curl(){
+        $this->load->library('CellVozApi');
+        $api = new CellVozApi();
+        $api->envio_sms_masivos_por_curl("","","");
+    }
 }

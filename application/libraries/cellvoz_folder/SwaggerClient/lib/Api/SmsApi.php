@@ -121,6 +121,7 @@ class SmsApi
 
         try {
             $options = $this->createHttpClientOption();
+            //var_dump($options);
             try {
                 $response = $this->client->send($request, $options);
             } catch (RequestException $e) {
@@ -320,7 +321,6 @@ class SmsApi
                 ['application/json']
             );
         }
-
         // for model (json/xml)
         if (isset($_tempBody)) {
             // $_tempBody is the method argument, if present
