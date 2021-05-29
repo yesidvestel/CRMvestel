@@ -902,4 +902,15 @@ class Clientgroup extends CI_Controller
         }              
         
     }
+    public function cambiar_barrios(){
+        set_time_limit(6000);
+        $lista_customers=$this->db->get_where("customers")->result_array();
+        foreach ($lista_customers as $key => $value) {
+            $barrio =ucwords(strtolower($value['barrio']));
+            
+            $this->db->update("customers",array("barrio"=>$barrio),array('id' => $value['id']));
+        }
+        
+        var_dump("Exito");
+    }
 }
