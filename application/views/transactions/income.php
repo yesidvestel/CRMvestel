@@ -7,7 +7,7 @@
         </div>
         <div class="grid_3 grid_4 table-responsive">
             <h5><?php echo $this->lang->line('Income Transactions') ?></h5>
-
+			<a href="#" onclick="redirect_to_export()" class="btn btn-success btn-md">Exportar a Excel .XLSX</a>
             <hr>
             <table id="trans_table" class="display" cellspacing="0" width="100%">
                 <thead>
@@ -62,6 +62,12 @@
             ],
         });
     });
+	function redirect_to_export(){
+         
+        var url_redirect=baseurl+'transactions/explortar_a_excel2';
+            window.location.replace(url_redirect);
+
+    }
 </script>
 
 <div id="delete_model" class="modal fade">
