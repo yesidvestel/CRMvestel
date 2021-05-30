@@ -74,7 +74,7 @@ class CellVozApi
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt_array($curl, array(
-          CURLOPT_URL => 'https://api.cellvoz.co/v2/sms/single',
+          CURLOPT_URL => 'https://api.cellvoz.co/v2/sms/multiple',
           CURLOPT_RETURNTRANSFER => true,
           CURLOPT_ENCODING => '',
           CURLOPT_MAXREDIRS => 10,

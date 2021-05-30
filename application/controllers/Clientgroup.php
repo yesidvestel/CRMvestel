@@ -864,8 +864,9 @@ class Clientgroup extends CI_Controller
         $api = new CellVozApi();
         $retorno=$api->getToken(); 
         $valido=false;
-        $alerta=" ";
-        if($_POST['numerosMasivo']==""){
+        $alerta=" ";        
+
+        if($_POST['numerosMasivos']==""){
 
             if(is_integer(intval($number)) && strlen($number)==10){
                 $valido=true;
@@ -879,8 +880,12 @@ class Clientgroup extends CI_Controller
             //y leer todo el codigo de la libreria metodo a metodo para ver como puedo aplicar los componentes json necesarios para el envio de mensajes masivos enves de individuales;        
             //Con la Ayuda de Dios lo saco jejejeje :)
             //pero mañana con el favor de el ...
+            $numeros=explode(",",$_POST['numerosMasivos']);        
+            $valido=true;
+            //var_dump($numeros);
         }
-
+        //var_dump($_POST);
+        //var_dump($_POST['numerosMasivos']);
         if($message==""){
             $alerta.=" Mensaje no puede ser vacio";
             $valido=false;
@@ -889,7 +894,14 @@ class Clientgroup extends CI_Controller
         }
         
         if ($valido) {
-            $var=$api->enviar_msm($retorno->getToken(),$number,$message);
+            if(is_array($numeros)){
+                foreach ($numeros as $key => $numer) {
+                    $numer=str_replace(" ","",$numer);
+                    $var=$api->enviar_msm($retorno->getToken(),$numer,$message);        
+                }
+            }else{
+                $var=$api->enviar_msm($retorno->getToken(),$number,$message);    
+            }
 
             if($var->getMessage()=="Enviado"){
                 echo json_encode(array('status' => 'Success-sms', 'message' => 'SMS Enviado Con Exito'));    
