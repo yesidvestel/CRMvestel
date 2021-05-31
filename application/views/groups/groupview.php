@@ -354,6 +354,7 @@
 					<th>Celular</th>
                     <th><?php echo $this->lang->line('Address') ?></th>
                     <th>Barrio</th>
+                    <th>Serv. Suscritos</th>
 					<th id="despues_de_thead">Estado</th>
                     <th><?php echo $this->lang->line('Settings') ?></th>
 					<?php if ($this->aauth->get_user()->roleid > 4) { ?>
@@ -375,6 +376,7 @@
 					<th>Celular</th>
                     <th><?php echo $this->lang->line('Address') ?></th>
                     <th>Barrio</th>
+                    <th>Serv. Suscritos</th>
 					<th id="despues_de_tfoot">Estado</th>
                     <th><?php echo $this->lang->line('Settings') ?></th>
 					<?php if ($this->aauth->get_user()->roleid > 4) { ?>

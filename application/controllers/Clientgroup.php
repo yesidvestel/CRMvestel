@@ -395,9 +395,23 @@ class Clientgroup extends CI_Controller
         $data = array();
         $no = $this->input->post('start');
         foreach ($list as $customers) {
+
             if(isset($customers->idx)){
                 $customers->id=$customers->idx;
             }
+            $servicios_detail=$this->customers->servicios_detail($customers->id);            
+            $servicios_str="";
+            if($servicios_detail['television']!="" && $servicios_detail['television']!="no" && $servicios_detail['television']!="-"){
+                $servicios_str="Tv";
+            }
+            if($servicios_detail['combo']!="" && $servicios_detail['combo']!="no" && $servicios_detail['combo']!="-"){
+                if($servicios_str==""){
+                    $servicios_str=$servicios_detail['combo'];
+                }else{
+                    $servicios_str.="+".$servicios_detail['combo'];
+                }   
+            }
+
             $no++;
 
             $row = array();
@@ -409,6 +423,7 @@ class Clientgroup extends CI_Controller
 			$row[] = $customers->celular;			
             $row[] = $customers->nomenclatura . ' ' . $customers->numero1 . $customers->adicionauno.' Nº '.$customers->numero2.$customers->adicional2.' - '.$customers->numero3;
             $row[] = $customers->barrio;
+            $row[] = $servicios_str;
 			$row[] = '<span class="st-'.$customers->usu_estado. '">' .$customers->usu_estado. '</span>';
             $row[] = '<a href="' . $base . 'edit?id=' . $customers->id . '" class="btn btn-success btn-sm"><span class="icon-pencil"></span> '.$this->lang->line('Edit').'</a>';
 			if ($this->aauth->get_user()->roleid > 4) {
@@ -501,6 +516,7 @@ class Clientgroup extends CI_Controller
             $valor_ultima_factura=0;
             $_var_tiene_internet=false;
             $_var_tiene_tv=false;
+            $suscripcion_str="";
             if($debe_customer==0){
                 $customer_moroso=false;
             }
@@ -520,12 +536,16 @@ class Clientgroup extends CI_Controller
                     }
                     if($fact_valida){
                         if($_var_tiene_tv){
+                            $producto=null;
                             if(str_replace(" ", "", $invoice->refer)=="Mocoa"){
                                 $producto=$this->db->get_where('products', array("pid"=>"159"))->row();
                                 $suma+=$producto->product_price;
                             }else{
                                 $producto=$this->db->get_where('products', array("pid"=>"27"))->row();
                                 $suma+=$producto->product_price+3992;
+                            }
+                            if($producto!=null){
+                                $suscripcion_str="Tv";
                             }
                             
                         }
@@ -540,6 +560,14 @@ class Clientgroup extends CI_Controller
                                     break;
                                 }
                             }
+                            if(!empty($var_e)){
+                                if($suscripcion_str!=""){
+                                    $suscripcion_str.="+".$var_e;
+                                }else{
+                                    $suscripcion_str=$var_e;
+                                }    
+                            }
+                            
                         }
                         
                     }
@@ -679,6 +707,7 @@ class Clientgroup extends CI_Controller
                             $row[] = $customers->celular;           
                             $row[] = $customers->nomenclatura . ' ' . $customers->numero1 . $customers->adicionauno.' Nº '.$customers->numero2.$customers->adicional2.' - '.$customers->numero3;
                             $row[] = $customers->barrio;
+                            $row[] = $suscripcion_str;
                             $row[] = '<span class="st-'.$customers->usu_estado. '">' .$customers->usu_estado. '</span>';
                             $row[] = amountFormat($debe_customer);
                             $row[] = amountFormat($valor_ultima_factura);
@@ -697,6 +726,7 @@ class Clientgroup extends CI_Controller
                 $x++;
                 $customers->debe_customer=$debe_customer;
                 $customers->valor_ultima_factura=$valor_ultima_factura;
+                $customers->suscripcion_str=$suscripcion_str;
                 $customers->ingreso=$money['credit']-$money['debit'];
                 $listax[]=$customers;
                 
@@ -746,6 +776,7 @@ class Clientgroup extends CI_Controller
                             $row[] = $customers->celular;           
                             $row[] = $customers->nomenclatura . ' ' . $customers->numero1 . $customers->adicionauno.' Nº '.$customers->numero2.$customers->adicional2.' - '.$customers->numero3;
                             $row[] = $customers->barrio;
+                            $row[] = $customers->suscripcion_str;
                             $row[] = '<span class="st-'.$customers->usu_estado. '">' .$customers->usu_estado. '</span>';
                             $row[] = amountFormat($customers->debe_customer);
                             $row[] = amountFormat($customers->valor_ultima_factura);
