@@ -352,7 +352,7 @@
 						<div class="">
                             <select name="vlan" class="form-control mb-1" onchange="funcion_status();">
 								<option value="null">-</option>
-								<?php for ($i=1;$i<=16;$i++){
+								<?php for ($i=1;$i<=36;$i++){
 								echo '<option value="'.$i*'10'.'">'.$i*'10'.'</option>';
 								}?>
                             </select>
