@@ -100,6 +100,7 @@ class Clientgroup extends CI_Controller
             $valor_ultima_factura=0;
             $_var_tiene_internet=false;
             $_var_tiene_tv=false;
+            $suscripcion_str="";
             if($debe_customer==0){
                 $customer_moroso=false;
             }
@@ -126,6 +127,9 @@ class Clientgroup extends CI_Controller
                                 $producto=$this->db->get_where('products', array("pid"=>"27"))->row();
                                 $suma+=$producto->product_price+3992;
                             }
+                            if($producto!=null){
+                                $suscripcion_str="Tv";
+                            }
                             
                         }
 
@@ -138,6 +142,14 @@ class Clientgroup extends CI_Controller
                                     $suma+=$prod->product_price;                                    
                                     break;
                                 }
+                            }
+
+                            if(!empty($var_e)){
+                                if($suscripcion_str!=""){
+                                    $suscripcion_str.="+".$var_e;
+                                }else{
+                                    $suscripcion_str=$var_e;
+                                }    
                             }
                         }
                         
@@ -267,6 +279,7 @@ class Clientgroup extends CI_Controller
             if($customer_moroso){
                 $customers->deuda=$debe_customer;
                 $customers->suscripcion=$valor_ultima_factura;            
+                $customers->suscripcion_str=$suscripcion_str;
                 $lista_customers2[] = $customers;
             }else{
 
@@ -280,7 +293,7 @@ class Clientgroup extends CI_Controller
         $this->load->library('Excel');
     
     //define column headers
-    $headers = array('Abonado' => 'string','Cedula' => 'string', 'Nombre' => 'string', 'Celular' => 'string', 'Direccion' => 'string','Barrio' => 'string', 'Estado' => 'string','Deuda' => 'integer','Suscripcion' => 'integer','Ingreso' => 'integer');
+    $headers = array('Abonado' => 'string','Cedula' => 'string', 'Nombre' => 'string', 'Celular' => 'string', 'Direccion' => 'string','Barrio' => 'string','Serv. Suscritos' => 'string', 'Estado' => 'string','Deuda' => 'integer','Suscripcion' => 'integer','Ingreso' => 'integer');
     
     //fetch data from database
     //$salesinfo = $this->product_model->get_salesinfo();
@@ -316,7 +329,7 @@ class Clientgroup extends CI_Controller
     //write rows to sheet1
     foreach ($lista_customers2 as $key => $customer) {            
             $direccion= $customer->nomenclatura . ' ' . $customer->numero1 . $customer->adicionauno.' Nº '.$customer->numero2.$customer->adicional2.' - '.$customer->numero3;
-            $writer->writeSheetRow('Customers '.$cust_group->title,array($customer->abonado,$customer->documento ,$customer->name, $customer->celular, $direccion,$customer->barrio ,$customer->usu_estado,$customer->deuda,$customer->suscripcion,$customer->money));
+            $writer->writeSheetRow('Customers '.$cust_group->title,array($customer->abonado,$customer->documento ,$customer->name, $customer->celular, $direccion,$customer->barrio ,$customer->suscripcion_str,$customer->usu_estado,$customer->deuda,$customer->suscripcion,$customer->money));
     }
         
         

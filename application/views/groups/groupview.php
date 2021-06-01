@@ -701,7 +701,7 @@ $("#pagination_div").hide();
     }
     function enviar_SMS(){
 
-        $("#notify2 .message2").html("<strong> Enviando</strong>: enviando");
+        $("#notify2 .message2").html("<strong> Enviando </strong>: <img src='<?=base_url()?>/assets/img/iconocargando.gif'>");
                     $("#notify2").removeClass("alert-danger").removeClass("alert-success").addClass("alert-warning").fadeIn();
                     $("html, body").animate({scrollTop: $('#notify2').offset().top}, 1000);
 
