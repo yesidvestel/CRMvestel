@@ -805,6 +805,256 @@ class Clientgroup extends CI_Controller
         echo json_encode($output);
     }
 
+     public function get_filtrados_para_checked(){ 
+        set_time_limit(6000);
+       
+
+        $listax=array();
+        $this->db->select("*");
+        $this->db->from("customers");        
+        $this->db->where("gid",$_GET['id']);
+        if (isset($_GET['estado']) && $_GET['estado'] != '' && $_GET['estado'] != null) {
+            $this->db->where('usu_estado=', $_GET['estado']);
+        }
+        if (isset($_GET['direccion']) &&$_GET['direccion'] =="Personalizada"){ 
+            if ($_GET['localidad'] != '' && $_GET['localidad'] != '-' && $_GET['localidad'] != '0') {
+                $this->db->where('localidad=', $_GET['localidad']);
+            }
+
+            if ($_GET['barrio'] != '' && $_GET['barrio'] != '-' && $_GET['barrio'] != '0') {
+                $this->db->where('barrio=', $_GET['barrio']);
+            }
+            if ($_GET['nomenclatura'] != '' && $_GET['nomenclatura'] != '-') {
+                $this->db->where('nomenclatura=', $_GET['nomenclatura']);
+            }
+            if ($_GET['numero1'] != '') {
+                $this->db->where('numero1=', $_GET['numero1']);
+            }
+            if ($_GET['adicionauno'] != '' && $_GET['adicionauno'] != '-') {
+                $this->db->where('adicionauno=', $_GET['adicionauno']);
+            }
+            if ($_GET['numero2'] != '' && $_GET['numero2'] != '-') {
+                $this->db->where('numero2=', $_GET['numero2']);
+            }
+            if ($_GET['adicional2'] != '' && $_GET['adicional2'] != '-') {
+                $this->db->where('adicional2=', $_GET['adicional2']);
+            }
+            if ($_GET['numero3'] != '' && $_GET['numero3'] != '-') {
+                $this->db->where('numero3=', $_GET['numero3']);
+            }
+        }
+    
+        
+    
+
+        $lista_customers=$this->db->get()->result();
+        
+
+
+    
+        $data=array();
+        $x=0;
+    
+    
+        $descontar=0;
+        foreach ($lista_customers as $key => $customers) {
+            $due=$this->customers->due_details($customers->id);
+            $money=$this->customers->money_details($customers->id);//para poder arreglar el tema de la velocidad de carga esta ligado con este proceso la solucion a la que llegamos es crear los campos debit y credit en customers y en cada proceso del sistema en los que se cree elimine o editen transacciones se debe de editar el valor de customers;
+            $customers->money=$money['credit']-$money['debit'];
+            $debe_customer=($due['total']-$due['pamnt'])+$money['debit'];//se agrego el campo de money debit por el item de gastos que se mencino en fechas anteriores
+
+            $lista_invoices = $this->db->from("invoices")->where("csd",$customers->id)->order_by('invoicedate',"DESC")->get()->result();
+            $customer_moroso=false;
+            $valor_ultima_factura=0;
+            $_var_tiene_internet=false;
+            $_var_tiene_tv=false;
+            $suscripcion_str="";
+            if($debe_customer==0){
+                $customer_moroso=false;
+            }
+                $fact_valida=false;
+                foreach ($lista_invoices as $key => $invoice) {
+                    $suma=0;
+                    if($invoice->combo!="no" && $invoice->combo!="" && $invoice->combo!="-"){
+                        $fact_valida=true;
+                        $_var_tiene_internet=true;
+                    }
+                    if($invoice->television!="no" && $invoice->television!="" && $invoice->television!="-"){
+                        $fact_valida=true;
+                        $_var_tiene_tv=true;
+                    }
+                    if($invoice->ron!="" && $invoice->ron!=null){
+                        $fact_valida=true;
+                    }
+                    if($fact_valida){
+                        if($_var_tiene_tv){
+                            $producto=null;
+                            if(str_replace(" ", "", $invoice->refer)=="Mocoa"){
+                                $producto=$this->db->get_where('products', array("pid"=>"159"))->row();
+                                $suma+=$producto->product_price;
+                            }else{
+                                $producto=$this->db->get_where('products', array("pid"=>"27"))->row();
+                                $suma+=$producto->product_price+3992;
+                            }
+                            if($producto!=null){
+                                $suscripcion_str="Tv";
+                            }
+                            
+                        }
+
+                        if($_var_tiene_internet){
+                            $lista_de_productos=$this->db->from("products")->like("product_name","mega","both")->get()->result();
+                            $var_e=strtolower(str_replace(" ", "",$invoice->combo));
+                            foreach ($lista_de_productos as $key => $prod) {
+                                $prod->product_name=strtolower(str_replace(" ", "",$prod->product_name ));
+                                if($prod->product_name==$var_e){
+                                    $suma+=$prod->product_price;                                    
+                                    break;
+                                }
+                            }
+                            if(!empty($var_e)){
+                                if($suscripcion_str!=""){
+                                    $suscripcion_str.="+".$var_e;
+                                }else{
+                                    $suscripcion_str=$var_e;
+                                }    
+                            }
+                            
+                        }
+                        
+                    }
+                    $invoice->total=$suma;
+                   // if(!$fact_valida){
+                          /*  $query=$this->db->query('SELECT * FROM `invoice_items` WHERE tid='.$invoice->tid.' and (product like "%mega%" or product like "%tele%" or product like "%punto adicional%")')->result_array();
+                            if(count($query)!=0){
+                                $fact_valida=true;
+                                $suma=0;
+                                foreach ($query as $key => $value) {
+                                    if(strpos(strtolower($value['product']),"reconexi" )!==false || strpos(strtolower($value['product']),"afiliaci" )!==false){
+                                            
+                                    }else{
+                                        $suma+=$value['subtotal'];    
+                                    }
+                                    
+                                    //si se selecciona el filtro por servicios realiza este filtro
+                                    if(isset($_GET['sel_servicios']) && $_GET['sel_servicios'] != '' && $_GET['sel_servicios'] != null){
+                                        if(strpos(strtolower($value['product']),"mega" )!==false){
+                                            $_var_tiene_internet=true;
+                                        }
+                                        if(strpos(strtolower($value['product']),"television" )!==false){
+                                            $_var_tiene_tv=true;   
+                                        }
+                                    }
+
+                                }
+                                $invoice->total=$suma;
+                            }*/
+                   // }
+                    if($_GET['morosos']=="1mes"){
+                        if($fact_valida && $debe_customer==$invoice->total && $customer_moroso==false){
+                            $customer_moroso=true;
+                            $valor_ultima_factura=$invoice->total;
+                            break;                    
+                        }else if($fact_valida){
+                            break;
+                        }
+                    }else if($_GET['morosos']=="masdeunmes"){
+                        if($fact_valida && $debe_customer>$invoice->total && $customer_moroso==false){
+                            $customer_moroso=true;
+                            $valor_ultima_factura=$invoice->total;
+                            break;                    
+                        }else if($fact_valida){
+                            break;
+                        }
+                    }else if($_GET['morosos']=="2meses"){
+                        if($fact_valida && $debe_customer>=($invoice->total*2) && $customer_moroso==false){
+                            $customer_moroso=true;
+                            $valor_ultima_factura=$invoice->total;
+                            break;                    
+                        }else if($fact_valida){
+                            break;
+                        }
+                    }else if($_GET['morosos']=="3y4meses"){
+                        if($fact_valida && $debe_customer>=($invoice->total*3) && $customer_moroso==false){
+                            $customer_moroso=true;
+                            $valor_ultima_factura=$invoice->total;
+                            break;                    
+                        }else if($fact_valida){
+                            break;
+                        }
+                    }else if($_GET['morosos']=="Todos"){
+                        if($fact_valida && $debe_customer>0 && $customer_moroso==false){
+                            $customer_moroso=true;
+                            $valor_ultima_factura=$invoice->total;
+                            break;                    
+                        }else if($fact_valida){
+                            break;
+                        }
+                    }else if($_GET['morosos']=="saldoaFavor"){
+                        if($fact_valida && $debe_customer<0 && $customer_moroso==false){
+                            $customer_moroso=true;
+                            $valor_ultima_factura=$invoice->total;
+                            break;                    
+                        }else if($fact_valida){
+                            break;
+                        }
+
+                    }else if($_GET['morosos']=="al Dia"){
+                        if($fact_valida && $debe_customer==0 && $customer_moroso==false){
+                            $customer_moroso=true;
+                            $valor_ultima_factura=$invoice->total;
+                            break;                    
+                        }else if($fact_valida){
+                            break;
+                        }
+
+                    }else if($_GET['morosos']==""){
+                        if($fact_valida){
+                            $customer_moroso=true;
+                            $valor_ultima_factura=$invoice->total;
+                            break;
+                        }
+
+                    }
+
+                    
+                }    
+            
+            //filtro por servicios con morosos
+            if(isset($_GET['sel_servicios']) && $_GET['sel_servicios'] != '' && $_GET['sel_servicios'] != null ){
+                //aunque sea moroso pero para aplicar el filtro se va a cambiar la variable moroso
+               
+                if($_GET['morosos']==""){//para que muestre todos si esta seleccionada esta opcion, probar si colocando esta condicion encima del if funciona bien para eliminar y dejar solo una
+                    $customer_moroso=true;
+                }
+
+                if($_GET['sel_servicios']=="Internet" && !$_var_tiene_internet){
+                            $customer_moroso=false;                        
+                }else if($_GET['sel_servicios']=="TV" && !$_var_tiene_tv){//preguntar que si solo debe de filtrar los que tienen tv o si tiene tv pero tambien internet lo puede listar lo mismo con la de internet
+                            $customer_moroso=false;     
+                }else if($_GET['sel_servicios']=="Combo" ){
+                    if(!$_var_tiene_internet || !$_var_tiene_tv){
+                        $customer_moroso=false;
+                    }
+                }
+
+            }else{
+                if($_GET['morosos']==""){//para que muestre todos si esta seleccionada esta opcion
+                    $customer_moroso=true;
+                }
+            }
+            //end fitro por servicios con morosos 
+
+            if($customer_moroso){
+                    $listax[]=array('id' =>$customers->id ,"celular"=>$customers->celular);                                    
+            }
+             
+        }
+        
+        echo json_encode($listax);
+    
+    }
+
     public function create()
     {
         $head['usernm'] = $this->aauth->get_user()->username;

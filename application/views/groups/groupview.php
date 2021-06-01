@@ -35,6 +35,11 @@
 
             <div class="message"></div>
         </div>
+        <div id="notify3" class="alert alert-success" style="display:none;">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+
+            <div class="message3"><img src="<?=base_url()?>/assets/img/iconocargando.gif"></div>
+        </div>
 		 
             <!-- paneles -->
             <div class="card">
@@ -342,11 +347,12 @@
                         class="fa fa-envelope"></i> Mensaje por SMS</a>
 
 			<a href="#" onclick="redirect_to_export()" class="btn btn-success btn-md">Exportar a Excel .XLSX</a>
+
             <hr>
             <table id="fclientstable" class="table-striped" cellspacing="0" width="100%">
                 <thead>
                 <tr >
-                    <th>SMS</th>
+                    <th><input type="checkbox" name="" style="cursor: pointer;" onclick="selet_all_customers(this)">&nbspSMS</th>
                     <th>#</th>
 					<th>Abonado</th>
 					<th>Cedula</th>
@@ -403,6 +409,58 @@
 </article>
 
 <script type="text/javascript">
+
+    function selet_all_customers(elemento){
+        var estado=$("#estado option:selected").val();
+           
+      
+            var localidad= $("#cmbLocalidades option:selected").val();
+            var barrio= $("#cmbBarrios option:selected").val();
+            var nomenclatura= $("#nomenclatura option:selected").val();
+            var numero1= $("#numero1").val();
+            
+            var adicionauno= $("#adicionauno option:selected").val();
+            var numero2= $("#numero2").val();
+            var adicional2= $("#adicional2 option:selected").val();
+            var numero3= $("#numero3").val();
+            var direccion = $("#sel_dir_personalizada option:selected").val();
+            var sel_servicios = $("#sel_servicios option:selected").val();
+            var morosos=$("#deudores option:selected").val();
+
+            var ingreso_select=$("#fechas option:selected").val();
+            var sdate=$("#sdate").val();
+            var edate=$("#edate").val();
+            var url =baseurl+"clientgroup/get_filtrados_para_checked?id=<?=$_GET['id']?>&morosos="+morosos+"&estado="+estado+"&localidad="+localidad+"&barrio="+barrio+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate;
+             if(elemento.checked==true){
+                    $("#notify3 .message3").html("<strong> Cargando</strong>: <img src='<?=base_url()?>/assets/img/iconocargando.gif'>");
+                    $("#notify3").removeClass("alert-danger").removeClass("alert-success").addClass("alert-warning").fadeIn();
+                    //$("html, body").animate({scrollTop: $('#notify3').offset().top}, 1000);
+
+                $.post(url,{},function(data){
+                    var puntos=1;
+                    $(data).each(function(index,value){
+                        var data1srt='{"id":'+(value.id)+',"celular":"'+(value.celular)+'"}';
+                        var indice_elemento=lista_customers_sms.indexOf(data1srt);
+                
+                        if(indice_elemento==-1){
+                            
+                                lista_customers_sms.push(data1srt);
+                        }
+
+                    });
+                   $("#notify3 .message3").html("<strong> Cargando</strong>: Customers Seleccionados...");
+                    $("#notify3").removeClass("alert-danger").removeClass("alert-warning").addClass("alert-success").fadeIn();
+                    $("html, body").animate({scrollTop: $('#notify3').offset().top}, 1000);
+                    $("input[type=checkbox]").prop("checked",true);        
+                },'json');
+
+                
+        }else{
+            $("input[type=checkbox]").prop("checked",false); 
+            lista_customers_sms=[];   
+
+        }
+    }
     var tb;
     $(document).ready(function () {
 $("#pagination_div").hide();
@@ -864,10 +922,11 @@ function abrir_modal_sms(e){
     $("#sendSms").modal("show");
     var lista_cadena="";
     $(lista_customers_sms).each(function(index,value){
+        value=JSON.parse(value);
         if(lista_cadena!=""){
-            lista_cadena=lista_cadena+","+value;    
+            lista_cadena=lista_cadena+","+value.celular;    
         }else{
-            lista_cadena=value;    
+            lista_cadena=value.celular;    
         }
         
     });
@@ -883,11 +942,12 @@ function abrir_modal_sms(e){
 }
     let lista_customers_sms=[];
  function agregar_customer_envio_sms(elemento){
-        var indice_elemento=lista_customers_sms.indexOf($(elemento).data("celular"));
+        var data1srt='{"id":'+$(elemento).data("id-customer")+',"celular":"'+$(elemento).data("celular")+'"}';
+        var indice_elemento=lista_customers_sms.indexOf(data1srt);
         
         if(indice_elemento==-1){
                 if(elemento.checked==true){
-                    lista_customers_sms.push($(elemento).data("celular"));                   
+                    lista_customers_sms.push(data1srt);                   
                 }
         }else{
             if(elemento.checked==false){
@@ -914,7 +974,8 @@ function abrir_modal_sms(e){
     
 $("#fclientstable").on('draw.dt',function (){
         $(lista_customers_sms).each(function(index,value){
-            var checked_seleccionado=document.getElementById("input_"+value);            
+           value= JSON.parse(value);
+            var checked_seleccionado=document.getElementById("input_"+value.id);            
             try{
                 if(checked_seleccionado.checked==false){
                         console.log("si esta imprimiendo todo esta bien Gloria Al Dios Altisimo Jesus de Nazaret.");
