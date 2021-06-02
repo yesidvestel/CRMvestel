@@ -1237,7 +1237,7 @@ class Clientgroup extends CI_Controller
                               "message": "'.$ultimo_mensaje.'",
                               "type": 1
                             }';
-                var_dump($mensajes_a_enviar);
+                //var_dump($mensajes_a_enviar);
                 $var=$api->envio_sms_masivos_por_curl($retorno->getToken(),$mensajes_a_enviar);        
                 $mensaje=json_decode($var);
                 if($mensaje->success==true){
