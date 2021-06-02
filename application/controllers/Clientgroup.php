@@ -1174,7 +1174,8 @@ class Clientgroup extends CI_Controller
             //y leer todo el codigo de la libreria metodo a metodo para ver como puedo aplicar los componentes json necesarios para el envio de mensajes masivos enves de individuales;        
             //Con la Ayuda de Dios lo saco jejejeje :)
             //pero mañana con el favor de el ...
-            $numeros=explode(",",$_POST['numerosMasivos']);        
+            $numeros=str_replace(" ","",$_POST['numerosMasivos']);
+            $numeros=explode(",",$numeros);        
             $valido=true;
             //var_dump($numeros);
         }
@@ -1188,19 +1189,71 @@ class Clientgroup extends CI_Controller
         }
         
         if ($valido) {
+            $mensaje="";
             if(is_array($numeros)){
+                $mensajes_a_enviar="";
+
+
+
                 foreach ($numeros as $key => $numer) {
-                    $numer=str_replace(" ","",$numer);
-                    $var=$api->enviar_msm($retorno->getToken(),$numer,$message);        
+                    $msg_customer="";
+                    $datosy=explode("-", $numer);
+                    if($_POST['plantillas2']=="saldo"){
+
+
+                    $customer= $this->db->get_where("customers",array("id"=>$datosy[0]))->row();
+                    
+                    $due=$this->customers->due_details($customer->id);
+                    $money=$this->customers->money_details($customer->id);//para poder arreglar el tema de la velocidad de carga esta ligado con este proceso la solucion a la que llegamos es crear los campos debit y credit en customers y en cada proceso del sistema en los que se cree elimine o editen transacciones se debe de editar el valor de customers;
+                    //$customers->money=$money['credit']-$money['debit'];
+                    $debe_customer=($due['total']-$due['pamnt'])+$money['debit'];//se agrego el campo de money debit por el item de gastos que se mencino en fechas anteriores
+                    $msg_customer="Señor(a) ".$customer->name." ".$customer->unoapellido." su saldo es ".amountFormat($debe_customer)." ".$message;
+                    $ultimo_mensaje=$msg_customer;
+                }else{
+                    $msg_customer=$message;
+                    $ultimo_mensaje=$msg_customer;
+                }
+                    $msg_customer='               {
+                              "codeCountry": "57",
+                              "number": "'.$datosy[1].'",
+                              "message": "'.$msg_customer.'",
+                              "type": 1
+                            }';
+
+                    $mensajes_a_enviar.=$msg_customer.",";   
+                    /*if($mensajes_a_enviar!=""){
+                        $mensajes_a_enviar.=",".$msg_customer;   
+                    }else{
+                        $mensajes_a_enviar=$msg_customer;   
+                    } */ 
+
+
+                    
+                }
+                //agregar numero del jefe
+                $mensajes_a_enviar.='{
+                              "codeCountry": "57",
+                              "number": "3106247129",
+                              "message": "'.$ultimo_mensaje.'",
+                              "type": 1
+                            }';
+                var_dump($mensajes_a_enviar);
+                $var=$api->envio_sms_masivos_por_curl($retorno->getToken(),$mensajes_a_enviar);        
+                $mensaje=json_decode($var);
+                if($mensaje->success==true){
+                    $mensaje="Enviado";
+                }else{
+                    $mensaje=$mensaje->message;
                 }
             }else{
                 $var=$api->enviar_msm($retorno->getToken(),$number,$message);    
+                $mensaje=$var->getMessage();
             }
 
-            if($var->getMessage()=="Enviado"){
+            if($mensaje=="Enviado"){
                 echo json_encode(array('status' => 'Success-sms', 'message' => 'SMS Enviado Con Exito'));    
             }else{
-                echo json_encode(array('status' => 'Error-sms', 'message' => $var->getMessage()));    
+                echo json_encode(array('status' => 'Error-sms', 'message' => $mensaje));    
             }
             
         } else {
@@ -1220,8 +1273,10 @@ class Clientgroup extends CI_Controller
         var_dump("Exito");
     }
     public function prueba_envio_masivo_sms_curl(){
+        set_time_limit(6000);
         $this->load->library('CellVozApi');
         $api = new CellVozApi();
-        $api->envio_sms_masivos_por_curl("","","");
+        $retorno=$api->getToken(); 
+        var_dump($api->envio_sms_masivos_por_curl($retorno->getToken(),"",""));
     }
 }

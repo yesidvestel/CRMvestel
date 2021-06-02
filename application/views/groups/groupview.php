@@ -35,12 +35,13 @@
 
             <div class="message"></div>
         </div>
+        <div id="div_notify3">
         <div id="notify3" class="alert alert-success" style="display:none;">
             <a href="#" class="close" data-dismiss="alert">&times;</a>
 
             <div class="message3"><img src="<?=base_url()?>/assets/img/iconocargando.gif"></div>
         </div>
-		 
+		 </div>
             <!-- paneles -->
             <div class="card">
                     <div class="card-body">
@@ -432,6 +433,7 @@
             var edate=$("#edate").val();
             var url =baseurl+"clientgroup/get_filtrados_para_checked?id=<?=$_GET['id']?>&morosos="+morosos+"&estado="+estado+"&localidad="+localidad+"&barrio="+barrio+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate;
              if(elemento.checked==true){
+                $("#div_notify3").html('<div id="notify3" class="alert alert-success" style="display:none;"><a href="#" class="close" data-dismiss="alert">&times;</a><div class="message3">></div></div>');
                     $("#notify3 .message3").html("<strong> Cargando</strong>: <img src='<?=base_url()?>/assets/img/iconocargando.gif'>");
                     $("#notify3").removeClass("alert-danger").removeClass("alert-success").addClass("alert-warning").fadeIn();
                     //$("html, body").animate({scrollTop: $('#notify3').offset().top}, 1000);
@@ -448,6 +450,7 @@
                         }
 
                     });
+                    $("#div_notify3").html('<div id="notify3" class="alert alert-success" style="display:none;"><a href="#" class="close" data-dismiss="alert">&times;</a><div class="message3">></div></div>');
                    $("#notify3 .message3").html("<strong> Cargando</strong>: Customers Seleccionados...");
                     $("#notify3").removeClass("alert-danger").removeClass("alert-warning").addClass("alert-success").fadeIn();
                     $("html, body").animate({scrollTop: $('#notify3').offset().top}, 1000);
@@ -608,20 +611,22 @@ $("#pagination_div").hide();
 
             <div class="modal-body" id="emailbody">
                 <form id="sendSMS_form">
-
+<div id="div_notify2">
 <div id="notify2" class="alert alert-success" style="display:none;">
             <a href="#" class="close" data-dismiss="alert">&times;</a>
 
             <div class="message2"></div>
         </div>
+</div>
                     
                     <div class="row">
                         <div class="col-xs-12 mb-1"><label
                                     for="plantillas">Plantillas</label>
-                        <select id="plantillas2" class="form-control" onchange="cargar_plantilla()">
+                        <select id="plantillas2" name="plantillas2" class="form-control" onchange="cargar_plantilla()">
                             <option value="">-</option>
+                            <option value="saldo">Señor x su Saldo es y + texto que se escriba en Mensaje</option>
                             <?php foreach ($plantillas as $key => $value) {
-                                echo "<option value='".$value['other']."'>".$value['name']."</option>";
+                                echo "<option value='' data-texto='".$value['other']."'>".$value['name']."</option>";
                             } ?>
                         </select>
                         </div>
@@ -695,12 +700,18 @@ $("#pagination_div").hide();
         }
     }
     function cargar_plantilla(){
-        var text=$("#plantillas2 option:selected").val();
+        var text=$("#plantillas2 option:selected").data("texto");
+        
+        if($("#plantillas2 option:selected").val()=="saldo"){
+            $("#contents2").attr("maxlength",40);
+        }else{
+            $("#contents2").attr("maxlength",140);
+        }
         
         $("#contents2").val(text);
     }
     function enviar_SMS(){
-
+        $("#div_notify2").html('<div id="notify2" class="alert alert-success" ><a href="#" class="close" data-dismiss="alert">&times;</a><div class="message2"></div></div>');
         $("#notify2 .message2").html("<strong> Enviando </strong>: <img src='<?=base_url()?>/assets/img/iconocargando.gif'>");
                     $("#notify2").removeClass("alert-danger").removeClass("alert-success").addClass("alert-warning").fadeIn();
                     $("html, body").animate({scrollTop: $('#notify2').offset().top}, 1000);
@@ -924,9 +935,9 @@ function abrir_modal_sms(e){
     $(lista_customers_sms).each(function(index,value){
         value=JSON.parse(value);
         if(lista_cadena!=""){
-            lista_cadena=lista_cadena+","+value.celular;    
+            lista_cadena=lista_cadena+","+value.id+"-"+value.celular;    
         }else{
-            lista_cadena=value.celular;    
+            lista_cadena=value.id+"-"+value.celular;    
         }
         
     });
