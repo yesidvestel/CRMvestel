@@ -213,6 +213,93 @@ class Transactions extends CI_Controller
        
 
     }
+	public function explortar_a_excel3(){
+        
+        $this->db->select("*");
+        $this->db->from("transactions");
+		$this->db->join('anulaciones', 'transactions.id=anulaciones.transactions_id', 'left');
+		$this->db->where('estado', 'Anulada');
+        $this->db->order_by("id","DESC");
+        $lista_creditos=$this->db->get()->result();
+        $this->load->library('Excel');
+		$lista_creditos2=array();
+		
+    
+    //define column headers
+    $headers = array(
+        'Fecha' => 'string', 
+        'Centro de costo' => 'string',
+		'Valor' => 'integer',
+		'Motivo' => 'string',
+		'Codigo cuenta' => 'string',
+		'Responsable' => 'string');
+    
+    //fetch data from database
+    //$salesinfo = $this->product_model->get_salesinfo();
+    
+    //create writer object
+    $writer = new Excel();
+    
+        //meta data info
+    $keywords = array('xlsx','CUSTOMERS','VESTEL');
+    $writer->setTitle('Reporte creditos ');
+    $writer->setSubject('');
+    $writer->setAuthor('VESTEL');
+    $writer->setCompany('VESTEL');
+    $writer->setKeywords($keywords);
+    $writer->setDescription('Reporte creditos ');
+    $writer->setTempDir(sys_get_temp_dir());
+    
+    //write headers el primer campo que es nombre de la hoja de excel deve de coincidir en writeSheetHeader y writeSheetRow para tener en cuenta si se piensan agregar otras hojas o algo por el estilo
+    $writer->writeSheetHeader('Creditos ',$headers,$col_options = array(
+
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+));
+    
+    //write rows to sheet1
+	
+    foreach ($lista_creditos as $key => $creditos) {
+		$fecha = date("d/m/Y",strtotime($creditos->date));
+            $writer->writeSheetRow('Creditos ',array($fecha,$creditos->account,$creditos->credit,$creditos->detalle,$creditos->tid,$creditos->usuario_anula));
+        
+    }
+        
+        
+    
+    $fecha_actual= date("d-m-Y");
+    $dia= date("N");
+    $this->load->model('reports_model', 'reports');
+    $fecha_actual=$this->reports->obtener_dia($dia)." ".$fecha_actual;
+    $fileLocation = 'Creditos '.$fecha_actual.'.xlsx';
+    
+    //write to xlsx file
+    $writer->writeToFile($fileLocation);
+    //echo $writer->writeToString();
+    
+    //force download
+    header('Content-Description: File Transfer');
+    header("Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+    header("Content-Disposition: attachment; filename=".basename($fileLocation));
+    header("Content-Transfer-Encoding: binary");
+    header("Expires: 0");
+    header("Pragma: public");
+    header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+    header('Content-Length: ' . filesize($fileLocation)); //Remove
+
+    ob_clean();
+    flush();
+
+    readfile($fileLocation);
+    unlink($fileLocation);
+    exit(0);
+       
+
+    }
     public function index()
     {
         if ($this->aauth->get_user()->roleid < 2) {
