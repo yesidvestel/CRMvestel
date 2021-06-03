@@ -398,6 +398,7 @@ class Tickets Extends CI_Controller
 		'Factura #' => 'string',			 
 		'Asignado' => 'string',
 		'Direccion' => 'string',
+		'Referencia' => 'string',
 		'Barrio' => 'string',					 
         'Sede' => 'string');
     
@@ -435,6 +436,7 @@ class Tickets Extends CI_Controller
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ));
     
     //write rows to sheet1
@@ -448,7 +450,7 @@ class Tickets Extends CI_Controller
         if($tickets->fecha_final == '0000-00-00' || $tickets->fecha_final == '' || $tickets->fecha_final == null){
             $tickets->fecha_final="Sin Realizar";
         }
-            $writer->writeSheetRow('Tickets ',array($tickets->codigo,$tickets->subject ,$tickets->detalle, $tickets->created,$tickets->fecha_final,$tickets->abonado ,$tickets->name.' '.$tickets->unoapellido,$tickets->documento,$tickets->status,$obsv2,$tickets->id_factura,$tickets->asignado,$tickets->nomenclatura.' '.$tickets->numero1.$tickets->adicionauno.' # '.$tickets->numero2.$tickets->adicional2.' - '.$tickets->numero3,$tickets->barrio,$tickets->ciudad));
+            $writer->writeSheetRow('Tickets ',array($tickets->codigo,$tickets->subject ,$tickets->detalle, $tickets->created,$tickets->fecha_final,$tickets->abonado ,$tickets->name.' '.$tickets->unoapellido,$tickets->documento,$tickets->status,$obsv2,$tickets->id_factura,$tickets->asignado,$tickets->nomenclatura.' '.$tickets->numero1.$tickets->adicionauno.' # '.$tickets->numero2.$tickets->adicional2.' - '.$tickets->numero3,$tickets->referencia,$tickets->barrio,$tickets->ciudad));
         
     }
         
