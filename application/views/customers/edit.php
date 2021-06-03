@@ -208,6 +208,7 @@
 									<option value="Diagonal">Diagonal</option>
 									<option value="Transversal">Transversal</option>
 									<option value="Manzana">Manzana</option>
+									<option value="Vereda">Vereda</option>
 							</select>
 						</div>
                         <div class="col-sm-2 mb-1">
