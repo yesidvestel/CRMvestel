@@ -95,6 +95,7 @@
                                                 <option value='Suspendido'>Suspendidos</option>
                                                 <option value='Instalar'>Instalar</option>
 												<option value='Exonerado'>Exonerado</option>
+												<option value='Cartera'>Cartera</option>
                                             </select>
                                         </div>
                                     </div>
