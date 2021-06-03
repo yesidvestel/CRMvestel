@@ -38,9 +38,9 @@
                             <div class="card-block">
                                 <div class="media">
                                     <div class="media-body text-xs-left">
-										<?php $numero_asignados= $this->db->select('count(idt) as numero')->from('tickets')->where('status="Realizando"')->get()->result(); ?>
+										<?php $numero_asignados= $this->db->select('count(idt) as numero')->from('tickets')->where('status="Anulada"')->get()->result(); ?>
                                         <h3 class="indigo"><?=$numero_asignados[0]->numero?></h3>
-                                        <span><?php echo $this->lang->line('Processing') ?></span>
+                                        <span>Anuladas</span>
                                     </div>
                                     <div class="media-right media-middle">
                                         <i class="icon-spinner5 indigo font-large-2 float-xs-right"></i>
@@ -161,6 +161,7 @@
                                                     <option value=''>Todas</option>
                                                     <option value='Pendiente'>Pendiente</option>
                                                     <option value='Resuelto'>Resuelto</option>
+													<option value='Anulada'>Anulada</option>
                                                 </select>
                                             </div>                              
                                         </div>    

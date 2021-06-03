@@ -145,7 +145,7 @@
                 </div>
             </div>
 
-
+			<?php if ($thread_info['status'] != 'Anulada') { ?>
             <div class="form-group row">
 
                 <label class="col-sm-1 col-form-label"></label>
@@ -169,7 +169,9 @@
 				</div>
 				
             </div>
-				
+			<?php } else {
+					echo '<h2 class="btn btn-oval btn-danger">ANULADA</h2>';
+				} ?>	
 
             </form>
         </div>
@@ -255,8 +257,8 @@
                                     for="pmethod"><?php echo $this->lang->line('Mark As') ?></label>
                             <select id="estadoid" name="status" class="form-control mb-1" onchange="funcion_status();">
                                 <option value="Resuelto">Resuelto</option>
-                                <option value="Realizando">Realizando</option>
                                 <option value="Pendiente">Pendiente</option>
+								<option value="Anulada">Anular</option>
                             </select>
 
                         </div>
