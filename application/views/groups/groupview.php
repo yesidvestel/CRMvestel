@@ -625,9 +625,9 @@ $("#pagination_div").hide();
                                     for="plantillas">Plantillas</label>
                         <select id="plantillas2" name="plantillas2" class="form-control" onchange="cargar_plantilla()">
                             <option value="">-</option>
-                            <option value="saldo">Señor x su Saldo es y + texto que se escriba en Mensaje</option>
+                            
                             <?php foreach ($plantillas as $key => $value) {
-                                echo "<option value='' data-texto='".$value['other']."'>".$value['name']."</option>";
+                                echo "<option value='".$value['id']."' data-texto='".$value['other']."'>".$value['name']."</option>";
                             } ?>
                         </select>
                         </div>
@@ -703,8 +703,8 @@ $("#pagination_div").hide();
     function cargar_plantilla(){
         var text=$("#plantillas2 option:selected").data("texto");
         
-        if($("#plantillas2 option:selected").val()=="saldo"){
-            $("#contents2").attr("maxlength",40);
+        if($("#plantillas2 option:selected").val()=="37"){
+            $("#contents2").attr("maxlength",210);
         }else{
             $("#contents2").attr("maxlength",140);
         }

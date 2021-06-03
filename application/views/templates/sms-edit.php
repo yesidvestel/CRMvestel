@@ -41,7 +41,7 @@
 
             </div>
         </form>
-        <div class="box"> <div class="col-sm-2">Variables are </div><div class="col-sm-8">{BillNumber}, {URL},{DueDate},{Amount}</div></div>
+        <div class="box"> <div class="col-sm-2">Variables are </div><div class="col-sm-8"> {primer_nombre_customer}, {segundo_nombre_customer}, {primer_apellido_customer}, {segundo_apellido_customer}, {monto_debe_customer}</div></div>
 
     </div>
 

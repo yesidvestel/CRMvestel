@@ -391,7 +391,7 @@ class Clientgroup extends CI_Controller
         $data['array_pagination']=$array;
         //var_dump($array);
         $this->load->model('templates_model','templates');
-        $data['plantillas'] = $this->templates->get_template(30,36);
+        $data['plantillas'] = $this->templates->get_template(30,37);
         //var_dump($data['plantillas']);
         $this->load->view('fixed/header', $head);
         $this->load->view('groups/groupview', $data);
@@ -1196,9 +1196,9 @@ class Clientgroup extends CI_Controller
 
 
                 foreach ($numeros as $key => $numer) {
-                    $msg_customer="";
+                    $msg_customer=$message;
                     $datosy=explode("-", $numer);
-                    if($_POST['plantillas2']=="saldo"){
+                    if($_POST['plantillas2']=="37"){
 
 
                     $customer= $this->db->get_where("customers",array("id"=>$datosy[0]))->row();
@@ -1207,7 +1207,14 @@ class Clientgroup extends CI_Controller
                     $money=$this->customers->money_details($customer->id);//para poder arreglar el tema de la velocidad de carga esta ligado con este proceso la solucion a la que llegamos es crear los campos debit y credit en customers y en cada proceso del sistema en los que se cree elimine o editen transacciones se debe de editar el valor de customers;
                     //$customers->money=$money['credit']-$money['debit'];
                     $debe_customer=($due['total']-$due['pamnt'])+$money['debit'];//se agrego el campo de money debit por el item de gastos que se mencino en fechas anteriores
-                    $msg_customer="Señor(a) ".$customer->name." ".$customer->unoapellido." su saldo es ".amountFormat($debe_customer)." ".$message;
+                    //$msg_customer="Señor(a) ".$customer->name." ".$customer->unoapellido." su saldo es ".amountFormat($debe_customer)." ".$message;
+
+                    $msg_customer=str_replace("{primer_nombre_customer}",$customer->name,$msg_customer);
+                    $msg_customer=str_replace("{segundo_nombre_customer}",$customer->dosnombre,$msg_customer);
+                    $msg_customer=str_replace("{primer_apellido_customer}",$customer->unoapellido,$msg_customer);
+                    $msg_customer=str_replace("{segundo_apellido_customer}",$customer->dosapellido,$msg_customer);
+                    $msg_customer=str_replace("{monto_debe_customer}",amountFormat($debe_customer),$msg_customer);
+
                     $ultimo_mensaje=$msg_customer;
                 }else{
                     $msg_customer=$message;
