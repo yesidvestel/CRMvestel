@@ -41,7 +41,7 @@
 
             </div>
         </form>
-        <div class="box"> <div class="col-sm-2">Variables are </div><div class="col-sm-8"><?php if($sms['id']=="37") { ?> {primer_nombre_usuario}, {segundo_nombre_usuario}, {primer_apellido_usuario}, {segundo_apellido_usuario}, {monto_debe_usuario}<?php  }else{ ?> {BillNumber}, {URL},{DueDate},{Amount} <?php } ?></div></div>
+        <div class="box"> <div class="col-sm-2">Variables are </div><div class="col-sm-8"><?php if($sms['id']=="37") { ?> {primer_nombre}, {segundo_nombre}, {primer_apellido}, {segundo_apellido}, {monto_debe}, {documento}, {mes_actual}<?php  }else{ ?> {BillNumber}, {URL},{DueDate},{Amount} <?php } ?></div></div>
 
     </div>
 

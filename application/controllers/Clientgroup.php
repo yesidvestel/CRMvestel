@@ -1192,15 +1192,15 @@ class Clientgroup extends CI_Controller
             $mensaje="";
             if(is_array($numeros)){
                 $mensajes_a_enviar="";
-
+                $this->load->model('Reports_model', 'reports');
 
 
                 foreach ($numeros as $key => $numer) {
                     $msg_customer=$message;
                     $datosy=explode("-", $numer);
-                    if($_POST['plantillas2']=="37"){
+                    
 
-
+                    //asignacion de variables
                     $customer= $this->db->get_where("customers",array("id"=>$datosy[0]))->row();
                     
                     $due=$this->customers->due_details($customer->id);
@@ -1209,17 +1209,16 @@ class Clientgroup extends CI_Controller
                     $debe_customer=($due['total']-$due['pamnt'])+$money['debit'];//se agrego el campo de money debit por el item de gastos que se mencino en fechas anteriores
                     //$msg_customer="Señor(a) ".$customer->name." ".$customer->unoapellido." su saldo es ".amountFormat($debe_customer)." ".$message;
 
-                    $msg_customer=str_replace("{primer_nombre_usuario}",$customer->name,$msg_customer);
-                    $msg_customer=str_replace("{segundo_nombre_usuario}",$customer->dosnombre,$msg_customer);
-                    $msg_customer=str_replace("{primer_apellido_usuario}",$customer->unoapellido,$msg_customer);
-                    $msg_customer=str_replace("{segundo_apellido_usuario}",$customer->dosapellido,$msg_customer);
-                    $msg_customer=str_replace("{monto_debe_usuario}",amountFormat($debe_customer),$msg_customer);
+                    $msg_customer=str_replace("{primer_nombre}",$customer->name,$msg_customer);
+                    $msg_customer=str_replace("{segundo_nombre}",$customer->dosnombre,$msg_customer);
+                    $msg_customer=str_replace("{primer_apellido}",$customer->unoapellido,$msg_customer);
+                    $msg_customer=str_replace("{segundo_apellido}",$customer->dosapellido,$msg_customer);
+                    $msg_customer=str_replace("{monto_debe}",amountFormat($debe_customer),$msg_customer);
+                    $msg_customer=str_replace("{documento}",$customer->documento,$msg_customer);
+                    $msg_customer=str_replace("{mes_actual}",$this->reports->devolver_nombre_mes(date("m")),$msg_customer);
 
                     $ultimo_mensaje=$msg_customer;
-                }else{
-                    $msg_customer=$message;
-                    $ultimo_mensaje=$msg_customer;
-                }
+                //end asignacion de variables
                     $msg_customer='               {
                               "codeCountry": "57",
                               "number": "'.$datosy[1].'",
@@ -1228,14 +1227,7 @@ class Clientgroup extends CI_Controller
                             }';
 
                     $mensajes_a_enviar.=$msg_customer.",";   
-                    /*if($mensajes_a_enviar!=""){
-                        $mensajes_a_enviar.=",".$msg_customer;   
-                    }else{
-                        $mensajes_a_enviar=$msg_customer;   
-                    } */ 
 
-
-                    
                 }
                 //agregar numero del jefe
                 $mensajes_a_enviar.='{

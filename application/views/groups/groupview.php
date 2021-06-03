@@ -653,11 +653,13 @@ $("#pagination_div").hide();
 					<div class="row">
                         <div class="col-xs-12 mb-1"><label
                                     for="shortnote">Personalizar</label><br>
-                            <span>1er Nombre = {primer_nombre_customer}</span><br>
-							<span>2do Nombre = {segundo_nombre_customer}</span><br>
-							<span>1er Apellido = {primer_apellido_customer}</span><br>
-							<span>2do Apellido = {segundo_apellido_customer}</span><br>
-							<span>Saldo = {monto_debe_customer}</span><br>
+                            <span>1er Nombre = {primer_nombre}</span><br>
+							<span>2do Nombre = {segundo_nombre}</span><br>
+							<span>1er Apellido = {primer_apellido}</span><br>
+							<span>2do Apellido = {segundo_apellido}</span><br>
+							<span>Saldo = {monto_debe}</span><br>
+                            <span>Documento = {documento}</span><br>
+                            <span>Mes Actual = {mes_actual}</span><br>
 						</div>
                     </div>
                     <input type="hidden" class="form-control"

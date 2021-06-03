@@ -1,4 +1,5 @@
 INSERT INTO `univarsal_api` (`id`, `name`, `key1`, `key2`, `url`, `method`, `other`, `active`) VALUES ('37', 'Señor x su Saldo es y', NULL, NULL, NULL, NULL, 'Señor(a) {primer_nombre_customer} {segundo_nombre_customer} {primer_apellido_customer} {segundo_apellido_customer} su Saldo es {monto_debe_customer}.', NULL);
 
 
-UPDATE `univarsal_api` SET  `other`="Señor(a) {primer_nombre_usuario} {segundo_nombre_usuario} {primer_apellido_usuario} {segundo_apellido_usuario} su Saldo es {monto_debe_usuario}." WHERE  id=37
+UPDATE `univarsal_api` SET `other`="Señor(a) {primer_nombre} {segundo_nombre} {primer_apellido} {segundo_apellido} su Saldo es {monto_debe}." WHERE id=37
+
