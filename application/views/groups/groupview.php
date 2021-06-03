@@ -648,7 +648,7 @@ $("#pagination_div").hide();
                     <div class="row">
                         <div class="col-xs-12 mb-1"><label
                                     for="shortnote"><?php echo $this->lang->line('Message') ?></label>
-                            <textarea name="text2" class="form-control" maxlength="140" id="contents2" title="Contents"></textarea></div>
+                            <textarea name="text2" class="form-control" maxlength="250" id="contents2" title="Contents"></textarea></div>
                     </div>
 					<div class="row">
                         <div class="col-xs-12 mb-1"><label
@@ -714,9 +714,9 @@ $("#pagination_div").hide();
         var text=$("#plantillas2 option:selected").data("texto");
         
         if($("#plantillas2 option:selected").val()=="37"){
-            $("#contents2").attr("maxlength",210);
+            $("#contents2").attr("maxlength",250);
         }else{
-            $("#contents2").attr("maxlength",140);
+            $("#contents2").attr("maxlength",250);
         }
         
         $("#contents2").val(text);
