@@ -343,10 +343,9 @@
                     
         <div class="grid_3 grid_4">
             <h5><?php echo $this->lang->line('Client Group') . '- ' . $group['title'] ?></h5> 
-			<a href="#sendMail" data-toggle="modal" data-remote="false" class="btn btn-primary btn-md"><i
-                        class="fa fa-envelope"></i> <?php echo $this->lang->line('Send Group Message') ?> </a>
+			
                         <a href=""  class="btn btn-primary btn-md" onclick="abrir_modal_sms(event)"><i
-                        class="fa fa-envelope"></i> Mensaje por SMS</a>
+                        class="fa fa-envelope"></i>Enviar mensajes de Grupo</a>
 
 			<a href="#" onclick="redirect_to_export()" class="btn btn-success btn-md">Exportar a Excel .XLSX</a>
 
@@ -651,7 +650,16 @@ $("#pagination_div").hide();
                                     for="shortnote"><?php echo $this->lang->line('Message') ?></label>
                             <textarea name="text2" class="form-control" maxlength="140" id="contents2" title="Contents"></textarea></div>
                     </div>
-
+					<div class="row">
+                        <div class="col-xs-12 mb-1"><label
+                                    for="shortnote">Personalizar</label><br>
+                            <span>1er Nombre = {primer_nombre_customer}</span><br>
+							<span>2do Nombre = {segundo_nombre_customer}</span><br>
+							<span>1er Apellido = {primer_apellido_customer}</span><br>
+							<span>2do Apellido = {segundo_apellido_customer}</span><br>
+							<span>Saldo = {monto_debe_customer}</span><br>
+						</div>
+                    </div>
                     <input type="hidden" class="form-control"
                            name="gid" value="<?php echo $group['id'] ?>">
                     <input type="hidden" id="action-urlSMS" value="clientgroup/sendGroupSms">
