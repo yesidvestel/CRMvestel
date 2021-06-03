@@ -229,10 +229,13 @@ class Transactions extends CI_Controller
     $headers = array(
         'Fecha' => 'string', 
         'Centro de costo' => 'string',
-		'Valor' => 'integer',
+		'Debito' => 'integer',
+		'Credito' => 'integer',
 		'Motivo' => 'string',
 		'Codigo cuenta' => 'string',
-		'Responsable' => 'string');
+		'Razon' => 'string',
+		'Responsable' => 'string'
+		);
     
     //fetch data from database
     //$salesinfo = $this->product_model->get_salesinfo();
@@ -242,17 +245,19 @@ class Transactions extends CI_Controller
     
         //meta data info
     $keywords = array('xlsx','CUSTOMERS','VESTEL');
-    $writer->setTitle('Reporte creditos ');
+    $writer->setTitle('Reporte Anulaciones ');
     $writer->setSubject('');
     $writer->setAuthor('VESTEL');
     $writer->setCompany('VESTEL');
     $writer->setKeywords($keywords);
-    $writer->setDescription('Reporte creditos ');
+    $writer->setDescription('Reporte Anulaciones ');
     $writer->setTempDir(sys_get_temp_dir());
     
     //write headers el primer campo que es nombre de la hoja de excel deve de coincidir en writeSheetHeader y writeSheetRow para tener en cuenta si se piensan agregar otras hojas o algo por el estilo
-    $writer->writeSheetHeader('Creditos ',$headers,$col_options = array(
+    $writer->writeSheetHeader('Anulaciones ',$headers,$col_options = array(
 
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
@@ -265,7 +270,7 @@ class Transactions extends CI_Controller
 	
     foreach ($lista_creditos as $key => $creditos) {
 		$fecha = date("d/m/Y",strtotime($creditos->date));
-            $writer->writeSheetRow('Creditos ',array($fecha,$creditos->account,$creditos->credit,$creditos->detalle,$creditos->tid,$creditos->usuario_anula));
+            $writer->writeSheetRow('Anulaciones ',array($fecha,$creditos->account,$creditos->debit,$creditos->credit,$creditos->detalle,$creditos->tid,$creditos->razon_anulacion,$creditos->usuario_anula));
         
     }
         
@@ -275,7 +280,7 @@ class Transactions extends CI_Controller
     $dia= date("N");
     $this->load->model('reports_model', 'reports');
     $fecha_actual=$this->reports->obtener_dia($dia)." ".$fecha_actual;
-    $fileLocation = 'Creditos '.$fecha_actual.'.xlsx';
+    $fileLocation = 'Anulaciones '.$fecha_actual.'.xlsx';
     
     //write to xlsx file
     $writer->writeToFile($fileLocation);
