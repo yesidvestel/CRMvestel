@@ -1209,11 +1209,11 @@ class Clientgroup extends CI_Controller
                     $debe_customer=($due['total']-$due['pamnt'])+$money['debit'];//se agrego el campo de money debit por el item de gastos que se mencino en fechas anteriores
                     //$msg_customer="Señor(a) ".$customer->name." ".$customer->unoapellido." su saldo es ".amountFormat($debe_customer)." ".$message;
 
-                    $msg_customer=str_replace("{primer_nombre_customer}",$customer->name,$msg_customer);
-                    $msg_customer=str_replace("{segundo_nombre_customer}",$customer->dosnombre,$msg_customer);
-                    $msg_customer=str_replace("{primer_apellido_customer}",$customer->unoapellido,$msg_customer);
-                    $msg_customer=str_replace("{segundo_apellido_customer}",$customer->dosapellido,$msg_customer);
-                    $msg_customer=str_replace("{monto_debe_customer}",amountFormat($debe_customer),$msg_customer);
+                    $msg_customer=str_replace("{primer_nombre_usuario}",$customer->name,$msg_customer);
+                    $msg_customer=str_replace("{segundo_nombre_usuario}",$customer->dosnombre,$msg_customer);
+                    $msg_customer=str_replace("{primer_apellido_usuario}",$customer->unoapellido,$msg_customer);
+                    $msg_customer=str_replace("{segundo_apellido_usuario}",$customer->dosapellido,$msg_customer);
+                    $msg_customer=str_replace("{monto_debe_usuario}",amountFormat($debe_customer),$msg_customer);
 
                     $ultimo_mensaje=$msg_customer;
                 }else{
