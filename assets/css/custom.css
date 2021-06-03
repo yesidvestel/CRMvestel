@@ -201,7 +201,10 @@ text-transform: capitalize;
 {
  background-color: #C36;
 }
-
+.st-Anulada
+{
+ background-color: #434343;
+}
 .st-partial,.st-pending,.st-Activo
 {
  background-color: #A86522;

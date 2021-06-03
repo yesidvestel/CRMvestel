@@ -413,6 +413,7 @@ $lang['Send Proposal'] = "Enviar propuesta";
 $lang['Rejected'] = "Rechazado";
 $lang['Accepted'] = "Aceptado";
 $lang['Pending'] = "Pendiente";
+$lang['Anulada'] = "Anulada";
 $lang['quote as invoice'] = "Convierte el presupuesto como factura. ¿Estás seguro?";
 $lang['Public Access'] = "Acceso público";
 $lang['Reccuring Invoice Properties'] = "Reciclaje de las propiedades de la factura";
