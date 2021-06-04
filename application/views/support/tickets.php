@@ -318,6 +318,8 @@
 
             </table>
 			</div>
+			<?php if ($this->aauth->get_user()->roleid >= 3) { ?>
+			<div class="col-md-12">
 			 <div class="col-md-12">
 			<h6 class="colspan 1">ASIGNAR ORDEN</h6>
 			</div>
@@ -338,7 +340,8 @@
                         <button type="button" class="btn btn-primary"
                                 onclick="asignar_tecnico()">Asignar</button>
 			</div>
-			
+			</div>
+			<?php } ?>
 			</div>
         </div>
     </div>
