@@ -1193,6 +1193,8 @@ class Clientgroup extends CI_Controller
             $mensaje="";
             if(is_array($numeros)){
                 $mensajes_a_enviar="";
+                $array_mensajes_a_enviar= array("msg1"=>"","msg2"=>"","msg3"=>"","msg4"=>"");
+                $data_retornada=array();
                 $this->load->model('Reports_model', 'reports');
 
 
@@ -1226,19 +1228,45 @@ class Clientgroup extends CI_Controller
                               "message": "'.$msg_customer.'",
                               "type": 1
                             }';
-
-                    $mensajes_a_enviar.=$msg_customer.",";   
+                            if($key>=0 &&$key<=1000){
+                                $array_mensajes_a_enviar['msg1'].=$msg_customer.",";
+                            }else if($key>1000 &&$key<=2000){
+                                $array_mensajes_a_enviar['msg2'].=$msg_customer.",";
+                            }else if($key>2000 &&$key<=3000){
+                                $array_mensajes_a_enviar['msg3'].=$msg_customer.",";
+                            }else{
+                                $array_mensajes_a_enviar['msg4'].=$msg_customer.",";
+                            }
+                    //$mensajes_a_enviar.=$msg_customer.",";   
 
                 }
                 //agregar numero del jefe
-                $mensajes_a_enviar.='{
+                foreach ($array_mensajes_a_enviar as $key => $msg) {
+                    if($key=="msg4"){
+                         $msg.='{
                               "codeCountry": "57",
                               "number": "3106247129",
                               "message": "'.$ultimo_mensaje.'",
                               "type": 1
-                            }';
-                //var_dump($mensajes_a_enviar);
-                $var=$api->envio_sms_masivos_por_curl($retorno->getToken(),$mensajes_a_enviar,$name_campaign);        
+                            }';  
+
+                    }else{
+                        $msg = trim($msg, ',');
+                    }
+                    $array_mensajes_a_enviar[$key]=$msg;       
+                    $var=$api->envio_sms_masivos_por_curl($retorno->getToken(),$msg,$name_campaign);        
+                    $data_retornada[]=$var;
+                }
+                /*$mensajes_a_enviar.='{
+                              "codeCountry": "57",
+                              "number": "3106247129",
+                              "message": "'.$ultimo_mensaje.'",
+                              "type": 1
+                            }';*/
+
+                var_dump($data_retornada);
+                var_dump($array_mensajes_a_enviar);
+                //$var=$api->envio_sms_masivos_por_curl($retorno->getToken(),$mensajes_a_enviar,$name_campaign);        
                 $mensaje=json_decode($var);
                 if($mensaje->success==true){
                     $mensaje="Enviado";
@@ -1277,6 +1305,6 @@ class Clientgroup extends CI_Controller
         $this->load->library('CellVozApi');
         $api = new CellVozApi();
         $retorno=$api->getToken(); 
-        var_dump($api->envio_sms_masivos_por_curl($retorno->getToken(),"",""));
+        var_dump($api->envio_sms_masivos_por_curl_2($retorno->getToken(),"",""));
     }
 }

@@ -120,5 +120,70 @@ class CellVozApi
             }
         */
     }
+    public function envio_sms_masivos_por_curl_2($token,$mensaje,$name_campaign){
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt_array($curl, array(
+          CURLOPT_URL => 'https://api.cellvoz.co/v2/sms/multiple',
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => '',
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 0,
+          CURLOPT_FOLLOWLOCATION => true,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => 'POST',
+          CURLOPT_POSTFIELDS =>'{
+              "name": "masiva",
+              "messages": [
+                    {
+                              "codeCountry": "57",
+                              "number": "3142349563",
+                              "message": "Estimado JAIRO vestel informa, su estado de cuenta de el mes de Junio ha sido generado su saldo es $ 235.000 pago oportuno 20-06-2021 si ya pago Omitir",
+                              "type": 1
+                            },               {
+                              "codeCountry": "57",
+                              "number": "3142349563",
+                              "message": "Estimado CESAR vestel informa, su estado de cuenta de el mes de Junio ha sido generado su saldo es $ 50.000 pago oportuno 20-06-2021 si ya pago Omitir",
+                              "type": 1
+                            },               {
+                              "codeCountry": "57",
+                              "number": "3142349563",
+                              "message": "Estimado CELSO vestel informa, su estado de cuenta de el mes de Junio ha sido generado su saldo es $ 25.000 pago oportuno 20-06-2021 si ya pago Omitir",
+                              "type": 1
+                            }
+              ]
+            }',
+          CURLOPT_HTTPHEADER => array(
+            'Content-Type: application/json',
+            'api-key: 8529863e6706e0659cb610dfaded9c36db43e989',
+            'Authorization: Bearer '.$token
+          ),
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+        return $response;
+
+        /* es orden de los datos que resive este servidor
+        {
+              "name": "masivo",
+              "messages": [
+                {
+                  "codeCountry": "57",
+                  "number": "3142349563",
+                  "message": "mensaje Duber CRM 2",
+                  "type": 1
+                },
+                {
+                  "codeCountry": "57",
+                  "number": "3107614750",
+                  "message": "mensaje Duber CRM 2",
+                  "type": 1
+                }
+              ]
+            }
+        */
+    }
 }
  ?>
