@@ -631,6 +631,13 @@ $("#pagination_div").hide();
                         </select>
                         </div>
                     </div>
+                    <div class="row" >
+                        <div class="col-xs-12 mb-1"><label
+                                    for="number">Nombre Campaña</label>
+                            <input type="text" class="form-control"
+                                   name="name_champaign" id="name_champaign" maxlength="10" minlength="10" >
+                        </div>
+                    </div>
                     <div class="row" id="div_numero_individual">
                         <div class="col-xs-12 mb-1"><label
                                     for="number">Numero de telefono individual</label>

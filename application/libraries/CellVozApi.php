@@ -70,7 +70,7 @@ class CellVozApi
         curl_close($curl);
         echo $response;
     } 
-    public function envio_sms_masivos_por_curl($token,$mensaje){
+    public function envio_sms_masivos_por_curl($token,$mensaje,$name_campaign){
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt_array($curl, array(
@@ -83,7 +83,7 @@ class CellVozApi
           CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
           CURLOPT_CUSTOMREQUEST => 'POST',
           CURLOPT_POSTFIELDS =>'{
-              "name": "masivo",
+              "name": "'.$name_campaign.'",
               "messages": [
                     '.$mensaje.'
               ]

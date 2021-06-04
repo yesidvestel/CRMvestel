@@ -1154,6 +1154,7 @@ class Clientgroup extends CI_Controller
         //var_dump($_POST);
         $message = $this->input->post('text2');
         $number = $this->input->post('number2');
+        $name_campaign = $this->input->post('name_campaign');
         $this->load->library('CellVozApi');
         $api = new CellVozApi();
         $retorno=$api->getToken(); 
@@ -1237,7 +1238,7 @@ class Clientgroup extends CI_Controller
                               "type": 1
                             }';
                 //var_dump($mensajes_a_enviar);
-                $var=$api->envio_sms_masivos_por_curl($retorno->getToken(),$mensajes_a_enviar);        
+                $var=$api->envio_sms_masivos_por_curl($retorno->getToken(),$mensajes_a_enviar,$name_campaign);        
                 $mensaje=json_decode($var);
                 if($mensaje->success==true){
                     $mensaje="Enviado";
