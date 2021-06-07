@@ -1142,7 +1142,7 @@ class Clientgroup extends CI_Controller
         $this->communication_model->group_email($recipients, $subject, $message, $attachmenttrue, $attachment);
     }
     public function sendGroupSms()
-    {
+    {set_time_limit(6000);
         /*$id = $this->input->post('gid');
         $subject = $this->input->post('subject');
         $message = $this->input->post('text');
@@ -1193,80 +1193,69 @@ class Clientgroup extends CI_Controller
             $mensaje="";
             if(is_array($numeros)){
                 $mensajes_a_enviar="";
-                $array_mensajes_a_enviar= array("msg1"=>"","msg2"=>"","msg3"=>"","msg4"=>"");
-                $data_retornada=array();
                 $this->load->model('Reports_model', 'reports');
 
 
                 foreach ($numeros as $key => $numer) {
-                    $msg_customer=$message;
-                    $datosy=explode("-", $numer);
                     
+                        $msg_customer=$message;
+                        $datosy=explode("-", $numer);
+                    if(strlen($datosy[1])==10){    
 
-                    //asignacion de variables
-                    $customer= $this->db->get_where("customers",array("id"=>$datosy[0]))->row();
-                    
-                    $due=$this->customers->due_details($customer->id);
-                    $money=$this->customers->money_details($customer->id);//para poder arreglar el tema de la velocidad de carga esta ligado con este proceso la solucion a la que llegamos es crear los campos debit y credit en customers y en cada proceso del sistema en los que se cree elimine o editen transacciones se debe de editar el valor de customers;
-                    //$customers->money=$money['credit']-$money['debit'];
-                    $debe_customer=($due['total']-$due['pamnt'])+$money['debit'];//se agrego el campo de money debit por el item de gastos que se mencino en fechas anteriores
-                    //$msg_customer="Señor(a) ".$customer->name." ".$customer->unoapellido." su saldo es ".amountFormat($debe_customer)." ".$message;
+                        //asignacion de variables
+                        $customer= $this->db->get_where("customers",array("id"=>$datosy[0]))->row();
+                        
+                        $due=$this->customers->due_details($customer->id);
+                        $money=$this->customers->money_details($customer->id);//para poder arreglar el tema de la velocidad de carga esta ligado con este proceso la solucion a la que llegamos es crear los campos debit y credit en customers y en cada proceso del sistema en los que se cree elimine o editen transacciones se debe de editar el valor de customers;
+                        //$customers->money=$money['credit']-$money['debit'];
+                        $debe_customer=($due['total']-$due['pamnt'])+$money['debit'];//se agrego el campo de money debit por el item de gastos que se mencino en fechas anteriores
+                        //$msg_customer="Señor(a) ".$customer->name." ".$customer->unoapellido." su saldo es ".amountFormat($debe_customer)." ".$message;
 
-                    $msg_customer=str_replace("{primer_nombre}",$customer->name,$msg_customer);
-                    $msg_customer=str_replace("{segundo_nombre}",$customer->dosnombre,$msg_customer);
-                    $msg_customer=str_replace("{primer_apellido}",$customer->unoapellido,$msg_customer);
-                    $msg_customer=str_replace("{segundo_apellido}",$customer->dosapellido,$msg_customer);
-                    $msg_customer=str_replace("{monto_debe}",amountFormat($debe_customer),$msg_customer);
-                    $msg_customer=str_replace("{documento}",$customer->documento,$msg_customer);
-                    $msg_customer=str_replace("{mes_actual}",$this->reports->devolver_nombre_mes(date("m")),$msg_customer);
+                        $msg_customer=str_replace("{primer_nombre}",$customer->name,$msg_customer);
+                        $msg_customer=str_replace("{segundo_nombre}",$customer->dosnombre,$msg_customer);
+                        $msg_customer=str_replace("{primer_apellido}",$customer->unoapellido,$msg_customer);
+                        $msg_customer=str_replace("{segundo_apellido}",$customer->dosapellido,$msg_customer);
+                        $msg_customer=str_replace("{monto_debe}",amountFormat($debe_customer),$msg_customer);
+                        $msg_customer=str_replace("{documento}",$customer->documento,$msg_customer);
+                        $msg_customer=str_replace("{mes_actual}",$this->reports->devolver_nombre_mes(date("m")),$msg_customer);
 
-                    $ultimo_mensaje=$msg_customer;
-                //end asignacion de variables
-                    $msg_customer='               {
-                              "codeCountry": "57",
-                              "number": "'.$datosy[1].'",
-                              "message": "'.$msg_customer.'",
-                              "type": 1
-                            }';
-                            if($key>=0 &&$key<=1000){
-                                $array_mensajes_a_enviar['msg1'].=$msg_customer.",";
-                            }else if($key>1000 &&$key<=2000){
-                                $array_mensajes_a_enviar['msg2'].=$msg_customer.",";
-                            }else if($key>2000 &&$key<=3000){
-                                $array_mensajes_a_enviar['msg3'].=$msg_customer.",";
-                            }else{
-                                $array_mensajes_a_enviar['msg4'].=$msg_customer.",";
-                            }
-                    //$mensajes_a_enviar.=$msg_customer.",";   
+                        $ultimo_mensaje=$msg_customer;
+                    //end asignacion de variables
+                        $msg_customer='               {
+                                  "codeCountry": "57",
+                                  "number": "'.$datosy[1].'",
+                                  "message": "'.$msg_customer.'",
+                                  "type": 1
+                                }';
 
-                }
-                //agregar numero del jefe
-                foreach ($array_mensajes_a_enviar as $key => $msg) {
-                    if($key=="msg4"){
-                         $msg.='{
-                              "codeCountry": "57",
-                              "number": "3106247129",
-                              "message": "'.$ultimo_mensaje.'",
-                              "type": 1
-                            }';  
+                        $mensajes_a_enviar.=$msg_customer.","; 
 
                     }else{
-                        $msg = trim($msg, ',');
-                    }
-                    $array_mensajes_a_enviar[$key]=$msg;       
-                    $var=$api->envio_sms_masivos_por_curl($retorno->getToken(),$msg,$name_campaign);        
-                    $data_retornada[]=$var;
-                }
-                /*$mensajes_a_enviar.='{
-                              "codeCountry": "57",
-                              "number": "3106247129",
-                              "message": "'.$ultimo_mensaje.'",
-                              "type": 1
-                            }';*/
+                        $msg_customer='               {
+                                  "codeCountry": "57",
+                                  "number": "notiene",
+                                  "message": "no tiene",
+                                  "type": 1
+                                }';
 
-                var_dump($data_retornada);
-                var_dump($array_mensajes_a_enviar);
-                //$var=$api->envio_sms_masivos_por_curl($retorno->getToken(),$mensajes_a_enviar,$name_campaign);        
+                        $mensajes_a_enviar.=$msg_customer.","; 
+                    }  
+
+                }
+                        $mensajes_a_enviar = trim($mensajes_a_enviar, ',');
+                if($_POST['ultimo_lote']=="si"){
+                //agregar numero del jefe
+                    $mensajes_a_enviar.='{
+                                  "codeCountry": "57",
+                                  "number": "3106247129",
+                                  "message": "'.$ultimo_mensaje.'",
+                                  "type": 1
+                                }';
+                }else{
+                    $mensajes_a_enviar = trim($mensajes_a_enviar, ',');
+                }
+                //var_dump($mensajes_a_enviar);
+                $var=$api->envio_sms_masivos_por_curl($retorno->getToken(),$mensajes_a_enviar,$name_campaign);        
                 $mensaje=json_decode($var);
                 if($mensaje->success==true){
                     $mensaje="Enviado";
@@ -1281,7 +1270,7 @@ class Clientgroup extends CI_Controller
             if($mensaje=="Enviado"){
                 echo json_encode(array('status' => 'Success-sms', 'message' => 'SMS Enviado Con Exito'));    
             }else{
-                echo json_encode(array('status' => 'Error-sms', 'message' => $mensaje));    
+                echo json_encode(array('status' => 'Error-sms', 'message' => $mensaje, "variable completa"=>$var));    
             }
             
         } else {

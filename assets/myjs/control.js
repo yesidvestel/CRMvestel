@@ -804,7 +804,46 @@ var errorNum = farmCheck();
 
 });
 
+function cargar_informacion_lote(dataStatus,dataMensaje){
+    $("#notify_"+n_lote_actual_customers+" .message_"+n_lote_actual_customers).html("<strong>" + dataStatus + " Lote "+n_lote_actual_customers+" de "+n_lotes_customers+"</strong>: " + dataMensaje);
+    if(dataStatus=="Success-sms"){
+        $("#notify_"+n_lote_actual_customers).removeClass("alert-danger").removeClass("alert-warning").addClass("alert-success").fadeIn();
+    }else{
+        $("#notify_"+n_lote_actual_customers).removeClass("alert-success").removeClass("alert-warning").addClass("alert-danger").fadeIn();
+    }
+    $("html, body").animate({scrollTop: $("#notify_"+n_lote_actual_customers).offset().top}, 1000);
 
+    if(n_lote_actual_customers<n_lotes_customers){
+        n_lote_actual_customers++;
+        $("#div_notify4").append('<div id="notify_'+n_lote_actual_customers+'" class="alert alert-warning" style="display:none;"><a href="#" class="close" data-dismiss="alert">&times;</a><div class="message_'+n_lote_actual_customers+'"></div></div>');        
+        $("#notify_"+n_lote_actual_customers+" .message_"+n_lote_actual_customers).html("<strong> Enviando Lote "+n_lote_actual_customers+" de "+n_lotes_customers+"</strong>: <img src='"+baseurl+"/assets/img/iconocargando.gif'>");
+                    $("#notify_"+n_lote_actual_customers).fadeIn();
+                    $("html, body").animate({scrollTop: $('#notify_'+n_lote_actual_customers).offset().top}, 1000);
+        x=y+1;
+        y=(500*n_lote_actual_customers)-1;
+        if(lista_customers_sms_aux[y]==undefined){
+            y=lista_customers_sms_aux.length-1;
+        }
+        lista_customers_sms=lista_customers_sms_aux.slice(x,y);
+        var lista_cadena="";
+        $(lista_customers_sms).each(function(index,value){
+            value=JSON.parse(value);
+            if(lista_cadena!=""){
+                lista_cadena=lista_cadena+","+value.id+"-"+value.celular;    
+            }else{
+                lista_cadena=value.id+"-"+value.celular;    
+            }
+            
+        });
+        $("#numerosMasivo").val(lista_cadena);
+        enviar_SMS();
+        
+
+
+    }
+
+
+}
 function sendMail_g(o_data,action_url) {
 
     var errorNum = farmCheck();
@@ -822,13 +861,15 @@ function sendMail_g(o_data,action_url) {
             dataType: 'json',
             success: function (data) {
                 if(data.status=="Success-sms"){
-                    $("#notify2 .message2").html("<strong>" + data.status + "</strong>: " + data.message);
-                    $("#notify2").removeClass("alert-danger").removeClass("alert-warning").addClass("alert-success").fadeIn();
-                    $("html, body").animate({scrollTop: $('#notify2').offset().top}, 1000);
+                    /*$("#notify2 .message2").html("<strong>" + data.status + "</strong>: " + data.message);
+                    /$("#notify2").removeClass("alert-danger").removeClass("alert-warning").addClass("alert-success").fadeIn();
+                    $("html, body").animate({scrollTop: $('#notify2').offset().top}, 1000);*/
+                    cargar_informacion_lote(data.status,data.message);
                 }else if(data.status=="Error-sms"){
-                        $("#notify2 .message2").html("<strong>" + data.status + "</strong>: " + data.message);
+                        /*$("#notify2 .message2").html("<strong>" + data.status + "</strong>: " + data.message);
                         $("#notify2").removeClass("alert-success").removeClass("alert-warning").addClass("alert-danger").fadeIn();
-                        $("html, body").animate({scrollTop: $('body').offset().top}, 1000);
+                        $("html, body").animate({scrollTop: $('body').offset().top}, 1000);*/
+                    cargar_informacion_lote(data.status,data.message);
                 }else if (data.status == "Success") {
                     $("#notify .message").html("<strong>" + data.status + "</strong>: " + data.message);
                     $("#notify").removeClass("alert-danger").addClass("alert-success").fadeIn();

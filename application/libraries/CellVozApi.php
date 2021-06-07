@@ -145,11 +145,6 @@ class CellVozApi
                               "number": "3142349563",
                               "message": "Estimado CESAR vestel informa, su estado de cuenta de el mes de Junio ha sido generado su saldo es $ 50.000 pago oportuno 20-06-2021 si ya pago Omitir",
                               "type": 1
-                            },               {
-                              "codeCountry": "57",
-                              "number": "3142349563",
-                              "message": "Estimado CELSO vestel informa, su estado de cuenta de el mes de Junio ha sido generado su saldo es $ 25.000 pago oportuno 20-06-2021 si ya pago Omitir",
-                              "type": 1
                             }
               ]
             }',

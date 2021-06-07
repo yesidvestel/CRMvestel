@@ -618,6 +618,9 @@ $("#pagination_div").hide();
             <div class="message2"></div>
         </div>
 </div>
+<div id="div_notify4">
+
+</div>
                     
                     <div class="row">
                         <div class="col-xs-12 mb-1"><label
@@ -650,6 +653,8 @@ $("#pagination_div").hide();
                                     for="number">Numeros envio masivo</label>
                             <input type="text" class="form-control" readonly="true" 
                                    name="numerosMasivos" id="numerosMasivo" minlength="10" >
+                                   <input type="text" class="form-control" hidden="true" 
+                                   name="ultimo_lote" id="ultimo_lote"  >
                         </div>
                     </div>
                     <div class="row">
@@ -728,18 +733,7 @@ $("#pagination_div").hide();
         
         $("#contents2").val(text);
     }
-    function enviar_SMS(){
-        $("#div_notify2").html('<div id="notify2" class="alert alert-success" ><a href="#" class="close" data-dismiss="alert">&times;</a><div class="message2"></div></div>');
-        $("#notify2 .message2").html("<strong> Enviando </strong>: <img src='<?=base_url()?>/assets/img/iconocargando.gif'>");
-                    $("#notify2").removeClass("alert-danger").removeClass("alert-success").addClass("alert-warning").fadeIn();
-                    $("html, body").animate({scrollTop: $('#notify2').offset().top}, 1000);
-
-         var o_data =  $("#sendSMS_form").serialize();
-        var action_url= $('#action-urlSMS').val();
-
-
-        sendMail_g(o_data,action_url);
-    }
+   
 
     var columnasAgregadas=false;
     function nuevas_columnas(){
@@ -946,8 +940,68 @@ $("#pagination_div").hide();
     }
 
     //seleccion multiple
+    /*var f =1000;
+    var y=f/500;
+    if(y % 1==0){
+
+        console.log(parseInt(y)+" lotes");
+    }else{
+        console.log(parseInt(y)+" +1 lotes");
+    }*/
+ function enviar_SMS(){
+        //$("#div_notify2").html('<div id="notify2" class="alert alert-success" ><a href="#" class="close" data-dismiss="alert">&times;</a><div class="message2"></div></div>');
+        /*$("#div_notify3").html('<div id="notify_1" class="alert alert-warning" style="display:none;"><a href="#" class="close" data-dismiss="alert">&times;</a><div class="message_1"></div></div>');        
+        $("#notify_1 .message_1").html("<strong> Enviando Lote 1 de "+n_lotes_customers+"</strong>: <img src='<?=base_url()?>/assets/img/iconocargando.gif'>");
+                    $("#notify_1").fadeIn();
+                    $("html, body").animate({scrollTop: $('#notify_1').offset().top}, 1000);*/
+
+        $("#div_notify4").append('<div id="notify_'+n_lote_actual_customers+'" class="alert alert-warning" style="display:none;"><a href="#" class="close" data-dismiss="alert">&times;</a><div class="message_'+n_lote_actual_customers+'"></div></div>');        
+        $("#notify_"+n_lote_actual_customers+" .message_"+n_lote_actual_customers).html("<strong> Enviando Lote "+n_lote_actual_customers+" de "+n_lotes_customers+"</strong>: <img src='"+baseurl+"/assets/img/iconocargando.gif'>");
+                    $("#notify_1").fadeIn();
+                    $("html, body").animate({scrollTop: $('#notify_'+n_lote_actual_customers).offset().top}, 1000);
+if(n_lote_actual_customers<n_lotes_customers){
+    $("#ultimo_lote").val("no");
+}else{
+    $("#ultimo_lote").val("si");
+}
+
+         var o_data =  $("#sendSMS_form").serialize();
+        var action_url= $('#action-urlSMS').val();
+
+
+        sendMail_g(o_data,action_url);
+}
+    var n_lotes_customers=1;
+    var n_lote_actual_customers=1;
+    let lista_customers_sms_aux=null;
+    var x=0;
+    var y=0;
 function abrir_modal_sms(e){
     e.preventDefault();
+    //console.log(lista_customers_sms[0]);
+    n_lotes_customers=1;
+    n_lote_actual_customers=1;
+    //console.log(lista_customers_sms.length);
+    
+
+    if(lista_customers_sms.length>500){
+        var x= lista_customers_sms.length/500;
+        if(x % 1==0){
+            n_lotes_customers=parseInt(x);
+        }else{
+            n_lotes_customers=parseInt(x)+1;
+        }
+        lista_customers_sms_aux=lista_customers_sms;
+      //saber cuantas veces voy a segmentar la lista, n_lotes_customers;
+      //en que segmentacion esta, n_lote_actual_customers;
+      //de que indice a que indice escojer segun la segmentacion, x, y;
+      n_lote_actual_customers=1;
+      x=0;
+      y=499;
+      lista_customers_sms=lista_customers_sms.slice(x,y);
+
+    }
+    //console.log(lista_customers_sms.length);
     $("#sendSms").modal("show");
     var lista_cadena="";
     $(lista_customers_sms).each(function(index,value){
@@ -968,6 +1022,7 @@ function abrir_modal_sms(e){
         $("#div_numero_individual").hide();
     }
     $("#numerosMasivo").val(lista_cadena);
+    $("#div_notify4").html("");
 }
     let lista_customers_sms=[];
  function agregar_customer_envio_sms(elemento){
