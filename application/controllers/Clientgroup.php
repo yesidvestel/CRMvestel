@@ -1242,7 +1242,7 @@ class Clientgroup extends CI_Controller
                     }  
 
                 }
-                        $mensajes_a_enviar = trim($mensajes_a_enviar, ',');
+                        //$mensajes_a_enviar = trim($mensajes_a_enviar, ',');
                 if($_POST['ultimo_lote']=="si"){
                 //agregar numero del jefe
                     $mensajes_a_enviar.='{
