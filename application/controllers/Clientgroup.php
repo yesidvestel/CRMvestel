@@ -1142,7 +1142,7 @@ class Clientgroup extends CI_Controller
         $this->communication_model->group_email($recipients, $subject, $message, $attachmenttrue, $attachment);
     }
     public function sendGroupSms()
-    {set_time_limit(6000);
+    {set_time_limit(400);
         /*$id = $this->input->post('gid');
         $subject = $this->input->post('subject');
         $message = $this->input->post('text');
@@ -1189,8 +1189,9 @@ class Clientgroup extends CI_Controller
 
         }
         
-        if ($valido) {
+if ($valido) {
             $mensaje="";
+            $caracteres_pasados="";
             if(is_array($numeros)){
                 $mensajes_a_enviar="";
                 $this->load->model('Reports_model', 'reports');
@@ -1218,7 +1219,9 @@ class Clientgroup extends CI_Controller
                         $msg_customer=str_replace("{monto_debe}",amountFormat($debe_customer),$msg_customer);
                         $msg_customer=str_replace("{documento}",$customer->documento,$msg_customer);
                         $msg_customer=str_replace("{mes_actual}",$this->reports->devolver_nombre_mes(date("m")),$msg_customer);
-
+                        if(strlen($msg_customer)>=160){
+                            $caracteres_pasados.=$msg_customer.","; 
+                        }else{
                         $ultimo_mensaje=$msg_customer;
                     //end asignacion de variables
                         $msg_customer='               {
@@ -1229,16 +1232,16 @@ class Clientgroup extends CI_Controller
                                 }';
 
                         $mensajes_a_enviar.=$msg_customer.","; 
-
+                        }
                     }else{
-                        $msg_customer='               {
+                        /*$msg_customer='               {
                                   "codeCountry": "57",
                                   "number": "notiene",
                                   "message": "no tiene",
                                   "type": 1
-                                }';
+                                }';*/
 
-                        $mensajes_a_enviar.=$msg_customer.","; 
+                        //$caracteres_pasados.=$msg_customer.","; 
                     }  
 
                 }
@@ -1256,26 +1259,27 @@ class Clientgroup extends CI_Controller
                 }
                 //var_dump($mensajes_a_enviar);
                 $var=$api->envio_sms_masivos_por_curl($retorno->getToken(),$mensajes_a_enviar,$name_campaign);        
-                $mensaje=json_decode($var);
-                if($mensaje->success==true){
+                //$mensaje=json_decode($var);
+                /*if($mensaje->success==true){
                     $mensaje="Enviado";
                 }else{
                     $mensaje=$mensaje->message;
-                }
+                }*/
+                $mensaje="Enviado";
             }else{
                 $var=$api->enviar_msm($retorno->getToken(),$number,$message);    
                 $mensaje=$var->getMessage();
             }
 
             if($mensaje=="Enviado"){
-                echo json_encode(array('status' => 'Success-sms', 'message' => 'SMS Enviado Con Exito'));    
+                echo json_encode(array('status' => 'Success-sms', 'message' => 'SMS Enviado Con Exito',"variable completa"=>$var,"caracteres_pasados"=>$caracteres_pasados));    
             }else{
                 echo json_encode(array('status' => 'Error-sms', 'message' => $mensaje, "variable completa"=>$var));    
             }
             
         } else {
             echo json_encode(array('status' => 'Error-sms', 'message' => $alerta));
-        }              
+        }                      
         
     }
     public function cambiar_barrios(){
