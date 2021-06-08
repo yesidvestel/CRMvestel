@@ -881,10 +881,15 @@ function sendMail_g(o_data,action_url) {
                 }
 
             },
-            error: function (data) {
+            timeout: 20000,
+            error: function (data, status, err) {
+                if (status == "timeout") {
+                    cargar_informacion_lote("Success-sms","La solicitud demoro demaciado porfavor revice en cellvoz si fue creada la campaña");
+                }else{
                 $("#notify .message").html("<strong>" + data.status + "</strong>: " + data.message);
                 $("#notify").removeClass("alert-success").addClass("alert-danger").fadeIn();
                 $("html, body").animate({scrollTop: $('body').offset().top}, 1000);
+                }
             }
         });
     }
