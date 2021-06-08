@@ -638,7 +638,7 @@ $("#pagination_div").hide();
                         <div class="col-xs-12 mb-1"><label
                                     for="number">Nombre Campaña</label>
                             <input type="text" class="form-control"
-                                   name="name_champaign" id="name_champaign" maxlength="10" minlength="10" >
+                                   name="name_campaign" id="name_campaign" maxlength="10" minlength="10" >
                         </div>
                     </div>
                     <div class="row" id="div_numero_individual">
@@ -977,6 +977,7 @@ if(n_lote_actual_customers<n_lotes_customers){
     var x=0;
     var y=0;
 function abrir_modal_sms(e){
+    
     e.preventDefault();
     //console.log(lista_customers_sms[0]);
     n_lotes_customers=1;
