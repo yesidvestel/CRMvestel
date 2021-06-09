@@ -310,6 +310,7 @@ $lang['Send Group Message'] = "Enviar mensaje de grupo";
 $lang['Client Group'] = "Grupo de clientes";
 $lang['delete this customer'] = "¿Seguro que quieres eliminar a este cliente?";
 $lang['Email to group'] = "Correo electrónico al grupo";
+$lang['Sms to group'] = "Mensajes de Texto al grupo";
 $lang['Messages'] = "Mensajes";
 $lang['Compose'] = "Componer";
 $lang['Send Message'] = "Enviar mensaje";

@@ -348,7 +348,8 @@
                         class="fa fa-envelope"></i>Enviar mensajes de Grupo</a>
 
 			<a href="#" onclick="redirect_to_export()" class="btn btn-success btn-md">Exportar a Excel .XLSX</a>
-
+<a href=""  class="btn btn-danger btn-md" onclick="abrir_modal_corte_usuarios(event)"><i
+                        class="fa fa-envelope"></i>Cortar Usuarios</a>
             <hr>
             <table id="fclientstable" class="table-striped" cellspacing="0" width="100%">
                 <thead>
@@ -541,7 +542,7 @@ $("#pagination_div").hide();
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title"><?php echo $this->lang->line('Email to group') ?> </h4>
+                <h4 class="modal-title"><?php echo $this->lang->line('Sms to group') ?> </h4>
             </div>
 
             <div class="modal-body" id="emailbody">
@@ -606,7 +607,7 @@ $("#pagination_div").hide();
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title"><?php echo $this->lang->line('Email to group') ?> </h4>
+                <h4 class="modal-title"><?php echo $this->lang->line('Sms to group') ?> </h4>
             </div>
 
             <div class="modal-body" id="emailbody">
@@ -686,6 +687,66 @@ $("#pagination_div").hide();
                         data-dismiss="modal"><?php echo $this->lang->line('Close') ?> </button>
                 <button type="button" class="btn btn-primary"
                         id="sendNow2" onclick="enviar_SMS()"><?php echo $this->lang->line('Send') ?> </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modal_corte_multiple_usuarios" class="modal fade">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title"><?php echo $this->lang->line('Sms to group') ?> </h4>
+            </div>
+
+            <div class="modal-body" id="emailbody">
+                <form id="corteUsers_form">
+
+<div id="div_notify5">
+
+</div>
+                    
+                    <div class="row">
+                        <div class="col-xs-12 mb-1"><label
+                                    for="plantillas">Tipo de Corte</label>
+                        <select id="plantillas2" name="plantillas2" class="form-control" onchange="cargar_plantilla()">
+                            <option value="">-</option>
+                            <option value="">Corte Internet</option>
+                            <option value="">Corte Television</option>
+                            <option value="">Corte Combo</option>
+                            
+                        </select>
+                        </div>
+                    </div>
+                    
+                    
+                    <div class="row" id="div_envio_masivo">
+                        <div class="col-xs-12 mb-1"><label
+                                    for="number">Customers</label>
+                            <input type="text" class="form-control" readonly="true" 
+                                   name="id_customers_corte" id="id_customers_corte" >
+                                   
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 mb-1"><label
+                                    for="shortnote"><?php echo $this->lang->line('Message') ?></label>
+                            <textarea name="description_corte" class="form-control"  id="description_corte" title="Descripcion Corte"></textarea></div>
+                    </div>
+                    
+                    <input type="hidden" class="form-control"
+                           name="gid" value="<?php echo $group['id'] ?>">
+                    <input type="hidden" id="action-urlSMS" value="clientgroup/cortarUsuariosMultiple">
+
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal"><?php echo $this->lang->line('Close') ?> </button>
+                <button type="button" class="btn btn-primary"
+                        id="sendNow2" onclick="realizar_corte_usuarios()">Realizar Corte de Usuarios </button>
             </div>
         </div>
     </div>
@@ -937,6 +998,10 @@ $("#pagination_div").hide();
         }else{
             $("#div_direccion_personalizada").show();
         }
+    }
+    function abrir_modal_corte_usuarios(e){
+        e.preventDefault();
+        $("#modal_corte_multiple_usuarios").modal("show");
     }
 
     //seleccion multiple
