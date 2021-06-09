@@ -785,6 +785,7 @@ class Tickets Extends CI_Controller
         }else{
             $msg1="no redirect";        
 		}
+		if($status=="Resuelto"){
         //var_dump($ticket->cid);
         //$customer=$this->db->get_where("customers",array('id' =>$ticket->cid))->row();
         if($ticket->detalle=="Subir 20 Mg"){
@@ -1167,7 +1168,7 @@ class Tickets Extends CI_Controller
         		$this->db->where('tid', $idfactura);
         		$this->db->update('invoices');			
 		}
-		
+		}
         $dataz['status']=$status;
         $dataz['fecha_final']=$fecha_final;
         $this->db->update('tickets',$dataz,array('idt'=>$tid));
