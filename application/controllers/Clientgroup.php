@@ -93,8 +93,8 @@ class Clientgroup extends CI_Controller
         foreach ($lista_customers as $key => $customers) {
             $due=$this->customers->due_details($customers->id);
             $money=$this->customers->money_details($customers->id);
-            $customers->money=$money['credit']-$money['debit'];
-            $debe_customer=($due['total']-$due['pamnt'])+$money['debit'];//se agrego el campo de money debit por el item de gastos que se mencino en fechas anteriores
+            $customers->money=$money['credit'];
+            $debe_customer=($due['total']-$due['pamnt']);//se agrego el campo de money debit por el item de gastos que se mencino en fechas anteriores
             $lista_invoices = $this->db->from("invoices")->where("csd",$customers->id)->order_by('invoicedate',"DESC")->get()->result();
             $customer_moroso=false;
             $valor_ultima_factura=0;
@@ -521,8 +521,8 @@ class Clientgroup extends CI_Controller
         foreach ($lista_customers as $key => $customers) {
             $due=$this->customers->due_details($customers->id);
             $money=$this->customers->money_details($customers->id);//para poder arreglar el tema de la velocidad de carga esta ligado con este proceso la solucion a la que llegamos es crear los campos debit y credit en customers y en cada proceso del sistema en los que se cree elimine o editen transacciones se debe de editar el valor de customers;
-            $customers->money=$money['credit']-$money['debit'];
-            $debe_customer=($due['total']-$due['pamnt'])+$money['debit'];//se agrego el campo de money debit por el item de gastos que se mencino en fechas anteriores
+            $customers->money=$money['credit'];
+            $debe_customer=($due['total']-$due['pamnt']);//se agrego el campo de money debit por el item de gastos que se mencino en fechas anteriores
 
             $lista_invoices = $this->db->from("invoices")->where("csd",$customers->id)->order_by('invoicedate',"DESC")->get()->result();
             $customer_moroso=false;
@@ -873,8 +873,8 @@ class Clientgroup extends CI_Controller
         foreach ($lista_customers as $key => $customers) {
             $due=$this->customers->due_details($customers->id);
             $money=$this->customers->money_details($customers->id);//para poder arreglar el tema de la velocidad de carga esta ligado con este proceso la solucion a la que llegamos es crear los campos debit y credit en customers y en cada proceso del sistema en los que se cree elimine o editen transacciones se debe de editar el valor de customers;
-            $customers->money=$money['credit']-$money['debit'];
-            $debe_customer=($due['total']-$due['pamnt'])+$money['debit'];//se agrego el campo de money debit por el item de gastos que se mencino en fechas anteriores
+            $customers->money=$money['credit'];
+            $debe_customer=($due['total']-$due['pamnt']);//se agrego el campo de money debit por el item de gastos que se mencino en fechas anteriores
 
             $lista_invoices = $this->db->from("invoices")->where("csd",$customers->id)->order_by('invoicedate',"DESC")->get()->result();
             $customer_moroso=false;
@@ -1206,9 +1206,9 @@ class Clientgroup extends CI_Controller
                         $customer= $this->db->get_where("customers",array("id"=>$datosy[0]))->row();
                         
                         $due=$this->customers->due_details($customer->id);
-                        $money=$this->customers->money_details($customer->id);//para poder arreglar el tema de la velocidad de carga esta ligado con este proceso la solucion a la que llegamos es crear los campos debit y credit en customers y en cada proceso del sistema en los que se cree elimine o editen transacciones se debe de editar el valor de customers;
+                        
                         //$customers->money=$money['credit']-$money['debit'];
-                        $debe_customer=($due['total']-$due['pamnt'])+$money['debit'];//se agrego el campo de money debit por el item de gastos que se mencino en fechas anteriores
+                        $debe_customer=($due['total']-$due['pamnt']);//se agrego el campo de money debit por el item de gastos que se mencino en fechas anteriores
                         //$msg_customer="Señor(a) ".$customer->name." ".$customer->unoapellido." su saldo es ".amountFormat($debe_customer)." ".$message;
 
                         $msg_customer=str_replace("{primer_nombre}",$customer->name,$msg_customer);
