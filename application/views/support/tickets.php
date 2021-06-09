@@ -320,12 +320,12 @@
 			</div>
 			<?php if ($this->aauth->get_user()->roleid >= 3) { ?>
 			<div class="col-md-12">
-			 <div class="col-md-12">
-			<h6 class="colspan 1">ASIGNAR ORDEN</h6>
-			</div>
-			<div class="col-xs-3 mb-1">
-			<select name="asignado" id="tecnicos" class="form-control mb-1">
-				<option value="">-</option>
+			 	<div class="col-md-12">
+					<h6 class="colspan 1">ASIGNAR ORDEN</h6>
+				</div>
+				<div class="col-xs-3 mb-1">
+					<select name="asignado" id="tecnicos" class="form-control mb-1">
+					<option value="">-</option>
 				<?php
 					foreach ($tecnicoslista as $row) {
 						$cid = $row['id'];
@@ -333,13 +333,13 @@
 						echo "<option value='$title'>$title</option>";
 					}
 					?>
-			</select>
+				</select>
 				</div>
-			<div class="col-xs-2 mb-1">
-				<input type="hidden" id="action-url" value="tickets/update_status">
+				<div class="col-xs-2 mb-1">
+					<input type="hidden" id="action-url" value="tickets/update_status">
                         <button type="button" class="btn btn-primary"
                                 onclick="asignar_tecnico()">Asignar</button>
-			</div>
+				</div>
 			</div>
 			<?php } ?>
 			</div>

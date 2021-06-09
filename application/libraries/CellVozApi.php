@@ -78,7 +78,7 @@ class CellVozApi
           CURLOPT_RETURNTRANSFER => true,
           CURLOPT_ENCODING => '',
           CURLOPT_MAXREDIRS => 10,
-          CURLOPT_TIMEOUT => 0,
+          CURLOPT_TIMEOUT => 399,
           CURLOPT_FOLLOWLOCATION => true,
           CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
           CURLOPT_CUSTOMREQUEST => 'POST',
@@ -90,7 +90,7 @@ class CellVozApi
             }',
           CURLOPT_HTTPHEADER => array(
             'Content-Type: application/json',
-            'api-key: 8529863e6706e0659cb610dfaded9c36db43e989',
+            'api-key: b8f242444abd818622a25431b81fc6812dd44396',
             'Authorization: Bearer '.$token
           ),
         ));
