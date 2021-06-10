@@ -701,7 +701,7 @@ $("#pagination_div").hide();
             </div>
 
             <div class="modal-body" id="emailbody">
-                <form id="corteUsers_form">
+                <form id="corte-users_form">
 
 <div id="div_notify5">
 
@@ -737,7 +737,7 @@ $("#pagination_div").hide();
                     
                     <input type="hidden" class="form-control"
                            name="gid" value="<?php echo $group['id'] ?>">
-                    <input type="hidden" id="action-urlSMS" value="clientgroup/cortarUsuariosMultiple">
+                    <input type="hidden" id="action-url-cortes" value="clientgroup/cortar_usuarios_multiple">
 
 
                 </form>
@@ -746,7 +746,7 @@ $("#pagination_div").hide();
                 <button type="button" class="btn btn-default"
                         data-dismiss="modal"><?php echo $this->lang->line('Close') ?> </button>
                 <button type="button" class="btn btn-primary"
-                        id="sendNow2" onclick="realizar_corte_usuarios()">Realizar Corte de Usuarios </button>
+                        id="sendNow4" onclick="realizar_corte_usuarios()">Realizar Corte de Usuarios </button>
             </div>
         </div>
     </div>
@@ -1018,6 +1018,13 @@ $("#pagination_div").hide();
 
 
         $("#modal_corte_multiple_usuarios").modal("show");
+    }
+    function realizar_corte_usuarios(){
+        var o_data =  $("#corte-users_form").serialize();
+        var action_url= $('#action-url-cortes').val();
+
+
+        send_corte_multiple_form(o_data,action_url);
     }
 
     //seleccion multiple

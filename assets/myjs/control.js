@@ -901,6 +901,46 @@ function sendMail_g(o_data,action_url) {
 
 }
 
+function send_corte_multiple_form(o_data,action_url) {
+
+    var errorNum = farmCheck();
+    $("#sendMail").modal('hide');
+    if (errorNum > 0) {
+        $("#notify").removeClass("alert-success").addClass("alert-warning").fadeIn();
+        $("#notify .message").html("<strong>Error</strong>");
+        $("html, body").animate({scrollTop: $('body').offset().top}, 1000);
+    } else {
+        jQuery.ajax({
+
+            url: baseurl + action_url,
+            type: 'POST',
+            data: o_data,
+            dataType: 'json',
+             success: function (data) {
+                if(data.status=="Success-sms"){
+                    $("#notify2 .message2").html("<strong>" + data.status + "</strong>: " + data.message);
+                    $("#notify2").removeClass("alert-danger").removeClass("alert-warning").addClass("alert-success").fadeIn();
+                    $("html, body").animate({scrollTop: $('#notify2').offset().top}, 1000);
+                    
+                }else{
+                        $("#notify2 .message2").html("<strong>" + data.status + "</strong>: " + data.message);
+                        $("#notify2").removeClass("alert-success").removeClass("alert-warning").addClass("alert-danger").fadeIn();
+                        $("html, body").animate({scrollTop: $('body').offset().top}, 1000);
+                    
+                }
+
+            },
+            
+            error: function (data, status, err) {
+                $("#notify .message").html("<strong>" + data.status + "</strong>: " + data.message);
+                $("#notify").removeClass("alert-success").addClass("alert-danger").fadeIn();
+                $("html, body").animate({scrollTop: $('body').offset().top}, 1000);
+            }
+        });
+    }
+
+}
+
 //generic model
 
 //part

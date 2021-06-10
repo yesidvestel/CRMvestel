@@ -1300,4 +1300,11 @@ if ($valido) {
         $retorno=$api->getToken(); 
         var_dump($api->envio_sms_masivos_por_curl_2($retorno->getToken(),"",""));
     }
+    public function cortar_usuarios_multiple(){
+        $tipo_corte=$this->input->post("tipo_corte");
+        $ids_customers_corte=$this->input->post("ids_customers_corte");
+        $description_corte=$this->input->post("description_corte");
+        $ids_customers_corte=explode(",", $ids_customers_corte);
+        var_dump($ids_customers_corte);
+    }
 }
