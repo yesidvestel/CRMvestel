@@ -1,3 +1,32 @@
+<style>
+.static {
+  	position: sticky;
+  	left: 0;
+	width: 140px;
+	background: white;
+}
+	th .static{
+		background-color:#719FD0;
+	}
+	
+.first-col {
+  padding-left: 35px!important;
+}
+table {
+  display: block;
+  overflow-x: auto;
+}
+	th {
+		background-color:#719FD0;
+	}
+	tr:nth-child(2n){
+		background-color:aliceblue;
+	}
+	tr:nth-child(2n) .static{
+		background-color:aliceblue;
+	}
+</style>
+<?php $mes = date("Y-m-",strtotime($filter[2]))?>
 <div class="app-content content container-fluid">
     <div class="content-wrapper">
         <div class="content-header">
@@ -70,74 +99,79 @@
                         <div class="card-body">
 
                             <div class="table-responsive">
-                                <table class="table table-hover mb-1" border="1">
+                                <table class="table table-hover mb-1">
                                     <thead>
 										<tr>
-										<th rowspan="2">Tipor de orden</th>
-										<th colspan="30" style="text-align: center">Dia</th>
+										<th rowspan="2" width="140px" class="static">Tipor de orden</th>
+										<th colspan="31" style="text-align: center" class="first-col">Dia</th>
 										</tr>
 									
                                     <tr>
                                         
-                                        <?php for ($i=1;$i<=30;$i++){
+                                        <?php for ($i=1;$i<=31;$i++){
 													echo '<th>'.$i.'</th>';}?>
-                                        <th><?php echo $this->lang->line('sold') . $this->lang->line('products') ?></th>
+                                        <th rowspan="2">TOTAL</th>
                                     </tr>
 										
                                     </thead>
                                     <tbody>
-				
+										
 										<tr>
-											<td>Instalacion Tv+Internet</td>
-											<?php for ($i=1;$i<=30;$i++){
+											<td class="static">Instalacion Tv+Internet</td>
+											<?php for ($i=1;$i<=31;$i++){
 											
 											$instalaciones= $this->db->select("count(idt) as numero")
 												->from('tickets')
 												->where('status="Resuelto"')
-												->where('created="2021-06-'.$i.'"')
+												->where('fecha_final="'.$mes.$i.'"')
 												->where('detalle="Instalacion"')
+												->where('asignado="'.$filter[0].'"')
 												->like("section","Television +","right")
 												->get()->result(); ?>
-											<td><?php echo $instalaciones[0]->numero; } ?></td>
+											<td class="first-col"><?php echo $instalaciones[0]->numero; } ?></td>
 											<?php 
 											$totalins= $this->db->select("count(idt) as numero")
 												->from('tickets')
 												->where('status="Resuelto"')
-												->like("created","2021-06","left")
+												->like("fecha_final","$mes","left")
 												->where('detalle="Instalacion"')
+												->where('asignado="'.$filter[0].'"')
 												->like("section","Television +","right")
 												->get()->result(); ?>
 											<td align="center"><?php echo $totalins[0]->numero ?></td>
 										</tr>
 										<tr>
-											<td bgcolor="#D5D5D5">Instalacion Television</td>
-											<?php for ($i=1;$i<=30;$i++){
+											<td class="static">Instalacion Television</td>
+											<?php for ($i=1;$i<=31;$i++){
 											$instalacionestv= $this->db->select("count(idt) as numero")
 												->from('tickets')
 												->where('status="Resuelto"')
-												->where('created="2021-06-'.$i.'"')
+												->where('fecha_final="'.$mes.$i.'"')
 												->where('detalle="Instalacion"')
+												->where('asignado="'.$filter[0].'"')
 												->where('section="Television"')
 												->get()->result(); ?>
-											<td bgcolor="#D5D5D5"><?php echo $instalacionestv[0]->numero; } ?></td>
+											<td><?php echo $instalacionestv[0]->numero; } ?></td>
 											<?php 
 											$totalinstv= $this->db->select("count(idt) as numero")
 												->from('tickets')
 												->where('status="Resuelto"')
-												->like("created","2021-06","left")
+												->like("fecha_final","$mes","left")
 												->where('detalle="Instalacion"')
+												->where('asignado="'.$filter[0].'"')
 												->where('section="Television"')
 												->get()->result(); ?>
 											<td align="center"><?php echo $totalinstv[0]->numero ?></td>
 										</tr>
 										<tr>
-											<td>Instalacion Internet</td>
-											<?php for ($i=1;$i<=30;$i++){
+											<td class="static">Instalacion Internet</td>
+											<?php for ($i=1;$i<=31;$i++){
 											$instalacionesint= $this->db->select("count(idt) as numero")
 												->from('tickets')
 												->where('status="Resuelto"')
-												->where('created="2021-06-'.$i.'"')
+												->where('fecha_final="'.$mes.$i.'"')
 												->where('detalle="Instalacion"')
+												->where('asignado="'.$filter[0].'"')
 												->not_like("section","Television")
 												->get()->result(); ?>
 											<td><?php echo $instalacionesint[0]->numero; } ?></td>
@@ -145,19 +179,21 @@
 											$totalinsint= $this->db->select("count(idt) as numero")
 												->from('tickets')
 												->where('status="Resuelto"')
-												->like("created","2021-06","left")
+												->like("fecha_final","$mes","left")
 												->where('detalle="Instalacion"')
+												->where('asignado="'.$filter[0].'"')
 												->not_like("section","Television")
 												->get()->result(); ?>
 											<td align="center"><?php echo $totalinsint[0]->numero ?></td>
 										</tr>
 										<tr>
-											<td>Agregar Television</td>
-											<?php for ($i=1;$i<=30;$i++){
+											<td class="static">Agregar Television</td>
+											<?php for ($i=1;$i<=31;$i++){
 											$agregartv= $this->db->select("count(idt) as numero")
 												->from('tickets')
 												->where('status="Resuelto"')
-												->where('created="2021-06-'.$i.'"')
+												->where('fecha_final="'.$mes.$i.'"')
+												->where('asignado="'.$filter[0].'"')
 												->where('detalle="AgregarTelevision"')
 												->get()->result(); ?>
 											<td><?php echo $agregartv[0]->numero; } ?></td>
@@ -165,18 +201,20 @@
 											$totalinsagretv= $this->db->select("count(idt) as numero")
 												->from('tickets')
 												->where('status="Resuelto"')
-												->like("created","2021-06","left")
+												->like("fecha_final","$mes","left")
+												->where('asignado="'.$filter[0].'"')
 												->where('detalle="AgregarTelevision"')
 												->get()->result(); ?>
 											<td align="center"><?php echo $totalinsagretv[0]->numero ?></td>
 										</tr>
 										<tr>
-											<td>Agregar Internet</td>
-											<?php for ($i=1;$i<=30;$i++){
+											<td class="static">Agregar Internet</td>
+											<?php for ($i=1;$i<=31;$i++){
 											$agregarint= $this->db->select("count(idt) as numero")
 												->from('tickets')
 												->where('status="Resuelto"')
-												->where('created="2021-06-'.$i.'"')
+												->where('fecha_final="'.$mes.$i.'"')
+												->where('asignado="'.$filter[0].'"')
 												->where('detalle="AgregarInternet"')
 												->get()->result(); ?>
 											<td><?php echo $agregarint[0]->numero; } ?></td>
@@ -184,75 +222,83 @@
 											$totalinsagrein= $this->db->select("count(idt) as numero")
 												->from('tickets')
 												->where('status="Resuelto"')
-												->like("created","2021-06","left")
+												->like("fecha_final","$mes","left")
 												->where('detalle="AgregarInternet"')
+												->where('asignado="'.$filter[0].'"')
 												->get()->result(); ?>
 											<td align="center"><?php echo $totalinsagrein[0]->numero ?></td>
 										</tr>
 										<tr>
-											<td>Traslado</td>
-											<?php for ($i=1;$i<=30;$i++){
+											<td class="static">Traslado</td>
+											<?php for ($i=1;$i<=31;$i++){
 											$traslado= $this->db->select("count(idt) as numero")
 												->from('tickets')
 												->where('status="Resuelto"')
-												->where('created="2021-06-'.$i.'"')
+												->where('fecha_final="'.$mes.$i.'"')
 												->where('detalle="Traslado"')
+												->where('asignado="'.$filter[0].'"')
 												->get()->result(); ?>
 											<td><?php echo $traslado[0]->numero; } ?></td>
 											<?php 
 											$totaltras= $this->db->select("count(idt) as numero")
 												->from('tickets')
 												->where('status="Resuelto"')
-												->like("created","2021-06","left")
+												->like("fecha_final","$mes","left")
 												->where('detalle="Traslado"')
+												->where('asignado="'.$filter[0].'"')
 												->get()->result(); ?>
 											<td align="center"><?php echo $totaltras[0]->numero ?></td>
 										</tr>
 										<tr>
-											<td>Revision</td>
-											<?php for ($i=1;$i<=30;$i++){
+											<td class="static">Revision</td>
+											<?php for ($i=1;$i<=31;$i++){
 											$instalaciones= $this->db->select("count(idt) as numero")
 												->from('tickets')
 												->where('status="Resuelto"')
-												->where('created="2021-06-'.$i.'"')
-												->like("section","Revision","right")
+												->where('fecha_final="'.$mes.$i.'"')
+												->where('asignado="'.$filter[0].'"')
+												->like("detalle","Revision","right")
 												->get()->result(); ?>
 											<td><?php echo $instalaciones[0]->numero; } ?></td>
 											<?php 
 											$totaltras= $this->db->select("count(idt) as numero")
 												->from('tickets')
 												->where('status="Resuelto"')
-												->like("created","2021-06","left")
-												->like("section","Revision","right")
+												->like("fecha_final","$mes","left")
+												->where('asignado="'.$filter[0].'"')
+												->like("detalle","Revision","right")
 												->get()->result(); ?>
 											<td align="center"><?php echo $totaltras[0]->numero ?></td>
 										</tr>
 										<tr>
-											<td>Reconexion Television</td>
-											<?php for ($i=1;$i<=30;$i++){
+											<td class="static">Reconexion Television</td>
+											<?php for ($i=1;$i<=31;$i++){
 											$reconexiontv= $this->db->select("count(idt) as numero")
 												->from('tickets')
 												->where('status="Resuelto"')
-												->where('created="2021-06-'.$i.'"')
-												->where('detalle="Reconexion Television"')
+												->where('fecha_final="'.$mes.$i.'"')
+												->where('asignado="'.$filter[0].'"')
+												->like("detalle","Reconexion","right")
 												->get()->result(); ?>
 											<td><?php echo $reconexiontv[0]->numero; } ?></td>
 											<?php 
 											$totalrecotv= $this->db->select("count(idt) as numero")
 												->from('tickets')
 												->where('status="Resuelto"')
-												->like("created","2021-06","left")
-												->where('detalle="Reconexion Television"')
+												->like("fecha_final","$mes","left")
+												->where('asignado="'.$filter[0].'"')
+												->like("detalle","Reconexion","right")
 												->get()->result(); ?>
 											<td align="center"><?php echo $totalrecotv[0]->numero ?></td>
 										</tr>
 										<tr>
-											<td>Suspension Combo</td>
-											<?php for ($i=1;$i<=30;$i++){
+											<td class="static">Suspension Combo</td>
+											<?php for ($i=1;$i<=31;$i++){
 											$suspensioncom= $this->db->select("count(idt) as numero")
 												->from('tickets')
 												->where('status="Resuelto"')
-												->where('created="2021-06-'.$i.'"')
+												->where('fecha_final="'.$mes.$i.'"')
+												->where('asignado="'.$filter[0].'"')
 												->where('detalle="Suspension Combo"')
 												->get()->result(); ?>
 											<td><?php echo $suspensioncom[0]->numero; } ?></td>
@@ -260,18 +306,20 @@
 											$totalsuscom= $this->db->select("count(idt) as numero")
 												->from('tickets')
 												->where('status="Resuelto"')
-												->like("created","2021-06","left")
+												->like("fecha_final","$mes","left")
+												->where('asignado="'.$filter[0].'"')
 												->where('detalle="Suspension Combo"')
 												->get()->result(); ?>
 											<td align="center"><?php echo $totalsuscom[0]->numero ?></td>
 										</tr>
 										<tr>
-											<td>Suspension Internet</td>
-											<?php for ($i=1;$i<=30;$i++){
+											<td class="static">Suspension Internet</td>
+											<?php for ($i=1;$i<=31;$i++){
 											$suspensionint= $this->db->select("count(idt) as numero")
 												->from('tickets')
 												->where('status="Resuelto"')
-												->where('created="2021-06-'.$i.'"')
+												->where('fecha_final="'.$mes.$i.'"')
+												->where('asignado="'.$filter[0].'"')
 												->where('detalle="Suspension Internet"')
 												->get()->result(); ?>
 											<td><?php echo $suspensionint[0]->numero; } ?></td>
@@ -279,18 +327,20 @@
 											$totalsusint= $this->db->select("count(idt) as numero")
 												->from('tickets')
 												->where('status="Resuelto"')
-												->like("created","2021-06","left")
+												->like("fecha_final","$mes","left")
+												->where('asignado="'.$filter[0].'"')
 												->where('detalle="Suspension Internet"')
 												->get()->result(); ?>
 											<td align="center"><?php echo $totalsusint[0]->numero ?></td>
 										</tr>
 										<tr>
-											<td>Suspension Television</td>
-											<?php for ($i=1;$i<=30;$i++){
+											<td class="static">Suspension Television</td>
+											<?php for ($i=1;$i<=31;$i++){
 											$suspensiontv= $this->db->select("count(idt) as numero")
 												->from('tickets')
 												->where('status="Resuelto"')
-												->where('created="2021-06-'.$i.'"')
+												->where('fecha_final="'.$mes.$i.'"')
+												->where('asignado="'.$filter[0].'"')
 												->where('detalle="Suspension Television"')
 												->get()->result(); ?>
 											<td><?php echo $suspensiontv[0]->numero; } ?></td>
@@ -298,18 +348,20 @@
 											$totalsustv= $this->db->select("count(idt) as numero")
 												->from('tickets')
 												->where('status="Resuelto"')
-												->like("created","2021-06","left")
+												->like("fecha_final","$mes","left")
+												->where('asignado="'.$filter[0].'"')
 												->where('detalle="Suspension Television"')
 												->get()->result(); ?>
 											<td align="center"><?php echo $totalsustv[0]->numero ?></td>
 										</tr>
 										<tr>
-											<td>Corte Television</td>
-											<?php for ($i=1;$i<=30;$i++){
+											<td class="static">Corte Television</td>
+											<?php for ($i=1;$i<=31;$i++){
 											$cortetv= $this->db->select("count(idt) as numero")
 												->from('tickets')
 												->where('status="Resuelto"')
-												->where('created="2021-06-'.$i.'"')
+												->where('asignado="'.$filter[0].'"')
+												->where('fecha_final="'.$mes.$i.'"')
 												->where('detalle="Corte Television"')
 												->get()->result(); ?>
 											<td><?php echo $cortetv[0]->numero; } ?></td>
@@ -317,10 +369,53 @@
 											$totalcortv= $this->db->select("count(idt) as numero")
 												->from('tickets')
 												->where('status="Resuelto"')
-												->like("created","2021-06","left")
+												->like("fecha_final","$mes","left")
+												->where('asignado="'.$filter[0].'"')
 												->where('detalle="Corte Television"')
 												->get()->result(); ?>
 											<td align="center"><?php echo $totalcortv[0]->numero ?></td>
+										</tr>
+										<tr>
+											<td class="static" style="background-color:#719FD0 ">TOTAL DIA</td>
+											<?php for ($i=1;$i<=31;$i++){
+											$totalrsto= $this->db->select("count(idt) as numero")
+												->from('tickets')
+												->where('status="Resuelto"')
+												->where('asignado="'.$filter[0].'"')
+												->where('fecha_final="'.$mes.$i.'"')
+												//->where('detalle="Corte Television"')
+												->get()->result(); ?>
+											<td style="background-color:#719FD0 "><?php echo $totalrsto[0]->numero; } ?></td>
+											<?php 
+											$totalgenrto= $this->db->select("count(idt) as numero")
+												->from('tickets')
+												->where('status="Resuelto"')
+												->where('asignado="'.$filter[0].'"')
+												->like("fecha_final","$mes","left")
+												//->where('detalle="Corte Television"')
+												->get()->result(); ?>
+											<td align="center" style="background-color:#719FD0 "><?php echo $totalgenrto[0]->numero ?></td>
+										</tr>
+										<tr>
+											<td class="static" style="background-color: cadetblue">PENDIENTES</td>
+											<?php for ($i=1;$i<=31;$i++){
+											$totalrsto= $this->db->select("count(idt) as numero")
+												->from('tickets')
+												->where('status="Pendiente"')
+												->where('asignado="'.$filter[0].'"')
+												->where('created="'.$mes.$i.'"')
+												//->where('detalle="Corte Television"')
+												->get()->result(); ?>
+											<td style="background-color: cadetblue"><?php echo $totalrsto[0]->numero; } ?></td>
+											<?php 
+											$totalgenrto= $this->db->select("count(idt) as numero")
+												->from('tickets')
+												->where('status="Pendiente"')
+												->where('asignado="'.$filter[0].'"')
+												->like("created","$mes","left")
+												//->where('detalle="Corte Television"')
+												->get()->result(); ?>
+											<td align="center" style="background-color: cadetblue"><?php echo $totalgenrto[0]->numero ?></td>
 										</tr>
                                     
                                     </tbody>

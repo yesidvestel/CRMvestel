@@ -65,7 +65,7 @@ class Reports extends CI_Controller
 
         $data['tickets'] = $this->reports->tickets();
 		//$data['stat'] = $this->reports->statistics();
-        $head['title'] = "Statisticst";
+        $head['title'] = "estadisticaTecnico";
         $head['usernm'] = $this->aauth->get_user()->username;
         $this->load->view('fixed/header', $head);
         $this->load->view('reports/estatecnicos', $data);
@@ -84,6 +84,23 @@ class Reports extends CI_Controller
         $head['usernm'] = $this->aauth->get_user()->username;
         $this->load->view('fixed/header', $head);
         $this->load->view('reports/statement', $data);
+        $this->load->view('fixed/footer');
+
+    }
+	//filtro reporte tecnico
+
+    public function filreptec()
+
+    {
+        $this->load->model('ticket_model');
+		$this->load->model('customers_model');
+		//$data['accounts'] = $this->transactions_model->acc_list();
+		$data['sede'] = $this->customers_model->group_list();
+        $data['tecnicos'] = $this->ticket_model->tecnico_list();
+        $head['title'] = "Account Statement";
+        $head['usernm'] = $this->aauth->get_user()->username;
+        $this->load->view('fixed/header', $head);
+        $this->load->view('reports/filreptec', $data);
         $this->load->view('fixed/footer');
 
     }
@@ -561,6 +578,24 @@ $data['datos_informe']=array("trans_type"=>$trans_type);
         $head['usernm'] = $this->aauth->get_user()->username;
         $this->load->view('fixed/header', $head);
         $this->load->view('reports/customerstatement_list', $data);
+        $this->load->view('fixed/footer');
+
+
+    }
+	public function estadisticaportecnico()
+
+    {
+        $this->load->model('customers_model', 'customer');
+        $tec = $this->input->post('tecnico');
+        $sede = $this->input->post('sede');
+        $sdate = datefordatabase($this->input->post('sdate'));
+        $data['filter'] = array($tec, $sede, $sdate,);
+
+        //  print_r( $data['statement']);
+        $head['title'] = "reporte tecnico";
+        $head['usernm'] = $this->aauth->get_user()->username;
+        $this->load->view('fixed/header', $head);
+        $this->load->view('reports/estatecnicos', $data);
         $this->load->view('fixed/footer');
 
 
