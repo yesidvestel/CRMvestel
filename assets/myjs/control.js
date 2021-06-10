@@ -841,6 +841,9 @@ function cargar_informacion_lote(dataStatus,dataMensaje){
 
 
     }
+    if(n_lote_actual_customers==n_lotes_customers){
+        lista_customers_sms=lista_customers_sms_aux;
+    }
 
 
 }
