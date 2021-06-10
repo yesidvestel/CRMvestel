@@ -257,7 +257,7 @@ table {
 												->where('status="Resuelto"')
 												->where('created="'.$mes.$i.'"')
 												->where('asignado="'.$filter[0].'"')
-												->like("section","Revision","right")
+												->like("detalle","Revision","right")
 												->get()->result(); ?>
 											<td><?php echo $instalaciones[0]->numero; } ?></td>
 											<?php 
@@ -266,7 +266,7 @@ table {
 												->where('status="Resuelto"')
 												->like("created","$mes","left")
 												->where('asignado="'.$filter[0].'"')
-												->like("section","Revision","right")
+												->like("detalle","Revision","right")
 												->get()->result(); ?>
 											<td align="center"><?php echo $totaltras[0]->numero ?></td>
 										</tr>
