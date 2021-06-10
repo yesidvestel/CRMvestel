@@ -278,7 +278,7 @@ table {
 												->where('status="Resuelto"')
 												->where('fecha_final="'.$mes.$i.'"')
 												->where('asignado="'.$filter[0].'"')
-												->where('detalle="Reconexion Television"')
+												->like("detalle","Reconexion","right")
 												->get()->result(); ?>
 											<td><?php echo $reconexiontv[0]->numero; } ?></td>
 											<?php 
@@ -287,7 +287,7 @@ table {
 												->where('status="Resuelto"')
 												->like("fecha_final","$mes","left")
 												->where('asignado="'.$filter[0].'"')
-												->where('detalle="Reconexion Television"')
+												->like("detalle","Reconexion","right")
 												->get()->result(); ?>
 											<td align="center"><?php echo $totalrecotv[0]->numero ?></td>
 										</tr>
