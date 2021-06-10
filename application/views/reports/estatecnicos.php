@@ -112,59 +112,101 @@
 										<tr>
 											<td bgcolor="#D5D5D5">Instalacion Television</td>
 											<?php for ($i=1;$i<=30;$i++){
-											$instalaciones= $this->db->select("count(idt) as numero")
+											$instalacionestv= $this->db->select("count(idt) as numero")
 												->from('tickets')
 												->where('status="Resuelto"')
 												->where('created="2021-06-'.$i.'"')
 												->where('detalle="Instalacion"')
 												->where('section="Television"')
 												->get()->result(); ?>
-											<td bgcolor="#D5D5D5"><?php echo $instalaciones[0]->numero; } ?></td>
+											<td bgcolor="#D5D5D5"><?php echo $instalacionestv[0]->numero; } ?></td>
+											<?php 
+											$totalinstv= $this->db->select("count(idt) as numero")
+												->from('tickets')
+												->where('status="Resuelto"')
+												->like("created","2021-06","left")
+												->where('detalle="Instalacion"')
+												->where('section="Television"')
+												->get()->result(); ?>
+											<td align="center"><?php echo $totalinstv[0]->numero ?></td>
 										</tr>
 										<tr>
 											<td>Instalacion Internet</td>
 											<?php for ($i=1;$i<=30;$i++){
-											$instalaciones= $this->db->select("count(idt) as numero")
+											$instalacionesint= $this->db->select("count(idt) as numero")
 												->from('tickets')
 												->where('status="Resuelto"')
 												->where('created="2021-06-'.$i.'"')
 												->where('detalle="Instalacion"')
 												->not_like("section","Television")
 												->get()->result(); ?>
-											<td><?php echo $instalaciones[0]->numero; } ?></td>
+											<td><?php echo $instalacionesint[0]->numero; } ?></td>
+											<?php 
+											$totalinsint= $this->db->select("count(idt) as numero")
+												->from('tickets')
+												->where('status="Resuelto"')
+												->like("created","2021-06","left")
+												->where('detalle="Instalacion"')
+												->not_like("section","Television")
+												->get()->result(); ?>
+											<td align="center"><?php echo $totalinsint[0]->numero ?></td>
 										</tr>
 										<tr>
 											<td>Agregar Television</td>
 											<?php for ($i=1;$i<=30;$i++){
-											$instalaciones= $this->db->select("count(idt) as numero")
+											$agregartv= $this->db->select("count(idt) as numero")
 												->from('tickets')
 												->where('status="Resuelto"')
 												->where('created="2021-06-'.$i.'"')
 												->where('detalle="AgregarTelevision"')
 												->get()->result(); ?>
-											<td><?php echo $instalaciones[0]->numero; } ?></td>
+											<td><?php echo $agregartv[0]->numero; } ?></td>
+											<?php 
+											$totalinsagretv= $this->db->select("count(idt) as numero")
+												->from('tickets')
+												->where('status="Resuelto"')
+												->like("created","2021-06","left")
+												->where('detalle="AgregarTelevision"')
+												->get()->result(); ?>
+											<td align="center"><?php echo $totalinsagretv[0]->numero ?></td>
 										</tr>
 										<tr>
 											<td>Agregar Internet</td>
 											<?php for ($i=1;$i<=30;$i++){
-											$instalaciones= $this->db->select("count(idt) as numero")
+											$agregarint= $this->db->select("count(idt) as numero")
 												->from('tickets')
 												->where('status="Resuelto"')
 												->where('created="2021-06-'.$i.'"')
 												->where('detalle="AgregarInternet"')
 												->get()->result(); ?>
-											<td><?php echo $instalaciones[0]->numero; } ?></td>
+											<td><?php echo $agregarint[0]->numero; } ?></td>
+											<?php 
+											$totalinsagrein= $this->db->select("count(idt) as numero")
+												->from('tickets')
+												->where('status="Resuelto"')
+												->like("created","2021-06","left")
+												->where('detalle="AgregarInternet"')
+												->get()->result(); ?>
+											<td align="center"><?php echo $totalinsagrein[0]->numero ?></td>
 										</tr>
 										<tr>
 											<td>Traslado</td>
 											<?php for ($i=1;$i<=30;$i++){
-											$instalaciones= $this->db->select("count(idt) as numero")
+											$traslado= $this->db->select("count(idt) as numero")
 												->from('tickets')
 												->where('status="Resuelto"')
 												->where('created="2021-06-'.$i.'"')
 												->where('detalle="Traslado"')
 												->get()->result(); ?>
-											<td><?php echo $instalaciones[0]->numero; } ?></td>
+											<td><?php echo $traslado[0]->numero; } ?></td>
+											<?php 
+											$totaltras= $this->db->select("count(idt) as numero")
+												->from('tickets')
+												->where('status="Resuelto"')
+												->like("created","2021-06","left")
+												->where('detalle="Traslado"')
+												->get()->result(); ?>
+											<td align="center"><?php echo $totaltras[0]->numero ?></td>
 										</tr>
 										<tr>
 											<td>Revision</td>
@@ -176,61 +218,109 @@
 												->like("section","Revision","right")
 												->get()->result(); ?>
 											<td><?php echo $instalaciones[0]->numero; } ?></td>
+											<?php 
+											$totaltras= $this->db->select("count(idt) as numero")
+												->from('tickets')
+												->where('status="Resuelto"')
+												->like("created","2021-06","left")
+												->like("section","Revision","right")
+												->get()->result(); ?>
+											<td align="center"><?php echo $totaltras[0]->numero ?></td>
 										</tr>
 										<tr>
 											<td>Reconexion Television</td>
 											<?php for ($i=1;$i<=30;$i++){
-											$instalaciones= $this->db->select("count(idt) as numero")
+											$reconexiontv= $this->db->select("count(idt) as numero")
 												->from('tickets')
 												->where('status="Resuelto"')
 												->where('created="2021-06-'.$i.'"')
 												->where('detalle="Reconexion Television"')
 												->get()->result(); ?>
-											<td><?php echo $instalaciones[0]->numero; } ?></td>
+											<td><?php echo $reconexiontv[0]->numero; } ?></td>
+											<?php 
+											$totalrecotv= $this->db->select("count(idt) as numero")
+												->from('tickets')
+												->where('status="Resuelto"')
+												->like("created","2021-06","left")
+												->where('detalle="Reconexion Television"')
+												->get()->result(); ?>
+											<td align="center"><?php echo $totalrecotv[0]->numero ?></td>
 										</tr>
 										<tr>
 											<td>Suspension Combo</td>
 											<?php for ($i=1;$i<=30;$i++){
-											$instalaciones= $this->db->select("count(idt) as numero")
+											$suspensioncom= $this->db->select("count(idt) as numero")
 												->from('tickets')
 												->where('status="Resuelto"')
 												->where('created="2021-06-'.$i.'"')
 												->where('detalle="Suspension Combo"')
 												->get()->result(); ?>
-											<td><?php echo $instalaciones[0]->numero; } ?></td>
+											<td><?php echo $suspensioncom[0]->numero; } ?></td>
+											<?php 
+											$totalsuscom= $this->db->select("count(idt) as numero")
+												->from('tickets')
+												->where('status="Resuelto"')
+												->like("created","2021-06","left")
+												->where('detalle="Suspension Combo"')
+												->get()->result(); ?>
+											<td align="center"><?php echo $totalsuscom[0]->numero ?></td>
 										</tr>
 										<tr>
 											<td>Suspension Internet</td>
 											<?php for ($i=1;$i<=30;$i++){
-											$instalaciones= $this->db->select("count(idt) as numero")
+											$suspensionint= $this->db->select("count(idt) as numero")
 												->from('tickets')
 												->where('status="Resuelto"')
 												->where('created="2021-06-'.$i.'"')
 												->where('detalle="Suspension Internet"')
 												->get()->result(); ?>
-											<td><?php echo $instalaciones[0]->numero; } ?></td>
+											<td><?php echo $suspensionint[0]->numero; } ?></td>
+											<?php 
+											$totalsusint= $this->db->select("count(idt) as numero")
+												->from('tickets')
+												->where('status="Resuelto"')
+												->like("created","2021-06","left")
+												->where('detalle="Suspension Internet"')
+												->get()->result(); ?>
+											<td align="center"><?php echo $totalsusint[0]->numero ?></td>
 										</tr>
 										<tr>
 											<td>Suspension Television</td>
 											<?php for ($i=1;$i<=30;$i++){
-											$instalaciones= $this->db->select("count(idt) as numero")
+											$suspensiontv= $this->db->select("count(idt) as numero")
 												->from('tickets')
 												->where('status="Resuelto"')
 												->where('created="2021-06-'.$i.'"')
 												->where('detalle="Suspension Television"')
 												->get()->result(); ?>
-											<td><?php echo $instalaciones[0]->numero; } ?></td>
+											<td><?php echo $suspensiontv[0]->numero; } ?></td>
+											<?php 
+											$totalsustv= $this->db->select("count(idt) as numero")
+												->from('tickets')
+												->where('status="Resuelto"')
+												->like("created","2021-06","left")
+												->where('detalle="Suspension Television"')
+												->get()->result(); ?>
+											<td align="center"><?php echo $totalsustv[0]->numero ?></td>
 										</tr>
 										<tr>
 											<td>Corte Television</td>
 											<?php for ($i=1;$i<=30;$i++){
-											$instalaciones= $this->db->select("count(idt) as numero")
+											$cortetv= $this->db->select("count(idt) as numero")
 												->from('tickets')
 												->where('status="Resuelto"')
 												->where('created="2021-06-'.$i.'"')
 												->where('detalle="Corte Television"')
 												->get()->result(); ?>
-											<td><?php echo $instalaciones[0]->numero; } ?></td>
+											<td><?php echo $cortetv[0]->numero; } ?></td>
+											<?php 
+											$totalcortv= $this->db->select("count(idt) as numero")
+												->from('tickets')
+												->where('status="Resuelto"')
+												->like("created","2021-06","left")
+												->where('detalle="Corte Television"')
+												->get()->result(); ?>
+											<td align="center"><?php echo $totalcortv[0]->numero ?></td>
 										</tr>
                                     
                                     </tbody>
