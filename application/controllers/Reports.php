@@ -57,6 +57,21 @@ class Reports extends CI_Controller
         $this->load->view('fixed/footer');
 
     }
+	//estadisticas tecnicos
+
+    public function statecnicos()
+
+    {
+
+        $data['tickets'] = $this->reports->tickets();
+		//$data['stat'] = $this->reports->statistics();
+        $head['title'] = "Statisticst";
+        $head['usernm'] = $this->aauth->get_user()->username;
+        $this->load->view('fixed/header', $head);
+        $this->load->view('reports/estatecnicos', $data);
+        $this->load->view('fixed/footer');
+
+    }
 
     //accounts section
 
