@@ -1,3 +1,31 @@
+<style>
+.static {
+  	position: sticky;
+  	left: 0;
+	width: 140px;
+	background: white;
+}
+	th .static{
+		background-color:#719FD0;
+	}
+	
+.first-col {
+  padding-left: 35px!important;
+}
+table {
+  display: block;
+  overflow-x: auto;
+}
+	th {
+		background-color:#719FD0;
+	}
+	tr:nth-child(2n){
+		background-color:aliceblue;
+	}
+	tr:nth-child(2n) .static{
+		background-color:aliceblue;
+	}
+</style>
 <div class="app-content content container-fluid">
     <div class="content-wrapper">
         <div class="content-header">
@@ -70,25 +98,25 @@
                         <div class="card-body">
 
                             <div class="table-responsive">
-                                <table class="table table-hover mb-1" border="1">
+                                <table class="table table-hover mb-1">
                                     <thead>
 										<tr>
-										<th rowspan="2">Tipor de orden</th>
-										<th colspan="30" style="text-align: center">Dia</th>
+										<th rowspan="2" width="140px" class="static">Tipor de orden</th>
+										<th colspan="30" style="text-align: center" class="first-col">Dia</th>
 										</tr>
 									
                                     <tr>
                                         
                                         <?php for ($i=1;$i<=30;$i++){
 													echo '<th>'.$i.'</th>';}?>
-                                        <th><?php echo $this->lang->line('sold') . $this->lang->line('products') ?></th>
+                                        <th rowspan="2">TOTAL</th>
                                     </tr>
 										
                                     </thead>
                                     <tbody>
 				
 										<tr>
-											<td>Instalacion Tv+Internet</td>
+											<td class="static">Instalacion Tv+Internet</td>
 											<?php for ($i=1;$i<=30;$i++){
 											
 											$instalaciones= $this->db->select("count(idt) as numero")
@@ -98,7 +126,7 @@
 												->where('detalle="Instalacion"')
 												->like("section","Television +","right")
 												->get()->result(); ?>
-											<td><?php echo $instalaciones[0]->numero; } ?></td>
+											<td class="first-col"><?php echo $instalaciones[0]->numero; } ?></td>
 											<?php 
 											$totalins= $this->db->select("count(idt) as numero")
 												->from('tickets')
@@ -110,7 +138,7 @@
 											<td align="center"><?php echo $totalins[0]->numero ?></td>
 										</tr>
 										<tr>
-											<td bgcolor="#D5D5D5">Instalacion Television</td>
+											<td class="static">Instalacion Television</td>
 											<?php for ($i=1;$i<=30;$i++){
 											$instalacionestv= $this->db->select("count(idt) as numero")
 												->from('tickets')
@@ -119,7 +147,7 @@
 												->where('detalle="Instalacion"')
 												->where('section="Television"')
 												->get()->result(); ?>
-											<td bgcolor="#D5D5D5"><?php echo $instalacionestv[0]->numero; } ?></td>
+											<td><?php echo $instalacionestv[0]->numero; } ?></td>
 											<?php 
 											$totalinstv= $this->db->select("count(idt) as numero")
 												->from('tickets')
@@ -131,7 +159,7 @@
 											<td align="center"><?php echo $totalinstv[0]->numero ?></td>
 										</tr>
 										<tr>
-											<td>Instalacion Internet</td>
+											<td class="static">Instalacion Internet</td>
 											<?php for ($i=1;$i<=30;$i++){
 											$instalacionesint= $this->db->select("count(idt) as numero")
 												->from('tickets')
@@ -152,7 +180,7 @@
 											<td align="center"><?php echo $totalinsint[0]->numero ?></td>
 										</tr>
 										<tr>
-											<td>Agregar Television</td>
+											<td class="static">Agregar Television</td>
 											<?php for ($i=1;$i<=30;$i++){
 											$agregartv= $this->db->select("count(idt) as numero")
 												->from('tickets')
@@ -171,7 +199,7 @@
 											<td align="center"><?php echo $totalinsagretv[0]->numero ?></td>
 										</tr>
 										<tr>
-											<td>Agregar Internet</td>
+											<td class="static">Agregar Internet</td>
 											<?php for ($i=1;$i<=30;$i++){
 											$agregarint= $this->db->select("count(idt) as numero")
 												->from('tickets')
@@ -190,7 +218,7 @@
 											<td align="center"><?php echo $totalinsagrein[0]->numero ?></td>
 										</tr>
 										<tr>
-											<td>Traslado</td>
+											<td class="static">Traslado</td>
 											<?php for ($i=1;$i<=30;$i++){
 											$traslado= $this->db->select("count(idt) as numero")
 												->from('tickets')
@@ -209,7 +237,7 @@
 											<td align="center"><?php echo $totaltras[0]->numero ?></td>
 										</tr>
 										<tr>
-											<td>Revision</td>
+											<td class="static">Revision</td>
 											<?php for ($i=1;$i<=30;$i++){
 											$instalaciones= $this->db->select("count(idt) as numero")
 												->from('tickets')
@@ -228,7 +256,7 @@
 											<td align="center"><?php echo $totaltras[0]->numero ?></td>
 										</tr>
 										<tr>
-											<td>Reconexion Television</td>
+											<td class="static">Reconexion Television</td>
 											<?php for ($i=1;$i<=30;$i++){
 											$reconexiontv= $this->db->select("count(idt) as numero")
 												->from('tickets')
@@ -247,7 +275,7 @@
 											<td align="center"><?php echo $totalrecotv[0]->numero ?></td>
 										</tr>
 										<tr>
-											<td>Suspension Combo</td>
+											<td class="static">Suspension Combo</td>
 											<?php for ($i=1;$i<=30;$i++){
 											$suspensioncom= $this->db->select("count(idt) as numero")
 												->from('tickets')
@@ -266,7 +294,7 @@
 											<td align="center"><?php echo $totalsuscom[0]->numero ?></td>
 										</tr>
 										<tr>
-											<td>Suspension Internet</td>
+											<td class="static">Suspension Internet</td>
 											<?php for ($i=1;$i<=30;$i++){
 											$suspensionint= $this->db->select("count(idt) as numero")
 												->from('tickets')
@@ -285,7 +313,7 @@
 											<td align="center"><?php echo $totalsusint[0]->numero ?></td>
 										</tr>
 										<tr>
-											<td>Suspension Television</td>
+											<td class="static">Suspension Television</td>
 											<?php for ($i=1;$i<=30;$i++){
 											$suspensiontv= $this->db->select("count(idt) as numero")
 												->from('tickets')
@@ -304,7 +332,7 @@
 											<td align="center"><?php echo $totalsustv[0]->numero ?></td>
 										</tr>
 										<tr>
-											<td>Corte Television</td>
+											<td class="static">Corte Television</td>
 											<?php for ($i=1;$i<=30;$i++){
 											$cortetv= $this->db->select("count(idt) as numero")
 												->from('tickets')
