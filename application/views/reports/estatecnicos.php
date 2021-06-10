@@ -102,12 +102,12 @@ table {
                                     <thead>
 										<tr>
 										<th rowspan="2" width="140px" class="static">Tipor de orden</th>
-										<th colspan="30" style="text-align: center" class="first-col">Dia</th>
+										<th colspan="31" style="text-align: center" class="first-col">Dia</th>
 										</tr>
 									
                                     <tr>
                                         
-                                        <?php for ($i=1;$i<=30;$i++){
+                                        <?php for ($i=1;$i<=31;$i++){
 													echo '<th>'.$i.'</th>';}?>
                                         <th rowspan="2">TOTAL</th>
                                     </tr>
@@ -117,7 +117,7 @@ table {
 				
 										<tr>
 											<td class="static">Instalacion Tv+Internet</td>
-											<?php for ($i=1;$i<=30;$i++){
+											<?php for ($i=1;$i<=31;$i++){
 											
 											$instalaciones= $this->db->select("count(idt) as numero")
 												->from('tickets')
@@ -139,7 +139,7 @@ table {
 										</tr>
 										<tr>
 											<td class="static">Instalacion Television</td>
-											<?php for ($i=1;$i<=30;$i++){
+											<?php for ($i=1;$i<=31;$i++){
 											$instalacionestv= $this->db->select("count(idt) as numero")
 												->from('tickets')
 												->where('status="Resuelto"')
@@ -160,7 +160,7 @@ table {
 										</tr>
 										<tr>
 											<td class="static">Instalacion Internet</td>
-											<?php for ($i=1;$i<=30;$i++){
+											<?php for ($i=1;$i<=31;$i++){
 											$instalacionesint= $this->db->select("count(idt) as numero")
 												->from('tickets')
 												->where('status="Resuelto"')
@@ -181,7 +181,7 @@ table {
 										</tr>
 										<tr>
 											<td class="static">Agregar Television</td>
-											<?php for ($i=1;$i<=30;$i++){
+											<?php for ($i=1;$i<=31;$i++){
 											$agregartv= $this->db->select("count(idt) as numero")
 												->from('tickets')
 												->where('status="Resuelto"')
@@ -200,7 +200,7 @@ table {
 										</tr>
 										<tr>
 											<td class="static">Agregar Internet</td>
-											<?php for ($i=1;$i<=30;$i++){
+											<?php for ($i=1;$i<=31;$i++){
 											$agregarint= $this->db->select("count(idt) as numero")
 												->from('tickets')
 												->where('status="Resuelto"')
@@ -219,7 +219,7 @@ table {
 										</tr>
 										<tr>
 											<td class="static">Traslado</td>
-											<?php for ($i=1;$i<=30;$i++){
+											<?php for ($i=1;$i<=31;$i++){
 											$traslado= $this->db->select("count(idt) as numero")
 												->from('tickets')
 												->where('status="Resuelto"')
@@ -238,7 +238,7 @@ table {
 										</tr>
 										<tr>
 											<td class="static">Revision</td>
-											<?php for ($i=1;$i<=30;$i++){
+											<?php for ($i=1;$i<=31;$i++){
 											$instalaciones= $this->db->select("count(idt) as numero")
 												->from('tickets')
 												->where('status="Resuelto"')
@@ -257,7 +257,7 @@ table {
 										</tr>
 										<tr>
 											<td class="static">Reconexion Television</td>
-											<?php for ($i=1;$i<=30;$i++){
+											<?php for ($i=1;$i<=31;$i++){
 											$reconexiontv= $this->db->select("count(idt) as numero")
 												->from('tickets')
 												->where('status="Resuelto"')
@@ -276,7 +276,7 @@ table {
 										</tr>
 										<tr>
 											<td class="static">Suspension Combo</td>
-											<?php for ($i=1;$i<=30;$i++){
+											<?php for ($i=1;$i<=31;$i++){
 											$suspensioncom= $this->db->select("count(idt) as numero")
 												->from('tickets')
 												->where('status="Resuelto"')
@@ -295,7 +295,7 @@ table {
 										</tr>
 										<tr>
 											<td class="static">Suspension Internet</td>
-											<?php for ($i=1;$i<=30;$i++){
+											<?php for ($i=1;$i<=31;$i++){
 											$suspensionint= $this->db->select("count(idt) as numero")
 												->from('tickets')
 												->where('status="Resuelto"')
@@ -314,7 +314,7 @@ table {
 										</tr>
 										<tr>
 											<td class="static">Suspension Television</td>
-											<?php for ($i=1;$i<=30;$i++){
+											<?php for ($i=1;$i<=31;$i++){
 											$suspensiontv= $this->db->select("count(idt) as numero")
 												->from('tickets')
 												->where('status="Resuelto"')
@@ -333,7 +333,7 @@ table {
 										</tr>
 										<tr>
 											<td class="static">Corte Television</td>
-											<?php for ($i=1;$i<=30;$i++){
+											<?php for ($i=1;$i<=31;$i++){
 											$cortetv= $this->db->select("count(idt) as numero")
 												->from('tickets')
 												->where('status="Resuelto"')
@@ -349,6 +349,44 @@ table {
 												->where('detalle="Corte Television"')
 												->get()->result(); ?>
 											<td align="center"><?php echo $totalcortv[0]->numero ?></td>
+										</tr>
+										<tr>
+											<td class="static" style="background-color:#719FD0 ">TOTAL DIA</td>
+											<?php for ($i=1;$i<=31;$i++){
+											$totalrsto= $this->db->select("count(idt) as numero")
+												->from('tickets')
+												->where('status="Resuelto"')
+												->where('created="2021-06-'.$i.'"')
+												//->where('detalle="Corte Television"')
+												->get()->result(); ?>
+											<td style="background-color:#719FD0 "><?php echo $totalrsto[0]->numero; } ?></td>
+											<?php 
+											$totalgenrto= $this->db->select("count(idt) as numero")
+												->from('tickets')
+												->where('status="Resuelto"')
+												->like("created","2021-06","left")
+												//->where('detalle="Corte Television"')
+												->get()->result(); ?>
+											<td align="center" style="background-color:#719FD0 "><?php echo $totalgenrto[0]->numero ?></td>
+										</tr>
+										<tr>
+											<td class="static" style="background-color: cadetblue">PENDIENTES</td>
+											<?php for ($i=1;$i<=31;$i++){
+											$totalrsto= $this->db->select("count(idt) as numero")
+												->from('tickets')
+												->where('status="Pendiente"')
+												->where('created="2021-06-'.$i.'"')
+												//->where('detalle="Corte Television"')
+												->get()->result(); ?>
+											<td style="background-color: cadetblue"><?php echo $totalrsto[0]->numero; } ?></td>
+											<?php 
+											$totalgenrto= $this->db->select("count(idt) as numero")
+												->from('tickets')
+												->where('status="Pendiente"')
+												->like("created","2021-06","left")
+												//->where('detalle="Corte Television"')
+												->get()->result(); ?>
+											<td align="center" style="background-color: cadetblue"><?php echo $totalgenrto[0]->numero ?></td>
 										</tr>
                                     
                                     </tbody>
