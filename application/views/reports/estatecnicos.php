@@ -26,6 +26,7 @@ table {
 		background-color:aliceblue;
 	}
 </style>
+<?php $mes = date("Y-m-",strtotime($filter[2])) ?>
 <div class="app-content content container-fluid">
     <div class="content-wrapper">
         <div class="content-header">
@@ -114,7 +115,7 @@ table {
 										
                                     </thead>
                                     <tbody>
-										<?php $mes = date("Y-m-",strtotime($filter[2])) ?>
+										
 										<tr>
 											<td class="static">Instalacion Tv+Internet</td>
 											<?php for ($i=1;$i<=31;$i++){
