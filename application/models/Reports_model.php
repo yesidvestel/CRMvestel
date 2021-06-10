@@ -222,6 +222,16 @@ class Reports_model extends CI_Model
         $result = $query->result_array();
         return $result;
     }
+	public function tickets()
+    {
+		$this->db->select('*');
+        $this->db->from('tickets');
+        // if($limit) $this->db->limit(12);
+        //$this->db->order_by('id', 'DESC');
+        $query = $this->db->get();
+        $result = $query->result_array();
+        return $result;
+    }
 
     public function get_customer_statements($pay_acc, $trans_type, $sdate, $edate)
     {
