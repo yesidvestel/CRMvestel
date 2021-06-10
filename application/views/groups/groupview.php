@@ -710,11 +710,11 @@ $("#pagination_div").hide();
                     <div class="row">
                         <div class="col-xs-12 mb-1"><label
                                     for="plantillas">Tipo de Corte</label>
-                        <select id="plantillas2" name="plantillas2" class="form-control" onchange="cargar_plantilla()">
+                        <select id="tipo_corte" name="tipo_corte" class="form-control" onchange="cargar_plantilla()">
                             <option value="">-</option>
-                            <option value="">Corte Internet</option>
-                            <option value="">Corte Television</option>
-                            <option value="">Corte Combo</option>
+                            <option value="corte_internet">Corte Internet</option>
+                            <option value="corte_television">Corte Television</option>
+                            <option value="corte_combo">Corte Combo</option>
                             
                         </select>
                         </div>
@@ -725,7 +725,7 @@ $("#pagination_div").hide();
                         <div class="col-xs-12 mb-1"><label
                                     for="number">Customers</label>
                             <input type="text" class="form-control" readonly="true" 
-                                   name="id_customers_corte" id="id_customers_corte" >
+                                   name="ids_customers_corte" id="ids_customers_corte" >
                                    
                         </div>
                     </div>
@@ -1001,6 +1001,22 @@ $("#pagination_div").hide();
     }
     function abrir_modal_corte_usuarios(e){
         e.preventDefault();
+        var lista_cadena="";
+        $(lista_customers_sms).each(function(index,value){
+        value=JSON.parse(value);
+        if(lista_cadena!=""){
+            lista_cadena=lista_cadena+","+value.id;    
+        }else{
+            lista_cadena=value.id;    
+        }
+        
+    });
+
+    
+    $("#ids_customers_corte").val(lista_cadena);
+    $("#div_notify5").html("");
+
+
         $("#modal_corte_multiple_usuarios").modal("show");
     }
 
