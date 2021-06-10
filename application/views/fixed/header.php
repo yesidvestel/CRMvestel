@@ -564,7 +564,7 @@
 								?></a>
                         </li>
 						<li>
-                            <a href="<?php echo base_url(); ?>reports/statecnicos">Reporte Tecnicos</a>
+                            <a href="<?php echo base_url(); ?>reports/filreptec">Reporte Tecnicos</a>
                         </li>
                         <li>
                             <a href="<?php echo base_url(); ?>reports/customerstatement"><?php echo $this->lang->line('Customer') . ' ' . $this->lang->line('Account Statements') ?></a>

@@ -124,6 +124,7 @@ table {
 												->where('status="Resuelto"')
 												->where('created="2021-06-'.$i.'"')
 												->where('detalle="Instalacion"')
+												->where('asignado="'.$filter[0].'"')
 												->like("section","Television +","right")
 												->get()->result(); ?>
 											<td class="first-col"><?php echo $instalaciones[0]->numero; } ?></td>
@@ -133,6 +134,7 @@ table {
 												->where('status="Resuelto"')
 												->like("created","2021-06","left")
 												->where('detalle="Instalacion"')
+												->where('asignado="'.$filter[0].'"')
 												->like("section","Television +","right")
 												->get()->result(); ?>
 											<td align="center"><?php echo $totalins[0]->numero ?></td>
@@ -145,6 +147,7 @@ table {
 												->where('status="Resuelto"')
 												->where('created="2021-06-'.$i.'"')
 												->where('detalle="Instalacion"')
+												->where('asignado="'.$filter[0].'"')
 												->where('section="Television"')
 												->get()->result(); ?>
 											<td><?php echo $instalacionestv[0]->numero; } ?></td>
@@ -154,6 +157,7 @@ table {
 												->where('status="Resuelto"')
 												->like("created","2021-06","left")
 												->where('detalle="Instalacion"')
+												->where('asignado="'.$filter[0].'"')
 												->where('section="Television"')
 												->get()->result(); ?>
 											<td align="center"><?php echo $totalinstv[0]->numero ?></td>
@@ -166,6 +170,7 @@ table {
 												->where('status="Resuelto"')
 												->where('created="2021-06-'.$i.'"')
 												->where('detalle="Instalacion"')
+												->where('asignado="'.$filter[0].'"')
 												->not_like("section","Television")
 												->get()->result(); ?>
 											<td><?php echo $instalacionesint[0]->numero; } ?></td>
@@ -175,6 +180,7 @@ table {
 												->where('status="Resuelto"')
 												->like("created","2021-06","left")
 												->where('detalle="Instalacion"')
+												->where('asignado="'.$filter[0].'"')
 												->not_like("section","Television")
 												->get()->result(); ?>
 											<td align="center"><?php echo $totalinsint[0]->numero ?></td>
@@ -186,6 +192,7 @@ table {
 												->from('tickets')
 												->where('status="Resuelto"')
 												->where('created="2021-06-'.$i.'"')
+												->where('asignado="'.$filter[0].'"')
 												->where('detalle="AgregarTelevision"')
 												->get()->result(); ?>
 											<td><?php echo $agregartv[0]->numero; } ?></td>
@@ -194,6 +201,7 @@ table {
 												->from('tickets')
 												->where('status="Resuelto"')
 												->like("created","2021-06","left")
+												->where('asignado="'.$filter[0].'"')
 												->where('detalle="AgregarTelevision"')
 												->get()->result(); ?>
 											<td align="center"><?php echo $totalinsagretv[0]->numero ?></td>
@@ -205,6 +213,7 @@ table {
 												->from('tickets')
 												->where('status="Resuelto"')
 												->where('created="2021-06-'.$i.'"')
+												->where('asignado="'.$filter[0].'"')
 												->where('detalle="AgregarInternet"')
 												->get()->result(); ?>
 											<td><?php echo $agregarint[0]->numero; } ?></td>
@@ -214,6 +223,7 @@ table {
 												->where('status="Resuelto"')
 												->like("created","2021-06","left")
 												->where('detalle="AgregarInternet"')
+												->where('asignado="'.$filter[0].'"')
 												->get()->result(); ?>
 											<td align="center"><?php echo $totalinsagrein[0]->numero ?></td>
 										</tr>
@@ -225,6 +235,7 @@ table {
 												->where('status="Resuelto"')
 												->where('created="2021-06-'.$i.'"')
 												->where('detalle="Traslado"')
+												->where('asignado="'.$filter[0].'"')
 												->get()->result(); ?>
 											<td><?php echo $traslado[0]->numero; } ?></td>
 											<?php 
@@ -233,6 +244,7 @@ table {
 												->where('status="Resuelto"')
 												->like("created","2021-06","left")
 												->where('detalle="Traslado"')
+												->where('asignado="'.$filter[0].'"')
 												->get()->result(); ?>
 											<td align="center"><?php echo $totaltras[0]->numero ?></td>
 										</tr>
@@ -243,6 +255,7 @@ table {
 												->from('tickets')
 												->where('status="Resuelto"')
 												->where('created="2021-06-'.$i.'"')
+												->where('asignado="'.$filter[0].'"')
 												->like("section","Revision","right")
 												->get()->result(); ?>
 											<td><?php echo $instalaciones[0]->numero; } ?></td>
@@ -251,6 +264,7 @@ table {
 												->from('tickets')
 												->where('status="Resuelto"')
 												->like("created","2021-06","left")
+												->where('asignado="'.$filter[0].'"')
 												->like("section","Revision","right")
 												->get()->result(); ?>
 											<td align="center"><?php echo $totaltras[0]->numero ?></td>
@@ -262,6 +276,7 @@ table {
 												->from('tickets')
 												->where('status="Resuelto"')
 												->where('created="2021-06-'.$i.'"')
+												->where('asignado="'.$filter[0].'"')
 												->where('detalle="Reconexion Television"')
 												->get()->result(); ?>
 											<td><?php echo $reconexiontv[0]->numero; } ?></td>
@@ -270,6 +285,7 @@ table {
 												->from('tickets')
 												->where('status="Resuelto"')
 												->like("created","2021-06","left")
+												->where('asignado="'.$filter[0].'"')
 												->where('detalle="Reconexion Television"')
 												->get()->result(); ?>
 											<td align="center"><?php echo $totalrecotv[0]->numero ?></td>
@@ -281,6 +297,7 @@ table {
 												->from('tickets')
 												->where('status="Resuelto"')
 												->where('created="2021-06-'.$i.'"')
+												->where('asignado="'.$filter[0].'"')
 												->where('detalle="Suspension Combo"')
 												->get()->result(); ?>
 											<td><?php echo $suspensioncom[0]->numero; } ?></td>
@@ -289,6 +306,7 @@ table {
 												->from('tickets')
 												->where('status="Resuelto"')
 												->like("created","2021-06","left")
+												->where('asignado="'.$filter[0].'"')
 												->where('detalle="Suspension Combo"')
 												->get()->result(); ?>
 											<td align="center"><?php echo $totalsuscom[0]->numero ?></td>
@@ -300,6 +318,7 @@ table {
 												->from('tickets')
 												->where('status="Resuelto"')
 												->where('created="2021-06-'.$i.'"')
+												->where('asignado="'.$filter[0].'"')
 												->where('detalle="Suspension Internet"')
 												->get()->result(); ?>
 											<td><?php echo $suspensionint[0]->numero; } ?></td>
@@ -308,6 +327,7 @@ table {
 												->from('tickets')
 												->where('status="Resuelto"')
 												->like("created","2021-06","left")
+												->where('asignado="'.$filter[0].'"')
 												->where('detalle="Suspension Internet"')
 												->get()->result(); ?>
 											<td align="center"><?php echo $totalsusint[0]->numero ?></td>
@@ -319,6 +339,7 @@ table {
 												->from('tickets')
 												->where('status="Resuelto"')
 												->where('created="2021-06-'.$i.'"')
+												->where('asignado="'.$filter[0].'"')
 												->where('detalle="Suspension Television"')
 												->get()->result(); ?>
 											<td><?php echo $suspensiontv[0]->numero; } ?></td>
@@ -327,6 +348,7 @@ table {
 												->from('tickets')
 												->where('status="Resuelto"')
 												->like("created","2021-06","left")
+												->where('asignado="'.$filter[0].'"')
 												->where('detalle="Suspension Television"')
 												->get()->result(); ?>
 											<td align="center"><?php echo $totalsustv[0]->numero ?></td>
@@ -337,6 +359,7 @@ table {
 											$cortetv= $this->db->select("count(idt) as numero")
 												->from('tickets')
 												->where('status="Resuelto"')
+												->where('asignado="'.$filter[0].'"')
 												->where('created="2021-06-'.$i.'"')
 												->where('detalle="Corte Television"')
 												->get()->result(); ?>
@@ -346,6 +369,7 @@ table {
 												->from('tickets')
 												->where('status="Resuelto"')
 												->like("created","2021-06","left")
+												->where('asignado="'.$filter[0].'"')
 												->where('detalle="Corte Television"')
 												->get()->result(); ?>
 											<td align="center"><?php echo $totalcortv[0]->numero ?></td>
@@ -356,6 +380,7 @@ table {
 											$totalrsto= $this->db->select("count(idt) as numero")
 												->from('tickets')
 												->where('status="Resuelto"')
+												->where('asignado="'.$filter[0].'"')
 												->where('created="2021-06-'.$i.'"')
 												//->where('detalle="Corte Television"')
 												->get()->result(); ?>
@@ -364,6 +389,7 @@ table {
 											$totalgenrto= $this->db->select("count(idt) as numero")
 												->from('tickets')
 												->where('status="Resuelto"')
+												->where('asignado="'.$filter[0].'"')
 												->like("created","2021-06","left")
 												//->where('detalle="Corte Television"')
 												->get()->result(); ?>
@@ -375,6 +401,7 @@ table {
 											$totalrsto= $this->db->select("count(idt) as numero")
 												->from('tickets')
 												->where('status="Pendiente"')
+												->where('asignado="'.$filter[0].'"')
 												->where('created="2021-06-'.$i.'"')
 												//->where('detalle="Corte Television"')
 												->get()->result(); ?>
@@ -383,6 +410,7 @@ table {
 											$totalgenrto= $this->db->select("count(idt) as numero")
 												->from('tickets')
 												->where('status="Pendiente"')
+												->where('asignado="'.$filter[0].'"')
 												->like("created","2021-06","left")
 												//->where('detalle="Corte Television"')
 												->get()->result(); ?>
