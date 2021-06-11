@@ -1028,6 +1028,49 @@
                             data-original-title="Miscellaneous"
                             class="icon-ellipsis icon-ellipsis"></i>
                 </li>
+			<!--- DATOS Y REPORTES--->
+			
+                <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "reports") {
+                    echo ' open';
+                } ?>">
+                    <a href=""> <i class="icon-file-archive-o"></i><span
+                                class="menu-title"> <?php echo $this->lang->line('Data & Reports') ?> </span><i
+                                class="fa arrow"></i> </a>
+                    <ul class="menu-content">
+                        <li>
+                            <a href="<?php echo base_url(); ?>reports/statistics"><?php echo $this->lang->line('Statistics') ?></a>
+                        </li>
+                        <li>
+                            <a href="<?php echo base_url(); ?>reports/accountstatement"><?php echo $this->lang->line('Account Statements')
+								
+								
+								
+								?></a>
+                        </li>
+						<li>
+                            <a href="<?php echo base_url(); ?>reports/filreptec">Reporte Tecnicos</a>
+                        </li>
+                        <li>
+                            <a href="<?php echo base_url(); ?>reports/customerstatement"><?php echo $this->lang->line('Customer') . ' ' . $this->lang->line('Account Statements') ?></a>
+                        </li>
+                        <li>
+                            <a href="<?php echo base_url(); ?>reports/supplierstatement"><?php echo $this->lang->line('Supplier') . ' ' . $this->lang->line('Account Statements') ?></a>
+                        </li>
+                        <li>
+                            <a href="<?php echo base_url(); ?>reports/incomestatement"><?php echo $this->lang->line('Calculate Income'); ?></a>
+                        </li>
+                        <li>
+                            <a href="<?php echo base_url(); ?>reports/expensestatement"><?php echo $this->lang->line('Calculate Expenses') ?></a>
+                        </li>
+                        <li>
+                            <a href="<?php echo base_url(); ?>reports/customerviewstatement"><?php echo $this->lang->line('Clients Transactions') ?></a>
+                        </li>
+                        <li>
+                            <a href="<?php echo base_url(); ?>reports/taxstatement"><?php echo $this->lang->line('TAX').' '.$this->lang->line('Statements'); ?> </a>
+                        </li>
+
+                    </ul>
+                </li>
 			
 			<li><a href="<?php echo base_url(); ?>tools/notes"><i class="icon-android-clipboard"></i><span
                                 class="menu-title"> <?php echo $this->lang->line('Notes') ?></span></a></li>
@@ -1235,6 +1278,7 @@
                             data-original-title="Miscellaneous"
                             class="icon-ellipsis icon-ellipsis"></i>
                 </li>
+			
 			
 			<li><a href="<?php echo base_url(); ?>tools/notes"><i class="icon-android-clipboard"></i><span
                                 class="menu-title"> <?php echo $this->lang->line('Notes') ?></span></a></li>

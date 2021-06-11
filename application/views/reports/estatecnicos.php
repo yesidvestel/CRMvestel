@@ -87,7 +87,7 @@ table {
                 <div class="col-xl-12 col-lg-12 ">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title"><?php echo $this->lang->line('All Time Detailed Statistics') ?></h4>
+                            <h4 class="card-title">Estadisticas Detalladas Tecnico <?php echo $filter[0]?></h4>
                             <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
                             <div class="heading-elements">
                                 <ul class="list-inline mb-0">
