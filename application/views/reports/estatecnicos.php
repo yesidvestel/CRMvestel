@@ -127,7 +127,7 @@ table {
 											$instalaciones= $this->db->select("count(idt) as numero")
 												->from('tickets')
 												->join('customers', 'tickets.cid=customers.id', 'left')
-												->where('gid="'.$filter[0].'"')
+												->where('gid="'.$filter[1].'"')
 												->where('status="Resuelto"')
 												->where('fecha_final="'.$mes.$i.'"')
 												->where('detalle="Instalacion"')
