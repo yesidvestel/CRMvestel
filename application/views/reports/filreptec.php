@@ -43,7 +43,7 @@
                                         foreach ($sede as $row) {
                                             $cid = $row['id'];
                                             $acn = $row['title'];
-                                            echo "<option value='$acn'>$acn</option>";
+                                            echo "<option value='$cid'>$acn</option>";
                                         }
                                         ?>
                                     </select>
