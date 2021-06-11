@@ -20,6 +20,7 @@
 
                                 <div class="col-sm-9">
                                     <select name="tecnico" class="form-control">
+										<option value="all">Todos</option>
                                         <?php
                                         foreach ($tecnicos as $row) {
                                             $cid = $row['id'];
