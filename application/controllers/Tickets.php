@@ -517,7 +517,7 @@ class Tickets Extends CI_Controller
         	$this->db->update('temporales');}
 			$tele = $tv;
 			$net = 'no';
-			$detalle = 'Reinstalacion Internet';
+			$detalle = 'AgregarInternet';
 		}if ($servicio==='internet'){
 			$this->db->set('corden', $codmasuno[0]->codigo);
 			$this->db->set('tv', $tv);		
@@ -528,7 +528,7 @@ class Tickets Extends CI_Controller
         	$this->db->update('temporales');}
 			$tele = 'no';
 			$net = $inter;
-			$detalle = 'Reinstalacion Television';
+			$detalle = 'AgregarTelevision';
 		}
 		//datos de duplicado
 		foreach ($ticket[0] as $key => $value) {
