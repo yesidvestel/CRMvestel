@@ -20,6 +20,7 @@
 
                                 <div class="col-sm-9">
                                     <select name="tecnico" class="form-control">
+										<option value="all">Todos</option>
                                         <?php
                                         foreach ($tecnicos as $row) {
                                             $cid = $row['id'];
@@ -43,7 +44,7 @@
                                         foreach ($sede as $row) {
                                             $cid = $row['id'];
                                             $acn = $row['title'];
-                                            echo "<option value='$acn'>$acn</option>";
+                                            echo "<option value='$cid'>$acn</option>";
                                         }
                                         ?>
                                     </select>
@@ -67,7 +68,7 @@
                                 <label class="col-sm-3 col-form-label" for="pay_cat"></label>
 
                                 <div class="col-sm-4">
-                                    <input type="submit" class="btn btn-primary btn-md" value="View">
+                                    <input type="submit" class="btn btn-primary btn-md" value="Ver">
 
 
                                 </div>
