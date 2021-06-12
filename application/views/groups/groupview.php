@@ -712,9 +712,9 @@ $("#pagination_div").hide();
                                     for="plantillas">Tipo de Corte</label>
                         <select id="tipo_corte" name="tipo_corte" class="form-control" onchange="cargar_plantilla()">
                             <option value="">-</option>
-                            <option value="corte_internet">Corte Internet</option>
-                            <option value="corte_television">Corte Television</option>
-                            <option value="corte_combo">Corte Combo</option>
+                            <option value="Corte Internet">Corte Internet</option>
+                            <option value="Corte Television">Corte Television</option>
+                            <option value="Corte Combo">Corte Combo</option>
                             
                         </select>
                         </div>

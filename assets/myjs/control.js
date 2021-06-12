@@ -917,14 +917,17 @@ function send_corte_multiple_form(o_data,action_url) {
             data: o_data,
             dataType: 'json',
              success: function (data) {
-                if(data.status=="Success-sms"){
-                    $("#notify2 .message2").html("<strong>" + data.status + "</strong>: " + data.message);
-                    $("#notify2").removeClass("alert-danger").removeClass("alert-warning").addClass("alert-success").fadeIn();
+                if(data.status=="Success"){
+                    $("#div_notify5").append('<div id="notify_5" class="alert alert-warning" style="display:none;"><a href="#" class="close" data-dismiss="alert">&times;</a><div class="message_5"></div></div>');        
+                    $("#notify_5 .message_5").html("<strong>" + data.status + "</strong>: " + data.message);
+                    $("#notify_5").removeClass("alert-danger").removeClass("alert-warning").addClass("alert-success").fadeIn();
                     $("html, body").animate({scrollTop: $('#notify2').offset().top}, 1000);
                     
                 }else{
-                        $("#notify2 .message2").html("<strong>" + data.status + "</strong>: " + data.message);
-                        $("#notify2").removeClass("alert-success").removeClass("alert-warning").addClass("alert-danger").fadeIn();
+
+                    $("#div_notify5").append('<div id="notify_5" class="alert alert-warning" style="display:none;"><a href="#" class="close" data-dismiss="alert">&times;</a><div class="message_5"></div></div>');        
+                        $("#notify_5 .message_5").html("<strong>" + data.status + "</strong>: <ul>" + data.message+"</ul>");
+                        $("#notify_5").removeClass("alert-success").removeClass("alert-warning").addClass("alert-danger").fadeIn();
                         $("html, body").animate({scrollTop: $('body').offset().top}, 1000);
                     
                 }

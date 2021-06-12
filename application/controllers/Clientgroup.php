@@ -1304,7 +1304,55 @@ if ($valido) {
         $tipo_corte=$this->input->post("tipo_corte");
         $ids_customers_corte=$this->input->post("ids_customers_corte");
         $description_corte=$this->input->post("description_corte");
+        
+        $valido=true;
+        $alerta="";
+        if($tipo_corte==""){
+            $alerta="<li>Tipo de corde no puede ser vacio</li>";                
+            $valido=false;
+        }
+        
+        if($ids_customers_corte==""){
+            $alerta.="<li>Selecciona usuarios por favor</li>";                
+            $valido=false;
+        }
         $ids_customers_corte=explode(",", $ids_customers_corte);
-        var_dump($ids_customers_corte);
+
+            if($valido){
+                $bill_llegada=date("Y-m-d");
+                foreach ($ids_customers_corte as $key => $customer_id) {
+                    $listado_de_facturas=$this->db->from("invoices")->where("csd",$customer_id)->order_by("invoicedate,tid","DESC")->get()->result();
+                    $factura=0;
+                    if(count($listado_de_facturas)!=0){
+                            $factura=$listado_de_facturas[0]->tid;
+                    }else{
+                        //aqui seria crear la factura si no la tiene;
+                    }                    
+                    $nticket=($this->lastquote())+1;
+                    $data = array(
+                        'codigo' => $nticket,
+                        'subject' => "servicio",
+                        'detalle' => $tipo_corte,
+                        'created' => $bill_llegada,
+                        'cid' => $customer_id,
+                        'status' => 'Resuelto',
+                        'section' => $description_corte,
+                        'fecha_final' => $bill_llegada,
+                        'id_invoice' => 'null',
+                        'id_factura' => $factura,          
+                    );                    
+                        $this->db->insert('tickets', $data);
+                    //falta realizar el corte en la factura y en el customer
+                    //y en la microtik y terminariamos con este tema Gloria a Dios
+
+
+                }
+                echo json_encode(array('status' => 'Success', 'message' => 'Usuarios cortados con exito...'));           
+            }else{
+                echo json_encode(array('status' => 'Error', 'message' => $alerta));       
+            }
+         
+
+         
     }
 }
