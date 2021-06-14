@@ -329,7 +329,7 @@
                                 <label class="col-sm-3 col-form-label" for="pay_cat"></label>
 
                                 <div class="col-sm-4">
-                                    <input type="button" class="btn btn-primary btn-md" value="VER" onclick="filtrar(1);">
+                                    <input type="button" class="btn btn-primary btn-md" value="VER" onclick="filtrar(1);reestablecer_seleciones();">
 
 
                                 </div>
@@ -964,7 +964,10 @@ $("#pagination_div").hide();
 
     }
  
- 
+ function reestablecer_seleciones(){
+    lista_customers_sms=[];
+    lista_customers_sms_aux=[];
+ }
     function redirect_to_export(){
          var estado=$("#estado option:selected").val();
            
@@ -1061,7 +1064,7 @@ if(n_lote_actual_customers<n_lotes_customers){
 }
     var n_lotes_customers=1;
     var n_lote_actual_customers=1;
-    let lista_customers_sms_aux=null;
+    let lista_customers_sms_aux=[];
     var x=0;
     var y=0;
 function abrir_modal_sms(e){

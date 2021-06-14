@@ -95,7 +95,7 @@ class Clientgroup extends CI_Controller
             $money=$this->customers->money_details($customers->id);
             $customers->money=$money['credit'];
             $debe_customer=($due['total']-$due['pamnt']);//se agrego el campo de money debit por el item de gastos que se mencino en fechas anteriores
-            $lista_invoices = $this->db->from("invoices")->where("csd",$customers->id)->order_by('invoicedate',"DESC")->get()->result();
+            $lista_invoices = $this->db->from("invoices")->where("csd",$customers->id)->order_by('invoicedate,tid',"DESC")->get()->result();
             $customer_moroso=false;
             $valor_ultima_factura=0;
             $_var_tiene_internet=false;
@@ -524,7 +524,7 @@ class Clientgroup extends CI_Controller
             $customers->money=$money['credit'];
             $debe_customer=($due['total']-$due['pamnt']);//se agrego el campo de money debit por el item de gastos que se mencino en fechas anteriores
 
-            $lista_invoices = $this->db->from("invoices")->where("csd",$customers->id)->order_by('invoicedate',"DESC")->get()->result();
+            $lista_invoices = $this->db->from("invoices")->where("csd",$customers->id)->order_by('invoicedate,tid',"DESC")->get()->result();
             $customer_moroso=false;
             $valor_ultima_factura=0;
             $_var_tiene_internet=false;
@@ -876,7 +876,7 @@ class Clientgroup extends CI_Controller
             $customers->money=$money['credit'];
             $debe_customer=($due['total']-$due['pamnt']);//se agrego el campo de money debit por el item de gastos que se mencino en fechas anteriores
 
-            $lista_invoices = $this->db->from("invoices")->where("csd",$customers->id)->order_by('invoicedate',"DESC")->get()->result();
+            $lista_invoices = $this->db->from("invoices")->where("csd",$customers->id)->order_by('invoicedate,tid',"DESC")->get()->result();
             $customer_moroso=false;
             $valor_ultima_factura=0;
             $_var_tiene_internet=false;
@@ -1304,6 +1304,7 @@ if ($valido) {
         $tipo_corte=$this->input->post("tipo_corte");
         $ids_customers_corte=$this->input->post("ids_customers_corte");
         $description_corte=$this->input->post("description_corte");
+        $this->load->model("quote_model","quote");
         
         $valido=true;
         $alerta="";
@@ -1323,29 +1324,153 @@ if ($valido) {
                 foreach ($ids_customers_corte as $key => $customer_id) {
                     $listado_de_facturas=$this->db->from("invoices")->where("csd",$customer_id)->order_by("invoicedate,tid","DESC")->get()->result();
                     $factura=0;
-                    if(count($listado_de_facturas)!=0){
-                            $factura=$listado_de_facturas[0]->tid;
+                        if(count($listado_de_facturas)!=0){
+                                $factura=$listado_de_facturas[0];
+
+                                $nticket=($this->quote->lastquote())+1;
+                                $data = array(
+                                    'codigo' => $nticket,
+                                    'subject' => "servicio",
+                                    'detalle' => $tipo_corte,
+                                    'created' => $bill_llegada,
+                                    'cid' => $customer_id,
+                                    'status' => 'Resuelto',
+                                    'section' => $description_corte,
+                                    'fecha_final' => $bill_llegada,
+                                    'id_invoice' => 'null',
+                                    'id_factura' => $factura->tid,          
+                                );                    
+                                //$this->db->insert('tickets', $data);
+                        //falta realizar el corte en la factura y en el customer
+                        //y en la microtik y terminariamos con este tema Gloria a Dios
+                        //desactivacion en la mikrotik
+                        $customer = $this->db->get_where("customers",array("id"=>$customer_id))->row();
+                        if($tipo_corte=="Corte Combo") {
+                            $producto2 = $this->db->get_where('products',array('product_name'=>'Reconexion Combo'))->row();
+                                $data2['tid']=$factura->tid;
+                                $data2['pid']=$producto2->pid;
+                                $data2['product']=$producto2->product_name;
+                                $data2['price']=$producto2->product_price;
+                                $data2['qty']=1;
+                                $data2['subtotal']=$producto2->product_price;
+                                //SELECT * FROM `invoice_items` where product like "%Reconexión Internet%"
+                                $inv_it=$this->db->from("invoice_items")->where("tid",$factura->tid)->like("product","Reconexion Combo","both")->get()->result();
+                                if(count($inv_it)==0){
+                                    $this->db->insert('tickets', $data);
+                                    $this->db->insert('invoice_items',$data2);    
+                                    //actualizar factura
+                                //$factura = $this->db->get_where('invoices',array('tid'=>$idfactura))->row();
+                                    $this->db->set('subtotal', $factura->subtotal+$producto2->product_price);
+                                    $this->db->set('ron', 'Cortado');               
+                                    $this->db->set('total', $factura->total+$producto2->product_price);
+                                    $this->db->set('items', $factura->items+1);
+                                    $this->db->set('television', 'no');
+                                    $this->db->set('combo', 'no');
+                                    $this->db->where('tid', $factura->tid);
+                                    $this->db->update('invoices');
+                                //actualizar estado usuario
+                                    $this->db->set('usu_estado', 'Cortado');
+                                    $this->db->where('id', $customer_id);
+                                    $this->db->update('customers');
+                                }                                
+                            
+                            //microtik
+                            $this->customers->desactivar_estado_usuario($customer->name_s,$customer->gid);
+                            
+                        }else if($tipo_corte=="Corte Internet"){
+                            //$factura = $this->db->get_where('invoices',array('tid'=>$idfactura))->row();
+                            $producto2 = $this->db->get_where('products',array('product_name'=>'Reconexión Internet'))->row();
+                                if ($factura->television==='no'){
+                                    $nestado = 'Cortado';
+                                    $reconexion = '0';
+                                }else{
+                                    $nestado = 'Activo';
+                                    $reconexion = '1';
+                                }
+                                //actualizar estado usuario
+                                $this->db->set('usu_estado', $nestado);
+                                $this->db->where('id', $customer_id);
+                                $this->db->update('customers');
+                                //agregar reconexion    
+                                $data2['tid']=$factura->tid;
+                                $data2['pid']=$producto2->pid;
+                                $data2['product']=$producto2->product_name;
+                                $data2['price']=$producto2->product_price;
+                                $data2['qty']=1;
+                                $data2['subtotal']=$producto2->product_price;           
+
+                                $inv_it=$this->db->from("invoice_items")->where("tid",$factura->tid)->like("product","Reconexión Internet","both")->get()->result();
+                                
+                                if(count($inv_it)==0){
+                                    $this->db->insert('tickets', $data);
+                                    $this->db->insert('invoice_items',$data2);
+
+                                         //actualizar factura
+                                    $this->db->set('subtotal', $factura->subtotal+$producto2->product_price);
+                                    $this->db->set('total', $factura->total+$producto2->product_price);
+                                    $this->db->set('items', $factura->items+1);
+                                    $this->db->set('ron', $nestado);
+                                    $this->db->set('rec', $reconexion);
+                                    $this->db->set('combo', 'no');
+                                    $this->db->where('tid', $factura->tid);
+                                    $this->db->update('invoices');
+                                }
+                                
+                           
+
+                            $this->customers->desactivar_estado_usuario($customer->name_s,$customer->gid);
+                        }else{
+                                $producto2 = $this->db->get_where('products',array('product_name'=>'Reconexión Television'))->row();
+                                $data2['tid']=$factura->tid;
+                                $data2['pid']=$producto2->pid;
+                                $data2['product']=$producto2->product_name;
+                                $data2['price']=$producto2->product_price;
+                                $data2['qty']=1;
+                                $data2['subtotal']=$producto2->product_price;
+
+                                $inv_it=$this->db->from("invoice_items")->where("tid",$factura->tid)->like("product","Reconexión Television","both")->get()->result();
+                                if(count($inv_it)==0){
+                                    $this->db->insert('tickets', $data);
+                                    $this->db->insert('invoice_items',$data2);
+
+                                    //actualizar factura
+                            //$factura = $this->db->get_where('invoices',array('tid'=>$idfactura))->row();
+                                    $this->db->set('subtotal', $factura->subtotal+$producto2->product_price);
+                                    $this->db->set('total', $factura->total+$producto2->product_price);
+                                    $this->db->set('items', $factura->items+1);
+                                    $this->db->where('tid', $factura->tid);
+                                    $this->db->update('invoices');
+                                    if ($factura->combo==='no'){
+                                        $this->db->set('ron', 'Cortado');
+                                        $this->db->set('television', 'no');
+                                        $this->db->where('tid', $factura->tid);
+                                        $this->db->update('invoices');
+                                        //actualizar estado usuario
+                                        $this->db->set('usu_estado', 'Cortado');
+                                        $this->db->where('id', $customer_id);
+                                        $this->db->update('customers');
+                                    }else{
+                                        //actualizar factura
+                                        $this->db->set('ron', 'Activo');
+                                        //para generar reconexion
+                                        $this->db->set('rec', '1'); 
+                                        $this->db->set('television', 'no');         
+                                        $this->db->where('tid', $factura->tid);
+                                        $this->db->update('invoices');
+                                        //actualizar estado usuario
+                                        $this->db->set('usu_estado', 'Activo');
+                                        $this->db->where('id', $customer_id);
+                                        $this->db->update('customers');
+                                    }
+                                }           
+                                
+                            
+                        }
+                        //end desactivacion en la mikrotik
                     }else{
                         //aqui seria crear la factura si no la tiene;
                     }                    
-                    $nticket=($this->lastquote())+1;
-                    $data = array(
-                        'codigo' => $nticket,
-                        'subject' => "servicio",
-                        'detalle' => $tipo_corte,
-                        'created' => $bill_llegada,
-                        'cid' => $customer_id,
-                        'status' => 'Resuelto',
-                        'section' => $description_corte,
-                        'fecha_final' => $bill_llegada,
-                        'id_invoice' => 'null',
-                        'id_factura' => $factura,          
-                    );                    
-                        $this->db->insert('tickets', $data);
-                    //falta realizar el corte en la factura y en el customer
-                    //y en la microtik y terminariamos con este tema Gloria a Dios
-
-
+                    
                 }
                 echo json_encode(array('status' => 'Success', 'message' => 'Usuarios cortados con exito...'));           
             }else{

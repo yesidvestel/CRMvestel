@@ -225,7 +225,7 @@ class Customers_model extends CI_Model
     }
          public function servicios_detail($custid)
     {
-        $lista_invoices = $this->db->from("invoices")->where("csd",$custid)->order_by('invoicedate',"DESC")->get()->result();
+        $lista_invoices = $this->db->from("invoices")->where("csd",$custid)->order_by('invoicedate,tid',"DESC")->get()->result();
         $customer_moroso=false;
         $valor_ultima_factura=0;
         $_var_tiene_internet=false;
