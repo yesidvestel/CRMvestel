@@ -1023,6 +1023,11 @@ $("#pagination_div").hide();
         $("#modal_corte_multiple_usuarios").modal("show");
     }
     function realizar_corte_usuarios(){
+        $("#div_notify5").append('<div id="notify_5" class="alert alert-warning" style="display:none;"><a href="#" class="close" data-dismiss="alert">&times;</a><div class="message_5"></div></div>');        
+        $("#notify_5 .message_5").html("Relizando Cortes</strong>: <img src='"+baseurl+"/assets/img/iconocargando.gif'>");
+                    $("#notify_5").fadeIn();
+                    $("html, body").animate({scrollTop: $('#notify_5').offset().top}, 1000);
+
         var o_data =  $("#corte-users_form").serialize();
         var action_url= $('#action-url-cortes').val();
 
@@ -1048,7 +1053,7 @@ $("#pagination_div").hide();
 
         $("#div_notify4").append('<div id="notify_'+n_lote_actual_customers+'" class="alert alert-warning" style="display:none;"><a href="#" class="close" data-dismiss="alert">&times;</a><div class="message_'+n_lote_actual_customers+'"></div></div>');        
         $("#notify_"+n_lote_actual_customers+" .message_"+n_lote_actual_customers).html("<strong> Enviando Lote "+n_lote_actual_customers+" de "+n_lotes_customers+"</strong>: <img src='"+baseurl+"/assets/img/iconocargando.gif'>");
-                    $("#notify_1").fadeIn();
+                    $("#notify_"+n_lote_actual_customers).fadeIn();
                     $("html, body").animate({scrollTop: $('#notify_'+n_lote_actual_customers).offset().top}, 1000);
 if(n_lote_actual_customers<n_lotes_customers){
     $("#ultimo_lote").val("no");
