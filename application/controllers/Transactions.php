@@ -387,7 +387,7 @@ class Transactions extends CI_Controller
         $valor_restante_monto=0;
         $montos=array();
         $array_facturas2=array();
-        
+        $_id_last_invoice_procesed=0;
             foreach ($array_facturas as $key => $id_factura) {
                 $factura_var = $this->db->get_where('invoices',array('tid'=>$id_factura))->row();                                
                 
@@ -401,18 +401,24 @@ class Transactions extends CI_Controller
                     $montos[$id_factura]=$total_factura;
                     $array_facturas2[]=$id_factura;
                     $monto=$valor_restante_monto;
+                    $_id_last_invoice_procesed=$id_factura;
                 }else if($monto>0 && $factura_var->status!="partial"){
                     $montos[$id_factura]=$monto;
                     $array_facturas2[]=$id_factura;
                     $monto=$valor_restante_monto;  
-                    
+                    $_id_last_invoice_procesed=$id_factura;
                 }else if($valor_restante_monto<0 && $monto>0 && $factura_var->status=="partial"){
                     $montos[$id_factura]=$monto;
                     $array_facturas2[]=$id_factura;
-                    $monto=$valor_restante_monto;  
+                    $monto=$valor_restante_monto;
+                    $_id_last_invoice_procesed=$id_factura;  
                     break;
                 }
                 
+            }
+            //var_dump($valor_restante_monto);
+            if($valor_restante_monto>0){
+                $montos[$_id_last_invoice_procesed]+=$valor_restante_monto;
             }
 
             
@@ -436,7 +442,6 @@ class Transactions extends CI_Controller
         $cid = $factura_var->csd;
         $cname = $customer->name;
         $paydate = datefordatabase($paydate);
-
         $this->db->select('holder');
         $this->db->from('accounts');
         $this->db->where('id', $acid);

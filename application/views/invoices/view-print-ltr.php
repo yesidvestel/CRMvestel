@@ -248,7 +248,19 @@
                 }else{
                     $cantidad_total_a_restar+=$valor;
                 }
-
+                        //codigo resien agregado editar con caso en el que el primer item sea el pagado adelantado
+                        $valor_transacciones=0;
+                        foreach ($transacciones as $key => $tr) {
+                            $valor_transacciones+=$tr['credit'];
+                        }
+                        $valor_a_cubrir=$invoice['total']-$invoice['pamnt'];
+                        if($valor_transacciones>$invoice['total']){
+                                $cantidad_total+=$invoice['total']-$valor_transacciones;
+                        }
+                        //$cantidad_total=-35000;
+                        $cantidad_total_a_restar+=$cantidad_total;
+                        // end codigo resien agregado editar con caso en el que el primer item sea el pagado adelantado
+                        
                         if($invoice['status']=="paid"){
                             
                         }else{
@@ -261,11 +273,16 @@
 
                         }
 
+                        
+                        $valor+=$cantidad_total;
 
                     echo '<tr class="item' . $flag . '"> 
                                 <td>' . strftime("%B", strtotime($f1)). ' CTA:'. $invoice['tid'].'</td>';
                     echo '<td class="t_center">' . amountExchange($valor) . '</td>
                                 </tr>';
+                                //codigo resien agregado editar con caso en el que el primer item sea el pagado adelantado
+                                $cantidad_total_a_restar-=$cantidad_total;
+                                //end codigo resien agregado editar con caso en el que el primer item sea el pagado adelantado
                 }else{$lista_a_excluir[$invoice['tid']]=true;
                      $transacciones = $this->db->order_by("id","DESC")->get_where("transactions",array("tid"=>$invoice['tid'],"estado"=>null))->result_array();
                         $valor=$invoice['total'];
@@ -280,7 +297,19 @@
                             }
                         }else{
                             $cantidad_total_a_restar+=$valor;
-                        }                
+
+                        }
+                        $valor_transacciones=0;
+                        foreach ($transacciones as $key => $tr) {
+                            $valor_transacciones+=$tr['credit'];
+                        }
+                        $valor_a_cubrir=$invoice['total']-$invoice['pamnt'];
+                        if($valor_transacciones>$invoice['total']){
+                                $cantidad_total+=$invoice['total']-$valor_transacciones;
+                        }
+                        //$cantidad_total=-35000;
+                        $cantidad_total_a_restar+=$cantidad_total;
+
                     $porcentaje=($cantidad_total_a_restar*100)/$invoice['total'];
                     $lista_items=$this->db->get_where("invoice_items",array('tid' => $invoice['tid']))->result();
 
@@ -303,7 +332,9 @@
                         echo '<td class="t_center">' . amountExchange( $valor_item) . '</td>
                                 </tr>';
                                // $cantidad_total+=$value->subtotal;
+
                     }
+                    $cantidad_total_a_restar-=$cantidad_total;
 
                 }
            foreach ($lista_invoices as $key => $factura) {
@@ -323,8 +354,20 @@
                     $cantidad_total_a_restar+=$valor;
                 }
                 //$cantidad_total+=$factura['total'];
-
-
+ //codigo resien agregado editar con caso en el que el primer item sea el pagado adelantado
+                        $valor_transacciones=0;
+                        foreach ($transacciones as $key => $tr) {
+                            $valor_transacciones+=$tr['credit'];
+                        }
+                        $valor_a_cubrir=$factura['total']-$factura['pamnt'];
+                        if($valor_transacciones>$factura['total']){                            
+                                $cantidad_total+=$factura['total']-$valor_transacciones;
+                                //var_dump($cantidad_total);
+                        }
+                        //$cantidad_total=-55000;
+                        $cantidad_total_a_restar+=$cantidad_total;
+                        // end codigo resien agregado editar con caso en el que el primer item sea el pagado adelantado
+                        //var_dump($cantidad_total_a_restar);
                 //aplicacion de caso en que se pague con mas de dos transacciones una facatura
                 if($factura['status']=="paid"){
                             
@@ -337,10 +380,13 @@
                             }
 
                         }
+
+                        $valor+=$cantidad_total;
                         //end 
                 $f1 = date(" F ",strtotime($factura['invoicedate']));
             echo '<tr class="item' . $flag . '"> <td>' . strftime("%B", strtotime($f1)). ' CTA:'. $factura['tid'].'</td>';
             echo '<td class="t_center">' . amountExchange( $valor) .'</td></tr>';
+            $cantidad_total_a_restar-=$cantidad_total;
             }
             $fill = !$fill;
 
