@@ -70,7 +70,7 @@
                     <label class="col-sm-3 control-label"
                            for="sdate2">Servicios</label>
                     <div  class="col-sm-9">
-                    <select id="servicios" name="servicios" class="form-control">
+                    <select id="servicios" onchange="al_cambiar_de_servicio();" name="servicios" class="form-control">
                         <?php if($servicios['television']!="no"){ ?>
                         <option value="Television">Television</option>
                         <?php } ?>
@@ -83,6 +83,22 @@
                     </select>
                     </div>
                 </div>
+                
+                <?php if($servicios['television']!="no") { ?>
+                    <div class="form-group row" id="div_de_puntos">
+
+                        <label class="col-sm-3 control-label"
+                               for="sdate2">Puntos</label>
+                        <div  class="col-sm-9">
+                        <select id="puntos" name="puntos" class="form-control">
+                            <option value="no">no</option>
+                            <?php for ($i=1; $i <100 ; $i++) { ?>
+                                <option value="<?=$i?>" <?= ($due['puntos']==$i) ? 'selected="true"':""?> ><?=$i?></option>
+                            <?php  } ?>
+                        </select>
+                        </div>
+                    </div>
+                <?php } ?>
             </div>
             <div class="modal-footer">
                 <input type="hidden" id="object-id" name="id" value="<?=$_GET['id']?>">
@@ -124,5 +140,14 @@
     }
     function editar_z_index(){
         $(".datepicker-container,datepicker-dropdown").css("z-index","5000");
+    }
+    function al_cambiar_de_servicio(){
+        var elemento= $("#servicios option:selected").val();
+        if(elemento=="Internet"){
+            $("#div_de_puntos").hide();
+        }else{
+            $("#div_de_puntos").show();
+        }
+
     }
 </script>
