@@ -1457,5 +1457,163 @@ public function getClientData2Productos(){
 return $data_json_string;
     }
 
+public function getClientData3Productos(){
+        $data_json_string='{
+    "Header": {
+        "Id": 0,
+        "DocCode": 12434,
+        
+        "EmailToSend": null,
+        "DocDate": "20210427",
+        "MoneyCode": "COP",
+        "ExchangeValue": 0,
+        "DiscountValue": 0,
+        "VATTotalValue": 3992,
+        "ConsumptionTaxTotalValue": 0,
+        "TaxDiscTotalValue": 0,
+        "RetVATTotalID": -1,
+        "RetVATTotalPercentage": -1,
+        "RetVATTotalValue": 0,
+        "RetICATotalID": -1,
+        "RetICATotalValue": 0,
+        "RetICATotaPercentage": -1,
+        "TotalValue": 25000,
+        "TotalBase": 21008,
+        "SalesmanIdentification": "963852741",
+        "Observations": "Registro automático API",
+        "Account": {
+            "IsSocialReason": true,
+            "FullName": "JANNINI MAZIEL ESTUPIÑAN ALFONSO",
+            "FirstName": "JANNINI",
+            "LastName": "ESTUPIÑAN",
+            "IdTypeCode": "13",
+            "Identification": "1118197537",
+            "CheckDigit": 0,
+            "BranchOffice": 0,
+            "IsVATCompanyType": false,
+            "City": {
+                "CountryCode": "Co",
+                "StateCode": "85",
+                "CityCode": "85001"
+            },
+            "Address": "Dirección Tercero prueba",
+            "Phone": {
+                "Indicative": 0,
+                "Number": 0,
+                "Extention": 0
+            }
+        },
+        "Contact": {
+            "Code": 1,
+            "Phone1": {
+                "Indicative": 0,
+                "Number": 0,
+                "Extention": 0
+            },
+            "Mobile": {
+                "Indicative": 0,
+                "Number": 0,
+                "Extention": 0
+            },
+            "EMail": "vestelsas@gmail.com",
+            "FirstName": "Contacto",
+            "LastName": "JOAO",
+            "IsPrincipal": true,
+            "Gender": 1,
+            "BirthDate": ""
+        },
+        "CostCenterCode": "",
+        "SubCostCenterCode": ""
+    },
+    "Items": [
+        {
+            "ProductCode": "001",
+            "Description": "Descripción producto",
+            "GrossValue": 21008,
+            "BaseValue": 21008,
+            "Quantity": 1,
+            "UnitValue": 21008,
+            "DiscountValue": 0,
+            "DiscountPercentage": 0,
+            "TaxAddName": "IVA 19%",
+            "TaxAddId": 6688,
+            "TaxAddValue": 3992,
+            "TaxAddPercentage": 19,
+            "TaxDiscountName": "",
+            "TaxDiscountId": -1,
+            "TaxDiscountValue": 0,
+            "TaxDiscountPercentage": 0,
+            "TotalValue": 25000,
+            "ProductSubType": 0,
+            "TaxAdd2Name": "",
+            "TaxAdd2Id": -1,
+            "TaxAdd2Value": 0,
+            "TaxAdd2Percentage": 0,
+            "WareHouseCode": null,
+            "SalesmanIdentification": 963852741
+        },{
+            "ProductCode": "l01",
+            "Description": "Descripción producto",
+            "GrossValue": 21008,
+            "BaseValue": 21008,
+            "Quantity": 1,
+            "UnitValue": 21008,
+            "DiscountValue": 0,
+            "DiscountPercentage": 0,
+            "TaxAddName": "IVA 19%",
+            "TaxAddId": 6688,
+            "TaxAddValue": 3992,
+            "TaxAddPercentage": 19,
+            "TaxDiscountName": "",
+            "TaxDiscountId": -1,
+            "TaxDiscountValue": 0,
+            "TaxDiscountPercentage": 0,
+            "TotalValue": 25000,
+            "ProductSubType": 0,
+            "TaxAdd2Name": "",
+            "TaxAdd2Id": -1,
+            "TaxAdd2Value": 0,
+            "TaxAdd2Percentage": 0,
+            "WareHouseCode": null,
+            "SalesmanIdentification": 963852741
+        },
+        {
+            "ProductCode": "l01",
+            "Description": "Descripción producto",
+            "GrossValue": 21008,
+            "BaseValue": 21008,
+            "Quantity": 1,
+            "UnitValue": 21008,
+            "DiscountValue": 0,
+            "DiscountPercentage": 0,
+            "TaxAddName": "IVA 19%",
+            "TaxAddId": 6688,
+            "TaxAddValue": 3992,
+            "TaxAddPercentage": 19,
+            "TaxDiscountName": "",
+            "TaxDiscountId": -1,
+            "TaxDiscountValue": 0,
+            "TaxDiscountPercentage": 0,
+            "TotalValue": 25000,
+            "ProductSubType": 0,
+            "TaxAdd2Name": "",
+            "TaxAdd2Id": -1,
+            "TaxAdd2Value": 0,
+            "TaxAdd2Percentage": 0,
+            "WareHouseCode": null,
+            "SalesmanIdentification": 963852741
+        }
+    ],
+    "Payments": [
+        {
+            "PaymentMeansCode": 2863,
+            "Value": 25000,
+            "DueDate": "20210427",
+            "DueQuote": 0
+        }
+    ]
+}';
+return $data_json_string;
+    }
 
 }

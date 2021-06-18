@@ -269,6 +269,14 @@ class Clientgroup extends CI_Controller
                     }
                 }
 
+                if($_GET['checked_ind_service']=="true"){
+                    if($_GET['sel_servicios']=="Internet" && $_var_tiene_tv ){
+                            $customer_moroso=false;                        
+                    }else if($_GET['sel_servicios']=="TV" && $_var_tiene_internet){//preguntar que si solo debe de filtrar los que tienen tv o si tiene tv pero tambien internet lo puede listar lo mismo con la de internet
+                                $customer_moroso=false;     
+                    }                        
+                }
+
             }else{
                 if($_GET['morosos']==""){//para que muestre todos si esta seleccionada esta opcion
                     $customer_moroso=true;
@@ -699,6 +707,14 @@ class Clientgroup extends CI_Controller
                     }
                 }
 
+                if($_GET['checked_ind_service']=="true"){
+                    if($_GET['sel_servicios']=="Internet" && $_var_tiene_tv ){
+                            $customer_moroso=false;                        
+                    }else if($_GET['sel_servicios']=="TV" && $_var_tiene_internet){//preguntar que si solo debe de filtrar los que tienen tv o si tiene tv pero tambien internet lo puede listar lo mismo con la de internet
+                                $customer_moroso=false;     
+                    }                        
+                }
+
             }else{
                 if($_GET['morosos']==""){//para que muestre todos si esta seleccionada esta opcion
                     $customer_moroso=true;
@@ -1049,6 +1065,14 @@ class Clientgroup extends CI_Controller
                     if(!$_var_tiene_internet || !$_var_tiene_tv){
                         $customer_moroso=false;
                     }
+                }
+
+                if($_GET['checked_ind_service']=="true"){
+                    if($_GET['sel_servicios']=="Internet" && $_var_tiene_tv ){
+                            $customer_moroso=false;                        
+                    }else if($_GET['sel_servicios']=="TV" && $_var_tiene_internet){//preguntar que si solo debe de filtrar los que tienen tv o si tiene tv pero tambien internet lo puede listar lo mismo con la de internet
+                                $customer_moroso=false;     
+                    }                        
                 }
 
             }else{

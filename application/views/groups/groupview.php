@@ -114,6 +114,7 @@
                                                     <option value='Combo'>Combo</option>
                                                 </select>
                                             </div>                              
+                                            <input type="checkbox" id="check1" name="individual_service" style="cursor:pointer;" ><b onclick="ckekar_1()" style="cursor: pointer;"><i  >&nbsp; Individualizar Servicio</i></b>
                                         </div>
                                 </div>
                                 <!--thread-->
@@ -432,7 +433,8 @@
             var ingreso_select=$("#fechas option:selected").val();
             var sdate=$("#sdate").val();
             var edate=$("#edate").val();
-            var url =baseurl+"clientgroup/get_filtrados_para_checked?id=<?=$_GET['id']?>&morosos="+morosos+"&estado="+estado+"&localidad="+localidad+"&barrio="+barrio+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate;
+            var checked_ind_service =$("#check1").prop('checked');
+            var url =baseurl+"clientgroup/get_filtrados_para_checked?id=<?=$_GET['id']?>&morosos="+morosos+"&estado="+estado+"&localidad="+localidad+"&barrio="+barrio+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&checked_ind_service="+checked_ind_service;
              if(elemento.checked==true){
                 $("#div_notify3").html('<div id="notify3" class="alert alert-success" style="display:none;"><a href="#" class="close" data-dismiss="alert">&times;</a><div class="message3">></div></div>');
                     $("#notify3 .message3").html("<strong> Cargando</strong>: <img src='<?=base_url()?>/assets/img/iconocargando.gif'>");
@@ -452,7 +454,7 @@
 
                     });
                     $("#div_notify3").html('<div id="notify3" class="alert alert-success" style="display:none;"><a href="#" class="close" data-dismiss="alert">&times;</a><div class="message3">></div></div>');
-                   $("#notify3 .message3").html("<strong> Cargando</strong>: Customers Seleccionados...");
+                   $("#notify3 .message3").html("<strong> Cargando</strong>: Usuarios Seleccionados...");
                     $("#notify3").removeClass("alert-danger").removeClass("alert-warning").addClass("alert-success").fadeIn();
                     $("html, body").animate({scrollTop: $('#notify3').offset().top}, 1000);
                     $("input[type=checkbox]").prop("checked",true);        
@@ -827,6 +829,7 @@ $("#pagination_div").hide();
                 var ingreso_select=$("#fechas option:selected").val();
                 var sdate=$("#sdate").val();
                 var edate=$("#edate").val();
+                var checked_ind_service =$("#check1").prop('checked');
               tb=$('#fclientstable').DataTable({
 
                 "processing": true, //Feature control the processing indicator.
@@ -835,7 +838,7 @@ $("#pagination_div").hide();
 
                 // Load data for the table's content from an Ajax source
                 "ajax": {
-                    "url": "<?php echo site_url('clientgroup/load_morosos') . '?id=' . $group['id']; ?>&morosos="+morosos+"&estado="+estado+"&localidad="+localidad+"&barrio="+barrio+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&pagination_start="+pagination_start+"&pagination_end="+pagination_end,
+                    "url": "<?php echo site_url('clientgroup/load_morosos') . '?id=' . $group['id']; ?>&morosos="+morosos+"&estado="+estado+"&localidad="+localidad+"&barrio="+barrio+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&pagination_start="+pagination_start+"&pagination_end="+pagination_end+"&checked_ind_service="+checked_ind_service,
                     "type": "POST",
                     error: function (xhr, error, code)
                     {
@@ -925,6 +928,7 @@ $("#pagination_div").hide();
             var ingreso_select=$("#fechas option:selected").val();
             var sdate=$("#sdate").val();
             var edate=$("#edate").val();
+            var checked_ind_service =$("#check1").prop('checked');
             if($pagination_id==0){
                 pagination_end="";
                 pagination_start="";
@@ -950,7 +954,7 @@ $("#pagination_div").hide();
              
             //if(morosos!=""){
                 if(columnasAgregadas){
-                    tb.ajax.url( baseurl+'clientgroup/load_morosos?id=<?=$_GET['id']?>&morosos='+morosos+"&estado="+estado+"&localidad="+localidad+"&barrio="+barrio+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&pagination_start="+pagination_start+"&pagination_end="+pagination_end).load();               
+                    tb.ajax.url( baseurl+'clientgroup/load_morosos?id=<?=$_GET['id']?>&morosos='+morosos+"&estado="+estado+"&localidad="+localidad+"&barrio="+barrio+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&pagination_start="+pagination_start+"&pagination_end="+pagination_end+"&checked_ind_service="+checked_ind_service).load();               
                 }else{
                     nuevas_columnas();
                     $("option[value=100]").text("Todo");
@@ -988,8 +992,8 @@ $("#pagination_div").hide();
             var ingreso_select=$("#fechas option:selected").val();
             var sdate=$("#sdate").val();
             var edate=$("#edate").val();
-
-            var url_redirect=baseurl+'clientgroup/explortar_a_excel?estado='+estado+"&id=<?=$_GET['id']?>&localidad="+localidad+"&barrio="+barrio+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&morosos="+morosos+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate;
+            var checked_ind_service =$("#check1").prop('checked');
+            var url_redirect=baseurl+'clientgroup/explortar_a_excel?estado='+estado+"&id=<?=$_GET['id']?>&localidad="+localidad+"&barrio="+barrio+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&morosos="+morosos+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&checked_ind_service="+checked_ind_service;
             window.location.replace(url_redirect);
 
     }
@@ -1225,4 +1229,13 @@ $("#fclientstable").on('draw.dt',function (){
                                 }
                                 
                             }
+
+function ckekar_1(){
+    var selecccionado =$("#check1").prop('checked');
+    if(selecccionado){
+        $("#check1").prop('checked',false);
+    }else{
+        $("#check1").prop('checked',true);
+    }
+}                            
 </script>                   
