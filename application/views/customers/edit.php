@@ -392,7 +392,7 @@
                                for="country_s"><?php echo $this->lang->line('') ?>Comentario</label></h6>
 							<div>
                             <input type="text" placeholder="Barrio y codigo usuario"
-                                   class="form-control margin-bottom" name="comentario" value="<?php echo $barrio['barrio'] ?>" id="mcustomer_comentario_s">
+                                   class="form-control margin-bottom" name="comentario" value="<?php echo $customer['comentario'] ?>" id="mcustomer_comentario_s">
                         	</div>
                         </div>
                     </div>

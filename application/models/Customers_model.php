@@ -465,7 +465,7 @@ class Customers_model extends CI_Model
                                "remote-address" => $Ipremota,
                                "local-address" => $Iplocal,
                                "profile" => $perfil,
-                               "comment"  => $barrio." ".$abonado,
+                               "comment"  => $comentario,
                                "service"  => $servicio,
                                "disabled"  => "no",
                                )
@@ -477,7 +477,7 @@ class Customers_model extends CI_Model
                           "remote-address" => $Ipremota,
                           "local-address" => $Iplocal,
                           "profile" => $perfil,
-                          "comment"  => $barrio." ".$abonado,
+                          "comment"  => $barrio." ".$abonado." ".$comentario,
                           "service"  => $servicio,
                           "disabled"  => "no",
                         ));
