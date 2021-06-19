@@ -88,10 +88,20 @@ $this->load->model("customers_model","customers");
         $api = new SiigoAPI();
         $this->load->model("customers_model","customers");
         $dataApi;
-        if($_POST['servicios']=="Combo"){
-        	$dataApi= $this->customers->getClientData2Productos();
-        }else{
-        	$dataApi= $this->customers->getClientData();
+        if($_POST['servicios']=="Combo"){        	
+            if(isset($_POST['puntos']) && $_POST['puntos']!="no"){
+                $dataApi= $this->customers->getClientData3Productos();//verificar este caso
+            }else{
+                $dataApi= $this->customers->getClientData2Productos();    
+            }
+        }else if($_POST['servicios']=="Internet"){
+        	//$dataApi= $this->customers->getClientData();
+        }else if($_POST['servicios']=="Television"){
+            if(isset($_POST['puntos']) && $_POST['puntos']!="no"){
+                $dataApi= $this->customers->getClientData2Productos();    //y este caso
+            }else{
+                $dataApi= $this->customers->getClientData();    
+            }            
         }
         
         $dataApi=json_decode($dataApi);
@@ -142,6 +152,34 @@ $this->load->model("customers_model","customers");
         if($_POST['servicios']=="Television"){
         	$dataApi->Items[0]->Description="Servicio de Televisión por Cable";
         	//agregar valores reales de televicion deacuerdo a que en diferentes a yopal cambia el valor
+
+            if(isset($_POST['puntos']) && $_POST['puntos']!="no"){
+                    $dataApi->Items[1]->Description="Puntos de tv adicionales ".$_POST['puntos'];
+                    $lista_de_productos=$this->db->from("products")->where("pid","158")->get()->result();
+                    $prod=$lista_de_productos[0];
+
+                    $prod->product_price=$prod->product_price*intval($_POST['puntos']);
+
+                    $dataApi->Items[1]->ProductCode="001";
+
+                            //valores para no generar iva
+                            $dataApi->Items[1]->TaxAddName="";
+                            $dataApi->Items[1]->TaxAddId="-1";
+                            $dataApi->Items[1]->TaxAddValue="0";
+                            $dataApi->Items[1]->TaxAddPercentage="0";   
+                            //$dataApi->Header->VATTotalValue="0";  //se comenta porque se mantiene el de la tv
+                            //valores de total;
+                            $dataApi->Payments[0]->Value=$prod->product_price+$dataApi->Payments[0]->Value;
+                            $dataApi->Items[1]->TotalValue=$prod->product_price;
+                            $dataApi->Header->TotalValue=$prod->product_price+$dataApi->Header->TotalValue;//total de todo con iva
+                            //valores restados
+                            $dataApi->Items[1]->UnitValue=$prod->product_price;
+                            $dataApi->Items[1]->BaseValue=$prod->product_price;
+                            $dataApi->Items[1]->GrossValue=$prod->product_price;
+
+                            $dataApi->Header->TotalBase=$prod->product_price+$dataApi->Header->TotalBase;//total de todo sin iva    
+
+            }
 
             //falta verificar el caso de la tv de mocoa que cambian los valores
         }else if($_POST['servicios']=="Internet"){
@@ -258,7 +296,31 @@ $this->load->model("customers_model","customers");
 
         				}
         				
-        				
+        				if(isset($_POST['puntos']) && $_POST['puntos']!="no"){
+                                $dataApi->Items[2]->Description="Puntos de tv adicionales ".$_POST['puntos'];
+                                $lista_de_productos=$this->db->from("products")->where("pid","158")->get()->result();
+                                $prod=$lista_de_productos[0];
+                                $prod->product_price=$prod->product_price*intval($_POST['puntos']);
+                                $dataApi->Items[2]->ProductCode="001";
+
+                                        //valores para no generar iva
+                                        $dataApi->Items[2]->TaxAddName="";
+                                        $dataApi->Items[2]->TaxAddId="-1";
+                                        $dataApi->Items[2]->TaxAddValue="0";
+                                        $dataApi->Items[2]->TaxAddPercentage="0";   
+                                        //$dataApi->Header->VATTotalValue="0";  //se comenta porque se mantiene el de la tv
+                                        //valores de total;
+                                        $dataApi->Payments[0]->Value=$prod->product_price+$dataApi->Payments[0]->Value;
+                                        $dataApi->Items[2]->TotalValue=$prod->product_price;
+                                        $dataApi->Header->TotalValue=$prod->product_price+$dataApi->Header->TotalValue;//total de todo con iva
+                                        //valores restados
+                                        $dataApi->Items[2]->UnitValue=$prod->product_price;
+                                        $dataApi->Items[2]->BaseValue=$prod->product_price;
+                                        $dataApi->Items[2]->GrossValue=$prod->product_price;
+
+                                        $dataApi->Header->TotalBase=$prod->product_price+$dataApi->Header->TotalBase;//total de todo sin iva    
+
+                        }
         				break;
         			}
         		}
