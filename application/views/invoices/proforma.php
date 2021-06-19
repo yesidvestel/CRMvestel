@@ -234,20 +234,7 @@
                 if ($invoice['taxid']) echo '<br>' . $this->lang->line('Tax') . ' ID: ' . $invoice['taxid'];
                 ?>
             </td>
-        </tr><?php if ($invoice['name_s']) { ?>
-
-            <tr>
-
-                <td>
-                    <?php echo '<strong>' . $this->lang->line('Shipping Address') . '</strong>:<br>';
-                    echo $invoice['name_s'] . '<br>';
-
-                    echo $invoice['address_s'] . '<br>' . $invoice['city_s'] . '<br> '.$this->lang->line('Phone').': ' . $invoice['phone_s'] . '<br> '.$this->lang->line('Email').': ' . $invoice['email_s'];
-
-                    ?>
-                </td>
-            </tr>
-        <?php } ?>
+        </tr>
         </tbody>
     </table>
     <br/>
