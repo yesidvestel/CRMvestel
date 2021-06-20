@@ -566,6 +566,22 @@ class Tickets Extends CI_Controller
 		$usuario = $this->db->get_where('customers', array('id' => $ticket->cid))->row();
         $invoice = $this->db->get_where('invoices',array('tid'=>$ticket->id_invoice))->result_array();
 		$temporal=$this->db->get_where('temporales',array('corden'=>$ticket->codigo))->row();
+   
+    $ya_agrego_equipos=true;
+    if($ticket->detalle=="Instalacion"){
+            if($temporal->internet!="no"){
+                $equipo=$this->db->get_where("equipos", array('asignado' => $ticket->cid))->row();
+                if(empty($equipo)){
+                        $ya_agrego_equipos=false;
+                }
+                
+            } 
+    }
+    
+if($ya_agrego_equipos==false){
+        echo json_encode(array('status' => 'Error', 'message' =>"Por favor agrega un equipo a esta orden antes de cerrarla ", 'pstatus' => "error"));
+}else{
+
 		$tv = $temporal->tv;
 		$inter = $temporal->internet;
 		$ptos = $temporal->puntos;
@@ -1178,7 +1194,7 @@ class Tickets Extends CI_Controller
 		
         echo json_encode(array('msg1'=>$msg1,'tid'=>$data['tid'],'status' => 'Success', 'message' =>
             $this->lang->line('UPDATED'), 'pstatus' => $status));
-		
+		}
 		
 	}
 
