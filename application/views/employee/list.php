@@ -19,6 +19,7 @@
                     <th><?php echo $this->lang->line('Name') ?></th>
                     <th>Role</th>
                     <th><?php echo $this->lang->line('Status') ?></th>
+					<th>Hora ingreso</th>
                     <th><?php echo $this->lang->line('Actions') ?></th>
 					<?php if ($this->aauth->get_user()->roleid == 5) {
 					echo "<th>Admin</th>";
@@ -35,7 +36,8 @@
                     $name = $row['name'];
                     $role = user_role($row['roleid']);
                     $status = $row['banned'];
-
+					$hora = date("g:i a",strtotime($row['last_login']));
+					
                     if ($status == 1) {
                         $status = 'Deactive';
                         $btn = "<a href='#' data-object-id='" . $aid . "' class='btn btn-orange btn-xs delete-object' title='Enable'><i class='icon-eye-slash'></i> Enable</a>";
@@ -49,9 +51,12 @@
                     <td>$name</td>
                     <td>$role</td>                 
                     <td>$status</td>
+					<td>$hora</td>
                     <td><a href='" . base_url("employee/view?id=$aid") . "' class='btn btn-success btn-xs'><i class='icon-file-text'></i> " . $this->lang->line('View') ."</a></td>";
 					if ($this->aauth->get_user()->roleid == 5) {
-					echo "<td>$btn&nbsp;&nbsp;<a href='#pop_model' data-toggle='modal' data-remote='false' data-object-id='" . $aid . "' class='btn btn-danger btn-xs delemp' title='Delete'><i class='icon-trash-o'></i></a></td></tr>";
+					echo "<td>$btn&nbsp;&nbsp;<a href='#pop_model' data-toggle='modal' data-remote='false' data-object-id='" . $aid . "' class='btn btn-danger btn-xs delemp' title='Delete'><i class='icon-trash-o'></i></a></td>
+					
+					</tr>";
                     $i++;
 					}
                 }
@@ -63,6 +68,7 @@
                     <th><?php echo $this->lang->line('Name') ?></th>
                     <th>Role</th>
                     <th><?php echo $this->lang->line('Status') ?></th>
+					<th>Hora ingreso</th>
                     <th><?php echo $this->lang->line('Actions') ?></th>
 					<?php if ($this->aauth->get_user()->roleid == 5) {
 					echo "<th>Admin</th>";
