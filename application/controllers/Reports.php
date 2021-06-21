@@ -590,7 +590,7 @@ $data['datos_informe']=array("trans_type"=>$trans_type);
         $sede = $this->input->post('sede');
         $sdate = datefordatabase($this->input->post('sdate'));
         $data['filter'] = array($tec, $sede, $sdate,);
-
+		$data['tipos'] = $this->reports->filtrotipos($tec, $sede, $sdate, $i);
         //  print_r( $data['statement']);
         $head['title'] = "reporte tecnico";
         $head['usernm'] = $this->aauth->get_user()->username;

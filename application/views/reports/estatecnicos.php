@@ -128,9 +128,9 @@ table {
 										
 										<tr>
 											<td class="static">Ins. Tv+Int</td>
-											<?php for ($i=1;$i<=31;$i++){
+											<?php foreach ($tipos as $row) {
 											
-											$this->db->select("count(idt) as numero")
+											 /*?>$this->db->select("count(idt) as numero")
 												->from('tickets')
 												->join('customers', 'tickets.cid=customers.id', 'left')
 												->where('gid="'.$filter[1].'"')
@@ -141,9 +141,9 @@ table {
 													$this->db->where('asignado="'.$filter[0].'"');
 												}
 												
-												$instalaciones= $this->db->like("section","Television +","right")->get()->result(); 
-											?>
-											<td class="first-col"><?php echo $instalaciones[0]->numero; } ?></td>
+												$instalaciones= $this->db->like("section","Television +","right")->get()->result(); <?php */?>
+											
+											<td class="first-col"><?php echo $row['numero']; } ?></td>
 											<?php 
 											$totalins= $this->db->select("count(idt) as numero")
 												->from('tickets')

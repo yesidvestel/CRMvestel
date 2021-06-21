@@ -169,6 +169,32 @@ class Reports_model extends CI_Model
 
         return $result;
     }
+	// tipos de ticket
+	public function filtrotipos($tec, $sede, $sdate, $i)
+    {
+		
+		$mes = date("Y-m-d",strtotime($sdate));
+		$where = "DATE(fecha_final) BETWEEN CURDATE() - INTERVAL 30 DAY AND CURDATE()";
+        $this->db->select('count(idt) as numero, DATE(fecha_final) as date');
+        $this->db->from('tickets');
+		$this->db->join('customers', 'tickets.cid=customers.id', 'left');
+        if ($tec != 'all') {
+            $this->db->where('asignado', $tec);
+        }
+        $this->db->where('gid', $sede);
+        $this->db->where('status', 'Resuelto');
+        $this->db->where($where);
+		$this->db->where('detalle', 'Instalacion');
+		$this->db->like('section','Television +','right');
+		$i++;
+        // $this->db->where("DATE(date) BETWEEN '$sdate' AND '$edate'");
+        $query = $this->db->get();
+        $result = $query->row_array();
+
+        return $result;
+    }
+	
+
 
     //expense statement
 
