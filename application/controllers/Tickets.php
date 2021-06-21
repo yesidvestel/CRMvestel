@@ -569,13 +569,30 @@ class Tickets Extends CI_Controller
    
     $ya_agrego_equipos=true;
     if($ticket->detalle=="Instalacion"){
-            if($temporal->internet!="no"){
+            if($temporal->internet!="no" && $temporal->internet!=null){
                 $equipo=$this->db->get_where("equipos", array('asignado' => $ticket->cid))->row();
                 if(empty($equipo)){
                         $ya_agrego_equipos=false;
                 }
                 
-            } 
+            }
+
+            if(!empty($invoice)){
+                
+                $item_invoice=$this->db->get_where("invoice_items", array("tid"=>$invoice[0]['tid']))->result_array();
+                $val_internet=false;
+                foreach ($item_invoice as $key => $v1) {
+                    if($v1['pid']=="47" || $v1['pid']=="209"){
+                        $val_internet=true;
+                    }
+                }
+                $equipo=$this->db->get_where("equipos", array('asignado' => $ticket->cid))->row();
+                if($val_internet && empty($equipo)){
+                    $ya_agrego_equipos=false;
+                }
+                
+            }
+
     }
     
 if($ya_agrego_equipos==false){
