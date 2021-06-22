@@ -170,39 +170,53 @@ class Reports_model extends CI_Model
         return $result;
     }
 	// tipos de ticket
-	public function filtrotipos($tec, $sede, $sdate, $i)
+	public function filtrotipos($tec, $sede, $sdate)
     {
 		$filtro_tecnico="";
-		$mes = date("Y-m-d",strtotime($sdate));
-		$where = "DATE(fecha_final) BETWEEN CURDATE() - INTERVAL 30 DAY AND CURDATE()";
-        $this->db->select('count(idt) as numero');
-        $this->db->from('tickets');
-		$this->db->join('customers', 'tickets.cid=customers.id', 'left');
-        if ($tec != 'all') {
-            $this->db->where('asignado', $tec);
-            $filtro_tecnico=' and tickets.asignado="'.$tec.'"';
-        }
-        $this->db->where('gid', $sede);
-        $this->db->where('status', 'Resuelto');
-        $this->db->where($where);
-		$this->db->where('detalle', 'Instalacion');
-		$this->db->like('section','Television +','right');
-		$i++;
-        // $this->db->where("DATE(date) BETWEEN '$sdate' AND '$edate'");
-        $query = $this->db->get();
-        $result = $query->row_array();
-        //nuevo codigo //falta utilizar el last_date($fecha); y colocar $fecha->format("Y-m")."01"; para el tema de las fechas
- $resultado=$this->db->query('SELECT count(idt) as numero, datetable.date 
+        $fecha =new DateTime($sdate);
+		
+        //, datetable.date
+        $header_sql='SELECT count(idt) as numero 
             from datetable left join (select * from tickets 
-            join customers on tickets.cid=customers.id where customers.gid=2 '.$filtro_tecnico.') as t1 
+            join customers on tickets.cid=customers.id where';
+
+        $footer_sql=' and tickets.status="Resuelto" and 
+            customers.gid='.$sede.' '.$filtro_tecnico.') as t1 
             on datetable.date = date_format(t1.fecha_final,"%Y-%m-%d") 
-            where datetable.date BETWEEN date_format("2021-06-01","%Y-%m-%d") 
-            and date_format("2021-06-30","%Y-%m-%d")
-            GROUP by datetable.date')->result_array();
+            where datetable.date BETWEEN date_format("'.$fecha->format("Y-m").'-01","%Y-%m-%d") 
+            and date_format("'.$fecha->format("Y-m-t").'","%Y-%m-%d")
+            GROUP by datetable.date';
+
+        //nuevo codigo //falta utilizar el last_date($fecha); y colocar $fecha->format("Y-m")."01"; para el tema de las fechas
+        $lista_datos=array();
+
+        $lista_datos['instalaciones_tv_e_internet']=$this->db->query($header_sql.' tickets.detalle="Instalacion" and tickets.section like "%mega%" and tickets.section like "%Television%" '.$footer_sql)->result_array();
+        $lista_datos['instalaciones_tv']=$this->db->query($header_sql.' tickets.detalle="Instalacion" and tickets.section like "%Television%" '.$footer_sql)->result_array();
+        $lista_datos['instalaciones_internet']=$this->db->query($header_sql.' tickets.detalle="Instalacion" and tickets.section like "%mega%"  '.$footer_sql)->result_array();
+        $lista_datos['instalaciones_Agregar_Tv']=$this->db->query($header_sql.' tickets.detalle="AgregarTelevision" '.$footer_sql)->result_array();
+        $lista_datos['instalaciones_AgregarInternet']=$this->db->query($header_sql.' tickets.detalle="AgregarInternet" '.$footer_sql)->result_array();
+        $lista_datos['instalaciones_Traslado']=$this->db->query($header_sql.' tickets.detalle="Traslado" '.$footer_sql)->result_array();
+        $lista_datos['instalaciones_Revision']=$this->db->query($header_sql.' tickets.detalle like"%Revision%" '.$footer_sql)->result_array();
+        $lista_datos['instalaciones_Reconexion']=$this->db->query($header_sql.' tickets.detalle like "%Reconexion%" '.$footer_sql)->result_array();
+        $lista_datos['instalaciones_Suspension_Combo']=$this->db->query($header_sql.' tickets.detalle="Suspension Combo" '.$footer_sql)->result_array();
+        $lista_datos['instalaciones_Suspension_Internet']=$this->db->query($header_sql.' tickets.detalle="Suspension Internet" '.$footer_sql)->result_array();
+        $lista_datos['instalaciones_Suspension_Television']=$this->db->query($header_sql.' tickets.detalle="Suspension Television" '.$footer_sql)->result_array();
+        $lista_datos['instalaciones_Corte_Television']=$this->db->query($header_sql.' tickets.detalle="Corte Television" '.$footer_sql)->result_array();
+        //para seguir agregando ordenes segun el tipo apartir de aca
         
 
-        return $resultado;
+        $lista_datos['total_dia']=$this->db->query(($header_sql.' '.substr($footer_sql,5)))->result_array();//el subtring es para quitar el and de el footer
+
+        $footer_sql=str_replace("Resuelto","Pendiente",$footer_sql);//el replace para cambiar por pendientes
+        $footer_sql=substr(str_replace("fecha_final","created",$footer_sql),5);//el subtring es para quitar el and de el footer y el replace es para filtrar en ves de con fecha final con created
+
+        $lista_datos['pendientes']=$this->db->query($header_sql.' '.$footer_sql)->result_array();
+        $lista_datos['cuantos_dias_a_imprimir']=intval($fecha->format("t"));
+        
+        return $lista_datos;
     }
+
+
 	
 
 
