@@ -142,7 +142,7 @@ table {
 												}
 												
 												$instalaciones= $this->db->like("section","Television +","right")->get()->result(); <?php */?>
-											
+												
 											<td class="first-col"><?php echo $row['numero']; } ?></td>
 											<?php 
 											$totalins= $this->db->select("count(idt) as numero")

@@ -172,14 +172,15 @@ class Reports_model extends CI_Model
 	// tipos de ticket
 	public function filtrotipos($tec, $sede, $sdate, $i)
     {
-		
+		$filtro_tecnico="";
 		$mes = date("Y-m-d",strtotime($sdate));
 		$where = "DATE(fecha_final) BETWEEN CURDATE() - INTERVAL 30 DAY AND CURDATE()";
-        $this->db->select('count(idt) as numero, DATE(fecha_final) as date');
+        $this->db->select('count(idt) as numero');
         $this->db->from('tickets');
 		$this->db->join('customers', 'tickets.cid=customers.id', 'left');
         if ($tec != 'all') {
             $this->db->where('asignado', $tec);
+            $filtro_tecnico=' and tickets.asignado="'.$tec.'"';
         }
         $this->db->where('gid', $sede);
         $this->db->where('status', 'Resuelto');
@@ -190,8 +191,17 @@ class Reports_model extends CI_Model
         // $this->db->where("DATE(date) BETWEEN '$sdate' AND '$edate'");
         $query = $this->db->get();
         $result = $query->row_array();
+        //nuevo codigo //falta utilizar el last_date($fecha); y colocar $fecha->format("Y-m")."01"; para el tema de las fechas
+ $resultado=$this->db->query('SELECT count(idt) as numero, datetable.date 
+            from datetable left join (select * from tickets 
+            join customers on tickets.cid=customers.id where customers.gid=2 '.$filtro_tecnico.') as t1 
+            on datetable.date = date_format(t1.fecha_final,"%Y-%m-%d") 
+            where datetable.date BETWEEN date_format("2021-06-01","%Y-%m-%d") 
+            and date_format("2021-06-30","%Y-%m-%d")
+            GROUP by datetable.date')->result_array();
+        
 
-        return $result;
+        return $resultado;
     }
 	
 
