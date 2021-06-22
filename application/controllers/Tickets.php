@@ -179,6 +179,10 @@ class Tickets Extends CI_Controller
         $data['response'] = 3;
         $data['id_orden_n']	=$thread_id;
         $orden = $this->db->get_where('tickets',array('idt'=>$thread_id))->row();		
+            $equipo_asignado = $this->db->get_where("equipos", array('asignado' =>$orden->cid))->row();
+           $data['orden']=$orden; 
+           $data['equipo_asignado']=$equipo_asignado; 
+
         $almacen= $this->db->get_where('product_warehouse',array('id_tecnico'=>$orden->asignado))->row();
 		$data['lista_productos_tecnico']=$this->db->get_where('products',array('warehouse'=>$almacen->id))->result_array();
         $head['usernm'] = $this->aauth->get_user()->username;
