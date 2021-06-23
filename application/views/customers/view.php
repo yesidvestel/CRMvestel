@@ -135,9 +135,9 @@
                                     <strong><?php echo $this->lang->line('') ?>Local:</strong>
                                     <strong><?php echo $this->lang->line('') ?>Remota:</strong>
                                     <strong><?php echo $this->lang->line('') ?>Comt/rio:</strong>                                    
-                                    
+                                    <?php if ($this->aauth->get_user()->roleid > 4) { ?>
                                     <a class="btn btn-success" href="<?=base_url().'customers/edita_estado_usuario?username='.$details['name_s'].'&id_cm='.$details['id']?>&id_sede=<?=$details['gid']?>"><?= ($estado_mikrotik=='true') ? "Activar" : "Desactivar" ?></a>                                 
-                                
+                                	<?php } ?>
                                 </div>
                                 <div class="col-md-6">
                                     <?php echo $customergroup['title'] ?>                                    
