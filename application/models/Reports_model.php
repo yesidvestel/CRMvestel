@@ -174,7 +174,10 @@ class Reports_model extends CI_Model
     {
 		$filtro_tecnico="";
         $fecha =new DateTime($sdate);
-		
+		if ($tec != 'all') {
+        
+            $filtro_tecnico=' and tickets.asignado="'.$tec.'"';
+        }
         //, datetable.date
         $header_sql='SELECT count(idt) as numero 
             from datetable left join (select * from tickets 
