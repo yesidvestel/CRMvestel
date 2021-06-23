@@ -194,8 +194,8 @@ class Reports_model extends CI_Model
         $lista_datos=array();
 
         $lista_datos['instalaciones_tv_e_internet']=$this->db->query($header_sql.' tickets.detalle="Instalacion" and tickets.section like "%mega%" and tickets.section like "%Television%" '.$footer_sql)->result_array();
-        $lista_datos['instalaciones_tv']=$this->db->query($header_sql.' tickets.detalle="Instalacion" and tickets.section like "%Television%" '.$footer_sql)->result_array();
-        $lista_datos['instalaciones_internet']=$this->db->query($header_sql.' tickets.detalle="Instalacion" and tickets.section like "%mega%"  '.$footer_sql)->result_array();
+        $lista_datos['instalaciones_tv']=$this->db->query($header_sql.' tickets.detalle="Instalacion" and tickets.section not like "%mega%" '.$footer_sql)->result_array();
+        $lista_datos['instalaciones_internet']=$this->db->query($header_sql.' tickets.detalle="Instalacion" and tickets.section not like "%Television%"  '.$footer_sql)->result_array();
         $lista_datos['instalaciones_Agregar_Tv']=$this->db->query($header_sql.' tickets.detalle="AgregarTelevision" '.$footer_sql)->result_array();
         $lista_datos['instalaciones_AgregarInternet']=$this->db->query($header_sql.' tickets.detalle="AgregarInternet" '.$footer_sql)->result_array();
         $lista_datos['instalaciones_Traslado']=$this->db->query($header_sql.' tickets.detalle="Traslado" '.$footer_sql)->result_array();
