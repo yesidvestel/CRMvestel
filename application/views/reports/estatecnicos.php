@@ -243,7 +243,7 @@ table {
         ],
         xkey: 'x',
         ykeys: ['y'],
-        labels: ['Ordenes Resueltas'],
+        labels: ['instalaciones tv + internet'],
         hideHover: 'auto',
         resize: true,
         barColors: ['#34cea7', '#ff6e40'],
@@ -255,20 +255,20 @@ table {
     Morris.Line({
         element: 'invoices-products-chart',
         data: [
-            <?php foreach ($stat as $row) {
-            $datex = new DateTime($row['year']."-".$row['month']."-01");
+            <?php foreach ($tipos['instalaciones_tv_e_internet'] as $key => $row) {
+            $datex = new DateTime($row['fecha1']);
             //$num = cal_days_in_month(CAL_GREGORIAN, $row['month'], $row['year']);
-            echo "{ x: '".($datex->format("Y-m-t"))."', y: " . intval($row['numero']) . "},";
+            echo "{ x: '".($datex->format("Y-m-d"))."', y: " . intval($row['numero']) . ",z: " . intval($tipos['instalaciones_tv'][$key]['numero']) . ",a: " . intval($tipos['instalaciones_internet'][$key]['numero']) . ",b: " . intval($tipos['instalaciones_Agregar_Tv'][$key]['numero']) . ",c: " . intval($tipos['instalaciones_AgregarInternet'][$key]['numero']) . ",d: " . intval($tipos['instalaciones_Traslado'][$key]['numero']) . ",e: " . intval($tipos['instalaciones_Revision'][$key]['numero']) . ",f: " . intval($tipos['instalaciones_Reconexion'][$key]['numero']) . ",g: " . intval($tipos['instalaciones_Suspension_Combo'][$key]['numero']) . ",h: " . intval($tipos['instalaciones_Suspension_Internet'][$key]['numero']) . ",i: " . intval($tipos['instalaciones_Suspension_Television'][$key]['numero']) . ",j: " . intval($tipos['instalaciones_Corte_Television'][$key]['numero']) . "},";//,z: " . intval($tipos['instalaciones_tv'][$key]['numero']) . "
             
         } ?>
 
         ],
         xkey: 'x',
-        ykeys: ['y'],
-        labels: ['Ordenes Resueltas'],
+        ykeys: ['y','z','a','b','c','d','e','f','g','h','i','j'],
+        labels: ['instalaciones tv + internet',"instalaciones_tv","instalaciones_internet","instalaciones_Agregar_Tv","instalaciones_AgregarInternet","instalaciones_Traslado","instalaciones_Revision","instalaciones_Reconexion","instalaciones_Suspension_Combo","instalaciones_Suspension_Internet","instalaciones_Suspension_Television","instalaciones_Corte_Television"],
         hideHover: 'auto',
         resize: true,
-        lineColors: ['#34cea7', '#ff6e40'],
+        lineColors: ['#34cea7', '#ff6e40','#9A7D0A','#FFA633', '#FF7933','#FF3333','#33FFB8', '#33D3FF','#338AFF','#8033FF', '#C933FF','#FF33DA'],
     });
 
 

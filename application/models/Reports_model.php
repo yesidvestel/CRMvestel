@@ -179,7 +179,7 @@ class Reports_model extends CI_Model
             $filtro_tecnico=' and tickets.asignado="'.$tec.'"';
         }
         //, datetable.date
-        $header_sql='SELECT count(idt) as numero 
+        $header_sql='SELECT count(idt) as numero, datetable.date as fecha1 
             from datetable left join (select * from tickets 
             join customers on tickets.cid=customers.id where';
 
@@ -290,14 +290,14 @@ class Reports_model extends CI_Model
             from datetable left join (select * from tickets 
             join customers on tickets.cid=customers.id where';
 
-        $footer_sql=' tickets.status="Resuelto" and 
+        $footer_sql=' and tickets.status="Resuelto" and 
             customers.gid='.$sede.' '.$filtro_tecnico.') as t1 
             on datetable.date = date_format(t1.fecha_final,"%Y-%m-%d") 
             where datetable.date BETWEEN date_format("'.(date("Y-m-d",strtotime($fecha->format("Y-m")."-01"."- 1 year"))).'","%Y-%m-%d") 
             and date_format("'.$fecha->format("Y-m-t").'","%Y-%m-%d")
             GROUP by YEAR(datetable.date),MONTH(datetable.date)';
 
-        $estadistica=$this->db->query($header_sql.' '.$footer_sql)->result_array();
+        $estadistica=$this->db->query($header_sql.' tickets.detalle="Instalacion" and tickets.section like "%mega%" and tickets.section like "%Television%"  '.$footer_sql)->result_array();
         
         //echo date("d-m-Y",strtotime($fecha->format("Y-m")."-01"."- 1 year"));
 
