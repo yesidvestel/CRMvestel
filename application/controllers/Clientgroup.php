@@ -1325,6 +1325,9 @@ if ($valido) {
         var_dump($api->envio_sms_masivos_por_curl_2($retorno->getToken(),"",""));
     }
     public function cortar_usuarios_multiple(){
+        include (APPPATH."libraries\RouterosAPI.php");
+        $API = new RouterosAPI();
+        $API->debug = false;
         $tipo_corte=$this->input->post("tipo_corte");
         $ids_customers_corte=$this->input->post("ids_customers_corte");
         $description_corte=$this->input->post("description_corte");
@@ -1394,12 +1397,13 @@ if ($valido) {
                                     $this->db->update('invoices');
                                 //actualizar estado usuario
                                     $this->db->set('usu_estado', 'Cortado');
+                                    $this->db->set('perfil', "-");
                                     $this->db->where('id', $customer_id);
                                     $this->db->update('customers');
                                 }                                
                             
                             //microtik
-                            $this->customers->desactivar_estado_usuario($customer->name_s,$customer->gid);
+                            $this->customers->desactivar_estado_usuario_multiple($customer->name_s,$customer->gid,$API);
                             
                         }else if($tipo_corte=="Corte Internet"){
                             //$factura = $this->db->get_where('invoices',array('tid'=>$idfactura))->row();
@@ -1413,6 +1417,7 @@ if ($valido) {
                                 }
                                 //actualizar estado usuario
                                 $this->db->set('usu_estado', $nestado);
+                                $this->db->set('perfil', "-");
                                 $this->db->where('id', $customer_id);
                                 $this->db->update('customers');
                                 //agregar reconexion    
@@ -1442,7 +1447,7 @@ if ($valido) {
                                 
                            
 
-                            $this->customers->desactivar_estado_usuario($customer->name_s,$customer->gid);
+                            $this->customers->desactivar_estado_usuario_multiple($customer->name_s,$customer->gid,$API);
                         }else{
                                 $producto2 = $this->db->get_where('products',array('product_name'=>'Reconexión Television'))->row();
                                 $data2['tid']=$factura->tid;
