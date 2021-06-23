@@ -234,9 +234,9 @@ table {
         element: 'invoices-sales-chart',
         data: [
             <?php foreach ($stat as $row) {
-            
+            $datex = new DateTime($row['year']."-".$row['month']."-01");
             //$num = cal_days_in_month(CAL_GREGORIAN, $row['month'], $row['year']);
-            echo "{ x: '" . $row['year'] . '-' . $row['month'] . "-01', y: " . intval($row['numero']) . "},";
+            echo "{ x: '".($datex->format("Y-m-t"))."', y: " . intval($row['numero']) . "},";
             
         } ?>
 
@@ -256,9 +256,9 @@ table {
         element: 'invoices-products-chart',
         data: [
             <?php foreach ($stat as $row) {
-            
+            $datex = new DateTime($row['year']."-".$row['month']."-01");
             //$num = cal_days_in_month(CAL_GREGORIAN, $row['month'], $row['year']);
-            echo "{ x: '" . $row['year'] . '-' . $row['month'] . "-01', y: " . intval($row['numero']) . "},";
+            echo "{ x: '".($datex->format("Y-m-t"))."', y: " . intval($row['numero']) . "},";
             
         } ?>
 
