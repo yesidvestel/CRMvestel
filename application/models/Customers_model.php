@@ -1137,6 +1137,50 @@ class Customers_model extends CI_Model
         }
     }
 
+    public function desactivar_estado_usuario_multiple($user_name,$id_sede,$API){
+          //include (APPPATH."libraries\RouterosAPI.php");
+        set_time_limit(3000);
+         //$API = new RouterosAPI();
+        //$API->debug = false;
+        
+        if ($API->connect($this->get_ip_coneccion_microtik_por_sede($id_sede), 'api.crmvestel', 'duber123')) {
+            //$user_name="user_prueba_duber_disabled";
+            $arrID=$API->comm("/ppp/secret/getall", 
+                  array(
+                  "?name" => $user_name,
+                  ));
+          
+            
+            //desactivate
+               $secret_id=$arrID[0][".id"];
+               $arrID=$API->comm("/ppp/active/getall", 
+                  array(
+                    ".proplist"=> ".id",
+                  "?name" => $user_name,
+                  ));
+                $API->comm("/ppp/active/remove",
+                    array(
+                        ".id" => $arrID[0][".id"],
+                        )
+                    );
+
+                $API->comm("/ppp/secret/set",
+                  array(
+                       ".id" => $secret_id,
+                       "disabled"  => "yes",
+                       )
+                  );  
+                //var_dump($secret_id);
+                //var_dump($arrID[0][".id"]);                            
+
+         $API->disconnect();
+         
+
+        }else{
+            
+        }
+    }
+
     public function devolver_ips_proximas(){
         $ips_remotas = array('yopal' =>'10.0.0.2', "monterrey"=>'10.1.100.2','villanueva'=>"80.0.0.2" );    
         $customers_yopal=$this->db->get_where("customers",array('ciudad'=>"yopal","Ipremota!="=>null,"Ipremota!="=>""))->result_array();
