@@ -224,6 +224,7 @@ table {
         </div>
     </div>
 </div>
+
 <script type="text/javascript">
 
 
@@ -232,17 +233,17 @@ table {
     Morris.Bar({
         element: 'invoices-sales-chart',
         data: [
-            <?php $i = 0;foreach (array_reverse($stat) as $row) {
-            if ($i > 11) break;
-            $num = cal_days_in_month(CAL_GREGORIAN, $row['month'], $row['year']);
-            echo "{ x: '" . $row['year'] . '-' . sprintf("%02d", $row['month']) . "-$num', y: " . intval($row['income']) . ", z: " . intval($row['expense']) . "},";
-            $i++;
+            <?php foreach ($stat as $row) {
+            
+            //$num = cal_days_in_month(CAL_GREGORIAN, $row['month'], $row['year']);
+            echo "{ x: '" . $row['year'] . '-' . $row['month'] . "-01', y: " . intval($row['numero']) . "},";
+            
         } ?>
 
         ],
         xkey: 'x',
-        ykeys: ['y', 'z'],
-        labels: ['Income', 'expense'],
+        ykeys: ['y'],
+        labels: ['Ordenes Resueltas'],
         hideHover: 'auto',
         resize: true,
         barColors: ['#34cea7', '#ff6e40'],
@@ -254,17 +255,17 @@ table {
     Morris.Line({
         element: 'invoices-products-chart',
         data: [
-            <?php $i = 0;foreach (array_reverse($stat) as $row) {
-            if ($i > 11) break;
-            $num = cal_days_in_month(CAL_GREGORIAN, $row['month'], $row['year']);
-            echo "{ x: '" . $row['year'] . '-' . sprintf("%02d", $row['month']) . "-$num', y: " . intval($row['items']) . ", z: " . intval($row['invoices']) . "},";
-            $i++;
+            <?php foreach ($stat as $row) {
+            
+            //$num = cal_days_in_month(CAL_GREGORIAN, $row['month'], $row['year']);
+            echo "{ x: '" . $row['year'] . '-' . $row['month'] . "-01', y: " . intval($row['numero']) . "},";
+            
         } ?>
 
         ],
         xkey: 'x',
-        ykeys: ['y', 'z'],
-        labels: ['Products', 'Invoices'],
+        ykeys: ['y'],
+        labels: ['Ordenes Resueltas'],
         hideHover: 'auto',
         resize: true,
         lineColors: ['#34cea7', '#ff6e40'],

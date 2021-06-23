@@ -58,7 +58,7 @@
                                        for="sdate">Mes</label>
 
                                 <div class="col-sm-4">
-                                    <input type="month" class="form-control required"
+                                    <input type="text" class="form-control required"
                                            placeholder="Start Date" name="sdate" id="sdate"
                                             autocomplete="false">
                                 </div>
