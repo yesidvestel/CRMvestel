@@ -275,6 +275,34 @@ class Reports_model extends CI_Model
         $result = $query->result_array();
         return $result;
     }
+    public function get_estadisticas_tecnicos($tec, $sede, $sdate){
+        
+
+
+        $filtro_tecnico="";
+        $fecha =new DateTime($sdate);
+        if ($tec != 'all') {
+        
+            $filtro_tecnico=' and tickets.asignado="'.$tec.'"';
+        }
+        //, datetable.date
+        $header_sql='SELECT count(idt) as numero,YEAR(datetable.date) as year,MONTH(datetable.date) as month
+            from datetable left join (select * from tickets 
+            join customers on tickets.cid=customers.id where';
+
+        $footer_sql=' tickets.status="Resuelto" and 
+            customers.gid='.$sede.' '.$filtro_tecnico.') as t1 
+            on datetable.date = date_format(t1.fecha_final,"%Y-%m-%d") 
+            where datetable.date BETWEEN date_format("'.(date("Y-m-d",strtotime($fecha->format("Y-m")."-01"."- 1 year"))).'","%Y-%m-%d") 
+            and date_format("'.$fecha->format("Y-m-t").'","%Y-%m-%d")
+            GROUP by YEAR(datetable.date),MONTH(datetable.date)';
+
+        $estadistica=$this->db->query($header_sql.' '.$footer_sql)->result_array();
+        
+        //echo date("d-m-Y",strtotime($fecha->format("Y-m")."-01"."- 1 year"));
+
+        return $estadistica;
+    }
 	public function tickets()
     {
 		$this->db->select('*');
