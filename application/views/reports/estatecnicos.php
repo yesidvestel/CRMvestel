@@ -75,8 +75,17 @@ table {
                 <div class="col-xl-12 col-lg-12">
                     <div class="card">
                         <div class="card-header no-border">
-                            <h6 class="card-title"><?php echo $this->lang->line('Products in last 12 months') ?></h6>
-
+                            <h6 style="text-align: center;" class="card-title"><?php echo $this->lang->line('Products in last 12 months') ?></h6>
+                             <div class="row">
+				            	<div class="col-xl-12 col-lg-12"><!-- ['y','z','a','b','c','d','e','f','g','h','i','j'] -->
+				            	<input type="checkbox" id="instalaciones_tv_e_internet" style="cursor:pointer;" onclick="activar_desactivar_lines(null,'y');"><b style="cursor:pointer;" onclick="activar_desactivar_lines('instalaciones_tv_e_internet','y');" ><i>&nbsp;Instalaciones Tv + Internet&nbsp;</b></i>
+				            	<input type="checkbox" id="instalaciones_tv" style="cursor:pointer;" onclick="activar_desactivar_lines(null,'z');"><b style="cursor:pointer;" onclick="activar_desactivar_lines('instalaciones_tv','z');"><i>&nbsp;Instalaciones Tv&nbsp;</b></i>
+				            	<input type="checkbox" id="instalaciones_internet" style="cursor:pointer;" onclick="activar_desactivar_lines(null,'a');"><b style="cursor:pointer;" onclick="activar_desactivar_lines('instalaciones_internet','a');"><i>&nbsp;instalaciones Internet&nbsp;</b></i>
+				            	<input type="checkbox" id="instalaciones_Agregar_Tv" style="cursor:pointer;" onclick="activar_desactivar_lines(null,'b');"><b style="cursor:pointer;" onclick="activar_desactivar_lines('instalaciones_Agregar_Tv','b');"><i>&nbsp;Agregar Tv&nbsp;</b></i>
+				            	<input type="checkbox" id="instalaciones_AgregarInternet" style="cursor:pointer;" onclick="activar_desactivar_lines(null,'c');"><b style="cursor:pointer;" onclick="activar_desactivar_lines('instalaciones_AgregarInternet','c');"><i>&nbsp;Agregar Internet&nbsp;</b></i>
+				            	<input type="checkbox" id="instalaciones_Traslado" style="cursor:pointer;" onclick="activar_desactivar_lines(null,'d');"><b style="cursor:pointer;" onclick="activar_desactivar_lines('instalaciones_Traslado','d');"><i>&nbsp;Traslado&nbsp;</b></i>
+					            </div>
+				            </div>
                         </div>
 
                         <div class="card-body">
@@ -88,8 +97,10 @@ table {
 
                     </div>
                 </div>
-
+			
             </div>
+
+
             <!--/ project charts -->
             <!-- Recent invoice with Statistics -->
             <div class="row match-height">
@@ -249,10 +260,11 @@ table {
         barColors: ['#34cea7', '#ff6e40'],
     });
 
-
+    var lista_keys=['y','z','a','b','c','d','e','f','g','h','i','j'];
+    var lista_labels_total={y:'Instalaciones Tv + Internet',z:"Instalaciones Tv",a:"Instalaciones Internet",b:"Agregar Tv",c:"Agregar Internet",d:"Traslado",e:"Revision",f:"Reconexion",g:"Suspension Combo",h:"Suspension Internet",i:"Suspension Television",j:"Corte Television"};
+    var lista_labels_personalizada=[];
     $('#invoices-products-chart').empty();
-
-    Morris.Line({
+	var datos={
         element: 'invoices-products-chart',
         data: [
             <?php foreach ($tipos['instalaciones_tv_e_internet'] as $key => $row) {
@@ -264,12 +276,41 @@ table {
 
         ],
         xkey: 'x',
-        ykeys: ['y','z','a','b','c','d','e','f','g','h','i','j'],
-        labels: ['instalaciones tv + internet',"instalaciones_tv","instalaciones_internet","instalaciones_Agregar_Tv","instalaciones_AgregarInternet","instalaciones_Traslado","instalaciones_Revision","instalaciones_Reconexion","instalaciones_Suspension_Combo","instalaciones_Suspension_Internet","instalaciones_Suspension_Television","instalaciones_Corte_Television"],
+        ykeys: lista_keys,
+        labels: ['Instalaciones Tv + Internet',"Instalaciones Tv","Instalaciones Internet","Agregar Tv","Agregar Internet","Traslado","Revision","Reconexion","Suspension Combo","Suspension Internet","Suspension Television","Corte Television"],
         hideHover: 'auto',
         resize: true,
         lineColors: ['#34cea7', '#ff6e40','#9A7D0A','#FFA633', '#FF7933','#FF3333','#33FFB8', '#33D3FF','#338AFF','#8033FF', '#C933FF','#FF33DA'],
-    });
+    }
+    Morris.Line(datos);
+	function activar_desactivar_lines(ck,key){
+		var indice_elemento=lista_keys.indexOf(key);
+		if(indice_elemento==-1){
+			lista_keys.push(key);
+		}else{
+			lista_keys.splice(indice_elemento,1);
+		}
 
+		//console.log(lista_labels_total.a);
+		lista_labels_personalizada=[];	
+		$(lista_keys).each(function(index,dato){
+			lista_labels_personalizada.push(lista_labels_total[dato]);
+		});
+		
+
+		//console.log(lista_keys);
+		datos.ykeys=lista_keys;
+		datos.labels=lista_labels_personalizada;
+		$('#invoices-products-chart').empty();
+		Morris.Line(datos);
+
+		if(ck!=null){
+			if($("#"+ck).prop("checked")){
+				$("#"+ck).prop("checked",false);
+			}else{
+				$("#"+ck).prop("checked",true);
+			}
+		}
+	}
 
 </script>

@@ -59,7 +59,7 @@
 
                                 <div class="col-sm-4">
                                     <input type="text" class="form-control required"
-                                           placeholder="Start Date" name="sdate" id="sdate"
+                                           placeholder="Start Date" name="sdate" id="sdate2"
                                             autocomplete="false">
                                 </div>
                             </div>
