@@ -265,7 +265,7 @@ table {
         ],
         xkey: 'x',
         ykeys: ['y','z','a','b','c','d','e','f','g','h','i','j'],
-        labels: ['instalaciones tv + internet',"instalaciones_tv","instalaciones_internet","instalaciones_Agregar_Tv","instalaciones_AgregarInternet","instalaciones_Traslado","instalaciones_Revision","instalaciones_Reconexion","instalaciones_Suspension_Combo","instalaciones_Suspension_Internet","instalaciones_Suspension_Television","instalaciones_Corte_Television"],
+        labels: ['instalaciones tv + internet',"instalaciones_tv","instalaciones internet","Agregar Tv","Agregar Internet","Traslado","Revisiones","Reconexion","Suspension Combo","Suspension Internet","Suspension Television","Corte Television"],
         hideHover: 'auto',
         resize: true,
         lineColors: ['#34cea7', '#ff6e40','#9A7D0A','#FFA633', '#FF7933','#FF3333','#33FFB8', '#33D3FF','#338AFF','#8033FF', '#C933FF','#FF33DA'],
