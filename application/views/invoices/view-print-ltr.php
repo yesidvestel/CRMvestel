@@ -191,7 +191,9 @@
             <td >
 				<?php echo '<strong>'.ucwords($invoice['name']) .' '.ucwords($invoice['unoapellido']) . '</strong><br>';
                 if ($invoice['company']) echo $invoice['company'] . '<br>';
-                 echo $invoice['tipo_documento'] .': '.$invoice['documento'].'<br>'. $this->lang->line('Email') . ' : ' . $invoice['email'];
+                 echo $invoice['tipo_documento'] .': '.$invoice['documento']
+					 .'<br>'. $this->lang->line('Email') . ' : ' . $invoice['email']
+					 .'<br>Abonado : ' . $invoice['abonado'];
                 if ($invoice['taxid']) echo '<br>' . $this->lang->line('Tax') . ' ID: ' . $invoice['taxid'];
                 ?>
 				
