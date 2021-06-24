@@ -1,5 +1,5 @@
 <style>
-.st-Activo, .st-Instalar , .st-Cortado, .st-Suspendido, .st-Exonerado
+.st-Activo, .st-Instalar , .st-Cortado, .st-Suspendido, .st-Exonerado, .st-Compromiso
 {
 	text-transform: uppercase;
     color: #fff;
@@ -29,7 +29,7 @@
 }
 .st-Compromiso
 {
- background-color: #962895;
+ background-color: #8B6390;
 }
 </style>
 <article class="content content items-list-page">
