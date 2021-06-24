@@ -267,7 +267,7 @@ table {
         barColors: ['#34cea7', '#ff6e40'],
     });
 
-    var lista_keys=['y','z','a','b','c','d','e','f','g','h','i','j'];
+    var lista_keys=[];
     var lista_labels_total={y:'Instalaciones Tv + Internet',z:"Instalaciones Tv",a:"Instalaciones Internet",b:"Agregar Tv",c:"Agregar Internet",d:"Traslado",e:"Revision",f:"Reconexion",g:"Suspension Combo",h:"Suspension Internet",i:"Suspension Television",j:"Corte Television"};
     var lista_labels_personalizada=[];
     $('#invoices-products-chart').empty();
@@ -283,8 +283,8 @@ table {
 
         ],
         xkey: 'x',
-        ykeys: lista_keys,
-        labels: ['Instalaciones Tv + Internet',"Instalaciones Tv","Instalaciones Internet","Agregar Tv","Agregar Internet","Traslado","Revision","Reconexion","Suspension Combo","Suspension Internet","Suspension Television","Corte Television"],
+        ykeys: [],
+        labels: [],
         hideHover: 'auto',
         resize: true,
         lineColors: ['#34cea7', '#ff6e40','#9A7D0A','#FFA633', '#FF7933','#FF3333','#33FFB8', '#33D3FF','#338AFF','#8033FF', '#C933FF','#FF33DA'],
@@ -312,10 +312,11 @@ table {
 		Morris.Line(datos);
 
 		if(ck!=null){
+			
 			if($("#"+ck).prop("checked")){
-				$("#"+ck).prop("checked",true);
-			}else{
 				$("#"+ck).prop("checked",false);
+			}else{
+				$("#"+ck).prop("checked",true);
 			}
 		}
 	}
