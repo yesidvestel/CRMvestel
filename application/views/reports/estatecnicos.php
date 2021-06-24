@@ -78,13 +78,20 @@ table {
                             <h6 style="text-align: center;" class="card-title"><?php echo $this->lang->line('Products in last 12 months') ?></h6>
                              <div class="row">
 				            	<div class="col-xl-12 col-lg-12"><!-- ['y','z','a','b','c','d','e','f','g','h','i','j'] -->
-				            	<input type="checkbox" id="instalaciones_tv_e_internet" style="cursor:pointer;" onclick="activar_desactivar_lines(null,'y');"><b style="cursor:pointer;" onclick="activar_desactivar_lines('instalaciones_tv_e_internet','y');" ><i>&nbsp;Instalaciones Tv + Internet&nbsp;</b></i>
-				            	<input type="checkbox" id="instalaciones_tv" style="cursor:pointer;" onclick="activar_desactivar_lines(null,'z');"><b style="cursor:pointer;" onclick="activar_desactivar_lines('instalaciones_tv','z');"><i>&nbsp;Instalaciones Tv&nbsp;</b></i>
-				            	<input type="checkbox" id="instalaciones_internet" style="cursor:pointer;" onclick="activar_desactivar_lines(null,'a');"><b style="cursor:pointer;" onclick="activar_desactivar_lines('instalaciones_internet','a');"><i>&nbsp;instalaciones Internet&nbsp;</b></i>
-				            	<input type="checkbox" id="instalaciones_Agregar_Tv" style="cursor:pointer;" onclick="activar_desactivar_lines(null,'b');"><b style="cursor:pointer;" onclick="activar_desactivar_lines('instalaciones_Agregar_Tv','b');"><i>&nbsp;Agregar Tv&nbsp;</b></i>
-				            	<input type="checkbox" id="instalaciones_AgregarInternet" style="cursor:pointer;" onclick="activar_desactivar_lines(null,'c');"><b style="cursor:pointer;" onclick="activar_desactivar_lines('instalaciones_AgregarInternet','c');"><i>&nbsp;Agregar Internet&nbsp;</b></i>
-				            	<input type="checkbox" id="instalaciones_Traslado" style="cursor:pointer;" onclick="activar_desactivar_lines(null,'d');"><b style="cursor:pointer;" onclick="activar_desactivar_lines('instalaciones_Traslado','d');"><i>&nbsp;Traslado&nbsp;</b></i>
-					            </div>
+								
+				            	<input type="checkbox" id="instalaciones_tv_e_internet" style="cursor:pointer;" onclick="activar_desactivar_lines(null,'y');" class="case"><b style="cursor:pointer;" onclick="activar_desactivar_lines('instalaciones_tv_e_internet','y');" ><i>&nbsp;Instalaciones Tv + Internet&nbsp;</b></i>
+				            	<input type="checkbox" id="instalaciones_tv" style="cursor:pointer;" onclick="activar_desactivar_lines(null,'z');" class="case"><b style="cursor:pointer;" onclick="activar_desactivar_lines('instalaciones_tv','z');"><i>&nbsp;Instalaciones Tv&nbsp;</b></i>
+				            	<input type="checkbox" id="instalaciones_internet" style="cursor:pointer;" onclick="activar_desactivar_lines(null,'a');" class="case"><b style="cursor:pointer;" onclick="activar_desactivar_lines('instalaciones_internet','a');"><i>&nbsp;instalaciones Internet&nbsp;</b></i>
+				            	<input type="checkbox" id="instalaciones_Agregar_Tv" style="cursor:pointer;" onclick="activar_desactivar_lines(null,'b');" class="case"><b style="cursor:pointer;" onclick="activar_desactivar_lines('instalaciones_Agregar_Tv','b');"><i>&nbsp;Agregar Tv&nbsp;</b></i>
+				            	<input type="checkbox" id="instalaciones_AgregarInternet" style="cursor:pointer;" onclick="activar_desactivar_lines(null,'c');" class="case"><b style="cursor:pointer;" onclick="activar_desactivar_lines('instalaciones_AgregarInternet','c');"><i>&nbsp;Agregar Internet&nbsp;</b></i>
+				            	<input type="checkbox" id="instalaciones_Traslado" style="cursor:pointer;" onclick="activar_desactivar_lines(null,'d');" class="case"><b style="cursor:pointer;" onclick="activar_desactivar_lines('instalaciones_Traslado','d');"><i>&nbsp;Traslado&nbsp;</b></i>
+								<input type="checkbox" id="instalaciones_Revision" style="cursor:pointer;" onclick="activar_desactivar_lines(null,'e');" class="case"><b style="cursor:pointer;" onclick="activar_desactivar_lines('instalaciones_Revision','e');"><i>&nbsp;Revision&nbsp;</b></i>
+					            <input type="checkbox" id="instalaciones_Reconexion" style="cursor:pointer;" onclick="activar_desactivar_lines(null,'f');" class="case"><b style="cursor:pointer;" onclick="activar_desactivar_lines('instalaciones_Reconexion','f');"><i>&nbsp;Reconexion&nbsp;</b></i>
+								<input type="checkbox" id="instalaciones_Suspension_Combo" style="cursor:pointer;" onclick="activar_desactivar_lines(null,'g');" class="case"><b style="cursor:pointer;" onclick="activar_desactivar_lines('instalaciones_Suspension_Combo','g');"><i>&nbsp;Suspension Combo&nbsp;</b></i>
+								<input type="checkbox" id="instalaciones_Suspension_Internet" style="cursor:pointer;" onclick="activar_desactivar_lines(null,'h');" class="case"><b style="cursor:pointer;" onclick="activar_desactivar_lines('instalaciones_Suspension_Internet','h');"><i>&nbsp;Suspension Internet&nbsp;</b></i>
+								<input type="checkbox" id="instalaciones_Suspension_Television" style="cursor:pointer;" onclick="activar_desactivar_lines(null,'i');" class="case"><b style="cursor:pointer;" onclick="activar_desactivar_lines('instalaciones_Suspension_Television','i');"><i>&nbsp;Suspension Television&nbsp;</b></i> 
+								<input type="checkbox" id="instalaciones_Corte_Television" style="cursor:pointer;" onclick="activar_desactivar_lines(null,'j');" class="case"><b style="cursor:pointer;" onclick="activar_desactivar_lines('instalaciones_Corte_Television','j');"><i>&nbsp;Cortes Television&nbsp;</b></i>
+								 </div>
 				            </div>
                         </div>
 
@@ -306,11 +313,12 @@ table {
 
 		if(ck!=null){
 			if($("#"+ck).prop("checked")){
-				$("#"+ck).prop("checked",false);
-			}else{
 				$("#"+ck).prop("checked",true);
+			}else{
+				$("#"+ck).prop("checked",false);
 			}
 		}
 	}
+	
 
 </script>
