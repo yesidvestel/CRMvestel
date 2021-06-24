@@ -1,5 +1,5 @@
 <style>
-.st-Activo, .st-Instalar , .st-Cortado, .st-Suspendido, .st-Exonerado
+.st-Activo, .st-Instalar , .st-Cortado, .st-Suspendido, .st-Exonerado, .st-Compromiso
 {
 	text-transform: uppercase;
     color: #fff;
@@ -26,6 +26,10 @@
 .st-Exonerado
 {
  background-color: #24A9AB;
+}
+.st-Compromiso
+{
+ background-color: #8B6390;
 }
 </style>
 <article class="content content items-list-page">
@@ -96,6 +100,7 @@
                                                 <option value='Instalar'>Instalar</option>
 												<option value='Exonerado'>Exonerado</option>
 												<option value='Cartera'>Cartera</option>
+												<option value='Compromiso'>Compromiso</option>
                                             </select>
                                         </div>
                                     </div>

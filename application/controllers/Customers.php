@@ -223,7 +223,29 @@ class Customers extends CI_Controller
         }
 
     }
-	
+	public function file_handling()
+    {
+        if($this->input->get('op')) {
+            $name = $this->input->get('name');
+            $invoice = $this->input->get('invoice');
+            if ($this->customers->meta_delete($invoice,6, $name)){
+                echo json_encode(array('status' => 'Success'));
+            }
+        }
+        else {
+            $id = $this->input->get('id');
+            $this->load->library("Uploadhandler_generic", array(
+                'accept_file_types' => '/\.(gif|jpe?g|png|docx|docs|txt|pdf|xls)$/i', 'upload_dir' => FCPATH . 'userfiles/attach/', 'upload_url' => base_url() . 'userfiles/attach/'
+            ));
+            $files = (string)$this->uploadhandler_generic->filenaam();
+            if ($files != '') {
+
+                $this->customers->meta_insert($id, 6, $files);
+            }
+        }
+
+
+    }
 	public function ciudades_list()
 	{ 
 		$id = $this->input->post('idDepartamento');
@@ -272,6 +294,7 @@ class Customers extends CI_Controller
         $data['servicios'] = $this->customers->servicios_detail($custid);
         $head['usernm'] = $this->aauth->get_user()->username;
         $data['activity']=$this->customers->activity($custid);
+		$data['attach'] = $this->customers->attach($custid);
         $data['estado_mikrotik']=$this->customers->get_estado_mikrotik($data['details']['name_s'],$data['details']['gid']);
         $head['title'] = 'View Customer';
         $this->load->view('fixed/header', $head);
