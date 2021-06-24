@@ -27,6 +27,10 @@
 {
  background-color: #24A9AB;
 }
+.st-Compromiso
+{
+ background-color: #962895;
+}
 </style>
 <article class="content content items-list-page">
     <div class="card card-block">
