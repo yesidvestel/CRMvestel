@@ -67,14 +67,16 @@
 
                     <div class="form-group row">
                     <div class="frmSearch col-sm-6">
-						<label for="cst" class="caption  col-form-label">Tipo de llamada</label>
+						<label for="cst" class="caption  col-form-label">Tipo de Atencion</label>
 						<div>
 							<select class="form-control required" name="tllamada" id="tipo" onchange="change(this.id,'respuesta')" required>
 								<option value="">seleccione</option>
+								<option value="Presencial">Presencial</option>
+								<option value="whatsapp">Por whatsapp</option>
 								<option value="Para Venta">Para Venta</option>
 								<option value="Control de Calidad">Control de Calidad</option>
 								<option value="Para Recuperacion">Para Recuperacion</option>
-								<option value="Recibida">Recibida</option>
+								<option value="Recibida">Llamada Recibida</option>
                            </select>
                         </div>
 					</div>
@@ -145,6 +147,10 @@
 			var optionArray = ["","Venta Contestada","sin Contestar"];
 		}else if (tipo.value == "Control de Calidad"){
 			var optionArray = ["","Control Contestado","sin Contestar"];
+		}else if (tipo.value == "Presencial"){
+			var optionArray = ["","Reclamo","Estado de cuenta","Actualizar Datos","Otros"];
+		}else if (tipo.value == "whatsapp"){
+			var optionArray = ["","Reclamo","Estado de cuenta","Actualizar Datos","Otros"];
 		}else if (tipo.value == "Para Recuperacion"){
 			var optionArray = ["","Recuperacion Contestada","sin Contestar"];
 		}else if (tipo.value == "Recibida"){
@@ -173,6 +179,12 @@
 			var optionArray = ["","Acuerdo de pago","Cliente inconforme","Informado","No va a pagar","Va a pagar"];
 		}else if (respuesta.value == "sin Contestar"){
 			var optionArray = ["","Correo de Voz","Numero no esta en uso","Timbra pero no contestan"];
+		}else if (respuesta.value == "Reclamo"){
+			var optionArray = ["","Mal servicio","Mala atencion","Otros"];
+		}else if (respuesta.value == "Estado de Cuenta"){
+			var optionArray = ["","Valor Incorrecto","No aparece pago","Otros"];
+		}else if (respuesta.value == "Actualizar Datos"){
+			var optionArray = ["","De cuenta","Personales","Direccion","Otros"];
 		}
 		
 	for(option = 0;option < optionArray.length; option++){
