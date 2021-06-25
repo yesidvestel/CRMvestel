@@ -598,9 +598,19 @@ class Tickets Extends CI_Controller
             }
 
     }
-    
+$hiso_devolucion_de_equipo=true;
+    if($ticket->detalle=="Suspension Internet" || $ticket->detalle=="Suspension Combo"){
+
+        $historiales=$this->db->get_where("historiales",array('id_user' => $ticket->cid,'tipos' => 'Devolucion Equipo'))->result_array();
+        if(!empty($historiales) && count($historiales)!=0){
+            $hiso_devolucion_de_equipo=false;
+        }
+    }
+
 if($ya_agrego_equipos==false){
         echo json_encode(array('status' => 'Error', 'message' =>"Por favor agrega un equipo a esta orden antes de cerrarla ", 'pstatus' => "error"));
+}else if($hiso_devolucion_de_equipo==false){
+        echo json_encode(array('status' => 'Error', 'message' =>"Por favor realice la devolicin del equipo antes de cerrar la orden ", 'pstatus' => "error"));
 }else{
 
 		$tv = $temporal->tv;
