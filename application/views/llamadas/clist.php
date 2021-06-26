@@ -11,8 +11,8 @@
 		
         <div class="grid_3 grid_4 table-responsive animated fadeInRight">
 			
-            <h5><?php echo $this->lang->line('Supplier') ?></h5>
-
+            <h5><?php echo $this->lang->line('Supplier')  ?></h5>
+			
             <hr>
             <table id="clientstable" class="table-striped" cellspacing="0" width="100%">
                 <thead>
@@ -50,6 +50,39 @@
                 </tr>
                 </tfoot>
             </table>
+			<div class="row">
+				<table class="table table-striped">
+					<thead>
+					<tr>
+						<th><?php echo $this->lang->line('Files') ?></th>
+					</tr>
+					</thead>
+					<tbody id="activity">
+					<?php foreach ($attach as $row) {
+
+						echo '<tr><td><a data-url="' . base_url() . 'customers/file_handling?op=delete&name=' . $row['col1'] . '&invoice=' . $_GET['id'] . '" class="aj_delete"><i class="btn-danger btn-lg icon-trash-a"></i></a> <a class="n_item" href="' . base_url() . 'userfiles/attach/' . $row['col1'] . '"> ' . $row['col1'] . ' </a></td></tr>';
+					} ?>
+
+					</tbody>
+				</table>
+					<!-- The fileinput-button span is used to style the file input field as button -->
+					<span class="btn btn-success fileinput-button">
+					<i class="glyphicon glyphicon-plus"></i>
+
+						<!-- The file input field used as target for the file upload widget -->
+					<input id="fileupload" type="file" name="files[]" multiple>
+					</span>
+					<br>
+					<pre>tipos: gif, jpeg, png, docx, docs, txt, pdf, xls </pre>
+					<br>
+					<!-- The global progress bar -->
+					<div id="progress" class="progress">
+						<div class="progress-bar progress-bar-success"></div>
+					</div>
+					<!-- The container for the uploaded files -->
+					<table id="files" class="files"></table>
+					<br>
+			</div>
         </div>
     </div>
 </article>
@@ -137,6 +170,7 @@
         </div>
     </div>
 </div>
+
 <script type="text/javascript">
 	function change(tipo, respuesta){
 		tipo = document.getElementById(tipo);
@@ -218,6 +252,56 @@
         });
     });
 </script>
+<script src="<?php echo base_url('assets/myjs/jquery.ui.widget.js') ?>"></script>
+<!-- The basic File Upload plugin -->
+<script src="<?php echo base_url('assets/myjs/jquery.fileupload.js') ?>"></script>
+<script>
+/*jslint unparam: true */
+    /*global window, $ */
+    $(function () {
+        'use strict';
+        // Change this to the location of your server-side upload handler:
+        var url = '<?php echo base_url() ?>llamadas/file_handling?id=<?php echo $_GET['id'] ?>';
+        $('#fileupload').fileupload({
+            url: url,
+            dataType: 'json',
+            done: function (e, data) {
+                $.each(data.result.files, function (index, file) {
+                    $('#files').append('<tr><td><a data-url="<?php echo base_url() ?>llamadas/file_handling?op=delete&name=' + file.name + '&invoice=<?php echo $_GET['id'] ?>" class="aj_delete"><i class="btn-danger btn-sm icon-trash-a"></i> ' + file.name + ' </a></td></tr>');
+
+                });
+            },
+            progressall: function (e, data) {
+                var progress = parseInt(data.loaded / data.total * 100, 10);
+                $('#progress .progress-bar').css(
+                    'width',
+                    progress + '%'
+                );
+            }
+        }).prop('disabled', !$.support.fileInput)
+            .parent().addClass($.support.fileInput ? undefined : 'disabled');
+    });
+
+    $(document).on('click', ".aj_delete", function (e) {
+        e.preventDefault();
+
+        var aurl = $(this).attr('data-url');
+        var obj = $(this);
+
+        jQuery.ajax({
+
+            url: aurl,
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                obj.closest('tr').remove();
+                obj.remove();
+            }
+        });
+
+    });
+</script>
+
 <div id="delete_model" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">

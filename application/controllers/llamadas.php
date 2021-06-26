@@ -38,11 +38,12 @@ class llamadas extends CI_Controller
 
     public function index()
     {
-
+		$id = $this->input->get('id');
+		$data['attach'] = $this->llamadas->attach($id);
         $head['usernm'] = $this->aauth->get_user()->username;
         $head['title'] = 'Llamadas';
         $this->load->view('fixed/header', $head);
-        $this->load->view('llamadas/clist');
+        $this->load->view('llamadas/clist', $data);
         $this->load->view('fixed/footer');
     }
 
@@ -185,7 +186,29 @@ class llamadas extends CI_Controller
 
 
     }
+	public function file_handling()
+    {
+        if($this->input->get('op')) {
+            $name = $this->input->get('name');
+            $invoice = $this->input->get('invoice');
+            if ($this->llamadas->meta_delete($invoice, 7, $name)){
+                echo json_encode(array('status' => 'Success'));
+            }
+        }
+        else {
+            $id = $this->input->get('id');
+            $this->load->library("Uploadhandler_generic", array(
+                'accept_file_types' => '/\.(gif|jpe?g|png|docx|docs|txt|pdf|xls)$/i', 'upload_dir' => FCPATH . 'userfiles/attach/', 'upload_url' => base_url() . 'userfiles/attach/'
+            ));
+            $files = (string)$this->uploadhandler_generic->filenaam();
+            if ($files != '') {
 
+                $this->llamadas->meta_insert($id, 7, $files);
+            }
+        }
+
+
+    }
 
     public function translist()
     {
