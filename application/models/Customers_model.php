@@ -214,7 +214,10 @@ class Customers_model extends CI_Model
     }
 	public function meta_delete($id,$type,$name)
     {
-        if (@unlink(FCPATH . 'userfiles/attach/' . $name)) {
+        $x=@unlink(FCPATH . 'userfiles/attach/' . $name);
+        $x=@unlink(FCPATH . 'userfiles/attach/thumbnail/' . $name);
+        //$x=true;
+        if ($x) {
             return $this->db->delete('meta_data', array('rid' => $id, 'type' => $type, 'col1' => $name));
         }
     }

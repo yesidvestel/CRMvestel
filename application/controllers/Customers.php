@@ -228,7 +228,8 @@ class Customers extends CI_Controller
         if($this->input->get('op')) {
             $name = $this->input->get('name');
             $invoice = $this->input->get('invoice');
-            if ($this->customers->meta_delete($invoice,6, $name)){
+            $type = $this->input->get('type');
+            if ($this->customers->meta_delete($invoice,$type, $name)){
                 echo json_encode(array('status' => 'Success'));
             }
         }
