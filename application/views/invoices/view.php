@@ -875,9 +875,6 @@
                         </div>
 						<div class="col-xs-6 mb-1"><label
                                     for="pmethod">Internet</label>
-                                    
-                            <?php $refer_var =strtolower(str_replace(' ', '', $invoice['refer'])); ?>
-							<?php if ($refer_var=='yopal') {?>
                             <select name="internet" class="form-control mb-1">
                                 <option value="por_defecto">-><?php echo $invoice['combo'] ?></option>
 										<?php
@@ -887,7 +884,7 @@
 												echo "<option value='$title'>$title</option>";
 											}
 											?>
-                            </select><?php } ?>
+                            </select>
                         </div>						
 						
 						
