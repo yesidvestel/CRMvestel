@@ -70,8 +70,10 @@ class Products extends CI_Controller
 
     public function add()
     {
-        $data['cat'] = $this->categories_model->category_list();
+        $this->load->model('customers_model', 'customers');
+		$data['cat'] = $this->categories_model->category_list();
         $data['warehouse'] = $this->categories_model->warehouse_list();
+		$data['customergrouplist'] = $this->customers->group_list();
         $head['title'] = "Add Product";
         $head['usernm'] = $this->aauth->get_user()->username;
         $this->load->view('fixed/header', $head);
@@ -181,6 +183,7 @@ class Products extends CI_Controller
         $catid = $this->input->post('product_cat');
         $warehouse = $this->input->post('product_warehouse');
         $product_code = $this->input->post('product_code');
+		$sede = $this->input->post('sede');
         $product_price = $this->input->post('product_price');
         $factoryprice = $this->input->post('fproduct_price');
         $taxrate = $this->input->post('product_tax');
@@ -189,7 +192,7 @@ class Products extends CI_Controller
         $product_qty_alert = $this->input->post('product_qty_alert');
         $product_desc = $this->input->post('product_desc');
         if ($catid) {
-            $this->products->addnew($catid, $warehouse, $product_name, $product_code, $product_price, $factoryprice, $taxrate, $disrate, $product_qty,$product_qty_alert,$product_desc);
+            $this->products->addnew($catid, $warehouse, $product_name, $product_code, $sede, $product_price, $factoryprice, $taxrate, $disrate, $product_qty,$product_qty_alert,$product_desc);
         }
 
 
@@ -244,13 +247,18 @@ class Products extends CI_Controller
 
     public function edit()
     {
-        $pid = $this->input->get('id');
+        $this->load->model('customers_model', 'customers');
+		$pid = $this->input->get('id');
         $this->db->select('*');
         $this->db->from('products');
         $this->db->where('pid', $pid);
         $query = $this->db->get();
         $data['product'] = $query->row_array();
+		$prod = $this->db->get_where('products', array('pid' => $pid))->row();
+		$sedep = $prod->sede;
         $data['cat_ware'] = $this->categories_model->cat_ware($pid);
+		$data['customergrouplist'] = $this->customers->group_list();
+		$data['sede'] = $this->products->sede_list($sedep);
         $data['warehouse'] = $this->categories_model->warehouse_list();
         $data['cat'] = $this->categories_model->category_list();
         $head['title'] = "Edit Product";
@@ -288,6 +296,7 @@ class Products extends CI_Controller
         $product_name = $this->input->post('product_name');
         $catid = $this->input->post('product_cat');
         $warehouse = $this->input->post('product_warehouse');
+		$sede = $this->input->post('sede');
         $product_code = $this->input->post('product_code');
         $product_price = $this->input->post('product_price');
         $factoryprice = $this->input->post('fproduct_price');
@@ -297,7 +306,7 @@ class Products extends CI_Controller
         $product_qty_alert = $this->input->post('product_qty_alert');
         $product_desc = $this->input->post('product_desc');
         if ($pid) {
-            $this->products->edit($pid, $catid, $warehouse, $product_name, $product_code, $product_price, $factoryprice, $taxrate, $disrate, $product_qty,$product_qty_alert,$product_desc);
+            $this->products->edit($pid, $catid, $warehouse, $sede, $product_name, $product_code, $product_price, $factoryprice, $taxrate, $disrate, $product_qty,$product_qty_alert,$product_desc);
         }
 
 

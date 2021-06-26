@@ -690,38 +690,7 @@ if($ya_agrego_equipos==false){
         
         $datay['totaldiscount']=0;			
                 if($data['combo']!==no || $inter===no){
-                    if($data['combo']==='1Mega' || $inter==='1Mega'){
-                        $datay['pid']=125;
-                    }else if($data['combo']==='2Megas' || $inter==='2Megas'){
-                        $datay['pid']=126;
-                    }else if($data['combo']==='3Megas'|| $inter==='3Megas'){
-                        $datay['pid']=24;
-					}else if($data['combo']==='3MegasV'|| $inter==='3MegasV'){
-                        $datay['pid']=243;
-					}else if($data['combo']==='3MegasSolo' || $inter==='3MegasSolo'){
-                        $datay['pid']=170;
-                    }else if($data['combo']==='5Megas' || $inter==='5Megas'){
-                        $datay['pid']=25;
-					}else if($data['combo']==='5MegasV'|| $inter==='5MegasV'){
-                        $datay['pid']=244;
-					}else if($data['combo']==='5MegasVS'|| $inter==='5MegasVS'){
-                        $datay['pid']=247;
-					}else if($data['combo']==='5MegasSolo'|| $inter==='5MegasSolo'){
-                        $datay['pid']=171;					
-                    }else if($data['combo']==='5MegasD'|| $inter==='5MegasD'){
-                        $datay['pid']=223;					
-                    }else if($data['combo']==='10Megas'|| $inter==='10Megas'){
-                        $datay['pid']=26;
-					}else if($data['combo']==='10MegasV'|| $inter==='10MegasV'){
-                        $datay['pid']=245;
-					}else if($data['combo']==='10MegasVS'|| $inter==='10MegasVS'){
-                        $datay['pid']=246;
-					}else if($data['combo']==='10MegasSolo'|| $inter==='10MegasSolo'){
-                        $datay['pid']=172;
-                    }else if($data['combo']==='50Megas'|| $inter==='50Megas'){
-                        $datay['pid']=222;
-                    }
-                    $producto = $this->db->get_where('products',array('pid'=>$datay['pid']))->row();
+                    $producto = $this->db->get_where('products',array('product_name'=>$data['combo']))->row();
                     $x=intval($producto->product_price);
                     $x=($x/31)*$diferencia->days;
                     $total+=$x;
@@ -738,7 +707,7 @@ if($ya_agrego_equipos==false){
                 }
                 
                 if($data['television']!==no AND $data['refer']!==Mocoa || $tv!==no && $ciudad!==Mocoa){                
-                    $producto = $this->db->get_where('products',array('pid'=>27))->row();
+                    $producto = $this->db->get_where('products',array('product_name'=>$data['television']))->row();
                     $datay['pid']=$producto->pid;
                     $datay['product']=$producto->product_name;
 					$datay['qty']=1;

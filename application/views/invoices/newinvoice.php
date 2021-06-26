@@ -300,7 +300,14 @@
                                     </select></td>
 								<td colspan="2">Internet 
 								<select name="combo" class="selectpicker form-control">
-										<option value="-">-</option>
+										<option value="no">No</option>
+										<?php
+											foreach ($paquete as $row) {
+												$cid = $row['pid'];
+												$title = $row['product_name'];
+												echo "<option value='$title'>$title</option>";
+											}
+											?>
 										
                                     </select></td>
 								<td colspan="2">Punto Adicional 
@@ -312,8 +319,14 @@
                                 <td align="right" colspan="6"><input type="submit" class="btn btn-success sub-btn" value="<?php echo $this->lang->line('Generate Invoice') ?> " id="submit-data" data-loading-text="Creating...">
 
                                 </td>
+								
                             </tr>
-
+							<tr>
+								<th>Significado Letras Pequetes</th>
+							</tr>
+							<tr>
+							<td>V: Villanueva &nbsp S: Solo &nbsp D: Dedicado &nbsp C: Comercial &nbsp &nbsp &nbsp I: Institucional</td>
+							</tr>
 
                             </tbody>
                         </table>
@@ -735,12 +748,6 @@
                                    class="form-control margin-bottom" name="comentario" id="mcustomer_comentario_s">
                         </div>
                     </div>
-                    
-
-                    
-
-
-                
 					</div>
                 </div>
                 <!-- Modal Footer -->
@@ -748,6 +755,7 @@
                     <button type="button" class="btn btn-default"
                             data-dismiss="modal"><?php echo $this->lang->line('Close') ?></button>
                     <input type="submit" id="mclient_add" class="btn btn-primary submitBtn" value="ADD"/>
+										
                 </div>
             </form>
         </div>
@@ -767,33 +775,7 @@ alert(selected);
 }
 </script>
 <script type="text/javascript">	
-	var combo_Yopal = new Array ("no","1Mega","2Megas","3Megas","3MegasSolo","5Megas","5MegasSolo","10Megas","10MegasSolo","15Megas","15MegasSolo","20Megas","20MegasSolo");
-	var combo_Monterrey = new Array ("no","1Mega","2Megas","3Megas","3MegasSolo","5Megas","5MegasSolo","5MegasD","10Megas","10MegasSolo","50Megas");
-	var combo_Villanueva = new Array ("no","1Mega","3MegasV","3MegasVS","5MegasV","5MegasVS","5MegasVD","10MegasV","10MegasVS","30MegasV","50MegasV");
-							//crear funcion que ejecute el cambio
-							function cambia(){
-								var refer;
-								refer = document.formulario2.refer[document.formulario2.refer.			selectedIndex].value;
-								//se verifica la seleccion dada
-								if(refer!=0){
-									mis_opts=eval("combo_"+refer);
-									//definimos cuantas obciones hay
-									num_opts=mis_opts.length;
-									//marcamos obciones en el selector
-									document.formulario2.combo.length = num_opts;
-									//colocamos las obciones array
-									for(i=0; i<num_opts; i++){
-										document.formulario2.combo.options[i].value=mis_opts[i];
-										document.formulario2.combo.options[i].text=mis_opts[i];
-									}
-										}else{
-											//resultado si no hay obciones
-											document.formulario2.combo.length = 1;
-											document.formulario2.combo.options[0].value="-"
-											document.formulario2.combo.options[0].text="-"											
-								}
-								document.formulario2.combo.options[0].selected = true;
-							}	
+	
 	var Iplocal_2 = new Array ("10.0.0.1");
 	var Iplocal_3 = new Array ("80.0.0.1");
 	var Iplocal_4 = new Array ("10.1.100.1");

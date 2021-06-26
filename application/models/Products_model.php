@@ -176,11 +176,12 @@ class Products_model extends CI_Model
     }
 	
 
-    public function addnew($catid, $warehouse, $product_name, $product_code, $product_price, $factoryprice, $taxrate, $disrate, $product_qty,$product_qty_alert,$product_desc)
+    public function addnew($catid, $warehouse, $sede, $product_name, $product_code, $product_price, $factoryprice, $taxrate, $disrate, $product_qty,$product_qty_alert,$product_desc)
     {
         $data = array(
             'pcat' => $catid,
             'warehouse' => $warehouse,
+			'sede' => $sede,
             'product_name' => $product_name,
             'product_code' => $product_code,
             'product_price' => $product_price,
@@ -229,11 +230,12 @@ class Products_model extends CI_Model
 
     }
 
-    public function edit($pid, $catid, $warehouse, $product_name, $product_code, $product_price, $factoryprice, $taxrate, $disrate, $product_qty,$product_qty_alert,$product_desc)
+    public function edit($pid, $catid, $warehouse, $sede, $product_name, $product_code, $product_price, $factoryprice, $taxrate, $disrate, $product_qty,$product_qty_alert,$product_desc)
     {
         $data = array(
             'pcat' => $catid,
             'warehouse' => $warehouse,
+			'sede' => $sede,
             'product_name' => $product_name,
             'product_code' => $product_code,
             'product_price' => $product_price,
@@ -311,6 +313,15 @@ FROM products ");
         $this->db->where('warehouse', $id);
         $query = $this->db->get();
         return $query->result_array();
+
+    }
+	public function sede_list($sedep)
+    {
+        $this->db->select('*');
+        $this->db->from('customers_group');
+        $this->db->where('id', $sedep);
+        $query = $this->db->get();
+        return $query->row_array();
 
     }
 	public function proveedor_list($id)

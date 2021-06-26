@@ -49,7 +49,9 @@ class Invoices extends CI_Controller
         $data['exchange'] = $this->plugins->universal_api(5);
         $data['customergrouplist'] = $this->customers->group_list();
         $data['lastinvoice'] = $this->invocies->lastinvoice();			
-        $data['warehouse'] = $this->invocies->warehouses();		
+        $data['warehouse'] = $this->invocies->warehouses();
+		$ttype = $this->input->get('type');
+		$data['paquete'] = $this->invocies->paquetes();
         $data['terms'] = $this->invocies->billingterms();
         $data['currency'] = $this->invocies->currencies();
         $head['title'] = "New Invoice";
@@ -675,6 +677,7 @@ class Invoices extends CI_Controller
         $data['customergrouplist'] = $this->customers->group_list();
         $data['terms'] = $this->invocies->billingterms();
         $data['currency'] = $this->invocies->currencies();
+		$data['paquete'] = $this->invocies->paquetes();
         $data['invoice'] = $this->invocies->invoice_details($tid, $this->limited);
         if ($data['invoice']) $data['products'] = $this->invocies->invoice_products($tid);
         $head['title'] = "Edit Invoice #$tid";
@@ -1060,6 +1063,7 @@ class Invoices extends CI_Controller
         $head['title'] = "View Invoice $tid";
         $data['invoice'] = $this->invocies->invoice_details($tid, $this->limited);
         $data['attach'] = $this->invocies->attach($tid);
+		$data['paquete'] = $this->invocies->paquetes();
         if ($data['invoice']) $data['products'] = $this->invocies->invoice_products($tid);
         if ($data['invoice']) $data['activity'] = $this->invocies->invoice_transactions($tid);
 

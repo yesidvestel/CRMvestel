@@ -66,6 +66,31 @@
 
                     </div>
                 </div>
+				<div class="form-group row">
+
+                    <label class="col-sm-2 col-form-label"
+                           for="product_cat">sede</label>
+
+                    <div class="col-sm-6">
+                        <select name="sede" class="form-control">
+                            <?php
+                            echo '<option value="' . $sede['id'] . '">' . $sede['title'] . ' (S)</option>
+								<option value="">-</option>';
+                            foreach ($customergrouplist as $row) {
+                                    $cid = $row['id'];
+                                    $title = $row['title'];
+                                    $selected="";
+                                    if($sede_accede==$cid){
+                                        $selected="selected='true'";
+                                    }
+                                    echo "<option ".$selected." value='$cid'>$title</option>";
+                                    
+                                }
+                            ?>
+                        </select>
+						<small>Seleccione solo si es un SERVICIO</small>
+                    </div>
+                </div>
                 <div class="form-group row">
 
                     <label class="col-sm-2 col-form-label"
