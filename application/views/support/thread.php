@@ -167,7 +167,7 @@
 				<div class="col-sm-2">
 					<a href="#pop_model4" data-toggle="modal" onclick="funcion_status();" data-remote="false" class="btn btn- btn-black mb-1" title="Change Status"><span></span> DIVIDIR ORDEN</a>
 				</div>
-                <?php if($orden->detalle="Suspension Internet" || $orden->detalle="Suspension Combo"){ ?>
+                <?php if($orden->detalle=="Suspension Internet" || $orden->detalle=="Suspension Combo"){ ?>
                 <div class="col-sm-2" style="margin-left: 8%;">          
                     <a href="#pop_model5" data-toggle="modal" onclick="funcion_status();" data-remote="false" class="btn btn- btn-blue mb-1" title="Change Status"
                     > DEVOLVER EQUIPO</a>
@@ -196,24 +196,28 @@
 
             <div class="modal-body">
                 <form id="form_model3">
-                <div id="customerpanel" class="form-group row">
-                    <label for="toBizName"
-                           class="caption col-sm-2 col-form-label">Codigo equipo<span
+                <div id="customerpanel" class="row">
+                    <label for="codigo"
+                           class="caption col-sm-6 col-form-label">Codigo equipo<span
                                 style="color: red;">*</span></label>                    
-                    <div class="col-sm-6">
-                        <?php $lista=$this->db->get_where("equipos",array('asignado' =>$orden->cid))->result_array(); ?>
+                    <div class="col-sm-12">
+                        <?php $lista_equipos=$this->db->get_where("equipos",array('asignado' =>$orden->cid))->result_array(); ?>
+                        <select name="codigo" class="form-control">
+                            <?php foreach ($lista_equipos as $key => $equipo) { ?>
+                                <option><?= $equipo['codigo']." | ".$equipo['mac']." | ".$equipo['serial'] ?></option>
+                            <?php } ?>
+                        </select>
                         
-                        <input type="text" class="form-control" name="codigo" >
                     </div>
                                         
                 </div>
-                <div id="customerpanel" class="form-group row">
+                <div id="customerpanel" class="row">
                     <label for="toBizName"
                            class="caption col-sm-2 col-form-label">Motivo<span
                                 style="color: red;">*</span></label>
                     <input type="hidden" name="iduser" value="<?php echo $orden->cid ?>"></input>
 
-                    <div class="col-sm-6">
+                    <div class="col-sm-12">
                         <input type="text" class="form-control" name="nota">
                     </div>
                                         
@@ -222,7 +226,7 @@
                     <label for="toBizName"
                            class="caption col-sm-2 col-form-label">Estado<span
                                 style="color: red;">*</span></label>                    
-                    <div class="col-sm-6">
+                    <div class="col-sm-12">
                         <select name="estado" class="form-control">
                             <option value="Bueno">Bueno</option>
                             <option value="Malo">Malo</option>                      
