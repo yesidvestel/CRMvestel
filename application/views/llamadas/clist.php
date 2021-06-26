@@ -181,10 +181,12 @@
 			var optionArray = ["","Correo de Voz","Numero no esta en uso","Timbra pero no contestan"];
 		}else if (respuesta.value == "Reclamo"){
 			var optionArray = ["","Mal servicio","Mala atencion","Otros"];
-		}else if (respuesta.value == "Estado de Cuenta"){
+		}else if (respuesta.value == "Estado de cuenta"){
 			var optionArray = ["","Valor Incorrecto","No aparece pago","Otros"];
 		}else if (respuesta.value == "Actualizar Datos"){
 			var optionArray = ["","De cuenta","Personales","Direccion","Otros"];
+		}else if (respuesta.value == "Otros"){
+			var optionArray = ["","Otros"];
 		}
 		
 	for(option = 0;option < optionArray.length; option++){
