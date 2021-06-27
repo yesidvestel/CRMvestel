@@ -129,83 +129,11 @@ class Invoices extends CI_Controller
                             if(strpos(strtolower($item_invoic['product']), "tele")!==false){
                                 $_tiene_television=true;
                             }else{
-                                if($item_invoic['product']=="1Mega" ||$item_invoic['product']=="1 Mega"){
-                                    $_tiene_internet=true;
-                                    $internet="1 Mega";
-                                }else if($item_invoic['product']=="2Megas" ||$item_invoic['product']=="2 Megas"){
-                                    $_tiene_internet=true;
-                                    $internet="2 Megas";
-                                }else if($item_invoic['product']=="3Megas"|| $item_invoic['product']=="3 Megas"){
-                                    $_tiene_internet=true;
-                                    $internet="3 Megas";
-                                }else if($item_invoic['product']=="3MegasVC"|| $item_invoic['product']=="3 MegasVC"){
-                                    $_tiene_internet=true;
-                                    $internet="3MegasVC";
-                                }else if($item_invoic['product']=="3MegasV"|| $item_invoic['product']=="3 MegasV"){
-                                    $_tiene_internet=true;
-                                    $internet="3MegasV";
-                                }else if($item_invoic['product']=="3MegasSolo"|| $item_invoic['product']=="3 MegasSolo"){
-                                    $_tiene_internet=true;
-                                    $internet="3MegasSolo";
-                                }else if($item_invoic['product']=="5Megas"||$item_invoic['product']=="5 Megas"){
-                                    $_tiene_internet=true;
-                                    $internet="5Megas";
-                                }else if($item_invoic['product']=="5MegasVS"||$item_invoic['product']=="5MegasVS"){
-                                    $_tiene_internet=true;
-                                    $internet="5MegasVS";
-                                }else if($item_invoic['product']=="5MegasV"||$item_invoic['product']=="5MegasV"){
-                                    $_tiene_internet=true;
-                                    $internet="5MegasV";
-                                }else if($item_invoic['product']=="5 Megas Dedicadas"){
-                                    $_tiene_internet=true;
-                                    $internet="5 Megas Dedicadas";
-                                }else if($item_invoic['product']=="5MegasSolo"){
-                                    $_tiene_internet=true;
-                                    $internet="5MegasSolo";
-                                }else if($item_invoic['product']=="10Megas"||$item_invoic['product']=="10 Megas"){
-                                    $_tiene_internet=true;
-                                    $internet="10 Megas";
-                                }else if($item_invoic['product']=="10MegasSolo"){
-                                    $_tiene_internet=true;
-                                    $internet="10MegasSolo";
-                                }else if($item_invoic['product']=="10MegasV"){
-                                    $_tiene_internet=true;
-                                    $internet="10MegasV";
-                                }else if($item_invoic['product']=="10MegasVS"){
-                                    $_tiene_internet=true;
-                                    $internet="10MegasVS";
-                                }else if($item_invoic['product']=="15MegasSolo"){
-                                    $_tiene_internet=true;
-                                    $internet="15MegasSolo";
-                                }else if($item_invoic['product']=="15Megas"){
-                                    $_tiene_internet=true;
-                                    $internet="15Megas";
-                                }else if($item_invoic['product']=="20Megas"){
-                                    $_tiene_internet=true;
-                                    $internet="20Megas";
-                                }else if($item_invoic['product']=="20MegasSolo"){
-                                    $_tiene_internet=true;
-                                    $internet="20MegasSolo";
-                                }else if($item_invoic['product']=="30MegasV"){
-                                    $_tiene_internet=true;
-                                    $internet="30MegasV";
-                                }else if($item_invoic['product']=="50Megas"||$item_invoic['product']=="50 Megas"){
-                                    $_tiene_internet=true;
-                                    $internet="50 Megas";
-                                }else if($item_invoic['product']=="3MegasSolo"){
-                                    $_tiene_internet=true;
-                                    $internet="3MegasSolo";
-                                }else if($item_invoic['product']=="5MegasSolo"){
-                                    $_tiene_internet=true;
-                                    $internet="5MegasSolo";
-                                }else if($item_invoic['product']=="10MegasSolo"){
-                                    $_tiene_internet=true;
-                                    $internet="10MegasSolo";
-                                }else if($item_invoic['product']=="5MegasD"){
-                                    $_tiene_internet=true;
-                                    $internet="5MegasD";
-                                }else if($item_invoic['product']=="Punto Adicional"){
+                                if($item_invoic['product']=="Punto Adicional"){
                                     $puntos=$item_invoic['qty'];
+                                }else if(strpos(strtolower($item_invoic['product']), "mega")!==false){
+                                    $_tiene_internet=true;
+                                    $internet=$item_invoic['product'];
                                 }
                             }
 
@@ -264,73 +192,24 @@ class Invoices extends CI_Controller
                             }                                                                                    
                             //estan listos los datos de tv item invoice falta llenar los campos faltantes 
                             //falta llenar los datos de internet y posteriormente insertar
-                            if($internet=="1Mega" ||$internet=="1 Mega"){
-                                $_tiene_internet=true;
-                                $internet="1 Mega";
-                            }else if($internet=="2Megas" ||$internet=="2 Megas"){
-                                $_tiene_internet=true;
-                                $internet="2 Megas";
-                            }else if($internet=="3Megas"|| $internet=="3 Megas"){
-                                $_tiene_internet=true;
-                                $internet="3 Megas";
-                            }else if($internet=="5Megas"||$internet=="5 Megas"){
-                                $_tiene_internet=true;
-                                $internet="5Megas";
-                            }else if($internet=="10Megas"||$internet=="10 Megas"){
-                                $_tiene_internet=true;
-                                $internet="10 Megas";
-                            }else if($internet=="15Megas"||$internet=="15 Megas"){
-                                $_tiene_internet=true;
-                                $internet="15Megas";
-                            }else if($internet=="20Megas"||$internet=="20 Megas"){
-                                $_tiene_internet=true;
-                                $internet="20Megas";
-                            }else if($internet=="50Megas"||$internet=="50 Megas"){
-                                $_tiene_internet=true;
-                                $internet="50 Megas";
-                            }else if($internet=="3MegasSolo"){
-                                $_tiene_internet=true;
-                                $internet="3MegasSolo";
-                            }else if($internet=="5MegasSolo"){
-                                $_tiene_internet=true;
-                                $internet="5MegasSolo";
-                            }else if($internet=="10MegasSolo"){
-                                $_tiene_internet=true;
-                                $internet="10MegasSolo";
-                            }else if($internet=="5MegasD"){
-                                $_tiene_internet=true;
-                                $internet="5MegasD";
-                            }else if($internet=="3MegasV"){
-                                $_tiene_internet=true;
-                                $internet="3MegasV";
-                            }else if($internet=="5MegasV"){
-                                $_tiene_internet=true;
-                                $internet="5MegasV";
-                            }else if($internet=="5MegasVS"){
-                                $_tiene_internet=true;
-                                $internet="5MegasVS";
-                            }else if($internet=="10MegasV"){
-                                $_tiene_internet=true;
-                                $internet="10MegasV";
-                            }else if($internet=="10MegasVS"){
-                                $_tiene_internet=true;
-                                $internet="10MegasVS";
-                            }
 
                             if($_tiene_internet==true){
-                                $producto_internet=$this->db->get_where("products", array('product_name' =>$internet))->row();
+                                
+                                $str1=str_replace(" ", "", strtolower($internet));
+                                $producto_internet=$this->db->query('SELECT * FROM products WHERE lower(REPLACE(product_name," ","")) = "'.$str1.'"')->result_array();
+                                $producto_internet=$producto_internet[0];
                                 $internet_data['tid']=$factura_data['tid'];
-                                $internet_data['pid']=$producto_internet->pid;
-                                $internet_data['product']=$producto_internet->product_name;
+                                $internet_data['pid']=$producto_internet['pid'];
+                                $internet_data['product']=$producto_internet['product_name'];
                                 $internet_data['qty']=1;
-                                $internet_data['price']=$producto_internet->product_price;
+                                $internet_data['price']=$producto_internet['product_price'];
                                 $internet_data['tax']=0;
                                 $internet_data['discount']=0;
-                                $internet_data['subtotal']=$producto_internet->product_price;
+                                $internet_data['subtotal']=$producto_internet['product_price'];
                                 $internet_data['totaldiscount']=0;
                                 $internet_data['totaltax']=0;
-                                $factura_data['subtotal']+=$producto_internet->product_price;
-                                $factura_data['total']+=$producto_internet->product_price;
+                                $factura_data['subtotal']+=$producto_internet['product_price'];
+                                $factura_data['total']+=$producto_internet['product_price'];
                                 
                                     $this->db->insert("invoice_items",$internet_data);
                                 
