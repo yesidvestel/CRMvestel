@@ -296,10 +296,23 @@ class Reports_model extends CI_Model
             where datetable.date BETWEEN date_format("'.(date("Y-m-d",strtotime($fecha->format("Y-m")."-01"."- 1 year"))).'","%Y-%m-%d") 
             and date_format("'.$fecha->format("Y-m-t").'","%Y-%m-%d")
             GROUP by YEAR(datetable.date),MONTH(datetable.date)';
-
-        $estadistica=$this->db->query($header_sql.' tickets.detalle="Instalacion" and tickets.section like "%mega%" and tickets.section like "%Television%"  '.$footer_sql)->result_array();
-        
-        //echo date("d-m-Y",strtotime($fecha->format("Y-m")."-01"."- 1 year"));
+		//nuevo codigo //falta utilizar el last_date($fecha); y colocar $fecha->format("Y-m")."01"; para el tema de las fechas
+        $estadistica=array();
+		
+        $estadistica['instalaciones_tv_e_internet']=$this->db->query($header_sql.' tickets.detalle="Instalacion" and tickets.section like "%mega%" and tickets.section like "%Television%"  '.$footer_sql)->result_array();
+        $estadistica['instalaciones_tv']=$this->db->query($header_sql.' tickets.detalle="Instalacion" and tickets.section not like "%mega%" '.$footer_sql)->result_array();
+        $estadistica['instalaciones_internet']=$this->db->query($header_sql.' tickets.detalle="Instalacion" and tickets.section not like "%Television%"  '.$footer_sql)->result_array();
+        $estadistica['instalaciones_Agregar_Tv']=$this->db->query($header_sql.' tickets.detalle="AgregarTelevision" '.$footer_sql)->result_array();
+        $estadistica['instalaciones_AgregarInternet']=$this->db->query($header_sql.' tickets.detalle="AgregarInternet" '.$footer_sql)->result_array();
+        $estadistica['instalaciones_Traslado']=$this->db->query($header_sql.' tickets.detalle="Traslado" '.$footer_sql)->result_array();
+        $estadistica['instalaciones_Revision']=$this->db->query($header_sql.' tickets.detalle like"%Revision%" '.$footer_sql)->result_array();
+        $estadistica['instalaciones_Reconexion']=$this->db->query($header_sql.' tickets.detalle like "%Reconexion%" '.$footer_sql)->result_array();
+        $estadistica['instalaciones_Suspension_Combo']=$this->db->query($header_sql.' tickets.detalle="Suspension Combo" '.$footer_sql)->result_array();
+        $estadistica['instalaciones_Suspension_Internet']=$this->db->query($header_sql.' tickets.detalle="Suspension Internet" '.$footer_sql)->result_array();
+        $estadistica['instalaciones_Suspension_Television']=$this->db->query($header_sql.' tickets.detalle="Suspension Television" '.$footer_sql)->result_array();
+        $estadistica['instalaciones_Corte_Television']=$this->db->query($header_sql.' tickets.detalle="Corte Television" '.$footer_sql)->result_array();
+        //para seguir agregando ordenes segun el tipo apartir de aca
+		//echo date("d-m-Y",strtotime($fecha->format("Y-m")."-01"."- 1 year"));
 
         return $estadistica;
     }
