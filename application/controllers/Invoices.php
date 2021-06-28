@@ -267,7 +267,12 @@ class Invoices extends CI_Controller
                                 }
                                 $factura_data['term']=$value2->term;
                                 $factura_data['rec']=$value2->rec;
-                                $factura_data['ron']=$value2->ron;
+                                if($value['usu_estado']=="Compromiso"){
+                                    $factura_data['ron']=$value['usu_estado'];
+                                }else{
+                                    $factura_data['ron']=$value2->ron;    
+                                }
+                                
                                 $factura_data['multi']=$value2->multi;
                                 
                                     

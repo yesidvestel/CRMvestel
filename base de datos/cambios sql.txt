@@ -1,4 +1,6 @@
-﻿ALTER TABLE `anulaciones` ADD `razon_anulacion` TEXT NOT NULL AFTER `transactions_id`;
+﻿ALTER TABLE `invoices` CHANGE `ron` `ron` ENUM('Activo','Instalar','Cortado','Suspendido','Exonerado','Cartera','Convenio','Depurado','Retirado','Compromiso') CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+-------------------------------
+ALTER TABLE `anulaciones` ADD `razon_anulacion` TEXT NOT NULL AFTER `transactions_id`;
 ALTER TABLE `anulaciones` ADD `usuario_anula` VARCHAR(100) NOT NULL AFTER `razon_anulacion`;
 
 
