@@ -134,7 +134,7 @@ class llamadas extends CI_Controller
         $responsable = $this->input->post('responsable');
         $fcha = $this->input->post('fcha');
 		$fecha = datefordatabase($fcha);
-        $hra = date("h:i",strtotime($this->input->post('hra')));
+        $hra = date("H:i",strtotime($this->input->post('hra')));
         $notes = $this->input->post('notes');        
         $this->llamadas->add($iduser, $tllamada, $trespuesta, $drespuesta, $responsable, $fecha, $hra, $notes);
         echo json_encode(array('status' => 'Success', 'message' => "Agregado Exitoso"));
