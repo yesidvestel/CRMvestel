@@ -1022,7 +1022,11 @@ function saveMData(o_data,action_url) {
                 } else {
                     $("#notify .message").html("<strong>" + data.status + "</strong>: " + data.message);
                     $("#notify").removeClass("alert-success").addClass("alert-danger").fadeIn();
-                    $("html, body").scrollTop($("body").offset().top);
+                    
+                        $('html, body').animate({scrollTop:0}, 'slow');
+                    
+                    
+
 
                 }
 

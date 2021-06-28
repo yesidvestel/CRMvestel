@@ -330,23 +330,64 @@ class Tickets Extends CI_Controller
 		$puerto = $this->input->post('puerto');
 		$vlan = $this->input->post('vlan');
 		$nat = $this->input->post('nat');
+        $master = $this->input->post('master');
 		$idequipo = $this->input->post('idequipo');
-		$this->db->set('macequipo', $mac);		
-        $this->db->where('id', $id);
-        $this->db->update('customers');
-		//datos de equipo
-		$datae = array(
-				't_instalacion' => $tinstalacion,
-				'puerto' => $puerto,
-			  	'vlan' => $vlan,
-				'nat' => $nat,
-				'asignado' => $id			
-			);	
-        $this->db->where('id', $idequipo);
-        $this->db->update('equipos', $datae);
+$es_valido=true;
+$txt_error="";
+        if($mac==""){
+            $es_valido=false;
+            $txt_error.="<li>Agrega una mac </li>";
+        }
+        if($tinstalacion=="" || $tinstalacion=="null"){
+            $es_valido=false;
+            $txt_error.="<li>Selecciona un tipo de instalacion</li>";
+        }else if($tinstalacion=="EOC"){
 
-        echo json_encode(array('status' => 'Success', 'message' =>
-            $this->lang->line('UPDATED'), 'pstatus' => $status));
+                if($master==""){
+                    $es_valido=false;
+                    $txt_error.="<li>Ingresa una master</li>";
+                }
+        }else if($tinstalacion=="FTTH"){
+               if($vlan=="null" || $vlan==""){
+                    $es_valido=false;
+                    $txt_error.="<li>Selecciona una vlan</li>";
+               }
+                if($puerto=="null" || $puerto==""){
+                    $es_valido=false;
+                    $txt_error.="<li>Selecciona un puerto nat</li>";
+               }
+                if($nat=="null" || $nat==""){
+                    $es_valido=false;
+                    $txt_error.="<li>ingresa una caja nat</li>";
+               }
+        }
+
+        if(!$es_valido){
+            if($txt_error!=""){
+                $txt_error="<ul>".$txt_error."</ul>";
+            }
+            echo json_encode(array('status' => 'Error-Validacion', 'message' =>
+                "Llena los campos correctamente por favor <br>".$txt_error, 'pstatus' => "error"));                
+        }else{
+            $this->db->set('macequipo', $mac);      
+            $this->db->where('id', $id);
+            $this->db->update('customers');
+            //datos de equipo
+            $datae = array(
+                    't_instalacion' => $tinstalacion,
+                    'puerto' => $puerto,
+                    'vlan' => $vlan,
+                    'nat' => $nat,
+                    'master'=>$master,
+                    'asignado' => $id           
+                );  
+            $this->db->where('id', $idequipo);
+            $this->db->update('equipos', $datae);
+
+            echo json_encode(array('status' => 'Success', 'message' =>
+                $this->lang->line('UPDATED'), 'pstatus' => $status));    
+        }
+		
     }
 	public function explortar_a_excel(){
         

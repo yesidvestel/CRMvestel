@@ -411,7 +411,7 @@
 				<div class="frmSearch col-sm-6">
                         <label for="pmethod" class="caption col-form-label">Tipo de instalacion</label>
 						<div>
-                            <select name="tinstalacion" class="form-control mb-1" onchange="funcion_status();">
+                            <select id="tinstalacion" name="tinstalacion" class="form-control mb-1" onchange="funcion_status();validaciones_campos();">
 								<option value="null">-</option>
 								<option value="EOC">EOC</option>
 								<option value="FTTH">FTTH</option>
@@ -419,15 +419,22 @@
                         </div>
                 </div>
 				
-				<div class="frmSearch col-sm-6">
-                        <label for="pmethod" class="caption col-form-label">Vlan</label>
+				<div class="frmSearch col-sm-6" id="eoc_div"  >
+                        <label for="pmethod" class="caption col-form-label">Master</label>
 						<div class="">
+                            <input type="text" name="master" class="form-control mb-1" placeholder="master">
+                        </div>
+                    </div>
+                    <div id="ftth_div" style="display: none;">
+                    <div class="frmSearch col-sm-6">
+                        <label for="pmethod" class="caption col-form-label">Vlan</label>
+                        <div class="">
                             <select name="vlan" class="form-control mb-1" onchange="funcion_status();">
-								<option value="null">-</option>
-								<option value="101">101</option>
-								<?php for ($i=1;$i<=36;$i++){
-								echo '<option value="'.$i*'10'.'">'.$i*'10'.'</option>';
-								}?>
+                                <option value="null">-</option>
+                                <option value="101">101</option>
+                                <?php for ($i=1;$i<=36;$i++){
+                                echo '<option value="'.$i*'10'.'">'.$i*'10'.'</option>';
+                                }?>
                             </select>
                         </div>
                     </div>
@@ -447,7 +454,9 @@
                             </select>
                         </div>
                     </div>
+                    </div>
 					<br>
+                    <div style="text-align: right;">
                         <button type="button" class="btn btn-default"
                                 data-dismiss="modal">Volver</button>
                         <input type="hidden" id="action-url" value="tickets/asig_equipo">
@@ -643,6 +652,18 @@ console.log(itemSeleccionado);
                 window.location.reload();
             },'json');
       }
+    }
+    function validaciones_campos(){
+        var ck=$("#tinstalacion option:checked").val();
+        if(ck=="EOC"){
+            $("#eoc_div").show();
+            $("#ftth_div").hide();
+        }else{
+            $("#eoc_div").hide();
+            $("#ftth_div").show();
+        }
+        console.log(ck);
+
     }
 
     
