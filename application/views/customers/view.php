@@ -173,7 +173,7 @@
 									<tbody id="activity">
 									<?php foreach ($attach as $row) {
 
-										echo '<tr><td><a data-url="' . base_url() . 'customers/file_handling?op=delete&name=' . $row['col1'] . '&invoice=' . $details['id'] . '" class="aj_delete"><i class="btn-danger btn-lg icon-trash-a"></i></a> <a class="n_item" href="' . base_url() . 'userfiles/attach/' . $row['col1'] . '"> ' . $row['col1'] . ' </a></td></tr>';
+										echo '<tr><td><a data-url="' . base_url() . 'customers/file_handling?op=delete&name=' . $row['col1'] . '&type='.$row['type'].'&invoice=' . $details['id'] . '" class="aj_delete"><i class="btn-danger btn-lg icon-trash-a"></i></a> <a class="n_item" href="' . base_url() . 'userfiles/attach/' . $row['col1'] . '"> ' . $row['col1'] . ' </a></td></tr>';
 									} ?>
 
 									</tbody>
