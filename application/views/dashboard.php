@@ -48,7 +48,7 @@
                                 <div class="media">
                                     <div class="media-body text-xs-left">
                                         <h3 class="pink"> <?php echo $todayin ?></h3>
-                                        <span><?php echo $this->lang->line('today') . $this->lang->line('invoices') ?></span>
+                                        <span><?php echo $this->lang->line('today') .' '. $this->lang->line('invoices') ?></span>
                                     </div>
                                     <div class="media-right media-middle">
                                         <i class="icon-file-text2 pink font-large-2 float-xs-right"></i>
@@ -65,7 +65,7 @@
                                 <div class="media">
                                     <div class="media-body text-xs-left">
                                         <h3 class="teal"><?php echo $monthin ?></h3>
-                                        <span><?php echo $this->lang->line('this') . $this->lang->line('month') . $this->lang->line('invoices') ?></span>
+                                        <span><?php echo $this->lang->line('this') .' '. $this->lang->line('month') .' '. $this->lang->line('invoices') ?></span>
                                     </div>
                                     <div class="media-right media-middle">
                                         <i class="icon-paste teal font-large-2 float-xs-right"></i>
@@ -82,7 +82,7 @@
                                 <div class="media">
                                     <div class="media-body text-xs-left">
                                         <h3 class="deep-orange"><?php echo amountFormat($todaysales) ?> </h3>
-                                        <span><?php echo $this->lang->line('today') . $this->lang->line('sales') ?></span>
+                                        <span><?php echo $this->lang->line('today') .' '. $this->lang->line('sales') ?></span>
                                     </div>
                                     <div class="media-right media-middle">
                                         <i class="icon-coin-dollar deep-orange font-large-2 float-xs-right"></i>
@@ -99,7 +99,7 @@
                                 <div class="media">
                                     <div class="media-body text-xs-left">
                                         <h3 class="cyan"><?php echo amountFormat($monthsales) ?> </h3>
-                                        <span><?php echo $this->lang->line('this') . $this->lang->line('month') . $this->lang->line('sales') ?></span>
+                                        <span><?php echo $this->lang->line('this') .' '. $this->lang->line('month') .' '. $this->lang->line('sales') ?></span>
                                     </div>
                                     <div class="media-right media-middle">
                                         <i class="icon-briefcase2 cyan font-large-2 float-xs-right"></i>
@@ -116,7 +116,7 @@
                 <div class="col-xl-8 col-lg-12">
                     <div class="card">
                         <div class="card-header no-border">
-                            <h6 class="card-title"><?php echo $this->lang->line('in_last _30') ?></h6>
+                            <h6>Presentación gráfica De Las ventas y facturas realizadas en los últimos 30 días.</h6>
 
                         </div>
 
@@ -129,19 +129,19 @@
                         <div class="card-footer">
                             <div class="row">
                                 <div class="col-xs-3 text-xs-center">
-                                    <span class="text-muted"><?php echo $this->lang->line('today') . $this->lang->line('income') ?></span>
+                                    <span class="text-muted"><?php echo $this->lang->line('today') .' '. $this->lang->line('income') ?></span>
                                     <h4 class="block font-weight-normal"><?php echo amountFormat($todayinexp['credit']) ?></h4>
                                     <progress class="progress progress-xs mt-2 progress-success" value="100"
                                               max="100"></progress>
                                 </div>
                                 <div class="col-xs-3 text-xs-center">
-                                    <span class="text-muted"><?php echo $this->lang->line('today') . $this->lang->line('expenses') ?></span>
+                                    <span class="text-muted"><?php echo $this->lang->line('today') .' '. $this->lang->line('expenses') ?></span>
                                     <h4 class="block font-weight-normal"><?php echo amountFormat($todayinexp['debit']) ?></h4>
                                     <progress class="progress progress-xs mt-2 progress-warning" value="100"
                                               max="100"></progress>
                                 </div>
                                 <div class="col-xs-3 text-xs-center">
-                                    <span class="text-muted"><?php echo $this->lang->line('today') . $this->lang->line('sold') . $this->lang->line('products') ?></span>
+                                    <span class="text-muted"><?php echo $this->lang->line('today') .' '. $this->lang->line('sold') .' '. $this->lang->line('products') ?></span>
                                     <h4 class="block font-weight-normal"><?php echo $todayitems ?></h4>
                                     <progress class="progress progress-xs mt-2 progress-light-blue" value="100"
                                               max="100"></progress>
@@ -182,8 +182,8 @@
 
                     <div class="card">
                         <div class="card-header ">
-                            <h4 class="card-title"><?php echo date('F Y');
-                                echo ' ' . $this->lang->line('targets') ?></h4>
+                            <h4 class="card-title"><?php setlocale(LC_TIME, "spanish"); echo $this->lang->line('targets'); 
+                                echo ' ' . strftime("%B del %Y")  ?></h4>
 
                         </div>
                         <div class="card-body">
@@ -420,8 +420,8 @@
                                         echo '<tr>
                                 <td class="text-truncate"><a href="' . base_url() . 'transactions/view?id=' . $item['id'] . '">' . dateformat($item['date']) . '</a></td>
                                 <td class="text-truncate"> ' . $item['account'] . '</td>
-                                <td class="text-truncate">' . $item['debit'] . '</td>
-                                <td class="text-truncate">' . $item['credit'] . '</td>
+                                <td class="text-truncate">' . amountFormat($item['debit']) . '</td>
+                                <td class="text-truncate">' . amountFormat($item['credit']) . '</td>
                                
                                 <td class="text-truncate">' . $this->lang->line($item['method']) . '</td>
                             </tr>';
