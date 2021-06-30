@@ -92,7 +92,7 @@
                                         $month = $dateObj->format('F');
 										setlocale(LC_TIME, "spanish");
                                         echo '<tr>
-                                <td class="text-truncate">' . strftime("%B del %Y", strtotime($month)) . '</td>
+                                <td class="text-truncate">' . strftime("%B del", strtotime($month)) .' ' . $item['year'] . '</td>
                                 <td class="text-truncate"> ' . amountFormat($item['income']) . '</td>
                             
                                 <td class="text-truncate">' . amountFormat($item['expense']) . '</td>
