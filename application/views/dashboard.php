@@ -1,7 +1,7 @@
 <script type="text/javascript">
     var dataVisits = [
         <?php $tt_inc = 0;foreach ($incomechart as $row) {
-        $tt_inc += intval($row['total']);
+        $tt_inc += $row['total'];
         echo "{ x: '" . $row['date'] . "', y: " . intval($row['total']) . "},";
     }
         ?>
@@ -498,15 +498,6 @@
             labels: ['<?php echo  $this->lang->line('Amount') ?>'],
             xLabels: "day",
             hideHover: 'auto',
-            yLabelFormat: function (y) {
-                // Only integers
-                if (y === parseInt(y, 10)) {
-                    return y;
-                }
-                else {
-                    return '';
-                }
-            },
             resize: true,
             lineColors: [
                 '#34cea7',
@@ -543,15 +534,6 @@
             labels: ['<?php echo  $this->lang->line('Amount') ?>'],
             xLabels: "day",
             hideHover: 'auto',
-            yLabelFormat: function (y) {
-                // Only integers
-                if (y === parseInt(y, 10)) {
-                    return y;
-                }
-                else {
-                    return '';
-                }
-            },
             resize: true,
             lineColors: [
                 '#ff6e40',
