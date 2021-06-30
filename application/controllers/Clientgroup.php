@@ -337,7 +337,7 @@ class Clientgroup extends CI_Controller
     //write rows to sheet1
     foreach ($lista_customers2 as $key => $customer) {            
             $direccion= $customer->nomenclatura . ' ' . $customer->numero1 . $customer->adicionauno.' Nº '.$customer->numero2.$customer->adicional2.' - '.$customer->numero3;
-            $writer->writeSheetRow('Customers '.$cust_group->title,array($customer->abonado,$customer->documento ,$customer->name, $customer->celular, $direccion,$customer->barrio ,$customer->suscripcion_str,$customer->usu_estado,$customer->deuda,$customer->suscripcion,$customer->money));
+            $writer->writeSheetRow('Customers '.$cust_group->title,array($customer->abonado,$customer->documento ,$customer->name.' '.$customer->unoapellido, $customer->celular, $direccion,$customer->barrio ,$customer->suscripcion_str,$customer->usu_estado,$customer->deuda,$customer->suscripcion,$customer->money));
     }
         
         
@@ -440,7 +440,7 @@ class Clientgroup extends CI_Controller
             $row[] = $no;
 			$row[] = $customers->abonado;
 			$row[] = $customers->documento;
-            $row[] = '<a href="' . $base . 'view?id=' . $customers->id . '">' . $customers->name . ' </a>';
+            $row[] = '<a href="' . $base . 'view?id=' . $customers->id . '">' . $customers->name .' '.$customers->unoapellido. ' </a>';
 			$row[] = $customers->celular;			
             $row[] = $customers->nomenclatura . ' ' . $customers->numero1 . $customers->adicionauno.' Nº '.$customers->numero2.$customers->adicional2.' - '.$customers->numero3;
             $row[] = $customers->barrio;
