@@ -1,7 +1,7 @@
 <script type="text/javascript">
     var dataVisits = [
         <?php $tt_inc = 0;foreach ($incomechart as $row) {
-        $tt_inc += $row['total'];
+        $tt_inc += intval($row['total']);
         echo "{ x: '" . $row['date'] . "', y: " . intval($row['total']) . "},";
     }
         ?>
