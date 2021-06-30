@@ -70,7 +70,7 @@
 
                     <div class="col-sm-6">
                         <select name="sede" class="form-control">
-							<option value="">-</option>
+							<option value"">-</option>
                             <?php
                                 foreach ($customergrouplist as $row) {
                                     $cid = $row['id'];
