@@ -1,7 +1,17 @@
 <?php
 $lang['Date'] = "Fecha";
 $lang['Search'] = "Busqueda";
+$lang['Activities'] = "Actividades";
+$lang['Bill'] = "Minuta";
+$lang['Low'] = "Baja";
+$lang['Medium'] = "Media";
+$lang['High'] = "Alta";
+$lang['Add Activity'] = "Añadir actividad";
+$lang['Activity'] = "Actividad";
+$lang['Urgent'] = "Urgente";
+$lang['Emails to team'] = "Correo de grupo de trabajo";
 $lang['Show'] = "Mostrar";
+$lang['Emails to team &  customer'] = "Correo de grupo y usuarios";
 $lang['Activo'] = "Activo";
 $lang['end'] = "Finalizado";
 $lang['Date acte'] = "Fecha acte";

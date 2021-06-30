@@ -31,6 +31,7 @@ ALTER TABLE `equipos` ADD `nat` INT NULL AFTER `vlan`;
 ALTER TABLE `temporales` ADD `residencia` VARCHAR(50) NULL AFTER `barrio`;
 ALTER TABLE `temporales` ADD `referencia` VARCHAR(50) NULL AFTER `residencia`;
 ALTER TABLE `events` ADD `asigno` INT NULL AFTER `rol`;
+ALTER TABLE `transferencia_products_orden` ADD `proy_id` INT NULL AFTER `tickets_id`;
 
 
 

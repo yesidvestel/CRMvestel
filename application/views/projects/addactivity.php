@@ -18,7 +18,7 @@
                     <label class="col-sm-2 col-form-label" for="name"><?php echo $this->lang->line('Title') ?></label>
 
                     <div class="col-sm-10">
-                        <input type="text" placeholder="Activity Title"
+                        <input type="text" placeholder="Actividad realizando"
                                class="form-control margin-bottom  required" name="name">
                     </div>
                 </div>

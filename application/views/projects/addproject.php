@@ -24,7 +24,7 @@
                     <label class="col-sm-2 col-form-label" for="name"><?php echo $this->lang->line('Title') ?></label>
 
                     <div class="col-sm-10">
-                        <input type="text" placeholder="Project Title"
+                        <input type="text" placeholder="Nombre del proyecto"
                                class="form-control margin-bottom  required" name="name">
                     </div>
                 </div>
@@ -37,7 +37,6 @@
                         <select name="status" class="form-control">
                            <?php echo" <option value='Waiting'>".$this->lang->line('Waiting')."</option>
                             <option value='Pending'>".$this->lang->line('Pending')."</option>
-                            <option value='Terminated'>".$this->lang->line('Terminated')."</option>
                             <option value='Finished'>".$this->lang->line('Finished')."</option>
                             <option value='Progress'>".$this->lang->line('Progress')."</option>"; ?>
                         </select>
@@ -63,10 +62,10 @@
 
                     <div class="col-sm-4">
                         <select name="priority" class="form-control">
-                            <option value='Low'>Low</option>
-                            <option value='Medium'>Medium</option>
-                            <option value='High'>High</option>
-                            <option value='Urgent'>Urgent</option>
+                            <option value='Low'>Baja</option>
+                            <option value='Medium'>Media</option>
+                            <option value='High'>Alta</option>
+                            <option value='Urgent'>Urgente</option>
                         </select>
 
 
@@ -93,8 +92,8 @@
 
                     <div class="col-sm-4">
                         <select name="customerview" class="form-control">
-                            <option value='true'>True</option>
-                            <option value='false'>False</option>
+                            <option value='true'>Si</option>
+                            <option value='false'>No</option>
                         </select>
                     </div>
                 </div>
@@ -105,8 +104,8 @@
 
                     <div class="col-sm-4">
                         <select name="customercomment" class="form-control">
-                            <option value='true'>True</option>
-                            <option value='false'>False</option>
+                            <option value='true'>Si</option>
+                            <option value='false'>No</option>
                         </select>
                     </div>
                 </div>
@@ -115,7 +114,7 @@
                     <label class="col-sm-2 col-form-label" for="worth"><?php echo $this->lang->line('Budget') ?></label>
 
                     <div class="col-sm-4">
-                        <input type="number" placeholder="Budget"
+                        <input type="number" placeholder="Presupuesto estimado"
                                class="form-control margin-bottom  required" name="worth">
                     </div>
                 </div>
@@ -130,7 +129,7 @@
                             <?php
                             foreach ($emp as $row) {
                                 $cid = $row['id'];
-                                $title = $row['name'];
+                                $title = $row['username'];
                                 echo "<option value='$cid'>$title</option>";
                             }
                             ?>
@@ -145,7 +144,7 @@
                     <label class="col-sm-2 col-form-label" for="phase"><?php echo $this->lang->line('Phase') ?></label>
 
                     <div class="col-sm-10">
-                        <input type="text" placeholder="Phase A,B,C"
+                        <input type="text" placeholder="Fase A,B,C"
                                class="form-control margin-bottom  required" name="phase">
                     </div>
                 </div>
@@ -184,8 +183,8 @@
                     <div class="col-sm-4">
                         <select name="link_to_cal" class="form-control" id="link_to_cal">
                             <option value='0'>No</option>
-                            <option value='1'>Mark Deadline(End Date)</option>
-                            <option value='2'>Mark Start to End Date</option>
+                            <option value='1'>Marcar Fecha limite (Fecha finalizacion)</option>
+                            <option value='2'>Marcar fecha inicia y finaliza</option>
                         </select>
                     </div>
                 </div>
@@ -195,7 +194,7 @@
                     <div class="col-md-4">
                         <input id="color" name="color" type="text" class="form-control input-md"
                                readonly="readonly"/>
-                        <span class="help-block">Click to pick a color</span>
+                        <span class="help-block">Seleccione color de Agenda</span>
                     </div>
                 </div>
 
@@ -223,13 +222,13 @@
                 <div class="form-group row">
 
                     <label class="col-sm-2 col-form-label"
-                           for="name">Task Communication</label>
+                           for="name">Comunicacion de Tarea</label>
 
                     <div class="col-sm-4">
                         <select name="ptype" class="form-control">
                             <option value='0'>No</option>
-                            <option value='1'>Emails to team</option>
-                            <option value='2'>Emails to team, customer</option>
+                            <option value='1'>Correo a equipo</option>
+                            <option value='2'>Correo a equipo y usuario</option>
                         </select>
                     </div>
                 </div>

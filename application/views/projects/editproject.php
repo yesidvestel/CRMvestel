@@ -133,7 +133,7 @@
                     <label class="col-sm-2 col-form-label" for="phase"><?php echo $this->lang->line('Phase') ?></label>
 
                     <div class="col-sm-10">
-                        <input type="text" placeholder="Phase A,B,C"
+                        <input type="text" placeholder="Fase A,B,C"
                                class="form-control margin-bottom  required" name="phase"
                                value="<?php echo $project['phase'] ?>">
                     </div>
@@ -237,12 +237,12 @@
                             <?php
                             foreach ($emp2 as $row) {
                                 $cid = $row['id'];
-                                $title = $row['name'];
+                                $title = $row['username'];
                                 echo "<option value='$cid' selected>- $title -</option>";
                             }
                             foreach ($emp as $row) {
                                 $cid = $row['id'];
-                                $title = $row['name'];
+                                $title = $row['username'];
                                 echo "<option value='$cid'>$title</option>";
                             }
                             ?>

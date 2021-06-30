@@ -57,13 +57,18 @@ class Projects Extends CI_Controller
         $head['title'] = 'Project Overview';
         $data['totalt'] = $this->projects->task_count_all($id);
         $explore = $this->projects->explore($id);
+		$data['id_orden_n']	= $id;
         $data['thread_list'] = $this->projects->task_thread($id);
         $data['milestones'] = $this->projects->milestones_list($id);
         $data['activities'] = $this->projects->activities($id);
         $data['p_files'] = $this->projects->p_files($id);
         $data['comments_list'] = $this->projects->comments_thread($id);
         $data['emp'] = $this->projects->list_project_employee($id);
-
+		$data['id_orden_n']	=$id;
+		//$pro = $this->db->get_where('project_meta',array('pid'=>$id))->row();
+		$orden = $this->aauth->get_user()->username;
+		$almacen= $this->db->get_where('product_warehouse',array('id_tecnico'=>$orden))->row();
+		$data['lista_productos_tecnico']=$this->db->get_where('products',array('warehouse'=>$almacen->id))->result_array();
         $data['project'] = $explore['project'];
         // $data['customer']=$explore['customer'];
         $data['invoices'] = $explore['invoices'];
@@ -72,6 +77,30 @@ class Projects Extends CI_Controller
         $this->load->view('projects/explore', $data);
         $this->load->view('fixed/footer');
 
+    }
+	public function add_products_orden(){
+        
+        foreach ($_POST['lista'] as $key => $producto) {
+             $vary=intval($producto['qty']);
+             if($vary>0){
+                $tf_prod_orden=$this->db->get_where('transferencia_products_orden',array("products_pid"=>$producto['pid'],"proy_id"=>$_POST['id_orden_n']))->row();
+                if(empty($tf_prod_orden)){
+                    $dats['products_pid']=$producto['pid'];
+                    $dats['proy_id']=$_POST['id_orden_n'];
+                    $dats['cantidad']=$producto['qty'];
+                    //proceso de descontar cantidades del almacen
+                    $producto_padre=$this->db->get_where('products',array('pid'=>$producto['pid']))->row();
+                    $x1=intval($producto_padre->qty);
+                    $x1=$x1-$vary;
+                    $datx['qty']=$x1;
+                    $this->db->update('products',$datx,array('pid'=>$producto['pid']));
+                    // end proceso de descontar cantidades del almacen
+                    $this->db->insert('transferencia_products_orden',$dats);
+                }
+             }
+        }
+
+        echo "Correcto";
     }
 
     public function addproject()

@@ -140,22 +140,44 @@ class Projects_model extends CI_Model
 
     public function addproject($name, $status, $priority, $progress, $customer, $sdate, $edate, $tag, $phase, $content, $budget, $customerview, $customer_comment, $link_to_cal, $color, $ptype, $employee)
     {
-        $data = array('name' => $name, 'status' => $status, 'priority' => $priority, 'progress' => $progress, 'cid' => $customer, 'sdate' => $sdate, 'edate' => $edate, 'tag' => $tag, 'phase' => $phase, 'note' => $content, 'worth' => $budget, 'ptype' => $ptype);
+        $data = array(
+			'name' => $name, 
+			'status' => $status, 
+			'priority' => $priority, 
+			'progress' => $progress, 
+			'cid' => $customer, 
+			'sdate' => $sdate, 
+			'edate' => $edate, 
+			'tag' => $tag, 
+			'phase' => $phase, 
+			'note' => $content, 
+			'worth' => $budget, 
+			'ptype' => $ptype);
         $this->db->insert('projects', $data);
         $last = $this->db->insert_id();
         $title = '[Project Created] ';
         $this->add_activity($title, $last);
-        $data = array('pid' => $last, 'meta_key' => 2, 'meta_data' => $customerview, 'value' => $customer_comment);
+        $data = array(
+			'pid' => $last, 
+			'meta_key' => 2, 
+			'meta_data' => $customerview, 
+			'value' => $customer_comment);
         $this->db->insert('project_meta', $data);
 
         if ($employee) {
             foreach ($employee as $key => $value) {
 
-                $data = array('pid' => $last, 'meta_key' => 19, 'meta_data' => $value);
+                $data = array(
+					'pid' => $last, 
+					'meta_key' => 19, 
+					'meta_data' => $value);
                 $this->db->insert('project_meta', $data);
             }
         } else {
-            $data = array('pid' => $last, 'meta_key' => 19, 'meta_data' => $this->aauth->get_user()->id);
+            $data = array(
+				'pid' => $last, 
+				'meta_key' => 19, 
+				'meta_data' => $this->aauth->get_user()->id);
             $this->db->insert('project_meta', $data);
         }
 

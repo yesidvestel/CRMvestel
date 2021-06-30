@@ -1,3 +1,4 @@
+<?php $lista_productos_orden=$this->db->get_where('transferencia_products_orden',array('proy_id'=>$id_orden_n))->result_array(); ?>
 <div class="app-content content container-fluid">
     <div class="content-wrapper">
         <div class="content-header row">
@@ -16,7 +17,7 @@
                                     class="project_<?php echo $project['status'] ?>"><?php echo $this->lang->line($project['status']) ?></span>
                         </p>
                         <p>
-                            Assigned to</p>
+                            Asignado a</p>
                         <p><?php
                             foreach ($emp as $row) {
 
@@ -122,11 +123,11 @@
 
                                 <li class="nav-item">
                                     <a class="nav-link" id="milestones-tab" data-toggle="tab" href="#milestones"
-                                       aria-controls="milestones"><?php echo $this->lang->line('Milestones') ?></a>
+                                       aria-controls="milestones"><?php echo $this->lang->line('Activities') ?></a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" id="thread-tab" data-toggle="tab" href="#activities"
-                                       aria-controls="activities"><?php echo $this->lang->line('Activities Log') ?></a>
+                                       aria-controls="activities"><?php echo $this->lang->line('Bill') ?></a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" id="linkOpt-tab" data-toggle="tab" href="#files"
@@ -138,7 +139,7 @@
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" id="invoices-tab" data-toggle="tab" href="#invoices"
-                                       aria-controls="invoices"><?php echo $this->lang->line('Invoices') ?></a>
+                                       aria-controls="invoices">Materiales</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" id="comments-tab" data-toggle="tab" href="#comments"
@@ -163,7 +164,7 @@
                                             <tr>
                                                 <th scope="row"><?php echo $this->lang->line('Priority') ?></th>
                                                 <td>
-                                                    <p><?php echo $project['priority'] ?></p>
+                                                    <p><?php echo $this->lang->line($project['priority']); ?></p>
 
                                                 </td>
 
@@ -236,18 +237,18 @@
 
                                             </tr>
                                             <tr>
-                                                <th scope="row">Communication</th>
+                                                <th scope="row">Comuinicado a</th>
                                                 <td>
                                                     <p><?php switch ($project['ptype']) {
                                                             case 0 :
                                                                 echo 'None';
                                                                 break;
                                                             case 1 :
-                                                                echo 'Emails to team';
+                                                                echo $this->lang->line('Emails to team');
                                                                 break;
 
                                                             case 2 :
-                                                                echo 'Emails to team &  customer';
+                                                                echo $this->lang->line('Emails to team &  customer');
                                                                 break;
                                                         }
 
@@ -331,7 +332,7 @@
                                      aria-labelledby="milestones-tab" aria-expanded="false">
                                     <p><a href="<?php echo base_url('projects/addmilestone?id=' . $project['id']) ?>"
                                           class="btn btn-primary btn-sm rounded">
-                                            <?php echo $this->lang->line('Add Milestone') ?>
+                                            <?php echo $this->lang->line('Add Activity') ?>
                                         </a></p>
 
                                     <ul class="timeline">
@@ -375,7 +376,7 @@
                                      aria-labelledby="activities-tab" aria-expanded="false"><p><a
                                                 href="<?php echo base_url('projects/addactivity?id=' . $project['id']) ?>"
                                                 class="btn btn-primary btn-sm rounded">
-                                            <?php echo $this->lang->line('Add activity') ?>
+                                            Añadir
                                         </a></p>
                                     <?php foreach ($activities as $row) { ?>
 
@@ -466,36 +467,33 @@
                                 <!--invoices-->
                                 <div class="tab-pane fade" id="invoices" role="tabpanel" aria-labelledby="invoices-tab"
                                      aria-expanded="false">
-                                    <p><a href="<?php echo base_url('invoices/create?project=' . $project['id']) ?>"
-                                          class="btn btn-primary btn-sm rounded">
-                                            <?php echo $this->lang->line('Create New Invoice') ?>
-                                        </a></p>
+                                    <p><a href="#pop_model3" data-toggle="modal" onclick="funcion_status();" data-remote="false" class="btn btn-success sub-btn" title="Change Status">ASIGNAR MATERIAL</a></p>
 
                                     <div class="table-responsive">
-                                        <table class="table table-hover mb-1">
-                                            <thead>
-                                            <tr>
-                                                <th><?php echo $this->lang->line('Invoices') ?>#</th>
-                                                <th><?php echo $this->lang->line('Status') ?></th>
-                                                <th><?php echo $this->lang->line('Due') ?></th>
-                                                <th><?php echo $this->lang->line('Amount') ?></th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <?php
+                                        <table  class="table-responsive tfr my_stripe" width="80%">
+										<thead>
+											<tr>
+												<th colspan="3" ><h5 align="left"><strong>Material usado en la Orden</strong></h5></th>
+											</tr>
+											<tr>
+												<th style="text-align: center;" width="10%">PID</th>
+												<th style="text-align: center;" width="40%">Nombre</th>
+												<th style="text-align: center;" width="30%">Cantidad Tot.</th>
+												<th style="text-align: center;" width="20%">Valor a Transferir</th>
+											</tr>
+										</thead>
+										<tbody>
 
-                                            foreach ($invoices as $item) {
-                                                echo '<tr>
-                                <td class="text-truncate"><a href="' . base_url() . 'invoices/view?id=' . $item['tid'] . '">#' . $item['tid'] . '</a></td>
-                              
-                                <td class="text-truncate"><span class="tag tag-default st-' . $item['status'] . '">' . $this->lang->line(ucwords($item['status'])) . '</span></td>
-                                <td class="text-truncate">' . $item['invoicedate'] . '</td>
-                                <td class="text-truncate">' . $this->config->item('currency') . ' ' . amountFormat($item['total']) . '</td>
-                            </tr>';
-                                            } ?>
-
-                                            </tbody>
-                                        </table>
+											<?php foreach ($lista_productos_orden as $key => $prod) { $prod_padre=$this->db->get_where('products',array('pid'=>$prod['products_pid']))->row(); ?>        
+												<tr>
+													<td style="text-align: center;" width="10%"><?=$prod_padre->pid?></td>
+													<td style="text-align: center;" width="30%"><?=$prod_padre->product_name?></td>
+													<td style="text-align: center;" width="20%"><?=$prod['cantidad']?></td>
+													<td style="text-align: center;" width="20%"><a onclick="eliminar_prod_lista(<?=$prod['idtransferencia_products_orden']?>)"><img src="<?=base_url()?>/assets/img/trash.png"></a></td>
+												</tr>
+											<?php } ?>
+										</tbody>
+									</table>
                                     </div>
 
                                 </div>
@@ -503,7 +501,7 @@
                                 <!--comments-->
                                 <div class="tab-pane fade" id="comments" role="tabpanel" aria-labelledby="comments-tab"
                                      aria-expanded="false">
-                                    <p>Comments timeline among team members and customer.</p>
+                                    <p>Cronología de comentarios entre los miembros del equipo y el cliente</p>
                                     <form method="post" id="data_form2">
                                         <div class="form-group row">
 
@@ -604,7 +602,55 @@
                         </div>
                     </div>
                 </div>
+				<div id="pop_model3" class="modal fade">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+								<h4 class="modal-title">Asignar Material</h4>
+							</div>
+							<div class="modal-body">
+								<form id="form_model3">
 
+							<div class="form-group row">
+
+						<div class="col-sm-10">
+							<label class="col-sm-4 col-form-label" for="name">Nombre del articulo</label> 
+							<select class="form-control select-box" id="lista_productos" name="lista_productos[]" multiple="multiple" style="width: 100%;">
+								<?php foreach ($lista_productos_tecnico as $key => $producto) { ?>
+									<option value="<?=$producto['pid']?>"  data-qty="<?=$producto['qty']?>" data-pid="<?=$producto['pid']?>" data-product_name="<?=$producto['product_name']?>" ><?=$producto['product_name']?></option>
+							   <?php } ?>
+							</select>
+						</div>
+									 </div>   
+									 <table width="80%" style="text-align: center;" class="table-responsive tfr my_stripe">
+											<thead >
+												<tr>
+													<th style="text-align: center;" width="10%">PID</th>
+													<th style="text-align: center;" width="30%">Nombre</th>
+													<th style="text-align: center;" width="20%">Cantidad Tot.</th>
+													<th style="text-align: center;" width="20%">Valor a Transferir</th>
+												</tr>
+											</thead>
+											<tbody id="itemsx">
+												<tr id="remover_fila">
+													<td>PID</td>
+													<td>Nombre</td>
+													<td>##</td>
+													<td><input type="number" name="" data-max="5" data-pid="0" class="form-control" onfocusout="validar_numeros(this);" disabled></td>   
+												</tr>
+											</tbody>
+										</table>
+										<br>
+										<input  type="button" class="btn btn-primary" value="Agregar" onclick="guardar_productos()">
+										<button type="button" class="btn btn-default" data-dismiss="modal">Volver</button>
+
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
 
                 <div id="task_model" class="modal fade">
                     <div class="modal-dialog">
@@ -963,5 +1009,91 @@
 
             });
         });
+	var id_orden_n="<?=$id_orden_n?>";
+
+    $("#lista_productos").select2();
+    let listaProductos=[];
+    $("#lista_productos").on('select2:select',function(e){
+                var itemSeleccionado;
+                itemSeleccionado= {pid:e.params.data.element.dataset.pid,qty:e.params.data.element.dataset.qty,product_name:e.params.data.element.dataset.product_name};
+
+                
+                listaProductos.push(itemSeleccionado);
+                $("#remover_fila").html('');
+                var max_var=itemSeleccionado.qty;
+                if(max_var<0){
+                    max_var=0;
+                }
+                $("#itemsx").append('<tr id="fila_'+itemSeleccionado.pid+'"> <td>'+itemSeleccionado.pid+'</td><td>'+itemSeleccionado.product_name+'</td>       <td>'+itemSeleccionado.qty+'</td>           <td><input type="number" name="" data-max="'+max_var+'" data-pid="'+itemSeleccionado.pid+'" class="form-control" onfocusout="validar_numeros(this);" value="'+max_var+'"></td>     </tr>');
+
+console.log(e);
+console.log(itemSeleccionado);
+                 
+            });
+
+        $("#lista_productos").on("select2:unselect",function(e){
+        console.log("eliminado "+e.params.data.element.dataset.pid);
+        
+        $("#fila_"+e.params.data.element.dataset.pid).remove();
+        var remove_index=0;
+        $(listaProductos).each(function(index,value){
+            if(e.params.data.element.dataset.pid==value.pid){
+                remove_index=index;
+            }    
+            
+            
+        });
+        listaProductos.splice(remove_index,1);
+        
+    });
+
+
+    function guardar_productos(){
+        var datos_lista=$("#lista_productos").val();
+        if(datos_lista==null){
+            $("#lista_productos").attr("required", true);
+            $("#document_add").click();
+            setTimeout(function(){
+            $("#lista_productos").attr("required", false);    
+            },1000);
+        }else{
+         $.post(baseurl+"projects/add_products_orden",{lista:listaProductos,id_orden_n:id_orden_n},function(data){
+                alert("Productos Agregados");
+                window.location.reload();
+            });   
+        }
+    }
+
+    function validar_numeros (input){
+        var valorInput =parseInt($(input).val());
+        var valorMaximo = parseInt($(input).data('max'));
+        var valor_pid=parseInt($(input).data('pid'));
+        if(isNaN(valorInput)){
+            $(input).val(0);
+        }else if(valorInput<0){
+            $(input).val(0);    
+        }else if(valorInput>valorMaximo){
+            $(input).val(valorMaximo);
+        }
+        // cambia el valor total del la listaProductos y pasar los valores al input para que se envien al submit
+        valorInput =parseInt($(input).val());
+        var index_cambiar=0;
+        $(listaProductos).each(function(index,value){
+            if(value.pid==valor_pid){
+                index_cambiar=index;
+            }
+        });
+        listaProductos[index_cambiar].qty=valorInput;
+    }
+
+    function eliminar_prod_lista(idtransferencia_products_orden){
+        var confirmacion =confirm("¿Deseas realmente eliminar este item ?");
+        if(confirmacion==true){
+            $.post(baseurl+"tickets/eliminar_prod_lista",{id:idtransferencia_products_orden},function(data){
+                alert("Producto Eliminado");
+                window.location.reload();
+            });
+        }
+    }
 
     </script>

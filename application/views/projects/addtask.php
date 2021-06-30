@@ -18,7 +18,7 @@
                     <label class="col-sm-2 col-form-label" for="name"><?php echo $this->lang->line('Title') ?></label>
 
                     <div class="col-sm-10">
-                        <input type="text" placeholder="Task Title"
+                        <input type="text" placeholder="Titulo de tarea"
                                class="form-control margin-bottom  required" name="name">
                     </div>
                 </div>
@@ -43,10 +43,10 @@
 
                     <div class="col-sm-4">
                         <select name="priority" class="form-control">
-                            <option value='Low'>Low</option>
-                            <option value='Medium'>Medium</option>
-                            <option value='High'>High</option>
-                            <option value='Urgent'>Urgent</option>
+                            <option value='Low'><?php echo $this->lang->line(Low)?></option>
+                            <option value='Medium'><?php echo $this->lang->line(Medium)?></option>
+                            <option value='High'><?php echo $this->lang->line(High)?></option>
+                            <option value='Urgent'><?php echo $this->lang->line(Urgent)?></option>
                         </select>
 
 
@@ -55,7 +55,7 @@
                 <div class="form-group row">
 
                     <label class="col-sm-2 col-form-label"
-                           for="pay_cat"><?php echo $this->lang->line('Milestones') ?></label>
+                           for="pay_cat"><?php echo $this->lang->line('Activities') ?></label>
 
                     <div class="col-sm-4">
                         <select name="milestone" class="form-control select-box">
@@ -140,7 +140,7 @@
 
                 </div>
                 <div class="form-group row"><label class="col-sm-2 col-form-label"></label>
-                    <p>Process may take sometime, if email communication is enabled.</p></div>
+                    <p>El progreso puede tardar algun tiempo, si la comunicacion por correo está habilitada.</p></div>
 
 
             </form>

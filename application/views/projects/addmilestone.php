@@ -10,7 +10,7 @@
 
             <form method="post" id="data_form" class="form-horizontal">
 
-                <h5><?php echo $this->lang->line('Add Milestone') ?></h5>
+                <h5>Añadir Actividad</h5>
                 <hr>
 
                 <div class="form-group row">
@@ -18,7 +18,7 @@
                     <label class="col-sm-2 col-form-label" for="name"><?php echo $this->lang->line('Title') ?></label>
 
                     <div class="col-sm-10">
-                        <input type="text" placeholder="Milestone Title"
+                        <input type="text" placeholder="Titulo de Actividad"
                                class="form-control margin-bottom  required" name="name">
                     </div>
                 </div>
