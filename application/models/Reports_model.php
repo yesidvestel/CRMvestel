@@ -275,6 +275,7 @@ class Reports_model extends CI_Model
         $result = $query->result_array();
         return $result;
     }
+	
     public function get_estadisticas_tecnicos($tec, $sede, $sdate){
         
 
@@ -326,6 +327,7 @@ class Reports_model extends CI_Model
         $result = $query->result_array();
         return $result;
     }
+	
 
     public function get_customer_statements($pay_acc, $trans_type, $sdate, $edate)
     {
