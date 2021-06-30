@@ -732,7 +732,7 @@ class Clientgroup extends CI_Controller
                             $row[] = $no;
                             $row[] = $customers->abonado;
                             $row[] = $customers->documento;
-                            $row[] = '<a href="'.base_url().'customers/view?id=' . $customers->id . '">' . $customers->name . ' </a>';
+                            $row[] = '<a href="'.base_url().'customers/view?id=' . $customers->id . '">' . $customers->name .' '.$customers->unoapellido. ' </a>';
                             $row[] = $customers->celular;           
                             $row[] = $customers->nomenclatura . ' ' . $customers->numero1 . $customers->adicionauno.' Nº '.$customers->numero2.$customers->adicional2.' - '.$customers->numero3;
                             $row[] = $customers->barrio;
