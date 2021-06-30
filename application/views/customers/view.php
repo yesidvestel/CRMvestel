@@ -125,43 +125,93 @@
                             </div>
                             <hr>
                              <strong>DATOS DE INTEGRACION</strong>
-                            <hr>                            
-                                <div class="col-md-3">
-                                    <strong><?php echo $this->lang->line('') ?>Mikrotik:</strong>
-                                    <strong><?php echo $this->lang->line('') ?>Usuario:</strong>
-                                    <strong><?php echo $this->lang->line('') ?>Pasword:</strong>
-                                    <strong><?php echo $this->lang->line('') ?>Servicio:</strong>
-                                    <strong><?php echo $this->lang->line('') ?>Perfil:</strong>
-                                    <strong><?php echo $this->lang->line('') ?>Local:</strong>
-                                    <strong><?php echo $this->lang->line('') ?>Remota:</strong>
-                                    <strong><?php echo $this->lang->line('') ?>Comt/rio:</strong>                                    
+                            <hr>                                  
                                     <?php if ($this->aauth->get_user()->roleid > 4) { ?>
                                     <a class="btn btn-success" href="<?=base_url().'customers/edita_estado_usuario?username='.$details['name_s'].'&id_cm='.$details['id']?>&id_sede=<?=$details['gid']?>"><?= ($estado_mikrotik=='true') ? "Activar" : "Desactivar" ?></a>                                 
                                 	<?php } ?>
+                                
+                                <div class="col-md-12">
+									<div class="col-md-3">
+									<strong><?php echo $this->lang->line('') ?>Mikrotik:</strong>
+									</div>
+									<div class="col-md-8">
+                                    <?php echo $customergroup['title'] ?> 
+									</div>
                                 </div>
-                                <div class="col-md-6">
-                                    <?php echo $customergroup['title'] ?>                                    
+                                <div class="col-md-12">
+									<div class="col-md-3">
+									<strong><?php echo $this->lang->line('') ?>Usuario:</strong>
+									</div>
+									<div class="col-md-9">
+                                    <?php echo $details['name_s'] ?>
+									</div>
                                 </div>
-                                <div class="col-md-6">
-                                    <?php echo $details['name_s'] ?>                                   
+                                <div class="col-md-12">
+									<div class="col-md-3">
+									<strong><?php echo $this->lang->line('') ?>Pasword:</strong>
+									</div>
+									<div class="col-md-9">
+                                    <?php echo $details['contra'] ?>
+									</div>
                                 </div>
-                                <div class="col-md-6">
-                                    <?php echo $details['contra'] ?>                                    
+                                <div class="col-md-12">
+									<div class="col-md-3">
+									<strong><?php echo $this->lang->line('') ?>Servicio:</strong>
+									</div>
+									<div class="col-md-9">
+                                    <?php echo $details['servicio'] ?>
+									</div>
                                 </div>
-                                <div class="col-md-6">
-                                    <?php echo $details['servicio'] ?>                                    
+                                <div class="col-md-12">
+									<div class="col-md-3">
+									<strong><?php echo $this->lang->line('') ?>Perfil:</strong>
+									</div>
+									<div class="col-md-9">
+                                    <?php echo $details['perfil'] ?>
+									</div>
                                 </div>
-                                <div class="col-md-6">
-                                    <?php echo $details['perfil'] ?>                                    
+                                 <div class="col-md-12">
+									<div class="col-md-3">
+									<strong><?php echo $this->lang->line('') ?>Local:</strong>
+									</div>
+									<div class="col-md-9">
+                                    <?php echo $details['Iplocal'] ?>
+									</div>
                                 </div>
-                                <div class="col-md-6">
-                                    <?php echo $details['Iplocal'] ?>                                    
+                                <div class="col-md-12">
+									<div class="col-md-3">
+									<strong><?php echo $this->lang->line('') ?>Remota:</strong>
+									</div>
+									<div class="col-md-9">
+                                    <?php echo $details['Ipremota'] ?>
+									</div>
                                 </div>
-                                <div class="col-md-6">
-                                    <?php echo $details['Ipremota'] ?>                                    
+                                <div class="col-md-12">
+									<div class="col-md-3">
+									<strong><?php echo $this->lang->line('') ?>Comt/rio:</strong>
+									</div>
+									<div class="col-md-9">
+                                    <?php echo $details['comentario'] ?>
+									</div>
                                 </div>
-                                <div class="col-md-6">
-                                    <?php echo $barrio['comentario'] ?>                                    
+								<div class="col-md-12">
+									<div class="col-md-3">
+									<strong><?php echo $this->lang->line('') ?>T/sistema:</strong>
+									</div>
+									<div class="col-md-2">
+                                    <?php echo $equipo['t_instalacion'] ?>
+									</div>
+									<?php if ($equipo['t_instalacion']=='EOC'){ ?>
+									<div class="col-md-7">
+									<strong>MAS:</strong> <?php echo $equipo['master'] ?>
+									</div>
+									<?php }else{ ?>
+									<div class="col-md-7">
+									<strong>Vlan:</strong> <?php echo $equipo['vlan'] ?>
+									<strong>Nat:</strong> <?php echo $equipo['nat'] ?>
+									<strong>P/to:</strong> <?php echo $equipo['puerto'] ?>
+									</div>
+									<?php } ?>
                                 </div>
                                 <div class="row">
 								<table class="table table-striped">

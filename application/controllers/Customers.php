@@ -291,6 +291,7 @@ class Customers extends CI_Controller
 		$data['localidad'] = $this->customers->group_localidad($data['details']['localidad']);
 		$data['barrio'] = $this->customers->group_barrio($data['details']['barrio']);
         $data['money'] = $this->customers->money_details($custid);
+		$data['equipo'] = $this->customers->equipo_details($custid);
         $data['due'] = $this->customers->due_details($custid);
         $data['servicios'] = $this->customers->servicios_detail($custid);
         $head['usernm'] = $this->aauth->get_user()->username;

@@ -192,6 +192,15 @@ class Customers_model extends CI_Model
         $query = $this->db->get();
         return $query->row_array();
     }
+	public function equipo_details($custid)
+    {
+
+        $this->db->select('*');
+        $this->db->from('equipos');
+        $this->db->where('asignado', $custid);
+        $query = $this->db->get();
+        return $query->row_array();
+    }
 	 public function meta_insert($id, $type, $meta_data)
     {
 
