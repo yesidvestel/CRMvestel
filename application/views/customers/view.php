@@ -205,7 +205,7 @@
 									<div class="col-md-7">
 									<strong>MAS:</strong> <?php echo $equipo['master'] ?>
 									</div>
-									<?php }else{ ?>
+									<?php }if ($equipo['t_instalacion']=='FTTH'){ ?>
 									<div class="col-md-7">
 									<strong>Vlan:</strong> <?php echo $equipo['vlan'] ?>
 									<strong>Nat:</strong> <?php echo $equipo['nat'] ?>
