@@ -801,7 +801,7 @@
                 </li>
             <?php } ?>
 			
-			<!---------- MENU PARA EL DOCTOR,MAIRA Y DON HUGO----->
+			<!---------- MENU ADMINISTRACION----->
 			
 			<?php if ($this->aauth->get_user()->roleid == 4) { ?>
 			<li class="nav-item has-sub <?php if ($this->uri->segment(1) == "invoices" OR $this->uri->segment(1) == "quote") {
@@ -984,13 +984,34 @@
                     </ul>
                 </li>
 			<!---------------- GESTION DE PROYECTOS ----------------->
-                <li class="navigation-header"><span><?php echo $this->lang->line('Project') ?></span><i
+                <li class="navigation-header"><span>Tareas</span><i
                             data-toggle="tooltip" data-placement="right"
                             data-original-title="Balance"
                             class="icon-ellipsis icon-ellipsis"></i>
                 </li>
 			 <li><a href="<?php echo base_url(); ?>tools/todo"><i class="icon-android-done-all"></i><span
                                 class="menu-title"> <?php echo $this->lang->line('') ?>Listado de Tareas</span></a></li>
+			<!---------------- GESTION DE PROYECTOS ----------------->
+                <li class="navigation-header"><span><?php echo $this->lang->line('Project') ?></span><i
+                            data-toggle="tooltip" data-placement="right"
+                            data-original-title="Balance"
+                            class="icon-ellipsis icon-ellipsis"></i>
+                </li>
+                <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "projects") {
+                    echo ' open';
+                } ?>">
+                    <a href=""> <i class="icon-file"></i><span
+                                class="menu-title"> <?php echo $this->lang->line('Project Management') ?> </span><i
+                                class="fa arrow"></i> </a>
+                    <ul class="menu-content">
+                        <li>
+                            <a href="<?php echo base_url(); ?>projects/addproject"><?php echo $this->lang->line('New Project') ?></a>
+                        </li>
+                        <li>
+                            <a href="<?php echo base_url(); ?>projects"><?php echo $this->lang->line('Manage Projects') ?></a>
+                        </li>
+                    </ul>
+                </li>
 			<!--- TESORERIA--->
 			
                 <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "transactions") {
