@@ -463,7 +463,7 @@ alert(selected);
 }
 </script>
 <script type="text/javascript">	
-	var perfil_2 = new Array ("Seleccine...","3Megas","5Megas","10Megas","MOROSOS");
+	var perfil_2 = new Array ("Seleccine...","3Megas","5Megas","5MegasD","10Megas","15Megas","20Megas","30Megas","50Megas","80Megas","Cortados");
 	var perfil_3 = new Array ("Seleccine...","3MEGAS","5MEGAS","5MDEDI","5MEGAS2","10MEGAS","10MegasD","20MEGASD","30MEGAS","MOROSOS");
 	var perfil_4 = new Array ("Seleccine...","3Megas","5Megas","5MegasD","10Megas","15Megas","20Megas","30Megas","50Megas","80Megas","Cortados");
     var perfil_5 = new Array ("Seleccine...","3Megas","5Megas","5MegasD","10Megas","15Megas","20Megas","30Megas","50Megas","80Megas","Cortados");
