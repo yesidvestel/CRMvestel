@@ -132,9 +132,6 @@ class Invoices extends CI_Controller
                             }else{
                                 if($item_invoic['product']=="Punto Adicional"){
                                     $puntos=$item_invoic['qty'];
-                                }else if(strpos(strtolower($item_invoic['product']), "mega")!==false){
-                                    $_tiene_internet=true;
-                                    $internet=$item_invoic['product'];
                                 }
                             }
 
@@ -209,8 +206,22 @@ class Invoices extends CI_Controller
                                 $internet_data['subtotal']=$producto_internet['product_price'];
                                 $internet_data['totaldiscount']=0;
                                 $internet_data['totaltax']=0;
-                                $factura_data['subtotal']+=$producto_internet['product_price'];
-                                $factura_data['total']+=$producto_internet['product_price'];
+
+                                if($producto_internet['taxrate']!=0 ){
+                                    $iva=($producto_internet['product_price']*$producto_internet['taxrate'])/100;
+                                    $internet_data['tax']=$producto_internet['taxrate'];
+                                    $internet_data['totaltax']=$iva;
+                                    $internet_data['subtotal']=$producto_internet['product_price']+$iva;
+
+                                    $factura_data['subtotal']+=$producto_internet['product_price'];
+                                    $factura_data['total']+=($producto_internet['product_price']+$iva); 
+                                    $factura_data['tax']+=$iva;
+                                }else{
+                                    $factura_data['subtotal']+=$producto_internet['product_price'];
+                                    $factura_data['total']+=$producto_internet['product_price'];    
+                                }
+
+                                
                                 
                                     $this->db->insert("invoice_items",$internet_data);
                                 
