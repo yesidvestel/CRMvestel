@@ -663,7 +663,7 @@
 						$valor_parcial=intval($val1['credit']);
 						$valor_total=intval($inv1->total);
 						$valor_item=intval($item_invoic['subtotal']);
-							if($item_invoic['product']=="1Mega" ||$item_invoic['product']=="1 Mega"){
+							if(strpos(strtolower($item_invoic['product']), "mega")!==false){
 
 						 		if($val1['credit']!=0 && $valor_item!=0){
 						 			$valores_mes_actual['Internet']['cantidad']++;
@@ -675,50 +675,6 @@
 						 		}
 						 		
 
-							}else if($item_invoic['product']=="2Megas" ||$item_invoic['product']=="2 Megas"){
-								
-						 		if($val1['credit']!=0 && $valor_item!=0){
-						 			$valores_mes_actual['Internet']['cantidad']++;
-						 			$cuanto_porcentaje_item_en_invoice=($valor_item*100)/$valor_total;
-									$valor_item=($valor_parcial*$cuanto_porcentaje_item_en_invoice)/100;
-									$valores_mes_actual['Internet']['monto']+=$valor_item;
-									$sumatoria_items+=$valor_item;
-									$items_tocados['Internet']=true;
-						 		}
-
-							}else if($item_invoic['product']=="3Megas"|| $item_invoic['product']=="3 Megas"){
-								
-						 		if($val1['credit']!=0 && $valor_item!=0){
-						 			$valores_mes_actual['Internet']['cantidad']++;
-						 			$cuanto_porcentaje_item_en_invoice=($valor_item*100)/$valor_total;
-									$valor_item=($valor_parcial*$cuanto_porcentaje_item_en_invoice)/100;
-									$valores_mes_actual['Internet']['monto']+=$valor_item;
-									$sumatoria_items+=$valor_item;
-									$items_tocados['Internet']=true;
-						 		}
-
-							}else if($item_invoic['product']=="5Megas"||$item_invoic['product']=="5 Megas"){
-								
-						 		if($val1['credit']!=0 && $valor_item!=0){
-						 			$valores_mes_actual['Internet']['cantidad']++;
-						 			$cuanto_porcentaje_item_en_invoice=($valor_item*100)/$valor_total;
-									$valor_item=($valor_parcial*$cuanto_porcentaje_item_en_invoice)/100;
-									$valores_mes_actual['Internet']['monto']+=$valor_item;
-									$sumatoria_items+=$valor_item;
-									$items_tocados['Internet']=true;
-						 		}
-
-							}else if($item_invoic['product']=="10Megas"||$item_invoic['product']=="10 Megas"){
-								
-								if($val1['credit']!=0 && $valor_item!=0){
-									$valores_mes_actual['Internet']['cantidad']++;
-						 			$cuanto_porcentaje_item_en_invoice=($valor_item*100)/$valor_total;
-									$valor_item=($valor_parcial*$cuanto_porcentaje_item_en_invoice)/100;
-									$valores_mes_actual['Internet']['monto']+=$valor_item;
-									$sumatoria_items+=$valor_item;
-									$items_tocados['Internet']=true;
-						 		}
-						 		
 							}else if(strpos(strtolower($item_invoic['product']), "tele")!==false){
 								
 								if($val1['credit']!=0 && $valor_item!=0){
@@ -797,7 +753,7 @@
 						$valor_parcial=intval($val1['credit']);
 						$valor_total=intval($inv1->total);
 						$valor_item=intval($item_invoic['subtotal']);
-							if($item_invoic['product']=="1Mega" ||$item_invoic['product']=="1 Mega"){
+							if(strpos(strtolower($item_invoic['product']), "mega")!==false){
 
 						 		if($val1['credit']!=0 && $valor_item!=0){
 						 			$valores_mes_anterior['Internet']['cantidad']++;
@@ -809,50 +765,6 @@
 						 		}
 						 		
 
-							}else if($item_invoic['product']=="2Megas" ||$item_invoic['product']=="2 Megas"){
-								
-						 		if($val1['credit']!=0 && $valor_item!=0){
-						 			$valores_mes_anterior['Internet']['cantidad']++;
-						 			$cuanto_porcentaje_item_en_invoice=($valor_item*100)/$valor_total;
-									$valor_item=($valor_parcial*$cuanto_porcentaje_item_en_invoice)/100;
-									$valores_mes_anterior['Internet']['monto']+=$valor_item;
-									$sumatoria_items+=$valor_item;
-									$items_tocados['Internet']=true;
-						 		}
-
-							}else if($item_invoic['product']=="3Megas"|| $item_invoic['product']=="3 Megas"){
-								
-						 		if($val1['credit']!=0 && $valor_item!=0){
-						 			$valores_mes_anterior['Internet']['cantidad']++;
-						 			$cuanto_porcentaje_item_en_invoice=($valor_item*100)/$valor_total;
-									$valor_item=($valor_parcial*$cuanto_porcentaje_item_en_invoice)/100;
-									$valores_mes_anterior['Internet']['monto']+=$valor_item;
-									$sumatoria_items+=$valor_item;
-									$items_tocados['Internet']=true;
-						 		}
-
-							}else if($item_invoic['product']=="5Megas"||$item_invoic['product']=="5 Megas"){
-								
-						 		if($val1['credit']!=0 && $valor_item!=0){
-						 			$valores_mes_anterior['Internet']['cantidad']++;
-						 			$cuanto_porcentaje_item_en_invoice=($valor_item*100)/$valor_total;
-									$valor_item=($valor_parcial*$cuanto_porcentaje_item_en_invoice)/100;
-									$valores_mes_anterior['Internet']['monto']+=$valor_item;
-									$sumatoria_items+=$valor_item;
-									$items_tocados['Internet']=true;
-						 		}
-
-							}else if($item_invoic['product']=="10Megas"||$item_invoic['product']=="10 Megas"){
-								
-								if($val1['credit']!=0 && $valor_item!=0){
-									$valores_mes_anterior['Internet']['cantidad']++;
-						 			$cuanto_porcentaje_item_en_invoice=($valor_item*100)/$valor_total;
-									$valor_item=($valor_parcial*$cuanto_porcentaje_item_en_invoice)/100;
-									$valores_mes_anterior['Internet']['monto']+=$valor_item;
-									$sumatoria_items+=$valor_item;
-									$items_tocados['Internet']=true;
-						 		}
-						 		
 							}else if(strpos(strtolower($item_invoic['product']), "tele")!==false){
 								
 								if($val1['credit']!=0 && $valor_item!=0){
@@ -932,7 +844,7 @@
 						$valor_parcial=intval($val1['credit']);
 						$valor_total=intval($inv1->total);
 						$valor_item=intval($item_invoic['subtotal']);
-							if($item_invoic['product']=="1Mega" ||$item_invoic['product']=="1 Mega"){
+							if(strpos(strtolower($item_invoic['product']), "mega")!==false){
 
 						 		if($val1['credit']!=0 && $valor_item!=0){
 						 			$valores_meses_anteriores['Internet']['cantidad']++;
@@ -944,50 +856,6 @@
 						 		}
 						 		
 
-							}else if($item_invoic['product']=="2Megas" ||$item_invoic['product']=="2 Megas"){
-								
-						 		if($val1['credit']!=0 && $valor_item!=0){
-						 			$valores_meses_anteriores['Internet']['cantidad']++;
-						 			$cuanto_porcentaje_item_en_invoice=($valor_item*100)/$valor_total;
-									$valor_item=($valor_parcial*$cuanto_porcentaje_item_en_invoice)/100;
-									$valores_meses_anteriores['Internet']['monto']+=$valor_item;
-									$sumatoria_items+=$valor_item;
-									$items_tocados['Internet']=true;
-						 		}
-
-							}else if($item_invoic['product']=="3Megas"|| $item_invoic['product']=="3 Megas"){
-								
-						 		if($val1['credit']!=0 && $valor_item!=0){
-						 			$valores_meses_anteriores['Internet']['cantidad']++;
-						 			$cuanto_porcentaje_item_en_invoice=($valor_item*100)/$valor_total;
-									$valor_item=($valor_parcial*$cuanto_porcentaje_item_en_invoice)/100;
-									$valores_meses_anteriores['Internet']['monto']+=$valor_item;
-									$sumatoria_items+=$valor_item;
-									$items_tocados['Internet']=true;
-						 		}
-
-							}else if($item_invoic['product']=="5Megas"||$item_invoic['product']=="5 Megas"){
-								
-						 		if($val1['credit']!=0 && $valor_item!=0){
-						 			$valores_meses_anteriores['Internet']['cantidad']++;
-						 			$cuanto_porcentaje_item_en_invoice=($valor_item*100)/$valor_total;
-									$valor_item=($valor_parcial*$cuanto_porcentaje_item_en_invoice)/100;
-									$valores_meses_anteriores['Internet']['monto']+=$valor_item;
-									$sumatoria_items+=$valor_item;
-									$items_tocados['Internet']=true;
-						 		}
-
-							}else if($item_invoic['product']=="10Megas"||$item_invoic['product']=="10 Megas"){
-								
-								if($val1['credit']!=0 && $valor_item!=0){
-									$valores_meses_anteriores['Internet']['cantidad']++;
-						 			$cuanto_porcentaje_item_en_invoice=($valor_item*100)/$valor_total;
-									$valor_item=($valor_parcial*$cuanto_porcentaje_item_en_invoice)/100;
-									$valores_meses_anteriores['Internet']['monto']+=$valor_item;
-									$sumatoria_items+=$valor_item;
-									$items_tocados['Internet']=true;
-						 		}
-						 		
 							}else if(strpos(strtolower($item_invoic['product']), "tele")!==false){
 								
 								if($val1['credit']!=0 && $valor_item!=0){
