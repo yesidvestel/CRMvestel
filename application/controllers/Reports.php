@@ -585,6 +585,7 @@ $data['datos_informe']=array("trans_type"=>$trans_type);
 	public function estadisticaportecnico()
 
     {
+        set_time_limit(10000);
         $this->load->model('customers_model', 'customer');
         $tec = $this->input->post('tecnico');
         $sede = $this->input->post('sede');
