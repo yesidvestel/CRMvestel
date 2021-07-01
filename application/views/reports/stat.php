@@ -78,7 +78,7 @@
                                         <th><?php echo $this->lang->line('Expenses') ?></th>
                                         <th><?php echo $this->lang->line('Sales') ?></th>
                                         <th><?php echo $this->lang->line('Invoices') ?></th>
-                                        <th><?php echo $this->lang->line('sold') . $this->lang->line('products') ?></th>
+                                        <th><?php echo $this->lang->line('products') .' vendidos'  ?></th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -90,12 +90,13 @@
 
                                         $dateObj = DateTime::createFromFormat('!m', $item['month']);
                                         $month = $dateObj->format('F');
+										setlocale(LC_TIME, "spanish");
                                         echo '<tr>
-                                <td class="text-truncate">' . $month . ', ' . $item['year'] . '</td>
-                                <td class="text-truncate"> ' . $item['income'] . '</td>
+                                <td class="text-truncate">' . strftime("%B del", strtotime($month)) .' ' . $item['year'] . '</td>
+                                <td class="text-truncate"> ' . amountFormat($item['income']) . '</td>
                             
-                                <td class="text-truncate">' . $item['expense'] . '</td>
-                                 <td class="text-truncate">' . $item['sales'] . '</td>
+                                <td class="text-truncate">' . amountFormat($item['expense']) . '</td>
+                                 <td class="text-truncate">' . amountFormat($item['sales']) . '</td>
                                   <td class="text-truncate">' . $item['invoices'] . '</td>
                                    <td class="text-truncate">' . $item['items'] . '</td>
                                
@@ -133,7 +134,7 @@
         ],
         xkey: 'x',
         ykeys: ['y', 'z'],
-        labels: ['Income', 'expense'],
+        labels: ['Ingresos', 'Gastos'],
         hideHover: 'auto',
         resize: true,
         barColors: ['#34cea7', '#ff6e40'],
@@ -155,7 +156,7 @@
         ],
         xkey: 'x',
         ykeys: ['y', 'z'],
-        labels: ['Products', 'Invoices'],
+        labels: ['Productos', 'Facturas'],
         hideHover: 'auto',
         resize: true,
         lineColors: ['#34cea7', '#ff6e40'],

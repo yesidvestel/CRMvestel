@@ -473,7 +473,7 @@
                                         <table  class="table-responsive tfr my_stripe" width="80%">
 										<thead>
 											<tr>
-												<th colspan="3" ><h5 align="left"><strong>Material usado en la Orden</strong></h5></th>
+												<th colspan="3" ><h5 align="left"><strong>Material usado en la red</strong></h5></th>
 											</tr>
 											<tr>
 												<th style="text-align: center;" width="10%">PID</th>
