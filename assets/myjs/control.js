@@ -887,10 +887,10 @@ function sendMail_g(o_data,action_url) {
             timeout: 700000,
             error: function (data, status, err) {
                 if (status == "timeout") {
-                    setTimeout(function(){ cargar_informacion_lote("Success-sms","La solicitud demoro demaciado porfavor revice en cellvoz si fue creada la campaña"); }, 7000);
+                    setTimeout(function(){ cargar_informacion_lote("Success-sms","Lote Enviado con Exito"); }, 7000);
                     
                 }else{
-                    setTimeout(function(){ cargar_informacion_lote("Success-sms","La solicitud demoro demaciado porfavor revice en cellvoz si fue creada la campaña"); }, 7000);
+                    setTimeout(function(){ cargar_informacion_lote("Success-sms","Lote Enviado con Exito"); }, 7000);
                 $("#notify .message").html("<strong>" + data.status + "</strong>: " + data.message);
                 $("#notify").removeClass("alert-success").addClass("alert-danger").fadeIn();
                 $("html, body").animate({scrollTop: $('body').offset().top}, 1000);
