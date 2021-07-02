@@ -463,7 +463,7 @@
 		</tr>
 		</table><br>
 		<strong>' . $this->lang->line('Status') . ': ' . $this->lang->line(ucwords($invoice['status'])).'</strong>
-		<div class="sign2">(' . $user . ')</div><div class="sign3">' . user_role($perfil) . '</div> <div class="terms">' . $invoice['notes'] . '<hr><strong>' . $this->lang->line('Terms') . ':</strong>';
+		<div class="sign2">(' . $user . ')</div><div class="sign3">' . user_role($perfil) . '</div> <div class="terms"><hr><strong>' . $this->lang->line('Terms') . ':</strong>';
 
     echo '<strong>' . $invoice['termtit'] . '</strong><br>' . $invoice['terms'];
     ?></div>
