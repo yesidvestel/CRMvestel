@@ -95,7 +95,7 @@ $this->load->model("customers_model","customers");
                 $dataApi= $this->customers->getClientData2Productos();    
             }
         }else if($_POST['servicios']=="Internet"){
-        	//$dataApi= $this->customers->getClientData();
+        	$dataApi= $this->customers->getClientData();
         }else if($_POST['servicios']=="Television"){
             if(isset($_POST['puntos']) && $_POST['puntos']!="no"){
                 $dataApi= $this->customers->getClientData2Productos();    //y este caso
@@ -193,15 +193,17 @@ $this->load->model("customers_model","customers");
         			if($prod->product_name==$array_servicios['combo']){
         				//var_dump($prod->product_name);
         				$dataApi->Items[0]->ProductCode="l01";
-        				if($prod->product_name=="3megasvc"){
+        				if($prod->taxrate!=0){
         					//valores para generar iva
-        					$valor_iva="3800";
-        					$dataApi->Items[0]->TaxAddName="IVA 19%";
-	        				$dataApi->Items[0]->TaxAddId="5869";
+        					$valor_iva=($prod->product_price*$prod->taxrate)/100;
+                            $valor_iva=round($valor_iva);
+        					$dataApi->Items[0]->TaxAddName="IVA ".$prod->taxrate."%";
+	        				$dataApi->Items[0]->TaxAddId="6688";
 	        				$dataApi->Items[0]->TaxAddValue=$valor_iva;
-	        				$dataApi->Items[0]->TaxAddPercentage="19";	
+	        				$dataApi->Items[0]->TaxAddPercentage=$prod->taxrate;	
 	        				$dataApi->Header->VATTotalValue=$valor_iva;
 							//total
+                            $prod->product_price+=$valor_iva;
 							$dataApi->Payments[0]->Value=$prod->product_price;
         					$dataApi->Items[0]->TotalValue=$prod->product_price;
         					$dataApi->Header->TotalValue=$prod->product_price;
@@ -249,7 +251,7 @@ $this->load->model("customers_model","customers");
 
         	$array_servicios=$this->customers->servicios_detail($customer->id);
         	if($array_servicios['combo']!="no"){
-        		$dataApi->Items[1]->Description="Servicio de Internet ".$array_servicios['combo'];
+        		$dataApi->Items[1]->Description="Servicio de Internet a ".$array_servicios['combo'];
         		$lista_de_productos=$this->db->from("products")->like("product_name","mega","both")->get()->result();
         		$array_servicios['combo']=strtolower(str_replace(" ", "",$array_servicios['combo'] ));
         		foreach ($lista_de_productos as $key => $prod) {
@@ -257,15 +259,20 @@ $this->load->model("customers_model","customers");
         			if($prod->product_name==$array_servicios['combo']){
         				//var_dump($prod->product_name);
         				$dataApi->Items[1]->ProductCode="l01";
-        				if($prod->product_name=="3megasvc"){
+        				if($prod->taxrate!=0){
         					//valores para generar iva
-        					$valor_iva="3800";
-        					$dataApi->Items[1]->TaxAddName="IVA 19%";
-	        				$dataApi->Items[1]->TaxAddId="5869";
+        					$valor_iva=($prod->product_price*$prod->taxrate)/100;
+                            $valor_iva=round($valor_iva);
+        					$dataApi->Items[1]->TaxAddName="IVA ".$prod->taxrate."% ";
+	        				$dataApi->Items[1]->TaxAddId="6688";
 	        				$dataApi->Items[1]->TaxAddValue=$valor_iva;
-	        				$dataApi->Items[1]->TaxAddPercentage="19";	
+	        				$dataApi->Items[1]->TaxAddPercentage=$prod->taxrate;	
 	        				$dataApi->Header->VATTotalValue=$valor_iva+$dataApi->Header->VATTotalValue;
 							//total
+                            
+                            $prod->product_price+=$valor_iva;
+                            
+                            
 							$dataApi->Payments[0]->Value=$prod->product_price+$dataApi->Payments[0]->Value;
         					$dataApi->Items[1]->TotalValue=$prod->product_price;
         					$dataApi->Header->TotalValue=$prod->product_price+$dataApi->Header->TotalValue;//total de todo con iva
