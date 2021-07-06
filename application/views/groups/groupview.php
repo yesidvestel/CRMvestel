@@ -793,7 +793,7 @@ $("#pagination_div").hide();
     function cargar_plantilla(){
         var text=$("#plantillas2 option:selected").data("texto");
         
-        if($("#plantillas2 option:selected").val()=="37"){
+        if($("#plantillas2 option:selected").val()=="38"){
             $("#contents2").attr("maxlength",250);
         }else{
             $("#contents2").attr("maxlength",250);
