@@ -257,9 +257,9 @@
 			 $array_afiliaciones['Afiliación Television']['monto_afiliacion']+=$rep_tv;
 			 $array_afiliaciones['Afiliación Television']['cuenta_afiliacion']+=$array_afiliaciones['Afiliación Combo']['cuenta_afiliacion'];
 			 
-			 if(isset($array_afiliaciones['Afiliación  Internet '])){
-			 	$array_afiliaciones['Afiliación  Internet ']['monto_afiliacion']+=$rep_internet;
-			 	$array_afiliaciones['Afiliación  Internet ']['cuenta_afiliacion']+=$array_afiliaciones['Afiliación Combo']['cuenta_afiliacion'];	
+			 if(isset($array_afiliaciones['Afiliación Internet '])){
+			 	$array_afiliaciones['Afiliación Internet ']['monto_afiliacion']+=$rep_internet;
+			 	$array_afiliaciones['Afiliación Internet ']['cuenta_afiliacion']+=$array_afiliaciones['Afiliación Combo']['cuenta_afiliacion'];	
 			 }else{
 			 	$array_afiliaciones['Afiliación Internet']['monto_afiliacion']+=$rep_internet;	
 			 	$array_afiliaciones['Afiliación Internet']['cuenta_afiliacion']+=$array_afiliaciones['Afiliación Combo']['cuenta_afiliacion'];
