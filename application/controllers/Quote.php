@@ -119,7 +119,8 @@ class Quote extends CI_Controller
 		$tv = $this->input->post('tele');
 		$inter = $this->input->post('inter');
 		$punto = $this->input->post('punto');
-     
+        
+        $detalle=str_replace("_"," ",$detalle);
      if($detalle=="AgregarInternet"){
             $inter = $this->input->post('interB');
             $tv="no";
