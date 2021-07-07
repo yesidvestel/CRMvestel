@@ -613,7 +613,7 @@ $txt_error="";
 		$temporal=$this->db->get_where('temporales',array('corden'=>$ticket->codigo))->row();
    
     $ya_agrego_equipos=true;
-    if($ticket->detalle=="Instalacion"){
+    if($ticket->detalle=="Instalacion" && $status=="Resuelto"){
             if($temporal->internet!="no" && $temporal->internet!=null){
                 $equipo=$this->db->get_where("equipos", array('asignado' => $ticket->cid))->row();
                 if(empty($equipo)){
