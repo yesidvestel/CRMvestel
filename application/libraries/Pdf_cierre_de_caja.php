@@ -32,7 +32,7 @@ class Pdf_cierre_de_caja
 
         require_once APPPATH . '/third_party/vendor/autoload.php';
 
-        $mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => 'letter', 'margin_left' => 5, 'margin_right' => 5, 'margin_top' => 50, 'margin_bottom' => 12]);
+        $mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => 'letter', 'margin_left' => 5, 'margin_right' => 5, 'margin_top' => 5, 'margin_bottom' => 12]);
 
         //$mpdf->SetDirectionality('RTL');
         $mpdf->autoScriptToLang = true;

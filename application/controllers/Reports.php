@@ -563,43 +563,27 @@ $data['datos_informe']=array("trans_type"=>$trans_type);
     }
 public function sacar_pdf2(){
 
-        $this->load->model('accounts_model', 'accounts');
-        $pay_acc = $this->input->post('pay_acc');
+         $pay_acc = $this->input->post('pay_acc');
         $trans_type = $this->input->post('trans_type');
-        $sdate = datefordatabase($this->input->post('sdate'));
-        $edate = datefordatabase($this->input->post('edate'));
-        $ttype = $this->input->post('ttype');
-        $account = $this->accounts->details($pay_acc);
-        $data['filter'] = array($pay_acc, $trans_type, $sdate, $edate, $ttype, $account['holder']);
-        $data['income'] = $this->reports->incomestatement();
-        $head['title'] = "Account Statement";
-        $head['usernm'] = $this->aauth->get_user()->username;
-
-
-        //datos para fechas de cierre 
-            $iduser = $this->aauth->get_user()->id;
-            $fecha = date("Y-m-d");
-            $hora = date("H:i");
-            $datec = array(
-                'fcierre' => $fecha,
-                'hcierre' => $hora,
-                //'roleid' => '0'
-            );
-            $this->db->where('id', $iduser);
-            $this->db->update('aauth_users', $datec);
-            //$this->load->view('dashboard');
-        //fin datos para fechas cierre
-
-        $data['datos_informe']=array("pay_acc"=>$pay_acc,"trans_type"=>$trans_type,"sdate"=>$sdate,"edate"=>$edate);
+        $sdate = $this->input->post('sdate');
+        $edate = $this->input->post('edate');
+        //$ttype = $this->input->post('ttype');
+        //$account = $this->accounts->details($pay_acc);
+        //$data['filter'] = array($pay_acc, $trans_type, $sdate, $edate, $ttype, $account['holder']);
+        //$data['income'] = $this->reports->incomestatement();
+        //$head['title'] = "Account Statement";
+        //$head['usernm'] = $this->aauth->get_user()->username;
+$data['datos_informe']=array("trans_type"=>$trans_type);
         //codigo listar
-            
-            
-            $datex=new DateTime($sdate);
+          $data['fecha']=$sdate;  
+             //hice esto para hacer que el cierre sea de un dia si se desea reestablecer a entre fechas solo comentar la linea 57;
+              $datex=new DateTime($sdate);
             $edate=$datex->format('Y-m-d')." 23:59:00";
             $caja1=$this->db->get_where('accounts',array('id' =>$pay_acc))->row();
-            //egresos
+            
             $list = $this->reports->get_statements($pay_acc, $trans_type, $sdate, $edate);
-            $ordenes_compra=$this->reports->get_statements($pay_acc, "Expense", $sdate, $edate);//listo gastos en esta cuenta
+            //egresos
+                 $ordenes_compra=$this->reports->get_statements($pay_acc, "Expense", $sdate, $edate);//listo gastos en esta cuenta
             $ordenes_compra_c1=$this->reports->get_statements(6, "Expense", $sdate, $edate);
             $ordenes_compra_c2=$this->reports->get_statements(7, "Expense", $sdate, $edate);
             $ordenes_compra_c3=$this->reports->get_statements(8, "Expense", $sdate, $edate);
@@ -642,10 +626,8 @@ public function sacar_pdf2(){
 
             }
             $tr1=$this->reports->get_statements($pay_acc, "Transfer", $sdate, $edate);
-
             $data['ordenes_compra']=$ordenes_compra;
             $data['tr1']=$tr1;
-
             //end egresos
             $lista2=array();
             foreach ($list as $key => $value) {
@@ -668,12 +650,12 @@ public function sacar_pdf2(){
             $data['cuenta2']=$cuenta2;
             $data['cuenta3']=$cuenta3;
             
+
             foreach ($cuenta1 as $key => $value) {
                 $invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
                 if($invoice->refer!=null){
                     $invoice->refer=str_replace(" ","",$invoice->refer);                                    
-                }
-                
+                }                                
                 if($value['estado']!="Anulada"){                
                     if($invoice->refer==$caja1->holder){                    
                         $lista2[]=$value;
@@ -688,9 +670,9 @@ public function sacar_pdf2(){
          
          foreach ($cuenta2 as $key => $value) {         
             $invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
-            if($invoice->refer!=null){
-                $invoice->refer=str_replace(" ","",$invoice->refer);                                    
-            }
+             if($invoice->refer!=null){
+                    $invoice->refer=str_replace(" ","",$invoice->refer);                                    
+                }
             if($value['estado']!="Anulada"){                
                 if($invoice->refer==$caja1->holder){
                     $lista2[]=$value;
@@ -704,9 +686,9 @@ public function sacar_pdf2(){
          
          foreach ($cuenta3 as $key => $value) {         
             $invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
-            if($invoice->refer!=null){
-                $invoice->refer=str_replace(" ","",$invoice->refer);                                    
-            }
+             if($invoice->refer!=null){
+                    $invoice->refer=str_replace(" ","",$invoice->refer);                                    
+                }
             if($value['estado']!="Anulada"){
                 if($invoice->refer==$caja1->holder){
                     $lista2[]=$value;
@@ -735,7 +717,6 @@ public function sacar_pdf2(){
             $d1=new DateTime($dia_inicial_mes_anterior);
             $data['texto_mes_anterior']=$this->reports->devolver_nombre_mes($d1->format("m"))." ".$d1->format("Y");
 
-            //meses anteriores list
             
             //resumen por meses code
             //mes anterior
@@ -768,11 +749,24 @@ public function sacar_pdf2(){
             $data['lista_meses_anteriores']=$lista_meses_anteriores;
         //end new code
 
+           $data['lista_datos']=$this->statements_para_pdf();
+           $data['caja']=$this->input->post('caja');
+           //cambiando rol usario
+            $iduser = $this->aauth->get_user()->id;        
+            $datec = array(
+                //'fcierre' => $fecha,
+                //'hcierre' => $hora,
+                'roleid' => '0'
+            );
+            $this->db->where('id', $iduser);
+            //$this->db->update('aauth_users', $datec);
+        //end new code
+
 
     ini_set('memory_limit', '64M');
 
            $foot= $this->load->view('fixed/footer', $head,true);
-            $contenido=$this->load->view('reports/statement_list', $data,true);
+            $contenido=$this->load->view('reports/sacar_pdf_editado', $data,true);
             $this->load->library('pdf_cierre_de_caja');
             $pdf = $this->pdf_cierre_de_caja->load();
            
