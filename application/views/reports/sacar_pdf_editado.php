@@ -748,6 +748,12 @@ $array_afiliaciones=array();
 			$cajero = $this->aauth->get_user()->username;
 
 ?>
+<style type="text/css">
+	.tablas_anchos{
+		width: 315px;
+	}
+</style>
+
 <div style='text-align: center;'>
 <img style='display:block;margin:auto;' src='<?=base_url(); ?>userfiles/theme/logo-header.png'>
 </div>
@@ -768,9 +774,9 @@ $array_afiliaciones=array();
 <?php if($datos_informe['trans_type']!='Expense'){ ?>
 	<tr>
 		<td style='vertical-align: top;'>
-			
+
 			<h6 style='font-size: 1rem;margin-bottom: 0.5rem;font-family: inherit;font-weight: 500;line-height: 1.2;color: inherit;margin-top: 0;'>Resumen Cobranza</h6>
-			<table style='border-collapse: collapse;border: 1px solid #5F5F5F;border-spacing: 2px;'>
+			<table style='border-collapse: collapse;border: 1px solid #5F5F5F;border-spacing: 2px;'  class="tablas_anchos">
 					<thead>
 						<tr >
 							<th style='background: #555;color: #fff;text-transform: uppercase;text-align: center;font-size: 14px;padding: 10px;'>
@@ -805,8 +811,8 @@ $array_afiliaciones=array();
 			
 <br>
 			<h6 style='font-size: 1rem;margin-bottom: 0.5rem;font-family: inherit;font-weight: 500;line-height: 1.2;color: inherit;margin-top: 10px;'>Resumen por Banco</h6>
-			<table style='border-collapse: collapse;border: 1px solid #5F5F5F;border-spacing: 2px;'>
-					<thead>
+			<table  style='border-collapse: collapse;border: 1px solid #5F5F5F;border-spacing: 2px;'  class="tablas_anchos">
+					<thead >
 						<tr >
 							<th style='background: #555;color: #fff;text-transform: uppercase;text-align: center;font-size: 14px;padding: 10px;'>
 							DESCRIPCION</th>
@@ -839,10 +845,10 @@ $array_afiliaciones=array();
 			
 		</td>
 		
-		<td width='20%'></td>
-		<td >
+		<td width='15%'></td>
+		<td style="padding-top: -55px;">
 			<h6 style='font-size: 1rem;margin-bottom: 0.5rem;font-family: inherit;font-weight: 500;line-height: 1.2;color: inherit;margin-top: 0;'>Resumen por Forma de pago</h6>
-			<table style='border-collapse: collapse;border: 1px solid #5F5F5F;border-spacing: 2px;'>
+			<table style='border-collapse: collapse;border: 1px solid #5F5F5F;border-spacing: 2px;'  class="tablas_anchos">
 					<thead>
 						<tr >
 							<th style='background: #555;color: #fff;text-transform: uppercase;text-align: center;font-size: 14px;padding: 10px;'>
@@ -903,7 +909,7 @@ $array_afiliaciones=array();
 		<td>
 			
 			<h6 style='font-size: 1rem;margin-bottom: 0.5rem;font-family: inherit;font-weight: 500;line-height: 1.2;color: inherit;margin-top: 10px;'>Resumen Anulaciones</h6>
-			<table style='border-collapse: collapse;border: 1px solid #5F5F5F;border-spacing: 2px;'>
+			<table style='border-collapse: collapse;border: 1px solid #5F5F5F;border-spacing: 2px;'  class="tablas_anchos">
 					<thead>
 						<tr >
 							<th style='background: #555;color: #fff;text-transform: uppercase;text-align: center;font-size: 14px;padding: 10px;'>
@@ -943,7 +949,7 @@ $array_afiliaciones=array();
 	<?php if($datos_informe['trans_type']!='Expense'){ ?>
 		<td style='vertical-align: top;'>
 			<h6 style='font-size: 1rem;margin-bottom: 0.5rem;font-family: inherit;font-weight: 500;line-height: 1.2;color: inherit;margin-top: 10px;'>Resumen por Servicios</h6>
-			<table style='border-collapse: collapse;border: 1px solid #5F5F5F;border-spacing: 2px;'>
+			<table style='border-collapse: collapse;border: 1px solid #5F5F5F;border-spacing: 2px;' class="tablas_anchos">
 					<thead>
 						<tr >
 							<th style='background: #555;color: #fff;text-transform: uppercase;text-align: center;font-size: 14px;padding: 10px;'>
@@ -995,7 +1001,7 @@ $array_afiliaciones=array();
 			</table>
 			<br>
 			<h6 style='font-size: 1rem;margin-bottom: 0.5rem;font-family: inherit;font-weight: 500;line-height: 1.2;color: inherit;margin-top: 10px;'>Resumen de cargos cobrados por meses</h6>
-			<table style='border-collapse: collapse;border: 1px solid #5F5F5F;border-spacing: 2px;'>
+			<table style='border-collapse: collapse;border: 1px solid #5F5F5F;border-spacing: 2px;' class="tablas_anchos">
 					<thead>
 						<tr >
 							<th style='background: #555;color: #fff;text-transform: uppercase;text-align: center;font-size: 14px;padding: 10px;'>
@@ -1034,7 +1040,7 @@ $array_afiliaciones=array();
 		
 		<?php if($datos_informe['trans_type']!='Expense'){ ?>
 			<h6 style='font-size: 1rem;margin-bottom: 0.5rem;font-family: inherit;font-weight: 500;line-height: 1.2;color: inherit;margin-top: 10px;'>Resumen de cargos cobrados <br>por meses INTERNET</h6>
-			<table style='border-collapse: collapse;border: 1px solid #5F5F5F;border-spacing: 2px;'>
+			<table style='border-collapse: collapse;border: 1px solid #5F5F5F;border-spacing: 2px;' class="tablas_anchos">
 					<thead>
 						<tr >
 							<th style='background: #555;color: #fff;text-transform: uppercase;text-align: center;font-size: 14px;padding: 10px;'>
@@ -1068,7 +1074,7 @@ $array_afiliaciones=array();
 			</table>
 			<br>
 			<h6 style='font-size: 1rem;margin-bottom: 0.5rem;font-family: inherit;font-weight: 500;line-height: 1.2;color: inherit;margin-top: 10px;'>Resumen de cargos cobrados <br>por meses TV</h6>
-			<table style='border-collapse: collapse;border: 1px solid #5F5F5F;border-spacing: 2px;'>
+			<table style='border-collapse: collapse;border: 1px solid #5F5F5F;border-spacing: 2px;' class="tablas_anchos">
 					<thead>
 						<tr >
 							<th style='background: #555;color: #fff;text-transform: uppercase;text-align: center;font-size: 14px;padding: 10px;'>
@@ -1102,7 +1108,7 @@ $array_afiliaciones=array();
 			</table>
 			<br>
 			<h6 style='font-size: 1rem;margin-bottom: 0.5rem;font-family: inherit;font-weight: 500;line-height: 1.2;color: inherit;margin-top: 10px;'>Resumen por tipo de servicio</h6>
-			<table style='border-collapse: collapse;border: 1px solid #5F5F5F;border-spacing: 2px;'>
+			<table style='border-collapse: collapse;border: 1px solid #5F5F5F;border-spacing: 2px;' class="tablas_anchos">
 					<thead>
 						<tr >
 							<th style='background: #555;color: #fff;text-transform: uppercase;text-align: center;font-size: 14px;padding: 10px;'>
@@ -1136,7 +1142,7 @@ $array_afiliaciones=array();
 			
 			<?php if($datos_informe['trans_type']!='Income'){ ?>
 			<h6 style='font-size: 1rem;margin-bottom: 0.5rem;font-family: inherit;font-weight: 500;line-height: 1.2;color: inherit;margin-top: 10px;'>Resumen Egresos</h6>
-			<table style='border-collapse: collapse;border: 1px solid #5F5F5F;border-spacing: 2px;'>
+			<table style='border-collapse: collapse;border: 1px solid #5F5F5F;border-spacing: 2px;' class="tablas_anchos">
 					<thead>
 						<tr >
 							<th style='background: #555;color: #fff;text-transform: uppercase;text-align: center;font-size: 14px;padding: 10px;'>
@@ -1180,7 +1186,7 @@ $array_afiliaciones=array();
 	</tr>
 </table>
 <div style='page-break-after: always'></div>
-<table style='width: 100%;max-width: 100%;margin-bottom: 1rem;vertical-align: bottom;border-bottom: 2px solid #e3ebf3;border-top: 1px solid #e3ebf3;padding: 0.75rem 2rem;border-spacing: 2px;font-variant: normal;border-collapse: collapse;'>
+<table style='width: 100%;max-width: 100%;margin-bottom: 1rem;vertical-align: bottom;border-bottom: 2px solid #e3ebf3;border-top: 1px solid #e3ebf3;padding: 0.75rem 2rem;border-spacing: 2px;font-variant: normal;border-collapse: collapse;margin-right: 8px;'>
 	<thead>
                 <tr>
                     <th style='vertical-align: bottom;border-bottom: 2px solid #e3ebf3;border-top: 1px solid #e3ebf3;padding: 0.75rem 2rem;background: #555;color: #fff;text-transform: uppercase;text-align: center;font-size: 14px;'>Fecha</th>
