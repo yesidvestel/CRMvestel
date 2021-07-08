@@ -768,6 +768,7 @@ $array_afiliaciones=array();
 <?php if($datos_informe['trans_type']!='Expense'){ ?>
 	<tr>
 		<td style='vertical-align: top;'>
+			
 			<h6 style='font-size: 1rem;margin-bottom: 0.5rem;font-family: inherit;font-weight: 500;line-height: 1.2;color: inherit;margin-top: 0;'>Resumen Cobranza</h6>
 			<table style='border-collapse: collapse;border: 1px solid #5F5F5F;border-spacing: 2px;'>
 					<thead>
@@ -1046,10 +1047,10 @@ $array_afiliaciones=array();
 					</thead>
 					<tbody>
 						<tr >
-							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>".$texto_mes_actual."</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'><?=$valores_mes_actual['Internet']['cantidad']  ?></td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 1px;'><?="$ ".number_format($valores_mes_actual['Internet']['monto'],0,",",".")  ?></td>
+							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'><?=$texto_mes_actual  ?></td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'><?=$valores_mes_actual['Internet']['cantidad']  ?></td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 1px;'><?="$ ".number_format($valores_mes_actual['Internet']['monto'],0,",",".")  ?></td>
 						</tr>
 						<tr>
-							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>".$texto_mes_anterior."</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'><?=$valores_mes_anterior['Internet']['cantidad']  ?></td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 1px;'><?="$ ".number_format($valores_mes_anterior['Internet']['monto'],0,",",".")  ?></td>
+							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'><?=$texto_mes_anterior  ?></td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'><?=$valores_mes_anterior['Internet']['cantidad']  ?></td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 1px;'><?="$ ".number_format($valores_mes_anterior['Internet']['monto'],0,",",".")  ?></td>
 						</tr>
 						<tr>
 							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Meses Anteriores</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'><?=$valores_meses_anteriores['Internet']['cantidad']  ?></td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 1px;'><?="$ ".number_format($valores_meses_anteriores['Internet']['monto'],0,",",".")  ?></td>
