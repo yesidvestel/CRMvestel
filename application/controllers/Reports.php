@@ -557,213 +557,10 @@ $data['datos_informe']=array("trans_type"=>$trans_type);
             $this->db->where('id', $iduser);
             $this->db->update('aauth_users', $datec);
             // fin cambiando rol usario
-           $this->load->view('reports/sacar_pdf', $data);
+           //$this->load->view('reports/sacar_pdf', $data);
             //sacar pdf
 
-    }
-public function sacar_pdf2(){
-
-         $pay_acc = $this->input->post('pay_acc');
-        $trans_type = $this->input->post('trans_type');
-        $sdate = $this->input->post('sdate');
-        $edate = $this->input->post('edate');
-        //$ttype = $this->input->post('ttype');
-        //$account = $this->accounts->details($pay_acc);
-        //$data['filter'] = array($pay_acc, $trans_type, $sdate, $edate, $ttype, $account['holder']);
-        //$data['income'] = $this->reports->incomestatement();
-        //$head['title'] = "Account Statement";
-        //$head['usernm'] = $this->aauth->get_user()->username;
-$data['datos_informe']=array("trans_type"=>$trans_type);
-        //codigo listar
-          $data['fecha']=$sdate;  
-             //hice esto para hacer que el cierre sea de un dia si se desea reestablecer a entre fechas solo comentar la linea 57;
-              $datex=new DateTime($sdate);
-            $edate=$datex->format('Y-m-d')." 23:59:00";
-            $caja1=$this->db->get_where('accounts',array('id' =>$pay_acc))->row();
-            
-            $list = $this->reports->get_statements($pay_acc, $trans_type, $sdate, $edate);
-            //egresos
-                 $ordenes_compra=$this->reports->get_statements($pay_acc, "Expense", $sdate, $edate);//listo gastos en esta cuenta
-            $ordenes_compra_c1=$this->reports->get_statements(6, "Expense", $sdate, $edate);
-            $ordenes_compra_c2=$this->reports->get_statements(7, "Expense", $sdate, $edate);
-            $ordenes_compra_c3=$this->reports->get_statements(8, "Expense", $sdate, $edate);
-
-            //falta agregar las transferencias echas 
-            
-            foreach ($ordenes_compra_c1 as $key => $value) {
-                $purchase=$this->reports->db->get_where('purchase',array('tid' =>$value['tid']))->row();
-                if($purchase->refer!=null){
-                    $purchase->refer=str_replace(" ","",$purchase->refer);                                    
-                    if($purchase->refer==$caja1->holder){
-                        $ordenes_compra[]=$value;
-                    }
-                }
-
-
-            }
-            foreach ($ordenes_compra_c2 as $key => $value) {
-                $purchase=$this->reports->db->get_where('purchase',array('tid' =>$value['tid']))->row();
-                if($purchase->refer!=null){
-
-                    $purchase->refer=str_replace(" ","",$purchase->refer);                                    
-                    if($purchase->refer==$caja1->holder){
-                        $ordenes_compra[]=$value;
-                    }
-                }
-
-
-            }
-            foreach ($ordenes_compra_c3 as $key => $value) {
-                $purchase=$this->reports->db->get_where('purchase',array('tid' =>$value['tid']))->row();
-                if($purchase->refer!=null){
-
-                    $purchase->refer=str_replace(" ","",$purchase->refer);                                    
-                    if($purchase->refer==$caja1->holder){
-                        $ordenes_compra[]=$value;
-                    }
-                }
-
-
-            }
-            $tr1=$this->reports->get_statements($pay_acc, "Transfer", $sdate, $edate);
-            $data['ordenes_compra']=$ordenes_compra;
-            $data['tr1']=$tr1;
-            //end egresos
-            $lista2=array();
-            foreach ($list as $key => $value) {
-                if($value['estado']!="Anulada"){
-                    $lista2[]=$value;    
-                }
-                
-            }
-            $anulaciones=array();
-            foreach ($list as $key => $value) {
-                if($value["estado"]=="Anulada"){
-                    $anulaciones[]=$value;
-                }
-            }
-
-            $cuenta1 = $this->reports->get_statements(6, $trans_type, $sdate, $edate);
-            $cuenta2 = $this->reports->get_statements(7, $trans_type, $sdate, $edate);
-            $cuenta3 = $this->reports->get_statements(8, $trans_type, $sdate, $edate);
-            $data['cuenta1']=$cuenta1;
-            $data['cuenta2']=$cuenta2;
-            $data['cuenta3']=$cuenta3;
-            
-
-            foreach ($cuenta1 as $key => $value) {
-                $invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
-                if($invoice->refer!=null){
-                    $invoice->refer=str_replace(" ","",$invoice->refer);                                    
-                }                                
-                if($value['estado']!="Anulada"){                
-                    if($invoice->refer==$caja1->holder){                    
-                        $lista2[]=$value;
-                        
-                    }
-                }else{
-                    if($invoice->refer==$caja1->holder){                    
-                        $anulaciones[]=$value;                        
-                    }
-                }
-            }
-         
-         foreach ($cuenta2 as $key => $value) {         
-            $invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
-             if($invoice->refer!=null){
-                    $invoice->refer=str_replace(" ","",$invoice->refer);                                    
-                }
-            if($value['estado']!="Anulada"){                
-                if($invoice->refer==$caja1->holder){
-                    $lista2[]=$value;
-                }
-            }else{
-                    if($invoice->refer==$caja1->holder){                    
-                        $anulaciones[]=$value;
-                    }
-            }
-         }
-         
-         foreach ($cuenta3 as $key => $value) {         
-            $invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
-             if($invoice->refer!=null){
-                    $invoice->refer=str_replace(" ","",$invoice->refer);                                    
-                }
-            if($value['estado']!="Anulada"){
-                if($invoice->refer==$caja1->holder){
-                    $lista2[]=$value;
-                }
-            }else{
-                    if($invoice->refer==$caja1->holder){                    
-                        $anulaciones[]=$value; 
-                    }
-            }
-         }
-         $data['lista']=$lista2;
-         $data['lista_anulaciones']=$anulaciones;
-            
-            //obteniendo datos mes actual
-            $dia_inicial_mes_actual = date($datex->format("Y-m")."-01 00:00:00");
-            $dia_final_de_mes_actual=date($datex->format("Y-m")."-t 23:00:00", strtotime($dia_inicial_mes_actual));
-            
-            //end obteniendo datos mes actual
-            
-            //obteniendo datos mes anterior
-            $xdate=strtotime($datex->format("Y-m-d")." 00:00:00");
-            $dia_inicial_mes_anterior=date("Y-m", strtotime("-1 month", $xdate))."-01 00:00:00";
-            $dia_final_de_mes_anterior=date("Y-m-t 23:00:00", strtotime($dia_inicial_mes_anterior));
-        //fin codigo listar
-            $data['texto_mes_actual']=$this->reports->devolver_nombre_mes($datex->format('m'))." ".$datex->format('Y');
-            $d1=new DateTime($dia_inicial_mes_anterior);
-            $data['texto_mes_anterior']=$this->reports->devolver_nombre_mes($d1->format("m"))." ".$d1->format("Y");
-
-            
-            //resumen por meses code
-            //mes anterior
-            $list3 =array();
-            $fecha_inicial_m_anterior=strtotime($dia_inicial_mes_anterior);
-            $fecha_final_m_anterior=strtotime($dia_final_de_mes_anterior);
-           
-            //mes actual
-            $fecha_inicial_m_actual=strtotime($dia_inicial_mes_actual);
-            $fecha_final_m_actual=strtotime($dia_final_de_mes_actual);
-            $lista4=array();
-           
-            //resumen por meses code end
-            //new code
-      
-            $lista_meses_anteriores=array();
-            foreach ($lista2 as $key => $value) {
-                $invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
-                $fecha_invoice=strtotime($invoice->invoicedate);
-                if ($fecha_invoice>=$fecha_inicial_m_anterior && $fecha_invoice<=$fecha_final_m_anterior) {
-                    $list3[]=$value;
-                }else if($fecha_invoice>=$fecha_inicial_m_actual && $fecha_invoice<=$fecha_final_m_actual){
-                    $lista4[]=$value;
-                }else{
-                    $lista_meses_anteriores[]=$value;
-                }
-            }
-            $data['lista_mes_anterior']=$list3;
-            $data['lista_mes_actual']=$lista4;
-            $data['lista_meses_anteriores']=$lista_meses_anteriores;
-        //end new code
-
-           $data['lista_datos']=$this->statements_para_pdf();
-           $data['caja']=$this->input->post('caja');
-           //cambiando rol usario
-            $iduser = $this->aauth->get_user()->id;        
-            $datec = array(
-                //'fcierre' => $fecha,
-                //'hcierre' => $hora,
-                'roleid' => '0'
-            );
-            $this->db->where('id', $iduser);
-            //$this->db->update('aauth_users', $datec);
-        //end new code
-
-
-    ini_set('memory_limit', '64M');
+           ini_set('memory_limit', '64M');
 
            $foot= $this->load->view('fixed/footer', $head,true);
             $contenido=$this->load->view('reports/sacar_pdf_editado', $data,true);
@@ -771,11 +568,16 @@ $data['datos_informe']=array("trans_type"=>$trans_type);
             $pdf = $this->pdf_cierre_de_caja->load();
            
            //$pdf->SetHTMLHeader($head);
-           $pdf->SetHTMLFooter('<div style="text-align: right;font-family: serif; font-size: 8pt; color: #5C5C5C; font-style: italic;margin-top:0pt;">{PAGENO}/{nbpg}</div>');
+           $pdf->SetHTMLFooter("<hr style='margin-bottom: 1px;'><div style='text-align:right;'><i><b><small>Pagina N° {PAGENO} de {nb}</small></b></i></div>");
     
             $pdf->WriteHTML($contenido);
-            $pdf->Output('Invoice_#' . $tid . '.pdf', 'I');
-}
+            $fecha =new DateTime($sdate);
+
+            $pdf->SetTitle('Cierre de Caja '.$this->reports->obtener_dia($fecha->format("N")).', '.$fecha->format("d-m-Y"));
+            $pdf->Output('Cierre de Caja '.$this->reports->obtener_dia($fecha->format("N")).', '.$fecha->format("d-m-Y").'.pdf',"I");
+
+    }
+
     public function customerviewstatement()
 
     {
