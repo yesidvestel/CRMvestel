@@ -193,7 +193,7 @@ class Reports extends CI_Controller
                 $purchase=$this->reports->db->get_where('purchase',array('tid' =>$value['tid']))->row();
                 if($purchase->refer!=null){
                     $purchase->refer=str_replace(" ","",$purchase->refer);                                    
-                    if($purchase->refer==$caja1->holder){
+                    if(strtolower($purchase->refer)==strtolower($caja1->holder)){
                         $ordenes_compra[]=$value;
                     }
                 }
@@ -205,7 +205,7 @@ class Reports extends CI_Controller
                 if($purchase->refer!=null){
 
                     $purchase->refer=str_replace(" ","",$purchase->refer);                                    
-                    if($purchase->refer==$caja1->holder){
+                    if(strtolower($purchase->refer)==strtolower($caja1->holder)){
                         $ordenes_compra[]=$value;
                     }
                 }
@@ -217,7 +217,7 @@ class Reports extends CI_Controller
                 if($purchase->refer!=null){
 
                     $purchase->refer=str_replace(" ","",$purchase->refer);                                    
-                    if($purchase->refer==$caja1->holder){
+                    if(strtolower($purchase->refer)==strtolower($caja1->holder)){
                         $ordenes_compra[]=$value;
                     }
                 }
@@ -258,12 +258,12 @@ class Reports extends CI_Controller
                 }
                 
                 if($value['estado']!="Anulada"){                
-                    if($invoice->refer==$caja1->holder){                    
+                    if(strtolower($invoice->refer)==strtolower($caja1->holder)){                    
                         $lista2[]=$value;
                         
                     }
                 }else{
-                    if($invoice->refer==$caja1->holder){                    
+                    if(strtolower($invoice->refer)==strtolower($caja1->holder)){                    
                         $anulaciones[]=$value;                        
                     }
                 }
@@ -275,11 +275,11 @@ class Reports extends CI_Controller
                 $invoice->refer=str_replace(" ","",$invoice->refer);                                    
             }
             if($value['estado']!="Anulada"){                
-                if($invoice->refer==$caja1->holder){
+                if(strtolower($invoice->refer)==strtolower($caja1->holder)){
                     $lista2[]=$value;
                 }
             }else{
-                    if($invoice->refer==$caja1->holder){                    
+                    if(strtolower($invoice->refer)==strtolower($caja1->holder)){                    
                         $anulaciones[]=$value;
                     }
             }
@@ -291,11 +291,11 @@ class Reports extends CI_Controller
                 $invoice->refer=str_replace(" ","",$invoice->refer);                                    
             }
             if($value['estado']!="Anulada"){
-                if($invoice->refer==$caja1->holder){
+                if(strtolower($invoice->refer)==strtolower($caja1->holder)){
                     $lista2[]=$value;
                 }
             }else{
-                    if($invoice->refer==$caja1->holder){                    
+                    if(strtolower($invoice->refer)==strtolower($caja1->holder)){                    
                         $anulaciones[]=$value; 
                     }
             }
@@ -390,7 +390,7 @@ $data['datos_informe']=array("trans_type"=>$trans_type);
                 $purchase=$this->reports->db->get_where('purchase',array('tid' =>$value['tid']))->row();
                 if($purchase->refer!=null){
                     $purchase->refer=str_replace(" ","",$purchase->refer);                                    
-                    if($purchase->refer==$caja1->holder){
+                    if(strtolower($purchase->refer)==strtolower($caja1->holder)){
                         $ordenes_compra[]=$value;
                     }
                 }
@@ -402,7 +402,7 @@ $data['datos_informe']=array("trans_type"=>$trans_type);
                 if($purchase->refer!=null){
 
                     $purchase->refer=str_replace(" ","",$purchase->refer);                                    
-                    if($purchase->refer==$caja1->holder){
+                    if(strtolower($purchase->refer)==strtolower($caja1->holder)){
                         $ordenes_compra[]=$value;
                     }
                 }
@@ -414,7 +414,7 @@ $data['datos_informe']=array("trans_type"=>$trans_type);
                 if($purchase->refer!=null){
 
                     $purchase->refer=str_replace(" ","",$purchase->refer);                                    
-                    if($purchase->refer==$caja1->holder){
+                    if(strtolower($purchase->refer)==strtolower($caja1->holder)){
                         $ordenes_compra[]=$value;
                     }
                 }
@@ -453,12 +453,12 @@ $data['datos_informe']=array("trans_type"=>$trans_type);
                     $invoice->refer=str_replace(" ","",$invoice->refer);                                    
                 }                                
                 if($value['estado']!="Anulada"){                
-                    if($invoice->refer==$caja1->holder){                    
+                    if(strtolower($invoice->refer)==strtolower($caja1->holder)){                    
                         $lista2[]=$value;
                         
                     }
                 }else{
-                    if($invoice->refer==$caja1->holder){                    
+                    if(strtolower($invoice->refer)==strtolower($caja1->holder)){                    
                         $anulaciones[]=$value;                        
                     }
                 }
@@ -470,11 +470,11 @@ $data['datos_informe']=array("trans_type"=>$trans_type);
                     $invoice->refer=str_replace(" ","",$invoice->refer);                                    
                 }
             if($value['estado']!="Anulada"){                
-                if($invoice->refer==$caja1->holder){
+                if(strtolower($invoice->refer)==strtolower($caja1->holder)){
                     $lista2[]=$value;
                 }
             }else{
-                    if($invoice->refer==$caja1->holder){                    
+                    if(strtolower($invoice->refer)==strtolower($caja1->holder)){                    
                         $anulaciones[]=$value;
                     }
             }
@@ -486,11 +486,11 @@ $data['datos_informe']=array("trans_type"=>$trans_type);
                     $invoice->refer=str_replace(" ","",$invoice->refer);                                    
                 }
             if($value['estado']!="Anulada"){
-                if($invoice->refer==$caja1->holder){
+                if(strtolower($invoice->refer)==strtolower($caja1->holder)){
                     $lista2[]=$value;
                 }
             }else{
-                    if($invoice->refer==$caja1->holder){                    
+                    if(strtolower($invoice->refer)==strtolower($caja1->holder)){                    
                         $anulaciones[]=$value; 
                     }
             }
@@ -670,7 +670,7 @@ $data['datos_informe']=array("trans_type"=>$trans_type);
                         $invoice->refer=str_replace(" ","",$invoice->refer);                                    
                     }
                     if($value['estado']!="Anulada"){                
-                        if($invoice->refer==$caja1->holder){                    
+                        if(strtolower($invoice->refer)==strtolower($caja1->holder)){                    
                             $list[]=$value;                        
                         }
                     }
@@ -679,7 +679,7 @@ $data['datos_informe']=array("trans_type"=>$trans_type);
                         if($purchase->refer!=null){
 
                             $purchase->refer=str_replace(" ","",$purchase->refer);                                    
-                            if($purchase->refer==$caja1->holder){
+                            if(strtolower($purchase->refer)==strtolower($caja1->holder)){
                                 $list[]=$value;
                             }
                         }
@@ -694,7 +694,7 @@ $data['datos_informe']=array("trans_type"=>$trans_type);
                     $invoice->refer=str_replace(" ","",$invoice->refer);                                    
                 }
                 if($value['estado']!="Anulada"){                
-                    if($invoice->refer==$caja1->holder){                    
+                    if(strtolower($invoice->refer)==strtolower($caja1->holder)){                    
                         $list[]=$value;                        
                     }
                 }
@@ -703,7 +703,7 @@ $data['datos_informe']=array("trans_type"=>$trans_type);
                     if($purchase->refer!=null){
 
                         $purchase->refer=str_replace(" ","",$purchase->refer);                                    
-                        if($purchase->refer==$caja1->holder){
+                        if(strtolower($purchase->refer)==strtolower($caja1->holder)){
                             $list[]=$value;
                         }
                     }
@@ -717,7 +717,7 @@ $data['datos_informe']=array("trans_type"=>$trans_type);
                     $invoice->refer=str_replace(" ","",$invoice->refer);                                    
                 }
                 if($value['estado']!="Anulada"){                
-                    if($invoice->refer==$caja1->holder){                    
+                    if(strtolower($invoice->refer)==strtolower($caja1->holder)){                    
                         $list[]=$value;                        
                     }
                 }
@@ -726,7 +726,7 @@ $data['datos_informe']=array("trans_type"=>$trans_type);
                     if($purchase->refer!=null){
 
                         $purchase->refer=str_replace(" ","",$purchase->refer);                                    
-                        if($purchase->refer==$caja1->holder){
+                        if(strtolower($purchase->refer)==strtolower($caja1->holder)){
                             $list[]=$value;
                         }
                     }
@@ -775,7 +775,7 @@ $data['datos_informe']=array("trans_type"=>$trans_type);
                         $invoice->refer=str_replace(" ","",$invoice->refer);                                    
                     }
                     if($value['estado']!="Anulada"){                
-                        if($invoice->refer==$caja1->holder){                    
+                        if(strtolower($invoice->refer)==strtolower($caja1->holder)){                    
                             $list[]=$value;                        
                         }
                     }
@@ -784,7 +784,7 @@ $data['datos_informe']=array("trans_type"=>$trans_type);
                         if($purchase->refer!=null){
 
                             $purchase->refer=str_replace(" ","",$purchase->refer);                                    
-                            if($purchase->refer==$caja1->holder){
+                            if(strtolower($purchase->refer)==strtolower($caja1->holder)){
                                 $list[]=$value;
                             }
                         }
@@ -798,7 +798,7 @@ $data['datos_informe']=array("trans_type"=>$trans_type);
                     $invoice->refer=str_replace(" ","",$invoice->refer);                                    
                 }
                 if($value['estado']!="Anulada"){                
-                    if($invoice->refer==$caja1->holder){                    
+                    if(strtolower($invoice->refer)==strtolower($caja1->holder)){                    
                         $list[]=$value;                        
                     }
                 }
@@ -807,7 +807,7 @@ $data['datos_informe']=array("trans_type"=>$trans_type);
                     if($purchase->refer!=null){
 
                         $purchase->refer=str_replace(" ","",$purchase->refer);                                    
-                        if($purchase->refer==$caja1->holder){
+                        if(strtolower($purchase->refer)==strtolower($caja1->holder)){
                             $list[]=$value;
                         }
                     }
@@ -821,7 +821,7 @@ $data['datos_informe']=array("trans_type"=>$trans_type);
                     $invoice->refer=str_replace(" ","",$invoice->refer);                                    
                 }
                 if($value['estado']!="Anulada"){                
-                    if($invoice->refer==$caja1->holder){                    
+                    if(strtolower($invoice->refer)==strtolower($caja1->holder)){                    
                         $list[]=$value;                        
                     }
                 }
@@ -830,7 +830,7 @@ $data['datos_informe']=array("trans_type"=>$trans_type);
                     if($purchase->refer!=null){
 
                         $purchase->refer=str_replace(" ","",$purchase->refer);                                    
-                        if($purchase->refer==$caja1->holder){
+                        if(strtolower($purchase->refer)==strtolower($caja1->holder)){
                             $list[]=$value;
                         }
                     }

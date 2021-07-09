@@ -222,7 +222,7 @@ $array_afiliaciones=array();
 		 		if($invoice->refer!=null){
 		 			$invoice->refer=str_replace(" ","",$invoice->refer);		 				 			
 		 		}		 				 		
-		 		if($invoice->refer==$caja){		 			
+		 		if(strtolower($invoice->refer)==strtolower($caja)){		 			
 		 			$array_bancos['BANCOLOMBIA TV']['cantidad']++;
 					$array_bancos['BANCOLOMBIA TV']['monto']+=$value['credit'];	
 		 		}
@@ -235,7 +235,7 @@ $array_afiliaciones=array();
 				if($invoice->refer!=null){
 		 			$invoice->refer=str_replace(" ","",$invoice->refer);		 				 			
 		 		}
-			 	if($invoice->refer==$caja){
+			 	if(strtolower($invoice->refer)==strtolower($caja)){
 			 		$array_bancos['BANCOLOMBIA TELECOMUNICACIONES']['cantidad']++;
 					$array_bancos['BANCOLOMBIA TELECOMUNICACIONES']['monto']+=$value['credit'];
 				}
@@ -248,7 +248,7 @@ $array_afiliaciones=array();
 			 	if($invoice->refer!=null){
 		 			$invoice->refer=str_replace(" ","",$invoice->refer);		 				 			
 		 		}
-			 	if($invoice->refer==$caja){
+			 	if(strtolower($invoice->refer)==strtolower($caja)){
 			 		$array_bancos['BANCOLOMBIA CUENTA CORRIENTE']['cantidad']++;
 					$array_bancos['BANCOLOMBIA CUENTA CORRIENTE']['monto']+=$value['credit'];
 				}
