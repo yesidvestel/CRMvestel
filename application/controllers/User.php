@@ -33,7 +33,31 @@ class User extends CI_Controller
         $this->captcha = $this->captcha_u->public_key()->captcha;
 
     }
+public function vista_previa_contrato(){
+        $data['title'] = "Contrato $custid";
+        
+        $data['invoice']['multi'] = 0;
 
+        ini_set('memory_limit', '64M');
+
+        $html = $this->load->view('customers/view-print-'.RTL, $data, true);
+
+        //PDF Rendering
+        $this->load->library('pdf_contrato');
+
+        $pdf = $this->pdf_contrato->load();
+
+        $pdf->SetHTMLFooter('<table width="100%" style="vertical-align: bottom; font-family: serif; font-size: 8pt; color: #959595; font-weight: bold; font-style: italic;"><tr><td width="33%"><span style="font-weight: bold; font-style: italic;">{DATE j-m-Y}</span></td><td width="33%" align="center" style="font-weight: bold; font-style: italic;">{PAGENO}/{nbpg}</td><td width="33%" style="text-align: right; ">#' . $custid . '</td></tr></table>');
+
+        $pdf->WriteHTML($html);
+
+        if ($this->input->get('d')) {
+
+            $pdf->Output('Contrato_#' . $custid . '.pdf', 'D');
+        } else {
+            $pdf->Output('Contrato_#' . $custid . '.pdf', 'I');
+        }
+}
     public function index()
     {
 
