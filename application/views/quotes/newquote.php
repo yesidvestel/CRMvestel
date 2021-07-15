@@ -359,27 +359,7 @@
 										</div>
                                    </div>
 								</div>
-								<div class="form-group row" id="AgregarInternet">	
-                                    <div class="col-sm-12">
-										<h3 class="title">Asignar servicio</h3>
-                                    </div>
-									<div class="col-sm-4">
-									<label for="invociedate" class="caption">Internet</label>
-										<div class="input-group">									
-											<select name="interB" class="form-control mb-1">
-												<option value="no">No</option>
-												<?php
-													foreach ($paquete as $row) {
-														$cid = $row['pid'];
-														$title = $row['product_name'];
-														echo "<option value='$title'>$title</option>";
-													}
-												?>
-											</select>
-										</div>
-                                   </div>
-								</div>
-					<div class="form-group row" id="Revision_de_Internet">
+								<div class="form-group row" id="Revision_de_Internet">
                         <div class="col-sm-12">
                             <label for="toAddInfo" class="caption">Posible Problema</label>
                             	<select name="problema" class="form-control mb-1">
@@ -407,6 +387,28 @@
 								</select>
 						</div>
                     </div>
+								<div class="form-group row" id="AgregarInternet">	
+                                    <div class="col-sm-12">
+										<h3 class="title">Asignar servicio</h3>
+                                    </div>
+									<div class="col-sm-4">
+									<label for="invociedate" class="caption">Internet</label>
+										<div class="input-group">									
+											<select name="interB" class="form-control mb-1">
+												<option value="no">No</option>
+												<?php
+													foreach ($paquete as $row) {
+														$cid = $row['pid'];
+														$title = $row['product_name'];
+														echo "<option value='$title'>$title</option>";
+													}
+												?>
+											</select>
+										</div>
+                                   </div>
+								</div>
+							</div>
+						</div>
 					</div>
                     <div class="form-group row">
                         <div class="col-sm-12">
@@ -414,7 +416,7 @@
                             <textarea class="summernote" name="section" id="contents" rows="2"></textarea></div>
                     </div>
                    
-					<input type="submit" class="btn btn-success sub-btn" value="Update Quote" id="submit-data" data-loading-text="Updating...">
+					<input type="submit" class="btn btn-success sub-btn" value="Generar Ticket" id="submit-data" data-loading-text="Updating...">
 						
                     <input type="hidden" value="quote/action" id="action-url">
                     <input type="hidden" value="search" id="billtype">
