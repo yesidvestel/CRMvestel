@@ -109,7 +109,7 @@
                         <div class="card card-block"><?php
                             if ($row['custo']) echo 'Customer <strong>' . $row['custo'] . '</strong> Replied<br><br>';
 
-                            if ($row['emp']) echo 'Tecnico <strong>' . $row['emp'] . '</strong> Respondio';
+                            if ($row['emp']) echo 'Tecnico <strong>' . $row['emp'] . '</strong> Respondio<br><br>';
 
                             echo $row['message'] . '';
                             if ($row['attach']) echo '<strong>Documentacion: </strong><a href="' . base_url('userfiles/support/' . $row['attach']) . '"><br><br>';?>
