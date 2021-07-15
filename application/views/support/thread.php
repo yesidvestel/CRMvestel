@@ -124,7 +124,26 @@
 			
             <h5><?php echo $this->lang->line('Your Response') ?></h5>
             <hr>
-			
+			<div class="form-group row">
+				<div class="col-sm-12">
+				<select name="solucion" class="form-control">
+					<option value="">-</option>
+					<option value="Cablemoden desconfigurado">Cablemoden desconfigurado</option>
+					<option value="Mantenimiento a la Red">Mantenimiento a la Red</option>
+					<option value="Cambio de Tecnologia">Cambio de Tecnologia</option>
+					<option value="Fusiono Fibra">Fusiono Fibra</option>
+					<option value="Cambio de Fibra">Cambio de Fibra</option>
+					<option value="Cambio de Cable RG 6">Cambio de Cable RG 6</option>
+					<option value="Reestructuracion Red">Reestructuracion Red</option>
+					<option value="Instalo Caja NAP">Instalo Caja NAP</option>
+					<option value="Instalaciones Internas en Mal estado">Instalaciones Internas en Mal estado</option>
+					<option value="Manipulacion del Usuario">Manipulacion del Usuario</option>
+					<option value="Daño General">Daño General</option>
+					<option value="Sin energia el Sector">Sin energia el Sector</option>
+					<option value="Elementos Quemados">Elementos Quemados</option>
+				</select>
+				</div>
+			</div>
 			
             <div class="form-group row">               
 

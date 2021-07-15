@@ -190,8 +190,9 @@ class Tickets Extends CI_Controller
         $this->load->view('fixed/header', $head);
 
         if ($this->input->post('content')) {
-
-            $message = $this->input->post('content');
+			$psolucion = $this->input->post('solucion');
+			$message2 = $this->input->post('content');
+            $message = $psolucion.'/ '.$message2;
             $attach = $_FILES['userfile']['name'];
             if ($attach) {
                 $config['upload_path'] = './userfiles/support';
