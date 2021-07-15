@@ -115,7 +115,7 @@ class Tickets Extends CI_Controller
             }
 			$row[] = $ticket->name.' '.$ticket->unoapellido;
 			$row[] = $ticket->documento;
-			$row[] = $obsv2;
+			$row[] = $obsv2.' '.$ticket->problema;
           if($ticket->id_factura !=null || $ticket->id_factura !==0 ){
                 $row[]='<a href="'.base_url("invoices/view?id=".$ticket->id_factura).'">'.$ticket->id_factura.'</a>';
             }else{

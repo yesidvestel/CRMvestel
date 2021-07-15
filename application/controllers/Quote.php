@@ -104,6 +104,7 @@ class Quote extends CI_Controller
         $subject = $this->input->post('subject');
         $detalle = $this->input->post('detalle');
         $created = $this->input->post('created');
+		$problema = $this->input->post('problema');
         $section = $this->input->post('section');
 		$factura = $this->input->post('factura');
 		$agendar = $this->input->post('agendar');
@@ -135,7 +136,7 @@ class Quote extends CI_Controller
      }        
         
         if ($customer_id) {
-        	$this->quote->addticket($customer_id, $nticket, $subject, $detalle, $created, $section, $factura,$agendar,$fagenda,$hora,$hora2,$nomen,$nuno,$auno,$ndos,$ados,$ntres,$local,$barrio,$recider, $refer, $tv,$inter,$punto);
+        	$this->quote->addticket($customer_id, $nticket, $subject, $detalle, $created, $problema, $section, $factura,$agendar,$fagenda,$hora,$hora2,$nomen,$nuno,$auno,$ndos,$ados,$ntres,$local,$barrio,$recider, $refer, $tv,$inter,$punto);
 			
 		}
 
@@ -262,6 +263,7 @@ class Quote extends CI_Controller
         $subject = $this->input->post('subject');
         $detalle = $this->input->post('detalle');
         $created = $this->input->post('created');
+		$problema = $this->input->post('problema');
         $section = $this->input->post('section');
 		$factura = $this->input->post('factura');
 		$nomen = $this->input->post('nomenclatura');
@@ -278,6 +280,7 @@ class Quote extends CI_Controller
 		$inter = $this->input->post('inter');
 		$punto = $this->input->post('punto');
         $bill_date = datefordatabase($created);
+		$detalle=str_replace("_"," ",$detalle);
         if($detalle=="AgregarInternet"){
             $inter = $this->input->post('interB');
             $tv="no";
@@ -305,7 +308,8 @@ class Quote extends CI_Controller
 			'codigo' => $nticket, 
 			'subject' => $subject, 
 			'detalle' => $detalle, 
-			'created' => $bill_date, 
+			'created' => $bill_date,
+			'problema' => $problema,
 			'section' => $section.$tv2.$int2.$pto2,
 			'id_factura' => $factura
 		);

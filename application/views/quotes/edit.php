@@ -312,6 +312,7 @@
 											</select>
 										</div>
                                    </div>
+									
 									<div class="col-sm-4">
 									<label for="invociedate" class="caption">Puntos</label>
 										<div class="input-group">									
@@ -324,6 +325,7 @@
 										</div>
                                    </div>
 								</div>
+								
 								<div class="form-group row" id="AgregarTelevision">	
                                     <div class="col-sm-12">
 										<h3 class="title">Asignar servicio</h3>
@@ -350,6 +352,36 @@
 										</div>
                                    </div>
 								</div>
+								<div class="form-group row" id="Revision_de_Internet">
+                        <div class="col-sm-12">
+                            <label for="toAddInfo" class="caption">Posible Problema</label>
+                            	<select name="problema" class="form-control mb-1">
+									<option value="<?php echo $thread_info['problema'] ?>"><?php echo $thread_info['problema'] ?></option>
+									<option value="">-</option>
+									<option value="Internet lento">Internet lento</option>
+									<option value="No aparece la Red">No aparece la Red</option>
+									<option value="No prende Cablemoden">No prende Cablemoden</option>
+									<option value="Fibra Rota">Fibra Rota</option>
+									<option value="Cable Caido">Cable Caido</option>
+									<option value="Desconfigurado Cablemoden">Desconfigurado Cablemoden</option>
+									<option value="Cambio de Tecnologia">Cambio de Tecnologia</option>
+									<option value="No hay Internet">No hay Internet</option>
+								</select>
+						</div>
+                    </div>
+					<div class="form-group row" id="Revision_de_television">
+                        <div class="col-sm-12">
+                            <label for="toAddInfo" class="caption">Posible Problema</label>
+                            	<select name="problema" class="form-control mb-1">
+									<option value="<?php echo $thread_info['problema'] ?>"><?php echo $thread_info['problema'] ?></option>
+									<option value="">-</option>
+									<option value="Señal Lluviosa">Señal Lluviosa</option>
+									<option value="Televisor desconfigurado">Televisor desconfigurado</option>
+									<option value="Cambio de Tecnologia">Cambio de Tecnologia</option>
+									<option value="No hay Television">No hay Television</option>
+								</select>
+						</div>
+                    </div>
 								<div class="form-group row" id="AgregarInternet">	
                                     <div class="col-sm-12">
 										<h3 class="title">Asignar servicio</h3>
@@ -424,8 +456,8 @@
         });
     });
 	// selecion de orden
-	var perfil_servicio = new Array ("...","AgregarInternet","AgregarTelevision","Bajar 15 Mg","Bajar 10 Mg","Bajar 5 Mg","Cambio de equipo","Corte Combo","Corte Internet","Corte Television","Equipo adicional","Instalacion","Punto nuevo","Reconexion Combo","Reconexion Internet","Reconexion Television","Subir 5 Mg","Subir 10 Mg","Subir 15 Mg","Subir 20 Mg","Suspension Combo","Suspension Internet","Suspension Television","Traslado","Toma Adicional");
-	var perfil_reclamo = new Array ("...","Revision de Internet","Revision de television","Otros");	
+	var perfil_servicio = new Array ("...","AgregarInternet","AgregarTelevision","Bajar 15 Mg","Bajar 10 Mg","Bajar 5 Mg","Cambio de equipo","Corte Combo","Corte Internet","Corte Television","Equipo adicional","Instalacion","Punto nuevo","Subir 5 Mg","Subir 10 Mg","Subir 15 Mg","Subir 20 Mg","Suspension Combo","Suspension Internet","Suspension Television","Traslado","Toma Adicional");
+	var perfil_reclamo = new Array ("...","Revision_de_Internet","Revision_de_television","Otros");	
 							//crear funcion que ejecute el cambio
 							function cambia(){
 								var subject;
@@ -440,8 +472,20 @@
 									//colocamos las obciones array
 									mis_opts=mis_opts.sort();
 									for(i=0; i<num_opts; i++){
+										var text1=mis_opts[i];
+										var ciclo=true;
+										while(ciclo){
+											text1=text1.replace("_"," ");
+											if(text1.includes("_")==false){
+												ciclo=false;
+											}
+											
+										}
+										
+										
+										
 										document.soporte.detalle.options[i].value=mis_opts[i];
-										document.soporte.detalle.options[i].text=mis_opts[i];
+										document.soporte.detalle.options[i].text=text1;
 									}
 										}else{
 											//resultado si no hay obciones
