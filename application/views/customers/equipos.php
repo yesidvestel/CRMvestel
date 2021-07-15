@@ -60,70 +60,79 @@
             </div>
 
             <div class="modal-body">
-                <form id="form_model2">
-					<div class="frmSearch col-sm-6">
-						<label for="cst" class="caption col-form-label">Burcar equipo</label>
+                 <form id="form_model2">
+                    <div class="frmSearch col-sm-6">
+                        <label for="cst" class="caption col-form-label">Burcar equipo</label>
                         <div class="">
-							<input type="hidden" name="iduser" value="<?php echo $details['id'] ?>"></input>
-							<input type="text" class="form-control mb-1" name="cst" id="equipo-box" placeholder="Ingrese mac del equipo" autocomplete="off"/>
+                            <input type="hidden" name="iduser"  value="<?php echo $details['id'] ?>"></input>
+                            <input type="text" class="form-control" name="cst" id="equipo-box" placeholder="Ingrese mac del equipo" autocomplete="off"/>
                             <div id="equipo-box-result"></div>
                         </div>
                     </div>
-
-               
-				<div class="frmSearch row col-sm-6">
-                    <label for="toBizName"
-                           class="caption col-form-label">Equipo mac<span
-                                style="color: red;">*</span></label>
-                    <div class=""><input type="hidden" name="idequipo" id="customer_id" value="0">
-                        <input type="text" class="form-control mb-1" name="mac" id="customer_name">
+                <div class="frmSearch col-sm-6">
+                    <label class="caption col-form-label">Equipo mac<span style="color: red;">*</span></label>
+                    <div class="">
+                        <input type="hidden" name="idequipo" id="customer_id" value="0">
+                        <input type="text" class="form-control" name="mac" id="customer_name">
                     </div>
                 </div>
-				<div class="frmSearch col-sm-6">
+                <div class="frmSearch col-sm-6">
                         <label for="pmethod" class="caption col-form-label">Tipo de instalacion</label>
-						<div>
-                            <select name="tinstalacion" class="form-control mb-1" onchange="funcion_status();">
-								<option value="null">-</option>
-								<option value="EOC">EOC</option>
-								<option value="FTTH">FTTH</option>
+                        <div>
+                            <select id="tinstalacion" name="tinstalacion" class="form-control mb-1" onchange="validaciones_campos();">
+                                <option value="null">-</option>
+                                <option value="EOC">EOC</option>
+                                <option value="FTTH">FTTH</option>
                             </select>
                         </div>
                 </div>
-				
-				<div class="frmSearch col-sm-6">
+                
+                <div class="frmSearch col-sm-6" id="eoc_div"  >
+                        <label for="pmethod" class="caption col-form-label">Master</label>
+                        <div class="">
+                            <input type="text" name="master" class="form-control mb-1" placeholder="master">
+                        </div>
+                    </div>
+                    <div id="ftth_div" style="display: none;">
+                    <div class="frmSearch col-sm-6">
                         <label for="pmethod" class="caption col-form-label">Vlan</label>
-						<div class="">
-                            <select name="vlan" class="form-control mb-1" onchange="funcion_status();">
-								<option value="null">-</option>
-								<option value="101">101</option>
-								<?php for ($i=1;$i<=16;$i++){
-								echo '<option value="'.$i*'10'.'">'.$i*'10'.'</option>';
-								}?>
+                        <div class="">
+                            <select name="vlan" class="form-control mb-1" >
+                                <option value="null">-</option>
+                                <option value="101">101</option>
+                                <?php for ($i=1;$i<=36;$i++){
+                                echo '<option value="'.$i*'10'.'">'.$i*'10'.'</option>';
+                                }?>
                             </select>
                         </div>
                     </div>
-				<div class="frmSearch col-sm-6">
+                <div class="frmSearch col-sm-6">
                         <label for="pmethod" class="caption col-form-label">Caja Nat</label>
-						<div class="">
+                        <div class="">
                             <input type="text" class="form-control mb-1" name="nat" placeholder="Numero de caja NAT"></input>
                         </div>
                     </div>
-				<div class="frmSearch col-sm-6">
-                        <label for="pmethod" class="caption col-form-label">P/to Nat</label>
-						<div>
+            <div class="frmSearch col-sm-6">
+                        <label for="pmethod" class="caption col-form-label">Puerto Nat</label>
+                        <div>
                             <select name="puerto" class="form-control mb-1" onchange="funcion_status();">
-								<option value="null">-</option>
-								<?php for ($i=1;$i<=16;$i++){
-								echo '<option value="'.$i.'">'.$i.'</option>';}?>
+                                <option value="null">-</option>
+                                <?php for ($i=1;$i<=16;$i++){
+                                echo '<option value="'.$i.'">'.$i.'</option>';}?>
                             </select>
                         </div>
                     </div>
+                    </div>
+                    <br>
+                    <div style="text-align: right;">
                         <button type="button" class="btn btn-default"
                                 data-dismiss="modal">Volver</button>
                         <input type="hidden" id="action-url" value="tickets/asig_equipo">
                         <button type="button" class="btn btn-primary"
                                 id="submit_model2">Asignar</button>
+            
                     </div>
+        
                 </form>
             </div>
         </div>
@@ -226,6 +235,18 @@
         });
         miniDash();
     });
+    function validaciones_campos(){
+        var ck=$("#tinstalacion option:checked").val();
+        if(ck=="EOC"){
+            $("#eoc_div").show();
+            $("#ftth_div").hide();
+        }else{
+            $("#eoc_div").hide();
+            $("#ftth_div").show();
+        }
+        console.log(ck);
+
+    }
 </script>
 <div id="delete_model" class="modal fade">
     <div class="modal-dialog">
