@@ -313,29 +313,14 @@
 									<label for="invociedate" class="caption">Internet</label>
 										<div class="input-group">									
 											<select name="inter" class="form-control mb-1">
-												<?php if ($details['ciudad']==='Yopal' || $details['ciudad']==='Monterrey' ){ ?>
 												<option value="no">No</option>
-												<option value="1Mega">1Mega</option>
-												<option value="2Megas">2Megas</option>
-												<option value="3Megas">3Megas</option>
-												<option value="3MegasSolo">3Megas Solo</option>
-												<option value="5Megas">5Megas</option>
-												<option value="5MegasD">5Megas Dedicado</option>
-												<option value="5MegasSolo">5Megas Solo</option>
-												<option value="10Megas">10Megas</option>
-												<option value="10MegasSolo">10Megas Solo</option>
-												<option value="50Megas">50Megas</option>
-												<?php }if ($details['ciudad']==='Villanueva'){ ?>
-												<option value="no">No</option>	
-												<option value="2MegasV">2Megas</option>
-												<option value="3MegasV">3Megas</option>
-												<option value="5MegasV">5Megas</option>
-												<option value="5MegasVD">5Megas Dedicado</option>
-												<option value="5MegasVS">5Megas Solo</option>
-												<option value="10MegasV">10Megas</option>
-												<option value="10MegasVS">10Megas Solo</option>
-												<option value="50MegasV">50Megas</option>
-												<?php } ?>
+												<?php
+													foreach ($paquete as $row) {
+														$cid = $row['pid'];
+														$title = $row['product_name'];
+														echo "<option value='$title'>$title</option>";
+													}
+												?>
 											</select>
 										</div>
                                    </div>
@@ -382,29 +367,14 @@
 									<label for="invociedate" class="caption">Internet</label>
 										<div class="input-group">									
 											<select name="interB" class="form-control mb-1">
-												<?php if ($details['ciudad']==='Yopal' || $details['ciudad']==='Monterrey' ){ ?>
 												<option value="no">No</option>
-												<option value="1Mega">1Mega</option>
-												<option value="2Megas">2Megas</option>
-												<option value="3Megas">3Megas</option>
-												<option value="3MegasSolo">3Megas Solo</option>
-												<option value="5Megas">5Megas</option>
-												<option value="5MegasD">5Megas Dedicado</option>
-												<option value="5MegasSolo">5Megas Solo</option>
-												<option value="10Megas">10Megas</option>
-												<option value="10MegasSolo">10Megas Solo</option>
-												<option value="50Megas">50Megas</option>
-												<?php }if ($details['ciudad']==='Villanueva'){ ?>
-												<option value="no">No</option>	
-												<option value="2MegasV">2Megas</option>
-												<option value="3MegasV">3Megas</option>
-												<option value="5MegasV">5Megas</option>
-												<option value="5MegasVD">5Megas Dedicado</option>
-												<option value="5MegasVS">5Megas Solo</option>
-												<option value="10MegasV">10Megas</option>
-												<option value="10MegasVS">10Megas Solo</option>
-												<option value="50MegasV">50Megas</option>
-												<?php } ?>
+												<?php
+													foreach ($paquete as $row) {
+														$cid = $row['pid'];
+														$title = $row['product_name'];
+														echo "<option value='$title'>$title</option>";
+													}
+												?>
 											</select>
 										</div>
                                    </div>

@@ -95,11 +95,13 @@
                                             <div class="input-group-addon"><span class="icon-bookmark-o"
                                                                                  aria-hidden="true"></span></div>
                                             <select type="text" class="form-control" placeholder="Reference #" name="refer" onchange="cambia()">
-												<option value="-">-</option>
-												<option value="Yopal">Yopal</option>
-												<option value="Monterrey">Monterrey</option>
-												<option value="Villanueva">Villanueva</option>
-												<option value="Mocoa">Mocoa</option>
+												<?php
+												foreach ($sede as $row) {
+													$cid = $row['id'];
+													$title = $row['title'];
+													echo "<option value='$title'>$title</option>";
+												}
+												?>
 											</select>
                                         </div>
                                     </div>

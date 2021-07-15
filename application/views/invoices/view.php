@@ -583,29 +583,19 @@
                             </select></div>
                     </div>
 					<div class="row">
-						<?php $refer_var =strtolower(str_replace(' ', '', $invoice['refer'])); ?>
-						<?php if ($invoice['refer']=='Monterrey' || $refer_var=='yopal' || $invoice['refer']=='YOPAL') { ?>
+						
                         <div class="col-xs-12 mb-1"><label
                                     for="shortnote">Paquete</label>
                              <select name="paquete" class="form-control mb-1">
                                 <option value="no">No</option>
-                                <option value="1Mega">1Mega</option>
-								<option value="2Megas">2Megas</option>
-								<option value="3Megas">3Megas</option>
-								<option value="5Megas">5Megas</option>
-								<option value="10Megas">10Megas</option>
-                            </select></div><?php } ?>
-						<?php if ($invoice['refer']=='Villanueva') { ?>
-						<div class="col-xs-12 mb-1"><label
-                                    for="shortnote">Paquete</label>
-                             <select name="paquete" class="form-control mb-1">
-                                <option value="no">No villanueva</option>
-                                <option value="1Mega">1Mega</option>								
-								<option value="3MegasV">3Megas</option>
-								<option value="5MegasV">5Megas</option>
-								<option value="5MegasVD">5MegasD</option>
-								<option value="10MegasV">10Megas</option>
-                            </select></div><?php } ?>
+                                <?php
+									foreach ($paquete as $row) {
+										$cid = $row['pid'];
+										$title = $row['product_name'];
+										echo "<option value='$title'>$title</option>";
+									}
+								?>
+                            </select></div>
                     </div>
 					<?php } ?>
                     <div class="modal-footer">
@@ -877,13 +867,14 @@
                                     for="pmethod">Internet</label>
                             <select name="internet" class="form-control mb-1">
                                 <option value="por_defecto">-><?php echo $invoice['combo'] ?></option>
-										<?php
-											foreach ($paquete as $row) {
-												$cid = $row['pid'];
-												$title = $row['product_name'];
-												echo "<option value='$title'>$title</option>";
-											}
-											?>
+								<option value="no">No</option>
+								<?php
+									foreach ($paquete as $row) {
+										$cid = $row['pid'];
+										$title = $row['product_name'];
+										echo "<option value='$title'>$title</option>";
+									}
+									?>
                             </select>
                         </div>						
 						

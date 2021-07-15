@@ -111,10 +111,13 @@
                                                                              aria-hidden="true"></span></div>
 										<select name="refer" class="form-control" onchange="cambia()">
 											<option value="<?php echo $invoice['refer'] ?>">--<?php echo $invoice['refer'] ?>--</option>
-											<option value="Yopal">Yopal</option>
-											<option value="Monterrey">Monterrey</option>
-											<option value="Villanueva">Villanueva</option>
-											<option value="Mocoa">Mocoa</option>
+											<?php
+												foreach ($sede as $row) {
+													$cid = $row['id'];
+													$title = $row['title'];
+													echo "<option value='$title'>$title</option>";
+												}
+												?>
 										</select>  
                                     </div>
                                 </div>

@@ -50,6 +50,7 @@ class Invoices extends CI_Controller
         $data['customergrouplist'] = $this->customers->group_list();
         $data['lastinvoice'] = $this->invocies->lastinvoice();			
         $data['warehouse'] = $this->invocies->warehouses();
+		$data['sede'] = $this->invocies->sede();
 		$ttype = $this->input->get('type');
 		$data['paquete'] = $this->invocies->paquetes();
         $data['terms'] = $this->invocies->billingterms();
@@ -574,6 +575,7 @@ class Invoices extends CI_Controller
         $data['terms'] = $this->invocies->billingterms();
         $data['currency'] = $this->invocies->currencies();
 		$data['paquete'] = $this->invocies->paquetes();
+		$data['sede'] = $this->invocies->sede();
         $data['invoice'] = $this->invocies->invoice_details($tid, $this->limited);
         if ($data['invoice']) $data['products'] = $this->invocies->invoice_products($tid);
         $head['title'] = "Edit Invoice #$tid";

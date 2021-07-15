@@ -40,10 +40,12 @@ class Quote extends CI_Controller
     {
         $this->load->model('customers_model', 'customers');
         $this->load->model('plugins_model', 'plugins');
-		$this->load->model('ticket_model', 'ticket');		
+		$this->load->model('ticket_model', 'ticket');
+		$this->load->model('invoices_model', 'invocies');
 		$custid = $this->input->get('id');
         $data['details'] = $this->customers->details($custid);
         $data['exchange'] = $this->plugins->universal_api(5);
+		$data['paquete'] = $this->invocies->paquetes();
 		$data['facturalist'] = $this->ticket->factura_list($custid);
         $data['currency'] = $this->quote->currencies();
         $data['customergrouplist'] = $this->customers->group_list();
@@ -61,6 +63,7 @@ class Quote extends CI_Controller
     public function edit()
     {
         $this->load->model('ticket_model', 'ticket');
+		$this->load->model('invoices_model', 'invocies');
         $thread_id = intval($this->input->get('id'));
 		$ticket = $this->db->get_where('tickets', array('idt' => $thread_id))->row();
 		$codigo = $ticket->codigo;
@@ -68,6 +71,7 @@ class Quote extends CI_Controller
         $data['title'] = "Quote $tid";
         $data['thread_info'] = $this->ticket->thread_info($thread_id);
 		$data['thread_agen'] = $this->ticket->thread_agen($codigo);
+		$data['paquete'] = $this->invocies->paquetes();
         $data['thread_list'] = $this->ticket->thread_list($thread_id);
 		$data['facturalist'] = $this->ticket->factura_list($thread_id);
         $head['title'] = "Edit Quote #$tid";

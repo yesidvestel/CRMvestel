@@ -117,6 +117,15 @@ class Invoices_model extends CI_Model
         $query = $this->db->get();
         return $query->result_array();
     }
+	public function sede()
+    {
+		$sedeacc = $this->aauth->get_user()->sede_accede;
+		$this->db->select('*');
+        $this->db->from('customers_group');
+		$this->db->where('id', $sedeacc);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
 
     public function warehouses()
     {
