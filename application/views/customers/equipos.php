@@ -62,7 +62,7 @@
             <div class="modal-body">
                  <form id="form_model2">
                     <div class="frmSearch col-sm-6">
-                        <label for="cst" class="caption col-form-label">Burcar equipo</label>
+                        <label for="cst" class="caption col-form-label">Buscar equipo</label>
                         <div class="">
                             <input type="hidden" name="iduser"  value="<?php echo $details['id'] ?>"></input>
                             <input type="text" class="form-control" name="cst" id="equipo-box" placeholder="Ingrese mac del equipo" autocomplete="off"/>
