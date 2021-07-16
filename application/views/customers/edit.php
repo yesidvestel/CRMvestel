@@ -290,7 +290,7 @@
                         <h6><label class="col-sm-10 col-form-label"
                                for="customergroup"><?php echo $this->lang->line('') ?>Sede</label></h6>
                         <div class="col-sm-12">
-                            <select name="customergroup" class="form-control" onchange="cambia()" >
+                            <select id="customergroup" name="customergroup" class="form-control" onchange="cambia()" >
                                 <?php
 								echo '<option value="' . $customergroup['id'] . '">' . $customergroup['title'] . '</option>';
                                 foreach ($customergrouplist as $row) {
@@ -393,6 +393,7 @@
 							<div>
                             <input type="text" placeholder="Barrio y codigo usuario"
                                    class="form-control margin-bottom" name="comentario" value="<?php echo $customer['comentario'] ?>" id="mcustomer_comentario_s">
+                                   <?php if($customer['name_s']!="" && $customer['name_s']!=null){  ?><a style="margin-top: 1px;color: white;" onclick="traer_comentario_mikrotik('<?=$customer['name_s']?>')" class="btn btn-info">Traer Comentario de Mikrotik</a><?php } ?>
                         	</div>
                         </div>
                     </div>
@@ -410,6 +411,14 @@
     </div>
 </article>
 <script type="text/javascript">
+	function traer_comentario_mikrotik(username){
+		var customergroup= $("#customergroup option:selected").val();
+		$.post(baseurl+"customers/get_comentario_mikrotik",{'username':username,'customergroup':customergroup},function(data){
+			$("#mcustomer_comentario_s").val(data.comentario);
+		},'json');
+	}
+
+
      var remote_ip_yopal="<?=$ips_remotas['yopal']?>";
     var remote_ip_villanueva="<?=$ips_remotas['villanueva']?>";
     var remote_ip_monterrey="<?=$ips_remotas['monterrey']?>";

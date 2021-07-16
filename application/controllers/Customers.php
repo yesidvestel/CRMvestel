@@ -713,6 +713,10 @@ class Customers extends CI_Controller
         $this->load->view('fixed/footer');
 
     }
+    public function get_comentario_mikrotik(){
+        $username=$this->customers->obtener_comentario_mikrotik($this->input->post("username"),$this->input->post("customergroup"));
+        echo json_encode(array("comentario"=>$username));
+    }
 
     public function addcustomer()
     {

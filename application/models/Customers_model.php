@@ -505,7 +505,7 @@ class Customers_model extends CI_Model
                                "profile" => $perfil,
                                "comment"  => $comentario,
                                "service"  => $servicio,
-                               "disabled"  => "no",
+                               //"disabled"  => "no",
                                )
                           );  
                     }else{
@@ -565,7 +565,27 @@ class Customers_model extends CI_Model
             }
 
     }
+    public function obtener_comentario_mikrotik($username,$customergroup){
+        include (APPPATH."libraries\RouterosAPI.php");
+        set_time_limit(3000);
+        $API = new RouterosAPI();
+        $API->debug = false;
+        
+        if ($API->connect($this->get_ip_coneccion_microtik_por_sede($customergroup), 'api.crmvestel', 'duber123')) {
+            //$user_name="user_prueba_duber_disabled";
+            $arrID=$API->comm("/ppp/secret/getall", 
+                  array(
+                  "?name" => $username,
+                  ));
+         $API->disconnect();
 
+         return $arrID[0]['comment'];
+
+        }else{
+            
+        }
+        return "No se pudo conectar a la mikrotik";
+    }
     public function changepassword($id, $password)
     {
         $pass = password_hash($password, PASSWORD_DEFAULT);
