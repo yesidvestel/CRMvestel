@@ -33,7 +33,7 @@
 		
 		
 		
-        <div class="grid_3 grid_4"><h4><?php echo $thread_info['subject'] ?> </h4>			
+        <div class="grid_3 grid_4"><h4><?php echo $thread_info['subject']. ' Nº '.$thread_info['codigo'] ?> </h4>			
 			
             <p class="card card-block"><?php
 				if ($factura->television!=='no'){
