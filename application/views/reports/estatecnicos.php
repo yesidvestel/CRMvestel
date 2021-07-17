@@ -47,7 +47,7 @@ table {
 				<div class="col-xl-12 col-lg-12"><!-- ['y','z','a','b','c','d','e','f','g','h','i','j'] -->
 								
 					<input type="checkbox" id="instalacion_tv_int" style="cursor:pointer;" onclick="activar_desactivar_meses(null,'y');" class="case"><b style="cursor:pointer;" onclick="activar_desactivar_meses('instalacion_tv_int','y');" ><i>&nbsp;Instalaciones Tv + Internet&nbsp;</b></i>
-					<input type="checkbox" id="inst_tv" style="cursor:pointer;" onclick="activar_desactivar_meses(null,'z');" class="case"><b style="cursor:pointer;" onclick="activar_desactivar_meses('ins_tv','z');"><i>&nbsp;Instalaciones Tv&nbsp;</b></i>
+					<input type="checkbox" id="inst_tv" style="cursor:pointer;" onclick="activar_desactivar_meses(null,'z');" class="case"><b style="cursor:pointer;" onclick="activar_desactivar_meses('inst_tv','z');"><i>&nbsp;Instalaciones Tv&nbsp;</b></i>
 					<input type="checkbox" id="inst_internet" style="cursor:pointer;" onclick="activar_desactivar_meses(null,'a');" class="case"><b style="cursor:pointer;" onclick="activar_desactivar_meses('inst_internet','a');"><i>&nbsp;instalaciones Internet&nbsp;</b></i>
 					<input type="checkbox" id="Agregar_Tv" style="cursor:pointer;" onclick="activar_desactivar_meses(null,'b');" class="case"><b style="cursor:pointer;" onclick="activar_desactivar_meses('Agregar_Tv','b');"><i>&nbsp;Agregar Tv&nbsp;</b></i>
 					<input type="checkbox" id="AgregarInternet" style="cursor:pointer;" onclick="activar_desactivar_meses(null,'c');" class="case"><b style="cursor:pointer;" onclick="activar_desactivar_meses('AgregarInternet','c');"><i>&nbsp;Agregar Internet&nbsp;</b></i>
@@ -281,6 +281,14 @@ table {
     }
 	Morris.Bar(datosdos);
 	function activar_desactivar_meses(ck2,key){
+		if(ck2!=null){
+			
+			if($("#"+ck2).prop("checked")){
+				$("#"+ck2).prop("checked",false);
+			}else{
+				$("#"+ck2).prop("checked",true);
+			}
+		}
 		var indice_elemento2=lista_keysdos.indexOf(key);
 		if(indice_elemento2==-1){
 			lista_keysdos.push(key);
@@ -301,14 +309,7 @@ table {
 		$('#invoices-sales-chart').empty();
 		Morris.Bar(datosdos);
 
-		if(ck2!=null){
-			
-			if($("#"+ck2).prop("checked")){
-				$("#"+ck2).prop("checked",false);
-			}else{
-				$("#"+ck2).prop("checked",true);
-			}
-		}
+		
 	}
     var lista_keys=[];
     var lista_labels_total={y:'Instalaciones Tv + Internet',z:"Instalaciones Tv",a:"Instalaciones Internet",b:"Agregar Tv",c:"Agregar Internet",d:"Traslado",e:"Revision",f:"Reconexion",g:"Suspension Combo",h:"Suspension Internet",i:"Suspension Television",j:"Corte Television"};
@@ -334,6 +335,14 @@ table {
     }
     Morris.Line(datos);
 	function activar_desactivar_lines(ck,key){
+		if(ck!=null){
+			
+			if($("#"+ck).prop("checked")){
+				$("#"+ck).prop("checked",false);
+			}else{
+				$("#"+ck).prop("checked",true);
+			}
+		}
 		var indice_elemento=lista_keys.indexOf(key);
 		if(indice_elemento==-1){
 			lista_keys.push(key);
@@ -354,14 +363,7 @@ table {
 		$('#invoices-products-chart').empty();
 		Morris.Line(datos);
 
-		if(ck!=null){
-			
-			if($("#"+ck).prop("checked")){
-				$("#"+ck).prop("checked",false);
-			}else{
-				$("#"+ck).prop("checked",true);
-			}
-		}
+		
 	}
 	
 	
