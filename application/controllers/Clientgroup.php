@@ -1373,6 +1373,11 @@ if ($valido) {
                         //desactivacion en la mikrotik
                         $customer = $this->db->get_where("customers",array("id"=>$customer_id))->row();
                         if($tipo_corte=="Corte Combo") {
+                            $reconexion = '0';
+                            if ($factura->combo!='no' || $factura->combo!='' || $factura->combo!='-'){
+                                    $reconexion = '1';
+                            }
+                            
                             $producto2 = $this->db->get_where('products',array('product_name'=>'Reconexion Combo'))->row();
                                 $data2['tid']=$factura->tid;
                                 $data2['pid']=$producto2->pid;
@@ -1391,6 +1396,7 @@ if ($valido) {
                                     $this->db->set('ron', 'Cortado');               
                                     $this->db->set('total', $factura->total+$producto2->product_price);
                                     $this->db->set('items', $factura->items+1);
+                                    $this->db->set('rec', $reconexion);
                                     $this->db->set('television', 'no');
                                     $this->db->set('combo', 'no');
                                     $this->db->where('tid', $factura->tid);
