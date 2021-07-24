@@ -578,13 +578,13 @@
                                         <label><?php echo $this->lang->line('Update Stock') ?></label>
                                         <div class="input-group">
                                             <label class="display-inline-block custom-control custom-radio ml-1">
-                                                <input type="radio" name="update_stock" class="custom-control-input"
-                                                       value="yes" <?= ($invoice['actualizar_stock'] ==1) ? 'checked="true"':'' ?> >
+                                                <input type="radio" name="update_stock" class="custom-control-input update_stock"
+                                                       value="yes" <?= ($invoice['actualizar_stock'] ==1) ? 'checked="true"':'' ?> onchange="action_actualizar_stock()">
                                                 <span class="custom-control-indicator"></span>
                                                 <span class="custom-control-description ml-0"><?php echo $this->lang->line('Yes') ?></span>
                                             </label>
-                                            <label class="display-inline-block custom-control custom-radio">
-                                                <input <?= ($invoice['actualizar_stock'] ==1) ? 'disabled="true"':'' ?> type="radio" name="update_stock" class="custom-control-input"
+                                            <label class="display-inline-block custom-control custom-radio update_stock">
+                                                <input <?= ($invoice['actualizar_stock'] ==1) ? 'disabled="true"':'' ?> type="radio" name="update_stock" class="custom-control-input update_stock" onchange="action_actualizar_stock()"
                                                        value="no" <?= ($invoice['actualizar_stock'] ==0 || $invoice['actualizar_stock'] ==null || $invoice['actualizar_stock'] =='null') ? 'checked="true"':'' ?>>
                                                 <span class="custom-control-indicator"></span>
                                                 <span class="custom-control-description ml-0"><?php echo $this->lang->line('No') ?></span>
@@ -701,11 +701,23 @@
 
         });
     });
+    estado_orden_compra();
     function estado_orden_compra(){
-        value_selected=$("#status option:selected").val();
+       var value_selected=$("#status option:selected").val();
+        
         if(value_selected=="recibido"){
-            
+            $("#div-resibido").show();
+        }else{
+            $("#div-resibido").hide();
         }
     }
-
+    action_actualizar_stock();
+    function action_actualizar_stock(){
+        var seleccionado = $(".update_stock:checked").val();
+        if(seleccionado=="no"){
+            $("#div-si-actualizar").hide();            
+        }else{
+            $("#div-si-actualizar").show();
+        }
+    }
 </script>
