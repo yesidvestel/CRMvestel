@@ -652,6 +652,11 @@ $hiso_devolucion_de_equipo=true;
         }else{
             $hiso_devolucion_de_equipo=false;
         }
+        $equipos=$this->db->get_where("equipos",array('asignado' => $ticket->cid))->result_array();
+        if(empty($equipos)){
+            $hiso_devolucion_de_equipo=true;
+        }
+
     }
     
 if($ya_agrego_equipos==false){
