@@ -563,7 +563,7 @@
                     <div class="row">
                         <div class="col-xs-12 mb-1"><label
                                     for="pmethod"><?php echo $this->lang->line('Mark As') ?></label>
-                            <select name="status" class="form-control mb-1">
+                            <select id="status" name="status" class="form-control mb-1" onchange="estado_orden_compra()">
                                 <option value="recibido"><?php echo $this->lang->line('') ?>Recibido</option>
                                 <option value="pendiente"><?php echo $this->lang->line('') ?>Pendiente</option>
                                 <option value="cancelado"><?php echo $this->lang->line('') ?>Cancelado</option>
@@ -572,6 +572,7 @@
 
                         </div>
                     </div>
+                    <div id="div-resibido">
                     <div class="row">
                        <div class="col-xs-12 mb-1">
                                         <label><?php echo $this->lang->line('Update Stock') ?></label>
@@ -591,6 +592,7 @@
                                         </div>
                                     </div>
                     </div>
+                    <div id="div-si-actualizar">
                     <div class="row">
                             <div class="table-responsive col-sm-12">
                                 <table class="table table-striped">
@@ -617,14 +619,14 @@
                                         $options="";
                                         $numero_de_iteraciones=$row['qty']-$row['qty_en_almacen'];
                                         for ($i=0; $i <= $numero_de_iteraciones; $i++) { 
-                                            $options.="<option>".$i."</option>";
+                                            $options.="<option value='".$i."'>".$i."</option>";
                                         }
                                         echo '<tr>
                                             <th scope="row">' . $c . '</th>
                                                                         <td>' . $row['product'] . '</td>                                                                       
                                                                          <td>' . $row['qty'] . '</td>
                                                                          <td>' . $row['qty_en_almacen'] . '</td>
-                                                                         <td><select class="form-control mb-1">' .$options. '</select></td>
+                                                                         <td><select class="form-control mb-1" id="sl-pr-'.$row['id'].'" name="sl-pr-'.$row['id'].'">' .$options. '</select></td>
                                                                     </tr>';
                                         echo '<tr><td colspan=5>' . $row['product_des'] . '</td></tr>';
                                         $c++;
@@ -634,6 +636,22 @@
                                 </table>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-xs-12 mb-1">
+                                <label for="salmacen"><?php echo $this->lang->line('Warehouse') ?></label>
+                                <select class="form-control mb-1" name="almacen">
+                                    <option value="0" ><?php echo $this->lang->line('All') ?></option><?php foreach ($warehouse as $row) {
+                                            $text_select="";
+                                            if($row['id']==$invoice['almacen_seleccionado']){
+                                                $text_select='selected="true"';
+                                            }
+                                            echo '<option '.$text_select.' value="' . $row['id'] . '">' . $row['title'] . '</option>';
+                                        } ?>
+                                </select>
+                            </div>
+                    </div>
+                    </div>
+                    </div>
                     <div class="modal-footer">
                         <input type="hidden" class="form-control required"
                                name="tid" id="invoiceid" value="<?php echo $invoice['tid'] ?>">
@@ -683,4 +701,11 @@
 
         });
     });
+    function estado_orden_compra(){
+        value_selected=$("#status option:selected").val();
+        if(value_selected=="recibido"){
+            
+        }
+    }
+
 </script>
