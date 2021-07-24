@@ -97,6 +97,8 @@ class Purchase extends CI_Controller
         $shipping = $this->input->post('shipping');
         $refer = $this->input->post('refer');
         $total = $this->input->post('total');
+        $warehouse = $this->input->post('warehouse');
+        $actualizar_stock=$this->input->post('update_stock');
         $total_tax = 0;
         $total_discount = 0;
         $discountFormat = $this->input->post('discountFormat');
@@ -164,9 +166,9 @@ class Purchase extends CI_Controller
 
                         $this->db->set('qty', "qty+$amt", FALSE);
                         $this->db->where('pid', $product_id[$key]);
-                        $this->db->update('products');
+                        $this->db->update('products');//se debe comentar estas lineas pero para poder subir avances la descomento
                     }
-                    $itc += $amt;
+                    $itc += $amt;//esto es para contar cuantos items tiene la orden
                 }
 
             }
@@ -208,12 +210,12 @@ class Purchase extends CI_Controller
 
                         $this->db->set('qty', "qty+$amt", FALSE);
                         $this->db->where('pid', $product_id[$key]);
-                        $this->db->update('products');
+                        $this->db->update('products');//se debe comentar estas lineas pero para poder subir avances la descomento
                     }
                 }
 
 
-                $itc += $amt;
+                $itc += $amt;//esto es para contar cuantos items tiene la orden
             }
         }
 
@@ -224,8 +226,14 @@ class Purchase extends CI_Controller
         //Invoice Data
         $bill_date = datefordatabase($invoicedate);
         $bill_due_date = datefordatabase($invocieduedate);
-
-        $data = array('tid' => $invocieno, 'invoicedate' => $bill_date, 'invoiceduedate' => $bill_due_date, 'subtotal' => $subtotal, 'shipping' => $shipping, 'discount' => $total_discount, 'tax' => $total_tax, 'total' => $total, 'notes' => $notes, 'csd' => $customer_id, 'eid' => $this->aauth->get_user()->id, 'items' => $itc, 'taxstatus' => $textst, 'discstatus' => $discstatus, 'format_discount' => $discountFormat, 'refer' => $refer, 'term' => $pterms);
+        $warehouse = $this->input->post('warehouse');
+        $actualizar_stock=$this->input->post('update_stock');
+        if($actualizar_stock=="yes"){
+            $actualizar_stock="1";
+        }else{
+            $actualizar_stock="0";
+        }//falta hacer el proceso en el lado de la actualzacion de estado
+        $data = array('tid' => $invocieno, 'invoicedate' => $bill_date, 'invoiceduedate' => $bill_due_date, 'subtotal' => $subtotal, 'shipping' => $shipping, 'discount' => $total_discount, 'tax' => $total_tax, 'total' => $total, 'notes' => $notes, 'csd' => $customer_id, 'eid' => $this->aauth->get_user()->id, 'items' => $itc, 'taxstatus' => $textst, 'discstatus' => $discstatus, 'format_discount' => $discountFormat, 'refer' => $refer, 'term' => $pterms,"almacen_seleccionado"=>$warehouse,"actualizar_stock"=>$actualizar_stock);
 
         if ($flag == true) {
             $this->db->insert_batch('purchase_items', $productlist);

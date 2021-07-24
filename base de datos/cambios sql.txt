@@ -1,4 +1,9 @@
-﻿ALTER TABLE `transferencia_products_orden` CHANGE `tickets_id` `tickets_id` INT(11) NULL;
+﻿------cambios sobre ordenes de compra -------------
+ALTER TABLE `purchase` ADD `actualizar_stock` TINYINT NULL AFTER `term`;
+ALTER TABLE `purchase` ADD `almacen_seleccionado` INT NULL AFTER `actualizar_stock`;
+ALTER TABLE `purchase_items` ADD `qty_en_almacen` INT NULL AFTER `product_des`;
+--------------------------------------
+ALTER TABLE `transferencia_products_orden` CHANGE `tickets_id` `tickets_id` INT(11) NULL;
 ALTER TABLE `equipos` ADD `master` VARCHAR(150) NOT NULL AFTER `observacion`;
 ALTER TABLE `tickets` ADD `problema` VARCHAR(150) NOT NULL AFTER `status`;
 

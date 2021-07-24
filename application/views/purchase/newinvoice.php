@@ -70,7 +70,7 @@
 
                                         <div type="text" id="customer_phone"></div>
                                     </div>
-                                    <hr><?php echo $this->lang->line('Warehouse') ?> <select id="warehouses"
+                                    <hr><?php echo $this->lang->line('Warehouse') ?> <select id="warehouses" name="warehouse" 
                                                                                              class="selectpicker form-control">
                                         <option value="0" ><?php echo $this->lang->line('All') ?></option><?php foreach ($warehouse as $row) {
                                             echo '<option value="' . $row['id'] . '">' . $row['title'] . '</option>';

@@ -549,7 +549,7 @@
 </div>
 
 <div id="pop_model" class="modal fade">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -572,7 +572,68 @@
 
                         </div>
                     </div>
+                    <div class="row">
+                       <div class="col-xs-12 mb-1">
+                                        <label><?php echo $this->lang->line('Update Stock') ?></label>
+                                        <div class="input-group">
+                                            <label class="display-inline-block custom-control custom-radio ml-1">
+                                                <input type="radio" name="update_stock" class="custom-control-input"
+                                                       value="yes" <?= ($invoice['actualizar_stock'] ==1) ? 'checked="true"':'' ?> >
+                                                <span class="custom-control-indicator"></span>
+                                                <span class="custom-control-description ml-0"><?php echo $this->lang->line('Yes') ?></span>
+                                            </label>
+                                            <label class="display-inline-block custom-control custom-radio">
+                                                <input <?= ($invoice['actualizar_stock'] ==1) ? 'disabled="true"':'' ?> type="radio" name="update_stock" class="custom-control-input"
+                                                       value="no" <?= ($invoice['actualizar_stock'] ==0 || $invoice['actualizar_stock'] ==null || $invoice['actualizar_stock'] =='null') ? 'checked="true"':'' ?>>
+                                                <span class="custom-control-indicator"></span>
+                                                <span class="custom-control-description ml-0"><?php echo $this->lang->line('No') ?></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                    </div>
+                    <div class="row">
+                            <div class="table-responsive col-sm-12">
+                                <table class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th><?php echo $this->lang->line('Description') ?></th>
+                                        
+                                        <th class="text-xs-left"><?php echo $this->lang->line('Qty') ?></th>
+                                        <th class="text-xs-left"><?php echo $this->lang->line('Qty') ?> en Almacen</th>
+                                        <th class="text-xs-left"><?php echo $this->lang->line('Qty') ?> a Pasar</th>
+                                        
+                                        
+                                        
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php $c = 1;
+                                    
+                                    foreach ($products as $row) {
+                                        if($row['qty_en_almacen']==null){
+                                            $row['qty_en_almacen'] ="0";
+                                        }
+                                        $options="";
+                                        $numero_de_iteraciones=$row['qty']-$row['qty_en_almacen'];
+                                        for ($i=0; $i <= $numero_de_iteraciones; $i++) { 
+                                            $options.="<option>".$i."</option>";
+                                        }
+                                        echo '<tr>
+                                            <th scope="row">' . $c . '</th>
+                                                                        <td>' . $row['product'] . '</td>                                                                       
+                                                                         <td>' . $row['qty'] . '</td>
+                                                                         <td>' . $row['qty_en_almacen'] . '</td>
+                                                                         <td><select class="form-control mb-1">' .$options. '</select></td>
+                                                                    </tr>';
+                                        echo '<tr><td colspan=5>' . $row['product_des'] . '</td></tr>';
+                                        $c++;
+                                    } ?>
 
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     <div class="modal-footer">
                         <input type="hidden" class="form-control required"
                                name="tid" id="invoiceid" value="<?php echo $invoice['tid'] ?>">
