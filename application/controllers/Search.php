@@ -84,7 +84,7 @@ class Search extends CI_Controller
 		$sede = $this->aauth->get_user()->sede_accede;
 
         if ($name) {
-            $query = $this->db->query("SELECT * FROM customers WHERE UPPER(name)  LIKE '" . strtoupper($name) . "%' OR UPPER(unoapellido) LIKE  '" . strtoupper($name) . "%'OR UPPER(documento) LIKE  '" . strtoupper($name) . "%' OR UPPER(abonado) LIKE  '" . strtoupper($name). "%' OR UPPER(celular) LIKE  '" . strtoupper($name). "%' LIMIT 6");
+            $query = $this->db->query("SELECT * FROM customers WHERE  gid='$sede' AND (UPPER(name)  LIKE '" . strtoupper($name) . "%' OR UPPER(unoapellido) LIKE  '" . strtoupper($name) . "%'OR UPPER(documento) LIKE  '" . strtoupper($name) . "%' OR UPPER(abonado) LIKE  '" . strtoupper($name). "%' OR UPPER(celular) LIKE  '" . strtoupper($name). "%') LIMIT 6");
 
             $result = $query->result_array();
 
