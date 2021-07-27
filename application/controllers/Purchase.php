@@ -627,7 +627,7 @@ class Purchase extends CI_Controller
                     foreach ($lista_productos as $key => $pr1) {
                         $cantidad_a_pasar = $this->input->post('sl-pr-'.$pr1['id']);
                         $nombre_pr=strtolower( str_replace(" ","",$pr1['product']));
-                        $productos=$this->db->query("SELECT * FROM products WHERE REPLACE(lower(product_name),' ','') LIKE '".$nombre_pr."' and warehouse='".$almacen."'")->result_array();
+                        $productos=$this->db->query("SELECT * FROM products WHERE REPLACE(lower(product_name),' ','') LIKE '%".$nombre_pr."%' and warehouse='".$almacen."'")->result_array();
                         if(count($productos)==0){
                             $product=$this->db->get_where("products",array("pid"=>$pr1['pid']))->row();
                             $data=array();
