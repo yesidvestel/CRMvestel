@@ -577,6 +577,7 @@
                         </div>
                     </div>
                     <div id="div-resibido">
+                        
                     <div class="row">
                        <div class="col-xs-12 mb-1">
                                         <label><?php echo $this->lang->line('Update Stock') ?></label>
@@ -625,12 +626,16 @@
                                         for ($i=0; $i <= $numero_de_iteraciones; $i++) { 
                                             $options.="<option value='".$i."'>".$i."</option>";
                                         }
+                                        $texto_select='<select class="form-control mb-1" id="sl-pr-'.$row['id'].'" name="sl-pr-'.$row['id'].'">' .$options. '</select>';
+                                        if($numero_de_iteraciones==0){
+                                            $texto_select='<div id="notif1" class="alert alert-success" style="margin-bottom:-9px;margin-top:-9px;"><div class="messag1">Stock En Almacen</div></div>';
+                                        }
                                         echo '<tr>
                                             <th scope="row">' . $c . '</th>
                                                                         <td>' . $row['product'] . '</td>                                                                       
                                                                          <td>' . $row['qty'] . '</td>
                                                                          <td>' . $row['qty_en_almacen'] . '</td>
-                                                                         <td><select class="form-control mb-1" id="sl-pr-'.$row['id'].'" name="sl-pr-'.$row['id'].'">' .$options. '</select></td>
+                                                                         <td>'.$texto_select.'</td>
                                                                     </tr>';
                                         echo '<tr><td colspan=5>' . $row['product_des'] . '</td></tr>';
                                         $c++;
