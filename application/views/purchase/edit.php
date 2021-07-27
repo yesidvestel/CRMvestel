@@ -51,7 +51,7 @@
 
                                 <div type="text" id="customer_phone">Phone: <strong>' . $invoice['phone'] . '</strong><br>Email: <strong>' . $invoice['email'] . '</strong></div>
                             </div>'; ?>
-                                <hr><?php echo $this->lang->line('Warehouse') ?> <select id="warehouses"
+                                <hr><?php echo $this->lang->line('Warehouse') ?> <select id="warehouses" name="warehouses" 
                                                                                          class="selectpicker form-control">
                                     <option value="0">All</option><?php foreach ($warehouse as $row) {
                                         echo '<option value="' . $row['id'] . '">' . $row['title'] . '</option>';

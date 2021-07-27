@@ -68,7 +68,7 @@
                                             class="icon-earth"></i> <?php echo $this->lang->line('Public Preview') ?>
                                 </a>
                                  <?php if ($this->aauth->get_user()->roleid > 3) { ?> 
-                                <a href="#pop_model" data-toggle="modal" data-remote="false"
+                                <a href="#pop_model2" data-toggle="modal" data-remote="false"
                                    class="btn btn-large btn-success" title="Change Status"
                                 ><span class="icon-tab"></span> <?php echo $this->lang->line('Change Status') ?></a>
 								<?php } ?>
@@ -548,7 +548,7 @@
     </div>
 </div>
 
-<div id="pop_model" class="modal fade">
+<div id="pop_model2" class="modal fade">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -557,6 +557,10 @@
             </div>
 
             <div class="modal-body">
+                <div id="mensaje">
+                    
+                </div>
+               
                 <form id="form_model">
 
 

@@ -1020,10 +1020,19 @@ function saveMData(o_data,action_url) {
 
 
                 } else {
-                    $("#notify .message").html("<strong>" + data.status + "</strong>: " + data.message);
-                    $("#notify").removeClass("alert-success").addClass("alert-danger").fadeIn();
+                    if(data.status=="Error-Resivido"){
+                        $("#mensaje").html('<div id="notifyx" class="alert alert-success" style="display: none;">            <a href="#" class="close" data-dismiss="alert">&times;</a>            <div class="messagex"></div></div>');
+                        $("#notifyx .messagex").html("<strong>" + data.status + "</strong>: " + data.message);
+                            $("#notifyx").removeClass("alert-success").addClass("alert-danger").fadeIn();
                     
-                        $('html, body').animate({scrollTop:0}, 'slow');
+                            $('html, body').animate({scrollTop:0}, 'slow');    
+                    }else{
+                            $("#notify .message").html("<strong>" + data.status + "</strong>: " + data.message);
+                            $("#notify").removeClass("alert-success").addClass("alert-danger").fadeIn();
+                    
+                            $('html, body').animate({scrollTop:0}, 'slow');    
+                    }
+                    
                     
                     
 

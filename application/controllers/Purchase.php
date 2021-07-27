@@ -164,9 +164,9 @@ class Purchase extends CI_Controller
                 if ($product_id[$key] > 0) {
                     if ($this->input->post('update_stock') == 'yes') {
 
-                        $this->db->set('qty', "qty+$amt", FALSE);
+                       /* $this->db->set('qty', "qty+$amt", FALSE);
                         $this->db->where('pid', $product_id[$key]);
-                        $this->db->update('products');//se debe comentar estas lineas pero para poder subir avances la descomento
+                        $this->db->update('products');//se debe comentar estas lineas pero para poder subir avances la descomento*/
                     }
                     $itc += $amt;//esto es para contar cuantos items tiene la orden
                 }
@@ -208,9 +208,9 @@ class Purchase extends CI_Controller
                 if ($product_id[$key] > 0) {
                     if ($this->input->post('update_stock') == 'yes') {
 
-                        $this->db->set('qty', "qty+$amt", FALSE);
+                        /*$this->db->set('qty', "qty+$amt", FALSE);
                         $this->db->where('pid', $product_id[$key]);
-                        $this->db->update('products');//se debe comentar estas lineas pero para poder subir avances la descomento
+                        $this->db->update('products');//se debe comentar estas lineas pero para poder subir avances la descomento*/
                     }
                 }
 
@@ -495,9 +495,9 @@ class Purchase extends CI_Controller
 
                 if ($this->input->post('update_stock') == 'yes') {
                     $amt = intval($product_qty[$key]) - @intval($old_product_qty[$key]);
-                    $this->db->set('qty', "qty+$amt", FALSE);
+                    /*$this->db->set('qty', "qty+$amt", FALSE);
                     $this->db->where('pid', $product_id[$key]);
-                    $this->db->update('products');
+                    $this->db->update('products');*/
                 }
                 $flag = true;
 
@@ -536,9 +536,9 @@ class Purchase extends CI_Controller
 
                 if ($this->input->post('update_stock') == 'yes') {
                     $amt = intval($product_qty[$key]) - intval($old_product_qty[$key]);
-                    $this->db->set('qty', "qty+$amt", FALSE);
+                    /*$this->db->set('qty', "qty+$amt", FALSE);
                     $this->db->where('pid', $product_id[$key]);
-                    $this->db->update('products');
+                    $this->db->update('products');*/
                 }
                 $flag = true;
 
@@ -547,8 +547,16 @@ class Purchase extends CI_Controller
 
         $bill_date = datefordatabase($invoicedate);
         $bill_due_date = datefordatabase($invocieduedate);
+        $warehouse = $this->input->post('warehouse');
+        $actualizar_stock=$this->input->post('update_stock');
+        if($actualizar_stock=="yes"){
+            $actualizar_stock="1";
+        }else{
+            $actualizar_stock="0";
+        }
+        
 
-        $data = array('invoicedate' => $bill_date, 'invoiceduedate' => $bill_due_date, 'subtotal' => $subtotal, 'shipping' => $shipping, 'discount' => $total_discount, 'tax' => $total_tax, 'total' => $total, 'notes' => $notes, 'csd' => $customer_id, 'items' => $i, 'taxstatus' => $taxstatus, 'discstatus' => $discstatus, 'format_discount' => $discountFormat, 'refer' => $refer, 'term' => $pterms);
+        $data = array('invoicedate' => $bill_date, 'invoiceduedate' => $bill_due_date, 'subtotal' => $subtotal, 'shipping' => $shipping, 'discount' => $total_discount, 'tax' => $total_tax, 'total' => $total, 'notes' => $notes, 'csd' => $customer_id, 'items' => $i, 'taxstatus' => $taxstatus, 'discstatus' => $discstatus, 'format_discount' => $discountFormat, 'refer' => $refer, 'term' => $pterms,"almacen_seleccionado"=>$warehouse,"actualizar_stock"=>$actualizar_stock);
         $this->db->set($data);
         $this->db->where('tid', $invocieno);
 
@@ -571,7 +579,7 @@ class Purchase extends CI_Controller
             $transok = false;
         }
 
-        if ($this->input->post('update_stock') == 'yes') {
+        /*if ($this->input->post('update_stock') == 'yes') {
             if ($this->input->post('restock')) {
                 foreach ($this->input->post('restock') as $key => $value) {
 
@@ -589,7 +597,7 @@ class Purchase extends CI_Controller
 
 
             }
-        }
+        }*/
 
 
         if ($transok) {
@@ -603,14 +611,93 @@ class Purchase extends CI_Controller
     {
         $tid = $this->input->post('tid');
         $status = $this->input->post('status');
+        if($status=="recibido"){
+            $errores=false;
+            $txt_errores="";
+            $almacen = $this->input->post('almacen');
+            $update_stock = $this->input->post('update_stock');
+            if($update_stock=="yes"){
+
+                if($almacen=="0" || $almacen==0){
+                    $errores=true;
+                    $txt_errores.="<li>Seleccione un almacen por favor</li>";
+                }else{
+
+                    $lista_productos=$this->db->get_where("purchase_items",array("tid"=>$tid))->result_array();
+                    foreach ($lista_productos as $key => $pr1) {
+                        $cantidad_a_pasar = $this->input->post('sl-pr-'.$pr1['id']);
+                        $nombre_pr=strtolower( str_replace(" ","",$pr1['product']));
+                        $productos=$this->db->query("SELECT * FROM products WHERE REPLACE(lower(product_name),' ','') LIKE '".$nombre_pr."' and warehouse='".$almacen."'")->result_array();
+                        if(count($productos)==0){
+                            $product=$this->db->get_where("products",array("pid"=>$pr1['pid']))->row();
+                            $data=array();
+                            $data['pcat']=$product->pcat;
+                            $data['warehouse']=$almacen;
+                            $data['sede']=0;
+                            $data['product_name']=$product->product_name;
+                            $data['product_code']=$product->product_code;
+                            $data['product_price']=$product->product_price;
+                            $data['fproduct_price']=$product->fproduct_price;
+                            $data['fproduct_price']=$product->fproduct_price;
+                            $data['taxrate']=$product->taxrate;
+                            $data['disrate']=$product->disrate;
+                            $data['qty']=$cantidad_a_pasar;
+                            $data['product_des']=$product->product_des;
+                            $data['alert']=$product->alert;
+                            $this->db->insert("products",$data);
+
+                        }else{
+                            $data['qty']=$productos[0]['qty']+$cantidad_a_pasar;
+                            $this->db->update("products",$data,array("pid"=>$productos[0]['pid']));
+                        }
+                        if($pr1['qty_en_almacen']==null || $pr1['qty_en_almacen']=='null'){
+                            $pr1['qty_en_almacen']==0;
+                        }
+                        $pr1['qty_en_almacen']=$pr1['qty_en_almacen']+$cantidad_a_pasar;
+
+                        $this->db->update("purchase_items",array("qty_en_almacen"=>$pr1['qty_en_almacen']),array("id"=>$pr1['id']));
+                    }
+                     $this->db->set('status', $status);
+                     $this->db->set('almacen_seleccionado', $almacen);
+                     if($update_stock=="yes"){
+                        $update_stock=1;
+                     }else{
+                        $update_stock=0;
+                     }
+                     $this->db->set('actualizar_stock', $update_stock);
+                     $this->db->where('tid', $tid);
+                     $this->db->update('purchase');
 
 
-        $this->db->set('status', $status);
-        $this->db->where('tid', $tid);
-        $this->db->update('purchase');
 
-        echo json_encode(array('status' => 'Success', 'message' =>
+                }
+
+            }
+
+            if($errores){
+                echo json_encode(array('status' => 'Error-Resivido', 'message' =>
+                '<ul>'.$txt_errores.'</ul>', 'pstatus' => $status));    
+            }else{
+
+                echo json_encode(array('status' => 'Success', 'message' =>
+                'Purchase Order Status updated successfully!', 'pstatus' => $status));
+            }
+
+            
+        }else{
+            $this->db->set('status', $status);
+            $this->db->where('tid', $tid);
+            $this->db->update('purchase');
+
+            echo json_encode(array('status' => 'Success', 'message' =>
             'Purchase Order Status updated successfully!', 'pstatus' => $status));
+
+            
+
+        }
+
+        
+        
     }
 
     public function file_handling()
