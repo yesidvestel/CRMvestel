@@ -647,6 +647,7 @@ class Purchase extends CI_Controller
                             $this->db->insert("products",$data);
 
                         }else{
+                            $data=array();
                             $data['qty']=$productos[0]['qty']+$cantidad_a_pasar;
                             $this->db->update("products",$data,array("pid"=>$productos[0]['pid']));
                         }
