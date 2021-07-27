@@ -142,6 +142,7 @@ class Products extends CI_Controller
         $no = $this->input->post('start');
 		
         foreach ($list as $prd) {
+			$usuario = $this->db->get_where('customers', array('id' => $prd->asignado))->row();
             $no++;
             $row = array();
             $row[] = $no;           	
@@ -151,7 +152,7 @@ class Products extends CI_Controller
 			$row[] = $prd->estado;
 			if ($prd->asignado == 0){
             $row[]= 'Sin asignar';
-			}else{ $row[] = $prd->asignado;}
+			}else{ $row[] = $usuario->abonado;}
 			$row[] = $prd->marca;
 			$row[] = $prd->t_instalacion;
 			if ($prd->vlan!=='0'){
