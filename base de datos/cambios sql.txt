@@ -1,4 +1,6 @@
 ﻿------cambios sobre ordenes de compra -------------
+ALTER TABLE `purchase` CHANGE `status` `status` ENUM('pendiente','cancelado','recibido','recibido parcial','finalizado','anulado') CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT 'pendiente';
+----------------------------nuevos cambios--------------
 ALTER TABLE `purchase` ADD `actualizar_stock` TINYINT NULL AFTER `term`;
 ALTER TABLE `purchase` ADD `almacen_seleccionado` INT NULL AFTER `actualizar_stock`;
 ALTER TABLE `purchase_items` ADD `qty_en_almacen` INT NULL AFTER `product_des`;

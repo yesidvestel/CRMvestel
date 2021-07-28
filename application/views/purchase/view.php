@@ -568,10 +568,11 @@
                         <div class="col-xs-12 mb-1"><label
                                     for="pmethod"><?php echo $this->lang->line('Mark As') ?></label>
                             <select id="status" name="status" class="form-control mb-1" onchange="estado_orden_compra()">
-                                <option value="recibido"><?php echo $this->lang->line('') ?>Recibido</option>
-                                <option value="pendiente"><?php echo $this->lang->line('') ?>Pendiente</option>
-                                <option value="cancelado"><?php echo $this->lang->line('') ?>Cancelado</option>
-                                <option value="finalizado"><?php echo $this->lang->line('') ?>Finalizado</option>
+                                <option value="pendiente" <?= ($invoice['status']=="pendiente") ? 'selected="true"':'' ?> ><?php echo $this->lang->line('') ?>Pendiente</option>                                
+                                <option value="recibido parcial" <?= ($invoice['status']=="recibido parcial") ? 'selected="true"':'' ?>><?php echo $this->lang->line('') ?>Recibido Parcial</option>
+                                <option value="recibido" <?= ($invoice['status']=="recibido") ? 'selected="true"':'' ?>><?php echo $this->lang->line('') ?>Recibido</option>
+                                <option value="cancelado" <?= ($invoice['status']=="cancelado") ? 'selected="true"':'' ?>><?php echo $this->lang->line('') ?>Cancelado</option>
+                                <option value="finalizado" <?= ($invoice['status']=="finalizado") ? 'selected="true"':'' ?>><?php echo $this->lang->line('') ?>Finalizado</option>
                             </select>
 
                         </div>
@@ -626,7 +627,7 @@
                                         for ($i=0; $i <= $numero_de_iteraciones; $i++) { 
                                             $options.="<option value='".$i."'>".$i."</option>";
                                         }
-                                        $texto_select='<select class="form-control mb-1" id="sl-pr-'.$row['id'].'" name="sl-pr-'.$row['id'].'">' .$options. '</select>';
+                                        $texto_select='<select data-ultimo-select="'.$numero_de_iteraciones.'" class="form-control mb-1 sl-cantidades" id="sl-pr-'.$row['id'].'" name="sl-pr-'.$row['id'].'">' .$options. '</select>';
                                         if($numero_de_iteraciones==0){
                                             $texto_select='<div id="notif1" class="alert alert-success" style="margin-bottom:-9px;margin-top:-9px;"><div class="messag1">Stock En Almacen</div></div>';
                                         }
@@ -648,7 +649,7 @@
                         <div class="row">
                             <div class="col-xs-12 mb-1">
                                 <label for="salmacen"><?php echo $this->lang->line('Warehouse') ?></label>
-                                <select class="form-control mb-1" name="almacen">
+                                <select class="form-control mb-1" name="almacen" <?= ($invoice['almacen_seleccionado']!=0 && $invoice['almacen_seleccionado']!=null) ? 'style="pointer-events:none;"':''  ?>>
                                     <option value="0" ><?php echo $this->lang->line('All') ?></option><?php foreach ($warehouse as $row) {
                                             $text_select="";
                                             if($row['id']==$invoice['almacen_seleccionado']){
@@ -714,7 +715,25 @@
     function estado_orden_compra(){
        var value_selected=$("#status option:selected").val();
         
-        if(value_selected=="recibido"){
+        if(value_selected=="recibido parcial"){
+            $(".sl-cantidades").each(function(item,value){
+                
+                var id=$(value).attr("id");
+                sel="#"+id+" option[value='0']";
+                console.log(sel);
+                $(sel).prop("selected",true);
+                $("#"+id).css("pointer-events","");
+            });
+            $("#div-resibido").show();
+        }else if(value_selected=="recibido"){
+            $(".sl-cantidades").each(function(item,value){
+                var sel=$(value).data("ultimo-select");
+                var id=$(value).attr("id");
+                sel="#"+id+" option[value='"+sel+"']";
+                console.log(sel);
+                $(sel).prop("selected",true);
+                $("#"+id).css("pointer-events","none");
+            });
             $("#div-resibido").show();
         }else{
             $("#div-resibido").hide();

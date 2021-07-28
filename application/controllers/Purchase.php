@@ -611,7 +611,7 @@ class Purchase extends CI_Controller
     {
         $tid = $this->input->post('tid');
         $status = $this->input->post('status');
-        if($status=="recibido"){
+        if($status=="recibido" || $status=="recibido parcial"){
             $errores=false;
             $txt_errores="";
             $almacen = $this->input->post('almacen');
@@ -624,8 +624,10 @@ class Purchase extends CI_Controller
                 }else{
 
                     $lista_productos=$this->db->get_where("purchase_items",array("tid"=>$tid))->result_array();
+                    $pasar_a_recivido=true;
                     foreach ($lista_productos as $key => $pr1) {
                         $cantidad_a_pasar = $this->input->post('sl-pr-'.$pr1['id']);
+
                         $nombre_pr=strtolower( str_replace(" ","",$pr1['product']));
                         $productos=$this->db->query("SELECT * FROM products WHERE REPLACE(lower(product_name),' ','') LIKE '%".$nombre_pr."%' and warehouse='".$almacen."'")->result_array();
                         if(count($productos)==0){
@@ -644,7 +646,9 @@ class Purchase extends CI_Controller
                             $data['qty']=$cantidad_a_pasar;
                             $data['product_des']=$product->product_des;
                             $data['alert']=$product->alert;
-                            $this->db->insert("products",$data);
+                            if($cantidad_a_pasar!=0){
+                                $this->db->insert("products",$data);
+                            }
 
                         }else{
                             $data=array();
@@ -655,8 +659,14 @@ class Purchase extends CI_Controller
                             $pr1['qty_en_almacen']==0;
                         }
                         $pr1['qty_en_almacen']=$pr1['qty_en_almacen']+$cantidad_a_pasar;
-
+                        if($pr1['qty_en_almacen']!=$pr1['qty']){
+                            $pasar_a_recivido=false;
+                        }
                         $this->db->update("purchase_items",array("qty_en_almacen"=>$pr1['qty_en_almacen']),array("id"=>$pr1['id']));
+
+                    }
+                    if($pasar_a_recivido){
+                        $status="recibido";
                     }
                      $this->db->set('status', $status);
                      $this->db->set('almacen_seleccionado', $almacen);
