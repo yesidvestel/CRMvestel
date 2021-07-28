@@ -12,6 +12,7 @@
                 <div class="col-sm-9">
                     
                         <select name="sede_accede" class="form-control" id="sede_accede">
+							<option value="0">Todas</option>
                             <?php
                                 foreach ($customergrouplist as $row) {
                                     $cid = $row['id'];
