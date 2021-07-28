@@ -721,7 +721,7 @@ class Customers extends CI_Controller
     public function addcustomer()
     {
 		$bill_due_date = datefordatabase($this->input->post('nacimiento'));
-        $abonado = $this->input->post('abonado');
+        $abonado = $this->customers->codigouser()+1;
 		$name = $this->input->post('name');
 		$dosnombre = $this->input->post('dosnombre');
         $unoapellido = $this->input->post('unoapellido');
