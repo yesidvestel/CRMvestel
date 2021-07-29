@@ -692,7 +692,7 @@ if($ya_agrego_equipos==false){
 		}if($ciudad==Monterrey){
 			$employee = 52;
 		}if($ciudad==Villanueva){
-			$employee = 46;
+			$employee = 61;
 		}
 		$assign = $this->aauth->get_user()->id;
 		$content = 'Revisar orden #'.$ticket->codigo;
