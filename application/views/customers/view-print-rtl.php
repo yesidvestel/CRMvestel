@@ -5,38 +5,8 @@ if ($due['television']!==no){
 		$totaltv = $producto->product_price+3992;
 	
 }if ($due['combo']!==no){
-	if($due['combo']==='1Mega'){
-                        $pid=125;
-                    }else if($due['combo']==='2Megas'){
-                        $pid=126;
-                    }else if($due['combo']==='3Megas'){
-                        $pid=24;
-					}else if($due['combo']==='3MegasV'){
-                        $pid=243;
-					}else if($due['combo']==='3MegasSolo'){
-                        $pid=170;
-                    }else if($due['combo']==='5Megas'){
-                        $pid=25;
-					}else if($due['combo']==='5MegasV'){
-                        $pid=244;
-					}else if($due['combo']==='5MegasVS'){
-                        $pid=247;
-					}else if($due['combo']==='5MegasSolo'){
-                        $pid=171;					
-                    }else if($due['combo']==='5MegasD'){
-                        $pid=223;					
-                    }else if($due['combo']==='10Megas'){
-                        $pid=26;
-					}else if($due['combo']==='10MegasV'){
-                        $pid=245;
-					}else if($due['combo']==='10MegasVS'){
-                        $pid=246;
-					}else if($due['combo']==='10MegasSolo'){
-                        $pid=172;
-                    }else if($due['combo']==='50Megas'){
-                        $pid=222;
-                    }
-					$producto2 = $this->db->get_where('products',array('pid'=>$pid))->row();
+	
+					$producto2 = $this->db->get_where('products',array('product_name'=>$due['combo']))->row();
 					$inter = $producto2->product_price;
 }
 $equipo = $this->db->get_where('equipos',array('asignado'=>$details['abonado']))->row();
