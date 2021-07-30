@@ -96,7 +96,11 @@ class Invoices extends CI_Controller
             foreach ($invoices as $key => $value2) {
                 $time_dateinv=strtotime($value2->invoicedate);
                 $dtime2=new DateTime($value2->invoicedate);
-                if($time_dateinv>$time_sdate1){
+                //para omitir los traslados y afiliaciones
+                 $afiliacion_traslado_omitir=$this->db->query('SELECT * FROM `invoice_items` where (product like "%afiliacion%" or product like "%traslado%") and tid="'.$invoice->tid.'"')->result_array();
+                if(count($afiliacion_traslado_omitir)!=0){
+                            //con este condicional si existen estos items omite esta factura 
+                }else if($time_dateinv>$time_sdate1){
                     $_customer_factura_creada=true;
                     //echo "Ya tiene factura ".$sdate1." | ".$value2->invoicedate;
                 }else if($date1->format("Y-m")==$dtime2->format("Y-m")){

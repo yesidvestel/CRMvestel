@@ -118,6 +118,10 @@ class Clientgroup extends CI_Controller
                     if($invoice->ron!="" && $invoice->ron!=null){
                         $fact_valida=true;
                     }
+                    $afiliacion_traslado_omitir=$this->db->query('SELECT * FROM `invoice_items` where (product like "%afiliacion%" or product like "%traslado%") and tid="'.$invoice->tid.'"')->result_array();
+                        if(count($afiliacion_traslado_omitir)!=0){
+                            $fact_valida=false;
+                    }
                     if($fact_valida){
                         if($_var_tiene_tv){
                             if(str_replace(" ", "", $invoice->refer)=="Mocoa"){
@@ -555,6 +559,10 @@ class Clientgroup extends CI_Controller
                     if($invoice->ron!="" && $invoice->ron!=null){
                         $fact_valida=true;
                     }
+                    $afiliacion_traslado_omitir=$this->db->query('SELECT * FROM `invoice_items` where (product like "%afiliacion%" or product like "%traslado%") and tid="'.$invoice->tid.'"')->result_array();
+                        if(count($afiliacion_traslado_omitir)!=0){
+                            $fact_valida=false;
+                    }
                     if($fact_valida){
                         if($_var_tiene_tv){
                             $producto=null;
@@ -914,6 +922,10 @@ class Clientgroup extends CI_Controller
                     }
                     if($invoice->ron!="" && $invoice->ron!=null){
                         $fact_valida=true;
+                    }
+                    $afiliacion_traslado_omitir=$this->db->query('SELECT * FROM `invoice_items` where (product like "%afiliacion%" or product like "%traslado%") and tid="'.$invoice->tid.'"')->result_array();
+                        if(count($afiliacion_traslado_omitir)!=0){
+                            $fact_valida=false;
                     }
                     if($fact_valida){
                         if($_var_tiene_tv){
