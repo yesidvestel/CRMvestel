@@ -373,4 +373,16 @@ $this->load->model("customers_model","customers");
         	//}
         }
     }
+    public function activar_desactivar_usuario(){
+        $id=$this->input->post("id");
+        $selected=$this->input->post("selected");
+        if($selected=="true"){
+            $data['facturar_electronicamente']=1;
+        }else{
+            $data['facturar_electronicamente']=0;
+        }
+        $this->db->update("customers",$data,array("id"=>$id));
+        echo json_encode(array("status"=>"guardao"));
+        
+    }
 }

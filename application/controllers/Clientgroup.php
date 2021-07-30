@@ -450,7 +450,11 @@ class Clientgroup extends CI_Controller
             $row[] = $customers->barrio;
             if($servicios_str!=""){
                 $servicios_str="<a class='cl-servicios' style='cursor:pointer;' onclick='facturas_electronicas_ev(this);'>".$servicios_str."</a>";
-                $servicios_str="<input class='cl-ck-f-electronicas' style='cursor:pointer;' title='activar o desactivar este usuario de la facturacion electronica' type='checkbox'/>&nbsp".$servicios_str;
+                $str_checked="";
+                if($customers->facturar_electronicamente==1){
+                    $str_checked="checked";
+                }
+                $servicios_str="<input ".$str_checked." onclick='ck_facturas_electronicas(this)' data-id='".$customers->id."' class='cl-ck-f-electronicas' style='cursor:pointer;' title='activar o desactivar este usuario de la facturacion electronica' type='checkbox'/>&nbsp".$servicios_str;
             }
             $row[] = $servicios_str;
 			$row[] = '<span class="st-'.$customers->usu_estado. '">' .$customers->usu_estado. '</span>';

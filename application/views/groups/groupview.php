@@ -1251,5 +1251,13 @@ function ckekar_1(){
     }else{
         $("#check1").prop('checked',true);
     }
+}
+function ck_facturas_electronicas(ck){
+    var selected=$(ck).prop("checked");
+    var id=$(ck).data('id');
+    
+    $.post(baseurl+"facturasElectronicas/activar_desactivar_usuario",{'id':id,'selected':selected},function(data){
+        console.log(data);
+    },'json');
 }                            
 </script>                   

@@ -1,4 +1,7 @@
-﻿------cambios sobre ordenes de compra -------------
+﻿------cambios para la facturacion electronica automatica--------------------------------------------
+ALTER TABLE `customers` ADD `facturar_electronicamente` TINYINT NULL AFTER `balance`;
+-----------------------------------------------------------------------------------------------------
+------cambios sobre ordenes de compra -------------
 ALTER TABLE `purchase` CHANGE `status` `status` ENUM('pendiente','cancelado','recibido','recibido parcial','finalizado','anulado') CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT 'pendiente';
 ----------------------------nuevos cambios--------------
 ALTER TABLE `purchase` ADD `actualizar_stock` TINYINT NULL AFTER `term`;
