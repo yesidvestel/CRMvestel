@@ -31,6 +31,12 @@
 {
  background-color: #8B6390;
 }
+.cl-servicios:hover {
+    border: solid 1px red;
+}
+.cl-ck-f-electronicas:hover{
+     transform: scale(4);
+}
 </style>
 <article class="content content items-list-page">
     <div class="card card-block">
@@ -760,15 +766,15 @@ $("#pagination_div").hide();
 </div>
 
 <div id="alert_modal" class="modal fade">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Informacion</h4>
+                <h4 class="modal-title">Facturacion Electronica Usuario</h4>
             </div>
 
             <div class="modal-body" id="body_modal">
-               <p>Ah ocurrido un error por la cantidad de registros, se va a segmentar por paginas automaticamente, seleccionando la 1</p>
+               <p>Edicion Facturacion electronica, en desarrollo</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default"
@@ -780,7 +786,7 @@ $("#pagination_div").hide();
 </div>
 
 <script type="text/javascript">
-
+    
     function  filtrado_fechas(){
         var opcion_seleccionada=$("#fechas option:selected").val();
         if(opcion_seleccionada=="fecha_ingreso"){
@@ -789,6 +795,9 @@ $("#pagination_div").hide();
         }else{
             $("#div_fechas").hide();
         }
+    }
+    function facturas_electronicas_ev(){
+        $("#alert_modal").modal("show");
     }
     function cargar_plantilla(){
         var text=$("#plantillas2 option:selected").data("texto");

@@ -448,6 +448,10 @@ class Clientgroup extends CI_Controller
 			$row[] = $customers->celular;			
             $row[] = $customers->nomenclatura . ' ' . $customers->numero1 . $customers->adicionauno.' Nº '.$customers->numero2.$customers->adicional2.' - '.$customers->numero3;
             $row[] = $customers->barrio;
+            if($servicios_str!=""){
+                $servicios_str="<a class='cl-servicios' style='cursor:pointer;' onclick='facturas_electronicas_ev(this);'>".$servicios_str."</a>";
+                $servicios_str="<input class='cl-ck-f-electronicas' style='cursor:pointer;' title='activar o desactivar este usuario de la facturacion electronica' type='checkbox'/>&nbsp".$servicios_str;
+            }
             $row[] = $servicios_str;
 			$row[] = '<span class="st-'.$customers->usu_estado. '">' .$customers->usu_estado. '</span>';
             $row[] = '<a href="' . $base . 'edit?id=' . $customers->id . '" class="btn btn-success btn-sm"><span class="icon-pencil"></span> '.$this->lang->line('Edit').'</a>';
