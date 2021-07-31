@@ -774,7 +774,35 @@ $("#pagination_div").hide();
             </div>
 
             <div class="modal-body" id="body_modal">
-               <p>Edicion Facturacion electronica, en desarrollo</p>
+               <div class="form-group row">
+
+                    <label class="col-sm-3 control-label"
+                           for="sdate2">Servicios</label>
+                    <div  class="col-sm-9">
+                    <select id="servicios" onchange="al_cambiar_de_servicio();" name="servicios" class="form-control">                        
+                        <option value="Television">Television</option>                        
+                        <option value="Internet">Internet</option>
+                        <option value="Combo">Combo</option>                        
+                    </select>
+                    </div>
+                </div>
+                
+                
+                    <div class="form-group row" id="div_de_puntos">
+
+                        <label class="col-sm-3 control-label"
+                               for="sdate2">Puntos</label>
+                        <div  class="col-sm-9">
+                        <select id="puntos" name="puntos" class="form-control">
+                            <option value="no">no</option>
+                            <?php for ($i=1; $i <100 ; $i++) { ?>
+                                <option value="<?=$i?>"  ><?=$i?></option>
+                            <?php  } ?>
+                        </select>
+                        </div>
+                    </div>
+                
+            
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default"
@@ -795,9 +823,6 @@ $("#pagination_div").hide();
         }else{
             $("#div_fechas").hide();
         }
-    }
-    function facturas_electronicas_ev(){
-        $("#alert_modal").modal("show");
     }
     function cargar_plantilla(){
         var text=$("#plantillas2 option:selected").data("texto");
@@ -1259,5 +1284,44 @@ function ck_facturas_electronicas(ck){
     $.post(baseurl+"facturasElectronicas/activar_desactivar_usuario",{'id':id,'selected':selected},function(data){
         console.log(data);
     },'json');
-}                            
+}   
+function al_cambiar_de_servicio(){
+        var elemento= $("#servicios option:selected").val();
+        if(elemento=="Internet"){
+            $("#div_de_puntos").hide();
+        }else{
+            $("#div_de_puntos").show();
+        }
+
+    }
+    function facturas_electronicas_ev(a){
+        var id=$(a).data("id");
+        $.post(baseurl+"facturasElectronicas/get_datos_customer",{'id':id},function(data){
+            
+            var op_tv="<option value='Television'>Television</option>";
+            var op_int="<option value='Internet'>Internet</option>";
+            var op_combo="<option value='Combo'>Combo</option>";
+            var options="";
+            if(data.servicios.television!="no"){
+                options+=op_tv;    
+                if(data.puntos=="no" || data.puntos=="0" data.puntos=="null" || data.puntos==null){
+                     
+                }
+                $("#div_de_puntos").show();
+            }else{
+                $("#div_de_puntos").hide();
+            }
+            if(data.servicios.combo!="no"){
+                options+=op_int;
+            }
+            if(data.servicios.television!="no" && data.servicios.combo!="no"){
+                options+=op_combo;   
+            }
+
+
+            $("#servicios").html(options);
+            $("#alert_modal").modal("show");
+        },'json');
+        
+    }
 </script>                   

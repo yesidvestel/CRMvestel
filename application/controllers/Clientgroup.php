@@ -449,7 +449,7 @@ class Clientgroup extends CI_Controller
             $row[] = $customers->nomenclatura . ' ' . $customers->numero1 . $customers->adicionauno.' Nº '.$customers->numero2.$customers->adicional2.' - '.$customers->numero3;
             $row[] = $customers->barrio;
             if($servicios_str!=""){
-                $servicios_str="<a class='cl-servicios' style='cursor:pointer;' onclick='facturas_electronicas_ev(this);'>".$servicios_str."</a>";
+                $servicios_str="<a class='cl-servicios' style='cursor:pointer;' data-id='".$customers->id."' onclick='facturas_electronicas_ev(this);'>".$servicios_str."</a>";
                 $str_checked="";
                 if($customers->facturar_electronicamente==1){
                     $str_checked="checked";

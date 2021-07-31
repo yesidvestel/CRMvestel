@@ -1,5 +1,6 @@
 ﻿------cambios para la facturacion electronica automatica--------------------------------------------
 ALTER TABLE `customers` ADD `facturar_electronicamente` TINYINT NULL AFTER `balance`;
+ALTER TABLE `customers` ADD `f_elec_tv` TINYINT NULL AFTER `facturar_electronicamente`, ADD `f_elec_internet` TINYINT NULL AFTER `f_elec_tv`, ADD `f_elec_puntos` TINYINT NULL AFTER `f_elec_internet`;
 -----------------------------------------------------------------------------------------------------
 ------cambios sobre ordenes de compra -------------
 ALTER TABLE `purchase` CHANGE `status` `status` ENUM('pendiente','cancelado','recibido','recibido parcial','finalizado','anulado') CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT 'pendiente';
