@@ -1302,11 +1302,10 @@ function al_cambiar_de_servicio(){
             var op_int="<option value='Internet'>Internet</option>";
             var op_combo="<option value='Combo'>Combo</option>";
             var options="";
+            console.log(data);
             if(data.servicios.television!="no"){
                 options+=op_tv;    
-                if(data.puntos=="no" || data.puntos=="0" data.puntos=="null" || data.puntos==null){
-                     
-                }
+               
                 $("#div_de_puntos").show();
             }else{
                 $("#div_de_puntos").hide();
