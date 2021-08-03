@@ -394,4 +394,27 @@ $this->load->model("customers_model","customers");
 
         echo json_encode(array("status"=>"success","f_elec_tv",$customer->f_elec_tv,"f_elec_internet",$customer->f_elec_internet,"f_elec_puntos",$customer->f_elec_puntos,"servicios"=>$servicios,"puntos"=>$puntos['puntos']));
     }
+    public function guardar_seleccion_usuario(){
+        $id=$this->input->post("id");
+        $servicio=$this->input->post("servicio");
+        $puntos=$this->input->post("puntos");
+        $data['f_elec_tv']=null;
+        $data['f_elec_internet']=null;
+        $data['f_elec_puntos']=null;
+        if($servicio=="Internet"){
+            $data['f_elec_internet']=1;
+        }else if($servicio=="Television"){
+            $data['f_elec_tv']=1;
+        }else{
+            $data['f_elec_internet']=1;
+            $data['f_elec_tv']=1;
+        }
+        if($puntos!="no"){
+            $data['f_elec_puntos']=1;
+        }
+
+        $this->db->update("customers",$data,array("id"=>$id));
+        echo json_encode(array("status"=>"success"));
+        
+    }
 }

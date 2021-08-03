@@ -52,6 +52,9 @@
             <div class="message3"><img src="<?=base_url()?>/assets/img/iconocargando.gif"></div>
         </div>
 		 </div>
+         <div id="div_notify_elec">
+             
+         </div>
             <!-- paneles -->
             <div class="card">
                     <div class="card-body">
@@ -805,6 +808,7 @@ $("#pagination_div").hide();
             
             </div>
             <div class="modal-footer">
+                <button  class="btn btn-success" onclick="guardar_sl_fac_electronica()">Guardar</button>
                 <button type="button" class="btn btn-default"
                         data-dismiss="modal"><?php echo $this->lang->line('Close') ?> </button>
                 
@@ -1294,18 +1298,24 @@ function al_cambiar_de_servicio(){
         }
 
     }
+    var id_usuario_seleccionado=0;
     function facturas_electronicas_ev(a){
         var id=$(a).data("id");
         $.post(baseurl+"facturasElectronicas/get_datos_customer",{'id':id},function(data){
-            
+            id_usuario_seleccionado=id;
             var op_tv="<option value='Television'>Television</option>";
             var op_int="<option value='Internet'>Internet</option>";
             var op_combo="<option value='Combo'>Combo</option>";
             var options="";
-            console.log(data);
+            
+
             if(data.servicios.television!="no"){
                 options+=op_tv;    
-               
+                if(data.puntos=="no" || data.puntos=="0" || data.puntos=="null" || data.puntos==null){
+                        $("#puntos option[value=no]").prop("selected",true);
+                }else{
+                    $("#puntos option[value="+data.puntos+"]").prop("selected",true);
+                }   
                 $("#div_de_puntos").show();
             }else{
                 $("#div_de_puntos").hide();
@@ -1316,10 +1326,33 @@ function al_cambiar_de_servicio(){
             if(data.servicios.television!="no" && data.servicios.combo!="no"){
                 options+=op_combo;   
             }
-
+            if(data.f_elec_tv=="1" && data.f_elec_internet=="1"){
+                $("#servicios option[value=Combo]").prop("selected",true);
+            }else if(data.f_elec_tv=="1"){
+                $("#servicios option[value=Television]").prop("selected",true);
+            }else if(data.f_elec_internet=="f_elec_internet"){
+                $("#servicios option[value=Internet]").prop("selected",true);
+            }
 
             $("#servicios").html(options);
             $("#alert_modal").modal("show");
+        },'json');
+        
+    }
+    function guardar_sl_fac_electronica(){
+        var servicio=$("#servicios option:selected").val();
+        var puntos="no";
+        if(servicio!="Internet"){
+            puntos=$("#puntos option:selected").val();
+        }
+        $.post(baseurl+'facturasElectronicas/guardar_seleccion_usuario',{'id':id_usuario_seleccionado,'servicio':servicio,'puntos':puntos},function(data){
+            if(data.status=="success"){
+                $("#div_notify_elec").html('<div id="notify_elec" class="alert alert-success" ><a href="#" class="close" data-dismiss="alert">&times;</a><div class="message_elec"><strong>Success</strong>: Se guardo la informacion de facturacion electronica correctamente para el usuario</div></div>');
+                
+                $("#notify_elec").fadeIn();
+                $("html, body").scrollTop($("body").offset().top);
+                $("#alert_modal").modal("hide");
+            }
         },'json');
         
     }
