@@ -351,7 +351,7 @@ function visualizar_div_asociadas(){
         $("#div_facturas_asociadas").find("option").remove();
         $(".facturas_para_pagar:checked").each(function(index){            
             total+=parseInt($(this).data('total'));            
-            if($(this).data("ron")=="cortado"){
+            if($(this).data("ron")=="cortado" ||$(this).data("rec")=="1"){
                 cortados=true;
                 refer=$(this).data("refer");
                 var idfact=$(this).data("idfacturas");

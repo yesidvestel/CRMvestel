@@ -1156,7 +1156,7 @@ class Customers extends CI_Controller
                 if($invoices->status=="paid"){
                     $row[] = '<a href="'.base_url().'invoices/view?id='.$invoices->tid.'">Cortado</a>';
                 }else{
-                    $row[] = '<input type="checkbox" name="x" class="facturas_para_pagar" data-total=" '.$total_factura.'" data-idfacturas="'.$invoices->tid.'" data-status="'.$invoices->status.'" data-ron="cortado" data-refer="'.$refer_var.'" style="cursor:pointer; margin-left: 9px;" onclick="agregar_factura(this)" ></input><a href="'.base_url().'invoices/view?id='.$invoices->tid.'">&nbspCortado</a>';
+                    $row[] = '<input type="checkbox" name="x" class="facturas_para_pagar" data-total=" '.$total_factura.'" data-idfacturas="'.$invoices->tid.'" data-status="'.$invoices->status.'" data-ron="cortado" data-rec="'.$invoices->rec.'" data-refer="'.$refer_var.'" style="cursor:pointer; margin-left: 9px;" onclick="agregar_factura(this)" ></input><a href="'.base_url().'invoices/view?id='.$invoices->tid.'">&nbspCortado</a>';
                 }
             }else if($invoices->status=="paid"){
                 $row[]="";
@@ -1165,7 +1165,7 @@ class Customers extends CI_Controller
                 if($invoices->status=="partial"){
                     $total_factura=$invoices->total-$invoices->pamnt;
                 }
-                $row[] = '<input type="checkbox" name="x" class="facturas_para_pagar" data-total=" '.$total_factura.'" data-idfacturas="'.$invoices->tid.'" data-status="'.$invoices->status.'" data-ron="no" data-refer="" style="cursor:pointer; margin-left: 9px;" onclick="agregar_factura(this)" ></input>';    
+                $row[] = '<input type="checkbox" name="x" class="facturas_para_pagar" data-total=" '.$total_factura.'" data-idfacturas="'.$invoices->tid.'" data-status="'.$invoices->status.'" data-ron="no" data-rec="'.$invoices->rec.'" data-refer="" style="cursor:pointer; margin-left: 9px;" onclick="agregar_factura(this)" ></input>';    
             }
 			
             $row[] = $no;
