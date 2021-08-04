@@ -417,4 +417,25 @@ $this->load->model("customers_model","customers");
         echo json_encode(array("status"=>"success"));
         
     }
+    public function generar_facturas_electronicas_multiples(){
+        $this->load->model('customers_model', 'customers');
+        $this->load->model('transactions_model');
+        $head['title'] = "Generar Facturas Electronicas";
+        $head['usernm'] = $this->aauth->get_user()->username;
+        $data['accounts'] = $this->transactions_model->acc_list();
+        $this->load->view('fixed/header', $head);
+        $this->load->view('facturas_electronicas/configuraciones',$data);
+        $this->load->view('fixed/footer');       
+    }
+    public function generar_facturas_action(){
+        $caja1=$this->db->get_where('accounts',array('id' =>$_POST['pay_acc']))->row();
+        $caja1->holder =strtolower($caja1->holder);
+        $customers = $this->db->query("select * from customers where (usu_estado='Activo' or usu_estado='Compromiso') and (lower(ciudad) ='".$caja1->holder."' and facturar_electronicamente='1')")->result_array();
+        foreach ($customers as $key => $value) {
+                $servicios=$this->customers->servicios_detail($value['id']);
+                $puntos = $this->customers->due_details($value['id']);
+                
+        }
+        
+    }
 }

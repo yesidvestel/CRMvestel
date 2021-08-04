@@ -261,6 +261,9 @@
                         <li>
                             <a href="<?php echo base_url(); ?>invoices/generar_facturas">Generar Facturas</a>
                         </li>
+                        <li>
+                            <a href="<?php echo base_url(); ?>facturasElectronicas/generar_facturas_electronicas_multiples">Facturas Electronicas M</a>
+                        </li>
                     </ul>
                 </li>
                 <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "rec_invoices") {
