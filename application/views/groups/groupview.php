@@ -797,11 +797,11 @@ $("#pagination_div").hide();
                                for="sdate2">Puntos</label>
                         <div  class="col-sm-9">
                         <select id="puntos" name="puntos" class="form-control">
-                            <option value="no">no</option>
-                            <?php for ($i=1; $i <100 ; $i++) { ?>
-                                <option value="<?=$i?>"  ><?=$i?></option>
-                            <?php  } ?>
+                            <option value="no">No</option>
+                            <option value="si">Si</option>
                         </select>
+                        <br>
+                        <div id="div_cuantos_puntos_tiene" style="text-align: center;"><h4><b><i id="i_puntos">Tiene X Puntos</i><b></h4></div>
                         </div>
                     </div>
                 
@@ -1290,8 +1290,9 @@ function ck_facturas_electronicas(ck){
     },'json');
 }   
 function al_cambiar_de_servicio(){
+    var puntos =$("#servicios").data("puntos");
         var elemento= $("#servicios option:selected").val();
-        if(elemento=="Internet"){
+        if(elemento=="Internet" || puntos=="0" || puntos=="no" || puntos=="null" || puntos==null ){
             $("#div_de_puntos").hide();
         }else{
             $("#div_de_puntos").show();
@@ -1307,35 +1308,50 @@ function al_cambiar_de_servicio(){
             var op_int="<option value='Internet'>Internet</option>";
             var op_combo="<option value='Combo'>Combo</option>";
             var options="";
-            
+            $("#servicios").data("puntos",data.puntos);            
 
-            if(data.servicios.television!="no"){
-                options+=op_tv;    
-                if(data.puntos=="no" || data.puntos=="0" || data.puntos=="null" || data.puntos==null){
-                        $("#puntos option[value=no]").prop("selected",true);
-                }else{
-                    $("#puntos option[value="+data.puntos+"]").prop("selected",true);
-                }   
-                $("#div_de_puntos").show();
-            }else{
-                $("#div_de_puntos").hide();
+            if(data.servicios.television!="no" && data.servicios.combo!="no"){
+                options+=op_combo;   
             }
             if(data.servicios.combo!="no"){
                 options+=op_int;
             }
-            if(data.servicios.television!="no" && data.servicios.combo!="no"){
-                options+=op_combo;   
-            }
-            if(data.f_elec_tv=="1" && data.f_elec_internet=="1"){
-                $("#servicios option[value=Combo]").prop("selected",true);
-            }else if(data.f_elec_tv=="1"){
-                $("#servicios option[value=Television]").prop("selected",true);
-            }else if(data.f_elec_internet=="f_elec_internet"){
-                $("#servicios option[value=Internet]").prop("selected",true);
+            if(data.servicios.television!="no"){
+                options+=op_tv;    
+                $("#i_puntos").html("Tiene "+data.puntos+" Puntos de Tv");
+                console.log(data.puntos);
+                if(data.puntos=="no" || data.puntos=="0" || data.puntos=="null" || data.puntos==null){
+                        $("#puntos option[value=no]").prop("selected",true);
+                        $("#div_de_puntos").hide();
+                }else{
+                    $("#puntos option[value=si]").prop("selected",true);
+                    $("#div_de_puntos").show();
+                }   
+                
+            }else{
+                $("#div_de_puntos").hide();
             }
 
+//falta en el caso que haya seleccionado por ejemplo combo guardo la configuracion y despues cortan algun servicio y demas casuisticas sobre si se configura y se cambian los datos de la factura
             $("#servicios").html(options);
             $("#alert_modal").modal("show");
+            console.log(data.f_elec_internet);
+            if(data.f_elec_tv=="1" && data.f_elec_internet=="1"){
+
+                $("#servicios option[value=Combo]").prop("selected",true);
+                $("#div_de_puntos").show();
+            }else if(data.f_elec_tv=="1"){
+
+                $("#servicios option[value=Television]").prop("selected",true);
+                $("#div_de_puntos").show();
+            }else if(data.f_elec_internet=="1"){
+
+                $("#servicios option[value=Internet]").prop("selected",true);
+                $("#div_de_puntos").hide();
+            }
+            if(data.f_elec_puntos!="1"){
+                    $("#puntos option[value=no]").prop("selected",true);
+            }
         },'json');
         
     }
