@@ -74,7 +74,7 @@ class Templates extends CI_Controller
     public function sms()
     {
         $head['usernm'] = $this->aauth->get_user()->username;
-        $data['emails'] = $this->templates->get_template(30,38);
+        $data['emails'] = $this->templates->get_template(30,40);
         $head['title'] = 'Email Templates';
         $this->load->view('fixed/header');
         $this->load->view('templates/sms',$data);
