@@ -440,8 +440,35 @@ $this->load->model("customers_model","customers");
                 //guardare en un array la variable servicios = combo o tv o internet y la variable puntos con no o el numero de puntos
                 // el orden es prima los servicios que tiene actualmente como hay seleccion por el admin si el servicio existe se toma la seleccion si no se omite,
                 //°° IMPORTANTE °°  por otro lado si agrega servicios y estan seteadas las opciones con un solo servicio ejemplo, el admin debe de setear las opciones de facturacion electronica porque generara segun este seteado
-                var_dump($puntos['puntos']);
+                
 
+                $datos=array();
+                if($puntos['puntos']=="0"){
+                    $datos['puntos']="no";
+                }else{
+                    $datos['puntos']=$puntos['puntos'];
+                }
+                if($value['f_elec_puntos']=="0"){
+                    $datos['puntos']="no";
+                }
+
+                if($servicios['television']!="no" && $servicios['television']!="-" &&$servicios['television']!="" &&$servicios['television']!="null" && $servicios['television']!=null){
+                    
+                    if($servicios['combo']!="no" && $servicios['combo']!="-" && $servicios['combo']!="" && $servicios['combo']!="null" && $servicios['combo']!=null){
+                            $datos['servicios']="Combo";                    
+                    }else{
+                        $datos['servicios']="Television";    
+                    }                    
+                }else if($servicios['combo']!="no" && $servicios['combo']!="-" && $servicios['combo']!="" && $servicios['combo']!="null" && $servicios['combo']!=null){
+                      $datos['servicios']="Internet";                    
+                }
+                $datos['sdate']=$_POST['sdate'];
+                $dateTime=new DateTime($_POST['sdate']);
+                var_dump($dateTime->format("Ymd"));
+                var_dump($servicios);
+                echo " var =";
+                var_dump($datos);
+                echo "<br>";
 
         }
         
