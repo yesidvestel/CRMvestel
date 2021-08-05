@@ -133,10 +133,10 @@ class Invoices extends CI_Controller
                             
                         }else{
                             if(strpos(strtolower($item_invoic['product']), "tele")!==false){
-                                $_tiene_television=true;
+                                //$_tiene_television=true;
                             }else{
                                 if($item_invoic['product']=="Punto Adicional"){
-                                    $puntos=$item_invoic['qty'];
+                                    //$puntos=$item_invoic['qty'];
                                 }
                             }
 
