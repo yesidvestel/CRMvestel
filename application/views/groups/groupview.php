@@ -1349,7 +1349,9 @@ function al_cambiar_de_servicio(){
                 $("#servicios option[value=Internet]").prop("selected",true);
                 $("#div_de_puntos").hide();
             }
-            if(data.f_elec_puntos!="1"){
+            if(data.f_elec_puntos=="1"){
+                    $("#puntos option[value=si]").prop("selected",true);
+            }else if(data.f_elec_puntos=="0"){
                     $("#puntos option[value=no]").prop("selected",true);
             }
         },'json');

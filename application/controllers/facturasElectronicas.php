@@ -409,8 +409,10 @@ $this->load->model("customers_model","customers");
             $data['f_elec_internet']=1;
             $data['f_elec_tv']=1;
         }
-        if($puntos!="no"){
+        if($puntos=="si"){
             $data['f_elec_puntos']=1;
+        }else if($puntos=="no"){
+            $data['f_elec_puntos']=0;
         }
 
         $this->db->update("customers",$data,array("id"=>$id));
@@ -428,13 +430,19 @@ $this->load->model("customers_model","customers");
         $this->load->view('fixed/footer');       
     }
     public function generar_facturas_action(){
+        $this->load->model("customers_model","customers");
         $caja1=$this->db->get_where('accounts',array('id' =>$_POST['pay_acc']))->row();
         $caja1->holder =strtolower($caja1->holder);
         $customers = $this->db->query("select * from customers where (usu_estado='Activo' or usu_estado='Compromiso') and (lower(ciudad) ='".$caja1->holder."' and facturar_electronicamente='1')")->result_array();
         foreach ($customers as $key => $value) {
                 $servicios=$this->customers->servicios_detail($value['id']);
                 $puntos = $this->customers->due_details($value['id']);
-                
+                //guardare en un array la variable servicios = combo o tv o internet y la variable puntos con no o el numero de puntos
+                // el orden es prima los servicios que tiene actualmente como hay seleccion por el admin si el servicio existe se toma la seleccion si no se omite,
+                //°° IMPORTANTE °°  por otro lado si agrega servicios y estan seteadas las opciones con un solo servicio ejemplo, el admin debe de setear las opciones de facturacion electronica porque generara segun este seteado
+                var_dump($puntos['puntos']);
+
+
         }
         
     }
