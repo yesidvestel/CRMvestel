@@ -431,9 +431,11 @@ $this->load->model("customers_model","customers");
     }
     public function generar_facturas_action(){
         $this->load->model("customers_model","customers");
+        $this->load->model("facturas_electronicas_model","facturas_electronicas");
         $caja1=$this->db->get_where('accounts',array('id' =>$_POST['pay_acc']))->row();
         $caja1->holder =strtolower($caja1->holder);
         $customers = $this->db->query("select * from customers where (usu_estado='Activo' or usu_estado='Compromiso') and (lower(ciudad) ='".$caja1->holder."' and facturar_electronicamente='1')")->result_array();
+        $datos_del_proceso=array("facturas_creadas"=>array(),"facturas_con_errores"=>array());
         foreach ($customers as $key => $value) {
                 $servicios=$this->customers->servicios_detail($value['id']);
                 $puntos = $this->customers->due_details($value['id']);
@@ -451,7 +453,7 @@ $this->load->model("customers_model","customers");
                 if($value['f_elec_puntos']=="0"){
                     $datos['puntos']="no";
                 }
-
+                $datos['servicios']=null;
                 if($servicios['television']!="no" && $servicios['television']!="-" &&$servicios['television']!="" &&$servicios['television']!="null" && $servicios['television']!=null){
                     
                     if($servicios['combo']!="no" && $servicios['combo']!="-" && $servicios['combo']!="" && $servicios['combo']!="null" && $servicios['combo']!=null){
@@ -463,14 +465,23 @@ $this->load->model("customers_model","customers");
                       $datos['servicios']="Internet";                    
                 }
                 $datos['sdate']=$_POST['sdate'];
-                $dateTime=new DateTime($_POST['sdate']);
-                var_dump($dateTime->format("Ymd"));
-                var_dump($servicios);
-                echo " var =";
-                var_dump($datos);
-                echo "<br>";
+                $datos['id']=$value['id'];
+                if($datos['servicios']!=null){
+                    $creo=$this->facturas_electronicas->generar_factura_customer_para_multiple($datos);
+                    if($creo['status']==true){
+                        $datos_del_proceso['facturas_creadas'][]=$value['id'];
+                    }else{
+                        $datos_del_proceso['facturas_con_errores'][]=$value['id'];
+                    }
+                    //CostCenterCode para agregar la sede 
+                    //falta agregar el centro de costo
+                    // y validar que si ya se creo la factura en esta fecha no volverla a crear
+                }
+
+            
 
         }
+        var_dump($datos_del_proceso);
         
     }
 }

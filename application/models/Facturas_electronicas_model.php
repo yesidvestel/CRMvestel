@@ -94,21 +94,21 @@ class Facturas_electronicas_model extends CI_Model
         return $this->db->count_all_results();
     }
 
-    public function generar_factura_customer_para_multiple(){
+    public function generar_factura_customer_para_multiple($datos_facturar){
         $this->load->library('SiigoAPI');
         $api = new SiigoAPI();
         $this->load->model("customers_model","customers");
         $dataApi;
-        if($_POST['servicios']=="Combo"){           
-            if(isset($_POST['puntos']) && $_POST['puntos']!="no"){
+        if($datos_facturar['servicios']=="Combo"){           
+            if(isset($datos_facturar['puntos']) && $datos_facturar['puntos']!="no"){
                 $dataApi= $this->customers->getClientData3Productos();//verificar este caso
             }else{
                 $dataApi= $this->customers->getClientData2Productos();    
             }
-        }else if($_POST['servicios']=="Internet"){
+        }else if($datos_facturar['servicios']=="Internet"){
             $dataApi= $this->customers->getClientData();
-        }else if($_POST['servicios']=="Television"){
-            if(isset($_POST['puntos']) && $_POST['puntos']!="no"){
+        }else if($datos_facturar['servicios']=="Television"){
+            if(isset($datos_facturar['puntos']) && $datos_facturar['puntos']!="no"){
                 $dataApi= $this->customers->getClientData2Productos();    //y este caso
             }else{
                 $dataApi= $this->customers->getClientData();    
@@ -123,7 +123,7 @@ class Facturas_electronicas_model extends CI_Model
             $dataApi->Header->Number=500;
         }*/
         //customer data and facturacion_electronica_siigo table insert
-        $customer = $this->db->get_where("customers",array('id' =>$_POST['id']))->row();
+        $customer = $this->db->get_where("customers",array('id' =>$datos_facturar['id']))->row();
         //data siigo api
         $dataApi->Header->Account->FullName=strtoupper($customer->name." ".$customer->dosnombre." ".$customer->unoapellido." ".$customer->dosapellido);         
         $dataApi->Header->Account->FullName=str_replace("?", "Ñ", $dataApi->Header->Account->FullName);
@@ -138,7 +138,7 @@ class Facturas_electronicas_model extends CI_Model
             $dataApi->Header->Account->City->StateCode="86";                                     
             $dataApi->Header->Account->City->CityCode="86001";
         }
-
+        //$dataApi->Header->CostCenterCode="Y01";
         $dataApi->Header->Account->Address=$customer->nomenclatura . ' ' . $customer->numero1 . $customer->adicionauno.' Nº '.$customer->numero2.$customer->adicional2.' - '.$customer->numero3;
         $dataApi->Header->Account->Phone->Number=$customer->celular;
         $dataApi->Header->Contact->Phone1->Number=$customer->celular2;
@@ -150,7 +150,7 @@ class Facturas_electronicas_model extends CI_Model
         //$dataApi->Header->Contact->EMail=$customer->email;//genera error sirve de validacion para mandar al final del desarrollo alertas con los posibles errores para que contacten con el desarrollador osease yo en caso tal
         $dataApi->Header->Contact->FirstName=$dataApi->Header->Account->FirstName;
         $dataApi->Header->Contact->LastName=$dataApi->Header->Account->LastName;
-        $dateTime=new DateTime($_POST['sdate']);
+        $dateTime=new DateTime($datos_facturar['sdate']);
         $dataApi->Header->DocDate=$dateTime->format("Ymd");
 
         //cambio de fecha de vencimiento sumandole 20 dias a la fecha seleccionada
@@ -160,16 +160,16 @@ class Facturas_electronicas_model extends CI_Model
         //end fecha vencimiento
         $dataApi->Payments[0]->DueDate=$dateTimeVencimiento->format("Ymd");
         //falta el manejo de los saldos saldos
-        if($_POST['servicios']=="Television"){
+        if($datos_facturar['servicios']=="Television"){
             $dataApi->Items[0]->Description="Servicio de Televisión por Cable";
             //agregar valores reales de televicion deacuerdo a que en diferentes a yopal cambia el valor
 
-            if(isset($_POST['puntos']) && $_POST['puntos']!="no"){
-                    $dataApi->Items[1]->Description="Puntos de tv adicionales ".$_POST['puntos'];
+            if(isset($datos_facturar['puntos']) && $datos_facturar['puntos']!="no"){
+                    $dataApi->Items[1]->Description="Puntos de tv adicionales ".$datos_facturar['puntos'];
                     $lista_de_productos=$this->db->from("products")->where("pid","158")->get()->result();
                     $prod=$lista_de_productos[0];
 
-                    $prod->product_price=$prod->product_price*intval($_POST['puntos']);
+                    $prod->product_price=$prod->product_price*intval($datos_facturar['puntos']);
 
                     $dataApi->Items[1]->ProductCode="001";
 
@@ -193,7 +193,7 @@ class Facturas_electronicas_model extends CI_Model
             }
 
             //falta verificar el caso de la tv de mocoa que cambian los valores
-        }else if($_POST['servicios']=="Internet"){
+        }else if($datos_facturar['servicios']=="Internet"){
             $array_servicios=$this->customers->servicios_detail($customer->id);
             if($array_servicios['combo']!="no"){
                 $dataApi->Items[0]->Description="Servicio de Internet ".$array_servicios['combo'];
@@ -253,7 +253,7 @@ class Facturas_electronicas_model extends CI_Model
             //falta esta parte identificar el paquete de internet del usuario y agregar sus valores
         }
 
-        if($_POST['servicios']=="Combo"){
+        if($datos_facturar['servicios']=="Combo"){
             //agregar valores reales de televicion deacuerdo a que en diferentes a yopal cambia el valor
             //falta esta parte identificar el paquete de internet del usuario y agregar sus valores
             $dataApi->Items[0]->Description="Servicio de Televisión por Cable";
@@ -314,11 +314,11 @@ class Facturas_electronicas_model extends CI_Model
 
                         }
                         
-                        if(isset($_POST['puntos']) && $_POST['puntos']!="no"){
-                                $dataApi->Items[2]->Description="Puntos de tv adicionales ".$_POST['puntos'];
+                        if(isset($datos_facturar['puntos']) && $datos_facturar['puntos']!="no"){
+                                $dataApi->Items[2]->Description="Puntos de tv adicionales ".$datos_facturar['puntos'];
                                 $lista_de_productos=$this->db->from("products")->where("pid","158")->get()->result();
                                 $prod=$lista_de_productos[0];
-                                $prod->product_price=$prod->product_price*intval($_POST['puntos']);
+                                $prod->product_price=$prod->product_price*intval($datos_facturar['puntos']);
                                 $dataApi->Items[2]->ProductCode="001";
 
                                         //valores para no generar iva
@@ -353,8 +353,9 @@ class Facturas_electronicas_model extends CI_Model
         $dataInsert=array();
         $dataInsert['consecutivo_siigo']=0;
         $dataInsert['fecha']=$dateTime->format("Y-m-d");
-        $dataInsert['customer_id']=$_POST['id'];
-        $dataInsert['servicios_facturados']=$_POST['servicios'];
+        $dataInsert['customer_id']=$datos_facturar['id'];
+        $dataInsert['servicios_facturados']=$datos_facturar['servicios'];
+        $dataInsert['creado_con_multiple']=1;
         // end customer data facturacion_electronica_siigo table insert
         $dataApi=json_encode($dataApi); 
         //var_dump($dataApi);
@@ -362,7 +363,8 @@ class Facturas_electronicas_model extends CI_Model
 
         if($retorno['mensaje']=="Factura Guardada"){
             $this->db->insert("facturacion_electronica_siigo",$dataInsert);
-            redirect("facturasElectronicas?id=".$customer->id);
+            $retor=array("status"=>true);
+            return $retor;
         }else{
             /*$error_era_consecutivo=false;
             for ($i=1; $i < 10 ; $i++) { 
@@ -380,8 +382,10 @@ class Facturas_electronicas_model extends CI_Model
                 }
             }*/
             //if($error_era_consecutivo==false){
-                var_dump($retorno['respuesta']);
+                //var_dump($retorno['respuesta']);
             //}
+            $retor=array("status"=>false);
+            return $retor;
         }
     }
 
