@@ -291,6 +291,7 @@ class Customers_model extends CI_Model
             }
             
                 if($fact_valida){
+                    $servicios['tid']=$invoice->tid;
                     //var_dump($invoice->ron);
                     $servicios['estado']=$invoice->ron;
                     if($invoice->ron=="Suspendido"){
@@ -1388,8 +1389,8 @@ class Customers_model extends CI_Model
             "Gender": 1,
             "BirthDate": ""
         },
-        "CostCenterCode": "",
-        "SubCostCenterCode": ""
+        "CostCenterCode": "Y01",
+        "SubCostCenterCode": "1"
     },
     "Items": [
         {
@@ -1496,8 +1497,8 @@ public function getClientData2Productos(){
             "Gender": 1,
             "BirthDate": ""
         },
-        "CostCenterCode": "",
-        "SubCostCenterCode": ""
+        "CostCenterCode": "Y01",
+        "SubCostCenterCode": "1"
     },
     "Items": [
         {
@@ -1629,8 +1630,8 @@ public function getClientData3Productos(){
             "Gender": 1,
             "BirthDate": ""
         },
-        "CostCenterCode": "",
-        "SubCostCenterCode": ""
+        "CostCenterCode": "Y01",
+        "SubCostCenterCode": "1"
     },
     "Items": [
         {

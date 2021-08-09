@@ -340,7 +340,7 @@ function visualizar_div_asociadas(){
     }
 
     var total_facturas="<?=$due['total']-$due['pamnt']?>";
-   
+   var id_ultima_factura=0;
     function cargar_facturas(){
         
         $("#facturas_seleccionadas").val("");
@@ -349,16 +349,23 @@ function visualizar_div_asociadas(){
         var cortados=false;
         var refer="yopal";
         $("#div_facturas_asociadas").find("option").remove();
+        var agregar="";
+
         $(".facturas_para_pagar:checked").each(function(index){            
             total+=parseInt($(this).data('total'));            
             if($(this).data("ron")=="cortado" ||$(this).data("rec")=="1"){
                 cortados=true;
                 refer=$(this).data("refer");
+                id_ultima_factura=$(this).data("id-ultima-factura");
                 var idfact=$(this).data("idfacturas");
-                $("#factura_asociada").append("<option value='"+idfact+"'>"+idfact+"</option>");
+                if(id_ultima_factura!=idfact){
+                    agregar+="<option value='"+idfact+"'>"+idfact+"</option>";
+                }
+                
             }
         });
-
+        agregar="<option value='"+id_ultima_factura+"'>"+id_ultima_factura+"</option>"+agregar;
+        $("#factura_asociada").append(agregar);
         $(lista_facturas).each(function(index){
             if(x==""){
                 x=this;
