@@ -131,9 +131,11 @@ class Facturas_electronicas_model extends CI_Model
         $dataApi->Header->Account->LastName=strtoupper(str_replace("?", "Ñ",$customer->unoapellido));
         $dataApi->Header->Account->Identification=$customer->documento;
         if(strpos(strtolower($customer->ciudad),"monterrey" )!==false){
-            $dataApi->Header->Account->City->CityCode="85162";                                   
+            $dataApi->Header->Account->City->CityCode="85162";
+            $dataApi->Header->CostCenterCode="M01";                                   
         }else if(strpos(strtolower($customer->ciudad),"villanueva" )!==false){
             $dataApi->Header->Account->City->CityCode="85440";                                   
+            $dataApi->Header->CostCenterCode="V01";
         }else if(strpos(strtolower($customer->ciudad),"mocoa" )!==false){
             $dataApi->Header->Account->City->StateCode="86";                                     
             $dataApi->Header->Account->City->CityCode="86001";
@@ -384,7 +386,7 @@ class Facturas_electronicas_model extends CI_Model
             //if($error_era_consecutivo==false){
                 //var_dump($retorno['respuesta']);
             //}
-            $retor=array("status"=>false);
+            $retor=array("status"=>false,'respuesta'=>$retorno['respuesta']);
             return $retor;
         }
     }

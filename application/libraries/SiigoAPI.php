@@ -101,7 +101,36 @@ class SiigoAPI
 
         return json_decode($resp, true);
     }
+/**
+     * Obtiene un listado de facturas
+     * 
+     * @param int $page Número de página que se quiere obtener
+     * 
+     * @return array Listado de facturas que se encuentran en la página indicada
+     */
+    public function getInvoicesByID()
+    {
+        _log("Consultando facturas");
+        $url = "{$this->urlBase}/Invoice/GetById/122849?namespace=v1";
+        $i = 0;
+        do {
+            $cOptions = [
+                CURLOPT_HTTPHEADER => [
+                    "Authorization: Bearer {$this->token}",
+                    "Content-Type: application/json",
+                    "Ocp-Apim-Subscription-Key: {$this->subscriptionKey}",
+                ],
+            ];
+            list($httpCode, $resp) = $this->cReq->curlGet($url, [], $cOptions);
+            if ($httpCode === 401) {
+                $this->getAuth();
+            }
+            $i += 1;
+        } while ($i < 2 && $httpCode === 401);
+        _log("Consulta de facturas finalizada [$httpCode]");
 
+        return json_decode($resp, true);
+    }
 
     /**
      * Guarda una factura

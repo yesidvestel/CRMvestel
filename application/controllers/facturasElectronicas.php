@@ -121,8 +121,10 @@ $this->load->model("customers_model","customers");
        	$dataApi->Header->Account->Identification=$customer->documento;
        	if(strpos(strtolower($customer->ciudad),"monterrey" )!==false){
            	$dataApi->Header->Account->City->CityCode="85162";	                                 
+            $dataApi->Header->CostCenterCode="M01";                                   
         }else if(strpos(strtolower($customer->ciudad),"villanueva" )!==false){
-           	$dataApi->Header->Account->City->CityCode="85440";	                                 
+           	$dataApi->Header->Account->City->CityCode="85440";	                      
+            $dataApi->Header->CostCenterCode="V01";           
         }else if(strpos(strtolower($customer->ciudad),"mocoa" )!==false){
            	$dataApi->Header->Account->City->StateCode="86";	                                 
            	$dataApi->Header->Account->City->CityCode="86001";
@@ -435,7 +437,7 @@ $this->load->model("customers_model","customers");
         $caja1=$this->db->get_where('accounts',array('id' =>$_POST['pay_acc']))->row();
         $caja1->holder =strtolower($caja1->holder);
         $customers = $this->db->query("select * from customers where (usu_estado='Activo' or usu_estado='Compromiso') and (lower(ciudad) ='".$caja1->holder."' and facturar_electronicamente='1')")->result_array();
-        $datos_del_proceso=array("facturas_creadas"=>array(),"facturas_con_errores"=>array());
+        $datos_del_proceso=array("facturas_creadas"=>array(),"facturas_con_errores"=>array(),"facturas_anteriormenet_creadas"=>array());
         foreach ($customers as $key => $value) {
                 $servicios=$this->customers->servicios_detail($value['id']);
                 $puntos = $this->customers->due_details($value['id']);
@@ -467,15 +469,26 @@ $this->load->model("customers_model","customers");
                 $datos['sdate']=$_POST['sdate'];
                 $datos['id']=$value['id'];
                 if($datos['servicios']!=null){
-                    $creo=$this->facturas_electronicas->generar_factura_customer_para_multiple($datos);
-                    if($creo['status']==true){
-                        $datos_del_proceso['facturas_creadas'][]=$value['id'];
+                    $dateTime=new DateTime($_POST['sdate']);
+                    $fecha_1=$dateTime->format("Y-m-d");
+                    $factura_tabla=$this->db->get_where("facturacion_electronica_siigo",array("fecha"=>$fecha_1,'customer_id'=>$value['id']))->row();
+                    if(empty($factura_tabla)){
+
+
+                        $creo=$this->facturas_electronicas->generar_factura_customer_para_multiple($datos);
+                        if($creo['status']==true){
+                            $datos_del_proceso['facturas_creadas'][]=$value['id'];
+                        }else{
+                            $datos_del_proceso['facturas_con_errores'][]=array("id"=>$value['id'],"error");
+                        }
                     }else{
-                        $datos_del_proceso['facturas_con_errores'][]=$value['id'];
+                            $datos_del_proceso['facturas_con_errores'][]=$value['id'];
                     }
-                    //CostCenterCode para agregar la sede 
-                    //falta agregar el centro de costo
+                    //--CostCenterCode para agregar la sede 
+                    //--falta agregar el centro de costo 
+                    //se agrego centro de costo falta validar las demas sedes
                     // y validar que si ya se creo la factura en esta fecha no volverla a crear
+
                 }
 
             
@@ -483,5 +496,11 @@ $this->load->model("customers_model","customers");
         }
         var_dump($datos_del_proceso);
         
+    }
+    public function obtener_token(){
+        $this->load->library('SiigoAPI');
+        $api = new SiigoAPI();
+        var_dump($api->getInvoicesByID());
+
     }
 }
