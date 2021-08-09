@@ -423,6 +423,7 @@ class Transactions extends CI_Controller
 
             
         $id_fact_pagadas="";
+        $reconexion_gen="no";
         foreach ($array_facturas2 as $key => $id_factura) {
             if($id_fact_pagadas==""){
                 $id_fact_pagadas="".$id_factura;
@@ -454,8 +455,9 @@ class Transactions extends CI_Controller
         
         if($reconexion=="si"){
             $factura_asociada = $this->input->post('factura_asociada');    
-     if($factura_asociada==$factura_var->tid){
-        $fcuenta = $factura_var->invoicedate;
+     if($reconexion_gen=="no"){//&& $factura_asociada==$factura_var->tid
+        $factura_asociada = $this->db->get_where('invoices',array('tid'=>$factura_asociada))->row();
+        $fcuenta = $factura_asociada->invoicedate;
         $paquete="no";
         $var1 = $this->input->post('paquete_yopal_monterrey');
         $var2 = $this->input->post('paquete_villanueva');
@@ -487,8 +489,9 @@ class Transactions extends CI_Controller
                 $data2['cid']=$cid;
                 $data2['status']='Pendiente';
                 $data2['section']=$paquete;
-                $data2['id_factura']=$tid;
+                $data2['id_factura']=$factura_asociada->tid;
                 $this->db->insert('tickets',$data2);
+                $reconexion_gen=="si";
         }if ($reconexion==si && $mes2>$mes1){
                 $data2['codigo']=$tidactualmasuno[0]->tid;
                 $data2['subject']='servicio';
@@ -504,6 +507,7 @@ class Transactions extends CI_Controller
                 'tv' => $tv,
                 'internet' => $paquete,             
             );      
+                $reconexion_gen=="si";
             $this->db->insert('temporales', $data4);
             }
         }
