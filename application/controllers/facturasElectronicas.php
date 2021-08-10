@@ -437,7 +437,8 @@ $this->load->model("customers_model","customers");
         $caja1=$this->db->get_where('accounts',array('id' =>$_POST['pay_acc']))->row();
         $caja1->holder =strtolower($caja1->holder);
         $customers = $this->db->query("select * from customers where (usu_estado='Activo' or usu_estado='Compromiso') and (lower(ciudad) ='".$caja1->holder."' and facturar_electronicamente='1')")->result_array();
-        $datos_del_proceso=array("facturas_creadas"=>array(),"facturas_con_errores"=>array(),"facturas_anteriormenet_creadas"=>array());
+        $datos_del_proceso=array("facturas_creadas"=>array(),"facturas_con_errores"=>array(),"facturas_anteriormente_creadas"=>array());
+        $dateTime=new DateTime($_POST['sdate']);
         foreach ($customers as $key => $value) {
                 $servicios=$this->customers->servicios_detail($value['id']);
                 $puntos = $this->customers->due_details($value['id']);
@@ -469,7 +470,7 @@ $this->load->model("customers_model","customers");
                 $datos['sdate']=$_POST['sdate'];
                 $datos['id']=$value['id'];
                 if($datos['servicios']!=null){
-                    $dateTime=new DateTime($_POST['sdate']);
+                    
                     $fecha_1=$dateTime->format("Y-m-d");
                     $factura_tabla=$this->db->get_where("facturacion_electronica_siigo",array("fecha"=>$fecha_1,'customer_id'=>$value['id']))->row();
                     if(empty($factura_tabla)){
@@ -479,10 +480,10 @@ $this->load->model("customers_model","customers");
                         if($creo['status']==true){
                             $datos_del_proceso['facturas_creadas'][]=$value['id'];
                         }else{
-                            $datos_del_proceso['facturas_con_errores'][]=array("id"=>$value['id'],"error");
+                            $datos_del_proceso['facturas_con_errores'][]=array("id"=>$value['id'],"error"=>$creo['respuesta']);
                         }
                     }else{
-                            $datos_del_proceso['facturas_con_errores'][]=$value['id'];
+                            $datos_del_proceso['facturas_anteriormente_creadas'][]=$value['id'];
                     }
                     //--CostCenterCode para agregar la sede 
                     //--falta agregar el centro de costo 
@@ -494,7 +495,16 @@ $this->load->model("customers_model","customers");
             
 
         }
-        var_dump($datos_del_proceso);
+        $_SESSION['errores']=$datos_del_proceso['facturas_con_errores'];
+     //   var_dump($datos_del_proceso);
+        $head['title'] = "Facturas electronicas generadas ";        
+        $data['datos_del_proceso'] = $datos_del_proceso;
+        $data['fecha'] = $dateTime->format("Y-m-d");
+        $data['pay_acc'] = $caja1->holder;
+        $head['usernm'] = $this->aauth->get_user()->username;
+        $this->load->view('fixed/header', $head);
+        $this->load->view('facturas_electronicas/facturas_creadas', $data);
+        $this->load->view('fixed/footer');
         
     }
     public function obtener_token(){
@@ -502,5 +512,84 @@ $this->load->model("customers_model","customers");
         $api = new SiigoAPI();
         var_dump($api->getInvoicesByID());
 
+    }
+    public function lista_facturas_generadas(){
+
+        $lista_invoices=$this->db->query("SELECT * FROM facturacion_electronica_siigo inner join customers on customers.id=facturacion_electronica_siigo.customer_id where fecha='".$_GET['fecha']."' and ciudad='".$_GET['pay_acc']."'")->result_array();
+        $no = $this->input->post('start');
+        $data=array();
+        $x=0;
+        $minimo=$this->input->post('start');
+        $maximo=$minimo+10;
+        foreach ($lista_invoices as $key => $value) {
+            
+            if($x>=$minimo && $x<$maximo){
+                $no++;
+                $customers = $this->db->get_where("customers", array('id' => $value['customer_id']))->row();
+                $row = array();
+                $row[] = $no;
+                //$row[] = $customers->abonado;
+                $row[] = '<a href="customers/view?id=' . $customers->id . '">' . $customers->name ." ". $customers->unoapellido. '</a>';
+                $row[] = $customers->celular;
+                $row[] = $customers->documento;
+                //$row[] = $customers->nomenclatura . ' ' . $customers->numero1 . $customers->adicionauno.' Nº '.$customers->numero2.$customers->adicional2.' - '.$customers->numero3;
+                //$row[] = $customers->usu_estado;
+                $row[] = '';//'<a href="'.base_url().'customers/invoices?id='.$value['csd'].'" class="btn btn-info btn-sm"><span class="icon-eye"></span>  Facturas</a> <a href="'.base_url().'invoices/view?id='.$value['tid'].'" class="btn btn-info btn-sm"><span class="icon-eye"></span>  Factura Creada</a>';
+                $data[] = $row;
+
+            }
+            $x++;
+             
+             
+        }
+
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => count($lista_invoices),
+            "recordsFiltered" => count($lista_invoices),
+            "data" => $data,
+        );
+        //output to json format
+        echo json_encode($output);
+    }
+     public function lista_facturas_no_generadas(){
+        
+
+        $lista_invoices=$_SESSION['errores'];
+        $no = $this->input->post('start');
+        $data=array();
+        $x=0;
+        $minimo=$this->input->post('start');
+        $maximo=$minimo+10;
+        foreach ($lista_invoices as $key => $value) {
+            
+            if($x>=$minimo && $x<$maximo){
+                $no++;
+                $customers = $this->db->get_where("customers", array('id' => $value['id']))->row();
+                $row = array();
+                $row[] = $no;
+                //$row[] = $customers->abonado;
+                $row[] = '<a href="customers/view?id=' . $customers->id . '">' . $customers->name ." ". $customers->unoapellido. '</a>';
+                $row[] = $customers->celular;
+                $row[] = $customers->documento;
+                //$row[] = $customers->nomenclatura . ' ' . $customers->numero1 . $customers->adicionauno.' Nº '.$customers->numero2.$customers->adicional2.' - '.$customers->numero3;
+                //$row[] = $customers->usu_estado;
+                $row[] = $value['error'];
+                $data[] = $row;
+
+            }
+            $x++;
+             
+             
+        }
+
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => count($lista_invoices),
+            "recordsFiltered" => count($lista_invoices),
+            "data" => $data,
+        );
+        //output to json format
+        echo json_encode($output);
     }
 }

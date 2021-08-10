@@ -36,7 +36,7 @@ class SiigoAPI
      */
     public function getAuth()
     {
-        _log("Obteniendo autorización");
+        //_log("Obteniendo autorización"); //descomentar para depurar
         $postFields = [
             "grant_type" => "password",
             "username" => 'VESGATELEVISIONSAS\\VESGAT17681@apionmicrosoft.com',
@@ -64,7 +64,7 @@ class SiigoAPI
         $decodedResp = json_decode($resp, true);
         $this->token = $decodedResp['access_token'];
 
-        _log("Obtención de autorización terminada");
+       // _log("Obtención de autorización terminada"); //descomentar para depurar
 
         return $resp;
     }
@@ -141,7 +141,7 @@ class SiigoAPI
      * @return string Respuesta enviada por el servidor
      */
     public function saveInvoice($invoiceData) {
-        _log("Enviando factura");
+        //_log("Enviando factura"); //descomentar para depurar
         $url = "{$this->urlBase}/Invoice/Save?namespace=1";
         $i = 0;
         
@@ -160,7 +160,7 @@ class SiigoAPI
             }
             $i += 1;
         } while ($i < 2 && $httpCode === 401);
-        _log("Envío de factura finalizado [$httpCode]");
+        //_log("Envío de factura finalizado [$httpCode]"); //descomentar para depurar
 
         return array('respuesta' => $resp,"httpCode"=>$httpCode );
     }
@@ -170,11 +170,11 @@ class SiigoAPI
         //var_dump($api->getInvoices(1));
         //$invoiceData = file_get_contents(dirname(__FILE__) . '/siigo_folder/invoice.json');
         $respuesta=$api->saveInvoice($invoiceData);
-        echo "<br>";
+        /*echo "<br>";
         var_dump($respuesta);
         echo "<br>";
         
-        var_dump($respuesta['httpCode']);
+        var_dump($respuesta['httpCode']);*/
         if(strpos($respuesta['respuesta'],"198")!==false){//200 es enviado, 400 es error
         	return  array('respuesta' =>$respuesta['respuesta'],"mensaje" =>"Ubo algun error") ;
         }
