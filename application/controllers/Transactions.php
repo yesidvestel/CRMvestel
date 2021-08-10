@@ -491,7 +491,7 @@ class Transactions extends CI_Controller
                 $data2['section']=$paquete;
                 $data2['id_factura']=$factura_asociada->tid;
                 $this->db->insert('tickets',$data2);
-                $reconexion_gen=="si";
+                $reconexion_gen="si";
         }if ($reconexion==si && $mes2>$mes1){
                 $data2['codigo']=$tidactualmasuno[0]->tid;
                 $data2['subject']='servicio';
@@ -507,7 +507,7 @@ class Transactions extends CI_Controller
                 'tv' => $tv,
                 'internet' => $paquete,             
             );      
-                $reconexion_gen=="si";
+                $reconexion_gen="si";
             $this->db->insert('temporales', $data4);
             }
         }
