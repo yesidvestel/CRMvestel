@@ -142,6 +142,12 @@ class Facturas_electronicas_model extends CI_Model
         }
         //$dataApi->Header->CostCenterCode="Y01";
         $dataApi->Header->Account->Address=$customer->nomenclatura . ' ' . $customer->numero1 . $customer->adicionauno.' Nº '.$customer->numero2.$customer->adicional2.' - '.$customer->numero3;
+        if(strlen($customer->celular)>10){
+            $customer->celular="0";
+        }
+        if(strlen($customer->celular2)>10){
+            $customer->celular2="0";
+        }
         $dataApi->Header->Account->Phone->Number=$customer->celular;
         $dataApi->Header->Contact->Phone1->Number=$customer->celular2;
         $dataApi->Header->Contact->Mobile->Number=$customer->celular;
