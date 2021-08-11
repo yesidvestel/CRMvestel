@@ -756,6 +756,7 @@ if($ya_agrego_equipos==false){
                     $x=intval($producto->product_price);
                     $x=($x/31)*$diferencia->days;
                     $total+=$x;
+                    $datay['pid']=$producto->pid;
                     $datay['product']=$producto->product_name;
 					$datay['qty']=1;
 					$tax2+=$datay['totaltax'];
@@ -822,7 +823,59 @@ if($ya_agrego_equipos==false){
                 }
                 
 			
+        if(strpos(strtolower($ticket->detalle), "reconexi")!==false){
+            $texto_producto=preg_replace('/[0-9]+/', '', $ticket->detalle);
+            $producto = $this->db->get_where("products",array("product_name"=>$texto_producto))->row();
+            $datay=array();
+           
+                $datay['pid']=$producto->pid;
+                        
+                        $datay['tax']=0;
+                        $datay['discount']=0;
+                        
+                        $datay['totaldiscount']=0;
+                    $x=intval($producto->product_price);
+                    var_dump($producto->product_price);
+                    $x=($x/31)*$diferencia->days;
+                    var_dump($x);
+                    var_dump($diferencia->days);
+                    $datay['product']=$producto->product_name;
+                    $datay['qty']=1;
+                    
+                    $datay['tax']=0;
+                    $datay['totaltax']=0;
+                    $datay['price']=$x;
+                    $datay['subtotal']=$x; 
+                    $rec_normal=false;
+                if($ticket->detalle=="Reconexion Combo2" || $ticket->detalle=="Reconexion Television2" || $ticket->detalle=="Reconexion Internet2"){
+                        $total+=$x*$datay['qty'];
+                        $datay['tid']=$data['tid'];
+                        
+                }else{
+                    $rec_normal=true;
+                     $datay['tid']=$ticket->id_factura;
+                }
+                $str="select * from invoice_items WHERE product LIKE '%reconexion%' and tid='". $datay['tid']."'";
                 
+                $hay_items_rec=$this->db->query($str)->result_array();                    
+
+                    if(count($hay_items_rec)==0){
+                        
+                        
+                        $this->db->insert('invoice_items',$datay);
+                        //si no hay item de reconexion insertar de lo contrario no
+                        if($rec_normal){
+                            $inv=$this->db->get_where("invoices",array("tid"=>$ticket->id_factura))->row();
+                            $dat['subtotal']=$inv->subtotal+$datay['subtotal'];
+                            $dat['total']=$inv->total+$datay['subtotal'];
+                            $this->db->update("invoices",$dat,array("tid"=>$datay['tid']));
+                            //falta probar este codigo
+                        }
+                    }  
+                
+                
+
+        }
                
         //end cod x
 		
@@ -974,6 +1027,8 @@ if($ya_agrego_equipos==false){
         		$this->db->where('id', $ticket->cid);
         		$this->db->update('customers');
 		}
+       
+
 		if($ticket->detalle=="Corte Combo"){
 			//agregar reconexion
 			$producto2 = $this->db->get_where('products',array('product_name'=>'Reconexion Combo'))->row();
