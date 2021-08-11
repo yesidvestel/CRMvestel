@@ -411,18 +411,21 @@ $this->load->model("customers_model","customers");
         $data['f_elec_puntos']=null;
         if($servicio=="Internet"){
             $data['f_elec_internet']=1;
+            $data['f_elec_tv']=0;
         }else if($servicio=="Television"){
             $data['f_elec_tv']=1;
+            $data['f_elec_internet']=0;
         }else{
             $data['f_elec_internet']=1;
             $data['f_elec_tv']=1;
         }
-        if($puntos=="si"){
-            $data['f_elec_puntos']=1;
-        }else if($puntos=="no"){
-            $data['f_elec_puntos']=0;
+        if($servicio=="Television" || $servicio=="Combo"){
+            if($puntos=="si"){
+                $data['f_elec_puntos']=1;
+            }else if($puntos=="no"){
+                $data['f_elec_puntos']=0;
+            }
         }
-
         $this->db->update("customers",$data,array("id"=>$id));
         echo json_encode(array("status"=>"success"));
         
@@ -466,7 +469,12 @@ $this->load->model("customers_model","customers");
                 if($servicios['television']!="no" && $servicios['television']!="-" &&$servicios['television']!="" &&$servicios['television']!="null" && $servicios['television']!=null){
                     
                     if($servicios['combo']!="no" && $servicios['combo']!="-" && $servicios['combo']!="" && $servicios['combo']!="null" && $servicios['combo']!=null){
-                            $datos['servicios']="Combo";                    
+                            $datos['servicios']="Combo";
+                            if($value['f_elec_internet']=="0"){
+                                $datos['servicios']="Television";
+                            }else if($value['f_elec_tv']=="0"){
+                                $datos['servicios']="Internet";
+                            }
                     }else{
                         $datos['servicios']="Television";    
                     }                    
