@@ -862,13 +862,13 @@ if($ya_agrego_equipos==false){
                     if(count($hay_items_rec)==0){
                         
                         
-                        $this->db->insert('invoice_items',$datay);
+                        //$this->db->insert('invoice_items',$datay);
                         //si no hay item de reconexion insertar de lo contrario no
                         if($rec_normal){
                             $inv=$this->db->get_where("invoices",array("tid"=>$ticket->id_factura))->row();
                             $dat['subtotal']=$inv->subtotal+$datay['subtotal'];
                             $dat['total']=$inv->total+$datay['subtotal'];
-                            $this->db->update("invoices",$dat,array("tid"=>$datay['tid']));
+                            //$this->db->update("invoices",$dat,array("tid"=>$datay['tid']));
                             //falta probar este codigo
                         }
                     }  
