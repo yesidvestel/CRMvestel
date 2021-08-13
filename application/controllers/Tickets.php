@@ -860,10 +860,41 @@ if($ya_agrego_equipos==false){
             $temporal=$this->db->get_where("temporales",array("corden"=>$ticket->codigo))->row();
 
             if($temporal!=null){
+                $datay=array();
+                if($ticket->detalle=="Reconexion Combo2" || $ticket->detalle=="Reconexion Television2" || $ticket->detalle=="Reconexion Internet2"){
+                        //$total+=$x*$datay['qty'];
+                        $datay['tid']=$data['tid'];
+                }else{
+                    
+                     $datay['tid']=$ticket->id_factura;
+                }
+
                 if($temporal->tv!="no" && $temporal->tv!="-" && $temporal->tv!="null" && $temporal->tv!=null){
                     //insertar tv si no hay en el invoice       
                     $name=strtolower(str_replace(" ", "",$temporal->tv ));
                     $producto = $this->db->query('SELECT * FROM products WHERE REPLACE(lower(product_name)," ","") LIKE "'.$name.'" ')->result_array();                    
+                    $inv_item=$this->db->query('SELECT * from invoice_items WHERE REPLACE(lower(product)," ","") LIKE "%'.$name.'%" and tid="'. $datay['tid'].'"')->result_array();
+                    if(count($inv_item)==0){
+                        $producto=$producto[0];
+                       $datay['pid']=$producto['pid'];                        
+                        $datay['tax']=$producto['taxrate'];
+                        $datay['discount']=0;                        
+                        $datay['totaldiscount']=0;
+                        $x=intval($producto['product_price']);
+                        $x=($x/31)*$diferencia->days;
+                        $datay['product']=$producto['product_name'];
+                        $datay['qty']=1;                        
+                        $iva=round(($producto['product_price']*$producto['taxrate'])/100);
+                        $iva=round(($iva/31)*$diferencia->days);
+                        
+                        $datay['price']=$x;
+                        $datay['totaltax']=$iva;
+                        $datay['subtotal']=$x+$iva;
+
+                        
+
+                        
+                    }                    
 
                 }
                 if($temporal->internet!="no" && $temporal->internet!="-" && $temporal->internet!="null" && $temporal->internet!=null){
