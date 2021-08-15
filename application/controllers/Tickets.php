@@ -855,26 +855,24 @@ if($ya_agrego_equipos==false){
             $msg1="no redirect";        
 		}
 
-        if(strpos(strtolower($ticket->detalle), "reconexi")!==false){
-            
-            $temporal=$this->db->get_where("temporales",array("corden"=>$ticket->codigo))->row();
-
-            if($temporal!=null){
+        if(strpos(strtolower($ticket->detalle), "reconexi")!==false){                        
                 $datay=array();
-                if($ticket->detalle=="Reconexion Combo2" || $ticket->detalle=="Reconexion Television2" || $ticket->detalle=="Reconexion Internet2"){
-                        //$total+=$x*$datay['qty'];
-                        $datay['tid']=$data['tid'];
-                }else{
-                    
-                     $datay['tid']=$ticket->id_factura;
+                $datay['tid']=$ticket->id_factura;
+                $insertar_tv=false;
+                $insertar_internet=false;
+                if($ticket->detalle=="Reconexion Combo" || $ticket->detalle=="Reconexion Television"){
+                    //insertar tv si no hay en el invoice       
+                    $insertar_tv=true;
+                    $insertar_internet=true;
+                }
+                if($ticket->detalle=="Reconexion Internet"){
+                    //insertar Internet si no hay en el invoice       
+                    $insertar_internet=true;
                 }
 
-                if($temporal->tv!="no" && $temporal->tv!="-" && $temporal->tv!="null" && $temporal->tv!=null){
-                    //insertar tv si no hay en el invoice       
-                    $name=strtolower(str_replace(" ", "",$temporal->tv ));
-                    $producto = $this->db->query('SELECT * FROM products WHERE REPLACE(lower(product_name)," ","") LIKE "'.$name.'" ')->result_array();                    
-                    $inv_item=$this->db->query('SELECT * from invoice_items WHERE REPLACE(lower(product)," ","") LIKE "%'.$name.'%" and tid="'. $datay['tid'].'"')->result_array();
-                    if(count($inv_item)==0){
+                    $producto = $this->db->query('SELECT * FROM products WHERE REPLACE(lower(product_name)," ","") LIKE "Television" ')->result_array();                    
+                    $inv_item=$this->db->query('SELECT * from invoice_items WHERE REPLACE(lower(product)," ","") LIKE "%Television%" and tid="'. $datay['tid'].'"')->result_array();
+                    if(count($inv_item)==0 && $insertar_tv==true){
                         $producto=$producto[0];
                        $datay['pid']=$producto['pid'];                        
                         $datay['tax']=$producto['taxrate'];
@@ -891,68 +889,60 @@ if($ya_agrego_equipos==false){
                         $datay['totaltax']=$iva;
                         $datay['subtotal']=$x+$iva;
 
+                        //$this->db->insert("invoice_items",$datay); //descomentar el lunes
+                        $inv=$this->db->get_where("invoices",array("tid"=>$datay['tid']))->row();
+                        $d_inv=array();
+                        $d_inv['subtotal']=$inv->subtotal+$datay['price'];
+                        $d_inv['total']=$inv->total+$datay['subtotal'];
+                        $d_inv['tax']=$inv->tax+$datay['totaltax'];
+                        //$this->db->update("invoices",$d_inv,array("tid"=>$datay['tid'])); //descomentar el lunes
                         
+                    }    
 
-                        
-                    }                    
-
-                }
-                if($temporal->internet!="no" && $temporal->internet!="-" && $temporal->internet!="null" && $temporal->internet!=null){
+                    $paquete = $this->input->post('paquete');
+                    if($paquete=="null" || $paquete==null || $paquete=="" || $paquete=="-"){
+                        $paquete = $ticket->section;
+                    }
                     //insertar internet si no hay en el invoice       
-                    $name=strtolower(str_replace(" ", "",$temporal->internet ));
+                    $name=strtolower(str_replace(" ", "",$paquete ));
                     $producto = $this->db->query('SELECT * FROM products WHERE REPLACE(lower(product_name)," ","") LIKE "'.$name.'" ')->result_array();                    
-                }
-                //completar el proceso aqui para cada uno de los casos insertar y actualizar valores monetarios
-            }
+                    $inv_item=$this->db->query('SELECT * from invoice_items WHERE REPLACE(lower(product)," ","") LIKE "%'.$name.'%" and tid="'. $datay['tid'].'"')->result_array();
+                            if(count($inv_item)==0 && count($producto)!=0 && $insertar_internet==true){
+                                $producto=$producto[0];
+                               $datay['pid']=$producto['pid'];                        
+                                $datay['tax']=$producto['taxrate'];
+                                $datay['discount']=0;                        
+                                $datay['totaldiscount']=0;
+                                $x=intval($producto['product_price']);
+                                $x=($x/31)*$diferencia->days;
+                                $datay['product']=$producto['product_name'];
+                                $datay['qty']=1;
+                                $iva=0;
+                                if($producto['taxrate']!=null && $producto['taxrate']!=0 && $producto['taxrate']!='0' && $producto['taxrate']!='null' && $producto['taxrate']!='' ){
+                                    $iva=round(($producto['product_price']*$producto['taxrate'])/100);
+                                    $iva=round(($iva/31)*$diferencia->days);
+                                }
+                                $datay['price']=$x;
+                                $datay['totaltax']=$iva;
+                                $datay['subtotal']=$x+$iva;
 
-
-            /*$producto = $this->db->get_where("products",array("product_name"=>$texto_producto))->row();
-            $datay=array();
-           
-                $datay['pid']=$producto->pid;
-                        
-                        $datay['tax']=0;
-                        $datay['discount']=0;
-                        
-                        $datay['totaldiscount']=0;
-                    $x=intval($producto->product_price);
-                    //var_dump($producto->product_price);
-                    $x=($x/31)*$diferencia->days;
-                    //var_dump($x);
-                    //var_dump($diferencia->days);
-                    $datay['product']=$producto->product_name;
-                    $datay['qty']=1;
-                    
-                    $datay['tax']=0;
-                    $datay['totaltax']=0;
-                    $datay['price']=$x;
-                    $datay['subtotal']=$x; 
-                    $rec_normal=false;
-                if($ticket->detalle=="Reconexion Combo2" || $ticket->detalle=="Reconexion Television2" || $ticket->detalle=="Reconexion Internet2"){
-                        //$total+=$x*$datay['qty'];
-                        $datay['tid']=$data['tid'];
-                        
-                }else{
-                    
-                     $datay['tid']=$ticket->id_factura;
-                }
-                $str="select * from invoice_items WHERE product LIKE '%reconexion%' and tid='". $datay['tid']."'";
+                          //      $this->db->insert("invoice_items",$datay); //descomentar el lunes
+                                $inv=$this->db->get_where("invoices",array("tid"=>$datay['tid']))->row();
+                                $d_inv=array();
+                                $d_inv['subtotal']=$inv->subtotal+$datay['price'];
+                                $d_inv['total']=$inv->total+$datay['subtotal'];
+                                $d_inv['tax']=$inv->tax+$datay['totaltax'];
+                           //     $this->db->update("invoices",$d_inv,array("tid"=>$datay['tid'])); //descomentar el lunes
+                                
+                            }                      
+                            
+                //termina reconexion combo o tv
                 
-                $hay_items_rec=$this->db->query($str)->result_array();                    
+                //completar el proceso aqui para cada uno de los casos insertar y actualizar valores monetarios
+            
 
-                    if(count($hay_items_rec)==0){
-                        
-                        
-                        $this->db->insert('invoice_items',$datay);
-                        //si no hay item de reconexion insertar de lo contrario no
-                        if($rec_normal){
-                            $inv=$this->db->get_where("invoices",array("tid"=>$ticket->id_factura))->row();
-                            $dat['subtotal']=$inv->subtotal+$datay['subtotal'];
-                            $dat['total']=$inv->total+$datay['subtotal'];
-                            $this->db->update("invoices",$dat,array("tid"=>$datay['tid']));
-                            //falta probar este codigo
-                        }
-                    }  */
+
+            
                 
                 
 
