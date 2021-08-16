@@ -889,13 +889,13 @@ if($ya_agrego_equipos==false){
                         $datay['totaltax']=$iva;
                         $datay['subtotal']=$x+$iva;
 
-                        //$this->db->insert("invoice_items",$datay); //descomentar el lunes
+                        $this->db->insert("invoice_items",$datay); //descomentar el lunes
                         $inv=$this->db->get_where("invoices",array("tid"=>$datay['tid']))->row();
                         $d_inv=array();
                         $d_inv['subtotal']=$inv->subtotal+$datay['price'];
                         $d_inv['total']=$inv->total+$datay['subtotal'];
                         $d_inv['tax']=$inv->tax+$datay['totaltax'];
-                        //$this->db->update("invoices",$d_inv,array("tid"=>$datay['tid'])); //descomentar el lunes
+                        $this->db->update("invoices",$d_inv,array("tid"=>$datay['tid'])); //descomentar el lunes
                         
                     }    
 
@@ -926,13 +926,13 @@ if($ya_agrego_equipos==false){
                                 $datay['totaltax']=$iva;
                                 $datay['subtotal']=$x+$iva;
 
-                          //      $this->db->insert("invoice_items",$datay); //descomentar el lunes
+                                $this->db->insert("invoice_items",$datay); //descomentar el lunes
                                 $inv=$this->db->get_where("invoices",array("tid"=>$datay['tid']))->row();
                                 $d_inv=array();
                                 $d_inv['subtotal']=$inv->subtotal+$datay['price'];
                                 $d_inv['total']=$inv->total+$datay['subtotal'];
                                 $d_inv['tax']=$inv->tax+$datay['totaltax'];
-                           //     $this->db->update("invoices",$d_inv,array("tid"=>$datay['tid'])); //descomentar el lunes
+                                $this->db->update("invoices",$d_inv,array("tid"=>$datay['tid'])); //descomentar el lunes
                                 
                             }                      
                             
