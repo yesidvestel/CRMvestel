@@ -1333,9 +1333,15 @@ if($ya_agrego_equipos==false){
         		$this->db->update('invoices');			
 		}
 		}
+		
         $dataz['status']=$status;
         $dataz['fecha_final']=$fecha_final;
-        $this->db->update('tickets',$dataz,array('idt'=>$tid));
+        if ($this->db->update('tickets',$dataz,array('idt'=>$tid))){
+			//cambio color al finalizar
+			$this->db->set('color', '#a3a3a3');
+        	$this->db->where('idorden', $ticket->codigo);
+        	$this->db->update('events');
+		};
 				
 		
 		
