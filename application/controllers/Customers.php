@@ -1108,6 +1108,7 @@ class Customers extends CI_Controller
 		$tid = $custid;
 		$data['details'] = $this->customers->details($custid);
 		$data['due'] = $this->customers->due_details($custid);
+        $data['servicios'] = $this->customers->servicios_detail($custid);
         $data['id'] = $custid;
         $data['title'] = "Contrato $custid";
         
