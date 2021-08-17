@@ -1020,7 +1020,7 @@ function saveMData(o_data,action_url) {
 
 
                 } else {
-                    if(data.status=="Error-Resivido"){
+                    if(data.status=="Error-Recibido"){
                         $("#mensaje").html('<div id="notifyx" class="alert alert-success" style="display: none;">            <a href="#" class="close" data-dismiss="alert">&times;</a>            <div class="messagex"></div></div>');
                         $("#notifyx .messagex").html("<strong>" + data.status + "</strong>: " + data.message);
                             $("#notifyx").removeClass("alert-success").addClass("alert-danger").fadeIn();

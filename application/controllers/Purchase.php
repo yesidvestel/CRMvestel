@@ -686,7 +686,7 @@ class Purchase extends CI_Controller
             }
 
             if($errores){
-                echo json_encode(array('status' => 'Error-Resivido', 'message' =>
+                echo json_encode(array('status' => 'Error-Recibido', 'message' =>
                 '<ul>'.$txt_errores.'</ul>', 'pstatus' => $status));    
             }else{
 

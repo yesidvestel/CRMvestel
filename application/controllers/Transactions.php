@@ -903,7 +903,7 @@ class Transactions extends CI_Controller
             $this->db->set('pmethod', $pmethod);
             $this->db->set('pamnt', "pamnt+$amount", FALSE);
 
-            $this->db->set('status', 'Recibido');
+            $this->db->set('status', 'abonado');
             $this->db->where('tid', $tid);
             $this->db->update('purchase');
 

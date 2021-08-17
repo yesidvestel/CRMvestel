@@ -1,4 +1,7 @@
-﻿------cambios para la facturacion electronica automatica--------------------------------------------
+﻿---------------------------cambios para agregar estado abonado a ordenes de compra------------------------
+ALTER TABLE `purchase` CHANGE `status` `status` ENUM('pendiente','cancelado','abonado','recibido','recibido parcial','finalizado','anulado') CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT 'pendiente';
+
+------cambios para la facturacion electronica automatica--------------------------------------------
 ALTER TABLE `facturacion_electronica_siigo` ADD `creado_con_multiple` TINYINT NULL AFTER `s2TaxValue`;
 ALTER TABLE `customers` ADD `facturar_electronicamente` TINYINT NULL AFTER `balance`;
 ALTER TABLE `customers` ADD `f_elec_tv` TINYINT NULL AFTER `facturar_electronicamente`, ADD `f_elec_internet` TINYINT NULL AFTER `f_elec_tv`, ADD `f_elec_puntos` TINYINT NULL AFTER `f_elec_internet`;
