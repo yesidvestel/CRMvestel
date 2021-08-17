@@ -999,6 +999,7 @@ class Customers extends CI_Controller
 	public function dev_equipo()
     {
         $id = $this->input->post('iduser');
+		$user = $this->aauth->get_user()->username;
         $nota = $this->input->post('nota');
 		$estado = $this->input->post('estado');
 		$codigo = $this->input->post('codigo');
@@ -1010,7 +1011,8 @@ class Customers extends CI_Controller
 			'id_user' => $id,
 			'tipos' => 'Devolucion Equipo',			
 			'fecha' => date("Y-m-d"),
-			'observacion' => 'Codigo: '.$codigo.' Motivo '.$nota);		
+			'observacion' => 'Codigo: '.$codigo.' Motivo '.$nota,
+			'colaborador' => $user);		
        $this->db->insert('historiales', $data1);
 		//actualizar equipo
 		$datae = array(
@@ -1061,6 +1063,7 @@ class Customers extends CI_Controller
         $this->db->update('customers', $data2);
 		$dt1=new DateTime($fecha);
         $fecha=$dt1->format("Y-m-d");
+		$user = $this->aauth->get_user()->username;
 		$data1 = array(				
 			'id_user' => $id,
 			'tipos' => 'Cambio Titular',
@@ -1069,7 +1072,8 @@ class Customers extends CI_Controller
 			'tdocumento' => $tdocumento,
 			'documento2' => $doc_anterior,
 			'fecha' => $fecha,
-			'observacion' => $observacion);		
+			'observacion' => $observacion,
+			'colaborador' => $user);		
        $this->db->insert('historiales', $data1);
 		
 		
@@ -1080,6 +1084,7 @@ class Customers extends CI_Controller
 	public function obser()
     {
         $id = $this->input->post('iduser2');
+		$user = $this->aauth->get_user()->username;
         $tipo = $this->input->post('tipo');
 		$detalle = $this->input->post('detalle2');
 		$fcha = $this->input->post('fecha2');
@@ -1093,7 +1098,8 @@ class Customers extends CI_Controller
 			'tdocumento' => '',
 			'documento2' => '',
 			'fecha' => $fecha,
-			'observacion' => $detalle);		
+			'observacion' => $detalle,
+			'colaborador' => $user);		
        $this->db->insert('historiales', $datos);
 		
 		
