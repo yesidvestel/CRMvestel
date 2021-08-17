@@ -507,6 +507,7 @@
                                     <th >Fecha</th>
                                     <th>Tipo</th>
 									<th>Detalle</th>
+									<th>Realizado</th>
 									<th>Accion</th>
 
 
@@ -516,12 +517,12 @@
                                 <?php foreach ($activity as $row) {
 									if ($row['tipos']=='Cambio Titular'){
                                     echo '<tr>
-                            		<td>' . $row['fecha'] . '</td><td>' . $row['tipos'] . '</td><td>' . $row['nombres'].', '.$row['tdocumento'] .': '.$row['documento2'] . '</td>
+                            		<td>' . $row['fecha'] . '</td><td>' . $row['tipos'] . '</td><td>' . $row['nombres'].', '.$row['tdocumento'] .': '.$row['documento2'] . '</td><td>'. $row['colaborador'] . '</td>
 									<td><a class="btn btn-danger" onclick="eliminar_documento(' .$row['idn'].')" > <i class="icon-trash-o "></i></a></td>
                         			</tr>';
 									}else{
 										echo '<tr>
-                            		<td>' . $row['fecha'] . '</td><td>' . $row['tipos'] . '</td><td>' . $row['observacion'] . '</td>
+                            		<td>' . $row['fecha'] . '</td><td>' . $row['tipos'] . '</td><td>' . $row['observacion'] .'</td><td>'. $row['colaborador'] . '</td>
 									<td><a class="btn btn-danger" onclick="eliminar_documento(' .$row['idn'].')" > <i class="icon-trash-o "></i></a></td>
                         			</tr>';
 										$i++;
