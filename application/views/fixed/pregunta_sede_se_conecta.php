@@ -12,8 +12,9 @@
                 <div class="col-sm-9">
                     
                         <select name="sede_accede" class="form-control" id="sede_accede">
+							<?php if ($this->aauth->get_user()->roleid > 3) {?>
 							<option value="0">Todas</option>
-                            <?php
+                            <?php }
                                 foreach ($customergrouplist as $row) {
                                     $cid = $row['id'];
                                     $title = $row['title'];

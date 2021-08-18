@@ -112,8 +112,13 @@ class Transactions_model extends CI_Model
 
     public function acc_list()
     {
-        $this->db->select('id,acn,holder');
+		$sedeacc = $this->aauth->get_user()->sede_accede;
+        $this->db->select('*');
         $this->db->from('accounts');
+		if ($sedeacc != '0'){
+			$this->db->where('sede', $sedeacc);
+			$this->db->or_where('sede', '0');
+		}
         $query = $this->db->get();
         return $query->result_array();
     }

@@ -32,7 +32,23 @@
                                class="form-control margin-bottom required" name="holder">
                     </div>
                 </div>
+				<div class="form-group row">
 
+                    <label class="col-sm-2 col-form-label" for="holder">Caja</label>
+
+                    <div class="col-sm-6">
+                        <select type="text" class="form-control" placeholder="Reference #" name="sede">
+							<option value="0">-</option>
+							<?php
+							foreach ($sede as $row) {
+								$cid = $row['id'];
+								$title = $row['title'];
+								echo "<option value='$cid'>$title</option>";
+							}
+							?>
+						</select>
+                    </div>
+                </div>
                 <div class="form-group row">
 
                     <label class="col-sm-2 col-form-label"

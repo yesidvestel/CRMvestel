@@ -41,8 +41,26 @@
                     </div>
 
                 </div>
+				<div class="form-group row">
 
+                    <label class="col-sm-2 col-form-label" for="holder">Caja</label>
 
+                    <div class="col-sm-8">
+                        <select type="text" class="form-control" placeholder="Reference #" name="sede">
+							<option value="<?php echo $account['sede'] ?>"><?php
+							$caja = $this->db->get_where('customers_group', array('id' => $account['sede']))->row();
+							echo $caja->title ?></option>
+							<?php
+							foreach ($sede as $row) {
+								$cid = $row['id'];
+								$title = $row['title'];
+								echo "<option value='$cid'>$title</option>";
+							}
+							?>
+						</select>
+                    </div>
+                </div>
+				
                 <div class="form-group row">
 
                     <label class="col-sm-2 col-form-label" for="acode"><?php echo $this->lang->line('Note') ?></label>

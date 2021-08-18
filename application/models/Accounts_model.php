@@ -46,11 +46,12 @@ class Accounts_model extends CI_Model
         return $query->row_array();
     }
 
-    public function addnew($accno, $holder, $intbal, $acode)
+    public function addnew($accno, $holder, $sede, $intbal, $acode)
     {
         $data = array(
             'acn' => $accno,
             'holder' => $holder,
+			'sede' => $sede,
             'lastbal' => $intbal,
             'code' => $acode
         );
@@ -65,11 +66,12 @@ class Accounts_model extends CI_Model
 
     }
 
-    public function edit($acid, $accno, $holder, $acode)
+    public function edit($acid, $accno, $holder, $sede, $acode)
     {
         $data = array(
             'acn' => $accno,
             'holder' => $holder,
+			'sede' => $sede,
             'code' => $acode
         );
 

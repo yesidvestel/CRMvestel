@@ -59,10 +59,12 @@ class Accounts Extends CI_Controller
 
     public function add()
     {
+		$this->load->model('invoices_model', 'invocies');
         $head['usernm'] = $this->aauth->get_user()->username;
+		$data['sede'] = $this->invocies->sede();
         $head['title'] = 'Add Account';
         $this->load->view('fixed/header', $head);
-        $this->load->view('accounts/add');
+        $this->load->view('accounts/add',$data);
         $this->load->view('fixed/footer');
     }
 
@@ -70,11 +72,12 @@ class Accounts Extends CI_Controller
     {
         $accno = $this->input->post('accno');
         $holder = $this->input->post('holder');
+		$sede = $this->input->post('sede');
         $intbal = $this->input->post('intbal');
         $acode = $this->input->post('acode');
 
         if ($accno) {
-            $this->accounts->addnew($accno, $holder, $intbal, $acode);
+            $this->accounts->addnew($accno, $holder, $sede, $intbal, $acode);
         }
     }
 
@@ -92,13 +95,14 @@ class Accounts Extends CI_Controller
 //view for edit
     public function edit()
     {
+		$this->load->model('invoices_model', 'invocies');
         $catid = $this->input->get('id');
         $this->db->select('*');
         $this->db->from('accounts');
         $this->db->where('id', $catid);
         $query = $this->db->get();
         $data['account'] = $query->row_array();
-
+		$data['sede'] = $this->invocies->sede();
         $head['usernm'] = $this->aauth->get_user()->username;
         $head['title'] = 'Edit Account';
         $this->load->view('fixed/header', $head);
@@ -112,9 +116,10 @@ class Accounts Extends CI_Controller
         $acid = $this->input->post('acid');
         $accno = $this->input->post('accno');
         $holder = $this->input->post('holder');
+		$sede = $this->input->post('sede');
         $acode = $this->input->post('acode');
         if ($acid) {
-            $this->accounts->edit($acid, $accno, $holder, $acode);
+            $this->accounts->edit($acid, $accno, $holder, $sede, $acode);
         }
     }
 

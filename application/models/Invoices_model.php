@@ -122,7 +122,9 @@ class Invoices_model extends CI_Model
 		$sedeacc = $this->aauth->get_user()->sede_accede;
 		$this->db->select('*');
         $this->db->from('customers_group');
+		if ($sedeacc != '0'){
 		$this->db->where('id', $sedeacc);
+		}
         $query = $this->db->get();
         return $query->result_array();
     }
