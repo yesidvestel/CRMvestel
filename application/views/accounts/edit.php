@@ -50,6 +50,7 @@
 							<option value="<?php echo $account['sede'] ?>"><?php
 							$caja = $this->db->get_where('customers_group', array('id' => $account['sede']))->row();
 							echo $caja->title ?></option>
+							<option value="0">Ninguna</option>
 							<?php
 							foreach ($sede as $row) {
 								$cid = $row['id'];

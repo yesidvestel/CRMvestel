@@ -38,7 +38,7 @@
 
                     <div class="col-sm-6">
                         <select type="text" class="form-control" placeholder="Reference #" name="sede">
-							<option value="0">-</option>
+							<option value="0">Ninguna</option>
 							<?php
 							foreach ($sede as $row) {
 								$cid = $row['id'];

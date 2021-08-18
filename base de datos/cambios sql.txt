@@ -51,7 +51,7 @@ ALTER TABLE `transferencia_products_orden` ADD `proy_id` INT NULL AFTER `tickets
 //nuevos campos tabla historiales
 ALTER TABLE `historiales` ADD `colaborador` VARCHAR(20) NULL AFTER `observacion`;
 //nuevos campos tabla de cuentas
-ALTER TABLE `account` ADD `sede` INT NULL AFTE `holder`;
+ALTER TABLE `accounts` ADD `sede` INT NULL AFTER `holder`;
 
 
 

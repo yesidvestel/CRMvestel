@@ -66,7 +66,7 @@
                     <div class="col-sm-6">
                         <input type="text" class="form-control required"
                                name="date" data-toggle="datepicker"
-                               autocomplete="false">
+                               autocomplete="false" readonly>
                     </div>
                 </div>
                 <div class="form-group row">
