@@ -113,7 +113,11 @@ class Invoices_model extends CI_Model
 		$sede = $this->aauth->get_user()->sede_accede;
 		$this->db->select('*');
         $this->db->from('products');
+		if ($sede == '0'){
+			$this->db->where('sede >', 0);
+		}else{
 		$this->db->where('sede', $sede);
+		}
         $query = $this->db->get();
         return $query->result_array();
     }
