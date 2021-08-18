@@ -1,12 +1,12 @@
 <!doctype html>
 <?php 
-if ($due['television']!==no){
+if ($servicios['television']!==no){
 		$producto = $this->db->get_where('products',array('pid'=>27))->row();
 		$totaltv = $producto->product_price+3992;
 	
-}if ($due['combo']!==no){
+}if ($servicios['combo']!==no){
 	
-					$producto2 = $this->db->get_where('products',array('product_name'=>$due['combo']))->row();
+					$producto2 = $this->db->get_where('products',array('product_name'=>$servicios['combo']))->row();
 					$inter = $producto2->product_price;
 }
 $equipo = $this->db->get_where('equipos',array('asignado'=>$details['abonado']))->row();
