@@ -1030,6 +1030,9 @@ if($ya_agrego_equipos==false){
 		
 		if($ticket->detalle=="Reconexion Combo"){
 			$paquete = $this->input->post('paquete');
+            if($paquete=="null" || $paquete==null || $paquete=="" || $paquete=="-"){
+                        $paquete = $ticket->section;
+                    }
 			$this->db->set('combo', $paquete);
 			$this->db->set('television', 'Television');
 			$this->db->set('ron', 'Activo');
@@ -1045,6 +1048,9 @@ if($ya_agrego_equipos==false){
 		}		
 		if($ticket->detalle=="Reconexion Internet"){
 			$paquete = $this->input->post('paquete');
+            if($paquete=="null" || $paquete==null || $paquete=="" || $paquete=="-"){
+                        $paquete = $ticket->section;
+                    }
 			$this->db->set('combo', $paquete);			
 			$this->db->set('ron', 'Activo');
         	$this->db->where('tid', $idfactura);
