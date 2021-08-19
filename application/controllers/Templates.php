@@ -74,7 +74,7 @@ class Templates extends CI_Controller
     public function sms()
     {
         $head['usernm'] = $this->aauth->get_user()->username;
-        $data['emails'] = $this->templates->get_template(30,40);
+        $data['emails'] = $this->templates->get_template();
         $head['title'] = 'Email Templates';
         $this->load->view('fixed/header');
         $this->load->view('templates/sms',$data);
@@ -101,7 +101,23 @@ class Templates extends CI_Controller
             $this->load->view('fixed/footer');
         }
     }
+	public function sms_add()
+    {
+        $head['usernm'] = $this->aauth->get_user()->username;
+        $data['emails'] = $this->templates->get_template(30,40);
+        $head['title'] = 'Email Templates';
+        $this->load->view('fixed/header');
+        $this->load->view('templates/sms-add');
+        $this->load->view('fixed/footer');
+    }
+	 public function sms_input()
+    {
+        
+            $name = $this->input->post('nombre');
+            $body = $this->input->post('body');
+            $this->templates->input($name,$body);
 
+    } 
 
 
 

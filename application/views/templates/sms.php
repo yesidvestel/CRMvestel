@@ -8,7 +8,7 @@
         <div class="grid_3 grid_4 table-responsive animated fadeInRight">
             <h5 class="title"><?php echo $this->lang->line('Manage SMS Templates') ?>
             </h5>
-
+			<a href='<?php echo base_url("templates/sms_add"); ?>' class='btn btn-cyan btn-xs'><i class='icon-pencil'></i> Nueva Plantilla</a>
             <hr>
             <table id="catgtable" class="display" cellspacing="0" width="100%">
                 <thead>

@@ -23,10 +23,10 @@ class Templates_model extends CI_Model
 
 
     /*Read the data from DB */
-    public function get_template($start,$end)
-    {   $where = "id BETWEEN $start AND $end";
+    public function get_template()
+    {   //$where = "id BETWEEN $start AND $end";
         $this->db->from('univarsal_api');
-        $this->db->where($where);
+        $this->db->where('key1','SMS');
         $query = $this->db->get();
         return $query->result_array();
     }
@@ -38,7 +38,24 @@ class Templates_model extends CI_Model
         $query = $this->db->get();
         return $query->row_array();
     }
+	public function input($name, $body)
+    {
+        $data = array(
+			'name' => $name,
+            'key1' => 'SMS',
+            'other' => $body
+        );
 
+        $this->db->set($data);
+
+        if ($this->db->insert('univarsal_api')) {
+            echo json_encode(array('status' => 'Success', 'message' =>
+                $this->lang->line('UPDATED')));
+        } else {
+            echo json_encode(array('status' => 'Error', 'message' =>
+                $this->lang->line('ERROR')));
+        }
+    }
 
 
     public function edit($id, $subect, $body)

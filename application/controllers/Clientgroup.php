@@ -403,7 +403,7 @@ class Clientgroup extends CI_Controller
         $data['array_pagination']=$array;
         //var_dump($array);
         $this->load->model('templates_model','templates');
-        $data['plantillas'] = $this->templates->get_template(30,40);
+        $data['plantillas'] = $this->templates->get_template();
         //var_dump($data['plantillas']);
         $this->load->view('fixed/header', $head);
         $this->load->view('groups/groupview', $data);
