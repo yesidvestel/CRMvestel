@@ -459,7 +459,7 @@ class Clientgroup extends CI_Controller
             $row[] = $servicios_str;
 			$row[] = '<span class="st-'.$customers->usu_estado. '">' .$customers->usu_estado. '</span>';
             $row[] = '<a href="' . $base . 'edit?id=' . $customers->id . '" class="btn btn-success btn-sm"><span class="icon-pencil"></span> '.$this->lang->line('Edit').'</a>
-					  <a href="' . base_url() . 'llamadas/index?id=' . $customers->id . '" class="btn btn-info btn-sm"><span class=" icon-mobile-phone"></span> Llamar</a>';
+					  <a href="' . base_url() . 'llamadas/index?id=' . $customers->id . '" class="btn btn-primary btn-sm"><span class=" icon-mobile-phone"></span> Llamar</a>';
 			if ($this->aauth->get_user()->roleid > 4) {
 			$row[] = '<a href="#" data-object-id="' . $customers->id . '" class="btn btn-danger btn-sm delete-object"><span class="icon-bin"></span></a>';}
 
@@ -758,7 +758,9 @@ class Clientgroup extends CI_Controller
                             $row[] = amountFormat($debe_customer);
                             $row[] = amountFormat($valor_ultima_factura);
                             $row[] = amountFormat($money['credit']-$money['debit']);
-                            $row[] = '<a href="' . base_url() . 'customers/edit?id=' . $customers->id . '" class="btn btn-success btn-sm"><span class="icon-pencil"></span> '.$this->lang->line('Edit').'</a>&nbsp&nbsp<a href="' . base_url() . 'llamadas/index?id=' . $customers->id . '" class="btn btn-info btn-sm"><span class=" icon-mobile-phone"></span> Llamar</a>&nbsp<a style="margin-top:1px;" target="_blanck" class="btn btn-info btn-sm"  href="'.base_url().'customers/invoices?id='.$customers->id.'"><span class="icon-eye"></span>&nbsp;Facturas</a>';
+                            $row[] = '<a href="' . base_url() . 'customers/edit?id=' . $customers->id . '" class="btn btn-success btn-sm"><span class="icon-pencil"></span> '.$this->lang->line('Edit').'</a>&nbsp
+							&nbsp<a href="' . base_url() . 'llamadas/index?id=' . $customers->id . '" class="btn btn-primary btn-sm"><span class=" icon-mobile-phone"></span> Llamar</a>
+							&nbsp<a style="margin-top:1px;" target="_blanck" class="btn btn-info btn-sm"  href="'.base_url().'customers/invoices?id='.$customers->id.'"><span class="icon-eye"></span>&nbsp;Facturas</a>';
                             if ($this->aauth->get_user()->roleid > 4) {
                             $row[] = '<a href="#" data-object-id="' . $customers->id . '" class="btn btn-danger btn-sm delete-object"><span class="icon-bin"></span></a>';
                             }
