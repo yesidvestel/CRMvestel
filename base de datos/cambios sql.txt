@@ -1,4 +1,8 @@
-﻿---------------------------cambios para agregar estado abonado a ordenes de compra------------------------
+﻿-----------------------------cambios para agregar estados a los servicios de la factura-----------------
+ALTER TABLE `invoices` ADD `estado_tv` ENUM('Cortado','Suspendido') NULL AFTER `television`;
+ALTER TABLE `invoices` ADD `estado_combo` ENUM('Cortado','Suspendido') NULL AFTER `combo`;
+--------------------------------------------------------------------------------------------------------
+---------------------------cambios para agregar estado abonado a ordenes de compra------------------------
 ALTER TABLE `purchase` CHANGE `status` `status` ENUM('pendiente','cancelado','abonado','recibido','recibido parcial','finalizado','anulado') CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT 'pendiente';
 
 ------cambios para la facturacion electronica automatica--------------------------------------------
