@@ -130,6 +130,11 @@ class Tickets Extends CI_Controller
             }
 			$row[] = $ticket->ciudad;
 			$row[] = $ticket->barrio;
+			if(isset($ticket->idorden)){
+				$row[] = "<span class=' icon-check' style='color:green'></span>";
+			}else{
+				$row[] = "<span class=' icon-remove' style='color:red'></span>";
+			}
 			$row[] = '<span class="st-' . $ticket->status . '">' . $ticket->status . '</span>';
             $row[] = '<a href="' . base_url('tickets/thread/?id=' . $ticket->idt) . '" class="btn btn-success btn-xs"><i class="icon-file-text"></i> ' . $this->lang->line('View') . '</a>';
 			if ($this->aauth->get_user()->roleid >= 3) {

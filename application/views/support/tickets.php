@@ -301,6 +301,7 @@
 					<th>Asignado</th>
 					<th>Sede</th>
 					<th>Barrio</th>
+					<th>Agenda</th>
 					<th>Estado</th>
                     <th>Accion</th>
 					<?php if ($this->aauth->get_user()->roleid >= 3) { ?>
