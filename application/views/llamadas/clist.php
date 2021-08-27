@@ -208,7 +208,7 @@
 		}else if (respuesta.value == "Control Contestado"){
 			var optionArray = ["","Excelente","Bueno","Regular","Malo"];
 		}else if (respuesta.value == "Recuperacion Contestada"){
-			var optionArray = ["","Acuerdo de Pago","Cliente inconforme","Informado","No va a pagar","Va a pagar"];
+			var optionArray = ["","Acuerdo de Pago","Numero equivocado","Cliente inconforme","Informado","No va a pagar","Va a pagar"];
 		}else if (respuesta.value == "Contestada"){
 			var optionArray = ["","Acuerdo de pago","Cliente inconforme","Informado","No va a pagar","Va a pagar"];
 		}else if (respuesta.value == "sin Contestar"){
