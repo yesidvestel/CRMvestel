@@ -94,6 +94,7 @@ class Tickets Extends CI_Controller
 		$obsv = str_replace('<p>','',$tickets->section);
 		$obsv2 = str_replace('</p>','',$obsv);
         foreach ($list as $ticket) {
+			$agenda=$this->db->get_where('events',array('idorden'=>$ticket->codigo))->row();
 			$obsv = str_replace('<p>','',$ticket->section);
 			$obsv2 = str_replace('</p>','',$obsv);
             $row = array();
@@ -130,11 +131,11 @@ class Tickets Extends CI_Controller
             }
 			$row[] = $ticket->ciudad;
 			$row[] = $ticket->barrio;
-			//if(isset($ticket->idorden)){
-			//	$row[] = "<span class=' icon-check' style='color:green'></span>";
-			//}else{
-				//$row[] = "<span class=' icon-remove' style='color:red'></span>";
-			//}
+			if(isset($agenda->idorden)){
+				$row[] = "<span class=' icon-check' style='color:green'></span>";
+			}else{
+				$row[] = "<span class=' icon-remove' style='color:red'></span>";
+			}
 			$row[] = '<span class="st-' . $ticket->status . '">' . $ticket->status . '</span>';
             $row[] = '<a href="' . base_url('tickets/thread/?id=' . $ticket->idt) . '" class="btn btn-success btn-xs"><i class="icon-file-text"></i> ' . $this->lang->line('View') . '</a>';
 			if ($this->aauth->get_user()->roleid >= 3) {
