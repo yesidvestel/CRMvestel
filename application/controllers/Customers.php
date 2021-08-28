@@ -1128,6 +1128,12 @@ class Customers extends CI_Controller
 		$data['details'] = $this->customers->details($custid);
 		$data['due'] = $this->customers->due_details($custid);
         $data['servicios'] = $this->customers->servicios_detail($custid);
+        if($data['servicios']['estado_combo']!=null){
+            $data['servicios']['combo']=$data['servicios']['paquete'];
+        }
+        if($data['servicios']['estado_tv']!=null){
+            $data['servicios']['television']="Television";
+        }
         $data['id'] = $custid;
         $data['title'] = "Contrato $custid";
         
