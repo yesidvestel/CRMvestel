@@ -203,6 +203,7 @@ class Ticket_model extends CI_Model
     {
 
         $this->db->from('tickets');
+		//$this->db->join('events', 'tickets.codigo=events.idorden', 'left');
          if ($filt2['estado'] != '') {
             $this->db->where('status=', $filt2['estado']);
         }

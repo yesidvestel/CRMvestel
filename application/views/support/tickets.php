@@ -290,8 +290,9 @@
 					<th><i class="icon-marquee"></th>
 					<th>N° orden</th>	
                     <th><?php echo $this->lang->line('Subject') ?></th>
-					<th>Detalle</th>
+					<th style="">Detalle</th>
                     <th>F/creada</th>
+					<span style=""></span>
 					<th>F/cierre</th>
 					<th>Abonado</th>
 					<th>Usuario</th>
@@ -301,6 +302,7 @@
 					<th>Asignado</th>
 					<th>Sede</th>
 					<th>Barrio</th>
+					<th>Agenda</th>
 					<th>Estado</th>
                     <th>Accion</th>
 					<?php if ($this->aauth->get_user()->roleid >= 3) { ?>
