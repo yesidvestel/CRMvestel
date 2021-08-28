@@ -19,9 +19,17 @@
 {
  background-color: #A4282A;
 }
+.sts-Cortado
+{
+ color: #A4282A;
+}
 .st-Suspendido
 {
  background-color: #2224A3;
+}
+.sts-Suspendido
+{
+ color: #2224A3;
 }
 .st-Exonerado
 {

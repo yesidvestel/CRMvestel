@@ -429,6 +429,22 @@ class Clientgroup extends CI_Controller
             if($servicios_detail['television']!="" && $servicios_detail['television']!="no" && $servicios_detail['television']!="-"){
                 $servicios_str="Tv";
             }
+//esto es para los estados
+            
+
+            
+
+            if($servicios_detail['estado_tv']=="Cortado"){
+                $servicios_str="<b><i class='sts-Cortado'>Tv</i></b>";   
+            }else if($servicios_detail['estado_tv']=="Suspendido"){
+                $servicios_str="<b><i class='sts-Suspendido'>Tv</i></b>";   
+            }
+            if($servicios_detail['estado_combo']=="Cortado"){
+                $servicios_detail['combo']="<b><i class='sts-Cortado'>".$servicios_detail['paquete']."</i></b>";   
+            }else if($servicios_detail['estado_combo']=="Suspendido"){
+                $servicios_detail['combo']="<b><i class='sts-Suspendido'>".$servicios_detail['paquete']."</i></b>";   
+            }
+//esto es para los estados 
             if($servicios_detail['combo']!="" && $servicios_detail['combo']!="no" && $servicios_detail['combo']!="-"){
                 if($servicios_str==""){
                     $servicios_str=$servicios_detail['combo'];
@@ -1420,8 +1436,11 @@ if ($valido) {
                                     $this->db->set('total', $factura->total+$producto2->product_price);
                                     $this->db->set('items', $factura->items+1);
                                     $this->db->set('rec', $reconexion);
-                                    $this->db->set('television', 'no');
-                                    $this->db->set('combo', 'no');
+                                    /*$this->db->set('television', 'no');
+                                    $this->db->set('combo', 'no');*/
+                                     $this->db->set('estado_tv', 'Cortado');
+                                    $this->db->set('estado_combo', 'Cortado');
+
                                     $this->db->where('tid', $factura->tid);
                                     $this->db->update('invoices');
                                 //actualizar estado usuario
@@ -1469,7 +1488,8 @@ if ($valido) {
                                     $this->db->set('items', $factura->items+1);
                                     $this->db->set('ron', $nestado);
                                     $this->db->set('rec', $reconexion);
-                                    $this->db->set('combo', 'no');
+                                    //$this->db->set('combo', 'no');
+                                    $this->db->set('estado_combo', 'Cortado');
                                     $this->db->where('tid', $factura->tid);
                                     $this->db->update('invoices');
                                 }
@@ -1496,11 +1516,12 @@ if ($valido) {
                                     $this->db->set('subtotal', $factura->subtotal+$producto2->product_price);
                                     $this->db->set('total', $factura->total+$producto2->product_price);
                                     $this->db->set('items', $factura->items+1);
+                                    $this->db->set('estado_tv', 'Cortado');
                                     $this->db->where('tid', $factura->tid);
                                     $this->db->update('invoices');
                                     if ($factura->combo==='no'){
                                         $this->db->set('ron', 'Cortado');
-                                        $this->db->set('television', 'no');
+                                        //$this->db->set('television', 'no');
                                         $this->db->where('tid', $factura->tid);
                                         $this->db->update('invoices');
                                         //actualizar estado usuario
@@ -1512,7 +1533,7 @@ if ($valido) {
                                         $this->db->set('ron', 'Activo');
                                         //para generar reconexion
                                         $this->db->set('rec', '1'); 
-                                        $this->db->set('television', 'no');         
+                                        //$this->db->set('television', 'no');         
                                         $this->db->where('tid', $factura->tid);
                                         $this->db->update('invoices');
                                         //actualizar estado usuario

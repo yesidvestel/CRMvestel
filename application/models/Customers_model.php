@@ -269,18 +269,30 @@ class Customers_model extends CI_Model
         $_var_tiene_internet=false;
         $_var_tiene_tv=false;
 
-        $servicios= array('television' =>"no",'combo' =>"no","puntos"=>"no","estado"=>"Inactivo");
+        $servicios= array('television' =>"no",'combo' =>"no","puntos"=>"no","estado"=>"Inactivo","estado_combo"=>null,"estado_tv"=>null,"paquete"=>"");
         foreach ($lista_invoices as $key => $invoice) {
             if($invoice->combo!="no" && $invoice->combo!="" && $invoice->combo!="-"){
+                if($invoice->estado_combo=="null" || $invoice->estado_combo==null){
                         $fact_valida=true;
                         $_var_tiene_internet=true;
                         $servicios['combo']=$invoice->combo;
+                }else{
+                      $servicios['estado_combo']=$invoice->estado_combo;  
+                      $servicios['paquete']=$invoice->combo;
+                }
+                    
             }
-            if($invoice->television!="no" && $invoice->television!="" && $invoice->television!="-"){
+            if($invoice->television!="no" && $invoice->television!="" && $invoice->television!="-" ){
+                if($invoice->estado_tv=="null" || $invoice->estado_tv==null){
                         $fact_valida=true;
                         $_var_tiene_tv=true;
                         $servicios['television']=$invoice->television;
-                        $servicios['puntos']=$invoice->puntos;
+                        
+                }else{
+                        $servicios['estado_tv']=$invoice->estado_tv;  
+                }
+                $servicios['puntos']=$invoice->puntos;
+                    
             }
             if($invoice->ron!="" && $invoice->ron!=null){
                         $fact_valida=true;

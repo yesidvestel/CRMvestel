@@ -895,6 +895,8 @@ if($ya_agrego_equipos==false){
                         $d_inv['subtotal']=$inv->subtotal+$datay['price'];
                         $d_inv['total']=$inv->total+$datay['subtotal'];
                         $d_inv['tax']=$inv->tax+$datay['totaltax'];
+                        $d_inv['estado_tv']=null;
+                        
                         $this->db->update("invoices",$d_inv,array("tid"=>$datay['tid'])); //descomentar el lunes
                         
                     }    
@@ -932,6 +934,7 @@ if($ya_agrego_equipos==false){
                                 $d_inv['subtotal']=$inv->subtotal+$datay['price'];
                                 $d_inv['total']=$inv->total+$datay['subtotal'];
                                 $d_inv['tax']=$inv->tax+$datay['totaltax'];
+                                $d_inv['estado_combo']=null;
                                 $this->db->update("invoices",$d_inv,array("tid"=>$datay['tid'])); //descomentar el lunes
                                 
                             }                      
@@ -961,6 +964,8 @@ if($ya_agrego_equipos==false){
             }
             $this->customers->edit_profile_mikrotik($customer->gid,$customer->name_s,$profile);
             $this->db->set('combo', $profile);
+
+            $this->db->set('estado_combo', null);
             $this->db->where('tid', $idfactura);
             $this->db->update('invoices');
 
@@ -980,6 +985,8 @@ if($ya_agrego_equipos==false){
 
             $this->customers->edit_profile_mikrotik($customer->gid,$customer->name_s,$profile);
             $this->db->set('combo', $profile);
+
+            $this->db->set('estado_combo', null);
             $this->db->where('tid', $idfactura);
             $this->db->update('invoices');
 
@@ -999,6 +1006,8 @@ if($ya_agrego_equipos==false){
 
             $this->customers->edit_profile_mikrotik($customer->gid,$customer->name_s,$profile);
             $this->db->set('combo', $profile);
+
+            $this->db->set('estado_combo', null);
         	$this->db->where('tid', $idfactura);
         	$this->db->update('invoices');
 
@@ -1018,6 +1027,8 @@ if($ya_agrego_equipos==false){
 
             $this->customers->edit_profile_mikrotik($customer->gid,$customer->name_s,$profile);
             $this->db->set('combo', $profile);
+
+            $this->db->set('estado_combo', null);
             $this->db->where('tid', $idfactura);
             $this->db->update('invoices');
 
@@ -1035,6 +1046,8 @@ if($ya_agrego_equipos==false){
                     }
 			$this->db->set('combo', $paquete);
 			$this->db->set('television', 'Television');
+            $this->db->set('estado_tv', null);
+            $this->db->set('estado_combo', null);
 			$this->db->set('ron', 'Activo');
         	$this->db->where('tid', $idfactura);
         	$this->db->update('invoices');
@@ -1052,6 +1065,7 @@ if($ya_agrego_equipos==false){
                         $paquete = $ticket->section;
                     }
 			$this->db->set('combo', $paquete);			
+            $this->db->set('estado_combo', null);
 			$this->db->set('ron', 'Activo');
         	$this->db->where('tid', $idfactura);
         	$this->db->update('invoices');
@@ -1065,7 +1079,8 @@ if($ya_agrego_equipos==false){
 		}
 		if($ticket->detalle=="Reconexion Television"){
 			$paquete = $this->input->post('paquete');
-			$this->db->set('television', 'Television');			
+			$this->db->set('television', 'Television');	
+            $this->db->set('estado_tv', null);
 			$this->db->set('ron', 'Activo');
         	$this->db->where('tid', $idfactura);
         	$this->db->update('invoices');
@@ -1077,6 +1092,11 @@ if($ya_agrego_equipos==false){
        
 
 		if($ticket->detalle=="Corte Combo"){
+
+             /*$reconexion = '0';
+                            if ($factura->combo!='no' || $factura->combo!='' || $factura->combo!='-'){
+                                    $reconexion = '1';
+                            } */ //preguntar si no es necesario este codigo
 			//agregar reconexion
 			$producto2 = $this->db->get_where('products',array('product_name'=>'Reconexion Combo'))->row();
 				$data2['tid']=$idfactura;
@@ -1092,8 +1112,13 @@ if($ya_agrego_equipos==false){
 				$this->db->set('ron', 'Cortado');				
 				$this->db->set('total', $factura->total+$producto2->product_price);
 				$this->db->set('items', $factura->items+1);
-				$this->db->set('television', 'no');
-				$this->db->set('combo', 'no');
+                //$this->db->set('rec', $reconexion);//preguntar por este campo
+				
+                /*$this->db->set('television', 'no');
+				$this->db->set('combo', 'no');*/ //esto se comenta porque ya no se va a manejar con el no para cuando esta cortado sino con el estado del servicio si este campo esta en no quiere decir que no cuenta con este servicio el usuario
+                $this->db->set('estado_tv', 'Cortado');
+                $this->db->set('estado_combo', 'Cortado');
+
         		$this->db->where('tid', $idfactura);
         		$this->db->update('invoices');
 			//actualizar estado usuario
@@ -1133,7 +1158,8 @@ if($ya_agrego_equipos==false){
 				$this->db->set('items', $factura->items+1);
 				$this->db->set('ron', $nestado);
 				$this->db->set('rec', $reconexion);
-				$this->db->set('combo', 'no');
+				//$this->db->set('combo', 'no');
+                $this->db->set('estado_combo', 'Cortado');
 				$this->db->where('tid', $idfactura);
         		$this->db->update('invoices');
 
@@ -1157,11 +1183,12 @@ if($ya_agrego_equipos==false){
 				$this->db->set('subtotal', $factura->subtotal+$producto2->product_price);
 				$this->db->set('total', $factura->total+$producto2->product_price);
 				$this->db->set('items', $factura->items+1);
+                $this->db->set('estado_tv', 'Cortado');
 				$this->db->where('tid', $idfactura);
         		$this->db->update('invoices');
 			if ($factura->combo==='no'){
 				$this->db->set('ron', 'Cortado');
-				$this->db->set('television', 'no');
+				//$this->db->set('television', 'no');
 				$this->db->where('tid', $idfactura);
         		$this->db->update('invoices');
 				//actualizar estado usuario
@@ -1173,7 +1200,7 @@ if($ya_agrego_equipos==false){
 				$this->db->set('ron', 'Activo');
 				//para generar reconexion
 				$this->db->set('rec', '1');	
-				$this->db->set('television', 'no');			
+				//$this->db->set('television', 'no');			
         		$this->db->where('tid', $idfactura);
         		$this->db->update('invoices');
 				//actualizar estado usuario
@@ -1205,8 +1232,11 @@ if($ya_agrego_equipos==false){
 		}
 		if($ticket->detalle=="Suspension Combo"){			
 			$this->db->set('ron', 'Suspendido');
-			$this->db->set('television', 'no');
-			$this->db->set('combo', 'no');
+			//$this->db->set('television', 'no');
+			//$this->db->set('combo', 'no');
+            $this->db->set('estado_tv', 'Suspendido');
+            $this->db->set('estado_combo', 'Suspendido');
+
         	$this->db->where('tid', $idfactura);
         	$this->db->update('invoices');
 			//actualizar estado usuario
@@ -1225,7 +1255,8 @@ if($ya_agrego_equipos==false){
 				$status2 = 'Activo';
 			}
 			$this->db->set('ron', $status2);
-			$this->db->set('television', 'no');			
+			//$this->db->set('television', 'no');	
+            $this->db->set('estado_tv', 'Suspendido');            	
         	$this->db->where('tid', $idfactura);
         	$this->db->update('invoices');
 			//actualizar estado usuario
@@ -1241,7 +1272,8 @@ if($ya_agrego_equipos==false){
 				$status2 = 'Activo';
 			}
 			$this->db->set('ron', $status2);
-			$this->db->set('combo', 'no');			
+			//$this->db->set('combo', 'no');		            
+            $this->db->set('estado_combo', 'Suspendido');	
         	$this->db->where('tid', $idfactura);
         	$this->db->update('invoices');
 			//actualizar estado usuario
@@ -1273,6 +1305,7 @@ if($ya_agrego_equipos==false){
 				$this->db->set('tax', $factura->tax+$tax2);
 				$this->db->set('total', $factura->total+$total+$tax2);
 				$this->db->set('television', 'Television');
+                $this->db->set('estado_tv', null);
 				$this->db->set('puntos', $ptos);
         		$this->db->where('tid', $idfactura);
         		$this->db->update('invoices');
@@ -1308,6 +1341,7 @@ if($ya_agrego_equipos==false){
 				$this->db->set('tax', $factura->tax);
 				$this->db->set('total', $factura->total+$total);
 				$this->db->set('combo', $inter);
+                $this->db->set('estado_combo', null);
         		$this->db->where('tid', $idfactura);
         		$this->db->update('invoices');
 

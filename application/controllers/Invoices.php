@@ -156,7 +156,7 @@ class Invoices extends CI_Controller
                             $factura_data['tax']=0;
                             $factura_data['total']=0;
                             $factura_data['subtotal']=0;
-                            if($_tiene_television==true){
+                            if($_tiene_television==true && ($value2->estado_tv==null || $value2->estado_tv=='null')){
                                 if(strpos(strtolower($caja1->holder), strtolower("mocoa"))!==false){
                                     $tv_product= $this->db->get_where("products", array('pid' => "159"))->row();
                                     $television_data['pid']=$tv_product->pid;
@@ -196,7 +196,7 @@ class Invoices extends CI_Controller
                             //estan listos los datos de tv item invoice falta llenar los campos faltantes 
                             //falta llenar los datos de internet y posteriormente insertar
 
-                            if($_tiene_internet==true){
+                            if($_tiene_internet==true && ($value2->estado_combo==null || $value2->estado_combo=='null')){
                                 
                                 $str1=str_replace(" ", "", strtolower($internet));
                                 $producto_internet=$this->db->query('SELECT * FROM products WHERE lower(REPLACE(product_name," ","")) = "'.$str1.'"')->result_array();

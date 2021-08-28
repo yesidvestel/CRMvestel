@@ -1,3 +1,13 @@
+<style type="text/css">
+    .sts-Cortado
+{
+ color: #A4282A;
+}
+.sts-Suspendido
+{
+ color: #2224A3;
+}
+</style>
 <div class="app-content content container-fluid">
     <div class="content-wrapper">
         <div id="notify" class="alert alert-success" style="display:none;">
@@ -253,11 +263,26 @@
 												if ($invoice['television'] == no ){
 													echo '';
 												} else{
-													echo $invoice['television'];}
+                                                        if($invoice['estado_tv'] == "Cortado"){
+                                                                echo "<b><i class='sts-Cortado'>".$invoice['television']." (cortado)</i></b>";
+                                                        }else if($invoice['estado_tv'] == "Suspendido"){
+                                                                echo "<b><i class='sts-Suspendido'>".$invoice['television']." (suspendido)</i></b>";
+                                                        }else{
+                                                            echo $invoice['television'];    
+                                                        }
+													}
 											if ($invoice['combo'] == no ){
 													echo '';
 												} else{
-													echo ' mas '.$invoice['combo'];}
+
+                                                     if($invoice['estado_combo'] == "Cortado"){
+                                                                echo " mas <b><i class='sts-Cortado'>".$invoice['combo']." (cortado)</i></b>";
+                                                        }else if($invoice['estado_combo'] == "Suspendido"){
+                                                                echo " mas <b><i class='sts-Suspendido'>".$invoice['combo']." (suspendido)</i></b>";
+                                                        }else{
+                                                            echo ' mas '.$invoice['combo'];
+                                                        }
+													}
 											if ($invoice['puntos'] == 0 ){
 													echo '';
 												} else{
