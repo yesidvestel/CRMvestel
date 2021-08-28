@@ -19,6 +19,14 @@
 {
  background-color: #A4282A;
 }
+.sts-Cortado
+{
+ color: #A4282A;
+}
+.sts-Suspendido
+{
+ color: #2224A3;
+}
 .st-Suspendido
 {
  background-color: #2224A3;

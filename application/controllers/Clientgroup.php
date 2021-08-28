@@ -136,6 +136,14 @@ class Clientgroup extends CI_Controller
                             }
                             
                         }
+                        //esto es para los estados
+            if($invoice->estado_tv=="Cortado"){
+                $suscripcion_str="(Tv cortada)";   
+            }else if($invoice->estado_tv=="Suspendido"){
+                $suscripcion_str="(Tv suspendida)";   
+            }
+
+//esto es para los estados
 
                         if($_var_tiene_internet){
                             $lista_de_productos=$this->db->from("products")->like("product_name","mega","both")->get()->result();
@@ -150,9 +158,22 @@ class Clientgroup extends CI_Controller
 
                             if(!empty($var_e)){
                                 if($suscripcion_str!=""){
-                                    $suscripcion_str.="+".$var_e;
+                                    if($invoice->estado_combo=="Cortado"){                
+                                        $suscripcion_str.="+"."(".$var_e." cortado)";   
+                                    }else if($invoice->estado_combo=="Suspendido"){
+                                        $suscripcion_str.="+"."(".$var_e." suspendido)";   
+                                    }else{
+                                        $suscripcion_str.="+".$var_e;    
+                                    }
+                                    
                                 }else{
-                                    $suscripcion_str=$var_e;
+                                    if($invoice->estado_combo=="Cortado"){                
+                                        $suscripcion_str="(".$var_e." cortado)";   
+                                    }else if($invoice->estado_combo=="Suspendido"){
+                                        $suscripcion_str="(".$var_e." suspendido)";   
+                                    }else{
+                                        $suscripcion_str=$var_e;
+                                    }
                                 }    
                             }
                         }
@@ -603,7 +624,14 @@ class Clientgroup extends CI_Controller
                             }
                             
                         }
+//esto es para los estados
+            if($invoice->estado_tv=="Cortado"){
+                $suscripcion_str="<b><i class='sts-Cortado'>Tv</i></b>";   
+            }else if($invoice->estado_tv=="Suspendido"){
+                $suscripcion_str="<b><i class='sts-Suspendido'>Tv</i></b>";   
+            }
 
+//esto es para los estados 
                         if($_var_tiene_internet){
                             $lista_de_productos=$this->db->from("products")->like("product_name","mega","both")->get()->result();
                             $var_e=strtolower(str_replace(" ", "",$invoice->combo));
@@ -616,9 +644,23 @@ class Clientgroup extends CI_Controller
                             }
                             if(!empty($var_e)){
                                 if($suscripcion_str!=""){
-                                    $suscripcion_str.="+".$var_e;
+                                    if($invoice->estado_combo=="Cortado"){                
+                                        $suscripcion_str.="+"."<b><i class='sts-Cortado'>".$var_e."</i></b>";   
+                                    }else if($invoice->estado_combo=="Suspendido"){
+                                        $suscripcion_str.="+"."<b><i class='sts-Suspendido'>".$var_e."</i></b>";   
+                                    }else{
+                                        $suscripcion_str.="+".$var_e;    
+                                    }
+                                    
                                 }else{
-                                    $suscripcion_str=$var_e;
+                                    if($invoice->estado_combo=="Cortado"){                
+                                        $suscripcion_str="<b><i class='sts-Cortado'>".$var_e."</i></b>";   
+                                    }else if($invoice->estado_combo=="Suspendido"){
+                                        $suscripcion_str="<b><i class='sts-Suspendido'>".$var_e."</i></b>";   
+                                    }else{
+                                        $suscripcion_str=$var_e;    
+                                    }
+                                    
                                 }    
                             }
                             

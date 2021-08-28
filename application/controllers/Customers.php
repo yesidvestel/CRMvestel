@@ -298,6 +298,19 @@ class Customers extends CI_Controller
         $data['activity']=$this->customers->activity($custid);
 		$data['attach'] = $this->customers->attach($custid);
         $data['estado_mikrotik']=$this->customers->get_estado_mikrotik($data['details']['name_s'],$data['details']['gid']);
+
+        if($data['servicios']['estado_combo']=="Cortado"){
+            $data['servicios']['combo']=$data['servicios']['combo']="<b><i class='sts-Cortado'>".$data['servicios']['paquete']."</i></b>";   
+        }else if($data['servicios']['estado_combo']=="Suspendido"){
+            $data['servicios']['combo']=$data['servicios']['combo']="<b><i class='sts-Suspendido'>".$data['servicios']['paquete']."</i></b>";   
+        }
+
+        if($data['servicios']['estado_tv']=="Cortado"){
+            $data['servicios']['television']="<b><i class='sts-Cortado'>Tv</i></b>";   
+        }else if($data['servicios']['estado_tv']=="Suspendido"){
+            $data['servicios']['television']="<b><i class='sts-Suspendido'>Tv</i></b>";   
+        }
+
         $head['title'] = 'View Customer';
         $this->load->view('fixed/header', $head);
         $this->load->view('customers/view', $data);
