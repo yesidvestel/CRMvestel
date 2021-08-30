@@ -175,14 +175,16 @@ class SiigoAPI
         echo "<br>";
         
         var_dump($respuesta['httpCode']);*/
-        if(strpos($respuesta['respuesta'],"198")!==false){//200 es enviado, 400 es error
-        	return  array('respuesta' =>$respuesta['respuesta'],"mensaje" =>"Ubo algun error") ;
+        try {
+            if($respuesta['httpCode']==200 ||$respuesta['httpCode']==100 || $respuesta['httpCode']==0){//100            
+                return array('respuesta' =>$respuesta['respuesta'],"mensaje" =>"Factura Guardada");
+            }else{
+                return array('respuesta' =>$respuesta['respuesta'],"mensaje" =>"Ubo algun error");//falta imprimir en un alter el error
+            }    
+        } catch (Exception $e) {
+               return array('respuesta' =>$respuesta['respuesta'],"mensaje" =>"Ubo algun error");//falta imprimir en un alter el error
         }
-        if($respuesta['httpCode']==200 ||$respuesta['httpCode']==100 || $respuesta['httpCode']==0){//100            
-        	return array('respuesta' =>$respuesta['respuesta'],"mensaje" =>"Factura Guardada");
-        }else{
-        	return array('respuesta' =>$respuesta['respuesta'],"mensaje" =>"Ubo algun error");//falta imprimir en un alter el error
-        }
+        
         
         
     }

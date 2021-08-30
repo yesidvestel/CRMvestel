@@ -131,10 +131,10 @@ $this->load->model("customers_model","customers");
         }
 
         $dataApi->Header->Account->Address=$customer->nomenclatura . ' ' . $customer->numero1 . $customer->adicionauno.' Nº '.$customer->numero2.$customer->adicional2.' - '.$customer->numero3;
-         if(strlen($customer->celular)>10){
+         if(strlen($customer->celular)>10 || is_int($customer->celular)==false){
             $customer->celular="0";
         }
-        if(strlen($customer->celular2)>10){
+        if(strlen($customer->celular2)>10 || is_int($customer->celular2)==false){
             $customer->celular2="0";
         }
         $dataApi->Header->Account->Phone->Number=$customer->celular;
@@ -441,6 +441,7 @@ $this->load->model("customers_model","customers");
         $this->load->view('fixed/footer');       
     }
     public function generar_facturas_action(){
+        set_time_limit(10000);
         $this->load->model("customers_model","customers");
         $this->load->model("facturas_electronicas_model","facturas_electronicas");
         $caja1=$this->db->get_where('accounts',array('id' =>$_POST['pay_acc']))->row();
