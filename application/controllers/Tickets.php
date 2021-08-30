@@ -445,6 +445,7 @@ $txt_error="";
         'Abonado' => 'string',
 		'Usuario' => 'string',
 		'Documento' => 'string',
+		'Celular' => 'string',			 
         'Estado' => 'string', 
         'Observacion' => 'string',
 		'Factura #' => 'string',			 
@@ -489,6 +490,7 @@ $txt_error="";
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ));
     
     //write rows to sheet1
@@ -502,7 +504,7 @@ $txt_error="";
         if($tickets->fecha_final == '0000-00-00' || $tickets->fecha_final == '' || $tickets->fecha_final == null){
             $tickets->fecha_final="Sin Realizar";
         }
-            $writer->writeSheetRow('Tickets ',array($tickets->codigo,$tickets->subject ,$tickets->detalle, $tickets->created,$tickets->fecha_final,$tickets->abonado ,$tickets->name.' '.$tickets->unoapellido,$tickets->documento,$tickets->status,$obsv2,$tickets->id_factura,$tickets->asignado,$tickets->nomenclatura.' '.$tickets->numero1.$tickets->adicionauno.' # '.$tickets->numero2.$tickets->adicional2.' - '.$tickets->numero3,$tickets->residencia.'/'.$tickets->referencia,$tickets->barrio,$tickets->ciudad));
+            $writer->writeSheetRow('Tickets ',array($tickets->codigo,$tickets->subject ,$tickets->detalle, $tickets->created,$tickets->fecha_final,$tickets->abonado ,$tickets->name.' '.$tickets->unoapellido,$tickets->documento,$tickets->celular,$tickets->status,$obsv2,$tickets->id_factura,$tickets->asignado,$tickets->nomenclatura.' '.$tickets->numero1.$tickets->adicionauno.' # '.$tickets->numero2.$tickets->adicional2.' - '.$tickets->numero3,$tickets->residencia.'/'.$tickets->referencia,$tickets->barrio,$tickets->ciudad));
         
     }
         
