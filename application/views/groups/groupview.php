@@ -136,7 +136,8 @@
                                                     <option value='Combo'>Combo</option>
                                                 </select>
                                             </div>                              
-                                            <input type="checkbox" id="check1" name="individual_service" style="cursor:pointer;" ><b onclick="ckekar_1()" style="cursor: pointer;"><i  >&nbsp; Individualizar Servicio</i></b>
+                                            <input type="checkbox" class="cl-ck-f-electronicas" id="check1" name="individual_service" style="cursor:pointer;" ><b onclick="ckekar_1()" style="cursor: pointer;"><i  >&nbsp; Individualizar Servicio</i></b><br>
+                                            <input type="checkbox" class="cl-ck-f-electronicas" id="check2" name="usuarios_a_facturar" style="cursor:pointer;" ><b onclick="ckekar_2()" style="cursor: pointer;"><i  >&nbsp; Filtrar Con Usuarios a Facturar Electronicamente</i></b>
                                         </div>
                                 </div>
                                 <!--thread-->
@@ -881,6 +882,7 @@ $("#pagination_div").hide();
                 var sdate=$("#sdate").val();
                 var edate=$("#edate").val();
                 var checked_ind_service =$("#check1").prop('checked');
+                var check_usuarios_a_facturar=$("#check2").prop('checked');
               tb=$('#fclientstable').DataTable({
 
                 "processing": true, //Feature control the processing indicator.
@@ -889,7 +891,7 @@ $("#pagination_div").hide();
 
                 // Load data for the table's content from an Ajax source
                 "ajax": {
-                    "url": "<?php echo site_url('clientgroup/load_morosos') . '?id=' . $group['id']; ?>&morosos="+morosos+"&estado="+estado+"&localidad="+localidad+"&barrio="+barrio+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&pagination_start="+pagination_start+"&pagination_end="+pagination_end+"&checked_ind_service="+checked_ind_service,
+                    "url": "<?php echo site_url('clientgroup/load_morosos') . '?id=' . $group['id']; ?>&morosos="+morosos+"&estado="+estado+"&localidad="+localidad+"&barrio="+barrio+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&pagination_start="+pagination_start+"&pagination_end="+pagination_end+"&checked_ind_service="+checked_ind_service+"&check_usuarios_a_facturar="+check_usuarios_a_facturar,
                     "type": "POST",
                     error: function (xhr, error, code)
                     {
@@ -980,6 +982,7 @@ $("#pagination_div").hide();
             var sdate=$("#sdate").val();
             var edate=$("#edate").val();
             var checked_ind_service =$("#check1").prop('checked');
+            var check_usuarios_a_facturar=$("#check2").prop('checked');
             if($pagination_id==0){
                 pagination_end="";
                 pagination_start="";
@@ -1005,7 +1008,7 @@ $("#pagination_div").hide();
              
             //if(morosos!=""){
                 if(columnasAgregadas){
-                    tb.ajax.url( baseurl+'clientgroup/load_morosos?id=<?=$_GET['id']?>&morosos='+morosos+"&estado="+estado+"&localidad="+localidad+"&barrio="+barrio+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&pagination_start="+pagination_start+"&pagination_end="+pagination_end+"&checked_ind_service="+checked_ind_service).load();               
+                    tb.ajax.url( baseurl+'clientgroup/load_morosos?id=<?=$_GET['id']?>&morosos='+morosos+"&estado="+estado+"&localidad="+localidad+"&barrio="+barrio+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&pagination_start="+pagination_start+"&pagination_end="+pagination_end+"&checked_ind_service="+checked_ind_service+"&check_usuarios_a_facturar="+check_usuarios_a_facturar).load();               
                 }else{
                     nuevas_columnas();
                     $("option[value=100]").text("Todo");
@@ -1287,6 +1290,14 @@ function ckekar_1(){
         $("#check1").prop('checked',false);
     }else{
         $("#check1").prop('checked',true);
+    }
+}
+function ckekar_2(){
+    var selecccionado =$("#check2").prop('checked');
+    if(selecccionado){
+        $("#check2").prop('checked',false);
+    }else{
+        $("#check2").prop('checked',true);
     }
 }
 function ck_facturas_electronicas(ck){
