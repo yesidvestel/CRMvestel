@@ -302,6 +302,18 @@ class Clientgroup extends CI_Controller
                     }                        
                 }
 
+                if($_GET['check_usuarios_a_facturar']=="true"){
+                    if($_GET['sel_servicios']=="Internet" && $_var_tiene_tv ){
+                            $customer_moroso=false;                        
+                    }else if($_GET['sel_servicios']=="TV" && $_var_tiene_internet){//preguntar que si solo debe de filtrar los que tienen tv o si tiene tv pero tambien internet lo puede listar lo mismo con la de internet
+                                $customer_moroso=false;     
+                    }                        
+
+                    if($customers->facturar_electronicamente==0){
+                        $customer_moroso=false; 
+                    }
+                }
+
             }else{
                 if($_GET['morosos']==""){//para que muestre todos si esta seleccionada esta opcion
                     $customer_moroso=true;
@@ -517,7 +529,7 @@ class Clientgroup extends CI_Controller
     }
     
     public function load_morosos(){ 
-        set_time_limit(6000);
+        set_time_limit(10000);
         if($this->input->post('start')!="0"){
             
             $this->list_data_precargada();
@@ -789,11 +801,26 @@ class Clientgroup extends CI_Controller
                                 $customer_moroso=false;     
                     }                        
                 }
+                if($_GET['check_usuarios_a_facturar']=="true"){
+                    if($_GET['sel_servicios']=="Internet" && $_var_tiene_tv ){
+                            $customer_moroso=false;                        
+                    }else if($_GET['sel_servicios']=="TV" && $_var_tiene_internet){//preguntar que si solo debe de filtrar los que tienen tv o si tiene tv pero tambien internet lo puede listar lo mismo con la de internet
+                                $customer_moroso=false;     
+                    }                        
 
+                    if($customers->facturar_electronicamente==0){
+                        $customer_moroso=false; 
+                    }
+                }
+                
             }else{
                 if($_GET['morosos']==""){//para que muestre todos si esta seleccionada esta opcion
                     $customer_moroso=true;
                 }
+
+                /*if($_GET['check_usuarios_a_facturar']=="true" && $customers->facturar_electronicamente==0){                    
+                        $customer_moroso=false;                     
+                }*/
             }
             //end fitro por servicios con morosos 
 
@@ -811,6 +838,15 @@ class Clientgroup extends CI_Controller
                             $row[] = $customers->celular;           
                             $row[] = $customers->nomenclatura . ' ' . $customers->numero1 . $customers->adicionauno.' Nº '.$customers->numero2.$customers->adicional2.' - '.$customers->numero3;
                             $row[] = $customers->barrio;
+
+                            if($suscripcion_str!=""){
+                                $suscripcion_str="<a class='cl-servicios' style='cursor:pointer;' data-id='".$customers->id."' onclick='facturas_electronicas_ev(this);'>".$suscripcion_str."</a>";
+                                $str_checked="";
+                                if($customers->facturar_electronicamente==1){
+                                    $str_checked="checked";
+                                }
+                                $suscripcion_str="<input ".$str_checked." onclick='ck_facturas_electronicas(this)' data-id='".$customers->id."' class='cl-ck-f-electronicas' style='cursor:pointer;' title='activar o desactivar este usuario de la facturacion electronica' type='checkbox'/>&nbsp".$suscripcion_str;
+                            }
                             $row[] = $suscripcion_str;
                             $row[] = '<span class="st-'.$customers->usu_estado. '">' .$customers->usu_estado. '</span>';
                             $row[] = amountFormat($debe_customer);
@@ -882,6 +918,14 @@ class Clientgroup extends CI_Controller
                             $row[] = $customers->celular;           
                             $row[] = $customers->nomenclatura . ' ' . $customers->numero1 . $customers->adicionauno.' Nº '.$customers->numero2.$customers->adicional2.' - '.$customers->numero3;
                             $row[] = $customers->barrio;
+                            if($customers->suscripcion_str!=""){
+                                $customers->suscripcion_str="<a class='cl-servicios' style='cursor:pointer;' data-id='".$customers->id."' onclick='facturas_electronicas_ev(this);'>".$customers->suscripcion_str."</a>";
+                                $str_checked="";
+                                if($customers->facturar_electronicamente==1){
+                                    $str_checked="checked";
+                                }
+                                $customers->suscripcion_str="<input ".$str_checked." onclick='ck_facturas_electronicas(this)' data-id='".$customers->id."' class='cl-ck-f-electronicas' style='cursor:pointer;' title='activar o desactivar este usuario de la facturacion electronica' type='checkbox'/>&nbsp".$customers->suscripcion_str;
+                            }
                             $row[] = $customers->suscripcion_str;
                             $row[] = '<span class="st-'.$customers->usu_estado. '">' .$customers->usu_estado. '</span>';
                             $row[] = amountFormat($customers->debe_customer);
@@ -1156,6 +1200,17 @@ class Clientgroup extends CI_Controller
                     }                        
                 }
 
+                if($_GET['check_usuarios_a_facturar']=="true"){
+                    if($_GET['sel_servicios']=="Internet" && $_var_tiene_tv ){
+                            $customer_moroso=false;                        
+                    }else if($_GET['sel_servicios']=="TV" && $_var_tiene_internet){//preguntar que si solo debe de filtrar los que tienen tv o si tiene tv pero tambien internet lo puede listar lo mismo con la de internet
+                                $customer_moroso=false;     
+                    }                        
+
+                    if($customers->facturar_electronicamente==0){
+                        $customer_moroso=false; 
+                    }
+                }
             }else{
                 if($_GET['morosos']==""){//para que muestre todos si esta seleccionada esta opcion
                     $customer_moroso=true;
