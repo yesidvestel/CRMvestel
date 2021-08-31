@@ -303,11 +303,7 @@ class Clientgroup extends CI_Controller
                 }
 
                 if($_GET['check_usuarios_a_facturar']=="true"){
-                    if($_GET['sel_servicios']=="Internet" && $_var_tiene_tv ){
-                            $customer_moroso=false;                        
-                    }else if($_GET['sel_servicios']=="TV" && $_var_tiene_internet){//preguntar que si solo debe de filtrar los que tienen tv o si tiene tv pero tambien internet lo puede listar lo mismo con la de internet
-                                $customer_moroso=false;     
-                    }                        
+                                          
 
                     if($customers->facturar_electronicamente==0){
                         $customer_moroso=false; 
@@ -802,11 +798,7 @@ class Clientgroup extends CI_Controller
                     }                        
                 }
                 if($_GET['check_usuarios_a_facturar']=="true"){
-                    if($_GET['sel_servicios']=="Internet" && $_var_tiene_tv ){
-                            $customer_moroso=false;                        
-                    }else if($_GET['sel_servicios']=="TV" && $_var_tiene_internet){//preguntar que si solo debe de filtrar los que tienen tv o si tiene tv pero tambien internet lo puede listar lo mismo con la de internet
-                                $customer_moroso=false;     
-                    }                        
+                                    
 
                     if($customers->facturar_electronicamente==0){
                         $customer_moroso=false; 
@@ -1201,11 +1193,7 @@ class Clientgroup extends CI_Controller
                 }
 
                 if($_GET['check_usuarios_a_facturar']=="true"){
-                    if($_GET['sel_servicios']=="Internet" && $_var_tiene_tv ){
-                            $customer_moroso=false;                        
-                    }else if($_GET['sel_servicios']=="TV" && $_var_tiene_internet){//preguntar que si solo debe de filtrar los que tienen tv o si tiene tv pero tambien internet lo puede listar lo mismo con la de internet
-                                $customer_moroso=false;     
-                    }                        
+                                        
 
                     if($customers->facturar_electronicamente==0){
                         $customer_moroso=false; 
