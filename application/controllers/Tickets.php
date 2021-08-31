@@ -122,7 +122,7 @@ class Tickets Extends CI_Controller
             }else{
                  $row[]="Sin Factura";
             }
-
+			$row[]=$ticket->col;
             if($ticket->asignado!=null){
                 //$tecnico=$this->db->get_where('aauth_users',array('id'=>$ticket->asignado))->row();
                 $row[]=$ticket->asignado;

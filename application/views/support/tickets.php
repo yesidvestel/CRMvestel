@@ -299,6 +299,7 @@
 					<th>documento</th>
 					<th>Observacion</th>
                     <th>Factura</th>
+					<th>Realizada</th>
 					<th>Asignado</th>
 					<th>Sede</th>
 					<th>Barrio</th>

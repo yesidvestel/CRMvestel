@@ -98,8 +98,9 @@ class Quote extends CI_Controller
     //action
     public function action()
     {
-
+		
         $customer_id = $this->input->post('customer_id');
+		$gen = $this->aauth->get_user()->username;
 		$nticket = $this->input->post('ticketnumero');
         $subject = $this->input->post('subject');
         $detalle = $this->input->post('detalle');
@@ -136,7 +137,7 @@ class Quote extends CI_Controller
      }        
         
         if ($customer_id) {
-        	$this->quote->addticket($customer_id, $nticket, $subject, $detalle, $created, $problema, $section, $factura,$agendar,$fagenda,$hora,$hora2,$nomen,$nuno,$auno,$ndos,$ados,$ntres,$local,$barrio,$recider, $refer, $tv,$inter,$punto);
+        	$this->quote->addticket($customer_id, $gen, $nticket, $subject, $detalle, $created, $problema, $section, $factura,$agendar,$fagenda,$hora,$hora2,$nomen,$nuno,$auno,$ndos,$ados,$ntres,$local,$barrio,$recider, $refer, $tv,$inter,$punto);
 			
 		}
 
