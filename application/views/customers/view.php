@@ -90,7 +90,7 @@
 											Servicios
                                         </li>
                                         <li class="list-group-item">
-                                            <span class="tag tag-default tag-pill bg-primary float-xs-right"><?php echo amountFormat($money['credit']) ?></span>
+                                            <span class="tag tag-default tag-pill bg-primary float-xs-right"><?php echo amountFormat($money['credit']-$money['debit']) ?></span>
                                             <?php echo $this->lang->line('Income') ?>
 											
                                         </li>
