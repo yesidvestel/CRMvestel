@@ -1181,7 +1181,7 @@ class Transactions extends CI_Controller
             $row[] = $prd->payer;
 			$row[] = $prd->tid;
             $row[] = $this->lang->line($prd->method);
-			$row[] = $this->lang->line($prd->cat);
+			$row[] = $prd->cat;
             $row[] = "<span id='estado_".$prd->id."'>".$prd->estado."</span>";
             $texto="";
             if($prd->estado!=null){
