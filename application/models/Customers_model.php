@@ -261,6 +261,15 @@ class Customers_model extends CI_Model
         $query = $this->db->get();
         return $query->row_array();
     }
+    public function due_details2($custid)
+    {
+
+       $this->db->select('SUM(total) AS total,SUM(pamnt) AS pamnt');
+        $this->db->from('invoices');
+        $this->db->where('csd', $custid);
+        $query = $this->db->get();
+        return $query->row_array();
+    }
          public function servicios_detail($custid)
     {
         $lista_invoices = $this->db->from("invoices")->where("csd",$custid)->order_by('invoicedate,tid',"DESC")->get()->result();

@@ -584,7 +584,9 @@ class Clientgroup extends CI_Controller
                 $this->db->where('numero3=', $_GET['numero3']);
             }
         }
-        if($_GET['pagination_start']!="" && $_GET['pagination_start']!=null){
+        if($this->input->post('search')['value']!=""){
+            $this->db->like('documento', $this->input->post('search')['value']);
+        }else if($_GET['pagination_start']!="" && $_GET['pagination_start']!=null){
                 $this->db->where('id<=',$_GET['pagination_start']);
                 $this->db->where("id>=",$_GET['pagination_end']);    
                 //eh pensado una forma mucho mas compleja para realizar esto y es atraves de multihilo o multitarea algo muy complejo pero con tiempo seria bueno intentarlo
@@ -603,9 +605,9 @@ class Clientgroup extends CI_Controller
         $maximo=$minimo+10;
         $descontar=0;
         foreach ($lista_customers as $key => $customers) {
-            $due=$this->customers->due_details($customers->id);
-            $money=$this->customers->money_details($customers->id);//para poder arreglar el tema de la velocidad de carga esta ligado con este proceso la solucion a la que llegamos es crear los campos debit y credit en customers y en cada proceso del sistema en los que se cree elimine o editen transacciones se debe de editar el valor de customers;
-            $customers->money=$money['credit'];
+            $due=$this->customers->due_details2($customers->id);
+            //$money=$this->customers->money_details($customers->id);//para poder arreglar el tema de la velocidad de carga esta ligado con este proceso la solucion a la que llegamos es crear los campos debit y credit en customers y en cada proceso del sistema en los que se cree elimine o editen transacciones se debe de editar el valor de customers;
+            //$customers->money=0;//$money['credit'];
             $debe_customer=($due['total']-$due['pamnt']);//se agrego el campo de money debit por el item de gastos que se mencino en fechas anteriores
 
             $lista_invoices = $this->db->from("invoices")->where("csd",$customers->id)->order_by('invoicedate,tid',"DESC")->get()->result();
@@ -839,7 +841,7 @@ class Clientgroup extends CI_Controller
                     $no++;                
                     
                     $row = array();
-                        //$money=$this->customers->money_details($customers->id);
+                        $money=$this->customers->money_details($customers->id);
                     $str_checked="";
                     if($customers->checked_seleccionado==1){
                         $str_checked="checked";
@@ -866,6 +868,7 @@ class Clientgroup extends CI_Controller
                             $row[] = amountFormat($debe_customer);
                             $row[] = amountFormat($valor_ultima_factura);
                             $row[] = amountFormat($money['credit']-$money['debit']);
+                            //$row[]="0";
                             $row[] = '<a href="' . base_url() . 'customers/edit?id=' . $customers->id . '" class="btn btn-success btn-sm"><span class="icon-pencil"></span> '.$this->lang->line('Edit').'</a>&nbsp
 							&nbsp<a href="' . base_url() . 'llamadas/index?id=' . $customers->id . '" class="btn btn-primary btn-sm"><span class=" icon-mobile-phone"></span> Llamar</a>
 							&nbsp<a style="margin-top:1px;" target="_blanck" class="btn btn-info btn-sm"  href="'.base_url().'customers/invoices?id='.$customers->id.'"><span class="icon-eye"></span>&nbsp;Facturas</a>';
@@ -922,7 +925,7 @@ class Clientgroup extends CI_Controller
             
             if(($x>=$minimo && $x<$maximo) || $_POST['length']=="100"){
                      $no++;                
-                    
+                    $money=$this->customers->money_details($customers->id);
                     $row = array();
                     $str_checked="";
                     if($customers->checked_seleccionado==1){
@@ -948,7 +951,7 @@ class Clientgroup extends CI_Controller
                             $row[] = '<span class="st-'.$customers->usu_estado. '">' .$customers->usu_estado. '</span>';
                             $row[] = amountFormat($customers->debe_customer);
                             $row[] = amountFormat($customers->valor_ultima_factura);
-                            $row[] = amountFormat($customers->ingreso);
+                            $row[] = amountFormat($money['credit']-$money['debit']);
                             $row[] = '<a href="' . base_url() . 'customers/edit?id=' . $customers->id . '" class="btn btn-success btn-sm"><span class="icon-pencil"></span> '.$this->lang->line('Edit').'</a>&nbsp;<a style="margin-top:1px;" target="_blanck" class="btn btn-info btn-sm"  href="'.base_url().'customers/invoices?id='.$customers->id.'"><span class="icon-eye"></span>&nbsp;Facturas</a>';
                             if ($this->aauth->get_user()->roleid > 4) {
                             $row[] = '<a href="#" data-object-id="' . $customers->id . '" class="btn btn-danger btn-sm delete-object"><span class="icon-bin"></span></a>';
@@ -1027,8 +1030,8 @@ class Clientgroup extends CI_Controller
         $descontar=0;
         foreach ($lista_customers as $key => $customers) {
             $due=$this->customers->due_details($customers->id);
-            $money=$this->customers->money_details($customers->id);//para poder arreglar el tema de la velocidad de carga esta ligado con este proceso la solucion a la que llegamos es crear los campos debit y credit en customers y en cada proceso del sistema en los que se cree elimine o editen transacciones se debe de editar el valor de customers;
-            $customers->money=$money['credit'];
+            //$money=$this->customers->money_details($customers->id);//para poder arreglar el tema de la velocidad de carga esta ligado con este proceso la solucion a la que llegamos es crear los campos debit y credit en customers y en cada proceso del sistema en los que se cree elimine o editen transacciones se debe de editar el valor de customers;
+            //$customers->money=$money['credit'];
             $debe_customer=($due['total']-$due['pamnt']);//se agrego el campo de money debit por el item de gastos que se mencino en fechas anteriores
 
             $lista_invoices = $this->db->from("invoices")->where("csd",$customers->id)->order_by('invoicedate,tid',"DESC")->get()->result();
