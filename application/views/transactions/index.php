@@ -20,6 +20,7 @@
                     <th><?php echo $this->lang->line('') ?>Usuario</th>
 					<th>Cuenta</th>
                     <th><?php echo $this->lang->line('Method') ?></th>
+					<th>Categoria</th>
                     <th>Estado</th>
                     <th><?php echo $this->lang->line('Action') ?></th>
 
@@ -38,6 +39,7 @@
                     <th><?php echo $this->lang->line('') ?>Usuario</th>
 					<th>Cuenta</th>
                     <th><?php echo $this->lang->line('Method') ?></th>
+					<th>Categoria</th>
                     <th>Estado</th>
                     <th><?php echo $this->lang->line('Action') ?></th>
 
