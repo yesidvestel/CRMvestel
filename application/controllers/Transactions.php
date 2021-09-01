@@ -53,6 +53,7 @@ class Transactions extends CI_Controller
         'Cuenta' => 'string',
 		'Valor' => 'integer',
 		'Motivo' => 'string',
+		'Categoria' => 'string',
 		'Orden N' => 'string',
 		'Detalle' => 'string',
 		'Metodo' => 'string');
@@ -83,13 +84,14 @@ class Transactions extends CI_Controller
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ));
     
     //write rows to sheet1
 	
     foreach ($lista_debito as $key => $debito) {
 		$fecha = date("d/m/Y",strtotime($debito->date));
-            $writer->writeSheetRow('Debito ',array($fecha,$debito->account,$debito->debit,$debito->playerid,$debito->tid,$debito->note,$debito->method));
+            $writer->writeSheetRow('Debito ',array($fecha,$debito->account,$debito->debit,$debito->playerid,$debito->cat,$debito->tid,$debito->note,$debito->method));
         
     }
         
@@ -142,6 +144,7 @@ class Transactions extends CI_Controller
         'Cuenta' => 'string',
 		'Valor' => 'integer',
 		'Motivo' => 'string',
+		'Categoria' => 'string',
 		'Cuenta N' => 'string',
 		'Detalle' => 'string',
 		'Metodo' => 'string');
@@ -172,13 +175,14 @@ class Transactions extends CI_Controller
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ));
     
     //write rows to sheet1
 	
     foreach ($lista_creditos as $key => $creditos) {
 		$fecha = date("d/m/Y",strtotime($creditos->date));
-            $writer->writeSheetRow('Creditos ',array($fecha,$creditos->account,$creditos->credit,$creditos->payer,$creditos->tid,$creditos->note,$creditos->method));
+            $writer->writeSheetRow('Creditos ',array($fecha,$creditos->account,$creditos->credit,$creditos->payer,$creditos->cat,$creditos->tid,$creditos->note,$creditos->method));
         
     }
         
@@ -1177,6 +1181,7 @@ class Transactions extends CI_Controller
             $row[] = $prd->payer;
 			$row[] = $prd->tid;
             $row[] = $this->lang->line($prd->method);
+			$row[] = $this->lang->line($prd->cat);
             $row[] = "<span id='estado_".$prd->id."'>".$prd->estado."</span>";
             $texto="";
             if($prd->estado!=null){
