@@ -378,7 +378,7 @@
             <table id="fclientstable" class="table-striped" cellspacing="0" width="100%">
                 <thead>
                 <tr >
-                    <th><input type="checkbox" name="" style="cursor: pointer;" onclick="selet_all_customers(this)">&nbspSMS</th>
+                    <th><input type="checkbox" checked name="" style="cursor: pointer;" onclick="selet_all_customers(this)">&nbspSMS</th>
                     <th>#</th>
 					<th>Abonado</th>
 					<th>Cedula</th>
@@ -466,7 +466,7 @@
 
                 $.post(url,{},function(data){
                     var puntos=1;
-                    $(data).each(function(index,value){
+                    /*$(data).each(function(index,value){
                         var data1srt='{"id":'+(value.id)+',"celular":"'+(value.celular)+'"}';
                         var indice_elemento=lista_customers_sms.indexOf(data1srt);
                 
@@ -475,7 +475,7 @@
                                 lista_customers_sms.push(data1srt);
                         }
 
-                    });
+                    });*/
                     $("#div_notify3").html('<div id="notify3" class="alert alert-success" style="display:none;"><a href="#" class="close" data-dismiss="alert">&times;</a><div class="message3">></div></div>');
                    $("#notify3 .message3").html("<strong> Cargando</strong>: Usuarios Seleccionados...");
                     $("#notify3").removeClass("alert-danger").removeClass("alert-warning").addClass("alert-success").fadeIn();
@@ -486,8 +486,8 @@
                 
         }else{
             $("input[type=checkbox]").prop("checked",false); 
-            lista_customers_sms=[];   
-
+            lista_customers_sms=[];  
+            $.post(baseurl+"clientgroup/deseleccionar_customers?id=<?=$_GET['id']?>",{},function(data){},'json');
         }
     }
     var tb;
@@ -1063,22 +1063,34 @@ $("#pagination_div").hide();
     function abrir_modal_corte_usuarios(e){
         e.preventDefault();
         var lista_cadena="";
-        $(lista_customers_sms).each(function(index,value){
-        value=JSON.parse(value);
-        if(lista_cadena!=""){
-            lista_cadena=lista_cadena+","+value.id;    
-        }else{
-            lista_cadena=value.id;    
-        }
-        
-    });
+        reestablecer_seleciones();
+        $.post(baseurl+"clientgroup/get_seleccionados_sms_y_cortar?id=<?=$_GET['id']?>",{},function(data){
+
+            $(data).each(function(index,value){
+                console.log(value);
+                var data1srt='{"id":'+(value.id)+',"celular":"'+(value.celular)+'"}';
+                        lista_customers_sms.push(data1srt);
+
+                if(lista_cadena!=""){
+                    lista_cadena=lista_cadena+","+value.id;    
+                }else{
+                    lista_cadena=value.id;    
+                }
+
+             });
+
+            
 
     
-    $("#ids_customers_corte").val(lista_cadena);
-    $("#div_notify5").html("");
+        $("#ids_customers_corte").val(lista_cadena);
+        $("#div_notify5").html("");
 
 
-        $("#modal_corte_multiple_usuarios").modal("show");
+            $("#modal_corte_multiple_usuarios").modal("show");
+
+        },'json');
+
+        
     }
     function realizar_corte_usuarios(){
         $("#div_notify5").append('<div id="notify_5" class="alert alert-warning" style="display:none;"><a href="#" class="close" data-dismiss="alert">&times;</a><div class="message_5"></div></div>');        
@@ -1138,46 +1150,64 @@ function abrir_modal_sms(e){
     n_lote_actual_customers=1;
     //console.log(lista_customers_sms.length);
     
+    reestablecer_seleciones();
+        $.post(baseurl+"clientgroup/get_seleccionados_sms_y_cortar?id=<?=$_GET['id']?>",{},function(data){
+            
+            $(data).each(function(index,value){
+                console.log(value);
+                var data1srt='{"id":'+(value.id)+',"celular":"'+(value.celular)+'"}';
+                        lista_customers_sms.push(data1srt);
 
-    if(lista_customers_sms.length>500){
-        var x= lista_customers_sms.length/500;
-        if(x % 1==0){
-            n_lotes_customers=parseInt(x);
-        }else{
-            n_lotes_customers=parseInt(x)+1;
-        }
-        lista_customers_sms_aux=lista_customers_sms;
-      //saber cuantas veces voy a segmentar la lista, n_lotes_customers;
-      //en que segmentacion esta, n_lote_actual_customers;
-      //de que indice a que indice escojer segun la segmentacion, x, y;
-      n_lote_actual_customers=1;
-      x=0;
-      y=499;
-      lista_customers_sms=lista_customers_sms.slice(x,y);
+               
 
-    }
-    //console.log(lista_customers_sms.length);
-    $("#sendSms").modal("show");
-    var lista_cadena="";
-    $(lista_customers_sms).each(function(index,value){
-        value=JSON.parse(value);
-        if(lista_cadena!=""){
-            lista_cadena=lista_cadena+","+value.id+"-"+value.celular;    
-        }else{
-            lista_cadena=value.id+"-"+value.celular;    
-        }
+             });
+
+            if(lista_customers_sms.length>500){
+                var x= lista_customers_sms.length/500;
+                if(x % 1==0){
+                    n_lotes_customers=parseInt(x);
+                }else{
+                    n_lotes_customers=parseInt(x)+1;
+                }
+                lista_customers_sms_aux=lista_customers_sms;
+              //saber cuantas veces voy a segmentar la lista, n_lotes_customers;
+              //en que segmentacion esta, n_lote_actual_customers;
+              //de que indice a que indice escojer segun la segmentacion, x, y;
+              n_lote_actual_customers=1;
+              x=0;
+              y=499;
+              lista_customers_sms=lista_customers_sms.slice(x,y);
+
+            }
+            //console.log(lista_customers_sms.length);
+            $("#sendSms").modal("show");
+            var lista_cadena="";
+            $(lista_customers_sms).each(function(index,value){
+                value=JSON.parse(value);
+                if(lista_cadena!=""){
+                    lista_cadena=lista_cadena+","+value.id+"-"+value.celular;    
+                }else{
+                    lista_cadena=value.id+"-"+value.celular;    
+                }
+                
+            });
+
+            if(lista_cadena==""){
+                $("#div_envio_masivo").hide();
+                $("#div_numero_individual").show();
+            }else{
+                $("#div_envio_masivo").show();
+                $("#div_numero_individual").hide();
+            }
+            $("#numerosMasivo").val(lista_cadena);
+            $("#div_notify4").html("");
+
+    
         
-    });
 
-    if(lista_cadena==""){
-        $("#div_envio_masivo").hide();
-        $("#div_numero_individual").show();
-    }else{
-        $("#div_envio_masivo").show();
-        $("#div_numero_individual").hide();
-    }
-    $("#numerosMasivo").val(lista_cadena);
-    $("#div_notify4").html("");
+        },'json');
+
+    
 }
     let lista_customers_sms=[];
  function agregar_customer_envio_sms(elemento){
@@ -1193,6 +1223,11 @@ function abrir_modal_sms(e){
                 lista_customers_sms.splice(indice_elemento,1);
             }
         }
+
+           var id=$(elemento).data("id-customer");
+            $.post(baseurl+"clientgroup/activar_desactivar_usuario",{'id':id,'selected':elemento.checked},function(data){
+                    console.log(data);
+            },'json');
       /* var y="";
         $(lista_customers_sms).each(function(index){
             if(y==""){

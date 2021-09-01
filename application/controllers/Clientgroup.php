@@ -485,7 +485,12 @@ class Clientgroup extends CI_Controller
             $no++;
 
             $row = array();
-            $row[] = '<input id="input_'.$customers->id.'" type="checkbox" name="x" class="clientes_para_enviar_sms" data-id-customer="'.$customers->id.'"  data-celular="'.$customers->celular.'" style="cursor:pointer; margin-left: 9px;" onclick="agregar_customer_envio_sms(this)" ></input>';    
+            $str_checked="";
+            if($customers->checked_seleccionado==1){
+                $str_checked="checked";
+            }
+
+            $row[] = '<input '.$str_checked.' id="input_'.$customers->id.'" type="checkbox" name="x" class="clientes_para_enviar_sms" data-id-customer="'.$customers->id.'"  data-celular="'.$customers->celular.'" style="cursor:pointer; margin-left: 9px;" onclick="agregar_customer_envio_sms(this)" ></input>';    
             $row[] = $no;
 			$row[] = $customers->abonado;
 			$row[] = $customers->documento;
@@ -524,6 +529,19 @@ class Clientgroup extends CI_Controller
         echo json_encode($output);
     }
     
+    public function activar_desactivar_usuario(){
+        $id=$this->input->post("id");
+        $selected=$this->input->post("selected");
+        if($selected=="true"){
+            $data['checked_seleccionado']=1;
+        }else{
+            $data['checked_seleccionado']=0;
+        }
+        $this->db->update("customers",$data,array("id"=>$id));
+        echo json_encode(array("status"=>"guardao"));
+        
+    }
+
     public function load_morosos(){ 
         set_time_limit(10000);
         if($this->input->post('start')!="0"){
@@ -822,7 +840,11 @@ class Clientgroup extends CI_Controller
                     
                     $row = array();
                         //$money=$this->customers->money_details($customers->id);
-                            $row[] = '<input id="input_'.$customers->id.'" type="checkbox" name="x" class="clientes_para_enviar_sms" data-id-customer="'.$customers->id.'"  data-celular="'.$customers->celular.'" style="cursor:pointer; margin-left: 9px;" onclick="agregar_customer_envio_sms(this)" ></input>';    
+                    $str_checked="";
+                    if($customers->checked_seleccionado==1){
+                        $str_checked="checked";
+                    }
+                            $row[] = '<input '.$str_checked.' id="input_'.$customers->id.'" type="checkbox" name="x" class="clientes_para_enviar_sms" data-id-customer="'.$customers->id.'"  data-celular="'.$customers->celular.'" style="cursor:pointer; margin-left: 9px;" onclick="agregar_customer_envio_sms(this)" ></input>';    
                             $row[] = $no;
                             $row[] = $customers->abonado;
                             $row[] = $customers->documento;
@@ -902,7 +924,11 @@ class Clientgroup extends CI_Controller
                      $no++;                
                     
                     $row = array();
-                            $row[] = '<input id="input_'.$customers->id.'" type="checkbox" name="x" class="clientes_para_enviar_sms" data-id-customer="'.$customers->id.'"  data-celular="'.$customers->celular.'" style="cursor:pointer; margin-left: 9px;" onclick="agregar_customer_envio_sms(this)" ></input>';    
+                    $str_checked="";
+                    if($customers->checked_seleccionado==1){
+                        $str_checked="checked";
+                    }
+                            $row[] = '<input '.$str_checked.' id="input_'.$customers->id.'" type="checkbox" name="x" class="clientes_para_enviar_sms" data-id-customer="'.$customers->id.'"  data-celular="'.$customers->celular.'" style="cursor:pointer; margin-left: 9px;" onclick="agregar_customer_envio_sms(this)" ></input>';    
                             $row[] = $no;
                             $row[] = $customers->abonado;
                             $row[] = $customers->documento;
@@ -1207,13 +1233,28 @@ class Clientgroup extends CI_Controller
             //end fitro por servicios con morosos 
 
             if($customer_moroso){
-                    $listax[]=array('id' =>$customers->id ,"celular"=>$customers->celular);                                    
+                $this->db->update("customers",array("checked_seleccionado"=>1),array('id' =>$customers->id));
+                    //$listax[]=array('id' =>$customers->id ,"celular"=>$customers->celular);                                    
             }
              
         }
         
         echo json_encode($listax);
     
+    }
+    public function deseleccionar_customers(){
+        $this->db->update("customers",array("checked_seleccionado"=>0),array("gid"=>$_GET['id']));
+        echo json_encode(array("estatus"=>"desdeleccionados"));
+    }
+    public function get_seleccionados_sms_y_cortar(){
+        $lista = $this->db->get_where("customers",array("checked_seleccionado"=>1,"gid"=>$_GET['id']))->result_array();
+        $listax=array();
+        foreach ($lista as $key => $customers) {
+             
+            $listax[]=array('id' =>$customers['id'] ,"celular"=>$customers['celular']);    
+        }
+
+        echo json_encode($listax);    
     }
 
     public function create()

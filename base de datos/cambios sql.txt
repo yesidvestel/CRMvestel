@@ -1,4 +1,6 @@
-﻿-----------------------------cambios para agregar estados a los servicios de la factura-----------------
+﻿-----------------------------cambios para agregar a la db la seleccion al cortar o enviar mensajes-----------------
+ALTER TABLE `customers` ADD `checked_seleccionado` INT NOT NULL DEFAULT '0' AFTER `f_elec_puntos`;
+-----------------------------cambios para agregar estados a los servicios de la factura-----------------
 ALTER TABLE `invoices` ADD `estado_tv` ENUM('Cortado','Suspendido') NULL AFTER `television`;
 ALTER TABLE `invoices` ADD `estado_combo` ENUM('Cortado','Suspendido') NULL AFTER `combo`;
 --------------------------------------------------------------------------------------------------------
