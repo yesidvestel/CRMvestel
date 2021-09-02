@@ -41,6 +41,24 @@ class Transactions extends CI_Controller
         $this->db->from("transactions");
 		//$this->db->join('customers', 'tickets.cid=customers.id', 'left');
 		$this->db->where('type', 'Expense');
+		if ($_GET['cuentas'] != '' && $_GET['cuentas'] != '-' && $_GET['cuentas'] != '0') {
+                $this->db->where('account=', $_GET['cuentas']);
+            }
+		if ($_GET['categorias'] != '' && $_GET['categorias'] != '-' && $_GET['categorias'] != '0') {
+                $this->db->where('cat=', $_GET['categorias']);
+           }
+		if($_GET['opcselect']!=''){
+
+            $dateTime= new DateTime($_GET['sdate']);
+            $sdate=$dateTime->format("Y-m-d");
+            $dateTime= new DateTime($_GET['edate']);
+            $edate=$dateTime->format("Y-m-d");
+            if($_GET['opcselect']=="fcreada"){
+                $this->db->where('date>=', $sdate);   
+                $this->db->where('date<=', $edate);       
+            }
+            
+        }
         $this->db->order_by("id","DESC");
         $lista_debito=$this->db->get()->result();
         $this->load->library('Excel');

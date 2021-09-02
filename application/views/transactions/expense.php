@@ -180,8 +180,12 @@ var tb;
         });
     });
 	function redirect_to_export(){
-         
-        var url_redirect=baseurl+'transactions/explortar_a_excel';
+        var cuentas =$("#cuentas option:selected").val();
+		var categorias =$("#categorias option:selected").val();
+        var sdate =$("#sdate").val();
+        var edate =$("#edate").val();
+		var opcion_seleccionada=$("#fechas option:selected").val();
+        var url_redirect=baseurl+'transactions/explortar_a_excel?sdate='+sdate+"&edate="+edate+"&opcselect="+opcion_seleccionada+"&cuentas="+cuentas+"&categorias="+categorias;
             window.location.replace(url_redirect);
 
     }
