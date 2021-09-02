@@ -427,15 +427,15 @@
                                     for="shortnote"><?php echo $this->lang->line('Note') ?></label>
                             <input type="text" class="form-control"
                                    name="shortnote" placeholder="Short note"
-                                   value="Payment for purchase #<?php echo $invoice['tid'] ?>"></div>
+                                   value="Orden de compra # <?php echo $invoice['tid'] ?>"></div>
                     </div>
                     <div class="modal-footer">
                         <input type="hidden" class="form-control required"
                                name="tid" id="invoiceid" value="<?php echo $invoice['tid'] ?>">
                         <button type="button" class="btn btn-default"
-                                data-dismiss="modal"><?php echo $this->lang->line('Close') ?></button>
+                                data-dismiss="modal">Volver</button>
                         <input type="hidden" name="cid" value="<?php echo $invoice['cid'] ?>">
-                                                                                                                                                                                                        va
+                                                                                                                                                                                                    
                         <button type="button" class="btn btn-primary" id="purchasepayment"><?php echo $this->lang->line('Do Payment') ?></button>
                     </div>
                 </form>

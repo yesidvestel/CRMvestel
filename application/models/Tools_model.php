@@ -29,13 +29,13 @@ class Tools_model extends CI_Model
 
     private function _task_datatables_query($cday = '')
     {
-
+		$colaborador = $this->aauth->get_user()->id;
         $this->db->from('todolist');
         if ($cday) {
             $this->db->where('DATE(duedate)=', $cday);
         }
-
-
+		$this->db->where('eid', $colaborador);
+		$this->db->or_where('aid', $colaborador);
         $i = 0;
 
         foreach ($this->column_search as $item) // loop column
