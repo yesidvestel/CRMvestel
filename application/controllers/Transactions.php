@@ -340,6 +340,9 @@ class Transactions extends CI_Controller
         if(isset($_GET['id_tr'])){
             $data['id_tr']=$_GET['id_tr'];
         }
+		$this->load->model('accounts_model', 'accounts');
+		$data['cta'] = $this->accounts->accountslist();
+		$data['cat'] = $this->transactions->categories();
         $this->load->view('fixed/header', $head);
         $this->load->view('transactions/index',$data);
         $this->load->view('fixed/footer');

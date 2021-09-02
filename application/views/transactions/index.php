@@ -5,6 +5,131 @@
 
             <div class="message"></div>
         </div>
+		<!-- paneles -->
+            <div class="card">
+                    <div class="card-body">
+                        <div class="card-block">
+                            <label class="col-sm-12 col-form-label"
+                                       for="pay_cat"><h5>FILTRAR </h5> </label> 
+
+                            <ul class="nav nav-tabs nav-justified">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="active-tab" data-toggle="tab" href="#thread"
+                                       aria-controls="thread"
+                                       aria-expanded="true">Fecha</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="link-tab" data-toggle="tab" href="#cuenta"
+                                       aria-controls="cuenta"
+                                       aria-expanded="false">Cuenta</a>
+                                </li>
+								<li class="nav-item">
+                                    <a class="nav-link" id="detalle-tab" data-toggle="tab" href="#link"
+                                       aria-controls="link"
+                                       aria-expanded="false">Categoria</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content px-1 pt-1">
+								<!--thread-->
+                                <div class="tab-pane fade" id="thread" role="tabpanel" aria-labelledby="thread-tab" aria-expanded="false">
+
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label"
+                                               for="pay_cat">Fechas</label>
+
+                                        <div class="col-sm-6">
+                                            <select name="trans_type" class="form-control" id="fechas" onchange="filtrado_fechas()">
+                                                <option value=''>Todas</option>
+                                                <option value='fcreada'>Fecha Creada</option>
+                                            </select>
+                                        </div>                              
+                                    </div>
+                                    <div class="form-group row" id="div_fechas" style="display: none">
+                                        <label class="col-sm-2 col-form-label"
+                                               for="pay_cat" id="label_fechas">Fecha Creada</label>
+
+                                        <div class="col-sm-2">
+                                            <input type="text" class="form-control required"
+                                                   placeholder="Start Date" name="sdate" id="sdate"
+                                                    autocomplete="false">
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <input type="text" class="form-control required"
+                                                   placeholder="End Date" name="edate" id="edate"
+                                                   data-toggle="datepicker" autocomplete="false">
+                                        </div>
+                                    </div>
+                                   
+
+                                </div>
+                                <!--thread-->
+                                <div role="tabpanel" class="tab-pane fade active in" id="cuenta" aria-labelledby="active-tab" aria-expanded="true">
+                                    <div class="form-group row">
+                                        
+                                        <label class="col-sm-2 col-form-label"
+                                               for="pay_cat">Cuentas</label>
+
+                                        <div class="col-sm-6">
+                                            <select name="tec" class="form-control" id="cuentas">
+                                                <option value=''>Todos</option>
+                                                <?php
+                                                    foreach ($cta as $row) {
+                                                        $cid = $row['id'];
+                                                        $title = $row['holder'];
+                                                        echo "<option value='$title' data-id='$cid'>$title</option>";
+                                                    }
+                                                    ?>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="tab-pane fade" id="link" role="tabpanel" aria-labelledby="link-tab" aria-expanded="false">
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 col-form-label"
+                                                   for="pay_cat">Categorias</label>
+
+                                            <div class="col-sm-6">
+                                                <select name="trans_type" class="form-control" id="categorias">
+                                                    <option value=''>Todas</option>
+                                                     <?php
+														foreach ($cat as $row) {
+															$cid = $row['id'];
+															$title = $row['name'];
+															echo "<option value='$title'>$title</option>";
+														}
+														?>
+                                                </select>
+                                            </div>                              
+                                        </div>    
+                                </div>
+								
+                                
+                                <!--milestones-->
+                                
+                                <!--milestones-->
+                                <!--otro filtro 
+                                <div class="tab-pane fade" id="activities" role="tabpanel" aria-labelledby="activities-tab" aria-expanded="false">
+
+                                </div>
+                                activities-->
+                                
+                                
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                                <label class="col-sm-3 col-form-label" for="pay_cat"></label>
+
+                                <div class="col-sm-4">
+                                    <input type="button" class="btn btn-primary btn-md" value="VER" onclick="filtrar()">
+
+
+                                </div>
+                            </div>
+                </div>
         <div class="grid_3 grid_4 table-responsive animated fadeInRight">
             <h5><?php echo $this->lang->line('Transactions') ?></h5>
 
@@ -51,6 +176,7 @@
     </div>
 </article>
 <script type="text/javascript">
+	var tb;
     $(document).ready(function () {
         <?php 
          $url1="transactions/translist";
@@ -58,7 +184,7 @@
                 $url1="transactions/translist?id_tr=".$_GET['id_tr'];
             }
          ?>
-       $('#trans_table').DataTable({
+       tb= $('#trans_table').DataTable({
             "processing": true,
             "serverSide": true,
             "stateSave": true,
@@ -89,6 +215,28 @@
                 }
         });
     });
+	function  filtrado_fechas(){
+        var opcion_seleccionada=$("#fechas option:selected").val();
+        if(opcion_seleccionada=="fcreada"){
+            $("#div_fechas").show();
+            $("#label_fechas").text("Fecha Creada");
+        }
+    }
+	function filtrar(){
+        var cuentas=$("#cuentas option:selected").val();
+        var categorias =$("#categorias option:selected").val();
+        var sdate =$("#sdate").val();
+        var edate =$("#edate").val();
+        var opcion_seleccionada=$("#fechas option:selected").val();
+        var sede_filtrar=$("#sede_sel option:selected").val();
+        if(cuentas=="" && categorias=="" && opcion_seleccionada==""){
+            tb.ajax.url( baseurl+'transactions/translist').load();     
+        }else{
+            tb.ajax.url( baseurl+"transactions/translist?sdate="+sdate+"&edate="+edate+"&opcselect="+opcion_seleccionada+"&cuentas="+cuentas+"&categorias="+categorias ).load();     
+        }
+       
+
+    }
 </script>
 
 <div id="delete_model" class="modal fade" >
