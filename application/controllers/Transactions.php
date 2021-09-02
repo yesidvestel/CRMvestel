@@ -1223,7 +1223,7 @@ public function anullist()
             $row[] = $prd->account;
             $row[] = amountFormat($prd->debit);
             $row[] = amountFormat($prd->credit);
-            $row[] = $prd->payer;
+            $row[] = $prd->payer.$prd->note;
             $row[] = $prd->tid;
             $row[] = $this->lang->line($prd->method);
             $row[] = "<span id='estado_".$prd->id."'>".$prd->estado."</span>";
