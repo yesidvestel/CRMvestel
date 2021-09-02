@@ -116,6 +116,12 @@
         </div>
     </div>
 </div>
+<?php //var_dump($stat); ?>
+<?php $date = new DateTime();
+        $mes =$date->format("m");
+        $year =$date->format("Y");
+
+ ?>    
 <script type="text/javascript">
 
 
@@ -125,7 +131,11 @@
         element: 'invoices-sales-chart',
         data: [
             <?php $i = 0;foreach (array_reverse($stat) as $row) {
-            if ($i > 11) break;
+            if(intval($row['month'])>intval($mes) &&  intval($row['year']) >= intval($year)){
+                break;
+               // var_dump(intval($mes)." ".intval($row['month'])." " .intval($year)." ".intval($row['year']));
+            }
+
             $num = cal_days_in_month(CAL_GREGORIAN, $row['month'], $row['year']);
             echo "{ x: '" . $row['year'] . '-' . sprintf("%02d", $row['month']) . "-$num', y: " . intval($row['income']) . ", z: " . intval($row['expense']) . "},";
             $i++;
@@ -147,7 +157,10 @@
         element: 'invoices-products-chart',
         data: [
             <?php $i = 0;foreach (array_reverse($stat) as $row) {
-            if ($i > 11) break;
+            if(intval($row['month'])>intval($mes) &&  intval($row['year']) >= intval($year)){
+                break;
+               // var_dump(intval($mes)." ".intval($row['month'])." " .intval($year)." ".intval($row['year']));
+            }
             $num = cal_days_in_month(CAL_GREGORIAN, $row['month'], $row['year']);
             echo "{ x: '" . $row['year'] . '-' . sprintf("%02d", $row['month']) . "-$num', y: " . intval($row['items']) . ", z: " . intval($row['invoices']) . "},";
             $i++;
