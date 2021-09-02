@@ -1456,6 +1456,17 @@ public function anullist()
         $this->load->view('transactions/income');
         $this->load->view('fixed/footer');
     }
+	public function transferencia()
+    {
+        if ($this->aauth->get_user()->roleid < 2) {
+            exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
+        }
+        $head['title'] = "Transferencias";
+        $head['usernm'] = $this->aauth->get_user()->username;
+        $this->load->view('fixed/header', $head);
+        $this->load->view('transactions/transferencia');
+        $this->load->view('fixed/footer');
+    }
 
     public function expense()
     {

@@ -39,6 +39,10 @@ class Transactions_model extends CI_Model
                 //var_dump($this->opt);
                 $this->db->where('type', 'Expense');
                 break;
+			case 'transferencia':
+                //var_dump($this->opt);
+                $this->db->where('type', 'transfer');
+                break;
         }
         if($_GET['id_tr']){
             $this->db->where("id",$_GET['id_tr']);

@@ -538,7 +538,9 @@
                         <li>
                             <a href="<?php echo base_url(); ?>transactions/expense"><?php echo $this->lang->line('Expense') ?></a>
                         </li>
-
+						<li>
+                            <a href="<?php echo base_url(); ?>transactions/transferencia">Transferencias</a>
+                        </li>
 
                     </ul>
                 </li>
@@ -1042,7 +1044,9 @@
                         <li>
                             <a href="<?php echo base_url(); ?>transactions/expense"><?php echo $this->lang->line('Expense') ?></a>
                         </li>
-
+						<li>
+                            <a href="<?php echo base_url(); ?>transactions/transferencia">Transferencias</a>
+                        </li>
 
                     </ul>
                 </li>
