@@ -1166,7 +1166,7 @@ class Transactions extends CI_Controller
         }
 
         $ttype = $this->input->get('type');
-        $list = $this->transactions->get_datatables($ttype);
+        $list = $this->transactions->get_datatables($ttype,$_GET);
         $data = array();
         // $no = $_POST['start'];
         $no = $this->input->post('start');
@@ -1179,7 +1179,7 @@ class Transactions extends CI_Controller
             $row[] = amountFormat($prd->debit);
             $row[] = amountFormat($prd->credit);
             $row[] = $prd->payer;
-			$row[] = $prd->tid;
+			$row[] = $prd->tid.' '.$prd->note;
             $row[] = $this->lang->line($prd->method);
 			$row[] = $prd->cat;
             $row[] = "<span id='estado_".$prd->id."'>".$prd->estado."</span>";
@@ -1223,7 +1223,7 @@ public function anullist()
             $row[] = $prd->account;
             $row[] = amountFormat($prd->debit);
             $row[] = amountFormat($prd->credit);
-            $row[] = $prd->payer.$prd->note;
+            $row[] = $prd->payer;
             $row[] = $prd->tid;
             $row[] = $this->lang->line($prd->method);
             $row[] = "<span id='estado_".$prd->id."'>".$prd->estado."</span>";
@@ -1475,10 +1475,13 @@ public function anullist()
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
 
         }
+		$this->load->model('accounts_model', 'accounts');
         $head['title'] = "Expense Transaction";
         $head['usernm'] = $this->aauth->get_user()->username;
+		$data['cta'] = $this->accounts->accountslist();
+		$data['cat'] = $this->transactions->categories();
         $this->load->view('fixed/header', $head);
-        $this->load->view('transactions/expense');
+        $this->load->view('transactions/expense',$data);
         $this->load->view('fixed/footer');
 
     }

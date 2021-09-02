@@ -26,11 +26,29 @@ class Transactions_model extends CI_Model
     var $order = array('id' => 'desc');
     var $opt = '';
 
-    private function _get_datatables_query()
+    private function _get_datatables_query($filt2)
     {
 
         $this->db->from($this->table);
+		if($filt2['opcselect']!=''){
 
+            $dateTime= new DateTime($filt2['sdate']);
+            $sdate=$dateTime->format("Y-m-d");
+            $dateTime= new DateTime($filt2['edate']);
+            $edate=$dateTime->format("Y-m-d");
+            if($filt2['opcselect']=="fcreada"){
+                $this->db->where('date>=', $sdate);   
+                $this->db->where('date<=', $edate);       
+            }
+            
+        }
+
+        if($filt2['cuentas']!=""){
+            $this->db->where('account', $filt2['cuentas']);       
+        }
+		if($filt2['categorias']!=""){
+            $this->db->where('cat', $filt2['categorias']);       
+        }
         switch ($this->opt) {
             case 'income':
                 $this->db->where('type', 'Income');
@@ -44,6 +62,7 @@ class Transactions_model extends CI_Model
                 $this->db->where('type', 'transfer');
                 break;
         }
+		
         if($_GET['id_tr']){
             $this->db->where("id",$_GET['id_tr']);
             $this->db->where("estado",null);
@@ -82,10 +101,10 @@ class Transactions_model extends CI_Model
         }
     }
 
-    function get_datatables($opt = 'all')
+    function get_datatables($opt = 'all',$filt2)
     {
         $this->opt = $opt;
-        $this->_get_datatables_query();
+        $this->_get_datatables_query($filt2);
         if ($_POST['length'] != -1)
             $this->db->limit($_POST['length'], $_POST['start']);
         $query = $this->db->get();
@@ -94,14 +113,14 @@ class Transactions_model extends CI_Model
 
     function count_filtered()
     {
-        $this->_get_datatables_query();
+        $this->_get_datatables_query($_GET);
         $query = $this->db->get();
         return $query->num_rows();
     }
 
     public function count_all()
     {
-       $this->_get_datatables_query();
+       $this->_get_datatables_query($_GET);
         $query = $this->db->get();
         return $query->num_rows();  
     }
