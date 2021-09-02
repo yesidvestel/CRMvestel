@@ -378,7 +378,7 @@
             <table id="fclientstable" class="table-striped" cellspacing="0" width="100%">
                 <thead>
                 <tr >
-                    <th><input type="checkbox" checked name="" style="cursor: pointer;" onclick="selet_all_customers(this)">&nbspSMS</th>
+                    <th><input type="checkbox" <?= ($cuenta!=0) ? 'checked':'' ?>  name="" style="cursor: pointer;" onclick="selet_all_customers(this)">&nbspSMS</th>
                     <th>#</th>
 					<th>Abonado</th>
 					<th>Cedula</th>

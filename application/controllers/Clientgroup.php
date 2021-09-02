@@ -410,6 +410,8 @@ class Clientgroup extends CI_Controller
         $head['usernm'] = $this->aauth->get_user()->username;
         $id = $this->input->get('id');		
         $data['group'] = $this->clientgroup->details($id);
+        $data['cuenta']=$this->clientgroup->get_numero_seleccionados($id);
+        
         $head['title'] = 'Group View';
         
         $this->db->select("*");
@@ -978,7 +980,8 @@ class Clientgroup extends CI_Controller
 
      public function get_filtrados_para_checked(){ 
         set_time_limit(6000);
-       
+        
+        $this->db->update("customers",array("checked_seleccionado"=>0),array("gid"=>$_GET['id']));
 
         $listax=array();
         $this->db->select("*");

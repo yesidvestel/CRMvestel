@@ -31,6 +31,10 @@ class Clientgroup_model extends CI_Model
         $query = $this->db->get();
         return $query->row_array();
     }
+    public function get_numero_seleccionados($id_sede){
+        $data =$this->db->query("select count(checked_seleccionado) as cuenta from customers where gid=".$id_sede." and checked_seleccionado=1")->result();
+        return $data[0]->cuenta;
+    }
 
     public function recipients($id)
     {
