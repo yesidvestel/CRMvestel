@@ -744,7 +744,15 @@ $("#pagination_div").hide();
                         </select>
                         </div>
                     </div>
-                    
+                    <div class="row">
+                        <div class="col-xs-12 mb-1">
+                            
+                            <div style="text-align: center;"><label
+                                    for="plantillas"><i> <b> Generar Solo Ordenes de Corte en Estado Pendiente</b></i></label></div>
+                                    <br><div style="text-align:center;"> <input type="checkbox" style="transform: scale(4);" name="tiket_en_pendiente" id="tiket_en_pendiente"></div>
+                        
+                        </div>
+                    </div>
                     
                     <div class="row" id="div_envio_masivo">
                         <div class="col-xs-12 mb-1"><label
@@ -1047,7 +1055,8 @@ $("#pagination_div").hide();
             var sdate=$("#sdate").val();
             var edate=$("#edate").val();
             var checked_ind_service =$("#check1").prop('checked');
-            var url_redirect=baseurl+'clientgroup/explortar_a_excel?estado='+estado+"&id=<?=$_GET['id']?>&localidad="+localidad+"&barrio="+barrio+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&morosos="+morosos+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&checked_ind_service="+checked_ind_service;
+            var check_usuarios_a_facturar=$("#check2").prop('checked');
+            var url_redirect=baseurl+'clientgroup/explortar_a_excel?estado='+estado+"&id=<?=$_GET['id']?>&localidad="+localidad+"&barrio="+barrio+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&morosos="+morosos+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&checked_ind_service="+checked_ind_service+"&check_usuarios_a_facturar="+check_usuarios_a_facturar;
             window.location.replace(url_redirect);
 
     }

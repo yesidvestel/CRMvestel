@@ -1502,6 +1502,7 @@ if ($valido) {
         $tipo_corte=$this->input->post("tipo_corte");
         $ids_customers_corte=$this->input->post("ids_customers_corte");
         $description_corte=$this->input->post("description_corte");
+        $tiket_en_pendiente=$this->input->post("tiket_en_pendiente");
         $this->load->model("quote_model","quote");
         
         $valido=true;
@@ -1524,7 +1525,10 @@ if ($valido) {
                     $factura=0;
                         if(count($listado_de_facturas)!=0){
                                 $factura=$listado_de_facturas[0];
-
+                                $status="Resuelto";
+                                if($tiket_en_pendiente=="true" || $tiket_en_pendiente==true){
+                                    $status="Pendiente";
+                                }
                                 $nticket=($this->quote->lastquote())+1;
                                 $data = array(
                                     'codigo' => $nticket,
@@ -1532,16 +1536,20 @@ if ($valido) {
                                     'detalle' => $tipo_corte,
                                     'created' => $bill_llegada,
                                     'cid' => $customer_id,
-                                    'status' => 'Resuelto',
+                                    'status' => $status,
                                     'section' => $description_corte,
                                     'fecha_final' => $bill_llegada,
                                     'id_invoice' => 'null',
                                     'id_factura' => $factura->tid,          
-                                );                    
+                                );   
+                                if($tiket_en_pendiente=="true" || $tiket_en_pendiente==true){
+                                    $this->db->insert('tickets', $data);
+                                }                 
                                 //$this->db->insert('tickets', $data);
                         //falta realizar el corte en la factura y en el customer
                         //y en la microtik y terminariamos con este tema Gloria a Dios
                         //desactivacion en la mikrotik
+                    if($tiket_en_pendiente=="false" || $tiket_en_pendiente==false){
                         $customer = $this->db->get_where("customers",array("id"=>$customer_id))->row();
                         if($tipo_corte=="Corte Combo") {
                             $reconexion = '0';
@@ -1677,6 +1685,7 @@ if ($valido) {
                                 
                             
                         }
+                    }
                         //end desactivacion en la mikrotik
                     }else{
                         //aqui seria crear la factura si no la tiene;
