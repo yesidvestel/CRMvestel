@@ -90,7 +90,7 @@ class CellVozApi
             }',
           CURLOPT_HTTPHEADER => array(
             'Content-Type: application/json',
-            'api-key: d5c672b631d95752eb62aefe0dcbee5382f24a55',
+            'api-key: 642329be7836bea019ea9ba41eb2e3ef48a9b985',
             'Authorization: Bearer '.$token
           ),
         ));
