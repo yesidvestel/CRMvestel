@@ -230,8 +230,31 @@ class Tools_model extends CI_Model
         $query = $this->db->get();
         return $query->num_rows();
     }
+	public function meta_insert($id, $type, $meta_data)
+    {
 
-
+        $data = array('type' => $type, 'rid' => $id, 'col1' => $meta_data);
+        if ($id) {
+            return $this->db->insert('meta_data', $data);
+        } else {
+            return 0;
+        }
+    }
+	public function meta_delete($id,$type,$name)
+    {
+        if (@unlink(FCPATH . 'userfiles/attach/' . $name)) {
+            return $this->db->delete('meta_data', array('rid' => $id, 'type' => $type, 'col1' => $name));
+        }
+    }
+	public function attach($id)
+    {
+        $this->db->select('meta_data.*');
+        $this->db->from('meta_data');
+        $this->db->where('meta_data.type', 8);
+        $this->db->where('meta_data.rid', $id);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
     function addnote($title, $content)
     {
         $data = array('title' => $title, 'content' => $content, 'cdate' => date('Y-m-d'));

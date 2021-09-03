@@ -164,6 +164,7 @@
                                 id="submit_model"><?php echo $this->lang->line('Change Status'); ?></button>
                     </div>
                 </form>
+				
             </div>
         </div>
     </div>
@@ -198,13 +199,29 @@
 
                         </div>
                     </div>
+					<div class="row">
+                        <div class="col-xs-12 mb-1"><?php echo $this->lang->line('Assigned to') ?> <strong><span
+                                        id="archivo"></span></strong>
+
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col-xs-12 mb-1"><?php echo $this->lang->line('Assigned by') ?> <strong><span
                                         id="assign"></span></strong>
 
                         </div>
                     </div>
-
+					<div class="modal-footer">
+                  	<table class="table table-striped">
+						<thead>
+						<tr>
+							<th><?php echo $this->lang->line('Files') ?></th>
+						</tr>
+						</thead>
+						<tbody id="activity">
+						</tbody>
+					</table>
+                    </div>
                     <div class="modal-footer">
                         <input type="hidden" class="form-control required"
                                name="tid" id="taskid" value="">
@@ -263,12 +280,20 @@
                 data: {'tid': id},
                 dataType: 'json',
                 success: function (data) {
+					//console.log(data.archivo[0].);
 
                     $('#description').html(data.description);
                     $('#task_title').html(data.name);
                     $('#employee').html(data.employee);
                     $('#assign').html(data.assign);
                     $('#priority').html(data.priority);
+					//$('#archivo').html(data.archivo);
+					var x =data.archivo;
+					var objetos="";
+					$(x).each(function(ind,dat){
+						objetos+="<tr><td><a data-url='"+baseurl+"tools/file_handling?op=delete&name="+ dat.col1+"&type="+dat.type+"&invoice="+ dat.id +"' class='aj_delete'><i class='btn-danger btn-lg icon-trash-a'></i></a> <a class='n_item' href='"+baseurl +"userfiles/attach/"+dat.col1 + "'>"+dat.col1+"</a></td></tr>";
+					});
+					$("#activity").html(objetos);
                 }
 
             });

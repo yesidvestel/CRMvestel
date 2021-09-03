@@ -57,10 +57,17 @@ class Manager Extends CI_Controller
     public function view_task()
     {
         $id = $this->input->post('tid');
-
+		$this->load->model('tools_model', 'tools');
         $task = $this->manager->viewtask($id);
-
-        echo json_encode(array('name' => $task['name'], 'description' => $task['description'], 'idorden' => $task['idorden'],'employee' => $task['emp'], 'assign' => $task['assign'], 'priority' => $task['priority']));
+		$data['attach'] = $this->tools->attach($id);
+        echo json_encode(array(
+			'name' => $task['name'], 
+			'description' => $task['description'], 
+			'idorden' => $task['idorden'],
+			'employee' => $task['emp'], 
+			'assign' => $task['assign'], 
+			'priority' => $task['priority'], 
+			'archivo' => $data['attach']));
     }
 
 
@@ -82,7 +89,7 @@ class Manager Extends CI_Controller
             $row[] = '<a href="#" class="btn btn-primary btn-sm rounded set-task" data-id="' . $task->id . '" data-stat="0"> SET </a>' . $name;
             $row[] = $task->duedate;
             $row[] = $task->start;
-            $row[] = '<span class="task_' . $task->status . '">' . $task->status . '</span>';
+            $row[] = '<span class="task_' . $task->status . '">' . $this->lang->line($task->status) . '</span>';
 
             $row[] = '<a href="#" data-id="' . $task->id . '" class="view_task btn-sm btn-indigo"> <i class="icon-eye"> View</i> </a>';
 

@@ -43,7 +43,7 @@ class Tools Extends CI_Controller
         $head['usernm'] = $this->aauth->get_user()->username;
         $head['title'] = 'ToDo List';
         $data['totalt'] = $this->tools->task_count_all();
-
+		
         $this->load->view('fixed/header', $head);
         $this->load->view('todo/index', $data);
         $this->load->view('fixed/footer');
@@ -85,18 +85,39 @@ class Tools Extends CI_Controller
         } else {
 
             $this->load->model('employee_model', 'employee');
-
             $head['usernm'] = $this->aauth->get_user()->username;
             $data['emp'] = $this->employee->list_employee();
             $head['title'] = 'Edit Task';
-
             $id = $this->input->get('id');
+			$data['attach'] = $this->tools->attach($id);
             $data['task'] = $this->tools->viewtask($id);
-
             $this->load->view('fixed/header', $head);
             $this->load->view('todo/edittask', $data);
             $this->load->view('fixed/footer');
         }
+
+    }
+	public function file_handling()
+    {
+        if($this->input->get('op')) {
+            $name = $this->input->get('name');
+            $invoice = $this->input->get('invoice');
+            if ($this->tools->meta_delete($invoice, 8, $name)){
+                echo json_encode(array('status' => 'Success'));
+            }
+        }
+        else {
+            $id = $this->input->get('id');
+            $this->load->library("Uploadhandler_generic", array(
+                'accept_file_types' => '/\.(gif|jpe?g|png|docx|docs|txt|pdf|xls)$/i', 'upload_dir' => FCPATH . 'userfiles/attach/', 'upload_url' => base_url() . 'userfiles/attach/'
+            ));
+            $files = (string)$this->uploadhandler_generic->filenaam();
+            if ($files != '') {
+
+                $this->tools->meta_insert($id, 8, $files);
+            }
+        }
+
 
     }
 
@@ -135,10 +156,17 @@ class Tools Extends CI_Controller
     public function view_task()
     {
         $id = $this->input->post('tid');
-
+		
         $task = $this->tools->viewtask($id);
-
-        echo json_encode(array('name' => $task['name'], 'description' => $task['description'], 'employee' => $task['emp'], 'idorden' => $task['idorden'], 'assign' => $task['assign'], 'priority' => $task['priority']));
+		$data['attach'] = $this->tools->attach($id);
+        echo json_encode(array(
+			'name' => $task['name'], 
+			'description' => $task['description'], 
+			'employee' => $task['emp'],
+			'idorden' => $task['idorden'], 
+			'assign' => $task['assign'], 
+			'priority' => $task['priority'], 
+			'archivo' => $data['attach']));
     }
 
     public function task_stats()

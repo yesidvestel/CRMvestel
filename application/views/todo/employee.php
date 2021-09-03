@@ -122,6 +122,17 @@
                                                 class="icon-file-text2"></i> Encuesta</a>
 
                                 </div>
+					<div class="modal-footer">
+                  	<table class="table table-striped">
+						<thead>
+						<tr>
+							<th><?php echo $this->lang->line('Files') ?></th>
+						</tr>
+						</thead>
+						<tbody id="activity">
+						</tbody>
+					</table>
+                    </div>
                     <div class="modal-footer">
                         <input type="hidden" class="form-control"
                                name="tid" id="taskid" value="">
@@ -185,6 +196,12 @@
                     $('#assign').html(data.assign);
                     $('#priority').html(data.priority);
                     $("#link_id_encuesta").attr("href",baseurl+"encuesta/create?id="+data.idorden);
+					var x =data.archivo;
+					var objetos="";
+					$(x).each(function(ind,dat){
+						objetos+="<tr><td><a data-url='"+baseurl+"tools/file_handling?op=delete&name="+ dat.col1+"&type="+dat.type+"&invoice="+ dat.id +"' class='aj_delete'><i class='btn-danger btn-lg icon-trash-a'></i></a> <a class='n_item' href='"+baseurl +"userfiles/attach/"+dat.col1 + "'>"+dat.col1+"</a></td></tr>";
+					});
+					$("#activity").html(objetos);
                 }
 
             });
