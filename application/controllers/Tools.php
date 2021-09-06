@@ -98,7 +98,7 @@ class Tools Extends CI_Controller
 
     }
 	public function file_handling()
-    {
+   {ini_set('memory_limit', '500M');
         if($this->input->get('op')) {
             $name = $this->input->get('name');
             $invoice = $this->input->get('invoice');
