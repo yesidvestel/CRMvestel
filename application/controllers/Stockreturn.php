@@ -713,6 +713,8 @@ class Stockreturn extends CI_Controller
 
         $activitym = "<tr><td>" . substr($paydate, 0, 10) . "</td><td>$pmethod</td><td>$amount</td><td>$note</td></tr>";
 
+        $this->load->model('customers_model', 'customers');
+        $this->customers->actualizar_debit_y_credit($cid);
 
         echo json_encode(array('status' => 'Success', 'message' =>
             $this->lang->line('Transaction has been added'), 'pstatus' => $this->lang->line($status), 'activity' => $activitym, 'amt' => $totalrm, 'ttlpaid' => $paid_amount));

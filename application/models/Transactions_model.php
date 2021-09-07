@@ -185,8 +185,11 @@ class Transactions_model extends CI_Model
             $this->db->set('lastbal', "lastbal+$amount", FALSE);
             $this->db->where('id', $pay_acc);
             $this->db->update('accounts');
-
-            return $this->db->insert('transactions', $data);
+            $tr_result=$this->db->insert('transactions', $data);
+            
+            $this->load->model('customers_model', 'customers');
+            $this->customers->actualizar_debit_y_credit($payer_id);
+            return $tr_result;
         }
     }
 
@@ -328,6 +331,8 @@ class Transactions_model extends CI_Model
         if(isset($_GET['id_tr'])){
             $var1=$transaction_var['tid'];
         }
+        $this->load->model('customers_model', 'customers');
+        $this->customers->actualizar_debit_y_credit($transaction_var['payerid']);
         //$this->db->delete('transactions', array('id' => $id));
         return array('status' => 'Success', 'message' => "Transferencia Anulada","id_inv"=>$var1);
 

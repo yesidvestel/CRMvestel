@@ -91,6 +91,8 @@ class Billing_model extends CI_Model
             $this->db->update('accounts');
 
         }
+        $this->load->model('customers_model', 'customers');
+        $this->customers->actualizar_debit_y_credit($invoice['csd']);
         if ($this->db->trans_complete()) {
             return true;
         } else {

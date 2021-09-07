@@ -78,15 +78,15 @@ class Invoices extends CI_Controller
         
         $caja1=$this->db->get_where('accounts',array('id' =>$_POST['pay_acc']))->row();
         //$customers = $this->db->get_where("customers", array("usu_estado"=>'Activo',"ciudad"=>$caja1->holder))->result_array();
-        $customers = $this->db->query("select * from customers where (usu_estado='Activo' or usu_estado='Compromiso') and ciudad ='".$caja1->holder."'")->result_array();
+        $customers_list = $this->db->query("select * from customers where (usu_estado='Activo' or usu_estado='Compromiso') and ciudad ='".$caja1->holder."'")->result_array();
         $ciudades= array();
         $sdate=$this->input->post("sdate");
         $date1= new DateTime($sdate);
         $sdate1=$date1->format("Y-m-d");
         $time_sdate1=strtotime($sdate1);
         $customers_afectados=array();
-
-        foreach ($customers as $key => $value) {            
+$this->load->model('customers_model', 'customers');
+        foreach ($customers_list as $key => $value) {            
             $invoices = $this->db->select("*")->from("invoices")->where('csd='.$value['id'])->order_by('invoicedate',"DESC")->get()->result();
             
             
@@ -510,12 +510,12 @@ class Invoices extends CI_Controller
 
             //end codigo para pagar con saldo ya existente
             
-
+$this->customers->actualizar_debit_y_credit($value['id']);
         }
         
         
 
-        $this->load->model('customers_model', 'customers');
+        
         //$this->load->model('transactions_model');
         $head['title'] = "Generar Facturas";        
         $data['customers_afectados'] = $customers_afectados;

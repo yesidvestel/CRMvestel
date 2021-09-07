@@ -251,6 +251,14 @@ class Customers_model extends CI_Model
         $query = $this->db->get();
         return $query->row_array();
     }
+      public function actualizar_debit_y_credit($id_customer){
+        $array=$this->money_details($id_customer);
+        $data=array();
+        $data['debit']=$array['debit'];
+        $data['credit']=$array['credit'];
+        $this->db->update("customers",$data,array("id"=>$id_customer));
+
+    }
 
         public function due_details($custid)
     {
