@@ -946,8 +946,8 @@ class Customers extends CI_Controller
             }
 
             if($ticket->asignado!=null){
-                $tecnico=$this->db->get_where('aauth_users',array('id'=>$ticket->asignado))->row();
-                $row[]=$tecnico->username;
+                //$tecnico=$this->db->get_where('aauth_users',array('id'=>$ticket->asignado))->row();
+                $row[]=$ticket->asignado;
             }else{
                 $row[] = "--";    
             }

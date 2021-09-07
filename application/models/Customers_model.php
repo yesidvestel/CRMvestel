@@ -26,8 +26,8 @@ class Customers_model extends CI_Model
     var $column_search = array('id','abonado','name', 'celular', 'documento', 'unoapellido', 'email','usu_estado');
     var $trans_column_order = array('date', 'debit', 'credit', 'account', null);
     var $trans_column_search = array('id', 'date');
-	var $sup_column_order = array('idt', 'subject', 'detalle','created','fecha_final', 'id_factura', 'status', null);
-    var $sup_column_search = array('idt','subject', 'detalle','created','fecha_final', 'id_factura', 'status');
+	var $sup_column_order = array(null, 'codigo', 'subject', 'detalle', 'created', 'abonado', 'id_factura', 'ciudad','status', null);
+    var $sup_column_search = array('idt', 'codigo', 'detalle', 'created', 'abonado', 'id_factura', 'ciudad','asignado','status',);
 	var $equi_column_search = array('id', 'codigo');
 	var $equi_column_order = array('null', 'codigo', 'mac', 'serial', 'estado', 'marca', null);
     var $inv_column_order = array(null, 'tid', 'name', 'invoicedate', 'total', 'status', null);
