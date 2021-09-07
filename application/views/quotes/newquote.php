@@ -256,7 +256,7 @@
 												<option value='ComunaIV'>ComunaIV</option>
 												<option value='ComunaV'>ComunaV</option>
 												<option value='ComunaVI'>ComunaVI</option>
-												<option value='ComunaVI'>ComunaVII</option>
+												<option value='ComunaVII'>ComunaVII</option>
 											<?php }if ($details['ciudad']==='Monterrey'){ ?>
 												<option value='-'>-</option>
 												<option value='Ninguno'>Ninguno</option>
