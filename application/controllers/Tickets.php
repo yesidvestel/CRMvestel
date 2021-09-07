@@ -179,7 +179,7 @@ class Tickets Extends CI_Controller
 
     public function thread()
     {
-
+		$this->load->model('invoices_model', 'invocies');
         $this->load->helper(array('form'));
         $thread_id = $this->input->get('id');		
         $data['response'] = 3;
@@ -254,12 +254,14 @@ class Tickets Extends CI_Controller
             }
 
             $data['thread_info'] = $this->ticket->thread_info($thread_id);
-            $data['thread_list'] = $this->ticket->thread_list($thread_id);			
+            $data['thread_list'] = $this->ticket->thread_list($thread_id);
+			$data['paquete'] = $this->invocies->paquetes();
             $this->load->view('support/thread', $data);
         } else {
 
             $data['thread_info'] = $this->ticket->thread_info($thread_id);
-            $data['thread_list'] = $this->ticket->thread_list($thread_id);			
+            $data['thread_list'] = $this->ticket->thread_list($thread_id);
+			$data['paquete'] = $this->invocies->paquetes();
             $this->load->view('support/thread', $data);
 
 
@@ -700,7 +702,7 @@ if($ya_agrego_equipos==false){
 		}if($ciudad==Monterrey){
 			$employee = 44;
 		}if($ciudad==Villanueva){
-			$employee = 61;
+			$employee = 66;
 		}
 		$assign = $this->aauth->get_user()->id;
 		$content = 'Revisar orden #'.$ticket->codigo;
