@@ -843,7 +843,13 @@ class Clientgroup extends CI_Controller
                     $no++;                
                     
                     $row = array();
+                    $money=array();
+                    if(isset($_GET['ingreso_select']) && $_GET['ingreso_select']!="" && $_GET['ingreso_select']!=null){
                         $money=$this->customers->money_details($customers->id);
+                    }else{
+                            $money['credit']=$customers->credit;
+                            $money['debit']=$customers->debit;
+                    }
                     $str_checked="";
                     if($customers->checked_seleccionado==1){
                         $str_checked="checked";
@@ -926,8 +932,14 @@ class Clientgroup extends CI_Controller
         foreach ($lista2 as $key => $customers) {
             
             if(($x>=$minimo && $x<$maximo) || $_POST['length']=="100"){
-                     $no++;                
-                    $money=$this->customers->money_details($customers->id);
+                     $no++;      
+                     if(isset($_GET['ingreso_select']) && $_GET['ingreso_select']!="" && $_GET['ingreso_select']!=null){
+                        $money=$this->customers->money_details($customers->id);
+                    }else{
+                            $money['credit']=$customers->credit;
+                            $money['debit']=$customers->debit;
+                    }          
+                    
                     $row = array();
                     $str_checked="";
                     if($customers->checked_seleccionado==1){

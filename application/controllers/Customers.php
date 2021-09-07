@@ -280,7 +280,13 @@ class Customers extends CI_Controller
 		}
 		//echo '</select>'; 
 	}
-
+    public function actualizar_debit_y_credit(){
+        set_time_limit(10000);
+        $customers_lst=$this->db->get_where("customers")->result_array();
+        foreach ($customers_lst as $key => $value) {
+            $this->customers->actualizar_debit_y_credit($value['id']);
+        }
+    }
     public function view()
     {
 		
