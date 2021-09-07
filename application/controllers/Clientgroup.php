@@ -932,7 +932,8 @@ class Clientgroup extends CI_Controller
         foreach ($lista2 as $key => $customers) {
             
             if(($x>=$minimo && $x<$maximo) || $_POST['length']=="100"){
-                     $no++;      
+                     $no++; 
+                     $money=array();     
                      if(isset($_GET['ingreso_select']) && $_GET['ingreso_select']!="" && $_GET['ingreso_select']!=null){
                         $money=$this->customers->money_details($customers->id);
                     }else{
