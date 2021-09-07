@@ -1342,21 +1342,7 @@
                         </li>
                     </ul>
                 </li>
-			<!--- SOPORTE TECNICO --->
-                <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "tickets") {
-                    echo ' open';
-                } ?>">
-                    <a href=""> <i class="icon-ticket"></i><span
-                                class="menu-title"><?php echo $this->lang->line('Support Tickets') ?></span><i
-                                class="fa arrow"></i> </a>
-                    <ul class="menu-content">
-                        <li>
-                            <a href="<?php echo base_url(); ?>tickets"><?php echo $this->lang->line('Manage Tickets') ?></a>
-                        </li>
-
-
-                    </ul>
-                </li>
+			
 			<!--- MENU INVENTARIOS--->
 			
                 <li class="navigation-header"><span><?php echo $this->lang->line('Stock') ?></span><i
