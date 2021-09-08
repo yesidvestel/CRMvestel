@@ -160,7 +160,7 @@ class Cronjob_model extends CI_Model
 
 
         uasort($output, array_compare('month'));
-        print_r($output);
+        //print_r($output);
 
         $batch = array();
         $i = 0;
