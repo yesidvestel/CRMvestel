@@ -122,6 +122,7 @@ class Clientgroup extends CI_Controller
                         if(count($afiliacion_traslado_omitir)!=0){
                             $fact_valida=false;
                     }
+                    $puntosvar="";
                     if($fact_valida){
                         if($_var_tiene_tv){
                             if(str_replace(" ", "", $invoice->refer)=="Mocoa"){
@@ -136,11 +137,18 @@ class Clientgroup extends CI_Controller
                             }
                             
                         }
+                        if($invoice->puntos!="" && $invoice->puntos!="0" && $invoice->puntos!=null && $invoice->puntos!="no"){
+                            $puntosvar="+".$invoice->puntos." Pts";
+                            $suscripcion_str.="+".$invoice->puntos." Pts";
+                          
+                            $punto_adicional=$this->db->get_where("products", array('product_name' =>"Punto Adicional"))->row();
+                            $suma+=$punto_adicional->product_price*$invoice->puntos;
+                       }
                         //esto es para los estados
             if($invoice->estado_tv=="Cortado"){
-                $suscripcion_str="(Tv cortada)";   
+                $suscripcion_str="(Tv cortada".$puntosvar.")";   
             }else if($invoice->estado_tv=="Suspendido"){
-                $suscripcion_str="(Tv suspendida)";   
+                $suscripcion_str="(Tv suspendida".$puntosvar.")";   
             }
 
 //esto es para los estados
@@ -639,6 +647,7 @@ class Clientgroup extends CI_Controller
                         if(count($afiliacion_traslado_omitir)!=0){
                             $fact_valida=false;
                     }
+                    $puntosvar="";
                     if($fact_valida){
                         if($_var_tiene_tv){
                             $producto=null;
@@ -654,11 +663,18 @@ class Clientgroup extends CI_Controller
                             }
                             
                         }
+                       if($invoice->puntos!="" && $invoice->puntos!="0" && $invoice->puntos!=null && $invoice->puntos!="no"){
+                            $puntosvar="+".$invoice->puntos." Pts";
+                            $suscripcion_str.="+".$invoice->puntos." Pts";
+
+                            $punto_adicional=$this->db->get_where("products", array('product_name' =>"Punto Adicional"))->row();
+                            $suma+=$punto_adicional->product_price*$invoice->puntos;
+                       }
 //esto es para los estados
             if($invoice->estado_tv=="Cortado"){
-                $suscripcion_str="<b><i class='sts-Cortado'>Tv</i></b>";   
+                $suscripcion_str="<b><i class='sts-Cortado'>Tv".$puntosvar."</i></b>";   
             }else if($invoice->estado_tv=="Suspendido"){
-                $suscripcion_str="<b><i class='sts-Suspendido'>Tv</i></b>";   
+                $suscripcion_str="<b><i class='sts-Suspendido'>Tv".$puntosvar."</i></b>";   
             }
 
 //esto es para los estados 
