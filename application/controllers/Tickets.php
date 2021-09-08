@@ -202,7 +202,7 @@ class Tickets Extends CI_Controller
             $attach = $_FILES['userfile']['name'];
             if ($attach) {
                 $config['upload_path'] = './userfiles/support';
-                $config['allowed_types'] = 'docx|docs|txt|pdf|xls|png|jpg|gif';
+                $config['allowed_types'] = 'docx|docs|txt|pdf|xls|png|jpg|jpeg|gif';
                 $config['max_size'] = 3000;
                 $config['file_name'] = time() . $attach;
                 $crear=true;
