@@ -1143,7 +1143,7 @@ if($ya_agrego_equipos==false){
 		if($ticket->detalle=="Corte Internet"){
 			$factura = $this->db->get_where('invoices',array('tid'=>$idfactura))->row();
 			$producto2 = $this->db->get_where('products',array('product_name'=>'Reconexión Internet'))->row();
-			if ($factura->television==='no'){
+			if ($factura->television==='no'  || $factura->television=='' || $factura->television==null || $factura->television=='-' || $factura->estado_tv=="Cortado" ||  $factura->estado_tv=="Suspendido"){
 				$nestado = 'Cortado';
 				$reconexion = '0';
 			}else{
@@ -1196,7 +1196,7 @@ if($ya_agrego_equipos==false){
                 $this->db->set('estado_tv', 'Cortado');
 				$this->db->where('tid', $idfactura);
         		$this->db->update('invoices');
-			if ($factura->combo==='no'){
+			if ($factura->combo==='no' || $factura->combo=='' || $factura->combo==null || $factura->combo=='-' || $factura->estado_combo=="Cortado" || $factura->estado_combo=="Suspendido"){
 				$this->db->set('ron', 'Cortado');
 				//$this->db->set('television', 'no');
 				$this->db->where('tid', $idfactura);
