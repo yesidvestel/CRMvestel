@@ -848,16 +848,19 @@
 						<div class="col-xs-6 mb-1"><label
                                     for="pmethod">Television</label>
                             <select name="television" class="form-control mb-1">
-                                <option value="por_defecto">-><?php echo $invoice['television'] ?></option>
-                                
-                            <option <?=($invoice['television']=="no")? 'hidden' :''?> value="no">Suspender</option>
-								<option <?=($invoice['television']=="Television")? 'hidden' :''?> value="Television">Agregar</option>
+                                <option value="por_defecto">-><?php if($invoice['estado_tv']==='Cortado'){
+									$estdo = 'Cortado';
+								}else{ $estdo = ''; } echo $invoice['television'].' '.$estdo ?></option>
+                            	<option value="no">Suspender</option>
+								<option value="Television">Agregar</option>
                             </select>
                         </div>
 						<div class="col-xs-6 mb-1"><label
                                     for="pmethod">Internet</label>
                             <select name="internet" class="form-control mb-1">
-                                <option value="por_defecto">-><?php echo $invoice['combo'] ?></option>
+                                <option value="por_defecto">-><?php if($invoice['estado_combo']==='Cortado'){
+									$estint = 'Cortado';
+								}else{ $estint = ''; } echo $invoice['combo'].' '.$estint ?></option>
 								<option value="no">No</option>
 								<?php
 									foreach ($paquete as $row) {
