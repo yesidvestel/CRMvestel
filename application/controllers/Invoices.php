@@ -112,13 +112,13 @@ $this->load->model('customers_model', 'customers');
                     $puntos=0;
                     $_tiene_internet=false;
                     $_tiene_television=false;
-                    if($value2->combo!="no" ){                    
+                    if($value2->combo!="no" && $value2->combo!="" && $value2->combo!="-"){                    
                         $_tiene_internet=true;
                         $internet=$value2->combo;
-                        if($value2->television!="no" ){
+                        if($value2->television!="no" && $value2->television!="" && $value2->television!="-"){
                             $_tiene_television=true;
                         }
-                    }else if($value2->television!="no"){
+                    }else if($value2->television!="no" && $value2->television!="" && $value2->television!="-"){
                         $_tiene_television=true;
                     }
                     if($value2->puntos!=null && $value2->puntos!=0){
@@ -316,7 +316,7 @@ $this->load->model('customers_model', 'customers');
                 
             }
             //codigo para pagar con saldo ya existente
-            $invoices = $this->db->select("*")->from("invoices")->where('csd='.$value['id'])->order_by('invoicedate',"ASC")->get()->result();
+            $invoices = $this->db->select("*")->from("invoices")->where('csd='.$value['id'])->order_by('invoicedate',"ASC")->get()->result();//$invoices = $this->db->select("*")->from("invoices")->where('csd='.$value['id'])->order_by('invoicedate',"ASC")->get()->result();
             $lista_para_pagos_adelantados=array();
             $lista_para_pagos_faltantes=array();
             $saldo_dispo_total=0;
@@ -332,9 +332,15 @@ $this->load->model('customers_model', 'customers');
                 }
 
                 if($inv->pamnt>$inv->total){
-                    $saldo_dispo=$inv->pamnt-$inv->total;
-                    $saldo_dispo_total+=$saldo_dispo;
-                    $lista_para_pagos_adelantados[]= array("tid"=>$inv->tid,"saldo_disponible"=>$saldo_dispo,"pamnt"=>$inv->pamnt);
+                    $tr_verificacion = $this->db->query("select sum(credit)-sum(debit) as calculo from transactions where tid=".$inv->tid)->result_array();
+                    if($inv->total==$tr_verificacion[0]['calculo']){
+                        $this->db->update("invoices",array("pamnt"=>$inv->total),array("tid"=>$inv->tid));
+                    }else{
+                        $saldo_dispo=$inv->pamnt-$inv->total;
+                        $saldo_dispo_total+=$saldo_dispo;
+                        $lista_para_pagos_adelantados[]= array("tid"=>$inv->tid,"saldo_disponible"=>$saldo_dispo,"pamnt"=>$inv->pamnt);    
+                    }
+                    
                 }else if($inv->status=="due" || $inv->status=="partial"){
                     $total_a_cubrir=$inv->total;
                     if($inv->status=="partial"){
@@ -367,8 +373,26 @@ $this->load->model('customers_model', 'customers');
                     foreach ($lista_para_pagos_faltantes as $key2 => $pag) { 
                    // var_dump("saldo_disponible =".$valuey['saldo_disponible']." total_a_cubrir=".$pag['total_a_cubrir']." , pag['pamnt']=".$pag['pamnt']);                       
                         if($valuey['saldo_disponible']>=$pag['total_a_cubrir'] && $pag['factura_totalizada']==false){//parte en la que sea mayor el saldo diponible completada parcialmente falta hacer lo de dividir transacciones
-
+var_dump($value2->csd);
+                            var_dump($valuey);
+                            var_dump($pag);
+var_dump("aqui2");
+                            $camino1=true;
+                            $camino3=false;
+                            $valor_debitados=0;
                             $tr = $this->db->get_where("transactions", array("tid"=>$valuey['tid'],"credit"=>$valuey['pamnt'],"estado"=>null,"cat!="=>"Purchase"))->row();
+                            if($tr==null){
+                                $camino1=false;
+                                $tr = $this->db->get_where("transactions", array("tid"=>$valuey['tid'],"credit"=>$valuey['saldo_disponible'],"estado"=>null,"cat!="=>"Purchase"))->row();
+                                if($tr==null){
+                                    $camino3=true;
+                                    $tr_verificacion = $this->db->query("select sum(debit) as calculo from transactions where tid=".$valuey['tid'])->result_array();
+                                    $valor_debitados=$tr_verificacion[0]['calculo'];
+                                    $tr = $this->db->get_where("transactions", array("tid"=>$valuey['tid'],"credit"=>($valuey['saldo_disponible']+$valor_debitados),"estado"=>null,"cat!="=>"Purchase"))->row();
+                                    //creo que agregar los debitados para que encuentre la transaccion    
+                                }
+                                
+                            }
                             //actualizando datos de la factura a pagar
                             $data= array();
                             $data['pamnt']=$pag['total_a_cubrir']+$pag['pamnt'];
@@ -381,7 +405,16 @@ $this->load->model('customers_model', 'customers');
                             $data= array();
                             $data['pamnt']=$valuey['pamnt']-$pag['total_a_cubrir'];
                             $lista_para_pagos_adelantados[$key]['pamnt']=$data['pamnt'];
-                            $valuey['pamnt']=$data['pamnt'];                            
+                            if($camino1){
+                                $valuey['pamnt']=$data['pamnt'];                                                            
+                            }else{
+
+                                $valuey['pamnt']=$tr->credit-$pag['total_a_cubrir'];
+                                if($camino3){
+                                    $valuey['pamnt']=$valuey['pamnt']-$valor_debitados;
+                                }
+                                //y aqui restarle los debitados
+                            }                             
                             $this->db->update("invoices",$data,array('tid' =>$valuey['tid']));                            
                             //editando transaccion que contiene el pago adelantado
                             $data_transaccion=array();                            
@@ -432,7 +465,18 @@ $this->load->model('customers_model', 'customers');
                             $lista_para_pagos_faltantes[$key2]['factura_totalizada']=true;
 
                         }else if($valuey['saldo_disponible']>50 && $pag['factura_totalizada']==false){//parte en la que sea menor el saldo diponible completada es decir pago parcial 
+                            var_dump("aqui");
+                            var_dump($value2->csd);
+                            var_dump($valuey);
+                            var_dump($pag);//http://localhost/CRMvestel/customers/invoices?id=14944
+                            $camino1=true;
+                            $camino3=false;
                             $tr = $this->db->get_where("transactions", array("tid"=>$valuey['tid'],"credit"=>$valuey['pamnt'],"estado"=>null,"cat!="=>"Purchase"))->row();
+                            if($tr==null){
+                                $camino1=false;
+                                $tr = $this->db->get_where("transactions", array("tid"=>$valuey['tid'],"credit"=>$valuey['saldo_disponible'],"estado"=>null,"cat!="=>"Purchase"))->row();
+                                //en el caso que esta dando error se me ocurre recorrer todo y obtener la transaccion mayor para descontarle el saldo que se pueda descontar
+                            }
                             //actualizando datos de la factura a pagar
                             $data= array();
                             $data['pamnt']=$valuey['saldo_disponible']+$pag['pamnt'];
@@ -448,10 +492,16 @@ $this->load->model('customers_model', 'customers');
                             $data= array();
                             $data['pamnt']=$valuey['pamnt']-$valuey['saldo_disponible'];
                             $lista_para_pagos_adelantados[$key]['pamnt']=$data['pamnt'];
-                            $valuey['pamnt']=$data['pamnt'];                            
+                            if($camino1){
+                                $valuey['pamnt']=$data['pamnt'];                            
+                                
+                            }else{
+                                $valuey['pamnt']=$tr->credit-$valuey['saldo_disponible'];
+                            }                            
                             $this->db->update("invoices",$data,array('tid' =>$valuey['tid']));                            
                             //editando transaccion que contiene el pago adelantado
-                            $data_transaccion=array();                            
+                            $data_transaccion=array();  
+
                             $data_transaccion['credit']=$valuey['pamnt'];
 
                             if(strpos(strtolower($tr->note), strtolower("credito_inicial"))!==false){
@@ -510,7 +560,7 @@ $this->load->model('customers_model', 'customers');
 
             //end codigo para pagar con saldo ya existente
             
-$this->customers->actualizar_debit_y_credit($value['id']);
+//$this->customers->actualizar_debit_y_credit($value['id']);
         }
         
         

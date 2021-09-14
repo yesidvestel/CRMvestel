@@ -155,7 +155,7 @@ class Transactions_model extends CI_Model
         return $this->db->insert('transactions_cat', $data);
     }
 
-    public function addtrans($payer_id, $payer_name, $pay_acc, $date, $debit, $credit, $pay_type, $pay_cat, $paymethod, $note, $eid)
+    public function addtrans($payer_id, $payer_name, $pay_acc, $date, $debit, $credit, $pay_type, $pay_cat, $paymethod, $note, $eid,$factura_id)
     {
 
         if ($pay_acc > 0) {
@@ -179,14 +179,37 @@ class Transactions_model extends CI_Model
                 'cat' => $pay_cat,
                 'method' => $paymethod,
                 'eid' => $eid,
-                'note' => $note
+                'note' => $note,
+                'tid'=>$factura_id
             );
             $amount = $credit - $debit;
             $this->db->set('lastbal', "lastbal+$amount", FALSE);
             $this->db->where('id', $pay_acc);
             $this->db->update('accounts');
             $tr_result=$this->db->insert('transactions', $data);
+
+            $this->db->select('invoiceduedate,total,csd,pamnt,rec');
+            $this->db->from('invoices');
+            $this->db->where('tid', $factura_id);
+            $query = $this->db->get();
+            $invresult = $query->row();
+            $totalrm = $invresult->total - $invresult->pamnt;
+        if ($totalrm > $amount) {
+            $this->db->set('pmethod', $paymethod);
+            $this->db->set('pamnt', "pamnt+$amount", FALSE);
+
+            $this->db->set('status', 'partial');
+            $this->db->where('tid', $factura_id);
+            $this->db->update('invoices');
             
+        } else {
+            $this->db->set('pmethod', $pmethod);
+            $this->db->set('pamnt', "pamnt+$amount", FALSE);
+            $this->db->set('status', 'paid');
+            $this->db->where('tid', $factura_id);
+            $this->db->update('invoices');
+        }
+
             $this->load->model('customers_model', 'customers');
             $this->customers->actualizar_debit_y_credit($payer_id);
             return $tr_result;
@@ -272,19 +295,27 @@ class Transactions_model extends CI_Model
         $this->db->update('accounts');
 		//echo $transaction_var['tid'];
 		if($transaction_var['tid']>0) {
-    	switch ($transaction_var['ext']) {
-        case 0 :
+            if($transaction_var['debit']>0){
+                $this->db->set('pamnt', "pamnt+$amt", FALSE);
+                $this->db->where('tid', $transaction_var['tid']);
+                $this->db->update('invoices');
+                
+            }else{
+                switch ($transaction_var['ext']) {
+                case 0 :
 
-            $this->db->set('pamnt', "pamnt-$crt", FALSE);
-            $this->db->where('tid', $transaction_var['tid']);
-            $this->db->update('invoices');
-            break;
+                    $this->db->set('pamnt', "pamnt-$crt", FALSE);
+                    $this->db->where('tid', $transaction_var['tid']);
+                    $this->db->update('invoices');
+                    break;
 
-        case 1 :
-            $this->db->set('pamnt', "pamnt-$amt", FALSE);
-            $this->db->where('tid', $transaction_var['tid']);
-            $this->db->update('purchase');
-            break;
+                case 1 :
+                    $this->db->set('pamnt', "pamnt-$amt", FALSE);
+                    $this->db->where('tid', $transaction_var['tid']);
+                    $this->db->update('purchase');
+                    break;        
+            }
+    	
 
     }
 }       

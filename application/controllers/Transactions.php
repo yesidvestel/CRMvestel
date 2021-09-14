@@ -381,6 +381,21 @@ class Transactions extends CI_Controller
 
     }
 
+    public function facturas_customer(){
+        $this->load->model('ticket_model', 'ticket');
+        $facturalist = $this->ticket->factura_list($this->input->post("id_customer"));
+        $lista=array();
+        foreach ($facturalist as $row) {
+            $cid = $row['id'];
+            $title = $row['tid'];
+            setlocale(LC_TIME, "spanish");
+            $mes = date(" F ",strtotime($row['invoicedate']));
+            
+            $lista[]= "<option value='$title'>$title".' '. strftime("%B del %Y", strtotime($mes))." </option>";
+        }
+        echo json_encode($lista);
+    }
+
     public function transfer()
     {
         if ($this->aauth->get_user()->roleid < 2) {
@@ -1408,6 +1423,7 @@ public function anullist()
         $date = $this->input->post('date');
         $amount = $this->input->post('amount');
         $pay_type = $this->input->post('pay_type');
+        $factura_id = $this->input->post('factura_id');
         if ($pay_type == 'Income') {
             $credit = $amount;
         } elseif ($pay_type == 'Expense') {
@@ -1418,7 +1434,7 @@ public function anullist()
         $note = $this->input->post('note');
         $date = datefordatabase($date);
 
-        if ($this->transactions->addtrans($payer_id, $payer_name, $pay_acc, $date, $debit, $credit, $pay_type, $pay_cat, $paymethod, $note, $this->aauth->get_user()->id)) {
+        if ($this->transactions->addtrans($payer_id, $payer_name, $pay_acc, $date, $debit, $credit, $pay_type, $pay_cat, $paymethod, $note, $this->aauth->get_user()->id,$factura_id)) {
             echo json_encode(array('status' => 'Success', 'message' => $this->lang->line('Transaction has been')));
         } else {
             echo json_encode(array('status' => 'Error', 'message' =>

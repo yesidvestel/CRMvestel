@@ -82,6 +82,20 @@
                 <div class="form-group row">
 
                     <label class="col-sm-2 control-label"
+                           for="product_price">Factura</label>
+
+                    <div class="col-sm-6">
+                        <div class="input-group">
+                            <select name="factura_id" id="id_facturas_asociadas" class="form-control">
+                                <option>--Sin Seleccionar Factura--</option>
+                            </select>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+
+                    <label class="col-sm-2 control-label"
                            for="product_price"><?php echo $this->lang->line('Type') ?></label>
 
                     <div class="col-sm-6">

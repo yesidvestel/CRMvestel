@@ -254,6 +254,7 @@
                         $valor_transacciones=0;
                         foreach ($transacciones as $key => $tr) {
                             $valor_transacciones+=$tr['credit'];
+                            $valor_transacciones-=$tr['debit'];
                         }
                         $valor_a_cubrir=$invoice['total']-$invoice['pamnt'];
                         if($valor_transacciones>$invoice['total']){
@@ -304,6 +305,7 @@
                         $valor_transacciones=0;
                         foreach ($transacciones as $key => $tr) {
                             $valor_transacciones+=$tr['credit'];
+                            $valor_transacciones-=$tr['debit'];
                         }
                         $valor_a_cubrir=$invoice['total']-$invoice['pamnt'];
                         if($valor_transacciones>$invoice['total']){
@@ -360,6 +362,7 @@
                         $valor_transacciones=0;
                         foreach ($transacciones as $key => $tr) {
                             $valor_transacciones+=$tr['credit'];
+                            $valor_transacciones-=$tr['debit'];
                         }
                         $valor_a_cubrir=$factura['total']-$factura['pamnt'];
                         if($valor_transacciones>$factura['total']){                            
