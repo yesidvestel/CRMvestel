@@ -369,7 +369,9 @@
                                 }else if($this->aauth->get_user()->roleid>=4){
                                     $row['note'].=", <a style='color:blue;' href='".base_url()."transactions/index?id_tr=".$row['id']."'>Ir a Anular<a/>";
                                 }
-
+                                if($row['type']=="Expense"){
+                                    $row['credit']="-".$row['debit'];
+                                }
                                 echo '<tr>
                             <td>' . $row['date'] . '</td>
                             <td>' . $this->lang->line($row['method']) . '</td>
