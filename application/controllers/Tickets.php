@@ -628,9 +628,9 @@ $txt_error="";
         //$dataz['fecha_final']=$fecha_final;
         if ($this->db->update('tickets',$dataz,array('idt'=>$tid))){
             //cambio color al finalizar
-            /*$this->db->set('color', '#a3a3a3');
+            $this->db->set('color', '#a3a3a3');
             $this->db->where('idorden', $ticket->codigo);
-            $this->db->update('events');*/
+            $this->db->update('events');
         };
                 
         
