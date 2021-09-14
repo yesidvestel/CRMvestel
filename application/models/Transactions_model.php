@@ -155,7 +155,7 @@ class Transactions_model extends CI_Model
         return $this->db->insert('transactions_cat', $data);
     }
 
-    public function addtrans($payer_id, $payer_name, $pay_acc, $date, $debit, $credit, $pay_type, $pay_cat, $paymethod, $note, $eid,$factura_id)
+    public function addtrans($payer_id, $payer_name, $pay_acc, $date, $debit, $credit, $pay_type, $pay_cat, $paymethod, $note, $eid)
     {
 
         if ($pay_acc > 0) {
@@ -180,7 +180,7 @@ class Transactions_model extends CI_Model
                 'method' => $paymethod,
                 'eid' => $eid,
                 'note' => $note,
-                'tid'=>$factura_id
+                //'tid'=>$factura_id
             );
             $amount = $credit - $debit;
             $this->db->set('lastbal', "lastbal+$amount", FALSE);
@@ -188,27 +188,8 @@ class Transactions_model extends CI_Model
             $this->db->update('accounts');
             $tr_result=$this->db->insert('transactions', $data);
 
-            $this->db->select('invoiceduedate,total,csd,pamnt,rec');
-            $this->db->from('invoices');
-            $this->db->where('tid', $factura_id);
-            $query = $this->db->get();
-            $invresult = $query->row();
-            $totalrm = $invresult->total - $invresult->pamnt;
-        if ($totalrm > $amount) {
-            $this->db->set('pmethod', $paymethod);
-            $this->db->set('pamnt', "pamnt+$amount", FALSE);
-
-            $this->db->set('status', 'partial');
-            $this->db->where('tid', $factura_id);
-            $this->db->update('invoices');
             
-        } else {
-            $this->db->set('pmethod', $pmethod);
-            $this->db->set('pamnt', "pamnt+$amount", FALSE);
-            $this->db->set('status', 'paid');
-            $this->db->where('tid', $factura_id);
-            $this->db->update('invoices');
-        }
+        
 
             $this->load->model('customers_model', 'customers');
             $this->customers->actualizar_debit_y_credit($payer_id);

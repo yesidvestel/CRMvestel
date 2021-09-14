@@ -8,7 +8,7 @@ function selectCustomer(cid, cname, cadd1, cadd2, ph, email) {
     $('#customer_phone').html('Documento: <strong>'+ph+'</strong><br>Celular: <strong>'+email+'</strong>');
     $("#customer-box").val();
 
-    $.post(baseurl+"transactions/facturas_customer",{'id_customer':cid},function(data){
+   /* $.post(baseurl+"transactions/facturas_customer",{'id_customer':cid},function(data){
         var options="<option value=''>--Sin Seleccionar Factura--</option>";
         console.log(data);
             $(data).each(function(ind,val){
@@ -16,7 +16,7 @@ function selectCustomer(cid, cname, cadd1, cadd2, ph, email) {
                 options+=val;
             });
             $("#id_facturas_asociadas").html(options);
-    },'json');
+    },'json');*/
     $("#customer").show();
 
     $("#customer-box-result").hide();

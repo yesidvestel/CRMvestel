@@ -79,7 +79,7 @@
                                class="form-control margin-bottom  required" name="amount">
                     </div>
                 </div>
-                <div class="form-group row">
+                <!--<div class="form-group row">
 
                     <label class="col-sm-2 control-label"
                            for="product_price">Factura</label>
@@ -92,7 +92,7 @@
 
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <div class="form-group row">
 
                     <label class="col-sm-2 control-label"

@@ -373,24 +373,24 @@ $this->load->model('customers_model', 'customers');
                     foreach ($lista_para_pagos_faltantes as $key2 => $pag) { 
                    // var_dump("saldo_disponible =".$valuey['saldo_disponible']." total_a_cubrir=".$pag['total_a_cubrir']." , pag['pamnt']=".$pag['pamnt']);                       
                         if($valuey['saldo_disponible']>=$pag['total_a_cubrir'] && $pag['factura_totalizada']==false){//parte en la que sea mayor el saldo diponible completada parcialmente falta hacer lo de dividir transacciones
-var_dump($value2->csd);
+/*var_dump($value2->csd);
                             var_dump($valuey);
                             var_dump($pag);
-var_dump("aqui2");
+var_dump("aqui2");*/
                             $camino1=true;
-                            $camino3=false;
-                            $valor_debitados=0;
+                            //$camino3=false;
+                            //$valor_debitados=0;
                             $tr = $this->db->get_where("transactions", array("tid"=>$valuey['tid'],"credit"=>$valuey['pamnt'],"estado"=>null,"cat!="=>"Purchase"))->row();
                             if($tr==null){
                                 $camino1=false;
                                 $tr = $this->db->get_where("transactions", array("tid"=>$valuey['tid'],"credit"=>$valuey['saldo_disponible'],"estado"=>null,"cat!="=>"Purchase"))->row();
-                                if($tr==null){
+                              /*  if($tr==null){
                                     $camino3=true;
                                     $tr_verificacion = $this->db->query("select sum(debit) as calculo from transactions where tid=".$valuey['tid'])->result_array();
                                     $valor_debitados=$tr_verificacion[0]['calculo'];
                                     $tr = $this->db->get_where("transactions", array("tid"=>$valuey['tid'],"credit"=>($valuey['saldo_disponible']+$valor_debitados),"estado"=>null,"cat!="=>"Purchase"))->row();
                                     //creo que agregar los debitados para que encuentre la transaccion    
-                                }
+                                }*/
                                 
                             }
                             //actualizando datos de la factura a pagar
@@ -410,9 +410,9 @@ var_dump("aqui2");
                             }else{
 
                                 $valuey['pamnt']=$tr->credit-$pag['total_a_cubrir'];
-                                if($camino3){
+                                /*if($camino3){
                                     $valuey['pamnt']=$valuey['pamnt']-$valor_debitados;
-                                }
+                                }*/
                                 //y aqui restarle los debitados
                             }                             
                             $this->db->update("invoices",$data,array('tid' =>$valuey['tid']));                            
@@ -465,12 +465,13 @@ var_dump("aqui2");
                             $lista_para_pagos_faltantes[$key2]['factura_totalizada']=true;
 
                         }else if($valuey['saldo_disponible']>50 && $pag['factura_totalizada']==false){//parte en la que sea menor el saldo diponible completada es decir pago parcial 
-                            var_dump("aqui");
+                          /*  var_dump("aqui");
                             var_dump($value2->csd);
                             var_dump($valuey);
                             var_dump($pag);//http://localhost/CRMvestel/customers/invoices?id=14944
+                            */
                             $camino1=true;
-                            $camino3=false;
+                            //$camino3=false;
                             $tr = $this->db->get_where("transactions", array("tid"=>$valuey['tid'],"credit"=>$valuey['pamnt'],"estado"=>null,"cat!="=>"Purchase"))->row();
                             if($tr==null){
                                 $camino1=false;
@@ -560,7 +561,7 @@ var_dump("aqui2");
 
             //end codigo para pagar con saldo ya existente
             
-//$this->customers->actualizar_debit_y_credit($value['id']);
+$this->customers->actualizar_debit_y_credit($value['id']);
         }
         
         
