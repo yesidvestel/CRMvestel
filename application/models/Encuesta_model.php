@@ -126,6 +126,16 @@ class encuesta_model extends CI_Model
         $query = $this->db->get();
         return $query->row_array();
     }
+	public function info_colaborador()
+    {
+		$datos = $this->aauth->get_user()->id;
+        $this->db->select('employee_profile.*');
+        $this->db->from('employee_profile');
+		//$this->db->join('aauth_users', 'employee_profile.username=aauth_users.user', 'left');
+        $this->db->where('id', $datos);
+        $query = $this->db->get();
+        return $query->row_array();
+    }
 
 
     public function add($us, $emp, $codigo, $detalle, $presentar, $trato, $estado, $tiempo, $recomendar, $obs)
@@ -158,7 +168,84 @@ class encuesta_model extends CI_Model
         }
 
 	}
+	public function addats($us, $ubicacion, $fecha, $lugar, $horain, $horafin, $tarea, $alturas, $casco, $gafas, $monogafas, $tapaoidos, $guantes, $careta, $arnes, $aux, $eslinga, $respirador, $mosquete, $otros,
+							$manual1, $manual2, $electro1,$electro2,$mecan1,$mecan2,$otras1,$otras2,$alto,$acceso,$puntos,$distancia,$prevencion,$proteccion,$trabajadores,$materiales,$peligros,$peligro_otros,$tarea1,
+							 $tarea2,$tarea3,$tarea4,$tarea5,$riesgo1,$riesgo2,$riesgo3,$riesgo4,$riesgo5,$consecuencia1,$consecuencia2,$consecuencia3,$consecuencia4,$consecuencia5,$control1,$control2,$control3,
+							 $control4,$control5,$incidente,$seguro)
+    {
+        $data = array(
+            'user' => $us,
+			'ubicacion' => $ubicacion,
+            'fecha' => $fecha,
+            'lugar' => $lugar,
+            'horain' => $horain,
+            'horafin' => $horafin,
+            'tarea' => $tarea,
+            'alturas' => $alturas,
+            'gafas' => $gafas,
+			'monogafas' => $monogafas,
+			'tapaoidos' => $tapaoidos,
+			'guantes' => $guantes,
+			'careta' => $careta,
+			'arnes' => $arnes,
+			'1er_aux' => $aux,
+			'eslinga' => $eslinga,
+			'respirador' => $respirador,
+			'mosquete' => $mosquete,
+			'otros' => $otros,
+			'manual1' => $manual1,
+			'manual2' => $manual2,
+			'electro1' => $electro1,
+			'electro2' => $electro2,
+			'mecan1' => $mecan1,
+			'mecan2' => $mecan2,
+			'otras1' => $otras1,
+			'otras2' => $otras2,
+			'alto' => $alto,
+			'acceso' => $acceso,
+			'puntos' => $puntos,
+			'distancia' => $distancia,
+			'prevencion' => $prevencion,
+			'proteccion' => $proteccion,
+			'trabajadores' => $trabajadores,
+			'materiales' => $materiales,
+			'peligros' => $peligros,
+			'peligro_otros' => $peligro_otros,
+			'tarea1' => $tarea1,
+			'tarea2' => $tarea2,
+			'tarea3' => $tarea3,
+			'tarea4' => $tarea4,
+			'tarea5' => $tarea5,
+			'riesgo1' => $riesgo1,
+			'riesgo2' => $riesgo2,
+			'riesgo3' => $riesgo3,
+			'riesgo4' => $riesgo4,
+			'riesgo5' => $riesgo5,
+			'consecuencia1' => $consecuencia1,
+			'consecuencia2' => $consecuencia2,
+			'consecuencia3' => $consecuencia3,
+			'consecuencia4' => $consecuencia4,
+			'consecuencia5' => $consecuencia5,
+			'control1' => $control1,
+			'control2' => $control2,
+			'control3' => $control3,
+			'control4' => $control4,
+			'control5' => $control5,
+			'incidente' => $incidente,
+			'seguro' => $seguro          
 
+        );
+	
+        if ($this->db->insert('formularioats', $data)) {
+            $cid = $this->db->insert_id();
+            echo json_encode(array('status' => 'Success', 'message' =>
+                $this->lang->line('UPDATED') . ' <a href="' . base_url('encuesta/index') . '" class="btn btn-info btn-sm"><span class="icon-eye"></span> ' . $this->lang->line('View') . '</a>', 'cid' => $cid));
+        } else {
+            echo json_encode(array('status' => 'Error', 'message' =>
+                $this->lang->line('ERROR')));
+        }
+
+	}
 
     public function edit($id, $name, $nit, $company, $phone, $email, $address, $city, $region, $cuenta, $typo, $banco)
     {

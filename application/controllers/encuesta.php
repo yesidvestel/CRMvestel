@@ -61,6 +61,21 @@ class encuesta extends CI_Controller
         $this->load->view('encuestas/create',$data);
         $this->load->view('fixed/footer');
     }
+	public function newats()
+    {
+		
+		$this->load->model('ticket_model', 'ticket');
+		$codigo = $this->input->get('id');
+		$ticket = $this->db->get_where('tickets',array('codigo'=>$codigo))->row();
+		$thread_id = $ticket->idt;
+		$data['colaborador'] = $this->encuesta->info_colaborador();
+		$data['rol'] = $this->aauth->get_user()->roleid;
+        $head['usernm'] = $this->aauth->get_user()->username;
+        $head['title'] = 'Nueva Encuesta';
+        $this->load->view('fixed/header', $head);
+        $this->load->view('encuestas/newats',$data);
+        $this->load->view('fixed/footer');
+    }
 
     public function view()
     {
@@ -139,6 +154,74 @@ class encuesta extends CI_Controller
         $detalle = $this->input->post('detalle');        
 
         $this->encuesta->add($us, $emp, $codigo, $detalle, $presentar, $trato, $estado, $tiempo, $recomendar, $obs);
+
+    }
+	public function addats()
+    {
+        $us = $this->aauth->get_user()->id;
+		$ubicacion = $this->input->post('ubicacion');
+        $fecha = date("Y-m-d",strtotime($this->input->post('fecha')));
+        $lugar = $this->input->post('lugar');
+        $horain = date("H:i",strtotime($this->input->post('horain')));
+        $horafin = date("H:i",strtotime($this->input->post('horafin')));
+		$tarea = $this->input->post('tarea');
+        $alturas = $this->input->post('alturas');
+        $casco = $this->input->post('casco');
+        $gafas = $this->input->post('gafas');
+		$monogafas = $this->input->post('monogafas');
+		$tapaoidos = $this->input->post('tapaoidos');
+		$guantes = $this->input->post('guantes');
+		$careta = $this->input->post('careta');
+		$arnes = $this->input->post('arnes');
+		$aux = $this->input->post('1er_aux');
+		$eslinga = $this->input->post('eslinga');
+		$respirador = $this->input->post('respirador');
+		$mosquete = $this->input->post('mosquete');
+		$otros = $this->input->post('otros');
+		$manual1 = $this->input->post('manual1');
+		$manual2 = $this->input->post('manual2');
+		$electro1 = $this->input->post('electro1');
+		$electro2 = $this->input->post('electro2');
+		$mecan1 = $this->input->post('mecan1');
+		$mecan2 = $this->input->post('mecan2');
+		$otras1 = $this->input->post('otras1');
+		$otras2 = $this->input->post('otras2');
+		$alto = $this->input->post('alto');
+		$acceso = $this->input->post('acceso');
+		$puntos = $this->input->post('puntos');
+		$distancia = $this->input->post('distancia');
+		$prevencion = $this->input->post('prevencion');
+		$proteccion = $this->input->post('proteccion');
+		$trabajadores = $this->input->post('trabajadores');
+		$materiales = $this->input->post('materiales');
+		$peligros = $this->input->post('peligros');
+		$peligro_otros = $this->input->post('peligro_otros');
+		$tarea1 = $this->input->post('tarea1');
+		$tarea2 = $this->input->post('tarea2');
+		$tarea3 = $this->input->post('tarea3');
+		$tarea4 = $this->input->post('tarea4');
+		$tarea5 = $this->input->post('tarea5');
+		$riesgo1 = $this->input->post('riesgo1');
+		$riesgo2 = $this->input->post('riesgo2');
+		$riesgo3 = $this->input->post('riesgo3');
+		$riesgo4 = $this->input->post('riesgo4');
+		$riesgo5 = $this->input->post('riesgo5');
+		$consecuencia1 = $this->input->post('consecuencia1');
+		$consecuencia2 = $this->input->post('consecuencia2');
+		$consecuencia3 = $this->input->post('consecuencia3');
+		$consecuencia4 = $this->input->post('consecuencia4');
+		$consecuencia5 = $this->input->post('consecuencia5');
+		$control1 = $this->input->post('control1');
+		$control2 = $this->input->post('control2');
+		$control3 = $this->input->post('control3');
+		$control4 = $this->input->post('control4');
+		$control5 = $this->input->post('control5');
+		$incidente = $this->input->post('incidente');
+		$seguro = $this->input->post('seguro');
+        $this->encuesta->addats($us, $ubicacion, $fecha, $lugar, $horain, $horafin, $tarea, $alturas, $casco, $gafas, $monogafas, $tapaoidos, $guantes, $careta, $arnes, $aux, $eslinga, $respirador, $mosquete, $otros,
+							$manual1, $manual2, $electro1,$electro2,$mecan1,$mecan2,$otras1,$otras2,$alto,$acceso,$puntos,$distancia,$prevencion,$proteccion,$trabajadores,$materiales,$peligros,$peligro_otros,$tarea1,
+							 $tarea2,$tarea3,$tarea4,$tarea5,$riesgo1,$riesgo2,$riesgo3,$riesgo4,$riesgo5,$consecuencia1,$consecuencia2,$consecuencia3,$consecuencia4,$consecuencia5,$control1,$control2,$control3,
+							 $control4,$control5,$incidente,$seguro);
 
     }
 

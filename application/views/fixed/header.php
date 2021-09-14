@@ -450,7 +450,10 @@
                         </li> 
 						<li>
                             <a href="<?php echo base_url(); ?>encuesta/create"><?php echo $this->lang->line(''); ?>Nueva Encuenta</a>
-                        </li>                        
+                        </li>
+						<li>
+                            <a href="<?php echo base_url(); ?>encuesta/newats"><?php echo $this->lang->line(''); ?>Nueva ATS</a>
+                        </li>
                         <li>
                             <a href="<?php echo base_url(); ?>encuesta/index"><?php echo $this->lang->line('Manage Tickets') ?></a>
                         </li>
