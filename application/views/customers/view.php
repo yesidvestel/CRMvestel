@@ -65,13 +65,14 @@
                                         </a>
 
                                     </div>
-									
+									<?php if ($this->aauth->get_user()->roleid == 5) { ?>
                                     <div class="col-md-6">
                                         <a href="<?php echo base_url('customers/edit?id=' . $details['id']) ?>"
                                            class="btn btn-info btn-md"><i
                                                     class="icon-pencil"></i> <?php echo $this->lang->line('Edit Profile') ?>
                                         </a>
                                     </div>
+									<?php } ?>
                                 </div>
                             </div>
                             <div class="row mt-3">
