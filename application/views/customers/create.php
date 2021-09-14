@@ -470,7 +470,7 @@ alert(selected);
 							//crear funcion que ejecute el cambio
 							function cambia(){
 								var customergroup;
-								customergroup = document.formulario1.customergroup[document.formulario1.customergroup.			selectedIndex].value;
+								customergroup = document.formulario1.customergroup[document.formulario1.customergroup.selectedIndex].value;
 								//se verifica la seleccion dada
 								if(customergroup!=0){
 									mis_opts=eval("perfil_"+customergroup);

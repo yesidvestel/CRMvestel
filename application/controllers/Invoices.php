@@ -928,12 +928,22 @@ var_dump("aqui2");
         $status = $this->input->post('status');
 		$tv = $this->input->post('television');
 		$int = $this->input->post('internet');
-       
+        
         if($tv!="por_defecto"){
-		  $this->db->set('television', $tv);
+			if($tv !='no'){
+		  		$this->db->set('television', $tv);
+				$this->db->set('estado_tv', '');
+			}else{
+				$this->db->set('estado_tv', 'Cortado');
+			}
         }
-         if($int!="por_defecto" && $tv!="Television"){           
-                $this->db->set('combo', $int);            
+         if($int!="por_defecto" && $tv!="Television"){
+			 if($int != 'no'){
+                $this->db->set('combo', $int);
+			 	$this->db->set('estado_combo', '');
+			 }else{
+				$this->db->set('estado_combo', 'Cortado'); 
+			 }
         }
         $this->db->set('ron', $status);
         $this->db->where('tid', $tid);
