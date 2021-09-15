@@ -304,7 +304,7 @@ class Customers extends CI_Controller
         $head['usernm'] = $this->aauth->get_user()->username;
         $data['activity']=$this->customers->activity($custid);
 		$data['attach'] = $this->customers->attach($custid);
-        //$data['estado_mikrotik']=$this->customers->get_estado_mikrotik($data['details']['name_s'],$data['details']['gid']);
+        $data['estado_mikrotik']=$this->customers->get_estado_mikrotik($data['details']['name_s'],$data['details']['gid']);
         $this->customers->actualizar_debit_y_credit($custid);
         if($data['servicios']['estado_combo']=="Cortado"){
             $data['servicios']['combo']=$data['servicios']['combo']="<b><i class='sts-Cortado'>".$data['servicios']['paquete']."</i></b>";   
