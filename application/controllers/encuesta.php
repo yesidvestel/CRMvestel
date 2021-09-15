@@ -80,13 +80,13 @@ class encuesta extends CI_Controller
     public function view()
     {
         $custid = $this->input->get('id');
-        $data['details'] = $this->supplier->details($custid);
-        $data['customergroup'] = $this->supplier->group_info($data['details']['gid']);
-        $data['money'] = $this->supplier->money_details($custid);
+        $data['rta'] = $this->encuesta->detall_colaborador($custid);
+        //$data['customergroup'] = $this->supplier->group_info($data['details']['gid']);
+        //$data['money'] = $this->supplier->money_details($custid);
         $head['usernm'] = $this->aauth->get_user()->username;
         $head['title'] = 'View Supplier';
         $this->load->view('fixed/header', $head);
-        $this->load->view('supplier/view', $data);
+        $this->load->view('encuestas/view', $data);
         $this->load->view('fixed/footer');
     }
 
@@ -275,29 +275,27 @@ class encuesta extends CI_Controller
     public function translist()
     {
         $cid = $this->input->post('cid');
-        $list = $this->supplier->trans_table($cid);
+        $list = $this->encuesta->trans_table();
         $data = array();
         // $no = $_POST['start'];
         $no = $this->input->post('start');
         foreach ($list as $prd) {
             $no++;
             $row = array();
-            $pid = $prd->id;
-            $row[] = $prd->date;
-            $row[] = amountFormat($prd->debit);
-            $row[] = amountFormat($prd->credit);
-            $row[] = $prd->account;
-            $row[] = $prd->payer;
-            $row[] = $this->lang->line($prd->method);
-
-            $row[] = '<a href="' . base_url() . 'transactions/view?id=' . $pid . '" class="btn btn-primary btn-xs"><span class="icon-eye"></span> ' . $this->lang->line('View') . '</a> <a href="#" data-object-id="' . $pid . '" class="btn btn-danger btn-xs delete-object"><span class="icon-bin"></span> ' . $this->lang->line('Delete') . '</a>';
+            $pid = $prd->idats;
+			$row[] = $prd->fecha;
+			$row[] = $prd->name;
+			$row[] = $prd->dto;
+			$row[] = $prd->phone;
+			$row[] = $prd->city;
+            $row[] = '<a href="' . base_url() . 'encuesta/view?id=' . $pid . '" class="btn btn-primary btn-xs"><span class="icon-eye"></span> ' . $this->lang->line('View') . '</a> <a href="#" data-object-id="' . $pid . '" class="btn btn-danger btn-xs delete-object"><span class="icon-bin"></span> ' . $this->lang->line('Delete') . '</a>';
             $data[] = $row;
         }
 
         $output = array(
             "draw" => $_POST['draw'],
-            "recordsTotal" => $this->supplier->trans_count_all($cid),
-            "recordsFiltered" => $this->supplier->trans_count_filtered($cid),
+            "recordsTotal" => $this->encuesta->trans_count_all(),
+            "recordsFiltered" => $this->encuesta->trans_count_filtered(),
             "data" => $data,
         );
         //output to json format
@@ -338,15 +336,15 @@ class encuesta extends CI_Controller
     }
 
 
-    public function transactions()
+    public function listats()
     {
         $custid = $this->input->get('id');
-        $data['details'] = $this->supplier->details($custid);
-        $data['money'] = $this->supplier->money_details($custid);
+        //$data['details'] = $this->supplier->details($custid);
+        //$data['money'] = $this->supplier->money_details($custid);
         $head['usernm'] = $this->aauth->get_user()->username;
         $head['title'] = 'View Supplier';
         $this->load->view('fixed/header', $head);
-        $this->load->view('supplier/transactions', $data);
+        $this->load->view('encuestas/listats');
         $this->load->view('fixed/footer');
     }
 

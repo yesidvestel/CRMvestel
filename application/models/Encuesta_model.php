@@ -24,12 +24,13 @@ class encuesta_model extends CI_Model
     var $table = 'encuestas';
     var $column_order = array(null, 'norden', 'idtec', 'idemp', 'presentacion', 'trato', 'estado', 'tiempo', 'recomendar', 'observacion');
     var $column_search = array('norden', 'idtec', 'idemp', 'presentacion', 'trato', 'estado', 'tiempo', 'recomendar', 'observacion');
-    var $trans_column_order = array('date', 'debit', 'credit', 'account', null);
-    var $trans_column_search = array('id', 'date');
+    var $trans_column_order = array('user', 'fecha', null);
+    var $trans_column_search = array('user', 'fecha');
     var $inv_column_order = array(null, 'tid', 'name', 'invoicedate', 'total', 'status', null);
     var $inv_column_search = array('tid', 'name', 'invoicedate', 'total');
     var $order = array('id' => 'desc');
     var $inv_order = array('purchase.tid' => 'desc');
+	var $trans_order = array('formularioats.idats' => 'desc');
 
 
     private function _get_datatables_query($id = '')
@@ -136,7 +137,15 @@ class encuesta_model extends CI_Model
         $query = $this->db->get();
         return $query->row_array();
     }
-
+	public function detall_colaborador($custid)
+    {
+		$this->db->select('*');
+        $this->db->from('formularioats');
+		$this->db->join('employee_profile', 'formularioats.user=employee_profile.id', 'left');
+        $this->db->where('idats', $custid);
+        $query = $this->db->get();
+        return $query->row_array();
+    }
 
     public function add($us, $emp, $codigo, $detalle, $presentar, $trato, $estado, $tiempo, $recomendar, $obs)
     {
@@ -319,9 +328,9 @@ class encuesta_model extends CI_Model
 
     //transtables
 
-    function trans_table($id)
+    function trans_table()
     {
-        $this->_get_trans_table_query($id);
+        $this->_get_trans_table_query();
         if ($_POST['length'] != -1)
             $this->db->limit($_POST['length'], $_POST['start']);
         $query = $this->db->get();
@@ -329,15 +338,11 @@ class encuesta_model extends CI_Model
     }
 
 
-    private function _get_trans_table_query($id)
+    private function _get_trans_table_query()
     {
 
-        $this->db->from('transactions');
-
-
-        $this->db->where('payerid', $id);
-        $this->db->where('ext', 1);
-
+        $this->db->from('formularioats');
+		$this->db->join('employee_profile', 'formularioats.user=employee_profile.id', 'left');
         $i = 0;
 
         foreach ($this->trans_column_search as $item) // loop column
@@ -360,12 +365,12 @@ class encuesta_model extends CI_Model
             }
             $i++;
         }
-        $search = $this->input->post('order');
+        $search = $this->input->post('trans_order');
         if ($search) // here order processing
         {
             $this->db->order_by($this->trans_column_order[$search['0']['column']], $search['0']['dir']);
-        } else if (isset($this->order)) {
-            $order = $this->order;
+        } else if (isset($this->trans_order)) {
+            $order = $this->trans_order;
             $this->db->order_by(key($order), $order[key($order)]);
         }
     }

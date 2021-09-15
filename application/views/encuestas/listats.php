@@ -36,12 +36,10 @@
                 <thead>
                 <tr>
                     <th><?php echo $this->lang->line('Date') ?></th>
-
-                    <th><?php echo $this->lang->line('Debit') ?></th>
-                    <th><?php echo $this->lang->line('Credit') ?></th>
-                    <th><?php echo $this->lang->line('Account') ?></th>
-                    <th><?php echo $this->lang->line('Payer') ?></th>
-                    <th><?php echo $this->lang->line('Method') ?></th>
+                    <th><?php echo $this->lang->line('') ?>Nombre</th>
+                    <th><?php echo $this->lang->line('') ?>Documento</th>
+                    <th><?php echo $this->lang->line('') ?>Celular</th>
+                    <th><?php echo $this->lang->line('') ?>Sede</th>
                     <th><?php echo $this->lang->line('Action') ?></th>
 
 
@@ -53,12 +51,10 @@
                 <tfoot>
                 <tr>
                     <th><?php echo $this->lang->line('Date') ?></th>
-
-                    <th><?php echo $this->lang->line('Debit') ?></th>
-                    <th><?php echo $this->lang->line('Credit') ?></th>
-                    <th><?php echo $this->lang->line('Account') ?></th>
-                    <th><?php echo $this->lang->line('Payer') ?></th>
-                    <th><?php echo $this->lang->line('Method') ?></th>
+                    <th><?php echo $this->lang->line('') ?>Nombre</th>
+                    <th><?php echo $this->lang->line('') ?>Documento</th>
+                    <th><?php echo $this->lang->line('') ?>Celular</th>
+                    <th><?php echo $this->lang->line('') ?>Sede</th>
                     <th><?php echo $this->lang->line('Action') ?></th>
 
                 </tr>
@@ -82,9 +78,9 @@
 
             // Load data for the table's content from an Ajax source
             "ajax": {
-                "url": "<?php echo site_url('supplier/translist')?>",
+                "url": "<?php echo site_url('encuesta/translist')?>",
                 "type": "POST",
-                "data": {'cid':<?php echo $_GET['id'] ?> }
+                //"data": {'cid':<?php echo $_GET['id'] ?> }
             },
 
             //Set column definition initialisation properties.

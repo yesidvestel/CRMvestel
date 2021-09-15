@@ -452,11 +452,15 @@
                             <a href="<?php echo base_url(); ?>encuesta/create"><?php echo $this->lang->line(''); ?>Nueva Encuenta</a>
                         </li>
 						<li>
+                            <a href="<?php echo base_url(); ?>encuesta/index"><?php echo $this->lang->line('') ?>Lista Encuestas</a>
+                        </li>
+						<li>
                             <a href="<?php echo base_url(); ?>encuesta/newats"><?php echo $this->lang->line(''); ?>Nueva ATS</a>
                         </li>
-                        <li>
-                            <a href="<?php echo base_url(); ?>encuesta/index"><?php echo $this->lang->line('Manage Tickets') ?></a>
+						<li>
+                            <a href="<?php echo base_url(); ?>encuesta/listats"><?php echo $this->lang->line(''); ?>Lista de ATS</a>
                         </li>
+                        
                     </ul>
                 </li>
                 <!---------------- GESTION DE PROYECTOS ----------------->
@@ -900,13 +904,16 @@
                         </li> 
 						<li>
                             <a href="<?php echo base_url(); ?>encuesta/create"><?php echo $this->lang->line(''); ?>Nueva Encuenta</a>
-                        </li>                        
-                        <li>
-                            <a href="<?php echo base_url(); ?>encuesta/index"><?php echo $this->lang->line('Manage Tickets') ?></a>
                         </li>
-						
-
-
+						<li>
+                            <a href="<?php echo base_url(); ?>encuesta/index"><?php echo $this->lang->line('') ?>Lista Encuestas</a>
+                        </li>
+						<li>
+                            <a href="<?php echo base_url(); ?>encuesta/newats"><?php echo $this->lang->line(''); ?>Nueva ATS</a>
+                        </li>
+						<li>
+                            <a href="<?php echo base_url(); ?>encuesta/listats"><?php echo $this->lang->line(''); ?>Lista de ATS</a>
+                        </li>
                     </ul>
                 </li>
 			<!--- SOPORTE TECNICO --->

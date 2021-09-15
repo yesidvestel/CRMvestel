@@ -258,7 +258,7 @@
 							<td align="center" class="titulos" colspan="3" width="30%">Firma</td>
 						</tr>
 						<tr>
-							<td align="center" colspan="5" width="70%"><?php echo $colaborador['name'].' CC: '.$colaborador['phone']; ?></td>
+							<td align="center" colspan="5" width="70%"><?php echo $colaborador['name'].' CC: '.$colaborador['dto']; ?></td>
 							<td align="center" colspan="3" width="30%"><img alt="image" class="img-responsive"
                                                  src="<?php echo base_url('userfiles/employee_sign/' . $colaborador['sign']); ?>" style="width: 40%"></td>
 						</tr>
