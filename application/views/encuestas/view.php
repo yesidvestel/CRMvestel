@@ -39,7 +39,8 @@
 						  <td colspan="4" width="50%"><span style="font-weight: bold">Nombre y Apellido:</span> <?php echo $rta['name']; ?>&nbsp;</td>
 						</tr>
 						<tr>
-						  <td colspan="4"><span style="font-weight: bold">Área/Proceso:</span> <?php echo user_role($rol); ?></td>
+						  <td colspan="4"><span style="font-weight: bold">Área/Proceso:</span> 
+							  <?php $rol = $this->db->get_where('aauth_users',array('id'=>$rta['id']))->row(); echo user_role($rol); ?></td>
 						  <td colspan="4"><span style="font-weight: bold">Ubicación donde se realiza el trabajo:</span> <?php echo $rta['ubicacion']; ?></td>
 						</tr>
 						<tr>
