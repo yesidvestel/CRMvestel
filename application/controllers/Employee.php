@@ -96,6 +96,11 @@ class Employee extends CI_Controller
 
 
         $name = $this->input->post('name');
+		$dto = $this->input->post('documento');
+		$ingreso = date("Y-m-d",strtotime($this->input->post('ingreso')));
+		$rh = $this->input->post('rh');
+		$eps = $this->input->post('eps');
+		$pensiones = $this->input->post('pensiones');
         $phone = $this->input->post('phone');
         $email = $this->input->post('email');
         $address = $this->input->post('address');
@@ -112,7 +117,7 @@ class Employee extends CI_Controller
             if ($nuid > 0) {
 
 
-                $this->employee->add_employee($nuid, (string)$this->aauth->get_user($a)->username, $name, $roleid, $phone, $address, $city, $region, $country);
+                $this->employee->add_employee($nuid, (string)$this->aauth->get_user($a)->username, $name,$dto,$ingreso,$rh,$eps,$pensiones, $roleid, $phone, $address, $city, $region, $country);
 
             }
 
@@ -322,13 +327,18 @@ class Employee extends CI_Controller
         if ($this->input->post()) {
             $eid = $this->input->post('eid');
             $name = $this->input->post('name');
+			$dto = $this->input->post('documento');
+			$ingreso = date("Y-m-d",strtotime($this->input->post('ingreso')));
+			$rh = $this->input->post('rh');
+			$eps = $this->input->post('eps');
+			$pensiones = $this->input->post('pensiones');
             $phone = $this->input->post('phone');
             $phonealt = $this->input->post('phonealt');
             $address = $this->input->post('address');
             $city = $this->input->post('city');
             $region = $this->input->post('region');
             $country = $this->input->post('country');
-            $this->employee->update_employee($eid, $name, $phone, $phonealt, $address, $city, $region, $country);
+            $this->employee->update_employee($eid, $name,$dto,$ingreso,$rh,$eps,$pensiones, $phone, $phonealt, $address, $city, $region, $country);
 
         } else {
             $head['usernm'] = $this->aauth->get_user($id)->username;

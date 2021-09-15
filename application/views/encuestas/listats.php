@@ -36,12 +36,10 @@
                 <thead>
                 <tr>
                     <th><?php echo $this->lang->line('Date') ?></th>
-
-                    <th><?php echo $this->lang->line('Debit') ?></th>
-                    <th><?php echo $this->lang->line('Credit') ?></th>
-                    <th><?php echo $this->lang->line('Account') ?></th>
-                    <th><?php echo $this->lang->line('Payer') ?></th>
-                    <th><?php echo $this->lang->line('Method') ?></th>
+                    <th><?php echo $this->lang->line('') ?>Nombre</th>
+                    <th><?php echo $this->lang->line('') ?>Documento</th>
+                    <th><?php echo $this->lang->line('') ?>Celular</th>
+                    <th><?php echo $this->lang->line('') ?>Sede</th>
                     <th><?php echo $this->lang->line('Action') ?></th>
 
 
@@ -53,12 +51,10 @@
                 <tfoot>
                 <tr>
                     <th><?php echo $this->lang->line('Date') ?></th>
-
-                    <th><?php echo $this->lang->line('Debit') ?></th>
-                    <th><?php echo $this->lang->line('Credit') ?></th>
-                    <th><?php echo $this->lang->line('Account') ?></th>
-                    <th><?php echo $this->lang->line('Payer') ?></th>
-                    <th><?php echo $this->lang->line('Method') ?></th>
+                    <th><?php echo $this->lang->line('') ?>Nombre</th>
+                    <th><?php echo $this->lang->line('') ?>Documento</th>
+                    <th><?php echo $this->lang->line('') ?>Celular</th>
+                    <th><?php echo $this->lang->line('') ?>Sede</th>
                     <th><?php echo $this->lang->line('Action') ?></th>
 
                 </tr>
@@ -82,9 +78,9 @@
 
             // Load data for the table's content from an Ajax source
             "ajax": {
-                "url": "<?php echo site_url('supplier/translist')?>",
+                "url": "<?php echo site_url('encuesta/translist')?>",
                 "type": "POST",
-                "data": {'cid':<?php echo $_GET['id'] ?> }
+                //"data": {'cid':<?php echo $_GET['id'] ?> }
             },
 
             //Set column definition initialisation properties.
@@ -109,11 +105,11 @@
                 <h4 class="modal-title"><?php echo $this->lang->line('Delete') ?></h4>
             </div>
             <div class="modal-body">
-                <p><?php echo $this->lang->line('delete this transaction') ?></p>
+                <p><?php echo $this->lang->line('') ?>¿Seguro que desea borrar este registro?</p>
             </div>
             <div class="modal-footer">
                 <input type="hidden" id="object-id" value="">
-                <input type="hidden" id="action-url" value="transactions/delete_i">
+                <input type="hidden" id="action-url" value="encuesta/delete_i">
                 <button type="button" data-dismiss="modal" class="btn btn-primary"
                         id="delete-confirm"><?php echo $this->lang->line('Delete') ?></button>
                 <button type="button" data-dismiss="modal"

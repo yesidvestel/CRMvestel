@@ -66,7 +66,12 @@ ALTER TABLE `accounts` ADD `sede` INT NULL AFTER `holder`;
 //nuevos campos tabla tickets
 ALTER TABLE `tickets` ADD `col` VARCHAR(30) NULL AFTER `cid`;
 
-
+//nuevos campos tabla employee_profile
+ALTER TABLE `employee_profile` ADD `dto` int(50) NOT NULL AFTER `name`;
+ALTER TABLE `employee_profile` ADD `ingreso` date DEFAULT NULL AFTER `dto`;
+ALTER TABLE `employee_profile` ADD `rh` varchar(10) NOT NULL AFTER `ingreso`;
+ALTER TABLE `employee_profile` ADD `eps` varchar(50) NOT NULL AFTER `rh`;
+ALTER TABLE `employee_profile` ADD `pensiones` varchar(50) NOT NULL AFTER `eps`;
 
 
 

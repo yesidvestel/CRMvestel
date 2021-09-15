@@ -128,6 +128,11 @@ public function vista_previa_contrato(){
         $this->load->model('employee_model', 'employee');
         if ($this->input->post()) {
             $name = $this->input->post('name');
+			$dto = $this->input->post('documento');
+			$ingreso = date("Y-m-d",strtotime($this->input->post('ingreso')));
+			$rh = $this->input->post('rh');
+			$eps = $this->input->post('eps');
+			$pensiones = $this->input->post('pensiones');
             $phone = $this->input->post('phone');
             $phonealt = $this->input->post('phonealt');
             $address = $this->input->post('address');
@@ -135,7 +140,7 @@ public function vista_previa_contrato(){
             $region = $this->input->post('region');
             $country = $this->input->post('country');
             $postbox = $this->input->post('postbox');
-            $this->employee->update_employee($id, $name, $phone, $phonealt, $address, $city, $region, $country, $postbox);
+            $this->employee->update_employee($id, $name,$dto,$ingreso,$rh,$eps,$pensiones, $phone, $phonealt, $address, $city, $region, $country, $postbox);
 
         } else {
             $head['usernm'] = $this->aauth->get_user()->username;
