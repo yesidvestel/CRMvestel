@@ -122,6 +122,9 @@ class Clientgroup extends CI_Controller
                         if(count($afiliacion_traslado_omitir)!=0){
                             $fact_valida=false;
                     }
+                    if($invoice->tipo_factura=="Fija" || $invoice->tipo_factura=="Nota Credito" || $invoice->tipo_factura=="Nota Debito"){
+                         $fact_valida=false;
+                    }
                     $puntosvar="";
                     if($fact_valida){
                         if($_var_tiene_tv){
@@ -647,6 +650,9 @@ class Clientgroup extends CI_Controller
                         if(count($afiliacion_traslado_omitir)!=0){
                             $fact_valida=false;
                     }
+                    if($invoice->tipo_factura=="Fija" || $invoice->tipo_factura=="Nota Credito" || $invoice->tipo_factura=="Nota Debito"){
+                         $fact_valida=false;
+                     }
                     $puntosvar="";
                     if($fact_valida){
                         if($_var_tiene_tv){
@@ -1092,6 +1098,10 @@ class Clientgroup extends CI_Controller
                     $afiliacion_traslado_omitir=$this->db->query('SELECT * FROM `invoice_items` where (product like "%afiliacion%" or product like "%traslado%") and tid="'.$invoice->tid.'"')->result_array();
                         if(count($afiliacion_traslado_omitir)!=0){
                             $fact_valida=false;
+                    }
+
+                    if($invoice->tipo_factura=="Fija" || $invoice->tipo_factura=="Nota Credito" || $invoice->tipo_factura=="Nota Debito"){
+                         $fact_valida=false;
                     }
                     if($fact_valida){
                         if($_var_tiene_tv){

@@ -1,4 +1,6 @@
-﻿---------------------------cambios en customers para agilizar filtros----------------------------------
+﻿-----------------------------cambios para notacredito y notadebito---------------
+ALTER TABLE `invoices` ADD `tipo_factura` VARCHAR(50) NOT NULL AFTER `multi`;
+---------------------------cambios en customers para agilizar filtros----------------------------------
 ALTER TABLE `customers` ADD `debit` VARCHAR(250) NULL AFTER `checked_seleccionado`, ADD `credit` VARCHAR(250) NULL AFTER `debit`;
 --------------------------------------------------------------------------------------------------------
 -----------------------------cambios para agregar a la db la seleccion al cortar o enviar mensajes-----------------

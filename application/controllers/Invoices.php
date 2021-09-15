@@ -98,7 +98,9 @@ $this->load->model('customers_model', 'customers');
                 $dtime2=new DateTime($value2->invoicedate);
                 //para omitir los traslados y afiliaciones
                  $afiliacion_traslado_omitir=$this->db->query('SELECT * FROM `invoice_items` where (product like "%afiliacion%" or product like "%traslado%") and tid="'.$invoice->tid.'"')->result_array();
-                if(count($afiliacion_traslado_omitir)!=0){
+                 if($value2->tipo_factura=="Fija" || $value2->tipo_factura=="Nota Credito" || $value2->tipo_factura=="Nota Debito"){
+
+                 }else if(count($afiliacion_traslado_omitir)!=0){
                             //con este condicional si existen estos items omite esta factura 
                 }else if($time_dateinv>$time_sdate1){
                     $_customer_factura_creada=true;
@@ -121,7 +123,7 @@ $this->load->model('customers_model', 'customers');
                     }else if($value2->television!="no" && $value2->television!="" && $value2->television!="-"){
                         $_tiene_television=true;
                     }
-                    if($value2->puntos!=null && $value2->puntos!=0){
+                    if($value2->puntos!=null && $value2->puntos!=0 && $value2->puntos!=''  && $value2->puntos!='no'){
                                 $puntos=$value2->puntos;
                         }
                     
@@ -321,6 +323,9 @@ $this->load->model('customers_model', 'customers');
             $lista_para_pagos_faltantes=array();
             $saldo_dispo_total=0;
             foreach ($invoices as $key => $inv) {
+                if($inv->tipo_factura=="Fija" || $inv->tipo_factura=="Nota Credito" || $inv->tipo_factura=="Nota Debito"){
+                        //para que se salte este tipo de facturas
+                }else{
                 if($inv->status=="paid" && $inv->pamnt==0){
                     $this->db->update("invoices",array('status' =>"due"),array("id"=>$inv->id));
                     $inv->status="due";
@@ -353,6 +358,7 @@ $this->load->model('customers_model', 'customers');
                         $status="partial";
                         $lista_para_pagos_faltantes[]=array("tid"=>$inv->tid,"status"=>$status,"pamnt"=>$inv->pamnt,"total_a_cubrir"=>$total_a_cubrir,"total"=>$inv->total,"factura_totalizada"=>false);
                         $this->db->update("invoices",array('status' =>$status),array("id"=>$inv->id));
+                }
                 }
             }
 
@@ -690,6 +696,7 @@ $this->customers->actualizar_debit_y_credit($value['id']);
 		$puntos = $this->input->post('puntos');
         $total = $this->input->post('total');
         $project = $this->input->post('prjid');
+        $tipo_factura = $this->input->post('tipo_factura');
         $total_tax = 0;
         $total_discount = 0;
         $discountFormat = $this->input->post('discountFormat');
@@ -731,8 +738,18 @@ $this->customers->actualizar_debit_y_credit($value['id']);
                 $ptotal_disc = $this->input->post('disca');
                 $product_des = $this->input->post('product_description');
                 $total_discount += $ptotal_disc[$key];
-                $total_tax += $ptotal_tax[$key];
+                
 
+                if($tipo_factura=="Nota Credito"){
+                        $var1=$product_price[$key]*2;
+                        $product_price[$key]=$product_price[$key]-$var1;
+                        $var1=$product_subtotal[$key]*2;
+                        $product_subtotal[$key]=$product_subtotal[$key]-$var1;
+                        $var1=$ptotal_tax[$key]*2;
+                        $ptotal_tax[$key]=$ptotal_tax[$key]-$var1;
+                        
+                 }
+                $total_tax += $ptotal_tax[$key];
                 $data = array(
                     'tid' => $invocieno,
                     'pid' => $product_id[$key],
@@ -778,7 +795,13 @@ $this->customers->actualizar_debit_y_credit($value['id']);
                 $product_des = $this->input->post('product_description');
                 $total_discount += $ptotal_disc[$key];
 
-
+                 if($tipo_factura=="Nota Credito"){
+                        $var1=$product_price[$key]*2;
+                        $product_price[$key]=$product_price[$key]-$var1;
+                        $var1=$product_subtotal[$key]*2;
+                        $product_subtotal[$key]=$product_subtotal[$key]-$var1;
+                        
+                 }
                 $data = array(
                     'tid' => $invocieno,
                     'pid' => $product_id[$key],
@@ -823,7 +846,15 @@ $this->customers->actualizar_debit_y_credit($value['id']);
 		}else{
 			$estado = '';
 		}
+        if($tipo_factura=="Nota Credito"){
+            $var1=$subtotal*2;
+            $subtotal=$subtotal-$var1;
+            $var1=$total_tax*2;
+            $total_tax=$total_tax-$var1;
+            $var1=$total*2;
+            $total=$total-$var1;
 
+        }
         $data = array(
 			'tid' => $invocieno, 
 			'invoicedate' => $bill_date, 
@@ -846,7 +877,9 @@ $this->customers->actualizar_debit_y_credit($value['id']);
 			'television' => $television, 
 			'combo' => $combo,
 			'puntos' => $puntos,
-			'ron' => $estado);
+			'ron' => $estado,
+            'tipo_factura'=>$tipo_factura
+        );
 
         if ($flag == true) {
             $this->db->insert_batch('invoice_items', $productlist);

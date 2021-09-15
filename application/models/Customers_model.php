@@ -319,6 +319,9 @@ class Customers_model extends CI_Model
             if(count($afiliacion_traslado_omitir)!=0){
                 $fact_valida=false;
             }
+            if($invoice->tipo_factura=="Fija" || $invoice->tipo_factura=="Nota Credito" || $invoice->tipo_factura=="Nota Debito"){
+                $fact_valida=false;
+            }
             
                 if($fact_valida){
                     $servicios['tid']=$invoice->tid;
