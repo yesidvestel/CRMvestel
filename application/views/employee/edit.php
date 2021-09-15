@@ -56,7 +56,59 @@
                                            value="<?php echo $user['name'] ?>">
                                 </div>
                             </div>
+							<div class="form-group row">
 
+                                    <label class="col-sm-2 col-form-label"
+                                           for="name"><?php echo $this->lang->line('') ?>Documento</label>
+
+                                    <div class="col-sm-10">
+                                        <input type="text" placeholder="Numero de documento"
+                                               class="form-control margin-bottom required" name="documento"
+                                               placeholder="Full name" value="<?php echo $user['dto'] ?>">
+                                    </div>
+                                </div>
+								<div class="form-group row">
+
+                                    <label class="col-sm-2 col-form-label"
+                                           for="name"><?php echo $this->lang->line('') ?>Fecha ingreso</label>
+
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control required"
+                                                   placeholder="Billing Date" name="ingreso"
+                                                   data-toggle="datepicker"
+                                                   autocomplete="false" value="<?php echo $user['inicio'] ?>">
+                                    </div>
+                                </div>
+								<div class="form-group row">
+
+                                    <label class="col-sm-2 col-form-label"
+                                           for="address"><?php echo $this->lang->line('') ?>RH</label>
+
+                                    <div class="col-sm-10">
+                                        <input type="text" placeholder="Grupo sanguineo"
+                                               class="form-control margin-bottom" name="rh" value="<?php echo $user['rh'] ?>">
+                                    </div>
+                                </div>
+								<div class="form-group row">
+
+                                    <label class="col-sm-2 col-form-label"
+                                           for="address"><?php echo $this->lang->line('') ?>Eps</label>
+
+                                    <div class="col-sm-10">
+                                        <input type="text" placeholder="Eps donde se encuentra afiliado"
+                                               class="form-control margin-bottom" name="eps" value="<?php echo $user['eps'] ?>">
+                                    </div>
+                                </div>
+								<div class="form-group row">
+
+                                    <label class="col-sm-2 col-form-label"
+                                           for="address"><?php echo $this->lang->line('') ?>Fondo de pension</label>
+
+                                    <div class="col-sm-10">
+                                        <input type="text" placeholder="Entidad donde este afiliado a pension"
+                                               class="form-control margin-bottom" name="pensiones" value="<?php echo $user['pensiones'] ?>">
+                                    </div>
+                                </div>
 
                             <div class="form-group row">
 

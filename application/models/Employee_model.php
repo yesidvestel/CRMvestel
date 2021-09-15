@@ -54,10 +54,15 @@ class Employee_model extends CI_Model
         return $query->row_array();
     }
 
-    public function update_employee($id, $name, $phone, $phonealt, $address, $city, $region, $country)
+    public function update_employee($id, $name,$dto,$ingreso,$rh,$eps,$pensiones, $phone, $phonealt, $address, $city, $region, $country)
     {
         $data = array(
             'name' => $name,
+			'dto' => $dto,
+			'ingreso' => $ingreso,
+			'rh' => $rh,
+			'eps' => $eps,
+			'pensiones' => $pensiones,
             'phone' => $phone,
             'phonealt' => $phonealt,
             'address' => $address,
@@ -308,12 +313,17 @@ class Employee_model extends CI_Model
     }
 
 
-    public function add_employee($id, $username, $name, $roleid, $phone, $address, $city, $region, $country)
+    public function add_employee($id, $username, $name,$dto,$ingreso,$rh,$eps,$pensiones, $roleid, $phone, $address, $city, $region, $country)
     {
         $data = array(
             'id' => $id,
             'username' => $username,
             'name' => $name,
+			'dto' => $dto,
+			'ingreso' => $ingreso,
+			'rh' => $rh,
+			'eps' => $eps,
+			'pensiones' => $pensiones,
             'address' => $address,
             'city' => $city,
             'region' => $region,
