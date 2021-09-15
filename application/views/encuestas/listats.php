@@ -105,11 +105,11 @@
                 <h4 class="modal-title"><?php echo $this->lang->line('Delete') ?></h4>
             </div>
             <div class="modal-body">
-                <p><?php echo $this->lang->line('delete this transaction') ?></p>
+                <p><?php echo $this->lang->line('') ?>¿Seguro que desea borrar este registro?</p>
             </div>
             <div class="modal-footer">
                 <input type="hidden" id="object-id" value="">
-                <input type="hidden" id="action-url" value="transactions/delete_i">
+                <input type="hidden" id="action-url" value="encuesta/delete_i">
                 <button type="button" data-dismiss="modal" class="btn btn-primary"
                         id="delete-confirm"><?php echo $this->lang->line('Delete') ?></button>
                 <button type="button" data-dismiss="modal"

@@ -250,7 +250,7 @@ class encuesta extends CI_Controller
     {
         $id = $this->input->post('deleteid');
 
-        if ($this->supplier->delete($id)) {
+        if ($this->encuesta->delete($id)) {
             echo json_encode(array('status' => 'Success', 'message' => $this->lang->line('DELETED')));
         } else {
             echo json_encode(array('status' => 'Error', 'message' => $this->lang->line('ERROR')));
@@ -301,7 +301,7 @@ class encuesta extends CI_Controller
         //output to json format
         echo json_encode($output);
     }
-
+	
     public function inv_list()
     {
         $cid = $this->input->post('cid');
