@@ -102,6 +102,7 @@ class encuesta extends CI_Controller
             $row = array();
             $row[] = $no;
             $row[] = $encuesta->norden;
+			$row[] = $encuesta->fecha;
             $row[] = $encuesta->idtec;
             $row[] = $encuestador->username;
             $row[] = $encuesta->presentacion;
@@ -143,6 +144,7 @@ class encuesta extends CI_Controller
     public function addencuesta()
     {
         $codigo = $this->input->post('norden');
+		$fcha = date("Y-m-d");
 		$us = $this->aauth->get_user()->id;
 		$emp = $this->input->post('tecnico');
         $presentar = $this->input->post('uno');
@@ -153,7 +155,7 @@ class encuesta extends CI_Controller
         $obs = $this->input->post('observacion');
         $detalle = $this->input->post('detalle');        
 
-        $this->encuesta->add($us, $emp, $codigo, $detalle, $presentar, $trato, $estado, $tiempo, $recomendar, $obs);
+        $this->encuesta->add($us, $emp, $codigo, $fcha, $detalle, $presentar, $trato, $estado, $tiempo, $recomendar, $obs);
 
     }
 	public function addats()

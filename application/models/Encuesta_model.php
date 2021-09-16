@@ -147,12 +147,13 @@ class encuesta_model extends CI_Model
         return $query->row_array();
     }
 
-    public function add($us, $emp, $codigo, $detalle, $presentar, $trato, $estado, $tiempo, $recomendar, $obs)
+    public function add($us, $emp, $codigo,$fcha, $detalle, $presentar, $trato, $estado, $tiempo, $recomendar, $obs)
     {
         $data = array(
             'idemp' => $us,
 			'idtec' => $emp,
             'norden' => $codigo,
+			'fecha' => $fcha,
             'detalle' => $detalle,
             'presentacion' => $presentar,
             'trato' => $trato,
