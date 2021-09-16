@@ -179,6 +179,21 @@
                                         </select>
                                     </div>
                                 </div>
+                                 <div class="col-sm-6">
+
+                                        <div class="form-group">
+                                            <label for="discountFormat"
+                                                   class="caption">Factura</label>
+                                            <select class="form-control"
+                                                    id="tipo_factura" name="tipo_factura">                                                    
+                                                    <option  value="Fija">Fija</option>
+                                                    <option <?= ($invoice['tipo_factura']=="Recurrente")? 'selected':'' ?> value="Recurrente">Recurrente</option>                                                    
+                                                    <option <?= ($invoice['tipo_factura']=="Nota Credito")? 'selected':'' ?> value="Nota Credito">Nota Credito</option>
+                                                    <option <?= ($invoice['tipo_factura']=="Nota Debito")? 'selected':'' ?> value="Nota Debito">Nota Debito</option>
+                                                <!-- <option value="0">Off</option> -->
+                                            </select>
+                                        </div>
+                                    </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-sm-12">

@@ -74,7 +74,7 @@ class Invoices extends CI_Controller
         $this->load->view('fixed/footer');
     }
     public function generar_facturas_action(){
-        set_time_limit(10000);
+        set_time_limit(20000);
         
         $caja1=$this->db->get_where('accounts',array('id' =>$_POST['pay_acc']))->row();
         //$customers = $this->db->get_where("customers", array("usu_estado"=>'Activo',"ciudad"=>$caja1->holder))->result_array();
@@ -471,11 +471,11 @@ var_dump("aqui2");*/
                             $lista_para_pagos_faltantes[$key2]['factura_totalizada']=true;
 
                         }else if($valuey['saldo_disponible']>50 && $pag['factura_totalizada']==false){//parte en la que sea menor el saldo diponible completada es decir pago parcial 
-                          /*  var_dump("aqui");
+                        /*    var_dump("aqui");
                             var_dump($value2->csd);
                             var_dump($valuey);
                             var_dump($pag);//http://localhost/CRMvestel/customers/invoices?id=14944
-                            */
+                          */  
                             $camino1=true;
                             //$camino3=false;
                             $tr = $this->db->get_where("transactions", array("tid"=>$valuey['tid'],"credit"=>$valuey['pamnt'],"estado"=>null,"cat!="=>"Purchase"))->row();
@@ -563,11 +563,12 @@ var_dump("aqui2");*/
 
                     }
                 }
+                $this->customers->actualizar_debit_y_credit($value['id']);
             }
 
             //end codigo para pagar con saldo ya existente
             
-$this->customers->actualizar_debit_y_credit($value['id']);
+
         }
         
         
@@ -1175,6 +1176,7 @@ $this->customers->actualizar_debit_y_credit($value['id']);
 		$combo = $this->input->post('combo');
 		$puntos = $this->input->post('puntos');
         $total = $this->input->post('total');
+        $tipo_factura = $this->input->post('tipo_factura');
         $total_tax = 0;
         $total_discount = 0;
         $discountFormat = $this->input->post('discountFormat');
@@ -1232,8 +1234,20 @@ $this->customers->actualizar_debit_y_credit($value['id']);
                 $ptotal_disc = $this->input->post('disca');
                 $product_des = $this->input->post('product_description');
                 $total_discount += $ptotal_disc[$key];
-                $total_tax += $ptotal_tax[$key];
-
+                
+                if($tipo_factura=="Nota Credito"){
+                        $product_price[$key]=abs($product_price[$key]);
+                        $var1=$product_price[$key]*2;
+                        $product_price[$key]=$product_price[$key]-$var1;
+                        $product_subtotal[$key]=abs($product_subtotal[$key]);
+                        $var1=$product_subtotal[$key]*2;
+                        $product_subtotal[$key]=$product_subtotal[$key]-$var1;
+                        $ptotal_tax[$key]=abs($ptotal_tax[$key]);
+                        $var1=$ptotal_tax[$key]*2;
+                        $ptotal_tax[$key]=$ptotal_tax[$key]-$var1;
+                        
+                 }
+                 $total_tax += $ptotal_tax[$key];
                 $data = array(
                     'tid' => $invocieno,
                     'pid' => $product_id[$key],
@@ -1279,6 +1293,17 @@ $this->customers->actualizar_debit_y_credit($value['id']);
                 $product_des = $this->input->post('product_description');
                 $ptotal_disc = $this->input->post('disca');
                 $total_discount += $ptotal_disc[$key];
+
+                if($tipo_factura=="Nota Credito"){
+                        $product_price[$key]=abs($product_price[$key]);
+                        $var1=$product_price[$key]*2;
+                        $product_price[$key]=$product_price[$key]-$var1;
+                        $product_subtotal[$key]=abs($product_subtotal[$key]);
+                        $var1=$product_subtotal[$key]*2;
+                        $product_subtotal[$key]=$product_subtotal[$key]-$var1;
+                        
+                 }
+
                 $data = array(
                     'tid' => $invocieno,
                     'product' => $product_name1,
@@ -1310,6 +1335,18 @@ $this->customers->actualizar_debit_y_credit($value['id']);
 
         $bill_date = datefordatabase($invoicedate);
         $bill_due_date = datefordatabase($invocieduedate);
+  if($tipo_factura=="Nota Credito"){
+                    $subtotal=abs($subtotal);
+                    $var1=$subtotal*2;
+                    $subtotal=$subtotal-$var1;
+                    $total_tax=abs($total_tax);
+                    $var1=$total_tax*2;
+                    $total_tax=$total_tax-$var1;
+                    $total=abs($total);
+                    $var1=$total*2;
+                    $total=$total-$var1;
+                    
+                }
 
         $data = array(
 			'invoicedate' => $bill_date,
@@ -1330,7 +1367,9 @@ $this->customers->actualizar_debit_y_credit($value['id']);
 			'combo' => $combo,
 			'puntos' => $puntos,
 			'term' => $pterms,
-			'multi' => $currency);
+			'multi' => $currency,
+            'tipo_factura'=>$tipo_factura
+        );
         $this->db->set($data);
         $this->db->where('tid', $invocieno);
 

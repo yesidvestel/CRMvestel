@@ -252,6 +252,7 @@ class Customers_model extends CI_Model
         return $query->row_array();
     }
       public function actualizar_debit_y_credit($id_customer){
+        set_time_limit(20000);
         $array=$this->money_details($id_customer);
         $data=array();
         $data['debit']=$array['debit'];

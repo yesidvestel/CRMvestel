@@ -173,8 +173,8 @@
                                                    class="caption">Factura</label>
                                             <select class="form-control"
                                                     id="tipo_factura" name="tipo_factura">                                                    
-                                                    <option value="Recurrente">Recurrente</option>
                                                     <option value="Fija">Fija</option>
+                                                    <option value="Recurrente">Recurrente</option>                                                    
                                                     <option value="Nota Credito">Nota Credito</option>
                                                     <option value="Nota Debito">Nota Debito</option>
                                                 <!-- <option value="0">Off</option> -->
