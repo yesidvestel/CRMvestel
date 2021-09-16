@@ -853,8 +853,11 @@ $this->customers->actualizar_debit_y_credit($value['id']);
             $total_tax=$total_tax-$var1;
             $var1=$total*2;
             $total=$total-$var1;
-
-        }
+			$status = 'paid';
+        }else{
+			$status = 'due';
+		}
+		
         $data = array(
 			'tid' => $invocieno, 
 			'invoicedate' => $bill_date, 
@@ -865,6 +868,7 @@ $this->customers->actualizar_debit_y_credit($value['id']);
 			'tax' => $total_tax, 
 			'total' => $total, 
 			'notes' => $notes, 
+			'status' => $status,
 			'csd' => $customer_id, 
 			'eid' => $this->aauth->get_user()->id, 
 			'items' => $itc, 
