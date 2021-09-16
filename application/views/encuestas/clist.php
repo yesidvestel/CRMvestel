@@ -14,6 +14,7 @@
                 <tr>
                     <th>#</th>
                     <th>Orden #</th>
+					<th>Fecha</th>
                     <th>Tecnico</th>
                     <th>Realizado por</th>
                     <th>Presentacion</th>
@@ -34,6 +35,7 @@
                 <tr>
                     <th>#</th>
                     <th>Orden #</th>
+					<th>Fecha</th>
                     <th>Tecnico</th>
                     <th>Realizado por</th>
                     <th>Presentacion</th>

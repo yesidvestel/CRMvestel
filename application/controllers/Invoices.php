@@ -854,8 +854,11 @@ var_dump("aqui2");*/
             $total_tax=$total_tax-$var1;
             $var1=$total*2;
             $total=$total-$var1;
-
-        }
+			$status = 'paid';
+        }else{
+			$status = 'due';
+		}
+		
         $data = array(
 			'tid' => $invocieno, 
 			'invoicedate' => $bill_date, 
@@ -866,6 +869,7 @@ var_dump("aqui2");*/
 			'tax' => $total_tax, 
 			'total' => $total, 
 			'notes' => $notes, 
+			'status' => $status,
 			'csd' => $customer_id, 
 			'eid' => $this->aauth->get_user()->id, 
 			'items' => $itc, 

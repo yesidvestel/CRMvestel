@@ -118,7 +118,7 @@ class Ticket_model extends CI_Model
     }
 	public function factura_list($custid)
     {
-        $query = $this->db->query('SELECT id, tid, invoicedate FROM invoices WHERE csd=\''.$custid.'\'');
+        $query = $this->db->query('SELECT id, tid, invoicedate FROM invoices WHERE tipo_factura="Recurrente" AND csd=\''.$custid.'\'');
         return $query->result_array();
 		
     }
