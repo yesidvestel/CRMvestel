@@ -1203,7 +1203,7 @@ class Customers extends CI_Controller
 			
             $row[] = $no;
             $row[] = $invoices->tid;
-            $row[] = $invoices->name;
+            $row[] = $invoices->tipo_factura;
             $row[] = $invoices->invoicedate;
 			$row[] = '<span class="st-' . $invoices->ron . '">' . $invoices->ron . '</span>';
             $row[] = amountFormat($invoices->total);
