@@ -925,6 +925,22 @@ var_dump("aqui2");*/
                 
                     
 				}
+$this->load->model('customers_model', 'customers');
+                $servicios_detail=$this->customers->servicios_detail($customer_id);            
+                if($servicios_detail['tid']!=0 && $servicios_detail['tid']!=null && $servicios_detail['tid']!=''){
+                    
+                    $due=$this->customers->due_details($customer_id);
+
+                    $datox=$due['total']-$due['pamnt'];
+
+                    if($datox==0){
+                            //due
+                        $this->db->update("invoices",array("status"=>"paid"),array("tid"=>$servicios_detail['tid']));
+                    }else if($datox>0){
+                            //partial
+                        $this->db->update("invoices",array("status"=>"partial"),array("tid"=>$servicios_detail['tid']));
+                    }
+                }
 
                 $validtoken = hash_hmac('ripemd160', $invocieno, $this->config->item('encryption_key'));
                 $link = base_url('billing/view?id=' . $invocieno . '&token=' . $validtoken);
@@ -1381,6 +1397,23 @@ var_dump("aqui2");*/
 
             if ($this->db->update('invoices', $data)) {
                 $this->db->insert_batch('invoice_items', $productlist);
+
+                $this->load->model('customers_model', 'customers');
+                $servicios_detail=$this->customers->servicios_detail($customer_id);            
+                if($servicios_detail['tid']!=0 && $servicios_detail['tid']!=null && $servicios_detail['tid']!=''){
+                    
+                    $due=$this->customers->due_details($customer_id);
+
+                    $datox=$due['total']-$due['pamnt'];
+
+                    if($datox==0){
+                            //due
+                        $this->db->update("invoices",array("status"=>"paid"),array("tid"=>$servicios_detail['tid']));
+                    }else if($datox>0){
+                            //partial
+                        $this->db->update("invoices",array("status"=>"partial"),array("tid"=>$servicios_detail['tid']));
+                    }
+                }
                 echo json_encode(array('status' => 'Success', 'message' => $this->lang->line('Invoice has  been updated') . " <a href='view?id=$invocieno' class='btn btn-info btn-lg'><span class='icon-file-text2' aria-hidden='true'></span> " . $this->lang->line('View') . " </a> "));
             } else {
                 echo json_encode(array('status' => 'Error', 'message' =>
