@@ -1,4 +1,4 @@
-<?php
+addticket<?php
 /**
  * Neo Billing -  Accounting,  Invoicing  and CRM Software
  * Copyright (c) Rajesh Dukiya. All Rights Reserved
@@ -173,7 +173,7 @@ class Quote_model extends CI_Model
         $query = $this->db->get();
         return $query->row_array();
     }
-	public function addticket($customer_id, $gen, $nticket, $subject, $detalle, $created, $problema, $section, $factura, $agendar, $fagenda, $hora,$hora2,$nomen,$nuno,$auno,$ndos,$ados,$ntres,$local,$barrio,$recider, $refer,$tv,$inter,$punto)
+	public function addticket($customer_id, $gen, $nticket, $subject, $detalle, $created, $problema, $section, $factura, $agendar, $fagenda, $tec, $hora,$hora2,$nomen,$nuno,$auno,$ndos,$ados,$ntres,$local,$barrio,$recider, $refer,$tv,$inter,$punto)
     {
 		$bill_llegada = datefordatabase($created);
 		if ($tv=='no' || $tv==''){
@@ -193,6 +193,7 @@ class Quote_model extends CI_Model
 			}
 		$start = new DateTime($fagenda);
         $nticket=($this->lastquote())+1;
+		
         $data = array(
 			'codigo' => $nticket,
             'subject' => $subject,
@@ -205,14 +206,15 @@ class Quote_model extends CI_Model
             'section' => $section.$tv2.$int2.$pto2,
             'fecha_final' => '',
             'id_invoice' => 'null',
-            'id_factura' => $factura,          
+            'id_factura' => $factura,
+			'asignado' => $tec,
         );
 		
         if ($this->db->insert('tickets', $data)) {
 			//agregar agenda
 		$boleta = $this->db->get_where('tickets', array('codigo' => $nticket))->row();
 		$abonado = $this->db->get_where('customers', array('id' => $boleta->cid))->row();
-		if ($agendar==si){
+		if ($agendar=="si"){
 		$data2 = array(
 			'idorden' => $nticket,
 			'title' => $detalle.' '.$hora.' Usuario #'.$abonado->abonado,

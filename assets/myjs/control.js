@@ -722,6 +722,7 @@ function addObject(action,action_url) {
             data: action,
             dataType: 'json',
             success: function (data) {
+				console.log(data);
                 if (data.status == "Success") {
                     $("#notify .message").html("<strong>" + data.status + "</strong>: " + data.message);
                     $("#notify").removeClass("alert-danger").addClass("alert-success").fadeIn();
