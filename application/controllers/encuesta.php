@@ -102,7 +102,7 @@ class encuesta extends CI_Controller
             $row = array();
             $row[] = $no;
             $row[] = $encuesta->norden;
-			$row[] = dateformat($encuesta->fecha);
+			$row[] = $encuesta->fecha;
             $row[] = $encuesta->idtec;
             $row[] = $encuestador->username;
             $row[] = $encuesta->presentacion;
