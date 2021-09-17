@@ -118,8 +118,8 @@ class encuesta extends CI_Controller
 
         $output = array(
             "draw" => $_POST['draw'],
-            "recordsTotal" => $this->encuesta->count_all(),
-            "recordsFiltered" => $this->encuesta->count_filtered(),
+            "recordsTotal" => $this->encuesta->count_all($_GET),
+            "recordsFiltered" => $this->encuesta->count_filtered($_GET),
             "data" => $data,
         );
         //output to json format

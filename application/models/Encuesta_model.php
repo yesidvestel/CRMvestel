@@ -98,22 +98,17 @@ class encuesta_model extends CI_Model
 
     function count_filtered($id = '')
     {
-        $this->_get_datatables_query();
+        $this->_get_datatables_query($id);
         $query = $this->db->get();
-        if ($id != '') {
-            $this->db->where('gid', $id);
-        }
-        return $query->num_rows($id = '');
+        
+        return $query->num_rows();
     }
 
     public function count_all($id = '')
     {
-        $this->_get_datatables_query();
+        $this->_get_datatables_query($id);
         $query = $this->db->get();
-        if ($id != '') {
-            $this->db->where('gid', $id);
-        }
-        return $query->num_rows($id = '');
+        return $query->num_rows();
     }
 
     public function details($custid)
