@@ -381,7 +381,7 @@
 								<div class="form-group row" id="Revision_de_Internet">
                         <div class="col-sm-12">
                             <label for="toAddInfo" class="caption">Posible Problema</label>
-                            	<select name="problema" class="form-control mb-1">
+                            	<select name="problema_red" class="form-control mb-1">
 									<option value="">-</option>
 									<option value="Internet lento">Internet lento</option>
 									<option value="No aparece la Red">No aparece la Red</option>
@@ -397,7 +397,7 @@
 					<div class="form-group row" id="Revision_de_television">
                         <div class="col-sm-12">
                             <label for="toAddInfo" class="caption">Posible Problema</label>
-                            	<select name="problema" class="form-control mb-1">
+                            	<select name="problema_tv" class="form-control mb-1">
 									<option value="">-</option>
 									<option value="Señal Lluviosa">Señal Lluviosa</option>
 									<option value="Televisor desconfigurado">Televisor desconfigurado</option>

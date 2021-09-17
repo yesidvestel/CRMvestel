@@ -106,7 +106,7 @@ class Quote extends CI_Controller
         $subject = $this->input->post('subject');
         $detalle = $this->input->post('detalle');
         $created = $this->input->post('created');
-		$problema = $this->input->post('problema');
+		$problema = $this->input->post('problema_red');        
         $section = $this->input->post('section');
 		$factura = $this->input->post('factura');
 		$agendar = $this->input->post('agendar');
@@ -136,7 +136,11 @@ class Quote extends CI_Controller
             $tv = $this->input->post('teleB');
             $inter="no";
             $punto = $this->input->post('puntoB');            
-     }        
+     }else if($detalle=="Revision_de_Internet"){
+        $problema = $this->input->post('problema_red');
+     }else if($detalle=="Revision_de_television"){
+        $problema = $this->input->post('problema_tv');
+     }      
         
         if ($customer_id) {
         	$this->quote->addticket($customer_id, $gen, $nticket, $subject, $detalle, $created, $problema, $section, $factura,$agendar,$fagenda, $tec, $hora,$hora2,$nomen,$nuno,$auno,$ndos,$ados,$ntres,$local,$barrio,$recider, $refer, $tv,$inter,$punto);
