@@ -37,7 +37,24 @@ class encuesta_model extends CI_Model
     {
 
         $this->db->from($this->table);
-        
+        if($id['opcselect']!=''){
+
+            $dateTime= new DateTime($id['sdate']);
+            $sdate=$dateTime->format("Y-m-d");
+            $dateTime= new DateTime($id['edate']);
+            $edate=$dateTime->format("Y-m-d");
+            if($id['opcselect']=="fcreada"){
+                $this->db->where('fecha>=', $sdate);   
+                $this->db->where('fecha<=', $edate);       
+            }
+            
+        }
+		if($id['tecnico']!=""){
+            $this->db->where('idtec', $id['tecnico']);       
+        }
+		if($id['realizador']!=""){
+            $this->db->where('idemp', $id['realizador']);       
+        }
         $i = 0;
 
         foreach ($this->column_search as $item) // loop column

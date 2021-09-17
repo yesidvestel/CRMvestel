@@ -38,11 +38,12 @@ class encuesta extends CI_Controller
 
     public function index()
     {
-
+		$this->load->model('ticket_model', 'ticket');
         $head['usernm'] = $this->aauth->get_user()->username;
         $head['title'] = 'Supplier';
+		$data['tecnicoslista'] = $this->ticket->tecnico_list();
         $this->load->view('fixed/header', $head);
-        $this->load->view('encuestas/clist');
+        $this->load->view('encuestas/clist', $data);
         $this->load->view('fixed/footer');
     }
 
@@ -92,7 +93,7 @@ class encuesta extends CI_Controller
 
     public function load_list()
     {
-        $list = $this->encuesta->get_datatables();
+        $list = $this->encuesta->get_datatables($_GET);
         $data = array();
 		$encuestador = $this->db->get_where('aauth_users',array('id'=>$encuesta->idemp))->row();
         $no = $this->input->post('start');
@@ -123,6 +124,121 @@ class encuesta extends CI_Controller
         );
         //output to json format
         echo json_encode($output);
+    }
+	// exportar a excel
+	public function explortar_a_excel(){
+        
+        $this->db->select("*");
+        $this->db->from("encuestas");
+		//$this->db->join('customers', 'tickets.cid=customers.id', 'left');
+		if ($_GET['tecnico'] != '' && $_GET['tecnico'] != '-' && $_GET['tecnico'] != '0') {
+                $this->db->where('idtec=', $_GET['tecnico']);
+            }
+		if ($_GET['realizador'] != '' && $_GET['realizador'] != '-' && $_GET['realizador'] != '0') {
+                $this->db->where('idemp=', $_GET['realizador']);
+           }
+		if($_GET['opcselect']!=''){
+
+            $dateTime= new DateTime($_GET['sdate']);
+            $sdate=$dateTime->format("Y-m-d");
+            $dateTime= new DateTime($_GET['edate']);
+            $edate=$dateTime->format("Y-m-d");
+            if($_GET['opcselect']=="fcreada"){
+                $this->db->where('fecha>=', $sdate);   
+                $this->db->where('fecha<=', $edate);       
+            }
+            
+        }
+        $this->db->order_by("id","DESC");
+        $lista_debito=$this->db->get()->result();
+        $this->load->library('Excel');
+		$lista_debito2=array();
+		
+    
+    //define column headers
+    $headers = array(
+        '# Orden' => 'string', 
+        'Fecha' => 'string',
+		'Tecnico' => 'string',
+		'Realizador' => 'string',
+		'Presentacion' => 'string',
+		'Trato' => 'string',
+		'Estado' => 'string',
+		'Tiempo' => 'string',
+		'Recomendaria' => 'string',
+		'Observacion' => 'string',);
+    
+    //fetch data from database
+    //$salesinfo = $this->product_model->get_salesinfo();
+    
+    //create writer object
+    $writer = new Excel();
+    
+        //meta data info
+    $keywords = array('xlsx','CUSTOMERS','VESTEL');
+    $writer->setTitle('Reporte Encuestas ');
+    $writer->setSubject('');
+    $writer->setAuthor('VESTEL');
+    $writer->setCompany('VESTEL');
+    $writer->setKeywords($keywords);
+    $writer->setDescription('Reporte encuestas ');
+    $writer->setTempDir(sys_get_temp_dir());
+    
+    //write headers el primer campo que es nombre de la hoja de excel deve de coincidir en writeSheetHeader y writeSheetRow para tener en cuenta si se piensan agregar otras hojas o algo por el estilo
+    $writer->writeSheetHeader('Encuestas ',$headers,$col_options = array(
+
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+));
+    
+    //write rows to sheet1
+	
+    foreach ($lista_debito as $key => $debito) {
+		$fecha = date("d/m/Y",strtotime($debito->fecha));
+		$encuestador = $this->db->get_where('aauth_users',array('id'=>$debito->idemp))->row();
+        $writer->writeSheetRow('Encuestas ',array($debito->norden,$fecha,$debito->idtec,$encuestador->username,$debito->presentacion,$debito->trato,$debito->estado,$debito->tiempo,$debito->recomendar,$debito->observacion));
+        
+    }
+        
+        
+    
+    $fecha_actual= date("d-m-Y");
+    $dia= date("N");
+    $this->load->model('reports_model', 'reports');
+    $fecha_actual=$this->reports->obtener_dia($dia)." ".$fecha_actual;
+    $fileLocation = 'Encuestas '.$fecha_actual.'.xlsx';
+    
+    //write to xlsx file
+    $writer->writeToFile($fileLocation);
+    //echo $writer->writeToString();
+    
+    //force download
+    header('Content-Description: File Transfer');
+    header("Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+    header("Content-Disposition: attachment; filename=".basename($fileLocation));
+    header("Content-Transfer-Encoding: binary");
+    header("Expires: 0");
+    header("Pragma: public");
+
+    header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+    header('Content-Length: ' . filesize($fileLocation)); //Remove
+
+    ob_clean();
+    flush();
+
+    readfile($fileLocation);
+    unlink($fileLocation);
+    exit(0);
+       
+
     }
 
     //edit section
