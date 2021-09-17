@@ -26,7 +26,7 @@
                             $validtoken = hash_hmac('ripemd160', $invoice['tid'], $this->config->item('encryption_key'));
 
                             $link = base_url('billing/view?id=' . $invoice['tid'] . '&token=' . $validtoken);
-                            if ($invoice['status'] != 'Anulado') { ?>
+                            if ($invoice['status'] != 'canceled') { ?>
                                 <div class="title-action">
 								<?php if ($this->aauth->get_user()->roleid > 3) { ?>
                                 <a href="<?php echo 'edit?id=' . $invoice['tid']; ?>" class="btn btn-warning mb-1"><i
