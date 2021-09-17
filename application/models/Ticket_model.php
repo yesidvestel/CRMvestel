@@ -112,7 +112,16 @@ class Ticket_model extends CI_Model
     }
 	public function tecnico_list()
     {
-        $query = $this->db->query("SELECT id,username FROM aauth_users WHERE UPPER(roleid) >= '1'");
+        //$query = $this->db->query("SELECT id,username FROM aauth_users WHERE UPPER(roleid) >= '1'");
+		$sedeacc = $this->aauth->get_user()->sede_accede;
+		$this->db->select('*');
+        $this->db->from('aauth_users');
+        //$this->db->where('roleid', '2');
+		if ($sedeacc != '0'){
+			$this->db->where('sede_accede', $sedeacc);
+			$this->db->or_where('sede_accede', '0');
+		}
+        $query = $this->db->get();
         return $query->result_array();		
 		
     }

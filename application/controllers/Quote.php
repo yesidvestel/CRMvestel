@@ -46,6 +46,7 @@ class Quote extends CI_Controller
         $data['details'] = $this->customers->details($custid);
         $data['exchange'] = $this->plugins->universal_api(5);
 		$data['paquete'] = $this->invocies->paquetes();
+		$data['tecnicoslista'] = $this->ticket->tecnico_list();
 		$data['facturalist'] = $this->ticket->factura_list($custid);
         $data['currency'] = $this->quote->currencies();
         $data['customergrouplist'] = $this->customers->group_list();
@@ -110,6 +111,7 @@ class Quote extends CI_Controller
 		$factura = $this->input->post('factura');
 		$agendar = $this->input->post('agendar');
 		$fagenda = $this->input->post('f_agenda');
+		$tec = $this->input->post('tecnico');
 		$nomen = $this->input->post('nomenclatura');
 		$nuno = $this->input->post('numero1');
 		$auno = $this->input->post('adicional1');
@@ -137,7 +139,7 @@ class Quote extends CI_Controller
      }        
         
         if ($customer_id) {
-        	$this->quote->addticket($customer_id, $gen, $nticket, $subject, $detalle, $created, $problema, $section, $factura,$agendar,$fagenda,$hora,$hora2,$nomen,$nuno,$auno,$ndos,$ados,$ntres,$local,$barrio,$recider, $refer, $tv,$inter,$punto);
+        	$this->quote->addticket($customer_id, $gen, $nticket, $subject, $detalle, $created, $problema, $section, $factura,$agendar,$fagenda, $tec, $hora,$hora2,$nomen,$nuno,$auno,$ndos,$ados,$ntres,$local,$barrio,$recider, $refer, $tv,$inter,$punto);
 			
 		}
 

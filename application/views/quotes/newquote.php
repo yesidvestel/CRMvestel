@@ -156,7 +156,25 @@
 										
                                     
                                 </div>
+                            </div>
+							<div class="form-group row">
+									<div class="col-sm-12">
+										<label for="invociedate" class="caption">Asignar</label>
+										<div class="input-group">
+										<select name="tecnico"  id="tecnico"  class="form-control mb-1">
+												<option value="">-</option>
+												<?php
+													foreach ($tecnicoslista as $row) {
+														$cid = $row['id'];
+														$title = $row['username'];
+														echo "<option value='$title'>$title</option>";
+													}
+													?>
+											</select>
+										</div>
                                     </div>
+                                    
+                            </div>
 							<div id="ocultar">								
 							<div class="form-group row" id="Traslado">
 																		
