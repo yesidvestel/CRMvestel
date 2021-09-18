@@ -78,7 +78,7 @@ class Invoices extends CI_Controller
         
         $caja1=$this->db->get_where('accounts',array('id' =>$_POST['pay_acc']))->row();
         //$customers = $this->db->get_where("customers", array("usu_estado"=>'Activo',"ciudad"=>$caja1->holder))->result_array();
-        $customers_list = $this->db->query("select * from customers where (usu_estado='Activo' or usu_estado='Compromiso') and ciudad ='".$caja1->holder."'")->result_array();
+        $customers_list = $this->db->query("select * from customers where id=33 and (usu_estado='Activo' or usu_estado='Compromiso') and ciudad ='".$caja1->holder."'")->result_array();
         $ciudades= array();
         $sdate=$this->input->post("sdate");
         $date1= new DateTime($sdate);
@@ -330,10 +330,13 @@ $this->load->model('customers_model', 'customers');
                     $tr_verificacion = $this->db->query("select sum(credit)-sum(debit) as calculo from transactions where estado is null and cat!='Purchase' and tid=".$inv->tid)->result_array();
 
                     if($inv->pamnt!=intval($tr_verificacion[0]['calculo'])){
-                        $this->db->update("invoices",array("pamnt"=>$tr_verificacion[0]['calculo']),array("tid"=>$inv->tid));
+                        $this->db->update("invoices",array("pamnt"=>intval($tr_verificacion[0]['calculo'])),array("tid"=>$inv->tid));
+                        $inv->pamnt=intval($tr_verificacion[0]['calculo']);
                         var_dump("se actuatidlizo inicio");
-                        var_dump($inv->tid);
+                        var_dump($inv->tid." calculo =".$tr_verificacion[0]['calculo']);
+                        
                         var_dump("se actualizo fin");
+                        
                     }
                 if($inv->status=="paid" && $inv->pamnt==0){
                     $this->db->update("invoices",array('status' =>"due"),array("id"=>$inv->id));
@@ -347,13 +350,13 @@ $this->load->model('customers_model', 'customers');
                 
                 if($inv->pamnt>$inv->total){
                     
-                    if($inv->total==$tr_verificacion[0]['calculo']){
+                    /*if($inv->total==$tr_verificacion[0]['calculo']){
                         $this->db->update("invoices",array("pamnt"=>$inv->total),array("tid"=>$inv->tid));
-                    }else{
+                    }else{*/
                         $saldo_dispo=$inv->pamnt-$inv->total;
                         $saldo_dispo_total+=$saldo_dispo;
                         $lista_para_pagos_adelantados[]= array("tid"=>$inv->tid,"saldo_disponible"=>$saldo_dispo,"pamnt"=>$inv->pamnt);    
-                    }
+                    //}
                     
                 }else if($inv->status=="due" || $inv->status=="partial"){
                     $total_a_cubrir=$inv->total;
@@ -393,19 +396,19 @@ var_dump($value2->csd);
                             var_dump($pag);
 var_dump("aqui2");
                             $camino1=true;
-                            //$camino3=false;
+                            $camino3=false;
                             //$valor_debitados=0;
                             $tr = $this->db->get_where("transactions", array("tid"=>$valuey['tid'],"credit"=>$valuey['pamnt'],"estado"=>null,"cat!="=>"Purchase"))->row();
                             if($tr==null){
                                 $camino1=false;
                                 $tr = $this->db->get_where("transactions", array("tid"=>$valuey['tid'],"credit"=>$valuey['saldo_disponible'],"estado"=>null,"cat!="=>"Purchase"))->row();
-                              /*  if($tr==null){
+                                if($tr==null){
                                     $camino3=true;
-                                    $tr_verificacion = $this->db->query("select sum(debit) as calculo from transactions where tid=".$valuey['tid'])->result_array();
-                                    $valor_debitados=$tr_verificacion[0]['calculo'];
-                                    $tr = $this->db->get_where("transactions", array("tid"=>$valuey['tid'],"credit"=>($valuey['saldo_disponible']+$valor_debitados),"estado"=>null,"cat!="=>"Purchase"))->row();
+                                    $tr_verificacion = $this->db->query("select * from transactions where estado is null and cat!='Purchase' and tid=".$valuey['tid']." order by credit desc")->result_array();
+                                    
+                                    $tr = $this->db->get_where("transactions", array("id"=>$tr_verificacion[0]['id']))->row();
                                    //se debe de buscar la transaccion que se acomode a lo necesario si se cumple el tope de la factura y sobra saldo de las transacciones
-                                }*/
+                                }
                                 
                             }
                             //actualizando datos de la factura a pagar
@@ -487,12 +490,18 @@ var_dump("aqui2");
                             var_dump($pag);//http://localhost/CRMvestel/customers/invoices?id=14944
                            
                             $camino1=true;
-                            //$camino3=false;
+                            $camino3=false;
                             $tr = $this->db->get_where("transactions", array("tid"=>$valuey['tid'],"credit"=>$valuey['pamnt'],"estado"=>null,"cat!="=>"Purchase"))->row();
                             if($tr==null){
                                 $camino1=false;
                                 $tr = $this->db->get_where("transactions", array("tid"=>$valuey['tid'],"credit"=>$valuey['saldo_disponible'],"estado"=>null,"cat!="=>"Purchase"))->row();
-                                //en el caso que esta dando error se me ocurre recorrer todo y obtener la transaccion mayor para descontarle el saldo que se pueda descontar
+                                if($tr==null){
+                                    $camino3=true;
+                                    $tr_verificacion = $this->db->query("select * from transactions where estado is null and cat!='Purchase' and tid=".$valuey['tid']." order by credit desc")->result_array();
+                                    
+                                    $tr = $this->db->get_where("transactions", array("id"=>$tr_verificacion[0]['id']))->row();
+                                   //se debe de buscar la transaccion que se acomode a lo necesario si se cumple el tope de la factura y sobra saldo de las transacciones
+                                }
                             }
                             //actualizando datos de la factura a pagar
                             $data= array();
