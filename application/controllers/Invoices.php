@@ -78,7 +78,7 @@ class Invoices extends CI_Controller
         
         $caja1=$this->db->get_where('accounts',array('id' =>$_POST['pay_acc']))->row();
         //$customers = $this->db->get_where("customers", array("usu_estado"=>'Activo',"ciudad"=>$caja1->holder))->result_array();
-        $customers_list = $this->db->query("select * from customers where id=33 and (usu_estado='Activo' or usu_estado='Compromiso') and ciudad ='".$caja1->holder."'")->result_array();
+        $customers_list = $this->db->query("select * from customers where (usu_estado='Activo' or usu_estado='Compromiso') and ciudad ='".$caja1->holder."'")->result_array();
         $ciudades= array();
         $sdate=$this->input->post("sdate");
         $date1= new DateTime($sdate);
