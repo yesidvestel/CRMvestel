@@ -347,7 +347,7 @@ class encuesta extends CI_Controller
     {
         $idats = $this->input->post('idats');
         $autor = $this->aauth->get_user()->id;
-		var_dump($idats);
+		//var_dump($idats);
         if ($idats) {
             $this->encuesta->edit($idats, $autor);
         }
