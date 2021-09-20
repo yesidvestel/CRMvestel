@@ -263,8 +263,11 @@
 							<td align="center" class="titulos" colspan="3" width="30%">Firma</td>
 						</tr>
 						<tr>
-							<td align="center" colspan="5" width="70%"></td>
-							<td align="center" colspan="3" width="30%"></td>
+							<td align="center" colspan="5" width="70%"><?php
+								$autor = $this->db->get_where('employee_profile',array('id'=>$rta['autoriza']))->row();
+								echo $autor->name.' CC: '.$autor->dto; ?></td>
+							<td align="center" colspan="3" width="30%"><img alt="image" class="img-responsive"
+                                                 src="<?php echo base_url('userfiles/employee_sign/' . $autor->sign); ?>" style="width: 40%"></td>
 						</tr>
 					  </tbody>
 					</table>
@@ -275,14 +278,14 @@
                 <div class="form-group row">
 					
                     <label class="col-sm-12 col-form-label"></label>
-					
+					<input type="hidden" name="idats" value="<?php echo $rta['idats']; ?>"></input>
                     <div class="col-sm-12" align="center">
 						<a href="<?php echo 'printats?id=' . $rta['idats']; ?>" class="btn btn-danger btn-md">
 									<i class="icon-pencil"></i> VER PDF <?php echo $this->lang->line('') ?>
                                     </a>
                         <input type="submit" id="submit-data" class="btn btn-success margin-bottom"
-                               value="<?php echo $this->lang->line('Add') ?>" data-loading-text="Adding...">
-                        <input type="hidden" value="encuesta/addats" id="action-url">
+                               value="<?php echo $this->lang->line('') ?>AUTORIZAR" data-loading-text="Adding...">
+                        <input type="hidden" value="encuesta/autorizar" id="action-url">
                     </div>
                 </div>
 

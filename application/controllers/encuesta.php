@@ -343,23 +343,13 @@ class encuesta extends CI_Controller
 
     }
 
-    public function editsupplier()
+    public function autorizar()
     {
-        $id = $this->input->post('id');
-        $name = $this->input->post('name');
-		$nit = $this->input->post('nit');
-        $company = $this->input->post('company');
-        $phone = $this->input->post('phone');
-        $email = $this->input->post('email');
-        $address = $this->input->post('address');
-        $city = $this->input->post('city');
-        $region = $this->input->post('region');
-        $cuenta = $this->input->post('cuenta');
-        $typo = $this->input->post('typo');
-        $banco = $this->input->post('banco');
-
-        if ($id) {
-            $this->supplier->edit($id, $name, $nit, $company, $phone, $email, $address, $city, $region, $cuenta, $typo,$banco);
+        $idats = $this->input->post('idats');
+        $autor = $this->aauth->get_user()->id;
+		var_dump($idats);
+        if ($idats) {
+            $this->encuesta->edit($idats, $autor);
         }
     }
 
@@ -474,15 +464,15 @@ class encuesta extends CI_Controller
 
         $pdf = $this->pdf->load();
 
-        $pdf->SetHTMLFooter('<table width="100%" style="vertical-align: bottom; font-family: serif; font-size: 8pt; color: #959595; font-weight: bold; font-style: italic;"><tr><td width="33%"><span style="font-weight: bold; font-style: italic;">{DATE j-m-Y}</span></td><td width="33%" align="center" style="font-weight: bold; font-style: italic;">{PAGENO}/{nbpg}</td><td width="33%" style="text-align: right; ">#' . $tid . '</td></tr></table>');
+        $pdf->SetHTMLFooter('<table width="100%" style="vertical-align: bottom; font-family: serif; font-size: 8pt; color: #959595; font-weight: bold; font-style: italic;"><tr><td width="33%"><span style="font-weight: bold; font-style: italic;">{DATE j-m-Y}</span></td><td width="33%" align="center" style="font-weight: bold; font-style: italic;">{PAGENO}/{nbpg}</td><td width="33%" style="text-align: right; ">ATS #' . $tid . '</td></tr></table>');
 
         $pdf->WriteHTML($html);
 
         if ($this->input->get('d')) {
 
-            $pdf->Output('Purchase_#' . $tid . '.pdf', 'D');
+            $pdf->Output('ATS_#' . $tid . '.pdf', 'D');
         } else {
-            $pdf->Output('Purchase_#' . $tid . '.pdf', 'I');
+            $pdf->Output('ATS_#' . $tid . '.pdf', 'I');
         }
 
 

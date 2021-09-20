@@ -32,7 +32,7 @@ class Pdf
 
         require_once APPPATH . '/third_party/vendor/autoload.php';
 
-        $mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => 'A4', 'margin_left' => 5, 'margin_right' => 5, 'margin_top' => 5, 'margin_bottom' => 10]);
+        $mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => 'letter', 'margin_left' => 5, 'margin_right' => 5, 'margin_top' => 5, 'margin_bottom' => 10]);
 
         //$mpdf->SetDirectionality('RTL');
         $mpdf->autoScriptToLang = true;

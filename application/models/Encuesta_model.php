@@ -269,28 +269,17 @@ class encuesta_model extends CI_Model
 
 	}
 
-    public function edit($id, $name, $nit, $company, $phone, $email, $address, $city, $region, $cuenta, $typo, $banco)
+    public function edit($idats, $autor)
     {
         $data = array(
-            'name' => $name,
-			'nit' => $nit,
-            'company' => $company,
-            'phone' => $phone,
-            'email' => $email,
-            'address' => $address,
-            'city' => $city,
-            'region' => $region,
-            'cuenta' => $cuenta,
-            'typo' => $typo,
-            'banco' => $banco
-
+            'autoriza' => $autor,
         );
 
 
         $this->db->set($data);
-        $this->db->where('id', $id);
+        $this->db->where('idats', $idats);
 
-        if ($this->db->update('supplier')) {
+        if ($this->db->update('formularioats')) {
             echo json_encode(array('status' => 'Success', 'message' =>
                 $this->lang->line('UPDATED')));
         } else {

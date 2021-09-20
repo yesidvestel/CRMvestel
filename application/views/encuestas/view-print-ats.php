@@ -262,8 +262,11 @@
 							<td align="center" class="titulos" colspan="3">Firma</td>
 						</tr>
 						<tr>
-							<td align="center" colspan="5"></td>
-							<td align="center" colspan="3"></td>
+							<td align="center" colspan="5"><?php
+								$autor = $this->db->get_where('employee_profile',array('id'=>$rta['autoriza']))->row();
+								echo $autor->name.' CC: '.$autor->dto; ?></td>
+							<td align="center" colspan="3"><img alt="image" class="img-responsive"
+                                                 src="<?php echo base_url('userfiles/employee_sign/' . $autor->sign); ?>" style="width: 40%"></td>
 						</tr>
 					  </tbody>
 					</table>
