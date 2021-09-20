@@ -45,6 +45,77 @@
 .cl-ck-f-electronicas:hover{
      transform: scale(4);
 }
+
+
+/*Cambios filtro multiple */
+.selectBox {
+  position: relative;
+}
+
+.selectBox select {
+  width: 100%;
+  font-weight: bold;
+}
+
+.overSelect {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+/*primer grupo de chechbox configuracion (estado usuario)*/
+#checkboxes {
+  display: none;
+  border: 1px #dadada solid;
+}
+
+#checkboxes label {
+  display: block;
+}
+
+#checkboxes label:hover {
+  background-color: #1e90ff;
+}
+/*segundo grupo de chechbox configuracion (estado de cuenta)*/
+#checkboxes2 {
+  display: none;
+  border: 1px #dadada solid;
+}
+
+#checkboxes2 label {
+  display: block;
+}
+
+#checkboxes2 label:hover {
+  background-color: #1e90ff;
+}
+/*3er grupo de chechbox configuracion (localidad)*/
+#checkboxes3 {
+  display: none;
+  border: 1px #dadada solid;
+}
+
+#checkboxes3 label {
+  display: block;
+}
+
+#checkboxes3 label:hover {
+  background-color: #1e90ff;
+}
+/*3er grupo de chechbox configuracion (barrio)*/
+#checkboxes4 {
+  display: none;
+  border: 1px #dadada solid;
+}
+
+#checkboxes4 label {
+  display: block;
+}
+
+#checkboxes4 label:hover {
+  background-color: #1e90ff;
+}
 </style>
 <article class="content content items-list-page">
     <div class="card card-block">
@@ -102,6 +173,7 @@
                                
                             </ul>
                             <div class="tab-content px-1 pt-1">
+                                
                                 <div role="tabpanel" class="tab-pane fade active in" id="active" aria-labelledby="active-tab" aria-expanded="true">
                                     <div class="form-group row">
                                             
@@ -111,7 +183,7 @@
                                         <div class="col-sm-6">
                                             <select name="tec" class="form-control" id="estado">
                                                 <option value=''>Todos</option>
-                                                <option value='Activo'>Activos</option>
+                                                <option value='Activo'>Activos </option>
                                                 <option value='Cortado'>Cortados</option>
                                                 <option value='Suspendido'>Suspendidos</option>
                                                 <option value='Instalar'>Instalar</option>
@@ -119,8 +191,34 @@
 												<option value='Cartera'>Cartera</option>
 												<option value='Compromiso'>Compromiso</option>
                                             </select>
+                                                <div class="form-group">
+                                                    <div class="selectBox" onclick="showCheckboxes()">
+                                                      <select class="form-control">
+                                                        <option>Seleccion Multiple</option>
+                                                      </select>
+                                                      <div class="overSelect"></div>
+                                                    </div>
+                                                    <div id="checkboxes" style="padding-left: 10px;">
+                                                      <label for="Activo">
+                                                        <input type="checkbox" id="Activo" /> Activos</label>
+                                                      <label for="Cortado">
+                                                        <input type="checkbox" id="Cortado" /> Cortados</label>
+                                                      <label for="Suspendido">
+                                                        <input type="checkbox" id="Suspendido" /> Suspendidos</label>
+                                                        <label for="Instalar">
+                                                        <input type="checkbox" id="Instalar" /> Instalar</label>
+                                                      <label for="Exonerado">
+                                                        <input type="checkbox" id="Exonerado" /> Exonerado</label>
+                                                      <label for="Cartera">
+                                                        <input type="checkbox" id="Cartera" /> Cartera</label>
+                                                        <label for="Compromiso">
+                                                        <input type="checkbox" id="Compromiso" /> Compromiso</label>
+                                                    </div>
+                                              </div>
                                         </div>
                                     </div>
+
+
 
                                 </div>
                                 <div class="tab-pane fade" id="link" role="tabpanel" aria-labelledby="link-tab" aria-expanded="false">
@@ -192,6 +290,18 @@
                                                         <select id="cmbLocalidades"  class="selectpicker form-control" name="localidad" onChange="cambia5()">
                                                         <option value="0">-</option>
                                                         </select>
+                                                        <div class="form-group">
+                                                            <div class="selectBox" onclick="showCheckboxes3()">
+                                                              <select class="form-control">
+                                                                <option>Seleccion Multiple</option>
+                                                              </select>
+                                                              <div class="overSelect"></div>
+                                                            </div>
+                                                            <div id="checkboxes3" style="padding-left: 10px;">
+                                                              <label for="otro"><input type="checkbox" id="otro" /> otro</label>
+                                                              
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                        
                                                 </div>
@@ -203,6 +313,18 @@
                                                         <select id="cmbBarrios" class="selectpicker form-control" name="barrio" >
                                                         <option value="0">-</option>
                                                         </select>
+                                                        <div class="form-group">
+                                                            <div class="selectBox" onclick="showCheckboxes4()">
+                                                              <select class="form-control">
+                                                                <option>Seleccion Multiple</option>
+                                                              </select>
+                                                              <div class="overSelect"></div>
+                                                            </div>
+                                                            <div id="checkboxes4" style="padding-left: 10px;">
+                                                              
+                                                              
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                        
                                                 </div>
@@ -306,6 +428,30 @@
                                                 <option value='saldoaFavor'>Saldo a Favor</option>
                                                 <option value='al Dia'>Al Dia</option>
                                             </select>
+                                            <div class="form-group">
+                                                    <div class="selectBox" onclick="showCheckboxes2()">
+                                                      <select class="form-control">
+                                                        <option>Seleccion Multiple</option>
+                                                      </select>
+                                                      <div class="overSelect"></div>
+                                                    </div>
+                                                    <div id="checkboxes2" style="padding-left: 10px;">
+                                                      <label for="1mes">
+                                                        <input type="checkbox" id="1mes" /> Corriente</label>
+                                                      <label for="masdeunmes">
+                                                        <input type="checkbox" id="masdeunmes" /> Mas del Mes</label>
+                                                      <label for="2meses">
+                                                        <input type="checkbox" id="2meses" /> Mas de 2 meses</label>
+                                                        <label for="3y4meses">
+                                                        <input type="checkbox" id="3y4meses" /> Mas de 3 y 4 meses</label>
+                                                      <label for="Todos">
+                                                        <input type="checkbox" id="Todos" /> Todos los Deudores</label>
+                                                      <label for="saldoaFavor">
+                                                        <input type="checkbox" id="saldoaFavor" /> Saldo a Favor</label>
+                                                        <label for="al Dia">
+                                                        <input type="checkbox" id="al Dia" /> Al Dia</label>
+                                                    </div>
+                                              </div>
                                         </div>
                                     </div>
 
@@ -1285,17 +1431,22 @@ $("#fclientstable").on('draw.dt',function (){
                                 var ciudad;
                                 ciudad = $("#cmbCiudades option:selected").val();
                                 //se verifica la seleccion dada
+                                var checks_multiple="";
                                 if(ciudad!=0 && ciudad!="-"){
                                     mis_opts=eval("localidad_"+ciudad);
                                     $("#cmbLocalidades").find('option').remove().end();
                                     for (var i = 0; i < mis_opts.length; i++) {
                                         $('#cmbLocalidades').append(new Option(mis_opts[i], mis_opts[i]));
+                                        if(mis_opts[i]!="-"){
+                                         checks_multiple+="<label for='"+mis_opts[i]+"'><input type='checkbox' id='"+mis_opts[i]+"' /> "+mis_opts[i]+"</label>";
+                                        }
                                     }
                                     
                                 }else{
                                     $("#cmbLocalidades").find('option').remove().end();
                                     $('#cmbLocalidades').append(new Option("-", "-"));                                           
                                 }
+                                $("#checkboxes3").html(checks_multiple);
                                 
                             }
 
@@ -1314,18 +1465,25 @@ $("#fclientstable").on('draw.dt',function (){
                                 var localidad;
                                 localidad = $("#cmbLocalidades option:selected").val();
                                 //se verifica la seleccion dada
+                                var checks_multiple="";
                                 if(localidad!=0 && localidad!="-"){
                                     mis_opts=eval("barrio_"+localidad);
                                     //definimos cuantas obciones hay
+                                    
                                     $("#cmbBarrios").find('option').remove().end();
                                     for (var i = 0; i < mis_opts.length; i++) {
                                         $('#cmbBarrios').append(new Option(mis_opts[i], mis_opts[i]));
+                                        if(mis_opts[i]!="-"){
+                                         checks_multiple+="<label for='"+mis_opts[i]+"'><input type='checkbox' id='"+mis_opts[i]+"' /> "+mis_opts[i]+"</label>";
+                                        }
                                     }
+                                    //checkboxes3
                                 }else{
                                 //resultado si no hay obciones
                                     $("#cmbBarrios").find('option').remove().end();
                                     $('#cmbBarrios').append(new Option("-", "-"));                                              
                                 }
+                                $("#checkboxes4").html(checks_multiple);
                                 
                             }
 
@@ -1438,4 +1596,51 @@ function al_cambiar_de_servicio(){
         },'json');
         
     }
+/* para estado usuario */
+    var expanded = false;
+    function showCheckboxes() {
+      var checkboxes = document.getElementById("checkboxes");
+      if (!expanded) {
+        checkboxes.style.display = "block";
+        expanded = true;
+      } else {
+        checkboxes.style.display = "none";
+        expanded = false;
+      }
+    }
+/* para estado de cuenta */
+    var expanded2 = false;
+    function showCheckboxes2() {
+      var checkboxes = document.getElementById("checkboxes2");
+      if (!expanded2) {
+        checkboxes.style.display = "block";
+        expanded2 = true;
+      } else {
+        checkboxes.style.display = "none";
+        expanded2 = false;
+      }
+    }
+    var expanded3 = false;
+    function showCheckboxes3() {
+      var checkboxes = document.getElementById("checkboxes3");
+      if (!expanded3) {
+        checkboxes.style.display = "block";
+        expanded3 = true;
+      } else {
+        checkboxes.style.display = "none";
+        expanded3 = false;
+      }
+    }
+    var expanded4 = false;
+    function showCheckboxes4() {
+      var checkboxes = document.getElementById("checkboxes4");
+      if (!expanded4) {
+        checkboxes.style.display = "block";
+        expanded4 = true;
+      } else {
+        checkboxes.style.display = "none";
+        expanded4 = false;
+      }
+    }
+
 </script>                   
