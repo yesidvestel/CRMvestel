@@ -452,7 +452,41 @@ class encuesta extends CI_Controller
         echo json_encode($output);
 
     }
+	 public function printats()
+    {
 
+        $tid = $this->input->get('id');
+
+        $data['id'] = $tid;
+        $data['title'] = "Encuesta $tid";
+		$data['rta'] = $this->encuesta->detall_colaborador($tid);
+        //$data['invoice'] = $this->purchase->purchase_details($tid);
+        //$data['products'] = $this->purchase->purchase_products($tid);
+        //$data['employee'] = $this->purchase->employee($data['invoice']['eid']);
+        //$data['invoice']['multi'] = 0;
+
+        ini_set('memory_limit', '64M');
+
+        $html = $this->load->view('encuestas/view-print-'.ATS, $data, true);
+
+        //PDF Rendering
+        $this->load->library('pdf');
+
+        $pdf = $this->pdf->load();
+
+        $pdf->SetHTMLFooter('<table width="100%" style="vertical-align: bottom; font-family: serif; font-size: 8pt; color: #959595; font-weight: bold; font-style: italic;"><tr><td width="33%"><span style="font-weight: bold; font-style: italic;">{DATE j-m-Y}</span></td><td width="33%" align="center" style="font-weight: bold; font-style: italic;">{PAGENO}/{nbpg}</td><td width="33%" style="text-align: right; ">#' . $tid . '</td></tr></table>');
+
+        $pdf->WriteHTML($html);
+
+        if ($this->input->get('d')) {
+
+            $pdf->Output('Purchase_#' . $tid . '.pdf', 'D');
+        } else {
+            $pdf->Output('Purchase_#' . $tid . '.pdf', 'I');
+        }
+
+
+    }
 
     public function listats()
     {

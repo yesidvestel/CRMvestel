@@ -1,9 +1,13 @@
-<style>
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Encuesta ATS #<?php echo $rta['idats'] ?></title>
+    <style>
 	.titulos{
 		background-color:#4881A6;
 		font-weight: bold;
 		padding-top: 10px;
-		padding-bottom: 10px;
 		
 	}
 	
@@ -15,22 +19,15 @@
 	input[type=radio] {
   		transform: scale(1.5);
 		margin-left: 10px;
-		pointer-events: none;
 	}
 
 </style>
+</head>
 
-<article class="content">
-    <div class="card card-block">
-        <div id="notify" class="alert alert-success" style="display:none;">
-            <a href="#" class="close" data-dismiss="alert">&times;</a>
+<body>
 
-            <div class="message"></div>
-        </div>
-        <form method="post" id="data_form" class="form-horizontal">
-            <div class="grid_3 grid_4">
 
-                <h5>FORMATO ANALISIS SEGURO DE TRABAJO</h5>
+    <h5>FORMATO ANALISIS SEGURO DE TRABAJO</h5>
                 <hr>
 				<table width="100%" border="1">
 					  <tbody>
@@ -75,7 +72,7 @@
 							<td align="center" class="titulos" colspan="8">ELEMENTOS DE PROTECCION PERSONAL A USAR</td>
 						</tr>
 						<tr>
-							<td colspan="8"><table width="100%" border="0">
+							<td colspan="8"><table border="1">
 								  <tbody>
 									<tr>
 									  <td align="right">CASCO DE SEGURIDAD: </td>
@@ -105,6 +102,7 @@
 									  <td align="right">ESLINGA:</td>
 									  <td><input type="checkbox" name="eslinga" <?= ($rta['eslinga']=='0')?'checked':'' ?>></input></td>
 									  <td align="right">RESPIRADOR ESPECIAL:</td>
+
 									  <td><input type="checkbox" name="respirador" <?= ($rta['respirador']=='0')?'checked':'' ?>></input></td>
 									</tr>
 									<tr>
@@ -122,13 +120,13 @@
 						</tr>
 						<tr>
 							<td colspan="2" style="font-weight: bold" align="center">EQUIPOS Y HERRAMIENTAS</td>
-							<td colspan="7" style="font-weight: bold">Indique cada una de las herramientas a utilizar.</td>
+							<td colspan="6" style="font-weight: bold">Indique cada una de las herramientas a utilizar.</td>
 							
 						</tr>
 						<tr>
-							<td colspan="1"  width="20%">Manuales</td>
-							<td colspan="1" width="5%"><?php echo $rta['manual1']; ?></td>
-							<td colspan="7"><?php echo $rta['manual2']; ?></td>
+							<td colspan="1">Manuales</td>
+							<td colspan="1"><?php echo $rta['manual1']; ?></td>
+							<td colspan="6"><?php echo $rta['manual2']; ?></td>
 						</tr>
 						<tr>
 							<td colspan="1">Eléctricas</td>
@@ -192,17 +190,17 @@
 							<td colspan="4"><?php echo $rta['peligro_otros']; ?></td>
 						</tr>
 						<tr>
-							<td align="center" class="titulos" colspan="2" width="25%">Pasos detallados de la tarea</td>
-							<td align="center" class="titulos" colspan="2" width="25%">Peligros existentes y
+							<td align="center" class="titulos" colspan="2">Pasos detallados de la tarea</td>
+							<td align="center" class="titulos" colspan="2">Peligros existentes y
 							potenciales</td>
-							<td align="center" class="titulos" colspan="2" width="25%">Consecuencias</td>
-							<td align="center" class="titulos" colspan="2" width="25%">Controles Requeridos</td>
+							<td align="center" class="titulos" colspan="2">Consecuencias</td>
+							<td align="center" class="titulos" colspan="2">Controles Requeridos</td>
 						</tr>
 						<tr>
 							<td colspan="2"><?php echo $rta['tarea1']; ?></td>
-							<td colspan="2"><?php echo $rta['riesgo1']; ?></td>
+							<td colspan="2"><?php echo $rta['riesgo1']; ?></input></td>
 							<td colspan="2"><?php echo $rta['consecuencia1']; ?></td>
-							<td colspan="2"><?php echo $rta['control1']; ?></td>
+							<td colspan="2"><?php echo $rta['control1']; ?></input></td>
 						</tr>
 						<tr>
 							<td colspan="2"><?php echo $rta['tarea2']; ?></td>
@@ -251,43 +249,24 @@
 							<td colspan="8"><input type="radio" name="seguro" <?= ($rta['seguro']=='1')?'checked':'' ?>></input>&nbsp;No, consulte al supervisor antes de tomar cualquier decisión.</td>
 						</tr>
 						<tr>
-							<td align="center" class="titulos" colspan="5" width="70%">Nombre y Cedula de los trabajadores (Ejecutor)</td>
-							<td align="center" class="titulos" colspan="3" width="30%">Firma</td>
+							<td align="center" class="titulos" colspan="5">Nombre y Cedula de los trabajadores (Ejecutor)</td>
+							<td align="center" class="titulos" colspan="3">Firma</td>
 						</tr>
 						<tr>
-							<td align="center" colspan="5" width="70%"><?php echo $rta['name'].' CC: '.$rta['dto']; ?></td>
-							<td align="center" colspan="3" width="30%"><img alt="image" class="img-responsive"
+							<td align="center" colspan="5"><?php echo $rta['name'].' CC: '.$rta['dto']; ?></td>
+							<td align="center" colspan="3"><img alt="image" class="img-responsive"
                                                  src="<?php echo base_url('userfiles/employee_sign/' . $rta['sign']); ?>" style="width: 40%"></td>
 						</tr>
-							<td align="center" class="titulos" colspan="5" width="70%">Nombre y Cedula de la persona (Emisor)</td>
-							<td align="center" class="titulos" colspan="3" width="30%">Firma</td>
+						<tr>
+							<td align="center" class="titulos" colspan="5">Nombre y Cedula de la persona (Emisor)</td>
+							<td align="center" class="titulos" colspan="3">Firma</td>
 						</tr>
 						<tr>
-							<td align="center" colspan="5" width="70%"></td>
-							<td align="center" colspan="3" width="30%"></td>
+							<td align="center" colspan="5"></td>
+							<td align="center" colspan="3"></td>
 						</tr>
 					  </tbody>
 					</table>
-					
 
-				</div>
-				
-                <div class="form-group row">
-					
-                    <label class="col-sm-12 col-form-label"></label>
-					
-                    <div class="col-sm-12" align="center">
-						<a href="<?php echo 'printats?id=' . $rta['idats']; ?>" class="btn btn-danger btn-md">
-									<i class="icon-pencil"></i> VER PDF <?php echo $this->lang->line('') ?>
-                                    </a>
-                        <input type="submit" id="submit-data" class="btn btn-success margin-bottom"
-                               value="<?php echo $this->lang->line('Add') ?>" data-loading-text="Adding...">
-                        <input type="hidden" value="encuesta/addats" id="action-url">
-                    </div>
-                </div>
-
-            </div>
-        </form>
-    </div>
-</article>
-
+</body>
+</html>
