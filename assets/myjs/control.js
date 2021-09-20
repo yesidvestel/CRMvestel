@@ -1158,7 +1158,8 @@ $("#copy_address").change(function ()
        // alert("Checkbox is checked." );
        var name=$('#mcustomer_name').val()+$('#mcustomer_dosnombre').val()+$('#mcustomer_unoapellido').val()+$('#mcustomer_dosapellido').val();
        name=name.replace(/ /g, "");
-
+            name=name.replace(/&/g, "y");
+            name=name.replace(/ñ/g, "n");
         $('#mcustomer_name_s').val(name.toUpperCase());
         $('#mcustomer_documento_s').val($('#mcustomer_documento').val());
         $('#mcustomer_email_s').val($('#mcustomer_email').val());
@@ -1201,6 +1202,8 @@ $("#copy_address_edit").change(function ()
         if(usuario_existe){
             var name=$('#mcustomer_name').val()+$('#mcustomer_dosnombre').val()+$('#mcustomer_unoapellido').val()+$('#mcustomer_dosapellido').val();
             name=name.replace(/ /g, "");
+            name=name.replace(/&/g, "y");
+            name=name.replace(/ñ/g, "n");
             $('#mcustomer_name_s').val(name.toUpperCase());
         }
         $('#mcustomer_documento_s').val($('#mcustomer_documento').val());
