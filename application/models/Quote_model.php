@@ -222,6 +222,7 @@ class Quote_model extends CI_Model
             'end' => '',
             'description' => strip_tags($section),
             'color' => '#4CB0CB',
+			'rol' => $tec,
 			'asigno' => $this->aauth->get_user()->id
 		);		
 		$this->db->insert('events', $data2);
