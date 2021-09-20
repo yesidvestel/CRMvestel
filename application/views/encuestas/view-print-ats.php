@@ -63,9 +63,9 @@
 							<td colspan="8" align="center" style="padding-top: 10px">
 								¿TRABAJO EN ALTURA ? 
                                                 <input type="radio" name="alturas"
-                                                       <?= ($rta['alturas']=='1')?'checked':'' ?>>  Si
+                                                       <?= ($rta['alturas']=='1')?'checked="true"':'' ?>>  Si
                                                 <input type="radio" name="alturas"
-                                                       <?= ($rta['alturas']=='0')?'checked':'' ?>>  No
+                                                       <?= ($rta['alturas']=='0')?'checked="true"':'' ?>>  No
                                             </td>
 						</tr>
 						<tr>
@@ -76,38 +76,38 @@
 								  <tbody>
 									<tr>
 									  <td align="right">CASCO DE SEGURIDAD: </td>
-										<td><input type="checkbox" name="casco" <?= ($rta['casco']=='0')?'checked':'' ?>></input></td>
+										<td><input type="checkbox" name="casco" <?= ($rta['casco']=='0')?'checked="true"="true"':'' ?>></input></td>
 									  <td align="right">GAFAS ESPECIALES:</td>
-									  <td><input type="checkbox" name="gafas" <?= ($rta['gafas']=='0')?'checked':'' ?>></input></td>
+									  <td><input type="checkbox" name="gafas" <?= ($rta['gafas']=='0')?'checked="true"':'' ?>></input></td>
 									</tr>
 									<tr>
 									  <td align="right">MONOGAFAS:</td>
-									  <td><input type="checkbox" name="monogafas" <?= ($rta['monogafas']=='0')?'checked':'' ?>></input></td>
+									  <td><input type="checkbox" name="monogafas" <?= ($rta['monogafas']=='0')?'checked="true"':'' ?>></input></td>
 									  <td align="right">TAPAOIDOS:</td>
-									  <td><input type="checkbox" name="tapaoidos" <?= ($rta['tapaoidos']=='0')?'checked':'' ?>></input></td>
+									  <td><input type="checkbox" name="tapaoidos" <?= ($rta['tapaoidos']=='0')?'checked="true"':'' ?>></input></td>
 									</tr>
 									<tr>
 									  <td align="right">GUANTES:</td>
-									  <td><input type="checkbox" name="guantes" <?= ($rta['guantes']=='0')?'checked':'' ?>></input></td>
+									  <td><input type="checkbox" name="guantes" <?= ($rta['guantes']=='0')?'checked="true"':'' ?>></input></td>
 									  <td align="right">VISERA O CARETA:</td>
-									  <td><input type="checkbox" name="careta" <?= ($rta['careta']=='0')?'checked':'' ?>></input></td>
+									  <td><input type="checkbox" name="careta" <?= ($rta['careta']=='0')?'checked="true"':'' ?>></input></td>
 									</tr>
 									<tr>
 									  <td align="right">ARNES:</td>
-									  <td><input type="checkbox" name="arnes" <?= ($rta['arnes']=='0')?'checked':'' ?>></input></td>
+									  <td><input type="checkbox" name="arnes" <?= ($rta['arnes']=='0')?'checked="true"':'' ?>></input></td>
 									  <td align="right">EQUIPO DE PRIMEROS AUXILIOS:</td>
-									  <td><input type="checkbox" name="1er_aux" <?= ($rta['1er_aux']=='0')?'checked':'' ?>></input></td>
+									  <td><input type="checkbox" name="1er_aux" <?= ($rta['1er_aux']=='0')?'checked="true"':'' ?>></input></td>
 									</tr>
 									<tr>
 									  <td align="right">ESLINGA:</td>
-									  <td><input type="checkbox" name="eslinga" <?= ($rta['eslinga']=='0')?'checked':'' ?>></input></td>
+									  <td><input type="checkbox" name="eslinga" <?= ($rta['eslinga']=='0')?'checked="true"':'' ?>></input></td>
 									  <td align="right">RESPIRADOR ESPECIAL:</td>
 
-									  <td><input type="checkbox" name="respirador" <?= ($rta['respirador']=='0')?'checked':'' ?>></input></td>
+									  <td><input type="checkbox" name="respirador" <?= ($rta['respirador']=='0')?'checked="true"':'' ?>></input></td>
 									</tr>
 									<tr>
 									  <td align="right">TIE OFF + MOSQUETON:</td>
-									  <td><input type="checkbox" name="mosquete" <?= ($rta['mosquete']=='0')?'checked':'' ?>></input></td>
+									  <td><input type="checkbox" name="mosquete" <?= ($rta['mosquete']=='0')?'checked="true"':'' ?>></input></td>
 									  <td align="right">¿ OTRO?, Cual:</td>
 									  <td><?php echo $rta['otros']; ?></td>
 									</tr>
@@ -233,20 +233,20 @@
 							<td colspan="8" style="font-weight: bold">¿Es posible, probable o casi-seguro que ocurra un incidente?</td>
 						</tr>
 						<tr>
-							<td colspan="8"><input type="radio" name="incidente" <?= ($rta['incidente']=='0')?'checked':'' ?>></input>&nbsp;Si, deténgase y no proceda con la tarea. Analice con el supervisor encargado el paso a paso, revisen controles y
+							<td colspan="8"><input type="radio" name="incidente" <?= ($rta['incidente']=='0')?'checked="true"':'' ?>></input>&nbsp;Si, deténgase y no proceda con la tarea. Analice con el supervisor encargado el paso a paso, revisen controles y
 							responda la siguiente pregunta.</td>
 						</tr>
 						<tr>
-							<td colspan="8"><input type="radio" name="incidente" <?= ($rta['incidente']=='1')?'checked':'' ?>></input>&nbsp;No, continúe con la tarea con precaución, implemente los controles establecidos.</td>
+							<td colspan="8"><input type="radio" name="incidente" <?= ($rta['incidente']=='1')?'checked="true"':'' ?>></input>&nbsp;No, continúe con la tarea con precaución, implemente los controles establecidos.</td>
 						</tr>
 						<tr>
 							<td colspan="8" style="font-weight: bold">¿Es seguro proceder ahora en la tarea con los controles adicionales?</td>
 						</tr>
 						<tr>
-							<td colspan="8"><input type="radio" name="seguro" <?= ($rta['seguro']=='0')?'checked':'' ?>></input>&nbsp;Si, proceda con la tarea.</td>
+							<td colspan="8"><input type="radio" name="seguro" <?= ($rta['seguro']=='0')?'checked="true"':'' ?>></input>&nbsp;Si, proceda con la tarea.</td>
 						</tr>
 						<tr>
-							<td colspan="8"><input type="radio" name="seguro" <?= ($rta['seguro']=='1')?'checked':'' ?>></input>&nbsp;No, consulte al supervisor antes de tomar cualquier decisión.</td>
+							<td colspan="8"><input type="radio" name="seguro" <?= ($rta['seguro']=='1')?'checked="true"':'' ?>></input>&nbsp;No, consulte al supervisor antes de tomar cualquier decisión.</td>
 						</tr>
 						<tr>
 							<td align="center" class="titulos" colspan="5">Nombre y Cedula de los trabajadores (Ejecutor)</td>
