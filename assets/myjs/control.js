@@ -1159,7 +1159,7 @@ $("#copy_address").change(function ()
        var name=$('#mcustomer_name').val()+$('#mcustomer_dosnombre').val()+$('#mcustomer_unoapellido').val()+$('#mcustomer_dosapellido').val();
        name=name.replace(/ /g, "");
 
-        $('#mcustomer_name_s').val(name);
+        $('#mcustomer_name_s').val(name.toUpperCase());
         $('#mcustomer_documento_s').val($('#mcustomer_documento').val());
         $('#mcustomer_email_s').val($('#mcustomer_email').val());
         $('#mcustomer_address1_s').val($('#mcustomer_address1').val());
@@ -1201,7 +1201,7 @@ $("#copy_address_edit").change(function ()
         if(usuario_existe){
             var name=$('#mcustomer_name').val()+$('#mcustomer_dosnombre').val()+$('#mcustomer_unoapellido').val()+$('#mcustomer_dosapellido').val();
             name=name.replace(/ /g, "");
-            $('#mcustomer_name_s').val(name);
+            $('#mcustomer_name_s').val(name.toUpperCase());
         }
         $('#mcustomer_documento_s').val($('#mcustomer_documento').val());
         $('#mcustomer_email_s').val($('#mcustomer_email').val());
