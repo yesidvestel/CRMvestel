@@ -191,29 +191,17 @@
 												<option value='Cartera'>Cartera</option>
 												<option value='Compromiso'>Compromiso</option>
                                             </select>
-                                                <div class="form-group">
-                                                    <div class="selectBox" onclick="showCheckboxes()">
-                                                      <select class="form-control">
-                                                        <option>Seleccion Multiple</option>
-                                                      </select>
-                                                      <div class="overSelect"></div>
-                                                    </div>
-                                                    <div id="checkboxes" style="padding-left: 10px;">
-                                                      <label for="Activo">
-                                                        <input type="checkbox" id="Activo" /> Activos</label>
-                                                      <label for="Cortado">
-                                                        <input type="checkbox" id="Cortado" /> Cortados</label>
-                                                      <label for="Suspendido">
-                                                        <input type="checkbox" id="Suspendido" /> Suspendidos</label>
-                                                        <label for="Instalar">
-                                                        <input type="checkbox" id="Instalar" /> Instalar</label>
-                                                      <label for="Exonerado">
-                                                        <input type="checkbox" id="Exonerado" /> Exonerado</label>
-                                                      <label for="Cartera">
-                                                        <input type="checkbox" id="Cartera" /> Cartera</label>
-                                                        <label for="Compromiso">
-                                                        <input type="checkbox" id="Compromiso" /> Compromiso</label>
-                                                    </div>
+                                                
+                                              <div class="form-group">
+                                                  <select id="estado_multiple" name="estado_multiple[]" class="form-control select-box" multiple="multiple">
+                                                <option value='Activo'>Activos </option>
+                                                <option value='Cortado'>Cortados</option>
+                                                <option value='Suspendido'>Suspendidos</option>
+                                                <option value='Instalar'>Instalar</option>
+                                                <option value='Exonerado'>Exonerado</option>
+                                                <option value='Cartera'>Cartera</option>
+                                                <option value='Compromiso'>Compromiso</option>
+                                                    </select>
                                               </div>
                                         </div>
                                     </div>
@@ -290,20 +278,14 @@
                                                         <select id="cmbLocalidades"  class="selectpicker form-control" name="localidad" onChange="cambia5()">
                                                         <option value="0">-</option>
                                                         </select>
-                                                        <div class="form-group">
-                                                            <div class="selectBox" onclick="showCheckboxes3()">
-                                                              <select class="form-control">
-                                                                <option>Seleccion Multiple</option>
-                                                              </select>
-                                                              <div class="overSelect"></div>
-                                                            </div>
-                                                            <div id="checkboxes3" style="padding-left: 10px;">
-                                                              <label for="otro"><input type="checkbox" id="otro" /> otro</label>
+                                                        <select style="width: 100%;" id="localidad_multiple" name="localidad_multiple[]" class="form-control select-box" multiple="multiple">
+                                                                    
+                                                         </select>
+                                                         
                                                               
-                                                            </div>
-                                                        </div>
+                                                        
                                                     </div>
-                                                       
+                                                    
                                                 </div>
                                                 
                                                 <div class="col-sm-6">
@@ -313,18 +295,9 @@
                                                         <select id="cmbBarrios" class="selectpicker form-control" name="barrio" >
                                                         <option value="0">-</option>
                                                         </select>
-                                                        <div class="form-group">
-                                                            <div class="selectBox" onclick="showCheckboxes4()">
-                                                              <select class="form-control">
-                                                                <option>Seleccion Multiple</option>
-                                                              </select>
-                                                              <div class="overSelect"></div>
-                                                            </div>
-                                                            <div id="checkboxes4" style="padding-left: 10px;">
-                                                              
-                                                              
-                                                            </div>
-                                                        </div>
+                                                        <select style="width: 100%;" id="barrios_multiple" name="barrios_multiple[]" class="form-control select-box" multiple="multiple">
+                                                                    
+                                                         </select>
                                                     </div>
                                                        
                                                 </div>
@@ -418,40 +391,18 @@
                                                for="pay_cat">Estado de Cuenta</label>
 
                                         <div class="col-sm-6">
-                                            <select name="tec" class="form-control" id="deudores">
-                                                <option value=''>Todo</option>
-                                                <option value='1mes'>Corriente</option>
-                                                <option value='masdeunmes'>Mas del Mes</option>
-                                                <option value='2meses'>Mas de 2 meses</option>
-                                                <option value='3y4meses'>Mas de 3 y 4 meses</option>
-                                                <option value='Todos'>Todos los Deudores</option>
-                                                <option value='saldoaFavor'>Saldo a Favor</option>
-                                                <option value='al Dia'>Al Dia</option>
-                                            </select>
-                                            <div class="form-group">
-                                                    <div class="selectBox" onclick="showCheckboxes2()">
-                                                      <select class="form-control">
-                                                        <option>Seleccion Multiple</option>
-                                                      </select>
-                                                      <div class="overSelect"></div>
-                                                    </div>
-                                                    <div id="checkboxes2" style="padding-left: 10px;">
-                                                      <label for="1mes">
-                                                        <input type="checkbox" id="1mes" /> Corriente</label>
-                                                      <label for="masdeunmes">
-                                                        <input type="checkbox" id="masdeunmes" /> Mas del Mes</label>
-                                                      <label for="2meses">
-                                                        <input type="checkbox" id="2meses" /> Mas de 2 meses</label>
-                                                        <label for="3y4meses">
-                                                        <input type="checkbox" id="3y4meses" /> Mas de 3 y 4 meses</label>
-                                                      <label for="Todos">
-                                                        <input type="checkbox" id="Todos" /> Todos los Deudores</label>
-                                                      <label for="saldoaFavor">
-                                                        <input type="checkbox" id="saldoaFavor" /> Saldo a Favor</label>
-                                                        <label for="al Dia">
-                                                        <input type="checkbox" id="al Dia" /> Al Dia</label>
-                                                    </div>
-                                              </div>
+                                           
+                                            <select style="width: 100%;" id="deudores_multiple" name="deudores_multiple[]" class="form-control select-box" multiple="multiple">
+                                                         
+                                                        <option value='1mes'>Corriente</option>
+                                                        <option value='masdeunmes'>Mas del Mes</option>
+                                                        <option value='2meses'>Mas de 2 meses</option>
+                                                        <option value='3y4meses'>Mas de 3 y 4 meses</option>
+                                                        <option value='Todos'>Todos los Deudores</option>
+                                                        <option value='saldoaFavor'>Saldo a Favor</option>
+                                                        <option value='al Dia'>Al Dia</option>       
+                                             </select>
+                                            
                                         </div>
                                     </div>
 
@@ -597,13 +548,18 @@
             var numero3= $("#numero3").val();
             var direccion = $("#sel_dir_personalizada option:selected").val();
             var sel_servicios = $("#sel_servicios option:selected").val();
-            var morosos=$("#deudores option:selected").val();
+            
 
             var ingreso_select=$("#fechas option:selected").val();
             var sdate=$("#sdate").val();
             var edate=$("#edate").val();
             var checked_ind_service =$("#check1").prop('checked');
-            var url =baseurl+"clientgroup/get_filtrados_para_checked?id=<?=$_GET['id']?>&morosos="+morosos+"&estado="+estado+"&localidad="+localidad+"&barrio="+barrio+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&checked_ind_service="+checked_ind_service;
+             var estados_multiple=$("#estado_multiple").val();
+            var localidad_multiple=$("#localidad_multiple").val();
+            var barrios_multiple=$("#barrios_multiple").val();
+            var deudores_multiple=$("#deudores_multiple").val();
+            
+            var url =baseurl+"clientgroup/get_filtrados_para_checked?id=<?=$_GET['id']?>&estado="+estado+"&localidad="+localidad+"&barrio="+barrio+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&checked_ind_service="+checked_ind_service+"&estados_multiple="+estados_multiple+"&localidad_multiple="+localidad_multiple+"&barrios_multiple="+barrios_multiple+"&deudores_multiple="+deudores_multiple;
              if(elemento.checked==true){
                 $("#div_notify3").html('<div id="notify3" class="alert alert-success" style="display:none;"><a href="#" class="close" data-dismiss="alert">&times;</a><div class="message3">></div></div>');
                     $("#notify3 .message3").html("<strong> Cargando</strong>: <img src='<?=base_url()?>/assets/img/iconocargando.gif'>");
@@ -1015,7 +971,7 @@ $("#pagination_div").hide();
               $("#despues_de_thead").after("<th class='cols_adicionadas'>Deuda</th>");
               $("#despues_de_tfoot").after("<th class='cols_adicionadas'>Deuda</th>");
 
-              var morosos=$("#deudores option:selected").val();
+              
 
               var estado=$("#estado option:selected").val();
            
@@ -1037,6 +993,11 @@ $("#pagination_div").hide();
                 var edate=$("#edate").val();
                 var checked_ind_service =$("#check1").prop('checked');
                 var check_usuarios_a_facturar=$("#check2").prop('checked');
+
+                 var estados_multiple=$("#estado_multiple").val();
+            var localidad_multiple=$("#localidad_multiple").val();
+            var barrios_multiple=$("#barrios_multiple").val();
+            var deudores_multiple=$("#deudores_multiple").val();
               tb=$('#fclientstable').DataTable({
 
                 "processing": true, //Feature control the processing indicator.
@@ -1045,7 +1006,7 @@ $("#pagination_div").hide();
 
                 // Load data for the table's content from an Ajax source
                 "ajax": {
-                    "url": "<?php echo site_url('clientgroup/load_morosos') . '?id=' . $group['id']; ?>&morosos="+morosos+"&estado="+estado+"&localidad="+localidad+"&barrio="+barrio+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&pagination_start="+pagination_start+"&pagination_end="+pagination_end+"&checked_ind_service="+checked_ind_service+"&check_usuarios_a_facturar="+check_usuarios_a_facturar,
+                    "url": "<?php echo site_url('clientgroup/load_morosos') . '?id=' . $group['id']; ?>&estado="+estado+"&localidad="+localidad+"&barrio="+barrio+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&pagination_start="+pagination_start+"&pagination_end="+pagination_end+"&checked_ind_service="+checked_ind_service+"&check_usuarios_a_facturar="+check_usuarios_a_facturar+"&estados_multiple="+estados_multiple+"&localidad_multiple="+localidad_multiple+"&barrios_multiple="+barrios_multiple+"&deudores_multiple="+deudores_multiple,
                     "type": "POST",
                     error: function (xhr, error, code)
                     {
@@ -1130,7 +1091,7 @@ $("#pagination_div").hide();
             var numero3= $("#numero3").val();
             var direccion = $("#sel_dir_personalizada option:selected").val();
             var sel_servicios = $("#sel_servicios option:selected").val();
-            var morosos=$("#deudores option:selected").val();
+            
 
             var ingreso_select=$("#fechas option:selected").val();
             var sdate=$("#sdate").val();
@@ -1144,7 +1105,10 @@ $("#pagination_div").hide();
                 pagination_start=$("#pagination_"+$pagination_id).data("start");
                 pagination_end=$("#pagination_"+$pagination_id).data("end");                                              
             }
-
+            var estados_multiple=$("#estado_multiple").val();
+            var localidad_multiple=$("#localidad_multiple").val();
+            var barrios_multiple=$("#barrios_multiple").val();
+            var deudores_multiple=$("#deudores_multiple").val();
                 //color:blue;font-weight:900
             
             
@@ -1162,7 +1126,7 @@ $("#pagination_div").hide();
              
             //if(morosos!=""){
                 if(columnasAgregadas){
-                    tb.ajax.url( baseurl+'clientgroup/load_morosos?id=<?=$_GET['id']?>&morosos='+morosos+"&estado="+estado+"&localidad="+localidad+"&barrio="+barrio+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&pagination_start="+pagination_start+"&pagination_end="+pagination_end+"&checked_ind_service="+checked_ind_service+"&check_usuarios_a_facturar="+check_usuarios_a_facturar).load();               
+                    tb.ajax.url( baseurl+'clientgroup/load_morosos?id=<?=$_GET['id']?>&estado='+estado+"&localidad="+localidad+"&barrio="+barrio+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&pagination_start="+pagination_start+"&pagination_end="+pagination_end+"&checked_ind_service="+checked_ind_service+"&check_usuarios_a_facturar="+check_usuarios_a_facturar+"&estados_multiple="+estados_multiple+"&localidad_multiple="+localidad_multiple+"&barrios_multiple="+barrios_multiple+"&deudores_multiple="+deudores_multiple).load();               
                 }else{
                     nuevas_columnas();
                     $("option[value=100]").text("Todo");
@@ -1195,14 +1159,14 @@ $("#pagination_div").hide();
             var numero3= $("#numero3").val();
             var direccion = $("#sel_dir_personalizada option:selected").val();
             var sel_servicios = $("#sel_servicios option:selected").val();
-            var morosos=$("#deudores option:selected").val();
+            
 
             var ingreso_select=$("#fechas option:selected").val();
             var sdate=$("#sdate").val();
             var edate=$("#edate").val();
             var checked_ind_service =$("#check1").prop('checked');
             var check_usuarios_a_facturar=$("#check2").prop('checked');
-            var url_redirect=baseurl+'clientgroup/explortar_a_excel?estado='+estado+"&id=<?=$_GET['id']?>&localidad="+localidad+"&barrio="+barrio+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&morosos="+morosos+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&checked_ind_service="+checked_ind_service+"&check_usuarios_a_facturar="+check_usuarios_a_facturar;
+            var url_redirect=baseurl+'clientgroup/explortar_a_excel?estado='+estado+"&id=<?=$_GET['id']?>&localidad="+localidad+"&barrio="+barrio+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&checked_ind_service="+checked_ind_service+"&check_usuarios_a_facturar="+check_usuarios_a_facturar;
             window.location.replace(url_redirect);
 
     }
@@ -1431,23 +1395,26 @@ $("#fclientstable").on('draw.dt',function (){
                                 var ciudad;
                                 ciudad = $("#cmbCiudades option:selected").val();
                                 //se verifica la seleccion dada
-                                var checks_multiple="";
+                                
+                                $("#localidad_multiple").find('option').remove().end();
                                 if(ciudad!=0 && ciudad!="-"){
                                     mis_opts=eval("localidad_"+ciudad);
                                     $("#cmbLocalidades").find('option').remove().end();
+                                    $("#localidad_multiple").find('option').remove().end();
                                     for (var i = 0; i < mis_opts.length; i++) {
-                                        $('#cmbLocalidades').append(new Option(mis_opts[i], mis_opts[i]));
-                                        if(mis_opts[i]!="-"){
-                                         checks_multiple+="<label for='"+mis_opts[i]+"'><input type='checkbox' id='"+mis_opts[i]+"' /> "+mis_opts[i]+"</label>";
-                                        }
+                                        $('#cmbLocalidades').append(new Option(mis_opts[i], mis_opts[i]));                                           
+                                           if(mis_opts[i]!="-"){
+                                                $('#localidad_multiple').append(new Option(mis_opts[i], mis_opts[i]));
+                                           }
+                                        
                                     }
                                     
                                 }else{
                                     $("#cmbLocalidades").find('option').remove().end();
                                     $('#cmbLocalidades').append(new Option("-", "-"));                                           
                                 }
-                                $("#checkboxes3").html(checks_multiple);
-                                
+                                //$("#checkboxes3").html(checks_multiple);
+                                $("#localidad_multiple").select2();
                             }
 
     var barrio_ComunaI = new Array ("-","Bello horizonte","Brisas del Cravo","El Batallon","El Centro","El Libertador","La Corocora","La Estrella bon Habitad","la Pradera","Luis Hernandez Vargas","San Martin","La Arboleda");
@@ -1465,7 +1432,7 @@ $("#fclientstable").on('draw.dt',function (){
                                 var localidad;
                                 localidad = $("#cmbLocalidades option:selected").val();
                                 //se verifica la seleccion dada
-                                var checks_multiple="";
+                                $("#barrios_multiple").find('option').remove().end();
                                 if(localidad!=0 && localidad!="-"){
                                     mis_opts=eval("barrio_"+localidad);
                                     //definimos cuantas obciones hay
@@ -1474,7 +1441,7 @@ $("#fclientstable").on('draw.dt',function (){
                                     for (var i = 0; i < mis_opts.length; i++) {
                                         $('#cmbBarrios').append(new Option(mis_opts[i], mis_opts[i]));
                                         if(mis_opts[i]!="-"){
-                                         checks_multiple+="<label for='"+mis_opts[i]+"'><input type='checkbox' id='"+mis_opts[i]+"' /> "+mis_opts[i]+"</label>";
+                                            $('#barrios_multiple').append(new Option(mis_opts[i], mis_opts[i]));
                                         }
                                     }
                                     //checkboxes3
@@ -1483,7 +1450,7 @@ $("#fclientstable").on('draw.dt',function (){
                                     $("#cmbBarrios").find('option').remove().end();
                                     $('#cmbBarrios').append(new Option("-", "-"));                                              
                                 }
-                                $("#checkboxes4").html(checks_multiple);
+                                $("#barrios_multiple").select2();
                                 
                             }
 
@@ -1642,5 +1609,10 @@ function al_cambiar_de_servicio(){
         expanded4 = false;
       }
     }
+//mas cambios
+
+$("#estado_multiple").select2();
+$("#barrios_multiple").select2();
+$("#deudores_multiple").select2();
 
 </script>                   

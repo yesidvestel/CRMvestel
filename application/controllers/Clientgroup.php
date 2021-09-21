@@ -85,7 +85,12 @@ class Clientgroup extends CI_Controller
         }
         $lista_customers=$this->db->get()->result();
         $cust_group=$this->db->get_where("customers_group",array('id' => $_GET['id']))->row();
-        
+        $filtro_deudores_multiple=explode(",", $_GET['deudores_multiple']) ;
+        $filtro_deudores_multiple_2=array();        
+
+        foreach ($filtro_deudores_multiple as $key => $value) {
+            $filtro_deudores_multiple_2[$value]=$value;
+        }
         //codigo para hacer filtros por mora y servicios
 
         $lista_customers2=array();
@@ -217,7 +222,7 @@ class Clientgroup extends CI_Controller
                                 $invoice->total=$suma;
                             }*/
                    // }
-                    if($_GET['morosos']=="1mes"){
+                    if( isset($filtro_deudores_multiple_2['1mes'])){
                         if($fact_valida && $debe_customer==$invoice->total && $customer_moroso==false){
                             $customer_moroso=true;
                             $valor_ultima_factura=$invoice->total;
@@ -225,7 +230,7 @@ class Clientgroup extends CI_Controller
                         }else if($fact_valida){
                             break;
                         }
-                    }else if($_GET['morosos']=="masdeunmes"){
+                    }else if( isset($filtro_deudores_multiple_2['masdeunmes'])){
                         if($fact_valida && $debe_customer>$invoice->total && $customer_moroso==false){
                             $customer_moroso=true;
                             $valor_ultima_factura=$invoice->total;
@@ -233,7 +238,7 @@ class Clientgroup extends CI_Controller
                         }else if($fact_valida){
                             break;
                         }
-                    }else if($_GET['morosos']=="2meses"){
+                    }else if(isset($filtro_deudores_multiple_2['2meses'])){
                         if($fact_valida && $debe_customer>=($invoice->total*2) && $customer_moroso==false){
                             $customer_moroso=true;
                             $valor_ultima_factura=$invoice->total;
@@ -241,7 +246,7 @@ class Clientgroup extends CI_Controller
                         }else if($fact_valida){
                             break;
                         }
-                    }else if($_GET['morosos']=="3y4meses"){
+                    }else if( isset($filtro_deudores_multiple_2['3y4meses'])){
                         if($fact_valida && $debe_customer>=($invoice->total*3) && $customer_moroso==false){
                             $customer_moroso=true;
                             $valor_ultima_factura=$invoice->total;
@@ -249,7 +254,7 @@ class Clientgroup extends CI_Controller
                         }else if($fact_valida){
                             break;
                         }
-                    }else if($_GET['morosos']=="Todos"){
+                    }else if( isset($filtro_deudores_multiple_2['Todos'])){
                         if($fact_valida && $debe_customer>0 && $customer_moroso==false){
                             $customer_moroso=true;
                             $valor_ultima_factura=$invoice->total;
@@ -257,7 +262,7 @@ class Clientgroup extends CI_Controller
                         }else if($fact_valida){
                             break;
                         }
-                    }else if($_GET['morosos']=="saldoaFavor"){
+                    }else if(isset($filtro_deudores_multiple_2['saldoaFavor'])){
                         if($fact_valida && $debe_customer<0 && $customer_moroso==false){
                             $customer_moroso=true;
                             $valor_ultima_factura=$invoice->total;
@@ -266,7 +271,7 @@ class Clientgroup extends CI_Controller
                             break;
                         }
 
-                    }else if($_GET['morosos']=="al Dia"){
+                    }else if( isset($filtro_deudores_multiple_2['al Dia'])){
                         if($fact_valida && $debe_customer==0 && $customer_moroso==false){
                             $customer_moroso=true;
                             $valor_ultima_factura=$invoice->total;
@@ -275,7 +280,7 @@ class Clientgroup extends CI_Controller
                             break;
                         }
 
-                    }else if($_GET['morosos']==""){
+                    }else if($_GET['deudores_multiple']==""){
                         if($fact_valida){
                             $customer_moroso=true;
                             $valor_ultima_factura=$invoice->total;
@@ -291,7 +296,7 @@ class Clientgroup extends CI_Controller
             if(isset($_GET['sel_servicios']) && $_GET['sel_servicios'] != '' && $_GET['sel_servicios'] != null ){
                 //aunque sea moroso pero para aplicar el filtro se va a cambiar la variable moroso
                
-                if($_GET['morosos']==""){//para que muestre todos si esta seleccionada esta opcion, probar si colocando esta condicion encima del if funciona bien para eliminar y dejar solo una
+                if($_GET['deudores_multiple']==""){//para que muestre todos si esta seleccionada esta opcion, probar si colocando esta condicion encima del if funciona bien para eliminar y dejar solo una
                     $customer_moroso=true;
                 }
 
@@ -322,7 +327,7 @@ class Clientgroup extends CI_Controller
                 }
 
             }else{
-                if($_GET['morosos']==""){//para que muestre todos si esta seleccionada esta opcion
+                if($_GET['deudores_multiple']==""){//para que muestre todos si esta seleccionada esta opcion
                     $customer_moroso=true;
                 }
             }
@@ -567,17 +572,56 @@ class Clientgroup extends CI_Controller
         $this->db->select("*");
         $this->db->from("customers");        
         $this->db->where("gid",$_GET['id']);
-        if (isset($_GET['estado']) && $_GET['estado'] != '' && $_GET['estado'] != null) {
-            $this->db->where('usu_estado=', $_GET['estado']);
-        }
-        if (isset($_GET['direccion']) &&$_GET['direccion'] =="Personalizada"){ 
-            if ($_GET['localidad'] != '' && $_GET['localidad'] != '-' && $_GET['localidad'] != '0') {
-                $this->db->where('localidad=', $_GET['localidad']);
+        //var_dump($_GET['estados_multiple']);
+        //var_dump($_GET['localidad_multiple']);
+        //var_dump($_GET['barrios_multiple']);
+        //var_dump($_GET['deudores_multiple']);
+        if(isset($_GET['estados_multiple'])){
+                    $estados_multiple=explode(",", $_GET['estados_multiple']) ;
+                    
+                    if($estados_multiple[0]!="null" && $estados_multiple[0]!=null){
+                        
+                        $this->db->where_in('usu_estado', $estados_multiple);
+                    }else{
+                       if (isset($_GET['estado']) && $_GET['estado'] != '' && $_GET['estado'] != null) {
+                            $this->db->where('usu_estado=', $_GET['estado']);
+                        }
+                    }    
             }
 
-            if ($_GET['barrio'] != '' && $_GET['barrio'] != '-' && $_GET['barrio'] != '0') {
-                $this->db->where('barrio=', $_GET['barrio']);
+        
+        if (isset($_GET['direccion']) &&$_GET['direccion'] =="Personalizada"){
+            if(isset($_GET['localidad_multiple'])){
+                    $localidad_multiple=explode(",", $_GET['localidad_multiple']) ;
+                    
+                    if($localidad_multiple[0]!="null" && $localidad_multiple[0]!=null){
+                        
+                        $this->db->where_in('localidad', $localidad_multiple);
+                    }else{
+                        if ($_GET['localidad'] != '' && $_GET['localidad'] != '-' && $_GET['localidad'] != '0') {
+                                $this->db->where('localidad=', $_GET['localidad']);
+                        }
+                    }    
             }
+            
+            if(isset($_GET['barrios_multiple'])){
+                    $multiplev=explode(",", $_GET['barrios_multiple']) ;
+                    
+                    if($multiplev[0]!="null" && $multiplev[0]!=null){                        
+                        $this->db->or_where_in('barrio', $multiplev);
+                    }else{
+
+                        if ($_GET['barrio'] != '' && $_GET['barrio'] != '-' && $_GET['barrio'] != '0') {
+                            if($_GET['localidad_multiple']!=""){
+                                $this->db->or_where('barrio=', $_GET['barrio']);
+                            }else{
+                                $this->db->where('barrio=', $_GET['barrio']);
+                            }
+                        }
+                    }    
+            }
+
+            
             if ($_GET['nomenclatura'] != '' && $_GET['nomenclatura'] != '-') {
                 $this->db->where('nomenclatura=', $_GET['nomenclatura']);
             }
@@ -608,8 +652,13 @@ class Clientgroup extends CI_Controller
         $this->db->order_by('id', 'DESC');
 
         $lista_customers=$this->db->get()->result();
-        
+        $filtro_deudores_multiple=explode(",", $_GET['deudores_multiple']) ;
+        $filtro_deudores_multiple_2=array();        
 
+        foreach ($filtro_deudores_multiple as $key => $value) {
+            $filtro_deudores_multiple_2[$value]=$value;
+        }
+        
 
         $no = $this->input->post('start');
         $data=array();
@@ -746,7 +795,7 @@ class Clientgroup extends CI_Controller
                                 $invoice->total=$suma;
                             }*/
                    // }
-                    if($_GET['morosos']=="1mes"){
+                    if( isset($filtro_deudores_multiple_2['1mes'])){
                         if($fact_valida && $debe_customer==$invoice->total && $customer_moroso==false){
                             $customer_moroso=true;
                             $valor_ultima_factura=$invoice->total;
@@ -754,7 +803,7 @@ class Clientgroup extends CI_Controller
                         }else if($fact_valida){
                             break;
                         }
-                    }else if($_GET['morosos']=="masdeunmes"){
+                    }else if( isset($filtro_deudores_multiple_2['masdeunmes'])){
                         if($fact_valida && $debe_customer>$invoice->total && $customer_moroso==false){
                             $customer_moroso=true;
                             $valor_ultima_factura=$invoice->total;
@@ -762,7 +811,7 @@ class Clientgroup extends CI_Controller
                         }else if($fact_valida){
                             break;
                         }
-                    }else if($_GET['morosos']=="2meses"){
+                    }else if(isset($filtro_deudores_multiple_2['2meses'])){
                         if($fact_valida && $debe_customer>=($invoice->total*2) && $customer_moroso==false){
                             $customer_moroso=true;
                             $valor_ultima_factura=$invoice->total;
@@ -770,7 +819,7 @@ class Clientgroup extends CI_Controller
                         }else if($fact_valida){
                             break;
                         }
-                    }else if($_GET['morosos']=="3y4meses"){
+                    }else if( isset($filtro_deudores_multiple_2['3y4meses'])){
                         if($fact_valida && $debe_customer>=($invoice->total*3) && $customer_moroso==false){
                             $customer_moroso=true;
                             $valor_ultima_factura=$invoice->total;
@@ -778,7 +827,7 @@ class Clientgroup extends CI_Controller
                         }else if($fact_valida){
                             break;
                         }
-                    }else if($_GET['morosos']=="Todos"){
+                    }else if( isset($filtro_deudores_multiple_2['Todos'])){
                         if($fact_valida && $debe_customer>0 && $customer_moroso==false){
                             $customer_moroso=true;
                             $valor_ultima_factura=$invoice->total;
@@ -786,7 +835,7 @@ class Clientgroup extends CI_Controller
                         }else if($fact_valida){
                             break;
                         }
-                    }else if($_GET['morosos']=="saldoaFavor"){
+                    }else if(isset($filtro_deudores_multiple_2['saldoaFavor'])){
                         if($fact_valida && $debe_customer<0 && $customer_moroso==false){
                             $customer_moroso=true;
                             $valor_ultima_factura=$invoice->total;
@@ -795,7 +844,7 @@ class Clientgroup extends CI_Controller
                             break;
                         }
 
-                    }else if($_GET['morosos']=="al Dia"){
+                    }else if( isset($filtro_deudores_multiple_2['al Dia'])){
                         if($fact_valida && $debe_customer==0 && $customer_moroso==false){
                             $customer_moroso=true;
                             $valor_ultima_factura=$invoice->total;
@@ -804,7 +853,7 @@ class Clientgroup extends CI_Controller
                             break;
                         }
 
-                    }else if($_GET['morosos']==""){
+                    }else if($_GET['deudores_multiple']==""){
                         if($fact_valida){
                             $customer_moroso=true;
                             $valor_ultima_factura=$invoice->total;
@@ -820,7 +869,7 @@ class Clientgroup extends CI_Controller
             if(isset($_GET['sel_servicios']) && $_GET['sel_servicios'] != '' && $_GET['sel_servicios'] != null ){
                 //aunque sea moroso pero para aplicar el filtro se va a cambiar la variable moroso
                
-                if($_GET['morosos']==""){//para que muestre todos si esta seleccionada esta opcion, probar si colocando esta condicion encima del if funciona bien para eliminar y dejar solo una
+                if($_GET['deudores_multiple']==""){//para que muestre todos si esta seleccionada esta opcion, probar si colocando esta condicion encima del if funciona bien para eliminar y dejar solo una
                     $customer_moroso=true;
                 }
 
@@ -850,7 +899,7 @@ class Clientgroup extends CI_Controller
                 }
                 
             }else{
-                if($_GET['morosos']==""){//para que muestre todos si esta seleccionada esta opcion
+                if($_GET['deudores_multiple']==""){//para que muestre todos si esta seleccionada esta opcion
                     $customer_moroso=true;
                 }
 
@@ -1022,16 +1071,47 @@ class Clientgroup extends CI_Controller
         $this->db->select("*");
         $this->db->from("customers");        
         $this->db->where("gid",$_GET['id']);
-        if (isset($_GET['estado']) && $_GET['estado'] != '' && $_GET['estado'] != null) {
-            $this->db->where('usu_estado=', $_GET['estado']);
-        }
-        if (isset($_GET['direccion']) &&$_GET['direccion'] =="Personalizada"){ 
-            if ($_GET['localidad'] != '' && $_GET['localidad'] != '-' && $_GET['localidad'] != '0') {
-                $this->db->where('localidad=', $_GET['localidad']);
+       if(isset($_GET['estados_multiple'])){
+                    $estados_multiple=explode(",", $_GET['estados_multiple']) ;
+                    
+                    if($estados_multiple[0]!="null" && $estados_multiple[0]!=null){
+                        
+                        $this->db->where_in('usu_estado', $estados_multiple);
+                    }else{
+                       if (isset($_GET['estado']) && $_GET['estado'] != '' && $_GET['estado'] != null) {
+                            $this->db->where('usu_estado=', $_GET['estado']);
+                        }
+                    }    
             }
+        if (isset($_GET['direccion']) &&$_GET['direccion'] =="Personalizada"){ 
+             if(isset($_GET['localidad_multiple'])){
+                    $localidad_multiple=explode(",", $_GET['localidad_multiple']) ;
+                    
+                    if($localidad_multiple[0]!="null" && $localidad_multiple[0]!=null){
+                        
+                        $this->db->where_in('localidad', $localidad_multiple);
+                    }else{
+                        if ($_GET['localidad'] != '' && $_GET['localidad'] != '-' && $_GET['localidad'] != '0') {
+                                $this->db->where('localidad=', $_GET['localidad']);
+                        }
+                    }    
+            }
+            
+            if(isset($_GET['barrios_multiple'])){
+                    $multiplev=explode(",", $_GET['barrios_multiple']) ;
+                    
+                    if($multiplev[0]!="null" && $multiplev[0]!=null){                        
+                        $this->db->or_where_in('barrio', $multiplev);
+                    }else{
 
-            if ($_GET['barrio'] != '' && $_GET['barrio'] != '-' && $_GET['barrio'] != '0') {
-                $this->db->where('barrio=', $_GET['barrio']);
+                        if ($_GET['barrio'] != '' && $_GET['barrio'] != '-' && $_GET['barrio'] != '0') {
+                            if($_GET['localidad_multiple']!=""){
+                                $this->db->or_where('barrio=', $_GET['barrio']);
+                            }else{
+                                $this->db->where('barrio=', $_GET['barrio']);
+                            }
+                        }
+                    }    
             }
             if ($_GET['nomenclatura'] != '' && $_GET['nomenclatura'] != '-') {
                 $this->db->where('nomenclatura=', $_GET['nomenclatura']);
@@ -1057,9 +1137,12 @@ class Clientgroup extends CI_Controller
     
 
         $lista_customers=$this->db->get()->result();
-        
+        $filtro_deudores_multiple=explode(",", $_GET['deudores_multiple']) ;
+        $filtro_deudores_multiple_2=array();        
 
-
+        foreach ($filtro_deudores_multiple as $key => $value) {
+            $filtro_deudores_multiple_2[$value]=$value;
+        }
     
         $data=array();
         $x=0;
@@ -1167,7 +1250,7 @@ class Clientgroup extends CI_Controller
                                 $invoice->total=$suma;
                             }*/
                    // }
-                    if($_GET['morosos']=="1mes"){
+                    if(isset($filtro_deudores_multiple_2['1mes'])){
                         if($fact_valida && $debe_customer==$invoice->total && $customer_moroso==false){
                             $customer_moroso=true;
                             $valor_ultima_factura=$invoice->total;
@@ -1175,7 +1258,7 @@ class Clientgroup extends CI_Controller
                         }else if($fact_valida){
                             break;
                         }
-                    }else if($_GET['morosos']=="masdeunmes"){
+                    }else if( isset($filtro_deudores_multiple_2['masdeunmes'])){
                         if($fact_valida && $debe_customer>$invoice->total && $customer_moroso==false){
                             $customer_moroso=true;
                             $valor_ultima_factura=$invoice->total;
@@ -1183,7 +1266,7 @@ class Clientgroup extends CI_Controller
                         }else if($fact_valida){
                             break;
                         }
-                    }else if($_GET['morosos']=="2meses"){
+                    }else if( isset($filtro_deudores_multiple_2['2meses'])){
                         if($fact_valida && $debe_customer>=($invoice->total*2) && $customer_moroso==false){
                             $customer_moroso=true;
                             $valor_ultima_factura=$invoice->total;
@@ -1191,7 +1274,7 @@ class Clientgroup extends CI_Controller
                         }else if($fact_valida){
                             break;
                         }
-                    }else if($_GET['morosos']=="3y4meses"){
+                    }else if( isset($filtro_deudores_multiple_2['3y4meses'])){
                         if($fact_valida && $debe_customer>=($invoice->total*3) && $customer_moroso==false){
                             $customer_moroso=true;
                             $valor_ultima_factura=$invoice->total;
@@ -1199,7 +1282,7 @@ class Clientgroup extends CI_Controller
                         }else if($fact_valida){
                             break;
                         }
-                    }else if($_GET['morosos']=="Todos"){
+                    }else if( isset($filtro_deudores_multiple_2['Todos'])){
                         if($fact_valida && $debe_customer>0 && $customer_moroso==false){
                             $customer_moroso=true;
                             $valor_ultima_factura=$invoice->total;
@@ -1207,7 +1290,7 @@ class Clientgroup extends CI_Controller
                         }else if($fact_valida){
                             break;
                         }
-                    }else if($_GET['morosos']=="saldoaFavor"){
+                    }else if( isset($filtro_deudores_multiple_2['saldoaFavor'])){
                         if($fact_valida && $debe_customer<0 && $customer_moroso==false){
                             $customer_moroso=true;
                             $valor_ultima_factura=$invoice->total;
@@ -1216,7 +1299,7 @@ class Clientgroup extends CI_Controller
                             break;
                         }
 
-                    }else if($_GET['morosos']=="al Dia"){
+                    }else if( isset($filtro_deudores_multiple_2['al Dia'])){
                         if($fact_valida && $debe_customer==0 && $customer_moroso==false){
                             $customer_moroso=true;
                             $valor_ultima_factura=$invoice->total;
@@ -1225,7 +1308,7 @@ class Clientgroup extends CI_Controller
                             break;
                         }
 
-                    }else if($_GET['morosos']==""){
+                    }else if($_GET['deudores_multiple']==""){
                         if($fact_valida){
                             $customer_moroso=true;
                             $valor_ultima_factura=$invoice->total;
@@ -1241,7 +1324,7 @@ class Clientgroup extends CI_Controller
             if(isset($_GET['sel_servicios']) && $_GET['sel_servicios'] != '' && $_GET['sel_servicios'] != null ){
                 //aunque sea moroso pero para aplicar el filtro se va a cambiar la variable moroso
                
-                if($_GET['morosos']==""){//para que muestre todos si esta seleccionada esta opcion, probar si colocando esta condicion encima del if funciona bien para eliminar y dejar solo una
+                if($_GET['deudores_multiple']==""){//para que muestre todos si esta seleccionada esta opcion, probar si colocando esta condicion encima del if funciona bien para eliminar y dejar solo una
                     $customer_moroso=true;
                 }
 
@@ -1271,7 +1354,7 @@ class Clientgroup extends CI_Controller
                     }
                 }
             }else{
-                if($_GET['morosos']==""){//para que muestre todos si esta seleccionada esta opcion
+                if($_GET['deudores_multiple']==""){//para que muestre todos si esta seleccionada esta opcion
                     $customer_moroso=true;
                 }
             }
