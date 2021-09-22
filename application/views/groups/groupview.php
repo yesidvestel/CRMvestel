@@ -181,16 +181,7 @@
                                                for="pay_cat">Estado</label>
 
                                         <div class="col-sm-6">
-                                            <select name="tec" class="form-control" id="estado">
-                                                <option value=''>Todos</option>
-                                                <option value='Activo'>Activos </option>
-                                                <option value='Cortado'>Cortados</option>
-                                                <option value='Suspendido'>Suspendidos</option>
-                                                <option value='Instalar'>Instalar</option>
-												<option value='Exonerado'>Exonerado</option>
-												<option value='Cartera'>Cartera</option>
-												<option value='Compromiso'>Compromiso</option>
-                                            </select>
+                                            
                                                 
                                               <div class="form-group">
                                                   <select id="estado_multiple" name="estado_multiple[]" class="form-control select-box" multiple="multiple">
@@ -534,7 +525,7 @@
 <script type="text/javascript">
 
     function selet_all_customers(elemento){
-        var estado=$("#estado option:selected").val();
+        
            
       
             var localidad= $("#cmbLocalidades option:selected").val();
@@ -559,7 +550,7 @@
             var barrios_multiple=$("#barrios_multiple").val();
             var deudores_multiple=$("#deudores_multiple").val();
             
-            var url =baseurl+"clientgroup/get_filtrados_para_checked?id=<?=$_GET['id']?>&estado="+estado+"&localidad="+localidad+"&barrio="+barrio+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&checked_ind_service="+checked_ind_service+"&estados_multiple="+estados_multiple+"&localidad_multiple="+localidad_multiple+"&barrios_multiple="+barrios_multiple+"&deudores_multiple="+deudores_multiple;
+            var url =baseurl+"clientgroup/get_filtrados_para_checked?id=<?=$_GET['id']?>&localidad="+localidad+"&barrio="+barrio+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&checked_ind_service="+checked_ind_service+"&estados_multiple="+estados_multiple+"&localidad_multiple="+localidad_multiple+"&barrios_multiple="+barrios_multiple+"&deudores_multiple="+deudores_multiple;
              if(elemento.checked==true){
                 $("#div_notify3").html('<div id="notify3" class="alert alert-success" style="display:none;"><a href="#" class="close" data-dismiss="alert">&times;</a><div class="message3">></div></div>');
                     $("#notify3 .message3").html("<strong> Cargando</strong>: <img src='<?=base_url()?>/assets/img/iconocargando.gif'>");
@@ -973,7 +964,7 @@ $("#pagination_div").hide();
 
               
 
-              var estado=$("#estado option:selected").val();
+              
            
       
                 var localidad= $("#cmbLocalidades option:selected").val();
@@ -1006,7 +997,7 @@ $("#pagination_div").hide();
 
                 // Load data for the table's content from an Ajax source
                 "ajax": {
-                    "url": "<?php echo site_url('clientgroup/load_morosos') . '?id=' . $group['id']; ?>&estado="+estado+"&localidad="+localidad+"&barrio="+barrio+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&pagination_start="+pagination_start+"&pagination_end="+pagination_end+"&checked_ind_service="+checked_ind_service+"&check_usuarios_a_facturar="+check_usuarios_a_facturar+"&estados_multiple="+estados_multiple+"&localidad_multiple="+localidad_multiple+"&barrios_multiple="+barrios_multiple+"&deudores_multiple="+deudores_multiple,
+                    "url": "<?php echo site_url('clientgroup/load_morosos') . '?id=' . $group['id']; ?>&localidad="+localidad+"&barrio="+barrio+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&pagination_start="+pagination_start+"&pagination_end="+pagination_end+"&checked_ind_service="+checked_ind_service+"&check_usuarios_a_facturar="+check_usuarios_a_facturar+"&estados_multiple="+estados_multiple+"&localidad_multiple="+localidad_multiple+"&barrios_multiple="+barrios_multiple+"&deudores_multiple="+deudores_multiple,
                     "type": "POST",
                     error: function (xhr, error, code)
                     {
@@ -1077,7 +1068,7 @@ $("#pagination_div").hide();
      
 	function filtrar($pagination_id){
         $("#pagination_div").show();
-            var estado=$("#estado option:selected").val();
+            
            
       
             var localidad= $("#cmbLocalidades option:selected").val();
@@ -1126,7 +1117,7 @@ $("#pagination_div").hide();
              
             //if(morosos!=""){
                 if(columnasAgregadas){
-                    tb.ajax.url( baseurl+'clientgroup/load_morosos?id=<?=$_GET['id']?>&estado='+estado+"&localidad="+localidad+"&barrio="+barrio+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&pagination_start="+pagination_start+"&pagination_end="+pagination_end+"&checked_ind_service="+checked_ind_service+"&check_usuarios_a_facturar="+check_usuarios_a_facturar+"&estados_multiple="+estados_multiple+"&localidad_multiple="+localidad_multiple+"&barrios_multiple="+barrios_multiple+"&deudores_multiple="+deudores_multiple).load();               
+                    tb.ajax.url( baseurl+"clientgroup/load_morosos?id=<?=$_GET['id']?>&localidad="+localidad+"&barrio="+barrio+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&pagination_start="+pagination_start+"&pagination_end="+pagination_end+"&checked_ind_service="+checked_ind_service+"&check_usuarios_a_facturar="+check_usuarios_a_facturar+"&estados_multiple="+estados_multiple+"&localidad_multiple="+localidad_multiple+"&barrios_multiple="+barrios_multiple+"&deudores_multiple="+deudores_multiple).load();               
                 }else{
                     nuevas_columnas();
                     $("option[value=100]").text("Todo");
@@ -1145,7 +1136,7 @@ $("#pagination_div").hide();
     lista_customers_sms_aux=[];
  }
     function redirect_to_export(){
-         var estado=$("#estado option:selected").val();
+         
            
       
             var localidad= $("#cmbLocalidades option:selected").val();
@@ -1166,7 +1157,12 @@ $("#pagination_div").hide();
             var edate=$("#edate").val();
             var checked_ind_service =$("#check1").prop('checked');
             var check_usuarios_a_facturar=$("#check2").prop('checked');
-            var url_redirect=baseurl+'clientgroup/explortar_a_excel?estado='+estado+"&id=<?=$_GET['id']?>&localidad="+localidad+"&barrio="+barrio+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&checked_ind_service="+checked_ind_service+"&check_usuarios_a_facturar="+check_usuarios_a_facturar;
+
+            var estados_multiple=$("#estado_multiple").val();
+            var localidad_multiple=$("#localidad_multiple").val();
+            var barrios_multiple=$("#barrios_multiple").val();
+            var deudores_multiple=$("#deudores_multiple").val();
+            var url_redirect=baseurl+"clientgroup/explortar_a_excel?id=<?=$_GET['id']?>&localidad="+localidad+"&barrio="+barrio+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&checked_ind_service="+checked_ind_service+"&check_usuarios_a_facturar="+check_usuarios_a_facturar+"&estados_multiple="+estados_multiple+"&localidad_multiple="+localidad_multiple+"&barrios_multiple="+barrios_multiple+"&deudores_multiple="+deudores_multiple;
             window.location.replace(url_redirect);
 
     }

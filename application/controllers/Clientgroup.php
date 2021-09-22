@@ -53,16 +53,43 @@ class Clientgroup extends CI_Controller
         $this->db->select("*");
         $this->db->from("customers");        
         $this->db->where("gid",$_GET['id']);
-        if (isset($_GET['estado']) && $_GET['estado'] != '' && $_GET['estado'] != null) {
-            $this->db->where('usu_estado=', $_GET['estado']);
-        }
-        if (isset($_GET['direccion']) &&$_GET['direccion'] =="Personalizada"){ 
-            if ($_GET['localidad'] != '' && $_GET['localidad'] != '-' && $_GET['localidad'] != '0') {
-                $this->db->where('localidad=', $_GET['localidad']);
+        if(isset($_GET['estados_multiple'])){
+                    $estados_multiple=explode(",", $_GET['estados_multiple']) ;
+                    
+                    if($estados_multiple[0]!="null" && $estados_multiple[0]!=null){
+                        
+                        $this->db->where_in('usu_estado', $estados_multiple);
+                    }   
             }
+        if (isset($_GET['direccion']) &&$_GET['direccion'] =="Personalizada"){ 
+            if(isset($_GET['localidad_multiple'])){
+                    $localidad_multiple=explode(",", $_GET['localidad_multiple']) ;
+                    
+                    if($localidad_multiple[0]!="null" && $localidad_multiple[0]!=null){
+                        
+                        $this->db->where_in('localidad', $localidad_multiple);
+                    }else{
+                        if ($_GET['localidad'] != '' && $_GET['localidad'] != '-' && $_GET['localidad'] != '0') {
+                                $this->db->where('localidad=', $_GET['localidad']);
+                        }
+                    }    
+            }
+            
+            if(isset($_GET['barrios_multiple'])){
+                    $multiplev=explode(",", $_GET['barrios_multiple']) ;
+                    
+                    if($multiplev[0]!="null" && $multiplev[0]!=null){                        
+                        $this->db->or_where_in('barrio', $multiplev);
+                    }else{
 
-            if ($_GET['barrio'] != '' && $_GET['barrio'] != '-' && $_GET['barrio'] != '0') {
-                $this->db->where('barrio=', $_GET['barrio']);
+                        if ($_GET['barrio'] != '' && $_GET['barrio'] != '-' && $_GET['barrio'] != '0') {
+                            if($_GET['localidad_multiple']!="" && $_GET['localidad_multiple']!="null"){
+                                $this->db->or_where('barrio=', $_GET['barrio']);
+                            }else{
+                                $this->db->where('barrio=', $_GET['barrio']);
+                            }
+                        }
+                    }    
             }
             if ($_GET['nomenclatura'] != '' && $_GET['nomenclatura'] != '-') {
                 $this->db->where('nomenclatura=', $_GET['nomenclatura']);
@@ -280,7 +307,7 @@ class Clientgroup extends CI_Controller
                             break;
                         }
 
-                    }else if($_GET['deudores_multiple']==""){
+                    }else if($_GET['deudores_multiple']=="" || $_GET['deudores_multiple']==null ||$_GET['deudores_multiple']=="null"){
                         if($fact_valida){
                             $customer_moroso=true;
                             $valor_ultima_factura=$invoice->total;
@@ -582,11 +609,7 @@ class Clientgroup extends CI_Controller
                     if($estados_multiple[0]!="null" && $estados_multiple[0]!=null){
                         
                         $this->db->where_in('usu_estado', $estados_multiple);
-                    }else{
-                       if (isset($_GET['estado']) && $_GET['estado'] != '' && $_GET['estado'] != null) {
-                            $this->db->where('usu_estado=', $_GET['estado']);
-                        }
-                    }    
+                    }   
             }
 
         
@@ -612,7 +635,7 @@ class Clientgroup extends CI_Controller
                     }else{
 
                         if ($_GET['barrio'] != '' && $_GET['barrio'] != '-' && $_GET['barrio'] != '0') {
-                            if($_GET['localidad_multiple']!=""){
+                            if($_GET['localidad_multiple']!="" && $_GET['localidad_multiple']!="null"){
                                 $this->db->or_where('barrio=', $_GET['barrio']);
                             }else{
                                 $this->db->where('barrio=', $_GET['barrio']);
@@ -853,7 +876,7 @@ class Clientgroup extends CI_Controller
                             break;
                         }
 
-                    }else if($_GET['deudores_multiple']==""){
+                    }else if($_GET['deudores_multiple']=="" || $_GET['deudores_multiple']==null ||$_GET['deudores_multiple']=="null"){
                         if($fact_valida){
                             $customer_moroso=true;
                             $valor_ultima_factura=$invoice->total;
@@ -1077,11 +1100,7 @@ class Clientgroup extends CI_Controller
                     if($estados_multiple[0]!="null" && $estados_multiple[0]!=null){
                         
                         $this->db->where_in('usu_estado', $estados_multiple);
-                    }else{
-                       if (isset($_GET['estado']) && $_GET['estado'] != '' && $_GET['estado'] != null) {
-                            $this->db->where('usu_estado=', $_GET['estado']);
-                        }
-                    }    
+                    }   
             }
         if (isset($_GET['direccion']) &&$_GET['direccion'] =="Personalizada"){ 
              if(isset($_GET['localidad_multiple'])){
@@ -1105,7 +1124,7 @@ class Clientgroup extends CI_Controller
                     }else{
 
                         if ($_GET['barrio'] != '' && $_GET['barrio'] != '-' && $_GET['barrio'] != '0') {
-                            if($_GET['localidad_multiple']!=""){
+                            if($_GET['localidad_multiple']!="" && $_GET['localidad_multiple']!="null"){
                                 $this->db->or_where('barrio=', $_GET['barrio']);
                             }else{
                                 $this->db->where('barrio=', $_GET['barrio']);
@@ -1308,7 +1327,7 @@ class Clientgroup extends CI_Controller
                             break;
                         }
 
-                    }else if($_GET['deudores_multiple']==""){
+                    }else if($_GET['deudores_multiple']=="" || $_GET['deudores_multiple']==null ||$_GET['deudores_multiple']=="null"){
                         if($fact_valida){
                             $customer_moroso=true;
                             $valor_ultima_factura=$invoice->total;
