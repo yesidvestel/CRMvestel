@@ -453,6 +453,7 @@ class Clientgroup extends CI_Controller
         $head['usernm'] = $this->aauth->get_user()->username;
         $id = $this->input->get('id');		
         $data['group'] = $this->clientgroup->details($id);
+        $this->db->update("customers",array("checked_seleccionado"=>0),array("gid"=>$_GET['id']));
         $data['cuenta']=$this->clientgroup->get_numero_seleccionados($id);
         
         $head['title'] = 'Group View';
