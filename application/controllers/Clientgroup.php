@@ -50,67 +50,172 @@ class Clientgroup extends CI_Controller
     }
     public function explortar_a_excel(){
         set_time_limit(3000);
-        $this->db->select("*");
-        $this->db->from("customers");        
-        $this->db->where("gid",$_GET['id']);
+        $query_consulta="select * from customers where gid=".$_GET['id']." and";
+        $condicionales="";
         if(isset($_GET['estados_multiple'])){
                     $estados_multiple=explode(",", $_GET['estados_multiple']) ;
                     
                     if($estados_multiple[0]!="null" && $estados_multiple[0]!=null){
-                        
-                        $this->db->where_in('usu_estado', $estados_multiple);
-                    }   
-            }
-        if (isset($_GET['direccion']) &&$_GET['direccion'] =="Personalizada"){ 
-            if(isset($_GET['localidad_multiple'])){
-                    $localidad_multiple=explode(",", $_GET['localidad_multiple']) ;
                     
-                    if($localidad_multiple[0]!="null" && $localidad_multiple[0]!=null){
-                        
-                        $this->db->where_in('localidad', $localidad_multiple);
-                    }else{
-                        if ($_GET['localidad'] != '' && $_GET['localidad'] != '-' && $_GET['localidad'] != '0') {
-                                $this->db->where('localidad=', $_GET['localidad']);
-                        }
-                    }    
-            }
-            
-            if(isset($_GET['barrios_multiple'])){
-                    $multiplev=explode(",", $_GET['barrios_multiple']) ;
-                    
-                    if($multiplev[0]!="null" && $multiplev[0]!=null){                        
-                        $this->db->or_where_in('barrio', $multiplev);
-                    }else{
-
-                        if ($_GET['barrio'] != '' && $_GET['barrio'] != '-' && $_GET['barrio'] != '0') {
-                            if($_GET['localidad_multiple']!="" && $_GET['localidad_multiple']!="null"){
-                                $this->db->or_where('barrio=', $_GET['barrio']);
-                            }else{
-                                $this->db->where('barrio=', $_GET['barrio']);
+                        $varx="";
+                        $c1=count($estados_multiple)-1;
+                        foreach ($estados_multiple as $key => $x) {
+                            $varx.="'".$x."'";   
+                            if($key!=$c1){
+                                $varx.=",";
                             }
                         }
+                        $condicionales.=" usu_estado in(".$varx.")";
+                    }   
+            }
+
+        $var_bool=false;
+                $_GET['barrios_multiple']=str_replace("-", "", $_GET['barrios_multiple']);
+                 $multiplev=explode(",", $_GET['barrios_multiple']) ;
+
+                    if ($_GET['barrio'] != '' && $_GET['barrio'] != '-' && $_GET['barrio'] != '0') {
+                       
+                        if($multiplev[0]!="null" && $multiplev[0]!=null){
+                            $multiplev[]=$_GET['barrio'];
+                        }else{
+                            $multiplev[0]=$_GET['barrio'];
+                        }
+                        
+                    }
+        if (isset($_GET['direccion']) &&$_GET['direccion'] =="Personalizada"){
+            if(isset($_GET['localidad_multiple'])){
+                $_GET['localidad_multiple']=str_replace("-", "", $_GET['localidad_multiple']);
+                    
+                    $localidad_multiple=explode(",", $_GET['localidad_multiple']) ;
+                    if ($_GET['localidad'] != '' && $_GET['localidad'] != '-' && $_GET['localidad'] != '0') {
+                                if($localidad_multiple[0]!="null" && $localidad_multiple[0]!=null && $localidad_multiple[0]!=""){
+                                        $localidad_multiple[]=$_GET['localidad'];
+                                }else{
+                                        $localidad_multiple[0]=$_GET['localidad'];
+                                }
+                                
+                        }
+                        $localidades2=array();
+                        if($multiplev[0]!="null" && $multiplev[0]!=null){
+                               $customer_b= $this->db->get_where("customers",array("barrio"=>$multiplev[0]))->row();
+                                foreach ($localidad_multiple as $key => $value) {
+                                        if($value!=$customer_b->localidad){
+                                            $localidades2[]=$value;
+                                        }    
+                                }
+                        }else{
+                            $localidades2=$localidad_multiple;
+                        }
+                        
+
+                    if($localidades2[0]!="null" && $localidades2[0]!=null && $localidades2[0]!="" && count($localidades2)!=0){
+                        
+                        $varx="";
+                        $c1=count($localidades2)-1;
+                        foreach ($localidades2 as $key => $x) {
+                            $varx.="'".$x."'";   
+                            if($key!=$c1){
+                                $varx.=",";
+                            }
+                        }
+
+                        if($condicionales!=""){
+                            $condicionales.=" and " ;   
+                        }
+                        $condicionales.=" ( localidad in(".$varx.") ";
+                        $var_bool=true;
+                    }  
+            }
+            $var_bool2=false;
+            if(isset($_GET['barrios_multiple'])){                    
+                    if($multiplev[0]!="null" && $multiplev[0]!=null){                        
+                        $varx="";
+                        $c1=count($multiplev)-1;
+                        foreach ($multiplev as $key => $x) {
+                            $varx.="'".$x."'";   
+                            if($key!=$c1){
+                                $varx.=",";
+                            }
+                        }
+                        $parentesis="";
+                        if($condicionales!=""){
+                            if($var_bool){
+                                $condicionales.=" or ";       
+                                $parentesis=")";
+                            }else{
+                                $condicionales.=" and ";       
+                            }
+                            
+                        }
+                        $condicionales.=" barrio in(".$varx.")".$parentesis;
+                        $var_bool2=true;
                     }    
             }
+            if($var_bool && $var_bool2==false){
+                $condicionales.=")";
+            }
+            
             if ($_GET['nomenclatura'] != '' && $_GET['nomenclatura'] != '-') {
-                $this->db->where('nomenclatura=', $_GET['nomenclatura']);
+                        if($condicionales!=""){
+                            $condicionales.=" and " ;   
+                        }
+                        $condicionales.="  nomenclatura ='".$_GET['nomenclatura']."' ";
             }
             if ($_GET['numero1'] != '') {
-                $this->db->where('numero1=', $_GET['numero1']);
+                        if($condicionales!=""){
+                            $condicionales.=" and " ;   
+                        }
+                        $condicionales.="  numero1 ='".$_GET['numero1']."' ";
             }
             if ($_GET['adicionauno'] != '' && $_GET['adicionauno'] != '-') {
-                $this->db->where('adicionauno=', $_GET['adicionauno']);
+                        if($condicionales!=""){
+                            $condicionales.=" and " ;   
+                        }
+                        $condicionales.="  adicionauno ='".$_GET['adicionauno']."' ";
             }
             if ($_GET['numero2'] != '' && $_GET['numero2'] != '-') {
-                $this->db->where('numero2=', $_GET['numero2']);
+                        if($condicionales!=""){
+                            $condicionales.=" and " ;   
+                        }
+                        $condicionales.="  numero2 ='".$_GET['numero2']."' ";
             }
             if ($_GET['adicional2'] != '' && $_GET['adicional2'] != '-') {
-                $this->db->where('adicional2=', $_GET['adicional2']);
+                
+                        if($condicionales!=""){
+                            $condicionales.=" and " ;   
+                        }
+                        $condicionales.="  adicional2 ='".$_GET['adicional2']."' ";
             }
             if ($_GET['numero3'] != '' && $_GET['numero3'] != '-') {
-                $this->db->where('numero3=', $_GET['numero3']);
+                
+                        if($condicionales!=""){
+                            $condicionales.=" and " ;   
+                        }
+                        $condicionales.="  numero3 ='".$_GET['numero3']."' ";
             }
         }
-        $lista_customers=$this->db->get()->result();
+        if($this->input->post('search')['value']!=""){
+
+                        if($condicionales!=""){
+                            $condicionales.=" and " ;   
+                        }
+                        $condicionales.="  documento like '%".$this->input->post('search')['value']."%' ";
+        }else if($_GET['pagination_start']!="" && $_GET['pagination_start']!=null){
+                        if($condicionales!=""){
+                            $condicionales.=" and " ;   
+                        }
+                        $condicionales.="  id<=".$_GET['pagination_start']." and id>=".$_GET['pagination_end'];
+                
+        }
+        if($condicionales==""){
+            $query_consulta= str_replace("and", "", $query_consulta);    
+        }
+        $query_consulta.=$condicionales;
+      
+        $query_consulta." order by id DESC";
+        
+        $lista_customers=$this->db->query($query_consulta)->result();
+        
         $cust_group=$this->db->get_where("customers_group",array('id' => $_GET['id']))->row();
         $filtro_deudores_multiple=explode(",", $_GET['deudores_multiple']) ;
         $filtro_deudores_multiple_2=array();        
@@ -597,85 +702,173 @@ class Clientgroup extends CI_Controller
         }else{
 
         $listax=array();
-        $this->db->select("*");
-        $this->db->from("customers");        
-        $this->db->where("gid",$_GET['id']);
-        //var_dump($_GET['estados_multiple']);
-        //var_dump($_GET['localidad_multiple']);
-        //var_dump($_GET['barrios_multiple']);
-        //var_dump($_GET['deudores_multiple']);
+       
+        $query_consulta="select * from customers where gid=".$_GET['id']." and";
+        $condicionales="";
         if(isset($_GET['estados_multiple'])){
                     $estados_multiple=explode(",", $_GET['estados_multiple']) ;
                     
                     if($estados_multiple[0]!="null" && $estados_multiple[0]!=null){
-                        
-                        $this->db->where_in('usu_estado', $estados_multiple);
+                    
+                        $varx="";
+                        $c1=count($estados_multiple)-1;
+                        foreach ($estados_multiple as $key => $x) {
+                            $varx.="'".$x."'";   
+                            if($key!=$c1){
+                                $varx.=",";
+                            }
+                        }
+                        $condicionales.=" usu_estado in(".$varx.")";
                     }   
             }
 
-        
+        $var_bool=false;
+                $_GET['barrios_multiple']=str_replace("-", "", $_GET['barrios_multiple']);
+                 $multiplev=explode(",", $_GET['barrios_multiple']) ;
+
+                    if ($_GET['barrio'] != '' && $_GET['barrio'] != '-' && $_GET['barrio'] != '0') {
+                       
+                        if($multiplev[0]!="null" && $multiplev[0]!=null){
+                            $multiplev[]=$_GET['barrio'];
+                        }else{
+                            $multiplev[0]=$_GET['barrio'];
+                        }
+                        
+                    }
         if (isset($_GET['direccion']) &&$_GET['direccion'] =="Personalizada"){
             if(isset($_GET['localidad_multiple'])){
+                $_GET['localidad_multiple']=str_replace("-", "", $_GET['localidad_multiple']);
+                    
                     $localidad_multiple=explode(",", $_GET['localidad_multiple']) ;
-                    
-                    if($localidad_multiple[0]!="null" && $localidad_multiple[0]!=null){
-                        
-                        $this->db->where_in('localidad', $localidad_multiple);
-                    }else{
-                        if ($_GET['localidad'] != '' && $_GET['localidad'] != '-' && $_GET['localidad'] != '0') {
-                                $this->db->where('localidad=', $_GET['localidad']);
+                    if ($_GET['localidad'] != '' && $_GET['localidad'] != '-' && $_GET['localidad'] != '0') {
+                                if($localidad_multiple[0]!="null" && $localidad_multiple[0]!=null && $localidad_multiple[0]!=""){
+                                        $localidad_multiple[]=$_GET['localidad'];
+                                }else{
+                                        $localidad_multiple[0]=$_GET['localidad'];
+                                }
+                                
                         }
-                    }    
-            }
-            
-            if(isset($_GET['barrios_multiple'])){
-                    $multiplev=explode(",", $_GET['barrios_multiple']) ;
-                    
-                    if($multiplev[0]!="null" && $multiplev[0]!=null){                        
-                        $this->db->or_where_in('barrio', $multiplev);
-                    }else{
+                        $localidades2=array();
+                        if($multiplev[0]!="null" && $multiplev[0]!=null){
+                               $customer_b= $this->db->get_where("customers",array("barrio"=>$multiplev[0]))->row();
+                                foreach ($localidad_multiple as $key => $value) {
+                                        if($value!=$customer_b->localidad){
+                                            $localidades2[]=$value;
+                                        }    
+                                }
+                        }else{
+                            $localidades2=$localidad_multiple;
+                        }
+                        
 
-                        if ($_GET['barrio'] != '' && $_GET['barrio'] != '-' && $_GET['barrio'] != '0') {
-                            if($_GET['localidad_multiple']!="" && $_GET['localidad_multiple']!="null"){
-                                $this->db->or_where('barrio=', $_GET['barrio']);
-                            }else{
-                                $this->db->where('barrio=', $_GET['barrio']);
+                    if($localidades2[0]!="null" && $localidades2[0]!=null && $localidades2[0]!="" && count($localidades2)!=0){
+                        
+                        $varx="";
+                        $c1=count($localidades2)-1;
+                        foreach ($localidades2 as $key => $x) {
+                            $varx.="'".$x."'";   
+                            if($key!=$c1){
+                                $varx.=",";
                             }
                         }
+
+                        if($condicionales!=""){
+                            $condicionales.=" and " ;   
+                        }
+                        $condicionales.=" ( localidad in(".$varx.") ";
+                        $var_bool=true;
+                    }  
+            }
+            $var_bool2=false;
+            if(isset($_GET['barrios_multiple'])){                    
+                    if($multiplev[0]!="null" && $multiplev[0]!=null){                        
+                        $varx="";
+                        $c1=count($multiplev)-1;
+                        foreach ($multiplev as $key => $x) {
+                            $varx.="'".$x."'";   
+                            if($key!=$c1){
+                                $varx.=",";
+                            }
+                        }
+                        $parentesis="";
+                        if($condicionales!=""){
+                            if($var_bool){
+                                $condicionales.=" or ";       
+                                $parentesis=")";
+                            }else{
+                                $condicionales.=" and ";       
+                            }
+                            
+                        }
+                        $condicionales.=" barrio in(".$varx.")".$parentesis;
+                        $var_bool2=true;
                     }    
             }
-
+            if($var_bool && $var_bool2==false){
+                $condicionales.=")";
+            }
             
             if ($_GET['nomenclatura'] != '' && $_GET['nomenclatura'] != '-') {
-                $this->db->where('nomenclatura=', $_GET['nomenclatura']);
+                        if($condicionales!=""){
+                            $condicionales.=" and " ;   
+                        }
+                        $condicionales.="  nomenclatura ='".$_GET['nomenclatura']."' ";
             }
             if ($_GET['numero1'] != '') {
-                $this->db->where('numero1=', $_GET['numero1']);
+                        if($condicionales!=""){
+                            $condicionales.=" and " ;   
+                        }
+                        $condicionales.="  numero1 ='".$_GET['numero1']."' ";
             }
             if ($_GET['adicionauno'] != '' && $_GET['adicionauno'] != '-') {
-                $this->db->where('adicionauno=', $_GET['adicionauno']);
+                        if($condicionales!=""){
+                            $condicionales.=" and " ;   
+                        }
+                        $condicionales.="  adicionauno ='".$_GET['adicionauno']."' ";
             }
             if ($_GET['numero2'] != '' && $_GET['numero2'] != '-') {
-                $this->db->where('numero2=', $_GET['numero2']);
+                        if($condicionales!=""){
+                            $condicionales.=" and " ;   
+                        }
+                        $condicionales.="  numero2 ='".$_GET['numero2']."' ";
             }
             if ($_GET['adicional2'] != '' && $_GET['adicional2'] != '-') {
-                $this->db->where('adicional2=', $_GET['adicional2']);
+                
+                        if($condicionales!=""){
+                            $condicionales.=" and " ;   
+                        }
+                        $condicionales.="  adicional2 ='".$_GET['adicional2']."' ";
             }
             if ($_GET['numero3'] != '' && $_GET['numero3'] != '-') {
-                $this->db->where('numero3=', $_GET['numero3']);
+                
+                        if($condicionales!=""){
+                            $condicionales.=" and " ;   
+                        }
+                        $condicionales.="  numero3 ='".$_GET['numero3']."' ";
             }
         }
         if($this->input->post('search')['value']!=""){
-            $this->db->like('documento', $this->input->post('search')['value']);
-        }else if($_GET['pagination_start']!="" && $_GET['pagination_start']!=null){
-                $this->db->where('id<=',$_GET['pagination_start']);
-                $this->db->where("id>=",$_GET['pagination_end']);    
-                //eh pensado una forma mucho mas compleja para realizar esto y es atraves de multihilo o multitarea algo muy complejo pero con tiempo seria bueno intentarlo
-        }
-        
-        $this->db->order_by('id', 'DESC');
 
-        $lista_customers=$this->db->get()->result();
+                        if($condicionales!=""){
+                            $condicionales.=" and " ;   
+                        }
+                        $condicionales.="  documento like '%".$this->input->post('search')['value']."%' ";
+        }else if($_GET['pagination_start']!="" && $_GET['pagination_start']!=null){
+                        if($condicionales!=""){
+                            $condicionales.=" and " ;   
+                        }
+                        $condicionales.="  id<=".$_GET['pagination_start']." and id>=".$_GET['pagination_end'];
+                
+        }
+        if($condicionales==""){
+            $query_consulta= str_replace("and", "", $query_consulta);    
+        }
+        $query_consulta.=$condicionales;
+      
+        $query_consulta." order by id DESC";
+        
+        $lista_customers=$this->db->query($query_consulta)->result();
+
         $filtro_deudores_multiple=explode(",", $_GET['deudores_multiple']) ;
         $filtro_deudores_multiple_2=array();        
 
@@ -1092,71 +1285,172 @@ class Clientgroup extends CI_Controller
         $this->db->update("customers",array("checked_seleccionado"=>0),array("gid"=>$_GET['id']));
 
         $listax=array();
-        $this->db->select("*");
-        $this->db->from("customers");        
-        $this->db->where("gid",$_GET['id']);
-       if(isset($_GET['estados_multiple'])){
+        $query_consulta="select * from customers where gid=".$_GET['id']." and";
+        $condicionales="";
+        if(isset($_GET['estados_multiple'])){
                     $estados_multiple=explode(",", $_GET['estados_multiple']) ;
                     
                     if($estados_multiple[0]!="null" && $estados_multiple[0]!=null){
-                        
-                        $this->db->where_in('usu_estado', $estados_multiple);
-                    }   
-            }
-        if (isset($_GET['direccion']) &&$_GET['direccion'] =="Personalizada"){ 
-             if(isset($_GET['localidad_multiple'])){
-                    $localidad_multiple=explode(",", $_GET['localidad_multiple']) ;
                     
-                    if($localidad_multiple[0]!="null" && $localidad_multiple[0]!=null){
-                        
-                        $this->db->where_in('localidad', $localidad_multiple);
-                    }else{
-                        if ($_GET['localidad'] != '' && $_GET['localidad'] != '-' && $_GET['localidad'] != '0') {
-                                $this->db->where('localidad=', $_GET['localidad']);
-                        }
-                    }    
-            }
-            
-            if(isset($_GET['barrios_multiple'])){
-                    $multiplev=explode(",", $_GET['barrios_multiple']) ;
-                    
-                    if($multiplev[0]!="null" && $multiplev[0]!=null){                        
-                        $this->db->or_where_in('barrio', $multiplev);
-                    }else{
-
-                        if ($_GET['barrio'] != '' && $_GET['barrio'] != '-' && $_GET['barrio'] != '0') {
-                            if($_GET['localidad_multiple']!="" && $_GET['localidad_multiple']!="null"){
-                                $this->db->or_where('barrio=', $_GET['barrio']);
-                            }else{
-                                $this->db->where('barrio=', $_GET['barrio']);
+                        $varx="";
+                        $c1=count($estados_multiple)-1;
+                        foreach ($estados_multiple as $key => $x) {
+                            $varx.="'".$x."'";   
+                            if($key!=$c1){
+                                $varx.=",";
                             }
                         }
+                        $condicionales.=" usu_estado in(".$varx.")";
+                    }   
+            }
+
+        $var_bool=false;
+                $_GET['barrios_multiple']=str_replace("-", "", $_GET['barrios_multiple']);
+                 $multiplev=explode(",", $_GET['barrios_multiple']) ;
+
+                    if ($_GET['barrio'] != '' && $_GET['barrio'] != '-' && $_GET['barrio'] != '0') {
+                       
+                        if($multiplev[0]!="null" && $multiplev[0]!=null){
+                            $multiplev[]=$_GET['barrio'];
+                        }else{
+                            $multiplev[0]=$_GET['barrio'];
+                        }
+                        
+                    }
+        if (isset($_GET['direccion']) &&$_GET['direccion'] =="Personalizada"){
+            if(isset($_GET['localidad_multiple'])){
+                $_GET['localidad_multiple']=str_replace("-", "", $_GET['localidad_multiple']);
+                    
+                    $localidad_multiple=explode(",", $_GET['localidad_multiple']) ;
+                    if ($_GET['localidad'] != '' && $_GET['localidad'] != '-' && $_GET['localidad'] != '0') {
+                                if($localidad_multiple[0]!="null" && $localidad_multiple[0]!=null && $localidad_multiple[0]!=""){
+                                        $localidad_multiple[]=$_GET['localidad'];
+                                }else{
+                                        $localidad_multiple[0]=$_GET['localidad'];
+                                }
+                                
+                        }
+                        $localidades2=array();
+                        if($multiplev[0]!="null" && $multiplev[0]!=null){
+                               $customer_b= $this->db->get_where("customers",array("barrio"=>$multiplev[0]))->row();
+                                foreach ($localidad_multiple as $key => $value) {
+                                        if($value!=$customer_b->localidad){
+                                            $localidades2[]=$value;
+                                        }    
+                                }
+                        }else{
+                            $localidades2=$localidad_multiple;
+                        }
+                        
+
+                    if($localidades2[0]!="null" && $localidades2[0]!=null && $localidades2[0]!="" && count($localidades2)!=0){
+                        
+                        $varx="";
+                        $c1=count($localidades2)-1;
+                        foreach ($localidades2 as $key => $x) {
+                            $varx.="'".$x."'";   
+                            if($key!=$c1){
+                                $varx.=",";
+                            }
+                        }
+
+                        if($condicionales!=""){
+                            $condicionales.=" and " ;   
+                        }
+                        $condicionales.=" ( localidad in(".$varx.") ";
+                        $var_bool=true;
+                    }  
+            }
+            $var_bool2=false;
+            if(isset($_GET['barrios_multiple'])){                    
+                    if($multiplev[0]!="null" && $multiplev[0]!=null){                        
+                        $varx="";
+                        $c1=count($multiplev)-1;
+                        foreach ($multiplev as $key => $x) {
+                            $varx.="'".$x."'";   
+                            if($key!=$c1){
+                                $varx.=",";
+                            }
+                        }
+                        $parentesis="";
+                        if($condicionales!=""){
+                            if($var_bool){
+                                $condicionales.=" or ";       
+                                $parentesis=")";
+                            }else{
+                                $condicionales.=" and ";       
+                            }
+                            
+                        }
+                        $condicionales.=" barrio in(".$varx.")".$parentesis;
+                        $var_bool2=true;
                     }    
             }
+            if($var_bool && $var_bool2==false){
+                $condicionales.=")";
+            }
+            
             if ($_GET['nomenclatura'] != '' && $_GET['nomenclatura'] != '-') {
-                $this->db->where('nomenclatura=', $_GET['nomenclatura']);
+                        if($condicionales!=""){
+                            $condicionales.=" and " ;   
+                        }
+                        $condicionales.="  nomenclatura ='".$_GET['nomenclatura']."' ";
             }
             if ($_GET['numero1'] != '') {
-                $this->db->where('numero1=', $_GET['numero1']);
+                        if($condicionales!=""){
+                            $condicionales.=" and " ;   
+                        }
+                        $condicionales.="  numero1 ='".$_GET['numero1']."' ";
             }
             if ($_GET['adicionauno'] != '' && $_GET['adicionauno'] != '-') {
-                $this->db->where('adicionauno=', $_GET['adicionauno']);
+                        if($condicionales!=""){
+                            $condicionales.=" and " ;   
+                        }
+                        $condicionales.="  adicionauno ='".$_GET['adicionauno']."' ";
             }
             if ($_GET['numero2'] != '' && $_GET['numero2'] != '-') {
-                $this->db->where('numero2=', $_GET['numero2']);
+                        if($condicionales!=""){
+                            $condicionales.=" and " ;   
+                        }
+                        $condicionales.="  numero2 ='".$_GET['numero2']."' ";
             }
             if ($_GET['adicional2'] != '' && $_GET['adicional2'] != '-') {
-                $this->db->where('adicional2=', $_GET['adicional2']);
+                
+                        if($condicionales!=""){
+                            $condicionales.=" and " ;   
+                        }
+                        $condicionales.="  adicional2 ='".$_GET['adicional2']."' ";
             }
             if ($_GET['numero3'] != '' && $_GET['numero3'] != '-') {
-                $this->db->where('numero3=', $_GET['numero3']);
+                
+                        if($condicionales!=""){
+                            $condicionales.=" and " ;   
+                        }
+                        $condicionales.="  numero3 ='".$_GET['numero3']."' ";
             }
         }
-    
-        
-    
+        if($this->input->post('search')['value']!=""){
 
-        $lista_customers=$this->db->get()->result();
+                        if($condicionales!=""){
+                            $condicionales.=" and " ;   
+                        }
+                        $condicionales.="  documento like '%".$this->input->post('search')['value']."%' ";
+        }else if($_GET['pagination_start']!="" && $_GET['pagination_start']!=null){
+                        if($condicionales!=""){
+                            $condicionales.=" and " ;   
+                        }
+                        $condicionales.="  id<=".$_GET['pagination_start']." and id>=".$_GET['pagination_end'];
+                
+        }
+        if($condicionales==""){
+            $query_consulta= str_replace("and", "", $query_consulta);    
+        }
+        $query_consulta.=$condicionales;
+      
+        $query_consulta." order by id DESC";
+        
+        $lista_customers=$this->db->query($query_consulta)->result();
+        
         $filtro_deudores_multiple=explode(",", $_GET['deudores_multiple']) ;
         $filtro_deudores_multiple_2=array();        
 
