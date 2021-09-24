@@ -192,12 +192,6 @@ class Clientgroup extends CI_Controller
                             $condicionales.=" and " ;   
                         }
                         $condicionales.="  documento like '%".$this->input->post('search')['value']."%' ";
-        }else if($_GET['pagination_start']!="" && $_GET['pagination_start']!=null){
-                        if($condicionales!=""){
-                            $condicionales.=" and " ;   
-                        }
-                        $condicionales.="  id<=".$_GET['pagination_start']." and id>=".$_GET['pagination_end'];
-                
         }
         if($condicionales==""){
             $query_consulta= str_replace("and", "", $query_consulta);    
@@ -420,7 +414,7 @@ class Clientgroup extends CI_Controller
             if(isset($_GET['sel_servicios']) && $_GET['sel_servicios'] != '' && $_GET['sel_servicios'] != null ){
                 //aunque sea moroso pero para aplicar el filtro se va a cambiar la variable moroso
                
-                if($_GET['deudores_multiple']==""){//para que muestre todos si esta seleccionada esta opcion, probar si colocando esta condicion encima del if funciona bien para eliminar y dejar solo una
+                 if($_GET['deudores_multiple']=="" || $_GET['deudores_multiple']==null || $_GET['deudores_multiple']=="null"){//para que muestre todos si esta seleccionada esta opcion, probar si colocando esta condicion encima del if funciona bien para eliminar y dejar solo una
                     $customer_moroso=true;
                 }
 
@@ -451,7 +445,7 @@ class Clientgroup extends CI_Controller
                 }
 
             }else{
-                if($_GET['deudores_multiple']==""){//para que muestre todos si esta seleccionada esta opcion
+                 if($_GET['deudores_multiple']=="" || $_GET['deudores_multiple']==null || $_GET['deudores_multiple']=="null"){//para que muestre todos si esta seleccionada esta opcion, probar si colocando esta condicion encima del if funciona bien para eliminar y dejar solo una
                     $customer_moroso=true;
                 }
             }
@@ -837,12 +831,6 @@ class Clientgroup extends CI_Controller
                             $condicionales.=" and " ;   
                         }
                         $condicionales.="  documento like '%".$this->input->post('search')['value']."%' ";
-        }else if($_GET['pagination_start']!="" && $_GET['pagination_start']!=null){
-                        if($condicionales!=""){
-                            $condicionales.=" and " ;   
-                        }
-                        $condicionales.="  id<=".$_GET['pagination_start']." and id>=".$_GET['pagination_end'];
-                
         }
         if($condicionales==""){
             $query_consulta= str_replace("and", "", $query_consulta);    
@@ -1069,7 +1057,7 @@ class Clientgroup extends CI_Controller
             if(isset($_GET['sel_servicios']) && $_GET['sel_servicios'] != '' && $_GET['sel_servicios'] != null ){
                 //aunque sea moroso pero para aplicar el filtro se va a cambiar la variable moroso
                
-                if($_GET['deudores_multiple']==""){//para que muestre todos si esta seleccionada esta opcion, probar si colocando esta condicion encima del if funciona bien para eliminar y dejar solo una
+                if($_GET['deudores_multiple']=="" || $_GET['deudores_multiple']==null || $_GET['deudores_multiple']=="null"){//para que muestre todos si esta seleccionada esta opcion, probar si colocando esta condicion encima del if funciona bien para eliminar y dejar solo una
                     $customer_moroso=true;
                 }
 
@@ -1099,7 +1087,7 @@ class Clientgroup extends CI_Controller
                 }
                 
             }else{
-                if($_GET['deudores_multiple']==""){//para que muestre todos si esta seleccionada esta opcion
+                if($_GET['deudores_multiple']=="" || $_GET['deudores_multiple']==null || $_GET['deudores_multiple']=="null"){//para que muestre todos si esta seleccionada esta opcion, probar si colocando esta condicion encima del if funciona bien para eliminar y dejar solo una
                     $customer_moroso=true;
                 }
 
@@ -1162,11 +1150,12 @@ class Clientgroup extends CI_Controller
                 }
 
                 $x++;
-                $customers->debe_customer=$debe_customer;
-                $customers->valor_ultima_factura=$valor_ultima_factura;
-                $customers->suscripcion_str=$suscripcion_str;
-                $customers->ingreso=$money['credit']-$money['debit'];
-                $listax[]=$customers;
+                $array_add=array("id"=>$customers->id);
+                $array_add['debe_customer']=$debe_customer;
+                $array_add['valor_ultima_factura']=$valor_ultima_factura;
+                $array_add['suscripcion_str']=$suscripcion_str;
+                //$customers->ingreso=$money['credit']-$money['debit'];
+                $listax[]=$array_add;
                 
             }else{
                 $descontar++;
@@ -1204,6 +1193,8 @@ class Clientgroup extends CI_Controller
             
             if(($x>=$minimo && $x<$maximo) || $_POST['length']=="100"){
                      $no++; 
+                     $datos_cuentas=$customers;
+                     $customers=$this->db->get_where("customers",array("id"=>$customers->id))->row();
                      $money=array();     
                      if(isset($_GET['ingreso_select']) && $_GET['ingreso_select']!="" && $_GET['ingreso_select']!=null){
                         $money=$this->customers->money_details($customers->id);
@@ -1226,17 +1217,17 @@ class Clientgroup extends CI_Controller
                             $row[] = $customers->nomenclatura . ' ' . $customers->numero1 . $customers->adicionauno.' Nº '.$customers->numero2.$customers->adicional2.' - '.$customers->numero3;
                             $row[] = $customers->barrio;
                             if($customers->suscripcion_str!=""){
-                                $customers->suscripcion_str="<a class='cl-servicios' style='cursor:pointer;' data-id='".$customers->id."' onclick='facturas_electronicas_ev(this);'>".$customers->suscripcion_str."</a>";
+                                $customers->suscripcion_str="<a class='cl-servicios' style='cursor:pointer;' data-id='".$customers->id."' onclick='facturas_electronicas_ev(this);'>".$datos_cuentas->suscripcion_str."</a>";
                                 $str_checked="";
                                 if($customers->facturar_electronicamente==1){
                                     $str_checked="checked";
                                 }
-                                $customers->suscripcion_str="<input ".$str_checked." onclick='ck_facturas_electronicas(this)' data-id='".$customers->id."' class='cl-ck-f-electronicas' style='cursor:pointer;' title='activar o desactivar este usuario de la facturacion electronica' type='checkbox'/>&nbsp".$customers->suscripcion_str;
+                                $customers->suscripcion_str="<input ".$str_checked." onclick='ck_facturas_electronicas(this)' data-id='".$customers->id."' class='cl-ck-f-electronicas' style='cursor:pointer;' title='activar o desactivar este usuario de la facturacion electronica' type='checkbox'/>&nbsp".$datos_cuentas->suscripcion_str;
                             }
                             $row[] = $customers->suscripcion_str;
                             $row[] = '<span class="st-'.$customers->usu_estado. '">' .$customers->usu_estado. '</span>';
-                            $row[] = amountFormat($customers->debe_customer);
-                            $row[] = amountFormat($customers->valor_ultima_factura);
+                            $row[] = amountFormat($datos_cuentas->debe_customer);
+                            $row[] = amountFormat($datos_cuentas->valor_ultima_factura);
                             $row[] = amountFormat($money['credit']-$money['debit']);
                             $row[] = '<a href="' . base_url() . 'customers/edit?id=' . $customers->id . '" class="btn btn-success btn-sm"><span class="icon-pencil"></span> '.$this->lang->line('Edit').'</a>&nbsp;<a style="margin-top:1px;" target="_blanck" class="btn btn-info btn-sm"  href="'.base_url().'customers/invoices?id='.$customers->id.'"><span class="icon-eye"></span>&nbsp;Facturas</a>';
                             if ($this->aauth->get_user()->roleid > 4) {
@@ -1410,12 +1401,6 @@ class Clientgroup extends CI_Controller
                             $condicionales.=" and " ;   
                         }
                         $condicionales.="  documento like '%".$this->input->post('search')['value']."%' ";
-        }else if($_GET['pagination_start']!="" && $_GET['pagination_start']!=null){
-                        if($condicionales!=""){
-                            $condicionales.=" and " ;   
-                        }
-                        $condicionales.="  id<=".$_GET['pagination_start']." and id>=".$_GET['pagination_end'];
-                
         }
         if($condicionales==""){
             $query_consulta= str_replace("and", "", $query_consulta);    
@@ -1613,7 +1598,7 @@ class Clientgroup extends CI_Controller
             if(isset($_GET['sel_servicios']) && $_GET['sel_servicios'] != '' && $_GET['sel_servicios'] != null ){
                 //aunque sea moroso pero para aplicar el filtro se va a cambiar la variable moroso
                
-                if($_GET['deudores_multiple']==""){//para que muestre todos si esta seleccionada esta opcion, probar si colocando esta condicion encima del if funciona bien para eliminar y dejar solo una
+                 if($_GET['deudores_multiple']=="" || $_GET['deudores_multiple']==null || $_GET['deudores_multiple']=="null"){//para que muestre todos si esta seleccionada esta opcion, probar si colocando esta condicion encima del if funciona bien para eliminar y dejar solo una
                     $customer_moroso=true;
                 }
 
@@ -1643,7 +1628,7 @@ class Clientgroup extends CI_Controller
                     }
                 }
             }else{
-                if($_GET['deudores_multiple']==""){//para que muestre todos si esta seleccionada esta opcion
+                 if($_GET['deudores_multiple']=="" || $_GET['deudores_multiple']==null || $_GET['deudores_multiple']=="null"){//para que muestre todos si esta seleccionada esta opcion, probar si colocando esta condicion encima del if funciona bien para eliminar y dejar solo una
                     $customer_moroso=true;
                 }
             }
