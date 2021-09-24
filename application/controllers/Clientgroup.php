@@ -852,7 +852,6 @@ class Clientgroup extends CI_Controller
         $query_consulta." order by id DESC";
         
         $lista_customers=$this->db->query($query_consulta)->result();
-var_dump($query_consulta);
         $filtro_deudores_multiple=explode(",", $_GET['deudores_multiple']) ;
         $filtro_deudores_multiple_2=array();        
 
