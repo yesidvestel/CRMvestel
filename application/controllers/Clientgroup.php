@@ -852,7 +852,15 @@ class Clientgroup extends CI_Controller
         $data=array();
         $x=0;
         $minimo=$this->input->post('start');
-        $maximo=$minimo+10;
+        if($_POST['length']=="10"){
+            $maximo=$minimo+10;
+        }else if($_POST['length']=="25"){
+            $maximo=$minimo+25;
+        }else if($_POST['length']=="50"){
+            $maximo=$minimo+50;
+        }else{
+            $maximo=$minimo+10;
+        }
         $descontar=0;
         foreach ($lista_customers as $key => $customers) {
             $due=$this->customers->due_details2($customers->id);
