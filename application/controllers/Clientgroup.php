@@ -1216,15 +1216,15 @@ class Clientgroup extends CI_Controller
                             $row[] = $customers->celular;           
                             $row[] = $customers->nomenclatura . ' ' . $customers->numero1 . $customers->adicionauno.' Nº '.$customers->numero2.$customers->adicional2.' - '.$customers->numero3;
                             $row[] = $customers->barrio;
-                            if($customers->suscripcion_str!=""){
-                                $customers->suscripcion_str="<a class='cl-servicios' style='cursor:pointer;' data-id='".$customers->id."' onclick='facturas_electronicas_ev(this);'>".$datos_cuentas->suscripcion_str."</a>";
+                            if($datos_cuentas->suscripcion_str!=""){
+                                $datos_cuentas->suscripcion_str="<a class='cl-servicios' style='cursor:pointer;' data-id='".$customers->id."' onclick='facturas_electronicas_ev(this);'>".$datos_cuentas->suscripcion_str."</a>";
                                 $str_checked="";
                                 if($customers->facturar_electronicamente==1){
                                     $str_checked="checked";
                                 }
-                                $customers->suscripcion_str="<input ".$str_checked." onclick='ck_facturas_electronicas(this)' data-id='".$customers->id."' class='cl-ck-f-electronicas' style='cursor:pointer;' title='activar o desactivar este usuario de la facturacion electronica' type='checkbox'/>&nbsp".$datos_cuentas->suscripcion_str;
+                                $datos_cuentas->suscripcion_str="<input ".$str_checked." onclick='ck_facturas_electronicas(this)' data-id='".$customers->id."' class='cl-ck-f-electronicas' style='cursor:pointer;' title='activar o desactivar este usuario de la facturacion electronica' type='checkbox'/>&nbsp".$datos_cuentas->suscripcion_str;
                             }
-                            $row[] = $customers->suscripcion_str;
+                            $row[] = $datos_cuentas->suscripcion_str;
                             $row[] = '<span class="st-'.$customers->usu_estado. '">' .$customers->usu_estado. '</span>';
                             $row[] = amountFormat($datos_cuentas->debe_customer);
                             $row[] = amountFormat($datos_cuentas->valor_ultima_factura);
