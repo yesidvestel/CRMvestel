@@ -323,19 +323,22 @@ $this->load->model('customers_model', 'customers');
             $lista_para_pagos_faltantes=array();
             $saldo_dispo_total=0;
             foreach ($invoices as $key => $inv) {
+               
                 if($inv->tipo_factura=="Fija" || $inv->tipo_factura=="Nota Credito" || $inv->tipo_factura=="Nota Debito"){
                         //para que se salte este tipo de facturas
                 }else{
-
+                     if($inv->pamnt<0){
+                                            break;
+                                    }
                     $tr_verificacion = $this->db->query("select sum(credit)-sum(debit) as calculo from transactions where estado is null and cat!='Purchase' and tid=".$inv->tid)->result_array();
 
                     if($inv->pamnt!=intval($tr_verificacion[0]['calculo'])){
                         $this->db->update("invoices",array("pamnt"=>intval($tr_verificacion[0]['calculo'])),array("tid"=>$inv->tid));
                         $inv->pamnt=intval($tr_verificacion[0]['calculo']);
-                        var_dump("se actuatidlizo inicio");
+                        /*var_dump("se actuatidlizo inicio");
                         var_dump($inv->tid." calculo =".$tr_verificacion[0]['calculo']);
                         
-                        var_dump("se actualizo fin");
+                        var_dump("se actualizo fin");*/
                         
                     }
                 if($inv->status=="paid" && $inv->pamnt==0){
@@ -391,10 +394,10 @@ $this->load->model('customers_model', 'customers');
                     foreach ($lista_para_pagos_faltantes as $key2 => $pag) { 
                    // var_dump("saldo_disponible =".$valuey['saldo_disponible']." total_a_cubrir=".$pag['total_a_cubrir']." , pag['pamnt']=".$pag['pamnt']);                       
                         if($valuey['saldo_disponible']>=$pag['total_a_cubrir'] && $pag['factura_totalizada']==false){//parte en la que sea mayor el saldo diponible completada parcialmente falta hacer lo de dividir transacciones
-var_dump($value2->csd);
+/*var_dump($value2->csd);
                             var_dump($valuey);
                             var_dump($pag);
-var_dump("aqui2");
+var_dump("aqui2");*/
                             $camino1=true;
                             $camino3=false;
                             //$valor_debitados=0;
@@ -484,11 +487,11 @@ var_dump("aqui2");
                             $lista_para_pagos_faltantes[$key2]['factura_totalizada']=true;
 
                         }else if($valuey['saldo_disponible']>50 && $pag['factura_totalizada']==false){//parte en la que sea menor el saldo diponible completada es decir pago parcial 
-                            var_dump("aqui");
+                            /*var_dump("aqui");
                             var_dump($value2->csd);
                             var_dump($valuey);
                             var_dump($pag);//http://localhost/CRMvestel/customers/invoices?id=14944
-                           
+                           */
                             $camino1=true;
                             $camino3=false;
                             $tr = $this->db->get_where("transactions", array("tid"=>$valuey['tid'],"credit"=>$valuey['pamnt'],"estado"=>null,"cat!="=>"Purchase"))->row();
