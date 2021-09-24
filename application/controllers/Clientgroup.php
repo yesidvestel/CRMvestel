@@ -1184,7 +1184,17 @@ class Clientgroup extends CI_Controller
         $data=array();
         $x=0;
         $minimo=$this->input->post('start');
-        $maximo=$minimo+10;
+        
+        if($_POST['length']=="10"){
+            $maximo=$minimo+10;
+        }else if($_POST['length']=="25"){
+            $maximo=$minimo+25;
+        }else if($_POST['length']=="50"){
+            $maximo=$minimo+50;
+        }else{
+            $maximo=$minimo+10;
+        }
+        
         $descontar=0;
         $lista=$this->db->get_where("filtros_historial",array('id' =>$this->aauth->get_user()->id))->row();
         $lista2=json_decode($lista->datos);
