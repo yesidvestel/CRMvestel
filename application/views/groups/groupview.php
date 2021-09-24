@@ -283,9 +283,7 @@
                                                     <h6><label class="col-sm-2 col-form-label"
                                                        for="barrio"><?php echo $this->lang->line('') ?>Barrio</label></h6>
                                                     <div id="barrios">
-                                                        <select id="cmbBarrios" class="selectpicker form-control" name="barrio" >
-                                                        <option value="0">-</option>
-                                                        </select>
+                                                        
                                                         <select style="width: 100%;" id="barrios_multiple" name="barrios_multiple[]" class="form-control select-box" multiple="multiple">
                                                                     
                                                          </select>
@@ -529,7 +527,7 @@
            
       
             var localidad= $("#cmbLocalidades option:selected").val();
-            var barrio= $("#cmbBarrios option:selected").val();
+            
             var nomenclatura= $("#nomenclatura option:selected").val();
             var numero1= $("#numero1").val();
             
@@ -550,7 +548,7 @@
             var barrios_multiple=$("#barrios_multiple").val();
             var deudores_multiple=$("#deudores_multiple").val();
             
-            var url =baseurl+"clientgroup/get_filtrados_para_checked?id=<?=$_GET['id']?>&localidad="+localidad+"&barrio="+barrio+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&checked_ind_service="+checked_ind_service+"&estados_multiple="+estados_multiple+"&localidad_multiple="+localidad_multiple+"&barrios_multiple="+barrios_multiple+"&deudores_multiple="+deudores_multiple;
+            var url =baseurl+"clientgroup/get_filtrados_para_checked?id=<?=$_GET['id']?>&localidad="+localidad+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&checked_ind_service="+checked_ind_service+"&estados_multiple="+estados_multiple+"&localidad_multiple="+localidad_multiple+"&barrios_multiple="+barrios_multiple+"&deudores_multiple="+deudores_multiple;
              if(elemento.checked==true){
                 $("#div_notify3").html('<div id="notify3" class="alert alert-success" style="display:none;"><a href="#" class="close" data-dismiss="alert">&times;</a><div class="message3">></div></div>');
                     $("#notify3 .message3").html("<strong> Cargando</strong>: <img src='<?=base_url()?>/assets/img/iconocargando.gif'>");
@@ -968,7 +966,7 @@ $("#pagination_div").hide();
            
       
                 var localidad= $("#cmbLocalidades option:selected").val();
-                var barrio= $("#cmbBarrios option:selected").val();
+                
                 var nomenclatura= $("#nomenclatura option:selected").val();
                 var numero1= $("#numero1").val();
                 
@@ -997,7 +995,7 @@ $("#pagination_div").hide();
 
                 // Load data for the table's content from an Ajax source
                 "ajax": {
-                    "url": "<?php echo site_url('clientgroup/load_morosos') . '?id=' . $group['id']; ?>&localidad="+localidad+"&barrio="+barrio+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&pagination_start="+pagination_start+"&pagination_end="+pagination_end+"&checked_ind_service="+checked_ind_service+"&check_usuarios_a_facturar="+check_usuarios_a_facturar+"&estados_multiple="+estados_multiple+"&localidad_multiple="+localidad_multiple+"&barrios_multiple="+barrios_multiple+"&deudores_multiple="+deudores_multiple,
+                    "url": "<?php echo site_url('clientgroup/load_morosos') . '?id=' . $group['id']; ?>&localidad="+localidad+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&pagination_start="+pagination_start+"&pagination_end="+pagination_end+"&checked_ind_service="+checked_ind_service+"&check_usuarios_a_facturar="+check_usuarios_a_facturar+"&estados_multiple="+estados_multiple+"&localidad_multiple="+localidad_multiple+"&barrios_multiple="+barrios_multiple+"&deudores_multiple="+deudores_multiple,
                     "type": "POST",
                     error: function (xhr, error, code)
                     {
@@ -1072,7 +1070,7 @@ $("#pagination_div").hide();
            
       
             var localidad= $("#cmbLocalidades option:selected").val();
-            var barrio= $("#cmbBarrios option:selected").val();
+            
             var nomenclatura= $("#nomenclatura option:selected").val();
             var numero1= $("#numero1").val();
             
@@ -1117,7 +1115,7 @@ $("#pagination_div").hide();
              
             //if(morosos!=""){
                 if(columnasAgregadas){
-                    tb.ajax.url( baseurl+"clientgroup/load_morosos?id=<?=$_GET['id']?>&localidad="+localidad+"&barrio="+barrio+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&pagination_start="+pagination_start+"&pagination_end="+pagination_end+"&checked_ind_service="+checked_ind_service+"&check_usuarios_a_facturar="+check_usuarios_a_facturar+"&estados_multiple="+estados_multiple+"&localidad_multiple="+localidad_multiple+"&barrios_multiple="+barrios_multiple+"&deudores_multiple="+deudores_multiple).load();               
+                    tb.ajax.url( baseurl+"clientgroup/load_morosos?id=<?=$_GET['id']?>&localidad="+localidad+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&pagination_start="+pagination_start+"&pagination_end="+pagination_end+"&checked_ind_service="+checked_ind_service+"&check_usuarios_a_facturar="+check_usuarios_a_facturar+"&estados_multiple="+estados_multiple+"&localidad_multiple="+localidad_multiple+"&barrios_multiple="+barrios_multiple+"&deudores_multiple="+deudores_multiple).load();               
                 }else{
                     nuevas_columnas();
                     $("option[value=100]").text("Todo");
@@ -1140,7 +1138,7 @@ $("#pagination_div").hide();
            
       
             var localidad= $("#cmbLocalidades option:selected").val();
-            var barrio= $("#cmbBarrios option:selected").val();
+            
             var nomenclatura= $("#nomenclatura option:selected").val();
             var numero1= $("#numero1").val();
             
@@ -1162,7 +1160,7 @@ $("#pagination_div").hide();
             var localidad_multiple=$("#localidad_multiple").val();
             var barrios_multiple=$("#barrios_multiple").val();
             var deudores_multiple=$("#deudores_multiple").val();
-            var url_redirect=baseurl+"clientgroup/explortar_a_excel?id=<?=$_GET['id']?>&localidad="+localidad+"&barrio="+barrio+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&checked_ind_service="+checked_ind_service+"&check_usuarios_a_facturar="+check_usuarios_a_facturar+"&estados_multiple="+estados_multiple+"&localidad_multiple="+localidad_multiple+"&barrios_multiple="+barrios_multiple+"&deudores_multiple="+deudores_multiple;
+            var url_redirect=baseurl+"clientgroup/explortar_a_excel?id=<?=$_GET['id']?>&localidad="+localidad+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&checked_ind_service="+checked_ind_service+"&check_usuarios_a_facturar="+check_usuarios_a_facturar+"&estados_multiple="+estados_multiple+"&localidad_multiple="+localidad_multiple+"&barrios_multiple="+barrios_multiple+"&deudores_multiple="+deudores_multiple;
             window.location.replace(url_redirect);
 
     }
@@ -1433,9 +1431,9 @@ $("#fclientstable").on('draw.dt',function (){
                                     mis_opts=eval("barrio_"+localidad);
                                     //definimos cuantas obciones hay
                                     
-                                    $("#cmbBarrios").find('option').remove().end();
+                                    
                                     for (var i = 0; i < mis_opts.length; i++) {
-                                        $('#cmbBarrios').append(new Option(mis_opts[i], mis_opts[i]));
+                                        
                                         if(mis_opts[i]!="-"){
                                             $('#barrios_multiple').append(new Option(mis_opts[i], mis_opts[i]));
                                         }
@@ -1443,8 +1441,7 @@ $("#fclientstable").on('draw.dt',function (){
                                     //checkboxes3
                                 }else{
                                 //resultado si no hay obciones
-                                    $("#cmbBarrios").find('option').remove().end();
-                                    $('#cmbBarrios').append(new Option("-", "-"));                                              
+                                                                                 
                                 }
                                 $("#barrios_multiple").select2();
                                 

@@ -73,15 +73,7 @@ class Clientgroup extends CI_Controller
                 $_GET['barrios_multiple']=str_replace("-", "", $_GET['barrios_multiple']);
                  $multiplev=explode(",", $_GET['barrios_multiple']) ;
 
-                    if ($_GET['barrio'] != '' && $_GET['barrio'] != '-' && $_GET['barrio'] != '0') {
-                       
-                        if($multiplev[0]!="null" && $multiplev[0]!=null){
-                            $multiplev[]=$_GET['barrio'];
-                        }else{
-                            $multiplev[0]=$_GET['barrio'];
-                        }
-                        
-                    }
+                    
         if (isset($_GET['direccion']) &&$_GET['direccion'] =="Personalizada"){
             if(isset($_GET['localidad_multiple'])){
                 $_GET['localidad_multiple']=str_replace("-", "", $_GET['localidad_multiple']);
@@ -726,15 +718,7 @@ class Clientgroup extends CI_Controller
                 $_GET['barrios_multiple']=str_replace("-", "", $_GET['barrios_multiple']);
                  $multiplev=explode(",", $_GET['barrios_multiple']) ;
 
-                    if ($_GET['barrio'] != '' && $_GET['barrio'] != '-' && $_GET['barrio'] != '0') {
-                       
-                        if($multiplev[0]!="null" && $multiplev[0]!=null){
-                            $multiplev[]=$_GET['barrio'];
-                        }else{
-                            $multiplev[0]=$_GET['barrio'];
-                        }
-                        
-                    }
+                   
         if (isset($_GET['direccion']) &&$_GET['direccion'] =="Personalizada"){
             if(isset($_GET['localidad_multiple'])){
                 $_GET['localidad_multiple']=str_replace("-", "", $_GET['localidad_multiple']);
@@ -868,7 +852,7 @@ class Clientgroup extends CI_Controller
         $query_consulta." order by id DESC";
         
         $lista_customers=$this->db->query($query_consulta)->result();
-
+var_dump($query_consulta);
         $filtro_deudores_multiple=explode(",", $_GET['deudores_multiple']) ;
         $filtro_deudores_multiple_2=array();        
 
@@ -1308,15 +1292,7 @@ class Clientgroup extends CI_Controller
                 $_GET['barrios_multiple']=str_replace("-", "", $_GET['barrios_multiple']);
                  $multiplev=explode(",", $_GET['barrios_multiple']) ;
 
-                    if ($_GET['barrio'] != '' && $_GET['barrio'] != '-' && $_GET['barrio'] != '0') {
-                       
-                        if($multiplev[0]!="null" && $multiplev[0]!=null){
-                            $multiplev[]=$_GET['barrio'];
-                        }else{
-                            $multiplev[0]=$_GET['barrio'];
-                        }
-                        
-                    }
+                   
         if (isset($_GET['direccion']) &&$_GET['direccion'] =="Personalizada"){
             if(isset($_GET['localidad_multiple'])){
                 $_GET['localidad_multiple']=str_replace("-", "", $_GET['localidad_multiple']);
