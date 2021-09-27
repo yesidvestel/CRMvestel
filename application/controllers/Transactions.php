@@ -520,6 +520,7 @@ class Transactions extends CI_Controller
             $tv = 'no';
         }
         //generar reconexion
+		$username = $this->aauth->get_user()->username;
         $tidactualmasuno= $this->db->select('max(codigo)+1 as tid')->from('tickets')->get()->result();
         if ($reconexion==si && $mes2===$mes1){
             $data2['codigo']=$tidactualmasuno[0]->tid;
@@ -527,6 +528,7 @@ class Transactions extends CI_Controller
                 $data2['detalle']=$tipo;
                 $data2['created']=$paydate;
                 $data2['cid']=$cid;
+				$data2['col']=$username;
                 $data2['status']='Pendiente';
                 $data2['section']=$paquete;
                 $data2['id_factura']=$factura_asociada->tid;
@@ -538,6 +540,7 @@ class Transactions extends CI_Controller
                 $data2['detalle']=$tipo.'2';
                 $data2['created']=$paydate;
                 $data2['cid']=$cid;
+				$data2['col']=$username;
                 $data2['status']='Pendiente';
                 $data2['section']=$paquete;
                 $data2['id_factura']='';
@@ -729,6 +732,7 @@ class Transactions extends CI_Controller
 			$tv = 'no';
 		}
 		//generar reconexion
+		$username = $this->aauth->get_user()->username;
 		$tidactualmasuno= $this->db->select('max(codigo)+1 as tid')->from('tickets')->get()->result();
 		if ($reconexion==si && $mes2===$mes1){
 			$data2['codigo']=$tidactualmasuno[0]->tid;
@@ -736,6 +740,7 @@ class Transactions extends CI_Controller
 				$data2['detalle']=$tipo;
                 $data2['created']=$paydate;
                 $data2['cid']=$cid;
+				$data2['col']=$username;
                 $data2['status']='Pendiente';
                 $data2['section']=$paquete;
                 $data2['id_factura']=$tid;
@@ -746,6 +751,7 @@ class Transactions extends CI_Controller
 				$data2['detalle']=$tipo.'2';
                 $data2['created']=$paydate;
                 $data2['cid']=$cid;
+				$data2['col']=$username;
                 $data2['status']='Pendiente';
                 $data2['section']=$paquete;
                 $data2['id_factura']='';

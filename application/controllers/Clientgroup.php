@@ -206,9 +206,14 @@ class Clientgroup extends CI_Controller
         $filtro_deudores_multiple=explode(",", $_GET['deudores_multiple']) ;
         $filtro_deudores_multiple_2=array();        
 
+        $n_filtro_deudores=0;
         foreach ($filtro_deudores_multiple as $key => $value) {
-            $filtro_deudores_multiple_2[$value]=$value;
+            if($value!="null" || $value!=null){
+                $filtro_deudores_multiple_2[$value]=$value;    
+            }
+            
         }
+        $n_filtro_deudores=count($filtro_deudores_multiple_2);
         //codigo para hacer filtros por mora y servicios
 
         $lista_customers2=array();
@@ -228,6 +233,7 @@ class Clientgroup extends CI_Controller
                 $customer_moroso=false;
             }
                 $fact_valida=false;
+                $filtros_deuda_customers=0;
                 foreach ($lista_invoices as $key => $invoice) {
                     $suma=0;
                     if($invoice->combo!="no" && $invoice->combo!="" && $invoice->combo!="-"){
@@ -346,59 +352,87 @@ class Clientgroup extends CI_Controller
                             $valor_ultima_factura=$invoice->total;
                             break;                    
                         }else if($fact_valida){
-                            break;
+                           $filtros_deuda_customers++;
+                            if($filtros_deuda_customers==$n_filtro_deudores){
+                                break;    
+                            }
                         }
-                    }else if( isset($filtro_deudores_multiple_2['masdeunmes'])){
+                    }
+                     if( isset($filtro_deudores_multiple_2['masdeunmes'])){
                         if($fact_valida && $debe_customer>$invoice->total && $customer_moroso==false){
                             $customer_moroso=true;
                             $valor_ultima_factura=$invoice->total;
                             break;                    
                         }else if($fact_valida){
-                            break;
+                           $filtros_deuda_customers++;
+                            if($filtros_deuda_customers==$n_filtro_deudores){
+                                break;    
+                            }
                         }
-                    }else if(isset($filtro_deudores_multiple_2['2meses'])){
+                    }
+                     if(isset($filtro_deudores_multiple_2['2meses'])){
                         if($fact_valida && $debe_customer>=($invoice->total*2) && $customer_moroso==false){
                             $customer_moroso=true;
                             $valor_ultima_factura=$invoice->total;
                             break;                    
                         }else if($fact_valida){
-                            break;
+                           $filtros_deuda_customers++;
+                            if($filtros_deuda_customers==$n_filtro_deudores){
+                                break;    
+                            }
                         }
-                    }else if( isset($filtro_deudores_multiple_2['3y4meses'])){
+                    }
+                     if( isset($filtro_deudores_multiple_2['3y4meses'])){
                         if($fact_valida && $debe_customer>=($invoice->total*3) && $customer_moroso==false){
                             $customer_moroso=true;
                             $valor_ultima_factura=$invoice->total;
                             break;                    
                         }else if($fact_valida){
-                            break;
+                           $filtros_deuda_customers++;
+                            if($filtros_deuda_customers==$n_filtro_deudores){
+                                break;    
+                            }
                         }
-                    }else if( isset($filtro_deudores_multiple_2['Todos'])){
+                    }
+                     if( isset($filtro_deudores_multiple_2['Todos'])){
                         if($fact_valida && $debe_customer>0 && $customer_moroso==false){
                             $customer_moroso=true;
                             $valor_ultima_factura=$invoice->total;
                             break;                    
                         }else if($fact_valida){
-                            break;
+                           $filtros_deuda_customers++;
+                            if($filtros_deuda_customers==$n_filtro_deudores){
+                                break;    
+                            }
                         }
-                    }else if(isset($filtro_deudores_multiple_2['saldoaFavor'])){
+                    }
+                     if(isset($filtro_deudores_multiple_2['saldoaFavor'])){
                         if($fact_valida && $debe_customer<0 && $customer_moroso==false){
                             $customer_moroso=true;
                             $valor_ultima_factura=$invoice->total;
                             break;                    
                         }else if($fact_valida){
-                            break;
+                           $filtros_deuda_customers++;
+                            if($filtros_deuda_customers==$n_filtro_deudores){
+                                break;    
+                            }
                         }
 
-                    }else if( isset($filtro_deudores_multiple_2['al Dia'])){
+                    }
+                     if( isset($filtro_deudores_multiple_2['al Dia'])){
                         if($fact_valida && $debe_customer==0 && $customer_moroso==false){
                             $customer_moroso=true;
                             $valor_ultima_factura=$invoice->total;
                             break;                    
                         }else if($fact_valida){
-                            break;
+                           $filtros_deuda_customers++;
+                            if($filtros_deuda_customers==$n_filtro_deudores){
+                                break;    
+                            }
                         }
 
-                    }else if($_GET['deudores_multiple']=="" || $_GET['deudores_multiple']==null ||$_GET['deudores_multiple']=="null"){
+                    }
+                     if($_GET['deudores_multiple']=="" || $_GET['deudores_multiple']==null ||$_GET['deudores_multiple']=="null"){
                         if($fact_valida){
                             $customer_moroso=true;
                             $valor_ultima_factura=$invoice->total;
@@ -842,11 +876,14 @@ class Clientgroup extends CI_Controller
         $lista_customers=$this->db->query($query_consulta)->result();
         $filtro_deudores_multiple=explode(",", $_GET['deudores_multiple']) ;
         $filtro_deudores_multiple_2=array();        
-
+        $n_filtro_deudores=0;
         foreach ($filtro_deudores_multiple as $key => $value) {
-            $filtro_deudores_multiple_2[$value]=$value;
+            if($value!="null" || $value!=null){
+                $filtro_deudores_multiple_2[$value]=$value;    
+            }
+            
         }
-        
+        $n_filtro_deudores=count($filtro_deudores_multiple_2);
 
         $no = $this->input->post('start');
         $data=array();
@@ -878,6 +915,7 @@ class Clientgroup extends CI_Controller
                 $customer_moroso=false;
             }
                 $fact_valida=false;
+                $filtros_deuda_customers=0;
                 foreach ($lista_invoices as $key => $invoice) {
                     $suma=0;
                     if($invoice->combo!="no" && $invoice->combo!="" && $invoice->combo!="-"){
@@ -997,59 +1035,88 @@ class Clientgroup extends CI_Controller
                             $valor_ultima_factura=$invoice->total;
                             break;                    
                         }else if($fact_valida){
-                            break;
+                            $filtros_deuda_customers++;
+                            if($filtros_deuda_customers==$n_filtro_deudores){
+                                break;    
+                            }
+                            
                         }
-                    }else if( isset($filtro_deudores_multiple_2['masdeunmes'])){
+                    }
+                     if( isset($filtro_deudores_multiple_2['masdeunmes'])){
                         if($fact_valida && $debe_customer>$invoice->total && $customer_moroso==false){
                             $customer_moroso=true;
                             $valor_ultima_factura=$invoice->total;
                             break;                    
                         }else if($fact_valida){
-                            break;
+                           $filtros_deuda_customers++;
+                            if($filtros_deuda_customers==$n_filtro_deudores){
+                                break;    
+                            }
                         }
-                    }else if(isset($filtro_deudores_multiple_2['2meses'])){
+                    }
+                     if(isset($filtro_deudores_multiple_2['2meses'])){
                         if($fact_valida && $debe_customer>=($invoice->total*2) && $customer_moroso==false){
                             $customer_moroso=true;
                             $valor_ultima_factura=$invoice->total;
                             break;                    
                         }else if($fact_valida){
-                            break;
+                            $filtros_deuda_customers++;
+                            if($filtros_deuda_customers==$n_filtro_deudores){
+                                break;    
+                            }
                         }
-                    }else if( isset($filtro_deudores_multiple_2['3y4meses'])){
+                    }
+                     if( isset($filtro_deudores_multiple_2['3y4meses'])){
                         if($fact_valida && $debe_customer>=($invoice->total*3) && $customer_moroso==false){
                             $customer_moroso=true;
                             $valor_ultima_factura=$invoice->total;
                             break;                    
                         }else if($fact_valida){
-                            break;
+                            $filtros_deuda_customers++;
+                            if($filtros_deuda_customers==$n_filtro_deudores){
+                                break;    
+                            }
                         }
-                    }else if( isset($filtro_deudores_multiple_2['Todos'])){
+                    }
+                     if( isset($filtro_deudores_multiple_2['Todos'])){
                         if($fact_valida && $debe_customer>0 && $customer_moroso==false){
                             $customer_moroso=true;
                             $valor_ultima_factura=$invoice->total;
                             break;                    
                         }else if($fact_valida){
-                            break;
+                            $filtros_deuda_customers++;
+                            if($filtros_deuda_customers==$n_filtro_deudores){
+                                break;    
+                            }
                         }
-                    }else if(isset($filtro_deudores_multiple_2['saldoaFavor'])){
+                    }
+                     if(isset($filtro_deudores_multiple_2['saldoaFavor'])){
                         if($fact_valida && $debe_customer<0 && $customer_moroso==false){
                             $customer_moroso=true;
                             $valor_ultima_factura=$invoice->total;
                             break;                    
                         }else if($fact_valida){
-                            break;
+                            $filtros_deuda_customers++;
+                            if($filtros_deuda_customers==$n_filtro_deudores){
+                                break;    
+                            }
                         }
 
-                    }else if( isset($filtro_deudores_multiple_2['al Dia'])){
+                    }
+                     if( isset($filtro_deudores_multiple_2['al Dia'])){
                         if($fact_valida && $debe_customer==0 && $customer_moroso==false){
                             $customer_moroso=true;
                             $valor_ultima_factura=$invoice->total;
                             break;                    
                         }else if($fact_valida){
-                            break;
+                            $filtros_deuda_customers++;
+                            if($filtros_deuda_customers==$n_filtro_deudores){
+                                break;    
+                            }
                         }
 
-                    }else if($_GET['deudores_multiple']=="" || $_GET['deudores_multiple']==null ||$_GET['deudores_multiple']=="null"){
+                    }
+                     if($_GET['deudores_multiple']=="" || $_GET['deudores_multiple']==null ||$_GET['deudores_multiple']=="null"){
                         if($fact_valida){
                             $customer_moroso=true;
                             $valor_ultima_factura=$invoice->total;
@@ -1432,9 +1499,14 @@ class Clientgroup extends CI_Controller
         $filtro_deudores_multiple=explode(",", $_GET['deudores_multiple']) ;
         $filtro_deudores_multiple_2=array();        
 
+        $n_filtro_deudores=0;
         foreach ($filtro_deudores_multiple as $key => $value) {
-            $filtro_deudores_multiple_2[$value]=$value;
+            if($value!="null" || $value!=null){
+                $filtro_deudores_multiple_2[$value]=$value;    
+            }
+            
         }
+        $n_filtro_deudores=count($filtro_deudores_multiple_2);
     
         $data=array();
         $x=0;
@@ -1457,6 +1529,7 @@ class Clientgroup extends CI_Controller
                 $customer_moroso=false;
             }
                 $fact_valida=false;
+                $filtros_deuda_customers=0;
                 foreach ($lista_invoices as $key => $invoice) {
                     $suma=0;
                     if($invoice->combo!="no" && $invoice->combo!="" && $invoice->combo!="-"){
@@ -1548,59 +1621,94 @@ class Clientgroup extends CI_Controller
                             $valor_ultima_factura=$invoice->total;
                             break;                    
                         }else if($fact_valida){
-                            break;
+                            $filtros_deuda_customers++;
+                            if($filtros_deuda_customers==$n_filtro_deudores){
+                                break;    
+                            }
+                            
                         }
-                    }else if( isset($filtro_deudores_multiple_2['masdeunmes'])){
+                    }
+                     if( isset($filtro_deudores_multiple_2['masdeunmes'])){
                         if($fact_valida && $debe_customer>$invoice->total && $customer_moroso==false){
                             $customer_moroso=true;
                             $valor_ultima_factura=$invoice->total;
                             break;                    
                         }else if($fact_valida){
-                            break;
+                            $filtros_deuda_customers++;
+                            if($filtros_deuda_customers==$n_filtro_deudores){
+                                break;    
+                            }
+                            
                         }
-                    }else if( isset($filtro_deudores_multiple_2['2meses'])){
+                    }
+                     if( isset($filtro_deudores_multiple_2['2meses'])){
                         if($fact_valida && $debe_customer>=($invoice->total*2) && $customer_moroso==false){
                             $customer_moroso=true;
                             $valor_ultima_factura=$invoice->total;
                             break;                    
                         }else if($fact_valida){
-                            break;
+                            $filtros_deuda_customers++;
+                            if($filtros_deuda_customers==$n_filtro_deudores){
+                                break;    
+                            }
+                            
                         }
-                    }else if( isset($filtro_deudores_multiple_2['3y4meses'])){
+                    }
+                     if( isset($filtro_deudores_multiple_2['3y4meses'])){
                         if($fact_valida && $debe_customer>=($invoice->total*3) && $customer_moroso==false){
                             $customer_moroso=true;
                             $valor_ultima_factura=$invoice->total;
                             break;                    
                         }else if($fact_valida){
-                            break;
+                            $filtros_deuda_customers++;
+                            if($filtros_deuda_customers==$n_filtro_deudores){
+                                break;    
+                            }
+                            
                         }
-                    }else if( isset($filtro_deudores_multiple_2['Todos'])){
+                    }
+                     if( isset($filtro_deudores_multiple_2['Todos'])){
                         if($fact_valida && $debe_customer>0 && $customer_moroso==false){
                             $customer_moroso=true;
                             $valor_ultima_factura=$invoice->total;
                             break;                    
                         }else if($fact_valida){
-                            break;
+                            $filtros_deuda_customers++;
+                            if($filtros_deuda_customers==$n_filtro_deudores){
+                                break;    
+                            }
+                            
                         }
-                    }else if( isset($filtro_deudores_multiple_2['saldoaFavor'])){
+                    }
+                     if( isset($filtro_deudores_multiple_2['saldoaFavor'])){
                         if($fact_valida && $debe_customer<0 && $customer_moroso==false){
                             $customer_moroso=true;
                             $valor_ultima_factura=$invoice->total;
                             break;                    
                         }else if($fact_valida){
-                            break;
+                            $filtros_deuda_customers++;
+                            if($filtros_deuda_customers==$n_filtro_deudores){
+                                break;    
+                            }
+                            
                         }
 
-                    }else if( isset($filtro_deudores_multiple_2['al Dia'])){
+                    }
+                     if( isset($filtro_deudores_multiple_2['al Dia'])){
                         if($fact_valida && $debe_customer==0 && $customer_moroso==false){
                             $customer_moroso=true;
                             $valor_ultima_factura=$invoice->total;
                             break;                    
                         }else if($fact_valida){
-                            break;
+                            $filtros_deuda_customers++;
+                            if($filtros_deuda_customers==$n_filtro_deudores){
+                                break;    
+                            }
+                            
                         }
 
-                    }else if($_GET['deudores_multiple']=="" || $_GET['deudores_multiple']==null ||$_GET['deudores_multiple']=="null"){
+                    }
+                     if($_GET['deudores_multiple']=="" || $_GET['deudores_multiple']==null ||$_GET['deudores_multiple']=="null"){
                         if($fact_valida){
                             $customer_moroso=true;
                             $valor_ultima_factura=$invoice->total;

@@ -89,7 +89,7 @@ $this->load->model('customers_model', 'customers');
         foreach ($customers_list as $key => $value) {            
             $invoices = $this->db->select("*")->from("invoices")->where('csd='.$value['id'])->order_by('invoicedate',"DESC")->get()->result();
             
-            
+            $este_usuario_sele_creo_ahora=false;
             //echo "<br>";
             //var_dump("customer = ".$value['id']." |");
             $_customer_factura_creada=false;
@@ -273,6 +273,7 @@ $this->load->model('customers_model', 'customers');
                                 $factura_data['discstatus']=$value2->discstatus;
                                 $factura_data['format_discount']=$value2->format_discount;
                                 $factura_data['refer']=$value2->refer;
+                                $factura_data['tipo_factura']="Recurrente";
                                 if($_tiene_television==true){
                                     $factura_data['television']="Television";
                                 }else{
@@ -303,7 +304,7 @@ $this->load->model('customers_model', 'customers');
                                     //var_dump($factura_data);
                                                            
                                 $_customer_factura_creada=true;
-
+                                $este_usuario_sele_creo_ahora=true;
                                 
                             }
 
@@ -318,7 +319,12 @@ $this->load->model('customers_model', 'customers');
                 
             }
             //codigo para pagar con saldo ya existente
-            $invoices = $this->db->select("*")->from("invoices")->where('csd='.$value['id'])->order_by('invoicedate',"ASC")->get()->result();//$invoices = $this->db->select("*")->from("invoices")->where('csd='.$value['id'])->order_by('invoicedate',"ASC")->get()->result();
+            if($este_usuario_sele_creo_ahora==false){
+                $invoices=array();
+            }else{
+                $invoices = $this->db->select("*")->from("invoices")->where('csd='.$value['id'])->order_by('invoicedate',"ASC")->get()->result();//$invoices = $this->db->select("*")->from("invoices")->where('csd='.$value['id'])->order_by('invoicedate',"ASC")->get()->result();
+            }
+            
             $lista_para_pagos_adelantados=array();
             $lista_para_pagos_faltantes=array();
             $saldo_dispo_total=0;
@@ -327,7 +333,7 @@ $this->load->model('customers_model', 'customers');
                 if($inv->tipo_factura=="Fija" || $inv->tipo_factura=="Nota Credito" || $inv->tipo_factura=="Nota Debito"){
                         //para que se salte este tipo de facturas
                 }else{
-                     if($inv->pamnt<0){
+                     if($inv->pamnt<0 || $inv->total<0){
                                             break;
                                     }
                     $tr_verificacion = $this->db->query("select sum(credit)-sum(debit) as calculo from transactions where estado is null and cat!='Purchase' and tid=".$inv->tid)->result_array();
@@ -927,12 +933,14 @@ var_dump("aqui2");*/
 				$pto = ' + '.$puntos.' Puntos';
 			}
             if ($this->db->insert('invoices', $data)) {
+				$username = $this->aauth->get_user()->username;
 				if (($television !== no) || $combo !== no){
 				$data2['codigo']=$tidactualmasuno[0]->codigo;	
                 $data2['subject']='servicio';
 				$data2['detalle']='Instalacion';	
                 $data2['created']=$bill_date;
                 $data2['cid']=$customer_id;
+				$data2['col']=$username;
                 $data2['status']='Pendiente';
 				$data2['section']=$tv.$int.$pto;	
                 //Tipo de instalacion
