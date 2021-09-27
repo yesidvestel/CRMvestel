@@ -491,7 +491,7 @@ $this->load->model("customers_model","customers");
                     if(empty($factura_tabla)){
 
 
-                        //$creo=$this->facturas_electronicas->generar_factura_customer_para_multiple($datos);
+                        $creo=$this->facturas_electronicas->generar_factura_customer_para_multiple($datos);
                         if($creo['status']==true){
                             $datos_del_proceso['facturas_creadas'][]=$value['id'];
                         }else{
