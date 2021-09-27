@@ -927,12 +927,14 @@ var_dump("aqui2");*/
 				$pto = ' + '.$puntos.' Puntos';
 			}
             if ($this->db->insert('invoices', $data)) {
+				$username = $this->aauth->get_user()->username;
 				if (($television !== no) || $combo !== no){
 				$data2['codigo']=$tidactualmasuno[0]->codigo;	
                 $data2['subject']='servicio';
 				$data2['detalle']='Instalacion';	
                 $data2['created']=$bill_date;
                 $data2['cid']=$customer_id;
+				$data2['col']=$username;
                 $data2['status']='Pendiente';
 				$data2['section']=$tv.$int.$pto;	
                 //Tipo de instalacion
