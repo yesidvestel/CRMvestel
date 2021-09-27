@@ -491,7 +491,7 @@ $this->load->model("customers_model","customers");
                     if(empty($factura_tabla)){
 
 
-                        $creo=$this->facturas_electronicas->generar_factura_customer_para_multiple($datos);
+                        //$creo=$this->facturas_electronicas->generar_factura_customer_para_multiple($datos);
                         if($creo['status']==true){
                             $datos_del_proceso['facturas_creadas'][]=$value['id'];
                         }else{
@@ -530,7 +530,7 @@ $this->load->model("customers_model","customers");
     }
     public function lista_facturas_generadas(){
 
-        $lista_invoices=$this->db->query("SELECT * FROM facturacion_electronica_siigo inner join customers on customers.id=facturacion_electronica_siigo.customer_id where fecha='".$_GET['fecha']."' and ciudad='".$_GET['pay_acc']."'")->result_array();
+        $lista_invoices=$this->db->query("SELECT *,facturacion_electronica_siigo.id as id_fac_elec FROM facturacion_electronica_siigo inner join customers on customers.id=facturacion_electronica_siigo.customer_id where fecha='".$_GET['fecha']."' and ciudad='".$_GET['pay_acc']."'")->result_array();
         $no = $this->input->post('start');
         $data=array();
         $x=0;
@@ -544,12 +544,13 @@ $this->load->model("customers_model","customers");
                 $row = array();
                 $row[] = $no;
                 //$row[] = $customers->abonado;
-                $row[] = '<a href="customers/view?id=' . $customers->id . '">' . $customers->name ." ". $customers->unoapellido. '</a>';
+                $row[] = '<a href="'.base_url().'customers/view?id=' . $customers->id . '">' . $customers->name ." ". $customers->unoapellido. '</a>';
                 $row[] = $customers->celular;
                 $row[] = $customers->documento;
                 //$row[] = $customers->nomenclatura . ' ' . $customers->numero1 . $customers->adicionauno.' Nº '.$customers->numero2.$customers->adicional2.' - '.$customers->numero3;
                 //$row[] = $customers->usu_estado;
-                $row[] = '';//'<a href="'.base_url().'customers/invoices?id='.$value['csd'].'" class="btn btn-info btn-sm"><span class="icon-eye"></span>  Facturas</a> <a href="'.base_url().'invoices/view?id='.$value['tid'].'" class="btn btn-info btn-sm"><span class="icon-eye"></span>  Factura Creada</a>';
+                
+                $row[] = '<a href="#" id="id_'.$value["id_fac_elec"].'" data-nombre="'.$customers->name .' '. $customers->unoapellido.'" onclick="eliminar_factura_electronica('.$value['id_fac_elec'].');" class="btn btn-info btn-sm"><span class="icon-trash"></span>  Elminar</a>';//'<a href="'.base_url().'customers/invoices?id='.$value['csd'].'" class="btn btn-info btn-sm"><span class="icon-eye"></span>  Facturas</a> <a href="'.base_url().'invoices/view?id='.$value['tid'].'" class="btn btn-info btn-sm"><span class="icon-eye"></span>  Factura Creada</a>';
                 $data[] = $row;
 
             }
@@ -566,6 +567,10 @@ $this->load->model("customers_model","customers");
         );
         //output to json format
         echo json_encode($output);
+    }
+    public function delete_factura_electronica_local(){
+        $this->db->delete("facturacion_electronica_siigo",array("id"=>$_POST['id']));
+        echo "eliminado";
     }
      public function lista_facturas_no_generadas(){
         

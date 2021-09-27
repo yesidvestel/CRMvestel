@@ -140,5 +140,16 @@
             
         });
     });
+
+    function eliminar_factura_electronica(id){
+        console.log(id);
+        $.post(baseurl+"facturasElectronicas/delete_factura_electronica_local",{'id':id},function(data){
+                   var nombre= $("#id_"+id).data("nombre");
+                    $("#notify .message").html("<strong>Success</strong>: Factura Electronica de <i>"+nombre+"</i> eliminada del registro local");
+                    $("#notify").removeClass("alert-danger").addClass("alert-success").fadeIn();
+                    $("html, body").scrollTop($("body").offset().top);
+            $("#id_"+id).parent().parent().css("background","red");
+        });
+    }
 </script>
 
