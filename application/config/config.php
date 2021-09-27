@@ -24,7 +24,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 
-$config['base_url'] = 'http://localhost/CRMvestel/';
+$config['base_url'] = 'http://190.14.233.190/CRMvestel/';
 
 /*
 |--------------------------------------------------------------------------
