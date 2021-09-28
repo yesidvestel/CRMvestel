@@ -743,6 +743,7 @@ if($ya_agrego_equipos==false){
         $data['status']='due';
         $data['ron']='Activo';
 		$data['refer']=$ciudad;
+		$data['tipo_factura']='Recurrente';
         //ssss
         $date_fecha_final = new DateTime($fecha_final);
         
