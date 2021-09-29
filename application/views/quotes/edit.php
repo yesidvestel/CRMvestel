@@ -171,7 +171,8 @@
                                         <div class="input-group">
                                              <select class="form-control mb-1" name="adicional1">
 													<option value="<?php echo $temporales->auno ?>"><?php echo $temporales->auno ?></option>
-                                                    <option value="bis">bis</option>
+                                                 	<option value="">-</option>
+												 	<option value="bis">bis</option>
 													<option value="sur">sur</option>
                                                 	<option value="a">a</option>
 													<option value="a">a sur</option>
@@ -204,6 +205,7 @@
                                         <div class="input-group">
                                              <select class="form-control mb-1" name="adicional2">
 													<option value="<?php echo $temporales->ados ?>"><?php echo $temporales->ados ?></option>
+												 	<option value="">-</option>
                                                     <option value="bis">bis</option>
 													<option value="sur">sur</option>
                                                 	<option value="a">a</option>
