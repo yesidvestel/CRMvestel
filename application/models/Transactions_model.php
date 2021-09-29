@@ -264,7 +264,7 @@ class Transactions_model extends CI_Model
 
     public function delt($id)
     {
-        $this->db->select('acid,credit,debit,tid,ext');
+        $this->db->select('acid,credit,debit,tid,ext,cat');
         $this->db->from('transactions');
         $this->db->where('id', $id);
         $query = $this->db->get();
