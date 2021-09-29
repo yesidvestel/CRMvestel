@@ -136,7 +136,7 @@ class Cronjob_model extends CI_Model
         $this->db->delete('reports', array('year' => $year));
 
 
-        $query = $this->db->query("SELECT MONTH(invoicedate) AS month,YEAR(invoicedate) AS year,COUNT(tid) AS invoices,SUM(total) AS sales,SUM(items) AS items FROM invoices WHERE (YEAR(invoicedate)='$year') GROUP BY MONTH(invoicedate)");
+        $query = $this->db->query("SELECT MONTH(invoicedate) AS month,YEAR(invoicedate) AS year,COUNT(tid) AS invoices,SUM(items) AS items FROM invoices WHERE (YEAR(invoicedate)='$year')  GROUP BY MONTH(invoicedate)");
         $arrayA = $query->result_array();
 
         $query = $this->db->query("SELECT MONTH(date) AS month,YEAR(date) AS year,SUM(credit) AS income,SUM(debit) AS expense FROM transactions WHERE (YEAR(date)='$year') and type!='Transfer' GROUP BY MONTH(date)");
