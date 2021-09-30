@@ -1192,6 +1192,65 @@ $this->load->model('customers_model', 'customers');
 
 
     }
+    public function printinvoice2()
+    {
+
+        $tid=0;
+       //$tid = $this->input->get('id');
+        if(!empty($this->input->get('tr_id'))){
+                
+                $transaccion =$this->db->get_where("transactions",array("id"=>$this->input->get('tr_id')))->row();
+                $tid=$transaccion->tid;
+        }else{
+            $tid = $this->input->get('id');
+        }
+        
+        
+
+        $data['id'] = $tid;
+        $data['transaccion'] = $transaccion;
+        $data['title'] = "Invoice $tid";
+
+        $data['invoice'] = $this->invocies->invoice_details($tid, $this->limited);
+        if ($data['invoice']) $data['products'] = $this->invocies->invoice_products($tid);
+        if ($data['invoice']) $data['employee'] = $this->invocies->employee($data['invoice']['eid']);
+        $this->load->model('customers_model', 'customers');
+        $data['due'] = $this->customers->due_details($data['invoice']['csd']);
+        
+        
+                $data['invoice']['total2']=$data['invoice']['total'];
+                $data['invoice']['discount2']=$data['invoice']['discount'];
+                $data['invoice']['multi2']=$data['invoice']['multi'];
+                $data['invoice']['pamnt2']=$data['invoice']['pamnt'];
+                $data['lista_invoices']= array();
+       
+        $lista_de_facturas_sin_pagar=array();
+        $data['lista_de_facturas_sin_pagar']=$lista_de_facturas_sin_pagar;
+        ini_set('memory_limit', '64M');
+
+        $html = $this->load->view('invoices/view-print-'.LTR2, $data, true);
+        $html2 = $this->load->view('invoices/header-print-'.LTR, $data, true);
+
+        //PDF Rendering
+        $this->load->library('pdf_invoice');
+
+        $pdf = $this->pdf_invoice->load();
+        $pdf->SetHTMLHeader($html2);
+        $pdf->SetHTMLFooter('<div style="text-align: right;font-family: serif; font-size: 8pt; color: #5C5C5C; font-style: italic;margin-top:0pt;">{PAGENO}/{nbpg} #'.$tid.'</div>');
+
+        $pdf->WriteHTML($html);
+
+        if ($this->input->get('d')) {
+
+            $pdf->Output('Invoice_#' . $tid . '.pdf', 'D');
+        } else {
+            $pdf->Output('Invoice_#' . $tid . '.pdf', 'I');
+        }
+
+
+
+
+    }
 
     public function delete_i()
     {

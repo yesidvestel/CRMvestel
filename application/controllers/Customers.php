@@ -1208,20 +1208,30 @@ class Customers extends CI_Controller
 			$row[] = '<span class="st-' . $invoices->ron . '">' . $invoices->ron . '</span>';
             $row[] = amountFormat($invoices->total);
             $row[] = '<span class="st-' . $invoices->status . '">' . $this->lang->line(ucwords($invoices->status)) . '</span>';
+
+            $lista_transacciones_agregar_st="";
+                                $transacciones = $this->db->get_where("transactions",array("tid"=>$invoices->tid,"estado"=>null))->result_array();
+                                foreach ($transacciones as $key => $value) {
+                                    $fecha = new DateTime($value['date']);
+                                    $lista_transacciones_agregar_st.='<a class="dropdown-item" style="padding:3px 0px;"
+                                           href="'.base_url().'invoices/printinvoice2?tr_id='.$value['id'].'">&nbsp;&nbsp;R'.$key.' - '.$fecha->format("d/m/Y").'</a>';
+                                    $lista_transacciones_agregar_st.='<div class="dropdown-divider"></div>';
+                                }
+
             $resivos_var='<div class="btn-group dropup">
                                     <button type="button" class="btn btn-success dropdown-toggle"
                                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
                                                 class="icon-download"></i> 
                                     </button>
                                     <div class="dropdown-menu" style="left:-100">
+                                        '.$lista_transacciones_agregar_st.'
                                         <a class="dropdown-item" style="padding:3px 0px;"
-                                           href="">&nbsp;&nbsp;R1</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" style="padding:3px 0px;"
-                                           href="">&nbsp;&nbsp;R2</a>
+                                           href="">&nbsp;&nbsp;Todo</a>
 
                                     </div>
                                 </div>';
+
+                                
             $row[] = '<a  href="' . base_url("invoices/view?id=$invoices->tid") . '" class="btn btn-success btn-xs"><i class="icon-file-text"></i> '.$this->lang->line('View').'</a> &nbsp; '.$resivos_var.'&nbsp;&nbsp;
 			<a href="#" data-object-id="' . $invoices->tid . '" class="btn btn-danger btn-xs delete-object"><span class="icon-trash"></span></a>'; 
             $data[] = $row;
