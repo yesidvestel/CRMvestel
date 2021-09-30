@@ -220,7 +220,13 @@ class Clientgroup extends CI_Controller
         
         foreach ($lista_customers as $key => $customers) {
             $due=$this->customers->due_details($customers->id);
-            $money=$this->customers->money_details($customers->id);
+            $money=array();
+                    if(isset($_GET['ingreso_select']) && $_GET['ingreso_select']!="" && $_GET['ingreso_select']!=null){
+                        $money=$this->customers->money_details($customers->id);
+                    }else{
+                            $money['credit']=$customers->credit;
+                            $money['debit']=$customers->debit;
+                    }
             $customers->money=$money['credit'];
             $debe_customer=($due['total']-$due['pamnt']);//se agrego el campo de money debit por el item de gastos que se mencino en fechas anteriores
             $lista_invoices = $this->db->from("invoices")->where("csd",$customers->id)->order_by('invoicedate,tid',"DESC")->get()->result();
@@ -523,6 +529,7 @@ class Clientgroup extends CI_Controller
     //write headers el primer campo que es nombre de la hoja de excel deve de coincidir en writeSheetHeader y writeSheetRow para tener en cuenta si se piensan agregar otras hojas o algo por el estilo
     $writer->writeSheetHeader('Customers '.$cust_group->title, $headers,$col_options = array(
 
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
