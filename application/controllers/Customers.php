@@ -1208,7 +1208,21 @@ class Customers extends CI_Controller
 			$row[] = '<span class="st-' . $invoices->ron . '">' . $invoices->ron . '</span>';
             $row[] = amountFormat($invoices->total);
             $row[] = '<span class="st-' . $invoices->status . '">' . $this->lang->line(ucwords($invoices->status)) . '</span>';
-            $row[] = '<a  href="' . base_url("invoices/view?id=$invoices->tid") . '" class="btn btn-success btn-xs"><i class="icon-file-text"></i> '.$this->lang->line('View').'</a> &nbsp; <a href="' . base_url("invoices/printinvoice?id=$invoices->tid") . '&d=1" class="btn btn-info btn-xs"  title="Download"><span class="icon-download"></span></a>&nbsp;&nbsp;
+            $resivos_var='<div class="btn-group dropup">
+                                    <button type="button" class="btn btn-success dropdown-toggle"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
+                                                class="icon-download"></i> 
+                                    </button>
+                                    <div class="dropdown-menu" style="left:-100">
+                                        <a class="dropdown-item" style="padding:3px 0px;"
+                                           href="">&nbsp;&nbsp;R1</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" style="padding:3px 0px;"
+                                           href="">&nbsp;&nbsp;R2</a>
+
+                                    </div>
+                                </div>';
+            $row[] = '<a  href="' . base_url("invoices/view?id=$invoices->tid") . '" class="btn btn-success btn-xs"><i class="icon-file-text"></i> '.$this->lang->line('View').'</a> &nbsp; '.$resivos_var.'&nbsp;&nbsp;
 			<a href="#" data-object-id="' . $invoices->tid . '" class="btn btn-danger btn-xs delete-object"><span class="icon-trash"></span></a>'; 
             $data[] = $row;
         }
