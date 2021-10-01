@@ -236,7 +236,16 @@
             
                 
                 
-                     $transacciones = $this->db->order_by("id","DESC")->get_where("transactions",array("tid"=>$invoice['tid'],"estado"=>null))->result_array();
+                     $transacciones = $this->db->query("select * from transactions where tid=".$invoice['tid']." and id<=".$transaccion->id." and estado is null order by id desc")->result_array();
+                     $transacciones2 = $this->db->query("select * from transactions where tid=".$invoice['tid']." and id>".$transaccion->id." and estado is null order by id desc")->result_array();
+                     $valores_a_restar=0;
+
+                     foreach ($transacciones2 as $key => $value) {
+                         $valores_a_restar+=$value['credit'];
+                         $invoice['status']="partial";
+                     }//var_dump($valores_a_restar);
+                     $invoice['pamnt']-=$valores_a_restar;
+
                         $valor=$invoice['total'];
                         if(count($transacciones)!=0){                    
                             $valor1=intval($transacciones[0]['credit']);
@@ -252,6 +261,7 @@
 
                         }
                         $valor_transacciones=0;
+                        //$transacciones = $this->db->query("select * from transactions where tid=".$invoice['tid']." and id>".$transaccion->id." and estado is null order by id desc")->result_array();
                         foreach ($transacciones as $key => $tr) {
                             $valor_transacciones+=$tr['credit'];
                             $valor_transacciones-=$tr['debit'];
@@ -261,6 +271,7 @@
                                 $cantidad_total+=$invoice['total']-$valor_transacciones;
                         }
                         //$cantidad_total=-35000;
+                        //var_dump($cantidad_total_a_restar);
                         $cantidad_total_a_restar+=$cantidad_total;
 
                     $porcentaje=($cantidad_total_a_restar*100)/$invoice['total'];
@@ -279,7 +290,7 @@
 
                             }
                         }
-                        
+                        $cantidad_total+=$valor_item;
                         echo '<tr class="item' . $flag . '"> 
                                 <td>'.$value->product.'</td>';
                         echo '<td class="t_center">' . amountExchange( $valor_item) . '</td>
@@ -287,7 +298,7 @@
                                // $cantidad_total+=$value->subtotal;
 
                     }
-                    $cantidad_total_a_restar-=$cantidad_total;
+                    //$cantidad_total_a_restar-=$cantidad_total;
 
                 
            
@@ -316,7 +327,7 @@
 
 
             <td>Cantidad Total:</td>
-            <td><?php echo amountExchange(($cantidad_total)+$cantidad_total_a_restar); ?></td>
+            <td><?php echo amountExchange($cantidad_total); ?></td>
         </tr>
         <?php 
         if ($invoice['discount'] > 0) {
@@ -338,7 +349,7 @@
 		</tr><tr>
             <td><?php echo $this->lang->line('Balance Due') ?>:</td>
 
-            <td><strong><?php $rming = $due['total']-$due['pamnt'];
+            <td><strong><?php $rming = $cantidad_total-$cantidad_total_a_restar;
 			
     if ($rming < 0) {
         $rming = 0;

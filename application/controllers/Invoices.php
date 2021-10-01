@@ -1237,7 +1237,7 @@ $this->load->model('customers_model', 'customers');
         $pdf = $this->pdf_invoice->load();
         $pdf->SetHTMLHeader($html2);
         $pdf->SetHTMLFooter('<div style="text-align: right;font-family: serif; font-size: 8pt; color: #5C5C5C; font-style: italic;margin-top:0pt;">{PAGENO}/{nbpg} #'.$tid.'</div>');
-
+//echo $html;
         $pdf->WriteHTML($html);
 
         if ($this->input->get('d')) {
