@@ -141,6 +141,9 @@ class Quote extends CI_Controller
      }else if($detalle=="Revision_de_television"){
         $problema = $this->input->post('problema_tv');
      }      
+        if($detalle=="Instalacion"){
+            $factura="null";
+        }
         
         if ($customer_id) {
         	$this->quote->addticket($customer_id, $gen, $nticket, $subject, $detalle, $created, $problema, $section, $factura,$agendar,$fagenda, $tec, $hora,$hora2,$nomen,$nuno,$auno,$ndos,$ados,$ntres,$local,$barrio,$recider, $refer, $tv,$inter,$punto);
