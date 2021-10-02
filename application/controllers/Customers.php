@@ -1217,7 +1217,7 @@ class Customers extends CI_Controller
                                            href="'.base_url().'invoices/printinvoice2?tr_id='.$value['id'].'">&nbsp;&nbsp;R'.$key.' - '.$fecha->format("d/m/Y").'</a>';
                                     $lista_transacciones_agregar_st.='<div class="dropdown-divider"></div>';
                                 }
-
+            if($lista_transacciones_agregar_st!=""){
             $resivos_var='<div class="btn-group dropup">
                                     <button type="button" class="btn btn-success dropdown-toggle"
                                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
@@ -1225,13 +1225,14 @@ class Customers extends CI_Controller
                                     </button>
                                     <div class="dropdown-menu" style="left:-100">
                                         '.$lista_transacciones_agregar_st.'
-                                        <a class="dropdown-item" style="padding:3px 0px;"
-                                           href="">&nbsp;&nbsp;Todo</a>
+                                        
 
                                     </div>
                                 </div>';
 
-                                
+            }else{
+                $resivos_var='<button type="button" class="btn btn-success"><i class="icon-download"></i> </button>';
+            }
             $row[] = '<a  href="' . base_url("invoices/view?id=$invoices->tid") . '" class="btn btn-success btn-xs"><i class="icon-file-text"></i> '.$this->lang->line('View').'</a> &nbsp; '.$resivos_var.'&nbsp;&nbsp;
 			<a href="#" data-object-id="' . $invoices->tid . '" class="btn btn-danger btn-xs delete-object"><span class="icon-trash"></span></a>'; 
             $data[] = $row;
