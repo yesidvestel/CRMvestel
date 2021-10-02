@@ -56,8 +56,10 @@
                     <th><?php echo $this->lang->line('') ?>Estado</th>
                     <th><?php echo $this->lang->line('Total') ?></th>
                     <th class="no-sort"><?php echo $this->lang->line('') ?>Pago</th>
-                    <th class="no-sort"><?php echo $this->lang->line('Settings') ?></th>
-                    
+					<th class="no-sort"><?php echo $this->lang->line('Settings') ?></th>
+					<?php if ($this->aauth->get_user()->roleid > 3) { ?>
+                    <th class="no-sort">Admin</th>
+                    <?php } ?>
 
 
                 </tr>
@@ -75,8 +77,10 @@
                     <th><?php echo $this->lang->line('') ?>Estado</th>
                     <th><?php echo $this->lang->line('Total') ?></th>
                     <th class="no-sort"><?php echo $this->lang->line('') ?>Pago</th>
-                    <th class="no-sort"><?php echo $this->lang->line('Settings') ?></th>
-
+					<th class="no-sort"><?php echo $this->lang->line('Settings') ?></th>
+					<?php if ($this->aauth->get_user()->roleid > 3) { ?>
+                    <th class="no-sort">Admin</th>
+					<?php } ?>
                 </tr>
                 </tfoot>
             </table>
