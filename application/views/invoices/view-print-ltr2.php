@@ -269,12 +269,21 @@
                         $valor_a_cubrir=$invoice['total']-$invoice['pamnt'];
                         if($valor_transacciones>$invoice['total']){
                                 $cantidad_total+=$invoice['total']-$valor_transacciones;
+                              //  $cantidad_total=$invoice['total']-$invoice['pamnt'];
+                                //$cantidad_total_a_restar=$invoice['total']-$invoice['pamnt'];
+                        }else{
+                            $cantidad_total_a_restar+=$cantidad_total;        
                         }
+
                         //$cantidad_total=-35000;
                         //var_dump($cantidad_total_a_restar);
-                        $cantidad_total_a_restar+=$cantidad_total;
+                        $x=$cantidad_total_a_restar;
+                        $cantidad_total_a_restar=20000;
 
                     $porcentaje=($cantidad_total_a_restar*100)/$invoice['total'];
+                    $cantidad_total_a_restar=$x;
+                    var_dump($porcentaje);
+                    var_dump($cantidad_total_a_restar);
                     $lista_items=$this->db->get_where("invoice_items",array('tid' => $invoice['tid']))->result();
 
                     foreach ($lista_items as $key => $value) {

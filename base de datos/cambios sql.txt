@@ -1,4 +1,6 @@
-﻿-----------------------------cambios para notacredito y notadebito---------------
+﻿----------------------------cambios guardar resivos---------------------------------------------
+ALTER TABLE `invoices` ADD `resivos_guardados` VARCHAR(500) NOT NULL AFTER `tipo_factura`;
+-----------------------------cambios para notacredito y notadebito---------------
 ALTER TABLE `invoices` ADD `tipo_factura` VARCHAR(50) NOT NULL AFTER `multi`;
 ---------------------------cambios en customers para agilizar filtros----------------------------------
 ALTER TABLE `customers` ADD `debit` VARCHAR(250) NULL AFTER `checked_seleccionado`, ADD `credit` VARCHAR(250) NULL AFTER `debit`;

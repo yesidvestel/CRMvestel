@@ -1239,7 +1239,20 @@ $this->load->model('customers_model', 'customers');
         $pdf->SetHTMLFooter('<div style="text-align: right;font-family: serif; font-size: 8pt; color: #5C5C5C; font-style: italic;margin-top:0pt;">{PAGENO}/{nbpg} #'.$tid.'</div>');
 //echo $html;
         $pdf->WriteHTML($html);
+        /* Escritura de archivos para visualizar pdfs de resivos*/
+        $x=getdate()[0];
+                    $file = fopen("userfiles/txt_para_pdf_resivos/header_".$tid."_".$x.".txt", "w");
+            fwrite($file, $html2 );
+            fclose($file);
 
+            $file = fopen("userfiles/txt_para_pdf_resivos/body_".$tid."_".$x.".txt", "w");            
+            fwrite($file, $str_g );
+            fclose($file);
+/* end  Escritura de archivos para visualizar pdfs de resivos*/
+$inv=$this->db->get_where("invoices",array("tid"=>$tid))->row();
+$array=json_decode($inv->resivos_guardados);
+$array[]=$tid."_".$x.".txt";
+$this->db->update("invoices",array("resivos_guardados"=>json_encode($array)),array("tid"=>$tid));
         if ($this->input->get('d')) {
 
             $pdf->Output('Invoice_#' . $tid . '.pdf', 'D');
