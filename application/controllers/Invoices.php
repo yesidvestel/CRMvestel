@@ -1240,18 +1240,23 @@ $this->load->model('customers_model', 'customers');
 //echo $html;
         $pdf->WriteHTML($html);
         /* Escritura de archivos para visualizar pdfs de resivos*/
+        if(!is_dir("userfiles/txt_para_pdf_resivos/")){
+             mkdir("userfiles/txt_para_pdf_resivos/", 0777, true);
+        }
         $x=getdate()[0];
                     $file = fopen("userfiles/txt_para_pdf_resivos/header_".$tid."_".$x.".txt", "w");
             fwrite($file, $html2 );
             fclose($file);
 
             $file = fopen("userfiles/txt_para_pdf_resivos/body_".$tid."_".$x.".txt", "w");            
-            fwrite($file, $str_g );
+            fwrite($file, $html );
             fclose($file);
 /* end  Escritura de archivos para visualizar pdfs de resivos*/
 $inv=$this->db->get_where("invoices",array("tid"=>$tid))->row();
 $array=json_decode($inv->resivos_guardados);
-$array[]=$tid."_".$x.".txt";
+$fecha_actual=new DateTime();
+$var_a=array("date"=>$fecha_actual->format("d-m-Y"),"name_file"=>$tid."_".$x.".txt");
+$array[]=$var_a;
 $this->db->update("invoices",array("resivos_guardados"=>json_encode($array)),array("tid"=>$tid));
         if ($this->input->get('d')) {
 
