@@ -14,11 +14,15 @@
                 <tr>
                     <th>#</th>
 					<th>Codigo</th>
-                    <th><?php echo $this->lang->line('') ?>MAC</th>
-                    <th><?php echo $this->lang->line('') ?>Serial</th>
-                    <th><?php echo $this->lang->line('') ?>Estado</th>
-                    <th><?php echo $this->lang->line('') ?>Asignado</th>
-                    <th><?php echo $this->lang->line('') ?>Marca</th>
+                    <th>MAC</th>
+                    <th>Serial</th>
+                    <th>Estado</th>
+                    <th>Asignado a:</th>
+					<th>Marca</th>
+					<th>T/po sistema</th>
+					<th>Vlan</th>
+					<th>Nat</th>
+					<th>P/to Nat</th>
                     <th><?php echo $this->lang->line('Settings') ?></th>
 
 
@@ -31,11 +35,15 @@
                 <tr>
                     <th>#</th>
 					<th>Codigo</th>
-                    <th><?php echo $this->lang->line('') ?>MAC</th>
-                    <th><?php echo $this->lang->line('') ?>Serial</th>
-                    <th><?php echo $this->lang->line('') ?>Estado</th>
-                    <th><?php echo $this->lang->line('') ?>Asignado</th>
-                    <th><?php echo $this->lang->line('') ?>Marca</th>
+                    <th>MAC</th>
+                    <th>Serial</th>
+                    <th>Estado</th>
+                    <th>Asignado a:</th>
+					<th>Marca</th>
+					<th>T/po sistema</th>
+					<th>Vlan</th>
+					<th>Nat</th>
+					<th>P/to Nat</th>
                     <th><?php echo $this->lang->line('Settings') ?></th>
 
                 </tr>
