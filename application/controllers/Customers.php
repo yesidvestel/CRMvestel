@@ -1209,29 +1209,30 @@ class Customers extends CI_Controller
             $row[] = amountFormat($invoices->total);
             $row[] = '<span class="st-' . $invoices->status . '">' . $this->lang->line(ucwords($invoices->status)) . '</span>';
 
-            $lista_transacciones_agregar_st="";
+            $lisa_resivos_agregar_st="";
                                 $transacciones = $this->db->get_where("transactions",array("tid"=>$invoices->tid,"estado"=>null))->result_array();
-                                foreach ($transacciones as $key => $value) {
-                                    $fecha = new DateTime($value['date']);
-                                    $lista_transacciones_agregar_st.='<a class="dropdown-item" style="padding:3px 0px;"
-                                           href="'.base_url().'invoices/printinvoice2?tr_id='.$value['id'].'">&nbsp;&nbsp;R'.$key.' - '.$fecha->format("d/m/Y").'</a>';
-                                    $lista_transacciones_agregar_st.='<div class="dropdown-divider"></div>';
+                                $lista_de_resivos=json_decode($invoices->resivos_guardados);
+                                foreach ($lista_de_resivos as $key => $value) {
+                                    $fecha = new DateTime($value->date);
+                                    $lisa_resivos_agregar_st.='<a class="dropdown-item" style="padding:3px 0px;"
+                                           href="'.base_url().'invoices/printinvoice2?file_name='.$value->file_name.'">&nbsp;&nbsp;R'.$key.' - '.$fecha->format("d/m/Y").'</a>';
+                                    $lisa_resivos_agregar_st.='<div class="dropdown-divider"></div>';
                                 }
-            if($lista_transacciones_agregar_st!=""){
+            if($lisa_resivos_agregar_st!=""){
             $resivos_var='<div class="btn-group dropup">
                                     <button type="button" class="btn btn-success dropdown-toggle"
                                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
                                                 class="icon-download"></i> 
                                     </button>
                                     <div class="dropdown-menu" style="left:-100">
-                                        '.$lista_transacciones_agregar_st.'
+                                        '.$lisa_resivos_agregar_st.'
                                         
 
                                     </div>
                                 </div>';
 
             }else{
-                $resivos_var='<button type="button" class="btn btn-success"><i class="icon-download"></i> </button>';
+                $resivos_var='';
             }
             $row[] = '<a  href="' . base_url("invoices/view?id=$invoices->tid") . '" class="btn btn-success btn-xs"><i class="icon-file-text"></i> '.$this->lang->line('View').'</a> &nbsp; '.$resivos_var.'&nbsp;&nbsp;';
 			$row[] = '<a href="#" data-object-id="' . $invoices->tid . '" class="btn btn-danger btn-xs delete-object"><span class="icon-trash"></span></a>';
