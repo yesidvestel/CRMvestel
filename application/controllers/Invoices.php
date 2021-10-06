@@ -336,17 +336,7 @@ $this->load->model('customers_model', 'customers');
                      if($inv->pamnt<0 || $inv->total<0){
                                             break;
                                     }
-                    $tr_verificacion = $this->db->query("select sum(credit)-sum(debit) as calculo from transactions where estado is null and cat!='Purchase' and tid=".$inv->tid)->result_array();
-
-                    if($inv->pamnt!=intval($tr_verificacion[0]['calculo'])){
-                        $this->db->update("invoices",array("pamnt"=>intval($tr_verificacion[0]['calculo'])),array("tid"=>$inv->tid));
-                        $inv->pamnt=intval($tr_verificacion[0]['calculo']);
-                        /*var_dump("se actuatidlizo inicio");
-                        var_dump($inv->tid." calculo =".$tr_verificacion[0]['calculo']);
-                        
-                        var_dump("se actualizo fin");*/
-                        
-                    }
+                    
                 if($inv->status=="paid" && $inv->pamnt==0){
                     $this->db->update("invoices",array('status' =>"due"),array("id"=>$inv->id));
                     $inv->status="due";
