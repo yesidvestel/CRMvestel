@@ -14,7 +14,7 @@ class CellVozApi
     }
     public function getToken(){
     	$AuthApi = new AuthApi();
-		$login = new Login( array('account' =>"00486800430","password"=>"Admin2019"));
+		$login = new Login( array('account' =>"00486800430","password"=>"Tvsur2018"));
 		$x=$AuthApi->login($login);
 		return $x;
     }
