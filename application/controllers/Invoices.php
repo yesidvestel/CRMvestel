@@ -1180,7 +1180,29 @@ $this->load->model('customers_model', 'customers');
         $pdf->SetHTMLFooter('<div style="text-align: right;font-family: serif; font-size: 8pt; color: #5C5C5C; font-style: italic;margin-top:0pt;">{PAGENO}/{nbpg} #'.$tid.'</div>');
 
         $pdf->WriteHTML($html);
+                /* Escritura de archivos para visualizar pdfs de resivos*/
+        if(!is_dir("userfiles/txt_para_pdf_resivos/")){
+             mkdir("userfiles/txt_para_pdf_resivos/", 0777, true);
+        }
+        $x=getdate()[0];
+                    $file = fopen("userfiles/txt_para_pdf_resivos/header_".$tid."_".$x.".txt", "w");
+            fwrite($file, $html2 );
+            fclose($file);
 
+            $file = fopen("userfiles/txt_para_pdf_resivos/body_".$tid."_".$x.".txt", "w");            
+            fwrite($file, $html );
+            fclose($file);
+/* end  Escritura de archivos para visualizar pdfs de resivos*/
+/* guardando datos de registro para la lectura de los pdfs*/
+foreach ($lista as $key => $value) {
+        $inv=$this->db->get_where("invoices",array("tid"=>$value))->row();
+        $array=json_decode($inv->resivos_guardados);
+        $fecha_actual=new DateTime();
+        $var_a=array("date"=>$fecha_actual->format("d-m-Y"),"file_name"=>$tid."_".$x);
+        $array[]=$var_a;
+        $this->db->update("invoices",array("resivos_guardados"=>json_encode($array)),array("tid"=>$value));
+}
+       
         if ($this->input->get('d')) {
 
             $pdf->Output('Invoice_#' . $tid . '.pdf', 'D');
@@ -1195,41 +1217,12 @@ $this->load->model('customers_model', 'customers');
     public function printinvoice2()
     {
 
-        $tid=0;
-       //$tid = $this->input->get('id');
-        if(!empty($this->input->get('tr_id'))){
-                
-                $transaccion =$this->db->get_where("transactions",array("id"=>$this->input->get('tr_id')))->row();
-                $tid=$transaccion->tid;
-        }else{
-            $tid = $this->input->get('id');
-        }
         
-        
-
-        $data['id'] = $tid;
-        $data['transaccion'] = $transaccion;
-        $data['title'] = "Invoice $tid";
-
-        $data['invoice'] = $this->invocies->invoice_details($tid, $this->limited);
-        if ($data['invoice']) $data['products'] = $this->invocies->invoice_products($tid);
-        if ($data['invoice']) $data['employee'] = $this->invocies->employee($data['invoice']['eid']);
-        $this->load->model('customers_model', 'customers');
-        $data['due'] = $this->customers->due_details($data['invoice']['csd']);
-        
-        
-                $data['invoice']['total2']=$data['invoice']['total'];
-                $data['invoice']['discount2']=$data['invoice']['discount'];
-                $data['invoice']['multi2']=$data['invoice']['multi'];
-                $data['invoice']['pamnt2']=$data['invoice']['pamnt'];
-                $data['lista_invoices']= array();
-       
-        $lista_de_facturas_sin_pagar=array();
-        $data['lista_de_facturas_sin_pagar']=$lista_de_facturas_sin_pagar;
         ini_set('memory_limit', '64M');
+        $nombre_fichero=$this->input->get("file_name").".txt";
 
-        $html = $this->load->view('invoices/view-print-'.LTR2, $data, true);
-        $html2 = $this->load->view('invoices/header-print-'.LTR, $data, true);
+        $html = file_get_contents('userfiles/txt_para_pdf_resivos/body_'.$nombre_fichero, FILE_USE_INCLUDE_PATH);
+        $html2 = file_get_contents('userfiles/txt_para_pdf_resivos/header_'.$nombre_fichero, FILE_USE_INCLUDE_PATH);
 
         //PDF Rendering
         $this->load->library('pdf_invoice');
@@ -1239,25 +1232,7 @@ $this->load->model('customers_model', 'customers');
         $pdf->SetHTMLFooter('<div style="text-align: right;font-family: serif; font-size: 8pt; color: #5C5C5C; font-style: italic;margin-top:0pt;">{PAGENO}/{nbpg} #'.$tid.'</div>');
 //echo $html;
         $pdf->WriteHTML($html);
-        /* Escritura de archivos para visualizar pdfs de resivos*/
-        if(!is_dir("userfiles/txt_para_pdf_resivos/")){
-             mkdir("userfiles/txt_para_pdf_resivos/", 0777, true);
-        }
-        $x=getdate()[0];
-                    $file = fopen("userfiles/txt_para_pdf_resivos/header_".$tid."_".$x.".txt", "w");
-            fwrite($file, $html2 );
-            fclose($file);
 
-            $file = fopen("userfiles/txt_para_pdf_resivos/body_".$tid."_".$x.".txt", "w");            
-            fwrite($file, $html );
-            fclose($file);
-/* end  Escritura de archivos para visualizar pdfs de resivos*/
-$inv=$this->db->get_where("invoices",array("tid"=>$tid))->row();
-$array=json_decode($inv->resivos_guardados);
-$fecha_actual=new DateTime();
-$var_a=array("date"=>$fecha_actual->format("d-m-Y"),"name_file"=>$tid."_".$x.".txt");
-$array[]=$var_a;
-$this->db->update("invoices",array("resivos_guardados"=>json_encode($array)),array("tid"=>$tid));
         if ($this->input->get('d')) {
 
             $pdf->Output('Invoice_#' . $tid . '.pdf', 'D');
