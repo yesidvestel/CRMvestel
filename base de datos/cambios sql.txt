@@ -1,4 +1,14 @@
-﻿----------------------------cambios guardar resivos---------------------------------------------
+﻿-----------------------------cambios para poder cambiar variables desde el sistema para ejemplo cellvos o otras integraciones-------------
+CREATE TABLE IF NOT EXISTS `variables_de_entorno` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `valor` VARCHAR(2000) NULL,
+  `nombre_api` VARCHAR(70) NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+INSERT INTO `variables_de_entorno` (`id`, `valor`, `nombre_api`) VALUES (NULL, '{"account":"00486800430","password":"Tvsur2018","api_key":"8529863e6706e0659cb610dfaded9c36db43e989"}', 'cellvoz');
+
+---------------------------------------------------------------------------------------------------------------------------
+----------------------------cambios guardar resivos---------------------------------------------
 ALTER TABLE `invoices` ADD `resivos_guardados` VARCHAR(500) NOT NULL AFTER `tipo_factura`;
 -----------------------------cambios para notacredito y notadebito---------------
 ALTER TABLE `invoices` ADD `tipo_factura` VARCHAR(50) NOT NULL AFTER `multi`;

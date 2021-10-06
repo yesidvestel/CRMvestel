@@ -93,6 +93,8 @@ class Dashboard extends CI_Controller
             $this->load->view('fixed/footer');
         }
         //cambios para preguntar desde que sede se conecta para configurar ips en mikrotik
+        $cellvoz=$this->db->get_where("variables_de_entorno",array("nombre_api"=>"cellvoz"))->row();
+        $_SESSION['variables_cellvoz']=json_decode($cellvoz->valor);
         $this->load->model('customers_model', 'customers');
         $datax['sede_accede']=$this->aauth->get_user()->sede_accede;
         $datax['customergrouplist'] = $this->customers->group_list();

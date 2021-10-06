@@ -14,7 +14,7 @@ class CellVozApi
     }
     public function getToken(){
     	$AuthApi = new AuthApi();
-		$login = new Login( array('account' =>"00486800430","password"=>"Tvsur2018"));
+		$login = new Login( array('account' =>$_SESSION['variables_cellvoz']->account,"password"=>$_SESSION['variables_cellvoz']->password));
 		$x=$AuthApi->login($login);
 		return $x;
     }
@@ -60,7 +60,7 @@ class CellVozApi
             }',
           CURLOPT_HTTPHEADER => array(
             'Content-Type: application/json',
-            'api-key: 8529863e6706e0659cb610dfaded9c36db43e989',
+            'api-key: '.$_SESSION['variables_cellvoz']->api_key,
             'Authorization: Bearer '.$token
           ),
         ));
@@ -90,7 +90,7 @@ class CellVozApi
             }',
           CURLOPT_HTTPHEADER => array(
             'Content-Type: application/json',
-            'api-key: 642329be7836bea019ea9ba41eb2e3ef48a9b985',
+            'api-key: '.$_SESSION['variables_cellvoz']->api_key,
             'Authorization: Bearer '.$token
           ),
         ));
