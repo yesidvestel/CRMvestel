@@ -1231,7 +1231,7 @@ class Customers extends CI_Controller
                                 </div>';
 
             }else{
-                $resivos_var='<button type="button" class="btn btn-success"><i class="icon-download"></i> </button>';
+                $resivos_var='';
             }
             $row[] = '<a  href="' . base_url("invoices/view?id=$invoices->tid") . '" class="btn btn-success btn-xs"><i class="icon-file-text"></i> '.$this->lang->line('View').'</a> &nbsp; '.$resivos_var.'&nbsp;&nbsp;';
 			$row[] = '<a href="#" data-object-id="' . $invoices->tid . '" class="btn btn-danger btn-xs delete-object"><span class="icon-trash"></span></a>';
