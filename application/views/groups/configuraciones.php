@@ -5,7 +5,7 @@
 
             <div class="message"></div>
         </div>
-        <div class="grid_3 grid_4">
+        <div class="grid_3 grid_4" id="div_remover">
             <h6>Editar Variables</h6>
             <hr>
             
@@ -20,7 +20,7 @@
                                        for="pay_cat">Api</label>
 
                                 <div class="col-sm-9">
-                                    <select name="pay_acc" class="form-control" id="cuentas_">
+                                    <select name="name_api" class="form-control" id="cuentas_">
                                         <?php
                                         foreach ($apis as $row) {
                                             
@@ -73,5 +73,49 @@
         </div>
     </div>
 </article>
-<?php //se hizo el cambio de fecha en el archivo views/fixed/footer ?>
+<div id="generar_factura" class="modal fade">
+    <div class="modal-dialog">
+     
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                <h4 class="modal-bodytitle">Confirmación</h4>
+            </div>
+
+            <div class="modal-body">
+                <h3>¿ Desea guardar los cambios ?</h3>
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn btn-primary" onclick="enviar()" >Aceptar</button>
+                <button type="button" data-dismiss="modal" class="btn">Cancel</button>
+            </div>
+
+        </div>
+       
+        
+    </div>
+</div>
+<script type="text/javascript">
+    function enviar(){
+    var o_data=$("form").serialize();
+        $.post(baseurl+"clientgroup/guardar_datos_api",o_data,function(data){
+
+
+                $("#notify .message").html("<strong>" + "Succes" + "</strong>: " + "Se actualizaron los datos con exito");
+                $("#notify").removeClass("alert-danger").addClass("alert-success").fadeIn();
+                $("html, body").scrollTop($("body").offset().top);
+                $("#div_remover").remove();
+
+        },'json');
+}  
+    
+    $("form").submit(function(e){
+        
+        e.preventDefault();
+        $("#generar_factura").modal("show");
+        
+    });
+  
+</script>
 

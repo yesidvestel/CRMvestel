@@ -56,6 +56,10 @@ class Clientgroup extends CI_Controller
         $this->load->view('groups/configuraciones',$data);
         $this->load->view('fixed/footer');
     }
+    public function guardar_datos_api(){
+        //var_dump();
+        echo json_encode($_POST);
+    }
     public function explortar_a_excel(){
         set_time_limit(3000);
         $query_consulta="select * from customers where gid=".$_GET['id']." and";
