@@ -48,6 +48,14 @@ class Clientgroup extends CI_Controller
         $this->load->view('groups/groups', $data);
         $this->load->view('fixed/footer');
     }
+    public function apis_vars_edit(){
+        $head['usernm'] = $this->aauth->get_user()->username;   
+        $head['title'] = "Editar Variables apis";   
+        $data['apis']=$this->db->get_where("variables_de_entorno")->result_array();
+        $this->load->view('fixed/header', $head);
+        $this->load->view('groups/configuraciones',$data);
+        $this->load->view('fixed/footer');
+    }
     public function explortar_a_excel(){
         set_time_limit(3000);
         $query_consulta="select * from customers where gid=".$_GET['id']." and";

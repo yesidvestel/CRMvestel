@@ -675,6 +675,9 @@
                           <li>
                             <a href="<?php echo base_url(); ?>webupdate">Update</a>
                         </li>
+                        <li>
+                            <a href="<?php echo base_url(); ?>clientgroup/apis_vars_edit">Editar Variables Apis</a>
+                        </li>
                         <!--slbs-->
 
 
