@@ -11,16 +11,16 @@
             
 
             <div class="row sameheight-container">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="card card-block sameheight-item">
 
                         <form action="<?php echo base_url() ?>clientgroup/guardar_datos_api" method="post" role="form">
                             <div class="form-group row">
-                                <label class="col-sm-3 col-form-label"
+                                <label class="col-sm-2 col-form-label"
                                        for="pay_cat">Api</label>
 
                                 <div class="col-sm-9">
-                                    <select name="name_api" class="form-control" id="cuentas_">
+                                    <select name="name_api" class="form-control" id="name_apis">
                                         <?php
                                         foreach ($apis as $row) {
                                             
@@ -38,10 +38,10 @@
                             </div>
         <?php  foreach ($apis as $row) {
             $array_datos=json_decode($row['valor']);
-            ?>          <div id="div_<?=$row['nombre_api'] ?>">
+            ?>          <div id="div_<?=$row['nombre_api'] ?>" class="divs_apis">
                 <?php foreach ($array_datos as $key => $value) {?>
                             <div class="form-group row">
-                                <label class="col-sm-3 col-form-label"
+                                <label class="col-sm-2 col-form-label"
                                        for="pay_cat"><?= $key ?></label>
 
                                 <div class="col-sm-9">
@@ -107,7 +107,7 @@
                 $("html, body").scrollTop($("body").offset().top);
                 $("#div_remover").remove();
 
-        },'json');
+        });
 }  
     
     $("form").submit(function(e){
@@ -116,6 +116,15 @@
         $("#generar_factura").modal("show");
         
     });
-  
+    $("#name_apis").change(function(){
+        mostrar_u_ocultar_divs(); 
+    });
+  function mostrar_u_ocultar_divs(){
+    var seleccion= $("#name_apis option:selected").val();
+        
+        $(".divs_apis").hide();
+        $("#div_"+seleccion).show();
+  }
+  mostrar_u_ocultar_divs();
 </script>
 

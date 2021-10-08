@@ -6,7 +6,9 @@ CREATE TABLE IF NOT EXISTS `variables_de_entorno` (
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 INSERT INTO `variables_de_entorno` (`id`, `valor`, `nombre_api`) VALUES (NULL, '{"account":"00486800430","password":"Tvsur2018","api_key":"8529863e6706e0659cb610dfaded9c36db43e989"}', 'cellvoz');
-
+------------mas----
+INSERT INTO `variables_de_entorno` (`id`, `valor`, `nombre_api`) VALUES (NULL, '{"username":"VESGATELEVISIONSAS\\\\\\\\VESGAT17681@apionmicrosoft.com","password":")QP>x3(9dN","Authorization_basic":"U2lpZ29XZWI6QUJBMDhCNkEtQjU2Qy00MEE1LTkwQ0YtN0MxRTU0ODkxQjYx"}', 'siigo')
+INSERT INTO `variables_de_entorno` (`id`, `valor`, `nombre_api`) VALUES (NULL, '{"username":"api.crmvestel","password":"duber123","ip_Yopal":"190.14.233.186:8728","ip_Villanueva":"190.14.238.114:8728","ip_Monterrey":"190.14.248.42:8728"}', 'MikroTik')
 ---------------------------------------------------------------------------------------------------------------------------
 ----------------------------cambios guardar resivos---------------------------------------------
 ALTER TABLE `invoices` ADD `resivos_guardados` VARCHAR(500) NOT NULL AFTER `tipo_factura`;

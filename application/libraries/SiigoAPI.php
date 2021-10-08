@@ -39,14 +39,14 @@ class SiigoAPI
         //_log("Obteniendo autorización"); //descomentar para depurar
         $postFields = [
             "grant_type" => "password",
-            "username" => 'VESGATELEVISIONSAS\\VESGAT17681@apionmicrosoft.com',
-            "password" => ')QP>x3(9dN',
+            "username" => $_SESSION['variables_siigo']->username,//VESGATELEVISIONSAS\\VESGAT17681@apionmicrosoft.com
+            "password" => $_SESSION['variables_siigo']->password,//)QP>x3(9dN
             "scope" => "WebApi offline_access",
         ];
         $cOptions = [
             CURLOPT_HTTPHEADER => [
                 "Accept: application/json",
-                "Authorization: Basic U2lpZ29XZWI6QUJBMDhCNkEtQjU2Qy00MEE1LTkwQ0YtN0MxRTU0ODkxQjYx",
+                "Authorization: Basic ".$_SESSION['variables_siigo']->Authorization_basic,//U2lpZ29XZWI6QUJBMDhCNkEtQjU2Qy00MEE1LTkwQ0YtN0MxRTU0ODkxQjYx
                 "Content-Type: application/x-www-form-urlencoded"
             ],
             CURLOPT_SSL_VERIFYPEER=>false,

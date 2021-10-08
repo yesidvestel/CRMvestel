@@ -58,7 +58,21 @@ class Clientgroup extends CI_Controller
     }
     public function guardar_datos_api(){
         //var_dump();
-        echo json_encode($_POST);
+        $data=array();
+        foreach ($_POST as $key => $value) {
+            
+            if($key!="name_api"){
+                $nombre_key=str_replace($_POST['name_api']."_", "", $key);
+                if($nombre_key!=$key){
+                    $data[$nombre_key]=$value;    
+                }
+                
+            }
+        }
+        $this->db->update("variables_de_entorno",array("valor"=>json_encode($data)),array("nombre_api"=>$_POST['name_api']));
+        $api_vars=$this->db->get_where("variables_de_entorno",array("nombre_api"=>$_POST['name_api']))->row();
+        $_SESSION['variables_'.$_POST['name_api']]=json_decode($api_vars->valor);
+        echo "Guardado";
     }
     public function explortar_a_excel(){
         set_time_limit(3000);

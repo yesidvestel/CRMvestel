@@ -357,13 +357,13 @@ class Customers_model extends CI_Model
         //$this->load->library("Aauth");
         //$id_sede=$this->aauth->get_user()->sede_accede;
         if($id_sede==2){//yopal
-            return "190.14.233.186:8728";
+            return $_SESSION['variables_MikroTik']->ip_Yopal;//190.14.233.186:8728
         }else if($id_sede==3){//Villanueva
-            return "190.14.238.114:8728";
+            return $_SESSION['variables_MikroTik']->ip_Villanueva;//190.14.238.114:8728
         }else if($id_sede==4){//Monterrey
-            return "190.14.248.42:8728";
+            return $_SESSION['variables_MikroTik']->ip_Monterrey;//190.14.248.42:8728
         }else{//default
-            return "190.14.233.186:8728";
+            return $_SESSION['variables_MikroTik']->ip_Yopal;//190.14.233.186:8728
         }
     }
 
@@ -436,7 +436,7 @@ class Customers_model extends CI_Model
                  $API = new RouterosAPI();
                 $API->debug = false;
                 //192.168.201.1:8728 ip jefe
-                if ($API->connect($this->get_ip_coneccion_microtik_por_sede($customergroup), 'api.crmvestel', 'duber123')) {
+                if ($API->connect($this->get_ip_coneccion_microtik_por_sede($customergroup), $_SESSION['variables_MikroTik']->username, $_SESSION['variables_MikroTik']->password)) {
 
                  $API->comm("/ppp/secret/add", array(
                       "name"     => str_replace(' ', '', $name_s),
@@ -527,7 +527,7 @@ class Customers_model extends CI_Model
                 $API = new RouterosAPI();
                 $API->debug = false;
 
-                if ($API->connect($this->get_ip_coneccion_microtik_por_sede($customergroup), 'api.crmvestel', 'duber123')) {
+                if ($API->connect($this->get_ip_coneccion_microtik_por_sede($customergroup), $_SESSION['variables_MikroTik']->username, $_SESSION['variables_MikroTik']->password)) {
 
                     $arrID=$API->comm("/ppp/secret/getall", 
                           array(
@@ -581,7 +581,7 @@ class Customers_model extends CI_Model
                 set_time_limit(3000);
                 $API = new RouterosAPI();
                 $API->debug = false;
-        if ($API->connect($this->get_ip_coneccion_microtik_por_sede($id_sede), 'api.crmvestel', 'duber123')) {
+        if ($API->connect($this->get_ip_coneccion_microtik_por_sede($id_sede), $_SESSION['variables_MikroTik']->username, $_SESSION['variables_MikroTik']->password)) {
                 $arrID=$API->comm("/ppp/secret/getall", 
                           array(
                           ".proplist"=> ".id",
@@ -611,7 +611,7 @@ class Customers_model extends CI_Model
         $API = new RouterosAPI();
         $API->debug = false;
         
-        if ($API->connect($this->get_ip_coneccion_microtik_por_sede($customergroup), 'api.crmvestel', 'duber123')) {
+        if ($API->connect($this->get_ip_coneccion_microtik_por_sede($customergroup), $_SESSION['variables_MikroTik']->username, $_SESSION['variables_MikroTik']->password)) {
             //$user_name="user_prueba_duber_disabled";
             $arrID=$API->comm("/ppp/secret/getall", 
                   array(
@@ -1075,7 +1075,7 @@ class Customers_model extends CI_Model
          $API = new RouterosAPI();
         $API->debug = false;
         
-        if ($API->connect($this->get_ip_coneccion_microtik_por_sede($id_sede), 'api.crmvestel', 'duber123')) {
+        if ($API->connect($this->get_ip_coneccion_microtik_por_sede($id_sede), $_SESSION['variables_MikroTik']->username, $_SESSION['variables_MikroTik']->password)) {
             //$user_name="user_prueba_duber_disabled";
             $arrID=$API->comm("/ppp/secret/getall", 
                   array(
@@ -1095,7 +1095,7 @@ class Customers_model extends CI_Model
          $API = new RouterosAPI();
         $API->debug = false;
         
-        if ($API->connect($this->get_ip_coneccion_microtik_por_sede($id_sede), 'api.crmvestel', 'duber123')) {
+        if ($API->connect($this->get_ip_coneccion_microtik_por_sede($id_sede), $_SESSION['variables_MikroTik']->username, $_SESSION['variables_MikroTik']->password)) {
             //$user_name="user_prueba_duber_disabled";
             $arrID=$API->comm("/ppp/secret/getall", 
                   array(
@@ -1115,7 +1115,7 @@ class Customers_model extends CI_Model
          $API = new RouterosAPI();
         $API->debug = false;
         
-        if ($API->connect($this->get_ip_coneccion_microtik_por_sede($id_sede), 'api.crmvestel', 'duber123')) {
+        if ($API->connect($this->get_ip_coneccion_microtik_por_sede($id_sede), $_SESSION['variables_MikroTik']->username, $_SESSION['variables_MikroTik']->password)) {
             //$user_name="user_prueba_duber_disabled";
             $arrID=$API->comm("/ppp/secret/getall", 
                   array(
@@ -1169,7 +1169,7 @@ class Customers_model extends CI_Model
          $API = new RouterosAPI();
         $API->debug = false;
         
-        if ($API->connect($this->get_ip_coneccion_microtik_por_sede($id_sede), 'api.crmvestel', 'duber123')) {
+        if ($API->connect($this->get_ip_coneccion_microtik_por_sede($id_sede), $_SESSION['variables_MikroTik']->username, $_SESSION['variables_MikroTik']->password)) {
             //$user_name="user_prueba_duber_disabled";
             $arrID=$API->comm("/ppp/secret/getall", 
                   array(
@@ -1197,7 +1197,7 @@ class Customers_model extends CI_Model
          $API = new RouterosAPI();
         $API->debug = false;
         
-        if ($API->connect($this->get_ip_coneccion_microtik_por_sede($id_sede), 'api.crmvestel', 'duber123')) {
+        if ($API->connect($this->get_ip_coneccion_microtik_por_sede($id_sede), $_SESSION['variables_MikroTik']->username, $_SESSION['variables_MikroTik']->password)) {
             //$user_name="user_prueba_duber_disabled";
             $arrID=$API->comm("/ppp/secret/getall", 
                   array(
@@ -1241,7 +1241,7 @@ class Customers_model extends CI_Model
          //$API = new RouterosAPI();
         //$API->debug = false;
         
-        if ($API->connect($this->get_ip_coneccion_microtik_por_sede($id_sede), 'api.crmvestel', 'duber123')) {
+        if ($API->connect($this->get_ip_coneccion_microtik_por_sede($id_sede), $_SESSION['variables_MikroTik']->username, $_SESSION['variables_MikroTik']->password)) {
             //$user_name="user_prueba_duber_disabled";
             $arrID=$API->comm("/ppp/secret/getall", 
                   array(
