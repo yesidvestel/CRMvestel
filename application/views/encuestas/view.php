@@ -60,6 +60,66 @@
 							<td colspan="4"><?php echo $rta['tarea']; ?></td>
 						</tr>
 						<tr>
+							<td align="center" class="titulos" colspan="8">RIESGOS Y PELIGROS EXISTENTES</td>
+						</tr>
+						<tr>
+							<td colspan="8"><table width="100%" border="0">
+								  <tbody>
+									<tr>
+									  <td align="left">BIOLOGICO: </td>
+										<td width="2%"><input type="checkbox" name="biologico" <?= ($rta['biologico']=='0')?'checked':'' ?>></input></td>
+										
+									  	<td>&nbsp; <?php $bio = json_decode($rta['biologico2']); echo implode(", ",$bio); ?>
+										</td>
+									</tr>
+									<tr>
+									  <td align="left">BIOMECANICO: </td>
+										<td><input type="checkbox" name="biomeca" <?= ($rta['biomeca']=='0')?'checked':'' ?>></input></td>
+									  <td align="left">
+										  &nbsp; <?php $bio = json_decode($rta['biomeca2']); echo implode(", ",$bio); ?>
+										  
+										</td>
+									</tr>
+									<tr>
+									  <td align="left">CONDICIONES DE SEGURIDAD: </td>
+										<td><input type="checkbox" name="condicion" <?= ($rta['condicion']=='0')?'checked':'' ?>></input></td>
+									  <td align="left">
+										  &nbsp;&nbsp;<?php echo $rta['condicion2']; ?>
+										</td>
+									</tr>
+									<tr>
+									  <td align="left">FENOMENOS NATURALES: </td>
+										<td><input type="checkbox" name="fenomeno" <?= ($rta['fenomeno']=='0')?'checked':'' ?>></input></td>
+									  <td align="left">
+										  &nbsp; <?php $bio = json_decode($rta['fenomeno2']); echo implode(", ",$bio); ?>
+										</td>
+									</tr>
+									<tr>
+									  <td align="left">FISICOS: </td>
+										<td><input type="checkbox" name="fisico" <?= ($rta['fisico']=='0')?'checked':'' ?>></input></td>
+									  <td align="left">
+										  &nbsp; <?php $bio = json_decode($rta['fisico2']); echo implode(", ",$bio); ?>
+										</td>
+									</tr>
+									<tr>
+									  <td align="left">PSICOSOCIAL: </td>
+										<td><input type="checkbox" name="psico" <?= ($rta['psico']=='0')?'checked':'' ?>></input></td>
+									  <td align="left">
+										    &nbsp;&nbsp;<?php echo $rta['psico2']; ?>
+										</td>
+									</tr>
+									<tr>
+									  <td align="left">QUIMICO: </td>
+										<td><input type="checkbox" name="quimico" <?= ($rta['quimico']=='0')?'checked':'' ?>></input></td>
+									  <td align="left">
+										  &nbsp;&nbsp;<?php echo $rta['quimico2']; ?>
+										</td>
+									</tr>
+								  </tbody>
+								</table>
+							</td>
+						</tr>
+						<tr>
 							<td align="center" class="titulos" colspan="8">PARA ESTE TRABAJO SE REQUIERE PERMISO DE:</td>
 						</tr>
 						<tr>
@@ -128,22 +188,22 @@
 						<tr>
 							<td colspan="1"  width="20%">Manuales</td>
 							<td colspan="1" width="5%"><?php echo $rta['manual1']; ?></td>
-							<td colspan="7"><?php echo $rta['manual2']; ?></td>
+							<td colspan="7">&nbsp; <?php $bio = json_decode($rta['manual2']); echo implode(", ",$bio); ?></td>
 						</tr>
 						<tr>
 							<td colspan="1">Eléctricas</td>
 							<td colspan="1"><?php echo $rta['electro1']; ?></td>
-							<td colspan="6"><?php echo $rta['electro2']; ?></td>
+							<td colspan="6">&nbsp; <?php $bio = json_decode($rta['electro2']); echo implode(", ",$bio); ?></td>
 						</tr>
 						<tr>
 							<td colspan="1">Mecánicas</td>
 							<td colspan="1"><?php echo $rta['mecan1']; ?></td>
-							<td colspan="6"><?php echo $rta['mecan2']; ?></td>
+							<td colspan="6">&nbsp; <?php $bio = json_decode($rta['mecan2']); echo implode(", ",$bio); ?></td>
 						</tr>
 						<tr>
 							<td colspan="1">Otras</td>
 							<td colspan="1"><?php echo $rta['otras1']; ?></td>
-							<td colspan="6"><?php echo $rta['otras2']; ?></td>
+							<td colspan="6">&nbsp;&nbsp;<?php echo $rta['otras2']; ?></td>
 						</tr>
 						<tr>
 							<td align="center" class="titulos" colspan="8">ANALISIS DE LA TAREA</td>
@@ -170,7 +230,7 @@
 						</tr>
 						<tr>
 							<td colspan="4">¿Cuáles son los elementos de protección requeridos?</td>
-							<td colspan="4"><?php echo $rta['proteccion']; ?></td>
+							<td colspan="4"><?php $bio = json_decode($rta['proteccion']); echo implode(", ",$bio); ?></td>
 						</tr>
 						<tr>
 							<td colspan="4">¿Cuántos trabajadores se requieren?</td>
@@ -227,6 +287,24 @@
 							<td colspan="2"><?php echo $rta['riesgo5']; ?></td>
 							<td colspan="2"><?php echo $rta['consecuencia5']; ?></td>
 							<td colspan="2"><?php echo $rta['control5']; ?></td>
+						</tr>
+						<tr>
+							<td colspan="2"><?php echo $rta['tarea6']; ?></td>
+							<td colspan="2"><?php echo $rta['riesgo6']; ?></td>
+							<td colspan="2"><?php echo $rta['consecuencia6']; ?></td>
+							<td colspan="2"><?php echo $rta['control6']; ?></td>
+						</tr>
+						<tr>
+							<td colspan="2"><?php echo $rta['tarea7']; ?></td>
+							<td colspan="2"><?php echo $rta['riesgo7']; ?></td>
+							<td colspan="2"><?php echo $rta['consecuencia7']; ?></td>
+							<td colspan="2"><?php echo $rta['control7']; ?></td>
+						</tr>
+						<tr>
+							<td colspan="2"><?php echo $rta['tarea8']; ?></td>
+							<td colspan="2"><?php echo $rta['riesgo8']; ?></td>
+							<td colspan="2"><?php echo $rta['consecuencia8']; ?></td>
+							<td colspan="2"><?php echo $rta['control8']; ?></td>
 						</tr>
 						<tr>
 							<td align="center" class="titulos" colspan="8">EVALUACION DEL RIESGO</td>

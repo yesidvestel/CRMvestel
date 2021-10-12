@@ -283,6 +283,20 @@ class encuesta extends CI_Controller
         $horain = date("H:i",strtotime($this->input->post('horain')));
         $horafin = date("H:i",strtotime($this->input->post('horafin')));
 		$tarea = $this->input->post('tarea');
+		$biologico = $this->input->post('biologico');
+		$biologico2 = $this->input->post('biologico2');
+		$biomeca = $this->input->post('biomeca');
+		$biomeca2 = $this->input->post('biomeca2');
+		$condicion = $this->input->post('condicion');
+		$condicion2 = $this->input->post('condicion2');
+		$fenomeno = $this->input->post('fenomeno');
+		$fenomeno2 = $this->input->post('fenomeno2');
+		$fisico = $this->input->post('fisico');
+		$fisico2 = $this->input->post('fisico2');
+		$psico = $this->input->post('psico');
+		$psico2 = $this->input->post('psico2');
+		$quimico = $this->input->post('quimico');
+		$quimico2 = $this->input->post('quimico2');
         $alturas = $this->input->post('alturas');
         $casco = $this->input->post('casco');
         $gafas = $this->input->post('gafas');
@@ -319,27 +333,52 @@ class encuesta extends CI_Controller
 		$tarea3 = $this->input->post('tarea3');
 		$tarea4 = $this->input->post('tarea4');
 		$tarea5 = $this->input->post('tarea5');
+		$tarea6 = $this->input->post('tarea6');
+		$tarea7 = $this->input->post('tarea7');
+		$tarea8 = $this->input->post('tarea8');
 		$riesgo1 = $this->input->post('riesgo1');
 		$riesgo2 = $this->input->post('riesgo2');
 		$riesgo3 = $this->input->post('riesgo3');
 		$riesgo4 = $this->input->post('riesgo4');
 		$riesgo5 = $this->input->post('riesgo5');
+		$riesgo6 = $this->input->post('riesgo6');
+		$riesgo7 = $this->input->post('riesgo7');
+		$riesgo8 = $this->input->post('riesgo8');
 		$consecuencia1 = $this->input->post('consecuencia1');
 		$consecuencia2 = $this->input->post('consecuencia2');
 		$consecuencia3 = $this->input->post('consecuencia3');
 		$consecuencia4 = $this->input->post('consecuencia4');
 		$consecuencia5 = $this->input->post('consecuencia5');
+		$consecuencia6 = $this->input->post('consecuencia6');
+		$consecuencia7 = $this->input->post('consecuencia7');
+		$consecuencia8 = $this->input->post('consecuencia8');
 		$control1 = $this->input->post('control1');
 		$control2 = $this->input->post('control2');
 		$control3 = $this->input->post('control3');
 		$control4 = $this->input->post('control4');
 		$control5 = $this->input->post('control5');
+		$control6 = $this->input->post('control6');
+		$control7 = $this->input->post('control7');
+		$control8 = $this->input->post('control8');
 		$incidente = $this->input->post('incidente');
 		$seguro = $this->input->post('seguro');
-        $this->encuesta->addats($us, $ubicacion, $fecha, $lugar, $horain, $horafin, $tarea, $alturas, $casco, $gafas, $monogafas, $tapaoidos, $guantes, $careta, $arnes, $aux, $eslinga, $respirador, $mosquete, $otros,
-							$manual1, $manual2, $electro1,$electro2,$mecan1,$mecan2,$otras1,$otras2,$alto,$acceso,$puntos,$distancia,$prevencion,$proteccion,$trabajadores,$materiales,$peligros,$peligro_otros,$tarea1,
-							 $tarea2,$tarea3,$tarea4,$tarea5,$riesgo1,$riesgo2,$riesgo3,$riesgo4,$riesgo5,$consecuencia1,$consecuencia2,$consecuencia3,$consecuencia4,$consecuencia5,$control1,$control2,$control3,
-							 $control4,$control5,$incidente,$seguro);
+        $this->encuesta->addats(
+			$us, $ubicacion, $fecha, $lugar, $horain, 
+			$horafin, $tarea, $biologico,$biologico2, 
+			$biomeca,$biomeca2,$condicion,$condicion2,
+			$fenomeno,$fenomeno2,$fisico,$fisico2,$psico,
+			$psico2,$quimico,$quimico2, $alturas, $casco, 
+			$gafas, $monogafas, $tapaoidos, $guantes, $careta, 
+			$arnes, $aux, $eslinga, $respirador, $mosquete, $otros,
+			$manual1, $manual2, $electro1,$electro2,$mecan1,$mecan2,
+			$otras1,$otras2,$alto,$acceso,$puntos,$distancia,$prevencion,
+			$proteccion,$trabajadores,$materiales,$peligros,$peligro_otros,
+			$tarea1,$tarea2,$tarea3,$tarea4,$tarea5,$tarea6,$tarea7,$tarea8,
+			$riesgo1,$riesgo2,$riesgo3,$riesgo4,$riesgo5,$riesgo6,$riesgo7,
+			$riesgo8,$consecuencia1,$consecuencia2,$consecuencia3,$consecuencia4,
+			$consecuencia5,$consecuencia6,$consecuencia7,$consecuencia8,$control1,
+			$control2,$control3,$control4,$control5,$control6,$control7,$control8,
+			$incidente,$seguro);
 
     }
 

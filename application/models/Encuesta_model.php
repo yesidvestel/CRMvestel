@@ -190,11 +190,39 @@ class encuesta_model extends CI_Model
         }
 
 	}
-	public function addats($us, $ubicacion, $fecha, $lugar, $horain, $horafin, $tarea, $alturas, $casco, $gafas, $monogafas, $tapaoidos, $guantes, $careta, $arnes, $aux, $eslinga, $respirador, $mosquete, $otros,
-							$manual1, $manual2, $electro1,$electro2,$mecan1,$mecan2,$otras1,$otras2,$alto,$acceso,$puntos,$distancia,$prevencion,$proteccion,$trabajadores,$materiales,$peligros,$peligro_otros,$tarea1,
-							 $tarea2,$tarea3,$tarea4,$tarea5,$riesgo1,$riesgo2,$riesgo3,$riesgo4,$riesgo5,$consecuencia1,$consecuencia2,$consecuencia3,$consecuencia4,$consecuencia5,$control1,$control2,$control3,
-							 $control4,$control5,$incidente,$seguro)
+	public function addats(
+		$us, $ubicacion, $fecha, $lugar, 
+		$horain, $horafin, $tarea,$biologico,	
+		$biologico2, $biomeca,$biomeca2,$condicion,
+		$condicion2,$fenomeno,$fenomeno2,$fisico,
+		$fisico2,$psico,$psico2,$quimico,
+		$quimico2, $alturas, $casco, $gafas,
+		$monogafas, $tapaoidos, $guantes,
+		$careta, $arnes, $aux, $eslinga,
+		$respirador, $mosquete, $otros,
+		$manual1, $manual2, $electro1,$electro2,
+		$mecan1,$mecan2,$otras1,$otras2,
+		$alto,$acceso,$puntos,$distancia,
+		$prevencion,$proteccion,$trabajadores,
+		$materiales,$peligros,$peligro_otros,$tarea1,
+		$tarea2,$tarea3,$tarea4,$tarea5,$tarea6,
+		$tarea7,$tarea8,$riesgo1,$riesgo2,$riesgo3,
+		$riesgo4,$riesgo5,$riesgo6,$riesgo7,$riesgo8,
+		$consecuencia1,$consecuencia2,$consecuencia3,
+		$consecuencia4,$consecuencia5,$consecuencia6,
+		$consecuencia7,$consecuencia8,$control1,$control2,
+		$control3,$control4,$control5,$control6,$control7,
+		$control8,$incidente,$seguro)
     {
+	 
+		$biomeca2=json_encode($biomeca2);
+		$biologico2=json_encode($biologico2);
+		$fenomeno2=json_encode($fenomeno2);
+		$fisico2=json_encode($fisico2);
+		$manual2=json_encode($manual2);
+		$electro2=json_encode($electro2);
+		$mecan2=json_encode($mecan2);
+		$proteccion=json_encode($proteccion);
         $data = array(
             'user' => $us,
 			'ubicacion' => $ubicacion,
@@ -202,7 +230,21 @@ class encuesta_model extends CI_Model
             'lugar' => $lugar,
             'horain' => $horain,
             'horafin' => $horafin,
-            'tarea' => $tarea,
+			'tarea' => $tarea,
+            'biologico' => $biologico,
+			'biologico2' => $biologico2,
+			'biomeca' => $biomeca,
+			'biomeca2' => $biomeca2,
+			'condicion' => $condicion,
+			'condicion2' => $condicion2,
+			'fenomeno' => $fenomeno,
+			'fenomeno2' => $fenomeno2,
+			'fisico' => $fisico,
+			'fisico2' => $fisico2,
+			'psico' => $psico,
+			'psico2' => $psico2,
+			'quimico' => $quimico,
+			'quimico2' => $quimico2,			
             'alturas' => $alturas,
             'gafas' => $gafas,
 			'monogafas' => $monogafas,
@@ -238,21 +280,33 @@ class encuesta_model extends CI_Model
 			'tarea3' => $tarea3,
 			'tarea4' => $tarea4,
 			'tarea5' => $tarea5,
+			'tarea6' => $tarea6,
+			'tarea7' => $tarea7,
+			'tarea8' => $tarea8,
 			'riesgo1' => $riesgo1,
 			'riesgo2' => $riesgo2,
 			'riesgo3' => $riesgo3,
 			'riesgo4' => $riesgo4,
 			'riesgo5' => $riesgo5,
+			'riesgo6' => $riesgo6,
+			'riesgo7' => $riesgo7,
+			'riesgo8' => $riesgo8,
 			'consecuencia1' => $consecuencia1,
 			'consecuencia2' => $consecuencia2,
 			'consecuencia3' => $consecuencia3,
 			'consecuencia4' => $consecuencia4,
 			'consecuencia5' => $consecuencia5,
+			'consecuencia6' => $consecuencia6,
+			'consecuencia7' => $consecuencia7,
+			'consecuencia8' => $consecuencia8,
 			'control1' => $control1,
 			'control2' => $control2,
 			'control3' => $control3,
 			'control4' => $control4,
 			'control5' => $control5,
+			'control6' => $control6,
+			'control7' => $control7,
+			'control8' => $control8,
 			'incidente' => $incidente,
 			'seguro' => $seguro          
 
