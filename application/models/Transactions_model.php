@@ -276,7 +276,7 @@ class Transactions_model extends CI_Model
         $this->db->update('accounts');
 		//echo $transaction_var['tid'];
 		if($transaction_var['tid']>0) {
-            if($transaction_var['debit']>0){
+            if($transaction_var['debit']>0 && $transaction_var['cat']!="Purchase"){
                 $this->db->set('pamnt', "pamnt+$amt", FALSE);
                 $this->db->where('tid', $transaction_var['tid']);
                 $this->db->update('invoices');
@@ -301,11 +301,12 @@ class Transactions_model extends CI_Model
     }
 }       
 
+
     //validando que sea un transaccion en la que se pague una factura
     if($transaction_var['tid']!=null && $transaction_var['tid']!='' && $transaction_var['tid']!=0){
         if($transaction_var['cat']=="Sales"){
             $invoice = $this->db->get_where("invoices",array('tid' => $transaction_var['tid']))->row();
-            $data_invoice['pamnt']=$invoice->pamnt-$transaction_var['total'];
+            $data_invoice['pamnt']=$invoice->pamnt-$transaction_var['credit'];
             if($data_invoice['pamnt']<=0){
                 $data_invoice['pamnt']=0;
                 $data_invoice['status']="due";
@@ -316,7 +317,7 @@ class Transactions_model extends CI_Model
             $this->db->update("invoices",$data_invoice,array('tid' =>$invoice->tid));
         }else if($transaction_var['cat']=="Purchase"){
                 $purchase = $this->db->get_where("purchase",array('tid' => $transaction_var['tid']))->row();
-                $data_purchase['pamnt']=$purchase->pamnt-$transaction_var['total'];
+                $data_purchase['pamnt']=$purchase->pamnt-$transaction_var['debit'];
                 if($data_purchase['pamnt']<=0){
                     $data_purchase['pamnt']=0;
                     $data_purchase['status']="due";
