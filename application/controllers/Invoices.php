@@ -1129,6 +1129,10 @@ $this->load->model('customers_model', 'customers');
         $data['id'] = $tid;
         $data['is_multiple'] = $is_multiple;
         $data['title'] = "Invoice $tid";
+        $data['vrm']=0;
+        if(!empty($this->input->get('vrm'))){
+                $data['vrm']=$this->input->get('vrm');
+        }
 
         $data['invoice'] = $this->invocies->invoice_details($tid, $this->limited);
         if ($data['invoice']) $data['products'] = $this->invocies->invoice_products($tid);
@@ -1199,9 +1203,6 @@ foreach ($lista as $key => $value) {
         } else {
             $pdf->Output('Invoice_#' . $tid . '.pdf', 'I');
         }
-
-
-
 
     }
     public function printinvoice2()
