@@ -418,7 +418,7 @@ if($vrm!=0){
     
     if($producto_internet!=null){
         
-        if($producto_internet['tax_rate']!=0){
+        if($producto_internet['taxrate']!=0){
                 $iva+=round(($producto_internet['product_price']*$producto_internet['taxrate'])/100);
         }    
         $total+=$producto_internet['product_price'];
@@ -445,7 +445,7 @@ if($vrm!=0){
         if($producto_televison!=null){
 
 
-            if($producto_televison['tax_rate']!=0){
+            if($producto_televison['taxrate']!=0){
                 $iva+=round(($producto_televison['product_price']*$producto_televison['taxrate'])/100);
             }
 
@@ -453,7 +453,7 @@ if($vrm!=0){
             if($puntos!=0 && $puntos!=null){
                 $punto=$this->db->query('SELECT * FROM products WHERE pid=158')->result_array();
                 $punto=$punto[0];
-                if($punto['tax_rate']!=0){
+                if($punto['taxrate']!=0){
                     $iva+=round(($punto['product_price']*$punto['taxrate'])/100);
                 }
 
