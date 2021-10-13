@@ -140,9 +140,9 @@ class Customers_model extends CI_Model
 	public function invoice_details($custid)
     {
 
-        $this->db->select('invoices.*,customers.*,customers.id AS cid');
+        $this->db->select('invoices.*,customers.*');
         $this->db->from('invoices');
-        $this->db->where('invoices.tid', $custid);        
+        $this->db->where('invoices.csd', $custid);        
         $this->db->join('customers', 'invoices.csd = customers.id', 'left');
         
         $query = $this->db->get();

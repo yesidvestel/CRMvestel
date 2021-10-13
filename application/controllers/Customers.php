@@ -1302,6 +1302,12 @@ class Customers extends CI_Controller
 		$data['due'] = $this->customers->due_details($custid);
 		$this->load->model('accounts_model');
 		$data['acclist'] = $this->accounts_model->accountslist();
+    if(isset($_GET['fac_pag'])){
+            $x=$this->db->query("select transactions.id as id,resivos_guardados from transactions inner join invoices on invoices.tid=transactions.tid where transactions.payerid=".$data['invoice']['csd']." order by id desc")->result_array();
+            $array=json_decode($x[0]['resivos_guardados']);        
+            $data['ultimo_resivo']=$array[count($array)-1]->file_name;
+    }
+        
         $this->load->view('fixed/header', $head);
         $this->load->view('customers/invoices', $data);
         $this->load->view('fixed/footer');

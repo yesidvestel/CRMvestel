@@ -257,7 +257,7 @@
 ?>
 <script type="text/javascript">
     var tb;
-    var fac_pagadas="<?= (isset($_GET['fac_pag'])) ? $_GET['fac_pag'] : '' ?>";
+    var fac_pagadas="<?= (isset($ultimo_resivo)) ? $ultimo_resivo : '' ?>";
     var id_customer="<?=$_GET['id']?>";
     $(document).ready(function () {
         $("#div_reconexion_cortados").hide();
@@ -281,7 +281,7 @@
         });
     
         if(fac_pagadas!=""){
-            var link="<a href='"+baseurl+"invoices/printinvoice?multiple=si&id="+fac_pagadas+"' class='btn btn-info btn-lg' target='_blank'><span class='icon-file-text2' aria-hidden='true'></span>Ver PDF Facturas Pagadas</a>";
+            var link="<a href='"+baseurl+"invoices/printinvoice2?file_name="+fac_pagadas+"' class='btn btn-info btn-lg' target='_blank'><span class='icon-file-text2' aria-hidden='true'></span>Ver PDF Facturas Pagadas</a>";
             $("#notify .message").html("<strong>" + "Success" + "</strong>: " + " "+link);
             $("#notify").removeClass("alert-danger").addClass("alert-success").fadeIn();
             $("html, body").scrollTop($("body").offset().top);
