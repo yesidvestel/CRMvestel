@@ -395,10 +395,11 @@
             }
 /* codigo pagos adelantados*/
 if($vrm!=0){
+
     $iva=0;
     $total=0;
     //esto es para el calculo de facturas sin crear al hacer pagos adelantados;
-    $ultima_factura=$this->customers->servicios_detail($factura['csd']);
+    $ultima_factura=$this->customers->servicios_detail($invoice['csd']);
     if(isset($ultima_factura['tid'])){
         $var_factura=$this->db->get_where("invoices",array("tid"=>$ultima_factura['tid']))->row();
     if($ultima_factura['combo']!="no" && $ultima_factura['combo']!="" && $ultima_factura['combo']!="-"){
