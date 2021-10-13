@@ -771,6 +771,7 @@ class Customers_model extends CI_Model
 	function supor_table($id)
     {
         $this->_sup_datatables_query($id);
+        $this->db->order_by("codigo","DESC");
         if ($_POST['length'] != -1)
             $this->db->limit($_POST['length'], $_POST['start']);
         $query = $this->db->get();
