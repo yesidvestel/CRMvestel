@@ -1112,7 +1112,25 @@ $this->load->model('customers_model', 'customers');
         $this->load->view('fixed/footer');
 
     }
+    public function ver_estado_de_cuenta_user(){
+        $this->load->model('accounts_model');
+        $data['acclist'] = $this->accounts_model->accountslist();
+        $csd = intval($this->input->get('id'));
+        $data['id'] = $csd;
+        $head['title'] = "Estado Cuenta Usuario $csd";
+        $data['invoice'] = $this->invocies->invoice_details($csd, $this->limited);
+        $data['attach'] = $this->invocies->attach($csd);
+        $data['paquete'] = $this->invocies->paquetes();
+        if ($data['invoice']) $data['products'] = $this->invocies->invoice_sin_pagar($csd);//
+        if ($data['invoice']) $data['activity'] = $this->invocies->invoice_transactions($csd);
+        $data['customer']=$this->db->get_where("customers",array("id"=>$csd))->row();
+        $data['employee'] = $this->invocies->employee($data['invoice']['eid']);
 
+        $head['usernm'] = $this->aauth->get_user()->username;
+        $this->load->view('fixed/header', $head);
+        $this->load->view('invoices/estado_cuenta_user', $data);
+        $this->load->view('fixed/footer');
+    }
 
     public function printinvoice()
     {
