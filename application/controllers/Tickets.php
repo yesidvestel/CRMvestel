@@ -715,7 +715,7 @@ if($ya_agrego_equipos==false){
 		$stdate = $stdate2;
 		$tdate = '';
 		if($ciudad==YOPAL || $ciudad==Yopal){
-		$employee = 32;
+		$employee = 65;
 		}if($ciudad==Monterrey){
 			$employee = 44;
 		}if($ciudad==Villanueva){
