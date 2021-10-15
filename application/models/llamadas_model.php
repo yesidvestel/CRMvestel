@@ -318,6 +318,9 @@ class llamadas_model extends CI_Model
 		if($_GET['tecnico']!='' && $_GET['tecnico']!='0' && $_GET['tecnico']!='undefined'){
          $this->db->where('responsable=', $_GET['tecnico']);   
         }
+		if($_GET['tipo']!='' && $_GET['tipo']!='0' && $_GET['tipo']!='undefined'){
+         $this->db->where('tllamada=', $_GET['tipo']);   
+        }
         if($_GET['filtro_fecha']!='' && $_GET['filtro_fecha']!='undefined'){
             
             $fecha_incial= new DateTime($_GET['sdate']);

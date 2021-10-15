@@ -31,6 +31,22 @@
                                     </select>
                                 </div>
                             </div>
+							<div class="form-group row">
+                                <label class="col-sm-2 col-form-label"
+                                       for="pay_cat">Tipo de atencion</label>
+
+                                <div class="col-sm-6">
+                                    <select class="form-control required" name="tllamada" id="tipo">
+										<option value="">seleccione</option>
+										<option value="Presencial">Presencial</option>
+										<option value="whatsapp">Por whatsapp</option>
+										<option value="Para Venta">Para Venta</option>
+										<option value="Control de Calidad">Control de Calidad</option>
+										<option value="Para Recuperacion">Para Recuperacion</option>
+										<option value="Recibida">Llamada Recibida</option>
+								   </select>
+                                </div>
+                            </div>
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label"
                                        for="pay_cat">Fechas</label>
@@ -160,14 +176,15 @@
     });
 	function filtrar(){
         var tecnico=$("#tecnicos2 option:selected").val();
+		var tipo=$("#tipo option:selected").val();
         var opcion_seleccionada=$("#fechas option:selected").val();
         var edate=$("#edate").val();
         var sdate=$("#sdate").val();
-        if(tecnico=="" && opcion_seleccionada==""){
+        if(tecnico=="" && tipo=="" && opcion_seleccionada==""){
             table.ajax.url( baseurl+'llamadas/inv_list' ).load();     
         }else{
             //var tec=$("#tecnicos2 option:selected").data("id");
-            table.ajax.url( baseurl+"llamadas/inv_list?tecnico="+tecnico+"&edate="+edate+"&sdate="+sdate+"&filtro_fecha="+opcion_seleccionada ).load();     
+            table.ajax.url( baseurl+"llamadas/inv_list?tecnico="+tecnico+"&tipo="+tipo+"&edate="+edate+"&sdate="+sdate+"&filtro_fecha="+opcion_seleccionada ).load();     
         }
        
 
