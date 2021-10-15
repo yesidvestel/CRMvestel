@@ -394,7 +394,7 @@
             $cantidad_total_a_restar-=$cantidad_total;
             }
 /* codigo pagos adelantados*/
-if($vrm!=0){
+if($vrm>0){
 
     $iva=0;
     $total=0;

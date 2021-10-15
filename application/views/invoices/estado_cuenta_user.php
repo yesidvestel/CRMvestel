@@ -64,7 +64,7 @@
                             <ul class="pb-1">'.Sede .': ' . $customer->ciudad . '</p>'; ?>
                             <ul class="px-0 list-unstyled">
                                 <li><?php echo $this->lang->line('Gross Amount') ?></li>
-                                <li class="lead text-bold-800"><?php echo amountFormat($invoice['total']) ?></li>
+                                <li class="lead text-bold-800" id="total1"><?php echo amountFormat($invoice['total']) ?></li>
                             </ul>
                         </div>
                     </div>
@@ -80,9 +80,9 @@
 
 
                                 <li class="text-bold-800"><a
-                                            href="<?php echo base_url('customers/view?id=' . $invoice['cid']) ?>"><strong
+                                            href="<?php echo base_url('customers/view?id=' . $customer->id) ?>"><strong
                                                 class="invoice_a"><?php echo ucwords($customer->name) .' '.ucwords($customer->unoapellido).'</strong></a></li><li>' .$customer->tipo_documento.': '. $customer->documento .  '</li><li>'.Celular .': ' . $customer->celular . '</li><li>'.$this->lang->line('Email') .': ' . $customer->email;
-                                    if ($invoice['taxid']) echo '</li><li>' . $this->lang->line('Tax') . ' ID: ' . $invoice['taxid']
+                                    
                                                 ?>
                                 </li>
                             </ul>
@@ -114,8 +114,10 @@
                                     </thead>
                                     <tbody>
                                     <?php $c = 1;
-                                    $sub_t = 0;
+                                    
                                     setlocale(LC_TIME, "spanish");
+                                    $sub_total=0;
+                                    $tax_total=0;
                                     foreach ($products as $row) {
                                         $sub_t += $row['total'];
                                         $servicios_asignados="";
@@ -124,7 +126,7 @@
                                                 } else{
                                                         if($row['estado_tv'] == "Cortado"){
                                                                 $servicios_asignados.=  "<b><i class='sts-Cortado'>".$row['television']." (cortado)</i></b>";
-                                                        }else if($invoice['estado_tv'] == "Suspendido"){
+                                                        }else if($row['estado_tv'] == "Suspendido"){
                                                                 $servicios_asignados.=  "<b><i class='sts-Suspendido'>".$row['television']." (suspendido)</i></b>";
                                                         }else{
                                                             $servicios_asignados.=  $row['television'];    
@@ -148,6 +150,15 @@
                                                     $servicios_asignados.=  ' mas '.$row['puntos'].' puntos adicionales';
                                                 }
                                                 $f1 = date(" F ",strtotime($row['invoicedate']));
+                                                $transacciones_factura=$this->db->query("select sum(credit-debit) as total_pagado from transactions where tid=".$row['tid']." and estado is null")->result_array();                                                
+                                                if($transacciones_factura[0]['total_pagado']>0){
+                                                        $porcentaje=($transacciones_factura[0]['total_pagado']*100)/$row['total'];
+                                                        $row['total']-=$transacciones_factura[0]['total_pagado'];
+                                                        $row['subtotal']=$row['subtotal']-(($row['subtotal']*$porcentaje)/100);
+                                                        $row['tax']=$row['tax']-(($row['tax']*$porcentaje)/100);    
+                                                }
+                                                $sub_total+=$row['subtotal'];
+                                                $tax_total+=$row['tax'];
                                         echo '<tr>
 <th scope="row">' . $c . '</th>
                             <td> <a href="'.base_url().'invoices/view?id='.$row['tid'].'">'.ucfirst(strftime("%B", strtotime($f1))).' CTA : ' . $row['tid'] . '</a></td>
@@ -182,48 +193,30 @@
                                         <tbody>
                                         <tr>
                                             <td><?php echo $this->lang->line('Sub Total') ?></td>
-                                            <td class="text-xs-right"> <?php echo amountFormat($sub_t) ?></td>
+                                            <td class="text-xs-right"> <?php echo amountFormat($sub_total) ?></td>
                                         </tr>
                                         <tr>
                                             <td><?php echo $this->lang->line('Tax') ?></td>
-                                            <td class="text-xs-right"><?php echo amountFormat($invoice['tax']) ?></td>
+                                            <td class="text-xs-right"><?php echo amountFormat($tax_total) ?></td>
                                         </tr>
                                         <tr>
                                             <td><?php echo $this->lang->line('') ?>Descuento</td>
-                                            <td class="text-xs-right"><?php echo amountFormat($invoice['discount']) ?></td>
+                                            <td class="text-xs-right"><?php echo amountFormat(0) ?></td>
                                         </tr>
                                         <tr>
                                             <td><?php echo $this->lang->line('Shipping') ?></td>
-                                            <td class="text-xs-right"><?php echo amountFormat($invoice['shipping']) ?></td>
+                                            <td class="text-xs-right"><?php echo amountFormat(0) ?></td>
                                         </tr>
                                         <tr>
                                             <td class="text-bold-800"><?php echo $this->lang->line('Total') ?></td>
-                                            <td class="text-bold-800 text-xs-right"> <?php echo amountFormat($invoice['total']) ?></td>
+                                            <td class="text-bold-800 text-xs-right"> <?php echo amountFormat($sub_total+$tax_total) ?></td>
                                         </tr>
-                                        <tr>
-                                            <td><?php echo $this->lang->line('Payment Made') ?></td>
-                                            <td class="pink text-xs-right">
-                                                (-) <?php echo ' <span id="paymade">' . amountFormat($invoice['pamnt']) ?></span></td>
-                                        </tr>
-                                        <tr class="bg-grey bg-lighten-4">
-                                            <td class="text-bold-800"><?php echo $this->lang->line('Balance Due') ?></td>
-                                            <td class="text-bold-800 text-xs-right"> <?php $myp = '';
-                                                $rming = $invoice['total'] - $invoice['pamnt'];
-                                                if ($rming < 0) {
-                                                    $rming = 0;
-
-                                                }
-                                                echo ' <span id="paydue">' . amountFormat($rming) . '</span></strong>'; ?></td>
-                                        </tr>
+                                        
+                                        
                                         </tbody>
                                     </table>
                                 </div>
-                                <div class="text-xs-center">
-                                    <p><?php echo $this->lang->line('Authorized person') ?></p>
-                                    <?php echo '<img src="' . FCPATH . 'userfiles/employee_sign/' . $employee['sign'] . '" alt="signature" class="height-100"/>
-                                    <h6>(' . $employee['name'] . ')</h6>
-                                    <p class="text-muted">' . user_role($employee['roleid']) . '</p>'; ?>
-                                </div>
+                                
                             </div>
                         </div>
                     </div>
@@ -360,7 +353,8 @@
 
 
 <script type="text/javascript">
-
+    var total="<?= amountFormat($sub_total+$tax_total) ?>";
+    $("#total1").text(total);
     
 
 </script>

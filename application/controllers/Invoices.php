@@ -1121,10 +1121,10 @@ $this->load->model('customers_model', 'customers');
         $data['invoice'] = $this->invocies->invoice_details($csd, $this->limited);
         $data['attach'] = $this->invocies->attach($csd);
         $data['paquete'] = $this->invocies->paquetes();
-        if ($data['invoice']) $data['products'] = $this->invocies->invoice_sin_pagar($csd);//
-        if ($data['invoice']) $data['activity'] = $this->invocies->invoice_transactions($csd);
+        $data['products'] = $this->invocies->invoice_sin_pagar($csd);//
+        $data['activity'] = $this->invocies->invoice_transactions($csd);
         $data['customer']=$this->db->get_where("customers",array("id"=>$csd))->row();
-        $data['employee'] = $this->invocies->employee($data['invoice']['eid']);
+        
 
         $head['usernm'] = $this->aauth->get_user()->username;
         $this->load->view('fixed/header', $head);
