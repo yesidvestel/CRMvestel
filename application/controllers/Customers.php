@@ -320,7 +320,12 @@ class Customers extends CI_Controller
         }else if($data['servicios']['estado_tv']=="Suspendido"){
             $data['servicios']['television']="<b><i class='sts-Suspendido'>Tv</i></b>";   
         }
-
+if($data['servicios']['estado']=="Inactivo"){
+    $customer1=$this->db->get_where("customers",array("id"=>$custid))->row();
+    if($customer1->usu_estado!="Inactivo" && $customer1->usu_estado!="0"  && $customer1->usu_estado!=""){
+        $data['servicios']['estado']=$customer1->usu_estado;
+    }
+}
         $head['title'] = 'View Customer';
         $this->load->view('fixed/header', $head);
         $this->load->view('customers/view', $data);
