@@ -40,10 +40,10 @@
                                     </button>
                                     <div class="dropdown-menu">
                                         <a class="dropdown-item"
-                                           href="<?php echo 'printinvoice?id=' . $invoice['tid']; ?>"><?php echo $this->lang->line('Print') ?></a>
+                                           href="<?php echo 'printinvoice?id=' . $customer->id; ?>"><?php echo $this->lang->line('Print') ?></a>
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item"
-                                           href="<?php echo 'printinvoice?id=' . $invoice['tid']; ?>&d=1"><?php echo $this->lang->line('PDF Download') ?></a>
+                                           href="<?php echo 'printinvoice?id=' . $customer->id; ?>&d=1"><?php echo $this->lang->line('PDF Download') ?></a>
 
                                     </div>
                                 </div>                               
@@ -64,7 +64,7 @@
                             <ul class="pb-1">'.Sede .': ' . $customer->ciudad . '</p>'; ?>
                             <ul class="px-0 list-unstyled">
                                 <li><?php echo $this->lang->line('Gross Amount') ?></li>
-                                <li class="lead text-bold-800" id="total1"><?php echo amountFormat($invoice['total']) ?></li>
+                                <li class="lead text-bold-800" id="total1"><?php echo amountFormat(0) ?></li>
                             </ul>
                         </div>
                     </div>
@@ -89,7 +89,7 @@
 
                         </div>
                         <div class="offset-md-3 col-md-3 col-sm-12 text-xs-center text-md-left">
-                            <?php echo '<p><span class="text-muted">'.$this->lang->line('Invoice Date').'  :</span> ' . dateformat($invoice['invoicedate']) . '</p> <p><span class="text-muted">'.$this->lang->line('Due Date').' :</span> ' . dateformat($invoice['invoiceduedate']) . '</p>  <p><span class="text-muted">'.$this->lang->line('Terms').' :</span> ' . $invoice['termtit'] . '</p>';
+                            <?php echo '<p><span class="text-muted">'.$this->lang->line('Invoice Date').'  :</span> ' . dateformat($products[0]['invoicedate']) . '</p> <p><span class="text-muted">'.$this->lang->line('Due Date').' :</span> ' . dateformat($products[count($products)-1]['invoiceduedate']) . '</p>';
                             ?>
                         </div>
                     </div>
@@ -228,14 +228,7 @@
 
                         <div class="row">
 
-                            <div class="col-md-7 col-sm-12">
-
-                                <h6><?php echo $this->lang->line('Terms & Condition') ?></h6>
-                                <p> <?php
-
-                                    echo '<strong>' . $invoice['termtit'] . '</strong><br>' . $invoice['terms'];
-                                    ?></p>
-                            </div>
+                    
 
                         </div>
 
@@ -245,95 +238,14 @@
                     <pre><?php echo $this->lang->line('Public Access URL') ?>: <?php
                         echo $link ?></pre>
 
-                    <div class="row">
-                        <table class="table table-striped">
-                            <thead>
-                            <tr>
-                                <th><?php echo $this->lang->line('Files') ?></th>
-
-
-                            </tr>
-                            </thead>
-                            <tbody id="activity">
-                            <?php foreach ($attach as $row) {
-
-                                echo '<tr><td><a data-url="' . base_url() . 'invoices/file_handling?op=delete&name=' . $row['col1'] . '&invoice=' . $invoice['tid'] . '" class="aj_delete"><i class="btn-danger btn-lg icon-trash-a"></i></a> <a class="n_item" href="' . base_url() . 'userfiles/attach/' . $row['col1'] . '"> ' . $row['col1'] . ' </a></td></tr>';
-                            } ?>
-
-                            </tbody>
-                        </table>
-                        <!-- The fileinput-button span is used to style the file input field as button -->
-                        <span class="btn btn-success fileinput-button">
-        <i class="glyphicon glyphicon-plus"></i>
-        <span>Select files...</span>
-                            <!-- The file input field used as target for the file upload widget -->
-        <input id="fileupload" type="file" name="files[]" multiple>
-    </span>
-                        <br>
-                        <pre>Allowed: gif, jpeg, png, docx, docs, txt, pdf, xls </pre>
-                        <br>
-                        <!-- The global progress bar -->
-                        <div id="progress" class="progress">
-                            <div class="progress-bar progress-bar-success"></div>
-                        </div>
-                        <!-- The container for the uploaded files -->
-                        <table id="files" class="files"></table>
-                        <br>
-                    </div>
+                   
                 </div>
             </section>
         </div>
     </div>
 </div>
 
-<script src="<?php echo base_url('assets/myjs/jquery.ui.widget.js') ?>"></script>
-<script src="<?php echo base_url('assets/myjs/jquery.fileupload.js') ?>"></script>
-<script>
-    /*jslint unparam: true */
-    /*global window, $ */
-    $(function () {
-        'use strict';
-        // Change this to the location of your server-side upload handler:
-        var url = '<?php echo base_url() ?>invoices/file_handling?id=<?php echo $invoice['tid'] ?>';
-        $('#fileupload').fileupload({
-            url: url,
-            dataType: 'json',
-            done: function (e, data) {
-                $.each(data.result.files, function (index, file) {
-                    $('#files').append('<tr><td><a data-url="<?php echo base_url() ?>invoices/file_handling?op=delete&name=' + file.name + '&invoice=<?php echo $invoice['tid'] ?>" class="aj_delete"><i class="btn-danger btn-sm icon-trash-a"></i> ' + file.name + ' </a></td></tr>');
 
-                });
-            },
-            progressall: function (e, data) {
-                var progress = parseInt(data.loaded / data.total * 100, 10);
-                $('#progress .progress-bar').css(
-                    'width',
-                    progress + '%'
-                );
-            }
-        }).prop('disabled', !$.support.fileInput)
-            .parent().addClass($.support.fileInput ? undefined : 'disabled');
-    });
-
-    $(document).on('click', ".aj_delete", function (e) {
-        e.preventDefault();
-
-        var aurl = $(this).attr('data-url');
-        var obj = $(this);
-
-        jQuery.ajax({
-
-            url: aurl,
-            type: 'GET',
-            dataType: 'json',
-            success: function (data) {
-                obj.closest('tr').remove();
-                obj.remove();
-            }
-        });
-
-    });
-</script>
 
 <!-- Modal HTML -->
 

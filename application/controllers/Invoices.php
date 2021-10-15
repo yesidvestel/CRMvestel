@@ -1118,11 +1118,8 @@ $this->load->model('customers_model', 'customers');
         $csd = intval($this->input->get('id'));
         $data['id'] = $csd;
         $head['title'] = "Estado Cuenta Usuario $csd";
-        $data['invoice'] = $this->invocies->invoice_details($csd, $this->limited);
-        $data['attach'] = $this->invocies->attach($csd);
-        $data['paquete'] = $this->invocies->paquetes();
-        $data['products'] = $this->invocies->invoice_sin_pagar($csd);//
-        $data['activity'] = $this->invocies->invoice_transactions($csd);
+
+        $data['products'] = $this->invocies->invoice_sin_pagar($csd);        
         $data['customer']=$this->db->get_where("customers",array("id"=>$csd))->row();
         
 

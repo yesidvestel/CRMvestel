@@ -72,7 +72,7 @@ class Invoices_model extends CI_Model
     }
     public function invoice_sin_pagar($id)
     {
-        return $this->db->query("select * from invoices where csd=".$id." and pamnt<total")->result_array();
+        return $this->db->query("select * from invoices where csd=".$id." and pamnt<total order by tid asc")->result_array();
     }
 	
     public function currencies()
