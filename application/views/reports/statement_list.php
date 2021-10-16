@@ -437,7 +437,8 @@
 			$horaA = $this->aauth->get_user()->hinicial;
 			$horas = date("g:i a",strtotime($horaA));
 			$horas2 = date("g:i a",strtotime($horaC));
-			$cajero = $this->aauth->get_user()->username;			
+			$user = $this->aauth->get_user()->id;
+			$cajero = $this->db->get_where('employee_profile', array('id' => $user))->row();
 		 ?>
 
 <article class="content">
@@ -467,7 +468,7 @@
 			 <p class="col-sm-6">Fecha: <?php echo $fecha->format("Y-m-d") ?></p>
 			 <p class="col-sm-6">Hora apertura: <?php echo $horas ?></p>
 			 <p class="col-sm-6">Hora cierre: <?php echo $horas2 ?></p>
-			 <p class="col-sm-6">Cajero: <?php echo $cajero ?></p>
+			 <p class="col-sm-6">Cajero: <?php echo $cajero->name ?></p>
             <hr class="col-sm-12">
             <?php if($datos_informe['trans_type']!="Expense"){ ?>
 			 <div class="col-sm-6">

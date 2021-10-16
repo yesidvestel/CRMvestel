@@ -745,7 +745,8 @@ $array_afiliaciones=array();
 			$horaA = $this->aauth->get_user()->hinicial;
 			$horas = date("g:i a",strtotime($horaA));
 			$horas2 = date("g:i a",strtotime($horaC));
-			$cajero = $this->aauth->get_user()->username;
+			$user = $this->aauth->get_user()->id;
+			$cajero = $this->db->get_where('employee_profile', array('id' => $user))->row();
 
 ?>
 <style type="text/css">
@@ -767,7 +768,7 @@ $array_afiliaciones=array();
 <p style='margin-top: 0;margin-bottom: 1rem;display: block;margin-block-start: 1em;margin-block-end: 1em;margin-inline-start: 0px;margin-inline-end: 0px;'>fecha : <?=$fecha2->format('Y-m-d')?></p>
 <p style='margin-top: 0;margin-bottom: 1rem;display: block;margin-block-start: 1em;margin-block-end: 1em;margin-inline-start: 0px;margin-inline-end: 0px;'>Hora Apertura : <?=$horas ?></p>
 <p style='margin-top: 0;margin-bottom: 1rem;display: block;margin-block-start: 1em;margin-block-end: 1em;margin-inline-start: 0px;margin-inline-end: 0px;'>Hora Cierre : <?= $horas2 ?></p>
-<p style='margin-top: 0;margin-bottom: 1rem;display: block;margin-block-start: 1em;margin-block-end: 1em;margin-inline-start: 0px;margin-inline-end: 0px;'>Cajero : <?=$cajero ?></p>
+<p style='margin-top: 0;margin-bottom: 1rem;display: block;margin-block-start: 1em;margin-block-end: 1em;margin-inline-start: 0px;margin-inline-end: 0px;'>Cajero : <?=$cajero->name ?></p>
 <hr style='margin-top: 1rem;margin-bottom: 1rem;border: 0;border-top: 1px solid rgba(0, 0, 0, 0.1);'>
 <table>
 
