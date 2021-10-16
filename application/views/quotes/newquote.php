@@ -94,7 +94,7 @@
 									<div class="col-sm-6">
 										<label for="invociedate" class="caption">Factura mes</label>
 										<div class="input-group">
-										<select name="factura" id="tecnicos" class="form-control mb-1">
+										<select name="factura" class="form-control mb-1">
 												<option value='null'>-</option>
 												<?php
 											

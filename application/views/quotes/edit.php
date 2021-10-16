@@ -93,7 +93,21 @@
 									<div class="col-sm-6">
 										<label for="invociedate" class="caption">Factura mes</label>
 										<div class="input-group">
-											<input name="factura" value="<?php echo $thread_info['id_factura'] ?>" class="form-control mb-1"></input>
+											
+											<select name="factura" class="form-control mb-1">
+												<option value='<?php echo $thread_info['id_factura'] ?>'>>><?php echo $thread_info['id_factura'] ?></option>
+												<?php
+											
+													foreach ($facturalist as $row) {
+														$cid = $row['id'];
+														$title = $row['tid'];
+														setlocale(LC_TIME, "spanish");
+														$mes = date(" F ",strtotime($row['invoicedate']));
+														
+														echo "<option value='$title'>$title".' '. strftime("%B del %Y", strtotime($mes))." </option>";
+													}
+													?>
+											</select>
 										</div>
                                         </div>
                                     </div>

@@ -67,6 +67,7 @@ class Quote extends CI_Controller
 		$this->load->model('invoices_model', 'invocies');
         $thread_id = intval($this->input->get('id'));
 		$ticket = $this->db->get_where('tickets', array('idt' => $thread_id))->row();
+		$custid = $ticket->csd;
 		$codigo = $ticket->codigo;
         $data['id'] = $tid;
         $data['title'] = "Quote $tid";
@@ -74,7 +75,7 @@ class Quote extends CI_Controller
 		$data['thread_agen'] = $this->ticket->thread_agen($codigo);
 		$data['paquete'] = $this->invocies->paquetes();
         $data['thread_list'] = $this->ticket->thread_list($thread_id);
-		$data['facturalist'] = $this->ticket->factura_list($thread_id);
+		$data['facturalist'] = $this->ticket->factura_list($custid);
         $head['title'] = "Edit Quote #$tid";
         $head['usernm'] = $this->aauth->get_user()->username;
         $data['warehouse'] = $this->quote->warehouses();
