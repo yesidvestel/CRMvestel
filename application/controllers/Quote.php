@@ -67,7 +67,7 @@ class Quote extends CI_Controller
 		$this->load->model('invoices_model', 'invocies');
         $thread_id = intval($this->input->get('id'));
 		$ticket = $this->db->get_where('tickets', array('idt' => $thread_id))->row();
-		$custid = $ticket->csd;
+		$custid = $ticket->cid;
 		$codigo = $ticket->codigo;
         $data['id'] = $tid;
         $data['title'] = "Quote $tid";
