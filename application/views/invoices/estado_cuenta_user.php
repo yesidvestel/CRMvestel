@@ -223,16 +223,56 @@
 
                     <!-- Invoice Footer -->
 
-                    <div id="invoice-footer">
-                       
+                    <!-- Invoice Footer -->
+
+                    <div id="invoice-footer"><p class="lead">Ultima Transaccion Realizada:</p>
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th><?php echo $this->lang->line('Date') ?></th>
+                                <th><?php echo $this->lang->line('Method') ?></th>
+                                <th><?php echo $this->lang->line('Amount') ?></th>
+                                <th><?php echo $this->lang->line('Note') ?></th>
+
+
+                            </tr>
+                            </thead>
+                            <tbody id="activity">
+                            <?php foreach ($transacciones as $row) {
+                                if($row['estado']=="Anulada" ){
+                                    $row['note']="<span style='color:red;'>Transaccion Anulada</span>";
+                                }else if($this->aauth->get_user()->roleid>=4){
+                                    $row['note'].=", <a style='color:blue;' href='".base_url()."transactions/index?id_tr=".$row['id']."'>Ir a Anular<a/>";
+                                }
+                                if($row['type']=="Expense"){
+                                    $row['credit']="-".$row['debit'];
+                                }
+                                echo '<tr>
+                            <td>' . $row['date'] . '</td>
+                            <td>' . $this->lang->line($row['method']) . '</td>
+                            <td>' . amountFormat($row['credit']) . '</td>
+                            <td>' . $row['note'] . '</td>
+                        </tr>';
+                            } ?>
+
+                            </tbody>
+                        </table>
 
                         <div class="row">
 
-                    
+                            <div class="col-md-7 col-sm-12">
+
+                                <h6><?php echo $this->lang->line('Terms & Condition') ?></h6>
+                                <p> <?php
+
+                                    echo '<strong>' . $invoice['termtit'] . '</strong><br>' . $invoice['terms'];
+                                    ?></p>
+                            </div>
 
                         </div>
 
                     </div>
+                    <!--/ Invoice Footer -->
                     <!--/ Invoice Footer -->
                     <hr>
                     <pre><?php echo $this->lang->line('Public Access URL') ?>: <?php

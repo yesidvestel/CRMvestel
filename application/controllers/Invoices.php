@@ -1121,7 +1121,7 @@ $this->load->model('customers_model', 'customers');
 
         $data['products'] = $this->invocies->invoice_sin_pagar($csd);        
         $data['customer']=$this->db->get_where("customers",array("id"=>$csd))->row();
-        
+        $data['transacciones'] = $this->invocies->ultima_transaccion_realizada($csd);        
 
         $head['usernm'] = $this->aauth->get_user()->username;
         $this->load->view('fixed/header', $head);

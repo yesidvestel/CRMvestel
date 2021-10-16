@@ -74,7 +74,9 @@ class Invoices_model extends CI_Model
     {
         return $this->db->query("select * from invoices where csd=".$id." and pamnt<total order by tid asc")->result_array();
     }
-	
+	public function ultima_transaccion_realizada($id){
+        return $this->db->query("select * from transactions where estado is null and payerid=".$id." order by id desc limit 1")->result_array();
+    }
     public function currencies()
     {
 
