@@ -1001,6 +1001,19 @@ if($ya_agrego_equipos==false){
             $this->db->where('id', $ticket->cid);
             $this->db->update('customers');
         }
+		if($ticket->detalle=="Subir 70Mb"){
+            $profile="70MegasC";
+            $this->customers->edit_profile_mikrotik($customer->gid,$customer->name_s,$profile);
+            $this->db->set('combo', $profile);
+
+            $this->db->set('estado_combo', null);
+            $this->db->where('tid', $idfactura);
+            $this->db->update('invoices');
+
+            $this->db->set('perfil', $profile);
+            $this->db->where('id', $ticket->cid);
+            $this->db->update('customers');
+        }
 		if($ticket->detalle=="Subir 15 Mg" || $ticket->detalle=="Bajar 15 Mg"){          
              $profile="15Megas";
             if($customer->gid==2){//yopal
