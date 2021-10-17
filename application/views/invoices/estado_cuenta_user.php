@@ -181,9 +181,20 @@
                         <div class="row">
                             <div class="col-md-7 col-sm-12 text-xs-center text-md-left">
 
-
+<?php $estado_de_user="Cancelado"; if(($sub_total+$tax_total)>0){
+    $estado_de_user="Debe";
+} ?>
                                 <div class="row">
-                                    
+                                    <div class="col-md-8"><p
+                                                class="lead"><?php echo $this->lang->line('Payment Status') ?>:
+                                            <u><strong
+                                                        id="pstatus"><?php echo $estado_de_user;  ?></strong></u>
+                                        </p>
+                                        
+
+                                        
+                                        
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-5 col-sm-12">
