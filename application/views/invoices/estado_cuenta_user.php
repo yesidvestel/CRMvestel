@@ -181,8 +181,12 @@
                         <div class="row">
                             <div class="col-md-7 col-sm-12 text-xs-center text-md-left">
 
-<?php $estado_de_user="Cancelado"; if(($sub_total+$tax_total)>0){
+<?php $estado_de_user="Cancelado"; 
+if(($sub_total+$tax_total)>0){
     $estado_de_user="Debe";
+}
+if($total_customer==0){
+    $estado_de_user="Cancelado";   
 } ?>
                                 <div class="row">
                                     <div class="col-md-8"><p

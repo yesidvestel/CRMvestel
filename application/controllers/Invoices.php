@@ -1114,12 +1114,21 @@ $this->load->model('customers_model', 'customers');
     }
     public function ver_estado_de_cuenta_user(){
         $this->load->model('accounts_model');
+        $this->load->model('customers_model',"customers");
         $data['acclist'] = $this->accounts_model->accountslist();
         $csd = intval($this->input->get('id'));
         $data['id'] = $csd;
         $head['title'] = "Estado Cuenta Usuario $csd";
+        $data['due'] = $this->customers->due_details($csd);
+        $total_customer=$data['due']['total']-$data['due']['pamnt'];
+        if($total_customer>0){
+            $data['products'] = $this->invocies->invoice_sin_pagar($csd);        
+        }else if($total_customer==0){
+            $data['products'] = $this->invocies->ultima_factura($csd);        
+        }else{
 
-        $data['products'] = $this->invocies->invoice_sin_pagar($csd);        
+        }
+        $data['total_customer']=$total_customer;
         $data['customer']=$this->db->get_where("customers",array("id"=>$csd))->row();
         $data['transacciones'] = $this->invocies->ultima_transaccion_realizada($csd);        
 
