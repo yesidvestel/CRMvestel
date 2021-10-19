@@ -119,6 +119,7 @@
                                     $sub_total=0;
                                     $tax_total=0;
                                     foreach ($products as $row) {
+
                                         $sub_t += $row['total'];
                                         $servicios_asignados="";
                                         if ($row['television'] == no ){
@@ -187,6 +188,9 @@ if(($sub_total+$tax_total)>0){
 }
 if($total_customer==0){
     $estado_de_user="Cancelado";   
+}else if($total_customer<0){
+    $estado_de_user="Pago Adelantado";
+    $sub_total=$total_customer;
 } ?>
                                 <div class="row">
                                     <div class="col-md-8"><p
@@ -322,6 +326,6 @@ if($total_customer==0){
 <script type="text/javascript">
     var total="<?= amountFormat($sub_total+$tax_total) ?>";
     $("#total1").text(total);
-    
+    <?php if($total_customer<0){echo '$("#total1").text("'.amountFormat($total_customer).'");';} ?>
 
 </script>

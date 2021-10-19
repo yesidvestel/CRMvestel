@@ -1121,16 +1121,19 @@ $this->load->model('customers_model', 'customers');
         $head['title'] = "Estado Cuenta Usuario $csd";
         $data['due'] = $this->customers->due_details($csd);
         $total_customer=$data['due']['total']-$data['due']['pamnt'];
+        $data['customer']=$this->db->get_where("customers",array("id"=>$csd))->row();
+        $data['transacciones'] = $this->invocies->ultima_transaccion_realizada($csd);
         if($total_customer>0){
             $data['products'] = $this->invocies->invoice_sin_pagar($csd);        
         }else if($total_customer==0){
             $data['products'] = $this->invocies->ultima_factura($csd);        
         }else{
+            $informacion = $this->invocies->pagadas_adelantadas($csd);        
+            $data['products']=array("0"=>$informacion['factura_saldo_adelantado']);
 
         }
         $data['total_customer']=$total_customer;
-        $data['customer']=$this->db->get_where("customers",array("id"=>$csd))->row();
-        $data['transacciones'] = $this->invocies->ultima_transaccion_realizada($csd);        
+               
 
         $head['usernm'] = $this->aauth->get_user()->username;
         $this->load->view('fixed/header', $head);
