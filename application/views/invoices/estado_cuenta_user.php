@@ -215,6 +215,7 @@ if($total_customer==0){
 }else if($total_customer<0){
     $estado_de_user="Pago Adelantado";
     $sub_total=$total_customer;
+    $tax_total=0;
 } ?>
                                 <div class="row">
                                     <div class="col-md-8"><p
