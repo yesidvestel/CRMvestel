@@ -100,7 +100,7 @@ class Invoices_model extends CI_Model
     public function calculo_de_facturas_adelantadas($vrm,$csd){
         /* codigo pagos adelantados*/ 
 if($vrm>0){
-
+setlocale(LC_TIME, "spanish");
     $iva=0;
     $total=0;
     //esto es para el calculo de facturas sin crear al hacer pagos adelantados;

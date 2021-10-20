@@ -151,13 +151,20 @@
                                                     $servicios_asignados.=  ' mas '.$row['puntos'].' puntos adicionales';
                                                 }
                                                 $f1 = date(" F ",strtotime($row['invoicedate']));
-                                                $transacciones_factura=$this->db->query("select sum(credit-debit) as total_pagado from transactions where tid=".$row['tid']." and estado is null")->result_array();                                                
-                                                if($transacciones_factura[0]['total_pagado']>0){
-                                                        $porcentaje=($transacciones_factura[0]['total_pagado']*100)/$row['total'];
-                                                        $row['total']-=$transacciones_factura[0]['total_pagado'];
-                                                        $row['subtotal']=$row['subtotal']-(($row['subtotal']*$porcentaje)/100);
-                                                        $row['tax']=$row['tax']-(($row['tax']*$porcentaje)/100);    
+                                                $transacciones_factura=array();
+                                                if($total_customer<0){                                                    
+                                                    $transacciones_factura=$this->db->query("select sum(credit-debit) as total_pagado from transactions where tid=".$row['tid']." and estado is null and id!=".$tr_saldo_adelantado['id'])->result_array();                                                    
+                                                }else{
+                                                    $transacciones_factura=$this->db->query("select sum(credit-debit) as total_pagado from transactions where tid=".$row['tid']." and estado is null")->result_array();                                                                                                        
                                                 }
+                                                
+                                                if(isset($transacciones_factura[0]['total_pagado']) && $transacciones_factura[0]['total_pagado']>0){
+                                                            $porcentaje=($transacciones_factura[0]['total_pagado']*100)/$row['total'];
+                                                            $row['total']-=$transacciones_factura[0]['total_pagado'];
+                                                            $row['subtotal']=$row['subtotal']-(($row['subtotal']*$porcentaje)/100);
+                                                            $row['tax']=$row['tax']-(($row['tax']*$porcentaje)/100);    
+                                                }
+                                                
                                                 $sub_total+=$row['subtotal'];
                                                 $tax_total+=$row['tax'];
                                         echo '<tr>
@@ -172,7 +179,24 @@
 
                                         
                                         $c++;
-                                    } ?>
+                                    } 
+
+                                    if(isset($facturas_adelantadas)){
+                                        foreach ($facturas_adelantadas as $key => $value) {
+                                             echo '<tr>
+<th scope="row">' . $c . '</th>
+                            <td> '.ucfirst($value['mes']).'</td>
+                           <td><code></code></td>
+                            <td>' . amountFormat($value['valor_a_colocar']) . '</td>                             
+                            <td>' . amountFormat(0) . '</td>
+                            <td>' . amountFormat(0) . '</td>
+                            <td>' . amountFormat($value['valor_a_colocar']) . '</td>
+                        </tr>';
+                        $c++;
+                                        }
+                                    }
+
+                                    ?>
 
                                     </tbody>
                                 </table>

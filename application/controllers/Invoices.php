@@ -1130,6 +1130,8 @@ $this->load->model('customers_model', 'customers');
         }else{
             $informacion = $this->invocies->pagadas_adelantadas($csd);        
             $data['products']=array("0"=>$informacion['factura_saldo_adelantado']);
+            $data['tr_saldo_adelantado']=$informacion['tr_saldo_adelantado'][0];
+            $data['facturas_adelantadas']=$informacion['facturas_adelantadas'];
 
         }
         $data['total_customer']=$total_customer;
