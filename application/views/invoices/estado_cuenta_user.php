@@ -89,7 +89,7 @@
 
                         </div>
                         <div class="offset-md-3 col-md-3 col-sm-12 text-xs-center text-md-left">
-                            <?php echo '<p><span class="text-muted">'.$this->lang->line('Invoice Date').'  :</span> ' . dateformat($products[0]['invoicedate']) . '</p> <p><span class="text-muted">'.$this->lang->line('Due Date').' :</span> ' . dateformat($products[count($products)-1]['invoiceduedate']) . '</p>';
+                            <?php echo '<p><span class="text-muted">'.$this->lang->line('Invoice Date').'  :</span> ' . dateformat($products[0]['invoicedate']) . '</p> <p><span class="text-muted">'.$this->lang->line('Due Date').' :</span> ' . dateformat((isset($facturas_adelantadas))? $facturas_adelantadas[count($facturas_adelantadas)-1]['fecha_final'] : $products[count($products)-1]['invoiceduedate']) . '</p>';
                             ?>
                         </div>
                     </div>

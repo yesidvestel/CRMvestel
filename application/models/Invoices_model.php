@@ -184,8 +184,9 @@ setlocale(LC_TIME, "spanish");
 
 
         $fecha_=date("d-m-Y",strtotime($fecha_."+ 1 month"));
-        $f1 = date(" F ",strtotime($fecha_));
-        $retorno[]=array("mes"=> strftime("%B", strtotime($f1)),"valor_a_colocar"=>$valor_a_colocar);        
+        $fecha_2=date("t-m-Y",strtotime($fecha_));
+        $f1 = date(" F ",strtotime($fecha_));        
+        $retorno[]=array("mes"=> strftime("%B", strtotime($f1)),"valor_a_colocar"=>$valor_a_colocar,"fecha_final"=>$fecha_2);        
     }
     return $retorno;
 
