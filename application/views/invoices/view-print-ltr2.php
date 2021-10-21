@@ -329,7 +329,7 @@ if($total_customer==0){
         <tr>
 			<td><?php echo $this->lang->line('Paid Amount')?></td>
 
-            <td><?php echo amountExchange($cantidad_total_a_restar); ?></td>
+            <td><?php echo amountExchange(0); ?></td>
 		</tr><tr>
             <td><?php echo $this->lang->line('Balance Due') ?>:</td>
 
@@ -342,7 +342,7 @@ if($total_customer==0){
 	$user = $this->aauth->get_user()->username;
 	$perfil = $this->aauth->get_user()->roleid;
 	$rol = user_role($perfil);
-    echo amountExchange(0);
+    echo amountExchange($sub_total+$tax_total);
     echo '</strong></td>
 		</tr>
 		</table><br>
