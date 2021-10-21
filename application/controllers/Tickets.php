@@ -196,6 +196,7 @@ class Tickets Extends CI_Controller
         $this->load->view('fixed/header', $head);
 
         if ($this->input->post('content')) {
+            set_time_limit(200000);
 			$psolucion = $this->input->post('solucion');
 			$message2 = $this->input->post('content');
             $message = $psolucion.'/ '.$message2;
