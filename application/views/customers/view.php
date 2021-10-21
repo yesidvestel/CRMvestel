@@ -35,6 +35,10 @@
 {
  background-color: #24A9AB;
 }
+.st-Compromiso
+{
+ background-color: #EB8D25;
+}
 </style>
 <div class="app-content content container-fluid">
     <div class="content-wrapper">
