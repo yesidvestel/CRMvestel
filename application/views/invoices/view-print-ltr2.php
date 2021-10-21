@@ -189,12 +189,11 @@
         <tbody>
         <tr>
             <td >
-				<?php echo '<strong>'.ucwords($invoice['name']) .' '.ucwords($invoice['unoapellido']) . '</strong><br>';
-                if ($invoice['company']) echo $invoice['company'] . '<br>';
-                 echo $invoice['tipo_documento'] .': '.$invoice['documento']
-					 .'<br>'. $this->lang->line('Email') . ' : ' . $invoice['email']
-					 .'<br>Abonado : ' . $invoice['abonado'].'<br>Factura : ' . $invoice['tid'];
-                if ($invoice['taxid']) echo '<br>' . $this->lang->line('Tax') . ' ID: ' . $invoice['taxid'];
+				<?php echo '<strong>'.ucwords($customer->name) .' '.ucwords($customer->unoapellido) . '</strong><br>';
+                if ($customer->company) echo $customer->company . '<br>';
+                 echo $customer->tipo_documento .': '.$customer->documento
+					 .'<br>'. $this->lang->line('Email') . ' : ' . $customer->email
+					 .'<br>Abonado : ' . $customer->abonado
                 ?>
 				
             </td>
@@ -202,13 +201,7 @@
             <td>
                 
             </td>
-        </tr><?php if ($invoice['name_s']) { ?>
-
-            <tr>
-
-                
-            </tr>
-        <?php } ?>
+        </tr>
         </tbody>
     </table>
     <br/>
@@ -227,98 +220,92 @@
             </td>
         </tr>
 
-        <?php
-            $cantidad_total_a_restar=0;
-            $cantidad_total=0;
-            $lista_a_excluir=array();
-			setlocale(LC_TIME, "spanish");
-			$f1 = date(" F ",strtotime($invoice['invoicedate']));
-            
-                
-                
-                     $transacciones = $this->db->query("select * from transactions where tid=".$invoice['tid']." and id<=".$transaccion->id." and estado is null order by id desc")->result_array();
-                     $transacciones2 = $this->db->query("select * from transactions where tid=".$invoice['tid']." and id>".$transaccion->id." and estado is null order by id desc")->result_array();
-                     $valores_a_restar=0;
+        <?php $c = 1;
+                                    
+                                    setlocale(LC_TIME, "spanish");
+                                    $sub_total=0;
+                                    $tax_total=0;
+                                    foreach ($products as $row) {
 
-                     foreach ($transacciones2 as $key => $value) {
-                         $valores_a_restar+=$value['credit'];
-                         $invoice['status']="partial";
-                     }//var_dump($valores_a_restar);
-                     $invoice['pamnt']-=$valores_a_restar;
+                                        $sub_t += $row['total'];
+                                        $servicios_asignados="";
+                                        if ($row['television'] == no ){
+                                                    $servicios_asignados.= '';
+                                                } else{
+                                                        if($row['estado_tv'] == "Cortado"){
+                                                                $servicios_asignados.=  "<b><i class='sts-Cortado'>".$row['television']." (cortado)</i></b>";
+                                                        }else if($row['estado_tv'] == "Suspendido"){
+                                                                $servicios_asignados.=  "<b><i class='sts-Suspendido'>".$row['television']." (suspendido)</i></b>";
+                                                        }else{
+                                                            $servicios_asignados.=  $row['television'];    
+                                                        }
+                                                    }
+                                            if ($row['combo'] == no ){
+                                                    $servicios_asignados.=  '';
+                                                } else{
 
-                        $valor=$invoice['total'];
-                        if(count($transacciones)!=0){                    
-                            $valor1=intval($transacciones[0]['credit']);
-                            if($valor1!=$invoice['total']){
-                                //$valor=$valor-$valor1;
-                                $valor=$valor1;
-                                $cantidad_total_a_restar+=$valor1;
-                            }else{
-                                $cantidad_total_a_restar+=$valor1;
-                            }
-                        }else{
-                            $cantidad_total_a_restar+=$valor;
+                                                     if($row['estado_combo'] == "Cortado"){
+                                                                $servicios_asignados.=  " mas <b><i class='sts-Cortado'>".$row['combo']." (cortado)</i></b>";
+                                                        }else if($row['estado_combo'] == "Suspendido"){
+                                                                $servicios_asignados.=  " mas <b><i class='sts-Suspendido'>".$row['combo']." (suspendido)</i></b>";
+                                                        }else{
+                                                            $servicios_asignados.=  ' mas '.$row['combo'];
+                                                        }
+                                                    }
+                                            if ($row['puntos'] == 0 ){
+                                                    $servicios_asignados.=  '';
+                                                } else{
+                                                    $servicios_asignados.=  ' mas '.$row['puntos'].' puntos adicionales';
+                                                }
+                                                $f1 = date(" F ",strtotime($row['invoicedate']));
+                                                $transacciones_factura=array();
+                                                if($total_customer<0){                                                    
+                                                    $transacciones_factura=$this->db->query("select sum(credit-debit) as total_pagado from transactions where tid=".$row['tid']." and estado is null and id!=".$tr_saldo_adelantado['id'])->result_array();                                                    
+                                                }else{
+                                                    $transacciones_factura=$this->db->query("select sum(credit-debit) as total_pagado from transactions where tid=".$row['tid']." and estado is null")->result_array();                                                                                                        
+                                                }
+                                                
+                                                if(isset($transacciones_factura[0]['total_pagado']) && $transacciones_factura[0]['total_pagado']>0){
+                                                            $porcentaje=($transacciones_factura[0]['total_pagado']*100)/$row['total'];
+                                                            $row['total']-=$transacciones_factura[0]['total_pagado'];
+                                                            $row['subtotal']=$row['subtotal']-(($row['subtotal']*$porcentaje)/100);
+                                                            $row['tax']=$row['tax']-(($row['tax']*$porcentaje)/100);    
+                                                }
+                                                
+                                                $sub_total+=$row['subtotal'];
+                                                $tax_total+=$row['tax'];
 
-                        }
-                        $valor_transacciones=0;
-                        //$transacciones = $this->db->query("select * from transactions where tid=".$invoice['tid']." and id>".$transaccion->id." and estado is null order by id desc")->result_array();
-                        foreach ($transacciones as $key => $tr) {
-                            $valor_transacciones+=$tr['credit'];
-                            $valor_transacciones-=$tr['debit'];
-                        }
-                        $valor_a_cubrir=$invoice['total']-$invoice['pamnt'];
-                        if($valor_transacciones>$invoice['total']){
-                                $cantidad_total+=$invoice['total']-$valor_transacciones;
-                              //  $cantidad_total=$invoice['total']-$invoice['pamnt'];
-                                //$cantidad_total_a_restar=$invoice['total']-$invoice['pamnt'];
-                        }else{
-                            $cantidad_total_a_restar+=$cantidad_total;        
-                        }
 
-                        //$cantidad_total=-35000;
-                        //var_dump($cantidad_total_a_restar);
-                        $x=$cantidad_total_a_restar;
-                        $cantidad_total_a_restar=20000;
+                                                echo '<tr class="item' . $flag . '"> 
+                                                            <td>' . ucfirst(strftime("%B", strtotime($f1))).' CTA : ' . $row['tid'] .'</td>';
+                                                echo '<td class="t_center">' . amountExchange($row['total']) . '</td>
+                                                            </tr>';                                        
+                                       
+                                    } 
 
-                    $porcentaje=($cantidad_total_a_restar*100)/$invoice['total'];
-                    $cantidad_total_a_restar=$x;
-                    var_dump($porcentaje);
-                    var_dump($cantidad_total_a_restar);
-                    $lista_items=$this->db->get_where("invoice_items",array('tid' => $invoice['tid']))->result();
+                                    if(isset($facturas_adelantadas)){
+                                        foreach ($facturas_adelantadas as $key => $value) {
+                                             echo '<tr class="item' . $flag . '"> 
+                                                            <td>' . ucfirst($value['mes']).' CTA : ' . $row['tid'] .'</td>';
+                                                echo '<td class="t_center">' . amountExchange($value['valor_a_colocar']) . '</td>
+                                                            </tr>'; 
+                                                                                
+                       
+                                        }
+                                    }
 
-                    foreach ($lista_items as $key => $value) {
-                        if($invoice['status']=="paid"){
-                            $valor_item=($porcentaje*$value->subtotal)/100;    
-                        }else{
-                            $valor_item=$value->subtotal;
-                            if(count($transacciones)>=2 && $invoice['status']=="partial"){
-                                //valor de lo que falta mas la transaccion realizada
-                                $valorx=($invoice['total']-$invoice['pamnt'])+$transacciones[0]['credit'];
-                                $porcentaje2=($valorx*100)/$invoice['total'];
-                                $valor_item=($porcentaje2*$value->subtotal)/100;    
-
-                            }
-                        }
-                        $cantidad_total+=$valor_item;
-                        echo '<tr class="item' . $flag . '"> 
-                                <td>'.$value->product.'</td>';
-                        echo '<td class="t_center">' . amountExchange( $valor_item) . '</td>
-                                </tr>';
-                               // $cantidad_total+=$value->subtotal;
-
-                    }
-                    //$cantidad_total_a_restar-=$cantidad_total;
-
-                
-           
-            
-          
-        
-
-  if ($invoice['shipping'] > 0) { $cols++;}
-
-        ?>
-
+                                    ?>
+<?php $estado_de_user="Cancelado"; 
+if(($sub_total+$tax_total)>0){
+    $estado_de_user="Debe";
+}
+if($total_customer==0){
+    $estado_de_user="Cancelado";   
+}else if($total_customer<0){
+    $estado_de_user="Pago Adelantado";
+    $sub_total=$total_customer;
+    $tax_total=0;
+} ?>
 
     </table>
     <br>
@@ -336,21 +323,9 @@
 
 
             <td>Cantidad Total:</td>
-            <td><?php echo amountExchange($cantidad_total); ?></td>
+            <td><?php echo amountExchange($sub_total+$tax_total); ?></td>
         </tr>
-        <?php 
-        if ($invoice['discount'] > 0) {
-            echo '<tr>
-
-
-            <td>' . $this->lang->line('Total Discount') . ':</td>
-
-            <td>' . amountExchange($invoice['discount2'], $invoice['multi2']) . '</td>
-        </tr>';
-
-        }
-		    
-        ?>
+        
         <tr>
 			<td><?php echo $this->lang->line('Paid Amount')?></td>
 
@@ -367,14 +342,14 @@
 	$user = $this->aauth->get_user()->username;
 	$perfil = $this->aauth->get_user()->roleid;
 	$rol = user_role($perfil);
-    echo amountExchange($rming, $invoice['multi2']);
+    echo amountExchange(0);
     echo '</strong></td>
 		</tr>
 		</table><br>
-		<strong>' . $this->lang->line('Status') . ': ' . $this->lang->line(ucwords($invoice['status'])).'</strong>
+		<strong>' . $this->lang->line('Status') . ':'.$estado_de_user.'</strong>
 		<div class="sign2">(' . $user . ')</div><div class="sign3">' . user_role($perfil) . '</div> <div class="terms"><hr><strong>' . $this->lang->line('Terms') . ':</strong>';
 
-    echo '<strong>' . $invoice['termtit'] . '</strong><br>' . $invoice['terms'];
+    //echo '<strong>' . $invoice['termtit'] . '</strong><br>' . $invoice['terms'];
     ?></div>
 </div>
 </body>

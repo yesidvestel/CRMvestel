@@ -78,7 +78,7 @@ class Invoices extends CI_Controller
         
         $caja1=$this->db->get_where('accounts',array('id' =>$_POST['pay_acc']))->row();
         //$customers = $this->db->get_where("customers", array("usu_estado"=>'Activo',"ciudad"=>$caja1->holder))->result_array();
-        $customers_list = $this->db->query("select * from customers where (usu_estado='Activo' or usu_estado='Compromiso') and ciudad ='".$caja1->holder."'")->result_array();
+        $customers_list = $this->db->query("select * from customers where (usu_estado='Activo' or usu_estado='Compromiso') and ciudad ='".$caja1->holder."' and id=2")->result_array();
         $ciudades= array();
         $sdate=$this->input->post("sdate");
         $date1= new DateTime($sdate);
@@ -1225,6 +1225,77 @@ foreach ($lista as $key => $value) {
         $array[]=$var_a;
         $this->db->update("invoices",array("resivos_guardados"=>json_encode($array)),array("tid"=>$value));
 }
+       
+        if ($this->input->get('d')) {
+
+            $pdf->Output('Invoice_#' . $tid . '.pdf', 'D');
+        } else {
+            $pdf->Output('Invoice_#' . $tid . '.pdf', 'I');
+        }
+
+    }
+     public function printinvoice_estado_user()
+    {
+
+        $id = $this->input->get('id');
+        
+        
+       
+        
+
+        
+        
+        $data['title'] = "Estado de cuemta usuario $id";
+        $data['vrm']=0;
+        if(!empty($this->input->get('vrm'))){
+                //$data['vrm']=$this->input->get('vrm');
+        }
+
+        $data['customer'] = $this->db->get_where("customers",array("id"=>$id))->row();
+        
+ //de estado view
+
+        $this->load->model('accounts_model');
+        $this->load->model('customers_model',"customers");
+        $data['acclist'] = $this->accounts_model->accountslist();
+        $csd = intval($this->input->get('id'));
+        $data['id'] = $csd;
+        $head['title'] = "Estado Cuenta Usuario $csd";
+        $data['due'] = $this->customers->due_details($csd);
+        $total_customer=$data['due']['total']-$data['due']['pamnt'];
+        $data['transacciones'] = $this->invocies->ultima_transaccion_realizada($csd);
+        if($total_customer>0){
+            $data['products'] = $this->invocies->invoice_sin_pagar($csd);        
+        }else if($total_customer==0){
+            $data['products'] = $this->invocies->ultima_factura($csd);        
+        }else{
+            $informacion = $this->invocies->pagadas_adelantadas($csd);        
+            $data['products']=array("0"=>$informacion['factura_saldo_adelantado']);
+            $data['tr_saldo_adelantado']=$informacion['tr_saldo_adelantado'][0];
+            $data['facturas_adelantadas']=$informacion['facturas_adelantadas'];
+
+        }
+        $data['total_customer']=$total_customer;
+               
+
+
+        //end de estado view
+       
+
+
+        ini_set('memory_limit', '64M');
+
+        $html = $this->load->view('invoices/view-print-'.LTR2, $data, true);
+        $html2 = $this->load->view('invoices/header-print-'.LTR, $data, true);
+
+        //PDF Rendering
+        $this->load->library('pdf_invoice');
+
+        $pdf = $this->pdf_invoice->load();
+        $pdf->SetHTMLHeader($html2);
+        $pdf->SetHTMLFooter('<div style="text-align: right;font-family: serif; font-size: 8pt; color: #5C5C5C; font-style: italic;margin-top:0pt;">{PAGENO}/{nbpg} #'.$tid.'</div>');
+
+        $pdf->WriteHTML($html);
        
         if ($this->input->get('d')) {
 
