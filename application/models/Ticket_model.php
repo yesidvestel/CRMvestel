@@ -139,7 +139,7 @@ class Ticket_model extends CI_Model
 
             $customer = $this->thread_info($thread_id);
 
-            $this->send_email($customer['email'], $customer['name'], '[Customer Ticket] #' . $thread_id, $message . $this->ticket()->other, $attachmenttrue = false, $attachment = '');
+            //$this->send_email($customer['email'], $customer['name'], '[Customer Ticket] #' . $thread_id, $message . $this->ticket()->other, $attachmenttrue = false, $attachment = '');
 
         }
         return $this->db->insert('tickets_th', $data);
