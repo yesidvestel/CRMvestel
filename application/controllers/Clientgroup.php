@@ -311,14 +311,18 @@ class Clientgroup extends CI_Controller
                        }
                         //esto es para los estados
             if($invoice->estado_tv=="Cortado"){
-				$var_excluir=true;
+				if($_GET['sel_servicios']=="TV" || $_GET['sel_servicios']=="Combo"){
+                    $var_excluir=true;    
+                }
                 if(strpos($_GET['estados_multiple'], "Cortado")!==false ){
                     $var_excluir=false;                    
                 }
                 $suscripcion_str="(Tv cortada".$puntosvar.")";   
             }else if($invoice->estado_tv=="Suspendido"){
                 $suscripcion_str="(Tv suspendida".$puntosvar.")";
-				$var_excluir=true;
+				if($_GET['sel_servicios']=="TV" || $_GET['sel_servicios']=="Combo"){
+                    $var_excluir=true;    
+                }
                 if(strpos($_GET['estados_multiple'], "Suspendido")!==false){
                     $var_excluir=false;                    
                 }				
@@ -340,14 +344,18 @@ class Clientgroup extends CI_Controller
                             if(!empty($var_e)){
                                 if($suscripcion_str!=""){
                                     if($invoice->estado_combo=="Cortado"){
-										$var_excluir=true;
+										if($_GET['sel_servicios']=="Internet" || $_GET['sel_servicios']=="Combo"){
+                                            $var_excluir=true;    
+                                        }
                                         if(strpos($_GET['estados_multiple'], "Cortado")!==false ){
                                             $var_excluir=false;                    
                                         }										
 									
                                         $suscripcion_str.="+"."(".$var_e." cortado)";   
                                     }else if($invoice->estado_combo=="Suspendido"){
-										$var_excluir=true;
+										if($_GET['sel_servicios']=="Internet" || $_GET['sel_servicios']=="Combo"){
+                                            $var_excluir=true;    
+                                        }
                                         if(strpos($_GET['estados_multiple'], "Suspendido")!==false){
                                             $var_excluir=false;                    
                                         }
@@ -358,13 +366,17 @@ class Clientgroup extends CI_Controller
                                     
                                 }else{
                                     if($invoice->estado_combo=="Cortado"){
-										$var_excluir=true;
+										if($_GET['sel_servicios']=="Internet" || $_GET['sel_servicios']=="Combo"){
+                                            $var_excluir=true;    
+                                        }
                                         if(strpos($_GET['estados_multiple'], "Cortado")!==false){
                                             $var_excluir=false;                    
                                         }  										
                                         $suscripcion_str="(".$var_e." cortado)";   
                                     }else if($invoice->estado_combo=="Suspendido"){
-										 $var_excluir=true;
+										 if($_GET['sel_servicios']=="Internet" || $_GET['sel_servicios']=="Combo"){
+                                            $var_excluir=true;    
+                                        }
                                         if(strpos($_GET['estados_multiple'], "Suspendido")!==false){
                                             $var_excluir=false;                    
                                         }
@@ -1023,14 +1035,19 @@ class Clientgroup extends CI_Controller
                        }
 //esto es para los estados
             if($invoice->estado_tv=="Cortado"){
-                $var_excluir=true;
+                
+                if($_GET['sel_servicios']=="TV" || $_GET['sel_servicios']=="Combo"){
+                    $var_excluir=true;    
+                }
                 if(strpos($_GET['estados_multiple'], "Cortado")!==false ){
                     $var_excluir=false;                    
                 }
                 $suscripcion_str="<b><i class='sts-Cortado'>Tv".$puntosvar."</i></b>";   
-            }else if($invoice->estado_tv=="Suspendido"){
+            }else if($invoice->estado_tv=="Suspendido"){                
                 $suscripcion_str="<b><i class='sts-Suspendido'>Tv".$puntosvar."</i></b>";   
-                $var_excluir=true;
+                if($_GET['sel_servicios']=="TV" || $_GET['sel_servicios']=="Combo"){
+                    $var_excluir=true;    
+                }
                 if(strpos($_GET['estados_multiple'], "Suspendido")!==false){
                     $var_excluir=false;                    
                 }
@@ -1050,14 +1067,18 @@ class Clientgroup extends CI_Controller
                             if(!empty($var_e)){
                                 if($suscripcion_str!=""){
                                     if($invoice->estado_combo=="Cortado"){
-                                        $var_excluir=true;
+                                        if($_GET['sel_servicios']=="Internet" || $_GET['sel_servicios']=="Combo"){
+                                            $var_excluir=true;    
+                                        }
                                         if(strpos($_GET['estados_multiple'], "Cortado")!==false ){
                                             $var_excluir=false;                    
                                         }
                                         
                                         $suscripcion_str.="+"."<b><i class='sts-Cortado'>".$var_e."</i></b>";   
                                     }else if($invoice->estado_combo=="Suspendido"){
-                                        $var_excluir=true;
+                                        if($_GET['sel_servicios']=="Internet" || $_GET['sel_servicios']=="Combo"){
+                                            $var_excluir=true;    
+                                        }
                                         if(strpos($_GET['estados_multiple'], "Suspendido")!==false){
                                             $var_excluir=false;                    
                                         }
@@ -1068,13 +1089,17 @@ class Clientgroup extends CI_Controller
                                     
                                 }else{
                                     if($invoice->estado_combo=="Cortado"){
-                                    $var_excluir=true;
+                                        if($_GET['sel_servicios']=="Internet" || $_GET['sel_servicios']=="Combo"){
+                                            $var_excluir=true;    
+                                        }
                                         if(strpos($_GET['estados_multiple'], "Cortado")!==false){
                                             $var_excluir=false;                    
                                         }               
                                         $suscripcion_str="<b><i class='sts-Cortado'>".$var_e."</i></b>";   
                                     }else if($invoice->estado_combo=="Suspendido"){
-                                         $var_excluir=true;
+                                        if($_GET['sel_servicios']=="Internet" || $_GET['sel_servicios']=="Combo"){
+                                            $var_excluir=true;    
+                                        }
                                         if(strpos($_GET['estados_multiple'], "Suspendido")!==false){
                                             $var_excluir=false;                    
                                         }
@@ -1666,14 +1691,18 @@ class Clientgroup extends CI_Controller
 						
 				//esto es para los estados
 							if($invoice->estado_tv=="Cortado"){
-								$var_excluir=true;
+								if($_GET['sel_servicios']=="TV" || $_GET['sel_servicios']=="Combo"){
+									$var_excluir=true;    
+								}
 								if(strpos($_GET['estados_multiple'], "Cortado")!==false ){
 									$var_excluir=false;                    
 								}
 								$suscripcion_str="<b><i class='sts-Cortado'>Tv".$puntosvar."</i></b>";   
 							}else if($invoice->estado_tv=="Suspendido"){
 								$suscripcion_str="<b><i class='sts-Suspendido'>Tv".$puntosvar."</i></b>";   
-								$var_excluir=true;
+								if($_GET['sel_servicios']=="TV" || $_GET['sel_servicios']=="Combo"){
+									$var_excluir=true;    
+								}
 								if(strpos($_GET['estados_multiple'], "Suspendido")!==false){
 									$var_excluir=false;                    
 								}
@@ -1694,14 +1723,18 @@ class Clientgroup extends CI_Controller
                             if(!empty($var_e)){
                                 if($suscripcion_str!=""){
                                     if($invoice->estado_combo=="Cortado"){
-                                        $var_excluir=true;
+                                        if($_GET['sel_servicios']=="Internet" || $_GET['sel_servicios']=="Combo"){
+                                            $var_excluir=true;    
+                                        }
                                         if(strpos($_GET['estados_multiple'], "Cortado")!==false ){
                                             $var_excluir=false;                    
                                         }
                                         
                                         $suscripcion_str.="+"."<b><i class='sts-Cortado'>".$var_e."</i></b>";   
                                     }else if($invoice->estado_combo=="Suspendido"){
-                                        $var_excluir=true;
+                                        if($_GET['sel_servicios']=="Internet" || $_GET['sel_servicios']=="Combo"){
+                                            $var_excluir=true;    
+                                        }
                                         if(strpos($_GET['estados_multiple'], "Suspendido")!==false){
                                             $var_excluir=false;                    
                                         }
@@ -1712,13 +1745,17 @@ class Clientgroup extends CI_Controller
                                     
                                 }else{
                                     if($invoice->estado_combo=="Cortado"){
-                                    $var_excluir=true;
+										if($_GET['sel_servicios']=="Internet" || $_GET['sel_servicios']=="Combo"){
+                                            $var_excluir=true;    
+                                        }
                                         if(strpos($_GET['estados_multiple'], "Cortado")!==false){
                                             $var_excluir=false;                    
                                         }               
                                         $suscripcion_str="<b><i class='sts-Cortado'>".$var_e."</i></b>";   
                                     }else if($invoice->estado_combo=="Suspendido"){
-                                         $var_excluir=true;
+                                        if($_GET['sel_servicios']=="Internet" || $_GET['sel_servicios']=="Combo"){
+                                            $var_excluir=true;    
+                                        }
                                         if(strpos($_GET['estados_multiple'], "Suspendido")!==false){
                                             $var_excluir=false;                    
                                         }
