@@ -326,6 +326,9 @@ class Customers_model extends CI_Model
             
                 if($fact_valida){
                     $servicios['tid']=$invoice->tid;
+                    $servicios['subtotal']=$invoice->subtotal;
+                    $servicios['total']=$invoice->total;
+                    $servicios['items']=$invoice->items;
                     //var_dump($invoice->ron);
                     $servicios['estado']=$invoice->ron;
                     if($invoice->ron=="Suspendido"){

@@ -2229,10 +2229,10 @@ if ($valido) {
             if($valido){
                 $bill_llegada=date("Y-m-d");
                 foreach ($ids_customers_corte as $key => $customer_id) {
-                    $listado_de_facturas=$this->db->from("invoices")->where("csd",$customer_id)->order_by("invoicedate,tid","DESC")->get()->result();
+                    $obtenido_de_servicio_details=$this->customers->servicios_detail($customer_id);
                     $factura=0;
-                        if(count($listado_de_facturas)!=0){
-                                $factura=$listado_de_facturas[0];
+                        if(isset($obtenido_de_servicio_details['tid']) && $obtenido_de_servicio_details['tid']!=0){
+                                $factura=$obtenido_de_servicio_details;
                                 $status="Resuelto";
                                 if($tiket_en_pendiente=="true" || $tiket_en_pendiente==true){
                                     $status="Pendiente";
@@ -2248,7 +2248,7 @@ if ($valido) {
                                     'section' => $description_corte,
                                     'fecha_final' => $bill_llegada,
                                     'id_invoice' => 'null',
-                                    'id_factura' => $factura->tid,          
+                                    'id_factura' => $factura['tid'],          
                                 );   
                                 if($tiket_en_pendiente=="true" || $tiket_en_pendiente==true){
                                     $this->db->insert('tickets', $data);
@@ -2261,35 +2261,35 @@ if ($valido) {
                         $customer = $this->db->get_where("customers",array("id"=>$customer_id))->row();
                         if($tipo_corte=="Corte Combo") {
                             $reconexion = '0';
-                            if ($factura->combo!='no' || $factura->combo!='' || $factura->combo!='-'){
+                            if ($factura['combo']!='no' || $factura['combo']!='' || $factura['combo']!='-'){
                                     $reconexion = '1';
                             }
                             
                             $producto2 = $this->db->get_where('products',array('product_name'=>'Reconexion Combo'))->row();
-                                $data2['tid']=$factura->tid;
+                                $data2['tid']=$factura['tid'];
                                 $data2['pid']=$producto2->pid;
                                 $data2['product']=$producto2->product_name;
                                 $data2['price']=$producto2->product_price;
                                 $data2['qty']=1;
                                 $data2['subtotal']=$producto2->product_price;
                                 //SELECT * FROM `invoice_items` where product like "%Reconexión Internet%"
-                                $inv_it=$this->db->from("invoice_items")->where("tid",$factura->tid)->like("product","Reconexion Combo","both")->get()->result();
+                                $inv_it=$this->db->from("invoice_items")->where("tid",$factura['tid'])->like("product","Reconexion Combo","both")->get()->result();
                                 if(count($inv_it)==0){
                                     $this->db->insert('tickets', $data);
                                     $this->db->insert('invoice_items',$data2);    
                                     //actualizar factura
                                 //$factura = $this->db->get_where('invoices',array('tid'=>$idfactura))->row();
-                                    $this->db->set('subtotal', $factura->subtotal+$producto2->product_price);
+                                    $this->db->set('subtotal', $factura['subtotal']+$producto2->product_price);
                                     $this->db->set('ron', 'Cortado');               
-                                    $this->db->set('total', $factura->total+$producto2->product_price);
-                                    $this->db->set('items', $factura->items+1);
+                                    $this->db->set('total', $factura['total']+$producto2->product_price);
+                                    $this->db->set('items', $factura['items']+1);
                                     $this->db->set('rec', $reconexion);
                                     /*$this->db->set('television', 'no');
                                     $this->db->set('combo', 'no');*/
                                      $this->db->set('estado_tv', 'Cortado');
                                     $this->db->set('estado_combo', 'Cortado');
 
-                                    $this->db->where('tid', $factura->tid);
+                                    $this->db->where('tid', $factura['tid']);
                                     $this->db->update('invoices');
                                 //actualizar estado usuario
                                     $this->db->set('usu_estado', 'Cortado');
@@ -2304,7 +2304,7 @@ if ($valido) {
                         }else if($tipo_corte=="Corte Internet"){
                             //$factura = $this->db->get_where('invoices',array('tid'=>$idfactura))->row();
                             $producto2 = $this->db->get_where('products',array('product_name'=>'Reconexión Internet'))->row();
-                                if ($factura->television==='no' || $factura->television=='' || $factura->television==null || $factura->television=='-' || $factura->estado_tv=="Cortado" ||  $factura->estado_tv=="Suspendido"){
+                                if ($factura['television']==='no' || $factura['television']=='' || $factura['television']==null || $factura['television']=='-' || $factura['estado_tv']=="Cortado" ||  $factura['estado_tv']=="Suspendido"){
                                     $nestado = 'Cortado';
                                     $reconexion = '0';
                                 }else{
@@ -2317,28 +2317,28 @@ if ($valido) {
                                 $this->db->where('id', $customer_id);
                                 $this->db->update('customers');
                                 //agregar reconexion    
-                                $data2['tid']=$factura->tid;
+                                $data2['tid']=$factura['tid'];
                                 $data2['pid']=$producto2->pid;
                                 $data2['product']=$producto2->product_name;
                                 $data2['price']=$producto2->product_price;
                                 $data2['qty']=1;
                                 $data2['subtotal']=$producto2->product_price;           
 
-                                $inv_it=$this->db->from("invoice_items")->where("tid",$factura->tid)->like("product","Reconexión Internet","both")->get()->result();
+                                $inv_it=$this->db->from("invoice_items")->where("tid",$factura['tid'])->like("product","Reconexión Internet","both")->get()->result();
                                 
                                 if(count($inv_it)==0){
                                     $this->db->insert('tickets', $data);
                                     $this->db->insert('invoice_items',$data2);
 
                                          //actualizar factura
-                                    $this->db->set('subtotal', $factura->subtotal+$producto2->product_price);
-                                    $this->db->set('total', $factura->total+$producto2->product_price);
-                                    $this->db->set('items', $factura->items+1);
+                                    $this->db->set('subtotal', $factura['subtotal']+$producto2->product_price);
+                                    $this->db->set('total', $factura['total']+$producto2->product_price);
+                                    $this->db->set('items', $factura['items']+1);
                                     $this->db->set('ron', $nestado);
                                     $this->db->set('rec', $reconexion);
                                     //$this->db->set('combo', 'no');
                                     $this->db->set('estado_combo', 'Cortado');
-                                    $this->db->where('tid', $factura->tid);
+                                    $this->db->where('tid', $factura['tid']);
                                     $this->db->update('invoices');
                                 }
                                 
@@ -2347,30 +2347,30 @@ if ($valido) {
                             $this->customers->desactivar_estado_usuario_multiple($customer->name_s,$customer->gid,$API);
                         }else{
                                 $producto2 = $this->db->get_where('products',array('product_name'=>'Reconexión Television'))->row();
-                                $data2['tid']=$factura->tid;
+                                $data2['tid']=$factura['tid'];
                                 $data2['pid']=$producto2->pid;
                                 $data2['product']=$producto2->product_name;
                                 $data2['price']=$producto2->product_price;
                                 $data2['qty']=1;
                                 $data2['subtotal']=$producto2->product_price;
 
-                                $inv_it=$this->db->from("invoice_items")->where("tid",$factura->tid)->like("product","Reconexión Television","both")->get()->result();
+                                $inv_it=$this->db->from("invoice_items")->where("tid",$factura['tid'])->like("product","Reconexión Television","both")->get()->result();
                                 if(count($inv_it)==0){
                                     $this->db->insert('tickets', $data);
                                     $this->db->insert('invoice_items',$data2);
 
                                     //actualizar factura
                             //$factura = $this->db->get_where('invoices',array('tid'=>$idfactura))->row();
-                                    $this->db->set('subtotal', $factura->subtotal+$producto2->product_price);
-                                    $this->db->set('total', $factura->total+$producto2->product_price);
-                                    $this->db->set('items', $factura->items+1);
+                                    $this->db->set('subtotal', $factura['subtotal']+$producto2->product_price);
+                                    $this->db->set('total', $factura['total']+$producto2->product_price);
+                                    $this->db->set('items', $factura['items']+1);
                                     $this->db->set('estado_tv', 'Cortado');
-                                    $this->db->where('tid', $factura->tid);
+                                    $this->db->where('tid', $factura['tid']);
                                     $this->db->update('invoices');
-                                    if ($factura->combo==='no' || $factura->combo=='' || $factura->combo==null || $factura->combo=='-' || $factura->estado_combo=="Cortado" || $factura->estado_combo=="Suspendido"){
+                                    if ($factura['combo']==='no' || $factura['combo']=='' || $factura['combo']==null || $factura['combo']=='-' || $factura['estado_combo']=="Cortado" || $factura['estado_combo']=="Suspendido"){
                                         $this->db->set('ron', 'Cortado');
                                         //$this->db->set('television', 'no');
-                                        $this->db->where('tid', $factura->tid);
+                                        $this->db->where('tid', $factura['tid']);
                                         $this->db->update('invoices');
                                         //actualizar estado usuario
                                         $this->db->set('usu_estado', 'Cortado');
@@ -2382,7 +2382,7 @@ if ($valido) {
                                         //para generar reconexion
                                         $this->db->set('rec', '1'); 
                                         //$this->db->set('television', 'no');         
-                                        $this->db->where('tid', $factura->tid);
+                                        $this->db->where('tid', $factura['tid']);
                                         $this->db->update('invoices');
                                         //actualizar estado usuario
                                         $this->db->set('usu_estado', 'Activo');
