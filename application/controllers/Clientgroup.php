@@ -254,6 +254,7 @@ class Clientgroup extends CI_Controller
                             $money['debit']=$customers->debit;
                     }
             $customers->money=$money['credit'];
+			$var_excluir=false;
             $debe_customer=($due['total']-$due['pamnt']);//se agrego el campo de money debit por el item de gastos que se mencino en fechas anteriores
             $lista_invoices = $this->db->from("invoices")->where("csd",$customers->id)->order_by('invoicedate,tid',"DESC")->get()->result();
             $customer_moroso=false;
@@ -310,9 +311,17 @@ class Clientgroup extends CI_Controller
                        }
                         //esto es para los estados
             if($invoice->estado_tv=="Cortado"){
+				$var_excluir=true;
+                if(strpos($_GET['estados_multiple'], "Cortado")!==false ){
+                    $var_excluir=false;                    
+                }
                 $suscripcion_str="(Tv cortada".$puntosvar.")";   
             }else if($invoice->estado_tv=="Suspendido"){
-                $suscripcion_str="(Tv suspendida".$puntosvar.")";   
+                $suscripcion_str="(Tv suspendida".$puntosvar.")";
+				$var_excluir=true;
+                if(strpos($_GET['estados_multiple'], "Suspendido")!==false){
+                    $var_excluir=false;                    
+                }				
             }
 
 //esto es para los estados
@@ -330,18 +339,35 @@ class Clientgroup extends CI_Controller
 
                             if(!empty($var_e)){
                                 if($suscripcion_str!=""){
-                                    if($invoice->estado_combo=="Cortado"){                
+                                    if($invoice->estado_combo=="Cortado"){
+										$var_excluir=true;
+                                        if(strpos($_GET['estados_multiple'], "Cortado")!==false ){
+                                            $var_excluir=false;                    
+                                        }										
+									
                                         $suscripcion_str.="+"."(".$var_e." cortado)";   
                                     }else if($invoice->estado_combo=="Suspendido"){
+										$var_excluir=true;
+                                        if(strpos($_GET['estados_multiple'], "Suspendido")!==false){
+                                            $var_excluir=false;                    
+                                        }
                                         $suscripcion_str.="+"."(".$var_e." suspendido)";   
                                     }else{
                                         $suscripcion_str.="+".$var_e;    
                                     }
                                     
                                 }else{
-                                    if($invoice->estado_combo=="Cortado"){                
+                                    if($invoice->estado_combo=="Cortado"){
+										$var_excluir=true;
+                                        if(strpos($_GET['estados_multiple'], "Cortado")!==false){
+                                            $var_excluir=false;                    
+                                        }  										
                                         $suscripcion_str="(".$var_e." cortado)";   
                                     }else if($invoice->estado_combo=="Suspendido"){
+										 $var_excluir=true;
+                                        if(strpos($_GET['estados_multiple'], "Suspendido")!==false){
+                                            $var_excluir=false;                    
+                                        }
                                         $suscripcion_str="(".$var_e." suspendido)";   
                                     }else{
                                         $suscripcion_str=$var_e;
@@ -508,6 +534,9 @@ class Clientgroup extends CI_Controller
                     if($customers->facturar_electronicamente==0){
                         $customer_moroso=false; 
                     }
+                }
+				 if($var_excluir){
+                     $customer_moroso=false;
                 }
 
             }else{
@@ -937,7 +966,7 @@ class Clientgroup extends CI_Controller
             //$money=$this->customers->money_details($customers->id);//para poder arreglar el tema de la velocidad de carga esta ligado con este proceso la solucion a la que llegamos es crear los campos debit y credit en customers y en cada proceso del sistema en los que se cree elimine o editen transacciones se debe de editar el valor de customers;
             //$customers->money=0;//$money['credit'];
             $debe_customer=($due['total']-$due['pamnt']);//se agrego el campo de money debit por el item de gastos que se mencino en fechas anteriores
-
+            $var_excluir=false;
             $lista_invoices = $this->db->from("invoices")->where("csd",$customers->id)->order_by('invoicedate,tid',"DESC")->get()->result();
             $customer_moroso=false;
             $valor_ultima_factura=0;
@@ -994,9 +1023,17 @@ class Clientgroup extends CI_Controller
                        }
 //esto es para los estados
             if($invoice->estado_tv=="Cortado"){
+                $var_excluir=true;
+                if(strpos($_GET['estados_multiple'], "Cortado")!==false ){
+                    $var_excluir=false;                    
+                }
                 $suscripcion_str="<b><i class='sts-Cortado'>Tv".$puntosvar."</i></b>";   
             }else if($invoice->estado_tv=="Suspendido"){
                 $suscripcion_str="<b><i class='sts-Suspendido'>Tv".$puntosvar."</i></b>";   
+                $var_excluir=true;
+                if(strpos($_GET['estados_multiple'], "Suspendido")!==false){
+                    $var_excluir=false;                    
+                }
             }
 
 //esto es para los estados 
@@ -1012,18 +1049,35 @@ class Clientgroup extends CI_Controller
                             }
                             if(!empty($var_e)){
                                 if($suscripcion_str!=""){
-                                    if($invoice->estado_combo=="Cortado"){                
+                                    if($invoice->estado_combo=="Cortado"){
+                                        $var_excluir=true;
+                                        if(strpos($_GET['estados_multiple'], "Cortado")!==false ){
+                                            $var_excluir=false;                    
+                                        }
+                                        
                                         $suscripcion_str.="+"."<b><i class='sts-Cortado'>".$var_e."</i></b>";   
                                     }else if($invoice->estado_combo=="Suspendido"){
+                                        $var_excluir=true;
+                                        if(strpos($_GET['estados_multiple'], "Suspendido")!==false){
+                                            $var_excluir=false;                    
+                                        }
                                         $suscripcion_str.="+"."<b><i class='sts-Suspendido'>".$var_e."</i></b>";   
                                     }else{
                                         $suscripcion_str.="+".$var_e;    
                                     }
                                     
                                 }else{
-                                    if($invoice->estado_combo=="Cortado"){                
+                                    if($invoice->estado_combo=="Cortado"){
+                                    $var_excluir=true;
+                                        if(strpos($_GET['estados_multiple'], "Cortado")!==false){
+                                            $var_excluir=false;                    
+                                        }               
                                         $suscripcion_str="<b><i class='sts-Cortado'>".$var_e."</i></b>";   
                                     }else if($invoice->estado_combo=="Suspendido"){
+                                         $var_excluir=true;
+                                        if(strpos($_GET['estados_multiple'], "Suspendido")!==false){
+                                            $var_excluir=false;                    
+                                        }
                                         $suscripcion_str="<b><i class='sts-Suspendido'>".$var_e."</i></b>";   
                                     }else{
                                         $suscripcion_str=$var_e;    
@@ -1194,6 +1248,9 @@ class Clientgroup extends CI_Controller
                     }
                 }
                 
+                if($var_excluir){
+                     $customer_moroso=false;
+                }
             }else{
                 if($_GET['deudores_multiple']=="" || $_GET['deudores_multiple']==null || $_GET['deudores_multiple']=="null"){//para que muestre todos si esta seleccionada esta opcion, probar si colocando esta condicion encima del if funciona bien para eliminar y dejar solo una
                     $customer_moroso=true;
@@ -1551,7 +1608,7 @@ class Clientgroup extends CI_Controller
             //$money=$this->customers->money_details($customers->id);//para poder arreglar el tema de la velocidad de carga esta ligado con este proceso la solucion a la que llegamos es crear los campos debit y credit en customers y en cada proceso del sistema en los que se cree elimine o editen transacciones se debe de editar el valor de customers;
             //$customers->money=$money['credit'];
             $debe_customer=($due['total']-$due['pamnt']);//se agrego el campo de money debit por el item de gastos que se mencino en fechas anteriores
-
+			$var_excluir=false;
             $lista_invoices = $this->db->from("invoices")->where("csd",$customers->id)->order_by('invoicedate,tid',"DESC")->get()->result();
             $customer_moroso=false;
             $valor_ultima_factura=0;
@@ -1599,6 +1656,30 @@ class Clientgroup extends CI_Controller
                             }
                             
                         }
+					if($invoice->puntos!="" && $invoice->puntos!="0" && $invoice->puntos!=null && $invoice->puntos!="no"){
+                            $puntosvar="+".$invoice->puntos." Pts";
+                            $suscripcion_str.="+".$invoice->puntos." Pts";
+
+                            $punto_adicional=$this->db->get_where("products", array('product_name' =>"Punto Adicional"))->row();
+                            $suma+=$punto_adicional->product_price*$invoice->puntos;
+                       }
+						
+				//esto es para los estados
+							if($invoice->estado_tv=="Cortado"){
+								$var_excluir=true;
+								if(strpos($_GET['estados_multiple'], "Cortado")!==false ){
+									$var_excluir=false;                    
+								}
+								$suscripcion_str="<b><i class='sts-Cortado'>Tv".$puntosvar."</i></b>";   
+							}else if($invoice->estado_tv=="Suspendido"){
+								$suscripcion_str="<b><i class='sts-Suspendido'>Tv".$puntosvar."</i></b>";   
+								$var_excluir=true;
+								if(strpos($_GET['estados_multiple'], "Suspendido")!==false){
+									$var_excluir=false;                    
+								}
+							}
+
+				//esto es para los estados 
 
                         if($_var_tiene_internet){
                             $lista_de_productos=$this->db->from("products")->like("product_name","mega","both")->get()->result();
@@ -1612,10 +1693,41 @@ class Clientgroup extends CI_Controller
                             }
                             if(!empty($var_e)){
                                 if($suscripcion_str!=""){
-                                    $suscripcion_str.="+".$var_e;
+                                    if($invoice->estado_combo=="Cortado"){
+                                        $var_excluir=true;
+                                        if(strpos($_GET['estados_multiple'], "Cortado")!==false ){
+                                            $var_excluir=false;                    
+                                        }
+                                        
+                                        $suscripcion_str.="+"."<b><i class='sts-Cortado'>".$var_e."</i></b>";   
+                                    }else if($invoice->estado_combo=="Suspendido"){
+                                        $var_excluir=true;
+                                        if(strpos($_GET['estados_multiple'], "Suspendido")!==false){
+                                            $var_excluir=false;                    
+                                        }
+                                        $suscripcion_str.="+"."<b><i class='sts-Suspendido'>".$var_e."</i></b>";   
+                                    }else{
+                                        $suscripcion_str.="+".$var_e;    
+                                    }
+                                    
                                 }else{
-                                    $suscripcion_str=$var_e;
-                                }    
+                                    if($invoice->estado_combo=="Cortado"){
+                                    $var_excluir=true;
+                                        if(strpos($_GET['estados_multiple'], "Cortado")!==false){
+                                            $var_excluir=false;                    
+                                        }               
+                                        $suscripcion_str="<b><i class='sts-Cortado'>".$var_e."</i></b>";   
+                                    }else if($invoice->estado_combo=="Suspendido"){
+                                         $var_excluir=true;
+                                        if(strpos($_GET['estados_multiple'], "Suspendido")!==false){
+                                            $var_excluir=false;                    
+                                        }
+                                        $suscripcion_str="<b><i class='sts-Suspendido'>".$var_e."</i></b>";   
+                                    }else{
+                                        $suscripcion_str=$var_e;    
+                                    }
+                                    
+                                }   
                             }
                             
                         }
@@ -1785,6 +1897,10 @@ class Clientgroup extends CI_Controller
                     if($customers->facturar_electronicamente==0){
                         $customer_moroso=false; 
                     }
+                }
+				
+				 if($var_excluir){
+                     $customer_moroso=false;
                 }
             }else{
                  if($_GET['deudores_multiple']=="" || $_GET['deudores_multiple']==null || $_GET['deudores_multiple']=="null"){//para que muestre todos si esta seleccionada esta opcion, probar si colocando esta condicion encima del if funciona bien para eliminar y dejar solo una

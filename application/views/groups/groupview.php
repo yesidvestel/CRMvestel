@@ -561,12 +561,12 @@
                    $("#notify3 .message3").html("<strong> Cargando</strong>: Usuarios Seleccionados...");
                     $("#notify3").removeClass("alert-danger").removeClass("alert-warning").addClass("alert-success").fadeIn();
                     $("html, body").animate({scrollTop: $('#notify3').offset().top}, 1000);
-                    $("input[type=checkbox]").prop("checked",true);        
+                    $(".clientes_para_enviar_sms").prop("checked",true);        
                 },'json');
 
                 
         }else{
-            $("input[type=checkbox]").prop("checked",false); 
+            $(".clientes_para_enviar_sms").prop("checked",false); 
             lista_customers_sms=[];  
             $.post(baseurl+"clientgroup/deseleccionar_customers?id=<?=$_GET['id']?>",{},function(data){},'json');
         }
