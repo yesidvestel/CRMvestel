@@ -1305,6 +1305,32 @@ foreach ($lista as $key => $value) {
         }
 
     }
+    public function printinvoice_proforma()
+    {
+
+        $tid = intval($this->input->get('id'));
+
+        $data['id'] = $tid;
+        $data['title'] = "Estado Usuario $tid";
+        $data['customer'] = $this->db->get_where("customers",array("id"=>$tid))->row();
+        $data['invoice'] = $this->invocies->invoice_details($tid, $this->limited);
+        if ($data['invoice']) $data['products'] = $this->invocies->invoice_products($tid);
+        if ($data['invoice']) $data['employee'] = $this->invocies->employee($data['invoice']['eid']);
+        ini_set('memory_limit', '64M');
+        $html = $this->load->view('invoices/proforma_estado_user', $data, true);
+        //PDF Rendering
+        $this->load->library('pdf');
+        $pdf = $this->pdf->load();
+        $pdf->SetHTMLFooter('<div style="text-align: right;font-family: serif; font-size: 8pt; color: #5C5C5C; font-style: italic;margin-top:-6pt;">{PAGENO}/{nbpg} #'.$tid.'</div>');
+        $pdf->WriteHTML($html);
+        if ($this->input->get('d')) {
+            $pdf->Output('Proforma_#' . $tid . '.pdf', 'D');
+        } else {
+            $pdf->Output('Proforma_#' . $tid . '.pdf', 'I');
+        }
+
+
+    }
     public function printinvoice2()
     {
 

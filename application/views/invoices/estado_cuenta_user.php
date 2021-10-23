@@ -40,10 +40,10 @@
                                     </button>
                                     <div class="dropdown-menu">
                                         <a class="dropdown-item"
-                                           href="<?php echo 'printinvoice_estado_user?id=' . $customer->id; ?>"><?php echo $this->lang->line('Print') ?></a>
+                                           href="<?php echo 'printinvoice_proforma?id=' . $customer->id; ?>"><?php echo $this->lang->line('Print') ?></a>
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item"
-                                           href="<?php echo 'printinvoice_estado_user?id=' . $customer->id; ?>&d=1"><?php echo $this->lang->line('PDF Download') ?></a>
+                                           href="<?php echo 'printinvoice_proforma?id=' . $customer->id; ?>&d=1"><?php echo $this->lang->line('PDF Download') ?></a>
 
                                     </div>
                                 </div>                               
@@ -164,7 +164,9 @@
                                                             $row['subtotal']=$row['subtotal']-(($row['subtotal']*$porcentaje)/100);
                                                             $row['tax']=$row['tax']-(($row['tax']*$porcentaje)/100);    
                                                 }
-                                                
+                                                if($total_customer==0){
+                                                    
+                                                }
                                                 $sub_total+=$row['subtotal'];
                                                 $tax_total+=$row['tax'];
                                         echo '<tr>
