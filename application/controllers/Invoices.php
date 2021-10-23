@@ -1310,9 +1310,36 @@ foreach ($lista as $key => $value) {
 
         $tid = intval($this->input->get('id'));
 
+        
+//cambios nuevos
+         $this->load->model('accounts_model');
+        $this->load->model('customers_model',"customers");
+        $data['acclist'] = $this->accounts_model->accountslist();
+        $csd = intval($this->input->get('id'));
+        $data['customer'] = $this->db->get_where("customers",array("id"=>$csd))->row();
+        
+        $data['due'] = $this->customers->due_details($csd);
+        $total_customer=$data['due']['total']-$data['due']['pamnt'];
+        $data['transacciones'] = $this->invocies->ultima_transaccion_realizada($csd);
+        if($total_customer>0){
+            $data['products'] = $this->invocies->invoice_sin_pagar($csd);        
+        }else if($total_customer==0){
+            $data['products'] = $this->invocies->ultima_factura($csd);        
+        }else{
+            $informacion = $this->invocies->pagadas_adelantadas($csd);        
+            $data['products']=array("0"=>$informacion['factura_saldo_adelantado']);
+            $data['tr_saldo_adelantado']=$informacion['tr_saldo_adelantado'][0];
+            $data['facturas_adelantadas']=$informacion['facturas_adelantadas'];
+
+        }
+        $data['total_customer']=$total_customer;
+               
+//end cambios nuevos
+
+
         $data['id'] = $tid;
         $data['title'] = "Estado Usuario $tid";
-        $data['customer'] = $this->db->get_where("customers",array("id"=>$tid))->row();
+        
         $data['invoice'] = $this->invocies->invoice_details($tid, $this->limited);
         if ($data['invoice']) $data['products'] = $this->invocies->invoice_products($tid);
         if ($data['invoice']) $data['employee'] = $this->invocies->employee($data['invoice']['eid']);
