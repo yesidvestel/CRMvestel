@@ -216,7 +216,7 @@ if($total_customer==0){
     $estado_de_user="Cancelado";   
 }else if($total_customer<0){
     $estado_de_user="Pago Adelantado";
-    $sub_total=$total_customer;
+    $sub_total=0;
     $tax_total=0;
 } ?>
                                 <div class="row">

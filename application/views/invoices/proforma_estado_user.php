@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Estado Usuario#<?php echo $invoice['tid'] ?></title>
+    <title>Estado Usuario#<?php echo $id ?></title>
     <style>	
         body {
             color: #2B2000;
@@ -189,13 +189,13 @@
                        <td colspan="1" class="t_center"><h2 >Estado del Usuario</h2><br><br></td>
                     </tr>
 			<tr>
-            <td>Usuario&nbsp;</td><td><?php echo '#' . $invoice['tid'] ?></td>
+            <td>Usuario&nbsp;</td><td><?php echo '#' . $id ?></td>
 			</tr>
 			<tr>
-            <td><?php echo $this->lang->line('Invoice Date') ?></td><td><?php echo $invoice['invoicedate'] ?></td>
+            <td><?php echo $this->lang->line('Invoice Date') ?></td><td><?php echo dateformat($products[0]['invoicedate']) ?></td>
 			</tr>
 			<tr>
-            <td><?php echo $this->lang->line('Due Date') ?></td><td><?php echo $invoice['invoiceduedate'] ?></td>
+            <td><?php echo $this->lang->line('Due Date') ?></td><td><?php echo dateformat((isset($facturas_adelantadas))? $facturas_adelantadas[count($facturas_adelantadas)-1]['fecha_final'] : $products[count($products)-1]['invoiceduedate']) ?></td>
 			</tr>
 			<?php if($customer->ciudad) { ?>
 			<tr>
@@ -254,9 +254,9 @@
             </td>
            
 
-            <?php if ($invoice['tax'] > 0) echo '<td>' . $this->lang->line('Tax') . '</td>';
+            <?php if ($products[0]['tax'] > 0) echo '<td>' . $this->lang->line('Tax') . '</td>';
 
-            if ($invoice['discount'] > 0) echo '<td>' . $this->lang->line('Discount') . '</td>'; ?>
+             ?>
             <td class="t_center">
                 <?php echo $this->lang->line('SubTotal') ?>
             </td>
@@ -359,7 +359,7 @@
                             <td>' . ucfirst($value['mes']) . '</td>
                             <td style="width:12%;">' . amountFormat($value['valor_a_colocar'])  . '</td>
                             ';
-            if ($row['tax'] > 0)  { $cols++; echo '<td style="width:16%;">' . amountExchange(0) . ' </td>'; }
+            $cols++; echo '<td style="width:16%;">' . amountExchange(0) . ' </td>'; 
             
             echo '<td class="t_center">' . amountFormat($value['valor_a_colocar'])  . '</td>
                         </tr>';
@@ -386,7 +386,7 @@ if($total_customer==0){
     $estado_de_user="Cancelado";   
 }else if($total_customer<0){
     $estado_de_user="Pago Adelantado";
-    $sub_total=$total_customer;
+    $sub_total=0;
     $tax_total=0;
 } ?>
     <table class="subtotal">
@@ -408,14 +408,14 @@ if($total_customer==0){
 
             <td><?php echo amountExchange($sub_total); ?></td>
         </tr>
-        <?php if ($invoice['tax'] > 0) {
+        <?php 
             echo '<tr>        
 
             <td> ' . $this->lang->line('Total Tax') . ' :</td>
 
-            <td>' . amountExchange($invoice['tax'], $invoice['multi']) . '</td>
+            <td>' . amountExchange($total_tax) . '</td>
         </tr>';
-        }
+        
         
             echo '<tr>
 
@@ -447,9 +447,9 @@ if($total_customer==0){
     echo amountExchange($x);
     echo '</strong></td>
 		</tr>
-		</table><br><div class="sign">'.$this->lang->line('Authorized person').'</div><div class="sign1"></div><div class="sign2">(' . $employee['name'] . ')</div><div class="sign3">' . user_role($employee['roleid']) . '</div> <div class="terms">' . $invoice['notes'] . '<hr><strong>' . $this->lang->line('Terms') . ':</strong><br>';
+		</table><br><div class="sign">'.$this->lang->line('Authorized person').'</div><div class="sign1"></div><div class="sign2">(' . $employee['name'] . ')</div><div class="sign3">' . user_role($employee['roleid']) . '</div> <div class="terms"><hr><strong>' . $this->lang->line('Terms') . ':</strong><br>';
 
-    echo '<strong>' . $invoice['termtit'] . '</strong><br>' . $invoice['terms'];
+    
     ?></div>
 </div>
 </body>
