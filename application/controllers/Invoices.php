@@ -1320,7 +1320,7 @@ foreach ($lista as $key => $value) {
         
         $data['due'] = $this->customers->due_details($csd);
         $total_customer=$data['due']['total']-$data['due']['pamnt'];
-        $data['transacciones'] = $this->invocies->ultima_transaccion_realizada($csd);
+        $data['transaccion'] = $this->invocies->ultima_transaccion_realizada($csd);
         if($total_customer>0){
             $data['products'] = $this->invocies->invoice_sin_pagar($csd);        
         }else if($total_customer==0){
@@ -1329,11 +1329,15 @@ foreach ($lista as $key => $value) {
             $informacion = $this->invocies->pagadas_adelantadas($csd);        
             $data['products']=array("0"=>$informacion['factura_saldo_adelantado']);
             $data['tr_saldo_adelantado']=$informacion['tr_saldo_adelantado'][0];
+            $data['transaccion']=$informacion['tr_saldo_adelantado'][0];
             $data['facturas_adelantadas']=$informacion['facturas_adelantadas'];
 
         }
         $data['total_customer']=$total_customer;
-               
+        if(count($data['transaccion'])!=0){
+            $data['transaccion']=$data['transaccion'][0];
+        }
+
 //end cambios nuevos
 
 
@@ -1341,7 +1345,7 @@ foreach ($lista as $key => $value) {
         $data['title'] = "Estado Usuario $tid";
         
         $data['invoice'] = $this->invocies->invoice_details($tid, $this->limited);
-        if ($data['invoice']) $data['products'] = $this->invocies->invoice_products($tid);
+        //if ($data['invoice']) $data['products'] = $this->invocies->invoice_products($tid);
         if ($data['invoice']) $data['employee'] = $this->invocies->employee($data['invoice']['eid']);
         ini_set('memory_limit', '64M');
         $html = $this->load->view('invoices/proforma_estado_user', $data, true);

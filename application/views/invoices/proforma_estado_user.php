@@ -242,6 +242,9 @@
 
 
         <tr class="heading">
+             <td>
+               #
+            </td>
             <td>
                 <?php echo $this->lang->line('Description') ?>
             </td>
@@ -249,9 +252,7 @@
             <td>
                 <?php echo $this->lang->line('Price') ?>
             </td>
-            <td>
-                <?php echo $this->lang->line('Qty') ?>
-            </td>
+           
 
             <?php if ($invoice['tax'] > 0) echo '<td>' . $this->lang->line('Tax') . '</td>';
 
@@ -264,6 +265,7 @@
         <?php
         $fill = true;
         $sub_t=0;
+        $c=1;
         foreach ($products as $row) {
 
             $cols = 3;
@@ -275,24 +277,100 @@
             }
             $sub_t+=$row['price']*$row['qty'];
 			
+//codigo x
 
-            echo '<tr class="item' . $flag . '"> 
-                            <td>' . $row['product'] . '</td>
-							<td style="width:12%;">' . amountExchange($row['price'],$invoice['multi']) . '</td>
-                            <td style="width:6%;" >' . $row['qty'] . '</td>   ';
-            if ($invoice['tax'] > 0)  { $cols++; echo '<td style="width:16%;">' . amountExchange($row['totaltax'], $invoice['multi']) . ' <span class="tax">(' . amountFormat_s($row['tax']) . '%)</span></td>'; }
-            if ($invoice['discount'] > 0) {   $cols++; echo ' <td style="width:16%;">' . amountExchange($row['totaldiscount'], $invoice['multi']) . '</td>'; }
-            echo '<td class="t_center">' . amountExchange($row['subtotal'], $invoice['multi']) . '</td>
+    $sub_t += $row['total'];
+    $servicios_asignados="";
+    if ($row['television'] == no ){
+            $servicios_asignados.= '';
+        } else{
+                if($row['estado_tv'] == "Cortado"){
+                        $servicios_asignados.=  "<b><i class='sts-Cortado'>".$row['television']." (cortado)</i></b>";
+                }else if($row['estado_tv'] == "Suspendido"){
+                        $servicios_asignados.=  "<b><i class='sts-Suspendido'>".$row['television']." (suspendido)</i></b>";
+                }else{
+                    $servicios_asignados.=  $row['television'];    
+                }
+            }
+    if ($row['combo'] == no ){
+            $servicios_asignados.=  '';
+        } else{
+
+             if($row['estado_combo'] == "Cortado"){
+                        $servicios_asignados.=  " mas <b><i class='sts-Cortado'>".$row['combo']." (cortado)</i></b>";
+                }else if($row['estado_combo'] == "Suspendido"){
+                        $servicios_asignados.=  " mas <b><i class='sts-Suspendido'>".$row['combo']." (suspendido)</i></b>";
+                }else{
+                    $servicios_asignados.=  ' mas '.$row['combo'];
+                }
+            }
+    if ($row['puntos'] == 0 ){
+            $servicios_asignados.=  '';
+        } else{
+            $servicios_asignados.=  ' mas '.$row['puntos'].' puntos adicionales';
+        }
+        $f1 = date(" F ",strtotime($row['invoicedate']));
+        $transacciones_factura=array();
+        if($total_customer<0){                                                    
+            $transacciones_factura=$this->db->query("select sum(credit-debit) as total_pagado from transactions where tid=".$row['tid']." and estado is null and id!=".$tr_saldo_adelantado['id'])->result_array();                                                    
+        }else{
+            $transacciones_factura=$this->db->query("select sum(credit-debit) as total_pagado from transactions where tid=".$row['tid']." and estado is null")->result_array();                                                                                                        
+        }
+        
+        if(isset($transacciones_factura[0]['total_pagado']) && $transacciones_factura[0]['total_pagado']>0){
+                    $porcentaje=($transacciones_factura[0]['total_pagado']*100)/$row['total'];
+                    $row['total']-=$transacciones_factura[0]['total_pagado'];
+                    $row['subtotal']=$row['subtotal']-(($row['subtotal']*$porcentaje)/100);
+                    $row['tax']=$row['tax']-(($row['tax']*$porcentaje)/100);    
+        }
+        
+        $sub_total+=$row['subtotal'];
+        $tax_total+=$row['tax'];
+
+// end codigo x
+
+
+            echo '<tr class="item' . $flag . '"> <td>'.$c.'</td>
+                            <td>' . ucfirst(strftime("%B", strtotime($f1))).' CTA : ' . $row['tid'] . '</td>
+							<td style="width:12%;">' . amountExchange($row['subtotal']) . '</td>
+                            ';
+            if ($row['tax'] > 0)  { $cols++; echo '<td style="width:16%;">' . amountExchange($row['tax']) . ' </td>'; }
+            
+            echo '<td class="t_center">' . amountExchange($row['total']) . '</td>
                         </tr>';
-           if($row['product_des'])  { $cc=$cols+1; echo '<tr class="item' . $flag . ' descr"> 
-                            <td colspan="'.$cc.'">' . $row['product_des'] . '<br>&nbsp;</td>
-							
-                        </tr>'; }
+           
             $fill = !$fill;
+            $c++;
           
         }
 
-  if ($invoice['shipping'] > 0) { $cols++;}
+  if(isset($facturas_adelantadas)){
+                                        foreach ($facturas_adelantadas as $key => $value) {
+
+                                            $cols = 3;
+            
+            if ($fill == true) {
+                $flag = ' mfill';               
+            } else {
+                $flag = '';
+            }
+            echo '<tr class="item' . $flag . '"> <td>'.$c.'</td>
+                            <td>' . ucfirst($value['mes']) . '</td>
+                            <td style="width:12%;">' . amountFormat($value['valor_a_colocar'])  . '</td>
+                            ';
+            if ($row['tax'] > 0)  { $cols++; echo '<td style="width:16%;">' . amountExchange(0) . ' </td>'; }
+            
+            echo '<td class="t_center">' . amountFormat($value['valor_a_colocar'])  . '</td>
+                        </tr>';
+           
+            $fill = !$fill;
+            $c++;
+
+
+
+                                             
+                                        }
+                                    }
 
         ?>
 
@@ -304,7 +382,7 @@
        
         <tr>
             <td class="myco2" rowspan="<?php echo $cols ?>"><br><br><br>
-                <p><?php echo '<strong>' . $this->lang->line('Status') . ': ' . $this->lang->line(ucwords($invoice['status'])).'</strong></p><br><p>' . $this->lang->line('Total Amount') . ': ' . amountExchange($invoice['total'], $invoice['multi']) . '</p><br><p>' . $this->lang->line('Paid Amount') . ': ' . amountExchange($invoice['pamnt'], $invoice['multi']); ?></p>
+                <p><?php echo '<strong>' . $this->lang->line('Status') . ': ' . $this->lang->line(ucwords($invoice['status'])).'</strong></p><br><p>Ultima transaccion : ' . amountExchange($transaccion['credit']) . '</p><br><p>Nota : ' . $transaccion['note']; ?></p>
             </td>
             <td><strong><?php echo $this->lang->line('Summary') ?>:</strong></td>
             <td></td>
@@ -316,7 +394,7 @@
 
             <td><?php echo $this->lang->line('SubTotal') ?>:</td>
 
-            <td><?php echo amountExchange($sub_t, $invoice['multi']); ?></td>
+            <td><?php echo amountExchange($sub_total); ?></td>
         </tr>
         <?php if ($invoice['tax'] > 0) {
             echo '<tr>        
@@ -326,26 +404,18 @@
             <td>' . amountExchange($invoice['tax'], $invoice['multi']) . '</td>
         </tr>';
         }
-        if ($invoice['discount'] > 0) {
+        
             echo '<tr>
 
 
-            <td>' . $this->lang->line('Total Discount') . ':</td>
+            <td> Total:</td>
 
-            <td>' . amountExchange($invoice['discount'], $invoice['multi']) . '</td>
+            <td>' . amountExchange($sub_total+$tax_total) . '</td>
         </tr>';
 
-        }
-		    if ($invoice['shipping'] > 0) {
-            echo '<tr>
+        
 
-
-            <td>' . $this->lang->line('Shipping') . ':</td>
-
-            <td>' . amountExchange($invoice['shipping'], $invoice['multi']) . '</td>
-        </tr>';
-
-        }
+        
         ?>
         <tr>
 
