@@ -335,7 +335,7 @@
                             <td>' . ucfirst(strftime("%B", strtotime($f1))).' CTA : ' . $row['tid'] . '</td>
 							<td style="width:12%;">' . amountExchange($row['subtotal']) . '</td>
                             ';
-            if ($row['tax'] > 0)  { $cols++; echo '<td style="width:16%;">' . amountExchange($row['tax']) . ' </td>'; }
+             $cols++; echo '<td style="width:16%;">' . amountExchange($row['tax']) . ' </td>';
             
             echo '<td class="t_center">' . amountExchange($row['total']) . '</td>
                         </tr>';

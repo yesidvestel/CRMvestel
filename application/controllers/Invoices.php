@@ -1329,7 +1329,7 @@ foreach ($lista as $key => $value) {
             $informacion = $this->invocies->pagadas_adelantadas($csd);        
             $data['products']=array("0"=>$informacion['factura_saldo_adelantado']);
             $data['tr_saldo_adelantado']=$informacion['tr_saldo_adelantado'][0];
-            $data['transaccion']=$informacion['tr_saldo_adelantado'][0];
+            $data['transaccion']=$informacion['tr_saldo_adelantado'];
             $data['facturas_adelantadas']=$informacion['facturas_adelantadas'];
 
         }
@@ -1344,11 +1344,14 @@ foreach ($lista as $key => $value) {
         $data['id'] = $tid;
         $data['title'] = "Estado Usuario $tid";
         
-        $data['invoice'] = $this->invocies->invoice_details($tid, $this->limited);
+        //$data['invoice'] = $this->invocies->invoice_details($tid, $this->limited);
         //if ($data['invoice']) $data['products'] = $this->invocies->invoice_products($tid);
-        if ($data['invoice']) $data['employee'] = $this->invocies->employee($data['invoice']['eid']);
+        
+       $data['employee']=$this->invocies->employee($data['products'][0]['eid']);
         ini_set('memory_limit', '64M');
         $html = $this->load->view('invoices/proforma_estado_user', $data, true);
+        
+        
         //PDF Rendering
         $this->load->library('pdf');
         $pdf = $this->pdf->load();
