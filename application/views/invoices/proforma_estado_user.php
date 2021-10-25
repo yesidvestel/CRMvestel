@@ -266,6 +266,7 @@
         $fill = true;
         $sub_t=0;
         $c=1;
+        setlocale(LC_TIME, "spanish");
         foreach ($products as $row) {
 
             $cols = 3;
@@ -377,12 +378,23 @@
 
     </table>
     <br>
+    <?php $estado_de_user="Cancelado"; 
+if(($sub_total+$tax_total)>0){
+    $estado_de_user="Debe";
+}
+if($total_customer==0){
+    $estado_de_user="Cancelado";   
+}else if($total_customer<0){
+    $estado_de_user="Pago Adelantado";
+    $sub_total=$total_customer;
+    $tax_total=0;
+} ?>
     <table class="subtotal">
 
        
         <tr>
             <td class="myco2" rowspan="<?php echo $cols ?>"><br><br><br>
-                <p><?php echo '<strong>' . $this->lang->line('Status') . ': ' . $this->lang->line(ucwords($invoice['status'])).'</strong></p><br><p>Ultima transaccion : ' . amountExchange($transaccion['credit']) . '</p><br><p>Nota : ' . $transaccion['note']; ?></p>
+                <p><?php echo '<strong>' . $this->lang->line('Status') . ': ' . ucwords($estado_de_user).'</strong></p><br><p>Ultima transaccion : ' . amountExchange($transaccion['credit']) . '</p><br><p>Nota : ' . $transaccion['note']; ?></p>
             </td>
             <td><strong><?php echo $this->lang->line('Summary') ?>:</strong></td>
             <td></td>
@@ -422,13 +434,17 @@
 
             <td><?php echo $this->lang->line('Balance Due') ?>:</td>
 
-            <td><strong><?php
+            <td colspan="2" align="center"><strong><?php
      $rming = $invoice['total'] - $invoice['pamnt'];
     if ($rming < 0) {
         $rming = 0;
 
     }
-    echo amountExchange($rming, $invoice['multi']);
+    $x=$sub_total+$tax_total;
+    if($total_customer<0){
+        $x=$total_customer;
+    }
+    echo amountExchange($x);
     echo '</strong></td>
 		</tr>
 		</table><br><div class="sign">'.$this->lang->line('Authorized person').'</div><div class="sign1"></div><div class="sign2">(' . $employee['name'] . ')</div><div class="sign3">' . user_role($employee['roleid']) . '</div> <div class="terms">' . $invoice['notes'] . '<hr><strong>' . $this->lang->line('Terms') . ':</strong><br>';
