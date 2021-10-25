@@ -103,6 +103,7 @@ if($vrm>0){
 setlocale(LC_TIME, "spanish");
     $iva=0;
     $total=0;
+    $retorno=array();
     //esto es para el calculo de facturas sin crear al hacer pagos adelantados;
     $ultima_factura=$this->customers->servicios_detail($csd);
     if(isset($ultima_factura['tid'])){
@@ -188,13 +189,14 @@ setlocale(LC_TIME, "spanish");
         $f1 = date(" F ",strtotime($fecha_));        
         $retorno[]=array("mes"=> strftime("%B", strtotime($f1)),"valor_a_colocar"=>$valor_a_colocar,"fecha_final"=>$fecha_2);        
     }
-    return $retorno;
+    
 
 
     
 
 //end esto es para el calculo de facturas sin crear al hacer pagos adelantados;
     }
+    return $retorno;
 }
 /* end codigo pagos adelantados*/
     }

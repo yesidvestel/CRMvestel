@@ -396,98 +396,14 @@
 /* codigo pagos adelantados*/
 if($vrm>0){
 
-    $iva=0;
-    $total=0;
-    //esto es para el calculo de facturas sin crear al hacer pagos adelantados;
-    $ultima_factura=$this->customers->servicios_detail($invoice['csd']);
-    if(isset($ultima_factura['tid'])){
-        $var_factura=$this->db->get_where("invoices",array("tid"=>$ultima_factura['tid']))->row();
-    if($ultima_factura['combo']!="no" && $ultima_factura['combo']!="" && $ultima_factura['combo']!="-"){
-        $internet="";
-        $total_factura=0;
-                if($ultima_factura['estado_combo']=="null" || $ultima_factura['estado_combo']==null){
-                        $internet=$ultima_factura['combo'];  
-                }else{
-                      $internet=$ultima_factura['paquete'];  
-                }
-                    
-            }
-    $str1=str_replace(" ", "", strtolower($internet));
-    $producto_internet=$this->db->query('SELECT * FROM products WHERE lower(REPLACE(product_name," ","")) = "'.$str1.'"')->result_array();
-    $producto_internet=$producto_internet[0];
-    
-    if($producto_internet!=null){
-        
-        if($producto_internet['taxrate']!=0){
-                $iva+=round(($producto_internet['product_price']*$producto_internet['taxrate'])/100);
-        }    
-        $total+=$producto_internet['product_price'];
-    }
-    
-    $television=0;
-    $puntos=0;
-    if($ultima_factura['television']!="no" && $ultima_factura['television']!="" && $ultima_factura['television']!="-" ){
-                if($ultima_factura['estado_tv']=="null" || $ultima_factura['estado_tv']==null){
-                       $television=27;
-                        
-                }else{
-                        $television=27;
-                }
-                $puntos=intval($ultima_factura['puntos']);
-    }
-    if($television!=0){
-        if(strpos(strtolower(), strtolower("mocoa"))!==false){
-            $television=159;
-        }
-        
-        $producto_televison=$this->db->query('SELECT * FROM products WHERE pid='.$television)->result_array();
-        $producto_televison=$producto_televison[0];
-        if($producto_televison!=null){
-
-
-            if($producto_televison['taxrate']!=0){
-                $iva+=round(($producto_televison['product_price']*$producto_televison['taxrate'])/100);
-            }
-
-            $total+=$producto_televison['product_price'];
-            if($puntos!=0 && $puntos!=null){
-                $punto=$this->db->query('SELECT * FROM products WHERE pid=158')->result_array();
-                $punto=$punto[0];
-                if($punto['taxrate']!=0){
-                    $iva+=round(($punto['product_price']*$punto['taxrate'])/100);
-                }
-
-                $total+=$punto['product_price'];
-            }
-        }
-
-    }
-    $total+=$iva;
-    
-    $fecha_= $var_factura->invoicedate;
-    $vrm_aux=$vrm;
-    while($vrm_aux>0){
-        $valor_a_colocar=0;
-        if($vrm_aux>=$total){
-            $valor_a_colocar=$total;
-            $vrm_aux=$vrm_aux-$total;
-        }else{
-            $valor_a_colocar=$vrm_aux;
-            $vrm_aux=0;            
-        }
-        $fecha_=date("d-m-Y",strtotime($fecha_."+ 1 month"));
-        $f1 = date(" F ",strtotime($fecha_));
-        echo '<tr class="item' . $flag . '"> 
-                                    <td>' . strftime("%B", strtotime($f1)). '</td>';
-                        echo '<td class="t_center">' . amountExchange(($valor_a_colocar)) . '</td>
+    foreach ($facturas_adelantadas_list as $key => $value) {
+                    echo '<tr class="item' . $flag . '"> 
+                                    <td>' . ucfirst($value['mes']). '</td>';
+                        echo '<td class="t_center">' . amountFormat($value['valor_a_colocar']) . '</td>
                                     </tr>';
     }
 
-
     
-
-//end esto es para el calculo de facturas sin crear al hacer pagos adelantados;
-    }
 }
 /* end codigo pagos adelantados*/
 

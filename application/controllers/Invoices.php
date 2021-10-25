@@ -1190,6 +1190,7 @@ $this->load->model('customers_model', 'customers');
 
         $lista_de_facturas_sin_pagar=$this->db->query('SELECT * FROM `invoices` WHERE csd="'.$data['invoice']['csd'].'" and (status="partial" or status="due")')->result_array();
         $data['lista_de_facturas_sin_pagar']=$lista_de_facturas_sin_pagar;
+        $data['facturas_adelantadas_list']=$this->invocies->calculo_de_facturas_adelantadas($data['vrm'],$data['invoice']['csd']);
         ini_set('memory_limit', '64M');
 
         $html = $this->load->view('invoices/view-print-'.LTR, $data, true);
