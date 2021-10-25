@@ -237,7 +237,7 @@ class Customers extends CI_Controller
         else {
             $id = $this->input->get('id');
             $this->load->library("Uploadhandler_generic", array(
-                'accept_file_types' => '/\.(gif|jpeg|png|docx|docs|txt|pdf|xls)$/i', 'upload_dir' => FCPATH . 'userfiles/attach/', 'upload_url' => base_url() . 'userfiles/attach/'
+                 'upload_dir' => FCPATH . 'userfiles/attach/', 'upload_url' => base_url() . 'userfiles/attach/'//'accept_file_types' => '/\.(gif|jpeg|png|docx|docs|txt|pdf|xls)$/i',
             ));
             $files = (string)$this->uploadhandler_generic->filenaam();
             if ($files != '') {
