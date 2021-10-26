@@ -108,6 +108,7 @@ setlocale(LC_TIME, "spanish");
     $ultima_factura=$this->customers->servicios_detail($csd);
     if(isset($ultima_factura['tid'])){
         $var_factura=$this->db->get_where("invoices",array("tid"=>$ultima_factura['tid']))->row();
+        $ticket_reconexion_internet=$this->db->query("select * from tickets where id_factura=".$ultima_factura['tid']." and (detalle like '%Reconexion Internet%' or detalle like '%Reconexion Combo%')")->result_array();
     if($ultima_factura['combo']!="no" && $ultima_factura['combo']!="" && $ultima_factura['combo']!="-"){
         $internet="";
         $total_factura=0;
@@ -117,7 +118,13 @@ setlocale(LC_TIME, "spanish");
                       $internet=$ultima_factura['paquete'];  
                 }
                     
-            }
+    }else if(count($ticket_reconexion_internet)!=0){
+                if($ultima_factura['estado_combo']=="null" || $ultima_factura['estado_combo']==null){
+                        $internet=$ultima_factura['combo'];  
+                }else{
+                      $internet=$ultima_factura['paquete'];  
+                }
+    }
     $str1=str_replace(" ", "", strtolower($internet));
     $producto_internet=$this->db->query('SELECT * FROM products WHERE lower(REPLACE(product_name," ","")) = "'.$str1.'"')->result_array();
     $producto_internet=$producto_internet[0];
@@ -142,7 +149,7 @@ setlocale(LC_TIME, "spanish");
                 $puntos=intval($ultima_factura['puntos']);
     }
     if($television!=0){
-        if(strpos(strtolower(), strtolower("mocoa"))!==false){
+        if(strpos(strtolower($var_factura->refer), strtolower("mocoa"))!==false){
             $television=159;
         }
         
