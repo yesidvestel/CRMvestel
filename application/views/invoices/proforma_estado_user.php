@@ -377,6 +377,7 @@
 
 
     </table>
+
     <br>
     <?php $estado_de_user="Cancelado"; 
 if(($sub_total+$tax_total)>0){
@@ -394,7 +395,7 @@ if($total_customer==0){
        
         <tr>
             <td class="myco2" rowspan="<?php echo $cols ?>"><br><br><br>
-                <p><?php echo '<strong>' . $this->lang->line('Status') . ': ' . ucwords($estado_de_user).'</strong></p><br><p>Ultima transaccion : ' . amountExchange($transaccion['credit']) . '</p><br><p>Nota : ' . $transaccion['note']; ?></p>
+                <p><?php echo '<strong>' . $this->lang->line('Status') . ': ' . ucwords($estado_de_user).'</strong></p>'; ?>
             </td>
             <td><strong><?php echo $this->lang->line('Summary') ?>:</strong></td>
             <td></td>
@@ -447,10 +448,46 @@ if($total_customer==0){
     echo amountExchange($x);
     echo '</strong></td>
 		</tr>
-		</table><br><div class="sign">'.$this->lang->line('Authorized person').'</div><div class="sign1"></div><div class="sign2">(' . $employee['name'] . ')</div><div class="sign3">' . user_role($employee['roleid']) . '</div> <div class="terms"><hr><strong>' . $this->lang->line('Terms') . ':</strong><br>';
+		</table>
+        <br><div class="sign">'.$this->lang->line('Authorized person').'</div><div class="sign1"></div><div class="sign2">(' . $employee['name'] . ')</div><div class="sign3">' . user_role($employee['roleid']) . '</div> 
+        ';
+?>
+<p class="lead">Ultima Transaccion Realizada:</p>
+                        <table class="plist" cellpadding="0" cellspacing="0">
+                           
+                            <tr class="heading">
+                                <td><?php echo $this->lang->line('Date') ?></td>
+                                <td><?php echo $this->lang->line('Method') ?></td>
+                                <td><?php echo $this->lang->line('Amount') ?></td>
+                                <td><?php echo $this->lang->line('Note') ?></td>
+                            </tr>
+                            
+                            
+                            <?php foreach ($transaccion as $row) {
+                                if($row['estado']=="Anulada" ){
+                                    $row['note']="<span style='color:red;'>Transaccion Anulada</span>";
+                                }else if($this->aauth->get_user()->roleid>=4){
+                                    
+                                }
+                                if($row['type']=="Expense"){
+                                    $row['credit']="-".$row['debit'];
+                                }
+                                echo '<tr class="item mfill">
+                            <td>' . $row['date'] . '</td>
+                            <td>' . $this->lang->line($row['method']) . '</td>
+                            <td>' . amountFormat($row['credit']) . '</td>
+                            <td>' . $row['note'] . '</td>
+                        </tr>';//mfill
+                            } ?>
+                            
+                        </table>
 
+<?php  
+        
+?>
     
-    ?></div>
+
+
 </div>
 </body>
 </html>

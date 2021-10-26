@@ -1335,9 +1335,7 @@ foreach ($lista as $key => $value) {
 
         }
         $data['total_customer']=$total_customer;
-        if(count($data['transaccion'])!=0){
-            $data['transaccion']=$data['transaccion'][0];
-        }
+        
 
 //end cambios nuevos
 
@@ -1351,7 +1349,7 @@ foreach ($lista as $key => $value) {
        $data['employee']=$this->invocies->employee($data['products'][0]['eid']);
         ini_set('memory_limit', '64M');
         $html = $this->load->view('invoices/proforma_estado_user', $data, true);
-        
+        //echo $html;
         
         //PDF Rendering
         $this->load->library('pdf');
