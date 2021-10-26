@@ -254,7 +254,7 @@
             </td>
            
 
-            <?php if ($products[0]['tax'] > 0) echo '<td>' . $this->lang->line('Tax') . '</td>';
+            <?php  echo '<td>' . $this->lang->line('Tax') . '</td>';
 
              ?>
             <td class="t_center">
