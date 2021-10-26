@@ -109,7 +109,7 @@ setlocale(LC_TIME, "spanish");
     if(isset($ultima_factura['tid'])){
         $var_factura=$this->db->get_where("invoices",array("tid"=>$ultima_factura['tid']))->row();
         $ticket_reconexion_internet=$this->db->query("select * from tickets where id_factura=".$ultima_factura['tid']." and (detalle like '%Reconexion Internet%' or detalle like '%Reconexion Combo%')")->result_array();
-    if($ultima_factura['combo']!="no" && $ultima_factura['combo']!="" && $ultima_factura['combo']!="-"){
+    if(($ultima_factura['combo']!="no" && $ultima_factura['combo']!="" && $ultima_factura['combo']!="-") || count($ticket_reconexion_internet)!=0){
         $internet="";
         $total_factura=0;
                 if($ultima_factura['estado_combo']=="null" || $ultima_factura['estado_combo']==null){
@@ -118,12 +118,6 @@ setlocale(LC_TIME, "spanish");
                       $internet=$ultima_factura['paquete'];  
                 }
                     
-    }else if(count($ticket_reconexion_internet)!=0){
-                if($ultima_factura['estado_combo']=="null" || $ultima_factura['estado_combo']==null){
-                        $internet=$ultima_factura['combo'];  
-                }else{
-                      $internet=$ultima_factura['paquete'];  
-                }
     }
     $str1=str_replace(" ", "", strtolower($internet));
     $producto_internet=$this->db->query('SELECT * FROM products WHERE lower(REPLACE(product_name," ","")) = "'.$str1.'"')->result_array();
@@ -139,7 +133,8 @@ setlocale(LC_TIME, "spanish");
     
     $television=0;
     $puntos=0;
-    if($ultima_factura['television']!="no" && $ultima_factura['television']!="" && $ultima_factura['television']!="-" ){
+    $ticket_reconexion_tv=$this->db->query("select * from tickets where id_factura=".$ultima_factura['tid']." and (detalle like '%Reconexion Television%' or detalle like '%Reconexion Combo%')")->result_array();
+    if(($ultima_factura['television']!="no" && $ultima_factura['television']!="" && $ultima_factura['television']!="-" )|| count($ticket_reconexion_tv)!=0){
                 if($ultima_factura['estado_tv']=="null" || $ultima_factura['estado_tv']==null){
                        $television=27;
                         
