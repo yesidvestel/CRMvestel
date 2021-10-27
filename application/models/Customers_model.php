@@ -913,6 +913,9 @@ class Customers_model extends CI_Model
 
         $this->db->from('tickets');
         $this->db->where('tickets.cid', $id);
+        if(isset($_POST['tipo']) && $_POST['tipo']=="pendientes"){
+            $this->db->where("status",'Pendiente');
+        }
         $this->db->join('customers', 'tickets.cid=customers.id', 'left');
 
         $i = 0;

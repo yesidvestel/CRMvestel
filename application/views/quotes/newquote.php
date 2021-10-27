@@ -457,7 +457,58 @@
         </div>
     </div>
 </div>
+
+<div id="modal_pendientes" class="modal fade">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+				<h3 align="center">ORDENES PENDIENTES</h3>
+                
+            </div>
+            <div class="modal-body">
+                <p>Lista </p>
+                
+                    <div class="table-responsive">
+                        <table id="tb_pendientes" class="table table-hover" cellspacing="0" >
+			                <thead>
+			                <tr>
+								<th>#</th>					
+								<th>N° orden</th>	
+			                    <th><?php echo $this->lang->line('Subject') ?></th>
+								<th>Detalle</th>
+			                    <th>F/creada</th>                    
+								<th>F/finalizado</th>					
+			                    <th>Factura</th>
+								<th>Asignado</th>
+								<th>Estado</th>
+			                    <th>Accion</th>
+								
+
+			                </tr>
+			                </thead>
+			                <tbody>
+							
+			                </tbody>
+
+            			</table>
+            		</div>
+                    
+                
+                <br>
+            </div>
+            <div class="modal-footer">
+                
+                
+                <button type="button" class="btn btn-primary" onclick="">Aceptar</button>
+                
+            </div>
+        </div>
+    </div>
+</div>
 <script type="text/javascript">
+	$("#modal_pendientes").modal("show");
     $(function () {
         $('.summernote').summernote({
             height: 100,
@@ -472,6 +523,39 @@
                 ['fullscreen', ['fullscreen']],
                 ['codeview', ['codeview']]
             ]
+        });
+
+        //tabla pendientes 
+         $('#tb_pendientes').DataTable({
+
+            "processing": true,
+            "serverSide": true,
+            "ajax": {
+                'url': "<?php echo site_url('customers/suporlist')?>",				
+                'type': 'POST',
+                'data': {'cid':<?php echo $_GET['id'] ?>,'tipo':'pendientes' }
+            },
+            "columnDefs": [
+                {
+                    "targets": [0],
+                    "orderable": true,
+                },
+            ],
+			"order": [[ 2, "desc" ]],
+                "language": {
+                    "info": "Pagina _PAGE_ de _PAGES_",
+                    "zeroRecords": "No se encontraron resultados",
+                    "processing": "Procesando...",
+                    "lengthMenu": "Mostrar _MENU_ registros",
+                    "search": "Buscar:",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Último",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    },
+                }
+
         });
     });
 	// selecion de orden
