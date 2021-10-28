@@ -55,6 +55,8 @@ class Quote extends CI_Controller
         $head['title'] = "New Quote";
         $head['usernm'] = $this->aauth->get_user()->username;
         $data['warehouse'] = $this->quote->warehouses();
+        $conteo=$this->db->get_where("tickets",array("cid"=>$custid,"status"=>"Pendiente"))->result_array();        
+        $data['conteo_pendientes']=count($conteo);
         $this->load->view('fixed/header', $head);
         $this->load->view('quotes/newquote', $data);
         $this->load->view('fixed/footer');

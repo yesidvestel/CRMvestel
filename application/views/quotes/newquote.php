@@ -501,14 +501,14 @@
             <div class="modal-footer">
                 
                 
-                <button type="button" class="btn btn-primary" onclick="">Aceptar</button>
+                <button type="button" class="btn btn-primary" onclick="$('#modal_pendientes').modal('hide');">Aceptar</button>
                 
             </div>
         </div>
     </div>
 </div>
 <script type="text/javascript">
-	$("#modal_pendientes").modal("show");
+	<?= ($conteo_pendientes>0) ? '$("#modal_pendientes").modal("show");':''?>	
     $(function () {
         $('.summernote').summernote({
             height: 100,
@@ -542,18 +542,24 @@
                 },
             ],
 			"order": [[ 2, "desc" ]],
-                "language": {
-                    "info": "Pagina _PAGE_ de _PAGES_",
-                    "zeroRecords": "No se encontraron resultados",
+                "language":{
                     "processing": "Procesando...",
                     "lengthMenu": "Mostrar _MENU_ registros",
+                    "zeroRecords": "No se encontraron resultados",
+                    "emptyTable": "Ningún dato disponible en esta tabla",
+                    "infoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "infoFiltered": "(filtrado de un total de _MAX_ registros)",
                     "search": "Buscar:",
+                    "infoThousands": ",",
+                    "loadingRecords": "Cargando...",
                     "paginate": {
                         "first": "Primero",
                         "last": "Último",
                         "next": "Siguiente",
                         "previous": "Anterior"
                     },
+                     "info": "Mostrando de _START_ a _END_ de _TOTAL_ entradas"
+
                 }
 
         });
