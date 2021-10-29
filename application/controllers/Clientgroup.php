@@ -657,24 +657,7 @@ class Clientgroup extends CI_Controller
         
         $head['title'] = 'Group View';
         
-        $this->db->select("*");
-        $this->db->from("customers");        
-        $this->db->where("gid",$_GET['id']);
-        $this->db->order_by('id', 'DESC');
-        $lista_customers=$this->db->get()->result();
         
-        $total=count($lista_customers);
-        $x=intval($total/7);
-        //var_dump($x);
-        $array= array('1' => array('start' => $lista_customers[0]->id,'end' => $lista_customers[$x]->id),//11
-            '2' => array('start' => $lista_customers[$x+1]->id,'end' => $lista_customers[$x*2]->id),//12-22
-            '3' => array('start' => $lista_customers[($x*2)+1]->id,'end' => $lista_customers[$x*3]->id),//23-33
-            '4' => array('start' => $lista_customers[($x*3)+1]->id,'end' => $lista_customers[$x*4]->id),//34-44
-            '5' => array('start' => $lista_customers[($x*4)+1]->id,'end' => $lista_customers[$x*5]->id),//45-55
-            '6' => array('start' => $lista_customers[($x*5)+1]->id,'end' => $lista_customers[$x*6]->id),//56-66
-            '7' => array('start' => $lista_customers[($x*6)+1]->id,'end' => $lista_customers[$total-1]->id),//
-        );
-        $data['array_pagination']=$array;
         //var_dump($array);
         $this->load->model('templates_model','templates');
         $data['plantillas'] = $this->templates->get_template();
@@ -2044,6 +2027,9 @@ class Clientgroup extends CI_Controller
         $this->load->model('communication_model');
         $this->communication_model->group_email($recipients, $subject, $message, $attachmenttrue, $attachment);
     }
+    public function cancelar_envio_de_mensajes(){
+        $_COOKIE['cancelar_envio_mensajes']="true";
+    }
     public function sendGroupSms()
     {set_time_limit(400);
         /*$id = $this->input->post('gid');
@@ -2161,16 +2147,21 @@ if ($valido) {
                     $mensajes_a_enviar = trim($mensajes_a_enviar, ',');
                 }
                 //var_dump($mensajes_a_enviar);
-                $var=$api->envio_sms_masivos_por_curl($retorno->getToken(),$mensajes_a_enviar,$name_campaign);        
+                if($_COOKIE['cancelar_envio_mensajes']=="false"){
+                    $var=$api->envio_sms_masivos_por_curl($retorno->getToken(),$mensajes_a_enviar,$name_campaign);            
+                }                
                 //$mensaje=json_decode($var);
                 /*if($mensaje->success==true){
                     $mensaje="Enviado";
                 }else{
                     $mensaje=$mensaje->message;
                 }*/
+
                 $mensaje="Enviado";
             }else{
-                $var=$api->enviar_msm($retorno->getToken(),$number,$message);    
+                if($_COOKIE['cancelar_envio_mensajes']=="false"){
+                    $var=$api->enviar_msm($retorno->getToken(),$number,$message);    
+                }
                 $mensaje=$var->getMessage();
             }
 

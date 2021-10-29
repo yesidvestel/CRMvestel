@@ -117,6 +117,7 @@
   background-color: #1e90ff;
 }
 </style>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 <article class="content content items-list-page">
     <div class="card card-block">
         <div id="notify" class="alert alert-success" style="display:none;">
@@ -769,6 +770,7 @@
                                     for="shortnote"><?php echo $this->lang->line('Message') ?></label>
                             <textarea name="text2" class="form-control" maxlength="250" id="contents2" title="Contents"></textarea></div>
                     </div>
+                    <div align="center"><input type="button" class="btn btn-danger" value="Detener Envio de Mensajes" onclick="cancelar_envio_mensajes();"></div>
 					<div class="row">
                         <div class="col-xs-12 mb-1"><label
                                     for="shortnote">Personalizar</label><br>
@@ -1222,7 +1224,7 @@ if(n_lote_actual_customers<n_lotes_customers){
          var o_data =  $("#sendSMS_form").serialize();
         var action_url= $('#action-urlSMS').val();
 
-
+        $.cookie("cancelar_envio_mensajes", "false");
         sendMail_g(o_data,action_url);
 }
     var n_lotes_customers=1;
@@ -1583,4 +1585,11 @@ $("#estado_multiple").select2();
 $("#barrios_multiple").select2();
 $("#deudores_multiple").select2();
 
+
+function cancelar_envio_mensajes(){
+    $.cookie("cancelar_envio_mensajes","true");
+    $.post(baseurl+"clientgroup/cancelar_envio_de_mensajes",{},function(data){
+
+    });
+}
 </script>                   
