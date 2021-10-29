@@ -21,6 +21,57 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Employee_model extends CI_Model
 {
 
+    
+    var $column_order2 = array('id','name', 'aauth_users.roleid', 'aauth_users.banned', 'aauth_users.last_login');
+    var $column_search2 = array('id','name', 'aauth_users.roleid', 'aauth_users.banned', 'aauth_users.last_login');
+    var $order2 = array('aauth_users.roleid' => 'desc');
+    
+
+ private function _get_datatables_query2()
+    {
+
+        
+        $this->db->select('employee_profile.*,aauth_users.banned,aauth_users.last_login,aauth_users.roleid');
+        $this->db->from('employee_profile');
+        $this->db->join('aauth_users', 'employee_profile.id = aauth_users.id', 'left')
+
+        
+        $i = 0;
+        foreach ($this->column_search2 as $item) // loop column
+        {
+            if ($_POST['search']['value']) // if datatable send POST for search
+            {
+
+                if ($i === 0) // first loop
+                {
+                    $this->db->group_start(); // open bracket. query Where with OR clause better with bracket. because maybe can combine with other WHERE with AND.
+                    $this->db->like($item, $_POST['search']['value']);
+                } else {
+                    $this->db->or_like($item, $_POST['search']['value']);
+                }
+
+                if (count($this->column_search2) - 1 == $i) //last loop
+                    $this->db->group_end(); //close bracket
+            }
+            $i++;
+        }
+
+        if (isset($_POST['order'])) // here order processing
+        {
+            $this->db->order_by($this->column_order2[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);
+        } else if (isset($this->order)) {
+            $order = $this->order2;
+            $this->db->order_by(key($order), $order[key($order)]);
+        }
+    }
+    function get_datatables1()
+    {
+        $this->_get_datatables_query2();
+        if ($this->input->post('length') != -1)
+            $this->db->limit($this->input->post('length'), $this->input->post('start'));
+        $query = $this->db->get();
+        return $query->result();
+    }
     public function list_employee()
     {
         $this->db->select('employee_profile.*,aauth_users.banned,aauth_users.last_login,aauth_users.roleid');

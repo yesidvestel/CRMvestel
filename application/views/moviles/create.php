@@ -59,7 +59,7 @@
                     <th>Role</th>
                     <th><?php echo $this->lang->line('Status') ?></th>
                     <th>Hora ingreso</th>
-                    <th>Agregar</th>
+                    <th>Quitar</th>
                     
 
                 </tr>
@@ -74,7 +74,7 @@
                     <th>Role</th>
                     <th><?php echo $this->lang->line('Status') ?></th>
                     <th>Hora ingreso</th>
-                    <th>Agregar</th>
+                    <th>Quitar</th>
                     
                 </tr>
                 </tfoot>
