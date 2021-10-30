@@ -44,9 +44,27 @@ class Moviles extends CI_Controller
     public function create(){
         $head['usern']=$this->aauth->get_user()->username;
         $head['title']="Nueva Movil";
+        $data_view=array();
         //la idea es que se crea al dar en nueva movil una movil temporal  vacia se le puede cambiar el nombre e ir agregando los empleados al dar guardar se cambia de temporal a nueva movil y aparecera en administrar moviles
+        $temporal_user=$this->db->get_where("moviles",array("id_usuario_crea"=>$this->aauth->get_user()->id,"estado"=>"Temporal"))->row();
+        if(isset($temporal_user)){
+            $data_view['movil_temporal_user']=$temporal_user;
+        }else{
+            $data=array();
+            $data['nombre']="Nueva";
+            $data['estado']="Temporal";
+            $data['id_usuario_crea']=$this->aauth->get_user()->id;
+            $data['fecha_creacion']=date("Y-m-d H:m:s");
+            $this->db->insert("moviles",$data);
+            $temporal_user=$this->db->get_where("moviles",array("id_usuario_crea"=>$this->aauth->get_user()->id,"estado"=>"Temporal"))->row();
+            $data_view['movil_temporal_user']=$temporal_user;
+        }
+
+        
+
+
         $this->load->view("fixed/header",$head);
-        $this->load->view("moviles/create");
+        $this->load->view("moviles/create",$data_view);
         $this->load->view("fixed/footer");
     }
     public function cargar_emptable(){

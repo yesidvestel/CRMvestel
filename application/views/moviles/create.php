@@ -13,7 +13,7 @@
                                        for="pay_cat">Nombre Movil</label>
 
                                 <div class="col-sm-6">                                    
-                                        <input placeholder="Nombre de la Movil" type="text" name="nombre" class="form-control" >
+                                        <input placeholder="Nombre de la Movil" type="text" name="nombre" class="form-control" value="<?=$movil_temporal_user->nombre  ?>">
                                 </div>
                 </div>
                 
