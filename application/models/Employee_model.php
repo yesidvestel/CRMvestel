@@ -23,7 +23,7 @@ class Employee_model extends CI_Model
 
     
     var $column_order2 = array('id','name', 'aauth_users.roleid', 'aauth_users.banned', 'aauth_users.last_login');
-    var $column_search2 = array('id','name', 'aauth_users.roleid', 'aauth_users.banned', 'aauth_users.last_login');
+    var $column_search2 = array('employee_profile.name', 'aauth_users.roleid', 'aauth_users.banned', 'aauth_users.last_login');
     var $order2 = array('aauth_users.roleid' => 'desc');
     
 
@@ -33,7 +33,7 @@ class Employee_model extends CI_Model
         
         $this->db->select('employee_profile.*,aauth_users.banned,aauth_users.last_login,aauth_users.roleid');
         $this->db->from('employee_profile');
-        $this->db->join('aauth_users', 'employee_profile.id = aauth_users.id', 'left')
+        $this->db->join('aauth_users', 'employee_profile.id = aauth_users.id', 'left');
 
         
         $i = 0;
@@ -71,6 +71,18 @@ class Employee_model extends CI_Model
             $this->db->limit($this->input->post('length'), $this->input->post('start'));
         $query = $this->db->get();
         return $query->result();
+    }
+    function count_filtered2()
+    {
+        $this->_get_datatables_query2();
+        $query = $this->db->get();
+        return $query->num_rows();
+    }
+    public function count_all2()
+    {
+        $this->_get_datatables_query2();
+        $query = $this->db->get();      
+        return $query->num_rows();
     }
     public function list_employee()
     {

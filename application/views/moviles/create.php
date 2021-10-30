@@ -88,10 +88,53 @@
     </div>
 </article>
 <script type="text/javascript">
+    var tb;
     $(document).ready(function () {
 
         //datatables
-        $('#emptable').DataTable({});
+        tb=$('#emptable').DataTable({
+
+            "processing": true, //Feature control the processing indicator.
+            "serverSide": true, //Feature control DataTables' server-side processing mode.
+            "order": [], //Initial no order.
+
+            // Load data for the table's content from an Ajax source
+            "ajax": {
+                "url": "<?php echo site_url('moviles/cargar_emptable'); ?>",
+                "type": "POST"
+            },
+
+            //Set column definition initialisation properties.
+            "columnDefs": [
+                {
+                    "targets": [0], //first column / numbering column
+                    "orderable": false, //set not orderable
+                },
+                
+            ],  
+            "language":{
+                    "processing": "Procesando...",
+                    "lengthMenu": "Mostrar _MENU_ registros",
+                    "zeroRecords": "No se encontraron resultados",
+                    "emptyTable": "Ningún dato disponible en esta tabla",
+                    "infoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "infoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "search": "Buscar:",
+                    "infoThousands": ",",
+                    "loadingRecords": "Cargando...",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Último",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    },
+                     "info": "Mostrando de _START_ a _END_ de _TOTAL_ entradas"
+
+                }
+            
+
+        });
+        
          $('#emptable2').DataTable({});
 
 

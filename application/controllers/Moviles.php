@@ -49,4 +49,35 @@ class Moviles extends CI_Controller
         $this->load->view("moviles/create");
         $this->load->view("fixed/footer");
     }
+    public function cargar_emptable(){
+        $this->load->model('employee_model', 'employee');
+        $list = $this->employee->get_datatables1();
+        $data = array();
+        $no = $this->input->post('start');
+        foreach ($list as $key => $empleado) {
+            $no++;
+            $row=array();
+            $row[]=$no;
+            $row[]=$empleado->name;
+            $row[]=user_role($empleado->roleid);
+            $status=$empleado->banned;
+            if ($status == 1) {
+                        $status = 'Deactive';
+            } else {
+                        $status = 'Active';
+            }   
+            $row[]=$status;
+            $row[]=date("g:i a",strtotime($empleado->last_login));;
+            $row[]="<a href='#' type='button' class='btn btn-success'><i class='icon-sort-down'></i> Agregar <i class='icon-sort-down'></a>";
+            $data[]=$row;
+        }
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->employee->count_all2(),
+            "recordsFiltered" => $this->employee->count_filtered2(),
+            "data" => $data,
+        );
+        //output to json format
+        echo json_encode($output);
+    }
 }
