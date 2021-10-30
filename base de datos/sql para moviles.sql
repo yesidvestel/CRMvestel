@@ -26,12 +26,12 @@ CREATE TABLE IF NOT EXISTS `empleados_moviles` (
   INDEX `fk_empleados_moviles_employee_profile1_idx` (`id_empleado` ASC),
   CONSTRAINT `fk_empleados_moviles_moviles1`
     FOREIGN KEY (`id_movil`)
-    REFERENCES `crm2`.`moviles` (`id_movil`)
+    REFERENCES `moviles` (`id_movil`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_empleados_moviles_employee_profile1`
     FOREIGN KEY (`id_empleado`)
-    REFERENCES `crm2`.`employee_profile` (`id`)
+    REFERENCES `employee_profile` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
