@@ -22,7 +22,7 @@ class Employee_model extends CI_Model
 {
 
     
-    var $column_order2 = array('id','name', 'aauth_users.roleid', 'aauth_users.banned', 'aauth_users.last_login');
+    var $column_order2 = array('employee_profile.id','employee_profile.name', 'aauth_users.roleid', 'aauth_users.banned', 'aauth_users.last_login');
     var $column_search2 = array('employee_profile.name', 'aauth_users.roleid', 'aauth_users.banned', 'aauth_users.last_login');
     var $order2 = array('aauth_users.roleid' => 'desc');
     
