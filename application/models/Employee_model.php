@@ -24,7 +24,7 @@ class Employee_model extends CI_Model
     
     var $column_order2 = array('employee_profile.id','employee_profile.name', 'aauth_users.roleid', 'aauth_users.banned', 'aauth_users.last_login');
     var $column_search2 = array('employee_profile.name', 'aauth_users.roleid', 'aauth_users.banned', 'aauth_users.last_login');
-    var $order2 = array('aauth_users.roleid' => 'desc');
+    var $order2 = array('employee_profile.name' => 'asc');
     
 
  private function _get_datatables_query2()
@@ -34,6 +34,14 @@ class Employee_model extends CI_Model
         $this->db->select('employee_profile.*,aauth_users.banned,aauth_users.last_login,aauth_users.roleid');
         $this->db->from('employee_profile');
         $this->db->join('aauth_users', 'employee_profile.id = aauth_users.id', 'left');
+        $this->db->join("empleados_moviles","employee_profile.id = empleados_moviles.id_empleado","left");
+        if($_POST['tb']=="2"){
+            $this->db->where("empleados_moviles.id_movil",$_POST['id_temporal']);    
+        }else{
+            $this->db->where("empleados_moviles.id_movil !=",$_POST['id_temporal']);    
+            $this->db->or_where('empleados_moviles.id_movil');
+        }
+        
 
         
         $i = 0;

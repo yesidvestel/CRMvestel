@@ -89,6 +89,7 @@
 </article>
 <script type="text/javascript">
     var tb;
+    var tb2
     $(document).ready(function () {
 
         //datatables
@@ -100,7 +101,7 @@
 
             // Load data for the table's content from an Ajax source
             "ajax": {
-                "url": "<?php echo site_url('moviles/cargar_emptable'); ?>",
+                "url": "<?php echo site_url('moviles/cargar_emptable')."?tb=1&id_temporal=".$movil_temporal_user->id_movil; ?>",
                 "type": "POST"
             },
 
@@ -135,70 +136,72 @@
 
         });
         
-         $('#emptable2').DataTable({});
+          tb=$('#emptable2').DataTable({
 
+            "processing": true, //Feature control the processing indicator.
+            "serverSide": true, //Feature control DataTables' server-side processing mode.
+            "order": [], //Initial no order.
 
-    });
+            // Load data for the table's content from an Ajax source
+            "ajax": {
+                "url": "<?php echo site_url('moviles/cargar_emptable')."?tb=2&id_temporal=".$movil_temporal_user->id_movil; ?>",
+                "type": "POST"
+            },
 
-    $('.delemp').click(function (e) {
-        e.preventDefault();
-        $('#empid').val($(this).attr('data-object-id'));
+            //Set column definition initialisation properties.
+            "columnDefs": [
+                {
+                    "targets": [0], //first column / numbering column
+                    "orderable": false, //set not orderable
+                },
+                
+            ],  
+            "language":{
+                    "processing": "Procesando...",
+                    "lengthMenu": "Mostrar _MENU_ registros",
+                    "zeroRecords": "No se encontraron resultados",
+                    "emptyTable": "Ningún dato disponible en esta tabla",
+                    "infoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "infoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "search": "Buscar:",
+                    "infoThousands": ",",
+                    "loadingRecords": "Cargando...",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Último",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    },
+                     "info": "Mostrando de _START_ a _END_ de _TOTAL_ entradas"
 
-    });
+                }
+            
+
+        });  
+
+            
+
+    });//end ready
+    var id_movil_temporal="<?=$movil_temporal_user->id_movil ?>";
+$("#emptable").on('draw.dt',function (){
+      $('.cl_agregar').click(function (e) {
+            e.preventDefault();//para prevenir el redireccionamiento y realizar la accion que es agregar a la otra tabla
+            var id_empleado_asignar=$(this).data("id-empleado");    
+            $.post(baseurl+"moviles/agregar_empleado_a_la_movil",{'id_empleado_asignar':id_empleado_asignar,'id_movil_temporal':id_movil_temporal},function(){
+                location.reload();
+            });                           
+      });
+});
+$("#emptable2").on('draw.dt',function (){
+      $('.cl_desvincular').click(function (e) {
+            e.preventDefault();//para prevenir el redireccionamiento y realizar la accion que es agregar a la otra tabla
+            var id_empleado_desvincular=$(this).data("id-empleado");    
+            $.post(baseurl+"moviles/desvincular_empleado_de_la_movil",{'id_empleado_desvincular':id_empleado_desvincular,'id_movil_temporal':id_movil_temporal},function(){
+                location.reload();
+            });                           
+      });
+});
+    
 </script>
 
 
-<div id="delete_model" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                            aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Deactive Employee</h4>
-            </div>
-            <div class="modal-body">
-                <p>Are you sure you want to deactive this account ? <br><strong> It will disable this account access to
-                        user.</strong></p>
-            </div>
-            <div class="modal-footer">
-                <input type="hidden" id="object-id" value="">
-                <input type="hidden" id="action-url" value="employee/disable_user">
-                <button type="button" data-dismiss="modal" class="btn btn-primary" id="delete-confirm">Deactive</button>
-                <button type="button" data-dismiss="modal" class="btn">Cancel</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div id="pop_model" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title"><?php echo $this->lang->line('Delete'); ?></h4>
-            </div>
-
-            <div class="modal-body">
-                <form id="form_model">
-
-
-                    <div class="modal-body">
-                        <p>Are you sure you want to delete this employee? <br><strong> It may interrupt old invoices,
-                                disable account is a better option.</strong></p>
-                    </div>
-                    <div class="modal-footer">
-
-
-                        <input type="hidden" class="form-control required"
-                               name="empid" id="empid" value="">
-                        <button type="button" class="btn btn-default"
-                                data-dismiss="modal"><?php echo $this->lang->line('Close'); ?></button>
-                        <input type="hidden" id="action-url" value="employee/delete_user">
-                        <button type="button" class="btn btn-primary"
-                                id="submit_model"><?php echo $this->lang->line('Delete'); ?></button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>

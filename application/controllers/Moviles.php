@@ -67,8 +67,39 @@ class Moviles extends CI_Controller
         $this->load->view("moviles/create",$data_view);
         $this->load->view("fixed/footer");
     }
+public function agregar_empleado_a_la_movil(){
+    $id_empleado_asignar=$this->input->post("id_empleado_asignar");
+    $id_movil_temporal=$this->input->post("id_movil_temporal");
+    //var_dump($id_empleado_asignar);
+    //var_dump($id_movil_temporal);
+    $validar_empleado_movil=$this->db->get_where("empleados_moviles",array("id_movil"=>$id_movil_temporal,"id_empleado"=>$id_empleado_asignar))->row();
+    if(!isset($validar_empleado_movil)){
+        $data['id_movil']=$id_movil_temporal;
+        $data['id_empleado']=$id_empleado_asignar;
+        echo $this->db->insert("empleados_moviles",$data);
+    }else{
+        echo "ya existe en la movil";
+    }
+}
+public function desvincular_empleado_de_la_movil(){
+ $id_empleado_desvincular=$this->input->post("id_empleado_desvincular");
+    $id_movil_temporal=$this->input->post("id_movil_temporal");
+    //var_dump($id_empleado_asignar);
+    //var_dump($id_movil_temporal);
+    $validar_empleado_movil=$this->db->get_where("empleados_moviles",array("id_movil"=>$id_movil_temporal,"id_empleado"=>$id_empleado_desvincular))->row();
+    if(isset($validar_empleado_movil)){
+       
+        echo $this->db->delete("empleados_moviles",array('id_empleados_moviles'=>$validar_empleado_movil->id_empleados_moviles));
+    }else{
+        echo "ya no existe en la movil";
+    }   
+}
     public function cargar_emptable(){
         $this->load->model('employee_model', 'employee');
+        
+        $_POST['id_temporal']=$_GET['id_temporal'];
+        $_POST['tb']=$_GET['tb'];
+
         $list = $this->employee->get_datatables1();
         $data = array();
         $no = $this->input->post('start');
@@ -85,8 +116,12 @@ class Moviles extends CI_Controller
                         $status = 'Active';
             }   
             $row[]=$status;
-            $row[]=date("g:i a",strtotime($empleado->last_login));;
-            $row[]="<a href='#' type='button' class='btn btn-success'><i class='icon-sort-down'></i> Agregar <i class='icon-sort-down'></a>";
+            $row[]=date("g:i a",strtotime($empleado->last_login));
+            if($_POST['tb']=="1"){
+                $row[]="<a href='' type='button' class='btn btn-success cl_agregar' data-id-empleado='".$empleado->id."'><i class='icon-sort-down'></i> Agregar <i class='icon-sort-down'></a>";
+            }else{
+                $row[]="<a href='' type='button' class='btn btn-danger cl_desvincular' data-id-empleado='".$empleado->id."'><i class='icon-sort-up'></i> Desvincular <i class='icon-sort-up'></a>";
+            }
             $data[]=$row;
         }
         $output = array(
