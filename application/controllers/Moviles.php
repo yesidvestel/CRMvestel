@@ -84,8 +84,6 @@ public function agregar_empleado_a_la_movil(){
 public function desvincular_empleado_de_la_movil(){
  $id_empleado_desvincular=$this->input->post("id_empleado_desvincular");
     $id_movil_temporal=$this->input->post("id_movil_temporal");
-    //var_dump($id_empleado_asignar);
-    //var_dump($id_movil_temporal);
     $validar_empleado_movil=$this->db->get_where("empleados_moviles",array("id_movil"=>$id_movil_temporal,"id_empleado"=>$id_empleado_desvincular))->row();
     if(isset($validar_empleado_movil)){
        
@@ -97,7 +95,7 @@ public function desvincular_empleado_de_la_movil(){
     public function cargar_emptable(){
         $this->load->model('employee_model', 'employee');
         
-        $_POST['id_temporal']=$_GET['id_temporal'];
+        $_POST['id_m_temporal']=$_GET['id_m_temporal'];
         $_POST['tb']=$_GET['tb'];
 
         $list = $this->employee->get_datatables1();

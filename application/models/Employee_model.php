@@ -36,9 +36,9 @@ class Employee_model extends CI_Model
         $this->db->join('aauth_users', 'employee_profile.id = aauth_users.id', 'left');
         $this->db->join("empleados_moviles","employee_profile.id = empleados_moviles.id_empleado","left");
         if($_POST['tb']=="2"){
-            $this->db->where("empleados_moviles.id_movil",$_POST['id_temporal']);    
+            $this->db->where("empleados_moviles.id_movil",$_POST['id_m_temporal']);    
         }else{
-            $this->db->where("empleados_moviles.id_movil !=",$_POST['id_temporal']);    
+            $this->db->where("empleados_moviles.id_movil !=",$_POST['id_m_temporal']);    
             $this->db->or_where('empleados_moviles.id_movil');
         }
         

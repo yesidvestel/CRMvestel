@@ -89,7 +89,7 @@
 </article>
 <script type="text/javascript">
     var tb;
-    var tb2
+    var tb2;
     $(document).ready(function () {
 
         //datatables
@@ -101,7 +101,7 @@
 
             // Load data for the table's content from an Ajax source
             "ajax": {
-                "url": "<?php echo site_url('moviles/cargar_emptable')."?tb=1&id_temporal=".$movil_temporal_user->id_movil; ?>",
+                "url": "<?php echo site_url('moviles/cargar_emptable')."?tb=1&id_m_temporal=".$movil_temporal_user->id_movil; ?>",
                 "type": "POST"
             },
 
@@ -136,7 +136,7 @@
 
         });
         
-          tb=$('#emptable2').DataTable({
+          tb2=$('#emptable2').DataTable({
 
             "processing": true, //Feature control the processing indicator.
             "serverSide": true, //Feature control DataTables' server-side processing mode.
@@ -144,7 +144,7 @@
 
             // Load data for the table's content from an Ajax source
             "ajax": {
-                "url": "<?php echo site_url('moviles/cargar_emptable')."?tb=2&id_temporal=".$movil_temporal_user->id_movil; ?>",
+                "url": "<?php echo site_url('moviles/cargar_emptable')."?tb=2&id_m_temporal=".$movil_temporal_user->id_movil; ?>",
                 "type": "POST"
             },
 
@@ -188,7 +188,8 @@ $("#emptable").on('draw.dt',function (){
             e.preventDefault();//para prevenir el redireccionamiento y realizar la accion que es agregar a la otra tabla
             var id_empleado_asignar=$(this).data("id-empleado");    
             $.post(baseurl+"moviles/agregar_empleado_a_la_movil",{'id_empleado_asignar':id_empleado_asignar,'id_movil_temporal':id_movil_temporal},function(){
-                location.reload();
+                tb.ajax.url(baseurl+"moviles/cargar_emptable?tb=1&id_m_temporal="+id_movil_temporal).load();
+                tb2.ajax.url(baseurl+"moviles/cargar_emptable?tb=2&id_m_temporal="+id_movil_temporal).load();
             });                           
       });
 });
@@ -197,7 +198,8 @@ $("#emptable2").on('draw.dt',function (){
             e.preventDefault();//para prevenir el redireccionamiento y realizar la accion que es agregar a la otra tabla
             var id_empleado_desvincular=$(this).data("id-empleado");    
             $.post(baseurl+"moviles/desvincular_empleado_de_la_movil",{'id_empleado_desvincular':id_empleado_desvincular,'id_movil_temporal':id_movil_temporal},function(){
-                location.reload();
+                tb2.ajax.url(baseurl+"moviles/cargar_emptable?tb=2&id_m_temporal="+id_movil_temporal).load();
+                tb.ajax.url(baseurl+"moviles/cargar_emptable?tb=1&id_m_temporal="+id_movil_temporal).load();
             });                           
       });
 });
