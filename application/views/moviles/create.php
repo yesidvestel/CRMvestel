@@ -5,21 +5,21 @@
 
             <div class="message"></div>
         </div>
-
-        <div class="grid_3 grid_4">
+<form id="formulario_movil" method="post" action="#" >
+        <div class="grid_3 grid_4" id="div_remover">
            
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label"
                                        for="pay_cat">Nombre Movil</label>
 
                                 <div class="col-sm-6">                                    
-                                        <input placeholder="Nombre de la Movil" type="text" name="nombre" class="form-control" value="<?=$movil_temporal_user->nombre  ?>">
+                                        <input placeholder="Nombre de la Movil" type="text" name="nombre" id="nombre" class="form-control" value="<?=$movil_temporal_user->nombre  ?>">
                                 </div>
                 </div>
                 
                 <hr>
             
-            <h5 align="center">Empleados para asignar a la movil</h5>
+            <h5 align="center">Colaboradores para asignar a la movil</h5>
             <table id="emptable" class="display" cellspacing="0" width="100%">
                 <thead>
                 <tr>
@@ -50,7 +50,7 @@
             </table>
             <hr>
             <hr>
-            <h5 align="center">Empleados asignados a la movil</h5>
+            <h5 align="center">Colaboradores asignados a la movil</h5>
             <table id="emptable2" class="display" cellspacing="0" width="100%">
                 <thead>
                 <tr>
@@ -81,15 +81,17 @@
             </table>
             <hr>
             <div align="right">
-                <input type="button" class="btn btn-primary" name="" value="Guardar Movil">
+                <input type="submit" class="btn btn-primary" name="" value="Guardar Movil" >
             </div>
             
         </div>
+   </form>    
     </div>
 </article>
 <script type="text/javascript">
     var tb;
     var tb2;
+    var id_movil_temporal="<?=$movil_temporal_user->id_movil ?>";
     $(document).ready(function () {
 
         //datatables
@@ -182,7 +184,7 @@
             
 
     });//end ready
-    var id_movil_temporal="<?=$movil_temporal_user->id_movil ?>";
+    
 $("#emptable").on('draw.dt',function (){
       $('.cl_agregar').click(function (e) {
             e.preventDefault();//para prevenir el redireccionamiento y realizar la accion que es agregar a la otra tabla
@@ -203,7 +205,20 @@ $("#emptable2").on('draw.dt',function (){
             });                           
       });
 });
+
+$("#formulario_movil").submit(function(e){
+    e.preventDefault();
+    var nombre =  $("#nombre").val();
     
+    $.post(baseurl+"moviles/guardar_movil?id_m_temporal="+id_movil_temporal,{'nombre':nombre},function(data){
+        console.log("asd");
+            $("#notify .message").html("<strong>Succes </strong>: Movil Creada");
+                    $("#notify").removeClass("alert-danger").addClass("alert-success").fadeIn();
+                    $("html, body").scrollTop($("body").offset().top);
+            $("#div_remover").remove();
+    });
+    
+});
 </script>
 
 

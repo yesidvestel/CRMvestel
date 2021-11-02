@@ -131,4 +131,10 @@ public function desvincular_empleado_de_la_movil(){
         //output to json format
         echo json_encode($output);
     }
+    public function guardar_movil(){
+        $nombre=$this->input->post("nombre");
+        $id_movil_temporal=$_GET['id_m_temporal'];
+
+        echo $this->db->update("moviles",array("estado"=>"Activa","nombre"=>$nombre),array("id_movil"=>$id_movil_temporal));
+    }
 }
