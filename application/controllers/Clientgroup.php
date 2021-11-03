@@ -1989,6 +1989,41 @@ class Clientgroup extends CI_Controller
         $this->load->view('fixed/footer');
 
     }
+      public function comprovar_facturas_que_se_van_a_editar(){
+        $lista=$this->db->get_where("invoices",array("notes"=>".","invoicedate"=>"2021-11-01"))->result_array();
+        foreach ($lista as $key => $value) {
+            $query="select * from invoices where csd=".$value['csd']." and tid!='".$value['tid']."' order by id desc limit 1";
+            $l2=$this->db->query($query)->result();
+            foreach ($l2 as $key => $value2) {
+                if($value2->estado_combo=="Suspendido" || $value2->estado_combo=="Cortado"){
+                    var_dump(" este customer ".$value2->csd);
+                  
+                }
+                if($value2->estado_tv=="Suspendido" || $value2->estado_tv=="Cortado"){
+                    var_dump(" este customer ".$value2->csd);
+                } 
+            }
+            
+        }
+    }
+    public function editar_estado_de_facturas_generadas(){
+        set_time_limit(3000);
+        $lista=$this->db->get_where("invoices",array("notes"=>".","invoicedate"=>"2021-11-01"))->result_array();
+        foreach ($lista as $key => $value) {
+            $query="select * from invoices where csd=".$value['csd']." and tid!='".$value['tid']."' order by id desc limit 1";
+            $l2=$this->db->query($query)->result();
+            foreach ($l2 as $key => $value2) {
+                if($value2->estado_combo=="Suspendido" || $value2->estado_combo=="Cortado"){
+                    var_dump(" este customer ".$value2->csd);
+                    $this->db->update("invoices",array("estado_combo"=>$value2->estado_combo),array("tid"=>$value['tid']));
+                }
+                if($value2->estado_tv=="Suspendido" || $value2->estado_tv=="Cortado"){
+                    var_dump(" este customer ".$value2->csd);
+                }   $this->db->update("invoices",array("estado_tv"=>$value2->estado_tv),array("tid"=>$value['tid']));
+            }
+            
+        }
+    }
 
     public function editgroupupdate()
     {
