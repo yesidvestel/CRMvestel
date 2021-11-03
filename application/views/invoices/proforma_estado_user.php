@@ -461,7 +461,7 @@ if($total_customer==0){
 		</tr>
 		</table>
         <br>';
-        if(isset($data['employee'])){
+        if(isset($data['employee']) && isset($employee['name']) ) {
             '<div class="sign">'.$this->lang->line('Authorized person').'</div><div class="sign1"></div><div class="sign2">(' . $employee['name'] . ')</div><div class="sign3">' . user_role($employee['roleid']) . '</div> ';    
         }
         
