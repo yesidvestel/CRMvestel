@@ -246,9 +246,11 @@
                #
             </td>
             <td>
-                <?php echo $this->lang->line('Description') ?>
+                Factura
             </td>
-
+            <td>
+                Items
+            </td>
             <td>
                 <?php echo $this->lang->line('Price') ?>
             </td>
@@ -282,7 +284,7 @@
 
     $sub_t += $row['total'];
     $servicios_asignados="";
-    if ($row['television'] == no ){
+    /*if ($row['television'] == no ){
             $servicios_asignados.= '';
         } else{
                 if($row['estado_tv'] == "Cortado"){
@@ -309,7 +311,14 @@
             $servicios_asignados.=  '';
         } else{
             $servicios_asignados.=  ' mas '.$row['puntos'].' puntos adicionales';
-        }
+        }*/
+        $list_items= $this->db->get_where("invoice_items",array("tid"=>$row['tid']))->result_array();
+       foreach ($list_items as $key => $value) {
+           $servicios_asignados.=$value['product'];
+           if($key<(count($list_items)-1)){
+            $servicios_asignados.=",";
+           }
+       }
         $f1 = date(" F ",strtotime($row['invoicedate']));
         $transacciones_factura=array();
         if($total_customer<0){                                                    
@@ -333,6 +342,7 @@
 
             echo '<tr class="item' . $flag . '"> <td>'.$c.'</td>
                             <td>' . ucfirst(strftime("%B", strtotime($f1))).' CTA : ' . $row['tid'] . '</td>
+                            <td> <code>' . $servicios_asignados.'</code></td>
 							<td style="width:12%;">' . amountExchange($row['subtotal']) . '</td>
                             ';
              $cols++; echo '<td style="width:16%;">' . amountExchange($row['tax']) . ' </td>';

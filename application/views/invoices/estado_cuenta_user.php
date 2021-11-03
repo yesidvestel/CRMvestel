@@ -105,7 +105,7 @@
                                         <th>#</th>
                                         <th>Factura</th>
                                         
-                                        <th class="text-xs-left">Servicios Asignados</th>
+                                        <th class="text-xs-left">Items</th>
                                         <th class="text-xs-left"><?php echo $this->lang->line('Rate') ?></th>
                                         <th class="text-xs-left"><?php echo $this->lang->line('Tax') ?></th>
                                         <th class="text-xs-left"><?php echo $this->lang->line('Discount') ?></th>
@@ -122,7 +122,7 @@
 
                                         $sub_t += $row['total'];
                                         $servicios_asignados="";
-                                        if ($row['television'] == no ){
+                                        /*if ($row['television'] == no ){
                                                     $servicios_asignados.= '';
                                                 } else{
                                                         if($row['estado_tv'] == "Cortado"){
@@ -132,8 +132,8 @@
                                                         }else{
                                                             $servicios_asignados.=  $row['television'];    
                                                         }
-                                                    }
-                                            if ($row['combo'] == no ){
+                                                    }*/
+                                           /* if ($row['combo'] == no ){
                                                     $servicios_asignados.=  '';
                                                 } else{
 
@@ -144,12 +144,20 @@
                                                         }else{
                                                             $servicios_asignados.=  ' mas '.$row['combo'];
                                                         }
-                                                    }
-                                            if ($row['puntos'] == 0 ){
+                                                    }*/
+                                            /*if ($row['puntos'] == 0 ){
                                                     $servicios_asignados.=  '';
                                                 } else{
                                                     $servicios_asignados.=  ' mas '.$row['puntos'].' puntos adicionales';
-                                                }
+                                                }*/
+                                               $list_items= $this->db->get_where("invoice_items",array("tid"=>$row['tid']))->result_array();
+                                               foreach ($list_items as $key => $value) {
+                                                   $servicios_asignados.=$value['product'];
+                                                   if($key<(count($list_items)-1)){
+                                                    $servicios_asignados.=",";
+                                                   }
+                                               }
+
                                                 $f1 = date(" F ",strtotime($row['invoicedate']));
                                                 $transacciones_factura=array();
                                                 if($total_customer<0){                                                    
