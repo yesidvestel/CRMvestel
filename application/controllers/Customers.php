@@ -1218,6 +1218,9 @@ if($data['servicios']['estado']=="Inactivo"){
             $lisa_resivos_agregar_st="";
                                 $transacciones = $this->db->get_where("transactions",array("tid"=>$invoices->tid,"estado"=>null))->result_array();
                                 $lista_de_resivos=json_decode($invoices->resivos_guardados);
+                                if($lista_de_resivos==null){
+                                    $lista_de_resivos=array();
+                                }
                                 foreach ($lista_de_resivos as $key => $value) {
                                     $fecha = new DateTime($value->date);
                                     $lisa_resivos_agregar_st.='<a class="dropdown-item" style="padding:3px 0px;"

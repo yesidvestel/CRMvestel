@@ -284,6 +284,8 @@ $this->load->model('customers_model', 'customers');
                                 }else{
                                     $factura_data['combo']="no";
                                 }
+                                $factura_data['estado_combo']=$value2->estado_combo;
+                                $factura_data['estado_tv']=$value2->estado_tv;
                                 $factura_data['term']=$value2->term;
                                 $factura_data['rec']=$value2->rec;
                                 if($value['usu_estado']=="Compromiso"){
