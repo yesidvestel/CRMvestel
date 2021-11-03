@@ -1347,8 +1347,12 @@ foreach ($lista as $key => $value) {
         
         //$data['invoice'] = $this->invocies->invoice_details($tid, $this->limited);
         //if ($data['invoice']) $data['products'] = $this->invocies->invoice_products($tid);
-        
-       $data['employee']=$this->invocies->employee($data['products'][0]['eid']);
+        if(isset($data['products'][0]['eid'])){
+            $data['employee']=$this->invocies->employee($data['products'][0]['eid']);     
+        }else{
+            $data['employee']=null;
+        }
+       
         ini_set('memory_limit', '64M');
         $html = $this->load->view('invoices/proforma_estado_user', $data, true);
         //echo $html;

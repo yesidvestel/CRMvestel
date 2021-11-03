@@ -367,6 +367,7 @@
             }
             echo '<tr class="item' . $flag . '"> <td>'.$c.'</td>
                             <td>' . ucfirst($value['mes']) . '</td>
+                            <td></td>
                             <td style="width:12%;">' . amountFormat($value['valor_a_colocar'])  . '</td>
                             ';
             $cols++; echo '<td style="width:16%;">' . amountExchange(0) . ' </td>'; 
@@ -459,8 +460,11 @@ if($total_customer==0){
     echo '</strong></td>
 		</tr>
 		</table>
-        <br><div class="sign">'.$this->lang->line('Authorized person').'</div><div class="sign1"></div><div class="sign2">(' . $employee['name'] . ')</div><div class="sign3">' . user_role($employee['roleid']) . '</div> 
-        ';
+        <br>';
+        if(isset($data['employee'])){
+            '<div class="sign">'.$this->lang->line('Authorized person').'</div><div class="sign1"></div><div class="sign2">(' . $employee['name'] . ')</div><div class="sign3">' . user_role($employee['roleid']) . '</div> ';    
+        }
+        
 ?>
 <p class="lead">Ultima Transaccion Realizada:</p>
                         <table class="plist" cellpadding="0" cellspacing="0">
