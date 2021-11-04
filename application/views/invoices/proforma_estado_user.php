@@ -191,12 +191,7 @@
 			<tr>
             <td>Usuario&nbsp;</td><td><?php echo '#' . $id ?></td>
 			</tr>
-			<tr>
-            <td><?php echo $this->lang->line('Invoice Date') ?></td><td><?php echo dateformat($products[0]['invoicedate']) ?></td>
-			</tr>
-			<tr>
-            <td><?php echo $this->lang->line('Due Date') ?></td><td><?php echo dateformat((isset($facturas_adelantadas))? $facturas_adelantadas[count($facturas_adelantadas)-1]['fecha_final'] : $products[count($products)-1]['invoiceduedate']) ?></td>
-			</tr>
+			
 			<?php if($customer->ciudad) { ?>
 			<tr>
             <td><?php echo $this->lang->line('Reference') ?></td><td><?php echo $customer->ciudad ?></td>
