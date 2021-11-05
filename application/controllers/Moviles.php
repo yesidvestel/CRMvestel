@@ -158,7 +158,7 @@ public function desvincular_empleado_de_la_movil(){
             }else{
                 $row[]=date("d-m-Y g:i a",strtotime($movil->fecha_edicion));
             }
-            
+            $row[]=$movil->estado;
             if($movil->estado=="Activa"){
                 $row[]="<a href='' type='button' class='btn btn-success cl_agregar' data-id-empleado='".$movil->id_movil."'><i class='icon-pencil'></i> Editar </a>&nbsp<a href='' type='button' class='btn btn-danger cl_agregar' data-id-empleado='".$movil->id_movil."'><i class='icon-trash'></i></a>";    
             }else{

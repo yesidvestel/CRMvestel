@@ -20,8 +20,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Moviles_model extends CI_Model
 {
-	var $column_order2 = array('moviles.id_movil','moviles.nombre', 'employee_profile.name', 'moviles.fecha_creacion', 'moviles.fecha_edicion');
-    var $column_search2 = array('moviles.id_movil','moviles.nombre', 'employee_profile.name', 'moviles.fecha_creacion', 'moviles.fecha_edicion');
+	var $column_order2 = array('moviles.id_movil','moviles.nombre', 'employee_profile.name', 'moviles.fecha_creacion', 'moviles.fecha_edicion','moviles.estado');
+    var $column_search2 = array('moviles.id_movil','moviles.nombre', 'employee_profile.name', 'moviles.fecha_creacion', 'moviles.fecha_edicion','moviles.estado');
     var $order2 = array('moviles.id_movil' => 'asc');
     var $table="moviles";
 private function _get_datatables_query2()

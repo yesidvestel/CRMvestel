@@ -18,6 +18,7 @@
                     <th>Usuario Creador</th>
                     <th>Fecha Creacion</th>
 					<th>Ultima Edicion</th>
+                    <th>Estado</th>
                     <th>Acciones</th>
 					
 
@@ -34,6 +35,7 @@
                     <th>Usuario Creador</th>
                     <th>Fecha Creacion</th>
                     <th>Ultima Edicion</th>
+                    <th>Estado</th>
                     <th>Acciones</th>
 					
                 </tr>
