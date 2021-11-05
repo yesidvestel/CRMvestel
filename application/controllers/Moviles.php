@@ -36,7 +36,7 @@ class Moviles extends CI_Controller
     }
     public function index(){
         $head['usern']=$this->aauth->get_user()->username;
-        $head['title']="Administrar Movil";
+        $head['title']="Administrar Moviles";
         $this->load->view("fixed/header",$head);
         $this->load->view("moviles/admin");
         $this->load->view("fixed/footer");
@@ -137,4 +137,46 @@ public function desvincular_empleado_de_la_movil(){
 
         echo $this->db->update("moviles",array("estado"=>"Activa","nombre"=>$nombre),array("id_movil"=>$id_movil_temporal));
     }
+    public function cargar_movtable(){
+        $this->load->model('moviles_model', 'moviles');
+        
+
+        $list = $this->moviles->get_datatables1();
+        $data = array();
+        $no = $this->input->post('start');
+        foreach ($list as $key => $movil) {
+            $no++;
+            $row=array();
+            $row[]=$no;
+            $row[]=$movil->id_movil;
+            $row[]=$movil->nombre;
+            $row[]=$movil->name;
+            
+            $row[]=date("d-m-Y g:i a",strtotime($movil->fecha_creacion));
+            if($movil->fecha_edicion==null){
+                $row[]="--";
+            }else{
+                $row[]=date("d-m-Y g:i a",strtotime($movil->fecha_edicion));
+            }
+            
+            if($movil->estado=="Activa"){
+                $row[]="<a href='' type='button' class='btn btn-success cl_agregar' data-id-empleado='".$movil->id_movil."'><i class='icon-pencil'></i> Editar </a>&nbsp<a href='' type='button' class='btn btn-danger cl_agregar' data-id-empleado='".$movil->id_movil."'><i class='icon-trash'></i></a>";    
+            }else{
+                $row[]="<a href='' type='button' class='btn btn-success cl_agregar' data-id-empleado='".$movil->id_movil."'><i class='icon-sort-down'></i> Editar <i class='icon-sort-down'></a><a href='' type='button' class='btn btn-success cl_agregar' data-id-empleado='".$movil->id_movil."'><i class='icon-sort-down'></i> Activar <i class='icon-sort-down'></a>";    
+            }
+
+            
+            $data[]=$row;
+        }
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->moviles->count_all2(),
+            "recordsFiltered" => $this->moviles->count_filtered2(),
+            "data" => $data,
+        );
+        //output to json format
+        echo json_encode($output);
+    }
+
+
 }
