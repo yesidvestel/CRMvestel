@@ -20,9 +20,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Moviles_model extends CI_Model
 {
-	var $column_order2 = array('moviles.id_movil','moviles.nombre', 'employee_profile.name', 'moviles.fecha_creacion', 'moviles.fecha_edicion','moviles.estado');
-    var $column_search2 = array('moviles.id_movil','moviles.nombre', 'employee_profile.name', 'moviles.fecha_creacion', 'moviles.fecha_edicion','moviles.estado');
-    var $order2 = array('moviles.id_movil' => 'asc');
+	var $column_order2 = array("#",'moviles.id_movil','moviles.nombre', 'employee_profile.name', 'moviles.fecha_creacion', 'moviles.fecha_edicion','moviles.estado');
+    var $column_search2 = array("#",'moviles.id_movil','moviles.nombre', 'employee_profile.name', 'moviles.fecha_creacion', 'moviles.fecha_edicion','moviles.estado');
+    var $order2 = array('moviles.id_movil' => 'DESC');
     var $table="moviles";
 private function _get_datatables_query2()
     {
@@ -58,7 +58,7 @@ private function _get_datatables_query2()
         if (isset($_POST['order'])) // here order processing
         {
             $this->db->order_by($this->column_order2[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);
-        } else if (isset($this->order)) {
+        } else if (isset($this->order2)) {
             $order = $this->order2;
             $this->db->order_by(key($order), $order[key($order)]);
         }

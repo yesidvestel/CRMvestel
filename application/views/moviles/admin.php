@@ -92,6 +92,23 @@
 
         });
 
+    $("#movtable").on('draw.dt',function (){
+      $('.cl_desactivar').click(function (e) {
+            e.preventDefault();//para prevenir el redireccionamiento y realizar la accion que es agregar a la otra tabla
+            var id_movil=$(this).data("id-movil");    
+            $.post(baseurl+"moviles/desactivar_activar_movil",{'id_movil':id_movil},function(){
+                tb.ajax.url(baseurl+"moviles/cargar_movtable").load();
+            });                           
+      });
+       $('.cl_editar').click(function (e) {
+            e.preventDefault();//para prevenir el redireccionamiento y realizar la accion que es agregar a la otra tabla
+            var id_movil=$(this).data("id-movil"); 
+            window.location.href =baseurl+"moviles/create?id="+id_movil;
+            
+            
+      });
+});
+
 
     });
 
@@ -99,25 +116,5 @@
 </script>
 
 
-<div id="delete_model" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                            aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Desactivar Movil</h4>
-            </div>
-            <div class="modal-body">
-                <p>Are you sure you want to deactive this account ? <br><strong> It will disable this account access to
-                        user.</strong></p>
-            </div>
-            <div class="modal-footer">
-                <input type="hidden" id="object-id" value="">
-                <input type="hidden" id="action-url" value="">
-                <button type="button" data-dismiss="modal" class="btn btn-primary" id="delete-confirm">Deactive</button>
-                <button type="button" data-dismiss="modal" class="btn">Cancel</button>
-            </div>
-        </div>
-    </div>
-</div>
+
 

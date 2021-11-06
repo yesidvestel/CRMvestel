@@ -46,7 +46,12 @@ class Moviles extends CI_Controller
         $head['title']="Nueva Movil";
         $data_view=array();
         //la idea es que se crea al dar en nueva movil una movil temporal  vacia se le puede cambiar el nombre e ir agregando los empleados al dar guardar se cambia de temporal a nueva movil y aparecera en administrar moviles
-        $temporal_user=$this->db->get_where("moviles",array("id_usuario_crea"=>$this->aauth->get_user()->id,"estado"=>"Temporal"))->row();
+        if(isset($_GET['id'])){
+            $temporal_user=$this->db->get_where("moviles",array("id_movil"=>$_GET['id']))->row();    
+        }else{
+            $temporal_user=$this->db->get_where("moviles",array("id_usuario_crea"=>$this->aauth->get_user()->id,"estado"=>"Temporal"))->row();    
+        }
+        
         if(isset($temporal_user)){
             $data_view['movil_temporal_user']=$temporal_user;
         }else{
@@ -54,7 +59,7 @@ class Moviles extends CI_Controller
             $data['nombre']="Nueva";
             $data['estado']="Temporal";
             $data['id_usuario_crea']=$this->aauth->get_user()->id;
-            $data['fecha_creacion']=date("Y-m-d H:m:s");
+            $data['fecha_creacion']=date("Y-m-d H:i:s");
             $this->db->insert("moviles",$data);
             $temporal_user=$this->db->get_where("moviles",array("id_usuario_crea"=>$this->aauth->get_user()->id,"estado"=>"Temporal"))->row();
             $data_view['movil_temporal_user']=$temporal_user;
@@ -134,8 +139,15 @@ public function desvincular_empleado_de_la_movil(){
     public function guardar_movil(){
         $nombre=$this->input->post("nombre");
         $id_movil_temporal=$_GET['id_m_temporal'];
-
-        echo $this->db->update("moviles",array("estado"=>"Activa","nombre"=>$nombre),array("id_movil"=>$id_movil_temporal));
+        $fs='fecha_creacion';
+        if(isset($_GET["type"])){
+            $fs="fecha_edicion";
+            $data['id_usuario_edita']=$this->aauth->get_user()->id;
+        }
+        $data[$fs]=date("Y-m-d H:i:s");
+        $data['estado']="Activa";
+        $data['nombre']=$nombre;
+        echo $this->db->update("moviles",$data,array("id_movil"=>$id_movil_temporal));
     }
     public function cargar_movtable(){
         $this->load->model('moviles_model', 'moviles');
@@ -160,9 +172,9 @@ public function desvincular_empleado_de_la_movil(){
             }
             $row[]=$movil->estado;
             if($movil->estado=="Activa"){
-                $row[]="<a href='' type='button' class='btn btn-success cl_agregar' data-id-empleado='".$movil->id_movil."'><i class='icon-pencil'></i> Editar </a>&nbsp<a href='' type='button' class='btn btn-danger cl_agregar' data-id-empleado='".$movil->id_movil."'><i class='icon-trash'></i></a>";    
+                $row[]="<a href='moviles/create?id=".$movil->id_movil."' type='button' class='btn btn-success cl_editar' data-id-movil='".$movil->id_movil."'><i class='icon-pencil'></i> Editar </a>&nbsp<a href='' type='button' class='btn btn-danger cl_desactivar' data-id-movil='".$movil->id_movil."'><i class='icon-trash'></i></a>";    
             }else{
-                $row[]="<a href='' type='button' class='btn btn-success cl_agregar' data-id-empleado='".$movil->id_movil."'><i class='icon-sort-down'></i> Editar <i class='icon-sort-down'></a><a href='' type='button' class='btn btn-success cl_agregar' data-id-empleado='".$movil->id_movil."'><i class='icon-sort-down'></i> Activar <i class='icon-sort-down'></a>";    
+                $row[]="<a href='' type='button' class='btn btn-success cl_desactivar' data-id-movil='".$movil->id_movil."'>Activar&nbsp<i class='icon-thumbs-up'></i></a>";    
             }
 
             
@@ -176,6 +188,16 @@ public function desvincular_empleado_de_la_movil(){
         );
         //output to json format
         echo json_encode($output);
+    }
+
+    public function desactivar_activar_movil(){
+        $id_movil=$this->input->post("id_movil");        
+        $movil=$this->db->get_where("moviles",array("id_movil"=>$id_movil))->row();
+        if($movil->estado=="Activa"){
+            $this->db->update("moviles",array("estado"=>"Inactiva"),array("id_movil"=>$id_movil));
+        }else{
+            $this->db->update("moviles",array("estado"=>"Activa"),array("id_movil"=>$id_movil));
+        }
     }
 
 

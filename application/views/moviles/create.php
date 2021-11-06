@@ -209,13 +209,15 @@ $("#emptable2").on('draw.dt',function (){
 $("#formulario_movil").submit(function(e){
     e.preventDefault();
     var nombre =  $("#nombre").val();
-    
-    $.post(baseurl+"moviles/guardar_movil?id_m_temporal="+id_movil_temporal,{'nombre':nombre},function(data){
-        console.log("asd");
-            $("#notify .message").html("<strong>Succes </strong>: Movil Creada");
+    var edicion="<?= (isset($_GET['id'])) ? '&type=edicion':''  ?>"
+    $.post(baseurl+"moviles/guardar_movil?id_m_temporal="+id_movil_temporal+edicion,{'nombre':nombre},function(data){
+            
+            var mensaje ="<?= (isset($_GET['id'])) ? 'Movil Actualizada':'Movil Creada' ?>";
+            $("#notify .message").html("<strong>Succes </strong>: "+mensaje);
                     $("#notify").removeClass("alert-danger").addClass("alert-success").fadeIn();
                     $("html, body").scrollTop($("body").offset().top);
             $("#div_remover").remove();
+            setTimeout(function(){window.location.href =baseurl+"moviles/";},2000);
     });
     
 });
