@@ -38,7 +38,7 @@ class Employee_model extends CI_Model
         if($_POST['tb']=="2"){
             $this->db->where("empleados_moviles.id_movil",$_POST['id_m_temporal']);    
         }else{
-            $this->db->where('employee_profile.id not in ((SELECT id_empleado from empleados_moviles where id_movil=6))');
+            $this->db->where('employee_profile.id not in ((SELECT id_empleado from empleados_moviles where id_movil='.$_POST['id_m_temporal'].'))');
             //$this->db->where("empleados_moviles.id_movil !=",$_POST['id_m_temporal']);    
             //$this->db->where("empleados_moviles.id !=","");    
             //$this->db->or_where('empleados_moviles.id_movil');
