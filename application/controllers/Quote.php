@@ -380,7 +380,7 @@ class Quote extends CI_Controller
 			if ($agendar==actualizar){
 				
 				$data2 = array(					
-					'title' => $detalle.' '.$hora2.' Usuario #'.$abonado->abonado,
+					'title' => 'Usuario #'.$abonado->abonado.' '.$detalle.' '.$hora2,
 					'start' => $start.' '.$hora,            
 					'description' => strip_tags($section),
 					'rol' => $boleta->asignado,
@@ -394,7 +394,7 @@ class Quote extends CI_Controller
 			if ($agendar==si){
 				$data2 = array(
 					'idorden' => $nticket,
-					'title' => $detalle.' '.$hora2.' Usuario #'.$abonado->abonado,
+					'title' => 'Usuario #'.$abonado->abonado.' '.$detalle.' '.$hora2,
 					'start' => $start.' '.$hora,            
 					'description' => strip_tags($section),
 					'rol' => $boleta->asignado,
