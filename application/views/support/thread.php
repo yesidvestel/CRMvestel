@@ -107,12 +107,12 @@
 
                     <div class="col-sm-10">
                         <div class="card card-block"><?php
-                            if ($row['custo']) echo 'Customer <strong>' . $row['custo'] . '</strong> Replied<br><br>';
+                            if ($row['custo']) echo 'Customer <strong>' . $row['custo'] . '</strong> Replied a las' . $row['cdate'] .'<br><br>';
 
-                            if ($row['emp']) echo 'Tecnico <strong>' . $row['emp'] . '</strong> Respondio<br><br>';
+                            if ($row['emp']) echo 'Tecnico <strong>' . $row['emp'] . '</strong> Respondio el ' . $row['cdate'] .'<br><br>';
 
                             echo $row['message'] . '';
-                            if ($row['attach']) echo '<strong>Documentacion: </strong><a href="' . base_url('userfiles/support/' . $row['attach']) . '"><br><br>';?>
+                            if ($row['attach']) echo '<strong><br>Documentacion: </strong><a href="' . base_url('userfiles/support/' . $row['attach']) . '"><br><br>';?>
 							<img width="20%" src="<?php if ($row['attach']) echo  base_url('userfiles/support/' . $row['attach']);?>"/></a><br><br>
 							<a class="btn btn-danger" onclick="eliminar_documento(<?php echo $row['id']?>)" > <i class="icon-trash-o "></i> Eliminar</a>
                             </div>
