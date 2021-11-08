@@ -194,6 +194,7 @@ class Tickets Extends CI_Controller
         $head['usernm'] = $this->aauth->get_user()->username;
         $head['title'] = 'Add Support Reply';		
         $this->load->view('fixed/header', $head);
+            ini_set('memory_limit', '500M');
 
         if ($this->input->post('content')) {
             set_time_limit(200000);
@@ -204,7 +205,7 @@ class Tickets Extends CI_Controller
             if ($attach) {
                 $config['upload_path'] = './userfiles/support';
                 $config['allowed_types'] = 'docx|docs|txt|pdf|xls|png|jpg|jpeg|gif';
-                $config['max_size'] = 3000;
+                $config['max_size'] = 900000;
                 $config['file_name'] = time() . $attach;
                 $crear=true;
               
@@ -224,8 +225,9 @@ class Tickets Extends CI_Controller
                     $this->load->library('upload', $config);
 
                     if (!$this->upload->do_upload('userfile')) {
+                        
                         $data['response'] = 0;
-                        $data['responsetext'] = 'File Upload Error';
+                        $data['responsetext'] = 'File Upload Error 2';
 
                     } else {
                         $data['response'] = 1;
@@ -233,6 +235,10 @@ class Tickets Extends CI_Controller
                         $filename = $this->upload->data()['file_name'];
                         $this->ticket->addreply($thread_id, $message, $filename);
                     }
+                }else{
+                    $data['response'] = 0;
+                    $data['responsetext'] = 'El archivo ya fue subido';
+                    //var_dump($this->upload->display_errors());
                 }
             } else {
                 $crear=true;

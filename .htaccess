@@ -10,3 +10,6 @@ RewriteRule ^(.*)$ index.php?/$1 [L]
 #Header set Pragma "no-cache"
 #Header set Expires "Wed, 11 Jan 1984 05:00:00 GMT"
 #</filesMatch>
+
+php_value upload_max_filesize 50M
+php_value post_max_size 50M
