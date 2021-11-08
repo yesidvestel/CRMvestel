@@ -114,8 +114,10 @@
                             echo $row['message'] . '';
                             if ($row['attach']) echo '<strong><br>Documentacion: </strong><a href="' . base_url('userfiles/support/' . $row['attach']) . '"><br><br>';?>
 							<img width="20%" src="<?php if ($row['attach']) echo  base_url('userfiles/support/' . $row['attach']);?>"/></a><br><br>
+							<?php if ($this->aauth->get_user()->roleid >= 3) { ?>
 							<a class="btn btn-danger" onclick="eliminar_documento(<?php echo $row['id']?>)" > <i class="icon-trash-o "></i> Eliminar</a>
-                            </div>
+                        	<?php } ?>    
+						</div>
 							
                     </div>
                 </div>
