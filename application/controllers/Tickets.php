@@ -1461,7 +1461,7 @@ if($ya_agrego_equipos==false){
             if ($attach) {
                 $config['upload_path'] = './userfiles/support';
                 $config['allowed_types'] = 'docx|docs|txt|pdf|xls|png|jpg|gif';
-                $config['max_size'] = 3000;
+                $config['max_size'] = 900000;
                 $config['file_name'] = time() . $attach;
                 $this->load->library('upload', $config);
 
