@@ -43,11 +43,13 @@ class Tickets Extends CI_Controller
     public function index()
     {
 		$this->load->model("customers_model","customers");
+        $this->load->model('Moviles_model', 'moviles');
         $head['usernm'] = $this->aauth->get_user()->username;
         $head['title'] = 'Support Tickets';
 		$data['tecnicoslista'] = $this->ticket->tecnico_list();
         $data['totalt'] = $this->ticket->ticket_count_all('');
         $data['listaclientgroups'] = $this->customers->group_list();
+        $data['moviles'] = $this->moviles->get_datatables1();
         $this->load->view('fixed/header', $head);
         $this->load->view('support/tickets', $data);
         $this->load->view('fixed/footer');
@@ -157,11 +159,21 @@ class Tickets Extends CI_Controller
     
     public function asignar_ordenes(){
         foreach ($_POST['lista'] as $key => $id_orden) {
-            $datos['asignado']=$_POST['id_tecnico_seleccionado'];
+            
+            if($_POST['id_movil_seleccionada']!=null){
+                $datos['asignacion_movil']=$_POST['id_movil_seleccionada'];
+            }else{
+                $datos['asignado']=$_POST['id_tecnico_seleccionado'];
+            }
             $condicion['codigo']=$id_orden;
             $this->db->update('tickets',$datos,$condicion);
 			
-			$data2['rol']=$_POST['id_tecnico_seleccionado'];
+            if($_POST['id_movil_seleccionada']!=null){
+                $data2['rol']=$_POST['id_movil_seleccionada'];
+            }else{
+                $data2['rol']=$_POST['id_tecnico_seleccionado'];
+            }
+			
 			$condicion2['idorden']=$id_orden;
 			$this->db->update('events',$data2,$condicion2);
         }

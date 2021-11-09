@@ -327,6 +327,7 @@
 					<h6 class="colspan 1">ASIGNAR ORDEN</h6>
 				</div>
 				<div class="col-xs-3 mb-1">
+                    <label>Tecnicos</label>
 					<select name="asignado" id="tecnicos" class="form-control mb-1">
 					<option value="">-</option>
 				<?php
@@ -338,12 +339,33 @@
 					?>
 				</select>
 				</div>
-				<div class="col-xs-2 mb-1">
-					<input type="hidden" id="action-url" value="tickets/update_status">
+                
+				
+
+			</div>
+            <div class="col-md-12">
+               
+            <div class="col-xs-3 mb-1">
+                <label>Moviles</label>
+                    <select name="moviles_asignar" id="moviles_asignar" class="form-control mb-1">
+                   <option value="">-</option>
+                        <?php
+                            foreach ($moviles as $movil) {
+                                $id = $movil->id_movil;
+                                $nombre = $movil->nombre;
+                                echo "<option value='$id'>id#$id - $nombre</option>";
+                            }
+                            ?>
+                </select>
+                </div>
+            </div>
+            <div class="col-md-12">
+            <div class="col-xs-2 mb-1">
+                    <input type="hidden" id="action-url" value="tickets/update_status">
                         <button type="button" class="btn btn-primary"
                                 onclick="asignar_tecnico()">Asignar</button>
-				</div>
-			</div>
+                </div>
+            </div>
 			<?php } ?>
 			</div>
         </div>
@@ -478,8 +500,9 @@
     });
     function asignar_tecnico (){
         var id_tecnico_seleccionado=$("#tecnicos").val();
+        var id_movil_seleccionada=$("#moviles").val();
 	
-        $.post(baseurl+"tickets/asignar_ordenes",{id_tecnico_seleccionado:id_tecnico_seleccionado,lista:lista_ordenes},function(data){
+        $.post(baseurl+"tickets/asignar_ordenes",{id_movil_seleccionada:id_movil_seleccionada,id_tecnico_seleccionado:id_tecnico_seleccionado,lista:lista_ordenes},function(data){
 
                 if(data=="correcto"){
                     var url1=baseurl+"tickets/";

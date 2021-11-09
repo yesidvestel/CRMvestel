@@ -1,4 +1,6 @@
-﻿-----------------------------cambios para poder cambiar variables desde el sistema para ejemplo cellvos o otras integraciones-------------
+﻿
+ALTER TABLE `tickets` ADD `asignacion_movil` INT NULL DEFAULT NULL AFTER `par`;
+-----------------------------cambios para poder cambiar variables desde el sistema para ejemplo cellvos o otras integraciones-------------
 CREATE TABLE IF NOT EXISTS `variables_de_entorno` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `valor` VARCHAR(2000) NULL,

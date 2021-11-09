@@ -42,6 +42,7 @@ class Quote extends CI_Controller
         $this->load->model('plugins_model', 'plugins');
 		$this->load->model('ticket_model', 'ticket');
 		$this->load->model('invoices_model', 'invocies');
+        $this->load->model('Moviles_model', 'moviles');
 		$custid = $this->input->get('id');
         $data['details'] = $this->customers->details($custid);
         $data['exchange'] = $this->plugins->universal_api(5);
@@ -55,6 +56,8 @@ class Quote extends CI_Controller
         $head['title'] = "New Quote";
         $head['usernm'] = $this->aauth->get_user()->username;
         $data['warehouse'] = $this->quote->warehouses();
+        $data['moviles'] = $this->moviles->get_datatables1();
+        //var_dump($data['moviles']);
         $conteo=$this->db->get_where("tickets",array("cid"=>$custid,"status"=>"Pendiente"))->result_array();        
         $data['conteo_pendientes']=count($conteo);
         $this->load->view('fixed/header', $head);
@@ -115,6 +118,7 @@ class Quote extends CI_Controller
 		$agendar = $this->input->post('agendar');
 		$fagenda = $this->input->post('f_agenda');
 		$tec = $this->input->post('tecnico');
+        $movil = $this->input->post('movil');
 		$nomen = $this->input->post('nomenclatura');
 		$nuno = $this->input->post('numero1');
 		$auno = $this->input->post('adicional1');
@@ -149,7 +153,7 @@ class Quote extends CI_Controller
         }
         
         if ($customer_id) {
-        	$this->quote->addticket($customer_id, $gen, $nticket, $subject, $detalle, $created, $problema, $section, $factura,$agendar,$fagenda, $tec, $hora,$hora2,$nomen,$nuno,$auno,$ndos,$ados,$ntres,$local,$barrio,$recider, $refer, $tv,$inter,$punto);
+        	$this->quote->addticket($customer_id, $gen, $nticket, $subject, $detalle, $created, $problema, $section, $factura,$agendar,$fagenda, $tec, $hora,$hora2,$nomen,$nuno,$auno,$ndos,$ados,$ntres,$local,$barrio,$recider, $refer, $tv,$inter,$punto,$movil);
 			
 		}
 
