@@ -848,8 +848,21 @@ function cargar_informacion_lote(dataStatus,dataMensaje){
             
         });
         $("#numerosMasivo").val(lista_cadena);
-        enviar_SMS();
-        
+        console.log($.cookie("cancelar_envio_mensajes"));
+        if( $.cookie("cancelar_envio_mensajes")=="false"){
+            enviar_SMS();
+        }else{
+            n_lote_actual_customers=n_lote_actual_customers-1;
+            console.log($.cookie("cancelar_envio_mensajes"));
+            $("#notify_"+n_lote_actual_customers+" .message_"+n_lote_actual_customers).html("<strong>" + dataStatus + " Lote "+n_lote_actual_customers+" de "+n_lotes_customers+"</strong>: Envio Cancelado");
+            $("#notify_"+n_lote_actual_customers).removeClass("alert-danger").removeClass("alert-success").addClass("alert-warning").fadeIn();
+            $("html, body").animate({scrollTop: $("#notify_"+n_lote_actual_customers).offset().top}, 1000);
+            n_lote_actual_customers++;
+            $("#notify_"+n_lote_actual_customers+" .message_"+n_lote_actual_customers).html("<strong>" + dataStatus + " Lote "+n_lote_actual_customers+" de "+n_lotes_customers+"</strong>: Envio Cancelado");
+            $("#notify_"+n_lote_actual_customers).removeClass("alert-danger").removeClass("alert-success").addClass("alert-warning").fadeIn();
+            $("html, body").animate({scrollTop: $("#notify_"+n_lote_actual_customers).offset().top}, 1000);
+            
+        }   
 
 
     }
@@ -903,7 +916,7 @@ function sendMail_g(o_data,action_url) {
                     
                 }else{
                     setTimeout(function(){ cargar_informacion_lote("Success-sms","Lote Enviado con Exito"); }, 7000);
-                $("#notify .message").html("<strong>" + data.status + "</strong>: " + data.message);
+                $("#notify .message").html("<strong>" + data.status + "</strong>: " + data.message+" *");
                 $("#notify").removeClass("alert-success").addClass("alert-danger").fadeIn();
                 $("html, body").animate({scrollTop: $('body').offset().top}, 1000);
                 }

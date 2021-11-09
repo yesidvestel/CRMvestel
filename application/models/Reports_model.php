@@ -138,6 +138,7 @@ class Reports_model extends CI_Model
         $this->db->from('transactions');
 
         $this->db->where('type', 'Income');
+        $this->db->where('estado');
         $month = date('Y-m');
         $today = date('Y-m-d');
         $this->db->where('DATE(date) >=', "$month-01");
@@ -160,6 +161,7 @@ class Reports_model extends CI_Model
         if ($acid > 0) {
             $this->db->where('acid', $acid);
         }
+        $this->db->where('estado');
         $this->db->where('type', 'Income');
         $this->db->where('DATE(date) >=', $sdate);
         $this->db->where('DATE(date) <=', $edate);
@@ -234,6 +236,7 @@ class Reports_model extends CI_Model
         $this->db->from('transactions');
 
         $this->db->where('type', 'Expense');
+        $this->db->where('estado');
         $month = date('Y-m');
         $today = date('Y-m-d');
         $this->db->where('DATE(date) >=', "$month-01");
@@ -253,6 +256,7 @@ class Reports_model extends CI_Model
 
         $this->db->select_sum('debit');
         $this->db->from('transactions');
+        $this->db->where('estado');
         if ($acid > 0) {
             $this->db->where('acid', $acid);
         }
