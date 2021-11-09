@@ -151,6 +151,7 @@ class Transactions extends CI_Controller
         $this->db->from("transactions");
 		//$this->db->join('customers', 'tickets.cid=customers.id', 'left');
 		$this->db->where('type', 'Income');
+		$this->db->where('estado');
         $this->db->order_by("id","DESC");
         $lista_creditos=$this->db->get()->result();
         $this->load->library('Excel');
