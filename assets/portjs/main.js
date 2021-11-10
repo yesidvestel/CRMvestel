@@ -141,6 +141,7 @@ $(function(){
         catch (e) {
        
         }
+
         
         
 		$('#idorden').val(data.event ? data.event.idorden : '');
@@ -148,6 +149,14 @@ $(function(){
         $('#description').val(data.event ? data.event.description : '');
 		$('#rol').val(data.event ? data.event.rol : '');
         $('#color').val(data.event ? data.event.color : '#3a87ad');		
+        if(typeof data.event!="undefined"){
+                if(data.event.asignacion_movil!=null ){
+                    $.post(baseurl+"Events/get_nombre_movil",{id:data.event.asignacion_movil},function(data){
+                           $('#rol').val(data);
+                    });    
+                }    
+        }
+        
         // Create Butttons
         $.each(data.buttons, function(index, button){
             $('.modal-footer').prepend('<button type="button" id="' + button.id  + '" class="btn ' + button.css + '">' + button.label + '</button>')

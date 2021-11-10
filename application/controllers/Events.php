@@ -57,6 +57,10 @@ class Events extends CI_Controller
         $result = $this->events_model->getEvents($start, $end);
         echo json_encode($result);
     }
+    public function get_nombre_movil(){
+        $var=$this->db->get_where("moviles",array('id_movil'=>$_POST['id']))->row();
+        echo "movil#".$var->id_movil." - ".$var->nombre;
+    }
 
     /*Add new event */
     public function addEvent()
