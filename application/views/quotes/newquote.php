@@ -182,7 +182,9 @@
 													foreach ($moviles as $movil) {
 														$id = $movil->id_movil;
 														$nombre = $movil->nombre;
-														echo "<option value='$id'>id#$id - $nombre</option>";
+														if($movil->estado!="Inactiva"){
+															echo "<option value='$id'>id#$id - $nombre</option>";
+														}
 													}
 													?>
 											</select>
