@@ -176,9 +176,17 @@ class Reports_model extends CI_Model
     {
 		$filtro_tecnico="";
         $fecha =new DateTime($sdate);
-		if ($tec != 'all') {
-        
-            $filtro_tecnico=' and tickets.asignado="'.$tec.'"';
+		  if ($tec != 'all') {
+
+            $emp=$this->db->query("SELECT GROUP_CONCAT(id_movil) as ids FROM `empleados_moviles` join aauth_users on empleados_moviles.id_empleado=aauth_users.id WHERE aauth_users.username ='".$tec."'")->result_array();
+            $in='';
+            if(isset($emp[0]['ids']) && $emp[0]['ids']!=null){
+                $filtro_tecnico=" and (tickets.asignado='".$tec."' or tickets.asignacion_movil in(".$emp[0]['ids']."))";
+                
+            }else{
+                $filtro_tecnico=' and tickets.asignado="'.$tec.'"';    
+            }
+            
         }
         //, datetable.date
         $header_sql='SELECT count(idt) as numero, datetable.date as fecha1 
@@ -287,8 +295,16 @@ class Reports_model extends CI_Model
         $filtro_tecnico="";
         $fecha =new DateTime($sdate);
         if ($tec != 'all') {
-        
-            $filtro_tecnico=' and tickets.asignado="'.$tec.'"';
+
+            $emp=$this->db->query("SELECT GROUP_CONCAT(id_movil) as ids FROM `empleados_moviles` join aauth_users on empleados_moviles.id_empleado=aauth_users.id WHERE aauth_users.username ='".$tec."'")->result_array();
+            $in='';
+            if(isset($emp[0]['ids']) && $emp[0]['ids']!=null){
+                $filtro_tecnico=" and (tickets.asignado='".$tec."' or tickets.asignacion_movil in(".$emp[0]['ids']."))";
+                
+            }else{
+                $filtro_tecnico=' and tickets.asignado="'.$tec.'"';    
+            }
+            
         }
         //, datetable.date
         $header_sql='SELECT count(idt) as numero,YEAR(datetable.date) as year,MONTH(datetable.date) as month
