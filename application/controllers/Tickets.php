@@ -170,6 +170,7 @@ class Tickets Extends CI_Controller
                 $datos['asignacion_movil']=$_POST['id_movil_seleccionada'];
             }else{
                 $datos['asignado']=$_POST['id_tecnico_seleccionado'];
+                $datos['asignacion_movil']=null;
             }
             $condicion['codigo']=$id_orden;
             $this->db->update('tickets',$datos,$condicion);
