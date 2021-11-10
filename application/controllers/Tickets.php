@@ -125,11 +125,17 @@ class Tickets Extends CI_Controller
                  $row[]="Sin Factura";
             }
 			$row[]=$ticket->col;
-            if($ticket->asignado!=null){
+            
+            if($ticket->asignacion_movil!=null || $ticket->asignacion_movil!=''){
+                $movil=$this->db->get_where("moviles",array("id_movil"=>$ticket->asignacion_movil))->row();
+                $row[]="movil#".$movil->id_movil." - ".$movil->nombre;
+            }else{
+                if($ticket->asignado!=null){
                 //$tecnico=$this->db->get_where('aauth_users',array('id'=>$ticket->asignado))->row();
                 $row[]=$ticket->asignado;
-            }else{
-                $row[] = "--";    
+                }else{
+                    $row[] = "--";    
+                }
             }
 			$row[] = $ticket->ciudad;
 			$row[] = $ticket->barrio;

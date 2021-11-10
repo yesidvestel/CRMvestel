@@ -500,7 +500,7 @@
     });
     function asignar_tecnico (){
         var id_tecnico_seleccionado=$("#tecnicos").val();
-        var id_movil_seleccionada=$("#moviles").val();
+        var id_movil_seleccionada=$("#moviles_asignar").val();
 	
         $.post(baseurl+"tickets/asignar_ordenes",{id_movil_seleccionada:id_movil_seleccionada,id_tecnico_seleccionado:id_tecnico_seleccionado,lista:lista_ordenes},function(data){
 

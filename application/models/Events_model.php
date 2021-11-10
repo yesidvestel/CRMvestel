@@ -28,7 +28,16 @@ class Events_model extends CI_Model
 		$us = $this->aauth->get_user()->roleid;
 		$tec = $this->aauth->get_user()->username;
 		$idagendor = $this->aauth->get_user()->id;
-        $sql = "SELECT * FROM events inner join tickets on tickets.codigo=events.idorden WHERE rol='$tec' OR $us>=4 OR asigno='$idagendor' AND events.start BETWEEN ? AND ? ORDER BY events.start  ASC ";
+        //obener lista de moviles en las que esta el usuario para hacer un where in 
+        $emp=$this->db->query("SELECT GROUP_CONCAT(id_movil) as ids FROM `empleados_moviles` WHERE `id_empleado` =".$idagendor)->result_array();
+        $in='';
+        if(isset($emp[0]['ids']) && $emp[0]['ids']!=null){
+            $in="or tickets.asignacion_movil in(".$emp[0]['ids'].")";
+            
+        }
+
+        $sql = "SELECT * FROM events inner join tickets on tickets.codigo=events.idorden WHERE rol='$tec' OR $us>=4 OR asigno='$idagendor' ".$in." AND events.start BETWEEN ? AND ? ORDER BY events.start  ASC ";
+        
         return $this->db->query($sql, array($start, $end))->result();
 		
     }
