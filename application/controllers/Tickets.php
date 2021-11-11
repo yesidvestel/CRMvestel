@@ -186,7 +186,14 @@ class Tickets Extends CI_Controller
         }
         echo "correcto";
     }
-
+    public function guardar_datos_firma(){
+        $data['nombre_firma']=$_POST['nombre'];
+        $data['cc_firma']=$_POST['cc'];
+        $data['parentesco_firma']=$_POST['parentesco'];
+        $this->db->update("tickets",$data,array("codigo"=>$_GET['codigo']));
+        echo "Guardado";
+        
+    }
     public function ticket_stats()
     {
 

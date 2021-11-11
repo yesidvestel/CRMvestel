@@ -29,7 +29,7 @@
       <canvas></canvas>
     </div>
     <div class="signature-pad--footer">
-      <div class="description">Firma Digital Contrato</div>
+      <div class="description"><?= (isset($type) && $type=="orden") ? 'Firma digital usuario que resive' : 'Firma Digital Contrato'?></div>
 
       <div class="signature-pad--actions">
         <div>
@@ -42,6 +42,7 @@
           
           <form id="form" action="<?=base_url()?>customers/save_firma" method="post">
         <input type="hidden" name="customer_id" value="<?php echo $id; ?>">
+        <input type="hidden" name="type" value="<?php echo $type; ?>">
         <input type="hidden" name="base64" value="" id="base64">
         <button id="saveandfinish" class="btn btn-success">Guardar y Finalizar</button>
     </form>

@@ -205,8 +205,54 @@
 
             </form>
         </div>
-			
+	<hr style="height:1px;border:none;color:#333;background-color:#333;">
+    <hr style="height:1px;border:none;color:#333;background-color:#333;">
+    <h1>Firma de quien resive</h1>
+    <div class="form-group row">
+            <label class="col-sm-2 col-form-label"
+                               for="pay_cat">Nombre Completo</label>
+
+                        <div class="col-sm-6">                                    
+                                <input placeholder="Nombre Completo Quien Resive" type="text" name="nombre" id="nombre" class="form-control" value="<?=$orden->nombre_firma ?>">
+                        </div>
+
     </div>
+     <div class="form-group row">
+            <label class="col-sm-2 col-form-label"
+                               for="pay_cat">Cedula</label>
+
+                        <div class="col-sm-6">                                    
+                                <input placeholder="Cedula" type="text" name="Cedula" id="Cedula" class="form-control" value="<?=$orden->cc_firma ?>">
+                        </div>
+                        
+    </div>
+    <div class="form-group row">
+            <label class="col-sm-2 col-form-label"
+                               for="pay_cat">Parentesto</label>
+
+                        <div class="col-sm-6">                                    
+                                <input placeholder="Parentesto" type="text" name="Parentesto" id="Parentesto" class="form-control" value="<?=$orden->parentesco_firma ?>">
+                        </div>
+                        
+    </div>
+
+    <div class="form-group row">
+            
+
+                        <div class="col-sm-6">                                    
+                                <img onerror="this.style.display='none'" src="<?=base_url()."assets/firmas_digitales/orden_".$thread_info['codigo'].".png"; ?>">
+                        </div>
+
+                        
+    </div>
+    <div id="notify_firma" class="alert alert-success" style="display:none;">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+
+            <div class="message"><strong>Success:</strong> Datos de quien resive guardados</div>
+        </div>
+    <a href="<?=base_url().'customers/firmadigital?id='.$thread_info['codigo'].'&type=orden' ?>" class="btn btn-primary">Agregar Firma</a><br><br> <a id="guardar_datos_firma" href="#" class="btn btn-success">Guardar</a>
+    </div>
+
     <div id="pop_model5" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -269,6 +315,7 @@
 
 </article>
 <script type="text/javascript">
+    
     $(function () {
         $('.summernote').summernote({
             height: 250,
@@ -285,6 +332,7 @@
             ]
         });
     });
+
 </script>
 
 <script type="text/javascript">
@@ -689,5 +737,16 @@ console.log(itemSeleccionado);
 
     }
 
+$("#guardar_datos_firma").click(function(ev){
+        ev.preventDefault();
+        var nombre=$("#nombre").val();
+        var cc=$("#Cedula").val();
+        var parentesco=$("#Parentesto").val();
+        var url=baseurl+"tickets/guardar_datos_firma?codigo=<?=$thread_info['codigo']?>";
+        $.post(url,{'nombre':nombre,'cc':cc,'parentesco':parentesco},function(data){
+            console.log(data);
+            $("#notify_firma").fadeIn(1000).fadeOut(7000);
+        });
+});
     
 </script>
