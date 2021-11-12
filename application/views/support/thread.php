@@ -251,7 +251,7 @@
 
             <div class="message"><strong>Success:</strong> Datos de quien resive guardados</div>
         </div>
-    <a href="<?=base_url().'customers/firmadigital?id='.$thread_info['codigo'].'&type=orden' ?>" class="btn btn-primary">Agregar Firma</a><br><br> <a id="guardar_datos_firma" href="#" class="btn btn-success">Guardar</a>
+    <a id="firma_link" href="<?=base_url().'customers/firmadigital?id='.$thread_info['codigo'].'&type=orden' ?>" class="btn btn-primary">Agregar Firma</a><br><br> <a id="guardar_datos_firma" href="#" class="btn btn-success">Guardar</a>
 </div>
     <br>
 <div id="bloque_firmas_estatico" <?=($orden->nombre_firma==null || $orden->nombre_firma=="") ? 'style="display:none;"':'' ?> >
@@ -763,25 +763,34 @@ console.log(itemSeleccionado);
 
 $("#guardar_datos_firma").click(function(ev){
         ev.preventDefault();
-        var nombre=$("#nombre").val();
+        guardar_datos_firma(1);
+});
+function guardar_datos_firma(use){
+    var nombre=$("#nombre").val();
         var cc=$("#Cedula").val();
         var parentesco=$("#Parentesto").val();
         var url=baseurl+"tickets/guardar_datos_firma?codigo=<?=$thread_info['codigo']?>";
         $.post(url,{'nombre':nombre,'cc':cc,'parentesco':parentesco},function(data){
             console.log(data);
-            $("#notify_firma").fadeIn(1000).fadeOut(3000,'swing',function(){
-                 $("#bloque_firmas_edicion").hide();
-                 $("#i_nombre").text(nombre);
-                 $("#i_cc").text(cc);
-                 $("#i_parentesco").text(parentesco);
-                 $("#bloque_firmas_estatico").show();   
-            });
+            if(use==1){
+                    $("#notify_firma").fadeIn(1000).fadeOut(3000,'swing',function(){
+                     $("#bloque_firmas_edicion").hide();
+                     $("#i_nombre").text(nombre);
+                     $("#i_cc").text(cc);
+                     $("#i_parentesco").text(parentesco);
+                     $("#bloque_firmas_estatico").show();   
+                });    
+            }
+            
         });
-});
+}
 $("#btn-habilitar-edicion").click(function(ev){
     ev.preventDefault();
     $("#bloque_firmas_edicion").show();
     $("#bloque_firmas_estatico").hide();    
+});
+$("#firma_link").click(function(ev){
+        guardar_datos_firma(2);
 });
     
 </script>
