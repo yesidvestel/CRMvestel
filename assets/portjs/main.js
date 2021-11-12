@@ -150,7 +150,7 @@ $(function(){
 		$('#rol').val(data.event ? data.event.rol : '');
         $('#color').val(data.event ? data.event.color : '#3a87ad');		
         if(typeof data.event!="undefined"){
-                if(data.event.asignacion_movil!=null ){
+                if(data.event.asignacion_movil!=null && data.event.asignacion_movil!="0"){
                     $.post(baseurl+"Events/get_nombre_movil",{id:data.event.asignacion_movil},function(data){
                            $('#rol').val(data);
                     });    

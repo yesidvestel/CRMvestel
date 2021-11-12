@@ -193,7 +193,9 @@ class Quote_model extends CI_Model
 			}
 		$start = new DateTime($fagenda);
         $nticket=($this->lastquote())+1;
-		
+		if($movil==0){
+            $movil=null;
+        }
         $data = array(
 			'codigo' => $nticket,
             'subject' => $subject,
