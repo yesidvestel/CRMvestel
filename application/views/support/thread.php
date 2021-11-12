@@ -208,6 +208,7 @@
 	<hr style="height:1px;border:none;color:#333;background-color:#333;">
     <hr style="height:1px;border:none;color:#333;background-color:#333;">
     <h1>Firma de quien resive</h1>
+    <div id="bloque_firmas_edicion" <?=($orden->nombre_firma!=null || $orden->nombre_firma!="") ? 'style="display:none;"':'' ?>>
     <div class="form-group row">
             <label class="col-sm-2 col-form-label"
                                for="pay_cat">Nombre Completo</label>
@@ -240,7 +241,7 @@
             
 
                         <div class="col-sm-6">                                    
-                                <img onerror="this.style.display='none'" src="<?=base_url()."assets/firmas_digitales/orden_".$thread_info['codigo'].".png"; ?>">
+                                <img onerror="this.style.display='none'" src="<?=base_url()."assets/firmas_digitales/orden_".$thread_info['codigo'].".png?".microtime(); ?>">
                         </div>
 
                         
@@ -251,6 +252,29 @@
             <div class="message"><strong>Success:</strong> Datos de quien resive guardados</div>
         </div>
     <a href="<?=base_url().'customers/firmadigital?id='.$thread_info['codigo'].'&type=orden' ?>" class="btn btn-primary">Agregar Firma</a><br><br> <a id="guardar_datos_firma" href="#" class="btn btn-success">Guardar</a>
+</div>
+    <br>
+<div id="bloque_firmas_estatico" <?=($orden->nombre_firma==null || $orden->nombre_firma=="") ? 'style="display:none;"':'' ?> >
+    <img onerror="this.style.display='none'" src="<?=base_url()."assets/firmas_digitales/orden_".$thread_info['codigo'].".png?".microtime(); ?>">
+    <table >
+    <tr>
+        <td><h5>Nombre Completo</h5></td>
+        <td width="15px;"></td>
+        <td style="vertical-align: top;" id="i_nombre"><i><?=$orden->nombre_firma ?></i></td>
+    </tr>
+    <tr>
+        <td><h5>Cedula</h5></td>
+        <td width="15px;"></td>
+        <td style="vertical-align: top;"><i id="i_cc"> <?=$orden->cc_firma ?></i></td>
+    </tr>
+    <tr>
+        <td><h5>Parentesco</h5></td>
+        <td width="15px;"></td>
+        <td style="vertical-align: top;"><i id="i_parentesco"> <?=$orden->parentesco_firma ?></i></td>
+    </tr>
+</table>
+<a href="#" class="btn btn-success" id="btn-habilitar-edicion">Habilitar Edicion</a>
+</div>
     </div>
 
     <div id="pop_model5" class="modal fade">
@@ -745,8 +769,19 @@ $("#guardar_datos_firma").click(function(ev){
         var url=baseurl+"tickets/guardar_datos_firma?codigo=<?=$thread_info['codigo']?>";
         $.post(url,{'nombre':nombre,'cc':cc,'parentesco':parentesco},function(data){
             console.log(data);
-            $("#notify_firma").fadeIn(1000).fadeOut(7000);
+            $("#notify_firma").fadeIn(1000).fadeOut(3000,'swing',function(){
+                 $("#bloque_firmas_edicion").hide();
+                 $("#i_nombre").text(nombre);
+                 $("#i_cc").text(cc);
+                 $("#i_parentesco").text(parentesco);
+                 $("#bloque_firmas_estatico").show();   
+            });
         });
+});
+$("#btn-habilitar-edicion").click(function(ev){
+    ev.preventDefault();
+    $("#bloque_firmas_edicion").show();
+    $("#bloque_firmas_estatico").hide();    
 });
     
 </script>
