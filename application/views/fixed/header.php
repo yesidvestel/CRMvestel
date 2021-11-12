@@ -1019,6 +1019,24 @@
                         </li>
                     </ul>
                 </li>
+				<!--- moviles --->
+                <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "moviles") {
+                    echo ' open';
+                } ?>">
+                    <a href=""> <i class="icon-sitemap"></i><span
+                                class="menu-title">Moviles</span><i
+                                class="fa arrow"></i> </a>
+                    <ul class="menu-content">
+                        <li>
+                            <a href="<?php echo base_url(); ?>moviles/create"><?php echo $this->lang->line(''); ?>Nueva movil</a>
+                        </li>                        
+                        <li>
+                            <a href="<?php echo base_url(); ?>moviles">Administrar Moviles</a>
+                        </li>
+
+
+                    </ul>
+                </li>
 			<!---------------- GESTION DE PROYECTOS ----------------->
                 <li class="navigation-header"><span>Tareas</span><i
                             data-toggle="tooltip" data-placement="right"
