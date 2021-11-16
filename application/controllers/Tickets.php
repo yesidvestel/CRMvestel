@@ -750,7 +750,7 @@ if($ya_agrego_equipos==false){
 		if($ciudad==YOPAL || $ciudad==Yopal){
 		$employee = 65;
 		}if($ciudad==Monterrey){
-			$employee = 44;
+			$employee = 77;
 		}if($ciudad==Villanueva){
 			$employee = 66;
 		}
