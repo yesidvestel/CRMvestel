@@ -417,7 +417,7 @@ class Clientgroup extends CI_Controller
                             }*/
                    // }
                     if( isset($filtro_deudores_multiple_2['1mes'])){
-                        if($fact_valida && $debe_customer==$invoice->total && $customer_moroso==false){
+                        if($fact_valida && $debe_customer==$invoice->total && $customer_moroso==false && $invoice->total>0){
                             $customer_moroso=true;
                             $valor_ultima_factura=$invoice->total;
                             break;                    
@@ -429,7 +429,7 @@ class Clientgroup extends CI_Controller
                         }
                     }
                      if( isset($filtro_deudores_multiple_2['masdeunmes'])){
-                        if($fact_valida && $debe_customer>$invoice->total && $customer_moroso==false){
+                        if($fact_valida && $debe_customer>$invoice->total && $customer_moroso==false && $invoice->total>0){
                             $customer_moroso=true;
                             $valor_ultima_factura=$invoice->total;
                             break;                    
@@ -441,7 +441,7 @@ class Clientgroup extends CI_Controller
                         }
                     }
                      if(isset($filtro_deudores_multiple_2['2meses'])){
-                        if($fact_valida && $debe_customer>=($invoice->total*2) && $customer_moroso==false){
+                        if($fact_valida && $debe_customer>=($invoice->total*2) && $customer_moroso==false && $invoice->total>0){
                             $customer_moroso=true;
                             $valor_ultima_factura=$invoice->total;
                             break;                    
@@ -453,7 +453,7 @@ class Clientgroup extends CI_Controller
                         }
                     }
                      if( isset($filtro_deudores_multiple_2['3y4meses'])){
-                        if($fact_valida && $debe_customer>=($invoice->total*3) && $customer_moroso==false){
+                        if($fact_valida && $debe_customer>=($invoice->total*3) && $customer_moroso==false && $invoice->total>0){
                             $customer_moroso=true;
                             $valor_ultima_factura=$invoice->total;
                             break;                    
@@ -465,7 +465,7 @@ class Clientgroup extends CI_Controller
                         }
                     }
                      if( isset($filtro_deudores_multiple_2['Todos'])){
-                        if($fact_valida && $debe_customer>0 && $customer_moroso==false){
+                        if($fact_valida && $debe_customer>0 && $customer_moroso==false && $invoice->total>0){
                             $customer_moroso=true;
                             $valor_ultima_factura=$invoice->total;
                             break;                    
@@ -477,7 +477,7 @@ class Clientgroup extends CI_Controller
                         }
                     }
                      if(isset($filtro_deudores_multiple_2['saldoaFavor'])){
-                        if($fact_valida && $debe_customer<0 && $customer_moroso==false){
+                        if($fact_valida && $debe_customer<0 && $customer_moroso==false && $invoice->total>0){
                             $customer_moroso=true;
                             $valor_ultima_factura=$invoice->total;
                             break;                    
@@ -1125,7 +1125,7 @@ class Clientgroup extends CI_Controller
                             }*/
                    // }
                     if( isset($filtro_deudores_multiple_2['1mes'])){
-                        if($fact_valida && $debe_customer==$invoice->total && $customer_moroso==false){
+                        if($fact_valida && $debe_customer==$invoice->total && $customer_moroso==false && $invoice->total>0){
                             $customer_moroso=true;
                             $valor_ultima_factura=$invoice->total;
                             break;                    
@@ -1138,7 +1138,7 @@ class Clientgroup extends CI_Controller
                         }
                     }
                      if( isset($filtro_deudores_multiple_2['masdeunmes'])){
-                        if($fact_valida && $debe_customer>$invoice->total && $customer_moroso==false){
+                        if($fact_valida && $debe_customer>$invoice->total && $customer_moroso==false && $invoice->total>0){
                             $customer_moroso=true;
                             $valor_ultima_factura=$invoice->total;
                             break;                    
@@ -1150,7 +1150,7 @@ class Clientgroup extends CI_Controller
                         }
                     }
                      if(isset($filtro_deudores_multiple_2['2meses'])){
-                        if($fact_valida && $debe_customer>=($invoice->total*2) && $customer_moroso==false){
+                        if($fact_valida && $debe_customer>=($invoice->total*2) && $customer_moroso==false && $invoice->total>0){
                             $customer_moroso=true;
                             $valor_ultima_factura=$invoice->total;
                             break;                    
@@ -1162,7 +1162,7 @@ class Clientgroup extends CI_Controller
                         }
                     }
                      if( isset($filtro_deudores_multiple_2['3y4meses'])){
-                        if($fact_valida && $debe_customer>=($invoice->total*3) && $customer_moroso==false){
+                        if($fact_valida && $debe_customer>=($invoice->total*3) && $customer_moroso==false && $invoice->total>0){
                             $customer_moroso=true;
                             $valor_ultima_factura=$invoice->total;
                             break;                    
@@ -1174,7 +1174,7 @@ class Clientgroup extends CI_Controller
                         }
                     }
                      if( isset($filtro_deudores_multiple_2['Todos'])){
-                        if($fact_valida && $debe_customer>0 && $customer_moroso==false){
+                        if($fact_valida && $debe_customer>0 && $customer_moroso==false && $invoice->total>0){
                             $customer_moroso=true;
                             $valor_ultima_factura=$invoice->total;
                             break;                    
@@ -1186,7 +1186,7 @@ class Clientgroup extends CI_Controller
                         }
                     }
                      if(isset($filtro_deudores_multiple_2['saldoaFavor'])){
-                        if($fact_valida && $debe_customer<0 && $customer_moroso==false){
+                        if($fact_valida && $debe_customer<0 && $customer_moroso==false && $invoice->total>0){
                             $customer_moroso=true;
                             $valor_ultima_factura=$invoice->total;
                             break;                    
@@ -1781,7 +1781,7 @@ class Clientgroup extends CI_Controller
                             }*/
                    // }
                     if(isset($filtro_deudores_multiple_2['1mes'])){
-                        if($fact_valida && $debe_customer==$invoice->total && $customer_moroso==false){
+                        if($fact_valida && $debe_customer==$invoice->total && $customer_moroso==false && $invoice->total>0){
                             $customer_moroso=true;
                             $valor_ultima_factura=$invoice->total;
                             break;                    
@@ -1794,7 +1794,7 @@ class Clientgroup extends CI_Controller
                         }
                     }
                      if( isset($filtro_deudores_multiple_2['masdeunmes'])){
-                        if($fact_valida && $debe_customer>$invoice->total && $customer_moroso==false){
+                        if($fact_valida && $debe_customer>$invoice->total && $customer_moroso==false && $invoice->total>0){
                             $customer_moroso=true;
                             $valor_ultima_factura=$invoice->total;
                             break;                    
@@ -1807,7 +1807,7 @@ class Clientgroup extends CI_Controller
                         }
                     }
                      if( isset($filtro_deudores_multiple_2['2meses'])){
-                        if($fact_valida && $debe_customer>=($invoice->total*2) && $customer_moroso==false){
+                        if($fact_valida && $debe_customer>=($invoice->total*2) && $customer_moroso==false && $invoice->total>0){
                             $customer_moroso=true;
                             $valor_ultima_factura=$invoice->total;
                             break;                    
@@ -1820,7 +1820,7 @@ class Clientgroup extends CI_Controller
                         }
                     }
                      if( isset($filtro_deudores_multiple_2['3y4meses'])){
-                        if($fact_valida && $debe_customer>=($invoice->total*3) && $customer_moroso==false){
+                        if($fact_valida && $debe_customer>=($invoice->total*3) && $customer_moroso==false && $invoice->total>0){
                             $customer_moroso=true;
                             $valor_ultima_factura=$invoice->total;
                             break;                    
@@ -1833,7 +1833,7 @@ class Clientgroup extends CI_Controller
                         }
                     }
                      if( isset($filtro_deudores_multiple_2['Todos'])){
-                        if($fact_valida && $debe_customer>0 && $customer_moroso==false){
+                        if($fact_valida && $debe_customer>0 && $customer_moroso==false && $invoice->total>0){
                             $customer_moroso=true;
                             $valor_ultima_factura=$invoice->total;
                             break;                    
@@ -1845,7 +1845,7 @@ class Clientgroup extends CI_Controller
                             
                         }
                     }
-                     if( isset($filtro_deudores_multiple_2['saldoaFavor'])){
+                     if( isset($filtro_deudores_multiple_2['saldoaFavor']) && $invoice->total>0){
                         if($fact_valida && $debe_customer<0 && $customer_moroso==false){
                             $customer_moroso=true;
                             $valor_ultima_factura=$invoice->total;
