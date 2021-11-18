@@ -317,7 +317,7 @@ class Customers extends CI_Controller
         $data['activity']=$this->customers->activity($custid);
 		$data['attach'] = $this->customers->attach($custid);
         
-        $data['estado_mikrotik']=$this->customers->get_estado_mikrotik($data['details']['name_s'],$data['details']['gid']);        
+        $data['estado_mikrotik']=$this->customers->get_estado_mikrotik($data['details']['name_s'],$data['details']['gid'],$data['details']['tegnologia_instalacion']);        
         $this->customers->actualizar_debit_y_credit($custid);
         if($data['servicios']['estado_combo']=="Cortado"){
             $data['servicios']['combo']=$data['servicios']['combo']="<b><i class='sts-Cortado'>".$data['servicios']['paquete']."</i></b>";   
@@ -720,12 +720,13 @@ if($data['servicios']['estado']=="Inactivo"){
         echo json_encode($output);
     }
     public function edita_estado_usuario(){
-        $this->customers->editar_estado_usuario($_GET['username'],$_GET['id_sede']);
+        $customer1=$this->db->get_where("customers",array("id"=>$id_cm))->row();
+        $this->customers->editar_estado_usuario($_GET['username'],$_GET['id_sede'],$customer1->tegnologia_instalacion);
         redirect(base_url()."customers/view?id=".$_GET['id_cm']);
     }
 
     public function validar_user_name(){
-        $resultado =$this->customers->validar_user_name($_POST['username'],$_POST['sede']);
+        $resultado =$this->customers->validar_user_name($_POST['username'],$_POST['sede'],$_POST['tegnologia_instalacion']);
         if($resultado==null){
             echo "disponible";
         }else{
@@ -756,7 +757,7 @@ if($data['servicios']['estado']=="Inactivo"){
 
     }
     public function get_comentario_mikrotik(){
-        $username=$this->customers->obtener_comentario_mikrotik($this->input->post("username"),$this->input->post("customergroup"));
+        $username=$this->customers->obtener_comentario_mikrotik($this->input->post("username"),$this->input->post("customergroup"),$this->input->post("tegnologia_instalacion"));
         echo json_encode(array("comentario"=>$username));
     }
 
@@ -798,7 +799,8 @@ if($data['servicios']['estado']=="Inactivo"){
 		$Iplocal = $this->input->post('Iplocal');
 		$Ipremota = $this->input->post('Ipremota2');
 		$comentario = $this->input->post('comentario');
-        $this->customers->add($abonado, $name, $dosnombre, $unoapellido, $dosapellido, $company, $celular, $celular2, $email, $nacimiento, $tipo_cliente, $tipo_documento, $documento, $fcontrato, $estrato, $departamento, $ciudad, $localidad, $barrio, $nomenclatura, $numero1, $adicionauno, $numero2, $adicional2, $numero3, $residencia, $referencia, $customergroup, $name_s, $contra, $servicio, $perfil, $Iplocal, $Ipremota, $comentario);
+        $tegnologia_instalacion = $this->input->post('tegnologia_instalacion');
+        $this->customers->add($abonado, $name, $dosnombre, $unoapellido, $dosapellido, $company, $celular, $celular2, $email, $nacimiento, $tipo_cliente, $tipo_documento, $documento, $fcontrato, $estrato, $departamento, $ciudad, $localidad, $barrio, $nomenclatura, $numero1, $adicionauno, $numero2, $adicional2, $numero3, $residencia, $referencia, $customergroup, $name_s, $contra, $servicio, $perfil, $Iplocal, $Ipremota, $comentario,$tegnologia_instalacion);
 
     }
 
@@ -841,8 +843,9 @@ if($data['servicios']['estado']=="Inactivo"){
 		$Iplocal = $this->input->post('Iplocal');
 		$Ipremota = $this->input->post('Ipremota');
 		$comentario = $this->input->post('comentario');
+        $tegnologia_instalacion = $this->input->post('tegnologia_instalacion');
         if ($id) {
-            $this->customers->edit($id, $abonado, $name, $dosnombre, $unoapellido, $dosapellido, $company, $celular, $celular2, $email, $nacimiento, $tipo_cliente, $tipo_documento, $documento, $fcontrato, $estrato, $departamento, $ciudad, $localidad, $barrio, $nomenclatura, $numero1, $adicionauno, $numero2, $adicional2, $numero3, $residencia, $referencia, $customergroup, $name_s, $contra, $servicio, $perfil, $Iplocal, $Ipremota, $comentario);
+            $this->customers->edit($id, $abonado, $name, $dosnombre, $unoapellido, $dosapellido, $company, $celular, $celular2, $email, $nacimiento, $tipo_cliente, $tipo_documento, $documento, $fcontrato, $estrato, $departamento, $ciudad, $localidad, $barrio, $nomenclatura, $numero1, $adicionauno, $numero2, $adicional2, $numero3, $residencia, $referencia, $customergroup, $name_s, $contra, $servicio, $perfil, $Iplocal, $Ipremota, $comentario,$tegnologia_instalacion);
         }
    
     }

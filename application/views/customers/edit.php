@@ -330,6 +330,19 @@
                         </div>
                     </div>
                     <div class="form-group row">
+                    	<div class="col-sm-12">
+                            <h6><label class="col-form-label"
+                                   for="tegnologia">Tegnologia</label><h6>
+                            <div>
+                                       <select id="tegnologia" name="tegnologia_instalacion" class="form-control" onchange="selecciona_para_agregar()">
+                                        <option value="">--</option>
+                                           <option value="GPON" <?= ($customer['tegnologia_instalacion']=="GPON") ? 'selected=""' :'' ?> >GPON</option>
+                                           <option value="EPON" <?= ($customer['tegnologia_instalacion']=="EPON") ? 'selected=""' :'' ?> >EPON</option>
+                                           <option value="EOC" <?= ($customer['tegnologia_instalacion']=="EOC") ? 'selected=""' :'' ?> >EOC</option>
+                                       </select>                     
+                                       
+                            </div>
+                         </div>
 						<div class="col-sm-12">
                         <h6><label class="col-form-label"
                                for="name_s"><?php echo $this->lang->line('Name') ?></label><h6>
@@ -413,7 +426,8 @@
 <script type="text/javascript">
 	function traer_comentario_mikrotik(username){
 		var customergroup= $("#customergroup option:selected").val();
-		$.post(baseurl+"customers/get_comentario_mikrotik",{'username':username,'customergroup':customergroup},function(data){
+		var tegnologia_instalacion= $("#tegnologia option:selected").val();
+		$.post(baseurl+"customers/get_comentario_mikrotik",{'username':username,'customergroup':customergroup,'tegnologia_instalacion':tegnologia_instalacion},function(data){
 			$("#mcustomer_comentario_s").val(data.comentario);
 		},'json');
 	}
@@ -450,8 +464,9 @@
      function validar_user_name(){
      var username=$("#mcustomer_name_s").val();
      var sede=$("#id_sede").val();
+     var tegnologia_instalacion= $("#tegnologia option:selected").val();
         if(username!="" && user_name_default!=username){
-            $.post(baseurl+"customers/validar_user_name",{username:username,sede:sede},function(data){
+            $.post(baseurl+"customers/validar_user_name",{username:username,sede:sede,tegnologia_instalacion:tegnologia_instalacion},function(data){
                 if(data=="disponible"){
                     $("#msg_error_username").css("visibility","hidden");
                     if($("#mcustomer_name_s").val()=="" || $("#mcustomer_documento_s").val()=="" || $("#discountFormatPerfil").val()=="-" || $("#discountFormatPerfil").val()=="Seleccine..." || $("#discountFormatIpLocal").val()=="-" || $("#Ipremota").val()=="" || $("#mcustomer_comentario_s").val()==""){

@@ -2325,7 +2325,7 @@ if ($valido) {
                                 }                                
                             
                             //microtik
-                            $this->customers->desactivar_estado_usuario_multiple($customer->name_s,$customer->gid,$API);
+                            $this->customers->desactivar_estado_usuario_multiple($customer->name_s,$customer->gid,$API,$customer->tegnologia_instalacion);
                             
                         }else if($tipo_corte=="Corte Internet"){
                             //$factura = $this->db->get_where('invoices',array('tid'=>$idfactura))->row();
@@ -2370,7 +2370,7 @@ if ($valido) {
                                 
                            
 
-                            $this->customers->desactivar_estado_usuario_multiple($customer->name_s,$customer->gid,$API);
+                            $this->customers->desactivar_estado_usuario_multiple($customer->name_s,$customer->gid,$API,$customer->tegnologia_instalacion);
                         }else{
                                 $producto2 = $this->db->get_where('products',array('product_name'=>'Reconexión Television'))->row();
                                 $data2['tid']=$factura['tid'];

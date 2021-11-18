@@ -911,7 +911,7 @@ if($ya_agrego_equipos==false){
                 }
                 //mikrotik
                 
-                $this->customers->activar_estado_usuario($customerx->name_s,$customerx->gid);
+                $this->customers->activar_estado_usuario($customerx->name_s,$customerx->gid,$customerx->tegnologia_instalacion);
         }else{
             $msg1="no redirect";        
 		}
@@ -1023,7 +1023,7 @@ if($ya_agrego_equipos==false){
             }else if($customer->gid==4){//monterrey
                 $profile="20Megas";
             }
-            $this->customers->edit_profile_mikrotik($customer->gid,$customer->name_s,$profile);
+            $this->customers->edit_profile_mikrotik($customer->gid,$customer->name_s,$profile,$customer->tegnologia_instalacion);
             $this->db->set('combo', $profile);
 
             $this->db->set('estado_combo', null);
@@ -1036,7 +1036,7 @@ if($ya_agrego_equipos==false){
         }
 		if($ticket->detalle=="Subir 70Mb"){
             $profile="70MegasC";
-            $this->customers->edit_profile_mikrotik($customer->gid,$customer->name_s,$profile);
+            $this->customers->edit_profile_mikrotik($customer->gid,$customer->name_s,$profile,$customer->tegnologia_instalacion);
             $this->db->set('combo', $profile);
 
             $this->db->set('estado_combo', null);
@@ -1057,7 +1057,7 @@ if($ya_agrego_equipos==false){
                 $profile="15Megas";
             }
 
-            $this->customers->edit_profile_mikrotik($customer->gid,$customer->name_s,$profile);
+            $this->customers->edit_profile_mikrotik($customer->gid,$customer->name_s,$profile,$customer->tegnologia_instalacion);
             $this->db->set('combo', $profile);
 
             $this->db->set('estado_combo', null);
@@ -1078,7 +1078,7 @@ if($ya_agrego_equipos==false){
                 $profile="10Megas";
             }
 
-            $this->customers->edit_profile_mikrotik($customer->gid,$customer->name_s,$profile);
+            $this->customers->edit_profile_mikrotik($customer->gid,$customer->name_s,$profile,$customer->tegnologia_instalacion);
             $this->db->set('combo', $profile);
 
             $this->db->set('estado_combo', null);
@@ -1099,7 +1099,7 @@ if($ya_agrego_equipos==false){
                 $profile="5Megas";
             }
 
-            $this->customers->edit_profile_mikrotik($customer->gid,$customer->name_s,$profile);
+            $this->customers->edit_profile_mikrotik($customer->gid,$customer->name_s,$profile,$customer->tegnologia_instalacion);
             $this->db->set('combo', $profile);
 
             $this->db->set('estado_combo', null);
@@ -1131,7 +1131,7 @@ if($ya_agrego_equipos==false){
         		$this->db->update('customers');
              //mikrotik
                 $customerx=$this->db->get_where("customers",array('id' =>$ticket->cid ))->row();
-                $this->customers->activar_estado_usuario($customerx->name_s,$customerx->gid);
+                $this->customers->activar_estado_usuario($customerx->name_s,$customerx->gid,$customerx->tegnologia_instalacion);
 		}		
 		if($ticket->detalle=="Reconexion Internet"){
 			$paquete = $this->input->post('paquete');
@@ -1149,7 +1149,7 @@ if($ya_agrego_equipos==false){
         		$this->db->update('customers');
                  //mikrotik
                 $customerx=$this->db->get_where("customers",array('id' =>$ticket->cid ))->row();
-                $this->customers->activar_estado_usuario($customerx->name_s,$customerx->gid);
+                $this->customers->activar_estado_usuario($customerx->name_s,$customerx->gid,$customerx->tegnologia_instalacion);
 		}
 		if($ticket->detalle=="Reconexion Television"){
 			$paquete = $this->input->post('paquete');
@@ -1202,7 +1202,7 @@ if($ya_agrego_equipos==false){
 
                  //mikrotik
                 $customerx=$this->db->get_where("customers",array('id' =>$ticket->cid ))->row();
-                $this->customers->desactivar_estado_usuario($customerx->name_s,$customerx->gid);
+                $this->customers->desactivar_estado_usuario($customerx->name_s,$customerx->gid,$customerx->tegnologia_instalacion);
 		}
 		if($ticket->detalle=="Corte Internet"){
 			$factura = $this->db->get_where('invoices',array('tid'=>$idfactura))->row();
@@ -1240,7 +1240,7 @@ if($ya_agrego_equipos==false){
 			
              //mikrotik
                 $customerx=$this->db->get_where("customers",array('id' =>$ticket->cid ))->row();
-                $this->customers->desactivar_estado_usuario($customerx->name_s,$customerx->gid);
+                $this->customers->desactivar_estado_usuario($customerx->name_s,$customerx->gid,$customerx->tegnologia_instalacion);
 		}
 		if($ticket->detalle=="Corte Television"){
 			//agregar reconexion
@@ -1319,7 +1319,7 @@ if($ya_agrego_equipos==false){
         		$this->db->update('customers');
                  //mikrotik
                 $customerx=$this->db->get_where("customers",array('id' =>$ticket->cid ))->row();
-                $this->customers->desactivar_estado_usuario($customerx->name_s,$customerx->gid);
+                $this->customers->desactivar_estado_usuario($customerx->name_s,$customerx->gid,$customerx->tegnologia_instalacion);
 		}
 		if($ticket->detalle=="Suspension Television"){
 			$factura = $this->db->get_where('invoices',array('tid'=>$idfactura))->row();
@@ -1356,7 +1356,7 @@ if($ya_agrego_equipos==false){
         		$this->db->update('customers');
                  //mikrotik
                 $customerx=$this->db->get_where("customers",array('id' =>$ticket->cid ))->row();
-                $this->customers->desactivar_estado_usuario($customerx->name_s,$customerx->gid);
+                $this->customers->desactivar_estado_usuario($customerx->name_s,$customerx->gid,$customerx->tegnologia_instalacion);
 		}
 		if($ticket->detalle=="AgregarTelevision"){			
 			$producto = $this->db->get_where('products',array('product_name'=>'Television'))->row();
@@ -1421,7 +1421,7 @@ if($ya_agrego_equipos==false){
 
                   //mikrotik
                 $customerx=$this->db->get_where("customers",array('id' =>$ticket->cid ))->row();
-                $this->customers->activar_estado_usuario($customerx->name_s,$customerx->gid);
+                $this->customers->activar_estado_usuario($customerx->name_s,$customerx->gid,$customerx->tegnologia_instalacion);
 			
 		}
 		if($ticket->detalle=="Toma Adicional"){

@@ -360,13 +360,24 @@ class Customers_model extends CI_Model
         
     }
 
-    public function get_ip_coneccion_microtik_por_sede($id_sede){
+    public function get_ip_coneccion_microtik_por_sede($datos){
         //$this->load->library("Aauth");
         //$id_sede=$this->aauth->get_user()->sede_accede;
+        $id_sede=$datos['id_sede'];
         if($id_sede==2){//yopal
             return $_SESSION['variables_MikroTik']->ip_Yopal;//190.14.233.186:8728
         }else if($id_sede==3){//Villanueva
-            return $_SESSION['variables_MikroTik']->ip_Villanueva;//190.14.238.114:8728
+            if($datos['tegnologia']=="GPON"){
+                return $_SESSION['variables_MikroTik']->Ip_Villanueva_GPON;
+            }else if($datos['tegnologia']=="EPON"){
+                return $_SESSION['variables_MikroTik']->Ip_Villanueva_EPON;
+            }else if($datos['tegnologia']=="EOC"){
+                return $_SESSION['variables_MikroTik']->Ip_Villanueva_EOC;
+            }else{
+                return $_SESSION['variables_MikroTik']->Ip_Villanueva_GPON;//default
+                //return $_SESSION['variables_MikroTik']->ip_Villanueva;//190.14.238.114:8728
+            }
+            
         }else if($id_sede==4){//Monterrey
             return $_SESSION['variables_MikroTik']->ip_Monterrey;//190.14.248.42:8728
         }else{//default
@@ -374,8 +385,11 @@ class Customers_model extends CI_Model
         }
     }
 
-    public function add($abonado, $name, $dosnombre, $unoapellido, $dosapellido, $company, $celular, $celular2, $email, $nacimiento, $tipo_cliente, $tipo_documento, $documento, $fcontrato, $estrato, $departamento, $ciudad, $localidad, $barrio, $nomenclatura, $numero1, $adicionauno, $numero2, $adicional2, $numero3, $residencia, $referencia, $customergroup, $name_s, $contra, $servicio, $perfil, $Iplocal, $Ipremota, $comentario)
+    public function add($abonado, $name, $dosnombre, $unoapellido, $dosapellido, $company, $celular, $celular2, $email, $nacimiento, $tipo_cliente, $tipo_documento, $documento, $fcontrato, $estrato, $departamento, $ciudad, $localidad, $barrio, $nomenclatura, $numero1, $adicionauno, $numero2, $adicional2, $numero3, $residencia, $referencia, $customergroup, $name_s, $contra, $servicio, $perfil, $Iplocal, $Ipremota, $comentario,$tegnologia_instalacion)
     {
+        if($tegnologia_instalacion==""){
+            $tegnologia_instalacion=null;
+        }
         $data = array(
 			'abonado' => $abonado,
             'name' => $name,
@@ -412,7 +426,7 @@ class Customers_model extends CI_Model
 			'Iplocal' => $Iplocal,
 			'Ipremota' => $Ipremota,
 			'comentario' => $comentario,
-			
+			'tegnologia_instalacion'=>$tegnologia_instalacion
 			
         );
 
@@ -443,7 +457,8 @@ class Customers_model extends CI_Model
                  $API = new RouterosAPI();
                 $API->debug = false;
                 //192.168.201.1:8728 ip jefe
-                if ($API->connect($this->get_ip_coneccion_microtik_por_sede($customergroup), $_SESSION['variables_MikroTik']->username, $_SESSION['variables_MikroTik']->password)) {
+                $datos_consulta_ip=array("id_sede"=>$customergroup,"tegnologia"=>$tegnologia_instalacion);
+                if ($API->connect($this->get_ip_coneccion_microtik_por_sede($datos_consulta_ip), $_SESSION['variables_MikroTik']->username, $_SESSION['variables_MikroTik']->password)) {
 
                  $API->comm("/ppp/secret/add", array(
                       "name"     => str_replace(' ', '', $name_s),
@@ -472,8 +487,11 @@ class Customers_model extends CI_Model
     }
 
 
-    public function edit($id, $abonado, $name, $dosnombre, $unoapellido, $dosapellido, $company, $celular, $celular2, $email, $nacimiento, $tipo_cliente, $tipo_documento, $documento, $fcontrato, $estrato, $departamento, $ciudad, $localidad, $barrio, $nomenclatura, $numero1, $adicionauno, $numero2, $adicional2, $numero3, $residencia, $referencia, $customergroup, $name_s, $contra, $servicio, $perfil, $Iplocal, $Ipremota, $comentario)
+    public function edit($id, $abonado, $name, $dosnombre, $unoapellido, $dosapellido, $company, $celular, $celular2, $email, $nacimiento, $tipo_cliente, $tipo_documento, $documento, $fcontrato, $estrato, $departamento, $ciudad, $localidad, $barrio, $nomenclatura, $numero1, $adicionauno, $numero2, $adicional2, $numero3, $residencia, $referencia, $customergroup, $name_s, $contra, $servicio, $perfil, $Iplocal, $Ipremota, $comentario,$tegnologia_instalacion)
     {
+        if($tegnologia_instalacion==""){
+            $tegnologia_instalacion=null;
+        }
         $data = array(
 			'abonado' => $abonado,
             'name' => $name,
@@ -510,6 +528,7 @@ class Customers_model extends CI_Model
 			'Iplocal' => $Iplocal,
 			'Ipremota' => $Ipremota,
 			'comentario' => $comentario,
+            'tegnologia_instalacion'=>$tegnologia_instalacion
         );
 
         if($data['name_s']=="" || $data['name_s']==null){
@@ -533,8 +552,8 @@ class Customers_model extends CI_Model
                 set_time_limit(3000);
                 $API = new RouterosAPI();
                 $API->debug = false;
-
-                if ($API->connect($this->get_ip_coneccion_microtik_por_sede($customergroup), $_SESSION['variables_MikroTik']->username, $_SESSION['variables_MikroTik']->password)) {
+                $datos_consulta_ip=array("id_sede"=>$customergroup,"tegnologia"=>$tegnologia_instalacion);
+                if ($API->connect($this->get_ip_coneccion_microtik_por_sede($datos_consulta_ip), $_SESSION['variables_MikroTik']->username, $_SESSION['variables_MikroTik']->password)) {
 
                     $arrID=$API->comm("/ppp/secret/getall", 
                           array(
@@ -583,12 +602,13 @@ class Customers_model extends CI_Model
         }
 
     }
-    public function edit_profile_mikrotik($id_sede,$name_s,$profile){
+    public function edit_profile_mikrotik($id_sede,$name_s,$profile,$tegnologia_instalacion){
         include (APPPATH."libraries\RouterosAPI.php");
                 set_time_limit(3000);
                 $API = new RouterosAPI();
                 $API->debug = false;
-        if ($API->connect($this->get_ip_coneccion_microtik_por_sede($id_sede), $_SESSION['variables_MikroTik']->username, $_SESSION['variables_MikroTik']->password)) {
+                $datos_consulta_ip=array("id_sede"=>$id_sede,"tegnologia"=>$tegnologia_instalacion);
+        if ($API->connect($this->get_ip_coneccion_microtik_por_sede($datos_consulta_ip), $_SESSION['variables_MikroTik']->username, $_SESSION['variables_MikroTik']->password)) {
                 $arrID=$API->comm("/ppp/secret/getall", 
                           array(
                           ".proplist"=> ".id",
@@ -612,13 +632,13 @@ class Customers_model extends CI_Model
             }
 
     }
-    public function obtener_comentario_mikrotik($username,$customergroup){
+    public function obtener_comentario_mikrotik($username,$customergroup,$tegnologia_instalacion){
         include (APPPATH."libraries\RouterosAPI.php");
         set_time_limit(3000);
         $API = new RouterosAPI();
         $API->debug = false;
-        
-        if ($API->connect($this->get_ip_coneccion_microtik_por_sede($customergroup), $_SESSION['variables_MikroTik']->username, $_SESSION['variables_MikroTik']->password)) {
+        $datos_consulta_ip=array("id_sede"=>$customergroup,"tegnologia"=>$tegnologia_instalacion);
+        if ($API->connect($this->get_ip_coneccion_microtik_por_sede($datos_consulta_ip), $_SESSION['variables_MikroTik']->username, $_SESSION['variables_MikroTik']->password)) {
             //$user_name="user_prueba_duber_disabled";
             $arrID=$API->comm("/ppp/secret/getall", 
                   array(
@@ -1080,13 +1100,13 @@ class Customers_model extends CI_Model
 
     }
 
-    public function get_estado_mikrotik($user_name,$id_sede){
+    public function get_estado_mikrotik($user_name,$id_sede,$tegnologia_instalacion){
         include (APPPATH."libraries\RouterosAPI.php");
         set_time_limit(3000);
          $API = new RouterosAPI();
         $API->debug = false;
-        
-        if ($API->connect($this->get_ip_coneccion_microtik_por_sede($id_sede), $_SESSION['variables_MikroTik']->username, $_SESSION['variables_MikroTik']->password)) {
+        $datos_consulta_ip=array("id_sede"=>$id_sede,"tegnologia"=>$tegnologia_instalacion);
+        if ($API->connect($this->get_ip_coneccion_microtik_por_sede($datos_consulta_ip), $_SESSION['variables_MikroTik']->username, $_SESSION['variables_MikroTik']->password)) {
             //$user_name="user_prueba_duber_disabled";
             $arrID=$API->comm("/ppp/secret/getall", 
                   array(
@@ -1100,13 +1120,13 @@ class Customers_model extends CI_Model
             
         }
     }
-     public function validar_user_name($user_name,$id_sede){
+     public function validar_user_name($user_name,$id_sede,$tegnologia_instalacion){
         include (APPPATH."libraries\RouterosAPI.php");
         set_time_limit(3000);
          $API = new RouterosAPI();
         $API->debug = false;
-        
-        if ($API->connect($this->get_ip_coneccion_microtik_por_sede($id_sede), $_SESSION['variables_MikroTik']->username, $_SESSION['variables_MikroTik']->password)) {
+        $datos_consulta_ip=array("id_sede"=>$id_sede,"tegnologia"=>$tegnologia_instalacion);
+        if ($API->connect($this->get_ip_coneccion_microtik_por_sede($datos_consulta_ip), $_SESSION['variables_MikroTik']->username, $_SESSION['variables_MikroTik']->password)) {
             //$user_name="user_prueba_duber_disabled";
             $arrID=$API->comm("/ppp/secret/getall", 
                   array(
@@ -1120,13 +1140,13 @@ class Customers_model extends CI_Model
             
         }
     }
-     public function editar_estado_usuario($user_name,$id_sede){
+     public function editar_estado_usuario($user_name,$id_sede,$tegnologia_instalacion){
         include (APPPATH."libraries\RouterosAPI.php");
         set_time_limit(3000);
          $API = new RouterosAPI();
         $API->debug = false;
-        
-        if ($API->connect($this->get_ip_coneccion_microtik_por_sede($id_sede), $_SESSION['variables_MikroTik']->username, $_SESSION['variables_MikroTik']->password)) {
+        $datos_consulta_ip=array("id_sede"=>$id_sede,"tegnologia"=>$tegnologia_instalacion);
+        if ($API->connect($this->get_ip_coneccion_microtik_por_sede($datos_consulta_ip), $_SESSION['variables_MikroTik']->username, $_SESSION['variables_MikroTik']->password)) {
             //$user_name="user_prueba_duber_disabled";
             $arrID=$API->comm("/ppp/secret/getall", 
                   array(
@@ -1174,13 +1194,13 @@ class Customers_model extends CI_Model
         }
     }
 
-    public function activar_estado_usuario($user_name,$id_sede){
+    public function activar_estado_usuario($user_name,$id_sede,$tegnologia_instalacion){
         include (APPPATH."libraries\RouterosAPI.php");
         set_time_limit(3000);
          $API = new RouterosAPI();
         $API->debug = false;
-        
-        if ($API->connect($this->get_ip_coneccion_microtik_por_sede($id_sede), $_SESSION['variables_MikroTik']->username, $_SESSION['variables_MikroTik']->password)) {
+        $datos_consulta_ip=array("id_sede"=>$id_sede,"tegnologia"=>$tegnologia_instalacion);
+        if ($API->connect($this->get_ip_coneccion_microtik_por_sede($datos_consulta_ip), $_SESSION['variables_MikroTik']->username, $_SESSION['variables_MikroTik']->password)) {
             //$user_name="user_prueba_duber_disabled";
             $arrID=$API->comm("/ppp/secret/getall", 
                   array(
@@ -1202,13 +1222,13 @@ class Customers_model extends CI_Model
         }
     }
 
-    public function desactivar_estado_usuario($user_name,$id_sede){
+    public function desactivar_estado_usuario($user_name,$id_sede,$tegnologia_instalacion){
           include (APPPATH."libraries\RouterosAPI.php");
         set_time_limit(3000);
          $API = new RouterosAPI();
         $API->debug = false;
-        
-        if ($API->connect($this->get_ip_coneccion_microtik_por_sede($id_sede), $_SESSION['variables_MikroTik']->username, $_SESSION['variables_MikroTik']->password)) {
+        $datos_consulta_ip=array("id_sede"=>$id_sede,"tegnologia"=>$tegnologia_instalacion);
+        if ($API->connect($this->get_ip_coneccion_microtik_por_sede($datos_consulta_ip), $_SESSION['variables_MikroTik']->username, $_SESSION['variables_MikroTik']->password)) {
             //$user_name="user_prueba_duber_disabled";
             $arrID=$API->comm("/ppp/secret/getall", 
                   array(
@@ -1246,13 +1266,13 @@ class Customers_model extends CI_Model
         }
     }
 
-    public function desactivar_estado_usuario_multiple($user_name,$id_sede,$API){
+    public function desactivar_estado_usuario_multiple($user_name,$id_sede,$API,$tegnologia_instalacion){
           //include (APPPATH."libraries\RouterosAPI.php");
         set_time_limit(3000);
          //$API = new RouterosAPI();
         //$API->debug = false;
-        
-        if ($API->connect($this->get_ip_coneccion_microtik_por_sede($id_sede), $_SESSION['variables_MikroTik']->username, $_SESSION['variables_MikroTik']->password)) {
+        $datos_consulta_ip=array("id_sede"=>$id_sede,"tegnologia"=>$tegnologia_instalacion);
+        if ($API->connect($this->get_ip_coneccion_microtik_por_sede($datos_consulta_ip), $_SESSION['variables_MikroTik']->username, $_SESSION['variables_MikroTik']->password)) {
             //$user_name="user_prueba_duber_disabled";
             $arrID=$API->comm("/ppp/secret/getall", 
                   array(

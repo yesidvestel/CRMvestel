@@ -320,6 +320,19 @@
 
 
                     <div class="form-group row">
+                        <div class="col-sm-12">
+                            <h6><label class="col-form-label"
+                                   for="tegnologia">Tegnologia</label><h6>
+                            <div>
+                                       <select id="tegnologia" name="tegnologia_instalacion" class="form-control" onchange="selecciona_para_agregar()">
+                                        <option value="">--</option>
+                                           <option value="GPON">GPON</option>
+                                           <option value="EPON">EPON</option>
+                                           <option value="EOC">EOC</option>
+                                       </select>                     
+                                       
+                            </div>
+                         </div>
 						<div class="col-sm-12">
                         <h6><label class="col-form-label"
                                for="name_s"><?php echo $this->lang->line('Name') ?></label><h6>
@@ -328,7 +341,7 @@
                                    class="form-control margin-bottom" name="name_s" id="mcustomer_name_s" onblur="selecciona_para_agregar()" > 
                                    <span id="msg_error_username" style="color: red;visibility :hidden">Este Nombre de Usuario Ya Existe</span>
                         </div>
-                    </div>
+                    </div>                    
 						<div class="col-sm-6">
                         	<h6><label class="col-form-label"
                                for="phone_s"><?php echo $this->lang->line('') ?>Contraseña</label></h6>
@@ -413,7 +426,7 @@
             var desabilitar=false;
             //console.log($("#mcustomer_name_s").val());
             validar_user_name();
-            if($("#mcustomer_name_s").val()=="" || $("#mcustomer_documento_s").val()=="" || $("#discountFormatPerfil").val()=="-" || $("#discountFormatPerfil").val()=="Seleccine..." || $("#discountFormatIpLocal").val()=="-" || $("#Ipremota").val()=="" || $("#mcustomer_comentario_s").val()==""){
+            if($("#mcustomer_name_s").val()=="" || $("#mcustomer_documento_s").val()=="" || $("#discountFormatPerfil").val()=="-" || $("#discountFormatPerfil").val()=="Seleccine..." || $("#discountFormatIpLocal").val()=="-" || $("#Ipremota").val()=="" || $("#mcustomer_comentario_s").val()=="" || $("#tegnologia").val()==""){
                 desabilitar=true;
             }
            
@@ -432,12 +445,13 @@
 function validar_user_name(){
      var username=$("#mcustomer_name_s").val();
      var sede=$("#id_sede").val();
-
+    var tegnologia_instalacion= $("#tegnologia option:selected").val();
         if(username!=""){
-            $.post(baseurl+"customers/validar_user_name",{username:username,sede:sede},function(data){
+            $.post(baseurl+"customers/validar_user_name",{username:username,sede:sede,tegnologia_instalacion:tegnologia_instalacion},function(data){
                 if(data=="disponible"){
                     $("#msg_error_username").css("visibility","hidden");
-                    if($("#mcustomer_name_s").val()=="" || $("#mcustomer_documento_s").val()=="" || $("#discountFormatPerfil").val()=="-" || $("#discountFormatPerfil").val()=="Seleccine..." || $("#discountFormatIpLocal").val()=="-" || $("#Ipremota").val()=="" || $("#mcustomer_comentario_s").val()==""){
+                    console.log($("#tegnologia").val());
+                    if($("#mcustomer_name_s").val()=="" || $("#mcustomer_documento_s").val()=="" || $("#discountFormatPerfil").val()=="-" || $("#discountFormatPerfil").val()=="Seleccine..." || $("#discountFormatIpLocal").val()=="-" || $("#Ipremota").val()=="" || $("#mcustomer_comentario_s").val()=="" || $("#tegnologia").val()==""){
                          $("#submit-data").attr("disabled", true);    
 
                     }else{
