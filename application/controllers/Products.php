@@ -223,9 +223,14 @@ class Products extends CI_Controller
         $id = $this->input->post('deleteid');
         if ($id) {
             $transferencia = $this->db->select("*")->from("transferencias")->where("producto_a=".$id." OR producto_b=".$id)->get()->result();
-
+            $transferencia_ordenes = $this->db->select("*")->from("transferencia_products_orden")->where("products_pid=".$id)->get()->result();
+            //var_dump($transferencia_ordenes);
             foreach ($transferencia as $key => $value) {
                 $this->db->delete('transferencias', array('id_transferencia' => $value->id_transferencia));
+                  
+            }
+            foreach ($transferencia_ordenes as $key => $value) {
+                $this->db->delete('transferencia_products_orden', array('idtransferencia_products_orden' => $value->idtransferencia_products_orden));
                   
             }
 
