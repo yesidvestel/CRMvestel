@@ -67,6 +67,16 @@ $.removeCookie('tecnico');
 
 
           },
+          loading:function(isLoading){
+            if (isLoading == true) {
+    
+              } else {
+                 $(".fc-more").each(function (index){
+                    $(this).text($(this).text().replace("more","mas"));
+                });
+              }
+               
+          },
           eventResize: function(event,dayDelta,minuteDelta,revertFunc) { 
                     
                 start = event.start.format('YYYY-MM-DD HH:mm:ss');
@@ -132,6 +142,10 @@ $.removeCookie('tecnico');
         }
 
     });
+$(".fc-month-button").text("Mes");
+$(".fc-basicWeek-button").text("Semana");
+$(".fc-basicDay-button").text("Dia");
+
 
     // Prepares the modal window according to data passed
     function modal(data) {
