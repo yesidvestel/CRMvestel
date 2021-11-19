@@ -41,8 +41,13 @@ class Events extends CI_Controller
 
     public function index()
     {
+        $this->load->model("Ticket_model","ticket");
+        $this->load->model("Moviles_model","moviles");
+        $data['tecnicoslista'] = $this->ticket->tecnico_list();
+        $data['moviles'] = $this->moviles->get_datatables1();
+        //var_dump($data['tecnicoslista']);
         $this->load->view('fixed/header');
-        $this->load->view('events/cal');
+        $this->load->view('events/cal',$data);
         $this->load->view('fixed/footer');
 
 
@@ -54,6 +59,9 @@ class Events extends CI_Controller
     {
         $start = $this->input->get('start');
         $end = $this->input->get('end');
+        if(isset($_COOKIE['tecnico'])){
+            $_POST['tecnico']=$_COOKIE['tecnico'];
+        }
         $result = $this->events_model->getEvents($start, $end);
         echo json_encode($result);
     }

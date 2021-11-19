@@ -1,5 +1,8 @@
+var calendario;
 $(function(){
 
+$.removeCookie('tecnico');
+   
     var currentDate; // Holds the day clicked when adding a new event
     var currentEvent; // Holds the event object when editing an event
 
@@ -11,15 +14,17 @@ $(function(){
     // Fullcalendar
     $('#calendar').fullCalendar({
         header: {
-            left: 'prev, next, today',
+            left: 'prev, next, hoy',
             center: 'title',
              right: 'month, basicWeek, basicDay'
         },
+
         // Get all events stored in database
         eventLimit: true, // allow "more" link when too many events
         events: base_url+'events/getEvents',
         selectable: true,
         selectHelper: true,
+        lang: 'es',
         editable: true, // Make the event resizable true           
             select: function(start, end) {
                 

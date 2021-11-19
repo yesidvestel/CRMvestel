@@ -28,6 +28,13 @@ class Events_model extends CI_Model
 		$us = $this->aauth->get_user()->roleid;
 		$tec = $this->aauth->get_user()->username;
 		$idagendor = $this->aauth->get_user()->id;
+        if(isset($_POST['tecnico'])){
+            $var_tec=$this->db->get_where("aauth_users",array("username"=>$_POST['tecnico']))->row();
+            $us=2;
+            $idagendor=$var_tec->id;
+            $tec=$_POST['tecnico'];
+            //var_dump($tec);
+        }
         //obener lista de moviles en las que esta el usuario para hacer un where in 
         $emp=$this->db->query("SELECT GROUP_CONCAT(id_movil) as ids FROM `empleados_moviles` WHERE `id_empleado` =".$idagendor)->result_array();
         $in='';
