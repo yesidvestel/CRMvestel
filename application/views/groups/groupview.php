@@ -193,6 +193,7 @@
                                                 <option value='Exonerado'>Exonerado</option>
                                                 <option value='Cartera'>Cartera</option>
                                                 <option value='Compromiso'>Compromiso</option>
+												<option value='Retirado'>Retirado</option>
                                                     </select>
                                               </div>
                                         </div>
