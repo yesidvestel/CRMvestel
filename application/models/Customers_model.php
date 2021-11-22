@@ -1429,6 +1429,7 @@ class Customers_model extends CI_Model
                 "CityCode": "85001"
             },
             "Address": "Dirección Tercero prueba",
+            "Comments": "",
             "Phone": {
                 "Indicative": 0,
                 "Number": 0,
@@ -1537,6 +1538,7 @@ public function getClientData2Productos(){
                 "CityCode": "85001"
             },
             "Address": "Dirección Tercero prueba",
+            "Comments": "",
             "Phone": {
                 "Indicative": 0,
                 "Number": 0,
@@ -1670,6 +1672,7 @@ public function getClientData3Productos(){
                 "CityCode": "85001"
             },
             "Address": "Dirección Tercero prueba",
+            "Comments": "",
             "Phone": {
                 "Indicative": 0,
                 "Number": 0,

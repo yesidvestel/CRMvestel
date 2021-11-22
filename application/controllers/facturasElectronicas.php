@@ -149,7 +149,8 @@ $this->load->model("customers_model","customers");
         $dataApi->Header->Contact->LastName=$dataApi->Header->Account->LastName;
         $dateTime=new DateTime($_POST['sdate']);
         $dataApi->Header->DocDate=$dateTime->format("Ymd");
-
+        $dataApi->Header->Observations="Estrato : ".$customer->estrato;
+        $dataApi->Header->Account->Comments="Estrato : ".$customer->estrato;
         //cambio de fecha de vencimiento sumandole 20 dias a la fecha seleccionada
             $fecha_actual = date($dateTime->format("Y-m-d"));
             $date=date("d-m-Y",strtotime($fecha_actual."+ 20 days")); 
