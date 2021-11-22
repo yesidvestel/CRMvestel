@@ -39,6 +39,10 @@
 {
  background-color: #EB8D25;
 }
+.st-Depurado
+{
+ background-color: darkcyan;
+}
 </style>
 <div class="app-content content container-fluid">
     <div class="content-wrapper">

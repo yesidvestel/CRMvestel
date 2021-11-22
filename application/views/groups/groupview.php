@@ -186,14 +186,15 @@
                                                 
                                               <div class="form-group">
                                                   <select id="estado_multiple" name="estado_multiple[]" class="form-control select-box" multiple="multiple">
-                                                <option value='Activo'>Activos </option>
-                                                <option value='Cortado'>Cortados</option>
-                                                <option value='Suspendido'>Suspendidos</option>
-                                                <option value='Instalar'>Instalar</option>
-                                                <option value='Exonerado'>Exonerado</option>
-                                                <option value='Cartera'>Cartera</option>
-                                                <option value='Compromiso'>Compromiso</option>
-												<option value='Retirado'>Retirado</option>
+														<option value='Activo'>Activos </option>
+														<option value='Cortado'>Cortados</option>
+														<option value='Suspendido'>Suspendidos</option>
+														<option value='Instalar'>Instalar</option>
+														<option value='Exonerado'>Exonerado</option>
+														<option value='Cartera'>Cartera</option>
+														<option value='Compromiso'>Compromiso</option>
+														<option value='Retirado'>Retirado</option>
+														<option value='Depurado'>Depurado</option>
                                                     </select>
                                               </div>
                                         </div>
