@@ -39,6 +39,10 @@
 {
  background-color: #EB8D25;
 }
+.st-Depurado
+{
+ background-color: darkcyan;
+}
 </style>
 <div class="app-content content container-fluid">
     <div class="content-wrapper">
@@ -347,7 +351,16 @@
                                 </div>
 
                             </div>
-                            
+                            <hr>
+                            <div class="row m-t-lg">
+                                <div class="col-md-2">
+                                    <strong><?php echo $this->lang->line('') ?>Estrato:</strong>
+                                </div>
+                                <div class="col-md-10">
+                                    <?php echo $details['estrato'] ?>
+                                </div>
+
+                            </div>
                             <hr>
                             
                             
@@ -435,6 +448,9 @@
 							<div class="row m-t-lg">
                                 <div class="col-md-2">
                                     <strong>Contrato:</strong>
+                                </div>
+								<div class="col-md-10">
+                                    Realizado el <?php echo $details['f_contrato'] ?>
                                 </div>
                                 <div class="col-md-10">
                                    <a class="btn btn-primary btn-lg"
