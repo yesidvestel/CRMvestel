@@ -169,11 +169,12 @@
 								<div class="tab-pane fade" id="detalle" role="tabpanel" aria-labelledby="detalle-tab" aria-expanded="false">
                                         <div class="form-group row">
                                             <label class="col-sm-2 col-form-label"
-                                                   for="pay_cat">Detalle de orden</label>
+                                                   for="detalle">Detalle de orden</label>
 
                                             <div class="col-sm-6">
-                                                <select name="trans_type" class="form-control" id="detalle">
-                                                   	<option value=''>Todas</option>
+                                                <div class="form-group">
+                                                <select style="width: 100%;" name="trans_type[]" class="form-control select-box detalle-class col-sm-6" id="detalle-sl" multiple="multiple">
+                                                   	
                                                    	<option value='AgregarInternet'>AgregarInternet</option>
                                                   	<option value='AgregarTelevision'>AgregarTelevision</option>
 													<option value='Bajar 5 Mg'>Bajar 5 Mg</option>
@@ -198,6 +199,7 @@
 													<option value='Traslado'>Traslado</option>
 													<option value='Toma Adicional'>Toma Adicional</option>
                                                 </select>
+                                               </div>
                                             </div>                              
                                         </div>    
                                 </div>
@@ -524,11 +526,12 @@
     function filtrar(){
         var tecnico=$("#tecnicos2 option:selected").val();
         var estado =$("#estados option:selected").val();
-		var detalle =$("#detalle option:selected").val();
+		var detalle =$("#detalle-sl").val();
         var sdate =$("#sdate").val();
         var edate =$("#edate").val();
         var opcion_seleccionada=$("#fechas option:selected").val();
         var sede_filtrar=$("#sede_sel option:selected").val();
+        
         if(tecnico=="" && estado=="" && opcion_seleccionada=="" && ciudad_filtrar==""){
             tb.ajax.url( baseurl+'tickets/tickets_load_list?stat=' ).load();     
         }else{
@@ -541,7 +544,7 @@
 	function redirect_to_export(){
          var tecnico=$("#tecnicos2 option:selected").val();
         var estado =$("#estados option:selected").val();
-		var detalle =$("#detalle option:selected").val();
+		var detalle =$("#detalle-sl").val();
         var sdate =$("#sdate").val();
         var edate =$("#edate").val();
         var opcion_seleccionada=$("#fechas option:selected").val();
@@ -551,4 +554,5 @@
             window.location.replace(url_redirect);
 
     }
+    $("#detalle-sl").select2();
 </script>
