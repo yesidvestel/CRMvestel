@@ -2299,8 +2299,8 @@ if ($valido) {
                                 $data2['qty']=1;
                                 $data2['subtotal']=$producto2->product_price;
                                 //SELECT * FROM `invoice_items` where product like "%Reconexión Internet%"
-                                $inv_it=$this->db->from("invoice_items")->where("tid",$factura['tid'])->like("product","Reconexion Combo","both")->get()->result();
-                                if(count($inv_it)==0){
+                                
+                                
                                     $this->db->insert('tickets', $data);
                                     $this->db->insert('invoice_items',$data2);    
                                     //actualizar factura
@@ -2322,7 +2322,7 @@ if ($valido) {
                                     $this->db->set('perfil', "-");
                                     $this->db->where('id', $customer_id);
                                     $this->db->update('customers');
-                                }                                
+                                                                
                             
                             //microtik
                             $this->customers->desactivar_estado_usuario_multiple($customer->name_s,$customer->gid,$API,$customer->tegnologia_instalacion);
@@ -2350,9 +2350,9 @@ if ($valido) {
                                 $data2['qty']=1;
                                 $data2['subtotal']=$producto2->product_price;           
 
-                                $inv_it=$this->db->from("invoice_items")->where("tid",$factura['tid'])->like("product","Reconexión Internet","both")->get()->result();
                                 
-                                if(count($inv_it)==0){
+                                
+                                
                                     $this->db->insert('tickets', $data);
                                     $this->db->insert('invoice_items',$data2);
 
@@ -2366,7 +2366,7 @@ if ($valido) {
                                     $this->db->set('estado_combo', 'Cortado');
                                     $this->db->where('tid', $factura['tid']);
                                     $this->db->update('invoices');
-                                }
+                                
                                 
                            
 
@@ -2380,8 +2380,8 @@ if ($valido) {
                                 $data2['qty']=1;
                                 $data2['subtotal']=$producto2->product_price;
 
-                                $inv_it=$this->db->from("invoice_items")->where("tid",$factura['tid'])->like("product","Reconexión Television","both")->get()->result();
-                                if(count($inv_it)==0){
+                                
+                                
                                     $this->db->insert('tickets', $data);
                                     $this->db->insert('invoice_items',$data2);
 
@@ -2415,7 +2415,7 @@ if ($valido) {
                                         $this->db->where('id', $customer_id);
                                         $this->db->update('customers');
                                     }
-                                }           
+                                          
                                 
                             
                         }
