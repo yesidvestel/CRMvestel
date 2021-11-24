@@ -166,7 +166,7 @@
                 </div>
             </div>
 
-			<?php if ($thread_info['status'] != 'Anulada') { ?>
+			<?php if ($thread_info['status'] == 'Pendiente' || $this->aauth->get_user()->roleid == 5) { ?>
             <div class="form-group row">
 
                 <label class="col-sm-1 col-form-label"></label>
@@ -199,7 +199,9 @@
 				
             </div>
             
-			<?php } else {
+			<?php }if ($thread_info['status'] == 'Resuelto'){
+					echo '<h2 class="btn btn-oval btn-success">RESUELTO</h2>';
+				}if ($thread_info['status'] == 'Anulada'){
 					echo '<h2 class="btn btn-oval btn-danger">ANULADA</h2>';
 				} ?>	
 
