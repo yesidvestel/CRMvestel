@@ -58,7 +58,7 @@
                                                for="name"><?php echo $this->lang->line('UserRole') ?></label>
 
                                         <div class="col-sm-5">
-                                            <select name="roleid" class="form-control margin-bottom">
+                                            <select id="sl-roleid" name="roleid" class="form-control margin-bottom">
                                                 <option value="5">Super usuario</option>
                                                 <option value="4">Administrativo</option>
                                                 <option value="3">Caja y ventas</option>
@@ -114,7 +114,7 @@
 												  	<td align="lift">Bodega de equipos</td>
 													<td align="right"></td>
 													<td><input type="checkbox" name="invcat"></input></td>
-												  	<td align="lift">Categorias material</td
+												  	<td align="lift">Categorias material</td>
 												</tr>
 												<tr>
 												  	<td align="right"></td>
@@ -227,7 +227,7 @@
 												  	<td align="lift">Transferencias</td>
 													<td align="right"></td>
 													<td><input type="checkbox" name="plamen"></input></td>
-												  	<td align="lift">Mensajes</td
+												  	<td align="lift">Mensajes</td>
 												</tr>
 												<tr>
 												  	<td align="right"></td>
@@ -343,7 +343,7 @@
 												  	<td align="lift" colspan="2">NOTAS</td>
 													<td align="right"></td>
 													<td><input type="checkbox" name="confterm"></input></td>
-												  	<td align="lift">Termino facturacion</td
+												  	<td align="lift">Termino facturacion</td>
 												</tr>
 												<tr>
 												  	<td><input type="checkbox" name="proy"></input></td>
@@ -581,7 +581,37 @@
 </script>
 
 <script>
+	select_checkbox_segun_rol();//para hacer la seleccion al principio
+$("#sl-roleid").on("change",function(ev){
+	select_checkbox_segun_rol();//al cambiar de rol
+});
+function select_checkbox_segun_rol(){
+	var roleid=$("#sl-roleid option:selected").val();
+		$(":checkbox").prop("checked",false);
+		if(roleid=="5"){
+			$("input[name=co]").prop("checked",true);
+			$("input[name=coape]").prop("checked",true);
+			$("input[name=conue]").prop("checked",true);
+			$("input[name=coadm]").prop("checked",true);
+			$("input[name=cocie]").prop("checked",true);
+			$("input[name=cofa]").prop("checked",true);
+			$("input[name=cofae]").prop("checked",true);
 
+		}else if(roleid=="4"){
+			$("input[name=us]").prop("checked",true);
+			$("input[name=usnue]").prop("checked",true);
+			$("input[name=usadm]").prop("checked",true);
+			$("input[name=usgru]").prop("checked",true);
+		}else if(roleid=="3"){
+			$("input[name=tik]").prop("checked",true);
+			$("input[name=tiknue]").prop("checked",true);
+			$("input[name=tikadm]").prop("checked",true);
+		}else if(roleid=="2"){
+			$("input[name=mo]").prop("checked",true);
+			$("input[name=monue]").prop("checked",true);
+			$("input[name=moadm]").prop("checked",true);
+		}
+}
     function actionProduct1(actionurl) {
 
         $.ajax({
