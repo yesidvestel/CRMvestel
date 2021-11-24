@@ -438,11 +438,14 @@ $txt_error="";
 		$this->db->join('customers', 'tickets.cid=customers.id', 'left');
         $this->db->order_by("idt","DESC");
 		//$usuario=$this->db->get_where("customers",array('id' => $_GET['id']))->row();
-		if ($_GET['detalle'] != '' && $_GET['detalle'] != '-' && $_GET['detalle'] != '0') {
-                $this->db->where('detalle=', $_GET['detalle']);
+		if ($_GET['detalle'] != '' && $_GET['detalle'] != '-' && $_GET['detalle'] != '0' && $filt2['detalle']!=null && $filt2['detalle']!="null") {
+                $this->db->where_in('detalle', explode(",", $filt2['detalle']));       
             }
-		if ($_GET['tecnico'] != '' && $_GET['tecnico'] != '-' && $_GET['tecnico'] != '0') {
-                $this->db->where('asignado=', $_GET['tecnico']);
+		if ($_GET['tecnico'] != '' && $_GET['tecnico'] != '-' && $_GET['tecnico'] != '0' && $_GET['tecnico']!=null && $_GET['tecnico']!="null") {
+            if(strpos($_GET['tecnico'],"Sin Asignar")!==false){
+             $_GET['tecnico']= str_replace("Sin Asignar", "", $_GET['tecnico']);   
+            }
+            $this->db->where_in('asignado', explode(",", $_GET['tecnico']));       
             }
 		if ($_GET['estado'] != '' && $_GET['estado'] != '-' && $_GET['estado'] != '0') {
                 $this->db->where('status=', $_GET['estado']);

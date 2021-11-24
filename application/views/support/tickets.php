@@ -136,8 +136,8 @@
                                                for="pay_cat">Tecnico</label>
 
                                         <div class="col-sm-6">
-                                            <select name="tec" class="form-control" id="tecnicos2">
-                                                <option value='0'>Todos</option>
+                                            <select style="width: 100%;" name="tec[]" class="form-control select-box" id="tecnicos2" multiple="multiple">
+                                                
                                                 <option value='Sin Asignar'>Sin Asignar</option>
                                                 <?php
                                                     foreach ($tecnicoslista as $row) {
@@ -524,7 +524,7 @@
       }
     }
     function filtrar(){
-        var tecnico=$("#tecnicos2 option:selected").val();
+        var tecnico=$("#tecnicos2").val();
         var estado =$("#estados option:selected").val();
 		var detalle =$("#detalle-sl").val();
         var sdate =$("#sdate").val();
@@ -542,7 +542,7 @@
 
     }
 	function redirect_to_export(){
-         var tecnico=$("#tecnicos2 option:selected").val();
+         var tecnico=$("#tecnicos2").val();
         var estado =$("#estados option:selected").val();
 		var detalle =$("#detalle-sl").val();
         var sdate =$("#sdate").val();
@@ -555,4 +555,5 @@
 
     }
     $("#detalle-sl").select2();
+    $("#tecnicos2").select2();
 </script>
