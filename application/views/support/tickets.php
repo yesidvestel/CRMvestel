@@ -157,8 +157,7 @@
                                                    for="pay_cat">Estado</label>
 
                                             <div class="col-sm-6">
-                                                <select name="trans_type" class="form-control" id="estados">
-                                                    <option value=''>Todas</option>
+                                                <select style="width: 100%;" name="trans_type[]" class="form-control select-box" id="estados" multiple="multiple">
                                                     <option value='Pendiente'>Pendiente</option>
                                                     <option value='Resuelto'>Resuelto</option>
 													<option value='Anulada'>Anulada</option>
@@ -245,8 +244,8 @@
                                                    for="sede_sel">Sede</label>
 
                                             <div class="col-sm-6">
-                                                <select name="sede_sel" class="form-control" id="sede_sel">                                        
-                                                    <option value="">Todo</option>
+                                                <select style="width: 100%;" name="sede_sel[]" class="form-control select-box" id="sede_sel" multiple="multiple">                                        
+                                                    
                                                     <?php 
                                                             foreach ($listaclientgroups as $key => $sede) {
                                                                 echo "<option value='".$sede['id']."'>".$sede['title']."</option>";
@@ -525,12 +524,12 @@
     }
     function filtrar(){
         var tecnico=$("#tecnicos2").val();
-        var estado =$("#estados option:selected").val();
+        var estado =$("#estados").val();
 		var detalle =$("#detalle-sl").val();
         var sdate =$("#sdate").val();
         var edate =$("#edate").val();
         var opcion_seleccionada=$("#fechas option:selected").val();
-        var sede_filtrar=$("#sede_sel option:selected").val();
+        var sede_filtrar=$("#sede_sel").val();
         
         if(tecnico=="" && estado=="" && opcion_seleccionada=="" && ciudad_filtrar==""){
             tb.ajax.url( baseurl+'tickets/tickets_load_list?stat=' ).load();     
@@ -543,12 +542,12 @@
     }
 	function redirect_to_export(){
          var tecnico=$("#tecnicos2").val();
-        var estado =$("#estados option:selected").val();
+        var estado =$("#estados").val();
 		var detalle =$("#detalle-sl").val();
         var sdate =$("#sdate").val();
         var edate =$("#edate").val();
         var opcion_seleccionada=$("#fechas option:selected").val();
-        var sede_filtrar=$("#sede_sel option:selected").val();
+        var sede_filtrar=$("#sede_sel").val();
         var id1=$("#tecnicos2 option:selected").data("id");
         var url_redirect=baseurl+'tickets/explortar_a_excel?sdate='+sdate+"&edate="+edate+"&opcselect="+opcion_seleccionada+"&tecnico="+tecnico+"&estado="+estado+"&detalle="+detalle+"&tec1="+id1+"&sede_filtrar="+sede_filtrar+"&id=<?=$_GET['id']?>";
             window.location.replace(url_redirect);
@@ -556,4 +555,7 @@
     }
     $("#detalle-sl").select2();
     $("#tecnicos2").select2();
+    $("#estados").select2();
+    $("#sede_sel").select2();
+    
 </script>

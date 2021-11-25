@@ -447,11 +447,11 @@ $txt_error="";
             }
             $this->db->where_in('asignado', explode(",", $_GET['tecnico']));       
             }
-		if ($_GET['estado'] != '' && $_GET['estado'] != '-' && $_GET['estado'] != '0') {
-                $this->db->where('status=', $_GET['estado']);
+		if ($_GET['estado'] != '' && $_GET['estado'] != '-' && $_GET['estado'] != '0' && $_GET['estado']!=null && $_GET['estado']!="null") {
+                $this->db->where_in('status', explode(",", $_GET['estado']));       
             }
-		if ($_GET['sede_filtrar'] != '' && $_GET['sede_filtrar'] != '-' && $_GET['sede_filtrar'] != '0') {
-                $this->db->where('gid=', $_GET['sede_filtrar']);
+		if ($_GET['sede_filtrar'] != '' && $_GET['sede_filtrar'] != '-' && $_GET['sede_filtrar'] != '0' && $_GET['sede_filtrar'] != 'null' && $_GET['sede_filtrar'] != null) {
+                $this->db->where_in('gid', explode(",", $_GET['sede_filtrar']));       
            }
 		if($_GET['opcselect']!=''){
 

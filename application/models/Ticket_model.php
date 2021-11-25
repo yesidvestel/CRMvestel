@@ -213,8 +213,8 @@ class Ticket_model extends CI_Model
 
         $this->db->from('tickets');
 		//$this->db->join('events', 'tickets.codigo=events.idorden', 'left');
-         if ($filt2['estado'] != '') {
-            $this->db->where('status=', $filt2['estado']);
+         if ($filt2['estado'] != '' && $filt2['estado'] != 'null' && $filt2['estado'] != null) {
+            $this->db->where_in('status', explode(",", $filt2['estado']));       
         }
         if($filt2['tecnico']!='' && $filt2['tecnico']!='0' && $filt2['tecnico']!='undefined' && $filt2['tecnico']!=null && $filt2['tecnico']!="null"){
             if(strpos($filt2['tecnico'],"Sin Asignar")!==false){
@@ -239,13 +239,13 @@ class Ticket_model extends CI_Model
             
         }
 
-        if($filt2['sede_filtrar']!=""){
-            $this->db->where('gid', $filt2['sede_filtrar']);       
+        if($filt2['sede_filtrar']!="" && $filt2['sede_filtrar']!=null && $filt2['sede_filtrar']!="null"){
+            $this->db->where_in('gid', explode(",", $filt2['sede_filtrar']));       
         }
 		if($filt2['detalle']!="" && $filt2['detalle']!=null && $filt2['detalle']!="null"){
             $this->db->where_in('detalle', explode(",", $filt2['detalle']));       
         }
-		$this->db->join('customers', 'tickets.cid=customers.id', 'left');
+		$this->db->join('customers', 'tickets.cid=customers.id ', 'left');
         $i = 0;
 
         foreach ($this->doccolumn_search as $item) // loop column
