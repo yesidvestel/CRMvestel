@@ -1311,10 +1311,11 @@ class Customers_model extends CI_Model
     }
 
     public function devolver_ips_proximas(){
-        $ips_remotas = array('yopal' =>'10.0.0.2', "monterrey"=>'10.1.100.2','villanueva'=>"80.0.0.2" );    
+        $ips_remotas = array('yopal' =>'10.0.0.2', "monterrey"=>'10.1.100.2','villanueva'=>"80.0.0.2",'villanueva_gpon'=>"10.20.0.2" );    
         $customers_yopal=$this->db->get_where("customers",array('ciudad'=>"yopal","Ipremota!="=>null,"Ipremota!="=>""))->result_array();
         $customers_monterrey=$this->db->get_where("customers",array('ciudad'=>"monterrey","Ipremota!="=>null,"Ipremota!="=>""))->result_array();
         $customers_villanueva=$this->db->get_where("customers",array('ciudad'=>"villanueva","Ipremota!="=>null,"Ipremota!="=>""))->result_array();
+        $customers_villanueva_gpon=$this->db->get_where("customers",array('ciudad'=>"villanueva","Ipremota!="=>null,"Ipremota!="=>"","tegnologia_instalacion"=>"GPON"))->result_array();
         $x=0;$y=2;
         foreach ($customers_yopal as $key => $cm) {
             
@@ -1388,6 +1389,31 @@ class Customers_model extends CI_Model
             $y++;
         }
         $ips_remotas['villanueva']="80.0.".$x.".".$y;
+        //ips casos gpon
+        $x=0;$y=1;
+        foreach ($customers_villanueva_gpon as $key => $cm) {
+            
+            $desarticulacion_ip=explode(".",$cm['Ipremota'] );
+            if(count($desarticulacion_ip)==4){
+                
+                if($desarticulacion_ip[2]==$x){
+                    if($desarticulacion_ip[3]>$y){
+                        $y=$desarticulacion_ip[3];
+                    }
+                }else if($desarticulacion_ip[2]>$x){
+                    $x=$desarticulacion_ip[2];
+                    $y=$desarticulacion_ip[3];
+                }
+            }
+
+        }
+        if($y==254){
+            $x++;
+            $y=0;
+        }else{
+            $y++;
+        }
+        $ips_remotas['villanueva_gpon']="10.20.".$x.".".$y;
         return $ips_remotas;
     }
     public function getClientData(){

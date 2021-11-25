@@ -439,6 +439,7 @@
     var sede_default="<?=$customergroup['id']?>";
     var ip_default="<?=$customer['Ipremota']?>";
     var user_name_default="<?=$customer['name_s']?>";
+    var remote_ip_villanueva_gpon="<?=$ips_remotas['villanueva_gpon']?>";
     function selecciona_para_agregar(){
         var elemento=document.getElementById("copy_address<?=$edit?>");
         //console.log($("#discountFormatServicio").val());
@@ -526,6 +527,7 @@ alert(selected);
 											document.formulario1.perfil.options[0].text="-"											
 								}
 								document.formulario1.perfil.options[0].selected = true;
+								var tegnologia_instalacion1=$("#tegnologia option:selected").val();
                                 if(customergroup==sede_default && user_name_default!=""){
                                     
                                     $("#Ipremota").val(ip_default);
@@ -537,22 +539,53 @@ alert(selected);
                                     }else if(customergroup=="3"){
                                         $("#Ipremota").val(remote_ip_villanueva);
                                         //$("#Ipremota2").val(remote_ip_villanueva);
+                                        if(tegnologia_instalacion1=="GPON"){
+	                                        $("#Ipremota").val(remote_ip_villanueva_gpon);
+	                                       
+                                   		 }
                                     }else if(customergroup=="4"){
                                         $("#Ipremota").val(remote_ip_monterrey);
                                        // $("#Ipremota2").val(remote_ip_monterrey);
                                     }
                                 }
                                 selecciona_para_agregar();   
-							}	
+							}
+
+							$("#tegnologia").on("change",function(ev){
+                                /*var tegnologia_instalacion1=$("#tegnologia option:selected").val();
+                                var id_sede=$("#id_sede option:selected").val();
+                                if(id_sede=="2"){
+                                    $("#Ipremota").val(remote_ip_yopal);
+                                    $("#Ipremota2").val(remote_ip_yopal);
+                                }else if(id_sede=="3"){
+                                    $("#Ipremota").val(remote_ip_villanueva);
+                                    $("#Ipremota2").val(remote_ip_villanueva);
+                                    if(tegnologia_instalacion1=="GPON"){
+                                        $("#Ipremota").val(remote_ip_villanueva_gpon);
+                                        $("#Ipremota2").val(remote_ip_villanueva_gpon);
+                                    }
+                                }else if(id_sede=="4"){
+                                    $("#Ipremota").val(remote_ip_monterrey);
+                                    $("#Ipremota2").val(remote_ip_monterrey);
+                                }*/
+                                cambia();
+                                cambia2();
+                                
+                            });		
 	var Iplocal_2 = new Array ("10.0.0.1");
 	var Iplocal_3 = new Array ("80.0.0.1");
 	var Iplocal_4 = new Array ("10.1.100.1");
+	var Iplocal_3gpon = new Array ("10.20.0.1");
 							//crear funcion que ejecute el cambio
 							function cambia2(){
 								var customergroup;
 								customergroup = document.formulario1.customergroup[document.formulario1.customergroup.			selectedIndex].value;
 								//se verifica la seleccion dada
 								if(customergroup!=0){
+									var tegnologia_instalacion1=$("#tegnologia option:selected").val();
+                                    if(customergroup==3 && tegnologia_instalacion1=="GPON"){
+                                        customergroup="3gpon";
+                                    }
 									mis_opts=eval("Iplocal_"+customergroup);
 									//definimos cuantas obciones hay
 									num_opts=mis_opts.length;
