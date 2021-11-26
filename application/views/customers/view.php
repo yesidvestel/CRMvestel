@@ -43,6 +43,10 @@
 {
  background-color: darkcyan;
 }
+.st-Cartera
+{
+ background-color:darkgoldenrod;
+}
 </style>
 <div class="app-content content container-fluid">
     <div class="content-wrapper">
