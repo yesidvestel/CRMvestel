@@ -469,6 +469,7 @@
 			 <p class="col-sm-6">Hora apertura: <?php echo $horas ?></p>
 			 <p class="col-sm-6">Hora cierre: <?php echo $horas2 ?></p>
 			 <p class="col-sm-6">Cajero: <?php echo $cajero->name ?></p>
+			 <p class="col-sm-6" id="efectivo-caja">Efectivo Caja: $0</p>
             <hr class="col-sm-12">
             <?php if($datos_informe['trans_type']!="Expense"){ ?>
 			 <div class="col-sm-6">
@@ -1306,6 +1307,8 @@
             dataType: 'html',
             success: function (data) {
                 $('#entries').html(data);
+                //var x=$.cookie("cierre_variable_efectivo_format");
+                //$("#efectivo-caja").text("Efectivo Caja: "+x);
 
             },
             error: function (data) {

@@ -744,14 +744,20 @@ $data['datos_informe']=array("trans_type"=>$trans_type);
            
          
          }
+   
+         $balance2=0;
         foreach ($list as $row) {
             
             if($row['estado']!="Anulada"){
                 $balance += $row['credit'] - $row['debit'];
+                if($row['method']=="Cash" || $row['method']=="cash"){
+                    $balance2 += $row['credit'] - $row['debit'];
+                }
             echo '<tr><td>' . $row['date'] . '</td><td>' . $row['note'] . '</td><td>' . amountFormat($row['debit']) . '</td><td>' . amountFormat($row['credit']) . '</td><td>' . amountFormat($balance) . '</td></tr>';
             }
         }
-
+        echo '<script type="text/javascript">$("#efectivo-caja").text("Efectivo Caja: '.amountFormat($balance2).'")</script>';
+        //$_COOKIE['']; falta completar la logica 
     }
     public function statements_para_pdf()
     {
