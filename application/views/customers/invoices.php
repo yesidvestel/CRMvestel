@@ -257,6 +257,7 @@
     //quito esto porque esta generando error y no se porque esta no le veo la logica
 ?>
 <script type="text/javascript">
+    var desabilitar=false;
     var tb;
     var fac_pagadas="<?= (isset($ultimo_resivo)) ? $ultimo_resivo : '' ?>";
     var id_customer="<?=$_GET['id']?>";
@@ -293,7 +294,9 @@
    $(document).on('click', "#submitpayment2", function (e) {
     e.preventDefault();
    var pyurl=baseurl + 'transactions/payinvoicemultiple';
-
+        $("#submitpayment2").attr("disabled",true);
+        
+        desabilitar=true;
         payInvoice(pyurl);
 
 
@@ -369,7 +372,10 @@ function visualizar_div_asociadas(){
             $("#submitpayment2").attr("disabled",true);
         }else{
             $("#rmpay").val(total);
-            $("#submitpayment2").removeAttr("disabled");
+            if(desabilitar==false){
+                $("#submitpayment2").removeAttr("disabled");
+            }
+            
         }
         
 
