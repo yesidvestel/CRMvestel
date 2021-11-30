@@ -556,6 +556,35 @@ $data['datos_informe']=array("trans_type"=>$trans_type);
             );
             $this->db->where('id', $iduser);
             $this->db->update('aauth_users', $datec);
+            $valor_efectivo_caja=intval($_SESSION['valor_efectivo_caja']);
+            
+            if($valor_efectivo_caja>0){
+                $validar_no_repit=$this->db->get_where("transactions",array("note"=>"Saldo ".$datex->format("Y-m-d"),"estado"=>null))->row();
+                    if(empty($validar_no_repit)){
+                        $data_tr_efectivo=array();
+                        $data_tr_efectivo['acid']=$_SESSION['valor_efectivo_caja_acid'];
+                        $data_tr_efectivo['account']=$_SESSION['valor_efectivo_account'];
+                        $data_tr_efectivo['type']="Expense";
+                        $data_tr_efectivo['cat']="sales";
+                        $data_tr_efectivo['debit']=$valor_efectivo_caja;
+                        $data_tr_efectivo['credit']="0.00";
+                        $cajero = $this->db->get_where('employee_profile', array('id' => $iduser))->row();
+                        $data_tr_efectivo['payer']=$cajero->name;
+                        $data_tr_efectivo['payerid']=0;
+                        $data_tr_efectivo['method']="Cash";
+                        $data_tr_efectivo['date']=$datex->format("Y-m-d");
+                        $data_tr_efectivo['tid']="0";
+                        $data_tr_efectivo['eid']=$iduser;
+                        $data_tr_efectivo['note']="Saldo ".$data_tr_efectivo['date'];
+                        $this->db->insert("transactions",$data_tr_efectivo);
+                        $data_tr_efectivo['debit']="0.00";
+                        $data_tr_efectivo['credit']=$valor_efectivo_caja;
+                        $fecha_actual = date("Y-m-d");                
+                        $data_tr_efectivo['date']= date("Y-m-d",strtotime($data_tr_efectivo['date']."+ 1 days")); 
+                        $data_tr_efectivo['type']="Income";
+                        $this->db->insert("transactions",$data_tr_efectivo);
+                    }
+            }
             // fin cambiando rol usario
            //$this->load->view('reports/sacar_pdf', $data);
             //sacar pdf
@@ -746,18 +775,24 @@ $data['datos_informe']=array("trans_type"=>$trans_type);
          }
    
          $balance2=0;
+         $valor_efectivo_caja_acid="0";
+         $account_ef="";
         foreach ($list as $row) {
             
             if($row['estado']!="Anulada"){
                 $balance += $row['credit'] - $row['debit'];
                 if($row['method']=="Cash" || $row['method']=="cash"){
                     $balance2 += $row['credit'] - $row['debit'];
+                    $valor_efectivo_caja_acid=$row['acid'];
+                    $account_ef=$row['account'];
                 }
             echo '<tr><td>' . $row['date'] . '</td><td>' . $row['note'] . '</td><td>' . amountFormat($row['debit']) . '</td><td>' . amountFormat($row['credit']) . '</td><td>' . amountFormat($balance) . '</td></tr>';
             }
         }
         echo '<script type="text/javascript">$("#efectivo-caja").text("Efectivo Caja: '.amountFormat($balance2).'")</script>';
-        //$_COOKIE['']; falta completar la logica 
+        $_SESSION['valor_efectivo_caja']=$balance2; 
+        $_SESSION['valor_efectivo_caja_acid']=$valor_efectivo_caja_acid;
+        $_SESSION['valor_efectivo_account']=$account_ef;
     }
     public function statements_para_pdf()
     {
