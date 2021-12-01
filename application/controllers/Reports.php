@@ -561,6 +561,32 @@ $data['datos_informe']=array("trans_type"=>$trans_type);
             if($valor_efectivo_caja>0){
                 $validar_no_repit=$this->db->get_where("transactions",array("note"=>"Saldo ".$datex->format("Y-m-d"),"estado"=>null))->row();
                     if(empty($validar_no_repit)){
+                       $this->load->library("Festivos");
+                        $festivos = new Festivos();//ejemplo para saber si un dia es festivo
+                        
+                        $fechax1 = $datex->format("Y-m-d");
+                        $dias_a_sumar=1;
+                        $fechax1=date("Y-m-d",strtotime($datex->format("Y-m-d")."+ ".$dias_a_sumar." days"));
+                        $ciclo=true;
+                        while($ciclo){
+                            if($festivos->esFestivoFecha($fechax1)){
+                                $dias_a_sumar++;
+                                //es festivo
+                                $ciclo=true;
+                            }else{
+                                $ciclo=false;
+                            } 
+                            if(date("w",strtotime($fechax1))=="0"){
+                                $dias_a_sumar++;
+                                $ciclo=true;
+                            }
+                            
+                            if($ciclo){
+                                $fechax1=date("Y-m-d",strtotime($datex->format("Y-m-d")."+ ".$dias_a_sumar." days"));    
+                            }
+                            
+                            
+                        }
                         $data_tr_efectivo=array();
                         $data_tr_efectivo['acid']=$_SESSION['valor_efectivo_caja_acid'];
                         $data_tr_efectivo['account']=$_SESSION['valor_efectivo_account'];
@@ -580,7 +606,7 @@ $data['datos_informe']=array("trans_type"=>$trans_type);
                         $data_tr_efectivo['debit']="0.00";
                         $data_tr_efectivo['credit']=$valor_efectivo_caja;
                         $fecha_actual = date("Y-m-d");                
-                        $data_tr_efectivo['date']= date("Y-m-d",strtotime($data_tr_efectivo['date']."+ 1 days")); 
+                        $data_tr_efectivo['date']= $fechax1; 
                         $data_tr_efectivo['type']="Income";
                         $this->db->insert("transactions",$data_tr_efectivo);
                     }
