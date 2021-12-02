@@ -532,6 +532,14 @@ alert(selected);
                                     
                                     $("#Ipremota").val(ip_default);
                                     //$("#Ipremota2").val(ip_default);
+                                    if(customergroup=="3"){
+                                        
+                                        //$("#Ipremota2").val(remote_ip_villanueva);
+                                        if(tegnologia_instalacion1=="GPON"){
+	                                        $("#Ipremota").val(remote_ip_villanueva_gpon);
+	                                       
+                                   		 }
+                                    }
                                 }else{
                                     if(customergroup=="2"){
                                         $("#Ipremota").val(remote_ip_yopal);

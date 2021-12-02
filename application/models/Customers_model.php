@@ -1310,111 +1310,110 @@ class Customers_model extends CI_Model
         }
     }
 
+    
     public function devolver_ips_proximas(){
         $ips_remotas = array('yopal' =>'10.0.0.2', "monterrey"=>'10.1.100.2','villanueva'=>"80.0.0.2",'villanueva_gpon'=>"10.20.0.2" );    
-        $customers_yopal=$this->db->get_where("customers",array('ciudad'=>"yopal","Ipremota!="=>null,"Ipremota!="=>""))->result_array();
-        $customers_monterrey=$this->db->get_where("customers",array('ciudad'=>"monterrey","Ipremota!="=>null,"Ipremota!="=>""))->result_array();
-        $customers_villanueva=$this->db->get_where("customers",array('ciudad'=>"villanueva","Ipremota!="=>null,"Ipremota!="=>""))->result_array();
-        $customers_villanueva_gpon=$this->db->get_where("customers",array('ciudad'=>"villanueva","Ipremota!="=>null,"Ipremota!="=>"","tegnologia_instalacion"=>"GPON"))->result_array();
-        $x=0;$y=2;
-        foreach ($customers_yopal as $key => $cm) {
-            
-            $desarticulacion_ip=explode(".",$cm['Ipremota'] );
-            if(count($desarticulacion_ip)==4){
-                
-                if($desarticulacion_ip[2]==$x){
-                    if($desarticulacion_ip[3]>$y){
-                        $y=$desarticulacion_ip[3];
-                    }
-                }else if($desarticulacion_ip[2]>$x){
-                    $x=$desarticulacion_ip[2];
-                    $y=$desarticulacion_ip[3];
-                }
-            }
+        $customers_yopal=$this->db->query("select count(*) as c_usuarios from customers where ciudad='yopal' and Ipremota is not null and Ipremota!='' and Ipremota!='0'")->result_array();
+        $customers_monterrey=$this->db->query("select count(*) as c_usuarios from customers where ciudad='monterrey' and Ipremota is not null and Ipremota!='' and Ipremota!='0'")->result_array();
+        $customers_villanueva=$this->db->query("select count(*) as c_usuarios from customers where ciudad='villanueva' and Ipremota is not null and Ipremota!='' and (tegnologia_instalacion!='GPON' or tegnologia_instalacion is null)")->result_array();
+        $customers_villanueva_gpon=$this->db->query("select count(*) as c_usuarios from customers where ciudad='villanueva' and Ipremota is not null and Ipremota!='' and tegnologia_instalacion='GPON'")->result_array();
 
-        }
-        if($y==254){
-            $x++;
-            $y=0;
-        }else{
-            $y++;
-        }
-        $ips_remotas['yopal']="10.0.".$x.".".$y;
         
-        $x=100;$y=2;
-        foreach ($customers_monterrey as $key => $cm) {
+        // ips yopal
+        $ciclo=true;
+        $ip=ip2long($ips_remotas['yopal']);//+intval($customers_yopal[0]['c_usuarios']) estas lineas hay que agregarlas si el sistema se pone lento al completar todas las casillas ips posibles
+        
+        while($ciclo){
             
-            $desarticulacion_ip=explode(".",$cm['Ipremota'] );
-            if(count($desarticulacion_ip)==4){
-                
-                if($desarticulacion_ip[2]==$x){
-                    if($desarticulacion_ip[3]>$y){
-                        $y=$desarticulacion_ip[3];
-                    }
-                }else if($desarticulacion_ip[2]>$x){
-                    $x=$desarticulacion_ip[2];
-                    $y=$desarticulacion_ip[3];
-                }
-            }
-
-        }
-        if($y==254){
-            $x++;
-            $y=0;
-        }else{
-            $y++;
-        }
-        $ips_remotas['monterrey']="10.1.".$x.".".$y;
-        $x=0;$y=2;
-        foreach ($customers_villanueva as $key => $cm) {
+            $bcast = $ip;
+            $smask = ip2long("255.255.255.255");
+            $nmask = $bcast & $smask;
             
-            $desarticulacion_ip=explode(".",$cm['Ipremota'] );
-            if(count($desarticulacion_ip)==4){
-                
-                if($desarticulacion_ip[2]==$x){
-                    if($desarticulacion_ip[3]>$y){
-                        $y=$desarticulacion_ip[3];
-                    }
-                }else if($desarticulacion_ip[2]>$x){
-                    $x=$desarticulacion_ip[2];
-                    $y=$desarticulacion_ip[3];
-                }
+            $comprovar=$this->db->get_where("customers",array("Ipremota"=>long2ip($nmask),"ciudad"=>"yopal"))->row();
+            if(empty($comprovar)){
+                //no existe
+                $ips_remotas['yopal']=long2ip($nmask);//aqui como la ip es correcta y no existe se deja como la ip a retornar
+                $ciclo=false;
+            }else{                
+                //existe
+                $ciclo=true;
+                $ip=$ip+1;
             }
-
-        }
-        if($y==254){
-            $x++;
-            $y=0;
-        }else{
-            $y++;
-        }
-        $ips_remotas['villanueva']="80.0.".$x.".".$y;
-        //ips casos gpon
-        $x=0;$y=1;
-        foreach ($customers_villanueva_gpon as $key => $cm) {
+        }            
+       // end ips yopal
+        // ips monterrey
+        $ciclo=true;
+        $ip=ip2long($ips_remotas['monterrey']);//+intval($customers_monterrey[0]['c_usuarios']) estas lineas hay que agregarlas si el sistema se pone lento al completar todas las casillas ips posibles
+        
+        while($ciclo){
             
-            $desarticulacion_ip=explode(".",$cm['Ipremota'] );
-            if(count($desarticulacion_ip)==4){
-                
-                if($desarticulacion_ip[2]==$x){
-                    if($desarticulacion_ip[3]>$y){
-                        $y=$desarticulacion_ip[3];
-                    }
-                }else if($desarticulacion_ip[2]>$x){
-                    $x=$desarticulacion_ip[2];
-                    $y=$desarticulacion_ip[3];
-                }
+            $bcast = $ip;
+            $smask = ip2long("255.255.255.255");
+            $nmask = $bcast & $smask;
+            
+            $comprovar=$this->db->get_where("customers",array("Ipremota"=>long2ip($nmask),"ciudad"=>"monterrey"))->row();
+            if(empty($comprovar)){
+                //no existe
+                $ips_remotas['monterrey']=long2ip($nmask);//aqui como la ip es correcta y no existe se deja como la ip a retornar
+                $ciclo=false;
+            }else{                
+                //existe
+                $ciclo=true;
+                $ip=$ip+1;
             }
+        }            
+       // end ips monterrey
 
-        }
-        if($y==254){
-            $x++;
-            $y=0;
-        }else{
-            $y++;
-        }
-        $ips_remotas['villanueva_gpon']="10.20.".$x.".".$y;
-        return $ips_remotas;
+        // ips villanueva
+        $ciclo=true;
+        $ip=ip2long($ips_remotas['villanueva']);//+intval($customers_villanueva[0]['c_usuarios']) estas lineas hay que agregarlas si el sistema se pone lento al completar todas las casillas ips posibles
+        
+        while($ciclo){
+            
+            $bcast = $ip;
+            $smask = ip2long("255.255.255.255");
+            $nmask = $bcast & $smask;
+            
+            $comprovar=$this->db->query("select * from customers where ciudad='villanueva' and Ipremota='".long2ip($nmask)."' and (tegnologia_instalacion!='GPON' or tegnologia_instalacion is null)")->result_array();
+            if(count($comprovar)==0){
+                //no existe
+                $ips_remotas['villanueva']=long2ip($nmask);//aqui como la ip es correcta y no existe se deja como la ip a retornar
+                $ciclo=false;
+            }else{                
+                //existe
+                $ciclo=true;
+                $ip=$ip+1;
+            }
+        }            
+       // end ips villanueva
+         // ips customers_villanueva_gpon
+        $ciclo=true;
+        $ip=ip2long($ips_remotas['villanueva_gpon']);//+intval($customers_villanueva_gpon[0]['c_usuarios']) estas lineas hay que agregarlas si el sistema se pone lento al completar todas las casillas ips posibles
+        
+        while($ciclo){
+            
+            $bcast = $ip;
+            $smask = ip2long("255.255.255.255");
+            $nmask = $bcast & $smask;
+            
+            $comprovar=$this->db->get_where("customers",array("Ipremota"=>long2ip($nmask),"ciudad"=>"villanueva","tegnologia_instalacion"=>"GPON"))->row();
+            if(empty($comprovar)){
+                //no existe
+                $ips_remotas['villanueva_gpon']=long2ip($nmask);//aqui como la ip es correcta y no existe se deja como la ip a retornar
+                $ciclo=false;
+            }else{                
+                //existe
+                $ciclo=true;
+                $ip=$ip+1;
+            }
+        }            
+       // end ips customers_villanueva_gpon
+return $ips_remotas;
+
+        /* $bcast = ip2long("10.20.2.0"); //codigo de ejemplo de como sumar ips basico
+            $smask = ip2long("255.255.255.255");
+            $nmask = $bcast & $smask;
+            var_dump( long2ip($nmask)); // Will give 192.168.178.0*/
     }
     public function getClientData(){
         $data_json_string='{
