@@ -350,8 +350,37 @@ class Reports extends CI_Controller
             $data['lista_mes_actual']=$lista4;
             $data['lista_meses_anteriores']=$lista_meses_anteriores;
         //end new code
-
-
+        $this->load->library("Festivos");
+                        $festivos = new Festivos();//ejemplo para saber si un dia es festivo
+                        
+                        $fechax1 = $datex->format("Y-m-d");
+                        $dias_a_sumar=1;
+                        $fechax1=date("Y-m-d",strtotime($datex->format("Y-m-d")."- ".$dias_a_sumar." days"));
+                        $ciclo=true;
+                        while($ciclo){
+                            if($festivos->esFestivoFecha($fechax1)){
+                                $dias_a_sumar++;
+                                //es festivo
+                                $ciclo=true;
+                            }else{
+                                $ciclo=false;
+                            } 
+                            if(date("w",strtotime($fechax1))=="0"){
+                                $dias_a_sumar++;
+                                $ciclo=true;
+                            }
+                            
+                            if($ciclo){
+                                $fechax1=date("Y-m-d",strtotime($datex->format("Y-m-d")."- ".$dias_a_sumar." days"));    
+                            }
+                            
+                            
+                        }
+        $saldo_anterior=$this->db->query("select * from transactions where account='".$caja1->holder."' and date='".$datex->format("Y-m-d")."' and note='Saldo ".$fechax1."' and estado is null")->result();
+        $data['saldo_anterior']=0;
+        if(count($saldo_anterior)>0){
+            $data['saldo_anterior']=$saldo_anterior[0]->credit;
+        }
         $this->load->view('fixed/header', $head);
         $this->load->view('reports/statement_list', $data);
         $this->load->view('fixed/footer');
@@ -557,11 +586,11 @@ $data['datos_informe']=array("trans_type"=>$trans_type);
             $this->db->where('id', $iduser);
             $this->db->update('aauth_users', $datec);
             $valor_efectivo_caja=intval($_SESSION['valor_efectivo_caja']);
-            
+            $this->load->library("Festivos");
             if($valor_efectivo_caja>0){
                 $validar_no_repit=$this->db->get_where("transactions",array("note"=>"Saldo ".$datex->format("Y-m-d"),"estado"=>null))->row();
                     if(empty($validar_no_repit)){
-                       $this->load->library("Festivos");
+                       
                         $festivos = new Festivos();//ejemplo para saber si un dia es festivo
                         
                         $fechax1 = $datex->format("Y-m-d");
@@ -614,6 +643,38 @@ $data['datos_informe']=array("trans_type"=>$trans_type);
             // fin cambiando rol usario
            //$this->load->view('reports/sacar_pdf', $data);
             //sacar pdf
+
+                        $festivos = new Festivos();//ejemplo para saber si un dia es festivo
+                        
+                        $fechax1 = $datex->format("Y-m-d");
+                        $dias_a_sumar=1;
+                        $fechax1=date("Y-m-d",strtotime($datex->format("Y-m-d")."- ".$dias_a_sumar." days"));
+                        $ciclo=true;
+                        while($ciclo){
+                            if($festivos->esFestivoFecha($fechax1)){
+                                $dias_a_sumar++;
+                                //es festivo
+                                $ciclo=true;
+                            }else{
+                                $ciclo=false;
+                            } 
+                            if(date("w",strtotime($fechax1))=="0"){
+                                $dias_a_sumar++;
+                                $ciclo=true;
+                            }
+                            
+                            if($ciclo){
+                                $fechax1=date("Y-m-d",strtotime($datex->format("Y-m-d")."- ".$dias_a_sumar." days"));    
+                            }
+                            
+                            
+                        }
+        $saldo_anterior=$this->db->query("select * from transactions where account='".$caja1->holder."' and date='".$datex->format("Y-m-d")."' and note='Saldo ".$fechax1."' and estado is null")->result();
+        $data['saldo_anterior']=0;
+        if(count($saldo_anterior)>0){
+            $data['saldo_anterior']=$saldo_anterior[0]->credit;
+        }
+
 
            ini_set('memory_limit', '64M');
 
