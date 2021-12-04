@@ -588,9 +588,11 @@ $data['datos_informe']=array("trans_type"=>$trans_type);
             $valor_efectivo_caja=intval($_SESSION['valor_efectivo_caja']);
             $this->load->library("Festivos");
             if($valor_efectivo_caja>0){
-                $validar_no_repit=$this->db->get_where("transactions",array("note"=>"Saldo ".$datex->format("Y-m-d"),"estado"=>null))->row();
-                    if(empty($validar_no_repit)){
-                       
+                //$validar_no_repit=$this->db->get_where("transactions",array("note"=>"Saldo ".$datex->format("Y-m-d"),"estado"=>null))->row();
+                $saldo_anterior=$this->db->query("select * from transactions where account='".$caja1->holder."' and date='".$datex->format("Y-m-d")."' and note='Saldo ".$datex->format("Y-m-d")."' and estado is null")->result();
+                
+                    if(count($saldo_anterior)==0){
+                    
                         $festivos = new Festivos();//ejemplo para saber si un dia es festivo
                         
                         $fechax1 = $datex->format("Y-m-d");
