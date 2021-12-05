@@ -720,7 +720,7 @@ if($data['servicios']['estado']=="Inactivo"){
         echo json_encode($output);
     }
     public function edita_estado_usuario(){
-        $customer1=$this->db->get_where("customers",array("id"=>$id_cm))->row();
+        $customer1=$this->db->get_where("customers",array("id"=>$_GET['id_cm']))->row();
         $this->customers->editar_estado_usuario($_GET['username'],$_GET['id_sede'],$customer1->tegnologia_instalacion);
         redirect(base_url()."customers/view?id=".$_GET['id_cm']);
     }
