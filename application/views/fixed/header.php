@@ -1428,9 +1428,11 @@
                         <li>
                             <a href="<?php echo base_url(); ?>productcategory"><?php echo $this->lang->line('') ?>Categoria de material</a>
                         </li>
+                        <!--
                         <li>
                             <a href="<?php echo base_url(); ?>productcategory/warehouse"><?php echo $this->lang->line('Warehouses') ?></a>
                         </li>
+                        -->   
                     </ul>
                 </li>
 			<!---------------- GESTION DE PROYECTOS ----------------->
