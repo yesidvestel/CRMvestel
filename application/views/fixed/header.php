@@ -1371,19 +1371,20 @@
 			<!------ MENU PARA TECNICOS------->
 			
 			<?php if ($this->aauth->get_user()->roleid == 2) { ?>
-			
+			<!--
 			<li class="navigation-header"><span><?php echo $this->lang->line('CRM') ?></span><i
                             data-toggle="tooltip" data-placement="right"
                             data-original-title="CRM"
                             class="icon-ellipsis icon-ellipsis"></i>
                 </li>
+                 ADMINISTRADOR DE USUARIOS
                 <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "customers") {
                     echo ' open';
                 } ?>">
                     <a href=""> <i class="icon-group"></i><span
                                 class="menu-title"> <?php echo $this->lang->line('') ?>Usuarios</span><i
                                 class="fa arrow"></i> </a>
-					<!---ADMINISTRADOR DE USUARIOS--->
+					
 					
                     <ul class="menu-content">
                         <li>
@@ -1391,9 +1392,9 @@
                         </li>
                     </ul>
                 </li>
-			
+			 -->
 			<!--- MENU INVENTARIOS--->
-			
+			<!--
                 <li class="navigation-header"><span><?php echo $this->lang->line('Stock') ?></span><i
                             data-toggle="tooltip" data-placement="right"
                             data-original-title="Stock"
@@ -1414,6 +1415,7 @@
                         </li>
 					</ul>
 				</li>
+                
                 <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "products") {
                     echo ' open';
                 } ?>">
@@ -1428,13 +1430,14 @@
                         <li>
                             <a href="<?php echo base_url(); ?>productcategory"><?php echo $this->lang->line('') ?>Categoria de material</a>
                         </li>
-                        <!--
+                        
                         <li>
                             <a href="<?php echo base_url(); ?>productcategory/warehouse"><?php echo $this->lang->line('Warehouses') ?></a>
                         </li>
-                        -->   
+                          
                     </ul>
                 </li>
+                --> 
 			<!---------------- GESTION DE PROYECTOS ----------------->
                 <li class="navigation-header"><span>PROYECTOS</span><i
                             data-toggle="tooltip" data-placement="right"
