@@ -630,7 +630,7 @@ $data['datos_informe']=array("trans_type"=>$trans_type);
                         $data_tr_efectivo['payerid']=0;
                         $data_tr_efectivo['method']="Cash";
                         $data_tr_efectivo['date']=$datex->format("Y-m-d");
-                        $data_tr_efectivo['tid']="0";
+                        $data_tr_efectivo['tid']="-1";
                         $data_tr_efectivo['eid']=$iduser;
                         $data_tr_efectivo['note']="Saldo ".$data_tr_efectivo['date'];
                         $this->db->insert("transactions",$data_tr_efectivo);
