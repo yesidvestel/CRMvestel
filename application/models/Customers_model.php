@@ -137,6 +137,10 @@ class Customers_model extends CI_Model
         $query = $this->db->get();
         return $query->result();
     }
+    public function validar_firma($id){
+        $nombre="assets/firmas_digitales/".$id.".png";
+        return file_exists($nombre);
+    }
 	public function invoice_details($custid)
     {
 
