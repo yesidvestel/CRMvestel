@@ -799,7 +799,7 @@
                 <h4 class="modal-title">Usuario Sin Firma Electronica</h4>
             </div>          
             <div class="modal-body">
-                <p>Con este mensaje se le informa que el usuario no presenta firma electronica registrada en el sistema,<br> muchas gracias.</p>
+                <p>Con este mensaje se le informa que el usuario no presenta firma electrónica registrada en el sistema,<br> muchas gracias.</p>
             </div>
             <div class="modal-footer">
                 <button class="btn btn-primary" onclick='$("#modal_informativo").modal("hide");'>Aceptar</button>
