@@ -44,6 +44,7 @@ class Dashboard_model extends CI_Model
         $where = "DATE(invoicedate) ='$today'";
         $this->db->select_sum('total');
         $this->db->from('invoices');
+        $this->db->where("tipo_factura!=",'Nota Credito');
         $this->db->where($where);
 		if ($sede != ''){
         $this->db->where('refer', $sede);
