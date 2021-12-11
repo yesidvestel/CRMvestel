@@ -585,6 +585,9 @@
                                 class="fa arrow"></i> </a>
                     <ul class="menu-content">
                         <li>
+                            <a href="<?php echo base_url(); ?>reports/statistics_services">Estadisticas Servicios</a>
+                        </li>
+                        <li>
                             <a href="<?php echo base_url(); ?>reports/statistics"><?php echo $this->lang->line('Statistics') ?></a>
                         </li>
                         <li>

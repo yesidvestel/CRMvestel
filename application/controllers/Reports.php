@@ -1002,7 +1002,42 @@ $data['datos_informe']=array("trans_type"=>$trans_type);
         return $var_lista;
 
     }
-
+public function statistics_services(){
+    $extraccion_dia=$this->db->get_where("estadisticas_servicios",array("fecha"=>date("Y-m-d")))->row();
+    $data=array();
+    if(empty($extraccion_dia)){
+        $lista_customers_activos=$this->db->query("select * from customers where (usu_estado='Activo' or usu_estado='Compromiso')")->result();
+        $this->load->model("customers_model","customers");
+        $internet=0;
+        $tv=0;
+        $activo_con_algun_servicio=0;
+        foreach ($lista_customers_activos as $key => $value) {
+            $servicios=$this->customers->servicios_detail($value->id);
+            $validar=false;
+            if($servicios["television"]!="no" && $servicios["television"]!="" && $servicios["television"]!="-"){
+                $tv++;
+                $validar=true;
+            } 
+            if($servicios["combo"]!="no" && $servicios["combo"]!="" && $servicios["combo"]!="-"){
+                $internet++;      
+                $validar=true;
+            } 
+            if($validar){
+                $activo_con_algun_servicio++;
+            }
+        }
+        $data['n_internet']=$internet;
+        $data['n_tv']=$tv;
+        $data['n_activo']=$activo_con_algun_servicio;
+        $data['fecha']=date("Y-m-d");
+        $this->db->insert("estadisticas_servicios",$data);
+    }
+    $lista_estadisticas=$this->db->order_by("fecha","asc")->get_where("estadisticas_servicios")->result_array();
+    $datos=array("lista_estadisticas"=>$lista_estadisticas);
+    $this->load->view("fixed/header");
+    $this->load->view("reports/statistics_services",$datos);
+    $this->load->view("fixed/footer");
+}
     public function customerstatements()
     {
 
