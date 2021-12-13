@@ -7,7 +7,9 @@
                 <div class="col-xl-12 col-lg-12">
                     <div class="card">
                         <div class="card-header no-border">
-                            <h6 style="text-align: center;" class="card-title">Servicios Activos</h6>
+                            <h4 style="text-align: center;" class="card-title">Servicios Activos <a class="float-xs-right"
+                                                                                               href="<?php echo base_url() ?>reports/refresh_data?tipo=estadisticas_servicios"><i
+                                class="icon-refresh2"></i></a></h4>
                              <div class="row">
 				            	<div class="col-xl-12 col-lg-12"><!-- ['y','z','a','b','c','d','e','f','g','h','i','j'] -->
 								

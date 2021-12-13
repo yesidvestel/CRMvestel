@@ -1005,7 +1005,7 @@ $data['datos_informe']=array("trans_type"=>$trans_type);
 public function statistics_services(){
     $extraccion_dia=$this->db->get_where("estadisticas_servicios",array("fecha"=>date("Y-m-d")))->row();
     $data=array();
-    if(empty($extraccion_dia)){
+    if(empty($extraccion_dia) || (isset($_GET['tipo']) && $_GET['tipo']=="process")){
         $lista_customers_activos=$this->db->query("select * from customers where (usu_estado='Activo' or usu_estado='Compromiso')")->result();
         $this->load->model("customers_model","customers");
         $internet=0;
@@ -1030,13 +1030,23 @@ public function statistics_services(){
         $data['n_tv']=$tv;
         $data['n_activo']=$activo_con_algun_servicio;
         $data['fecha']=date("Y-m-d");
-        $this->db->insert("estadisticas_servicios",$data);
+        if(empty($extraccion_dia)){
+            $this->db->insert("estadisticas_servicios",$data);    
+        }else{
+            $this->db->update("estadisticas_servicios",$data,array("id_estadisticas_servicios"=>$extraccion_dia->id_estadisticas_servicios));
+        }
+        
     }
-    $lista_estadisticas=$this->db->order_by("fecha","asc")->get_where("estadisticas_servicios")->result_array();
-    $datos=array("lista_estadisticas"=>$lista_estadisticas);
-    $this->load->view("fixed/header");
-    $this->load->view("reports/statistics_services",$datos);
-    $this->load->view("fixed/footer");
+    if(empty($_GET['tipo'])){
+        $lista_estadisticas=$this->db->order_by("fecha","asc")->get_where("estadisticas_servicios")->result_array();
+        $datos=array("lista_estadisticas"=>$lista_estadisticas);
+        $this->load->view("fixed/header");
+        $this->load->view("reports/statistics_services",$datos);
+        $this->load->view("fixed/footer");    
+    }else{
+        echo json_encode(array('status' => 'Success', 'message' => $this->lang->line('Calculated')));
+    }
+    
 }
     public function customerstatements()
     {
@@ -1175,8 +1185,12 @@ public function statistics_services(){
 
         $head['title'] = "Refreshing Reports";
         $head['usernm'] = $this->aauth->get_user()->username;
+        $data=array();
+        if(isset($_GET['tipo']) && $_GET['tipo']=="estadisticas_servicios"){
+            $data['tipo']="estadisticas_servicios";
+        }
         $this->load->view('fixed/header', $head);
-        $this->load->view('reports/refresh_data');
+        $this->load->view('reports/refresh_data',$data);
         $this->load->view('fixed/footer');
 
     }
