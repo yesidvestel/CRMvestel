@@ -1,3 +1,53 @@
+<style>
+.st-Activo, .st-Instalar , .st-Cortado, .st-Suspendido, .st-Exonerado
+{
+    text-transform: uppercase;
+    color: #fff;
+    padding: 4px;
+    border-radius: 11px;
+    font-size: 15px;
+}
+.st-Activo
+{
+ background-color: #4EAA28;
+}
+.st-Instalar
+{
+ background-color: #A49F20;
+}
+.st-Cortado
+{
+ background-color: #A4282A;
+}
+.sts-Cortado
+{
+ color: #A4282A;
+}
+.sts-Suspendido
+{
+ color: #2224A3;
+}
+.st-Suspendido
+{
+ background-color: #2224A3;
+}
+.st-Exonerado
+{
+ background-color: #24A9AB;
+}
+.st-Compromiso
+{
+ background-color: #EB8D25;
+}
+.st-Depurado
+{
+ background-color: darkcyan;
+}
+.st-Cartera
+{
+ background-color:darkgoldenrod;
+}
+</style>
 <article class="content">
     <div class="card card-block">
         <div id="notify" class="alert alert-success" style="display:none;">
@@ -124,7 +174,8 @@
                             <h6><label class="col-form-label"
                                for="documento"><?php echo $this->lang->line('') ?>Nº Documento</label></h6>
 							 <div>
-                            	<input type="text" placeholder="Numero de documento" class="form-control margin-bottom required" name="documento" id="mcustomer_documento">
+                            	<input type="text" placeholder="Numero de documento" class="form-control margin-bottom required" name="documento" id="mcustomer_documento" onfocusout="validar_n_documento()">
+                                <a href="#" style="margin-top:1px;" class="btn btn-info" onclick="validar_n_documento()"><i class="icon-refresh"></i></a>
                         	</div>
                         </div>
                     
@@ -415,6 +466,56 @@
     </form>
     </div>
 </article>
+<div id="modal_validacion_documento" class="modal fade">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Usuarios con el mismo documento</h4>
+            </div>          
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table id="clientstable" class="table-striped" cellspacing="0" width="100%">
+                        <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Abonado</th>
+                        <th><?php echo $this->lang->line('Name') ?></th>
+                        <th>Celular</th>
+                        <th>Cedula</th>
+                        <th><?php echo $this->lang->line('Address') ?></th>
+                        <th >Estado</th>
+                        
+
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+
+                    <tfoot>
+                    <tr>
+                        <th>#</th>
+                        <th>Abonado</th>
+                        <th><?php echo $this->lang->line('Name') ?></th>
+                        <th>Celular</th>
+                        <th>Cedula</th>
+                        <th><?php echo $this->lang->line('Address') ?></th>
+                        <th>Estado</th>
+                        
+
+
+                    </tr>
+                    </tfoot>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" onclick='$("#modal_validacion_documento").modal("hide");'>Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script type="text/javascript">
     var remote_ip_yopal="<?=$ips_remotas['yopal']?>";
     var remote_ip_villanueva="<?=$ips_remotas['villanueva']?>";
@@ -478,6 +579,48 @@ alert(selected);
 }
 </script>
 <script type="text/javascript">	
+    var tb;
+     $(document).ready(function () {
+ tb=$('#clientstable').DataTable({
+                    
+                    "language":{
+                            "processing": "Procesando...",
+                            "lengthMenu": "Mostrar _MENU_ registros",
+                            "zeroRecords": "No se encontraron resultados",
+                            "emptyTable": "Ningún dato disponible en esta tabla",
+                            "infoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                            "infoFiltered": "(filtrado de un total de _MAX_ registros)",
+                            "search": "Buscar:",
+                            "infoThousands": ",",
+                            "loadingRecords": "Cargando...",
+                            "paginate": {
+                                "first": "Primero",
+                                "last": "Último",
+                                "next": "Siguiente",
+                                "previous": "Anterior"
+                            },
+                             "info": "Mostrando de _START_ a _END_ de _TOTAL_ entradas"
+
+                        }
+                    
+                });
+});
+    function validar_n_documento(){
+        var doc=$("#mcustomer_documento").val();
+        if(doc!=" " && doc!=""){
+            $.post(baseurl+"customers/validar_n_documento",{'documento':doc},function(data){
+                if(data.conteo!=0){
+                    tb.ajax.url(baseurl+"customers/lista_por_documento?doc="+doc).load();
+                    $("#modal_validacion_documento").modal("show");                    
+                }
+
+            },'json');
+                
+            
+               
+
+        }
+    }
 	var perfil_2 = new Array ("Seleccine...","3Megas","5Megas","5MegasD","10Megas","10MegasSt","15Megas","20Megas","20MegasSt","30Megas","30MegasSt","50Megas","70Megas","80Megas","Cortados");
 	var perfil_3 = new Array ("Seleccine...","3MEGAS","5MEGAS","5MDEDI","5MEGAS2","10MEGAS","10MEGASST","10MegasD","20MEGAS","20MEGASST","20MEGASD","30MEGAS","30MEGASST","MOROSOS");
 	var perfil_4 = new Array ("Seleccine...","3Megas","5Megas","5MegasD","10Megas","10MegasSt","15Megas","20Megas","20MegasSt","30Megas","30MegasSt","50Megas","80Megas","Cortados");
