@@ -103,7 +103,7 @@
                                     class="icon-menu5"> </i></a></li>
                     <li class="nav-item hidden-sm-down"><a href="#" class="nav-link nav-link-expand"><i
                                     class="icon icon-expand2"></i></a></li>
-                    <li class="nav-item hidden-sm-down"><input type="text" placeholder="<?php echo $this->lang->line('Search Customer') ?>" id="head-customerbox" class="nav-link menu-search form-control round"/></li>
+                    <li class="nav-item "><input type="text" placeholder="<?php echo $this->lang->line('Search Customer') ?>" id="head-customerbox" class="nav-link menu-search form-control round"/></li>
                 </ul>
                 <div id="head-customerbox-result" class="dropdown dropdown-notification"></div>
                 <ul class="nav navbar-nav float-xs-right">
@@ -581,6 +581,9 @@
                                 class="menu-title"> <?php echo $this->lang->line('Data & Reports') ?> </span><i
                                 class="fa arrow"></i> </a>
                     <ul class="menu-content">
+                        <li>
+                            <a href="<?php echo base_url(); ?>reports/statistics_services">Estadisticas Servicios</a>
+                        </li>
                         <li>
                             <a href="<?php echo base_url(); ?>reports/statistics"><?php echo $this->lang->line('Statistics') ?></a>
                         </li>
@@ -1448,96 +1451,7 @@
 						<?php } ?>
                     </ul>
                 </li>
-				<?php } ?>
-				<!---temporales---->
-				<?php if ($this->aauth->get_user()->pla != '') { ?>
-                <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "templates") {
-                    echo ' open';
-                } ?>">
-                    <a href=""> <i class="icon-table3"></i><span
-                                class="menu-title"> <?php echo $this->lang->line('Templates') ?> </span><i
-                                class="fa arrow"></i> </a>
-                    <ul class="menu-content">
-						<?php if ($this->aauth->get_user()->placor != '') { ?>
-                        <li>
-                            <a href="<?php echo base_url(); ?>templates/email"><?php echo $this->lang->line('Email') ?></a>
-                        </li>
-						<?php } if ($this->aauth->get_user()->plamen != '') { ?>
-                        <li>
-                            <a href="<?php echo base_url(); ?>templates/sms">SMS</a>
-                        </li>
-						<?php } if ($this->aauth->get_user()->platem != '') { ?>
-                        <li>
-                            <a href="<?php echo base_url(); ?>settings/theme"><?php echo $this->lang->line('Theme') ?></a>
-                        </li>
-						<?php } ?>
-                    </ul>
-                </li>
-				<?php } ?>
-				<!----COPIAS----->
-				<?php if ($this->aauth->get_user()->PENDIENTE != '') { ?>
-                <li class="navigation-header"><span><?php echo $this->lang->line('Backup & Export').'-'.$this->lang->line('Import'); ?><i
-                                data-toggle="tooltip" data-placement="right"
-                                data-original-title="Export"
-                                class="icon-ellipsis icon-ellipsis"></i>
-                </li>
-                <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "export") {
-                    echo ' open';
-                } ?>">
-                    <a href=""> <i class="icon-database"></i><span
-                                class="menu-title"> <?php echo $this->lang->line('Export Data') ?> </span><i
-                                class="fa arrow"></i> </a>
-                    <ul class="menu-content">
-						<?php if ($this->aauth->get_user()->pla != '') { ?>
-                        <li>
-                            <a href="<?php echo base_url(); ?>export/crm"><?php echo $this->lang->line('Export People Data'); ?></a>
-                        </li>
-						<?php } if ($this->aauth->get_user()->plamen != '') { ?>
-                        <li>
-                            <a href="<?php echo base_url(); ?>export/transactions"><?php echo $this->lang->line('Export Transactions'); ?></a>
-                        </li>
-						<?php } if ($this->aauth->get_user()->plamen != '') { ?>
-                        <li>
-                            <a href="<?php echo base_url(); ?>export/products"><?php echo $this->lang->line('Export Products'); ?></a>
-                        </li>
-						<?php } if ($this->aauth->get_user()->plamen != '') { ?>
-                        <li>
-                            <a href="<?php echo base_url(); ?>export/account"><?php echo $this->lang->line('Account Statements') ?></a>
-                        </li>
-						<?php } if ($this->aauth->get_user()->plamen != '') { ?>
-                        <li>
-                            <a href="<?php echo base_url(); ?>export/dbexport"><?php echo $this->lang->line('Database Backup'); ?></a>
-                        </li>
-						<?php } if ($this->aauth->get_user()->plamen != '') { ?>
-                        <li>
-                            <a href="<?php echo base_url(); ?>export/taxstatement"><?php echo $this->lang->line('TAX'); ?> Statements</a>
-                        </li>
-						<?php } ?>
-                    </ul>
-                </li>
-				<?php } ?>
-				<?php if ($this->aauth->get_user()->PENDIENTE != '') { ?>
-                <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "import") {
-                    echo ' open';
-                } ?>">
-                    <a href=""> <i class="icon-road2"></i><span
-                                class="menu-title"> <?php echo $this->lang->line('Import') ?> </span><i
-                                class="fa arrow"></i> </a>
-                    <ul class="menu-content">
-                        <li>
-                            <a href="<?php echo base_url(); ?>import/products"><?php echo $this->lang->line('Import Products'); ?></a>
-                        </li>
-						<li>
-                            <a href="<?php echo base_url(); ?>importequipo/equipos"><?php echo $this->lang->line(''); ?>Importar Equipos</a>
-                        </li>
-						<li>
-                            <a href="<?php echo base_url(); ?>importequipo/usuarios"><?php echo $this->lang->line(''); ?>Importar Usuarios</a>
-                        </li>
-						<li>
-                            <a href="<?php echo base_url(); ?>importequipo/facturas"><?php echo $this->lang->line(''); ?>Importar facturas</a>
-                        </li>
-					</ul>
-                </li>
+
             <?php } } ?>
 			
         </ul>

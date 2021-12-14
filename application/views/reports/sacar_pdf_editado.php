@@ -861,6 +861,10 @@ $array_afiliaciones=array();
 						</tr>
 					</thead>
 					<tbody>
+						<?php $cantidad_saldo_anterior; if($saldo_anterior==0){$cantidad_saldo_anterior=0;}else{$cantidad_saldo_anterior=1;} ?>
+						<tr >
+							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Saldo Anterior</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'><?=$cantidad_saldo_anterior  ?></td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 1px;'><?="$ ".number_format($saldo_anterior,0,",",".")  ?></td>
+						</tr>
 						<tr >
 							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Efectivo</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'><?=$array_efectivo['cantidad']  ?></td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 1px;'><?="$ ".number_format($array_efectivo['monto'],0,",",".")  ?></td>
 						</tr>
@@ -890,8 +894,8 @@ $array_afiliaciones=array();
 					<tfoot>
 						<tr>
 							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;' >TOTAL FORMA PAGO</th>
-							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'><?=($array_efectivo['cantidad']+$array_bancos['BANCOLOMBIA TV']['cantidad']+$array_bancos['BANCOLOMBIA TELECOMUNICACIONES']['cantidad']+$array_bancos['BANCOLOMBIA CUENTA CORRIENTE']['cantidad'])  ?></th>
-							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 1px;'><?=("$ ".number_format($array_efectivo['monto']+$array_bancos['BANCOLOMBIA TV']['monto']+$array_bancos['BANCOLOMBIA TELECOMUNICACIONES']['monto']+$array_bancos['BANCOLOMBIA CUENTA CORRIENTE']['monto'],0,",","."))  ?></th>			
+							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'><?=($cantidad_saldo_anterior+$array_efectivo['cantidad']+$array_bancos['BANCOLOMBIA TV']['cantidad']+$array_bancos['BANCOLOMBIA TELECOMUNICACIONES']['cantidad']+$array_bancos['BANCOLOMBIA CUENTA CORRIENTE']['cantidad'])  ?></th>
+							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 1px;'><?=("$ ".number_format($saldo_anterior+$array_efectivo['monto']+$array_bancos['BANCOLOMBIA TV']['monto']+$array_bancos['BANCOLOMBIA TELECOMUNICACIONES']['monto']+$array_bancos['BANCOLOMBIA CUENTA CORRIENTE']['monto'],0,",","."))  ?></th>			
 						</tr>
 					</tfoot>
 			</table>

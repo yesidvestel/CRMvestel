@@ -969,6 +969,12 @@
 				</thead>
 				<tbody>
 					<tr>
+						<td>Saldo Anterior</td>
+						<?php $cantidad_saldo_anterior; if($saldo_anterior==0){$cantidad_saldo_anterior=0;}else{$cantidad_saldo_anterior=1;} ?>
+						<td style="text-align: center"><?=$cantidad_saldo_anterior?></td>
+						<td style="text-align: center"><?="$ ".number_format($saldo_anterior,0,",",".")?></td>
+					</tr>
+					<tr>
 						<td>Efectivo</td>
 						<td style="text-align: center"><?=$array_efectivo['cantidad']?></td>
 						<td style="text-align: center"><?="$ ".number_format($array_efectivo['monto'],0,",",".")?></td>
@@ -1013,8 +1019,8 @@
 				<tfoot>
 					<tr>
 						<th class="pie">TOTAL FORMA PAGO</th>
-						<th class="pie"><?=$array_efectivo['cantidad']+$array_bancos['BANCOLOMBIA TV']['cantidad']+$array_bancos['BANCOLOMBIA TELECOMUNICACIONES']['cantidad']+$array_bancos['BANCOLOMBIA CUENTA CORRIENTE']['cantidad']?></th>
-						<th class="pie"><?="$ ".number_format($array_efectivo['monto']+$array_bancos['BANCOLOMBIA TV']['monto']+$array_bancos['BANCOLOMBIA TELECOMUNICACIONES']['monto']+$array_bancos['BANCOLOMBIA CUENTA CORRIENTE']['monto'],0,",",".")?></th>			
+						<th class="pie"><?=$cantidad_saldo_anterior+$array_efectivo['cantidad']+$array_bancos['BANCOLOMBIA TV']['cantidad']+$array_bancos['BANCOLOMBIA TELECOMUNICACIONES']['cantidad']+$array_bancos['BANCOLOMBIA CUENTA CORRIENTE']['cantidad']?></th>
+						<th class="pie"><?="$ ".number_format($saldo_anterior+$array_efectivo['monto']+$array_bancos['BANCOLOMBIA TV']['monto']+$array_bancos['BANCOLOMBIA TELECOMUNICACIONES']['monto']+$array_bancos['BANCOLOMBIA CUENTA CORRIENTE']['monto'],0,",",".")?></th>			
 					</tr>
 				</tfoot>
 			</table>

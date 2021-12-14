@@ -34,13 +34,15 @@
     </div>
 </article>
 <script type="text/javascript">
+    var url_="<?= (isset($tipo) && $tipo=='estadisticas_servicios') ? 'reports/statistics_services':'reports/statistics'?>";
+    var url_process="<?= (isset($tipo) && $tipo=='estadisticas_servicios') ? 'reports/statistics_services?tipo=process':'reports/refresh_process'?>";
     setTimeout(function () {
         $.ajax({
 
-            url: baseurl + 'reports/refresh_process',
+            url: baseurl + url_process,
             dataType: 'json',
             success: function () {
-                window.location.href = baseurl + 'reports/statistics';
+                window.location.href = baseurl + url_;
 
             },
             error: function () {

@@ -137,6 +137,10 @@ class Customers_model extends CI_Model
         $query = $this->db->get();
         return $query->result();
     }
+    public function validar_firma($id){
+        $nombre="assets/firmas_digitales/".$id.".png";
+        return file_exists($nombre);
+    }
 	public function invoice_details($custid)
     {
 
@@ -1321,7 +1325,7 @@ class Customers_model extends CI_Model
         
         // ips yopal
         $ciclo=true;
-        $ip=ip2long($ips_remotas['yopal']);//+intval($customers_yopal[0]['c_usuarios']) estas lineas hay que agregarlas si el sistema se pone lento al completar todas las casillas ips posibles
+        $ip=ip2long($ips_remotas['yopal'])+intval($customers_yopal[0]['c_usuarios']);//+intval($customers_yopal[0]['c_usuarios']) estas lineas hay que agregarlas si el sistema se pone lento al completar todas las casillas ips posibles
         
         while($ciclo){
             
@@ -1343,7 +1347,7 @@ class Customers_model extends CI_Model
        // end ips yopal
         // ips monterrey
         $ciclo=true;
-        $ip=ip2long($ips_remotas['monterrey']);//+intval($customers_monterrey[0]['c_usuarios']) estas lineas hay que agregarlas si el sistema se pone lento al completar todas las casillas ips posibles
+        $ip=ip2long($ips_remotas['monterrey'])+intval($customers_monterrey[0]['c_usuarios']);//+intval($customers_monterrey[0]['c_usuarios']) estas lineas hay que agregarlas si el sistema se pone lento al completar todas las casillas ips posibles
         
         while($ciclo){
             
@@ -1366,7 +1370,7 @@ class Customers_model extends CI_Model
 
         // ips villanueva
         $ciclo=true;
-        $ip=ip2long($ips_remotas['villanueva']);//+intval($customers_villanueva[0]['c_usuarios']) estas lineas hay que agregarlas si el sistema se pone lento al completar todas las casillas ips posibles
+        $ip=ip2long($ips_remotas['villanueva'])+intval($customers_villanueva[0]['c_usuarios']);//+intval($customers_villanueva[0]['c_usuarios']) estas lineas hay que agregarlas si el sistema se pone lento al completar todas las casillas ips posibles
         
         while($ciclo){
             
@@ -1388,7 +1392,7 @@ class Customers_model extends CI_Model
        // end ips villanueva
          // ips customers_villanueva_gpon
         $ciclo=true;
-        $ip=ip2long($ips_remotas['villanueva_gpon']);//+intval($customers_villanueva_gpon[0]['c_usuarios']) estas lineas hay que agregarlas si el sistema se pone lento al completar todas las casillas ips posibles
+        $ip=ip2long($ips_remotas['villanueva_gpon'])+intval($customers_villanueva_gpon[0]['c_usuarios']);//+intval($customers_villanueva_gpon[0]['c_usuarios']) estas lineas hay que agregarlas si el sistema se pone lento al completar todas las casillas ips posibles
         
         while($ciclo){
             

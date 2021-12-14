@@ -1,4 +1,19 @@
-﻿UPDATE `variables_de_entorno` SET `valor` = '{\"username\":\"api.crmvestel\",\"password\":\"duber123\",\"ip_Yopal\":\"190.14.233.186:8728\",\"Ip_Villanueva_GPON\":\"190.14.238.114:8728\",\"Ip_Villanueva_EPON\":\"190.14.238.114:8780\",\"Ip_Villanueva_EOC\":\"190.14.238.114:8780\",\"ip_Monterrey\":\"190.14.248.42:8728\"}' WHERE `variables_de_entorno`.`id` = 3
+﻿------------------------------------------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `crm`.`estadisticas_servicios` (
+  `id_estadisticas_servicios` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `n_internet` INT(11) NOT NULL,
+  `n_tv` INT(11) NOT NULL,
+  `n_activo` INT(11) NOT NULL,
+  `fecha` DATE NOT NULL,
+  PRIMARY KEY (`id_estadisticas_servicios`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+-------------------------------------------sql para estadisticas---------------------------------------
+
+SELECT * FROM `transactions` WHERE `note` LIKE '%Saldo 2021%'; 
+update transactions set tid=-1 where note like "%Saldo 2021%";
+-----------------------------------------para verificar y colocar bandera para saber cuales son las transacciones de caja----------------------
+UPDATE `variables_de_entorno` SET `valor` = '{\"username\":\"api.crmvestel\",\"password\":\"duber123\",\"ip_Yopal\":\"190.14.233.186:8728\",\"Ip_Villanueva_GPON\":\"190.14.238.114:8728\",\"Ip_Villanueva_EPON\":\"190.14.238.114:8780\",\"Ip_Villanueva_EOC\":\"190.14.238.114:8780\",\"ip_Monterrey\":\"190.14.248.42:8728\"}' WHERE `variables_de_entorno`.`id` = 3
 ALTER TABLE `customers` ADD `tegnologia_instalacion` VARCHAR(25) NULL AFTER `credit`;
 -----------------------------------------------------------------------------------------------------------------
 ALTER TABLE `tickets` ADD `nombre_firma` VARCHAR(250) NULL DEFAULT NULL AFTER `asignacion_movil`, ADD `cc_firma` VARCHAR(30) NULL DEFAULT NULL AFTER `nombre_firma`, ADD `parentesco_firma` VARCHAR(100) NULL DEFAULT NULL AFTER `cc_firma`;

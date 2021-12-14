@@ -350,8 +350,37 @@ class Reports extends CI_Controller
             $data['lista_mes_actual']=$lista4;
             $data['lista_meses_anteriores']=$lista_meses_anteriores;
         //end new code
-
-
+        $this->load->library("Festivos");
+                        $festivos = new Festivos();//ejemplo para saber si un dia es festivo
+                        
+                        $fechax1 = $datex->format("Y-m-d");
+                        $dias_a_sumar=1;
+                        $fechax1=date("Y-m-d",strtotime($datex->format("Y-m-d")."- ".$dias_a_sumar." days"));
+                        $ciclo=true;
+                        while($ciclo){
+                            if($festivos->esFestivoFecha($fechax1)){
+                                $dias_a_sumar++;
+                                //es festivo
+                                $ciclo=true;
+                            }else{
+                                $ciclo=false;
+                            } 
+                            if(date("w",strtotime($fechax1))=="0"){
+                                $dias_a_sumar++;
+                                $ciclo=true;
+                            }
+                            
+                            if($ciclo){
+                                $fechax1=date("Y-m-d",strtotime($datex->format("Y-m-d")."- ".$dias_a_sumar." days"));    
+                            }
+                            
+                            
+                        }
+        $saldo_anterior=$this->db->query("select * from transactions where account='".$caja1->holder."' and date='".$datex->format("Y-m-d")."' and note='Saldo ".$fechax1."' and estado is null")->result();
+        $data['saldo_anterior']=0;
+        if(count($saldo_anterior)>0){
+            $data['saldo_anterior']=$saldo_anterior[0]->credit;
+        }
         $this->load->view('fixed/header', $head);
         $this->load->view('reports/statement_list', $data);
         $this->load->view('fixed/footer');
@@ -557,11 +586,13 @@ $data['datos_informe']=array("trans_type"=>$trans_type);
             $this->db->where('id', $iduser);
             $this->db->update('aauth_users', $datec);
             $valor_efectivo_caja=intval($_SESSION['valor_efectivo_caja']);
-            
+            $this->load->library("Festivos");
             if($valor_efectivo_caja>0){
-                $validar_no_repit=$this->db->get_where("transactions",array("note"=>"Saldo ".$datex->format("Y-m-d"),"estado"=>null))->row();
-                    if(empty($validar_no_repit)){
-                       $this->load->library("Festivos");
+                //$validar_no_repit=$this->db->get_where("transactions",array("note"=>"Saldo ".$datex->format("Y-m-d"),"estado"=>null))->row();
+                $saldo_anterior=$this->db->query("select * from transactions where account='".$caja1->holder."' and date='".$datex->format("Y-m-d")."' and note='Saldo ".$datex->format("Y-m-d")."' and estado is null")->result();
+                
+                    if(count($saldo_anterior)==0){
+                    
                         $festivos = new Festivos();//ejemplo para saber si un dia es festivo
                         
                         $fechax1 = $datex->format("Y-m-d");
@@ -599,7 +630,7 @@ $data['datos_informe']=array("trans_type"=>$trans_type);
                         $data_tr_efectivo['payerid']=0;
                         $data_tr_efectivo['method']="Cash";
                         $data_tr_efectivo['date']=$datex->format("Y-m-d");
-                        $data_tr_efectivo['tid']="0";
+                        $data_tr_efectivo['tid']="-1";
                         $data_tr_efectivo['eid']=$iduser;
                         $data_tr_efectivo['note']="Saldo ".$data_tr_efectivo['date'];
                         $this->db->insert("transactions",$data_tr_efectivo);
@@ -614,6 +645,38 @@ $data['datos_informe']=array("trans_type"=>$trans_type);
             // fin cambiando rol usario
            //$this->load->view('reports/sacar_pdf', $data);
             //sacar pdf
+
+                        $festivos = new Festivos();//ejemplo para saber si un dia es festivo
+                        
+                        $fechax1 = $datex->format("Y-m-d");
+                        $dias_a_sumar=1;
+                        $fechax1=date("Y-m-d",strtotime($datex->format("Y-m-d")."- ".$dias_a_sumar." days"));
+                        $ciclo=true;
+                        while($ciclo){
+                            if($festivos->esFestivoFecha($fechax1)){
+                                $dias_a_sumar++;
+                                //es festivo
+                                $ciclo=true;
+                            }else{
+                                $ciclo=false;
+                            } 
+                            if(date("w",strtotime($fechax1))=="0"){
+                                $dias_a_sumar++;
+                                $ciclo=true;
+                            }
+                            
+                            if($ciclo){
+                                $fechax1=date("Y-m-d",strtotime($datex->format("Y-m-d")."- ".$dias_a_sumar." days"));    
+                            }
+                            
+                            
+                        }
+        $saldo_anterior=$this->db->query("select * from transactions where account='".$caja1->holder."' and date='".$datex->format("Y-m-d")."' and note='Saldo ".$fechax1."' and estado is null")->result();
+        $data['saldo_anterior']=0;
+        if(count($saldo_anterior)>0){
+            $data['saldo_anterior']=$saldo_anterior[0]->credit;
+        }
+
 
            ini_set('memory_limit', '64M');
 
@@ -812,7 +875,10 @@ $data['datos_informe']=array("trans_type"=>$trans_type);
                     $valor_efectivo_caja_acid=$row['acid'];
                     $account_ef=$row['account'];
                 }
-            echo '<tr><td>' . $row['date'] . '</td><td>' . $row['note'] . '</td><td>' . amountFormat($row['debit']) . '</td><td>' . amountFormat($row['credit']) . '</td><td>' . amountFormat($balance) . '</td></tr>';
+                if($row['type']=="Transfer" && $row['debit']>0){
+                    $balance2 += $row['credit'] - $row['debit'];
+                }
+            echo '<tr><td>'. $row['date'] . '</td><td>' . $row['note'] . '</td><td>' . amountFormat($row['debit']) . '</td><td>' . amountFormat($row['credit']) . '</td><td>' . amountFormat($balance) . '</td></tr>';
             }
         }
         echo '<script type="text/javascript">$("#efectivo-caja").text("Efectivo Caja: '.amountFormat($balance2).'")</script>';
@@ -936,7 +1002,52 @@ $data['datos_informe']=array("trans_type"=>$trans_type);
         return $var_lista;
 
     }
-
+public function statistics_services(){
+    $extraccion_dia=$this->db->get_where("estadisticas_servicios",array("fecha"=>date("Y-m-d")))->row();
+    $data=array();
+    if(empty($extraccion_dia) || (isset($_GET['tipo']) && $_GET['tipo']=="process")){
+        $lista_customers_activos=$this->db->query("select * from customers where (usu_estado='Activo' or usu_estado='Compromiso')")->result();
+        $this->load->model("customers_model","customers");
+        $internet=0;
+        $tv=0;
+        $activo_con_algun_servicio=0;
+        foreach ($lista_customers_activos as $key => $value) {
+            $servicios=$this->customers->servicios_detail($value->id);
+            $validar=false;
+            if($servicios["television"]!="no" && $servicios["television"]!="" && $servicios["television"]!="-"){
+                $tv++;
+                $validar=true;
+            } 
+            if($servicios["combo"]!="no" && $servicios["combo"]!="" && $servicios["combo"]!="-"){
+                $internet++;      
+                $validar=true;
+            } 
+            if($validar){
+                $activo_con_algun_servicio++;
+            }
+        }
+        $data['n_internet']=$internet;
+        $data['n_tv']=$tv;
+        $data['n_activo']=$activo_con_algun_servicio;
+        $data['fecha']=date("Y-m-d");
+        if(empty($extraccion_dia)){
+            $this->db->insert("estadisticas_servicios",$data);    
+        }else{
+            $this->db->update("estadisticas_servicios",$data,array("id_estadisticas_servicios"=>$extraccion_dia->id_estadisticas_servicios));
+        }
+        
+    }
+    if(empty($_GET['tipo'])){
+        $lista_estadisticas=$this->db->order_by("fecha","asc")->get_where("estadisticas_servicios")->result_array();
+        $datos=array("lista_estadisticas"=>$lista_estadisticas);
+        $this->load->view("fixed/header");
+        $this->load->view("reports/statistics_services",$datos);
+        $this->load->view("fixed/footer");    
+    }else{
+        echo json_encode(array('status' => 'Success', 'message' => $this->lang->line('Calculated')));
+    }
+    
+}
     public function customerstatements()
     {
 
@@ -1074,8 +1185,12 @@ $data['datos_informe']=array("trans_type"=>$trans_type);
 
         $head['title'] = "Refreshing Reports";
         $head['usernm'] = $this->aauth->get_user()->username;
+        $data=array();
+        if(isset($_GET['tipo']) && $_GET['tipo']=="estadisticas_servicios"){
+            $data['tipo']="estadisticas_servicios";
+        }
         $this->load->view('fixed/header', $head);
-        $this->load->view('reports/refresh_data');
+        $this->load->view('reports/refresh_data',$data);
         $this->load->view('fixed/footer');
 
     }

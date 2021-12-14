@@ -44,6 +44,7 @@ class Dashboard_model extends CI_Model
         $where = "DATE(invoicedate) ='$today'";
         $this->db->select_sum('total');
         $this->db->from('invoices');
+        $this->db->where("tipo_factura!=",'Nota Credito');
         $this->db->where($where);
 		if ($sede != ''){
         $this->db->where('refer', $sede);
@@ -58,6 +59,7 @@ class Dashboard_model extends CI_Model
         $this->db->select('SUM(debit) as debit,SUM(credit) as credit', FALSE);
         $this->db->where("DATE(date) ='$today'");
         $this->db->where('account', $sede);
+        $this->db->where('tid!=',"-1" );
         $this->db->from('transactions');
         $query = $this->db->get();
         return $query->row_array();
@@ -71,6 +73,7 @@ class Dashboard_model extends CI_Model
 		if ($sede != ''){
         $this->db->where('account', $sede);
 		}
+        $this->db->where('tid!=',"-1" );
         $query = $this->db->get();
         return $query->result_array();
     }
@@ -112,27 +115,27 @@ class Dashboard_model extends CI_Model
     public function incomeChart($today, $month, $year, $sede)
     {
 		if ($sede ==''){
-        $query = $this->db->query("SELECT SUM(credit) AS total,date FROM transactions WHERE ((DATE(date) BETWEEN DATE('$year-$month-01') AND CURDATE()) AND type='Income') GROUP BY date DESC");
+        $query = $this->db->query("SELECT SUM(credit) AS total,date FROM transactions WHERE ((DATE(date) BETWEEN DATE('$year-$month-01') AND CURDATE()) AND type='Income') and tid!=-1 GROUP BY date DESC");
         return $query->result_array();
 		}
-		$query = $this->db->query("SELECT SUM(credit) AS total,date FROM transactions WHERE ((DATE(date) BETWEEN DATE('$year-$month-01') AND CURDATE()) AND type='Income' AND account='$sede') GROUP BY date DESC");
+		$query = $this->db->query("SELECT SUM(credit) AS total,date FROM transactions WHERE ((DATE(date) BETWEEN DATE('$year-$month-01') AND CURDATE()) AND type='Income' AND account='$sede') and tid!=-1 GROUP BY date DESC");
         return $query->result_array();
     }
 
     public function expenseChart($today, $month, $year, $sede)
     {
 		if ($sede ==''){
-        $query = $this->db->query("SELECT SUM(debit) AS total,date FROM transactions WHERE ((DATE(date) BETWEEN DATE('$year-$month-01') AND CURDATE()) AND type='Expense') GROUP BY date DESC");
+        $query = $this->db->query("SELECT SUM(debit) AS total,date FROM transactions WHERE ((DATE(date) BETWEEN DATE('$year-$month-01') AND CURDATE()) AND type='Expense') and tid!=-1 GROUP BY date DESC");
 		return $query->result_array();
 		}
-		$query = $this->db->query("SELECT SUM(debit) AS total,date FROM transactions WHERE ((DATE(date) BETWEEN DATE('$year-$month-01') AND CURDATE()) AND type='Expense' AND account='$sede') GROUP BY date DESC");
+		$query = $this->db->query("SELECT SUM(debit) AS total,date FROM transactions WHERE ((DATE(date) BETWEEN DATE('$year-$month-01') AND CURDATE()) AND type='Expense' AND account='$sede') and tid!=-1 GROUP BY date DESC");
         return $query->result_array();
     }
 
     public function countmonthlyChart()
     {
 
-        $query = $this->db->query("SELECT COUNT(id) AS ttlid,SUM(total) AS total,DATE(invoicedate) as date FROM invoices WHERE (DATE(invoicedate) BETWEEN CURDATE() - INTERVAL 30 DAY AND CURDATE()) GROUP BY date DESC");
+        $query = $this->db->query("SELECT COUNT(id) AS ttlid,SUM(total) AS total,DATE(invoicedate) as date FROM invoices WHERE (DATE(invoicedate) BETWEEN CURDATE() - INTERVAL 30 DAY AND CURDATE()) and tipo_factura!='Nota Credito' GROUP BY date DESC");
         return $query->result_array();
     }
 

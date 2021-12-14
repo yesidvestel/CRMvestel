@@ -316,7 +316,7 @@ class Customers extends CI_Controller
         $head['usernm'] = $this->aauth->get_user()->username;
         $data['activity']=$this->customers->activity($custid);
 		$data['attach'] = $this->customers->attach($custid);
-        
+        $data['validar_firma']=$this->customers->validar_firma($custid);
         $data['estado_mikrotik']=$this->customers->get_estado_mikrotik($data['details']['name_s'],$data['details']['gid'],$data['details']['tegnologia_instalacion']);        
         $this->customers->actualizar_debit_y_credit($custid);
         if($data['servicios']['estado_combo']=="Cortado"){
@@ -720,7 +720,7 @@ if($data['servicios']['estado']=="Inactivo"){
         echo json_encode($output);
     }
     public function edita_estado_usuario(){
-        $customer1=$this->db->get_where("customers",array("id"=>$id_cm))->row();
+        $customer1=$this->db->get_where("customers",array("id"=>$_GET['id_cm']))->row();
         $this->customers->editar_estado_usuario($_GET['username'],$_GET['id_sede'],$customer1->tegnologia_instalacion);
         redirect(base_url()."customers/view?id=".$_GET['id_cm']);
     }
@@ -1275,8 +1275,58 @@ if($data['servicios']['estado']=="Inactivo"){
 
     }
 	
- 	
+ 	public function validar_n_documento(){
+        $lista=$this->db->get_where("customers",array("documento"=>$_POST['documento']))->result_array();
+        echo json_encode(array("conteo"=>count($lista)));
+    }
 
+    public function lista_por_documento(){
+        $lista=$this->db->get_where("customers",array("documento"=>$_GET['doc']))->result_array();
+        $no = $this->input->post('start');
+        $data=array();
+        $x=0;
+        $minimo=$this->input->post('start');
+        if($minimo==null){
+            $minimo=0;
+        }
+        $maximo=$minimo+10;
+        $descontar=0;
+
+        foreach ($lista as $key => $customers) {
+            if($x>=$minimo && $x<$maximo){
+                
+                    $no++;                                
+                    $row = array();
+                    $row[] = $no;
+                    $row[] = $customers['abonado'];
+                    $row[] = '<a href="'.base_url().'customers/view?id=' . $customers['id'] . '">' . $customers['name'] .' '.$customers['unoapellido']. ' </a>';
+                    $row[] = $customers['celular'];  
+                    $row[] = $customers['documento'];
+                    $row[] = $customers['nomenclatura'] . ' ' . $customers['numero1'] . $customers['adicionauno'].' Nº '.$customers['numero2'].$customers['adicional2'].' - '.$customers['numero3'];
+                    $servicio = $this->customers->servicios_detail($customers['id']);
+                    if($servicio['estado']=="Inactivo"){                        
+                        if($customers['usu_estado']!="Inactivo" && $customers['usu_estado']!="0"  && $customers['usu_estado']!=""){
+                            $servicio['estado']=$customers['usu_estado'];
+                        }
+                    }
+                    $row[] = '<span class="tag tag-default tag-pill float-xs-center st-'.$servicio['estado']. '">' .$servicio['estado']. '</span>';
+                    
+                    $data[] = $row;
+            }
+            $x++;
+        }
+         $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => count($lista),
+            "recordsFiltered" => count($lista),
+            "data" => $data,
+        );
+         
+        //output to json format
+        echo json_encode($output);
+
+
+    }
     public function transactions()
     {
 

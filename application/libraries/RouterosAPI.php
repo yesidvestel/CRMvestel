@@ -95,6 +95,11 @@ class RouterosAPI
      */
     public function connect($ip, $login, $password)
     {
+    /* Este cambio es para editar el puerto */
+    $varx=explode(":", $ip);
+    $this->port=$varx[1];
+    /* end Este cambio es para editar el puerto */
+
         for ($ATTEMPT = 1; $ATTEMPT <= $this->attempts; $ATTEMPT++) {
             $this->connected = false;
             $PROTOCOL = ($this->ssl ? 'ssl://' : '' );

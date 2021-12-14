@@ -791,11 +791,32 @@
         </div>
     </div>
 </div>
+<div id="modal_informativo" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Usuario Sin Firma Electronica</h4>
+            </div>          
+            <div class="modal-body">
+                <p>Con este mensaje se le informa que el usuario no presenta firma electrónica registrada en el sistema,<br> muchas gracias.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" onclick='$("#modal_informativo").modal("hide");'>Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 <script src="<?php echo base_url('assets/myjs/jquery.ui.widget.js') ?>"></script>
 <!-- The basic File Upload plugin -->
 <script src="<?php echo base_url('assets/myjs/jquery.fileupload.js') ?>"></script>
 <script>
+    <?= (!$validar_firma) ? '$("#modal_informativo").modal("show");':'' ?>
+    
+
     /*jslint unparam: true */
     /*global window, $ */
     $(function () {
