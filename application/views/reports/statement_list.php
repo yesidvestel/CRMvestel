@@ -70,7 +70,7 @@
 	//end productos sin iva
 //end tabla total cobranza
 		$array_reconexiones=array('cantidad' =>0 ,"monto"=>0 );
-		$array_bancos=array("BANCOLOMBIA TV" => array('cantidad' => 0,"monto"=>0 ),"BANCOLOMBIA TELECOMUNICACIONES"=>array('cantidad' => 0,"monto"=>0 ),"BANCOLOMBIA CUENTA CORRIENTE"=>array('cantidad' => 0,"monto"=>0 ));
+		$array_bancos=array("BANCOLOMBIA TV" => array('cantidad' => 0,"monto"=>0 ),"BANCOLOMBIA TELECOMUNICACIONES"=>array('cantidad' => 0,"monto"=>0 ),"BANCOLOMBIA CUENTA CORRIENTE"=>array('cantidad' => 0,"monto"=>0 ),"Caja Virtual"=>array('cantidad' => 0,"monto"=>0 ));
 		$array_resumen_tipo_servicio= array('Internet' => array('cantidad' => 0,"monto"=>0 ),"Television"=> array('cantidad' => 0,"monto"=>0 ));
 		$array_efectivo=array("cantidad"=>0,"monto"=>0);
 
@@ -315,6 +315,16 @@
 				}
 			}
 		 }
+		 //caja virtual
+		 if($filter[5]=="Caja Virtual"){
+		 foreach ($cuenta4 as $key => $value) {		 	
+		 	if($value['estado']!="Anulada"){
+			 		$array_bancos['Caja Virtual']['cantidad']++;
+					$array_bancos['Caja Virtual']['monto']+=$value['credit'];
+				
+			}
+		 }
+		}
 		 //end bancos
 
 		 //resumen por tipo de servicio
@@ -996,8 +1006,8 @@
 					</tr>
 					<tr>
 						<td>Transferencia</td>
-						<td style="text-align: center"><?=$array_bancos['BANCOLOMBIA TV']['cantidad']+$array_bancos['BANCOLOMBIA TELECOMUNICACIONES']['cantidad']+$array_bancos['BANCOLOMBIA CUENTA CORRIENTE']['cantidad']?></td>
-						<td style="text-align: center"><?="$ ".number_format($array_bancos['BANCOLOMBIA TV']['monto']+$array_bancos['BANCOLOMBIA TELECOMUNICACIONES']['monto']+$array_bancos['BANCOLOMBIA CUENTA CORRIENTE']['monto'],0,",",".")?></td>
+						<td style="text-align: center"><?=$array_bancos['Caja Virtual']['cantidad']+$array_bancos['BANCOLOMBIA TV']['cantidad']+$array_bancos['BANCOLOMBIA TELECOMUNICACIONES']['cantidad']+$array_bancos['BANCOLOMBIA CUENTA CORRIENTE']['cantidad']?></td>
+						<td style="text-align: center"><?="$ ".number_format($array_bancos['Caja Virtual']['monto']+$array_bancos['BANCOLOMBIA TV']['monto']+$array_bancos['BANCOLOMBIA TELECOMUNICACIONES']['monto']+$array_bancos['BANCOLOMBIA CUENTA CORRIENTE']['monto'],0,",",".")?></td>
 					</tr>
 					<tr>
 						<td>Cheque</td>

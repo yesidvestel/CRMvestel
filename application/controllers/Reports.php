@@ -247,9 +247,11 @@ class Reports extends CI_Controller
             $cuenta1 = $this->reports->get_statements(6, $trans_type, $sdate, $edate);
             $cuenta2 = $this->reports->get_statements(7, $trans_type, $sdate, $edate);
             $cuenta3 = $this->reports->get_statements(8, $trans_type, $sdate, $edate);
+            $cuenta4 = $this->reports->get_statements(11, $trans_type, $sdate, $edate);
             $data['cuenta1']=$cuenta1;
             $data['cuenta2']=$cuenta2;
             $data['cuenta3']=$cuenta3;
+            $data['cuenta4']=$cuenta4;//caja virtual
             
             foreach ($cuenta1 as $key => $value) {
                 $invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
@@ -300,6 +302,13 @@ class Reports extends CI_Controller
                     }
             }
          }
+    if($caja1->holder=="Caja Virtual"){
+         foreach ($cuenta4 as $key => $value) {         
+            if($value['estado']=="Anulada"){
+               $anulaciones[]=$value; 
+            }
+         }
+     }
          $data['lista']=$lista2;
          $data['lista_anulaciones']=$anulaciones;
             
@@ -471,9 +480,11 @@ $data['datos_informe']=array("trans_type"=>$trans_type);
             $cuenta1 = $this->reports->get_statements(6, $trans_type, $sdate, $edate);
             $cuenta2 = $this->reports->get_statements(7, $trans_type, $sdate, $edate);
             $cuenta3 = $this->reports->get_statements(8, $trans_type, $sdate, $edate);
+            $cuenta4 = $this->reports->get_statements(11, $trans_type, $sdate, $edate);
             $data['cuenta1']=$cuenta1;
             $data['cuenta2']=$cuenta2;
             $data['cuenta3']=$cuenta3;
+            $data['cuenta4']=$cuenta4;
             
 
             foreach ($cuenta1 as $key => $value) {
@@ -524,6 +535,13 @@ $data['datos_informe']=array("trans_type"=>$trans_type);
                     }
             }
          }
+             if($caja1->holder=="Caja Virtual"){
+                 foreach ($cuenta4 as $key => $value) {         
+                    if($value['estado']=="Anulada"){
+                       $anulaciones[]=$value; 
+                    }
+                 }
+             }
          $data['lista']=$lista2;
          $data['lista_anulaciones']=$anulaciones;
             
@@ -878,7 +896,7 @@ $data['datos_informe']=array("trans_type"=>$trans_type);
                 if($row['type']=="Transfer" && $row['debit']>0){
                     $balance2 += $row['credit'] - $row['debit'];
                 }
-            echo '<tr><td>'. $row['date'] . '</td><td>' . $row['note'] . '</td><td>' . amountFormat($row['debit']) . '</td><td>' . amountFormat($row['credit']) . '</td><td>' . amountFormat($balance) . '</td></tr>';
+            echo '<tr><td>'.$row['id'].' - '. $row['date'] . '</td><td>' . $row['note'] . '</td><td>' . amountFormat($row['debit']) . '</td><td>' . amountFormat($row['credit']) . '</td><td>' . amountFormat($balance) . '</td></tr>';
             }
         }
         echo '<script type="text/javascript">$("#efectivo-caja").text("Efectivo Caja: '.amountFormat($balance2).'")</script>';
