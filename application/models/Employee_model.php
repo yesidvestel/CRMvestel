@@ -120,7 +120,7 @@ class Employee_model extends CI_Model
 
     public function employee_details($id)
     {
-        $this->db->select('employee_profile.*,aauth_users.email');
+        $this->db->select('employee_profile.*,aauth_users.*');
         $this->db->from('employee_profile');
         $this->db->where('employee_profile.id', $id);
         $this->db->join('aauth_users', 'employee_profile.id = aauth_users.id', 'left');
@@ -128,7 +128,28 @@ class Employee_model extends CI_Model
         return $query->row_array();
     }
 
-    public function update_employee($id, $name,$dto,$ingreso,$rh,$eps,$pensiones, $phone, $phonealt, $address, $city, $region, $country)
+    public function update_employee(
+		$id, $name,$dto,$ingreso,$rh,$eps,$pensiones, 
+		$phone, $phonealt, $address, $city, $region, $country,
+		$roleid,$co,$coape,$conue,$coadm,
+		$cocie,$cofa,$cofae,$us,$usnue,$usadm,$usgru,
+		$tik,$tiknue,$tikadm,$mo,$monue,$moadm,$pro,
+		$pronue,$proadm,$enc,$encllam,$encnue,$encenc,
+		$encats,$encatslis,$proy,$proynue,$proyadm,
+		$cuen,$cuenadm,$cuennue,$cuenbal,$cuendec,
+		$red,$reding,$redadm,$redbod,$com,$comnue,
+		$comadm,$tes,$testran,$tesanu,$tesnuetransac,
+		$tesnuetransfer,$tesing,$tesgas,$testransfer,
+		$dat,$datest,$datdec,$datrep,$datusu,$datpro,
+		$dating,$datgas,$dattrans,$datimp,$not,$cal,
+		$doct,$pag,$pagconf,$pagvia,$pagmon,$pagcam,
+		$pagban,$inv,$inving,$invadm,$invcat,$invalm,
+		$invtrs,$emp,$comp,$comprec,$compurl,$comptwi,
+		$compcurr,$pla,$placor,$plamen,$platem,$conf,
+		$confemp,$conffa,$confmon,$conffec,$confcat,
+		$confmet,$confrest,$confcorr,$confterm,$confaut,
+		$confseg,$conftem,$confsop,$conface,$confupt,
+		$confapi,$tar)
     {
         $data = array(
             'name' => $name,
@@ -148,7 +169,156 @@ class Employee_model extends CI_Model
 
         $this->db->set($data);
         $this->db->where('id', $id);
+		
 
+        if ($this->db->update('employee_profile')) {
+			$antrol=$this->db->get_where('aauth_users',array('id'=>$id))->row();
+				if ($roleid == ''){
+					$roleid2 = $antrol->roleid;
+				}else{
+					$roleid2 = $roleid;
+				}
+			 $data1 = array(
+                'roleid' => $roleid2,
+				'co'=>$co,
+				'coape'=>$coape,
+				'conue'=>$conue,
+				'coadm'=>$coadm,
+				'cocie'=>$cocie,
+				'cofa'=>$cofa,
+				'cofae'=>$cofae,
+				'us'=>$us,
+				'usnue'=>$usnue,
+				'usadm'=>$usadm,
+				'usgru'=>$usgru,
+				'tik'=>$tik,
+				'tiknue'=>$tiknue,
+				'tikadm'=>$tikadm,
+				'mo'=>$mo,
+				'monue'=>$monue,
+				'moadm'=>$moadm,
+				'pro'=>$pro,
+				'pronue'=>$pronue,
+				'proadm'=>$proadm,
+				'enc'=>$enc,
+				'encllam'=>$encllam,
+				'encnue'=>$encnue,
+				'encenc'=>$encenc,
+				'encats'=>$encats,
+				'encatslis'=>$encatslis,
+				'proy'=>$proy,
+				'proynue'=>$proynue,
+				'proyadm'=>$proyadm,
+				'cuen'=>$cuen,
+				'cuenadm'=>$cuenadm,
+				'cuennue'=>$cuennue,
+				'cuenbal'=>$cuenbal,
+				'cuendec'=>$cuendec,
+				'red'=>$red,
+				'reding'=>$reding,
+				'redadm'=>$redadm,
+				'redbod'=>$redbod,
+				'comp'=>$com,
+				'comnue'=>$comnue,
+				'comadm'=>$comadm,
+				'tes'=>$tes,
+				'testran'=>$testran,
+				'tesanu'=>$tesanu,
+				'tesnuetransac'=>$tesnuetransac,
+				'tesnuetransfer'=>$tesnuetransfer,
+				'tesing'=>$tesing,
+				'tesgas'=>$tesgas,
+				'testransfer'=>$testransfer,
+				'dat'=>$dat,
+				'datest'=>$datest,
+				'datdec'=>$datdec,
+				'datrep'=>$datrep,
+				'datusu'=>$datusu,
+				'datpro'=>$datpro,
+				'dating'=>$dating,
+				'datgas'=>$datgas,
+				'dattrans'=>$dattrans,
+				'datimp'=>$datimp,
+				'not'=>$not,
+				'cal'=>$cal,
+				'doct'=>$doct,
+				'pag'=>$pag,
+				'pagconf'=>$pagconf,
+				'pagvia'=>$pagvia,
+				'pagmon'=>$pagmon,
+				'pagcam'=>$pagcam,
+				'pagban'=>$pagban,
+				'inv'=>$inv,
+				'inving'=>$inving,
+				'invadm'=>$invadm,
+				'invcat'=>$invcat,
+				'invalm'=>$invalm,
+				'invtrs'=>$invtrs,
+				'emp'=>$emp,
+				'com'=>$comp,
+				'comprec'=>$comprec,
+				'compurl'=>$compurl,
+				'comptwi'=>$comptwi,
+				'compcurr'=>$compcurr,
+				'pla'=>$pla,
+				'placor'=>$placor,
+				'plamen'=>$plamen,
+				'platem'=>$platem,
+				'conf'=>$conf,
+				'confemp'=>$confemp,
+				'conffa'=>$conffa,
+				'confmon'=>$confmon,
+				'conffec'=>$conffec,
+				'confcat'=>$confcat,
+				'confmet'=>$confmet,
+				'confrest'=>$confrest,
+				'confcorr'=>$confcorr,
+				'confterm'=>$confterm,
+				'confaut'=>$confaut,
+				'confseg'=>$confseg,
+				'conftem'=>$conftem,
+				'confsop'=>$confsop,
+				'conface'=>$conface,
+				'confupt'=>$confupt,
+				'confapi'=>$confapi,
+				'tar'=>$tar
+            );
+
+            $this->db->set($data1);
+            $this->db->where('id', $id);
+
+            $this->db->update('aauth_users');
+            echo json_encode(array('status' => 'Success', 'message' =>
+                $this->lang->line('UPDATED')));
+        } else {
+            echo json_encode(array('status' => 'Error', 'message' =>
+                $this->lang->line('ERROR')));
+        }
+
+    }
+	 public function update_user(
+		$id, $name,$dto,$ingreso,$rh,$eps,$pensiones, 
+		$phone, $phonealt, $address, $city, $region, $country
+		)
+    {
+        $data = array(
+            'name' => $name,
+			'dto' => $dto,
+			'ingreso' => $ingreso,
+			'rh' => $rh,
+			'eps' => $eps,
+			'pensiones' => $pensiones,
+            'phone' => $phone,
+            'phonealt' => $phonealt,
+            'address' => $address,
+            'city' => $city,
+            'region' => $region,
+            'country' => $country,
+        );
+
+
+        $this->db->set($data);
+        $this->db->where('id', $id);
         if ($this->db->update('employee_profile')) {
             echo json_encode(array('status' => 'Success', 'message' =>
                 $this->lang->line('UPDATED')));
@@ -387,7 +557,29 @@ class Employee_model extends CI_Model
     }
 
 
-    public function add_employee($id, $username, $name,$dto,$ingreso,$rh,$eps,$pensiones, $roleid, $phone, $address, $city, $region, $country)
+    public function add_employee(
+		$id, $username, $name,$dto,$ingreso,$rh,
+		$eps,$pensiones, $roleid, $phone, 
+		$address, $city, $region, $country,
+		$co,$coape,$conue,$coadm,
+		$cocie,$cofa,$cofae,$us,$usnue,$usadm,$usgru,
+		$tik,$tiknue,$tikadm,$mo,$monue,$moadm,$pro,
+		$pronue,$proadm,$enc,$encllam,$encnue,$encenc,
+		$encats,$encatslis,$proy,$proynue,$proyadm,
+		$cuen,$cuenadm,$cuennue,$cuenbal,$cuendec,
+		$red,$reding,$redadm,$redbod,$com,$comnue,
+		$comadm,$tes,$testran,$tesanu,$tesnuetransac,
+		$tesnuetransfer,$tesing,$tesgas,$testransfer,
+		$dat,$datest,$datdec,$datrep,$datusu,$datpro,
+		$dating,$datgas,$dattrans,$datimp,$not,$cal,
+		$doct,$pag,$pagconf,$pagvia,$pagmon,$pagcam,
+		$pagban,$inv,$inving,$invadm,$invcat,$invalm,
+		$invtrs,$emp,$comp,$comprec,$compurl,$comptwi,
+		$compcurr,$pla,$placor,$plamen,$platem,$conf,
+		$confemp,$conffa,$confmon,$conffec,$confcat,
+		$confmet,$confrest,$confcorr,$confterm,$confaut,
+		$confseg,$conftem,$confsop,$conface,$confupt,
+		$confapi,$tar)
     {
         $data = array(
             'id' => $id,
@@ -408,7 +600,109 @@ class Employee_model extends CI_Model
 
         if ($this->db->insert('employee_profile', $data)) {
             $data1 = array(
-                'roleid' => $roleid
+                'roleid' => $roleid,
+				'co'=>$co,
+				'coape'=>$coape,
+				'conue'=>$conue,
+				'coadm'=>$coadm,
+				'cocie'=>$cocie,
+				'cofa'=>$cofa,
+				'cofae'=>$cofae,
+				'us'=>$us,
+				'usnue'=>$usnue,
+				'usadm'=>$usadm,
+				'usgru'=>$usgru,
+				'tik'=>$tik,
+				'tiknue'=>$tiknue,
+				'tikadm'=>$tikadm,
+				'mo'=>$mo,
+				'monue'=>$monue,
+				'moadm'=>$moadm,
+				'pro'=>$pro,
+				'pronue'=>$pronue,
+				'proadm'=>$proadm,
+				'enc'=>$enc,
+				'encllam'=>$encllam,
+				'encnue'=>$encnue,
+				'encenc'=>$encenc,
+				'encats'=>$encats,
+				'encatslis'=>$encatslis,
+				'proy'=>$proy,
+				'proynue'=>$proynue,
+				'proyadm'=>$proyadm,
+				'cuen'=>$cuen,
+				'cuenadm'=>$cuenadm,
+				'cuennue'=>$cuennue,
+				'cuenbal'=>$cuenbal,
+				'cuendec'=>$cuendec,
+				'red'=>$red,
+				'reding'=>$reding,
+				'redadm'=>$redadm,
+				'redbod'=>$redbod,
+				'comp'=>$com,
+				'comnue'=>$comnue,
+				'comadm'=>$comadm,
+				'tes'=>$tes,
+				'testran'=>$testran,
+				'tesanu'=>$tesanu,
+				'tesnuetransac'=>$tesnuetransac,
+				'tesnuetransfer'=>$tesnuetransfer,
+				'tesing'=>$tesing,
+				'tesgas'=>$tesgas,
+				'testransfer'=>$testransfer,
+				'dat'=>$dat,
+				'datest'=>$datest,
+				'datdec'=>$datdec,
+				'datrep'=>$datrep,
+				'datusu'=>$datusu,
+				'datpro'=>$datpro,
+				'dating'=>$dating,
+				'datgas'=>$datgas,
+				'dattrans'=>$dattrans,
+				'datimp'=>$datimp,
+				'not'=>$not,
+				'cal'=>$cal,
+				'doct'=>$doct,
+				'pag'=>$pag,
+				'pagconf'=>$pagconf,
+				'pagvia'=>$pagvia,
+				'pagmon'=>$pagmon,
+				'pagcam'=>$pagcam,
+				'pagban'=>$pagban,
+				'inv'=>$inv,
+				'inving'=>$inving,
+				'invadm'=>$invadm,
+				'invcat'=>$invcat,
+				'invalm'=>$invalm,
+				'invtrs'=>$invtrs,
+				'emp'=>$emp,
+				'com'=>$comp,
+				'comprec'=>$comprec,
+				'compurl'=>$compurl,
+				'comptwi'=>$comptwi,
+				'compcurr'=>$compcurr,
+				'pla'=>$pla,
+				'placor'=>$placor,
+				'plamen'=>$plamen,
+				'platem'=>$platem,
+				'conf'=>$conf,
+				'confemp'=>$confemp,
+				'conffa'=>$conffa,
+				'confmon'=>$confmon,
+				'conffec'=>$conffec,
+				'confcat'=>$confcat,
+				'confmet'=>$confmet,
+				'confrest'=>$confrest,
+				'confcorr'=>$confcorr,
+				'confterm'=>$confterm,
+				'confaut'=>$confaut,
+				'confseg'=>$confseg,
+				'conftem'=>$conftem,
+				'confsop'=>$confsop,
+				'conface'=>$conface,
+				'confupt'=>$confupt,
+				'confapi'=>$confapi,
+				'tar'=>$tar
             );
 
             $this->db->set($data1);

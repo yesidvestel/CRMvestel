@@ -107,6 +107,108 @@ class Employee extends CI_Controller
         $city = $this->input->post('city');
         $region = $this->input->post('region');
         $country = $this->input->post('country');
+        $co = $this->input->post('co');
+        $coape = $this->input->post('coape');
+        $conue = $this->input->post('conue');
+        $coadm = $this->input->post('coadm');
+        $cocie = $this->input->post('cocie');
+        $cofa = $this->input->post('cofa');
+        $cofae = $this->input->post('cofae');
+        $us = $this->input->post('us');
+        $usnue = $this->input->post('usnue');
+        $usadm = $this->input->post('usadm');
+        $usgru = $this->input->post('usgru');
+        $tik = $this->input->post('tik');
+        $tiknue = $this->input->post('tiknue');
+        $tikadm = $this->input->post('tikadm');
+        $mo = $this->input->post('mo');
+        $monue = $this->input->post('monue');
+        $moadm = $this->input->post('moadm');
+        $pro = $this->input->post('pro');
+        $pronue = $this->input->post('pronue');
+        $proadm = $this->input->post('proadm');
+        $enc = $this->input->post('enc');
+        $encllam = $this->input->post('encllam');
+        $encnue = $this->input->post('encnue');
+        $encenc = $this->input->post('encenc');
+        $encats = $this->input->post('encats');
+        $encatslis = $this->input->post('encatslis');
+        $proy = $this->input->post('proy');
+        $proynue = $this->input->post('proynue');
+        $proyadm = $this->input->post('proyadm');
+        $cuen = $this->input->post('cuen');
+        $cuenadm = $this->input->post('cuenadm');
+        $cuennue = $this->input->post('cuennue');
+        $cuenbal = $this->input->post('cuenbal');
+        $cuendec = $this->input->post('cuendec');
+        $red = $this->input->post('red');
+        $reding = $this->input->post('reding');
+        $redadm = $this->input->post('redadm');
+        $redbod = $this->input->post('redbod');
+        $com = $this->input->post('com');
+        $comnue = $this->input->post('comnue');
+        $comadm = $this->input->post('comadm');
+        $tes = $this->input->post('tes');
+        $testran = $this->input->post('testran');
+        $tesanu = $this->input->post('tesanu');
+        $tesnuetransac = $this->input->post('tesnuetransac');
+        $tesnuetransfer = $this->input->post('tesnuetransfer');
+        $tesing = $this->input->post('tesing');
+        $tesgas = $this->input->post('tesgas');
+        $testransfer = $this->input->post('testransfer');
+        $dat = $this->input->post('dat');
+        $datest = $this->input->post('datest');
+        $datdec = $this->input->post('datdec');
+        $datrep = $this->input->post('datrep');
+        $datusu = $this->input->post('datusu');
+        $datpro = $this->input->post('datpro');
+        $dating = $this->input->post('dating');
+        $datgas = $this->input->post('datgas');
+        $dattrans = $this->input->post('dattrans');
+        $datimp = $this->input->post('datimp');
+        $not = $this->input->post('not');
+        $cal = $this->input->post('cal');
+        $doct = $this->input->post('doct');
+        $pag = $this->input->post('pag');
+        $pagconf = $this->input->post('pagconf');
+        $pagvia = $this->input->post('pagvia');
+        $pagmon = $this->input->post('pagmon');
+        $pagcam = $this->input->post('pagcam');
+        $pagban = $this->input->post('pagban');
+        $inv = $this->input->post('inv');
+        $inving = $this->input->post('inving');
+        $invadm = $this->input->post('invadm');
+        $invcat = $this->input->post('invcat');
+        $invalm = $this->input->post('invalm');
+        $invtrs = $this->input->post('invtrs');
+        $emp = $this->input->post('emp');
+        $comp = $this->input->post('comp');
+        $comprec = $this->input->post('comprec');
+        $compurl = $this->input->post('compurl');
+        $comptwi = $this->input->post('comptwi');
+        $compcurr = $this->input->post('compcurr');
+        $pla = $this->input->post('pla');
+        $placor = $this->input->post('placor');
+        $plamen = $this->input->post('plamen');
+        $platem = $this->input->post('platem');
+        $conf = $this->input->post('conf');
+        $confemp = $this->input->post('confemp');
+        $conffa = $this->input->post('conffa');
+        $confmon = $this->input->post('confmon');
+        $conffec = $this->input->post('conffec');
+        $confcat = $this->input->post('confcat');
+        $confmet = $this->input->post('confmet');
+        $confrest = $this->input->post('confrest');
+        $confcorr = $this->input->post('confcorr');
+        $confterm = $this->input->post('confterm');
+        $confaut = $this->input->post('confaut');
+        $confseg = $this->input->post('confseg');
+        $conftem = $this->input->post('conftem');
+        $confsop = $this->input->post('confsop');
+        $conface = $this->input->post('conface');
+        $confupt = $this->input->post('confupt');
+        $confapi = $this->input->post('confapi');
+        $tar = $this->input->post('tar');
 
 
         $a = $this->aauth->create_user($email, $password, $username);
@@ -117,7 +219,29 @@ class Employee extends CI_Controller
             if ($nuid > 0) {
 
 
-                $this->employee->add_employee($nuid, (string)$this->aauth->get_user($a)->username, $name,$dto,$ingreso,$rh,$eps,$pensiones, $roleid, $phone, $address, $city, $region, $country);
+                $this->employee->add_employee(
+					$nuid, (string)$this->aauth->get_user($a)->username, 
+					$name,$dto,$ingreso,$rh,$eps,$pensiones, 
+					$roleid, $phone, $address, $city, 
+					$region, $country,$co,$coape,$conue,$coadm,
+					$cocie,$cofa,$cofae,$us,$usnue,$usadm,$usgru,
+					$tik,$tiknue,$tikadm,$mo,$monue,$moadm,$pro,
+					$pronue,$proadm,$enc,$encllam,$encnue,$encenc,
+					$encats,$encatslis,$proy,$proynue,$proyadm,
+					$cuen,$cuenadm,$cuennue,$cuenbal,$cuendec,
+					$red,$reding,$redadm,$redbod,$com,$comnue,
+					$comadm,$tes,$testran,$tesanu,$tesnuetransac,
+					$tesnuetransfer,$tesing,$tesgas,$testransfer,
+					$dat,$datest,$datdec,$datrep,$datusu,$datpro,
+					$dating,$datgas,$dattrans,$datimp,$not,$cal,
+					$doct,$pag,$pagconf,$pagvia,$pagmon,$pagcam,
+					$pagban,$inv,$inving,$invadm,$invcat,$invalm,
+					$invtrs,$emp,$comp,$comprec,$compurl,$comptwi,
+					$compcurr,$pla,$placor,$plamen,$platem,$conf,
+					$confemp,$conffa,$confmon,$conffec,$confcat,
+					$confmet,$confrest,$confcorr,$confterm,$confaut,
+					$confseg,$conftem,$confsop,$conface,$confupt,
+					$confapi,$tar);
 
             }
 
@@ -338,7 +462,131 @@ class Employee extends CI_Controller
             $city = $this->input->post('city');
             $region = $this->input->post('region');
             $country = $this->input->post('country');
-            $this->employee->update_employee($eid, $name,$dto,$ingreso,$rh,$eps,$pensiones, $phone, $phonealt, $address, $city, $region, $country);
+			$roleid = $this->input->post('roleid');
+			$co = $this->input->post('co');
+			$coape = $this->input->post('coape');
+			$conue = $this->input->post('conue');
+			$coadm = $this->input->post('coadm');
+			$cocie = $this->input->post('cocie');
+			$cofa = $this->input->post('cofa');
+			$cofae = $this->input->post('cofae');
+			$us = $this->input->post('us');
+			$usnue = $this->input->post('usnue');
+			$usadm = $this->input->post('usadm');
+			$usgru = $this->input->post('usgru');
+			$tik = $this->input->post('tik');
+			$tiknue = $this->input->post('tiknue');
+			$tikadm = $this->input->post('tikadm');
+			$mo = $this->input->post('mo');
+			$monue = $this->input->post('monue');
+			$moadm = $this->input->post('moadm');
+			$pro = $this->input->post('pro');
+			$pronue = $this->input->post('pronue');
+			$proadm = $this->input->post('proadm');
+			$enc = $this->input->post('enc');
+			$encllam = $this->input->post('encllam');
+			$encnue = $this->input->post('encnue');
+			$encenc = $this->input->post('encenc');
+			$encats = $this->input->post('encats');
+			$encatslis = $this->input->post('encatslis');
+			$proy = $this->input->post('proy');
+			$proynue = $this->input->post('proynue');
+			$proyadm = $this->input->post('proyadm');
+			$cuen = $this->input->post('cuen');
+			$cuenadm = $this->input->post('cuenadm');
+			$cuennue = $this->input->post('cuennue');
+			$cuenbal = $this->input->post('cuenbal');
+			$cuendec = $this->input->post('cuendec');
+			$red = $this->input->post('red');
+			$reding = $this->input->post('reding');
+			$redadm = $this->input->post('redadm');
+			$redbod = $this->input->post('redbod');
+			$com = $this->input->post('com');
+			$comnue = $this->input->post('comnue');
+			$comadm = $this->input->post('comadm');
+			$tes = $this->input->post('tes');
+			$testran = $this->input->post('testran');
+			$tesanu = $this->input->post('tesanu');
+			$tesnuetransac = $this->input->post('tesnuetransac');
+			$tesnuetransfer = $this->input->post('tesnuetransfer');
+			$tesing = $this->input->post('tesing');
+			$tesgas = $this->input->post('tesgas');
+			$testransfer = $this->input->post('testransfer');
+			$dat = $this->input->post('dat');
+			$datest = $this->input->post('datest');
+			$datdec = $this->input->post('datdec');
+			$datrep = $this->input->post('datrep');
+			$datusu = $this->input->post('datusu');
+			$datpro = $this->input->post('datpro');
+			$dating = $this->input->post('dating');
+			$datgas = $this->input->post('datgas');
+			$dattrans = $this->input->post('dattrans');
+			$datimp = $this->input->post('datimp');
+			$not = $this->input->post('not');
+			$cal = $this->input->post('cal');
+			$doct = $this->input->post('doct');
+			$pag = $this->input->post('pag');
+			$pagconf = $this->input->post('pagconf');
+			$pagvia = $this->input->post('pagvia');
+			$pagmon = $this->input->post('pagmon');
+			$pagcam = $this->input->post('pagcam');
+			$pagban = $this->input->post('pagban');
+			$inv = $this->input->post('inv');
+			$inving = $this->input->post('inving');
+			$invadm = $this->input->post('invadm');
+			$invcat = $this->input->post('invcat');
+			$invalm = $this->input->post('invalm');
+			$invtrs = $this->input->post('invtrs');
+			$emp = $this->input->post('emp');
+			$comp = $this->input->post('comp');
+			$comprec = $this->input->post('comprec');
+			$compurl = $this->input->post('compurl');
+			$comptwi = $this->input->post('comptwi');
+			$compcurr = $this->input->post('compcurr');
+			$pla = $this->input->post('pla');
+			$placor = $this->input->post('placor');
+			$plamen = $this->input->post('plamen');
+			$platem = $this->input->post('platem');
+			$conf = $this->input->post('conf');
+			$confemp = $this->input->post('confemp');
+			$conffa = $this->input->post('conffa');
+			$confmon = $this->input->post('confmon');
+			$conffec = $this->input->post('conffec');
+			$confcat = $this->input->post('confcat');
+			$confmet = $this->input->post('confmet');
+			$confrest = $this->input->post('confrest');
+			$confcorr = $this->input->post('confcorr');
+			$confterm = $this->input->post('confterm');
+			$confaut = $this->input->post('confaut');
+			$confseg = $this->input->post('confseg');
+			$conftem = $this->input->post('conftem');
+			$confsop = $this->input->post('confsop');
+			$conface = $this->input->post('conface');
+			$confupt = $this->input->post('confupt');
+			$confapi = $this->input->post('confapi');
+			$tar = $this->input->post('tar');
+            $this->employee->update_employee(
+				$eid, $name,$dto,$ingreso,$rh,$eps,$pensiones, 
+				$phone, $phonealt, $address, $city, $region, $country,
+				$roleid,$co,$coape,$conue,$coadm,
+				$cocie,$cofa,$cofae,$us,$usnue,$usadm,$usgru,
+				$tik,$tiknue,$tikadm,$mo,$monue,$moadm,$pro,
+				$pronue,$proadm,$enc,$encllam,$encnue,$encenc,
+				$encats,$encatslis,$proy,$proynue,$proyadm,
+				$cuen,$cuenadm,$cuennue,$cuenbal,$cuendec,
+				$red,$reding,$redadm,$redbod,$com,$comnue,
+				$comadm,$tes,$testran,$tesanu,$tesnuetransac,
+				$tesnuetransfer,$tesing,$tesgas,$testransfer,
+				$dat,$datest,$datdec,$datrep,$datusu,$datpro,
+				$dating,$datgas,$dattrans,$datimp,$not,$cal,
+				$doct,$pag,$pagconf,$pagvia,$pagmon,$pagcam,
+				$pagban,$inv,$inving,$invadm,$invcat,$invalm,
+				$invtrs,$emp,$comp,$comprec,$compurl,$comptwi,
+				$compcurr,$pla,$placor,$plamen,$platem,$conf,
+				$confemp,$conffa,$confmon,$conffec,$confcat,
+				$confmet,$confrest,$confcorr,$confterm,$confaut,
+				$confseg,$conftem,$confsop,$conface,$confupt,
+				$confapi,$tar);
 
         } else {
             $head['usernm'] = $this->aauth->get_user($id)->username;

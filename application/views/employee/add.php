@@ -163,7 +163,7 @@
 												  	<td><input type="checkbox" name="testran"></input></td>
 												  	<td align="lift">Ver transacciones</td>
 													<td align="right"></td>
-													<td><input type="checkbox" name="`comprec"></input></td>
+													<td><input type="checkbox" name="comprec"></input></td>
 												  	<td align="lift">Recaptchat</td>
 												</tr>
 												<tr>
@@ -285,7 +285,7 @@
 												  	<td><input type="checkbox" name="enc"></input></td>
 												  	<td align="lift" colspan="2">ENCUESTAS</td>
 												  	<td align="right"></td>
-												  	<td><input type="checkbox" name="datusu"></input></td>
+												  	<td><input type="checkbox" name="datpro"></input></td>
 												  	<td align="lift">Prov. declaraciones</td>
 													<td align="right"></td>
 													<td><input type="checkbox" name="conffec"></input></td>
@@ -337,7 +337,7 @@
 												</tr>
 												<tr>
 												  	<td align="right"></td>
-												  	<td><input type="checkbox" name="encatslit"></input></td>
+												  	<td><input type="checkbox" name="encatslis"></input></td>
 												  	<td align="lift">Lista ATS</td>
 												  	<td><input type="checkbox" name="not"></input></td>
 												  	<td align="lift" colspan="2">NOTAS</td>
@@ -589,6 +589,7 @@ function select_checkbox_segun_rol(){
 	var roleid=$("#sl-roleid option:selected").val();
 		$(":checkbox").prop("checked",false);
 		if(roleid=="5"){
+			//cobranza
 			$("input[name=co]").prop("checked",true);
 			$("input[name=coape]").prop("checked",true);
 			$("input[name=conue]").prop("checked",true);
@@ -596,20 +597,230 @@ function select_checkbox_segun_rol(){
 			$("input[name=cocie]").prop("checked",true);
 			$("input[name=cofa]").prop("checked",true);
 			$("input[name=cofae]").prop("checked",true);
-
-		}else if(roleid=="4"){
+			//usuarios
 			$("input[name=us]").prop("checked",true);
 			$("input[name=usnue]").prop("checked",true);
 			$("input[name=usadm]").prop("checked",true);
 			$("input[name=usgru]").prop("checked",true);
-		}else if(roleid=="3"){
+			//tickets
 			$("input[name=tik]").prop("checked",true);
 			$("input[name=tiknue]").prop("checked",true);
 			$("input[name=tikadm]").prop("checked",true);
-		}else if(roleid=="2"){
+			//moviles
 			$("input[name=mo]").prop("checked",true);
 			$("input[name=monue]").prop("checked",true);
 			$("input[name=moadm]").prop("checked",true);
+			//proveedores
+			$("input[name=pro]").prop("checked",true);
+			$("input[name=pronue]").prop("checked",true);
+			$("input[name=proadm]").prop("checked",true);
+			//encuestas
+			$("input[name=enc]").prop("checked",true);
+			$("input[name=encllam]").prop("checked",true);
+			$("input[name=encnue]").prop("checked",true);
+			$("input[name=encenc]").prop("checked",true);
+			$("input[name=encats]").prop("checked",true);
+			$("input[name=encatslis]").prop("checked",true);
+			//proyectos
+			$("input[name=proy]").prop("checked",true);
+			$("input[name=proynue]").prop("checked",true);
+			$("input[name=proyadm]").prop("checked",true);
+			//cuentas
+			$("input[name=cuen]").prop("checked",true);
+			$("input[name=cuenadm]").prop("checked",true);
+			$("input[name=cuennue]").prop("checked",true);
+			$("input[name=cuenbal]").prop("checked",true);
+			$("input[name=cuendec]").prop("checked",true);
+			//redes
+			$("input[name=red]").prop("checked",true);
+			$("input[name=reding]").prop("checked",true);
+			$("input[name=redadm]").prop("checked",true);
+			$("input[name=redbod]").prop("checked",true);
+			//ordenes
+			$("input[name=com]").prop("checked",true);
+			$("input[name=comnue]").prop("checked",true);
+			$("input[name=comadm]").prop("checked",true);
+			//tesoreria
+			$("input[name=tes]").prop("checked",true);
+			$("input[name=testran]").prop("checked",true);
+			$("input[name=tesanu]").prop("checked",true);
+			$("input[name=tesnuetransac]").prop("checked",true);
+			$("input[name=tesnuetransfer]").prop("checked",true);
+			$("input[name=tesing]").prop("checked",true);
+			$("input[name=tesgas]").prop("checked",true);
+			$("input[name=testransfer]").prop("checked",true);
+			//datos
+			$("input[name=dat]").prop("checked",true);
+			$("input[name=datest]").prop("checked",true);
+			$("input[name=datdec]").prop("checked",true);
+			$("input[name=datrep]").prop("checked",true);
+			$("input[name=datusu]").prop("checked",true);
+			$("input[name=datpro]").prop("checked",true);
+			$("input[name=dating]").prop("checked",true);
+			$("input[name=datgas]").prop("checked",true);
+			$("input[name=dattrans]").prop("checked",true);
+			$("input[name=datimp]").prop("checked",true);
+			//notas
+			$("input[name=not]").prop("checked",true);
+			//calendario
+			$("input[name=cal]").prop("checked",true);
+			//documentos
+			$("input[name=doct]").prop("checked",true);
+			//pagos
+			$("input[name=pag]").prop("checked",true);
+			$("input[name=pagconf]").prop("checked",true);
+			$("input[name=pagvia]").prop("checked",true);
+			$("input[name=pagmon]").prop("checked",true);
+			$("input[name=pagcam]").prop("checked",true);
+			$("input[name=pagban]").prop("checked",true);
+			//inventarios
+			$("input[name=inv]").prop("checked",true);
+			$("input[name=inving]").prop("checked",true);
+			$("input[name=invadm]").prop("checked",true);
+			$("input[name=invcat]").prop("checked",true);
+			$("input[name=invalm]").prop("checked",true);
+			$("input[name=invtrs]").prop("checked",true);
+			//empleados
+			$("input[name=emp]").prop("checked",true);
+			//complementos
+			$("input[name=comp]").prop("checked",true);
+			$("input[name=comprec]").prop("checked",true);
+			$("input[name=compurl]").prop("checked",true);
+			$("input[name=comptwi]").prop("checked",true);
+			$("input[name=compcurr]").prop("checked",true);
+			//plantillas
+			$("input[name=pla]").prop("checked",true);
+			$("input[name=placor]").prop("checked",true);
+			$("input[name=plamen]").prop("checked",true);
+			$("input[name=platem]").prop("checked",true);
+			//configuraciones
+			$("input[name=conf]").prop("checked",true);
+			$("input[name=confemp]").prop("checked",true);
+			$("input[name=conffa]").prop("checked",true);
+			$("input[name=confmon]").prop("checked",true);
+			$("input[name=conffec]").prop("checked",true);
+			$("input[name=confcat]").prop("checked",true);
+			$("input[name=confmet]").prop("checked",true);
+			$("input[name=confrest]").prop("checked",true);
+			$("input[name=confcorr]").prop("checked",true);
+			$("input[name=confterm]").prop("checked",true);
+			$("input[name=confaut]").prop("checked",true);
+			$("input[name=confseg]").prop("checked",true);
+			$("input[name=conftem]").prop("checked",true);
+			$("input[name=confsop]").prop("checked",true);
+			$("input[name=conface]").prop("checked",true);
+			$("input[name=confupt]").prop("checked",true);
+			$("input[name=confapi]").prop("checked",true);
+			//tareas
+			$("input[name=tar]").prop("checked",true);
+		}else if(roleid=="4"){
+			//cobranza
+			$("input[name=co]").prop("checked",true);
+			$("input[name=coape]").prop("checked",true);
+			$("input[name=conue]").prop("checked",true);
+			$("input[name=coadm]").prop("checked",true);
+			$("input[name=cocie]").prop("checked",true);
+			//usuarios
+			$("input[name=us]").prop("checked",true);
+			$("input[name=usnue]").prop("checked",true);
+			$("input[name=usadm]").prop("checked",true);
+			$("input[name=usgru]").prop("checked",true);
+			//tickets
+			$("input[name=tik]").prop("checked",true);
+			$("input[name=tiknue]").prop("checked",true);
+			$("input[name=tikadm]").prop("checked",true);
+			//moviles
+			$("input[name=mo]").prop("checked",true);
+			$("input[name=monue]").prop("checked",true);
+			$("input[name=moadm]").prop("checked",true);
+			//proveedores
+			$("input[name=pro]").prop("checked",true);
+			$("input[name=pronue]").prop("checked",true);
+			$("input[name=proadm]").prop("checked",true);
+			//encuestas
+			$("input[name=enc]").prop("checked",true);
+			$("input[name=encllam]").prop("checked",true);
+			$("input[name=encnue]").prop("checked",true);
+			$("input[name=encenc]").prop("checked",true);
+			$("input[name=encats]").prop("checked",true);
+			$("input[name=encatslis]").prop("checked",true);
+			//proyectos
+			$("input[name=proy]").prop("checked",true);
+			$("input[name=proynue]").prop("checked",true);
+			$("input[name=proyadm]").prop("checked",true);
+			//redes
+			$("input[name=red]").prop("checked",true);
+			$("input[name=reding]").prop("checked",true);
+			$("input[name=redadm]").prop("checked",true);
+			$("input[name=redbod]").prop("checked",true);
+			//ordenes
+			$("input[name=com]").prop("checked",true);
+			$("input[name=comnue]").prop("checked",true);
+			$("input[name=comadm]").prop("checked",true);
+			//tesoreria
+			$("input[name=tes]").prop("checked",true);
+			$("input[name=tesnuetransac]").prop("checked",true);
+			$("input[name=tesnuetransfer]").prop("checked",true);
+			//datos
+			$("input[name=dat]").prop("checked",true);
+			$("input[name=datest]").prop("checked",true);
+			$("input[name=datdec]").prop("checked",true);
+			$("input[name=datrep]").prop("checked",true);
+			//notas
+			$("input[name=not]").prop("checked",true);
+			//calendario
+			$("input[name=cal]").prop("checked",true);
+			//documentos
+			$("input[name=doct]").prop("checked",true);
+			//inventarios
+			$("input[name=inv]").prop("checked",true);
+			$("input[name=inving]").prop("checked",true);
+			$("input[name=invadm]").prop("checked",true);
+			$("input[name=invcat]").prop("checked",true);
+			$("input[name=invalm]").prop("checked",true);
+			$("input[name=invtrs]").prop("checked",true);
+			//empleados
+			$("input[name=emp]").prop("checked",true);
+			//tareas
+			$("input[name=tar]").prop("checked",true);
+		}else if(roleid=="3"){
+			//cobranza
+			$("input[name=co]").prop("checked",true);
+			$("input[name=coape]").prop("checked",true);
+			$("input[name=conue]").prop("checked",true);
+			$("input[name=cocie]").prop("checked",true);
+			//usuarios
+			$("input[name=us]").prop("checked",true);
+			$("input[name=usnue]").prop("checked",true);
+			$("input[name=usgru]").prop("checked",true);
+			//tickets
+			$("input[name=tik]").prop("checked",true);
+			$("input[name=tiknue]").prop("checked",true);
+			$("input[name=tikadm]").prop("checked",true);
+			//notas
+			$("input[name=not]").prop("checked",true);
+			//calendario
+			$("input[name=cal]").prop("checked",true);
+			//documentos
+			$("input[name=doct]").prop("checked",true);
+			//ordenes
+			$("input[name=com]").prop("checked",true);
+			$("input[name=comadm]").prop("checked",true);
+			//tesoreria
+			$("input[name=tes]").prop("checked",true);
+			$("input[name=tesnuetransac]").prop("checked",true);
+			$("input[name=tesnuetransfer]").prop("checked",true);
+			//tareas
+			$("input[name=tar]").prop("checked",true);
+		}else if(roleid=="2"){
+			//notas
+			$("input[name=not]").prop("checked",true);
+			//calendario
+			$("input[name=cal]").prop("checked",true);
+			//documentos
+			$("input[name=doct]").prop("checked",true);
+			//tareas
+			$("input[name=tar]").prop("checked",true);
 		}
 }
     function actionProduct1(actionurl) {

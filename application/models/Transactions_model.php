@@ -52,10 +52,12 @@ class Transactions_model extends CI_Model
         switch ($this->opt) {
             case 'income':
                 $this->db->where('type', 'Income');
+				$this->db->where('estado');
                 break;
             case 'expense':
                 //var_dump($this->opt);
                 $this->db->where('type', 'Expense');
+				$this->db->where('estado');
                 break;
 			case 'transferencia':
                 //var_dump($this->opt);

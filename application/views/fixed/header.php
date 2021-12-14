@@ -220,11 +220,8 @@
                 <a href="<?php echo base_url(); ?>dashboard/"> <i class="icon-dashboard"></i><span
                             class="menu-title"> <?php echo $this->lang->line('Dashboard') ?></span></a>
             </li>
-<!--- HEAD ----->
-
-            
-
-            <?php if ($this->aauth->get_user()->roleid > 4) { ?>
+			<!--- HEAD ----->
+            <?php if ($this->aauth->get_user()->roleid == 5) { ?>
                 <li class="navigation-header"><span
                             data-i18n="nav.category.support">Cobranza</span><i
                             data-toggle="tooltip"
@@ -835,39 +832,132 @@
 			
 			<!---------- MENU ADMINISTRACION----->
 			
-			<?php if ($this->aauth->get_user()->roleid == 4) { ?>
-			<li class="nav-item has-sub <?php if ($this->uri->segment(1) == "invoices" OR $this->uri->segment(1) == "quote") {
+			<!--- HEAD ----->
+            <?php if ($this->aauth->get_user()->roleid <= 4) { ?>
+				<?php if ($this->aauth->get_user()->co != '') { ?>
+                <li class="navigation-header"><span
+                            data-i18n="nav.category.support">Cobranza</span><i
+                            data-toggle="tooltip"
+                            data-placement="right"
+                            data-original-title="Sales"
+                            class="icon-ellipsis icon-ellipsis"></i>
+                </li>
+				
+                <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "invoices" OR $this->uri->segment(1) == "quote") {
                     echo ' open';
                 } ?>">
                     <a href=""> <i class="icon-plus"></i> <span
-                                class="menu-title">Cobranza
+                                class="menu-title"><?php echo $this->lang->line('sales') ?>
 						
 						<!-- MENU FACTURACION-->
 						
                     <i class="icon-arrow"></i></span></a>
+					
                     <ul class="menu-content">
+						<?php if ($this->aauth->get_user()->coape != '') { ?>
+						<li>
+                            <a href="<?php echo base_url(); ?>invoices/apertura">Apertura</a>
+                        </li>
+						<?php } ?>
+						<?php if ($this->aauth->get_user()->conue != '') { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>invoices/create"><?php echo $this->lang->line('New Invoice'); ?></a>
                         </li>
+						<?php } ?>
+						<?php if ($this->aauth->get_user()->coadm != '') { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>invoices"><?php echo $this->lang->line('Manage Invoices'); ?></a>
                         </li>
-
-                        <li>
-                            <a href="<?php echo base_url(); ?>quote"><?php echo $this->lang->line('Manage Quotes'); ?></a>
-                        </li>
+						<?php } ?>
+						<?php if ($this->aauth->get_user()->cocie != '') { ?>
 						<li>
                             <a href="<?php echo base_url(); ?>reports/cierre">Cierre</a>
                         </li>
+						<?php } ?>
+						<?php if ($this->aauth->get_user()->cofa != '') { ?>
+                        <li>
+                            <a href="<?php echo base_url(); ?>invoices/generar_facturas">Generar Facturas</a>
+                        </li>
+						<?php } ?>
+						<?php if ($this->aauth->get_user()->cofae != '') { ?>
+                        <li>
+                            <a href="<?php echo base_url(); ?>facturasElectronicas/generar_facturas_electronicas_multiples">Facturas Electronicas M</a>
+                        </li>
+						<?php } ?>
                     </ul>
                 </li>
-			<li class="navigation-header"><span>MATERIALES</span><i
+                <?php } ?>
+				<!--- MENU REDES--->
+				<?php if ($this->aauth->get_user()->red != '') { ?>
+                <li class="navigation-header"><span><?php echo $this->lang->line('Stock') ?></span><i
                             data-toggle="tooltip" data-placement="right"
                             data-original-title="Stock"
                             class="icon-ellipsis icon-ellipsis"></i>
                 </li>
-			
-					
+				<li class="nav-item has-sub <?php if ($this->uri->segment(1) == "equipos") {
+                    echo ' open';
+                } ?>">
+                    <a href=""> <i class="icon-wifi3"></i><span
+                                class="menu-title"><?php echo $this->lang->line('') ?>Redes</span><i
+                                class="fa arrow"></i> </a>
+                    <ul class="menu-content">
+						<?php if ($this->aauth->get_user()->reding != '') { ?>
+						<li>
+                            <a href="<?php echo base_url(); ?>products/equipoadd"><?php echo $this->lang->line('') ?>Ingreso de Equipo</a>
+                        </li>
+						<?php } ?>
+						<?php if ($this->aauth->get_user()->redadm != '') { ?>
+						<li>
+                            <a href="<?php echo base_url(); ?>products/equipos"><?php echo $this->lang->line('') ?>Administrar equipos</a>
+                        </li>
+						<?php } ?>
+						<?php if ($this->aauth->get_user()->redbod != '') { ?>
+						<li>
+                            <a href="<?php echo base_url(); ?>productcategory/almacen">Bodega equipos</a>
+                        </li>
+						<?php } ?>
+					</ul>
+				</li>
+				<?php } ?>
+				<!--- MENU INVENTARIOS--->
+				<?php if ($this->aauth->get_user()->inv != '') { ?>
+                <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "products") {
+                    echo ' open';
+                } ?>">
+                    <a href=""> <i class="icon-truck2"></i><span
+                                class="menu-title"><?php echo $this->lang->line('') ?>Inventarios</span><i
+                                class="fa arrow"></i> </a>
+                    <ul class="menu-content">
+						<?php if ($this->aauth->get_user()->inving != '') { ?>
+                        <li>
+                            <a href="<?php echo base_url(); ?>products/add"><?php echo $this->lang->line('') ?>Ingreso de material</a>
+                        </li>
+						<?php } ?>
+						<?php if ($this->aauth->get_user()->invadm != '') { ?>
+                        <li>
+                            <a href="<?php echo base_url(); ?>products"><?php echo $this->lang->line('') ?>Administrar material</a>
+                        </li>
+						<?php } ?>
+						<?php if ($this->aauth->get_user()->invcat != '') { ?>
+                        <li>
+                            <a href="<?php echo base_url(); ?>productcategory"><?php echo $this->lang->line('') ?>Categoria de material</a>
+                        </li>
+						<?php } ?>
+						<?php if ($this->aauth->get_user()->invalm != '') { ?>
+                        <li>
+                            <a href="<?php echo base_url(); ?>productcategory/warehouse"><?php echo $this->lang->line('Warehouses') ?></a>
+                        </li>
+						<?php } ?>
+						<?php if ($this->aauth->get_user()->invtrs != '') { ?>
+                        <li>
+                            <a href="<?php echo base_url(); ?>products/stock_transfer"><?php echo $this->lang->line('') ?>Traspasos</a>
+                        </li>
+						<?php } ?>
+                    </ul>
+                </li>
+				<?php } ?>
+				<!---ORDENES DE SERVICIOS --->
+				<?php if ($this->aauth->get_user()->comp != '') { ?>
                 <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "purchase") {
                     echo ' open';
                 } ?>">
@@ -877,22 +967,27 @@
                                 class="menu-title"> <?php echo $this->lang->line('Purchase Order') ?> </span><i
                                 class="fa arrow"></i> </a>
                     <ul class="menu-content">
+						<?php if ($this->aauth->get_user()->comnue != '') { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>purchase/create"><?php echo $this->lang->line('New Order') ?></a>
                         </li>
+						<?php } ?>
+						<?php if ($this->aauth->get_user()->comadm != '') { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>purchase"><?php echo $this->lang->line('Manage Orders') ?></a>
                         </li>
+						<?php } ?>
                     </ul>
                 </li>
-			 <!--- MENU CRM--->
-			
+				<?php } ?>
+				 <!--- MENU CRM--->
+				<?php if ($this->aauth->get_user()->us != '') { ?>
                 <li class="navigation-header"><span><?php echo $this->lang->line('CRM') ?></span><i
                             data-toggle="tooltip" data-placement="right"
                             data-original-title="CRM"
                             class="icon-ellipsis icon-ellipsis"></i>
                 </li>
-			<li class="nav-item has-sub <?php if ($this->uri->segment(1) == "customers") {
+                <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "customers") {
                     echo ' open';
                 } ?>">
                     <a href=""> <i class="icon-group"></i><span
@@ -901,42 +996,26 @@
 					<!---ADMINISTRADOR DE USUARIOS--->
 					
                     <ul class="menu-content">
+						<?php if ($this->aauth->get_user()->usnue != '') { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>customers/create"><?php echo $this->lang->line('') ?>Nuevo Usuario</a>
                         </li>
+						<?php } ?>
+						<?php if ($this->aauth->get_user()->usadm != '') { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>customers"><?php echo $this->lang->line('') ?>Administrar Usuarios</a>
+						</li>
+						<?php } ?>
+						<?php if ($this->aauth->get_user()->usgru != '') { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>clientgroup"><?php echo $this->lang->line('Manage Groups') ?></a>
                         </li>
+						<?php } ?>
                     </ul>
                 </li>
-			<!--- ENCUENTAS --->
-                <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "encuesta") {
-                    echo ' open';
-                } ?>">
-                    <a href=""> <i class="icon-android-clipboard"></i><span
-                                class="menu-title">Encuestas</span><i
-                                class="fa arrow"></i> </a>
-                    <ul class="menu-content">
-						<li>
-                            <a href="<?php echo base_url(); ?>llamadas/list_llamadas"><?php echo $this->lang->line(''); ?>Lista de llamadas</a>
-                        </li> 
-						<li>
-                            <a href="<?php echo base_url(); ?>encuesta/create"><?php echo $this->lang->line(''); ?>Nueva Encuenta</a>
-                        </li>
-						<li>
-                            <a href="<?php echo base_url(); ?>encuesta/index"><?php echo $this->lang->line('') ?>Lista Encuestas</a>
-                        </li>
-						<li>
-                            <a href="<?php echo base_url(); ?>encuesta/newats"><?php echo $this->lang->line(''); ?>Nueva ATS</a>
-                        </li>
-						<li>
-                            <a href="<?php echo base_url(); ?>encuesta/listats"><?php echo $this->lang->line(''); ?>Lista de ATS</a>
-                        </li>
-                    </ul>
-                </li>
-			<!--- SOPORTE TECNICO --->
+				<?php } ?>
+				<!--- SOPORTE TECNICO --->
+				<?php if ($this->aauth->get_user()->tik != '') { ?>
                 <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "tickets") {
                     echo ' open';
                 } ?>">
@@ -944,82 +1023,21 @@
                                 class="menu-title"><?php echo $this->lang->line('Support Tickets') ?></span><i
                                 class="fa arrow"></i> </a>
                     <ul class="menu-content">
+						<?php if ($this->aauth->get_user()->tiknue != '') { ?>
 						<li>
                             <a href="<?php echo base_url(); ?>quote/create"><?php echo $this->lang->line(''); ?>Nuevo ticket</a>
-                        </li>                        
+                        </li>
+						<?php } ?>
+						<?php if ($this->aauth->get_user()->tikadm != '') { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>tickets"><?php echo $this->lang->line('Manage Tickets') ?></a>
                         </li>
-
-
+						<?php } ?>
                     </ul>
                 </li>
-                
-			<!--- PROVEDORES--->
-			 <li class="navigation-header"><span><?php echo $this->lang->line('Stock') ?></span><i
-                            data-toggle="tooltip" data-placement="right"
-                            data-original-title="Stock"
-                            class="icon-ellipsis icon-ellipsis"></i>
-                </li>
-			<li class="nav-item has-sub <?php if ($this->uri->segment(1) == "equipos") {
-                    echo ' open';
-                } ?>">
-                    <a href=""> <i class="icon-wifi3"></i><span
-                                class="menu-title"><?php echo $this->lang->line('') ?>Redes</span><i
-                                class="fa arrow"></i> </a>
-                    <ul class="menu-content">
-						<li>
-                            <a href="<?php echo base_url(); ?>products/equipoadd"><?php echo $this->lang->line('') ?>Ingreso de Equipo</a>
-                        </li>
-						<li>
-                            <a href="<?php echo base_url(); ?>products/equipos"><?php echo $this->lang->line('') ?>Administrar equipos</a>
-                        </li>
-						<li>
-                            <a href="<?php echo base_url(); ?>productcategory/almacen">Bodega equipos</a>
-                        </li>
-					</ul>
-				</li>
-				
-                <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "products") {
-                    echo ' open';
-                } ?>">
-                    <a href=""> <i class="icon-truck2"></i><span
-                                class="menu-title"><?php echo $this->lang->line('') ?>Inventarios</span><i
-                                class="fa arrow"></i> </a>
-                    <ul class="menu-content">
-                        <li>
-                            <a href="<?php echo base_url(); ?>products/add"><?php echo $this->lang->line('') ?>Ingreso de material</a>
-                        </li>
-                        <li>
-                            <a href="<?php echo base_url(); ?>products"><?php echo $this->lang->line('') ?>Administrar material</a>
-                        </li>
-                        <li>
-                            <a href="<?php echo base_url(); ?>productcategory"><?php echo $this->lang->line('') ?>Categoria de material</a>
-                        </li>
-                        <li>
-                            <a href="<?php echo base_url(); ?>productcategory/warehouse"><?php echo $this->lang->line('Warehouses') ?></a>
-                        </li>
-                        <li>
-                            <a href="<?php echo base_url(); ?>products/stock_transfer"><?php echo $this->lang->line('') ?>Traspasos</a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "supplier") {
-                    echo ' open';
-                } ?>">
-                    <a href=""> <i class="icon-ios-people"></i><span
-                                class="menu-title"> <?php echo $this->lang->line('Suppliers') ?> </span><i
-                                class="fa arrow"></i> </a>
-                    <ul class="menu-content">
-                        <li>
-                            <a href="<?php echo base_url(); ?>supplier/create"><?php echo $this->lang->line('New Supplier') ?></a>
-                        </li>
-                        <li>
-                            <a href="<?php echo base_url(); ?>supplier"><?php echo $this->lang->line('Manage Suppliers') ?></a>
-                        </li>
-                    </ul>
-                </li>
+				<?php } ?>
 				<!--- moviles --->
+				<?php if ($this->aauth->get_user()->mo != '') { ?>
                 <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "moviles") {
                     echo ' open';
                 } ?>">
@@ -1027,25 +1045,81 @@
                                 class="menu-title">Moviles</span><i
                                 class="fa arrow"></i> </a>
                     <ul class="menu-content">
+						<?php if ($this->aauth->get_user()->monue != '') { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>moviles/create"><?php echo $this->lang->line(''); ?>Nueva movil</a>
-                        </li>                        
+                        </li>
+						<?php } ?>
+						<?php if ($this->aauth->get_user()->moadm != '') { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>moviles">Administrar Moviles</a>
                         </li>
-
+						<?php } ?>
 
                     </ul>
                 </li>
-			<!---------------- GESTION DE PROYECTOS ----------------->
-                <li class="navigation-header"><span>Tareas</span><i
-                            data-toggle="tooltip" data-placement="right"
-                            data-original-title="Balance"
-                            class="icon-ellipsis icon-ellipsis"></i>
+				<?php } ?>
+				<!--- PROVEDORES--->
+				<?php if ($this->aauth->get_user()->pro != '') { ?>
+                <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "supplier") {
+                    echo ' open';
+                } ?>">
+                    <a href=""> <i class="icon-ios-people"></i><span
+                                class="menu-title"> <?php echo $this->lang->line('Suppliers') ?> </span><i
+                                class="fa arrow"></i> </a>
+                    <ul class="menu-content">
+						<?php if ($this->aauth->get_user()->pronue != '') { ?>
+                        <li>
+                            <a href="<?php echo base_url(); ?>supplier/create"><?php echo $this->lang->line('New Supplier') ?></a>
+                        </li>
+						<?php } ?>
+						<?php if ($this->aauth->get_user()->proadm != '') { ?>
+                        <li>
+                            <a href="<?php echo base_url(); ?>supplier"><?php echo $this->lang->line('Manage Suppliers') ?></a>
+                        </li>
+						<?php } ?>
+                    </ul>
                 </li>
-			 <li><a href="<?php echo base_url(); ?>tools/todo"><i class="icon-android-done-all"></i><span
-                                class="menu-title"> <?php echo $this->lang->line('') ?>Listado de Tareas</span></a></li>
-			<!---------------- GESTION DE PROYECTOS ----------------->
+				<?php } ?>
+				<!--- ENCUENTAS --->
+				<?php if ($this->aauth->get_user()->enc != '') { ?>
+                <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "encuesta") {
+                    echo ' open';
+                } ?>">
+                    <a href=""> <i class="icon-android-clipboard"></i><span
+                                class="menu-title">Encuestas</span><i
+                                class="fa arrow"></i> </a>
+                    <ul class="menu-content">
+						<?php if ($this->aauth->get_user()->encllam != '') { ?>
+						<li>
+                            <a href="<?php echo base_url(); ?>llamadas/list_llamadas"><?php echo $this->lang->line(''); ?>Lista de llamadas</a>
+                        </li>
+						<?php } ?>
+						<?php if ($this->aauth->get_user()->encnue != '') { ?>
+						<li>
+                            <a href="<?php echo base_url(); ?>encuesta/create"><?php echo $this->lang->line(''); ?>Nueva Encuenta</a>
+                        </li>
+						<?php } ?>
+						<?php if ($this->aauth->get_user()->encenc != '') { ?>
+						<li>
+                            <a href="<?php echo base_url(); ?>encuesta/index"><?php echo $this->lang->line('') ?>Lista Encuestas</a>
+                        </li>
+						<?php } ?>
+						<?php if ($this->aauth->get_user()->encats != '') { ?>
+						<li>
+                            <a href="<?php echo base_url(); ?>encuesta/newats"><?php echo $this->lang->line(''); ?>Nueva ATS</a>
+                        </li>
+						<?php } ?>
+						<?php if ($this->aauth->get_user()->encatslis != '') { ?>
+						<li>
+                            <a href="<?php echo base_url(); ?>encuesta/listats"><?php echo $this->lang->line(''); ?>Lista de ATS</a>
+                        </li>
+                        <?php } ?>
+                    </ul>
+                </li>
+				<?php } ?>
+                <!---------------- GESTION DE PROYECTOS ----------------->
+				<?php if ($this->aauth->get_user()->proy != '') { ?>
                 <li class="navigation-header"><span><?php echo $this->lang->line('Project') ?></span><i
                             data-toggle="tooltip" data-placement="right"
                             data-original-title="Balance"
@@ -1058,16 +1132,62 @@
                                 class="menu-title"> <?php echo $this->lang->line('Project Management') ?> </span><i
                                 class="fa arrow"></i> </a>
                     <ul class="menu-content">
+						<?php if ($this->aauth->get_user()->proynue != '') { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>projects/addproject"><?php echo $this->lang->line('New Project') ?></a>
                         </li>
+						<?php } ?>
+						<?php if ($this->aauth->get_user()->proyadm != '') { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>projects"><?php echo $this->lang->line('Manage Projects') ?></a>
                         </li>
+						<?php } ?>
                     </ul>
                 </li>
-			<!--- TESORERIA--->
-			
+			    <?php } ?>
+			    <!--- TAREAS---->
+				<?php if ($this->aauth->get_user()->tar != '') { ?>
+                <li><a href="<?php echo base_url(); ?>tools/todo"><i class="icon-android-done-all"></i><span
+                                class="menu-title"> <?php echo $this->lang->line('') ?>Listado de Tareas</span></a></li>
+				<?php } ?>
+                <!---------------- end project ----------------->
+				<?php if ($this->aauth->get_user()->cuen != '') { ?>
+                <li class="navigation-header"><span><?php echo $this->lang->line('Balance') ?></span><i
+                            data-toggle="tooltip" data-placement="right"
+                            data-original-title="Balance"
+                            class="icon-ellipsis icon-ellipsis"></i>
+                </li>
+                <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "accounts") {
+                    echo ' open';
+                } ?>">
+                    <a href=""> <i class="icon-bank"></i><span
+                                class="menu-title"> <?php echo $this->lang->line('Accounts') ?></span><i
+                                class="fa arrow"></i> </a>
+                    <ul class="menu-content">
+						<?php if ($this->aauth->get_user()->cuenadm != '') { ?>
+                        <li>
+                            <a href="<?php echo base_url(); ?>accounts"><?php echo $this->lang->line('Manage Accounts') ?></a>
+                        </li>
+						<?php } ?>
+						<?php if ($this->aauth->get_user()->cuennue != '') { ?>
+                        <li>
+                            <a href="<?php echo base_url(); ?>accounts/add"><?php echo $this->lang->line('New Account') ?></a>
+                        </li>
+						<?php } if ($this->aauth->get_user()->cuenbal != '') { ?>
+                        <li>
+                            <a href="<?php echo base_url(); ?>accounts/balancesheet"><?php echo $this->lang->line('BalanceSheet') ?></a>
+                        </li>
+						<?php } ?>
+						<?php if ($this->aauth->get_user()->cuendec != '') { ?>
+                        <li>
+                            <a href="<?php echo base_url(); ?>reports/accountstatement"><?php echo $this->lang->line('Account Statements') ?></a>
+                        </li>
+						<?php } ?>
+                    </ul>
+                </li>
+				<?php } ?>
+						<!--- TESORERIA--->
+				<?php if ($this->aauth->get_user()->tes != '') { ?>
                 <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "transactions") {
                     echo ' open';
                 } ?>">
@@ -1075,40 +1195,47 @@
                                 class="menu-title"> <?php echo $this->lang->line('') ?>Tesoreria</span><i
                                 class="fa arrow"></i> </a>
                     <ul class="menu-content">
+						<?php if ($this->aauth->get_user()->testran != '') { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>transactions"><?php echo $this->lang->line('View Transactions') ?></a>
                         </li>
-						<li>
+						<?php } if ($this->aauth->get_user()->tesanu != '') { ?>
+                         <li>
                             <a href="<?php echo base_url(); ?>transactions/anulaciones"><?php echo $this->lang->line('View Anulations') ?></a>
                         </li>
+						<?php } if ($this->aauth->get_user()->tesnuetransac != '') { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>transactions/add"><?php echo $this->lang->line('New Transaction') ?></a>
                         </li>
+						<?php } if ($this->aauth->get_user()->tesnuetransfer != '') { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>transactions/transfer"><?php echo $this->lang->line('New Transfer') ?></a>
                         </li>
+						<?php } if ($this->aauth->get_user()->tesing != '') { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>transactions/income"><?php echo $this->lang->line('Income'); ?></a>
                         </li>
+						<?php } if ($this->aauth->get_user()->tesgas != '') { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>transactions/expense"><?php echo $this->lang->line('Expense') ?></a>
                         </li>
+						<?php } if ($this->aauth->get_user()->testransfer != '') { ?>
 						<li>
                             <a href="<?php echo base_url(); ?>transactions/transferencia">Transferencias</a>
                         </li>
-
+						<?php } ?>
                     </ul>
                 </li>
-			
-			<!---- diverso--->
-			
-			<li class="navigation-header"><span><?php echo $this->lang->line('Miscellaneous') ?></span><i
+				<?php } ?>
+				<!--- DATOS Y REPORTES--->
+				<?php if ($this->aauth->get_user()->dat != '') { ?>
+                <li class="navigation-header"><span><?php echo $this->lang->line('Miscellaneous') ?></span><i
                             data-toggle="tooltip" data-placement="right"
                             data-original-title="Miscellaneous"
                             class="icon-ellipsis icon-ellipsis"></i>
                 </li>
-			<!--- DATOS Y REPORTES--->
-			
+
+					
                 <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "reports") {
                     echo ' open';
                 } ?>">
@@ -1116,375 +1243,303 @@
                                 class="menu-title"> <?php echo $this->lang->line('Data & Reports') ?> </span><i
                                 class="fa arrow"></i> </a>
                     <ul class="menu-content">
+						<?php if ($this->aauth->get_user()->datest != '') { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>reports/statistics"><?php echo $this->lang->line('Statistics') ?></a>
                         </li>
+						<?php } if ($this->aauth->get_user()->datdec != '') { ?>
                         <li>
-                            <a href="<?php echo base_url(); ?>reports/accountstatement"><?php echo $this->lang->line('Account Statements')
-								
-								
-								
-								?></a>
+                            <a href="<?php echo base_url(); ?>reports/accountstatement"><?php echo $this->lang->line('Account Statements')?></a>
                         </li>
+						<?php } if ($this->aauth->get_user()->datrep != '') { ?>
 						<li>
                             <a href="<?php echo base_url(); ?>reports/filreptec">Reporte Tecnicos</a>
                         </li>
+						<?php } if ($this->aauth->get_user()->datusu!= '') { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>reports/customerstatement"><?php echo $this->lang->line('Customer') . ' ' . $this->lang->line('Account Statements') ?></a>
                         </li>
+						<?php } if ($this->aauth->get_user()->datpro != '') { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>reports/supplierstatement"><?php echo $this->lang->line('Supplier') . ' ' . $this->lang->line('Account Statements') ?></a>
                         </li>
+						<?php } if ($this->aauth->get_user()->dating != '') { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>reports/incomestatement"><?php echo $this->lang->line('Calculate Income'); ?></a>
                         </li>
+						<?php } if ($this->aauth->get_user()->datgas != '') { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>reports/expensestatement"><?php echo $this->lang->line('Calculate Expenses') ?></a>
                         </li>
+						<?php } if ($this->aauth->get_user()->dattrans != '') { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>reports/customerviewstatement"><?php echo $this->lang->line('Clients Transactions') ?></a>
                         </li>
+						<?php } if ($this->aauth->get_user()->datimp != '') { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>reports/taxstatement"><?php echo $this->lang->line('TAX').' '.$this->lang->line('Statements'); ?> </a>
                         </li>
+						<?php } ?>
+                    </ul>
+                </li>
+				<?php } ?>
+						<!--- HERRAMIENTAS---->
+				
+				<?php if ($this->aauth->get_user()->not != '') { ?>
+                <li><a href="<?php echo base_url(); ?>tools/notes"><i class="icon-android-clipboard"></i><span
+                                class="menu-title"> <?php echo $this->lang->line('Notes') ?></span></a></li>
+				<?php } ?>
+				<?php if ($this->aauth->get_user()->cal != '') { ?>
+                <li><a href="<?php echo base_url(); ?>events"><i class="icon-calendar2"></i><span
+                                class="menu-title"> <?php echo $this->lang->line('Calendar') ?></span></a></li>
+				<?php } ?>
+				<?php if ($this->aauth->get_user()->doct != '') { ?>
+                <li><a href="<?php echo base_url(); ?>tools/documents"><i class="icon-android-download"></i><span
+                                class="menu-title"><?php echo $this->lang->line('Documents') ?></span></a></li>
+				<?php } ?>
+			<!--- menu configuraciones------->
+			
+				<?php if ($this->aauth->get_user()->conf != '') { ?>
+                <li class="navigation-header"><span>Configure</span><i data-toggle="tooltip" data-placement="right"
+                                                                       data-original-title="Configure"
+                                                                       class="icon-ellipsis icon-ellipsis"></i>
+                </li>
+                <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "settings") {
+                    echo ' open';
+                } ?>">
+                    <a href=""> <i class="icon-cog"></i><span
+                                class="menu-title"> <?php echo $this->lang->line('Settings') ?></span><i
+                                class="fa arrow"></i> </a>
+                    <ul class="menu-content">
+						<?php if ($this->aauth->get_user()->confemp != '') { ?>
+                        <li>
+                            <a href="<?php echo base_url(); ?>settings/company"><?php echo $this->lang->line('Company'); ?></a>
+                        </li>
+						<?php } if ($this->aauth->get_user()->conffa != '') { ?>
+                        <li>
+                            <a href="<?php echo base_url(); ?>settings/billing"><?php echo $this->lang->line('Billing') ?>
+                                & Language</a>
+                        </li>
+						<?php } if ($this->aauth->get_user()->confmon != '') { ?>
+                        <li>
+                            <a href="<?php echo base_url(); ?>settings/currency"><?php echo $this->lang->line('Currency') ?></a>
+                        </li>
+						<?php } if ($this->aauth->get_user()->conffec != '') { ?>
+                        <li>
+                            <a href="<?php echo base_url(); ?>settings/dtformat"><?php echo $this->lang->line('Date & Time Format') ?></a>
+                        </li>
+						<?php } if ($this->aauth->get_user()->confcat != '') { ?>
+                        <li>
+                            <a href="<?php echo base_url(); ?>transactions/categories"><?php echo $this->lang->line('Transaction Categories') ?></a>
+                        </li>
+						<?php } if ($this->aauth->get_user()->confmet != '') { ?>
+                        <li>
+                            <a href="<?php echo base_url(); ?>tools/setgoals"><?php echo $this->lang->line('Set Goals') ?></a>
+                        </li>
+						<?php } if ($this->aauth->get_user()->confrest != '') { ?>
+                        <li>
+							<a href="<?php echo base_url(); ?>restapi"><?php echo $this->lang->line('REST API') ?></a>
+                        </li>
+						<?php } if ($this->aauth->get_user()->confcorr != '') { ?>
+                        <li>
+                            <a href="<?php echo base_url(); ?>settings/email"><?php echo $this->lang->line('Email Config') ?></a>
+                        </li>
+						<?php } if ($this->aauth->get_user()->confterm != '') { ?>
+                        <li>
+                            <a href="<?php echo base_url(); ?>settings/billing_terms"><?php echo $this->lang->line('Billing Terms') ?></a>
+                        </li>
+						<?php } if ($this->aauth->get_user()->confaut != '') { ?>
+                        <li>
+                            <a href="<?php echo base_url(); ?>cronjob"><?php echo $this->lang->line('Automatic Corn Job') ?></a>
+                        </li>
+						<?php } if ($this->aauth->get_user()->confseg != '') { ?>
+                        <li>
+                            <a href="<?php echo base_url(); ?>plugins/recaptcha"><?php echo $this->lang->line('Security') ?></a>
+                        </li>
+						<?php } if ($this->aauth->get_user()->conftem != '') { ?>
+                        <li>
+                            <a href="<?php echo base_url(); ?>settings/theme"><?php echo $this->lang->line('Theme') ?></a>
+                        </li>
+						<?php } if ($this->aauth->get_user()->confsop != '') { ?>
+                        <li>
+                            <a href="<?php echo base_url(); ?>settings/tickets"><?php echo $this->lang->line('Support Tickets') ?></a>
+                        </li>
+						<?php } if ($this->aauth->get_user()->conface != '') { ?>
+                        <li>
+                            <a href="<?php echo base_url(); ?>settings/about"><?php echo $this->lang->line('About') ?></a>
+                        </li>
+						<?php } if ($this->aauth->get_user()->confupt != '') { ?>
+                          <li>
+                            <a href="<?php echo base_url(); ?>webupdate">Update</a>
+                        </li>
+						<?php } if ($this->aauth->get_user()->confapi != '') { ?>
+                        <li>
+                            <a href="<?php echo base_url(); ?>clientgroup/apis_vars_edit">Editar Variables Apis</a>
+                        </li>
+                        <!--slbs-->
+						<?php } ?>
 
                     </ul>
                 </li>
-			
-			<li><a href="<?php echo base_url(); ?>tools/notes"><i class="icon-android-clipboard"></i><span
-                                class="menu-title"> <?php echo $this->lang->line('Notes') ?></span></a></li>
+				<?php } ?>
+				<?php if ($this->aauth->get_user()->emp != '') { ?>
+                <li><a href="<?php echo base_url(); ?>employee"><i class="icon-users"></i><span
+                                class="menu-title"> <?php echo $this->lang->line('Employees') ?></span></a>
+                </li>
+				<?php } ?>
+				<?php if ($this->aauth->get_user()->conf != '') { ?>
+                <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "paymentgateways") {
+                    echo ' open';
+                } ?>">
+                    <a href=""> <i class="icon-cc"></i><span
+                                class="menu-title"> <?php echo $this->lang->line('Payment Settings') ?> </span><i
+                                class="fa arrow"></i> </a>
+                    <ul class="menu-content">
+						<?php if ($this->aauth->get_user()->conf != '') { ?>
+                        <li>
+                            <a href="<?php echo base_url(); ?>paymentgateways/settings"><?php echo $this->lang->line('Payment Settings') ?></a>
+                        </li>
+						<?php } if ($this->aauth->get_user()->confupt != '') { ?>
+                        <li>
+                            <a href="<?php echo base_url(); ?>paymentgateways"><?php echo $this->lang->line('Payment Gateways') ?></a>
+                        </li>
+						<?php } if ($this->aauth->get_user()->confupt != '') { ?>
+                        <li>
+                            <a href="<?php echo base_url(); ?>paymentgateways/currencies"><?php echo $this->lang->line('Payment Currencies') ?></a>
+                        </li>
+						<?php } if ($this->aauth->get_user()->confupt != '') { ?>
+                        <li>
+                            <a href="<?php echo base_url(); ?>paymentgateways/exchange"><?php echo $this->lang->line('Currency Exchange') ?></a>
+                        </li>
+						<?php } if ($this->aauth->get_user()->confupt != '') { ?>
+                        <li>
+                            <a href="<?php echo base_url(); ?>paymentgateways/bank_accounts"><?php echo $this->lang->line('Bank Accounts') ?></a>
+                        </li>
+						<?php } ?>
 
-
-                <li><a href="<?php echo base_url(); ?>events"><i class="icon-calendar2"></i><span
-                                class="menu-title"> <?php echo $this->lang->line('Calendar') ?></span></a></li>
-			<li><a href="<?php echo base_url(); ?>tools/documents"><i class="icon-android-download"></i><span
-                                class="menu-title"><?php echo $this->lang->line('Documents') ?></span></a></li>
-			<!--menu importacion-->
-			<li class="nav-item has-sub <?php if ($this->uri->segment(1) == "import") {
+                    </ul>
+                </li>
+				<?php } ?>
+				<!---PLUGIN----->
+				<?php if ($this->aauth->get_user()->com != '') { ?>
+                <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "plugins") {
+                    echo ' open';
+                } ?>">
+                    <a href=""> <i class="icon-anchor"></i><span
+                                class="menu-title"> <?php echo $this->lang->line('Plugins') ?> </span><i
+                                class="fa arrow"></i> </a>
+                    <ul class="menu-content">
+						<?php if ($this->aauth->get_user()->comprec != '') { ?>
+                        <li>
+                            <a href="<?php echo base_url(); ?>plugins/recaptcha">reCaptcha Security</a>
+                        </li>
+						<?php } if ($this->aauth->get_user()->compurl != '') { ?>
+                        <li>
+                            <a href="<?php echo base_url(); ?>plugins/shortner">URL Shortener</a>
+                        </li>
+						<?php } if ($this->aauth->get_user()->comptwi != '') { ?>
+                        <li>
+                            <a href="<?php echo base_url(); ?>plugins/twilio">Twilio SMS</a>
+                        </li>
+						<?php } if ($this->aauth->get_user()->compcurr != '') { ?>
+                        <li>
+                            <a href="<?php echo base_url(); ?>paymentgateways/exchange">Currency Exchange API</a>
+                        </li>
+						<?php } ?>
+                    </ul>
+                </li>
+				<?php } ?>
+				<!---temporales---->
+				<?php if ($this->aauth->get_user()->pla != '') { ?>
+                <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "templates") {
+                    echo ' open';
+                } ?>">
+                    <a href=""> <i class="icon-table3"></i><span
+                                class="menu-title"> <?php echo $this->lang->line('Templates') ?> </span><i
+                                class="fa arrow"></i> </a>
+                    <ul class="menu-content">
+						<?php if ($this->aauth->get_user()->placor != '') { ?>
+                        <li>
+                            <a href="<?php echo base_url(); ?>templates/email"><?php echo $this->lang->line('Email') ?></a>
+                        </li>
+						<?php } if ($this->aauth->get_user()->plamen != '') { ?>
+                        <li>
+                            <a href="<?php echo base_url(); ?>templates/sms">SMS</a>
+                        </li>
+						<?php } if ($this->aauth->get_user()->platem != '') { ?>
+                        <li>
+                            <a href="<?php echo base_url(); ?>settings/theme"><?php echo $this->lang->line('Theme') ?></a>
+                        </li>
+						<?php } ?>
+                    </ul>
+                </li>
+				<?php } ?>
+				<!----COPIAS----->
+				<?php if ($this->aauth->get_user()->PENDIENTE != '') { ?>
+                <li class="navigation-header"><span><?php echo $this->lang->line('Backup & Export').'-'.$this->lang->line('Import'); ?><i
+                                data-toggle="tooltip" data-placement="right"
+                                data-original-title="Export"
+                                class="icon-ellipsis icon-ellipsis"></i>
+                </li>
+                <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "export") {
+                    echo ' open';
+                } ?>">
+                    <a href=""> <i class="icon-database"></i><span
+                                class="menu-title"> <?php echo $this->lang->line('Export Data') ?> </span><i
+                                class="fa arrow"></i> </a>
+                    <ul class="menu-content">
+						<?php if ($this->aauth->get_user()->pla != '') { ?>
+                        <li>
+                            <a href="<?php echo base_url(); ?>export/crm"><?php echo $this->lang->line('Export People Data'); ?></a>
+                        </li>
+						<?php } if ($this->aauth->get_user()->plamen != '') { ?>
+                        <li>
+                            <a href="<?php echo base_url(); ?>export/transactions"><?php echo $this->lang->line('Export Transactions'); ?></a>
+                        </li>
+						<?php } if ($this->aauth->get_user()->plamen != '') { ?>
+                        <li>
+                            <a href="<?php echo base_url(); ?>export/products"><?php echo $this->lang->line('Export Products'); ?></a>
+                        </li>
+						<?php } if ($this->aauth->get_user()->plamen != '') { ?>
+                        <li>
+                            <a href="<?php echo base_url(); ?>export/account"><?php echo $this->lang->line('Account Statements') ?></a>
+                        </li>
+						<?php } if ($this->aauth->get_user()->plamen != '') { ?>
+                        <li>
+                            <a href="<?php echo base_url(); ?>export/dbexport"><?php echo $this->lang->line('Database Backup'); ?></a>
+                        </li>
+						<?php } if ($this->aauth->get_user()->plamen != '') { ?>
+                        <li>
+                            <a href="<?php echo base_url(); ?>export/taxstatement"><?php echo $this->lang->line('TAX'); ?> Statements</a>
+                        </li>
+						<?php } ?>
+                    </ul>
+                </li>
+				<?php } ?>
+				<?php if ($this->aauth->get_user()->PENDIENTE != '') { ?>
+                <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "import") {
                     echo ' open';
                 } ?>">
                     <a href=""> <i class="icon-road2"></i><span
                                 class="menu-title"> <?php echo $this->lang->line('Import') ?> </span><i
                                 class="fa arrow"></i> </a>
                     <ul class="menu-content">
+                        <li>
+                            <a href="<?php echo base_url(); ?>import/products"><?php echo $this->lang->line('Import Products'); ?></a>
+                        </li>
 						<li>
                             <a href="<?php echo base_url(); ?>importequipo/equipos"><?php echo $this->lang->line(''); ?>Importar Equipos</a>
                         </li>
+						<li>
+                            <a href="<?php echo base_url(); ?>importequipo/usuarios"><?php echo $this->lang->line(''); ?>Importar Usuarios</a>
+                        </li>
+						<li>
+                            <a href="<?php echo base_url(); ?>importequipo/facturas"><?php echo $this->lang->line(''); ?>Importar facturas</a>
+                        </li>
 					</ul>
                 </li>
-			<li class="navigation-header"><span>Configure</span><i data-toggle="tooltip" data-placement="right" data-original-title="Configure" class="icon-ellipsis icon-ellipsis"></i>
-            </li>
-			<li><a href="<?php echo base_url(); ?>employee"><i class="icon-users"></i><span
-                                class="menu-title"> <?php echo $this->lang->line('Employees') ?></span></a>
-                </li>
-		
-
-<?php } ?>
-			<!------ MENU PARA CAJAS------->
+            <?php } } ?>
 			
-			<?php if ($this->aauth->get_user()->roleid == 3) { ?>
-			<li class="nav-item has-sub <?php if ($this->uri->segment(1) == "invoices" OR $this->uri->segment(1) == "quote") {
-                    echo ' open';
-                } ?>">
-                    <a href=""> <i class="icon-plus"></i> <span
-                                class="menu-title"><?php echo $this->lang->line('sales') ?>
-						
-						<!-- MENU FACTURACION-->
-						
-                    <i class="icon-arrow"></i></span></a>
-                    <ul class="menu-content">
-						<li>
-                            <a href="<?php echo base_url(); ?>invoices/apertura">Apertura</a>
-                        </li>
-                        <li>
-                            <a href="<?php echo base_url(); ?>invoices/create"><?php echo $this->lang->line('New Invoice'); ?></a>
-                        </li>
-                        <li>
-                            <a href="<?php echo base_url(); ?>invoices"><?php echo $this->lang->line('Manage Invoices'); ?></a>
-                        </li>
-
-						<li>
-                            <a href="<?php echo base_url(); ?>reports/cierre">Cierre</a>
-                        </li>
-                    </ul>
-                </li>
-			<li class="navigation-header"><span><?php echo $this->lang->line('CRM') ?></span><i
-                            data-toggle="tooltip" data-placement="right"
-                            data-original-title="CRM"
-                            class="icon-ellipsis icon-ellipsis"></i>
-                </li>
-                <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "customers") {
-                    echo ' open';
-                } ?>">
-                    <a href=""> <i class="icon-group"></i><span
-                                class="menu-title"> <?php echo $this->lang->line('') ?>Usuarios</span><i
-                                class="fa arrow"></i> </a>
-					<!---ADMINISTRADOR DE USUARIOS--->
-					
-                    <ul class="menu-content">
-                        <li>
-                            <a href="<?php echo base_url(); ?>customers/create"><?php echo $this->lang->line('') ?>Nuevo Usuario</a>
-                        </li>
-                        
-                        <li>
-                            <a href="<?php echo base_url(); ?>clientgroup"><?php echo $this->lang->line('Manage Groups') ?></a>
-                        </li>
-                    </ul>
-                </li>
-			<!--- SOPORTE TECNICO --->
-                <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "tickets") {
-                    echo ' open';
-                } ?>">
-                    <a href=""> <i class="icon-ticket"></i><span
-                                class="menu-title"><?php echo $this->lang->line('Support Tickets') ?></span><i
-                                class="fa arrow"></i> </a>
-                    <ul class="menu-content">
-						<li>
-                            <a href="<?php echo base_url(); ?>quote/create"><?php echo $this->lang->line(''); ?>Nuevo ticket</a>
-                        </li>
-                        <li>
-                            <a href="<?php echo base_url(); ?>tickets/?filter=Pendiente"><?php echo $this->lang->line('UnSolved') ?></a>
-                        </li>
-                        <li>
-                            <a href="<?php echo base_url(); ?>tickets"><?php echo $this->lang->line('Manage Tickets') ?></a>
-                        </li>
-
-
-                    </ul>
-                </li>
-			<!---ORDENES DE SERVICIOS --->
-			
-                <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "purchase") {
-                    echo ' open';
-                } ?>">
-					
-					
-                    <a href=""> <i class="icon-file"></i><span
-                                class="menu-title"> <?php echo $this->lang->line('Purchase Order') ?> </span><i
-                                class="fa arrow"></i> </a>
-                    <ul class="menu-content">
-                        <li>
-                            <a href="<?php echo base_url(); ?>purchase/create"><?php echo $this->lang->line('New Order') ?></a>
-                        </li>
-                        <li>
-                            <a href="<?php echo base_url(); ?>purchase"><?php echo $this->lang->line('Manage Orders') ?></a>
-                        </li>
-                    </ul>
-                </li>
-			<!--- MENU INVENTARIOS--->
-			
-                <li class="navigation-header"><span><?php echo $this->lang->line('Stock') ?></span><i
-                            data-toggle="tooltip" data-placement="right"
-                            data-original-title="Stock"
-                            class="icon-ellipsis icon-ellipsis"></i>
-                </li>
-				<li class="nav-item has-sub <?php if ($this->uri->segment(1) == "equipos") {
-                    echo ' open';
-                } ?>">
-                    <a href=""> <i class="icon-wifi3"></i><span
-                                class="menu-title"><?php echo $this->lang->line('') ?>Redes</span><i
-                                class="fa arrow"></i> </a>
-                    <ul class="menu-content">
-						<li>
-                            <a href="<?php echo base_url(); ?>products/equipoadd"><?php echo $this->lang->line('') ?>Ingreso de Equipo</a>
-                        </li>
-						<li>
-                            <a href="<?php echo base_url(); ?>products/equipos"><?php echo $this->lang->line('') ?>Administrar equipos</a>
-                        </li>
-						<li>
-                            <a href="<?php echo base_url(); ?>productcategory/almacen">Bodega equipos</a>
-                        </li>
-					</ul>
-				</li>
-                <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "products") {
-                    echo ' open';
-                } ?>">
-                    <a href=""> <i class="icon-truck2"></i><span
-                                class="menu-title"><?php echo $this->lang->line('') ?>Inventarios</span><i
-                                class="fa arrow"></i> </a>
-                    <ul class="menu-content">
-                        <li>
-                            <a href="<?php echo base_url(); ?>products/add"><?php echo $this->lang->line('') ?>Ingreso de material</a>
-                        </li>
-						
-                        <li>
-                            <a href="<?php echo base_url(); ?>products"><?php echo $this->lang->line('') ?>Administrar material</a>
-                        </li>
-						
-                        <li>
-                            <a href="<?php echo base_url(); ?>productcategory"><?php echo $this->lang->line('') ?>Categoria de material</a>
-                        </li>
-                        <li>
-                            <a href="<?php echo base_url(); ?>productcategory/warehouse"><?php echo $this->lang->line('Warehouses') ?></a>
-                        </li>
-						
-                        <li>
-                            <a href="<?php echo base_url(); ?>products/stock_transfer"><?php echo $this->lang->line('') ?>Traspasos</a>
-                        </li>
-                    </ul>
-                </li>
-			<!--- TESORERIA--->
-			
-                <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "transactions") {
-                    echo ' open';
-                } ?>">
-                    <a href=""> <i class="icon-exchange"></i><span
-                                class="menu-title"> <?php echo $this->lang->line('') ?>Tesoreria</span><i
-                                class="fa arrow"></i> </a>
-                    <ul class="menu-content">
-                        <li>
-                            <a href="<?php echo base_url(); ?>transactions/add"><?php echo $this->lang->line('New Transaction') ?></a>
-                        </li>
-                        <li>
-                            <a href="<?php echo base_url(); ?>transactions/transfer"><?php echo $this->lang->line('New Transfer') ?></a>
-                        </li>
-                    </ul>
-                </li>
-			
-			<!---------------- GESTION DE PROYECTOS ----------------->
-                <li class="navigation-header"><span>PROYECTOS</span><i
-                            data-toggle="tooltip" data-placement="right"
-                            data-original-title="Balance"
-                            class="icon-ellipsis icon-ellipsis"></i>
-                </li>
-			 <li><a href="<?php echo base_url(); ?>tools/todo"><i class="icon-android-done-all"></i><span
-                                class="menu-title"> <?php echo $this->lang->line('') ?>Listado de Tareas</span></a></li>
-			
-			<!---- diverso--->
-			
-			<li class="navigation-header"><span>DIVERSOS</span><i
-                            data-toggle="tooltip" data-placement="right"
-                            data-original-title="Miscellaneous"
-                            class="icon-ellipsis icon-ellipsis"></i>
-                </li>
-			
-			
-			<li><a href="<?php echo base_url(); ?>tools/notes"><i class="icon-android-clipboard"></i><span
-                                class="menu-title"> <?php echo $this->lang->line('Notes') ?></span></a></li>
-
-
-                <li><a href="<?php echo base_url(); ?>events"><i class="icon-calendar2"></i><span
-                                class="menu-title"> <?php echo $this->lang->line('Calendar') ?></span></a></li>
-		
-
-<?php } ?>
-			<!------ MENU PARA TECNICOS------->
-			
-			<?php if ($this->aauth->get_user()->roleid == 2) { ?>
-			
-			<li class="navigation-header"><span><?php echo $this->lang->line('CRM') ?></span><i
-                            data-toggle="tooltip" data-placement="right"
-                            data-original-title="CRM"
-                            class="icon-ellipsis icon-ellipsis"></i>
-                </li>
-                <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "customers") {
-                    echo ' open';
-                } ?>">
-                    <a href=""> <i class="icon-group"></i><span
-                                class="menu-title"> <?php echo $this->lang->line('') ?>Usuarios</span><i
-                                class="fa arrow"></i> </a>
-					<!---ADMINISTRADOR DE USUARIOS--->
-					
-                    <ul class="menu-content">
-                        <li>
-                            <a href="<?php echo base_url(); ?>clientgroup"><?php echo $this->lang->line('Manage Groups') ?></a>
-                        </li>
-                    </ul>
-                </li>
-			
-			<!--- MENU INVENTARIOS--->
-			
-                <li class="navigation-header"><span><?php echo $this->lang->line('Stock') ?></span><i
-                            data-toggle="tooltip" data-placement="right"
-                            data-original-title="Stock"
-                            class="icon-ellipsis icon-ellipsis"></i>
-                </li>
-				<li class="nav-item has-sub <?php if ($this->uri->segment(1) == "equipos") {
-                    echo ' open';
-                } ?>">
-                    <a href=""> <i class="icon-wifi3"></i><span
-                                class="menu-title"><?php echo $this->lang->line('') ?>Redes</span><i
-                                class="fa arrow"></i> </a>
-                    <ul class="menu-content">
-						<li>
-                            <a href="<?php echo base_url(); ?>products/equipos"><?php echo $this->lang->line('') ?>Administrar equipos</a>
-                        </li>
-						<li>
-                            <a href="<?php echo base_url(); ?>productcategory/almacen">Bodega equipos</a>
-                        </li>
-					</ul>
-				</li>
-                <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "products") {
-                    echo ' open';
-                } ?>">
-                    <a href=""> <i class="icon-truck2"></i><span
-                                class="menu-title"><?php echo $this->lang->line('') ?>Inventarios</span><i
-                                class="fa arrow"></i> </a>
-                    <ul class="menu-content">
-                        <li>
-                            <a href="<?php echo base_url(); ?>products"><?php echo $this->lang->line('') ?>Administrar material</a>
-                        </li>
-						
-                        <li>
-                            <a href="<?php echo base_url(); ?>productcategory"><?php echo $this->lang->line('') ?>Categoria de material</a>
-                        </li>
-                        <li>
-                            <a href="<?php echo base_url(); ?>productcategory/warehouse"><?php echo $this->lang->line('Warehouses') ?></a>
-                        </li>
-                    </ul>
-                </li>
-			<!---------------- GESTION DE PROYECTOS ----------------->
-                <li class="navigation-header"><span>PROYECTOS</span><i
-                            data-toggle="tooltip" data-placement="right"
-                            data-original-title="Balance"
-                            class="icon-ellipsis icon-ellipsis"></i>
-                </li>
-			 <li><a href="<?php echo base_url(); ?>tools/todo"><i class="icon-android-done-all"></i><span
-                                class="menu-title"> <?php echo $this->lang->line('') ?>Listado de Tareas</span></a></li>
-			
-			<!---- diverso--->
-			
-			<li class="navigation-header"><span>DIVERSOS</span><i
-                            data-toggle="tooltip" data-placement="right"
-                            data-original-title="Miscellaneous"
-                            class="icon-ellipsis icon-ellipsis"></i>
-                </li>
-			
-			<li><a href="<?php echo base_url(); ?>tools/notes"><i class="icon-android-clipboard"></i><span
-                                class="menu-title"> <?php echo $this->lang->line('Notes') ?></span></a></li>
-
-
-                <li><a href="<?php echo base_url(); ?>events"><i class="icon-calendar2"></i><span
-                                class="menu-title"> <?php echo $this->lang->line('Calendar') ?></span></a></li>
-		
-
-<?php } ?>
-			<!--apertura-->
-			<?php if ($this->aauth->get_user()->roleid == 0) { ?>
-                <li class="navigation-header"><span
-                            data-i18n="nav.category.support">Cobranza</span><i
-                            data-toggle="tooltip"
-                            data-placement="right"
-                            data-original-title="Sales"
-                            class="icon-ellipsis icon-ellipsis"></i>
-                </li>
-                <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "invoices" OR $this->uri->segment(1) == "quote") {
-                    echo ' open';
-                } ?>">
-                    <a href=""> <i class="icon-plus"></i> <span
-                                class="menu-title"><?php echo $this->lang->line('sales') ?>
-						
-						<!-- MENU FACTURACION-->
-						
-                    <i class="icon-arrow"></i></span></a>
-                    <ul class="menu-content">
-						<li>
-                            <a href="<?php echo base_url(); ?>invoices/apertura">Apertura</a>
-                        </li>
-                        
-                    </ul>
-                </li>
-			<?php } ?>
         </ul>
 		
 		

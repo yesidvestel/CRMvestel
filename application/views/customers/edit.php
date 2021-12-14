@@ -332,7 +332,7 @@
                     <div class="form-group row">
                     	<div class="col-sm-12">
                             <h6><label class="col-form-label"
-                                   for="tegnologia">Tegnologia</label><h6>
+                                   for="tegnologia">Tecnología</label><h6>
                             <div>
                                        <select id="tegnologia" name="tegnologia_instalacion" class="form-control" onchange="selecciona_para_agregar()">
                                         <option value="">--</option>
