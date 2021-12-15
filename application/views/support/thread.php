@@ -209,7 +209,7 @@
         </div>
 	<hr style="height:1px;border:none;color:#333;background-color:#333;">
     <hr style="height:1px;border:none;color:#333;background-color:#333;">
-    <h1>Firma de quien resive</h1>
+    <h1>Firma de quien recibe</h1>
     <div id="bloque_firmas_edicion" <?=($orden->nombre_firma!=null || $orden->nombre_firma!="") ? 'style="display:none;"':'' ?>>
     <div class="form-group row">
             <label class="col-sm-2 col-form-label"
