@@ -216,7 +216,7 @@
                                for="pay_cat">Nombre Completo</label>
 
                         <div class="col-sm-6">                                    
-                                <input placeholder="Nombre Completo Quien Resive" type="text" name="nombre" id="nombre" class="form-control" value="<?=$orden->nombre_firma ?>">
+                                <input placeholder="Nombre Completo Quien Recibe" type="text" name="nombre" id="nombre" class="form-control" value="<?=$orden->nombre_firma ?>">
                         </div>
 
     </div>
