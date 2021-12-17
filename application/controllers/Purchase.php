@@ -619,8 +619,11 @@ class Purchase extends CI_Controller
             if($update_stock=="yes"){
 
                 if($almacen=="0" || $almacen==0){
-                    $errores=true;
-                    $txt_errores.="<li>Seleccione un almacen por favor</li>";
+                    
+                     $this->db->set('status', "recibido");                     
+                     $this->db->where('tid', $tid);
+                     $this->db->update('purchase');
+
                 }else{
 
                     $lista_productos=$this->db->get_where("purchase_items",array("tid"=>$tid))->result_array();
