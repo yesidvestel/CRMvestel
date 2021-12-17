@@ -143,7 +143,8 @@
                                                     foreach ($tecnicoslista as $row) {
                                                         $cid = $row['id'];
                                                         $title = $row['username'];
-                                                        echo "<option value='$title' data-id='$cid'>$title</option>";
+														$nombre = $row['name'];
+                                                        echo "<option value='$title' data-id='$cid'>$nombre</option>";
                                                     }
                                                     ?>
                                             </select>
@@ -335,7 +336,8 @@
 					foreach ($tecnicoslista as $row) {
 						$cid = $row['id'];
 						$title = $row['username'];
-						echo "<option value='$title'>$title</option>";
+						$nombre = $row['name'];
+						echo "<option value='$title'>$nombre</option>";
 					}
 					?>
 				</select>

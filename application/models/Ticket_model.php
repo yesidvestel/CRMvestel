@@ -114,8 +114,9 @@ class Ticket_model extends CI_Model
     {
         //$query = $this->db->query("SELECT id,username FROM aauth_users WHERE UPPER(roleid) >= '1'");
 		$sedeacc = $this->aauth->get_user()->sede_accede;
-		$this->db->select('*');
+		$this->db->select('aauth_users.*,employee_profile.id,employee_profile.name,employee_profile.dto');
         $this->db->from('aauth_users');
+		$this->db->join('employee_profile', 'aauth_users.id=employee_profile.id', 'left');
         //$this->db->where('roleid', '2');
 		if ($sedeacc != '0'){
 			$this->db->where('sede_accede', $sedeacc);
