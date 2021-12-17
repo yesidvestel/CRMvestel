@@ -121,6 +121,7 @@ class Ticket_model extends CI_Model
 			$this->db->where('sede_accede', $sedeacc);
 			$this->db->or_where('sede_accede', '0');
 		}
+        $this->db->order_by("username");
         $query = $this->db->get();
         return $query->result_array();		
 		
