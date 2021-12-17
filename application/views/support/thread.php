@@ -231,10 +231,10 @@
     </div>
     <div class="form-group row">
             <label class="col-sm-2 col-form-label"
-                               for="pay_cat">Parentesto</label>
+                               for="pay_cat">Parentesco</label>
 
                         <div class="col-sm-6">                                    
-                                <input placeholder="Parentesto" type="text" name="Parentesto" id="Parentesto" class="form-control" value="<?=$orden->parentesco_firma ?>">
+                                <input placeholder="Parentesco" type="text" name="Parentesto" id="Parentesto" class="form-control" value="<?=$orden->parentesco_firma ?>">
                         </div>
                         
     </div>
