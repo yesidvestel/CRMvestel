@@ -198,6 +198,7 @@
 													<option value='Suspension Television'>Suspension Television</option>
 													<option value='Traslado'>Traslado</option>
 													<option value='Toma Adicional'>Toma Adicional</option>
+													<option value='Migracion'>Migracion</option>
                                                 </select>
                                                </div>
                                             </div>                              
