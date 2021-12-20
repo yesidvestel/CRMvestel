@@ -525,6 +525,13 @@
                                                 class="icon-file-text2"></i> Facturas Electronicas</a>
 
                                 </div>
+								<div class="col-md-4" style="margin-top: 5px;">
+
+                                    <a href="#pop_model3" data-toggle="modal" onclick="funcion_status();"
+                                       class="btn btn-primary btn-lg" style="width: 250px"><i
+                                                class="icon-mobile-phone"></i> Compromiso</a>
+
+                                </div>
                             </div>
                             <hr>
                             <h5 class="text-xs-center col-md-10">OBSERVACIONES</h5>
@@ -785,6 +792,66 @@
                         <input type="hidden" id="action-url" value="customers/obser">
                         <button type="button" class="btn btn-primary"
                                 id="submit_model">Realizar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="pop_model3" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Compromiso de pago</h4>
+            </div>			
+            <div class="modal-body">
+                <form id="form_model3">
+					<div class="form-group row">						
+                    <div class="frmSearch">
+						<label for="cst" class="caption col-sm-2 col-form-label">Fecha Limite</label>
+                        <div class="col-sm-6">
+							<input type="hidden" name="iduser2" value="<?php echo $details['id'] ?>"></input>
+							<select class="form-control" name="fechalimite">
+									<option value="30 de cada mes">30 de cada mes</option>
+									<option value="05 del siguiente mes">05 del siguiente mes</option>
+							</select>
+                        </div>
+                    </div>
+					</div>
+					<div class="form-group row">
+					<div class="frmSearch">
+						<label for="cst" class="caption col-sm-2 col-form-label">Factura mes</label>
+                        <div class="col-sm-6">
+							<select name="factura" class="form-control mb-1">
+								<option value='null'>-</option>
+								<?php
+
+									foreach ($facturalist as $row) {
+										$cid = $row['id'];
+										$title = $row['tid'];
+										setlocale(LC_TIME, "spanish");
+										$mes = date(" F ",strtotime($row['invoicedate']));
+
+										echo "<option value='$title'>$title".' '. strftime("%B del %Y", strtotime($mes))." </option>";
+									}
+									?>
+							</select>
+                        </div>
+                    </div>
+                </div>
+				<div class="form-group row">
+                    <label for="toBizName" class="caption col-sm-2 col-form-label">Detalles</label>
+                    <div class="col-sm-10">                        
+                        <textarea class="summernote" placeholder=" Message" autocomplete="false" rows="10" name="razon"></textarea>
+						<input type="hidden" class="form-control" placeholder="Billing Date" name="fecha2" data-toggle="datepicker" autocomplete="false">
+                    </div>					
+                </div>	
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">Volver</button>
+                        <input type="hidden" id="action-url" value="customers/compromiso">
+                        <button type="button" class="btn btn-primary"
+                                id="submit_model3">Realizar</button>
                     </div>
                 </form>
             </div>

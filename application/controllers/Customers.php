@@ -302,7 +302,8 @@ class Customers extends CI_Controller
     public function view()
     {
 		
-        $custid = $this->input->get('id');		
+        $custid = $this->input->get('id');	
+		$this->load->model('ticket_model', 'ticket');
         $data['details'] = $this->customers->details($custid);
         $data['customergroup'] = $this->customers->group_info($data['details']['gid']);
 		$data['departamentos'] = $this->customers->group_departamentos($data['details']['departamento']);
@@ -315,6 +316,7 @@ class Customers extends CI_Controller
         $data['servicios'] = $this->customers->servicios_detail($custid);
         $head['usernm'] = $this->aauth->get_user()->username;
         $data['activity']=$this->customers->activity($custid);
+		$data['facturalist'] = $this->ticket->factura_list($custid);
 		$data['attach'] = $this->customers->attach($custid);
         $data['validar_firma']=$this->customers->validar_firma($custid);
         $data['estado_mikrotik']=$this->customers->get_estado_mikrotik($data['details']['name_s'],$data['details']['gid'],$data['details']['tegnologia_instalacion']);        
@@ -1147,6 +1149,43 @@ if($data['servicios']['estado']=="Inactivo"){
 
         echo json_encode(array('status' => 'Success', 'message' =>
             $this->lang->line('UPDATED'), 'pstatus' => $status));
+    }
+	public function compromiso()
+    {
+        $id = $this->input->post('iduser2');
+		$user = $this->aauth->get_user()->username;
+        $fechalimite = $this->input->post('fechalimite');
+		$detalle = $this->input->post('razon');
+		$factura = $this->input->post('factura');
+		$fcha = $this->input->post('fecha2');
+		$dt1=new DateTime($fcha);
+        $fecha=$dt1->format("Y-m-d");
+		$datos = array(				
+			'id_user' => $id,
+			'tipos' => 'Compromiso',
+			'nombres' => '',
+			'tcliente' => '',
+			'tdocumento' => '',
+			'documento2' => '',
+			'fecha' => $fecha,
+			'observacion' => $fechalimite.'/'.$detalle,
+			'colaborador' => $user);		
+       if($this->db->insert('historiales', $datos)){
+		   //actualizar estado factura
+		   	$this->db->set('ron', 'Compromiso');
+        	$this->db->where('tid', $factura);
+        	$this->db->update('invoices');
+		   //actualizar estado usuario
+		   	$this->db->set('usu_estado', 'Compromiso');
+        	$this->db->where('id', $id);
+        	$this->db->update('customers');
+	   
+		
+		
+
+        echo json_encode(array('status' => 'Success', 'message' =>
+            $this->lang->line('UPDATED'), 'pstatus' => $status));
+	   }
     }
 	public function printpdf()
     {
