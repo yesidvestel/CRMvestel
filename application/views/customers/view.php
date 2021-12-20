@@ -480,7 +480,7 @@
                                 <div class="col-md-4" style="margin-top: 5px;">
                                     <a href="<?php echo base_url('customers/transactions?id=' . $details['id']) ?>"
                                        class="btn btn-success btn-lg" style="width: 250px"><i
-                                                class="icon-money3"></i> <?php echo $this->lang->line('View Transactions') ?>
+                                                class="icon-money"></i> <?php echo $this->lang->line('View Transactions') ?>
                                     </a>
                                 </div>
                                 <div class="col-md-4" style="margin-top: 5px;">
@@ -494,21 +494,21 @@
 
                                     <a href="<?php echo base_url('customers/soporte?id=' . $details['id']) ?>"
                                        class="btn btn-success btn-lg" style="width: 250px"><i
-                                                class="icon-file-text2"></i> Ver Tickets </a>
+                                                class="icon-ticket"></i> Ver Tickets </a>
 
                                 </div>
 								<div class="col-md-4" style="margin-top: 5px;">
 
                                     <a href="<?php echo base_url('customers/equipos?id=' . $details['id']) ?>"
                                        class="btn btn-primary btn-lg" style="width: 250px"><i
-                                                class="icon-file-text2"></i> Ver Equipos</a>
+                                                class="icon-tasks"></i> Ver Equipos</a>
 
                                 </div>
 								<div class="col-md-4" style="margin-top: 5px;">
 
                                     <a href="#pop_model2" data-toggle="modal" onclick="funcion_status();" data-remote="false" 
                                        class="btn btn-success btn-lg" style="width: 250px"><i
-                                                class="icon-file-text2"></i> Cambio Titular </a>
+                                                class="icon-user"></i> Cambio Titular </a>
 
                                 </div>
 								<div class="col-md-4" style="margin-top: 5px;">
@@ -529,7 +529,7 @@
 
                                     <a href="#pop_model3" data-toggle="modal" onclick="funcion_status();"
                                        class="btn btn-primary btn-lg" style="width: 250px"><i
-                                                class="icon-mobile-phone"></i> Compromiso</a>
+                                                class="icon-calendar"></i> Compromiso</a>
 
                                 </div>
                             </div>
