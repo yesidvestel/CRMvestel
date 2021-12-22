@@ -893,7 +893,7 @@ $data['datos_informe']=array("trans_type"=>$trans_type);
                     $valor_efectivo_caja_acid=$row['acid'];
                     $account_ef=$row['account'];
                 }
-                if($row['type']=="Transfer" && $row['debit']>0){
+                if($row['type']=="Transfer"){
                     $balance2 += $row['credit'] - $row['debit'];
                 }
             echo '<tr><td>'.$row['id'].' - '. $row['date'] . '</td><td>' . $row['note'] . '</td><td>' . amountFormat($row['debit']) . '</td><td>' . amountFormat($row['credit']) . '</td><td>' . amountFormat($balance) . '</td></tr>';
