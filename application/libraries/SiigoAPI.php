@@ -34,26 +34,30 @@ class SiigoAPI
      * 
      * @return array Respuesta del servidor a la solicitud de autenticación
      */
-    public function getAuth()
+    public function getAuth($cuenta)
     {
+        $cuentaVESGATV=array("username"=>"contabilidad@vestel.com.co","access_key"=>"MDc2YzZlMzAtZGI2Yy00OGFkLWFjZjktZTNlNGUxNDZkODk5Ok9SUDkhOXowQ0E=");
+        $cuentaVESGATELECOMUNICACIONES=array("username"=>"contabilidad@vestel.com.co","access_key"=>"YjMzZWY4MzYtMDMxMC00MjBlLTg0NzItZTAzYzFjMDcwMTc2OjQpcTh0Rk8hNkI=");
+        $cuentaData=array();
+        if($cuenta==1){
+            $cuentaData=$cuentaVESGATV;
+        }else{
+            $cuentaData=$cuentaVESGATELECOMUNICACIONES;
+        }
         //_log("Obteniendo autorización"); //descomentar para depurar
         $postFields = [
-            "grant_type" => "password",
-            "username" => $_SESSION['variables_siigo']->username,//VESGATELEVISIONSAS\\VESGAT17681@apionmicrosoft.com
-            "password" => $_SESSION['variables_siigo']->password,//)QP>x3(9dN
-            "scope" => "WebApi offline_access",
+            "username"=>$cuentaData['username'],
+            "access_key"=>$cuentaData['access_key'],
         ];
         $cOptions = [
             CURLOPT_HTTPHEADER => [
-                "Accept: application/json",
-                "Authorization: Basic ".$_SESSION['variables_siigo']->Authorization_basic,//U2lpZ29XZWI6QUJBMDhCNkEtQjU2Qy00MEE1LTkwQ0YtN0MxRTU0ODkxQjYx
-                "Content-Type: application/x-www-form-urlencoded"
+                "Content-Type: application/json",
             ],
             CURLOPT_SSL_VERIFYPEER=>false,
         ];
 
         list($httpCode, $resp) = $this->cReq->curlPost(
-            $this->urlToken, $postFields, $cOptions
+            $this->urlToken, json_encode($postFields), $cOptions
         );
 
         if ($httpCode !== 200) {
@@ -108,26 +112,27 @@ class SiigoAPI
      * 
      * @return array Listado de facturas que se encuentran en la página indicada
      */
-    public function getInvoicesByID()
+    public function getCustomer($document,$cuenta)
     {
-        _log("Consultando facturas");
-        $url = "{$this->urlBase}/Invoice/GetById/122849?namespace=v1";
+        //_log("Consultando facturas");
+        $this->getAuth($cuenta);
+        $url = "{$this->urlBase}/customers?identification=".$document;
         $i = 0;
         do {
             $cOptions = [
                 CURLOPT_HTTPHEADER => [
-                    "Authorization: Bearer {$this->token}",
                     "Content-Type: application/json",
-                    "Ocp-Apim-Subscription-Key: {$this->subscriptionKey}",
+                    "Authorization: Bearer $this->token",
                 ],
+                CURLOPT_SSL_VERIFYPEER=>false,
             ];
             list($httpCode, $resp) = $this->cReq->curlGet($url, [], $cOptions);
             if ($httpCode === 401) {
-                $this->getAuth();
+                $this->getAuth($cuenta);
             }
             $i += 1;
         } while ($i < 2 && $httpCode === 401);
-        _log("Consulta de facturas finalizada [$httpCode]");
+        //_log("Consulta de facturas finalizada [$httpCode]");
 
         return json_decode($resp, true);
     }
@@ -140,23 +145,24 @@ class SiigoAPI
      * 
      * @return string Respuesta enviada por el servidor
      */
-    public function saveInvoice($invoiceData) {
+    public function saveCustomer($invoiceData,$cuenta) {
         //_log("Enviando factura"); //descomentar para depurar
-        $url = "{$this->urlBase}/Invoice/Save?namespace=1";
+        $url = "{$this->urlBase}/customers";
         $i = 0;
-        
+        $this->getAuth($cuenta);
         do {
             $cOptions = [
                 CURLOPT_HTTPHEADER => [
-                    "Authorization: Bearer {$this->token}",
                     "Content-Type: application/json",
-                    "Ocp-Apim-Subscription-Key: {$this->subscriptionKey}",
+                    "Authorization: Bearer $this->token",
+                    
                 ],
-                CURLOPT_POSTFIELDS => $invoiceData,
+                CURLOPT_SSL_VERIFYPEER=>false,
             ];
-            list($httpCode, $resp)= $this->cReq->curlPost($url, [], $cOptions);
+
+            list($httpCode, $resp)= $this->cReq->curlPost($url, $invoiceData, $cOptions);
             if ($httpCode === 401) {
-                $this->getAuth();
+                $this->getAuth($cuenta);
             }
             $i += 1;
         } while ($i < 2 && $httpCode === 401);
@@ -165,18 +171,65 @@ class SiigoAPI
         return array('respuesta' => $resp,"httpCode"=>$httpCode );
     }
 
-    public function accionar($api,$invoiceData){
+    public function updateCustomer($invoiceData,$id,$cuenta) {
+        $this->getAuth($cuenta);
+       $ch = curl_init();
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_URL, "$this->urlBase/customers/".$id);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ch, CURLOPT_HEADER, FALSE);
+
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
+
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $invoiceData);
+
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+          "Content-Type: application/json",
+          "Authorization: Bearer $this->token"
+        ));
+
+        $response = curl_exec($ch);
+        curl_close($ch);
+    }
+
+    public function saveInvoice($invoiceData,$cuenta) {
+       // _log("Enviando factura"); //descomentar para depurar
+        $url = "{$this->urlBase}/invoices";
+        $i = 0;
+        $this->getAuth($cuenta);
+        do {
+            $cOptions = [
+                CURLOPT_HTTPHEADER => [
+                    "Content-Type: application/json",
+                    "Authorization: Bearer $this->token",
+                    
+                ],
+                CURLOPT_SSL_VERIFYPEER=>false,
+            ];
+
+            list($httpCode, $resp)= $this->cReq->curlPost($url, $invoiceData, $cOptions);
+            if ($httpCode === 401) {
+                $this->getAuth($cuenta);
+            }
+            $i += 1;
+        } while ($i < 4 && ($httpCode === 401 || $httpCode===500));
+       // _log("Envío de factura finalizado [$httpCode]"); //descomentar para depurar
+
+        return array('respuesta' => $resp,"httpCode"=>$httpCode );
+    }
+
+    public function accionar($api,$invoiceData,$cuenta){
     	
         //var_dump($api->getInvoices(1));
         //$invoiceData = file_get_contents(dirname(__FILE__) . '/siigo_folder/invoice.json');
-        $respuesta=$api->saveInvoice($invoiceData);
+        $respuesta=$api->saveInvoice($invoiceData,$cuenta);
         /*echo "<br>";
         var_dump($respuesta);
         echo "<br>";
         
         var_dump($respuesta['httpCode']);*/
         try {
-            if($respuesta['httpCode']==200 ||$respuesta['httpCode']==100 || $respuesta['httpCode']==0){//100            
+            if($respuesta['httpCode']==200 ||$respuesta['httpCode']==100 || $respuesta['httpCode']==0 || $respuesta['httpCode']==201){//100            
                 return array('respuesta' =>$respuesta['respuesta'],"mensaje" =>"Factura Guardada");
             }else{
                 return array('respuesta' =>$respuesta['respuesta'],"mensaje" =>"Ubo algun error");//falta imprimir en un alter el error

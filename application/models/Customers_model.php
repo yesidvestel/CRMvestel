@@ -1821,4 +1821,165 @@ public function getClientData3Productos(){
 return $data_json_string;
     }
 
+public function getCustomerJson(){
+        $str='{
+  "type": "Customer",
+  "person_type": "Person",
+  "id_type": "13",
+  "identification": "13832081",
+  "check_digit": "4",
+  "name": [
+    "Marcos",
+    "Castillo"
+  ],
+  "commercial_name": "Siigo",
+  "branch_office": 0,
+  "active": true,
+  "vat_responsible": false,
+  "fiscal_responsibilities": [
+    {
+      "code": "R-99-PN"
+    }
+  ],
+  "address": {
+    "address": "Cra. 18 #79A - 42",
+    "city": {
+      "country_code": "Co",
+      "state_code": "85",
+      "city_code": "85001"
+    },
+    "postal_code": "00000"
+  },
+  "phones": [
+    {
+      "indicative": "57",
+      "number": "3006003345",
+      "extension": "000"
+    }
+  ],
+  "contacts": [
+    {
+      "first_name": "Marcos",
+      "last_name": "Castillo",
+      "email": "marcos.castillo@contacto.com",
+      "phone": {
+        "indicative": "57",
+        "number": "3006003345",
+        "extension": "000"
+      }
+    }
+  ],
+  "comments": "Comentarios",
+  "related_users": {
+    "seller_id": 282,
+    "collector_id": 282
+  }
+}';
+return $str;
+    }
+
+    public function getFacturaElectronica($n_productos=null){
+        
+    $otro_producto=',{
+              "code": "001",
+              "description": "DESCRIPCION",
+              "quantity": 1,
+              "price": 21008,
+              "discount": 0.0              
+            }';
+            if($n_productos==null){
+                $otro_producto="";
+            }
+
+        $str='{
+  "document": {
+    "id": 12434
+  },
+  "date": "2021-12-31",
+  "customer": {
+    "identification": "13832081",
+    "branch_office": 0
+  },
+  "cost_center": 1074,
+  "seller": 1011,
+  "observations": "Observaciones",
+  "items": [
+    {
+      "code": "001",
+      "description": "DESCRIPCION",
+      "quantity": 1,
+      "price": 21008.4,
+      "discount": 0.0,
+      "taxes": [
+        {"id": 6688,
+         "name": "IVA 19%",
+         "type": "IVA",
+         "percentage": 19,
+         "value": 3991.6
+        }
+      ]
+    }'.$otro_producto.'
+  ],
+  "payments": [
+    {
+      "id": 2863,
+      "value": 25000,
+      "due_date": "2021-12-31"
+    }
+  ],
+  "additional_fields": {}
+  
+}';
+return $str;
+    }
+
+    public function calculoParaFacturaElectronica($valor_sin_iva){
+        $iva=19;
+        $valortotal=0;
+        $valor_iva=0;
+        //$valor_sin_iva=$valor_sin_iva;
+        $valor_iva=($valor_sin_iva*$iva)/100;
+        $valortotal=$valor_iva+$valor_sin_iva;
+
+        
+        if($valortotal!=round($valortotal)){
+            $explode_iva=explode(".",$valor_iva);
+            $decima1=$explode_iva[1][0];
+            //$decima1=1;
+            if($decima1==0){
+                $valor_sin_iva--;
+                $decima1=1;    
+            }
+            $decimal2=10-$decima1;
+            $vari=($explode_iva[0].".".$decima1);
+            
+            $var_sub=($valor_sin_iva.".".$decimal2);
+            $v=($var_sub*19)/100;
+            $vt=$v+$var_sub;
+            
+            if($vt!=round($valortotal)){
+                $decima1++;
+                $decimal2=10-$decima1;
+                $vari=($explode_iva[0].".".$decima1);
+                $var_sub=($valor_sin_iva.".".$decimal2);
+                $v=$vari;
+                
+                $valor_iva=$v;
+                $valor_sin_iva=$var_sub;
+                
+            }else{
+                $valor_iva=$v;
+                $valor_sin_iva=$var_sub;
+            }
+        }
+
+
+        
+        $valortotal=$valor_iva+$valor_sin_iva;
+        return array("valor_iva"=>$valor_iva,"valor_sin_iva"=>$valor_sin_iva,"valortotal"=>$valortotal);
+      /*  var_dump($valor_iva); 
+        var_dump($valor_sin_iva); 
+        var_dump($valortotal);*/
+    }
+
 }

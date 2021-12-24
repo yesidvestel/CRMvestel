@@ -98,159 +98,197 @@ class Facturas_electronicas_model extends CI_Model
         $this->load->library('SiigoAPI');
         $api = new SiigoAPI();
         $this->load->model("customers_model","customers");
-        $dataApi;
-        if($datos_facturar['servicios']=="Combo"){           
+        $dataApiTV=null;
+        $dataApiNET=null;
+        //var_dump($datos_facturar['servicios']);
+        if($datos_facturar['servicios']=="Combo"){
+            $dataApiNET=$this->customers->getFacturaElectronica(null);
+            //var_dump($dataApiNET);
             if(isset($datos_facturar['puntos']) && $datos_facturar['puntos']!="no"){
-                $dataApi= $this->customers->getClientData3Productos();//verificar este caso
+                $dataApiTV= $this->customers->getFacturaElectronica(2);//verificar este caso
             }else{
-                $dataApi= $this->customers->getClientData2Productos();    
+                $dataApiTV= $this->customers->getFacturaElectronica(null);    
             }
         }else if($datos_facturar['servicios']=="Internet"){
-            $dataApi= $this->customers->getClientData();
+            $dataApiNET= $this->customers->getFacturaElectronica(null);
         }else if($datos_facturar['servicios']=="Television"){
             if(isset($datos_facturar['puntos']) && $datos_facturar['puntos']!="no"){
-                $dataApi= $this->customers->getClientData2Productos();    //y este caso
+                $dataApiTV= $this->customers->getFacturaElectronica(2);    //y este caso
             }else{
-                $dataApi= $this->customers->getClientData();    
+                $dataApiTV= $this->customers->getFacturaElectronica(null);    
             }            
         }
+        $centro_de_costo_code="1074";
+        $centro_de_costo_codeNET="69";
         
-        $dataApi=json_decode($dataApi);
         //$consecutivo_siigo=$this->db->select("max(consecutivo_siigo)+1 as consecutivo_siigo")->from("facturacion_electronica_siigo")->get()->result();
-        /*$dataApi->Header->Number=$consecutivo_siigo[0]->consecutivo_siigo;
+        /*$dataApiTV->Header->Number=$consecutivo_siigo[0]->consecutivo_siigo;
 
-        if($dataApi->Header->Number=="1" || $dataApi->Header->Number==NULL || $dataApi->Header->Number=="0"){
-            $dataApi->Header->Number=500;
+        if($dataApiTV->Header->Number=="1" || $dataApiTV->Header->Number==NULL || $dataApiTV->Header->Number=="0"){
+            $dataApiTV->Header->Number=500;
         }*/
         //customer data and facturacion_electronica_siigo table insert
         $customer = $this->db->get_where("customers",array('id' =>$datos_facturar['id']))->row();
+        //cuadrando customer para crear o actualizar en siigo
+        
+        $json_customer=json_decode($this->customers->getCustomerJson());
+//var_dump($json_customer->address->address);
+//echo "<br>";
+        $json_customer->identification=$customer->documento;
+        $firs_name=strtoupper(str_replace("?", "Ñ",$customer->name));
+        $second_name=strtoupper(str_replace("?", "Ñ",$customer->dosnombre));
+        $first_last_name=strtoupper(str_replace("?", "Ñ",$customer->unoapellido));
+        $second_last_name=strtoupper(str_replace("?", "Ñ",$customer->dosapellido));
+        $json_customer->name[0]=$firs_name." ".$second_name;
+        $json_customer->name[1]=$first_last_name." ".$second_last_name;
+        $json_customer->address->address=$customer->nomenclatura . ' ' . $customer->numero1 . $customer->adicionauno.' Nº '.$customer->numero2.$customer->adicional2.' - '.$customer->numero3;
+        //$tv_product= $this->db->get_where("products", array('pid' => "27"))->row();
+            if(strpos(strtolower($customer->ciudad),"monterrey" )!==false){
+                        $json_customer->address->city->city_code="85162";
+                        $centro_de_costo_code="1070";
+                        $centro_de_costo_codeNET="165";                                   
+            }else if(strpos(strtolower($customer->ciudad),"villanueva" )!==false){
+                $json_customer->address->city->city_code="85440";                                   
+                $centro_de_costo_code="1072";
+                $centro_de_costo_codeNET="167";
+            }else if(strpos(strtolower($customer->ciudad),"mocoa" )!==false){
+                $json_customer->address->city->state_code="86";                                   
+                $json_customer->address->city->city_code="86001";   
+                //$tv_product= $this->db->get_where("products", array('pid' => "159"))->row();                                
+            }
+
+            //var_dump(preg_match_all("/[^0-9]/",$customer->celular));
+            
+            if(strlen($customer->celular)>10 || preg_match_all("/[^0-9]/",$customer->celular)!=0){
+                $customer->celular="0";
+            }
+            if(strlen($customer->celular2)>10 || preg_match_all("/[^0-9]/",$customer->celular2)!=0){
+                $customer->celular2="0";
+            }
+            //falta validar que si no tiene celular al crear elimine el array de contactos para que no quede en cero y luego al actualizar cliente cree un contacto aparte y quede ese en 0
+                   
+            $json_customer->phones[0]->number=$customer->celular;
+            $json_customer->contacts[0]->first_name=$firs_name." ".$second_name;
+            $json_customer->contacts[0]->last_name=$first_last_name." ".$second_last_name;
+            $json_customer->contacts[0]->email="vestelsas@gmail.com";
+
+            $json_customer->contacts[0]->phone->number=$customer->celular;
+            $json_customer->comments="Estrato : ".$customer->estrato;
+    //llenando los datos para crear o actualizar segun sea el caso
+           // var_dump($json_customer);
+            
+            $json_customer=json_encode($json_customer);
+
+
+           
+            
+        
+        // end cuadrando customer para crear o actualizar en siigo
         //data siigo api
-        $dataApi->Header->Account->FullName=strtoupper($customer->name." ".$customer->dosnombre." ".$customer->unoapellido." ".$customer->dosapellido);         
-        $dataApi->Header->Account->FullName=str_replace("?", "Ñ", $dataApi->Header->Account->FullName);
-        $dataApi->Header->Account->FirstName=strtoupper(str_replace("?", "Ñ",$customer->name));
-        $dataApi->Header->Account->LastName=strtoupper(str_replace("?", "Ñ",$customer->unoapellido));
-        $dataApi->Header->Account->Identification=$customer->documento;
-        if(strpos(strtolower($customer->ciudad),"monterrey" )!==false){
-            $dataApi->Header->Account->City->CityCode="85162";
-            $dataApi->Header->CostCenterCode="M01";                                   
-        }else if(strpos(strtolower($customer->ciudad),"villanueva" )!==false){
-            $dataApi->Header->Account->City->CityCode="85440";                                   
-            $dataApi->Header->CostCenterCode="V01";
-        }else if(strpos(strtolower($customer->ciudad),"mocoa" )!==false){
-            $dataApi->Header->Account->City->StateCode="86";                                     
-            $dataApi->Header->Account->City->CityCode="86001";
-        }
-        //$dataApi->Header->CostCenterCode="Y01";
-        $dataApi->Header->Account->Address=$customer->nomenclatura . ' ' . $customer->numero1 . $customer->adicionauno.' Nº '.$customer->numero2.$customer->adicional2.' - '.$customer->numero3;
-        if(strlen($customer->celular)>10 || is_int($customer->celular)==false){
-            $customer->celular="0";
-        }
-        if(strlen($customer->celular2)>10 || is_int($customer->celular2)==false){
-            $customer->celular2="0";
-        }
-        $dataApi->Header->Account->Phone->Number=$customer->celular;
-        $dataApi->Header->Contact->Phone1->Number=$customer->celular2;
-        $dataApi->Header->Contact->Mobile->Number=$customer->celular;
-        /*if($customer->email!=""){
-            $dataApi->Header->Contact->EMail=$customer->email;
-        }*/
-        $dataApi->Header->Contact->EMail="vestelsas@gmail.com";
-        //$dataApi->Header->Contact->EMail=$customer->email;//genera error sirve de validacion para mandar al final del desarrollo alertas con los posibles errores para que contacten con el desarrollador osease yo en caso tal
-        $dataApi->Header->Contact->FirstName=$dataApi->Header->Account->FirstName;
-        $dataApi->Header->Contact->LastName=$dataApi->Header->Account->LastName;
         $dateTime=new DateTime($datos_facturar['sdate']);
-        $dataApi->Header->DocDate=$dateTime->format("Ymd");
-        $dataApi->Header->Observations="Estrato : ".$customer->estrato;
-        $dataApi->Header->Account->Comments="Estrato : ".$customer->estrato;
+            
         //cambio de fecha de vencimiento sumandole 20 dias a la fecha seleccionada
             $fecha_actual = date($dateTime->format("Y-m-d"));
             $date=date("d-m-Y",strtotime($fecha_actual."+ 20 days")); 
             $dateTimeVencimiento=new DateTime($date);
         //end fecha vencimiento
-        $dataApi->Payments[0]->DueDate=$dateTimeVencimiento->format("Ymd");
-        //falta el manejo de los saldos saldos
-        if($datos_facturar['servicios']=="Television"){
-            $dataApi->Items[0]->Description="Servicio de Televisión por Cable";
-            //agregar valores reales de televicion deacuerdo a que en diferentes a yopal cambia el valor
+        
+        if($dataApiTV!=null){
+            $dataApiTV=json_decode($dataApiTV);
+            $dataApiTV->document->id="12434";
+            $dataApiTV->customer->identification=$customer->documento;
+            $dataApiTV->cost_center=$centro_de_costo_code;
+            $dataApiTV->seller="1011";
+            $dataApiTV->date=$dateTime->format("Y-m-d");
+            $dataApiTV->payments[0]->due_date=$dateTimeVencimiento->format("Y-m-d");
+            $dataApiTV->observations="Estrato : ".$customer->estrato;
+            $dataApiTV->payments[0]->id="2863";
 
+            $consulta_siigo1=$api->getCustomer($customer->documento,1);
+            //var_dump($consulta_siigo1['results']);
+            if($consulta_siigo1['results'][0]['id']==null){
+                    $api->saveCustomer($json_customer,1);//para crear cliente en siigo si no existe
+            }else{
+                    //$api->updateCustomer($json_customer,$consulta_siigo1['results'][0]['id'],2);//para acturalizar cliente en siigo 
+            }
+        }
+        if($dataApiNET!=null){
+            $dataApiNET=json_decode($dataApiNET);
+            $dataApiNET->document->id="27274";
+            $dataApiNET->customer->identification=$customer->documento;
+            $dataApiNET->cost_center=$centro_de_costo_codeNET;
+            $dataApiNET->seller="945";
+            $dataApiNET->date=$dateTime->format("Y-m-d");
+            $dataApiNET->payments[0]->due_date=$dateTimeVencimiento->format("Y-m-d");
+            $dataApiNET->observations="Estrato : ".$customer->estrato;
+            $dataApiNET->payments[0]->id="2512";
+
+            $consulta_siigo1=$api->getCustomer($customer->documento,2);
+            //var_dump($consulta_siigo1['results']);
+            if($consulta_siigo1['results'][0]['id']==null){
+                    $api->saveCustomer($json_customer,2);//para crear cliente en siigo si no existe
+            }else{
+                    //$api->updateCustomer($json_customer,$consulta_siigo1['results'][0]['id'],2);//para acturalizar cliente en siigo 
+            }
+        }
+        
+        
+        //var_dump($dataApiNET);
+        //falta el manejo de los saldos saldos
+        
+
+        if($dataApiTV!=null){
+            $dataApiTV->items[0]->description="Servicio de Televisión por Cable";
+            /*if($tv_product->taxrate!=0){
+                $precios=$this->customers->calculoParaFacturaElectronica($tv_product->product_price);
+                $dataApiTV->items[0]->price=$precios['valor_sin_iva'];
+                $dataApiTV->items[0]->taxes->value=$precios['valor_iva'];
+                $dataApiTV->payments[0]->value=$precios['valortotal'];
+            }else{
+
+            }*/
             if(isset($datos_facturar['puntos']) && $datos_facturar['puntos']!="no"){
-                    $dataApi->Items[1]->Description="Puntos de tv adicionales ".$datos_facturar['puntos'];
+                    $dataApiTV->items[1]->description="Puntos de tv adicionales ".$datos_facturar['puntos'];
                     $lista_de_productos=$this->db->from("products")->where("pid","158")->get()->result();
                     $prod=$lista_de_productos[0];
 
                     $prod->product_price=$prod->product_price*intval($datos_facturar['puntos']);
 
-                    $dataApi->Items[1]->ProductCode="001";
+                    $dataApiTV->items[1]->code="001";
 
-                            //valores para no generar iva
-                            $dataApi->Items[1]->TaxAddName="";
-                            $dataApi->Items[1]->TaxAddId="-1";
-                            $dataApi->Items[1]->TaxAddValue="0";
-                            $dataApi->Items[1]->TaxAddPercentage="0";   
-                            //$dataApi->Header->VATTotalValue="0";  //se comenta porque se mantiene el de la tv
-                            //valores de total;
-                            $dataApi->Payments[0]->Value=$prod->product_price+$dataApi->Payments[0]->Value;
-                            $dataApi->Items[1]->TotalValue=$prod->product_price;
-                            $dataApi->Header->TotalValue=$prod->product_price+$dataApi->Header->TotalValue;//total de todo con iva
-                            //valores restados
-                            $dataApi->Items[1]->UnitValue=$prod->product_price;
-                            $dataApi->Items[1]->BaseValue=$prod->product_price;
-                            $dataApi->Items[1]->GrossValue=$prod->product_price;
-
-                            $dataApi->Header->TotalBase=$prod->product_price+$dataApi->Header->TotalBase;//total de todo sin iva    
+                            $dataApiTV->items[1]->price=$prod->product_price;
+                            $dataApiTV->payments[0]->value=$dataApiTV->payments[0]->value+$prod->product_price;                            
 
             }
 
             //falta verificar el caso de la tv de mocoa que cambian los valores
-        }else if($datos_facturar['servicios']=="Internet"){
+        }
+         if($dataApiNET!=null){
             $array_servicios=$this->customers->servicios_detail($customer->id);
             if($array_servicios['combo']!="no"){
-                $dataApi->Items[0]->Description="Servicio de Internet ".$array_servicios['combo'];
+                $dataApiNET->items[0]->description="Servicio de Internet ".$array_servicios['combo'];
                 $lista_de_productos=$this->db->from("products")->like("product_name","mega","both")->get()->result();
                 $array_servicios['combo']=strtolower(str_replace(" ", "",$array_servicios['combo'] ));
                 foreach ($lista_de_productos as $key => $prod) {
                     $prod->product_name=strtolower(str_replace(" ", "",$prod->product_name ));
                     if($prod->product_name==$array_servicios['combo']){
                         //var_dump($prod->product_name);
-                        $dataApi->Items[0]->ProductCode="l01";
-                        if($prod->taxrate!=0){
-                            //valores para generar iva
-                            $valor_iva=($prod->product_price*$prod->taxrate)/100;
-                            $valor_iva=round($valor_iva);
-                            $dataApi->Items[0]->TaxAddName="IVA ".$prod->taxrate."%";
-                            $dataApi->Items[0]->TaxAddId="6688";
-                            $dataApi->Items[0]->TaxAddValue=$valor_iva;
-                            $dataApi->Items[0]->TaxAddPercentage=$prod->taxrate;    
-                            $dataApi->Header->VATTotalValue=$valor_iva;
-                            //total
-                            $prod->product_price+=$valor_iva;
-                            $dataApi->Payments[0]->Value=$prod->product_price;
-                            $dataApi->Items[0]->TotalValue=$prod->product_price;
-                            $dataApi->Header->TotalValue=$prod->product_price;
-                            //valores restados
-                            $dataApi->Items[0]->UnitValue=$prod->product_price-$valor_iva;
-                            $dataApi->Items[0]->BaseValue=$prod->product_price-$valor_iva;
-                            $dataApi->Items[0]->GrossValue=$prod->product_price-$valor_iva;
+                        $dataApiNET->items[0]->code="I01";
 
-                            $dataApi->Header->TotalBase=$prod->product_price-$valor_iva;
+                        if($prod->taxrate!=0){
+
+                            //$precios=$this->customers->calculoParaFacturaElectronica($prod->product_price);
+                            $v1=($prod->product_price*19)/100;
+                            $v2=$v1+$prod->product_price;
+                            $dataApiNET->items[0]->taxes[0]->id=5869;
+                            $dataApiNET->items[0]->price=$prod->product_price;
+                            $dataApiNET->items[0]->taxes[0]->value=$v1;
+                            $dataApiNET->payments[0]->value=$v2;
 
                         }else{
-                            //valores para no generar iva
-                            $dataApi->Items[0]->TaxAddName="";
-                            $dataApi->Items[0]->TaxAddId="-1";
-                            $dataApi->Items[0]->TaxAddValue="0";
-                            $dataApi->Items[0]->TaxAddPercentage="0";   
-                            $dataApi->Header->VATTotalValue="0";    
-                            //valores de total;
-                            $dataApi->Payments[0]->Value=$prod->product_price;
-                            $dataApi->Items[0]->TotalValue=$prod->product_price;
-                            $dataApi->Header->TotalValue=$prod->product_price;
-
-                            $dataApi->Items[0]->UnitValue=$prod->product_price;
-                            $dataApi->Items[0]->BaseValue=$prod->product_price;
-                            $dataApi->Items[0]->GrossValue=$prod->product_price;
-
-                            $dataApi->Header->TotalBase=$prod->product_price;   
+                            unset($dataApiNET->items[0]->taxes);
+                            $dataApiNET->items[0]->price=$prod->product_price;                            
+                            $dataApiNET->payments[0]->value=$prod->product_price;
 
                         }
                         
@@ -262,102 +300,14 @@ class Facturas_electronicas_model extends CI_Model
             //falta esta parte identificar el paquete de internet del usuario y agregar sus valores
         }
 
-        if($datos_facturar['servicios']=="Combo"){
-            //agregar valores reales de televicion deacuerdo a que en diferentes a yopal cambia el valor
-            //falta esta parte identificar el paquete de internet del usuario y agregar sus valores
-            $dataApi->Items[0]->Description="Servicio de Televisión por Cable";
 
-            //valores de internet
-
-            $array_servicios=$this->customers->servicios_detail($customer->id);
-            if($array_servicios['combo']!="no"){
-                $dataApi->Items[1]->Description="Servicio de Internet a ".$array_servicios['combo'];
-                $lista_de_productos=$this->db->from("products")->like("product_name","mega","both")->get()->result();
-                $array_servicios['combo']=strtolower(str_replace(" ", "",$array_servicios['combo'] ));
-                foreach ($lista_de_productos as $key => $prod) {
-                    $prod->product_name=strtolower(str_replace(" ", "",$prod->product_name ));
-                    if($prod->product_name==$array_servicios['combo']){
-                        //var_dump($prod->product_name);
-                        $dataApi->Items[1]->ProductCode="l01";
-                        if($prod->taxrate!=0){
-                            //valores para generar iva
-                            $valor_iva=($prod->product_price*$prod->taxrate)/100;
-                            $valor_iva=round($valor_iva);
-                            $dataApi->Items[1]->TaxAddName="IVA ".$prod->taxrate."% ";
-                            $dataApi->Items[1]->TaxAddId="6688";
-                            $dataApi->Items[1]->TaxAddValue=$valor_iva;
-                            $dataApi->Items[1]->TaxAddPercentage=$prod->taxrate;    
-                            $dataApi->Header->VATTotalValue=$valor_iva+$dataApi->Header->VATTotalValue;
-                            //total
-                            
-                            $prod->product_price+=$valor_iva;
-                            
-                            
-                            $dataApi->Payments[0]->Value=$prod->product_price+$dataApi->Payments[0]->Value;
-                            $dataApi->Items[1]->TotalValue=$prod->product_price;
-                            $dataApi->Header->TotalValue=$prod->product_price+$dataApi->Header->TotalValue;//total de todo con iva
-                            //valores restados
-                            $dataApi->Items[1]->UnitValue=$prod->product_price-$valor_iva;
-                            $dataApi->Items[1]->BaseValue=$prod->product_price-$valor_iva;
-                            $dataApi->Items[1]->GrossValue=$prod->product_price-$valor_iva;
-
-                            $dataApi->Header->TotalBase=($prod->product_price-$valor_iva)+$dataApi->Header->TotalBase;//total de todo sin iva
-
-                        }else{
-                            //valores para no generar iva
-                            $dataApi->Items[1]->TaxAddName="";
-                            $dataApi->Items[1]->TaxAddId="-1";
-                            $dataApi->Items[1]->TaxAddValue="0";
-                            $dataApi->Items[1]->TaxAddPercentage="0";   
-                            //$dataApi->Header->VATTotalValue="0";  //se comenta porque se mantiene el de la tv
-                            //valores de total;
-                            $dataApi->Payments[0]->Value=$prod->product_price+$dataApi->Payments[0]->Value;
-                            $dataApi->Items[1]->TotalValue=$prod->product_price;
-                            $dataApi->Header->TotalValue=$prod->product_price+$dataApi->Header->TotalValue;//total de todo con iva
-                            //valores restados
-                            $dataApi->Items[1]->UnitValue=$prod->product_price;
-                            $dataApi->Items[1]->BaseValue=$prod->product_price;
-                            $dataApi->Items[1]->GrossValue=$prod->product_price;
-
-                            $dataApi->Header->TotalBase=$prod->product_price+$dataApi->Header->TotalBase;//total de todo sin iva    
-
-                        }
-                        
-                        if(isset($datos_facturar['puntos']) && $datos_facturar['puntos']!="no"){
-                                $dataApi->Items[2]->Description="Puntos de tv adicionales ".$datos_facturar['puntos'];
-                                $lista_de_productos=$this->db->from("products")->where("pid","158")->get()->result();
-                                $prod=$lista_de_productos[0];
-                                $prod->product_price=$prod->product_price*intval($datos_facturar['puntos']);
-                                $dataApi->Items[2]->ProductCode="001";
-
-                                        //valores para no generar iva
-                                        $dataApi->Items[2]->TaxAddName="";
-                                        $dataApi->Items[2]->TaxAddId="-1";
-                                        $dataApi->Items[2]->TaxAddValue="0";
-                                        $dataApi->Items[2]->TaxAddPercentage="0";   
-                                        //$dataApi->Header->VATTotalValue="0";  //se comenta porque se mantiene el de la tv
-                                        //valores de total;
-                                        $dataApi->Payments[0]->Value=$prod->product_price+$dataApi->Payments[0]->Value;
-                                        $dataApi->Items[2]->TotalValue=$prod->product_price;
-                                        $dataApi->Header->TotalValue=$prod->product_price+$dataApi->Header->TotalValue;//total de todo con iva
-                                        //valores restados
-                                        $dataApi->Items[2]->UnitValue=$prod->product_price;
-                                        $dataApi->Items[2]->BaseValue=$prod->product_price;
-                                        $dataApi->Items[2]->GrossValue=$prod->product_price;
-
-                                        $dataApi->Header->TotalBase=$prod->product_price+$dataApi->Header->TotalBase;//total de todo sin iva    
-
-                        }
-                        break;
-                    }
-                }
-            }
-        }
+//var_dump($dataApiNET);
+     
 
         /*var_dump($dateTime->format("Ymd"));
-        var_dump($dataApi->Payments[0]->DueDate);
-        var_dump($dataApi->Header->Number);
-        var_dump($dataApi->Header->Account->Phone->Number);*/
+        var_dump($dataApiTV->Payments[0]->DueDate);
+        var_dump($dataApiTV->Header->Number);
+        var_dump($dataApiTV->Header->Account->Phone->Number);*/
         //facturacion_electronica_siigo table insert        
         $dataInsert=array();
         $dataInsert['consecutivo_siigo']=0;
@@ -366,9 +316,20 @@ class Facturas_electronicas_model extends CI_Model
         $dataInsert['servicios_facturados']=$datos_facturar['servicios'];
         $dataInsert['creado_con_multiple']=1;
         // end customer data facturacion_electronica_siigo table insert
-        $dataApi=json_encode($dataApi); 
-        //var_dump($dataApi);
-        $retorno = $api->accionar($api,$dataApi); 
+        //var_dump($dataApiNET);
+        $dataApiTV=json_encode($dataApiTV);
+        $dataApiNET=json_encode($dataApiNET); 
+        //var_dump($dataApiTV);
+        $retorno=array("mensaje"=>"No");
+        if($dataApiTV!=null){
+            $retorno = $api->accionar($api,$dataApiTV,1);     
+            if($dataApiNET!=null){
+                $retorno = $api->accionar($api,$dataApiNET,2);     
+            }
+        }else if($dataApiNET!=null){
+            $retorno = $api->accionar($api,$dataApiNET,2);     
+        }
+        
 
         if($retorno['mensaje']=="Factura Guardada"){
             $this->db->insert("facturacion_electronica_siigo",$dataInsert);
@@ -377,11 +338,11 @@ class Facturas_electronicas_model extends CI_Model
         }else{
             /*$error_era_consecutivo=false;
             for ($i=1; $i < 10 ; $i++) { 
-                $dataApi=json_decode($dataApi);
-                $dataApi->Header->Number= intval($dataApi->Header->Number)+$i;
-                $dataInsert['consecutivo_siigo']=$dataApi->Header->Number;
-                $dataApi=json_encode($dataApi);
-                $retorno2 = $api->accionar($api,$dataApi);              
+                $dataApiTV=json_decode($dataApiTV);
+                $dataApiTV->Header->Number= intval($dataApiTV->Header->Number)+$i;
+                $dataInsert['consecutivo_siigo']=$dataApiTV->Header->Number;
+                $dataApiTV=json_encode($dataApiTV);
+                $retorno2 = $api->accionar($api,$dataApiTV);              
                 if($retorno2['mensaje']=="Factura Guardada"){
                     $this->db->insert("facturacion_electronica_siigo",$dataInsert);
                     $error_era_consecutivo=true;

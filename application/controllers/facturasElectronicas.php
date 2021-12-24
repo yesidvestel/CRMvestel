@@ -447,7 +447,7 @@ $this->load->model("customers_model","customers");
         $this->load->model("facturas_electronicas_model","facturas_electronicas");
         $caja1=$this->db->get_where('accounts',array('id' =>$_POST['pay_acc']))->row();
         $caja1->holder =strtolower($caja1->holder);
-        $customers = $this->db->query("select * from customers where (usu_estado='Activo' or usu_estado='Compromiso') and (lower(ciudad) ='".$caja1->holder."' and facturar_electronicamente='1')")->result_array();
+        $customers = $this->db->query("select * from customers where (usu_estado='Activo' or usu_estado='Compromiso') and (lower(ciudad) ='".$caja1->holder."' and facturar_electronicamente='1')")->result_array();//and id=8241
         $datos_del_proceso=array("facturas_creadas"=>array(),"facturas_con_errores"=>array(),"facturas_anteriormente_creadas"=>array());
         $dateTime=new DateTime($_POST['sdate']);
         foreach ($customers as $key => $value) {
@@ -526,7 +526,46 @@ $this->load->model("customers_model","customers");
     public function obtener_token(){
         $this->load->library('SiigoAPI');
         $api = new SiigoAPI();
-        var_dump($api->getInvoicesByID());
+        $x=$api->getAuth();
+        //var_dump($x);
+
+       /* $ch = curl_init();
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_URL, "https://api.siigo.com/auth");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ch, CURLOPT_HEADER, FALSE);
+
+        curl_setopt($ch, CURLOPT_POST, TRUE);
+
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "{
+          \"username\": \"contabilidad@vestel.com.co\",
+          \"access_key\": \"MDc2YzZlMzAtZGI2Yy00OGFkLWFjZjktZTNlNGUxNDZkODk5Ok9SUDkhOXowQ0E=\"
+        }");
+
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+          "Content-Type: application/json"
+        ));
+
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        var_dump($response);*/
+$x=json_decode($x);
+//var_dump($x->access_token);
+        $ch = curl_init();
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+curl_setopt($ch, CURLOPT_URL, "https://api.siigo.com/v1/customers?identification=123456788");
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+curl_setopt($ch, CURLOPT_HEADER, FALSE);
+//curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
+curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+  "Content-Type: application/json",
+  "Authorization: Bearer ".$x->access_token
+));
+
+$response = curl_exec($ch);
+curl_close($ch);
+var_dump($response);
 
     }
     public function lista_facturas_generadas(){
