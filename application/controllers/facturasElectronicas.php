@@ -303,20 +303,21 @@ $this->load->model("customers_model","customers");
         $dataInsert['customer_id']=$_POST['id'];
         $dataInsert['servicios_facturados']=$_POST['servicios'];
         // end customer data facturacion_electronica_siigo table insert
+        
         $dataApiTV=json_encode($dataApiTV);
 
         $dataApiNET=json_encode($dataApiNET); 
         //var_dump($dataApiNET);
         //var_dump($dataApiTV);
         $retorno=array("mensaje"=>"No");
-        if($dataApiTV!=null){
+        if($dataApiTV!=null && $dataApiTV!="null"){
             $retorno = $api->accionar($api,$dataApiTV,1);     
-            //var_dump($dataApiTV);
-            if($dataApiNET!=null){
+            
+            if($dataApiNET!=null && $dataApiNET!="null"){
                 $retorno = $api->accionar($api,$dataApiNET,2);     
                 //var_dump($retorno);
             }
-        }else if($dataApiNET!=null){
+        }else if($dataApiNET!=null && $dataApiNET!="null"){
             $retorno = $api->accionar($api,$dataApiNET,2);     
         }
 
@@ -409,7 +410,7 @@ $this->load->model("customers_model","customers");
         $this->load->model("facturas_electronicas_model","facturas_electronicas");
         $caja1=$this->db->get_where('accounts',array('id' =>$_POST['pay_acc']))->row();
         $caja1->holder =strtolower($caja1->holder);
-        $customers = $this->db->query("select * from customers where (usu_estado='Activo' or usu_estado='Compromiso') and (lower(ciudad) ='".$caja1->holder."' and facturar_electronicamente='1') and id=16550")->result_array();//and id=8241
+        $customers = $this->db->query("select * from customers where (usu_estado='Activo' or usu_estado='Compromiso') and (lower(ciudad) ='".$caja1->holder."' and facturar_electronicamente='1')")->result_array();//and id=8241
         $datos_del_proceso=array("facturas_creadas"=>array(),"facturas_con_errores"=>array(),"facturas_anteriormente_creadas"=>array());
         $dateTime=new DateTime($_POST['sdate']);
         foreach ($customers as $key => $value) {

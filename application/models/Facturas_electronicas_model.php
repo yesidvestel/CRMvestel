@@ -321,12 +321,12 @@ class Facturas_electronicas_model extends CI_Model
         $dataApiNET=json_encode($dataApiNET); 
         //var_dump($dataApiTV);
         $retorno=array("mensaje"=>"No");
-        if($dataApiTV!=null){
+        if($dataApiTV!=null && $dataApiTV!="null"){
             $retorno = $api->accionar($api,$dataApiTV,1);     
-            if($dataApiNET!=null){
+            if($dataApiNET!=null && $dataApiNET!="null"){
                 $retorno = $api->accionar($api,$dataApiNET,2);     
             }
-        }else if($dataApiNET!=null){
+        }else if($dataApiNET!=null && $dataApiNET!="null"){
             $retorno = $api->accionar($api,$dataApiNET,2);     
         }
         
