@@ -13,7 +13,7 @@ class CurlRequest
     * @param array $options for cURL
     * @return string
     */
-    function curlPost($url, array $post = NULL, array $options = [])
+    function curlPost($url, $post = NULL, array $options = [])
     {
         $defaults = [
             CURLOPT_POST => 1,
@@ -45,7 +45,7 @@ class CurlRequest
     * @param array $options for cURL
     * @return string
     */
-    function curlGet($url, array $get = NULL, array $options = array())
+    function curlGet($url, $get = NULL, array $options = array())
     {   
         $defaults = array(
             CURLOPT_URL => $url,
