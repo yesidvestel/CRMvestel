@@ -212,7 +212,7 @@ class SiigoAPI
                 $this->getAuth($cuenta);
             }
             $i += 1;
-        } while ($i < 4 && ($httpCode === 401 || $httpCode===500));
+        } while ($i < 4 && ($httpCode === 401 ));
        // _log("Envío de factura finalizado [$httpCode]"); //descomentar para depurar
 
         return array('respuesta' => $resp,"httpCode"=>$httpCode );
