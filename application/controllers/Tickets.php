@@ -1175,27 +1175,26 @@ if($ya_agrego_equipos==false){
                                     $reconexion = '1';
                             } */ //preguntar si no es necesario este codigo
 			//agregar reconexion
-			$producto2 = $this->db->get_where('products',array('product_name'=>'Reconexion Combo'))->row();
-				$data2['tid']=$idfactura;
-				$data2['pid']=$producto2->pid;
-                $data2['product']=$producto2->product_name;
-                $data2['price']=$producto2->product_price;
-				$data2['qty']=1;
-                $data2['subtotal']=$producto2->product_price;			
-            	$this->db->insert('invoice_items',$data2);
+			//$producto2 = $this->db->get_where('products',array('product_name'=>'Reconexion Combo'))->row();
+				//$data2['tid']=$idfactura;
+				//$data2['pid']=$producto2->pid;
+                //$data2['product']=$producto2->product_name;
+                //$data2['price']=$producto2->product_price;
+				//$data2['qty']=1;
+                //$data2['subtotal']=$producto2->product_price;			
+            	//$this->db->insert('invoice_items',$data2);
 			//actualizar factura
-			$factura = $this->db->get_where('invoices',array('tid'=>$idfactura))->row();
-				$this->db->set('subtotal', $factura->subtotal+$producto2->product_price);
+			//$factura = $this->db->get_where('invoices',array('tid'=>$idfactura))->row();
+				//$this->db->set('subtotal', $factura->subtotal+$producto2->product_price);
 				$this->db->set('ron', 'Cortado');				
-				$this->db->set('total', $factura->total+$producto2->product_price);
-				$this->db->set('items', $factura->items+1);
+				//$this->db->set('total', $factura->total+$producto2->product_price);
+				//$this->db->set('items', $factura->items+1);
                 //$this->db->set('rec', $reconexion);//preguntar por este campo
 				
                 /*$this->db->set('television', 'no');
 				$this->db->set('combo', 'no');*/ //esto se comenta porque ya no se va a manejar con el no para cuando esta cortado sino con el estado del servicio si este campo esta en no quiere decir que no cuenta con este servicio el usuario
                 $this->db->set('estado_tv', 'Cortado');
                 $this->db->set('estado_combo', 'Cortado');
-
         		$this->db->where('tid', $idfactura);
         		$this->db->update('invoices');
 			//actualizar estado usuario
@@ -1220,19 +1219,19 @@ if($ya_agrego_equipos==false){
 				//actualizar estado usuario
 				$this->db->set('usu_estado', $nestado);
         		$this->db->where('id', $ticket->cid);
-        		$this->db->update('customers');
+        		if($this->db->update('customers')){
 				//agregar reconexion	
-				$data2['tid']=$idfactura;
+				/*?>$data2['tid']=$idfactura;
 				$data2['pid']=$producto2->pid;
                 $data2['product']=$producto2->product_name;
                 $data2['price']=$producto2->product_price;
 				$data2['qty']=1;
                 $data2['subtotal']=$producto2->product_price;			
-            	$this->db->insert('invoice_items',$data2);
+            	$this->db->insert('invoice_items',$data2);<?php */
 			//actualizar factura
-				$this->db->set('subtotal', $factura->subtotal+$producto2->product_price);
+				/*$this->db->set('subtotal', $factura->subtotal+$producto2->product_price);
 				$this->db->set('total', $factura->total+$producto2->product_price);
-				$this->db->set('items', $factura->items+1);
+				$this->db->set('items', $factura->items+1);*/
 				$this->db->set('ron', $nestado);
 				$this->db->set('rec', $reconexion);
 				//$this->db->set('combo', 'no');
@@ -1244,22 +1243,23 @@ if($ya_agrego_equipos==false){
              //mikrotik
                 $customerx=$this->db->get_where("customers",array('id' =>$ticket->cid ))->row();
                 $this->customers->desactivar_estado_usuario($customerx->name_s,$customerx->gid,$customerx->tegnologia_instalacion);
+				}
 		}
 		if($ticket->detalle=="Corte Television"){
 			//agregar reconexion
-			$producto2 = $this->db->get_where('products',array('product_name'=>'Reconexión Television'))->row();
+			/*$producto2 = $this->db->get_where('products',array('product_name'=>'Reconexión Television'))->row();
 				$data2['tid']=$idfactura;
 				$data2['pid']=$producto2->pid;
                 $data2['product']=$producto2->product_name;
                 $data2['price']=$producto2->product_price;
 				$data2['qty']=1;
                 $data2['subtotal']=$producto2->product_price;			
-            	$this->db->insert('invoice_items',$data2);
+            	$this->db->insert('invoice_items',$data2);*/
 			//actualizar factura
-			$factura = $this->db->get_where('invoices',array('tid'=>$idfactura))->row();
+			/*$factura = $this->db->get_where('invoices',array('tid'=>$idfactura))->row();
 				$this->db->set('subtotal', $factura->subtotal+$producto2->product_price);
 				$this->db->set('total', $factura->total+$producto2->product_price);
-				$this->db->set('items', $factura->items+1);
+				$this->db->set('items', $factura->items+1);*/
                 $this->db->set('estado_tv', 'Cortado');
 				$this->db->where('tid', $idfactura);
         		$this->db->update('invoices');
