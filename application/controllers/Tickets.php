@@ -753,9 +753,9 @@ if($ya_agrego_equipos==false){
 		if($ciudad==YOPAL || $ciudad==Yopal){
 		$employee = 65;
 		}if($ciudad==Monterrey){
-			$employee = 77;
+			$employee = 52;
 		}if($ciudad==Villanueva){
-			$employee = 66;
+			$employee = 74;
 		}
 		$assign = $this->aauth->get_user()->id;
 		$content = 'Revisar orden #'.$ticket->codigo;
