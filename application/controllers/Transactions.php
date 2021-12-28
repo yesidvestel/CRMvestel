@@ -421,7 +421,7 @@ class Transactions extends CI_Controller
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
 
         }
-
+        $ids_transacciones=array();
         $ids_facturas =$this->input->post('facturas_seleccionadas');
             $x="";
         $array_facturas=explode("-", $ids_facturas);
@@ -626,6 +626,8 @@ class Transactions extends CI_Controller
 
         $this->db->insert('transactions', $data);
         $this->db->insert_id();
+        $idtr = $this->db->select('max(id)+1 as id')->from('transactions')->get()->result();
+        $ids_transacciones[]=$idtr[0]->id;
 
         $this->db->select('invoiceduedate,total,csd,pamnt,rec');
         $this->db->from('invoices');
@@ -687,6 +689,11 @@ class Transactions extends CI_Controller
         }
         $this->load->model('customers_model', 'customers');
         $this->customers->actualizar_debit_y_credit($cid);
+        if(count($ids_transacciones)!=0){
+            $_COOKIE['ids_transacciones']=json_encode($ids_transacciones);
+        }else{
+            $_COOKIE['ids_transacciones']=null;
+        }
         $link ="<a href='".base_url()."invoices/printinvoice?id=".$id_fact_pagadas."' class='btn btn-info btn-lg'><span class='icon-file-text2' aria-hidden='true'></span>Ver PDF Facturas Pagadas</a>";
         echo json_encode(array('status'=>"Success",'message' =>$this->lang->line('Transaction has been added ').$link,"id_fact_pagadas"=>$id_fact_pagadas,"valor_restante_monto"=>$valor_restante_monto));
     }
@@ -698,7 +705,7 @@ class Transactions extends CI_Controller
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
 
         }
-
+        $ids_transacciones=array();
         $tid = intval($this->input->post('tid'));
         $amount = $this->input->post('amount');
         $paydate = $this->input->post('paydate');
@@ -830,6 +837,9 @@ class Transactions extends CI_Controller
 
         $this->db->insert('transactions', $data);
         $this->db->insert_id();
+        
+        $idtr = $this->db->select('max(id)+1 as id')->from('transactions')->get()->result();
+        $ids_transacciones[]=$idtr[0]->id;
 
         $this->db->select('invoiceduedate,total,csd,pamnt,rec');
         $this->db->from('invoices');
@@ -893,6 +903,11 @@ class Transactions extends CI_Controller
 
         $this->load->model('customers_model', 'customers');
         $this->customers->actualizar_debit_y_credit($cid);
+        if(count($ids_transacciones)!=0){
+            $_COOKIE['ids_transacciones']=json_encode($ids_transacciones);
+        }else{
+            $_COOKIE['ids_transacciones']=null;
+        }
         echo json_encode(array('status' => 'Success', 'message' =>
             $this->lang->line('Transaction has been added'), 'pstatus' => $this->lang->line($status), 'activity' => $activitym, 'amt' => $totalrm, 'ttlpaid' => $paid_amount,"tid"=>$tid));
     } 
