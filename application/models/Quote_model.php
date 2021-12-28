@@ -220,7 +220,7 @@ class Quote_model extends CI_Model
 		if ($agendar=="si"){
 		$data2 = array(
 			'idorden' => $nticket,
-			'title' => $detalle.' '.$hora.' Usuario #'.$abonado->abonado,
+			'title' => ' Usuario #'.$abonado->abonado.' '.$detalle.' '.$hora,
             'start' => date($start->format("Y-m-d")." ".$hora2),
             'end' => '',
             'description' => strip_tags($section),
