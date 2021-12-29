@@ -415,7 +415,7 @@ class Transactions extends CI_Controller
         $this->load->view('fixed/footer');
 
     }
-    public function payinvoicemultiple(){
+    public function payinvoicemultiple(){$this->load->helper('cookie');
         if ($this->aauth->get_user()->roleid < 2) {
 
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
@@ -626,7 +626,7 @@ class Transactions extends CI_Controller
 
         $this->db->insert('transactions', $data);
         $this->db->insert_id();
-        $idtr = $this->db->select('max(id)+1 as id')->from('transactions')->get()->result();
+        $idtr = $this->db->select('max(id) as id')->from('transactions')->where(array("tid"=>$tid))->get()->result();
         $ids_transacciones[]=$idtr[0]->id;
 
         $this->db->select('invoiceduedate,total,csd,pamnt,rec');
@@ -690,16 +690,18 @@ class Transactions extends CI_Controller
         $this->load->model('customers_model', 'customers');
         $this->customers->actualizar_debit_y_credit($cid);
         if(count($ids_transacciones)!=0){
-            $_COOKIE['ids_transacciones']=json_encode($ids_transacciones);
+            $this->input->set_cookie("ids_transacciones",json_encode($ids_transacciones),3600,null);
+            
         }else{
-            $_COOKIE['ids_transacciones']=null;
+            $this->input->set_cookie("ids_transacciones",null,3600,null);
+            
         }
         $link ="<a href='".base_url()."invoices/printinvoice?id=".$id_fact_pagadas."' class='btn btn-info btn-lg'><span class='icon-file-text2' aria-hidden='true'></span>Ver PDF Facturas Pagadas</a>";
         echo json_encode(array('status'=>"Success",'message' =>$this->lang->line('Transaction has been added ').$link,"id_fact_pagadas"=>$id_fact_pagadas,"valor_restante_monto"=>$valor_restante_monto));
     }
     public function payinvoice()
     {
-
+$this->load->helper('cookie');
         if ($this->aauth->get_user()->roleid < 2) {
 
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
@@ -838,7 +840,7 @@ class Transactions extends CI_Controller
         $this->db->insert('transactions', $data);
         $this->db->insert_id();
         
-        $idtr = $this->db->select('max(id)+1 as id')->from('transactions')->get()->result();
+        $idtr = $this->db->select('max(id) as id')->from('transactions')->where(array("tid"=>$tid))->get()->result();
         $ids_transacciones[]=$idtr[0]->id;
 
         $this->db->select('invoiceduedate,total,csd,pamnt,rec');
@@ -904,9 +906,11 @@ class Transactions extends CI_Controller
         $this->load->model('customers_model', 'customers');
         $this->customers->actualizar_debit_y_credit($cid);
         if(count($ids_transacciones)!=0){
-            $_COOKIE['ids_transacciones']=json_encode($ids_transacciones);
+            $this->input->set_cookie("ids_transacciones",json_encode($ids_transacciones),3600,null);
+            
         }else{
-            $_COOKIE['ids_transacciones']=null;
+            $this->input->set_cookie("ids_transacciones",null,3600,null);
+            
         }
         echo json_encode(array('status' => 'Success', 'message' =>
             $this->lang->line('Transaction has been added'), 'pstatus' => $this->lang->line($status), 'activity' => $activitym, 'amt' => $totalrm, 'ttlpaid' => $paid_amount,"tid"=>$tid));

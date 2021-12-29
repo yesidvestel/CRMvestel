@@ -768,7 +768,7 @@ if($ya_agrego_equipos==false){
 		}
         if(isset($invoice[0])){
             foreach ($invoice[0] as $key => $value) {
-                if($key!='id' && $key!='pmethod' && $key!='status' && $key!='pamnt'){
+                if($key!='id' && $key!='pmethod' && $key!='status' && $key!='pamnt' && $key!='resivos_guardados'){
                  $data[$key]=$value;
                 }
             }

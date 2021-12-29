@@ -1220,11 +1220,12 @@ $this->load->model('customers_model', 'customers');
             fclose($file);
 /* end  Escritura de archivos para visualizar pdfs de resivos*/
 /* guardando datos de registro para la lectura de los pdfs*/
+$ids_transactions=json_decode($this->input->cookie('ids_transacciones'));
 foreach ($lista as $key => $value) {
         $inv=$this->db->get_where("invoices",array("tid"=>$value))->row();
         $array=json_decode($inv->resivos_guardados);
         $fecha_actual=new DateTime();
-        $var_a=array("date"=>$fecha_actual->format("d-m-Y"),"file_name"=>$tid."_".$x);
+        $var_a=array("date"=>$fecha_actual->format("d-m-Y"),"file_name"=>$tid."_".$x,"id_transacciones"=>$ids_transactions);
         $array[]=$var_a;
         $this->db->update("invoices",array("resivos_guardados"=>json_encode($array)),array("tid"=>$value));
 }
