@@ -246,7 +246,55 @@
         </div>
     </div>
 </div>
+<div id="modal_resivos_de_pago" class="modal fade">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                <h3 align="center" id="titulo_modal">Resivos de la factura para eliminar</h3>
+                
+            </div>
+            <div class="modal-body">
+                
+                
+                    <div class="table-responsive">
+                        <table id="tb_pendientes" class="table table-hover" cellspacing="0" >
+                            <thead>
+                            <tr>
+                                <th>#</th>                  
+                                <th>N° orden</th>   
+                                <th><?php echo $this->lang->line('Subject') ?></th>
+                                <th>Detalle</th>
+                                <th>F/creada</th>                    
+                                <th>F/finalizado</th>                   
+                                <th>Factura</th>
+                                <th>Asignado</th>
+                                <th>Estado</th>
+                                <th>Accion</th>
+                                
 
+                            </tr>
+                            </thead>
+                            <tbody>
+                            
+                            </tbody>
+
+                        </table>
+                    </div>
+                    
+                
+                <br>
+            </div>
+            <div class="modal-footer">
+                
+                
+                <button type="button" class="btn btn-primary" onclick="$('#modal_resivos_de_pago').modal('hide');">Aceptar</button>
+                
+            </div>
+        </div>
+    </div>
+</div>
 <?php /*
     $lista_invoices=$this->db->order_by('status','DESC')->get_where('invoices')->result_array();
     foreach ($lista_invoices as $key => $value) {
@@ -257,6 +305,10 @@
     //quito esto porque esta generando error y no se porque esta no le veo la logica
 ?>
 <script type="text/javascript">
+    function eliminiar_resivos_de_pago(tid_invoice){
+        $("#titulo_modal").text("Resivos de la factura #"+tid_invoice+" para eliminar");
+        $("#modal_resivos_de_pago").modal("show");
+    }
     var desabilitar=false;
     var tb;
     var fac_pagadas="<?= (isset($ultimo_resivo)) ? $ultimo_resivo : '' ?>";

@@ -1270,7 +1270,7 @@ if($data['servicios']['estado']=="Inactivo"){
             $row[] = '<span class="st-' . $invoices->status . '">' . $this->lang->line(ucwords($invoices->status)) . '</span>';
 
             $lisa_resivos_agregar_st="";
-                                $transacciones = $this->db->get_where("transactions",array("tid"=>$invoices->tid,"estado"=>null))->result_array();
+                                //$transacciones = $this->db->get_where("transactions",array("tid"=>$invoices->tid,"estado"=>null))->result_array();
                                 $lista_de_resivos=json_decode($invoices->resivos_guardados);
                                 if($lista_de_resivos==null){
                                     $lista_de_resivos=array();
@@ -1289,8 +1289,8 @@ if($data['servicios']['estado']=="Inactivo"){
                                     </button>
                                     <div class="dropdown-menu" style="left:-100">
                                         '.$lisa_resivos_agregar_st.'
-                                        
-
+                                        <div class="dropdown-divider"></div>
+                                        <a onclick="eliminiar_resivos_de_pago(\''.$invoices->tid.'\');" class="dropdown-item" style="padding:3px 0px;text-align:center;">Eliminar</a>
                                     </div>
                                 </div>';
 
