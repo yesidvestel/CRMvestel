@@ -1,3 +1,36 @@
+<style type="text/css">
+    
+/*[data-title]:hover:after {
+    opacity: 1;
+    transition: all 0.1s ease 0.5s;
+    visibility: visible;
+
+}
+
+[data-title]:after {
+    content: attr(data-title);
+    background-color: #333;
+    color: #fff;
+    font-size: 14px;
+    font-family: Raleway;
+    position: initial;
+    padding: 3px 20px;
+    bottom: -1.6em;
+    left: 100%;
+    white-space: nowrap;
+    box-shadow: 1px 1px 3px #222222;
+    opacity: 0;
+    border: 1px solid #111111;
+    z-index: 99999;
+    visibility: hidden;
+    border-radius: 6px;
+    
+}
+[data-title] {
+    position: relative;
+
+}*/
+</style>
 <article class="content">
     <div class="card card-block">
         <div id="notify" class="alert alert-success" style="display:none;">
@@ -259,19 +292,15 @@
                 
                 
                     <div class="table-responsive">
-                        <table id="tb_pendientes" class="table table-hover" cellspacing="0" >
+                        <table id="tb_resivos_de_pago" class="table table-hover" cellspacing="0" width="100%" >
                             <thead>
                             <tr>
                                 <th>#</th>                  
-                                <th>N° orden</th>   
-                                <th><?php echo $this->lang->line('Subject') ?></th>
-                                <th>Detalle</th>
-                                <th>F/creada</th>                    
-                                <th>F/finalizado</th>                   
-                                <th>Factura</th>
-                                <th>Asignado</th>
-                                <th>Estado</th>
-                                <th>Accion</th>
+                                <th>Fecha</th>   
+                                <th>Nombre</th>
+                                <th>Transacciones</th>
+                                <th>Acciones</th>
+                                
                                 
 
                             </tr>
@@ -279,6 +308,13 @@
                             <tbody>
                             
                             </tbody>
+                            <tfoot>
+                                <th>#</th>                  
+                                <th>Fecha</th>   
+                                <th>Nombre</th>
+                                <th>Transacciones</th>
+                                <th>Acciones</th>
+                            </tfoot>
 
                         </table>
                     </div>
@@ -308,9 +344,10 @@
     function eliminiar_resivos_de_pago(tid_invoice){
         $("#titulo_modal").text("Resivos de la factura #"+tid_invoice+" para eliminar");
         $("#modal_resivos_de_pago").modal("show");
+        tb_resivos_de_pago.ajax.url( baseurl+'invoices/lista_resivos_tb?tid='+tid_invoice).load();     
     }
     var desabilitar=false;
-    var tb;
+    var tb,tb_resivos_de_pago;
     var fac_pagadas="<?= (isset($ultimo_resivo)) ? $ultimo_resivo : '' ?>";
     var id_customer="<?=$_GET['id']?>";
     $(document).ready(function () {
@@ -340,7 +377,22 @@
             $("#notify").removeClass("alert-danger").addClass("alert-success").fadeIn();
             $("html, body").scrollTop($("body").offset().top);
         }
-        
+        tb_resivos_de_pago= $('#tb_resivos_de_pago').DataTable({
+            'processing': true,
+            'serverSide': true,
+            'stateSave': true,
+            'order': [],
+            'ajax': {
+                'url': "<?php echo site_url('invoices/lista_resivos_tb')?>",               
+                'type': 'POST',
+            },
+            'columnDefs': [
+                {
+                    'targets': [0],
+                    'orderable': false,
+                },
+            ],
+        });    
 
     });
    $(document).on('click', "#submitpayment2", function (e) {

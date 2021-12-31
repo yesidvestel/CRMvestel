@@ -1092,7 +1092,61 @@ $this->load->model('customers_model', 'customers');
         echo json_encode($output);
 
     }
+public function lista_resivos_tb(){
+    if(empty($_GET['tid'])){
+        $_GET['tid']=-500;
+    }
+        $invoice=$this->db->get_where("invoices", array('tid' =>$_GET['tid']))->row();
+        $lista_resivos=array();
 
+        if(isset($invoice)){
+            $lista_resivos=json_decode($invoice->resivos_guardados);
+        }
+        
+        $no = $this->input->post('start');
+        $data=array();
+        $x=0;
+        $minimo=$this->input->post('start');
+        $maximo=$minimo+10;
+        foreach ($lista_resivos as $key => $value) {
+            
+            if($x>=$minimo && $x<$maximo){
+                
+                
+                $row = array();
+                $row[] = "R".$no;
+                //$row[] = $customers->abonado;
+                //$row[] = '<a href="customers/view?id=' . $customers->id . '">' . $customers->name ." ". $customers->unoapellido. '</a>';
+                $row[] = $value->date;
+                $row[] = $value->file_name;
+                $lista=explode(",", $value->id_transacciones);
+
+                foreach ($value->id_transacciones as $key => $value2) {
+                    $tr=$this->db->get_where("transactions", array('id' =>$value2))->row();
+                    $str.="<i style='cursor:pointer;' title='".$tr->note."'>".$value2."</i>,";
+                }
+                $row[] = $str;
+                $row[] = "<a href='#' class='btn btn-danger'><span class='icon-trash'></span></a>";
+                //$row[] = $customers->nomenclatura . ' ' . $customers->numero1 . $customers->adicionauno.' Nº '.$customers->numero2.$customers->adicional2.' - '.$customers->numero3;
+                //$row[] = $customers->usu_estado;
+                //$row[] = '<a href="'.base_url().'customers/invoices?id='.$value['csd'].'" class="btn btn-info btn-sm"><span class="icon-eye"></span>  Facturas</a> <a href="'.base_url().'invoices/view?id='.$value['tid'].'" class="btn btn-info btn-sm"><span class="icon-eye"></span>  Factura Creada</a>';
+                $data[] = $row;
+$no++;
+            }
+            $x++;
+             
+             
+        }
+
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => count($lista_invoices),
+            "recordsFiltered" => count($lista_invoices),
+            "data" => $data,
+        );
+        //output to json format
+        echo json_encode($output);
+}
     public function view()
     {
         $this->load->model('accounts_model');
