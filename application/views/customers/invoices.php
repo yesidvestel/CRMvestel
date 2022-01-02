@@ -296,7 +296,8 @@
                             <thead>
                             <tr>
                                 <th>#</th>                  
-                                <th>Fecha</th>   
+                                <th>Fecha</th> 
+                                <th>Vista Previa</th>     
                                 <th>Nombre</th>
                                 <th>Transacciones</th>
                                 <th>Acciones</th>
@@ -310,7 +311,8 @@
                             </tbody>
                             <tfoot>
                                 <th>#</th>                  
-                                <th>Fecha</th>   
+                                <th>Fecha</th> 
+                                <th>Vista Previa</th>   
                                 <th>Nombre</th>
                                 <th>Transacciones</th>
                                 <th>Acciones</th>
@@ -322,6 +324,7 @@
                 
                 <br>
             </div>
+            
             <div class="modal-footer">
                 
                 

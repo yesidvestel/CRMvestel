@@ -1118,9 +1118,10 @@ public function lista_resivos_tb(){
                 //$row[] = $customers->abonado;
                 //$row[] = '<a href="customers/view?id=' . $customers->id . '">' . $customers->name ." ". $customers->unoapellido. '</a>';
                 $row[] = $value->date;
+                $row[] = '<iframe src="'.base_url().'invoices/printinvoice2?file_name='.$value->file_name.'"></iframe>';
                 $row[] = $value->file_name;
                 //$lista=explode(",", $value->id_transacciones);
-
+                $str="";
                 foreach ($value->id_transacciones as $key => $value2) {
                     $tr=$this->db->get_where("transactions", array('id' =>$value2))->row();
                     $str.="<i style='cursor:pointer;' title='".$tr->note."'>".$value2."</i>,";
