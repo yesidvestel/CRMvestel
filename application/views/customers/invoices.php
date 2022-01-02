@@ -342,7 +342,7 @@
 ?>
 <script type="text/javascript">
     function eliminiar_resivos_de_pago(tid_invoice){
-        $("#titulo_modal").text("Resivos de la factura #"+tid_invoice+" para eliminar");
+        $("#titulo_modal").text("Recibos de la factura #"+tid_invoice+" para eliminar");
         $("#modal_resivos_de_pago").modal("show");
         tb_resivos_de_pago.ajax.url( baseurl+'invoices/lista_resivos_tb?tid='+tid_invoice).load();     
     }
@@ -405,6 +405,20 @@
 
 
 });
+
+   $("#tb_resivos_de_pago").on('draw.dt',function (){
+        $(".eliminar_resivo").click(function(e){
+            e.preventDefault();
+            var file_name=$(this).data("file-name");
+            console.log(file_name);
+                var x=confirm("¿estas seguro de eliminar el recibo?");
+                if(x==true){
+                    $.post(baseurl+"invoices/eliminar_resivos_de_pago?file_name="+file_name);    
+                }
+                
+            });
+
+    });
 
 function visualizar_div_asociadas(){
     if($("#reconexion option:selected").val()=="si"){
