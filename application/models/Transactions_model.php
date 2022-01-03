@@ -287,15 +287,15 @@ class Transactions_model extends CI_Model
                 switch ($transaction_var['ext']) {
                 case 0 :
 
-                    $this->db->set('pamnt', "pamnt-$crt", FALSE);
+                    /*$this->db->set('pamnt', "pamnt-$crt", FALSE);
                     $this->db->where('tid', $transaction_var['tid']);
-                    $this->db->update('invoices');
+                    $this->db->update('invoices');*/
                     break;
 
                 case 1 :
-                    $this->db->set('pamnt', "pamnt-$amt", FALSE);
+                    /*$this->db->set('pamnt', "pamnt-$amt", FALSE);
                     $this->db->where('tid', $transaction_var['tid']);
-                    $this->db->update('purchase');
+                    $this->db->update('purchase');*/
                     break;        
             }
     	
