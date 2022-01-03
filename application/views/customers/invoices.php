@@ -416,7 +416,9 @@
             console.log(file_name);
                 var x=confirm("¿estas seguro de eliminar el recibo?");
                 if(x==true){
-                    $.post(baseurl+"invoices/eliminar_resivos_de_pago?file_name="+file_name);    
+                    $.post(baseurl+"invoices/eliminar_resivos_de_pago?file_name="+file_name,{},function(data){
+
+                    });    
                 }
                 
             });

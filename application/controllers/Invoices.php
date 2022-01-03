@@ -1112,7 +1112,7 @@ public function lista_resivos_tb(){
             
             if($x>=$minimo && $x<$maximo){
                 
-                
+                //http://localhost/CRMvestel/customers/invoices?id=16441
                 $row = array();
                 $row[] = "R".$no;
                 //$row[] = $customers->abonado;
@@ -1149,7 +1149,33 @@ $no++;
         echo json_encode($output);
 }
 function eliminar_resivos_de_pago(){
-    //falta realizar la accion de eliminar
+    if(!is_dir("userfiles/txt_para_pdf_resivos_borrados/")){
+             mkdir("userfiles/txt_para_pdf_resivos_borrados/", 0777, true);
+        }
+       try {
+            rename("userfiles/txt_para_pdf_resivos/header_".$_GET['file_name'].".txt", "userfiles/txt_para_pdf_resivos_borrados/header_".$_GET['file_name'].".txt");
+            rename("userfiles/txt_para_pdf_resivos/body_".$_GET['file_name'].".txt", "userfiles/txt_para_pdf_resivos_borrados/body_".$_GET['file_name'].".txt");   
+       } catch (Exception $e) {
+           
+       }
+        
+        $resultado=$this->db->query("select * from invoices where resivos_guardados like '%".$_GET['file_name']."%'")->result();
+
+        foreach ($resultado as $key => $value) {
+            $varx=json_decode($value->resivos_guardados);
+            var_dump($varx);
+            echo(" antes de <br>");
+
+            foreach ($varx as $key => $value2) {
+                if($value2->file_name==$_GET['file_name']){
+                    unset($varx[$key]);
+                    break;
+                }
+            }
+            var_dump($varx);
+            echo("despues de <br>");
+        }
+
 }
     public function view()
     {
