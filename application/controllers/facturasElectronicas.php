@@ -414,6 +414,10 @@ $this->load->model("customers_model","customers");
         $datos_del_proceso=array("facturas_creadas"=>array(),"facturas_con_errores"=>array(),"facturas_anteriormente_creadas"=>array());
         $dateTime=new DateTime($_POST['sdate']);
         $x=0;
+         $this->load->library('SiigoAPI');
+        $api = new SiigoAPI();
+        $api->getAuth(1);
+        $api->getAuth2(2);
         foreach ($customers as $key => $value) {
                 $servicios=$this->customers->servicios_detail($value['id']);
                 $puntos = $this->customers->due_details($value['id']);
@@ -456,9 +460,10 @@ $this->load->model("customers_model","customers");
                     if(empty($factura_tabla)){
 
 $x++;
-            var_dump($x);
-            echo date('h:i:s') . "\n";
-                        $creo=$this->facturas_electronicas->generar_factura_customer_para_multiple($datos);
+            //var_dump($x);
+            //echo date('h:i:s') . "\n";
+                        $creo=$this->facturas_electronicas->generar_factura_customer_para_multiple($datos,$api);
+                        //sleep(7);
                         if($creo['status']==true){
                             $datos_del_proceso['facturas_creadas'][]=$value['id'];
                         }else{
@@ -475,7 +480,7 @@ $x++;
                 }
 
             
-sleep(5);
+
         }
         $_SESSION['errores']=$datos_del_proceso['facturas_con_errores'];
      //   var_dump($datos_del_proceso);

@@ -94,9 +94,9 @@ class Facturas_electronicas_model extends CI_Model
         return $this->db->count_all_results();
     }
 
-    public function generar_factura_customer_para_multiple($datos_facturar){
-        $this->load->library('SiigoAPI');
-        $api = new SiigoAPI();
+    public function generar_factura_customer_para_multiple($datos_facturar,$api){
+        /*$this->load->library('SiigoAPI');
+        $api = new SiigoAPI();*/
         $this->load->model("customers_model","customers");
         $dataApiTV=null;
         $dataApiNET=null;
