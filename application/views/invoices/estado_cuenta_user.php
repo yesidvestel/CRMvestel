@@ -171,6 +171,7 @@
                                                             $row['total']-=$transacciones_factura[0]['total_pagado'];
                                                             $row['subtotal']=$row['subtotal']-(($row['subtotal']*$porcentaje)/100);
                                                             $row['tax']=$row['tax']-(($row['tax']*$porcentaje)/100);    
+                                                            $row['subtotal']-=$row['tax'];
                                                 }
                                                 if($total_customer==0){
                                                     
