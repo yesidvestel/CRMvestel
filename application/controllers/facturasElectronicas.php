@@ -455,7 +455,8 @@ $this->load->model("customers_model","customers");
                     $factura_tabla=$this->db->get_where("facturacion_electronica_siigo",array("fecha"=>$fecha_1,'customer_id'=>$value['id']))->row();
                     if(empty($factura_tabla)){
 
-
+$x++;
+            var_dump($x);
                         $creo=$this->facturas_electronicas->generar_factura_customer_para_multiple($datos);
                         if($creo['status']==true){
                             $datos_del_proceso['facturas_creadas'][]=$value['id'];
@@ -472,8 +473,7 @@ $this->load->model("customers_model","customers");
 
                 }
 
-            $x++;
-            var_dump($x);
+            
 sleep(5);
         }
         $_SESSION['errores']=$datos_del_proceso['facturas_con_errores'];
