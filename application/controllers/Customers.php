@@ -1233,6 +1233,9 @@ if($data['servicios']['estado']=="Inactivo"){
     {
 
 		$cid = $this->input->post('cid');
+        if(empty($cid)){
+            $cid=$_GET['cid'];
+        }
         $list = $this->customers->inv_datatables($cid);
         $data = array();
         $ultima_factura=$this->customers->servicios_detail($cid);

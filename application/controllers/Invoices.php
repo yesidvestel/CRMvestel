@@ -1149,6 +1149,7 @@ $no++;
         echo json_encode($output);
 }
 function eliminar_resivos_de_pago(){
+    $this->load->model('transactions_model','transactions');
     if(!is_dir("userfiles/txt_para_pdf_resivos_borrados/")){
              mkdir("userfiles/txt_para_pdf_resivos_borrados/", 0777, true);
         }
@@ -1163,18 +1164,31 @@ function eliminar_resivos_de_pago(){
 
         foreach ($resultado as $key => $value) {
             $varx=json_decode($value->resivos_guardados);
-            var_dump($varx);
-            echo(" antes de <br>");
+            //var_dump($varx);
+            //echo(" antes de <br>");
 
             foreach ($varx as $key => $value2) {
                 if($value2->file_name==$_GET['file_name']){
+                    foreach ($value2->id_transacciones as $key => $trid) {
+                        $tr=$this->db->get_where("transactions",array("id"=>$trid,"estado"))->row();
+                        if(isset($tr)){
+                            $this->transactions->delt($trid);
+                        }
+                        
+                    }
+                    
+                    
                     unset($varx[$key]);
                     break;
                 }
             }
-            var_dump($varx);
-            echo("despues de <br>");
+            $varx=json_decode($varx);
+            $this->db->update("invoices",array("resivos_guardados"=>$varx),array("tid"=>$value->tid));
+            //var_dump($varx);
+            //echo("despues de <br>");
         }
+
+
 
 }
     public function view()

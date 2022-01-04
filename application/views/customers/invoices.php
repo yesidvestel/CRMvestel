@@ -344,9 +344,11 @@
     //quito esto porque esta generando error y no se porque esta no le veo la logica
 ?>
 <script type="text/javascript">
+    var tid_invoice_trabajado=0;
     function eliminiar_resivos_de_pago(tid_invoice){
         $("#titulo_modal").text("Recibos de la factura #"+tid_invoice+" para eliminar");
         $("#modal_resivos_de_pago").modal("show");
+        tid_invoice_trabajado=tid_invoice;
         tb_resivos_de_pago.ajax.url( baseurl+'invoices/lista_resivos_tb?tid='+tid_invoice).load();     
     }
     var desabilitar=false;
@@ -417,7 +419,8 @@
                 var x=confirm("¿estas seguro de eliminar el recibo?");
                 if(x==true){
                     $.post(baseurl+"invoices/eliminar_resivos_de_pago?file_name="+file_name,{},function(data){
-
+                        tb_resivos_de_pago.ajax.url( baseurl+'invoices/lista_resivos_tb?tid='+tid_invoice_trabajado).load();     
+                        tb.ajax.url( baseurl+'customers/inv_list?cid='+id_customer).load();     
                     });    
                 }
                 
