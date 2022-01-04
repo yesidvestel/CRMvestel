@@ -1127,7 +1127,12 @@ public function lista_resivos_tb(){
                     $str.="<i style='cursor:pointer;' title='".$tr->note."'>".$value2."</i>,";
                 }
                 $row[] = $str;
-                $row[] = "<a href='#' class='btn btn-danger eliminar_resivo' data-file-name='".$value->file_name."'><span class='icon-trash'></span></a>";
+                if($str!=""){
+                    $row[] = "<a href='#' class='btn btn-danger eliminar_resivo' data-file-name='".$value->file_name."'><span class='icon-trash'></span></a>";    
+                }else{
+                    $row[] ="Se creo antes de la actualizacion...";
+                }
+                
                 //$row[] = $customers->nomenclatura . ' ' . $customers->numero1 . $customers->adicionauno.' Nº '.$customers->numero2.$customers->adicional2.' - '.$customers->numero3;
                 //$row[] = $customers->usu_estado;
                 //$row[] = '<a href="'.base_url().'customers/invoices?id='.$value['csd'].'" class="btn btn-info btn-sm"><span class="icon-eye"></span>  Facturas</a> <a href="'.base_url().'invoices/view?id='.$value['tid'].'" class="btn btn-info btn-sm"><span class="icon-eye"></span>  Factura Creada</a>';
