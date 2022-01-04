@@ -457,6 +457,7 @@ $this->load->model("customers_model","customers");
 
 $x++;
             var_dump($x);
+            echo date('h:i:s') . "\n";
                         $creo=$this->facturas_electronicas->generar_factura_customer_para_multiple($datos);
                         if($creo['status']==true){
                             $datos_del_proceso['facturas_creadas'][]=$value['id'];
