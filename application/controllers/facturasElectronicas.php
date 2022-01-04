@@ -472,7 +472,7 @@ $this->load->model("customers_model","customers");
                 }
 
             
-sleep(1);
+sleep(3);
         }
         $_SESSION['errores']=$datos_del_proceso['facturas_con_errores'];
      //   var_dump($datos_del_proceso);
