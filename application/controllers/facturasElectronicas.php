@@ -413,6 +413,7 @@ $this->load->model("customers_model","customers");
         $customers = $this->db->query("select * from customers where (usu_estado='Activo' or usu_estado='Compromiso') and (lower(ciudad) ='".$caja1->holder."' and facturar_electronicamente='1')")->result_array();//and id=8241
         $datos_del_proceso=array("facturas_creadas"=>array(),"facturas_con_errores"=>array(),"facturas_anteriormente_creadas"=>array());
         $dateTime=new DateTime($_POST['sdate']);
+        $x=0;
         foreach ($customers as $key => $value) {
                 $servicios=$this->customers->servicios_detail($value['id']);
                 $puntos = $this->customers->due_details($value['id']);
@@ -471,8 +472,9 @@ $this->load->model("customers_model","customers");
 
                 }
 
-            
-sleep(3);
+            $x++;
+            var_dump($x);
+sleep(5);
         }
         $_SESSION['errores']=$datos_del_proceso['facturas_con_errores'];
      //   var_dump($datos_del_proceso);
