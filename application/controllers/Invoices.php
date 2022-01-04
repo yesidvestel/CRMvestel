@@ -1955,4 +1955,15 @@ foreach ($lista as $key => $value) {
 
     }
 
+    public function prueba(){
+        $lista=$this->db->query("SELECT invoice_items.id as id_i,invoice_items.tid as tid_i, invoice_items.subtotal as subtotal_item,invoices.subtotal as subtotal_inv,invoices.total as total_inv FROM `invoice_items` JOIN invoices ON invoice_items.tid=invoices.tid WHERE `status`='due' AND product='Reconexión internet'")->result();
+        foreach ($lista as $key => $value) {
+            $total=$value->total_inv-$value->subtotal_item;
+            $subTotal=$value->subtotal_inv-$value->subtotal_item;
+            $this->db->update("invoices",array("subtotal"=>$subTotal,"total"=>$total),array("tid"=>$value->tid_i));
+            $this->db->delete("invoice_items",array("id"=>$value->id_i));
+        }  
+
+    }
+
 }
