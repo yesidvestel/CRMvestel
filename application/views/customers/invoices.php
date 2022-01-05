@@ -74,7 +74,7 @@
             </div>
             <a href="#part_payment" onclick="cargar_facturas()" data-toggle="modal" data-remote="false" data-type="reminder" class="btn btn-large btn-success mb-1" title="Partial Payment">
 				<span class="icon-money"></span> <?php echo $this->lang->line('Make Payment') ?> </a><span id="span_facturas">&nbsp;Facturas a pagar</span>
-                <br><a href="#" class="btn btn-primary" onclick="filtrar_facturas()">Filtrar Facturas Sin Pagar</a>
+                <br><a href="#" id="btn-notas-debit-credit" class="btn btn-warning"><i class="icon-minus"></i>Notas Debito, <i class="icon-plus"></i>Notas Credito</a><br><br><a href="#" class="btn btn-primary" onclick="filtrar_facturas()">Filtrar Facturas Sin Pagar</a>
                &nbsp;<a href="<?=base_url().'invoices/ver_estado_de_cuenta_user?id='.$_GET['id'] ?>" class="btn btn-primary">Estado de cuenta</a>
 
             <hr>
@@ -334,6 +334,54 @@
         </div>
     </div>
 </div>
+
+
+<div id="modal_notas_debito_credito" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                <h3 align="center" id="titulo_modal">Crear Nota Debito o Credito</h3>
+                
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                        <div class="col-xs-12"><label
+                                    for="shortnote">Tipo Nota</label>
+                             <select name="tipo_nota" id="tipo_nota" class="form-control" onchange="tipo_nota_change()">
+                                <option value="Nota Credito">Nota Credito</option>
+                                <option value="Nota Debito">Nota Debito</option>
+                            </select></div>
+                        
+                </div>
+                <p><small id="info">Nota credito se utiliza para realizar descuentos a las facturas</small></p>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="input-group">
+
+                                <div class="input-group-addon"><?php echo $this->config->item('currency') ?></div>
+                                <input  type="text" class="form-control" placeholder="Total Amount" name="monto_notas"
+                                       id="monto_notas" value="0">
+                            </div>
+
+                        </div>
+                        
+                    </div>
+
+                
+                <br>
+            </div>
+            
+            <div class="modal-footer">
+                
+                <button type="button" class="btn btn-default" onclick="$('#modal_notas_debito_credito').modal('hide');">Cerrar</button>
+                <button type="button" class="btn btn-primary" id="id_guardar_notas" onclick="guardar_notas()">Guardar</button>
+                
+            </div>
+        </div>
+    </div>
+</div>
 <?php /*
     $lista_invoices=$this->db->order_by('status','DESC')->get_where('invoices')->result_array();
     foreach ($lista_invoices as $key => $value) {
@@ -548,5 +596,64 @@ let lista_facturas=[];
         
     }
     $("#span_facturas").hide();
-    
+    //js para notacreditos
+    var total2=0;
+    $("#btn-notas-debit-credit").click(function(e){
+        e.preventDefault();
+        $("#modal_notas_debito_credito").modal("show");
+        if(lista_facturas.length==0){
+            $("#id_guardar_notas").attr("disabled",true);
+        }else{
+            $("#id_guardar_notas").attr("disabled",false);
+        }
+         total2=0;
+
+        $(".facturas_para_pagar:checked").each(function(index){            
+            total2+=parseInt($(this).data('total'));            
+        });
+        $("#monto_notas").val(total2);
+    });
+    tipo_nota_change();
+    function tipo_nota_change(){
+        var seleccionada=$("#tipo_nota option:selected").val();
+        if(seleccionada=="Nota Credito"){
+            $("#info").html("Nota <span style='color:red'>Credito</span> se utiliza para realizar <span style='color:red'>descuentos</span> a las facturas");
+        }else{
+            $("#info").html("Nota <span style='color:blue'>Debito</span> se utiliza para realizar <span style='color:blue'>aumentos</span> a las facturas");
+        }
+validar_monto_notas();
+    }
+    var guardar_notas_b=true;
+
+    $("#monto_notas").keyup(function(){
+        validar_monto_notas();
+    });
+   function validar_monto_notas(){
+        var seleccionada=$("#tipo_nota option:selected").val();
+        var x=parseInt($("#monto_notas").val());
+        //desabilitar si x =0;
+        if(seleccionada=="Nota Credito"){
+            
+            if(x<0){
+                x=Math.abs(x);
+            }
+
+            if(x>total2 || x==0){
+                $("#id_guardar_notas").attr("disabled",true);                
+            }else{
+                $("#id_guardar_notas").attr("disabled",false);            
+            }
+            
+        }else{
+            if(total2==0){
+                $("#id_guardar_notas").attr("disabled",true);
+            }else{
+                $("#id_guardar_notas").attr("disabled",false);
+            }
+            
+        }
+    }
+    function guardar_notas(){
+        //falta obtener datos, conectar al servidor, realizar los calculos, guardar y refrescar tablas 
+    }
 </script>
