@@ -86,6 +86,8 @@ $this->load->model("customers_model","customers");
     public function guardar(){
     	$this->load->library('SiigoAPI');
         $api = new SiigoAPI();
+        $api->getAuth(1);
+        $api->getAuth2(2);
         $this->load->model("customers_model","customers");
          $dataApiTV=null;
         $dataApiNET=null;
