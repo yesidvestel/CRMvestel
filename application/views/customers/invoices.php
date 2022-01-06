@@ -668,7 +668,8 @@ validar_monto_notas();
                     $("html, body").scrollTop($("body").offset().top);                    
                     $("#total_text").text(data.total);
                     $("#modal_notas_debito_credito").modal("hide");
-                    tb.ajax.url( baseurl+'customers/inv_list?cid='+id_customer).load();     
+                    tb.ajax.url( baseurl+'customers/inv_list?cid='+id_customer).load();
+                    lista_facturas=[];     
             }
         },'json');
         //falta obtener datos, conectar al servidor, realizar los calculos, guardar y refrescar tablas 
