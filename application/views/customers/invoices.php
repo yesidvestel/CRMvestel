@@ -67,7 +67,7 @@
                 	<div class="col-md-1">
                     <strong>TOTAL</strong>
                     </div>
-                    <div class="col-md-10">
+                    <div class="col-md-10" id="total_text">
                     <?php echo amountFormat(($due['total']-$due['pamnt'])) ?>
                     </div>
                 </div>
@@ -612,6 +612,7 @@ let lista_facturas=[];
             total2+=parseInt($(this).data('total'));            
         });
         $("#monto_notas").val(total2);
+        validar_monto_notas();
     });
     tipo_nota_change();
     function tipo_nota_change(){
@@ -645,7 +646,7 @@ validar_monto_notas();
             }
             
         }else{
-            if(total2==0){
+            if(x==0){
                 $("#id_guardar_notas").attr("disabled",true);
             }else{
                 $("#id_guardar_notas").attr("disabled",false);
@@ -654,6 +655,22 @@ validar_monto_notas();
         }
     }
     function guardar_notas(){
+        var nota_seleccionada=$("#tipo_nota option:selected").val();
+        var valor_nota=parseInt($("#monto_notas").val());
+        if(valor_nota<0){
+                valor_nota=Math.abs(valor_nota);
+        }
+        $.post(baseurl+"invoices/crear_nota_debito_credito",{nota_seleccionada:nota_seleccionada,valor_nota:valor_nota,'lista':lista_facturas,id_customer:id_customer},function(data){
+            console.log(data);
+            if(data.status=="realizado"){
+                 $("#notify .message").html("<strong>Success : </strong>: Cambios realizados");
+                    $("#notify").removeClass("alert-danger").addClass("alert-success").fadeIn();
+                    $("html, body").scrollTop($("body").offset().top);                    
+                    $("#total_text").text(data.total);
+                    $("#modal_notas_debito_credito").modal("hide");
+                    tb.ajax.url( baseurl+'customers/inv_list?cid='+id_customer).load();     
+            }
+        },'json');
         //falta obtener datos, conectar al servidor, realizar los calculos, guardar y refrescar tablas 
     }
 </script>

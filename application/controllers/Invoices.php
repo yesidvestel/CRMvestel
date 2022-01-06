@@ -1971,4 +1971,92 @@ foreach ($lista as $key => $value) {
 
     }
 
+    public function crear_nota_debito_credito(){
+        $this->load->model('customers_model', 'customers');
+        $array_facturas=$_POST['lista'];
+        $monto=$_POST['valor_nota'];
+        $valor_restante_monto=0;
+        $montos=array();
+        $array_facturas2=array();
+        $_id_last_invoice_procesed=0;
+            foreach ($array_facturas as $key => $id_factura) {
+                $factura_var = $this->db->get_where('invoices',array('tid'=>$id_factura))->row();                                
+                
+                $total_factura=$factura_var->total;
+                if($factura_var->status=="partial"){
+                    $total_factura=$factura_var->total-$factura_var->pamnt;
+                }
+                $valor_restante_monto=$monto-$total_factura;
+
+                if($valor_restante_monto>=0){
+                    $montos[$id_factura]=$total_factura;
+                    $array_facturas2[]=$id_factura;
+                    $monto=$valor_restante_monto;
+                    $_id_last_invoice_procesed=$id_factura;
+                }else if($monto>0 && $factura_var->status!="partial"){
+                    $montos[$id_factura]=$monto;
+                    $array_facturas2[]=$id_factura;
+                    $monto=$valor_restante_monto;  
+                    $_id_last_invoice_procesed=$id_factura;
+                }else if($valor_restante_monto<0 && $monto>0 && $factura_var->status=="partial"){
+                    $montos[$id_factura]=$monto;
+                    $array_facturas2[]=$id_factura;
+                    $monto=$valor_restante_monto;
+                    $_id_last_invoice_procesed=$id_factura;  
+                    break;
+                }
+                
+            }
+            //var_dump($valor_restante_monto);
+            if($valor_restante_monto>0){
+                $montos[$_id_last_invoice_procesed]+=$valor_restante_monto;
+            }
+            
+            foreach ($array_facturas2 as $key => $id_factura) {
+                    $data_invoice_item=array();
+                    $data_invoice_item['tid']=$id_factura;
+                    $data_invoice_item['pid']=0;
+                    $data_invoice_item['product']=$_POST['nota_seleccionada'];
+                    $data_invoice_item['qty']=1;
+                    $data_invoice_item['tax']=0;
+                    $data_invoice_item['discount']=0;
+                    $data_invoice_item['totaltax']=0;
+                    $data_invoice_item['totaldiscount']=0;
+                    $invoice=$this->db->get_where("invoices",array("tid"=>$id_factura))->row();
+                    $data_invoice=array();
+                if($_POST['nota_seleccionada']=="Nota Credito"){
+                    $data_invoice_item['price']=-abs($montos[$id_factura]);  
+                    
+                    $data_invoice['subtotal']=$invoice->subtotal-$montos[$id_factura];
+                    $data_invoice['total']=$invoice->total-$montos[$id_factura];
+                    if($data_invoice['subtotal']<0){
+                        $data_invoice['subtotal']=0;
+                        $data_invoice['tax']=$data_invoice['total'];
+                    }
+                    if(($data_invoice['total']-$invoice->pamnt)<=0){
+                        $data_invoice['status']="paid";
+                    }
+
+                }else{//nota debito
+                    $data_invoice_item['price']=$montos[$id_factura];                    
+                    $data_invoice['subtotal']=$invoice->subtotal+$montos[$id_factura];
+                    $data_invoice['total']=$invoice->total+$montos[$id_factura];
+                    //falta aca cuando aumenta el valor calcular el status si tiene transacciones
+                    if($invoice->pamnt!=0){
+                        if($invoice->pamnt<$data_invoice['total']){
+                                $data_invoice['status']="partial";
+                        }
+                    }
+                }
+                    $data_invoice_item['subtotal']=$data_invoice_item['price'];
+                    //var_dump($data_invoice);
+                    $this->db->insert("invoice_items",$data_invoice_item);
+                    $this->db->update("invoices",$data_invoice,array("tid"=>$id_factura));
+
+            }
+            $due = $this->customers->due_details($_POST['id_customer']);
+            
+            echo json_encode(array("status"=>"realizado","total"=>amountFormat(($due['total']-$due['pamnt']))));
+    }
+
 }
