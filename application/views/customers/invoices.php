@@ -30,6 +30,9 @@
     position: relative;
 
 }*/
+.facturas_para_pagar:hover{
+     transform: scale(3);
+}
 </style>
 <article class="content">
     <div class="card card-block">
