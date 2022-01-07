@@ -1,4 +1,4 @@
-<?php $temporales=$this->db->get_where('temporales',array('corden'=>$thread_info['codigo']))->row(); ?>
+
 <div class="app-content content container-fluid">
     <div class="content-wrapper">
         <div class="content-header row">
@@ -166,7 +166,7 @@
 										
 										<div class="input-group">
 										<select name="nomenclatura" class="form-control mb-1">
-												<option value="<?php echo $temporales->nomenclatura ?>"><?php echo $temporales->nomenclatura ?></option>
+												<option value="<?php echo $temporal['nomenclatura'] ?>"><?php echo $temporal['nomenclatura'] ?></option>
 												<option value="Calle">Calle</option>
                                                 <option value="Carrera">Carrera</option>
                                                 <option value="Diagonal">Diagonal</option>
@@ -178,13 +178,13 @@
                                         </div>
                                     <div class="col-sm-2" style="margin-left: -10px;">
                                         <div class="input-group">
-												<input type="text" placeholder="Numero"class="form-control margin-bottom" name="numero1" value="<?php echo $temporales->nuno ?>">
+												<input type="text" placeholder="Numero"class="form-control margin-bottom" name="numero1" value="<?php echo $temporal['nuno'] ?>">
                                 		</div>
 									</div>
 									<div class="col-sm-2" style="margin-left: -14px;">
                                         <div class="input-group">
                                              <select class="form-control mb-1" name="adicional1">
-													<option value="<?php echo $temporales->auno ?>"><?php echo $temporales->auno ?></option>
+													<option value="<?php echo $temporal['auno'] ?>"><?php echo $temporal['auno'] ?></option>
                                                  	<option value="">-</option>
 												 	<option value="bis">bis</option>
 													<option value="sur">sur</option>
@@ -212,13 +212,13 @@
 									</div>
 									<div class="col-sm-2" style="margin-left: -14px;">
                                         <div class="input-group">
-												<input type="text" placeholder="Numero"class="form-control margin-bottom" name="numero2" value="<?php echo $temporales->ndos ?>">
+												<input type="text" placeholder="Numero"class="form-control margin-bottom" name="numero2" value="<?php echo $temporal['ndos'] ?>">
                                 		</div>
 									</div>
 									<div class="col-sm-2" style="margin-left: -14px;">
                                         <div class="input-group">
                                              <select class="form-control mb-1" name="adicional2">
-													<option value="<?php echo $temporales->ados ?>"><?php echo $temporales->ados ?></option>
+													<option value="<?php echo $temporal['ados'] ?>"><?php echo $temporal['ados'] ?></option>
 												 	<option value="">-</option>
                                                     <option value="bis">bis</option>
 													<option value="sur">sur</option>
@@ -241,42 +241,31 @@
                                 	</div>
 									<div class="col-sm-2">
                                         <div class="input-group">
-												<input type="text" placeholder="Numero"class="form-control margin-bottom" name="numero3" value="<?php echo $temporales->ntres ?>">
+												<input type="text" placeholder="Numero"class="form-control margin-bottom" name="numero3" value="<?php echo $temporal['ntres'] ?>">
                                 		</div>
 									</div>
 									<div class="col-sm-6">
 									<label for="invociedate" class="caption">Localidad</label>
 										<div class="input-group">
 											
-											<select name="localidad" class="form-control mb-1" onChange="cambia5()">
-												<?php if ($thread_info['ciudad']==='Yopal'){ ?>
-												<option value='<?php echo $temporales->localidad ?>'><?php echo $temporales->localidad ?></option>
-												<option value='ComunaI'>ComunaI</option>
-												<option value='ComunaII'>ComunaII</option>
-												<option value='ComunaIII'>ComunaIII</option>
-												<option value='ComunaIV'>ComunaIV</option>
-												<option value='ComunaV'>ComunaV</option>
-												<option value='ComunaVI'>ComunaVI</option>
-												<option value='ComunaVII'>ComunaVII</option>
-											<?php }if ($thread_info['ciudad']==='Monterrey'){ ?>
-												<option value='<?php echo $temporales->localidad ?>'><?php echo $temporales->localidad ?></option>
-												<option value='Ninguno'>Ninguno</option>
-											<?php }if ($thread_info['ciudad']==='Villanueva'){ ?>
-												<option value='<?php echo $temporales->localidad ?>'><?php echo $temporales->localidad ?></option>
-												<option value='SinLocalidad'>Sin localidad</option>
-											<?php }if ($thread_info['ciudad']==='Mocoa'){ ?>
-												<option value='<?php echo $temporales->localidad ?>'><?php echo $temporales->localidad ?></option>
-												<option value='Ninguna'>Ninguna</option>
-												<?php } ?>
+											<select name="localidad" id="cmbLocalidades" class="form-control mb-1">
+												<option value='<?php echo $local['idLocalidad'] ?>'><?php echo $local['localidad'] ?></option>
+												<?php
+													foreach ($localidades as $row) {
+														$cid = $row->idLocalidad;
+														$local = $row->localidad;
+														echo "<option value='$cid'>$local</option>";
+													}
+													?>
 											</select>
 											
 										</div>
                                    </div>
 									<div class="col-sm-6">
-									<label for="invociedate" class="caption">Barrio</label>
+									<label for="invociedate"  class="caption">Barrio</label>
 										<div class="input-group">									
-											<select name="barrio" class="form-control mb-1">
-												<option value="<?php echo $temporales->barrio ?>"><?php echo $temporales->barrio ?></option>
+											<select name="barrio" id="cmbBarrios" class="form-control mb-1">
+												<option value="<?php echo $barrio['idBarrio'] ?>"><?php echo $barrio['barrio'] ?></option>
 											</select>
 										</div>
                                    </div>
@@ -284,7 +273,7 @@
 									<label for="invociedate" class="caption">Recidencia</label>
 										<div class="input-group">									
 											<select class="form-control" name="residencia">
-													<option value="<?php echo $temporales->residencia ?>"><?php echo $temporales->residencia ?></option>
+													<option value="<?php echo $temporal['residencia'] ?>"><?php echo $temporal['residencia'] ?></option>
 													<option value="Casa">Casa</option>
                                                 	<option value="Apartamento">Apartamento</option>
                                                   	<option value="Edificio">Edificio</option>
@@ -295,7 +284,7 @@
 								<div class="col-sm-6">
 									<label for="invociedate" class="caption">Referencia</label>
                                         <div class="input-group">
-												<input type="text" class="form-control margin-bottom" name="referencia" value="<?php echo $temporales->referencia ?>">
+												<input type="text" class="form-control margin-bottom" name="referencia" value="<?php echo $temporal['referencia'] ?>">
                                 		</div>
 									</div>
 								</div>
@@ -307,7 +296,7 @@
 									<label for="invociedate" class="caption">Television</label>
 										<div class="input-group">									
 											<select name="tele" class="form-control mb-1">
-												<option value="<?php echo $temporales->tv ?>"><?php echo $temporales->tv ?></option>
+												<option value="<?php echo $temporal['tv'] ?>"><?php echo $temporal['tv'] ?></option>
 												<option value="no">No</option>
                                         		<option value="Television">Si</option>
 											</select>
@@ -317,7 +306,7 @@
 									<label for="invociedate" class="caption">Internet</label>
 										<div class="input-group">									
 											<select name="inter" class="form-control mb-1">
-												<option value="<?php echo $temporales->internet ?>"><?php echo $temporales->internet ?></option>
+												<option value="<?php echo $temporal['internet'] ?>"><?php echo $temporal['internet'] ?></option>
 												<option value="no">No</option>
 												<?php
 													foreach ($paquete as $row) {
@@ -334,7 +323,7 @@
 									<label for="invociedate" class="caption">Puntos</label>
 										<div class="input-group">									
 											<select name="punto" class="form-control mb-1">
-												<option value="<?php echo $temporales->puntos ?>"><?php echo $temporales->puntos ?></option>
+												<option value="<?php echo $temporal['puntos'] ?>"><?php echo $temporal['puntos'] ?></option>
 												<option value="0">no</option>
 													<?php for ($i=1;$i<=20;$i++){
 													echo '<option value="'.$i.'">'.$i.'</option>';}?>
@@ -512,40 +501,7 @@
 								}
 								document.soporte.detalle.options[0].selected = true;
 							}
-	var barrio_ComunaI = new Array ("-","Bello horizonte","Brisas del Cravo","El Batallon","El Centro","El Libertador","La Corocora","La Estrella bon Habitad","la Pradera","Luis Hernandez Vargas","San Martin","La Arboleda");
-	var barrio_ComunaII = new Array ("-","El Triunfo","Comfacasanare","Conjunto Residencial Comfaboy","El Bicentenario","El Remanso","Juan Pablo","La Floresta","Los Andes","Los Helechos","Los Heroes","Maria Milena","Puerta Amarilla","Valle de los guarataros","Villa Benilda","Barcelona","Ciudad Jardín","Juan Hernando Urrego","Unión San Carlos","Laureles","Villa Natalia");
-	var barrio_ComunaIII = new Array ("-","20 De Julio","Conjunto Comfacasanare","Aerocivil","El Gavan","El Oasis","El Recuerdo","La Amistad","Maria Paz","Mastranto II","Provivienda");
-	var barrio_ComunaIV = new Array ("-","1ro de Mayo","Araguaney","Vencedores","Casiquiare","El Bosque","La Campiña","La Esperanza","Las Palmeras","Paraíso","Villa Rocío");
-	var barrio_ComunaV = new Array ("-","Ciudad del Carmen","Conjunto Casa Blanca","Conjunto Flor Amarillo","Conjunto Torres de Leticia","La Victoria","Bella Vista","La Libertad","La Resistencia","Los Angeles","Ciudadela San Jorge","Casimena I","Casimena II","Casimena III","El Laguito","El Nogal","El Portal","El Progreso","La Primavera","Los Almendros","Maranatha","Montecarlo","Nuevo Hábitat","Nuevo Hábitat II","Nuevo Milenio","San Mateo","Villa Nelly","Villa Vargas","Villas de Chavinave");
-	var barrio_ComunaVI = new Array ("-","La Colina","Conjunto Senderos de manare","Conjunto el Silencio","Portal de san Geronimo","Senderos de la Colina","Metropoli","Los Ocobos","San Fernando","Villa Flor","Ciudad Paris","Arrayanes","Llano Grande","Llano Lindo","Llano Lindo II","Villa Nariño","Ciudad Berlín","Villa Docente","La Bendición");
-	var barrio_ComunaVII = new Array ("-","Mi Nueva Esperanza","7 de Agosto","Ocobos","Conjunto Torres de San Marcos","Villa Lucia","Villa Salomé 1","Xiruma","Xiruma II","Llano Vargas","Bosques de Sirivana","Bosques de Guarataros","Villa David","Getsemaní","Villa Salomé 2","Las americas","Puente Raudal","Camoruco");
-	var barrio_Ninguno = new Array ("-","Palmares","Chapinero","Pradera","Gaviotas","Torres de San Sebastián","La estrella","Paseo real","Esperanza","Villa del prado","Primavera","Nuevo milenio","San jose","Centro","Panorama","Alfonso lopez","Rivera de san andres","Rosales","Nuevo horizonte","La roca","Paomare","Floresta","Alcaravanes","Morichito","Villa santiago","15 de septiembre","Glorieta","Olimpico","Brisas del tua","Guaira","Esteros","Villa del bosque","Villa mariana","Guadalupe","Leche miel","Lanceros","Paraiso","El caney","Villa daniela","Julia luz","Los esteros");
-	var barrio_SinLocalidad = new Array ("-","Banquetas","Bella Vista","Bello Horizonte","Loma linda","Brisas del Agua Clara","Brisas del Upia I","Brisas del Upia II","Buenos Aires","Caricare","Centro","Ciudadela la Virgen","Comuneros","El Bosque","El Morichal","El Morichalito","El Portal","Fundadores","La colmena","La floresta","Las Vegas","Mirador","Palmeras","Palmares","Panorama","Paraiso I","Paraiso II","Progreso","Quintas del Camino Real","Villa Alejandra","Villa Campestre","Villa Estampa","Villa Luz","Villa del Palmar","Villa Mariana","Villa de los angeles");
-	var barrio_Ninguna = new Array ("-","Venecia","Villa Caimaron","Villa Colombia","Villa Daniela","Villa del Norte","Villa del rio","Villa Diana","Villa Natalia","Villa Nueva","Palermo","Paraiso","Peñan","Pinos","Piñayaco","Placer","Plaza de Mercado","Prados","Progreso","Rumipamba","San Andres","San Agustin","San Fernando","San Francisco","La Loma","La union","Las Vegas","Libertador","Loma","Los Angeles","Miraflores","Modelo","Naranjito","Nueva Floresta","Obrero 1","Obrero 2","Olimpico","Pablo VI","Pablo VI bajo");
-							//crear funcion que ejecute el cambio
-							function cambia5(){
-								var localidad;
-								localidad = document.soporte.localidad[document.soporte.localidad.			selectedIndex].value;
-								//se verifica la seleccion dada
-								if(localidad!=0){
-									mis_opts=eval("barrio_"+localidad);
-									//definimos cuantas obciones hay
-									num_opts=mis_opts.length;
-									//marcamos obciones en el selector
-									document.soporte.barrio.length = num_opts;
-									//colocamos las obciones array
-									for(i=0; i<num_opts; i++){
-										document.soporte.barrio.options[i].value=mis_opts[i];
-										document.soporte.barrio.options[i].text=mis_opts[i];
-									}
-										}else{
-											//resultado si no hay obciones
-											document.soporte.barrio.length = 1;
-											document.soporte.barrio.options[0].value="-"
-											document.soporte.barrio.options[0].text="-"											
-								}
-								document.soporte.barrio.options[0].selected = true;
-							}
+	
 	$(document).ready(function(){
 		ocultar();
 		$('#detalle').on('change',function(){
@@ -558,5 +514,19 @@
 			$('#ocultar').children('div').hide();			
 			$('#ocultar').children(selectValor).show();
 	}
+	//traer barrio			
+$(document).ready(function(){
+	$("#cmbLocalidades").change(function(){
+		$("#cmbLocalidades option:selected").each(function(){
+			idLocalidad = $(this).val();
+			//console.log(idDepartamento);
+			$.post(baseurl+"customers/barrios_list",{'idLocalidad': idLocalidad
+				},function(data){
+				//console.log(data);
+					$("#cmbBarrios").html(data);
+			})
+		})
+	})
+})
 
 </script>

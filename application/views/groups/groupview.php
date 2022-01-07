@@ -244,18 +244,10 @@
                                                 <h6><label class="col-sm-2 col-form-label"
                                                    for="ciudad"><?php echo $this->lang->line('') ?>Ciudad</label></h6>
                                                 <div id="ciudades">
-                                                    <select id="cmbCiudades" class="selectpicker form-control" name="ciudad" onChange="cambia4()">                                
-                                                        <?php if($_GET['id']=="1"){?>
-                                                            <option value="0">-</option>
-                                                        <?php }else if($_GET['id']=="2"){ ?>
-                                                            <option value="Yopal">Yopal</option>
-                                                        <?php }else if($_GET['id']=="3"){ ?>
-                                                            <option value="Villanueva">Villanueva</option>
-                                                        <?php }else if($_GET['id']=="4"){ ?>
-                                                            <option value="Monterrey">Monterrey</option>
-                                                        <?php }else if($_GET['id']=="5"){ ?>
-                                                            <option value="Mocoa">Mocoa</option>
-                                                        <?php } ?>
+                                                    <select id="cmbCiudades"  class="selectpicker form-control" name="ciudad" > 
+                                                            <option value="">-</option>
+                                                            <option value="<?php echo $sede['idCiudad'] ?>"><?php echo $sede['ciudad'] ?></option>
+                                                        
                                                     </select>
                                                 </div>
                                                    
@@ -269,7 +261,7 @@
                                                     <h6><label class="col-sm-2 col-form-label"
                                                        for="localidad"><?php echo $this->lang->line('') ?>Localidad</label></h6>
                                                     <div id="localidades">
-                                                        <select id="cmbLocalidades"  class="selectpicker form-control" name="localidad" onChange="cambia5()">
+                                                        <select id="cmbLocalidades"  class="selectpicker form-control" name="localidad">
                                                         <option value="0">-</option>
                                                         </select>
                                                         <select style="width: 100%;" id="localidad_multiple" name="localidad_multiple[]" class="form-control select-box" multiple="multiple">
@@ -1594,4 +1586,32 @@ function cancelar_envio_mensajes(){
 
     });
 }
+//traer localidad			
+$(document).ready(function(){
+	$("#cmbCiudades").change(function(){
+		$("#cmbCiudades option:selected").each(function(){
+			idCiudad = $(this).val();
+			//console.log(idDepartamento);
+			$.post(baseurl+"customers/localidades_list",{'idCiudad': idCiudad
+				},function(data){
+				//console.log(data);
+					$("#localidad_multiple").html(data);
+			})
+		})
+	})
+})
+//traer barrio			
+$(document).ready(function(){
+	$("#localidad_multiple").change(function(){
+		$("#localidad_multiple option:selected").each(function(){
+			idLocalidad = $(this).val();
+			//console.log(idDepartamento);
+			$.post(baseurl+"customers/barrios_list",{'idLocalidad': idLocalidad
+				},function(data){
+				//console.log(data);
+					$("#barrios_multiple").html(data);
+			})
+		})
+	})
+})	
 </script>                   

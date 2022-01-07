@@ -283,26 +283,15 @@
 									<div class="col-sm-6">
 									<label for="invociedate" class="caption">Localidad</label>
 										<div class="input-group">
-											<select name="localidad" class="form-control mb-1" onChange="cambia5()">
-												<?php if ($details['ciudad']==='Yopal'){ ?>
-												<option value='-'>-</option>
-												<option value='ComunaI'>ComunaI</option>
-												<option value='ComunaII'>ComunaII</option>
-												<option value='ComunaIII'>ComunaIII</option>
-												<option value='ComunaIV'>ComunaIV</option>
-												<option value='ComunaV'>ComunaV</option>
-												<option value='ComunaVI'>ComunaVI</option>
-												<option value='ComunaVII'>ComunaVII</option>
-											<?php }if ($details['ciudad']==='Monterrey'){ ?>
-												<option value='-'>-</option>
-												<option value='Ninguno'>Ninguno</option>
-											<?php }if ($details['ciudad']==='Villanueva'){ ?>
-												<option value='-'>-</option>
-												<option value='SinLocalidad'>Sin localidad</option>
-											<?php }if ($details['ciudad']==='Mocoa'){ ?>
-												<option value='-'>-</option>
-												<option value='Ninguna'>Ninguna</option>
-												<?php } ?>
+											<select name="localidad"  id="cmbLocalidades"  class="form-control mb-1">
+												<option value="">-</option>
+												<?php
+													foreach ($localidades as $row) {
+														$cid = $row->idLocalidad;
+														$local = $row->localidad;
+														echo "<option value='$cid'>$local</option>";
+													}
+													?>
 											</select>
 											
 										</div>
@@ -310,8 +299,8 @@
 									<div class="col-sm-6">
 									<label for="invociedate" class="caption">Barrio</label>
 										<div class="input-group">									
-											<select name="barrio" class="form-control mb-1">
-												<option value="-">-</option>
+											<select id="cmbBarrios" class="form-control mb-1" name="barrio">
+												<option value="0">-</option>
 											</select>
 										</div>
                                    </div>
@@ -331,7 +320,7 @@
                                         <div class="input-group">
 												<input type="text" class="form-control margin-bottom" name="referencia">
                                 		</div>
-									</div>
+								</div>
 								</div>
 								<div class="form-group row" id="Instalacion">	
                                     <div class="col-sm-12">
@@ -626,40 +615,7 @@
 								}
 								document.soporte.detalle.options[0].selected = true;
 							}
-	var barrio_ComunaI = new Array ("-","Bello horizonte","Brisas del Cravo","El Batallon","El Centro","El Libertador","La Corocora","La Estrella bon Habitad","la Pradera","Luis Hernandez Vargas","San Martin","La Arboleda");
-	var barrio_ComunaII = new Array ("-","El Triunfo","Comfacasanare","Conjunto Residencial Comfaboy","El Bicentenario","El Remanso","Juan Pablo","La Floresta","Los Andes","Los Helechos","Los Heroes","Maria Milena","Puerta Amarilla","Valle de los guarataros","Villa Benilda","Barcelona","Ciudad Jardín","Juan Hernando Urrego","Unión San Carlos","Laureles","Villa Natalia");
-	var barrio_ComunaIII = new Array ("-","20 De Julio","Conjunto Comfacasanare","Aerocivil","El Gavan","El Oasis","El Recuerdo","La Amistad","Maria Paz","Mastranto II","Provivienda");
-	var barrio_ComunaIV = new Array ("-","1ro de Mayo","Araguaney","Vencedores","Casiquiare","El Bosque","La Campiña","La Esperanza","Las Palmeras","Paraíso","Villa Rocío");
-	var barrio_ComunaV = new Array ("-","Ciudad del Carmen","Conjunto Casa Blanca","Conjunto Flor Amarillo","Conjunto Torres de Leticia","La Victoria","Bella Vista","La Libertad","La Resistencia","Los Angeles","Ciudadela San Jorge","Casimena I","Casimena II","Casimena III","El Laguito","El Nogal","El Portal","El Progreso","La Primavera","Los Almendros","Maranatha","Montecarlo","Nuevo Hábitat","Nuevo Hábitat II","Nuevo Milenio","San Mateo","Villa Nelly","Villa Vargas","Villas de Chavinave");
-	var barrio_ComunaVI = new Array ("-","La Colina","Conjunto Senderos de manare","Conjunto el Silencio","Portal de san Geronimo","Senderos de la Colina","Metropoli","Los Ocobos","San Fernando","Villa Flor","Ciudad Paris","Arrayanes","Llano Grande","Llano Lindo","Llano Lindo II","Villa Nariño","Ciudad Berlín","Villa Docente","La Bendición");
-	var barrio_ComunaVII = new Array ("-","Mi Nueva Esperanza","7 de Agosto","Ocobos","Conjunto Torres de San Marcos","Villa Lucia","Villa Salomé 1","Xiruma","Xiruma II","Llano Vargas","Bosques de Sirivana","Bosques de Guarataros","Villa David","Getsemaní","Villa Salomé 2","Las americas","Puente Raudal","Camoruco");
-	var barrio_Ninguno = new Array ("-","Palmares","Pradera","Chapinero","Torres de San Sebastián","Gaviotas","La estrella","Paseo real","Esperanza","Villa del prado","Primavera","Nuevo milenio","San jose","Centro","Panorama","Alfonso lopez","Rivera de san andres","Rosales","Nuevo horizonte","La roca","Paomare","Floresta","Alcaravanes","Morichito","Villa santiago","15 de septiembre","Glorieta","Olimpico","Brisas del tua","Guaira","Esteros","Villa del bosque","Villa mariana","Guadalupe","Leche miel","Lanceros","Paraiso","El caney","Villa daniela","Julia luz","Los esteros");
-	var barrio_SinLocalidad = new Array ("-","Banquetas","Bella Vista","Loma linda","Bello Horizonte","Brisas del Agua Clara","Brisas del Upia I","Brisas del Upia II","Buenos Aires","Caricare","Centro","Ciudadela la Virgen","Comuneros","El Bosque","El Morichal","El Morichalito","El Portal","Fundadores","La colmena","La floresta","Las Vegas","Mirador","Palmeras","Palmares","Panorama","Paraiso I","Paraiso II","Progreso","Quintas del Camino Real","Villa Alejandra","Villa Campestre","Villa Estampa","Villa Luz","Villa del Palmar","Villa Mariana","Villa de los angeles");
-	var barrio_Ninguna = new Array ("-","Venecia","Villa Caimaron","Villa Colombia","Villa Daniela","Villa del Norte","Villa del rio","Villa Diana","Villa Natalia","Villa Nueva","Palermo","Paraiso","Peñan","Pinos","Piñayaco","Placer","Plaza de Mercado","Prados","Progreso","Rumipamba","San Andres","San Agustin","San Fernando","San Francisco","La Loma","La union","Las Vegas","Libertador","Loma","Los Angeles","Miraflores","Modelo","Naranjito","Nueva Floresta","Obrero 1","Obrero 2","Olimpico","Pablo VI","Pablo VI bajo");
-							//crear funcion que ejecute el cambio
-							function cambia5(){
-								var localidad;
-								localidad = document.soporte.localidad[document.soporte.localidad.selectedIndex].value;
-								//se verifica la seleccion dada
-								if(localidad!=0){
-									mis_opts=eval("barrio_"+localidad);
-									//definimos cuantas obciones hay
-									num_opts=mis_opts.length;
-									//marcamos obciones en el selector
-									document.soporte.barrio.length = num_opts;
-									//colocamos las obciones array
-									for(i=0; i<num_opts; i++){
-										document.soporte.barrio.options[i].value=mis_opts[i];
-										document.soporte.barrio.options[i].text=mis_opts[i];
-									}
-										}else{
-											//resultado si no hay obciones
-											document.soporte.barrio.length = 1;
-											document.soporte.barrio.options[0].value="-"
-											document.soporte.barrio.options[0].text="-"											
-								}
-								document.soporte.barrio.options[0].selected = true;
-							}
+	
 	$(document).ready(function(){
 		ocultar();
 		$('#detalle').on('change',function(){
@@ -672,5 +628,18 @@
 			$('#ocultar').children('div').hide();			
 			$('#ocultar').children(selectValor).show();
 	}
-
+//traer barrio			
+$(document).ready(function(){
+	$("#cmbLocalidades").change(function(){
+		$("#cmbLocalidades option:selected").each(function(){
+			idLocalidad = $(this).val();
+			//console.log(idDepartamento);
+			$.post(baseurl+"customers/barrios_list",{'idLocalidad': idLocalidad
+				},function(data){
+				//console.log(data);
+					$("#cmbBarrios").html(data);
+			})
+		})
+	})
+})
 </script>

@@ -206,11 +206,14 @@ class Tickets Extends CI_Controller
     public function thread()
     {
 		$this->load->model('invoices_model', 'invocies');
+		$this->load->model('customers_model', 'customers');
+		$this->load->model('quote_model', 'quote');
         $this->load->helper(array('form'));
         $thread_id = $this->input->get('id');		
         $data['response'] = 3;
         $data['id_orden_n']	=$thread_id;
-        $orden = $this->db->get_where('tickets',array('idt'=>$thread_id))->row();		
+        $orden = $this->db->get_where('tickets',array('idt'=>$thread_id))->row();
+		$codigo = $orden->codigo;
             $equipo_asignado = $this->db->get_where("equipos", array('asignado' =>$orden->cid))->row();
            $data['orden']=$orden; 
            $data['equipo_asignado']=$equipo_asignado; 
@@ -288,12 +291,20 @@ class Tickets Extends CI_Controller
 
             $data['thread_info'] = $this->ticket->thread_info($thread_id);
             $data['thread_list'] = $this->ticket->thread_list($thread_id);
+			$data['temporal'] = $this->quote->group_tempo($codigo);
+			$data['local'] = $this->customers->group_localidad($data['temporal']['localidad']);
+			$data['barrio'] = $this->customers->group_barrio($data['temporal']['barrio']);
+			$data['barrio2'] = $this->customers->group_barrio($data['thread_info']['barrio']);
 			$data['paquete'] = $this->invocies->paquetes();
             $this->load->view('support/thread', $data);
         } else {
 
             $data['thread_info'] = $this->ticket->thread_info($thread_id);
             $data['thread_list'] = $this->ticket->thread_list($thread_id);
+			$data['temporal'] = $this->quote->group_tempo($codigo);
+			$data['local'] = $this->customers->group_localidad($data['temporal']['localidad']);
+			$data['barrio'] = $this->customers->group_barrio($data['temporal']['barrio']);
+			$data['barrio2'] = $this->customers->group_barrio($data['thread_info']['barrio']);
 			$data['paquete'] = $this->invocies->paquetes();
             $this->load->view('support/thread', $data);
 

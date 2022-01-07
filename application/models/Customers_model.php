@@ -192,6 +192,10 @@ class Customers_model extends CI_Model
 
         $this->db->select('*');
         $this->db->from($this->table);
+		//$this->db->join('departamentos', 'customers.departamento = departamentos.idDepartamento', 'left');
+		//$this->db->join('ciudad', 'customers.ciudad = ciudad.idCiudad', 'left');
+		//$this->db->join('localidad', 'customers.localidad = localidad.idLocalidad', 'left');
+		//$this->db->join('barrio', 'customers.barrio = barrio.idBarrio', 'left');
         $this->db->where('id', $custid);
         $query = $this->db->get();
         return $query->row_array();
@@ -730,9 +734,9 @@ class Customers_model extends CI_Model
     { 
 		$this->db->select('*');
         $this->db->from('ciudad');
-        $this->db->where('departamento', $id);
+        $this->db->where('idDepartamento', $id);
         $query = $this->db->get();
-        return $query->result_array(); 
+        return $query->result(); 
     }
 	public function group_ciudad($id)
     {
@@ -749,7 +753,7 @@ class Customers_model extends CI_Model
         $this->db->from('localidad');
         $this->db->where('idCiudad', $id);
         $query = $this->db->get();
-        return $query->result_array(); 
+        return $query->result(); 
     }
 	public function group_localidad($id)
     {
@@ -766,7 +770,7 @@ class Customers_model extends CI_Model
         $this->db->from('barrio');
         $this->db->where('idLocalidad', $id);
         $query = $this->db->get();
-        return $query->result_array(); 
+        return $query->result(); 
     }
 	public function group_barrio($id)
     {

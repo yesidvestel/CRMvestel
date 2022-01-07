@@ -118,8 +118,120 @@ class Templates extends CI_Controller
             $this->templates->input($name,$body);
 
     } 
+	public function local()
+    {
+        $head['usernm'] = $this->aauth->get_user()->username;
+        $data['barrios'] = $this->templates->get_barrios();
+        $head['title'] = 'Email Templates';
+        $this->load->view('fixed/header');
+        $this->load->view('templates/localizaciones',$data);
+        $this->load->view('fixed/footer');
+    }
+	public function barrio_add()
+    {
+		$this->load->model('customers_model', 'customers');
+        $head['usernm'] = $this->aauth->get_user()->username;
+        $data['departamentos'] = $this->customers->departamentos_list();
+        $head['title'] = 'lista barrios';
+        $this->load->view('fixed/header');
+        $this->load->view('templates/barrio-add',$data);
+        $this->load->view('fixed/footer');
+    }
+	public function barrio_input()
+    {
+        
+            $depar = $this->input->post('depar');
+            $ciudad = $this->input->post('ciudad');
+            $localidad = $this->input->post('localidad');
+            $barrio = $this->input->post('barrio');
+            $this->templates->input_barrio($depar,$ciudad,$localidad,$barrio);
 
+    }
+	public function barrio_edit()
+    {
+			$this->load->model('customers_model', 'customers');
+            $head['usernm'] = $this->aauth->get_user()->username;
+            $id = $this->input->get('id');
+            $head['title'] = 'Edit barrio';
+			$data['departamentos'] = $this->customers->departamentos_list();
+            $data['infobarrio'] = $this->templates->barrio_info($id);
+            $this->load->view('fixed/header');
+            $this->load->view('templates/barrio-edit', $data);
+            $this->load->view('fixed/footer');
+        
+    }
+	public function barrio_update()
+    {
+			$id = $this->input->post('id');
+			$depar = $this->input->post('depar');
+            $ciudad = $this->input->post('ciudad');
+            $localidad = $this->input->post('localidad');
+            $barrio = $this->input->post('barrio');
+            $this->templates->edit_barrio($id,$depar,$ciudad,$localidad,$barrio);
+        
+    }
+	public function delete_i()
+    {
+        $id = $this->input->post('deleteid');
 
+        if ($this->templates->delete($id)) {
+            echo json_encode(array('status' => 'Success', 'message' => $this->lang->line('DELETED')));
+        } else {
+            echo json_encode(array('status' => 'Error', 'message' => $this->lang->line('ERROR')));
+        }
+    }
+	public function local_add()
+    {
+		$this->load->model('customers_model', 'customers');
+        $head['usernm'] = $this->aauth->get_user()->username;
+        $data['departamentos'] = $this->customers->departamentos_list();
+        $head['title'] = 'lista barrios';
+        $this->load->view('fixed/header');
+        $this->load->view('templates/local-add',$data);
+        $this->load->view('fixed/footer');
+    }
+	public function local_input()
+    {
+        
+            $depar = $this->input->post('depar');
+            $ciudad = $this->input->post('ciudad');
+            $localidad = $this->input->post('localidad');
+            $this->templates->input_local($depar,$ciudad,$localidad);
 
+    }
+	public function ciudad_add()
+    {
+		$this->load->model('customers_model', 'customers');
+        $head['usernm'] = $this->aauth->get_user()->username;
+        $data['departamentos'] = $this->customers->departamentos_list();
+        $head['title'] = 'agregar ciudad';
+        $this->load->view('fixed/header');
+        $this->load->view('templates/ciudad-add',$data);
+        $this->load->view('fixed/footer');
+    }
+	public function ciudad_input()
+    {
+        
+            $depar = $this->input->post('depar');
+            $ciudad = $this->input->post('ciudad');
+            $this->templates->input_ciudad($depar,$ciudad);
 
+    }
+	public function depar_add()
+    {
+		$this->load->model('customers_model', 'customers');
+        $head['usernm'] = $this->aauth->get_user()->username;
+        $data['departamentos'] = $this->customers->departamentos_list();
+        $head['title'] = 'agregar ciudad';
+        $this->load->view('fixed/header');
+        $this->load->view('templates/depar-add',$data);
+        $this->load->view('fixed/footer');
+    }
+	public function depar_input()
+    {
+        
+            $depar = $this->input->post('depar');
+            $this->templates->input_depar($depar);
+
+    }
 }

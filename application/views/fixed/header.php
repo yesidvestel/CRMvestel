@@ -769,7 +769,9 @@
                         <li>
                             <a href="<?php echo base_url(); ?>settings/theme"><?php echo $this->lang->line('Theme') ?></a>
                         </li>
-
+						<li>
+                            <a href="<?php echo base_url(); ?>templates/local"><?php echo $this->lang->line('') ?>Localizaciones</a>
+                        </li>
 
                     </ul>
                 </li>

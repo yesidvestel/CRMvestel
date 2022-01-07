@@ -76,7 +76,14 @@ class Quote_model extends CI_Model
         return $query->result_array();
 
     }
-
+	public function group_tempo($id)
+    {
+		$this->db->select('*');
+        $this->db->from('temporales');
+        $this->db->where('corden', $id);
+        $query = $this->db->get();
+        return $query->row_array();
+    }
 
     public function quote_delete($id)
     {

@@ -48,6 +48,7 @@ class Quote extends CI_Controller
         $data['exchange'] = $this->plugins->universal_api(5);
 		$data['paquete'] = $this->invocies->paquetes();
 		$data['tecnicoslista'] = $this->ticket->tecnico_list();
+		$data['localidades'] =$this->customers->localidades_list($data['details']['ciudad']);
 		$data['facturalist'] = $this->ticket->factura_list($custid);
         $data['currency'] = $this->quote->currencies();
         $data['customergrouplist'] = $this->customers->group_list();
@@ -57,7 +58,6 @@ class Quote extends CI_Controller
         $head['usernm'] = $this->aauth->get_user()->username;
         $data['warehouse'] = $this->quote->warehouses();
         $data['moviles'] = $this->moviles->get_datatables1();
-        //var_dump($data['moviles']);
         $conteo=$this->db->get_where("tickets",array("cid"=>$custid,"status"=>"Pendiente"))->result_array();        
         $data['conteo_pendientes']=count($conteo);
         $this->load->view('fixed/header', $head);
@@ -70,6 +70,7 @@ class Quote extends CI_Controller
     {
         $this->load->model('ticket_model', 'ticket');
 		$this->load->model('invoices_model', 'invocies');
+		$this->load->model('customers_model', 'customers');
         $thread_id = intval($this->input->get('id'));
 		$ticket = $this->db->get_where('tickets', array('idt' => $thread_id))->row();
 		$custid = $ticket->cid;
@@ -78,7 +79,12 @@ class Quote extends CI_Controller
         $data['title'] = "Quote $tid";
         $data['thread_info'] = $this->ticket->thread_info($thread_id);
 		$data['thread_agen'] = $this->ticket->thread_agen($codigo);
+		$data['temporal'] = $this->quote->group_tempo($codigo);
+		$data['local'] = $this->customers->group_localidad($data['temporal']['localidad']);
+		$data['barrio'] = $this->customers->group_barrio($data['temporal']['barrio']);
+		$data['localidades'] =$this->customers->localidades_list($data['thread_info']['ciudad']);
 		$data['paquete'] = $this->invocies->paquetes();
+		//var_dump($data['temporal']);
         $data['thread_list'] = $this->ticket->thread_list($thread_id);
 		$data['facturalist'] = $this->ticket->factura_list($custid);
         $head['title'] = "Edit Quote #$tid";

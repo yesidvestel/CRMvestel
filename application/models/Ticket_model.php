@@ -214,7 +214,7 @@ class Ticket_model extends CI_Model
     {
 
         $this->db->from('tickets');
-		//$this->db->join('events', 'tickets.codigo=events.idorden', 'left');
+		
          if ($filt2['estado'] != '' && $filt2['estado'] != 'null' && $filt2['estado'] != null) {
             $this->db->where_in('status', explode(",", $filt2['estado']));       
         }
@@ -248,6 +248,8 @@ class Ticket_model extends CI_Model
             $this->db->where_in('detalle', explode(",", $filt2['detalle']));       
         }
 		$this->db->join('customers', 'tickets.cid=customers.id ', 'left');
+		$this->db->join('ciudad', 'customers.ciudad=ciudad.idCiudad ', 'left');
+		$this->db->join('barrio', 'customers.barrio=barrio.idBarrio', 'left');
         $i = 0;
 
         foreach ($this->doccolumn_search as $item) // loop column

@@ -265,10 +265,12 @@ class Customers extends CI_Controller
 		$id = $this->input->post('idDepartamento');
 		$ciudades = $this->customers->ciudades_list($id);
 		//echo '<select  id="cmbCiudades"  class="selectpicker form-control"><option>Seleccionar</option>';
+		$lista_opciones="<option value=''>Seleccionar</option>";
 		foreach ($ciudades as $row) {
-			echo '<option value="' . $row['idCiudad'] . '">' . $row['ciudad'] . '</option>';
+			$lista_opciones.= '<option value="' . $row->idCiudad . '">' . $row->ciudad . '</option>';
 		}
-		//echo '</select>'; 
+		
+		echo $lista_opciones; 
 	}
 	
 	public function localidades_list()
@@ -276,21 +278,24 @@ class Customers extends CI_Controller
 		$id = $this->input->post('idCiudad');
 		$ciudades = $this->customers->localidades_list($id);
 		//echo '<select class="selectpicker form-control"><option>Seleccionar</option>';
+		$lista_opciones2="<option value=''>Seleccionar</option>";
 		foreach ($ciudades as $row) {
-			echo '<option value="' . $row['idLocalidad'] . '">' . $row['localidad'] . '</option>';
+			$lista_opciones2.= '<option value="' . $row->idLocalidad . '">' . $row->localidad . '</option>';
 		}
-		//echo '</select>'; 
+		
+		echo $lista_opciones2; 
 	}
 	
 	public function barrios_list()
 	{ 
 		$id = $this->input->post('idLocalidad');
 		$ciudades = $this->customers->barrios_list($id);
-		//echo '<select class="selectpicker form-control"><option>Seleccionar</option>';
+		$lista_opciones3="<option value=''>Seleccionar</option>";
 		foreach ($ciudades as $row) {
-			echo '<option value="' . $row['idBarrio'] . '">' . $row['barrio'] . '</option>';
+			$lista_opciones3.= '<option value="' . $row->idBarrio . '">' . $row->barrio . '</option>';
 		}
-		//echo '</select>'; 
+		
+		echo $lista_opciones3; 
 	}
     public function actualizar_debit_y_credit(){
         set_time_limit(10000);
@@ -306,11 +311,11 @@ class Customers extends CI_Controller
 		$this->load->model('ticket_model', 'ticket');
         $data['details'] = $this->customers->details($custid);
         $data['customergroup'] = $this->customers->group_info($data['details']['gid']);
-		$data['departamentos'] = $this->customers->group_departamentos($data['details']['departamento']);
+        $data['money'] = $this->customers->money_details($custid);
+		$data['departamento'] = $this->customers->group_departamentos($data['details']['departamento']);
 		$data['ciudad'] = $this->customers->group_ciudad($data['details']['ciudad']);
 		$data['localidad'] = $this->customers->group_localidad($data['details']['localidad']);
 		$data['barrio'] = $this->customers->group_barrio($data['details']['barrio']);
-        $data['money'] = $this->customers->money_details($custid);
 		$data['equipo'] = $this->customers->equipo_details($custid);
         $data['due'] = $this->customers->due_details($custid);
         $data['servicios'] = $this->customers->servicios_detail($custid);
@@ -741,13 +746,14 @@ if($data['servicios']['estado']=="Inactivo"){
     public function edit()
     {
         $pid = $this->input->get('id');
-
         $data['customer'] = $this->customers->details($pid);
         $data['customergroup'] = $this->customers->group_info($data['customer']['gid']);
-		$data['departamentos'] = $this->customers->group_departamentos($data['customer']['departamento']);		
+		$data['departamentos'] = $this->customers->departamentos_list();		
+		$data['departamento'] = $this->customers->group_departamentos($data['customer']['departamento']);
 		$data['ciudad'] = $this->customers->group_ciudad($data['customer']['ciudad']);
 		$data['localidad'] = $this->customers->group_localidad($data['customer']['localidad']);
 		$data['barrio'] = $this->customers->group_barrio($data['customer']['barrio']);
+		$data['equipo'] = $this->customers->equipo_details($custid);
         $data['customergrouplist'] = $this->customers->group_list();
         $head['usernm'] = $this->aauth->get_user()->username;
         $head['title'] = 'Edit Customer';	

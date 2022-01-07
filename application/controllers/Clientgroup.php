@@ -654,10 +654,8 @@ class Clientgroup extends CI_Controller
         $data['group'] = $this->clientgroup->details($id);
         $this->db->update("customers",array("checked_seleccionado"=>0),array("gid"=>$_GET['id']));
         $data['cuenta']=$this->clientgroup->get_numero_seleccionados($id);
-        
         $head['title'] = 'Group View';
-        
-        
+		$data['sede'] =$this->clientgroup->group_info($data['group']['title']);
         //var_dump($array);
         $this->load->model('templates_model','templates');
         $data['plantillas'] = $this->templates->get_template();

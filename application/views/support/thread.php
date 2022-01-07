@@ -53,7 +53,7 @@
 				echo '<br><strong>Celular:</strong> ' . $thread_info['celular'];
 				echo '<br><strong>Direccion:</strong> ' . $thread_info['nomenclatura'].' '. $thread_info['numero1']. $thread_info['adicionauno'].' N°'. $thread_info['numero2']. $thread_info['adicional2'].' - '. $thread_info['numero3'];
 				echo '<br><strong>Referencia:</strong> ' . $thread_info['residencia'].'/'. $thread_info['referencia'];
-				echo '<br><strong>Barrio:</strong> ' . $thread_info['barrio'];
+				echo '<br><strong>Barrio:</strong> ' . $barrio2['barrio'];
                 echo '<br><strong>Estado:</strong> <span id="pstatus">' . $thread_info['status'];
 				echo '<br><strong>Servicios Contratados:</strong> <span id="pstatus">' . $tv.' '.$inter;
 				echo '<br><strong>Equipo Asignado:</strong> <span id="pstatus">' . $thread_info['macequipo'].'<strong>'.$equipo->t_instalacion.'</strong><strong> V:</strong>'.$equipo->vlan.'<strong> N:</strong>'.$equipo->nat.'<strong> PN:</strong>'.$equipo->puerto;
@@ -66,7 +66,8 @@
 
 			<?php echo '<h4>Detalles:</h4><code class="card card-block"><h5 style="text-decoration: underline;">' .$thread_info['detalle'].'</h5>'.strip_tags($thread_info['section'].' '.$thread_info['problema'],'<p>');
 	
-	if ($thread_info['detalle']=='Traslado'){ echo $traslados->nomenclatura.' '.$traslados->nuno.$traslados->auno.' Nº '.$traslados->ndos.$traslados->ados.' - '.$traslados->ntres.'/'.$traslados->residencia.' '.$traslados->referencia;}?>
+	if ($thread_info['detalle']=='Traslado'){ echo $traslados->nomenclatura.' '.$traslados->nuno.$traslados->auno.' Nº '.$traslados->ndos.$traslados->ados.' - '.$traslados->ntres.'<br>'
+			.$local['localidad'].'/'.$barrio['barrio'].'/'.$traslados->residencia.'/'.$traslados->referencia;}?>
 	
 			
 		</code>		

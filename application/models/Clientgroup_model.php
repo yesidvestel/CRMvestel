@@ -45,7 +45,14 @@ class Clientgroup_model extends CI_Model
         $query = $this->db->get();
         return $query->result_array();
     }
-	
+	public function group_info($id)
+    {
+		$this->db->select('*');
+        $this->db->from('ciudad');
+        $this->db->where('ciudad', $id);
+        $query = $this->db->get();
+        return $query->row_array();
+    }
 
     public function add($group_name, $group_desc)
     {

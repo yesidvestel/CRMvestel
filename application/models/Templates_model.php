@@ -30,6 +30,16 @@ class Templates_model extends CI_Model
         $query = $this->db->get();
         return $query->result_array();
     }
+	public function get_barrios()
+    {   //$where = "id BETWEEN $start AND $end";
+		$this->db->select('*');
+        $this->db->from('barrio');
+		$this->db->join('departamentos', 'barrio.idDepartamento = departamentos.idDepartamento', 'left');
+		$this->db->join('ciudad', 'barrio.idCiudad = ciudad.idCiudad', 'left');
+		$this->db->join('localidad', 'barrio.idLocalidad = localidad.idLocalidad', 'left');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
 
     public function template_info($id)
     {
@@ -37,6 +47,22 @@ class Templates_model extends CI_Model
         $this->db->where('id',$id);
         $query = $this->db->get();
         return $query->row_array();
+    }
+	public function barrio_info($id)
+    {
+		$this->db->select('*');
+        $this->db->from('barrio');
+		$this->db->join('departamentos', 'barrio.idDepartamento = departamentos.idDepartamento', 'left');
+		$this->db->join('ciudad', 'barrio.idCiudad = ciudad.idCiudad', 'left');
+		$this->db->join('localidad', 'barrio.idLocalidad = localidad.idLocalidad', 'left');
+        $this->db->where('idBarrio',$id);
+        $query = $this->db->get();
+        return $query->row_array();
+    }
+	public function delete($id)
+    {
+
+        return $this->db->delete('barrio', array('idBarrio' => $id));
     }
 	public function input($name, $body)
     {
@@ -56,8 +82,96 @@ class Templates_model extends CI_Model
                 $this->lang->line('ERROR')));
         }
     }
+	public function input_barrio($depar,$ciudad,$localidad,$barrio)
+    {
+        $data = array(
+			'idDepartamento' => $depar,
+            'idCiudad' => $ciudad,
+            'idLocalidad' => $localidad,
+            'barrio' => $barrio
+        );
 
+        $this->db->set($data);
 
+        if ($this->db->insert('barrio')) {
+            echo json_encode(array('status' => 'Success', 'message' =>
+                $this->lang->line('UPDATED')));
+        } else {
+            echo json_encode(array('status' => 'Error', 'message' =>
+                $this->lang->line('ERROR')));
+        }
+    }
+	public function edit_barrio($id,$depar,$ciudad,$localidad,$barrio)
+    {
+        $data = array(
+            'idDepartamento' => $depar,
+            'idCiudad' => $ciudad,
+            'idLocalidad' => $localidad,
+            'barrio' => $barrio,
+        );
+
+        $this->db->set($data);
+        $this->db->where('idBarrio', $id);
+
+        if ($this->db->update('barrio')) {
+            echo json_encode(array('status' => 'Success', 'message' =>
+                $this->lang->line('UPDATED')));
+        } else {
+            echo json_encode(array('status' => 'Error', 'message' =>
+                $this->lang->line('ERROR')));
+        }
+    }
+	public function input_local($depar,$ciudad,$localidad)
+    {
+        $data = array(
+			'idDepartamento' => $depar,
+            'idCiudad' => $ciudad,
+            'localidad' => $localidad
+        );
+
+        $this->db->set($data);
+
+        if ($this->db->insert('localidad')) {
+            echo json_encode(array('status' => 'Success', 'message' =>
+                $this->lang->line('UPDATED')));
+        } else {
+            echo json_encode(array('status' => 'Error', 'message' =>
+                $this->lang->line('ERROR')));
+        }
+    }
+	public function input_ciudad($depar,$ciudad)
+    {
+        $data = array(
+			'idDepartamento' => $depar,
+            'ciudad' => $ciudad
+        );
+
+        $this->db->set($data);
+
+        if ($this->db->insert('ciudad')) {
+            echo json_encode(array('status' => 'Success', 'message' =>
+                $this->lang->line('UPDATED')));
+        } else {
+            echo json_encode(array('status' => 'Error', 'message' =>
+                $this->lang->line('ERROR')));
+        }
+    }
+	public function input_depar($depar)
+    {
+        $data = array(
+			'departamento' => $depar
+        );
+
+        $this->db->set($data);
+
+        if ($this->db->insert('departamentos')) {
+            echo json_encode(array('status' => 'Success', 'message' =>
+                $this->lang->line('UPDATED')));
+        } else {
+            echo json_encode(array('status' => 'Error', 'message' =>
+                $this->lang->line('ERROR')));
+        }
+    }
     public function edit($id, $subect, $body)
     {
         $data = array(
