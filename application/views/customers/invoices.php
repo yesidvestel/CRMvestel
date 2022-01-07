@@ -469,10 +469,11 @@
             console.log(file_name);
                 var x=confirm("¿estas seguro de eliminar el recibo?");
                 if(x==true){
-                    $.post(baseurl+"invoices/eliminar_resivos_de_pago?file_name="+file_name,{},function(data){
+                    $.post(baseurl+"invoices/eliminar_resivos_de_pago?file_name="+file_name,{id_customer:id_customer},function(data){
+                        $("#total_text").text(data.total);
                         tb_resivos_de_pago.ajax.url( baseurl+'invoices/lista_resivos_tb?tid='+tid_invoice_trabajado).load();     
                         tb.ajax.url( baseurl+'customers/inv_list?cid='+id_customer).load();     
-                    });    
+                    },'json');    
                 }
                 
             });

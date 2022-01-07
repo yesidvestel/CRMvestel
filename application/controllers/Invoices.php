@@ -1155,6 +1155,7 @@ $no++;
 }
 function eliminar_resivos_de_pago(){
     $this->load->model('transactions_model','transactions');
+    $this->load->model('customers_model', 'customers');
     if(!is_dir("userfiles/txt_para_pdf_resivos_borrados/")){
              mkdir("userfiles/txt_para_pdf_resivos_borrados/", 0777, true);
         }
@@ -1192,7 +1193,9 @@ function eliminar_resivos_de_pago(){
             //var_dump($varx);
             //echo("despues de <br>");
         }
-
+            $due = $this->customers->due_details($_POST['id_customer']);
+            $this->customers->actualizar_debit_y_credit($_POST['id_customer']);
+            echo json_encode(array("status"=>"realizado","total"=>amountFormat(($due['total']-$due['pamnt']))));
 
 
 }
