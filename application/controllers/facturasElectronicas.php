@@ -86,6 +86,8 @@ $this->load->model("customers_model","customers");
     public function guardar(){
     	$this->load->library('SiigoAPI');
         $api = new SiigoAPI();
+        $api->getAuth(1);
+        $api->getAuth2(2);
         $this->load->model("customers_model","customers");
          $dataApiTV=null;
         $dataApiNET=null;
@@ -413,6 +415,11 @@ $this->load->model("customers_model","customers");
         $customers = $this->db->query("select * from customers where (usu_estado='Activo' or usu_estado='Compromiso') and (lower(ciudad) ='".$caja1->holder."' and facturar_electronicamente='1')")->result_array();//and id=8241
         $datos_del_proceso=array("facturas_creadas"=>array(),"facturas_con_errores"=>array(),"facturas_anteriormente_creadas"=>array());
         $dateTime=new DateTime($_POST['sdate']);
+        $x=0;
+         $this->load->library('SiigoAPI');
+        $api = new SiigoAPI();
+        $api->getAuth(1);
+        $api->getAuth2(2);
         foreach ($customers as $key => $value) {
                 $servicios=$this->customers->servicios_detail($value['id']);
                 $puntos = $this->customers->due_details($value['id']);
@@ -454,8 +461,11 @@ $this->load->model("customers_model","customers");
                     $factura_tabla=$this->db->get_where("facturacion_electronica_siigo",array("fecha"=>$fecha_1,'customer_id'=>$value['id']))->row();
                     if(empty($factura_tabla)){
 
-
-                        $creo=$this->facturas_electronicas->generar_factura_customer_para_multiple($datos);
+$x++;
+            //var_dump($x);
+            //echo date('h:i:s') . "\n";
+                        $creo=$this->facturas_electronicas->generar_factura_customer_para_multiple($datos,$api);
+                        //sleep(7);
                         if($creo['status']==true){
                             $datos_del_proceso['facturas_creadas'][]=$value['id'];
                         }else{

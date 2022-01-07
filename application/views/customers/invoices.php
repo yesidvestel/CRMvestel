@@ -1,3 +1,36 @@
+<style type="text/css">
+    
+/*[data-title]:hover:after {
+    opacity: 1;
+    transition: all 0.1s ease 0.5s;
+    visibility: visible;
+
+}
+
+[data-title]:after {
+    content: attr(data-title);
+    background-color: #333;
+    color: #fff;
+    font-size: 14px;
+    font-family: Raleway;
+    position: initial;
+    padding: 3px 20px;
+    bottom: -1.6em;
+    left: 100%;
+    white-space: nowrap;
+    box-shadow: 1px 1px 3px #222222;
+    opacity: 0;
+    border: 1px solid #111111;
+    z-index: 99999;
+    visibility: hidden;
+    border-radius: 6px;
+    
+}
+[data-title] {
+    position: relative;
+
+}*/
+</style>
 <article class="content">
     <div class="card card-block">
         <div id="notify" class="alert alert-success" style="display:none;">
@@ -34,14 +67,14 @@
                 	<div class="col-md-1">
                     <strong>TOTAL</strong>
                     </div>
-                    <div class="col-md-10">
+                    <div class="col-md-10" id="total_text">
                     <?php echo amountFormat(($due['total']-$due['pamnt'])) ?>
                     </div>
                 </div>
             </div>
             <a href="#part_payment" onclick="cargar_facturas()" data-toggle="modal" data-remote="false" data-type="reminder" class="btn btn-large btn-success mb-1" title="Partial Payment">
 				<span class="icon-money"></span> <?php echo $this->lang->line('Make Payment') ?> </a><span id="span_facturas">&nbsp;Facturas a pagar</span>
-                <br><a href="#" class="btn btn-primary" onclick="filtrar_facturas()">Filtrar Facturas Sin Pagar</a>
+                <br><a href="#" id="btn-notas-debit-credit" class="btn btn-warning"><i class="icon-minus"></i>Notas Debito, <i class="icon-plus"></i>Notas Credito</a><br><br><a href="#" class="btn btn-primary" onclick="filtrar_facturas()">Filtrar Facturas Sin Pagar</a>
                &nbsp;<a href="<?=base_url().'invoices/ver_estado_de_cuenta_user?id='.$_GET['id'] ?>" class="btn btn-primary">Estado de cuenta</a>
 
             <hr>
@@ -246,7 +279,109 @@
         </div>
     </div>
 </div>
+<div id="modal_resivos_de_pago" class="modal fade">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                <h3 align="center" id="titulo_modal">Resivos de la factura para eliminar</h3>
+                
+            </div>
+            <div class="modal-body">
+                
+                
+                    <div class="table-responsive">
+                        <table id="tb_resivos_de_pago" class="table table-hover" cellspacing="0" width="100%" >
+                            <thead>
+                            <tr>
+                                <th>#</th>                  
+                                <th>Fecha</th> 
+                                <th>Vista Previa</th>     
+                                <th>Nombre</th>
+                                <th>Transacciones</th>
+                                <th>Acciones</th>
+                                
+                                
 
+                            </tr>
+                            </thead>
+                            <tbody>
+                            
+                            </tbody>
+                            <tfoot>
+                                <th>#</th>                  
+                                <th>Fecha</th> 
+                                <th>Vista Previa</th>   
+                                <th>Nombre</th>
+                                <th>Transacciones</th>
+                                <th>Acciones</th>
+                            </tfoot>
+
+                        </table>
+                    </div>
+                    
+                
+                <br>
+            </div>
+            
+            <div class="modal-footer">
+                
+                
+                <button type="button" class="btn btn-primary" onclick="$('#modal_resivos_de_pago').modal('hide');">Aceptar</button>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="modal_notas_debito_credito" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                <h3 align="center" id="titulo_modal">Crear Nota Credito o Debito</h3>
+                
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                        <div class="col-xs-12"><label
+                                    for="shortnote">Tipo Nota</label>
+                             <select name="tipo_nota" id="tipo_nota" class="form-control" onchange="tipo_nota_change()">
+                                <option value="Nota Credito">Nota Credito</option>
+                                <option value="Nota Debito">Nota Debito</option>
+                            </select></div>
+                        
+                </div>
+                <p><small id="info">Nota credito se utiliza para realizar descuentos a las facturas</small></p>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="input-group">
+
+                                <div class="input-group-addon"><?php echo $this->config->item('currency') ?></div>
+                                <input  type="text" class="form-control" placeholder="Total Amount" name="monto_notas"
+                                       id="monto_notas" value="0">
+                            </div>
+
+                        </div>
+                        
+                    </div>
+
+                
+                <br>
+            </div>
+            
+            <div class="modal-footer">
+                
+                <button type="button" class="btn btn-default" onclick="$('#modal_notas_debito_credito').modal('hide');">Cerrar</button>
+                <button type="button" class="btn btn-primary" id="id_guardar_notas" onclick="guardar_notas()">Guardar</button>
+                
+            </div>
+        </div>
+    </div>
+</div>
 <?php /*
     $lista_invoices=$this->db->order_by('status','DESC')->get_where('invoices')->result_array();
     foreach ($lista_invoices as $key => $value) {
@@ -257,8 +392,15 @@
     //quito esto porque esta generando error y no se porque esta no le veo la logica
 ?>
 <script type="text/javascript">
+    var tid_invoice_trabajado=0;
+    function eliminiar_resivos_de_pago(tid_invoice){
+        $("#titulo_modal").text("Recibos de la factura #"+tid_invoice+" para eliminar");
+        $("#modal_resivos_de_pago").modal("show");
+        tid_invoice_trabajado=tid_invoice;
+        tb_resivos_de_pago.ajax.url( baseurl+'invoices/lista_resivos_tb?tid='+tid_invoice).load();     
+    }
     var desabilitar=false;
-    var tb;
+    var tb,tb_resivos_de_pago;
     var fac_pagadas="<?= (isset($ultimo_resivo)) ? $ultimo_resivo : '' ?>";
     var id_customer="<?=$_GET['id']?>";
     $(document).ready(function () {
@@ -288,7 +430,22 @@
             $("#notify").removeClass("alert-danger").addClass("alert-success").fadeIn();
             $("html, body").scrollTop($("body").offset().top);
         }
-        
+        tb_resivos_de_pago= $('#tb_resivos_de_pago').DataTable({
+            'processing': true,
+            'serverSide': true,
+            'stateSave': true,
+            'order': [],
+            'ajax': {
+                'url': "<?php echo site_url('invoices/lista_resivos_tb')?>",               
+                'type': 'POST',
+            },
+            'columnDefs': [
+                {
+                    'targets': [0],
+                    'orderable': false,
+                },
+            ],
+        });    
 
     });
    $(document).on('click', "#submitpayment2", function (e) {
@@ -301,6 +458,23 @@
 
 
 });
+
+   $("#tb_resivos_de_pago").on('draw.dt',function (){
+        $(".eliminar_resivo").click(function(e){
+            e.preventDefault();
+            var file_name=$(this).data("file-name");
+            console.log(file_name);
+                var x=confirm("¿estas seguro de eliminar el recibo?");
+                if(x==true){
+                    $.post(baseurl+"invoices/eliminar_resivos_de_pago?file_name="+file_name,{},function(data){
+                        tb_resivos_de_pago.ajax.url( baseurl+'invoices/lista_resivos_tb?tid='+tid_invoice_trabajado).load();     
+                        tb.ajax.url( baseurl+'customers/inv_list?cid='+id_customer).load();     
+                    });    
+                }
+                
+            });
+
+    });
 
 function visualizar_div_asociadas(){
     if($("#reconexion option:selected").val()=="si"){
@@ -422,5 +596,82 @@ let lista_facturas=[];
         
     }
     $("#span_facturas").hide();
-    
+    //js para notacreditos
+    var total2=0;
+    $("#btn-notas-debit-credit").click(function(e){
+        e.preventDefault();
+        $("#modal_notas_debito_credito").modal("show");
+        if(lista_facturas.length==0){
+            $("#id_guardar_notas").attr("disabled",true);
+        }else{
+            $("#id_guardar_notas").attr("disabled",false);
+        }
+         total2=0;
+
+        $(".facturas_para_pagar:checked").each(function(index){            
+            total2+=parseInt($(this).data('total'));            
+        });
+        $("#monto_notas").val(total2);
+        validar_monto_notas();
+    });
+    tipo_nota_change();
+    function tipo_nota_change(){
+        var seleccionada=$("#tipo_nota option:selected").val();
+        if(seleccionada=="Nota Credito"){
+            $("#info").html("Nota <span style='color:red'>Credito</span> se utiliza para realizar <span style='color:red'>descuentos</span> a las facturas");
+        }else{
+            $("#info").html("Nota <span style='color:blue'>Debito</span> se utiliza para realizar <span style='color:blue'>aumentos</span> a las facturas");
+        }
+validar_monto_notas();
+    }
+    var guardar_notas_b=true;
+
+    $("#monto_notas").keyup(function(){
+        validar_monto_notas();
+    });
+   function validar_monto_notas(){
+        var seleccionada=$("#tipo_nota option:selected").val();
+        var x=parseInt($("#monto_notas").val());
+        //desabilitar si x =0;
+        if(seleccionada=="Nota Credito"){
+            
+            if(x<0){
+                x=Math.abs(x);
+            }
+
+            if(x>total2 || x==0){
+                $("#id_guardar_notas").attr("disabled",true);                
+            }else{
+                $("#id_guardar_notas").attr("disabled",false);            
+            }
+            
+        }else{
+            if(x==0){
+                $("#id_guardar_notas").attr("disabled",true);
+            }else{
+                $("#id_guardar_notas").attr("disabled",false);
+            }
+            
+        }
+    }
+    function guardar_notas(){
+        var nota_seleccionada=$("#tipo_nota option:selected").val();
+        var valor_nota=parseInt($("#monto_notas").val());
+        if(valor_nota<0){
+                valor_nota=Math.abs(valor_nota);
+        }
+        $.post(baseurl+"invoices/crear_nota_debito_credito",{nota_seleccionada:nota_seleccionada,valor_nota:valor_nota,'lista':lista_facturas,id_customer:id_customer},function(data){
+            console.log(data);
+            if(data.status=="realizado"){
+                 $("#notify .message").html("<strong>Success : </strong>: Cambios realizados");
+                    $("#notify").removeClass("alert-danger").addClass("alert-success").fadeIn();
+                    $("html, body").scrollTop($("body").offset().top);                    
+                    $("#total_text").text(data.total);
+                    $("#modal_notas_debito_credito").modal("hide");
+                    tb.ajax.url( baseurl+'customers/inv_list?cid='+id_customer).load();
+                    lista_facturas=[];     
+            }
+        },'json');
+        //falta obtener datos, conectar al servidor, realizar los calculos, guardar y refrescar tablas 
+    }
 </script>

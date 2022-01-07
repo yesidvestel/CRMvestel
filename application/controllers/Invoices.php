@@ -1092,7 +1092,110 @@ $this->load->model('customers_model', 'customers');
         echo json_encode($output);
 
     }
+public function lista_resivos_tb(){
+    if(empty($_GET['tid'])){
+        $_GET['tid']=-500;
+    }
+        $invoice=$this->db->get_where("invoices", array('tid' =>$_GET['tid']))->row();
+        $lista_resivos=array();
 
+        if(isset($invoice)){
+            $lista_resivos=json_decode($invoice->resivos_guardados);
+        }
+        
+        $no = $this->input->post('start');
+        $data=array();
+        $x=0;
+        $minimo=$this->input->post('start');
+        $maximo=$minimo+10;
+        foreach ($lista_resivos as $key => $value) {
+            
+            if($x>=$minimo && $x<$maximo){
+                
+                //http://localhost/CRMvestel/customers/invoices?id=16441
+                $row = array();
+                $row[] = "R".$no;
+                //$row[] = $customers->abonado;
+                //$row[] = '<a href="customers/view?id=' . $customers->id . '">' . $customers->name ." ". $customers->unoapellido. '</a>';
+                $row[] = $value->date;
+                $row[] = '<iframe src="'.base_url().'invoices/printinvoice2?file_name='.$value->file_name.'"></iframe>';
+                $row[] = $value->file_name;
+                //$lista=explode(",", $value->id_transacciones);
+                $str="";
+                foreach ($value->id_transacciones as $key => $value2) {
+                    $tr=$this->db->get_where("transactions", array('id' =>$value2))->row();
+                    $str.="<i style='cursor:pointer;' title='".$tr->note."'>".$value2."</i>,";
+                }
+                $row[] = $str;
+                if($str!=""){
+                    $row[] = "<a href='#' class='btn btn-danger eliminar_resivo' data-file-name='".$value->file_name."'><span class='icon-trash'></span></a>";    
+                }else{
+                    $row[] ="Se creo antes de la actualizacion...";
+                }
+                
+                //$row[] = $customers->nomenclatura . ' ' . $customers->numero1 . $customers->adicionauno.' Nº '.$customers->numero2.$customers->adicional2.' - '.$customers->numero3;
+                //$row[] = $customers->usu_estado;
+                //$row[] = '<a href="'.base_url().'customers/invoices?id='.$value['csd'].'" class="btn btn-info btn-sm"><span class="icon-eye"></span>  Facturas</a> <a href="'.base_url().'invoices/view?id='.$value['tid'].'" class="btn btn-info btn-sm"><span class="icon-eye"></span>  Factura Creada</a>';
+                $data[] = $row;
+$no++;
+            }
+            $x++;
+             
+             
+        }
+
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => count($lista_invoices),
+            "recordsFiltered" => count($lista_invoices),
+            "data" => $data,
+        );
+        //output to json format
+        echo json_encode($output);
+}
+function eliminar_resivos_de_pago(){
+    $this->load->model('transactions_model','transactions');
+    if(!is_dir("userfiles/txt_para_pdf_resivos_borrados/")){
+             mkdir("userfiles/txt_para_pdf_resivos_borrados/", 0777, true);
+        }
+       try {
+            rename("userfiles/txt_para_pdf_resivos/header_".$_GET['file_name'].".txt", "userfiles/txt_para_pdf_resivos_borrados/header_".$_GET['file_name'].".txt");
+            rename("userfiles/txt_para_pdf_resivos/body_".$_GET['file_name'].".txt", "userfiles/txt_para_pdf_resivos_borrados/body_".$_GET['file_name'].".txt");   
+       } catch (Exception $e) {
+           
+       }
+        
+        $resultado=$this->db->query("select * from invoices where resivos_guardados like '%".$_GET['file_name']."%'")->result();
+
+        foreach ($resultado as $key => $value) {
+            $varx=json_decode($value->resivos_guardados);
+            //var_dump($varx);
+            //echo(" antes de <br>");
+
+            foreach ($varx as $key => $value2) {
+                if($value2->file_name==$_GET['file_name']){
+                    foreach ($value2->id_transacciones as $key => $trid) {
+                        $tr=$this->db->get_where("transactions",array("id"=>$trid,"estado"))->row();
+                        if(isset($tr)){
+                            $this->transactions->delt($trid);
+                        }
+                        
+                    }
+                    
+                    
+                    unset($varx[$key]);
+                    break;
+                }
+            }
+            $varx=json_decode($varx);
+            $this->db->update("invoices",array("resivos_guardados"=>$varx),array("tid"=>$value->tid));
+            //var_dump($varx);
+            //echo("despues de <br>");
+        }
+
+
+
+}
     public function view()
     {
         $this->load->model('accounts_model');
@@ -1855,6 +1958,105 @@ foreach ($lista as $key => $value) {
         if ($data['invoice']) $this->load->view('invoices/duplicate', $data);
         $this->load->view('fixed/footer');
 
+    }
+
+    public function prueba(){
+        $lista=$this->db->query("SELECT invoice_items.id as id_i,invoice_items.tid as tid_i, invoice_items.subtotal as subtotal_item,invoices.subtotal as subtotal_inv,invoices.total as total_inv FROM `invoice_items` JOIN invoices ON invoice_items.tid=invoices.tid WHERE `status`='due' AND product='Reconexión internet'")->result();
+        foreach ($lista as $key => $value) {
+            $total=$value->total_inv-$value->subtotal_item;
+            $subTotal=$value->subtotal_inv-$value->subtotal_item;
+            $this->db->update("invoices",array("subtotal"=>$subTotal,"total"=>$total),array("tid"=>$value->tid_i));
+            $this->db->delete("invoice_items",array("id"=>$value->id_i));
+        }  
+
+    }
+
+    public function crear_nota_debito_credito(){
+        $this->load->model('customers_model', 'customers');
+        $array_facturas=$_POST['lista'];
+        $monto=$_POST['valor_nota'];
+        $valor_restante_monto=0;
+        $montos=array();
+        $array_facturas2=array();
+        $_id_last_invoice_procesed=0;
+            foreach ($array_facturas as $key => $id_factura) {
+                $factura_var = $this->db->get_where('invoices',array('tid'=>$id_factura))->row();                                
+                
+                $total_factura=$factura_var->total;
+                if($factura_var->status=="partial"){
+                    $total_factura=$factura_var->total-$factura_var->pamnt;
+                }
+                $valor_restante_monto=$monto-$total_factura;
+
+                if($valor_restante_monto>=0){
+                    $montos[$id_factura]=$total_factura;
+                    $array_facturas2[]=$id_factura;
+                    $monto=$valor_restante_monto;
+                    $_id_last_invoice_procesed=$id_factura;
+                }else if($monto>0 && $factura_var->status!="partial"){
+                    $montos[$id_factura]=$monto;
+                    $array_facturas2[]=$id_factura;
+                    $monto=$valor_restante_monto;  
+                    $_id_last_invoice_procesed=$id_factura;
+                }else if($valor_restante_monto<0 && $monto>0 && $factura_var->status=="partial"){
+                    $montos[$id_factura]=$monto;
+                    $array_facturas2[]=$id_factura;
+                    $monto=$valor_restante_monto;
+                    $_id_last_invoice_procesed=$id_factura;  
+                    break;
+                }
+                
+            }
+            //var_dump($valor_restante_monto);
+            if($valor_restante_monto>0){
+                $montos[$_id_last_invoice_procesed]+=$valor_restante_monto;
+            }
+            
+            foreach ($array_facturas2 as $key => $id_factura) {
+                    $data_invoice_item=array();
+                    $data_invoice_item['tid']=$id_factura;
+                    $data_invoice_item['pid']=0;
+                    $data_invoice_item['product']=$_POST['nota_seleccionada'];
+                    $data_invoice_item['qty']=1;
+                    $data_invoice_item['tax']=0;
+                    $data_invoice_item['discount']=0;
+                    $data_invoice_item['totaltax']=0;
+                    $data_invoice_item['totaldiscount']=0;
+                    $invoice=$this->db->get_where("invoices",array("tid"=>$id_factura))->row();
+                    $data_invoice=array();
+                if($_POST['nota_seleccionada']=="Nota Credito"){
+                    $data_invoice_item['price']=-abs($montos[$id_factura]);  
+                    
+                    $data_invoice['subtotal']=$invoice->subtotal-$montos[$id_factura];
+                    $data_invoice['total']=$invoice->total-$montos[$id_factura];
+                    if($data_invoice['subtotal']<0){
+                        $data_invoice['subtotal']=0;
+                        $data_invoice['tax']=$data_invoice['total'];
+                    }
+                    if(($data_invoice['total']-$invoice->pamnt)<=0){
+                        $data_invoice['status']="paid";
+                    }
+
+                }else{//nota debito
+                    $data_invoice_item['price']=$montos[$id_factura];                    
+                    $data_invoice['subtotal']=$invoice->subtotal+$montos[$id_factura];
+                    $data_invoice['total']=$invoice->total+$montos[$id_factura];
+                    //falta aca cuando aumenta el valor calcular el status si tiene transacciones
+                    if($invoice->pamnt!=0){
+                        if($invoice->pamnt<$data_invoice['total']){
+                                $data_invoice['status']="partial";
+                        }
+                    }
+                }
+                    $data_invoice_item['subtotal']=$data_invoice_item['price'];
+                    //var_dump($data_invoice);
+                    $this->db->insert("invoice_items",$data_invoice_item);
+                    $this->db->update("invoices",$data_invoice,array("tid"=>$id_factura));
+
+            }
+            $due = $this->customers->due_details($_POST['id_customer']);
+            
+            echo json_encode(array("status"=>"realizado","total"=>amountFormat(($due['total']-$due['pamnt']))));
     }
 
 }
