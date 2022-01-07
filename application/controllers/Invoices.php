@@ -2055,7 +2055,7 @@ foreach ($lista as $key => $value) {
 
             }
             $due = $this->customers->due_details($_POST['id_customer']);
-            
+            $this->customers->actualizar_debit_y_credit($_POST['id_customer']);
             echo json_encode(array("status"=>"realizado","total"=>amountFormat(($due['total']-$due['pamnt']))));
     }
 

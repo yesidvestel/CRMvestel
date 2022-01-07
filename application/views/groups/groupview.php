@@ -246,7 +246,7 @@
                                                 <div id="ciudades">
                                                     <select id="cmbCiudades"  class="selectpicker form-control" name="ciudad" > 
                                                             <option value="">-</option>
-                                                            <option value="<?php echo $sede['idCiudad'] ?>"><?php echo $sede['ciudad'] ?></option>
+                                                            <option selected value="<?php echo $sede['idCiudad'] ?>"><?php echo $sede['ciudad'] ?></option>
                                                         
                                                     </select>
                                                 </div>
@@ -1350,11 +1350,11 @@ $("#fclientstable").on('draw.dt',function (){
     //end seleccion multiple
 
    
-    var localidad_Yopal = new Array ("-","ComunaI","ComunaII","ComunaIII","ComunaIV","ComunaV","ComunaVI","ComunaVII");
+   /* var localidad_Yopal = new Array ("-","ComunaI","ComunaII","ComunaIII","ComunaIV","ComunaV","ComunaVI","ComunaVII");
     var localidad_Monterrey = new Array ("-","Ninguno");
     var localidad_Villanueva = new Array ("-","SinLocalidad");
     var localidad_Mocoa = new Array ("-","Ninguna");
-     cambia4();
+     //cambia4();
                             //crear funcion que ejecute el cambio
                             function cambia4(){
                                 var ciudad;
@@ -1416,7 +1416,7 @@ $("#fclientstable").on('draw.dt',function (){
                                 }
                                 $("#barrios_multiple").select2();
                                 
-                            }
+                            }*/
 
 function ckekar_1(){
     var selecccionado =$("#check1").prop('checked');
@@ -1587,31 +1587,39 @@ function cancelar_envio_mensajes(){
     });
 }
 //traer localidad			
+
 $(document).ready(function(){
 	$("#cmbCiudades").change(function(){
-		$("#cmbCiudades option:selected").each(function(){
-			idCiudad = $(this).val();
-			//console.log(idDepartamento);
-			$.post(baseurl+"customers/localidades_list",{'idCiudad': idCiudad
-				},function(data){
-				//console.log(data);
-					$("#localidad_multiple").html(data);
-			})
-		})
-	})
+        cuando_cambia_de_ciudad();
+	});
+    cuando_cambia_de_ciudad();
+    $("#cmbLocalidades").change(function(){
+        $("#cmbLocalidades option:selected").each(function(){
+            idLocalidad = $(this).val();
+            //console.log(idDepartamento);
+            $.post(baseurl+"customers/barrios_list",{'idLocalidad': idLocalidad
+                },function(data){
+                //console.log(data);
+                data=data.replace("<option value=''>Seleccionar</option>","");
+                    $("#barrios_multiple").html(data);
+            })
+        })
+    });
 })
+function cuando_cambia_de_ciudad(){
+    $("#cmbCiudades option:selected").each(function(){
+            idCiudad = $(this).val();
+            //console.log(idDepartamento);
+            $.post(baseurl+"customers/localidades_list?tipo=multiple",{'idCiudad': idCiudad
+                },function(data){
+                //console.log(data);
+                    $("#cmbLocalidades").html(data);
+                    data=data.replace("<option value=''>Seleccionar</option>","");
+                    $("#localidad_multiple").html(data);
+                    $("#localidad_multiple").select2();
+            });
+        });
+}
 //traer barrio			
-$(document).ready(function(){
-	$("#localidad_multiple").change(function(){
-		$("#localidad_multiple option:selected").each(function(){
-			idLocalidad = $(this).val();
-			//console.log(idDepartamento);
-			$.post(baseurl+"customers/barrios_list",{'idLocalidad': idLocalidad
-				},function(data){
-				//console.log(data);
-					$("#barrios_multiple").html(data);
-			})
-		})
-	})
-})	
+
 </script>                   
