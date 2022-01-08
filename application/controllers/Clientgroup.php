@@ -612,7 +612,14 @@ class Clientgroup extends CI_Controller
     //write rows to sheet1
     foreach ($lista_customers2 as $key => $customer) {            
             $direccion= $customer->nomenclatura . ' ' . $customer->numero1 . $customer->adicionauno.' Nº '.$customer->numero2.$customer->adicional2.' - '.$customer->numero3;
-            $writer->writeSheetRow('Customers '.$cust_group->title,array($customer->abonado,$customer->documento ,$customer->name.' '.$customer->unoapellido, $customer->celular, $direccion,$customer->barrio ,$customer->suscripcion_str,$customer->usu_estado,$customer->deuda,$customer->suscripcion,$customer->money));
+                    $obj_barrio=$this->db->get_where("barrio",array("idBarrio"=>$customer->barrio))->row();
+                    $str_barrio="";
+                            if(isset($obj_barrio)){                                
+                                $str_barrio = $customer->barrio;    
+                            }else{
+                                $str_barrio= $customer->barrio;    
+                            }
+            $writer->writeSheetRow('Customers '.$cust_group->title,array($customer->abonado,$customer->documento ,$customer->name.' '.$customer->unoapellido, $customer->celular, $direccion,$str_barrio ,$customer->suscripcion_str,$customer->usu_estado,$customer->deuda,$customer->suscripcion,$customer->money));
     }
         
         
