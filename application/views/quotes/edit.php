@@ -462,8 +462,12 @@
         });
     });
 	// selecion de orden
-	var perfil_servicio = new Array ("...","AgregarInternet","AgregarTelevision","Migracion","Bajar 15 Mg","Bajar 10 Mg","Bajar 5 Mg","Cambio de equipo","Corte Combo","Corte Internet","Corte Television","Equipo adicional","Instalacion","Punto nuevo","Subir 5 Mg","Subir 10 Mg","Subir 15 Mg","Subir 20 Mg","Suspension Combo","Suspension Internet","Suspension Television","Traslado","Toma Adicional");
-	var perfil_reclamo = new Array ("...","Revision_de_Internet","Revision_de_television","Otros");	
+	<?php if ($this->aauth->get_user()->roleid == 5) { ?>
+	var perfil_servicio = new Array ("...","Reconexion Combo","Reconexion Television","Reconexion Internet","AgregarInternet","AgregarTelevision","Migracion","Bajar 15 Mg","Bajar 10 Mg","Bajar 5 Mg","Cambio de equipo","Corte Combo","Corte Internet","Corte Television","Equipo adicional","Instalacion","Punto nuevo","Subir 5 Mg","Subir 10 Mg","Subir 15 Mg","Subir 20 Mg","Subir 70Mb","Suspension Combo","Suspension Internet","Suspension Television","Traslado","Toma Adicional");
+	<?php }else{ ?>
+	var perfil_servicio = new Array ("...","AgregarInternet","AgregarTelevision","Migracion","Bajar 15 Mg","Bajar 10 Mg","Bajar 5 Mg","Cambio de equipo","Corte Combo","Corte Internet","Corte Television","Equipo adicional","Instalacion","Punto nuevo","Subir 5 Mg","Subir 10 Mg","Subir 15 Mg","Subir 20 Mg","Subir 70Mb","Suspension Combo","Suspension Internet","Suspension Television","Traslado","Toma Adicional");
+	<?php }; ?>
+	var perfil_reclamo = new Array ("...","Revision_de_Internet","Revision_de_television","Revision tv e internet");	
 							//crear funcion que ejecute el cambio
 							function cambia(){
 								var subject;
