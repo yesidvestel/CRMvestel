@@ -361,7 +361,7 @@
                 <p><small id="info">Nota credito se utiliza para realizar descuentos a las facturas</small></p>
                  <div class="row">
                         <div class="col-xs-12"><label
-                                    for="shortnote">Descripcion</label>
+                                    for="shortnote">Razón</label>
                              <textarea name="descripcion_nota" id="descripcion_nota" class="form-control"></textarea>
                         </div>
                         
