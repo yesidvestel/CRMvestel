@@ -248,7 +248,7 @@ class Ticket_model extends CI_Model
             $this->db->where_in('detalle', explode(",", $filt2['detalle']));       
         }
 		$this->db->join('customers', 'tickets.cid=customers.id ', 'left');
-		$this->db->join('ciudad', 'customers.ciudad=ciudad.idCiudad ', 'left');
+		//$this->db->join('ciudad', 'customers.ciudad=ciudad.idCiudad ', 'left');
 		$this->db->join('barrio', 'customers.barrio=barrio.idBarrio', 'left');
         $i = 0;
 
