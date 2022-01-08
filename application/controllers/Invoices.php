@@ -2025,6 +2025,9 @@ foreach ($lista as $key => $value) {
                     $data_invoice_item['discount']=0;
                     $data_invoice_item['totaltax']=0;
                     $data_invoice_item['totaldiscount']=0;
+                    if($_POST['des_nota']!="" && $_POST['des_nota']!=" " && $_POST['des_nota']!="null" && $_POST['des_nota']!=null){
+                        $data_invoice_item['product_des']=$_POST['des_nota'];
+                    }
                     $invoice=$this->db->get_where("invoices",array("tid"=>$id_factura))->row();
                     $data_invoice=array();
                 if($_POST['nota_seleccionada']=="Nota Credito"){
