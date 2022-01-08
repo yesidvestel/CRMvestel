@@ -1,4 +1,6 @@
-﻿ALTER TABLE `invoices` CHANGE `resivos_guardados` `resivos_guardados` VARCHAR(1000) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+﻿ALTER TABLE `tickets` CHANGE `status` `status` ENUM('Realizando','Resuelto','Anulada','Pendiente') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `invoices` CHANGE `resivos_guardados` `resivos_guardados` VARCHAR(1000) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
 ------------------------------------------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS `crm`.`estadisticas_servicios` (
   `id_estadisticas_servicios` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
