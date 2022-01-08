@@ -569,7 +569,9 @@ class Clientgroup extends CI_Controller
              
         }
         //fin codigo para hacer filtros por mora y servicios
-
+		//$this->db->join('customers', 'tickets.cid=customers.id ', 'left');
+		//$this->db->join('ciudad', 'customers.ciudad=ciudad.idCiudad ', 'left');
+		$this->db->join('barrio', 'customers.barrio=barrio.idBarrio', 'left');
 
         
         $this->load->library('Excel');
