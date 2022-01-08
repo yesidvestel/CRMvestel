@@ -385,8 +385,8 @@ class Tickets Extends CI_Controller
 		$nat = $this->input->post('nat');
         $master = $this->input->post('master');
 		$idequipo = $this->input->post('idequipo');
-$es_valido=true;
-$txt_error="";
+		$es_valido=true;
+		$txt_error="";
         if($mac==""){
             $es_valido=false;
             $txt_error.="<li>Agrega una mac </li>";
@@ -447,6 +447,7 @@ $txt_error="";
         $this->db->select("*");
         $this->db->from("tickets");
 		$this->db->join('customers', 'tickets.cid=customers.id', 'left');
+		$this->db->join('barrio', 'customers.barrio=barrio.idBarrio', 'left');
         $this->db->order_by("idt","DESC");
 		//$usuario=$this->db->get_where("customers",array('id' => $_GET['id']))->row();
 		if ($_GET['detalle'] != '' && $_GET['detalle'] != '-' && $_GET['detalle'] != '0' && $_GET['detalle']!=null && $_GET['detalle']!="null") {
@@ -480,6 +481,7 @@ $txt_error="";
             
         }
         //$this->db->where("idt",$_GET['id']);
+		
         $lista_tickets=$this->db->get()->result();
         $this->load->library('Excel');
 		$lista_tickets2=array();
