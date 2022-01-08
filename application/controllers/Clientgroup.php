@@ -617,9 +617,9 @@ class Clientgroup extends CI_Controller
                     $obj_barrio=$this->db->get_where("barrio",array("idBarrio"=>$customer->barrio))->row();
                     $str_barrio="";
                             if(isset($obj_barrio)){                                
-                                $str_barrio = $customer->barrio;    
+                                $str_barrio = $obj_barrio->barrio;    
                             }else{
-                                $str_barrio= $customer->barrio;    
+                                $str_barrio= $obj_barrio->barrio;    
                             }
             $writer->writeSheetRow('Customers '.$cust_group->title,array($customer->abonado,$customer->documento ,$customer->name.' '.$customer->unoapellido, $customer->celular, $direccion,$str_barrio ,$customer->suscripcion_str,$customer->usu_estado,$customer->deuda,$customer->suscripcion,$customer->money));
     }
