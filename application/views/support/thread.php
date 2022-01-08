@@ -366,19 +366,24 @@
     var estado_actual="<?=$thread_info['status']?>";
     function validar_estado(){
         var status_selected= $('#estadoid option:selected').text();
-        if(estado_actual==status_selected){
+		if(estado_actual=="Realizando" && status_selected=="Pendiente"){
+			$("#submit_model").prop("disabled","true");
+		}else if(estado_actual=="Realizado" && status_selected=="Realizando"){
+			$("#submit_model").prop("disabled","true");
+		}
+       /* if(estado_actual==status_selected){
             $("#submit_model").prop("disabled","true");
         }else{
             if(estado_actual=="Realizando" && status_selected=="Resuelto"){
               $("#submit_model").prop("disabled","true");  
             }
-        }
+        }*/
     }
     function funcion_status(){
         //aqui estoy toca terminar esto de que muestre y n el div
         var x= $('#estadoid option:selected').text();
         
-        if(x!='Resuelto'){
+        if(x!='Resuelto' && x!='Realizando'){
             $("#fecha_final_div").css('visibility','hidden');
             $("#submit_model").removeAttr("disabled");
         }else{
@@ -421,10 +426,13 @@
                     <div class="row">
                         <div class="col-xs-12 mb-1"><label
                                     for="pmethod"><?php echo $this->lang->line('Mark As') ?></label>
-                            <select id="estadoid" name="status" class="form-control mb-1" onchange="funcion_status();">
-                                <option value="Resuelto">Resuelto</option>
+                            <select id="estadoid" name="status" class="form-control mb-1" onchange="funcion_status();">                                
                                 <option value="Pendiente">Pendiente</option>
+                                <option value="Realizando">Realizando</option>								
 								<option value="Anulada">Anular</option>
+								<?php if ($thread_info['status']=='Realizando'){ ?>								
+								<option value="Resuelto">Resuelto</option>
+								<?php }; ?>
                             </select>
 
                         </div>

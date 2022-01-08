@@ -671,7 +671,21 @@ class Tickets Extends CI_Controller
 		$usuario = $this->db->get_where('customers', array('id' => $ticket->cid))->row();
         $invoice = $this->db->get_where('invoices',array('tid'=>$ticket->id_invoice))->result_array();
 		$temporal=$this->db->get_where('temporales',array('corden'=>$ticket->codigo))->row();
-   if($status=="Anulada"){
+		if($status=="Realizando"){
+			//cambio cuando se esta realizando
+            $this->db->set('status', $status);
+           // $this->db->set('inicio', date("Y-m-d h:i"));
+            $this->db->where('idt', $tid);
+            if ($this->db->update('tickets')){
+				//cambio color realizando
+				$this->db->set('color', '#2DC548');
+				$this->db->set('start', date("Y-m-d h:i"));
+				$this->db->where('idorden', $ticket->codigo);
+				$this->db->update('events');
+        };
+        echo json_encode(array('msg1'=>"Realizando",'tid'=>0,'status' => 'Success', 'message' =>
+            $this->lang->line('UPDATED'), 'pstatus' => $status));
+   } else if($status=="Anulada"){
     $dataz=array();
         $dataz['status']=$status;
         //$dataz['fecha_final']=$fecha_final;
@@ -681,11 +695,6 @@ class Tickets Extends CI_Controller
             $this->db->where('idorden', $ticket->codigo);
             $this->db->update('events');
         };
-                
-        
-        
-        
-
         echo json_encode(array('msg1'=>"Anulada",'tid'=>0,'status' => 'Success', 'message' =>
             $this->lang->line('UPDATED'), 'pstatus' => $status));
    }else{
@@ -1469,6 +1478,7 @@ if($ya_agrego_equipos==false){
         if ($this->db->update('tickets',$dataz,array('idt'=>$tid))){
 			//cambio color al finalizar
 			$this->db->set('color', '#a3a3a3');
+			$this->db->set('end', date("Y-m-d h:i"));
         	$this->db->where('idorden', $ticket->codigo);
         	$this->db->update('events');
 		};
