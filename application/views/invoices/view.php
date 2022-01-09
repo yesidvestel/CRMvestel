@@ -233,8 +233,11 @@
                             <td>' . amountFormat($row['totaldiscount']) . ' (' .amountFormat_s($row['discount']).$this->lang->line($invoice['format_discount']).')</td>
                             <td>' . amountFormat($row['subtotal']) . '</td>
                         </tr>';
-
-                                        echo '<tr><td colspan=5>' . $row['product_des'] . '</td></tr>';
+                        $str_1="";
+                        if($row['product']=="Nota Credito" || $row['product']=="Nota Debito"){
+                            $str_1='<a href="#" class="btn btn-danger btn-sm eliminar_nota" data-id="'.$row['id'].'"><span class="icon-trash"></span></a>&nbsp';
+                        }
+                                        echo '<tr><td colspan=5>'.$str_1. $row['product_des'] . '</td></tr>';
                                         $c++;
                                     } ?>
 
@@ -931,5 +934,12 @@ $("#seleccion_banco").hide();
 
     });
 
+$(".eliminar_nota").click(function(e){
+    e.preventDefault();
+    var id_nota=$(this).data("id");
+    $.post(baseurl+"invoices/eliminar_nota",{id_nota:id_nota},function(data){
+            
+    });
 
+});
 </script>
