@@ -167,9 +167,12 @@
                 </div>
             </div>
 
-			<?php if ($thread_info['status'] == 'Realizando' || $this->aauth->get_user()->roleid == 5) { ?>
+			<?php if ($thread_info['status'] == 'Pendiente' || $thread_info['status'] == 'Realizando' || $this->aauth->get_user()->roleid == 5) { ?>
             <div class="form-group row">
-
+				<div class="col-sm-2">
+					<a href="#pop_model" data-toggle="modal" onclick="funcion_status();" data-remote="false" class="btn btn- btn-red mb-1" title="Change Status"><span class="icon-tab"></span> CAMBIAR ESTADO</a>
+				</div>
+				<?php else if ($thread_info['status'] == 'Realizando' || $this->aauth->get_user()->roleid == 5) ?>
                 <label class="col-sm-1 col-form-label"></label>
 
                 <div class="col-sm-2">
@@ -183,9 +186,7 @@
 				<div class="col-sm-2">
 					<a href="#pop_model3" data-toggle="modal" onclick="funcion_status();" data-remote="false" class="btn btn- btn-orange mb-1" title="Change Status">ASIGNAR MATERIAL</a>
 				</div>
-				<div class="col-sm-2">
-					<a href="#pop_model" data-toggle="modal" onclick="funcion_status();" data-remote="false" class="btn btn- btn-red mb-1" title="Change Status"><span class="icon-tab"></span> CAMBIAR ESTADO</a>
-				</div>
+				
 				<div class="col-sm-2">
 					<a href="#pop_model4" data-toggle="modal" onclick="funcion_status();" data-remote="false" class="btn btn- btn-black mb-1" title="Change Status"><span></span> DIVIDIR ORDEN</a>
 				</div>
