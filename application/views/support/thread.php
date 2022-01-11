@@ -167,7 +167,7 @@
                 </div>
             </div>
 
-			<?php if ($thread_info['status'] == 'Pendiente' || $this->aauth->get_user()->roleid == 5) { ?>
+			<?php if ($thread_info['status'] == 'Realizando' || $this->aauth->get_user()->roleid == 5) { ?>
             <div class="form-group row">
 
                 <label class="col-sm-1 col-form-label"></label>
