@@ -1321,10 +1321,10 @@ class Customers_model extends CI_Model
     
     public function devolver_ips_proximas(){
         $ips_remotas = array('yopal' =>'10.0.0.2', "monterrey"=>'10.1.100.2','villanueva'=>"80.0.0.2",'villanueva_gpon'=>"10.20.0.2" );    
-        $customers_yopal=$this->db->query("select count(*) as c_usuarios from customers where ciudad='yopal' and Ipremota is not null and Ipremota!='' and Ipremota!='0'")->result_array();
-        $customers_monterrey=$this->db->query("select count(*) as c_usuarios from customers where ciudad='monterrey' and Ipremota is not null and Ipremota!='' and Ipremota!='0'")->result_array();
-        $customers_villanueva=$this->db->query("select count(*) as c_usuarios from customers where ciudad='villanueva' and Ipremota is not null and Ipremota!='' and (tegnologia_instalacion!='GPON' or tegnologia_instalacion is null)")->result_array();
-        $customers_villanueva_gpon=$this->db->query("select count(*) as c_usuarios from customers where ciudad='villanueva' and Ipremota is not null and Ipremota!='' and tegnologia_instalacion='GPON'")->result_array();
+        $customers_yopal=$this->db->query("select count(*) as c_usuarios from customers where gid='2' and Ipremota is not null and Ipremota!='' and Ipremota!='0'")->result_array();
+        $customers_monterrey=$this->db->query("select count(*) as c_usuarios from customers where gid='4' and Ipremota is not null and Ipremota!='' and Ipremota!='0'")->result_array();
+        $customers_villanueva=$this->db->query("select count(*) as c_usuarios from customers where gid='3' and Ipremota is not null and Ipremota!='' and (tegnologia_instalacion!='GPON' or tegnologia_instalacion is null)")->result_array();
+        $customers_villanueva_gpon=$this->db->query("select count(*) as c_usuarios from customers where gid='3' and Ipremota is not null and Ipremota!='' and tegnologia_instalacion='GPON'")->result_array();
 
         
         // ips yopal
@@ -1337,7 +1337,7 @@ class Customers_model extends CI_Model
             $smask = ip2long("255.255.255.255");
             $nmask = $bcast & $smask;
             
-            $comprovar=$this->db->get_where("customers",array("Ipremota"=>long2ip($nmask),"ciudad"=>"yopal"))->row();
+            $comprovar=$this->db->get_where("customers",array("Ipremota"=>long2ip($nmask),"gid"=>"2"))->row();
             if(empty($comprovar)){
                 //no existe
                 $ips_remotas['yopal']=long2ip($nmask);//aqui como la ip es correcta y no existe se deja como la ip a retornar
@@ -1359,7 +1359,7 @@ class Customers_model extends CI_Model
             $smask = ip2long("255.255.255.255");
             $nmask = $bcast & $smask;
             
-            $comprovar=$this->db->get_where("customers",array("Ipremota"=>long2ip($nmask),"ciudad"=>"monterrey"))->row();
+            $comprovar=$this->db->get_where("customers",array("Ipremota"=>long2ip($nmask),"gid"=>"4"))->row();
             if(empty($comprovar)){
                 //no existe
                 $ips_remotas['monterrey']=long2ip($nmask);//aqui como la ip es correcta y no existe se deja como la ip a retornar
@@ -1382,7 +1382,7 @@ class Customers_model extends CI_Model
             $smask = ip2long("255.255.255.255");
             $nmask = $bcast & $smask;
             
-            $comprovar=$this->db->query("select * from customers where ciudad='villanueva' and Ipremota='".long2ip($nmask)."' and (tegnologia_instalacion!='GPON' or tegnologia_instalacion is null)")->result_array();
+            $comprovar=$this->db->query("select * from customers where gid='3' and Ipremota='".long2ip($nmask)."' and (tegnologia_instalacion!='GPON' or tegnologia_instalacion is null)")->result_array();
             if(count($comprovar)==0){
                 //no existe
                 $ips_remotas['villanueva']=long2ip($nmask);//aqui como la ip es correcta y no existe se deja como la ip a retornar
@@ -1404,7 +1404,7 @@ class Customers_model extends CI_Model
             $smask = ip2long("255.255.255.255");
             $nmask = $bcast & $smask;
             
-            $comprovar=$this->db->get_where("customers",array("Ipremota"=>long2ip($nmask),"ciudad"=>"villanueva","tegnologia_instalacion"=>"GPON"))->row();
+            $comprovar=$this->db->get_where("customers",array("Ipremota"=>long2ip($nmask),"gid"=>"3","tegnologia_instalacion"=>"GPON"))->row();
             if(empty($comprovar)){
                 //no existe
                 $ips_remotas['villanueva_gpon']=long2ip($nmask);//aqui como la ip es correcta y no existe se deja como la ip a retornar
