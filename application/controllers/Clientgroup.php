@@ -732,7 +732,13 @@ class Clientgroup extends CI_Controller
             $row[] = '<a href="' . $base . 'view?id=' . $customers->id . '">' . $customers->name .' '.$customers->unoapellido. ' </a>';
 			$row[] = $customers->celular;			
             $row[] = $customers->nomenclatura . ' ' . $customers->numero1 . $customers->adicionauno.' Nº '.$customers->numero2.$customers->adicional2.' - '.$customers->numero3;
-            $row[] = $customers->barrio;
+            $obj_barrio=$this->db->get_where("barrio",array("idBarrio"=>$customers->barrio))->row();
+                            if(isset($obj_barrio)){
+                                
+                                $row[] = $obj_barrio->barrio;    
+                            }else{
+                                $row[] = $customers->barrio;    
+                            }
             if($servicios_str!=""){
                 $servicios_str="<a class='cl-servicios' style='cursor:pointer;' data-id='".$customers->id."' onclick='facturas_electronicas_ev(this);'>".$servicios_str."</a>";
                 $str_checked="";
