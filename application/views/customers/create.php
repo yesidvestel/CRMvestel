@@ -522,6 +522,7 @@
 </div>
 <script type="text/javascript">
     var remote_ip_yopal="<?=$ips_remotas['yopal']?>";
+    var remote_ip_yopal_gpon="<?=$ips_remotas['yopal_gpon']?>";
     var remote_ip_villanueva="<?=$ips_remotas['villanueva']?>";
     var remote_ip_monterrey="<?=$ips_remotas['monterrey']?>";
     var remote_ip_villanueva_gpon="<?=$ips_remotas['villanueva_gpon']?>";
@@ -656,6 +657,10 @@ alert(selected);
                                 if(customergroup=="2"){
                                     $("#Ipremota").val(remote_ip_yopal);
                                     $("#Ipremota2").val(remote_ip_yopal);
+                                    if(tegnologia_instalacion1=="GPON"){
+                                        $("#Ipremota").val(remote_ip_yopal_gpon);
+                                        $("#Ipremota2").val(remote_ip_yopal_gpon);
+                                    }
                                 }else if(customergroup=="3"){
                                     $("#Ipremota").val(remote_ip_villanueva);
                                     $("#Ipremota2").val(remote_ip_villanueva);
@@ -691,6 +696,7 @@ alert(selected);
                                 
                             });	
 	var Iplocal_2 = new Array ("10.0.0.1");
+    var Iplocal_2gpon = new Array ("10.100.0.1");
 	var Iplocal_3 = new Array ("80.0.0.1");
 	var Iplocal_4 = new Array ("10.1.100.1");
     var Iplocal_3gpon = new Array ("10.20.0.1");
@@ -703,6 +709,9 @@ alert(selected);
                                     var tegnologia_instalacion1=$("#tegnologia option:selected").val();
                                     if(customergroup==3 && tegnologia_instalacion1=="GPON"){
                                         customergroup="3gpon";
+                                    }
+                                    if(customergroup==2 && tegnologia_instalacion1=="GPON"){
+                                        customergroup="2gpon";
                                     }
 									mis_opts=eval("Iplocal_"+customergroup);
 									//definimos cuantas obciones hay
