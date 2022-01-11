@@ -196,7 +196,7 @@
                     > DEVOLVER EQUIPO</a>
                 
                 </div>
-                <?php } ?>
+                <?php }} ?>
                 
 				
             </div>
