@@ -24,8 +24,8 @@ class Ticket_model extends CI_Model
 
     //documents list
 	var $table = 'customers';
-    var $doccolumn_order = array(null, null, 'codigo', 'subject', 'detalle', 'created', 'abonado', 'id_factura', 'ciudad','status', null);
-    var $doccolumn_search = array('idt', 'codigo', 'detalle', 'created', 'abonado', 'id_factura', 'ciudad','status',);
+    var $doccolumn_order = array(null, null, 'codigo', 'subject', 'detalle', 'created','fecha_final','abonado','documento', 'id_factura', 'ciudad','status', null);
+    var $doccolumn_search = array('idt', 'codigo', 'detalle', 'created', 'abonado', 'id_factura', 'ciudad.ciudad','barrio.barrio','status');
 
 
     public function thread_list($id)
@@ -212,7 +212,7 @@ class Ticket_model extends CI_Model
 
     private function ticket_datatables_query($filt,$filt2)
     {
-
+       //$this->db->select("*,");
         $this->db->from('tickets');
 		
          if ($filt2['estado'] != '' && $filt2['estado'] != 'null' && $filt2['estado'] != null) {
@@ -247,8 +247,8 @@ class Ticket_model extends CI_Model
 		if($filt2['detalle']!="" && $filt2['detalle']!=null && $filt2['detalle']!="null"){
             $this->db->where_in('detalle', explode(",", $filt2['detalle']));       
         }
-		$this->db->join('customers', 'tickets.cid=customers.id ', 'left');
-		$this->db->join('ciudad', 'customers.ciudad=ciudad.idCiudad ', 'left');
+		$this->db->join('customers', 'tickets.cid=customers.id', 'left');
+		$this->db->join('ciudad', 'customers.ciudad=ciudad.idCiudad', 'left');
 		$this->db->join('barrio', 'customers.barrio=barrio.idBarrio', 'left');
         $i = 0;
 
