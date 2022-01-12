@@ -2038,6 +2038,7 @@ foreach ($lista as $key => $value) {
                     if($data_invoice['subtotal']<0){
                         $data_invoice['subtotal']=0;
                         $data_invoice['tax']=$data_invoice['total'];
+                        $data_invoice_item['tax_removed']=$invoice->tax-$data_invoice['tax'];
                     }
                     if(($data_invoice['total']-$invoice->pamnt)<=0){
                         $data_invoice['status']="paid";
@@ -2063,6 +2064,47 @@ foreach ($lista as $key => $value) {
             $due = $this->customers->due_details($_POST['id_customer']);
             $this->customers->actualizar_debit_y_credit($_POST['id_customer']);
             echo json_encode(array("status"=>"realizado","total"=>amountFormat(($due['total']-$due['pamnt']))));
+    }
+
+    function eliminar_nota(){
+        $nota=$this->db->get_where("invoice_items",array("id"=>$_POST['id_nota']))->row();
+        $invoice=$this->db->get_where("invoices",array("tid"=>$nota->tid))->row();
+        $data_invoice=array();
+        if($nota->product=="Nota Credito"){
+
+                $data_invoice['total']=$invoice->total+abs($nota->price);
+                $data_invoice['tax']=$invoice->tax;
+                if($nota->tax_removed!=null && $nota->tax_removed>0){
+                    $data_invoice['tax']=$invoice->tax+$nota->tax_removed;    
+                }else{
+
+                }
+                $data_invoice['subtotal']=$data_invoice['total']-$data_invoice['tax'];
+                if($invoice->pamnt!=0){
+                        if($invoice->pamnt<$data_invoice['total']){
+                                $data_invoice['status']="partial";
+                        }
+                }else{
+                        if($invoice->pamnt==0){
+                                $data_invoice['status']="due";
+                        }
+                }
+                //var_dump($data_invoice);
+                $this->db->update("invoices",$data_invoice,array("tid"=>$nota->tid));
+                $this->db->delete("invoice_items",array("id"=>$nota->id));
+                echo "Realizado";
+        }else{
+                $data_invoice['total']=$invoice->total-abs($nota->price);
+                $data_invoice['tax']=$invoice->tax;
+                $data_invoice['subtotal']=$data_invoice['total']-$data_invoice['tax'];
+                 if(($data_invoice['total']-$invoice->pamnt)<=0){
+                        $data_invoice['status']="paid";
+                    }
+                //var_dump($data_invoice);
+                $this->db->update("invoices",$data_invoice,array("tid"=>$nota->tid));
+                $this->db->delete("invoice_items",array("id"=>$nota->id));
+                echo "Realizado";
+        }
     }
 
 }

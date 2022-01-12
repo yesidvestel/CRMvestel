@@ -938,7 +938,9 @@ $(".eliminar_nota").click(function(e){
     e.preventDefault();
     var id_nota=$(this).data("id");
     $.post(baseurl+"invoices/eliminar_nota",{id_nota:id_nota},function(data){
-            
+            if(data=="Realizado"){
+                location.reload();
+            }
     });
 
 });
