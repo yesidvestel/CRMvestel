@@ -238,8 +238,7 @@ $fcontrato = $details['f_contrato'];
     <tr>
       <td colspan="2" style="background-color: black;color: white; font-size: x-large;text-align: justify">
 		  	Este contrato explica las condiciones para la prestación
-			de los servicios entre usted y Vesga
-			Telecomunicaciones S.A.S., por el que pagará mínimo
+			de los servicios entre usted, Vesga Telecomunicaciones y Vesga Television (VESTEL S.A.S), por el que pagará mínimo
 			mensualmente <span style="border-bottom: 1px solid;border-bottom-color: white"><?php echo amountFormat($totaltv+$inter) ?></span>. Este contrato
 		  tendrá vigencia de <span style="border-bottom: 1px solid;border-bottom-color: white">12</span> meses, contados a partir
 			del <span style="border-bottom: 1px solid;border-bottom-color: white"><?php echo date("d/m/Y",strtotime($fcontrato)) ?></span>. El plazo máximo de instalación
