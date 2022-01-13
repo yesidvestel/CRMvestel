@@ -167,17 +167,13 @@ class Importequipo extends CI_Controller
                         $datax['celular']=$array[6];
                         $datax['celular2']=$array[7];
                         $datax['email']=$array[8];
-                        
                         $array[9]=str_replace("/", "-", $array[9]);
-                        
                         try {
                             $datetimex=new DateTime($array[9]);    
                             $datax['nacimiento']=$this->check($datetimex->format("Y-m-d"));
                         } catch (Exception $e) {
                             $datax['nacimiento']=null;    
                         }
-                        
-
                         $datax['tipo_cliente']=$array[10];
 						$datax['tipo_documento']=$array[11];
 						$datax['documento']=$array[12];
@@ -191,8 +187,6 @@ class Importequipo extends CI_Controller
                             $datetimex=null;
                             $datax['f_contrato']=null;
                         }
-                        
-						
 						$datax['estrato']=$array[14];
 						$datax['departamento']=$array[15];
 						$datax['ciudad']=$array[16];
@@ -217,8 +211,7 @@ class Importequipo extends CI_Controller
 						$datax['comentario']=$array[35];
 						$datax['macequipo']=$array[36];
 						$datax['usu_estado']=$array[37];
-						$datax['balance']=$array[38];                        
-                        
+						$datax['balance']=$array[38];
                         $usuarios = $this->db->get_where('customers',array('abonado'=>$datax['abonado']))->row();
                         if(!isset($usuarios)){
                           $this->db->insert('customers',$datax);
@@ -290,7 +283,54 @@ class Importequipo extends CI_Controller
         }
         
     }
-
+	// funcion para actualizar datos independientes
+	public function actualizaciones()
+    {
+        //datos del arhivo enviado por post
+        $tipo_archivo = $_FILES['cargar_csv']['type'];
+        $tamano_archivo = $_FILES['cargar_csv']['size'];
+		$bill_date = datefordatabase($array[9]);        
+        //comprobacion de extencion
+        if(strcasecmp($tipo_archivo,"csv")){
+            //copiando el archivo a la ruta application/cache/temporal.csv
+            //if (move_uploaded_file($_FILES['cargar_csv']['tmp_name'],  'application/cache/localizacion1.csv')){
+                //abriendo el archivo para lectura
+               if ( $fp = fopen('application/cache/localizacion2.csv',"r")){
+                //indice para saber la linea del archivo
+                $i=0;
+                while (!feof($fp)){
+                    //lectura de cada linea 
+                    $linea = fgets($fp);
+                    //separacion de la linea por ; en un array
+                    $array = explode(";",$linea);
+                    //comprovacion de que no sea la primera linea porque la destine para el encabezado en la generacion y que el primer dato del array tiene que ser diferente a nada y tambien un entero
+					
+                    if($i!=0 && strcasecmp($array[0],"")!=false){
+                        $datax['departamento']=$array[1];
+						$datax['ciudad']=$array[2];
+						$datax['localidad']=$array[3];
+						$datax['barrio']=$array[4];
+						                        
+                        
+                        
+							$this->db->where('id', $array[0]);
+                          	$this->db->update('customers',$datax);
+                        
+                    }
+					
+                    //aumento indice en cada iteracion
+                    $i++;
+                }
+                fclose($fp);
+                $_SESSION['importacion']=true;
+                redirect(base_url().'Customers/index' , 'refresh');
+         }else{
+            $_SESSION['importacion']=false;
+                echo "Ocurrió algún error al subir el fichero. No pudo guardarse.";
+         }
+        }
+        
+    }
   public  function check($x) {
     if (date('Y-m-d', strtotime($x)) == $x) {
       return $x;
