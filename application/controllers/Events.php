@@ -52,6 +52,19 @@ class Events extends CI_Controller
 
 
     }
+    public function prueba()
+    {
+        $this->load->model("Ticket_model","ticket");
+        $this->load->model("Moviles_model","moviles");
+        $data['tecnicoslista'] = $this->ticket->tecnico_list();
+        $data['moviles'] = $this->moviles->get_datatables1();
+        //var_dump($data['tecnicoslista']);
+        $this->load->view('fixed/header');
+        $this->load->view('events/cal2',$data);
+        $this->load->view('fixed/footer');
+
+
+    }
 
     /*Get all Events */
 
