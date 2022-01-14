@@ -115,7 +115,7 @@ class Clientgroup extends CI_Controller
                         }
                         $localidades2=array();
                         if($multiplev[0]!="null" && $multiplev[0]!=null){
-                               $customer_b= $this->db->get_where("customers",array("barrio"=>$multiplev[0]))->row();
+                               $customer_b= $this->db->get_where("customers",array("barrio"=>intval($multiplev[0])))->row();
                                 foreach ($localidad_multiple as $key => $value) {
                                         if($value!=$customer_b->localidad){
                                             $localidades2[]=$value;
@@ -131,7 +131,7 @@ class Clientgroup extends CI_Controller
                         $varx="";
                         $c1=count($localidades2)-1;
                         foreach ($localidades2 as $key => $x) {
-                            $varx.="'".$x."'";   
+                            $varx.=$x;   
                             if($key!=$c1){
                                 $varx.=",";
                             }
@@ -150,7 +150,7 @@ class Clientgroup extends CI_Controller
                         $varx="";
                         $c1=count($multiplev)-1;
                         foreach ($multiplev as $key => $x) {
-                            $varx.="'".$x."'";   
+                            $varx.=$x;   
                             if($key!=$c1){
                                 $varx.=",";
                             }
@@ -832,7 +832,8 @@ class Clientgroup extends CI_Controller
                         }
                         $localidades2=array();
                         if($multiplev[0]!="null" && $multiplev[0]!=null){
-                               $customer_b= $this->db->get_where("customers",array("barrio"=>$multiplev[0]))->row();
+                               $customer_b= $this->db->get_where("customers",array("barrio"=>intval($multiplev[0])))->row();
+                               
                                 foreach ($localidad_multiple as $key => $value) {
                                         if($value!=$customer_b->localidad){
                                             $localidades2[]=$value;
@@ -848,7 +849,7 @@ class Clientgroup extends CI_Controller
                         $varx="";
                         $c1=count($localidades2)-1;
                         foreach ($localidades2 as $key => $x) {
-                            $varx.="'".$x."'";   
+                            $varx.=$x;   
                             if($key!=$c1){
                                 $varx.=",";
                             }
@@ -867,7 +868,7 @@ class Clientgroup extends CI_Controller
                         $varx="";
                         $c1=count($multiplev)-1;
                         foreach ($multiplev as $key => $x) {
-                            $varx.="'".$x."'";   
+                            $varx.=$x;   
                             if($key!=$c1){
                                 $varx.=",";
                             }
@@ -942,7 +943,7 @@ class Clientgroup extends CI_Controller
         $query_consulta.=$condicionales;
       
         $query_consulta." order by id DESC";
-        
+        //var_dump($query_consulta);
         $lista_customers=$this->db->query($query_consulta)->result();
         $filtro_deudores_multiple=explode(",", $_GET['deudores_multiple']) ;
         $filtro_deudores_multiple_2=array();        
@@ -1507,7 +1508,7 @@ class Clientgroup extends CI_Controller
                         }
                         $localidades2=array();
                         if($multiplev[0]!="null" && $multiplev[0]!=null){
-                               $customer_b= $this->db->get_where("customers",array("barrio"=>$multiplev[0]))->row();
+                               $customer_b= $this->db->get_where("customers",array("barrio"=>intval($multiplev[0])))->row();
                                 foreach ($localidad_multiple as $key => $value) {
                                         if($value!=$customer_b->localidad){
                                             $localidades2[]=$value;
@@ -1523,7 +1524,7 @@ class Clientgroup extends CI_Controller
                         $varx="";
                         $c1=count($localidades2)-1;
                         foreach ($localidades2 as $key => $x) {
-                            $varx.="'".$x."'";   
+                            $varx.=$x;   
                             if($key!=$c1){
                                 $varx.=",";
                             }
@@ -1542,7 +1543,7 @@ class Clientgroup extends CI_Controller
                         $varx="";
                         $c1=count($multiplev)-1;
                         foreach ($multiplev as $key => $x) {
-                            $varx.="'".$x."'";   
+                            $varx.=$x;   
                             if($key!=$c1){
                                 $varx.=",";
                             }
