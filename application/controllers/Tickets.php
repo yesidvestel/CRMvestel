@@ -765,6 +765,8 @@ if($ya_agrego_equipos==false){
 		
 		//alerta de revision
 		$ciudad = $usuario->ciudad;
+        $ciudad=$this->db->get_where("ciudad",array("idCiudad"=>$ciudad))->row();
+        $ciudad=$ciudad->ciudad;
 		if ($status==='Resuelto' && $ticket->detalle==='Instalacion'){
 		$stdate2 = datefordatabase($fecha_final);
 		$name = 'Revisar orden #'.$ticket->codigo;
