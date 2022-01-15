@@ -160,6 +160,7 @@
                                             <div class="col-sm-6">
                                                 <select style="width: 100%;" name="trans_type[]" class="form-control select-box" id="estados" multiple="multiple">
                                                     <option value='Pendiente'>Pendiente</option>
+                                                    <option value='Realizando'>Realizando</option>
                                                     <option value='Resuelto'>Resuelto</option>
 													<option value='Anulada'>Anulada</option>
                                                 </select>
