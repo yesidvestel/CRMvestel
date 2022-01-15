@@ -27,15 +27,15 @@ $.removeCookie('tecnico');
         
         //initialDate: '2020-09-12',
         locale: 'es',
-        editable: true, // Make the event resizable true     
+        editable: false, // Make the event resizable true     
         selectMirror: true,
         dayMaxEvents: true, // allow "more" link when too many events
       
       
-      select: function(start, end) {
+      select: function(ev) {
                 
-                $('#start').val(moment(start).format('YYYY-MM-DD HH:mm:ss'));
-                $('#end').val(moment(end).format('YYYY-MM-DD HH:mm:ss'));
+                $('#start').val(moment(ev.start).format('YYYY-MM-DD HH:mm:ss'));
+                $('#end').val(moment(ev.end).format('YYYY-MM-DD HH:mm:ss'));
                  // Open modal to add event
             modal({
                 // Available buttons when adding
@@ -59,7 +59,7 @@ $.removeCookie('tecnico');
             }         
                        
                $.post(base_url+'events/dragUpdateEvent',{                            
-                id:event.id,
+                id:event.event._def.extendedProps.idevent,
                 start : start,
                 end :end
             }, function(result){
@@ -80,9 +80,9 @@ $.removeCookie('tecnico');
             }else{
                 end = start;
             }         
-                       
+                       console.log(event.event._def.extendedProps.idevent);
                $.post(base_url+'events/dragUpdateEvent',{                            
-                id:event.id,
+                id:event.event._def.extendedProps.idevent,
                 start : start,
                 end :end
             }, function(result){
@@ -117,6 +117,7 @@ $.removeCookie('tecnico');
             // Set currentEvent variable according to the event clicked in the calendar
             console.log(calEvent);
             console.log(jsEvent);
+
             currentEvent = calEvent;
 
             // Open modal to edit or delete event
@@ -159,7 +160,7 @@ $.removeCookie('tecnico');
         catch (e) {
        
         }
-prue=data;
+
         
         
 		$('#idorden').val(data.event ? data.event._def.extendedProps.idorden : '');
@@ -198,7 +199,7 @@ prue=data;
             }, function(result){
                 $('.alert').addClass('alert-success').text('Event added successfuly');
                 $('.modal').modal('hide');
-                $('#calendar').fullCalendar("refetchEvents");
+                calendar.refetchEvents();
                 hide_notify();
             });
         }
@@ -209,7 +210,7 @@ prue=data;
     $('.modal').on('click', '#update-event',  function(e){
         if(validator(['idorden', 'title', 'description', 'rol'])) {
             $.post(base_url+'events/updateEvent', {
-                id: currentEvent._id,
+                id: currentEvent.event._def.extendedProps.idevent,
 				idorden: $('#idorden').val(),
                 title: $('#title').val(),
                 description: $('#description').val(),
@@ -218,7 +219,8 @@ prue=data;
             }, function(result){
                 $('.alert').addClass('alert-success').text('Event updated successfuly');
                 $('.modal').modal('hide');
-                $('#calendar').fullCalendar("refetchEvents");
+                //$('#calendar').fullCalendar("refetchEvents");
+                calendar.refetchEvents();
                 hide_notify();
                 
             });
@@ -240,7 +242,7 @@ prue=data;
         $.get(base_url+'events/deleteEvent?id=' + currentEvent._id, function(result){
             $('.alert').addClass('alert-success').text('Event deleted successfully !');
             $('.modal').modal('hide');
-            $('#calendar').fullCalendar("refetchEvents");
+            calendar.refetchEvents();
             hide_notify();
         });
     });

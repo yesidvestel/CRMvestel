@@ -109,6 +109,9 @@
     vertical-align: middle;
     background: #F2F2F2;
 }
+.fc .fc-popover{
+  z-index: 100;
+}
 
 </style>
 <link href="<?php echo base_url(); ?>assets/portcss/bootstrapValidator.min.css" rel="stylesheet"/>
