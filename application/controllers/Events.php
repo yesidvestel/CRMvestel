@@ -59,7 +59,8 @@ class Events extends CI_Controller
         $data['tecnicoslista'] = $this->ticket->tecnico_list();
         $data['moviles'] = $this->moviles->get_datatables1();
         //var_dump($data['tecnicoslista']);
-        $this->load->view('fixed/header');
+        $head['title']="Calendario";
+        $this->load->view('fixed/header',$head);
         $this->load->view('events/cal2',$data);
         $this->load->view('fixed/footer');
 

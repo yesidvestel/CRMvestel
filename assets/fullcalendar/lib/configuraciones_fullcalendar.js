@@ -1,4 +1,4 @@
-
+var prue;
 $(function(){
 
 $.removeCookie('tecnico');
@@ -6,7 +6,7 @@ $.removeCookie('tecnico');
     var currentDate; // Holds the day clicked when adding a new event
     var currentEvent; // Holds the event object when editing an event
 
-    //$('#color').colorpicker(); // Colopicker
+    $('#color').colorpicker(); // Colopicker
     
 
     var base_url=baseurl; // Here i define the base_url
@@ -20,106 +20,19 @@ $.removeCookie('tecnico');
         right: 'dayGridMonth,timeGridWeek,timeGridDay'
       },
       
-      //navLinks: true, // can click day/week names to navigate views
-      eventLimit: true, // allow "more" link when too many events
-      initialDate: '2020-09-12',
-        events: [
-        {
-          title: 'All Day Event',
-          start: '2020-09-01'
-        },
-        {
-          title: 'Long Event',
-          start: '2020-09-07',
-          end: '2020-09-10'
-        },
-        {
-          groupId: 999,
-          title: 'Repeating Event',
-          start: '2020-09-09T16:00:00'
-        },
-        {
-          groupId: 999,
-          title: 'Repeating Event',
-          start: '2020-09-16T16:00:00'
-        },
-        {
-          title: 'Conference',
-          start: '2020-09-11',
-          end: '2020-09-13'
-        },
-        {
-          title: 'Meeting',
-          start: '2020-09-12T10:30:00',
-          end: '2020-09-12T12:30:00'
-        },
-        {
-          title: 'Lunch',
-          start: '2020-09-12T12:00:00'
-        },
-        {
-          title: 'Meeting',
-          start: '2020-09-12T14:30:00'
-        },
-        {
-          title: 'Happy Hour',
-          start: '2020-09-12T17:30:00'
-        },
-        {
-          title: 'Dinner',
-          start: '2020-09-12T20:00:00'
-        },
-        {
-          title: 'Birthday Party',
-          start: '2020-09-13T07:00:00'
-        },
-        {
-          title: 'Click for Google',
-          url: 'http://google.com/',
-          start: '2020-09-28'
-        }
-      ],
+      navLinks: true, // can click day/week names to navigate views
+      
+        events: base_url+'events/getEvents' ,
         selectable: true,
-        selectHelper: true,
-        lang: 'es',
+        
+        //initialDate: '2020-09-12',
+        locale: 'es',
         editable: true, // Make the event resizable true     
+        selectMirror: true,
+        dayMaxEvents: true, // allow "more" link when too many events
       
-      select: function(arg) {
-        var title = prompt('Event Title:');
-        if (title) {
-          calendar.addEvent({
-            title: title,
-            start: arg.start,
-            end: arg.end,
-            allDay: arg.allDay
-          })
-        }
-        calendar.unselect()
-      },
-      eventClick: function(arg) {
-        if (confirm('Are you sure you want to delete this event?')) {
-          arg.event.remove()
-        }
-      },
       
-    });
-
-    calendar.render();
-    /*$('#calendar').fullCalendar({
-        header: {
-            left: 'prev, next, hoy',
-            center: 'title',
-             right: 'month, basicWeek, basicDay'
-        },
-
-        // Get all events stored in database
-        eventLimit: true, // allow "more" link when too many events
-        events: base_url+'events/getEvents',
-        selectable: true,
-        selectHelper: true,
-        lang: 'es',
-        editable: true, // Make the event resizable true           
-            select: function(start, end) {
+      select: function(start, end) {
                 
                 $('#start').val(moment(start).format('YYYY-MM-DD HH:mm:ss'));
                 $('#end').val(moment(end).format('YYYY-MM-DD HH:mm:ss'));
@@ -135,9 +48,8 @@ $.removeCookie('tecnico');
                 },
                 title: 'Add Event' // Modal title
             });
-            }, 
-           
-         eventDrop: function(event, delta, revertFunc,start,end) {  
+        }, 
+        eventDrop: function(event, delta, revertFunc,start,end) {  
             
             start = event.start.format('YYYY-MM-DD HH:mm:ss');
             if(event.end){
@@ -159,17 +71,7 @@ $.removeCookie('tecnico');
 
 
 
-          },
-          loading:function(isLoading){
-            if (isLoading == true) {
-    
-              } else {
-                 $(".fc-more").each(function (index){
-                    $(this).text($(this).text().replace("more","mas"));
-                });
-              }
-               
-          },
+          },         
           eventResize: function(event,dayDelta,minuteDelta,revertFunc) { 
                     
                 start = event.start.format('YYYY-MM-DD HH:mm:ss');
@@ -191,12 +93,13 @@ $.removeCookie('tecnico');
             },
           
         // Event Mouseover
-        eventMouseover: function(calEvent, jsEvent, view){
+        eventMouseEnter: function(calEvent){
 
-            var tooltip = '<div class="event-tooltip">' + calEvent.description + '</div>';
+            var tooltip = '<div class="event-tooltip">' + calEvent.event.description + '</div>';
+            
             $("body").append(tooltip);
-
-            $(this).mouseover(function(e) {
+            
+            $(calEvent.el).mouseover(function(e) {
                 $(this).css('z-index', 10000);
                 $('.event-tooltip').fadeIn('500');
                 $('.event-tooltip').fadeTo('10', 1.9);
@@ -205,13 +108,15 @@ $.removeCookie('tecnico');
                 $('.event-tooltip').css('left', e.pageX + 20);
             });
         },
-        eventMouseout: function(calEvent, jsEvent) {
-            $(this).css('z-index', 8);
+        eventMouseLeave: function(calEvent) {
+            $(calEvent.el).css('z-index', 8);
             $('.event-tooltip').remove();
         },
         // Handle Existing Event Click
         eventClick: function(calEvent, jsEvent, view) {
             // Set currentEvent variable according to the event clicked in the calendar
+            console.log(calEvent);
+            console.log(jsEvent);
             currentEvent = calEvent;
 
             // Open modal to edit or delete event
@@ -229,15 +134,16 @@ $.removeCookie('tecnico');
                         label: 'Actualizar'
                     }
                 },
-                title: 'Editar Evento "' + calEvent.title + '"',
-                event: calEvent
+                title: 'Editar Evento "' + calEvent.el.fcSeg.eventRange.def.title + '"',
+                event: calEvent.event
             });
         }
+           
+      
+    });
 
-    });*/
-/*$(".fc-month-button").text("Mes");
-$(".fc-basicWeek-button").text("Semana");
-$(".fc-basicDay-button").text("Dia");*/
+    calendar.render();
+    
 
 
     // Prepares the modal window according to data passed
@@ -248,12 +154,12 @@ $(".fc-basicDay-button").text("Dia");*/
         $('.modal-footer button:not(".btn-default")').remove();
         // Set input values
         try {
-            $("#ver_orden_id").attr("href",baseurl+"tickets/thread/?id="+data.event.idt);
+            $("#ver_orden_id").attr("href",baseurl+"tickets/thread/?id="+data._def.extendedProps.idorden);
         }
         catch (e) {
        
         }
-
+prue=data;
         
         
 		$('#idorden').val(data.event ? data.event.idorden : '');
