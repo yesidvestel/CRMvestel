@@ -95,7 +95,7 @@ $.removeCookie('tecnico');
         // Event Mouseover
         eventMouseEnter: function(calEvent){
 
-            var tooltip = '<div class="event-tooltip">' + calEvent.event.description + '</div>';
+            var tooltip = '<div class="event-tooltip">' + calEvent.event._def.extendedProps.description + '</div>';
             
             $("body").append(tooltip);
             
@@ -154,7 +154,7 @@ $.removeCookie('tecnico');
         $('.modal-footer button:not(".btn-default")').remove();
         // Set input values
         try {
-            $("#ver_orden_id").attr("href",baseurl+"tickets/thread/?id="+data._def.extendedProps.idorden);
+            $("#ver_orden_id").attr("href",baseurl+"tickets/thread/?id="+data.event._def.extendedProps.idt);
         }
         catch (e) {
        
@@ -162,14 +162,14 @@ $.removeCookie('tecnico');
 prue=data;
         
         
-		$('#idorden').val(data.event ? data.event.idorden : '');
-        $('#title').val(data.event ? data.event.title : '');        
-        $('#description').val(data.event ? data.event.description : '');
-		$('#rol').val(data.event ? data.event.rol : '');
-        $('#color').val(data.event ? data.event.color : '#3a87ad');		
+		$('#idorden').val(data.event ? data.event._def.extendedProps.idorden : '');
+        $('#title').val(data.event ? data.event._def.title : '');        
+        $('#description').val(data.event ? data.event._def.extendedProps.description : '');
+		$('#rol').val(data.event ? data.event._def.extendedProps.rol : '');
+        $('#color').val(data.event ? data.event._def.extendedProps.colorx : '#3a87ad');		
         if(typeof data.event!="undefined"){
-                if(data.event.asignacion_movil!=null && data.event.asignacion_movil!="0"){
-                    $.post(baseurl+"Events/get_nombre_movil",{id:data.event.asignacion_movil},function(data){
+                if(data.event._def.extendedProps.asignacion_movil!=null && data.event._def.extendedProps.asignacion_movil!="0"){
+                    $.post(baseurl+"Events/get_nombre_movil",{id:data.event._def.extendedProps.asignacion_movil},function(data){
                            $('#rol').val(data);
                     });    
                 }    
