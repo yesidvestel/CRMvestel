@@ -6623,6 +6623,9 @@ var FullCalendar = (function (exports) {
         if (method !== 'GET') {
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         }
+        xhr.setRequestHeader('Accept', 'application/json, text/javascript, */*; q=0.01');
+        xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+        
         xhr.onload = function () {
             if (xhr.status >= 200 && xhr.status < 400) {
                 var parsed = false;
