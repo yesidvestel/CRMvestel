@@ -125,7 +125,7 @@
                            for="pay_cat"><?php echo $this->lang->line('Assign to') ?></label>
 
                     <div class="col-sm-8">
-                        <select name="employee[]" class="form-control required select-box" multiple="multiple">
+                        <select name="employee[]" class="form-control required select-box" multiple="multiple" id="colaborador">
                             <?php
                             foreach ($emp as $row) {
                                 $cid = $row['id'];
@@ -250,7 +250,7 @@
     </div>
 </article>
 <script type="text/javascript">
-
+	$("#colaborador").select2();
     $(function () {
         $('.select-box').select2();
 
