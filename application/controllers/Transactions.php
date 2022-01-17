@@ -41,6 +41,7 @@ class Transactions extends CI_Controller
         $this->db->from("transactions");
 		//$this->db->join('customers', 'tickets.cid=customers.id', 'left');
 		$this->db->where('type', 'Expense');
+		$this->db->where('tid !=', -1);
 		$this->db->where('estado');
 		if ($_GET['cuentas'] != '' && $_GET['cuentas'] != '-' && $_GET['cuentas'] != '0') {
                 $this->db->where('account=', $_GET['cuentas']);
