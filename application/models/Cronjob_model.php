@@ -132,6 +132,15 @@ class Cronjob_model extends CI_Model
     {
 
         $year = date('Y');
+        $this->realizar_proceso_de_reportes($year-1);
+        $this->realizar_proceso_de_reportes($year);
+        
+        return true;
+
+
+    }
+    public function realizar_proceso_de_reportes($year){
+        
 
         $this->db->delete('reports', array('year' => $year));
 
@@ -171,9 +180,6 @@ class Cronjob_model extends CI_Model
         }
 
         $this->db->insert_batch('reports', $batch);
-
-        return true;
-
 
     }
 
