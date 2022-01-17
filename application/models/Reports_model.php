@@ -245,6 +245,7 @@ class Reports_model extends CI_Model
 
         $this->db->where('type', 'Expense');
         $this->db->where('estado');
+        $this->db->where('tid!=',-1);
         $month = date('Y-m');
         $today = date('Y-m-d');
         $this->db->where('DATE(date) >=', "$month-01");
