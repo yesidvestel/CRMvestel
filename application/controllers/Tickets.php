@@ -342,7 +342,7 @@ class Tickets Extends CI_Controller
     }
 
     public function eliminar_prod_lista(){
-        $transferencia =  $this->db->get_where('transferencia_products_orden',array("idtransferencia_products_orden"=>$_POST['idt']))->row();
+        $transferencia =  $this->db->get_where('transferencia_products_orden',array("idtransferencia_products_orden"=>$_POST['id']))->row();
         $producto=$this->db->get_where('products',array("pid"=>$transferencia->products_pid))->row();
         $x1=intval($producto->qty);
         $y1=intval($transferencia->cantidad);
