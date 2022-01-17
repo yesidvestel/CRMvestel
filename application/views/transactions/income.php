@@ -21,7 +21,7 @@
                                 <li class="nav-item">
                                     <a class="nav-link" id="link-tab" data-toggle="tab" href="#cuenta"
                                        aria-controls="cuenta"
-                                       aria-expanded="false">Sede</a>
+                                       aria-expanded="false">Caja</a>
                                 </li>
 								<li class="nav-item">
                                     <a class="nav-link" id="detalle-tab" data-toggle="tab" href="#link"
