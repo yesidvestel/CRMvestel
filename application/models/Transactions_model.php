@@ -52,6 +52,7 @@ class Transactions_model extends CI_Model
         switch ($this->opt) {
             case 'income':
                 $this->db->where('type', 'Income');
+				$this->db->where('tid !=', -1);
 				$this->db->where('estado');
                 break;
             case 'expense':
