@@ -154,6 +154,24 @@ class Transactions extends CI_Controller
 		$this->db->where('type', 'Income');
 		$this->db->where('estado');
 		$this->db->where('tid !=', -1);
+		if ($_GET['cuentas'] != '' && $_GET['cuentas'] != '-' && $_GET['cuentas'] != '0') {
+                $this->db->where('account=', $_GET['cuentas']);
+            }
+		if ($_GET['metodo'] != '' && $_GET['metodo'] != '-' && $_GET['metodo'] != '0') {
+                $this->db->where('method=', $_GET['metodo']);
+           }
+		if($_GET['opcselect']!=''){
+
+            $dateTime= new DateTime($_GET['sdate']);
+            $sdate=$dateTime->format("Y-m-d");
+            $dateTime= new DateTime($_GET['edate']);
+            $edate=$dateTime->format("Y-m-d");
+            if($_GET['opcselect']=="fcreada"){
+                $this->db->where('date>=', $sdate);   
+                $this->db->where('date<=', $edate);       
+            }
+            
+        }
         $this->db->order_by("id","DESC");
         $lista_creditos=$this->db->get()->result();
         $this->load->library('Excel');
@@ -1518,13 +1536,17 @@ public function anullist()
 
     public function income()
     {
+		$this->load->model('accounts_model', 'accounts');
+		$this->load->model("customers_model","customers");
         if ($this->aauth->get_user()->roleid < 2) {
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
         }
+		$data['cta'] = $this->accounts->accountslist();
+		$data['meto2'] = $this->transactions->metodos();
         $head['title'] = "Income Transaction";
         $head['usernm'] = $this->aauth->get_user()->username;
         $this->load->view('fixed/header', $head);
-        $this->load->view('transactions/income');
+        $this->load->view('transactions/income', $data);
         $this->load->view('fixed/footer');
     }
 	public function transferencia()

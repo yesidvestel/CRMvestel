@@ -31,7 +31,7 @@
                             </ul>
                             <div class="tab-content px-1 pt-1">
 								<!--thread-->
-                                <div class="tab-pane fade" id="thread" role="tabpanel" aria-labelledby="thread-tab" aria-expanded="false">
+                                <div class="tab-pane fade active in" id="thread" role="tabpanel" aria-labelledby="thread-tab" aria-expanded="false">
 
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label"
@@ -63,7 +63,7 @@
 
                                 </div>
                                 <!--thread-->
-                                <div role="tabpanel" class="tab-pane fade active in" id="cuenta" aria-labelledby="active-tab" aria-expanded="true">
+                                <div role="tabpanel" class="tab-pane fade" id="cuenta" aria-labelledby="active-tab" aria-expanded="true">
                                     <div class="form-group row">
                                         
                                         <label class="col-sm-2 col-form-label"

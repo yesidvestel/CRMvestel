@@ -49,6 +49,9 @@ class Transactions_model extends CI_Model
 		if($filt2['categorias']!=""){
             $this->db->where('cat', $filt2['categorias']);       
         }
+		if($filt2['metodo']!=""){
+            $this->db->where('method', $filt2['metodo']);       
+        }
         switch ($this->opt) {
             case 'income':
                 $this->db->where('type', 'Income');
@@ -363,6 +366,11 @@ class Transactions_model extends CI_Model
         $this->db->where('id', $id);
         $query = $this->db->get();
         return $query->row_array();
+    }
+	public function metodos()
+    {
+        $query = $this->db->query('SELECT method FROM transactions GROUP BY method');
+        return $query->result_array();
     }
 
     public function cview($id,$ext=0)
