@@ -57,6 +57,7 @@ class Transactions_model extends CI_Model
             case 'expense':
                 //var_dump($this->opt);
                 $this->db->where('type', 'Expense');
+                $this->db->where('tid !=', -1);
 				$this->db->where('estado');
                 break;
 			case 'transferencia':
