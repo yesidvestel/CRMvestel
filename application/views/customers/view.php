@@ -734,9 +734,21 @@
                     </div>
                 </div>
 				<div id="customerpanel" class="form-group row">
+                    <label for="toBizName" class="caption col-sm-2 col-form-label">Correo</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" name="email" placeholder="Correo electronico en minusculas" />
+                    </div>
+                </div>
+				<div id="customerpanel" class="form-group row">
                     <label for="toBizName" class="caption col-sm-2 col-form-label">Celular</label>
                     <div class="col-sm-6">
                         <input type="text" class="form-control" name="cel" placeholder="Numero celular" />
+                    </div>
+                </div>
+				<div id="customerpanel" class="form-group row">
+                    <label for="toBizName" class="caption col-sm-2 col-form-label">Celular 2</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" name="cel2" placeholder="Numero adicional" />
                     </div>
                 </div>
 				<div id="customerpanel" class="form-group row">

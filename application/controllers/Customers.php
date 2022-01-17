@@ -1093,7 +1093,9 @@ if($data['servicios']['estado']=="Inactivo"){
         $nom2 = $this->input->post('nom2');
 		$ape1 = $this->input->post('ape1');
 		$ape2 = $this->input->post('ape2');
+		$email = $this->input->post('email');
 		$cel = $this->input->post('cel');
+		$cel2 = $this->input->post('cel2');
 		$tipo_cliente = $this->input->post('tipo_cliente');
 		$tipo_documento = $this->input->post('tipo_documento');
 		$doc2 = $this->input->post('doc2');
@@ -1105,6 +1107,8 @@ if($data['servicios']['estado']=="Inactivo"){
 			'unoapellido' => $ape1,
 			'dosapellido' => $ape2,
 			'celular' => $cel,
+			'celular2' => $cel2,
+			'email' => $email,
 			'tipo_cliente' => $tipo_cliente,
 			'tipo_documento' => $tipo_documento,
 			'documento' => $doc2);
