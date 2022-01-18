@@ -42,8 +42,8 @@ class Events_model extends CI_Model
             $in="or tickets.asignacion_movil in(".$emp[0]['ids'].")";
             
         }
-
-        $sql = "SELECT * FROM events inner join tickets on tickets.codigo=events.idorden WHERE rol='$tec' OR $us>=4 OR asigno='$idagendor' ".$in." AND events.start BETWEEN ? AND ? ORDER BY events.start  ASC ";
+//        $sql = "SELECT * FROM events inner join tickets on tickets.codigo=events.idorden WHERE rol='$tec' OR $us>=4 OR asigno='$idagendor' ".$in." AND events.start BETWEEN ? AND ? ORDER BY events.start  ASC ";
+        $sql = "SELECT title,DATE_FORMAT(start, '%Y-%m-%dT%H:%i:%s') as start ,DATE_FORMAT(end, '%Y-%m-%dT%H:%i:%s') as end,color,events.id as idevent,idorden,description,rol,asigno,tickets.idt as idt,asignacion_movil, color as colorx FROM events inner join tickets on tickets.codigo=events.idorden WHERE rol='$tec' OR $us>=4 OR asigno='$idagendor' ".$in." AND events.start BETWEEN ? AND ? ORDER BY events.start  ASC ";
         
         return $this->db->query($sql, array($start, $end))->result();
 		

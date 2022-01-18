@@ -83,7 +83,7 @@ class Dashboard extends CI_Controller
             $head['title'] = "Manage Invoices";
             $head['usernm'] = $this->aauth->get_user()->username;
             $this->load->view('fixed/header', $head);
-            $this->load->view('events/cal');
+            $this->load->view('events/cal2');
             $this->load->view('fixed/footer');
         }else {
             $head['title'] = "Manage Invoices";
