@@ -237,10 +237,26 @@
      }else{
         $.cookie("tecnico",tecnico);   
      }
-     
-      calendar.refetchEvents();
+     if(calendar==null){
+        contruccion_calendar();
+     }else{
+        calendar.refetchEvents();
+     }
+      
        
     });
+  $(function(){
+    
+    $.removeCookie('tecnico');
+
+    $('#color').colorpicker(); // Colopicker
+    // Here i define the base_url
+
+    // Fullcalendar
+   <?php if ($this->aauth->get_user()->roleid <= 3) { ?>
+    contruccion_calendar();
+  <?php } ?>
+});
 </script>
   
 

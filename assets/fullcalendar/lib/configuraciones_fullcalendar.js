@@ -1,19 +1,11 @@
-var prue;
-var calendar;
-$(function(){
 
-$.removeCookie('tecnico');
-   
-    var currentDate; // Holds the day clicked when adding a new event
-    var currentEvent; // Holds the event object when editing an event
+var calendar=null;
+var base_url=baseurl;
+var currentDate; // Holds the day clicked when adding a new event
+var currentEvent; // Holds the event object when editing an event
 
-    $('#color').colorpicker(); // Colopicker
-    
-
-    var base_url=baseurl; // Here i define the base_url
-
-    // Fullcalendar
-    var calendarEl = document.getElementById('calendar');
+function contruccion_calendar(){
+     var calendarEl = document.getElementById('calendar');
          calendar = new FullCalendar.Calendar(calendarEl, {
       headerToolbar: {
         left: 'prev,next today',
@@ -145,11 +137,8 @@ $.removeCookie('tecnico');
     });
 
     calendar.render();
-    
 
-
-    // Prepares the modal window according to data passed
-    function modal(data) {
+     function modal(data) {
         // Set modal title
         $('.modal-title').html(data.title);
         // Clear buttons except Cancel
@@ -164,11 +153,11 @@ $.removeCookie('tecnico');
 
         
         
-		$('#idorden').val(data.event ? data.event._def.extendedProps.idorden : '');
+        $('#idorden').val(data.event ? data.event._def.extendedProps.idorden : '');
         $('#title').val(data.event ? data.event._def.title : '');        
         $('#description').val(data.event ? data.event._def.extendedProps.description : '');
-		$('#rol').val(data.event ? data.event._def.extendedProps.rol : '');
-        $('#color').val(data.event ? data.event._def.extendedProps.colorx : '#3a87ad');		
+        $('#rol').val(data.event ? data.event._def.extendedProps.rol : '');
+        $('#color').val(data.event ? data.event._def.extendedProps.colorx : '#3a87ad');     
         if(typeof data.event!="undefined"){
                 if(data.event._def.extendedProps.asignacion_movil!=null && data.event._def.extendedProps.asignacion_movil!="0"){
                     $.post(baseurl+"Events/get_nombre_movil",{id:data.event._def.extendedProps.asignacion_movil},function(data){
@@ -190,11 +179,11 @@ $.removeCookie('tecnico');
     $('.modal').on('click', '#add-event',  function(e){
         if(validator(['idorden', 'title', 'description', 'rol'])) {
             $.post(base_url+'events/addEvent', {
-				idorden: $('#idorden').val(),
+                idorden: $('#idorden').val(),
                 title: $('#title').val(),
                 description: $('#description').val(),
                 color: $('#color').val(),
-				rol: $('#rol').val(),
+                rol: $('#rol').val(),
                 start: $('#start').val(),
                 end: $('#end').val()
             }, function(result){
@@ -212,11 +201,11 @@ $.removeCookie('tecnico');
         if(validator(['idorden', 'title', 'description', 'rol'])) {
             $.post(base_url+'events/updateEvent', {
                 id: currentEvent.event._def.extendedProps.idevent,
-				idorden: $('#idorden').val(),
+                idorden: $('#idorden').val(),
                 title: $('#title').val(),
                 description: $('#description').val(),
                 color: $('#color').val(),
-				rol: $('#rol').val()
+                rol: $('#rol').val()
             }, function(result){
                 $('.alert').addClass('alert-success').text('Event updated successfuly');
                 $('.modal').modal('hide');
@@ -268,4 +257,6 @@ $.removeCookie('tecnico');
         }
         return true;
     }
-});
+}
+// Prepares the modal window according to data passed
+   
