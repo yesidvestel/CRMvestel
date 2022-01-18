@@ -1,4 +1,5 @@
 var prue;
+var calendar;
 $(function(){
 
 $.removeCookie('tecnico');
@@ -13,7 +14,7 @@ $.removeCookie('tecnico');
 
     // Fullcalendar
     var calendarEl = document.getElementById('calendar');
-    var calendar = new FullCalendar.Calendar(calendarEl, {
+         calendar = new FullCalendar.Calendar(calendarEl, {
       headerToolbar: {
         left: 'prev,next today',
         center: 'title',

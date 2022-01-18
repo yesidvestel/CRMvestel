@@ -226,6 +226,21 @@
         </div>
     </div>
 </div>
-
+<script type="text/javascript">
+  $("#btn-filtrar").click(function(ev){
+    ev.preventDefault();
+ 
+     var tecnico=$("#tecnicos_f option:selected").val();
+     var movil=$("#movil_f option:selected").val();
+     if(tecnico=="all"){
+            $.removeCookie("tecnico");
+     }else{
+        $.cookie("tecnico",tecnico);   
+     }
+     
+      calendar.refetchEvents();
+       
+    });
+</script>
   
 
