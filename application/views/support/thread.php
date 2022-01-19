@@ -375,23 +375,37 @@
         if(estado_actual==status_selected){
             $("#submit_model").prop("disabled","true");
         }else{
-            if(estado_actual=="Realizando" && status_selected=="Pendiente"){
+            if((estado_actual=="Realizando" || estado_actual=="Resuelto") && status_selected=="Pendiente"){
                  $("#submit_model").prop("disabled","true");
-            }else if(estado_actual=="Realizado" && status_selected=="Realizando"){
+            }else if(estado_actual=="Resuelto" && status_selected=="Realizando"){
                 $("#submit_model").prop("disabled","true");
+            }
+
+            if(perfil<5){
+                if(estado_actual=="Pendiente" && status_selected=="Realizando"){
+                    $("#submit_model").removeAttr("disabled");        
+                }else if(estado_actual=="Realizando" && status_selected=="Resuelto"){
+                    $("#submit_model").removeAttr("disabled");
+                    console.log("asdasd");
+                }
+                 
             }
         }
     }
+    var perfil="<?=$this->aauth->get_user()->roleid ?>";
     function funcion_status(){
         //aqui estoy toca terminar esto de que muestre y n el div
         var x= $('#estadoid option:selected').text();
-        console.log(x);
+        
         if(x=='Pendiente'|| x=='Anular'){
             $("#fecha_final_div").css('visibility','hidden');
             $("#submit_model").removeAttr("disabled");
         }else{
-            $("#fecha_final_div").css('visibility','visible');    
-             $("#submit_model").prop("disabled","true");
+            if(perfil==5){
+                $("#fecha_final_div").css('visibility','visible');    
+                $("#submit_model").prop("disabled","true");    
+            }
+            
         }
         validar_estado();
         
@@ -431,9 +445,12 @@
                                     for="pmethod"><?php echo $this->lang->line('Mark As') ?></label>
                             <select id="estadoid" name="status" class="form-control mb-1" onchange="funcion_status();">                                
                                 <option value="Pendiente" <?= ($thread_info['status']=="Pendiente")? 'selected="true"' :'' ?> >Pendiente</option>
-                                <option value="Realizando" <?= ($thread_info['status']=="Realizando")? 'selected="true"' :'' ?> >Realizando</option>								
+                                <?php if ($thread_info['status']=='Pendiente'){ ?>                             
+                                    <option value="Realizando" <?= ($thread_info['status']=="Realizando")? 'selected="true"' :'' ?> >Realizando</option>                                
+                                <?php }; ?>
+                                
 								<option value="Anulada" <?= ($thread_info['status']=="Anulada")? 'selected="true"' :'' ?> >Anular</option>
-								<?php if ($thread_info['status']=='Realizando'){ ?>								
+								<?php if ($thread_info['status']=='Realizando' || $thread_info['status']=='Resuelto'){ ?>								
 								<option value="Resuelto" <?= ($thread_info['status']=="Resuelto")? 'selected="true"' :'' ?> >Resuelto</option>
 								<?php }; ?>
                             </select>
@@ -473,11 +490,13 @@
 						
                     </div>
 					<?php } ?>
+                    <?php if ($this->aauth->get_user()->roleid >= 5) { ?>
                     <div class="row" id="fecha_final_div">
                         <div class="col-xs-12 mb-1" ><label>Fecha Final</label>
                             <input type="date" class="form-control" id="fecha_final" onchange="funcion_fecha()" name="fecha_final">
                         </div>
                     </div>
+                    <?php } ?>
                     <div class="modal-footer">
                         <input type="hidden" class="form-control required"
                                name="tid" id="invoiceid" value="<?php echo $thread_info['idt'] ?>">

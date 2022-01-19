@@ -679,7 +679,7 @@ class Tickets Extends CI_Controller
             if ($this->db->update('tickets')){
 				//cambio color realizando
 				$this->db->set('color', '#2DC548');
-				$this->db->set('start', date("Y-m-d h:i"));
+				$this->db->set('start', date("Y-m-d H:i:s"));
 				$this->db->where('idorden', $ticket->codigo);
 				$this->db->update('events');
         };
@@ -1480,7 +1480,7 @@ if($ya_agrego_equipos==false){
         if ($this->db->update('tickets',$dataz,array('idt'=>$tid))){
 			//cambio color al finalizar
 			$this->db->set('color', '#a3a3a3');
-			$this->db->set('end', date("Y-m-d h:i"));
+			$this->db->set('end', date("Y-m-d H:i:s"));
         	$this->db->where('idorden', $ticket->codigo);
         	$this->db->update('events');
 		};
