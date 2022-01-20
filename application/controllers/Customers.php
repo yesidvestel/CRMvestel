@@ -1004,6 +1004,14 @@ if($data['servicios']['estado']=="Inactivo"){
         //output to json format
         echo json_encode($output);
     }
+    public function validar_equipos_usuario(){
+        $dt=$this->db->get_where("equipos",array("asignado"=>$_POST['id_customer']))->row();
+        if(isset($dt)){
+            echo "false";
+        }else{
+            echo "true";
+        }
+    }
 	public function equipolist()
     {
 

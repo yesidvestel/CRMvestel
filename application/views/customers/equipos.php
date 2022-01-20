@@ -7,7 +7,7 @@
         </div>        
         <hr>
 		<div class="col-sm-2">			
-		 	<a href="#pop_model2" data-toggle="modal" onclick="funcion_status();" data-remote="false" class="btn btn- btn-green mb-1" title="Change Status"
+		 	<a href="#pop_model2" id="btn-asignar"   class="btn btn- btn-green mb-1" title="Change Status"
                 > ASIGNAR EQUIPO</a></div>
 		<div class="col-sm-2">			
 		 	<a href="#pop_model3" data-toggle="modal" onclick="funcion_status();" data-remote="false" class="btn btn- btn-blue mb-1" title="Change Status"
@@ -60,6 +60,11 @@
             </div>
 
             <div class="modal-body">
+                <div id="notify_asignar" class="alert alert-warning" >
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+
+            <div class="message"> <strong>Mensaje : </strong> El usuario ya cuenta con un equipo, si desea añadir uno nuevo debe de devolver el actual</div>
+        </div>
                  <form id="form_model2">
                     <div class="frmSearch col-sm-6">
                         <label for="cst" class="caption col-form-label">Buscar equipo</label>
@@ -193,7 +198,7 @@
 <script type="text/javascript">
 
     var table;
-
+    var id_customer="<?=$_GET['id']?>";
     $(document).ready(function () {
 
         //datatables
@@ -247,6 +252,21 @@
         console.log(ck);
 
     }
+    $("#btn-asignar").click(function(ev){
+        ev.preventDefault();
+        $.post(baseurl+"customers/validar_equipos_usuario",{id_customer:id_customer},function(data){
+            if(data=="true" || data==true){
+                $("#submit_model2").removeAttr("disabled");
+                $("#notify_asignar").hide();
+            }else{                
+                $("#submit_model2").attr("disabled","true");
+                $("#notify_asignar").show();
+            }
+            $("#pop_model2").modal("show");
+        });
+        
+
+    });
 </script>
 <div id="delete_model" class="modal fade">
     <div class="modal-dialog">
