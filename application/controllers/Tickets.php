@@ -390,7 +390,15 @@ class Tickets Extends CI_Controller
         if($mac==""){
             $es_valido=false;
             $txt_error.="<li>Agrega una mac </li>";
-        }
+        }else{
+            $q=$this->db->query("select * from equipos inner join customers on equipos.asignado=customers.id where mac='".$mac."' and asignado>0")->result();
+
+            if(count($q)>0){
+                $es_valido=false;
+                
+                $txt_error.="<li>Esta mac ya a sido asignada a el usuario <a href='".base_url()."customers/view?id=".$q[0]->id."'><strong>".$q[0]->name." ".$q[0]->unoapellido."</strong></a></li>";  
+            }
+        }              
         if($tinstalacion=="" || $tinstalacion=="null"){
             $es_valido=false;
             $txt_error.="<li>Selecciona un tipo de instalacion</li>";

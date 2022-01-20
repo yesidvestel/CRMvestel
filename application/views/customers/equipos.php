@@ -61,10 +61,10 @@
 
             <div class="modal-body">
                 <div id="notify_asignar" class="alert alert-warning" >
-            <a href="#" class="close" data-dismiss="alert">&times;</a>
+                        <a href="#" class="close" data-dismiss="alert">&times;</a>
 
-            <div class="message"> <strong>Mensaje : </strong> El usuario ya cuenta con un equipo, si desea añadir uno nuevo debe de devolver el actual</div>
-        </div>
+                        <div class="message"> <strong>Mensaje : </strong> El usuario ya cuenta con un equipo, si desea añadir uno nuevo debe de devolver el actual</div>
+                </div>
                  <form id="form_model2">
                     <div class="frmSearch col-sm-6">
                         <label for="cst" class="caption col-form-label">Buscar equipo</label>
