@@ -353,6 +353,32 @@ class Transactions_model extends CI_Model
         }
         $this->load->model('customers_model', 'customers');
         $this->customers->actualizar_debit_y_credit($transaction_var['payerid']);
+        /*$resultado=$this->db->query("select * from invoices where csd='".$transaction_var['payerid']."' and resivos_guardados like '%".$id."%'")->result();
+        foreach ($resultado as $key => $value) {
+            $varx=json_decode($value->resivos_guardados);
+            //var_dump($varx);
+            //echo(" antes de <br>");
+
+            foreach ($varx as $key => $value2) {
+                if($value2->id_transacciones==$id){
+                    foreach ($value2->id_transacciones as $key => $trid) {
+                        $tr=$this->db->get_where("transactions",array("id"=>$trid,"estado"))->row();
+                        if(isset($tr)){
+                            $this->transactions->delt($trid);
+                        }
+                        
+                    }
+                    
+                    
+                    unset($varx[$key]);
+                    break;
+                }
+            }
+            $varx=json_decode($varx);
+            $this->db->update("invoices",array("resivos_guardados"=>$varx),array("tid"=>$value->tid));
+            //var_dump($varx);
+            //echo("despues de <br>");
+        }*/
         //$this->db->delete('transactions', array('id' => $id));
         return array('status' => 'Success', 'message' => "Transferencia Anulada","id_inv"=>$var1);
 
