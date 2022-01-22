@@ -1167,28 +1167,31 @@ function eliminar_resivos_de_pago(){
        }
         
         $resultado=$this->db->query("select * from invoices where resivos_guardados like '%".$_GET['file_name']."%'")->result();
-
-        foreach ($resultado as $key => $value) {
+        $x1=0;
+        foreach ($resultado as $key1 => $value) {
             $varx=json_decode($value->resivos_guardados);
             //var_dump($varx);
             //echo(" antes de <br>");
 
-            foreach ($varx as $key => $value2) {
+            foreach ($varx as $key2 => $value2) {
                 if($value2->file_name==$_GET['file_name']){
-                    foreach ($value2->id_transacciones as $key => $trid) {
-                        $tr=$this->db->get_where("transactions",array("id"=>$trid,"estado"))->row();
-                        if(isset($tr)){
-                            $this->transactions->delt($trid);
+                    if($x1==0){
+                        foreach ($value2->id_transacciones as $key3 => $trid) {
+                            $tr=$this->db->get_where("transactions",array("id"=>$trid,"estado"=>null))->row();
+                            if(isset($tr)){
+                                $this->transactions->delt($trid);
+                            }
+                            
                         }
-                        
                     }
                     
                     
-                    unset($varx[$key]);
+                    unset($varx[$key2]);
+                    $x1++;
                     break;
                 }
             }
-            $varx=json_decode($varx);
+            $varx=json_encode($varx);
             $this->db->update("invoices",array("resivos_guardados"=>$varx),array("tid"=>$value->tid));
             //var_dump($varx);
             //echo("despues de <br>");

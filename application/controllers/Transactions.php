@@ -1528,7 +1528,56 @@ public function anullist()
         if ($id) {
 
 
-            echo json_encode($this->transactions->delt($id));
+            
+            $tr1=$this->db->get_where("transactions",array("id"=>$id))->row();
+
+        $resultado=$this->db->query("select * from invoices where csd='".$tr1->payerid."' and resivos_guardados like '%".$id."%'")->result();
+        if(count($resultado)>0){
+
+            $result=array();
+            $x1=0;
+             foreach ($resultado as $key1 => $value) {
+                $varx=json_decode($value->resivos_guardados);
+                //var_dump($varx);
+                //echo(" antes de <br>");
+
+
+                foreach ($varx as $key2 => $value2) {
+                    
+                    if(array_search($id,$value2->id_transacciones)!==false){
+                        if($x1==0){
+                            foreach ($value2->id_transacciones as $key3 => $trid) {
+                                $tr=$this->db->get_where("transactions",array("id"=>$trid,"estado"=>null))->row();
+                                if(isset($tr)){
+                                    
+                                    $res=$this->transactions->delt($trid);
+                                    if($trid==$id){
+                                        $result=$res;
+                                    }
+                                }
+                                
+                            }
+                        }
+                       // var_dump("aqui");
+
+                        unset($varx[$key2]);
+                        $x1++;
+                        break;
+                    }
+                }
+                //var_dump($value->tid);
+                //var_dump($varx);
+                $varx=json_encode($varx);
+                $this->db->update("invoices",array("resivos_guardados"=>$varx),array("tid"=>$value->tid));
+                //var_dump($varx);
+                //echo("despues de <br>");
+            }
+            echo json_encode($result);
+
+        }else{
+            echo json_encode($this->transactions->delt($id));//liena importante
+        }
+           
         } else {
             echo json_encode(array('status' => 'Error', 'message' => 'Error!'));
         }
