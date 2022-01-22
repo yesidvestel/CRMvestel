@@ -29,7 +29,7 @@
                             <h6><label class="col-form-label"
                                for="apellidos"><?php echo $this->lang->line('') ?>2do Nombre</label></h6>
 							<div>
-                            <input type="text" class="form-control margin-bottom" name="dosnombre" value="<?php echo $customer['dosnombre'] ?>"id="mcustomer_apellidos">
+                            <input type="text" class="form-control margin-bottom" name="dosnombre" value="<?php echo $customer['dosnombre'] ?>"id="mcustomer_dosnombre">
                         	</div>
                         </div>
                         <div class="col-sm-3">
@@ -43,7 +43,7 @@
                             <h6><label class="col-form-label"
                                for="apellidos"><?php echo $this->lang->line('') ?>2do Apellido</label></h6>
 							<div>
-                            <input type="text" class="form-control margin-bottom" name="dosapellido" value="<?php echo $customer['dosapellido'] ?>"id="mcustomer_apellidos">
+                            <input type="text" class="form-control margin-bottom" name="dosapellido" value="<?php echo $customer['dosapellido'] ?>"id="mcustomer_dosapellido">
                         	</div>
                         </div>
                     </div>

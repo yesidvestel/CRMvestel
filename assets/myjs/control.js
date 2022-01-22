@@ -1222,7 +1222,9 @@ $("#copy_address_edit").change(function ()
         $('#mcustomer_documento_s').val($('#mcustomer_documento').val());
         $('#mcustomer_email_s').val($('#mcustomer_email').val());
         $('#mcustomer_address1_s').val($('#mcustomer_address1').val());
-        $('#mcustomer_comentario_s').val($('#cmbBarrios option:selected').text());
+        if($('#mcustomer_comentario_s').val()==""){
+            $('#mcustomer_comentario_s').val($('#cmbBarrios option:selected').text());
+        }        
         $('#region_s').val($('#region').val());
         $('#mcustomer_country_s').val($('#mcustomer_country').val());
         $('#postbox_s').val($('#postbox').val());
