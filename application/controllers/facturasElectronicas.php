@@ -136,15 +136,15 @@ $this->load->model("customers_model","customers");
         $json_customer->name[1]=$first_last_name." ".$second_last_name;
         $json_customer->address->address=$customer->nomenclatura . ' ' . $customer->numero1 . $customer->adicionauno.' Nº '.$customer->numero2.$customer->adicional2.' - '.$customer->numero3;
         //$tv_product= $this->db->get_where("products", array('pid' => "27"))->row();
-            if(strpos(strtolower($customer->ciudad),"monterrey" )!==false){
+            if($customer->gid==4 )!==false){//monterrey
                         $json_customer->address->city->city_code="85162";
                         $centro_de_costo_code="1070";
                         $centro_de_costo_codeNET="165";                                   
-            }else if(strpos(strtolower($customer->ciudad),"villanueva" )!==false){
+            }else if($customer->gid==3 )!==false){//villanueva
                 $json_customer->address->city->city_code="85440";                                   
                 $centro_de_costo_code="1072";
                 $centro_de_costo_codeNET="167";
-            }else if(strpos(strtolower($customer->ciudad),"mocoa" )!==false){
+            }else if($customer->gid==5 )!==false){//mocoa
                 $json_customer->address->city->state_code="86";                                   
                 $json_customer->address->city->city_code="86001";   
                 //$tv_product= $this->db->get_where("products", array('pid' => "159"))->row();                                
@@ -411,8 +411,8 @@ $this->load->model("customers_model","customers");
         $this->load->model("customers_model","customers");
         $this->load->model("facturas_electronicas_model","facturas_electronicas");
         $caja1=$this->db->get_where('accounts',array('id' =>$_POST['pay_acc']))->row();
-        $caja1->holder =strtolower($caja1->holder);
-        $customers = $this->db->query("select * from customers where (usu_estado='Activo' or usu_estado='Compromiso') and (lower(ciudad) ='".$caja1->holder."' and facturar_electronicamente='1')")->result_array();//and id=8241
+        
+        $customers = $this->db->query("select * from customers where (usu_estado='Activo' or usu_estado='Compromiso') and (gid ='".$caja1->sede."' and facturar_electronicamente='1')")->result_array();//and id=8241
         $datos_del_proceso=array("facturas_creadas"=>array(),"facturas_con_errores"=>array(),"facturas_anteriormente_creadas"=>array());
         $dateTime=new DateTime($_POST['sdate']);
         $x=0;
