@@ -114,7 +114,9 @@ ALTER TABLE `employee_profile` ADD `rh` varchar(10) NOT NULL AFTER `ingreso`;
 ALTER TABLE `employee_profile` ADD `eps` varchar(50) NOT NULL AFTER `rh`;
 ALTER TABLE `employee_profile` ADD `pensiones` varchar(50) NOT NULL AFTER `eps`;
 
-
+//nuevos campos tabla grupos
+ALTER TABLE `custromers_group` ADD `dir` int(50) NOT NULL AFTER `summary`;
+ALTER TABLE `app_system` CHANGE `email` `email` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
 
 
 

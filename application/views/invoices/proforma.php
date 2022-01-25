@@ -186,20 +186,20 @@
             <td class="myw">
 			<table class="top_sum">
    <tr>
-                       <td colspan="1" class="t_center"><h2 >Factura de Venta</h2><br><br></td>
+                       <td colspan="1" class="t_center"><h2 >Estado de cuenta</h2><br><br></td>
                     </tr>
 			<tr>
-            <td><?php echo $this->lang->line('Invoice') ?> N&nbsp;</td><td><?php echo $this->config->item('prefix') . '_P#' . $invoice['tid'] ?></td>
+            <td><?php echo $this->lang->line('') ?>Cuenta Nº&nbsp;</td><td><?php echo $this->config->item('prefix') . '_P#' . $invoice['tid'] ?></td>
 			</tr>
 			<tr>
-            <td><?php echo $this->lang->line('Invoice Date') ?></td><td><?php echo $invoice['invoicedate'] ?></td>
+            <td><?php echo $this->lang->line('') ?>Fecha de generacion</td><td><?php echo $invoice['invoicedate'] ?></td>
 			</tr>
 			<tr>
             <td><?php echo $this->lang->line('Due Date') ?></td><td><?php echo $invoice['invoiceduedate'] ?></td>
 			</tr>
 			<?php if($invoice['refer']) { ?>
 			<tr>
-            <td><?php echo $this->lang->line('Reference') ?></td><td><?php echo $invoice['refer'] ?></td>
+            <td><?php echo $this->lang->line('') ?>Sede</td><td><?php echo $invoice['refer'] ?></td>
 			</tr>
 			<?php } ?>
 			</table>
@@ -222,16 +222,16 @@
         <tr>
             <td><strong><?php echo $this->config->item('ctitle'); ?></strong><br>
                 <?php echo
-                    $this->config->item('address') . '<br>' . $this->config->item('city') . ',' . $this->config->item('country') . '<br>'.$this->lang->line('Phone').': ' . $this->config->item('phone') . '<br> '.$this->lang->line('Email').': ' . $this->config->item('email');
-                if ($this->config->item('taxno')) echo '<br>' . $this->lang->line('Tax') . ' ID: ' . $this->config->item('taxno');
+                    $invoice['dir'] . '<br>' . $this->config->item('city') . ',' . $this->config->item('country') . '<br>'.$this->lang->line('Phone').': ' . $this->config->item('phone') . '<br> '.$this->lang->line('Email').': ' . $this->config->item('email');
+                //if ($this->config->item('taxno')) echo '<br>' . $this->lang->line('Tax') . ' ID: ' . $this->config->item('taxno');
                 ?>
             </td>
 
             <td>
                 <?php echo '<strong>'.$invoice['name'] .' '. $invoice['dosnombre'] .'</strong><br>';
                 echo $invoice['unoapellido'] .' '. $invoice['dosapellido'] .  '<br>';
-                echo $invoice['departamento'] .'/'.$invoice['ciudad'] . '<br>' .$invoice['tipo_documento'].': ' .$invoice['documento'] . '<br>'.$this->lang->line('Phone').': ' . $invoice['celular'] . '<br>' . $this->lang->line('Email') . ' : ' . $invoice['email'];
-                if ($invoice['taxid']) echo '<br>' . $this->lang->line('Tax') . ' ID: ' . $invoice['taxid'];
+                echo $invoice['tipo_documento'].': ' .$invoice['documento'] . '<br>'.$this->lang->line('Phone').': ' . $invoice['celular'] . '<br>' . $this->lang->line('Email') . ' : ' . $invoice['email'];
+                //if ($invoice['taxid']) echo '<br>' . $this->lang->line('Tax') . ' ID: ' . $invoice['taxid'];
                 ?>
             </td>
         </tr>
@@ -242,21 +242,21 @@
 
 
         <tr class="heading">
-            <td>
+            <td width="50%">
                 <?php echo $this->lang->line('Description') ?>
             </td>
 
-            <td>
+            <td width="10%">
                 <?php echo $this->lang->line('Price') ?>
             </td>
-            <td>
+            <td width="10%">
                 <?php echo $this->lang->line('Qty') ?>
             </td>
 
-            <?php if ($invoice['tax'] > 0) echo '<td>' . $this->lang->line('Tax') . '</td>';
+            <?php if ($invoice['tax'] > 0) echo '<td width="10%">' . $this->lang->line('Tax') . '</td>';
 
             if ($invoice['discount'] > 0) echo '<td>' . $this->lang->line('Discount') . '</td>'; ?>
-            <td class="t_center">
+            <td class="t_center" width="20%">
                 <?php echo $this->lang->line('SubTotal') ?>
             </td>
         </tr>
@@ -363,7 +363,7 @@
 		</tr>
 		</table><br><div class="sign">'.$this->lang->line('Authorized person').'</div><div class="sign1"></div><div class="sign2">(' . $employee['name'] . ')</div><div class="sign3">' . user_role($employee['roleid']) . '</div> <div class="terms">' . $invoice['notes'] . '<hr><strong>' . $this->lang->line('Terms') . ':</strong><br>';
 
-    echo '<strong>' . $invoice['termtit'] . '</strong><br>' . $invoice['terms'];
+    echo '<strong>' . $invoice['termtit'] . '</strong><br>Cuenta ' . $invoice['tipo_factura'];
     ?></div>
 </div>
 </body>

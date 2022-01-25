@@ -47,13 +47,16 @@ class Invoices_model extends CI_Model
     public function invoice_details($id, $eid = '')
     {
 
-        $this->db->select('invoices.*,customers.*,customers.id AS cid,billing_terms.id AS termid,billing_terms.title AS termtit,billing_terms.terms AS terms');
+        $this->db->select('invoices.*,customers.*,departamentos.*,ciudad.*,customers_group.*,customers.id AS cid,billing_terms.id AS termid,billing_terms.title AS termtit,billing_terms.terms AS terms');
         $this->db->from($this->table);
         $this->db->where('invoices.tid', $id);
         if ($eid) {
             $this->db->where('invoices.eid', $eid);
         }
         $this->db->join('customers', 'invoices.csd = customers.id', 'left');
+        $this->db->join('customers_group', 'customers.gid = customers_group.id', 'left');
+        $this->db->join('departamentos', 'customers.departamento = departamentos.idDepartamento', 'left');
+        $this->db->join('ciudad', 'customers.ciudad = ciudad.idCiudad', 'left');
         $this->db->join('billing_terms', 'billing_terms.id = invoices.term', 'left');
         $query = $this->db->get();
         return $query->row_array();
