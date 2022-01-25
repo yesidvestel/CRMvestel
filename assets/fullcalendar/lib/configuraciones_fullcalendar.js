@@ -20,7 +20,7 @@ function contruccion_calendar(){
         
         //initialDate: '2020-09-12',
         locale: 'es',
-        editable: false, // Make the event resizable true     
+        editable: true, // Make the event resizable true     
         selectMirror: true,
         dayMaxEvents: true, // allow "more" link when too many events
       
@@ -42,17 +42,16 @@ function contruccion_calendar(){
                 title: 'Add Event' // Modal title
             });
         }, 
-        eventDrop: function(event, delta, revertFunc,start,end) {  
-            
-            start = event.start.format('YYYY-MM-DD HH:mm:ss');
+        eventDrop: function(event, delta, revertFunc,start,end) {
+            start = moment(event.event._instance.range.start).format('YYYY-MM-DD HH:mm:ss');
             if(event.end){
-                end = event.end.format('YYYY-MM-DD HH:mm:ss');
+                end = moment(event.event._instance.range.end).format('YYYY-MM-DD HH:mm:ss');
             }else{
                 end = start;
             }         
                        
                $.post(base_url+'events/dragUpdateEvent',{                            
-                id:event.event._def.extendedProps.idevent,
+                id:event.el.fcSeg.eventRange.def.extendedProps.idevent,
                 start : start,
                 end :end
             }, function(result){
@@ -229,7 +228,7 @@ function contruccion_calendar(){
     // Handle Click on Delete Button
 
     $('.modal').on('click', '#delete-event',  function(e){
-        $.get(base_url+'events/deleteEvent?id=' + currentEvent._id, function(result){
+        $.get(base_url+'events/deleteEvent?id=' + currentEvent.el.fcSeg.eventRange.def.extendedProps.idevent, function(result){
             $('.alert').addClass('alert-success').text('Event deleted successfully !');
             $('.modal').modal('hide');
             calendar.refetchEvents();
