@@ -143,15 +143,15 @@ class Facturas_electronicas_model extends CI_Model
         $json_customer->name[1]=$first_last_name." ".$second_last_name;
         $json_customer->address->address=$customer->nomenclatura . ' ' . $customer->numero1 . $customer->adicionauno.' Nº '.$customer->numero2.$customer->adicional2.' - '.$customer->numero3;
         //$tv_product= $this->db->get_where("products", array('pid' => "27"))->row();
-            if($customer->gid==4 )!==false){//monterrey
+            if($customer->gid==4 ){//monterrey
                         $json_customer->address->city->city_code="85162";
                         $centro_de_costo_code="1070";
                         $centro_de_costo_codeNET="165";                                   
-            }else if($customer->gid==3 )!==false){//villanueva
+            }else if($customer->gid==3 ){//villanueva
                 $json_customer->address->city->city_code="85440";                                   
                 $centro_de_costo_code="1072";
                 $centro_de_costo_codeNET="167";
-            }else if($customer->gid==5 )!==false){//mocoa
+            }else if($customer->gid==5 ){//mocoa
                 $json_customer->address->city->state_code="86";                                   
                 $json_customer->address->city->city_code="86001";   
                 //$tv_product= $this->db->get_where("products", array('pid' => "159"))->row();                                
