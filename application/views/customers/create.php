@@ -175,7 +175,7 @@
                                for="documento"><?php echo $this->lang->line('') ?>Nº Documento</label></h6>
 							 <div>
                             	<input type="text" placeholder="Numero de documento" class="form-control margin-bottom required" name="documento" id="mcustomer_documento" onfocusout="validar_n_documento()">
-                                <a href="#" style="margin-top:1px;" class="btn btn-info" onclick="validar_n_documento()"><i class="icon-refresh"></i></a>
+                                <a href="#" style="margin-top:1px;" class="btn btn-info" title="Validar Numero de documento" onclick="validar_n_documento()"><i class="icon-refresh"></i></a>
                         	</div>
                         </div>
                     
@@ -248,7 +248,7 @@
                         <h6><label class="col-sm-12 col-form-label"
                                for="city"><?php echo $this->lang->line('') ?>Direccion</label></h6>
                     	<div class="col-lg-2 mb-1">
-						<select class="form-control"  id="discountFormat" name="nomenclatura">
+						<select class="form-control"  id="nomenclatura" name="nomenclatura">
 									<option value="Calle">Calle</option>
 									<option value="Carrera">Carrera</option>
 									<option value="Diagonal">Diagonal</option>
@@ -257,11 +257,11 @@
 							</select>
 						</div>
                         <div class="col-sm-2 mb-1">
-                            <input type="text" placeholder="Numero"
+                            <input id="numero1" type="text" placeholder="Numero"
                                    class="form-control margin-bottom" name="numero1">
                         </div>
                         <div class="col-sm-2 mb-1">
-                            <select class="form-control" name="adicionauno">
+                            <select class="form-control" name="adicionauno" id="adicionauno">
 													<option value=""></option>
                                                     <option value="bis">bis</option>
 													<option value="sur">sur</option>
@@ -282,11 +282,11 @@
                                             </select>
                         </div>
                         <div class="col-sm-2 mb-1">
-                            <input type="text" placeholder="Numero"
+                            <input id="numero2" type="text" placeholder="Numero"
                                    class="form-control margin-bottom" name="numero2">
                         </div>
                         <div class="col-sm-2 mb-1">
-                            <select class="col-sm-1 form-control" name="adicional2">
+                            <select id="adicional2" class="col-sm-1 form-control" name="adicional2">
 													<option value=""></option>
 													<option value="Lote">Lote</option>
                                                     <option value="bis">bis</option>
@@ -316,7 +316,7 @@
                         <h6><label class="col-form-label"
                                for="postbox"><?php echo $this->lang->line('') ?>Residencia</label></h6>
 							<div>
-                        	<select class="form-control"  id="discountFormat" name="residencia">
+                        	<select class="form-control"  id="residencia" name="residencia">
 										<option value="Casa">Casa</option>
 										<option value="Apartamento">Apartamento</option>
 										<option value="Edificio">Edificio</option>
@@ -324,12 +324,13 @@
 										<option value="Vereda">Vereda</option>
 								</select>
 							</div>
+                            <a href="#" style="margin-top:2px;" class="btn btn-info" title="Validar Direccion" id="a_validar_direccion"><i class="icon-refresh"></i></a>
 						</div>
                         <div class="col-sm-6">
                             <h6><label class="col-form-label"
                                for="postbox"><?php echo $this->lang->line('') ?>Referencia</label></h6>
 							<div>
-                            <input type="text" placeholder="detalles de residencia"
+                            <input id="referencia" type="text" placeholder="detalles de residencia"
                                    class="form-control margin-bottom" name="referencia">
                         	</div>
                         </div>
@@ -475,7 +476,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Usuarios con el mismo documento</h4>
+                <h4 id="titulo-validaciones" class="modal-title">Usuarios con el mismo documento</h4>
             </div>          
             <div class="modal-body">
                 <div class="table-responsive">
@@ -616,6 +617,7 @@ alert(selected);
             $.post(baseurl+"customers/validar_n_documento",{'documento':doc},function(data){
                 if(data.conteo!=0){
                     tb.ajax.url(baseurl+"customers/lista_por_documento?doc="+doc).load();
+                    $("#titulo-validaciones").text("Usuarios con el mismo documento");
                     $("#modal_validacion_documento").modal("show");                    
                 }
 
@@ -625,6 +627,53 @@ alert(selected);
                
 
         }
+    }
+    $("#a_validar_direccion").click(function(ev){
+        ev.preventDefault();
+        validar_direccion();
+    });
+    function validar_direccion(){
+        var id_departamento=$("#depar").val();
+        var cmbCiudades=$("#cmbCiudades").val();
+        var cmbLocalidades=$("#cmbLocalidades").val();
+        var cmbBarrios=$("#cmbBarrios").val();
+        var nomenclatura=$("#nomenclatura option:selected").val();
+        var numero1=$("#numero1").val();
+        var adicionauno=$("#adicionauno option:selected").val();
+        var numero2=$("#numero2").val();
+        var adicional2=$("#adicional2 option:selected").val();
+        var numero3=$("#numero3").val();
+        var residencia=$("#residencia option:selected").val();
+        var referencia=$("#referencia").val();
+        
+            $.post(baseurl+"customers/validar_direccion",{
+                'id_departamento':id_departamento,
+                'cmbCiudades':cmbCiudades,
+                'cmbLocalidades':cmbLocalidades,
+                'cmbBarrios':cmbBarrios,
+                'nomenclatura':nomenclatura,
+                'numero1':numero1,
+                'adicionauno':adicionauno,
+                'numero2':numero2,
+                'adicional2':adicional2,
+                'numero3':numero3,
+                'residencia':residencia,
+                'referencia':referencia,
+                },function(data){
+
+                if(data=="existe"){
+                    
+                    tb.ajax.url(baseurl+"customers/lista_por_documento?id_departamento="+id_departamento+"&cmbCiudades="+cmbCiudades+"&cmbLocalidades="+cmbLocalidades+"&cmbBarrios="+cmbBarrios+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&residencia="+residencia+"&referencia="+referencia).load();
+                    $("#titulo-validaciones").text("Usuarios con la misma direccion");
+                    $("#modal_validacion_documento").modal("show");                    
+                }
+
+            });
+                
+            
+               
+
+        
     }
 	var perfil_2 = new Array ("Seleccine...","3Megas","5Megas","5MegasD","10Megas","10MegasSt","15Megas","20Megas","20MegasSt","30Megas","30MegasSt","50Megas","70Megas","80Megas","Cortados");
 	var perfil_3 = new Array ("Seleccine...","3MEGAS","5MEGAS","5MDEDI","5MEGAS2","10MEGAS","10MEGASST","10MegasD","20MEGAS","20MEGASST","20MEGASD","30MEGAS","30MEGASST","MOROSOS");

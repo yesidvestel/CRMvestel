@@ -1339,9 +1339,49 @@ if($data['servicios']['estado']=="Inactivo"){
         $lista=$this->db->get_where("customers",array("documento"=>$_POST['documento']))->result_array();
         echo json_encode(array("conteo"=>count($lista)));
     }
+    public function validar_direccion(){
+        $lista=$this->db->select("*")->from('customers')->where(array(
+            "departamento"=>intval($_POST['id_departamento']),
+            "ciudad"=>intval($_POST['cmbCiudades']),
+            "localidad"=>intval($_POST['cmbLocalidades']),
+            "barrio"=>intval($_POST['cmbBarrios']),
+            "nomenclatura"=>$_POST['nomenclatura'],
+            "numero1"=>$_POST['numero1'],
+            "adicionauno"=>$_POST['adicionauno'],
+            "numero2"=>$_POST['numero2'],
+            "adicional2"=>$_POST['adicional2'],
+            "numero3"=>$_POST['numero3'],
+            "residencia"=>$_POST['residencia'],
+            "referencia"=>$_POST['referencia']
+            ))->get()->result();
+        if(!empty($lista)){
+            echo "existe";
+        }else{
+            echo "no existe";
+        }
+    }
 
     public function lista_por_documento(){
-        $lista=$this->db->get_where("customers",array("documento"=>$_GET['doc']))->result_array();
+        $lista=array();
+        if(isset($_GET['doc'])){
+            $lista=$this->db->get_where("customers",array("documento"=>$_GET['doc']))->result_array();    
+        }else{
+            $lista=$this->db->get_where("customers",array(
+            "departamento"=>intval($_GET['id_departamento']),
+            "ciudad"=>intval($_GET['cmbCiudades']),
+            "localidad"=>intval($_GET['cmbLocalidades']),
+            "barrio"=>intval($_GET['cmbBarrios']),
+            "nomenclatura"=>$_GET['nomenclatura'],
+            "numero1"=>$_GET['numero1'],
+            "adicionauno"=>$_GET['adicionauno'],
+            "numero2"=>$_GET['numero2'],
+            "adicional2"=>$_GET['adicional2'],
+            "numero3"=>$_GET['numero3'],
+            "residencia"=>$_GET['residencia'],
+            "referencia"=>$_GET['referencia']
+            ))->result_array();    
+        }
+        
         $no = $this->input->post('start');
         $data=array();
         $x=0;
