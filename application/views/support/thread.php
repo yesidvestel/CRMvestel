@@ -375,7 +375,7 @@
         if(estado_actual==status_selected){
             $("#submit_model").prop("disabled","true");
         }else{
-            if((estado_actual=="Realizando" || estado_actual=="Resuelto") && status_selected=="Pendiente"){
+            if((estado_actual=="Realizando" || estado_actual=="Resuelto") && status_selected=="Pendiente" && perfil<4){
                  $("#submit_model").prop("disabled","true");
             }else if(estado_actual=="Resuelto" && status_selected=="Realizando"){
                 $("#submit_model").prop("disabled","true");
