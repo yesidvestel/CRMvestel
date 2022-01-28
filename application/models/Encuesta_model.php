@@ -176,9 +176,12 @@ class encuesta_model extends CI_Model
 
         );
 			//cambiar estado de tarea
-			$this->db->set('status', 'Done');
-			$this->db->where('idorden', $codigo);
-			$this->db->update('todolist');
+            if($codigo!=null && $codigo!=0){
+                    $this->db->set('status', 'Done');
+                    $this->db->where('idorden', $codigo);
+                    $this->db->update('todolist');    
+            }
+			
 	
         if ($this->db->insert('encuestas', $data)) {
             $cid = $this->db->insert_id();
