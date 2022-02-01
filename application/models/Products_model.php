@@ -37,13 +37,17 @@ class Products_model extends CI_Model
 
     private function _get_datatables_query($id = '', $w = '')
     {
+		
         if ($w) {
+			$this->db->select('products.*,product_warehouse.*,product_cat.*, product_cat.title AS cate');
             $this->db->from($this->table);
             $this->db->join('product_warehouse', 'product_warehouse.id = products.warehouse');
+			$this->db->join('product_cat', 'product_cat.id = products.pcat');
             if ($id > 0) {
                 $this->db->where("product_warehouse.id = $id");
             }
         } else {
+			//$this->db->select('products.*,product_warehouse.*,product_cat.*, product_cat.title AS cate');
             $this->db->from($this->table);
             $this->db->join('product_cat', 'product_cat.id = products.pcat');
             if ($id > 0) {
