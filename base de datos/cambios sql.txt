@@ -1,4 +1,6 @@
-﻿ALTER TABLE `invoice_items` ADD `tax_removed` INT NULL AFTER `product_des`;
+﻿ALTER TABLE `estadisticas_servicios` ADD `internet_y_tv` INT NULL AFTER `n_tv`;
+-----------------------------------------------------------------------------------
+ALTER TABLE `invoice_items` ADD `tax_removed` INT NULL AFTER `product_des`;
 
 ----------------------------------------------------------------------------------------
 ALTER TABLE `tickets` CHANGE `status` `status` ENUM('Realizando','Resuelto','Anulada','Pendiente') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;

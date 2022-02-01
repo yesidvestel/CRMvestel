@@ -46,17 +46,17 @@ var datos={
             <?php foreach ($lista_estadisticas as $key => $row) {
             $datex = new DateTime($row['fecha']);
             //$num = cal_days_in_month(CAL_GREGORIAN, $row['month'], $row['year']);
-            echo "{ x: '".($datex->format("Y-m-d"))."', y: " . intval($row['n_activo']) . ",z: " . intval($row['n_internet']) . ",a: " . intval($row['n_tv']) ."},";//,z: " . intval($tipos['instalaciones_tv'][$key]['numero']) . "
+            echo "{ x: '".($datex->format("Y-m-d"))."', y: " . intval($row['n_activo']) . ",b: " . intval($row['internet_y_tv']) . ",z: " . intval($row['n_internet']) . ",a: " . intval($row['n_tv']) ."},";//,z: " . intval($tipos['instalaciones_tv'][$key]['numero']) . "
             
         } ?>
 
         ],
         xkey: 'x',
-        ykeys: ['y','z','a'],
-        labels: ['Activos','Internet','Tv'],
+        ykeys: ['y','b','z','a'],
+        labels: ['Internet o Tv',"Internet+Tv",'Solo Internet','Solo Tv'],
         hideHover: 'auto',
         resize: true,
-        lineColors: ['#34cea7', '#ff6e40','#9A7D0A'],
+        lineColors: ['#34cea7', '#ff6e40','#9A7D0A','#ffa500'],
         parseTime:false
     }
     Morris.Line(datos);

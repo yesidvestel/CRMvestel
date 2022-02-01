@@ -1029,6 +1029,7 @@ public function statistics_services(){
         $internet=0;
         $tv=0;
         $activo_con_algun_servicio=0;
+        $internet_y_tv=0;
         foreach ($lista_customers_activos as $key => $value) {
             $servicios=$this->customers->servicios_detail($value->id);
             $validar=false;
@@ -1038,6 +1039,9 @@ public function statistics_services(){
             } 
             if($servicios["combo"]!="no" && $servicios["combo"]!="" && $servicios["combo"]!="-"){
                 $internet++;      
+                if($validar){
+                    $internet_y_tv++;
+                }
                 $validar=true;
             } 
             if($validar){
@@ -1046,6 +1050,7 @@ public function statistics_services(){
         }
         $data['n_internet']=$internet;
         $data['n_tv']=$tv;
+        $data['internet_y_tv']=$internet_y_tv;
         $data['n_activo']=$activo_con_algun_servicio;
         $data['fecha']=date("Y-m-d");
         if(empty($extraccion_dia)){
