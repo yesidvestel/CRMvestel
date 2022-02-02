@@ -176,7 +176,7 @@ function contruccion_calendar(){
 
     // Handle Click on Add Button
     $('.modal').on('click', '#add-event',  function(e){
-        if(validator([ 'title', 'description', 'rol'])) {
+        if(validator([ 'title', 'description'])) {
             $.post(base_url+'events/addEvent', {
                 //idorden: $('#idorden').val(),
                 title: $('#title').val(),
