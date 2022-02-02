@@ -72,7 +72,7 @@ function contruccion_calendar(){
             }else{
                 end = start;
             }         
-                       console.log(event.event._def.extendedProps.idevent);
+                       //console.log(event.event._def.extendedProps.idevent);
                $.post(base_url+'events/dragUpdateEvent',{                            
                 id:event.event._def.extendedProps.idevent,
                 start : start,
@@ -107,8 +107,8 @@ function contruccion_calendar(){
         // Handle Existing Event Click
         eventClick: function(calEvent, jsEvent, view) {
             // Set currentEvent variable according to the event clicked in the calendar
-            console.log(calEvent);
-            console.log(jsEvent);
+            //console.log(calEvent);
+            //console.log(jsEvent);
 
             currentEvent = calEvent;
 
@@ -151,7 +151,7 @@ function contruccion_calendar(){
         }
 
         
-        
+        //console.log(data);
         $('#idorden').val(data.event ? data.event._def.extendedProps.idorden : '');
         $('#title').val(data.event ? data.event._def.title : '');        
         $('#description').val(data.event ? data.event._def.extendedProps.description : '');
@@ -176,9 +176,9 @@ function contruccion_calendar(){
 
     // Handle Click on Add Button
     $('.modal').on('click', '#add-event',  function(e){
-        if(validator(['idorden', 'title', 'description', 'rol'])) {
+        if(validator([ 'title', 'description', 'rol'])) {
             $.post(base_url+'events/addEvent', {
-                idorden: $('#idorden').val(),
+                //idorden: $('#idorden').val(),
                 title: $('#title').val(),
                 description: $('#description').val(),
                 color: $('#color').val(),
