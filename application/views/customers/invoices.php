@@ -435,7 +435,7 @@
                 },
             ],
         });
-    
+
         if(fac_pagadas!=""){
             var link="<a href='"+baseurl+"invoices/printinvoice2?file_name="+fac_pagadas+"' class='btn btn-info btn-lg' target='_blank'><span class='icon-file-text2' aria-hidden='true'></span>Ver PDF Facturas Pagadas</a>";
             $("#notify .message").html("<strong>" + "Success" + "</strong>: " + " "+link);
@@ -470,7 +470,15 @@
 
 
 });
+$("#invoices").on('draw.dt',function (){
+        $("#id-ultima-factura").click(function(ev){
+    ev.preventDefault();
+    console.log("asd");
+    $("#id-ultima-factura").hide();
+    $("#ck-ultima-fac").show();
+});
 
+    });
    $("#tb_resivos_de_pago").on('draw.dt',function (){
         $(".eliminar_resivo").click(function(e){
             e.preventDefault();
@@ -690,4 +698,5 @@ validar_monto_notas();
         },'json');
         //falta obtener datos, conectar al servidor, realizar los calculos, guardar y refrescar tablas 
     }
+
 </script>

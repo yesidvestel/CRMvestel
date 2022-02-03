@@ -1273,7 +1273,13 @@ if($data['servicios']['estado']=="Inactivo"){
                     $row[] = '<input type="checkbox" name="x" class="facturas_para_pagar" data-id-ultima-factura="'.$ultima_factura['tid'].'" data-total=" '.$total_factura.'" data-idfacturas="'.$invoices->tid.'" data-status="'.$invoices->status.'" data-ron="cortado" data-rec="'.$invoices->rec.'" data-refer="'.$refer_var.'" style="cursor:pointer; margin-left: 9px;" onclick="agregar_factura(this)" ></input><a href="'.base_url().'invoices/view?id='.$invoices->tid.'">&nbspCortado</a>';
                 }
             }else if($invoices->status=="paid"){
-                $row[]="";
+                if($invoices->tid==$ultima_factura['tid']){
+
+                    $row[] = '<a href="#" id="id-ultima-factura" class="btn btn-danger"><span class="icon-edit" title="Activar Seleccionar"></span></a><input id="ck-ultima-fac" type="checkbox" name="x" class="facturas_para_pagar" data-id-ultima-factura="'.$ultima_factura['tid'].'" data-total=" '.$invoices->total.'" data-idfacturas="'.$invoices->tid.'" data-status="'.$invoices->status.'" data-ron="no" data-rec="'.$invoices->rec.'" data-refer="" style="cursor:pointer; margin-left: 9px;display:none;" onclick="agregar_factura(this)" ></input>';//'';    
+                }else{
+                    $row[]="";
+                }
+                
             }else{
                 $total_factura=$invoices->total;
                 if($invoices->status=="partial"){

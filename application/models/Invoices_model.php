@@ -101,6 +101,11 @@ class Invoices_model extends CI_Model
         return $informacion;
     }
     public function calculo_de_facturas_adelantadas($vrm,$csd){
+        $due=$this->customers->due_details($csd);
+       $x1= $due['total']-$due['pamnt'];
+       if($x1<0){
+            $vrm=abs($x1);
+       }
         /* codigo pagos adelantados*/ 
 if($vrm>0){
 setlocale(LC_TIME, "spanish");

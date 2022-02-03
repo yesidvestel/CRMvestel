@@ -118,6 +118,13 @@
                                     setlocale(LC_TIME, "spanish");
                                     $sub_total=0;
                                     $tax_total=0;
+                                    $mostrar=true;
+                                    if(count($products)==1 && isset($facturas_adelantadas) && count($facturas_adelantadas)>0){
+                                        $query1=$this->db->query("select count(*) as conteo from transactions where tid='".$products[0]['tid']."' and estado is null")->result();    
+                                        if($query1[0]->conteo>=2){
+                                            $mostrar=false;
+                                        }
+                                    }
                                     foreach ($products as $row) {
 
                                         $sub_t += $row['total'];
@@ -181,6 +188,7 @@
                                                 }
                                                 $sub_total+=$row['subtotal'];
                                                 $tax_total+=$row['tax'];
+                                                if($mostrar){
                                         echo '<tr>
 <th scope="row">' . $c . '</th>
                             <td> <a href="'.base_url().'invoices/view?id='.$row['tid'].'">'.ucfirst(strftime("%B", strtotime($f1))).' CTA : ' . $row['tid'] . '</a></td>
@@ -191,7 +199,7 @@
                             <td>' . amountFormat($row['total']) . '</td>
                         </tr>';
 
-                                        
+                                        }
                                         $c++;
                                     } 
 

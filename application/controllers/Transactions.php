@@ -446,10 +446,13 @@ class Transactions extends CI_Controller
             $x="";
         $array_facturas=explode("-", $ids_facturas);
         $monto=$this->input->post('amount');
+        $monto_aux=$monto;
         $valor_restante_monto=0;
         $montos=array();
         $array_facturas2=array();
         $_id_last_invoice_procesed=0;
+        $factura_var=null;
+        $pa="no";
             foreach ($array_facturas as $key => $id_factura) {
                 $factura_var = $this->db->get_where('invoices',array('tid'=>$id_factura))->row();                                
                 
@@ -481,6 +484,11 @@ class Transactions extends CI_Controller
             //var_dump($valor_restante_monto);
             if($valor_restante_monto>0){
                 $montos[$_id_last_invoice_procesed]+=$valor_restante_monto;
+            }
+            $cal1=$factura_var->pamnt-$factura_var->total;
+            if($cal1>=0 && $factura_var->status=="paid"){//validar el igual a 0
+                 $valor_restante_monto=$cal1+$monto_aux;
+                 $pa="si";
             }
 
             
@@ -717,7 +725,7 @@ class Transactions extends CI_Controller
             
         }
         $link ="<a href='".base_url()."invoices/printinvoice?id=".$id_fact_pagadas."' class='btn btn-info btn-lg'><span class='icon-file-text2' aria-hidden='true'></span>Ver PDF Facturas Pagadas</a>";
-        echo json_encode(array('status'=>"Success",'message' =>$this->lang->line('Transaction has been added ').$link,"id_fact_pagadas"=>$id_fact_pagadas,"valor_restante_monto"=>$valor_restante_monto));
+        echo json_encode(array('status'=>"Success",'message' =>$this->lang->line('Transaction has been added ').$link,"id_fact_pagadas"=>$id_fact_pagadas,"valor_restante_monto"=>$valor_restante_monto,"pa"=>$pa));
     }
     public function payinvoice()
     {

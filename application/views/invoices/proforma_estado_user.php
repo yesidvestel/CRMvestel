@@ -263,6 +263,13 @@
         $fill = true;
         $sub_t=0;
         $c=1;
+      $mostrar=true;
+        if(count($products)==1 && isset($facturas_adelantadas) && count($facturas_adelantadas)>0){
+            $query1=$this->db->query("select count(*) as conteo from transactions where tid='".$products[0]['tid']."' and estado is null")->result();    
+            if($query1[0]->conteo>=2){
+                $mostrar=false;
+            }
+        }
         setlocale(LC_TIME, "spanish");
         foreach ($products as $row) {
 
@@ -334,7 +341,7 @@
 
 // end codigo x
 
-
+if($mostrar){
             echo '<tr class="item' . $flag . '"> <td>'.$c.'</td>
                             <td>' . ucfirst(strftime("%B", strtotime($f1))).' CTA : ' . $row['tid'] . '</td>
                             <td> <code>' . $servicios_asignados.'</code></td>
@@ -347,7 +354,7 @@
            
             $fill = !$fill;
             $c++;
-          
+          }
         }
 
   if(isset($facturas_adelantadas)){

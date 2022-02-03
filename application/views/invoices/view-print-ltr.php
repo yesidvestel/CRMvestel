@@ -278,11 +278,13 @@
 
                         
                         $valor+=$cantidad_total;
-
-                    echo '<tr class="item' . $flag . '"> 
+                    if($pa=="no"){
+                            echo '<tr class="item' . $flag . '"> 
                                 <td>' . strftime("%B", strtotime($f1)). ' CTA:'. $invoice['tid'].'</td>';
-                    echo '<td class="t_center">' . amountExchange($valor) . '</td>
-                                </tr>';
+                            echo '<td class="t_center">' . amountExchange($valor) . '</td>
+                                        </tr>';    
+                    }
+                    
                                 //codigo resien agregado editar con caso en el que el primer item sea el pagado adelantado
                                 $cantidad_total_a_restar-=$cantidad_total;
                                 //end codigo resien agregado editar con caso en el que el primer item sea el pagado adelantado
@@ -444,7 +446,7 @@ if($vrm>0){
 
 
             <td>Cantidad Total:</td>
-            <td><?php echo amountExchange(($cantidad_total)+$cantidad_total_a_restar); ?></td>
+            <td><?=($pa=="si") ? '$ 0' : amountExchange(($cantidad_total)+$cantidad_total_a_restar); ?></td>
         </tr>
         <?php 
         if ($invoice['discount'] > 0) {

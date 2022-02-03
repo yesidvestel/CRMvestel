@@ -320,6 +320,7 @@ $this->load->model('customers_model', 'customers');
                 }   
                 
             }
+            //var_dump($value['name']);
             //codigo para pagar con saldo ya existente
             if($este_usuario_sele_creo_ahora==false){
                 $invoices=array();
@@ -1246,7 +1247,8 @@ function eliminar_resivos_de_pago(){
 
         }
         $data['total_customer']=$total_customer;
-               
+        
+        $data['customer']->ciudad=$this->db->get_where("customers_group",array("id"=>$data['customer']->gid))->row()->title;               
 
         $head['usernm'] = $this->aauth->get_user()->username;
         $this->load->view('fixed/header', $head);
@@ -1270,8 +1272,12 @@ function eliminar_resivos_de_pago(){
         $data['is_multiple'] = $is_multiple;
         $data['title'] = "Invoice $tid";
         $data['vrm']=0;
+        $data['pa']="no";
         if(!empty($this->input->get('vrm'))){
                 $data['vrm']=$this->input->get('vrm');
+        }
+        if(!empty($this->input->get('pa'))){
+                $data['pa']=$this->input->get('pa');
         }
 
         $data['invoice'] = $this->invocies->invoice_details($tid, $this->limited);
@@ -1454,7 +1460,7 @@ foreach ($lista as $key => $value) {
 
         $data['id'] = $tid;
         $data['title'] = "Estado Usuario $tid";
-        
+        $data['customer']->ciudad=$this->db->get_where("ciudad",array("idCiudad"=>$data['customer']->ciudad))->row()->ciudad;               
         //$data['invoice'] = $this->invocies->invoice_details($tid, $this->limited);
         //if ($data['invoice']) $data['products'] = $this->invocies->invoice_products($tid);
         if(isset($data['products'][0]['eid'])){
