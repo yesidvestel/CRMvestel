@@ -674,8 +674,11 @@ class Tickets Extends CI_Controller
         $this->load->model('customers_model', 'customers');
 		$tid = $this->input->post('tid');		
         $status = $this->input->post('status');
-        //$fecha_final = $this->input->post('fecha_final'); 
-        $fecha_final = date("Y-m-d H:i:s"); 
+        $fecha_final = $this->input->post('fecha_final'); 
+        if($fecha_final=="null" || $fecha_final==null){
+            $fecha_final = date("Y-m-d H:i:s");     
+        }
+        
 		$ticket = $this->db->get_where('tickets', array('idt' => $tid))->row();
 		$usuario = $this->db->get_where('customers', array('id' => $ticket->cid))->row();
         $invoice = $this->db->get_where('invoices',array('tid'=>$ticket->id_invoice))->result_array();
@@ -688,7 +691,7 @@ class Tickets Extends CI_Controller
             if ($this->db->update('tickets')){
 				//cambio color realizando
 				$this->db->set('color', '#2DC548');
-				$this->db->set('start', date("Y-m-d H:i:s"));
+				$this->db->set('start', $fecha_final);
 				$this->db->where('idorden', $ticket->codigo);
 				$this->db->update('events');
         };
@@ -1485,11 +1488,11 @@ if($ya_agrego_equipos==false){
 		}//abre en line 963
 		
         $dataz['status']=$status;
-        $dataz['fecha_final']=date("Y-m-d H:i:s");
+        $dataz['fecha_final']=$fecha_final;
         if ($this->db->update('tickets',$dataz,array('idt'=>$tid))){
 			//cambio color al finalizar
 			$this->db->set('color', '#a3a3a3');
-			$this->db->set('end', date("Y-m-d H:i:s"));
+			$this->db->set('end', $fecha_final);
         	$this->db->where('idorden', $ticket->codigo);
         	$this->db->update('events');
 		};
