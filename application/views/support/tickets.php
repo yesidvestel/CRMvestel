@@ -187,6 +187,7 @@
 													<option value='Equipo adicional'>Equipo adicional</option>
 													<option value='Instalacion'>Instalacion</option>
 													<option value='Punto nuevo'>Punto nuevo</option>
+													<option value='Veeduria'>Veeduria</option>
 													<option value='Revision de Internet'>Revision de Internet</option>
 													<option value='Revision de television'>Revision de television</option>
 													<option value='Reconexion Combo'>Reconexion Combo</option>
