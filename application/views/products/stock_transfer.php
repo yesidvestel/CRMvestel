@@ -117,39 +117,25 @@
     var dataglobal;
     var listaProductos=[];
     $("#products_l").select2();
+
     $("#wfrom").on('change', function(){
     var tips=$('#wfrom').val();
     //este es el escucha cuando se cambia el select
     listaProductos=[];
-    $("#products_l").select2({
+     $.post(baseurl + 'products/stock_transfer_products?wid='+tips,{},function(data){
+            
+            $("#products_l").val("");
+            $("#products_l").trigger("change");
+            var options="";
+            $(data).each(function(index,data2){
+                options+="<option value='"+data2.pid+"'>"+data2.product_name+"</option>";
+            });
+            dataglobal=data;
+            $("#products_l").html(options);
+            $("#products_l").trigger("change");
+        },'json');
 
-        tags: [],
-        ajax: {
-            url: baseurl + 'products/stock_transfer_products?wid='+tips,
-            dataType: 'json',
-            type: 'POST',
-            quietMillis: 50,
-            data: function (customer) {
-                return {
-                    customer: customer
-                };
-            },
-            processResults: function (data) {
-                dataglobal=data;
-                //aqui es el escucha de cuando se toca el input
-
-                
-                return {
-                    results: $.map(data, function (item) {
-                        return {
-                            text: item.product_name,							
-                            id: item.pid
-                        }
-                    })
-                };
-            },
-        }
-    }); });
+});
 
     $("#products_l").on("select2:unselect",function(e){
         console.log("eliminado "+e.params.data.id);
