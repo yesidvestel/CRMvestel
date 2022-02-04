@@ -674,7 +674,8 @@ class Tickets Extends CI_Controller
         $this->load->model('customers_model', 'customers');
 		$tid = $this->input->post('tid');		
         $status = $this->input->post('status');
-        $fecha_final = $this->input->post('fecha_final'); 
+        //$fecha_final = $this->input->post('fecha_final'); 
+        $fecha_final = date("Y-m-d H:i:s"); 
 		$ticket = $this->db->get_where('tickets', array('idt' => $tid))->row();
 		$usuario = $this->db->get_where('customers', array('id' => $ticket->cid))->row();
         $invoice = $this->db->get_where('invoices',array('tid'=>$ticket->id_invoice))->result_array();
@@ -1484,7 +1485,7 @@ if($ya_agrego_equipos==false){
 		}//abre en line 963
 		
         $dataz['status']=$status;
-        $dataz['fecha_final']=$fecha_final;
+        $dataz['fecha_final']=date("Y-m-d H:i:s");
         if ($this->db->update('tickets',$dataz,array('idt'=>$tid))){
 			//cambio color al finalizar
 			$this->db->set('color', '#a3a3a3');
