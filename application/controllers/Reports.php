@@ -651,13 +651,13 @@ $data['datos_informe']=array("trans_type"=>$trans_type);
                         $data_tr_efectivo['tid']="-1";
                         $data_tr_efectivo['eid']=$iduser;
                         $data_tr_efectivo['note']="Saldo ".$data_tr_efectivo['date'];
-                        $this->db->insert("transactions",$data_tr_efectivo);
+                        //$this->db->insert("transactions",$data_tr_efectivo);
                         $data_tr_efectivo['debit']="0.00";
                         $data_tr_efectivo['credit']=$valor_efectivo_caja;
                         $fecha_actual = date("Y-m-d");                
                         $data_tr_efectivo['date']= $fechax1; 
                         $data_tr_efectivo['type']="Income";
-                        $this->db->insert("transactions",$data_tr_efectivo);
+                        //$this->db->insert("transactions",$data_tr_efectivo);
                     }
             }
             // fin cambiando rol usario
