@@ -319,7 +319,7 @@ class Reports_model extends CI_Model
             and date_format("'.$fecha->format("Y-m-t").'","%Y-%m-%d")
             GROUP by YEAR(datetable.date),MONTH(datetable.date)';*/
 $date1=date("Y-m-d",strtotime($fecha->format("Y-m")."-01"."- 1 year"));
-            $header_sql='SELECT t1.asignado as asig, t1.detalle as detalle,t1.section as section, YEAR(datetable.date) as year,MONTH(datetable.date) as month
+            $header_sql='SELECT  t1.detalle as detalle,t1.section as section, YEAR(datetable.date) as year,MONTH(datetable.date) as month
             from datetable left join (select * from tickets 
             join customers on tickets.cid=customers.id where';
 
@@ -375,11 +375,11 @@ foreach ($est as $key => $value) {
             $x3=strpos($value['section'], "mg");
             $x4=strpos($value['section'], "tv");
             $x5=strpos($value['section'], "internet");
-            $x6=strpos($value['section'], "mb");
-            if(($x1!==false || $x3!==false || $x5!==false || $x6!==false) && ($x2!==false || $x4!==false)){
+            $x7=strpos($value['section'], "mb");
+            if(($x1!==false || $x3!==false || $x5!==false || $x7!==false) && ($x2!==false || $x4!==false)){
                 $estadistica['instalaciones_tv_e_internet'][$key1]++;
             }else{
-                if($x1===false && $x3===false && $x5===false && $x6===false){                    
+                if($x1===false && $x3===false && $x5===false && $x7===false){                    
                     $estadistica['instalaciones_tv'][$key1]++;   
                 }
                 if($x2===false && $x4===false ){
