@@ -264,10 +264,10 @@ table {
     var datosdos={
         element: 'invoices-sales-chart',
         data: [
-            <?php foreach ($stat['instalaciones_tv_e_internet'] as $key => $row) {
-            $datex = new DateTime($row['year']."-".$row['month']."-01");
+            <?php foreach ($stat['instalaciones_tv_e_internet'] as $key => $numero) {
+            $datex = new DateTime($key);
             //$num = cal_days_in_month(CAL_GREGORIAN, $row['month'], $row['year']);
-            echo "{ x: '".($datex->format("Y-m-t"))."', y: ". intval($row['numero']) .",z: " . intval($stat['instalaciones_tv'][$key]['numero']) . ",a: " . intval($stat['instalaciones_internet'][$key]['numero']) . ",b: " . intval($stat['instalaciones_Agregar_Tv'][$key]['numero']) .",c:" . intval($stat['instalaciones_AgregarInternet'][$key]['numero']) . ",d: " . intval($stat['instalaciones_Traslado'][$key]['numero']) . ",e: " . intval($stat['instalaciones_Revision'][$key]['numero']) . ",f: " . intval($stat['instalaciones_Reconexion'][$key]['numero']) . ",g: " . intval($stat['instalaciones_Suspension_Combo'][$key]['numero']) . ",h: " . intval($stat['instalaciones_Suspension_Internet'][$key]['numero']) . ",i: " . intval($stat['instalaciones_Suspension_Television'][$key]['numero']) . ",j: " . intval($stat['instalaciones_Corte_Television'][$key]['numero']) . "},";
+            echo "{ x: '".($datex->format("Y-m-t"))."', y: ". intval($stat['instalaciones_tv_e_internet'][$key]) .",z: " . intval($stat['instalaciones_tv'][$key]) . ",a: " . intval($stat['instalaciones_internet'][$key]) . ",b: " . intval($stat['instalaciones_Agregar_Tv'][$key]) .",c:" . intval($stat['instalaciones_AgregarInternet'][$key]) . ",d: " . intval($stat['instalaciones_Traslado'][$key]) . ",e: " . intval($stat['instalaciones_Revision'][$key]) . ",f: " . intval($stat['instalaciones_Reconexion'][$key]) . ",g: " . intval($stat['instalaciones_Suspension_Combo'][$key]) . ",h: " . intval($stat['instalaciones_Suspension_Internet'][$key]) . ",i: " . intval($stat['instalaciones_Suspension_Television'][$key]) . ",j: " . intval($stat['instalaciones_Corte_Television'][$key]) . "},";
             
         } ?>
 

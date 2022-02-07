@@ -308,19 +308,109 @@ class Reports_model extends CI_Model
             
         }
         //, datetable.date
-        $header_sql='SELECT count(idt) as numero,YEAR(datetable.date) as year,MONTH(datetable.date) as month
+        /*$header_sql='SELECT count(idt) as numero,YEAR(datetable.date) as year,MONTH(datetable.date) as month
             from datetable left join (select * from tickets 
             join customers on tickets.cid=customers.id where';
 
-        $footer_sql=' and tickets.status="Resuelto" and 
+            $footer_sql=' and tickets.status="Resuelto" and 
             customers.gid='.$sede.' '.$filtro_tecnico.') as t1 
             on datetable.date = date_format(t1.fecha_final,"%Y-%m-%d") 
             where datetable.date BETWEEN date_format("'.(date("Y-m-d",strtotime($fecha->format("Y-m")."-01"."- 1 year"))).'","%Y-%m-%d") 
             and date_format("'.$fecha->format("Y-m-t").'","%Y-%m-%d")
-            GROUP by YEAR(datetable.date),MONTH(datetable.date)';
+            GROUP by YEAR(datetable.date),MONTH(datetable.date)';*/
+$date1=date("Y-m-d",strtotime($fecha->format("Y-m")."-01"."- 1 year"));
+            $header_sql='SELECT t1.asignado as asig, t1.detalle as detalle,t1.section as section, YEAR(datetable.date) as year,MONTH(datetable.date) as month
+            from datetable left join (select * from tickets 
+            join customers on tickets.cid=customers.id where';
+
+        $footer_sql='  tickets.status="Resuelto" and 
+            customers.gid='.$sede.' '.$filtro_tecnico.') as t1 
+            on datetable.date = date_format(t1.fecha_final,"%Y-%m-%d") 
+            where datetable.date BETWEEN date_format("'.($date1).'","%Y-%m-%d") 
+            and date_format("'.$fecha->format("Y-m-t").'","%Y-%m-%d")';
+            //GROUP by YEAR(datetable.date),MONTH(datetable.date)';
 		//nuevo codigo //falta utilizar el last_date($fecha); y colocar $fecha->format("Y-m")."01"; para el tema de las fechas
         $estadistica=array();
 		
+        $est=$this->db->query($header_sql." ".$footer_sql)->result_array();
+        $estadistica['instalaciones_tv_e_internet']=array();
+        $estadistica['instalaciones_tv']=array();
+        $estadistica['instalaciones_internet']=array();
+        $estadistica['instalaciones_Agregar_Tv']=array();
+        $estadistica['instalaciones_AgregarInternet']=array();
+        $estadistica['instalaciones_Traslado']=array();
+        $estadistica['instalaciones_Revision']=array();
+        $estadistica['instalaciones_Reconexion']=array();
+        $estadistica['instalaciones_Suspension_Combo']=array();
+        $estadistica['instalaciones_Suspension_Internet']=array();
+        $estadistica['instalaciones_Suspension_Television']=array();
+        $estadistica['instalaciones_Corte_Television']=array();
+
+        for ($i=0; $i <=12 ; $i++) { 
+            if($i!=0){
+                $date1=date("Y-m",strtotime($date1."+ 1 month"))."-01"; 
+                //var_dump($date1);
+            }            
+            foreach ($estadistica as $key => $value) {
+                $estadistica[$key][$date1]=0;
+            }
+            /*$estadistica['instalaciones_tv']['fecha']=$date1;$estadistica['instalaciones_internet']['fecha']=$date1;$estadistica['instalaciones_Agregar_Tv']['fecha']=$date1;$estadistica['instalaciones_AgregarInternet']=$date1;$estadistica['instalaciones_Traslado']['fecha']=$date1;$estadistica['instalaciones_Revision']['fecha']=$date1;$estadistica['instalaciones_Reconexion']['fecha']=$date1;$estadistica['instalaciones_Suspension_Combo']['fecha']=$date1;$estadistica['instalaciones_Suspension_Internet']['fecha']=$date1;$estadistica['instalaciones_Suspension_Television']['fecha']=$date1;$estadistica['instalaciones_Corte_Television']['fecha']=$date1;*/
+
+
+        }
+
+foreach ($est as $key => $value) {
+    //var_dump($value);
+    if($value['month']<10){
+        $value['month']="0".$value['month'];
+    }
+    $key1=$value['year']."-".$value['month']."-01";
+    $value['detalle']=strtolower($value['detalle']);
+    $value['section']=strtolower($value['section']);
+    if($value['detalle']=="instalacion"){
+        //var_dump($value);
+            
+            $x1=strpos($value['section'], "mega");
+            $x2=strpos($value['section'], "television");
+            $x3=strpos($value['section'], "mg");
+            $x4=strpos($value['section'], "tv");
+            $x5=strpos($value['section'], "internet");
+            $x6=strpos($value['section'], "mb");
+            if(($x1!==false || $x3!==false || $x5!==false || $x6!==false) && ($x2!==false || $x4!==false)){
+                $estadistica['instalaciones_tv_e_internet'][$key1]++;
+            }else{
+                if($x1===false && $x3===false && $x5===false && $x6===false){                    
+                    $estadistica['instalaciones_tv'][$key1]++;   
+                }
+                if($x2===false && $x4===false ){
+                        $estadistica['instalaciones_internet'][$key1]++;   
+                }    
+            }
+            
+            
+
+    }else if($value['detalle']=="agregartelevision"){
+        $estadistica['instalaciones_Agregar_Tv'][$key1]++;        
+    }else if($value['detalle']=="agregarinternet"){
+        $estadistica['instalaciones_AgregarInternet'][$key1]++;        
+    }else if($value['detalle']=="traslado"){
+        $estadistica['instalaciones_Traslado'][$key1]++;        
+    }else if(strpos($value['detalle'], "revision")!==false){
+        $estadistica['instalaciones_Revision'][$key1]++;        
+    }else if(strpos($value['detalle'], "reconexion")!==false){
+        $estadistica['instalaciones_Reconexion'][$key1]++;        
+    }else if($value['detalle']=="suspension combo"){
+        $estadistica['instalaciones_Suspension_Combo'][$key1]++;        
+    }else if($value['detalle']=="suspension internet"){
+        $estadistica['instalaciones_Suspension_Internet'][$key1]++;        
+    }else if($value['detalle']=="suspension television"){
+        $estadistica['instalaciones_Suspension_Television'][$key1]++;        
+    }else if($value['detalle']=="corte television"){
+        $estadistica['instalaciones_Corte_Television'][$key1]++;        
+    }
+
+}
+        /*
         $estadistica['instalaciones_tv_e_internet']=$this->db->query($header_sql.' tickets.detalle="Instalacion" and tickets.section like "%mega%" and tickets.section like "%Television%"  '.$footer_sql)->result_array();
         $estadistica['instalaciones_tv']=$this->db->query($header_sql.' tickets.detalle="Instalacion" and tickets.section not like "%mega%" '.$footer_sql)->result_array();
         $estadistica['instalaciones_internet']=$this->db->query($header_sql.' tickets.detalle="Instalacion" and tickets.section not like "%Television%"  '.$footer_sql)->result_array();
@@ -332,7 +422,7 @@ class Reports_model extends CI_Model
         $estadistica['instalaciones_Suspension_Combo']=$this->db->query($header_sql.' tickets.detalle="Suspension Combo" '.$footer_sql)->result_array();
         $estadistica['instalaciones_Suspension_Internet']=$this->db->query($header_sql.' tickets.detalle="Suspension Internet" '.$footer_sql)->result_array();
         $estadistica['instalaciones_Suspension_Television']=$this->db->query($header_sql.' tickets.detalle="Suspension Television" '.$footer_sql)->result_array();
-        $estadistica['instalaciones_Corte_Television']=$this->db->query($header_sql.' tickets.detalle="Corte Television" '.$footer_sql)->result_array();
+        $estadistica['instalaciones_Corte_Television']=$this->db->query($header_sql.' tickets.detalle="Corte Television" '.$footer_sql)->result_array();*/
         //para seguir agregando ordenes segun el tipo apartir de aca
 		//echo date("d-m-Y",strtotime($fecha->format("Y-m")."-01"."- 1 year"));
 
