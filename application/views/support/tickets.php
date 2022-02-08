@@ -193,6 +193,7 @@
 													<option value='Reconexion Combo'>Reconexion Combo</option>
 													<option value='Reconexion Internet'>Reconexion Internet</option>
 													<option value='Reconexion Television'>Reconexion Television</option>
+													<option value='Recuperación cable modem'>Recuperación cable modem</option>
 													<option value='Subir 5 Mg'>Subir 5 Mg</option>
 													<option value='Subir 10 Mg'>Subir 10 Mg</option>
 													<option value='Suspension Combo'>Suspension Combo</option>
