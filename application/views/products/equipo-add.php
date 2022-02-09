@@ -118,11 +118,13 @@
 								<option value="Bestcom">Bestcom</option>
 								<option value="Kyngtype">Kyngtype</option>
 								<option value="Wifi">Wifi</option>
+								<option value="Cisco">Cisco</option>
+								<option value="Mikotik">Mikrotik</option>
 							</select>
                         </div>
                     </div>
                     <div class="col-sm-4">
-                        <small><?php echo $this->lang->line('') ?>Puede cambiar el impuestos durante la creación de facturas también</small>
+                        <small><?php echo $this->lang->line('') ?>Especifica la marca del fabricante</small>
                     </div>
                 </div>
                 <div class="form-group row">
