@@ -189,19 +189,112 @@ class Reports_model extends CI_Model
             
         }
         //, datetable.date
-        $header_sql='SELECT count(idt) as numero, datetable.date as fecha1 
+        $header_sql='SELECT t1.detalle as detalle,t1.section as section, datetable.date as fecha1 
             from datetable left join (select * from tickets 
             join customers on tickets.cid=customers.id where';
 
-        $footer_sql=' and tickets.status="Resuelto" and 
+        $footer_sql='  tickets.status="Resuelto" and 
             customers.gid='.$sede.' '.$filtro_tecnico.') as t1 
             on datetable.date = date_format(t1.fecha_final,"%Y-%m-%d") 
             where datetable.date BETWEEN date_format("'.$fecha->format("Y-m").'-01","%Y-%m-%d") 
             and date_format("'.$fecha->format("Y-m-t").'","%Y-%m-%d")
-            GROUP by datetable.date';
+            ';
 
         //nuevo codigo //falta utilizar el last_date($fecha); y colocar $fecha->format("Y-m")."01"; para el tema de las fechas
-        $lista_datos=array();
+
+
+$lista_datos=array();
+        
+        $est=$this->db->query($header_sql." ".$footer_sql)->result_array();
+        $lista_datos['instalaciones_tv_e_internet']=array();
+        $lista_datos['instalaciones_tv']=array();
+        $lista_datos['instalaciones_internet']=array();
+        $lista_datos['instalaciones_Agregar_Tv']=array();
+        $lista_datos['instalaciones_AgregarInternet']=array();
+        $lista_datos['instalaciones_Traslado']=array();
+        $lista_datos['instalaciones_Revision']=array();
+        $lista_datos['instalaciones_Reconexion']=array();
+        $lista_datos['instalaciones_Suspension_Combo']=array();
+        $lista_datos['instalaciones_Suspension_Internet']=array();
+        $lista_datos['instalaciones_Suspension_Television']=array();
+        $lista_datos['instalaciones_Corte_Television']=array();
+        $lista_datos['total_dia']=array();
+$date1=$fecha->format("Y-m")."-01";
+for ($i=1; $i <=intval($fecha->format("t")) ; $i++) { 
+            if($i!=1){
+                $date1=date("Y-m-d",strtotime($date1."+ 1 days")); 
+                //var_dump($date1);
+            }            
+            foreach ($lista_datos as $key => $value) {
+                $lista_datos[$key][$date1]=0;
+            }
+            /*$estadistica['instalaciones_tv']['fecha']=$date1;$estadistica['instalaciones_internet']['fecha']=$date1;$estadistica['instalaciones_Agregar_Tv']['fecha']=$date1;$estadistica['instalaciones_AgregarInternet']=$date1;$estadistica['instalaciones_Traslado']['fecha']=$date1;$estadistica['instalaciones_Revision']['fecha']=$date1;$estadistica['instalaciones_Reconexion']['fecha']=$date1;$estadistica['instalaciones_Suspension_Combo']['fecha']=$date1;$estadistica['instalaciones_Suspension_Internet']['fecha']=$date1;$estadistica['instalaciones_Suspension_Television']['fecha']=$date1;$estadistica['instalaciones_Corte_Television']['fecha']=$date1;*/
+
+
+        }
+foreach ($est as $key => $value) {
+    //var_dump($value);
+    
+    $key1=$value['fecha1'];
+    $value['detalle']=strtolower($value['detalle']);
+    $value['section']=strtolower($value['section']);
+    
+    if($value['detalle']=="instalacion"){
+        //var_dump($value);
+            
+            $x1=strpos($value['section'], "mega");
+            $x2=strpos($value['section'], "television");
+            $x3=strpos($value['section'], "mg");
+            $x4=strpos($value['section'], "tv");
+            $x5=strpos($value['section'], "internet");
+            $x7=strpos($value['section'], "mb");
+            if(($x1!==false || $x3!==false || $x5!==false || $x7!==false) && ($x2!==false || $x4!==false)){
+                $lista_datos['instalaciones_tv_e_internet'][$key1]++;
+                $lista_datos['total_dia'][$key1]++;
+            }else{
+                if($x1===false && $x3===false && $x5===false && $x7===false){                    
+                    $lista_datos['instalaciones_tv'][$key1]++;   
+                    $lista_datos['total_dia'][$key1]++;
+                }
+                if($x2===false && $x4===false ){
+                        $lista_datos['instalaciones_internet'][$key1]++;   
+                        $lista_datos['total_dia'][$key1]++;
+                }    
+            }
+            
+                
+
+    }else if($value['detalle']=="agregartelevision"){
+        $lista_datos['instalaciones_Agregar_Tv'][$key1]++;        
+        $lista_datos['total_dia'][$key1]++;
+    }else if($value['detalle']=="agregarinternet"){
+        $lista_datos['instalaciones_AgregarInternet'][$key1]++;        
+        $lista_datos['total_dia'][$key1]++;
+    }else if($value['detalle']=="traslado"){
+        $lista_datos['instalaciones_Traslado'][$key1]++;        
+        $lista_datos['total_dia'][$key1]++;
+    }else if(strpos($value['detalle'], "revision")!==false){
+        $lista_datos['instalaciones_Revision'][$key1]++;        
+        $lista_datos['total_dia'][$key1]++;
+    }else if(strpos($value['detalle'], "reconexion")!==false){
+        $lista_datos['instalaciones_Reconexion'][$key1]++;        
+        $lista_datos['total_dia'][$key1]++;
+    }else if($value['detalle']=="suspension combo"){
+        $lista_datos['instalaciones_Suspension_Combo'][$key1]++;    
+        $lista_datos['total_dia'][$key1]++;    
+    }else if($value['detalle']=="suspension internet"){
+        $lista_datos['instalaciones_Suspension_Internet'][$key1]++;        
+        $lista_datos['total_dia'][$key1]++;
+    }else if($value['detalle']=="suspension television"){
+        $lista_datos['instalaciones_Suspension_Television'][$key1]++;        
+        $lista_datos['total_dia'][$key1]++;
+    }else if($value['detalle']=="corte television"){
+        $lista_datos['instalaciones_Corte_Television'][$key1]++;        
+        $lista_datos['total_dia'][$key1]++;
+    }
+
+}
+        /*$lista_datos=array();
 
         $lista_datos['instalaciones_tv_e_internet']=$this->db->query($header_sql.' tickets.detalle="Instalacion" and tickets.section like "%mega%" and tickets.section like "%Television%" '.$footer_sql)->result_array();
         $lista_datos['instalaciones_tv']=$this->db->query($header_sql.' tickets.detalle="Instalacion" and tickets.section not like "%mega%" '.$footer_sql)->result_array();
@@ -219,11 +312,13 @@ class Reports_model extends CI_Model
         
 
         $lista_datos['total_dia']=$this->db->query(($header_sql.' '.substr($footer_sql,5)))->result_array();//el subtring es para quitar el and de el footer
-
+*/
         $footer_sql=str_replace("Resuelto","Pendiente",$footer_sql);//el replace para cambiar por pendientes
-        $footer_sql=substr(str_replace("fecha_final","created",$footer_sql),5);//el subtring es para quitar el and de el footer y el replace es para filtrar en ves de con fecha final con created
+        $footer_sql=str_replace("fecha_final","created",$footer_sql);//el subtring es para quitar el and de el footer y el replace es para filtrar en ves de con fecha final con created
 
-        $lista_datos['pendientes']=$this->db->query($header_sql.' '.$footer_sql)->result_array();
+        $lista_datos['pendientes']=$this->db->query('SELECT count(idt) as numero, datetable.date as fecha1 
+            from datetable left join (select * from tickets 
+            join customers on tickets.cid=customers.id where '.$footer_sql." GROUP by datetable.date ")->result_array();
         $lista_datos['cuantos_dias_a_imprimir']=intval($fecha->format("t"));
         
         return $lista_datos;

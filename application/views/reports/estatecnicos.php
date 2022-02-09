@@ -160,79 +160,79 @@ table {
 										<tr>
 											<td class="static">Ins. Tv+Int</td>
 											<?php $conteo=0; foreach ($tipos['instalaciones_tv_e_internet'] as $row) {?>												
-											<td class="first-col"><?php echo $row['numero'];$conteo+=$row['numero']; } ?></td>
+											<td class="first-col"><?php echo $row;$conteo+=$row; } ?></td>
 											<td align="center"><?php echo $conteo; ?></td>
 										</tr>
 										<tr>
 											<td class="static">Ins. Tv</td>
 											<?php $conteo=0; foreach ($tipos['instalaciones_tv'] as $row) {?>												
-											<td ><?php echo $row['numero'];$conteo+=$row['numero']; } ?></td>
+											<td ><?php echo $row;$conteo+=$row; } ?></td>
 											<td align="center"><?php echo $conteo; ?></td>
 										</tr>
 										<tr>
 											<td class="static">Ins. Int</td>
 											<?php $conteo=0; foreach ($tipos['instalaciones_internet'] as $row) {?>												
-											<td ><?php echo $row['numero'];$conteo+=$row['numero']; } ?></td>
+											<td ><?php echo $row;$conteo+=$row; } ?></td>
 											<td align="center"><?php echo $conteo; ?></td>
 										</tr>
 										<tr>
 											<td class="static">Agregar Tv</td>
 											<?php $conteo=0; foreach ($tipos['instalaciones_Agregar_Tv'] as $row) {?>												
-											<td ><?php echo $row['numero'];$conteo+=$row['numero']; } ?></td>
+											<td ><?php echo $row;$conteo+=$row; } ?></td>
 											<td align="center"><?php echo $conteo; ?></td>
 										</tr>
 										<tr>
 											<td class="static">Agregar Int</td>
 											<?php $conteo=0; foreach ($tipos['instalaciones_AgregarInternet'] as $row) {?>												
-											<td ><?php echo $row['numero'];$conteo+=$row['numero']; } ?></td>
+											<td ><?php echo $row;$conteo+=$row; } ?></td>
 											<td align="center"><?php echo $conteo; ?></td>
 										</tr>
 										<tr>
 											<td class="static">Traslado</td>
 											<?php $conteo=0; foreach ($tipos['instalaciones_Traslado'] as $row) {?>												
-											<td ><?php echo $row['numero'];$conteo+=$row['numero']; } ?></td>
+											<td ><?php echo $row;$conteo+=$row; } ?></td>
 											<td align="center"><?php echo $conteo; ?></td>
 										</tr>
 										<tr>
 											<td class="static">Revision</td>
 											<?php $conteo=0; foreach ($tipos['instalaciones_Revision'] as $row) {?>												
-											<td ><?php echo $row['numero'];$conteo+=$row['numero']; } ?></td>
+											<td ><?php echo $row;$conteo+=$row; } ?></td>
 											<td align="center"><?php echo $conteo; ?></td>
 										</tr>
 										<tr>
 											<td class="static">Recon. Tv</td>
 											<?php $conteo=0; foreach ($tipos['instalaciones_Reconexion'] as $row) {?>												
-											<td ><?php echo $row['numero'];$conteo+=$row['numero']; } ?></td>
+											<td ><?php echo $row;$conteo+=$row; } ?></td>
 											<td align="center"><?php echo $conteo; ?></td>
 										</tr>
 										<tr>
 											<td class="static">Sus. Tv+Int</td>
 											<?php $conteo=0; foreach ($tipos['instalaciones_Suspension_Combo'] as $row) {?>												
-											<td ><?php echo $row['numero'];$conteo+=$row['numero']; } ?></td>
+											<td ><?php echo $row;$conteo+=$row; } ?></td>
 											<td align="center"><?php echo $conteo; ?></td>
 										</tr>
 										<tr>
 											<td class="static">Sus. Int</td>
 											<?php $conteo=0; foreach ($tipos['instalaciones_Suspension_Internet'] as $row) {?>												
-											<td ><?php echo $row['numero'];$conteo+=$row['numero']; } ?></td>
+											<td ><?php echo $row;$conteo+=$row; } ?></td>
 											<td align="center"><?php echo $conteo; ?></td>
 										</tr>
 										<tr>
 											<td class="static">Sus. Tv</td>
 											<?php $conteo=0; foreach ($tipos['instalaciones_Suspension_Television'] as $row) {?>												
-											<td ><?php echo $row['numero'];$conteo+=$row['numero']; } ?></td>
+											<td ><?php echo $row;$conteo+=$row; } ?></td>
 											<td align="center"><?php echo $conteo; ?></td>
 										</tr>
 										<tr>
 											<td class="static">Corte Tv</td>
 											<?php $conteo=0; foreach ($tipos['instalaciones_Corte_Television'] as $row) {?>												
-											<td ><?php echo $row['numero'];$conteo+=$row['numero']; } ?></td>
+											<td ><?php echo $row;$conteo+=$row; } ?></td>
 											<td align="center"><?php echo $conteo; ?></td>
 										</tr>
 										<tr>
 											<td class="static" style="background-color:#719FD0 ">TOTAL DIA</td>
 											<?php $conteo=0; foreach ($tipos['total_dia'] as $row) {?>	
-											<td style="background-color:#719FD0 "><?php echo $row['numero'];$conteo+=$row['numero']; } ?></td>
+											<td style="background-color:#719FD0 "><?php echo $row;$conteo+=$row; } ?></td>
 											<td align="center" style="background-color:#719FD0 "><?php echo $conteo; ?></td>
 										</tr>
 										<tr>
@@ -319,9 +319,9 @@ table {
         element: 'invoices-products-chart',
         data: [
             <?php foreach ($tipos['instalaciones_tv_e_internet'] as $key => $row) {
-            $datex = new DateTime($row['fecha1']);
+            $datex = new DateTime($key);
             //$num = cal_days_in_month(CAL_GREGORIAN, $row['month'], $row['year']);
-            echo "{ x: '".($datex->format("Y-m-d"))."', y: " . intval($row['numero']) . ",z: " . intval($tipos['instalaciones_tv'][$key]['numero']) . ",a: " . intval($tipos['instalaciones_internet'][$key]['numero']) . ",b: " . intval($tipos['instalaciones_Agregar_Tv'][$key]['numero']) . ",c: " . intval($tipos['instalaciones_AgregarInternet'][$key]['numero']) . ",d: " . intval($tipos['instalaciones_Traslado'][$key]['numero']) . ",e: " . intval($tipos['instalaciones_Revision'][$key]['numero']) . ",f: " . intval($tipos['instalaciones_Reconexion'][$key]['numero']) . ",g: " . intval($tipos['instalaciones_Suspension_Combo'][$key]['numero']) . ",h: " . intval($tipos['instalaciones_Suspension_Internet'][$key]['numero']) . ",i: " . intval($tipos['instalaciones_Suspension_Television'][$key]['numero']) . ",j: " . intval($tipos['instalaciones_Corte_Television'][$key]['numero']) . "},";//,z: " . intval($tipos['instalaciones_tv'][$key]['numero']) . "
+            echo "{ x: '".($datex->format("Y-m-d"))."', y: " . intval($tipos['instalaciones_tv_e_internet'][$key]) . ",z: " . intval($tipos['instalaciones_tv'][$key]) . ",a: " . intval($tipos['instalaciones_internet'][$key]) . ",b: " . intval($tipos['instalaciones_Agregar_Tv'][$key]) . ",c: " . intval($tipos['instalaciones_AgregarInternet'][$key]) . ",d: " . intval($tipos['instalaciones_Traslado'][$key]) . ",e: " . intval($tipos['instalaciones_Revision'][$key]) . ",f: " . intval($tipos['instalaciones_Reconexion'][$key]) . ",g: " . intval($tipos['instalaciones_Suspension_Combo'][$key]) . ",h: " . intval($tipos['instalaciones_Suspension_Internet'][$key]) . ",i: " . intval($tipos['instalaciones_Suspension_Television'][$key]) . ",j: " . intval($tipos['instalaciones_Corte_Television'][$key]) . "},";//,z: " . intval($tipos['instalaciones_tv'][$key]['numero']) . "
             
         } ?>
 
