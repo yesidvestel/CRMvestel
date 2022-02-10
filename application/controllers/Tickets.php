@@ -443,7 +443,10 @@ class Tickets Extends CI_Controller
                     'asignado' => $id           
                 );  
             $this->db->where('id', $idequipo);
-            $this->db->update('equipos', $datae);
+			//devolver equipo a bodega desde el almacen del tecnico
+            if ($this->db->update('equipos', $datae)) {
+				$this->db->delete('products', array('product_name' => $mac));
+			}
 
             echo json_encode(array('status' => 'Success', 'message' =>
                 $this->lang->line('UPDATED'), 'pstatus' => $status));    

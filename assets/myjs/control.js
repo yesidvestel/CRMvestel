@@ -666,6 +666,21 @@ $("#delete-confirm").on("click", function() {
     removeObject(o_data,action_url);
 });
 
+$(document).on('click', ".asigna-object", function (e) {
+    e.preventDefault();
+    $('#object-id').val($(this).attr('data-object-id'));
+    $(this).closest('tr').attr('id',$(this).attr('data-object-id'));
+    $('#asigna_model').modal({backdrop: 'static', keyboard: false});
+
+});
+$("#asignar-confirm").on("click", function() {
+    var o_data = 'deleteid=' + $('#object-id2').val()+"&"+'tecnico=' + $('#tec').val();
+    //var o_datados = 'tecnico=' + $('#tec').val();
+    var action_url= $('#action-urldos').val();
+    $('#'+$('#object-id2').val()).remove();
+    removeObject(o_data,action_url);
+});
+
 function removeObject(action,action_url) {
 
     jQuery.ajax({

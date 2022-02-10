@@ -96,6 +96,15 @@
         });
 
     });
+	$("#equipostable").on('draw.dt',function (){
+		$(".clasignar").click(function(ev){
+			ev.preventDefault();
+			$("#asigna_model").modal("show");
+			$("#object-id2").val($(this).data("object-id2"));
+		
+		});
+	});
+	
 </script>
 <div id="delete_model" class="modal fade">
     <div class="modal-dialog">
@@ -108,6 +117,7 @@
             <div class="modal-body">
                 <p><?php echo $this->lang->line('delete this product') ?></p>
             </div>
+			
             <div class="modal-footer">
                 <input type="hidden" id="object-id" value="">
                 <input type="hidden" id="action-url" value="products/delete_e">
@@ -120,3 +130,37 @@
         </div>
     </div>
 </div>
+<div id="asigna_model" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"><?php echo $this->lang->line('') ?>Asignacion</h4>
+            </div>
+            <div class="modal-body">
+                <p><?php echo $this->lang->line('') ?>Asignar equipo a tecnico</p>
+				<div>
+					<select name="tecnico" class="form-control" id="tec">
+						<?php
+						foreach ($tecnicoslista as $row) {
+							$cid = $row['id'];
+							$title = $row['username'];
+							$nombre = $row['name'];
+							echo "<option value='$title' data-id='$cid'>$nombre</option>";
+						}
+						?>
+					</select>
+				</div>
+            </div>
+            <div class="modal-footer">
+                <input type="hidden" id="object-id2" value="">
+                <input type="hidden" id="action-urldos" value="products/asigna_e">
+                <button type="button" data-dismiss="modal" class="btn btn-primary"
+                        id="asignar-confirm"><?php echo $this->lang->line('') ?>Asignar</button>
+                <button type="button" data-dismiss="modal"
+                        class="btn"><?php echo $this->lang->line('Cancel') ?></button>
+            </div>
+            </div>
+        </div>
+    </div>

@@ -150,9 +150,9 @@ class Products extends CI_Controller
             $row[] = $prd->mac;
             $row[] = $prd->serial;
 			$row[] = $prd->estado;
-			if ($prd->asignado == 0){
-            $row[]= 'Sin asignar';
-			}else{ $row[] = $usuario->abonado;}
+			if ($prd->asignado > 0 ){
+            $row[]= $usuario->abonado;
+			}else{ $row[] = $prd->asignado;}
 			$row[] = $prd->marca;
 			$row[] = $prd->t_instalacion;
 			if ($prd->vlan!=='0'){
@@ -164,7 +164,9 @@ class Products extends CI_Controller
 			if ($prd->puerto!=='0'){
 			$row[] = $prd->puerto;
 			}else{$row[]= 'N/A';}	
-            $row[] = '<a href="' . base_url() . 'products/editequipoview?id=' . $prd->id . '" class="btn btn-primary btn-xs"><span class="icon-pencil"></span> ' . $this->lang->line('Edit') . '</a> <a href="#" data-object-id="' . $prd->id  . '" class="btn btn-danger btn-xs  delete-object"><span class="icon-bin"></span> ' . $this->lang->line('Delete') . '</a>';
+            $row[] = '<a href="' . base_url() . 'products/editequipoview?id=' . $prd->id . '" class="btn btn-primary btn-xs"><span class="icon-pencil"></span> ' . $this->lang->line('Edit') . '</a> 
+					  <a href="#" data-object-id="' . $prd->id  . '" class="btn btn-danger btn-xs  delete-object"><span class="icon-bin"></span> ' . $this->lang->line('Delete') . '</a>
+					  <a href="#" data-object-id2="' . $prd->id  . '" class="btn btn-warning clasignar"><span class="icon-arrow-up"></span> ' . $this->lang->line('') . 'Asignar</a>';
             $data[] = $row;
         }
 		
@@ -246,6 +248,33 @@ class Products extends CI_Controller
         if ($id) {
             $this->db->delete('equipos', array('id' => $id));
             echo json_encode(array('status' => 'Success', 'message' => $this->lang->line('DELETED')));
+        } else {
+            echo json_encode(array('status' => 'Error', 'message' => $this->lang->line('ERROR')));
+        }
+    }
+	public function asigna_e()
+    {
+		
+		
+        $id = $this->input->post('deleteid');
+        $tecnico = $this->input->post('tecnico');		
+        if (isset($id) && $id!=null && $id!="null") {
+				
+			$equipo=$this->db->get_where("equipos",array('id' =>$id))->row();
+			$almacen=$this->db->get_where("product_warehouse",array('id_tecnico' =>$tecnico))->row();	
+            $data2 = array(					
+				'pcat' => 3,
+				'warehouse' => $almacen->id,
+				'product_name' => $equipo->mac,
+				'product_code' => $equipo->codigo
+			);
+			if ($this->db->insert('products', $data2)){
+				//agregar par de tickets
+				$this->db->set('asignado', $almacen->id_tecnico);		
+				$this->db->where('id', $equipo->id);
+				$this->db->update('equipos');
+			}
+            echo json_encode(array('status' => 'Success', 'message' => 'ASIGNADO'));
         } else {
             echo json_encode(array('status' => 'Error', 'message' => $this->lang->line('ERROR')));
         }

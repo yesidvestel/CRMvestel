@@ -87,7 +87,9 @@ class Productcategory Extends CI_Controller
     }
 	public function viewalmacen()
     {
+		$this->load->model('ticket_model', 'ticket');
         $data['cat'] = $this->products_cat->warehouse();
+		$data['tecnicoslista'] = $this->ticket->tecnico_list();
         $head['title'] = "Vista Productos Almacen";
         $head['usernm'] = $this->aauth->get_user()->username;
         $this->load->view('fixed/header', $head);

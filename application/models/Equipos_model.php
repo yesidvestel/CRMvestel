@@ -35,7 +35,8 @@ class Equipos_model extends CI_Model
 	 private function _get_datatables_query($id = '')
     {
          
-			$this->db->from($this->table);            
+			$this->db->from($this->table);
+		 	//$this->db->join('customers', 'customers.id = equipos.asignado');
 		 if ($id > 0) {
 			 $this->db->where("almacen = $id");
 		 }        
