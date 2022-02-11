@@ -1,0 +1,1 @@
+esta carpeta es un web service se utiliza para el progreso en tiempo real de la facturacion electronica, se debe de copiar en htdocs como un proyecto aparte
