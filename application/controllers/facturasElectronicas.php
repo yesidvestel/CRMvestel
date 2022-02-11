@@ -505,7 +505,7 @@ $x++;
 
                 }
 
-            if($cuenta%10==0 || $cuenta>=($total_customer-2)){
+            if($cuenta%2==0 || $cuenta>=($total_customer-2)){
                 $file = fopen("assets/facturas_electronicas_seguimiento.txt", "w");            
                 fwrite($file, $cuenta.",".$total_customer.",".$total_f_creadas);
                 fclose($file);
