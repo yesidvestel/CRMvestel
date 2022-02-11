@@ -406,8 +406,19 @@ $this->load->model("customers_model","customers");
         $this->load->view('facturas_electronicas/configuraciones',$data);
         $this->load->view('fixed/footer');       
     }
+    public function visualizar_resumen_ejecucion(){
+        $head['title'] = "Facturas electronicas generadas ";        
+        
+        $data['fecha'] = $_GET['fecha'];
+        $data['pay_acc'] = $_GET['sede'];
+        $head['usernm'] = $this->aauth->get_user()->username;
+        $this->load->view('fixed/header', $head);
+        $this->load->view('facturas_electronicas/facturas_creadas', $data);
+        $this->load->view('fixed/footer');
+    }
     public function generar_facturas_action(){
         set_time_limit(10000);
+       
         $this->load->model("customers_model","customers");
         $this->load->model("facturas_electronicas_model","facturas_electronicas");
         $caja1=$this->db->get_where('accounts',array('id' =>$_POST['pay_acc']))->row();
@@ -420,7 +431,19 @@ $this->load->model("customers_model","customers");
         $api = new SiigoAPI();
         $api->getAuth(1);
         $api->getAuth2(2);
+        $cuenta=0;
+        $datos_file=array();        
+        $total_customer=count($customers);
+        $total_f_creadas=$this->db->query("SELECT COUNT(*) as cuenta_f FROM `facturacion_electronica_siigo` inner join customers on customers.id=facturacion_electronica_siigo.customer_id where customers.gid='".$caja1->sede."' and facturacion_electronica_siigo.fecha = '".$dateTime->format("Y-m-d")."'")->result_array();
+        $total_f_creadas=intval($total_f_creadas[0]['cuenta_f']);
+        
+                $file = fopen("assets/facturas_electronicas_seguimiento.txt", "w");            
+                fwrite($file, $cuenta.",".$total_customer.",".$total_f_creadas);
+                fclose($file);
+        
         foreach ($customers as $key => $value) {
+            $cuenta++;
+            
                 $servicios=$this->customers->servicios_detail($value['id']);
                 $puntos = $this->customers->due_details($value['id']);
                 //guardare en un array la variable servicios = combo o tv o internet y la variable puntos con no o el numero de puntos
@@ -468,6 +491,7 @@ $x++;
                         //sleep(7);
                         if($creo['status']==true){
                             $datos_del_proceso['facturas_creadas'][]=$value['id'];
+                            $total_f_creadas++;
                         }else{
                             $datos_del_proceso['facturas_con_errores'][]=array("id"=>$value['id'],"error"=>$creo['respuesta']);
                         }
@@ -481,19 +505,25 @@ $x++;
 
                 }
 
-            
+            if($cuenta%10==0 || $cuenta>=($total_customer-2)){
+                $file = fopen("assets/facturas_electronicas_seguimiento.txt", "w");            
+                fwrite($file, $cuenta.",".$total_customer.",".$total_f_creadas);
+                fclose($file);
+            }
 
         }
         $_SESSION['errores']=$datos_del_proceso['facturas_con_errores'];
      //   var_dump($datos_del_proceso);
-        $head['title'] = "Facturas electronicas generadas ";        
-        $data['datos_del_proceso'] = $datos_del_proceso;
+        //$head['title'] = "Facturas electronicas generadas ";        
+        $data=array();
+        //$data['datos_del_proceso'] = $datos_del_proceso;
         $data['fecha'] = $dateTime->format("Y-m-d");
-        $data['pay_acc'] = $caja1->holder;
-        $head['usernm'] = $this->aauth->get_user()->username;
-        $this->load->view('fixed/header', $head);
+        $data['sede'] = $caja1->sede;
+        //$head['usernm'] = $this->aauth->get_user()->username;
+        /*$this->load->view('fixed/header', $head);
         $this->load->view('facturas_electronicas/facturas_creadas', $data);
-        $this->load->view('fixed/footer');
+        $this->load->view('fixed/footer');*/
+        echo json_encode($data);
         
     }
     public function obtener_token(){
@@ -543,7 +573,7 @@ var_dump($response);
     }
     public function lista_facturas_generadas(){
 
-        $lista_invoices=$this->db->query("SELECT *,facturacion_electronica_siigo.id as id_fac_elec FROM facturacion_electronica_siigo inner join customers on customers.id=facturacion_electronica_siigo.customer_id where fecha='".$_GET['fecha']."' and ciudad='".$_GET['pay_acc']."'")->result_array();
+        $lista_invoices=$this->db->query("SELECT *,facturacion_electronica_siigo.id as id_fac_elec FROM facturacion_electronica_siigo inner join customers on customers.id=facturacion_electronica_siigo.customer_id where fecha='".$_GET['fecha']."' and gid='".$_GET['pay_acc']."'")->result_array();
         $no = $this->input->post('start');
         $data=array();
         $x=0;
