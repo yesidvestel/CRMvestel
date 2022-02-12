@@ -13,9 +13,9 @@
 		background-color:#719FD0;
 	}
 	
-.first-col {
+/*.first-col {
   padding-left: 35px!important;
-}
+}*/
 table {
   display: block;
   overflow-x: auto;
@@ -140,7 +140,7 @@ table {
                         <div class="card-body">
 
                             <div class="table-responsive">
-                                <table class="table table-hover mb-1">
+                                <table class="table mb-1">
                                     <thead>
 										<tr>
 										<th rowspan="2" width="140px" class="static">Tipor de orden</th>
@@ -158,8 +158,8 @@ table {
                                     <tbody>
 										
 										<tr>
-											<td class="static">Ins. Tv+Int 
-												<br>
+											<td class="static"><div class="cl-instalaciones_tv_e_internet"><i><u>Ins. Tv+Int </u></i></div>
+												
 												<table><tbody>
 													<?php foreach ($lista_de_tecnicos as $key => $value) {
 														echo "<tr><td>".$value['username']."</td></tr>";
@@ -167,8 +167,8 @@ table {
 												</tbody></table> 
 											</td>
 											<?php $conteo=0; foreach ($tipos['instalaciones_tv_e_internet'] as $key1=> $row) {?>												
-												<td class="first-col"><?php echo $row;$conteo+=$row; ?>
-														<br>
+												<td class="first-col" style="padding-right: 5px;padding-left: 5px;text-align: center;"><div class="cl-instalaciones_tv_e_internet"><?php echo $row;$conteo+=$row; ?></div>
+														
 														<table><tbody>
 															<?php foreach ($lista_por_tecnicos['instalaciones_tv_e_internet'][$key1] as $key => $value2) {
 																echo "<tr><td>".$value2."</td></tr>";																
