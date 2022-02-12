@@ -746,6 +746,9 @@ $data['datos_informe']=array("trans_type"=>$trans_type);
         
         $data['filter'] = array($tec, $sede, $sdate);
 		$data['tipos'] = $this->reports->filtrotipos($tec, $sede, $sdate);
+        $data['lista_de_tecnicos']=$data['tipos']['lista_tecnicos'];
+        $data['lista_por_tecnicos']=$data['tipos']['lista_tecnicos_organizada'];
+        $data['tipos']=$data['tipos']['lista_datos'];
         $data['stat'] = $this->reports->get_estadisticas_tecnicos($tec, $sede, $sdate);
         //  print_r( $data['statement']);
         $head['title'] = "reporte tecnico";

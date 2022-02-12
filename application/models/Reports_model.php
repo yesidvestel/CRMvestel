@@ -189,7 +189,7 @@ class Reports_model extends CI_Model
             
         }
         //, datetable.date
-        $header_sql='SELECT t1.detalle as detalle,t1.section as section, datetable.date as fecha1 
+        $header_sql='SELECT t1.asignado as tec_asignado,t1.detalle as detalle,t1.section as section, datetable.date as fecha1 
             from datetable left join (select * from tickets 
             join customers on tickets.cid=customers.id where';
 
@@ -219,6 +219,9 @@ $lista_datos=array();
         $lista_datos['instalaciones_Suspension_Television']=array();
         $lista_datos['instalaciones_Corte_Television']=array();
         $lista_datos['total_dia']=array();
+        $lista_tecnicos=$this->db->query("SELECT username from aauth_users where roleid=2 or roleid=3")->result_array();
+        $lista_tecnicos_organizada=array();
+        
 $date1=$fecha->format("Y-m")."-01";
 for ($i=1; $i <=intval($fecha->format("t")) ; $i++) { 
             if($i!=1){
@@ -227,11 +230,17 @@ for ($i=1; $i <=intval($fecha->format("t")) ; $i++) {
             }            
             foreach ($lista_datos as $key => $value) {
                 $lista_datos[$key][$date1]=0;
+                foreach ($lista_tecnicos as $key2 => $value2) {
+                    $lista_tecnicos_organizada[$key][$date1][$value2['username']]=0;
+                    //$lista_tecnicos_organizada[$value2['username']][$date1]=0;
+                }
             }
+            
             /*$estadistica['instalaciones_tv']['fecha']=$date1;$estadistica['instalaciones_internet']['fecha']=$date1;$estadistica['instalaciones_Agregar_Tv']['fecha']=$date1;$estadistica['instalaciones_AgregarInternet']=$date1;$estadistica['instalaciones_Traslado']['fecha']=$date1;$estadistica['instalaciones_Revision']['fecha']=$date1;$estadistica['instalaciones_Reconexion']['fecha']=$date1;$estadistica['instalaciones_Suspension_Combo']['fecha']=$date1;$estadistica['instalaciones_Suspension_Internet']['fecha']=$date1;$estadistica['instalaciones_Suspension_Television']['fecha']=$date1;$estadistica['instalaciones_Corte_Television']['fecha']=$date1;*/
 
 
         }
+        
 foreach ($est as $key => $value) {
     //var_dump($value);
     
@@ -251,14 +260,20 @@ foreach ($est as $key => $value) {
             if(($x1!==false || $x3!==false || $x5!==false || $x7!==false) && ($x2!==false || $x4!==false)){
                 $lista_datos['instalaciones_tv_e_internet'][$key1]++;
                 $lista_datos['total_dia'][$key1]++;
+                $lista_tecnicos_organizada['instalaciones_tv_e_internet'][$key1][$value['tec_asignado']]++;
+                $lista_tecnicos_organizada['total_dia'][$key1][$value['tec_asignado']]++;
             }else{
                 if($x1===false && $x3===false && $x5===false && $x7===false){                    
                     $lista_datos['instalaciones_tv'][$key1]++;   
                     $lista_datos['total_dia'][$key1]++;
+                    $lista_tecnicos_organizada['instalaciones_tv'][$key1][$value['tec_asignado']]++;
+                    $lista_tecnicos_organizada['total_dia'][$key1][$value['tec_asignado']]++;
                 }
                 if($x2===false && $x4===false ){
                         $lista_datos['instalaciones_internet'][$key1]++;   
                         $lista_datos['total_dia'][$key1]++;
+                        $lista_tecnicos_organizada['instalaciones_internet'][$key1][$value['tec_asignado']]++;
+                        $lista_tecnicos_organizada['total_dia'][$key1][$value['tec_asignado']]++;
                 }    
             }
             
@@ -267,30 +282,48 @@ foreach ($est as $key => $value) {
     }else if($value['detalle']=="agregartelevision"){
         $lista_datos['instalaciones_Agregar_Tv'][$key1]++;        
         $lista_datos['total_dia'][$key1]++;
+        $lista_tecnicos_organizada['instalaciones_Agregar_Tv'][$key1][$value['tec_asignado']]++;
+        $lista_tecnicos_organizada['total_dia'][$key1][$value['tec_asignado']]++;
     }else if($value['detalle']=="agregarinternet"){
         $lista_datos['instalaciones_AgregarInternet'][$key1]++;        
         $lista_datos['total_dia'][$key1]++;
+        $lista_tecnicos_organizada['instalaciones_AgregarInternet'][$key1][$value['tec_asignado']]++;
+        $lista_tecnicos_organizada['total_dia'][$key1][$value['tec_asignado']]++;
     }else if($value['detalle']=="traslado"){
         $lista_datos['instalaciones_Traslado'][$key1]++;        
         $lista_datos['total_dia'][$key1]++;
+        $lista_tecnicos_organizada['instalaciones_Traslado'][$key1][$value['tec_asignado']]++;
+        $lista_tecnicos_organizada['total_dia'][$key1][$value['tec_asignado']]++;
     }else if(strpos($value['detalle'], "revision")!==false){
         $lista_datos['instalaciones_Revision'][$key1]++;        
         $lista_datos['total_dia'][$key1]++;
+        $lista_tecnicos_organizada['instalaciones_Revision'][$key1][$value['tec_asignado']]++;
+        $lista_tecnicos_organizada['total_dia'][$key1][$value['tec_asignado']]++;
     }else if(strpos($value['detalle'], "reconexion")!==false){
         $lista_datos['instalaciones_Reconexion'][$key1]++;        
         $lista_datos['total_dia'][$key1]++;
+        $lista_tecnicos_organizada['instalaciones_Reconexion'][$key1][$value['tec_asignado']]++;
+        $lista_tecnicos_organizada['total_dia'][$key1][$value['tec_asignado']]++;
     }else if($value['detalle']=="suspension combo"){
         $lista_datos['instalaciones_Suspension_Combo'][$key1]++;    
         $lista_datos['total_dia'][$key1]++;    
+        $lista_tecnicos_organizada['instalaciones_Suspension_Combo'][$key1][$value['tec_asignado']]++;
+        $lista_tecnicos_organizada['total_dia'][$key1][$value['tec_asignado']]++;
     }else if($value['detalle']=="suspension internet"){
         $lista_datos['instalaciones_Suspension_Internet'][$key1]++;        
         $lista_datos['total_dia'][$key1]++;
+        $lista_tecnicos_organizada['instalaciones_Suspension_Internet'][$key1][$value['tec_asignado']]++;
+        $lista_tecnicos_organizada['total_dia'][$key1][$value['tec_asignado']]++;
     }else if($value['detalle']=="suspension television"){
         $lista_datos['instalaciones_Suspension_Television'][$key1]++;        
         $lista_datos['total_dia'][$key1]++;
+        $lista_tecnicos_organizada['instalaciones_Suspension_Television'][$key1][$value['tec_asignado']]++;
+        $lista_tecnicos_organizada['total_dia'][$key1][$value['tec_asignado']]++;
     }else if($value['detalle']=="corte television"){
         $lista_datos['instalaciones_Corte_Television'][$key1]++;        
         $lista_datos['total_dia'][$key1]++;
+        $lista_tecnicos_organizada['instalaciones_Corte_Television'][$key1][$value['tec_asignado']]++;
+        $lista_tecnicos_organizada['total_dia'][$key1][$value['tec_asignado']]++;
     }
 
 }
@@ -321,7 +354,7 @@ foreach ($est as $key => $value) {
             join customers on tickets.cid=customers.id where '.$footer_sql." GROUP by datetable.date ")->result_array();
         $lista_datos['cuantos_dias_a_imprimir']=intval($fecha->format("t"));
         
-        return $lista_datos;
+        return array("lista_tecnicos_organizada"=>$lista_tecnicos_organizada,"lista_datos"=>$lista_datos,"lista_tecnicos"=>$lista_tecnicos);
     }
 
 

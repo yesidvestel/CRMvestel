@@ -158,9 +158,27 @@ table {
                                     <tbody>
 										
 										<tr>
-											<td class="static">Ins. Tv+Int</td>
-											<?php $conteo=0; foreach ($tipos['instalaciones_tv_e_internet'] as $row) {?>												
-											<td class="first-col"><?php echo $row;$conteo+=$row; } ?></td>
+											<td class="static">Ins. Tv+Int 
+												<br>
+												<table><tbody>
+													<?php foreach ($lista_de_tecnicos as $key => $value) {
+														echo "<tr><td>".$value['username']."</td></tr>";
+													} ?>	
+												</tbody></table> 
+											</td>
+											<?php $conteo=0; foreach ($tipos['instalaciones_tv_e_internet'] as $key1=> $row) {?>												
+												<td class="first-col"><?php echo $row;$conteo+=$row; ?>
+														<br>
+														<table><tbody>
+															<?php foreach ($lista_por_tecnicos['instalaciones_tv_e_internet'][$key1] as $key => $value2) {
+																echo "<tr><td>".$value2."</td></tr>";																
+															} ?>	
+														</tbody></table> 	
+												</td>
+											<?php } ?>
+
+												
+											
 											<td align="center"><?php echo $conteo; ?></td>
 										</tr>
 										<tr>
