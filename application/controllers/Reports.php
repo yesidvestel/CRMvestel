@@ -746,6 +746,7 @@ $data['datos_informe']=array("trans_type"=>$trans_type);
         
         $data['filter'] = array($tec, $sede, $sdate);
 		$data['tipos'] = $this->reports->filtrotipos($tec, $sede, $sdate);
+        $data['lista_datos_cuentas_tipos_por_tecnico']=$data['tipos']['lista_datos_cuentas_tipos_por_tecnico'];
         $data['lista_de_tecnicos']=$data['tipos']['lista_tecnicos'];
         $data['lista_por_tecnicos']=$data['tipos']['lista_tecnicos_organizada'];
         $data['tipos']=$data['tipos']['lista_datos'];

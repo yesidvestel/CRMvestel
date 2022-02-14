@@ -185,7 +185,14 @@ table {
 
 												
 											
-											<td align="center" ><div class="cl-instalaciones_tv_e_internet" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_tv_e_internet()"><?php echo $conteo; ?></div></td>
+											<td align="center" >
+												<div class="cl-instalaciones_tv_e_internet" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_tv_e_internet()"><?php echo $conteo; ?></div>
+														<table class="tb_tec_info_instalaciones_tv_e_internet"><tbody>
+															<?php foreach ($lista_datos_cuentas_tipos_por_tecnico['instalaciones_tv_e_internet'] as $key => $value2) {
+																echo "<tr class='instalaciones_tv_e_internet_".$key."' ><td>".$value2."</td></tr>";																
+															} ?>	
+														</tbody></table> 	
+											</td>
 										</tr>
 										<tr>
 											<td class="static">Ins. Tv</td>
