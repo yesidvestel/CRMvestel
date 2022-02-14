@@ -158,20 +158,26 @@ table {
                                     <tbody>
 										
 										<tr>
-											<td class="static"><div class="cl-instalaciones_tv_e_internet"><i><u>Ins. Tv+Int </u></i></div>
+											<td class="static">
+												<div class="cl-instalaciones_tv_e_internet" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_tv_e_internet()"><i><u>Ins. Tv+Int </u></i></div>
 												
-												<table><tbody>
-													<?php foreach ($lista_de_tecnicos as $key => $value) {
-														echo "<tr><td>".$value['username']."</td></tr>";
-													} ?>	
-												</tbody></table> 
+													<table class="tb_tec_info_instalaciones_tv_e_internet"><tbody>
+														<?php $lista_clases_css1=""; 
+															foreach ($lista_de_tecnicos as $key => $value) {
+																$name_class="instalaciones_tv_e_internet_".$value['username'];
+																$lista_clases_css1.=",.".$name_class."";
+																echo "<tr class='".$name_class."'><td>".$value['username']."</td></tr>";
+														}  ?>	
+														
+													</tbody></table> 
 											</td>
 											<?php $conteo=0; foreach ($tipos['instalaciones_tv_e_internet'] as $key1=> $row) {?>												
-												<td class="first-col" style="padding-right: 5px;padding-left: 5px;text-align: center;"><div class="cl-instalaciones_tv_e_internet"><?php echo $row;$conteo+=$row; ?></div>
+												<td class="first-col" style="padding-right: 4px;padding-left: 4px;text-align: center;">
+													<div class="cl-instalaciones_tv_e_internet" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_tv_e_internet()"><?php echo $row;$conteo+=$row; ?></div>
 														
-														<table><tbody>
+														<table class="tb_tec_info_instalaciones_tv_e_internet"><tbody>
 															<?php foreach ($lista_por_tecnicos['instalaciones_tv_e_internet'][$key1] as $key => $value2) {
-																echo "<tr><td>".$value2."</td></tr>";																
+																echo "<tr class='instalaciones_tv_e_internet_".$key."' ><td>".$value2."</td></tr>";																
 															} ?>	
 														</tbody></table> 	
 												</td>
@@ -179,7 +185,7 @@ table {
 
 												
 											
-											<td align="center"><?php echo $conteo; ?></td>
+											<td align="center" ><div class="cl-instalaciones_tv_e_internet" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_tv_e_internet()"><?php echo $conteo; ?></div></td>
 										</tr>
 										<tr>
 											<td class="static">Ins. Tv</td>
@@ -273,7 +279,38 @@ table {
         </div>
     </div>
 </div>
+<script type="text/javascript">
+	document.addEventListener("DOMContentLoaded", function(event) {
+		var lista_clases_css1="<?=$lista_clases_css1 ?>";
+		
+			$(".cl-instalaciones_tv_e_internet"+lista_clases_css1).mouseover(function(){
+				var x1="."+$(this).attr("class");
+				$(x1).css("background-color","#d2b48c");
+				
+				
+				/*$(x1).css("box-shadow","1px 1px #53a7ea,2px 2px #53a7ea,3px 3px #53a7ea");
+				$(x1).css("-webkit-transform","translateX(-7px)");
+				$(x1).css("transform","translateX(-7px)");*/
+			});
+			
+			$(".cl-instalaciones_tv_e_internet"+lista_clases_css1).mouseout(function (){
+				var x1="."+$(this).attr("class");
+				$(x1).css("background-color","");
+				/*$(x1).css("box-shadow","");
+				$(x1).css("-webkit-transform","");
+				$(x1).css("transform","");*/
+			});
 
+
+		
+    		
+			
+	});
+function desactivar_activar_tabla_instalaciones_tv_e_internet(){
+	$(".tb_tec_info_instalaciones_tv_e_internet").fadeToggle("fast");
+}
+
+</script>
 <script type="text/javascript">
 	var lista_keysdos=[];
 	var lista_labels_totaldos={y:'Instalaciones Tv + Internet',z:"Instalaciones Tv",a:"Instalaciones Internet",b:"Agregar Tv",c:"Agregar Internet",d:"Traslado",e:"Revision",f:"Reconexion",g:"Suspension Combo",h:"Suspension Internet",i:"Suspension Television",j:"Corte Television"};
@@ -383,7 +420,5 @@ table {
 
 		
 	}
-	
-	
 
 </script>
