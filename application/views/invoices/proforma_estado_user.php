@@ -333,7 +333,10 @@
                     $porcentaje=($transacciones_factura[0]['total_pagado']*100)/$row['total'];
                     $row['total']-=$transacciones_factura[0]['total_pagado'];
                     $row['subtotal']=$row['subtotal']-(($row['subtotal']*$porcentaje)/100);
-                    $row['tax']=$row['tax']-(($row['tax']*$porcentaje)/100);    
+                    $row['tax']=$row['tax']-(($row['tax']*$porcentaje)/100);   
+                    if($row['subtotal']==$row['total']){
+                        $row['subtotal']-=$row['tax'];    
+                    } 
         }
         
         $sub_total+=$row['subtotal'];
@@ -427,7 +430,7 @@ if($total_customer==0){
 
             <td> ' . $this->lang->line('Total Tax') . ' :</td>
 
-            <td>' . amountExchange($total_tax) . '</td>
+            <td>' . amountExchange($tax_total) . '</td>
         </tr>';
         
         
