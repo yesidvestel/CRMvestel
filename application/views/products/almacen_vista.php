@@ -7,6 +7,64 @@
         </div>
         <div class="grid_3 grid_4 table-responsive animated fadeInRight">
             <h5><?php echo $this->lang->line('Products') ?></h5>
+			<div class="col-xl-4 col-lg-6 col-xs-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="card-block">
+                                <div class="media">
+                                    <div class="media-body text-xs-left">
+                                    
+										<?php $numero_asignados= $this->db->select('count(id) as numero')->from('equipos')->where('almacen='.$_GET["id"].' AND asignado=0 or asignado is null')->get()->result(); ?>
+                                        <h3 class="green"><?=$numero_asignados[0]->numero?></h3>
+                                        <span>Por asignar</span>
+                                    </div>
+                                    <div class="media-right media-middle">
+                                        <i class="icon-rocket green font-large-2 float-xs-right"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-lg-6 col-xs-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="card-block">
+                                <div class="media">
+                                    <div class="media-body text-xs-left">
+                                        <?php $numero_sinasignar= $this->db->select('count(id) as numeroasig')->from('equipos')->where('almacen='.$_GET["id"].' AND asignado!=0')->get()->result(); ?>
+                                        <h3 class="red"><?=$numero_sinasignar[0]->numeroasig?></h3>
+                                        <span>Asignados</span>
+                                    </div>
+                                    <div class="media-right media-middle">
+                                        <i class="icon-blocked red font-large-2 float-xs-right"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-lg-6 col-xs-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="card-block">
+                                <div class="media">
+                                    <div class="media-body text-xs-left">
+                                        <?php $numero_total= $this->db->select('count(id) as numero')->from('equipos')->where('almacen='.$_GET["id"].'')->get()->result(); ?>
+                                        <h3 class="cyan"><?=$numero_total[0]->numero?></h3>
+                                        <span><?php echo $this->lang->line('Total') ?></span>
+                                    </div>
+                                    <div class="media-right media-middle">
+                                        <i class="icon-stats-bars22 cyan font-large-2 float-xs-right"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+        </div>
+        <hr>
 
             <hr>
             <table id="equipostable" class="display" cellspacing="0" width="100%">
