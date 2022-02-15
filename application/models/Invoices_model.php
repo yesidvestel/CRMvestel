@@ -175,7 +175,8 @@ setlocale(LC_TIME, "spanish");
                 if($punto['taxrate']!=0){
                     $iva+=round(($punto['product_price']*$punto['taxrate'])/100);
                 }
-
+                
+                $punto['product_price']=$punto['product_price']*$puntos;
                 $total+=$punto['product_price'];
             }
         }
