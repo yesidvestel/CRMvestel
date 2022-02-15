@@ -150,8 +150,8 @@ table {
                                     <tr>
                                         
                                         <?php for ($i=1;$i<=$tipos['cuantos_dias_a_imprimir'];$i++){
-													echo '<th>'.$i.'</th>';}?>
-                                        <th rowspan="2">TOTAL</th>
+													echo '<th style="text-align: center;">'.$i.'</th>';}?>
+                                        <th rowspan="2" style="text-align: center;" >TOTAL</th>
                                     </tr>
 										
                                     </thead>
@@ -172,12 +172,12 @@ table {
 													</tbody></table> 
 											</td>
 											<?php $conteo=0; foreach ($tipos['instalaciones_tv_e_internet'] as $key1=> $row) {?>												
-												<td class="first-col" style="padding-right: 4px;padding-left: 4px;text-align: center;">
+												<td class="first-col" style="padding-right: 0px;padding-left: 0px;text-align: center;">
 													<div class="cl-instalaciones_tv_e_internet" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_tv_e_internet()"><?php echo $row;$conteo+=$row; ?></div>
 														
-														<table class="tb_tec_info_instalaciones_tv_e_internet"><tbody>
+														<table class="tb_tec_info_instalaciones_tv_e_internet" style='width: 140px;'><tbody>
 															<?php foreach ($lista_por_tecnicos['instalaciones_tv_e_internet'][$key1] as $key => $value2) {
-																echo "<tr class='instalaciones_tv_e_internet_".$key."' ><td>".$value2."</td></tr>";																
+																echo "<tr class='instalaciones_tv_e_internet_".$key."' ><td style='width: 140px;text-align: center;'>".($value2['FTTH']['puntuacion']+$value2['EOC']['puntuacion']+$value2['puntos_adicionales']['puntuacion']+$value2['puntos_adicionales_multiples']['puntuacion'])." pts</td></tr>";																
 															} ?>	
 														</tbody></table> 	
 												</td>
@@ -186,10 +186,10 @@ table {
 												
 											
 											<td align="center" >
-												<div class="cl-instalaciones_tv_e_internet" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_tv_e_internet()"><?php echo $conteo; ?></div>
-														<table class="tb_tec_info_instalaciones_tv_e_internet"><tbody>
+												<div   class="cl-instalaciones_tv_e_internet" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_tv_e_internet()"><?php echo $conteo; ?></div>
+														<table class="tb_tec_info_instalaciones_tv_e_internet" style='width: 400px;'><tbody>
 															<?php foreach ($lista_datos_cuentas_tipos_por_tecnico['instalaciones_tv_e_internet'] as $key => $value2) {
-																echo "<tr class='instalaciones_tv_e_internet_".$key."' ><td>".$value2."</td></tr>";																
+																echo "<tr class='instalaciones_tv_e_internet_".$key."' ><td style='width: 400px;'>FTTH:".$value2['FTTH']['cantidad'].", EOC:".$value2['EOC']['cantidad'].", P.A:".$value2['puntos_adicionales']['cantidad'].", P.A.M:".$value2['puntos_adicionales_multiples']['cantidad']."; TOTAL=<strong>".($value2['FTTH']['puntuacion']+$value2['EOC']['puntuacion']+$value2['puntos_adicionales']['puntuacion']+$value2['puntos_adicionales_multiples']['puntuacion'])."</strong> pts </td></tr>";																
 															} ?>	
 														</tbody></table> 	
 											</td>
@@ -295,16 +295,16 @@ table {
 				$(x1).css("background-color","#d2b48c");
 				
 				
-				/*$(x1).css("box-shadow","1px 1px #53a7ea,2px 2px #53a7ea,3px 3px #53a7ea");
-				$(x1).css("-webkit-transform","translateX(-7px)");
+				$(x1).css("box-shadow","1px 1px #53a7ea,2px 2px #53a7ea,3px 3px #53a7ea");
+				/*$(x1).css("-webkit-transform","translateX(-7px)");
 				$(x1).css("transform","translateX(-7px)");*/
 			});
 			
 			$(".cl-instalaciones_tv_e_internet"+lista_clases_css1).mouseout(function (){
 				var x1="."+$(this).attr("class");
 				$(x1).css("background-color","");
-				/*$(x1).css("box-shadow","");
-				$(x1).css("-webkit-transform","");
+				$(x1).css("box-shadow","");
+				/*$(x1).css("-webkit-transform","");
 				$(x1).css("transform","");*/
 			});
 
