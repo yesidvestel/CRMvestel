@@ -84,10 +84,11 @@
 <script type="text/javascript">
     var timer;
     var b=0;
+    var pay_acc;
     $("#enviar").click(function(ev){
         ev.preventDefault();
         $(enviar).attr("disabled","true");
-        var pay_acc=$("#cuentas_ option:selected").val();
+        pay_acc=$("#cuentas_ option:selected").val();
         var sdate=$("#sdate2").val();
         b=0;
         timer=setTimeout("temporizador()",2800);
@@ -110,7 +111,7 @@
         var porcentaje=0;
         var x1=baseurl.replace("CRMvestel/","");
 
-        $.get(x1+"webservice/ws.php",{},function(data){
+        $.get(x1+"webservice/ws.php?pay_acc="+pay_acc,{},function(data){
             var datos=data.split(",");
             porcentaje=parseInt((parseInt(datos[0]))*100/parseInt(datos[1]));
             porcentaje2=parseInt((parseInt(datos[2]))*100/parseInt(datos[1]));
@@ -160,4 +161,5 @@
         percentage: 0,
         animation: true
     });
+   
 </script>

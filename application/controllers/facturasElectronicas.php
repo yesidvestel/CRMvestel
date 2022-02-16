@@ -437,7 +437,7 @@ $this->load->model("customers_model","customers");
         $total_f_creadas=$this->db->query("SELECT COUNT(*) as cuenta_f FROM `facturacion_electronica_siigo` inner join customers on customers.id=facturacion_electronica_siigo.customer_id where customers.gid='".$caja1->sede."' and facturacion_electronica_siigo.fecha = '".$dateTime->format("Y-m-d")."'")->result_array();
         $total_f_creadas=intval($total_f_creadas[0]['cuenta_f']);
         
-                $file = fopen("assets/facturas_electronicas_seguimiento.txt", "w");            
+                $file = fopen("assets/facturas_electronicas_seguimiento_".$_POST['pay_acc'].".txt", "w");            
                 fwrite($file, $cuenta.",".$total_customer.",".$total_f_creadas);
                 fclose($file);
         
@@ -506,7 +506,7 @@ $x++;
                 }
 
             if($cuenta%2==0 || $cuenta>=($total_customer-2)){
-                $file = fopen("assets/facturas_electronicas_seguimiento.txt", "w");            
+                $file = fopen("assets/facturas_electronicas_seguimiento_".$_POST['pay_acc'].".txt", "w");            
                 fwrite($file, $cuenta.",".$total_customer.",".$total_f_creadas);
                 fclose($file);
             }

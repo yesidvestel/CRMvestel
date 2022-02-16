@@ -20,6 +20,6 @@ if (!$resultado) {
 	var_dump(mysql_fetch_assoc($resultado));
 }*/
 
-$x=file_get_contents($_SERVER['DOCUMENT_ROOT'].'/CRMvestel/assets/facturas_electronicas_seguimiento.txt', FILE_USE_INCLUDE_PATH);
+$x=file_get_contents($_SERVER['DOCUMENT_ROOT'].'/CRMvestel/assets/facturas_electronicas_seguimiento_'.$_GET['pay_acc'].'.txt', FILE_USE_INCLUDE_PATH);
 echo $x;
  ?>
