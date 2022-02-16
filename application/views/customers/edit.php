@@ -504,13 +504,13 @@ alert(selected);
 }
 </script>
 <script type="text/javascript">	
-	var perfil_2 = new Array ("Seleccine...","3Megas","5Megas","5MegasD","10Megas","10MegasSt","15Megas","20Megas","20MegasSt","30Megas","30MegasSt","50Megas","70Megas","80Megas","Cortados");
-	var perfil_3 = new Array ("Seleccine...","3MEGAS","5MEGAS","5MDEDI","5MEGAS2","10MEGAS","10MEGASST","10MegasD","20MEGAS","20MEGASST","20MEGASD","30MEGAS","30MEGASST","MOROSOS");
-	var perfil_4 = new Array ("Seleccine...","3Megas","5Megas","5MegasD","10Megas","10MegasSt","15Megas","20Megas","20MegasSt","30Megas","30MegasSt","50Megas","80Megas","Cortados");
+	var perfil_2 = new Array ("Seleccine...","3Megas","5Megas","5MegasD","10Megas","10MegasSt","10MegasD","15Megas","20Megas","20MegasSt","20MegasD","30Megas","30MegasSt","30MegasD","40Megas","40MegasSt","40MegasD","50Megas","50MegasSt","50MegasD","60Megas","60MegasSt","60MegasD","70Megas","70MegasSt","70MegasD","80Megas","80MegasSt","80MegasD","90Megas","90MegasSt","90MegasD","100Megas","100MegasSt","100MegasD","Cortados");
+	var perfil_3 = new Array ("Seleccine...","3Megas","5Megas","5MegasD","10Megas","10MegasSt","10MegasD","15Megas","20Megas","20MegasSt","20MegasD","30Megas","30MegasSt","30MegasD","40Megas","40MegasSt","40MegasD","50Megas","50MegasSt","50MegasD","60Megas","60MegasSt","60MegasD","70Megas","70MegasSt","70MegasD","80Megas","80MegasSt","80MegasD","90Megas","90MegasSt","90MegasD","100Megas","100MegasSt","100MegasD","Cortados");
+	var perfil_4 = new Array ("Seleccine...","3Megas","5Megas","5MegasD","10Megas","10MegasSt","10MegasD","15Megas","20Megas","20MegasSt","20MegasD","30Megas","30MegasSt","30MegasD","40Megas","40MegasSt","40MegasD","50Megas","50MegasSt","50MegasD","60Megas","60MegasSt","60MegasD","70Megas","70MegasSt","70MegasD","80Megas","80MegasSt","80MegasD","90Megas","90MegasSt","90MegasD","100Megas","100MegasSt","100MegasD","Cortados");
 							//crear funcion que ejecute el cambio
 							function cambia(){
 								var customergroup;
-								customergroup = document.formulario1.customergroup[document.formulario1.customergroup.			selectedIndex].value;
+								customergroup = document.formulario1.customergroup[document.formulario1.customergroup.selectedIndex].value;
 								//se verifica la seleccion dada
 								if(customergroup!=0){
 									mis_opts=eval("perfil_"+customergroup);
