@@ -320,13 +320,44 @@ table {
 											</td>
 										</tr>
 						
-										<tr>
-											<td class="static">Agregar Int</td>
-											<?php $conteo=0; foreach ($tipos['instalaciones_AgregarInternet'] as $row) {?>												
-											<td ><?php echo $row;$conteo+=$row; } ?></td>
-											<td align="center"><?php echo $conteo; ?></td>
-										</tr>
 										
+										<tr>
+											<td class="static">
+												<div class="cl-instalaciones_AgregarInternet" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_AgregarInternet()"><i><u>Agregar Int</u></i></div>
+												
+													<table class="tb_tec_info_instalaciones_AgregarInternet"><tbody>
+														<?php $lista_clases_css5=""; 
+															foreach ($lista_de_tecnicos as $key => $value) {
+																$name_class="instalaciones_AgregarInternet_".$value['username'];
+																$lista_clases_css5.=",.".$name_class."";
+																echo "<tr class='".$name_class."'><td>".$value['username']."</td></tr>";
+														}  ?>	
+														
+													</tbody></table> 
+											</td>
+											<?php $conteo=0; foreach ($tipos['instalaciones_AgregarInternet'] as $key1=> $row) {?>												
+												<td class="first-col" style="padding-right: 0px;padding-left: 0px;text-align: center;">
+													<div class="cl-instalaciones_AgregarInternet" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_AgregarInternet()"><?php echo $row;$conteo+=$row; ?></div>
+														
+														<table class="tb_tec_info_instalaciones_AgregarInternet" style='width: 140px;'><tbody>
+															<?php foreach ($lista_por_tecnicos['instalaciones_AgregarInternet'][$key1] as $key => $value2) {
+																echo "<tr class='instalaciones_AgregarInternet_".$key."' ><td style='width: 140px;text-align: center;'>".($value2['FTTH']['puntuacion']+$value2['EOC']['puntuacion']+$value2['puntos_adicionales']['puntuacion']+$value2['puntos_adicionales_multiples']['puntuacion'])." pts</td></tr>";																
+															} ?>	
+														</tbody></table> 	
+												</td>
+											<?php } ?>
+
+												
+											
+											<td align="center" >
+												<div   class="cl-instalaciones_AgregarInternet" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_AgregarInternet()"><?php echo $conteo; ?></div>
+														<table class="tb_tec_info_instalaciones_AgregarInternet" style='width: 400px;text-align: center;'><tbody>
+															<?php foreach ($lista_datos_cuentas_tipos_por_tecnico['instalaciones_AgregarInternet'] as $key => $value2) {
+																echo "<tr class='instalaciones_AgregarInternet_".$key."' ><td style='width: 400px;'>FTTH:".$value2['FTTH']['cantidad'].", EOC:".$value2['EOC']['cantidad']."; TOTAL=<strong>".($value2['FTTH']['puntuacion']+$value2['EOC']['puntuacion'])."</strong> pts </td></tr>";																
+															} ?>	
+														</tbody></table> 	
+											</td>
+										</tr>
 										<tr>
 											<td class="static">
 												<div class="cl-instalaciones_Traslado" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_Traslado()"><i><u>Traslado</u></i></div>
@@ -432,6 +463,7 @@ table {
 		var lista_clases_css2="<?=$lista_clases_css2 ?>";
 		var lista_clases_css3="<?=$lista_clases_css3 ?>";
 		var lista_clases_css4="<?=$lista_clases_css4 ?>";
+		var lista_clases_css5="<?=$lista_clases_css5 ?>";
 		
 			$(".cl-instalaciones_tv_e_internet"+lista_clases_css1).mouseover(function(){
 				var x1="."+$(this).attr("class");
@@ -504,6 +536,23 @@ table {
 				/*$(x1).css("-webkit-transform","");
 				$(x1).css("transform","");*/
 			});
+			$(".cl-instalaciones_AgregarInternet"+lista_clases_css5).mouseover(function(){
+				var x1="."+$(this).attr("class");
+				$(x1).css("background-color","#d2b48c");
+				
+				
+				$(x1).css("box-shadow","1px 1px #53a7ea,2px 2px #53a7ea,3px 3px #53a7ea");
+				/*$(x1).css("-webkit-transform","translateX(-7px)");
+				$(x1).css("transform","translateX(-7px)");*/
+			});
+			
+			$(".cl-instalaciones_AgregarInternet"+lista_clases_css5).mouseout(function (){
+				var x1="."+$(this).attr("class");
+				$(x1).css("background-color","");
+				$(x1).css("box-shadow","");
+				/*$(x1).css("-webkit-transform","");
+				$(x1).css("transform","");*/
+			});
 
 
 		
@@ -522,6 +571,10 @@ function desactivar_activar_tabla_instalaciones_Agregar_Tv(){
 function desactivar_activar_tabla_instalaciones_Traslado(){
 	$(".tb_tec_info_instalaciones_Traslado").fadeToggle("fast");
 }
+function desactivar_activar_tabla_instalaciones_AgregarInternet(){
+	$(".tb_tec_info_instalaciones_AgregarInternet").fadeToggle("fast");
+}
+
 </script>
 <script type="text/javascript">
 	//$("#x2").scrollLeft(200);
