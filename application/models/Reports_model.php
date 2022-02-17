@@ -233,7 +233,7 @@ for ($i=1; $i <=intval($fecha->format("t")) ; $i++) {
             foreach ($lista_datos as $key => $value) {
                 $lista_datos[$key][$date1]=0;
                 foreach ($lista_tecnicos as $key2 => $value2) {
-                    if($key=="instalaciones_tv_e_internet" || $key=="instalaciones_internet"){
+                    if($key=="instalaciones_tv_e_internet" || $key=="instalaciones_internet" || $key=="instalaciones_Traslado"){
                             $lista_tecnicos_organizada[$key][$date1][$value2['username']]=array("EOC"=>array("cantidad"=>0,"puntuacion"=>0),
                                 "FTTH"=>array("cantidad"=>0,"puntuacion"=>0),
                                 "puntos_adicionales"=>array("cantidad"=>0,"puntuacion"=>0),
@@ -271,7 +271,7 @@ for ($i=1; $i <=intval($fecha->format("t")) ; $i++) {
 
         foreach ($lista_datos_cuentas_tipos_por_tecnico as $key2 => $value2) {
                    foreach ($lista_tecnicos as $key => $value) {
-                        if($key2=="instalaciones_tv_e_internet" || $key2=="instalaciones_internet"){
+                        if($key2=="instalaciones_tv_e_internet" || $key2=="instalaciones_internet" || $key2=="instalaciones_Traslado"){
                             $lista_datos_cuentas_tipos_por_tecnico[$key2][$value['username']]=array("EOC"=>array("cantidad"=>0,"puntuacion"=>0),
                                 "FTTH"=>array("cantidad"=>0,"puntuacion"=>0),
                                 "puntos_adicionales"=>array("cantidad"=>0,"puntuacion"=>0),
@@ -414,9 +414,31 @@ foreach ($est as $key => $value) {
     }else if($value['detalle']=="traslado"){
         $lista_datos['instalaciones_Traslado'][$key1]++;        
         $lista_datos['total_dia'][$key1]++;
-        $lista_tecnicos_organizada['instalaciones_Traslado'][$key1][$value['tec_asignado']]++;
         $lista_tecnicos_organizada['total_dia'][$key1][$value['tec_asignado']]++;
-        $lista_datos_cuentas_tipos_por_tecnico['instalaciones_Traslado'][$value['tec_asignado']]++;
+
+
+        $invoice=$this->db->get_where("invoices",array("tid"=>$value['id_factura_orden']))->row();
+        $equipo=$this->db->get_where("equipos",array("asignado"=>$invoice->csd))->row();
+        if(isset($equipo)){
+            if($equipo->t_instalacion=="FTTH"){
+                $lista_tecnicos_organizada['instalaciones_Traslado'][$key1][$value['tec_asignado']]['FTTH']['cantidad']++;
+                $lista_tecnicos_organizada['instalaciones_Traslado'][$key1][$value['tec_asignado']]['FTTH']['puntuacion']+=$puntuacion_instalaciones_FTTH;
+                $lista_datos_cuentas_tipos_por_tecnico['instalaciones_Traslado'][$value['tec_asignado']]['FTTH']['cantidad']++;
+                $lista_datos_cuentas_tipos_por_tecnico['instalaciones_Traslado'][$value['tec_asignado']]['FTTH']['puntuacion']+=$puntuacion_instalaciones_FTTH;
+            }else if($equipo->t_instalacion=="EOC"){
+                $lista_tecnicos_organizada['instalaciones_Traslado'][$key1][$value['tec_asignado']]['EOC']['cantidad']++;
+                $lista_tecnicos_organizada['instalaciones_Traslado'][$key1][$value['tec_asignado']]['EOC']['puntuacion']+=$puntuacion_instalaciones_EOC;
+                $lista_datos_cuentas_tipos_por_tecnico['instalaciones_Traslado'][$value['tec_asignado']]['EOC']['cantidad']++;
+                $lista_datos_cuentas_tipos_por_tecnico['instalaciones_Traslado'][$value['tec_asignado']]['EOC']['puntuacion']+=$puntuacion_instalaciones_EOC;
+            }
+
+        }else{ //esto son las que por alguna razon ya no tienen un equipo asignado
+                // $lista_tecnicos_organizada['instalaciones_Traslado'][$key1][$value['tec_asignado']]++;
+        
+                //$lista_datos_cuentas_tipos_por_tecnico['instalaciones_Traslado'][$value['tec_asignado']]++;
+        }
+
+       
     }else if(strpos($value['detalle'], "revision")!==false){
         $lista_datos['instalaciones_Revision'][$key1]++;        
         $lista_datos['total_dia'][$key1]++;
