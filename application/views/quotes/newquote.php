@@ -385,8 +385,73 @@
 										</div>
                                    </div>
 								</div>
+								
+								<div class="form-group row" id="Subir_megas">	
+                                    <div class="col-sm-12">
+										<h3 class="title">Subir megas</h3>
+                                    </div>
+									<div class="col-sm-4">
+										<label for="invociedate" class="caption">Paquete</label>
+											<select name="inter" class="form-control mb-1">
+												<option value="no">No</option>
+												<?php
+													foreach ($paquete as $row) {
+														$cid = $row['pid'];
+														$title = $row['product_name'];
+														echo "<option value='$title'>$title</option>";
+													}
+												?>
+											</select>
+									</div>
+									<div class="col-sm-4">
+									<label for="invociedate" class="caption">Perfil Mikrotik</label>
+										<div class="input-group">									
+											<select name="paquete" class="form-control mb-1">
+												<option value="0">no</option>
+													<?php for ($i=1;$i<=10;$i++){
+													echo '	<option value="'.$i*'10'.'Megas">'.$i*'10'.'Megas</option>
+															<option value="'.$i*'10'.'MegasSt">'.$i*'10'.'MegasSt</option>
+															<option value="'.$i*'10'.'MegasD">'.$i*'10'.'MegasD</option>'
+														
+														;}?>
+											</select>
+										</div>
+                                   </div>
+								</div>
+								<div class="form-group row" id="Bajar_megas">	
+                                    <div class="col-sm-12">
+										<h3 class="title">Bajar megas</h3>
+                                    </div>
+									<div class="col-sm-4">
+										<label for="invociedate" class="caption">Paquete</label>
+											<select name="inter" class="form-control mb-1">
+												<option value="no">No</option>
+												<?php
+													foreach ($paquete as $row) {
+														$cid = $row['pid'];
+														$title = $row['product_name'];
+														echo "<option value='$title'>$title</option>";
+													}
+												?>
+											</select>
+									</div>
+									<div class="col-sm-4">
+									<label for="invociedate" class="caption">Perfil Mikrotik</label>
+										<div class="input-group">									
+											<select name="paquete" class="form-control mb-1">
+												<option value="0">no</option>
+													<?php for ($i=1;$i<=10;$i++){
+													echo '	<option value="'.$i*'10'.'Megas">'.$i*'10'.'Megas</option>
+															<option value="'.$i*'10'.'MegasSt">'.$i*'10'.'MegasSt</option>
+															<option value="'.$i*'10'.'MegasD">'.$i*'10'.'MegasD</option>'
+														
+														;}?>
+											</select>
+										</div>
+                                   </div>
+								</div>
 								<div class="form-group row" id="Revision_de_Internet">
-                        <div class="col-sm-12">
+                        	<div class="col-sm-12">
                             <label for="toAddInfo" class="caption">Posible Problema</label>
                             	<select name="problema_red" class="form-control mb-1">
 									<option value="">-</option>
@@ -572,10 +637,11 @@
         });
     });
 	// selecion de orden
-	<?php if ($this->aauth->get_user()->roleid == 5) { ?>
-	var perfil_servicio = new Array ("...","Reconexion Combo","Reconexion Television","Recuperación cable modem","Veeduria","Reconexion Internet","AgregarInternet","AgregarTelevision","Migracion","Bajar 15 Mg","Bajar 10 Mg","Bajar 5 Mg","Cambio de equipo","Corte Combo","Corte Internet","Corte Television","Equipo adicional","Instalacion","Punto nuevo","Subir 5 Mg","Subir 10 Mg","Subir 15 Mg","Subir 20 Mg","Subir 70Mb","Suspension Combo","Suspension Internet","Suspension Television","Traslado","Toma Adicional");
+	<?php  if ($this->aauth->get_user()->roleid == 5) { ?>
+	
+	var perfil_servicio = new Array ("...","Reconexion Combo","Reconexion Television","Recuperación cable modem","Veeduria","Reconexion Internet","AgregarInternet","AgregarTelevision","Migracion","Bajar_megas","Cambio de equipo","Corte Combo","Corte Internet","Corte Television","Equipo adicional","Instalacion","Punto nuevo","Subir_megas","Suspension Combo","Suspension Internet","Suspension Television","Traslado","Toma Adicional");
 	<?php }else{ ?>
-	var perfil_servicio = new Array ("...","AgregarInternet","AgregarTelevision","Recuperación cable modem","Migracion","Veeduria","Bajar 15 Mg","Bajar 10 Mg","Bajar 5 Mg","Cambio de equipo","Corte Combo","Corte Internet","Corte Television","Equipo adicional","Instalacion","Punto nuevo","Subir 5 Mg","Subir 10 Mg","Subir 15 Mg","Subir 20 Mg","Subir 70Mb","Suspension Combo","Suspension Internet","Suspension Television","Traslado","Toma Adicional");
+	var perfil_servicio = new Array ("...","AgregarInternet","AgregarTelevision","Recuperación cable modem","Migracion","Veeduria","Bajar_megas","Cambio de equipo","Corte Combo","Corte Internet","Corte Television","Equipo adicional","Instalacion","Punto nuevo","Subir_megas","Suspension Combo","Suspension Internet","Suspension Television","Traslado","Toma Adicional");
 	<?php }; ?>
 	var perfil_reclamo = new Array ("...","Revision_de_Internet","Revision_de_television","Revision tv e internet");	
 							//crear funcion que ejecute el cambio

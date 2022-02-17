@@ -140,7 +140,7 @@ class Quote extends CI_Controller
 		$tv = $this->input->post('tele');
 		$inter = $this->input->post('inter');
 		$punto = $this->input->post('punto');
-        
+        $paquete = $this->input->post('paquete');
         $detalle=str_replace("_"," ",$detalle);
      if($detalle=="AgregarInternet"){
             $inter = $this->input->post('interB');
@@ -153,13 +153,13 @@ class Quote extends CI_Controller
         $problema = $this->input->post('problema_red');
      }else if($detalle=="Revision_de_television"){
         $problema = $this->input->post('problema_tv');
-     }      
+     }
         if($detalle=="Instalacion"){
             $factura="null";
-        }
+       }
         
         if ($customer_id) {
-        	$this->quote->addticket($customer_id, $gen, $nticket, $subject, $detalle, $created, $problema, $section, $factura,$agendar,$fagenda, $tec, $hora,$hora2,$nomen,$nuno,$auno,$ndos,$ados,$ntres,$local,$barrio,$recider, $refer, $tv,$inter,$punto,$movil);
+        	$this->quote->addticket($customer_id, $gen, $nticket, $subject, $detalle, $created, $problema, $paquete, $section, $factura,$agendar,$fagenda, $tec, $hora,$hora2,$nomen,$nuno,$auno,$ndos,$ados,$ntres,$local,$barrio,$recider, $refer, $tv,$inter,$punto,$movil);
 			
 		}
 
@@ -303,6 +303,7 @@ class Quote extends CI_Controller
 		$inter = $this->input->post('inter');
 		$punto = $this->input->post('punto');
         $bill_date = datefordatabase($created);
+		$paquete = $this->input->post('paquete');
 		$detalle=str_replace("_"," ",$detalle);
         if($detalle=="AgregarInternet"){
             $inter = $this->input->post('interB');
@@ -382,6 +383,15 @@ class Quote extends CI_Controller
 				);
 				$this->db->where('corden', $nticket);
 				$this->db->update('temporales', $data3);
+		}
+		//subir megas
+			if ($detalle=='Subir megas' || $detalle=='Bajar megas'){
+				$data4 = array(
+				'internet' => $inter,
+				'puntos' => $paquete,
+			);
+				$this->db->where('corden', $nticket);
+				$this->db->update('temporales', $data4);
 		}
 		$start = date("Y-m-d",strtotime($fagenda));
 			//agenda
