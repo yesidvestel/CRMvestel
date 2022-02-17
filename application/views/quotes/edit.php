@@ -337,7 +337,7 @@
                                     </div>
 									<div class="col-sm-4">
 										<label for="invociedate" class="caption">Paquete</label>
-											<select name="inter" class="form-control mb-1">
+											<select name="suinter" class="form-control mb-1">
 												<option value="no">No</option>
 												<?php
 													foreach ($paquete as $row) {
@@ -351,7 +351,7 @@
 									<div class="col-sm-4">
 									<label for="invociedate" class="caption">Perfil Mikrotik</label>
 										<div class="input-group">									
-											<select name="paquete" class="form-control mb-1">
+											<select name="supaquete" class="form-control mb-1">
 												<option value="0">no</option>
 													<?php for ($i=1;$i<=10;$i++){
 													echo '	<option value="'.$i*'10'.'Megas">'.$i*'10'.'Megas</option>
@@ -369,7 +369,7 @@
                                     </div>
 									<div class="col-sm-4">
 										<label for="invociedate" class="caption">Paquete</label>
-											<select name="inter" class="form-control mb-1">
+											<select name="bainter" class="form-control mb-1">
 												<option value="no">No</option>
 												<?php
 													foreach ($paquete as $row) {
@@ -383,7 +383,7 @@
 									<div class="col-sm-4">
 									<label for="invociedate" class="caption">Perfil Mikrotik</label>
 										<div class="input-group">									
-											<select name="paquete" class="form-control mb-1">
+											<select name="bapaquete" class="form-control mb-1">
 												<option value="0">no</option>
 													<?php for ($i=1;$i<=10;$i++){
 													echo '	<option value="'.$i*'10'.'Megas">'.$i*'10'.'Megas</option>

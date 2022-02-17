@@ -139,8 +139,11 @@ class Quote extends CI_Controller
 		$hora2 = date("H:i",strtotime($this->input->post('hora')));
 		$tv = $this->input->post('tele');
 		$inter = $this->input->post('inter');
+		$bainter = $this->input->post('bainter');
+		$suinter = $this->input->post('suinter');
 		$punto = $this->input->post('punto');
-        $paquete = $this->input->post('paquete');
+        $bapaquete = $this->input->post('bapaquete');
+        $supaquete = $this->input->post('supaquete');
         $detalle=str_replace("_"," ",$detalle);
      if($detalle=="AgregarInternet"){
             $inter = $this->input->post('interB');
@@ -159,7 +162,7 @@ class Quote extends CI_Controller
        }
         
         if ($customer_id) {
-        	$this->quote->addticket($customer_id, $gen, $nticket, $subject, $detalle, $created, $problema, $paquete, $section, $factura,$agendar,$fagenda, $tec, $hora,$hora2,$nomen,$nuno,$auno,$ndos,$ados,$ntres,$local,$barrio,$recider, $refer, $tv,$inter,$punto,$movil);
+        	$this->quote->addticket($customer_id, $gen, $nticket, $subject, $detalle, $created, $problema, $bapaquete, $supaquete, $section, $factura,$agendar,$fagenda, $tec, $hora,$hora2,$nomen,$nuno,$auno,$ndos,$ados,$ntres,$local,$barrio,$recider, $refer, $tv,$inter,$bainter, $suinter, $punto,$movil);
 			
 		}
 
@@ -301,9 +304,12 @@ class Quote extends CI_Controller
 		$refer = $this->input->post('referencia');
 		$tv = $this->input->post('tele');
 		$inter = $this->input->post('inter');
+		$bainter = $this->input->post('bainter');
+		$suinter = $this->input->post('suinter');
 		$punto = $this->input->post('punto');
         $bill_date = datefordatabase($created);
-		$paquete = $this->input->post('paquete');
+		$supaquete = $this->input->post('supaquete');
+		$bapaquete = $this->input->post('bapaquete');
 		$detalle=str_replace("_"," ",$detalle);
         if($detalle=="AgregarInternet"){
             $inter = $this->input->post('interB');
@@ -334,7 +340,7 @@ class Quote extends CI_Controller
 			'detalle' => $detalle, 
 			'created' => $bill_date,
 			'problema' => $problema,
-			'section' => $section.$tv2.$int2.$pto2,
+			'section' => $section,
 			'id_factura' => $factura
 		);
         $this->db->set($data);
@@ -365,7 +371,11 @@ class Quote extends CI_Controller
 					'puntos' => $punto
 				);
 				$this->db->where('corden', $nticket);
-				$this->db->update('temporales', $data3);
+			if ($this->db->update('temporales', $data3)){
+					$this->db->set('section',$tv2.' '.$int2.' '.$pto2.' '.$section);
+        			$this->db->where('idt', $customer_id);
+					$this->db->update('tickets');
+				}
 		}
 		//agregar servicio
 		if ($detalle==='AgregarTelevision'){
@@ -374,7 +384,11 @@ class Quote extends CI_Controller
 					'puntos' => $punto
 				);
 				$this->db->where('corden', $nticket);
-				$this->db->update('temporales', $data3);
+				if ($this->db->update('temporales', $data3)){
+					$this->db->set('section',$tv2.' '.$pto2.' '.$section);
+        			$this->db->where('idt', $customer_id);
+					$this->db->update('tickets');
+				}
 		}
 		
 		if ($detalle==='AgregarInternet'){
@@ -382,16 +396,37 @@ class Quote extends CI_Controller
 					'internet' => $inter, 
 				);
 				$this->db->where('corden', $nticket);
-				$this->db->update('temporales', $data3);
+				if ($this->db->update('temporales', $data3)){
+					$this->db->set('section',$int2.' '.$section);
+        			$this->db->where('idt', $customer_id);
+					$this->db->update('tickets');
+				}
 		}
 		//subir megas
-			if ($detalle=='Subir megas' || $detalle=='Bajar megas'){
+			if ($detalle=='Subir megas'){
 				$data4 = array(
-				'internet' => $inter,
-				'puntos' => $paquete,
+				'internet' => $suinter,
+				'puntos' => $supaquete,
 			);
 				$this->db->where('corden', $nticket);
-				$this->db->update('temporales', $data4);
+				if ($this->db->update('temporales', $data4)){
+					$this->db->set('section', $suinter.' '.$section);
+        			$this->db->where('idt', $customer_id);
+					$this->db->update('tickets');
+				}
+		}
+		//subir megas
+			if ($detalle=='Bajar megas'){
+				$data4 = array(
+				'internet' => $bainter,
+				'puntos' => $bapaquete,
+			);
+				$this->db->where('corden', $nticket);
+				if ($this->db->update('temporales', $data4)){
+					$this->db->set('section', $bainter.' '.$section);
+        			$this->db->where('idt', $customer_id);
+					$this->db->update('tickets');
+				}
 		}
 		$start = date("Y-m-d",strtotime($fagenda));
 			//agenda
@@ -408,10 +443,10 @@ class Quote extends CI_Controller
 				);
 				$this->db->where('idorden', $nticket);
 				$this->db->update('events', $data2);
-			}
+			}else if ($agendar==si){
 			$boleta = $this->db->get_where('tickets', array('codigo' => $nticket))->row();
 			$abonado = $this->db->get_where('customers', array('id' => $boleta->cid))->row();
-			if ($agendar==si){
+			
 				$data2 = array(
 					'idorden' => $nticket,
 					'title' => 'Usuario #'.$abonado->abonado.' '.$detalle.' '.$hora2,

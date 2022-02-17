@@ -214,7 +214,6 @@ class Ticket_model extends CI_Model
     {
        //$this->db->select("*,");
         $this->db->from('tickets');
-		
          if ($filt2['estado'] != '' && $filt2['estado'] != 'null' && $filt2['estado'] != null) {
             $this->db->where_in('status', explode(",", $filt2['estado']));       
         }

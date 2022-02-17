@@ -180,7 +180,7 @@ class Quote_model extends CI_Model
         $query = $this->db->get();
         return $query->row_array();
     }
-	public function addticket($customer_id, $gen, $nticket, $subject, $detalle, $created, $problema, $paquete, $section, $factura, $agendar, $fagenda, $tec, $hora,$hora2,$nomen,$nuno,$auno,$ndos,$ados,$ntres,$local,$barrio,$recider, $refer,$tv,$inter,$punto,$movil)
+	public function addticket($customer_id, $gen, $nticket, $subject, $detalle, $created, $problema, $bapaquete, $supaquete, $section, $factura, $agendar, $fagenda, $tec, $hora,$hora2,$nomen,$nuno,$auno,$ndos,$ados,$ntres,$local,$barrio,$recider, $refer,$tv,$inter,$bainter, $suinter,$punto,$movil)
     {
 		$bill_llegada = datefordatabase($created);
 		if ($tv=='no' || $tv==''){
@@ -203,6 +203,19 @@ class Quote_model extends CI_Model
 		if($movil==0){
             $movil=null;
         }
+		if($detalle=='Instalacion'){
+			$obs = $tv2.$int2.$pto2.$section;
+		}else if($detalle=='AgregarInternet'){
+			$obs = $int2.' '.$section;
+		}else if($detalle=='AgregarTelevision'){
+			$obs = $tv2.' '.$pto2.' '.$section;
+		}else if($detalle=='Subir megas'){
+			$obs = $suinter.' '.$section;
+		}else if($detalle=='Bajar megas'){
+			$obs = $bainter.' '.$section;
+		}else{
+			$obs = $section;
+		}
         $data = array(
 			'codigo' => $nticket,
             'subject' => $subject,
@@ -212,7 +225,7 @@ class Quote_model extends CI_Model
 			'col' => $gen,
             'status' => 'Pendiente',
 			'problema' => $problema,
-            'section' => $section.$tv2.$int2.$pto2,
+            'section' => $obs,
             'fecha_final' => '',
             'id_invoice' => 'null',
             'id_factura' => $factura,
@@ -271,11 +284,20 @@ class Quote_model extends CI_Model
 			);		
 			$this->db->insert('temporales', $data4);}
 			//subir megas
-			if ($detalle=='Subir megas' || $detalle=='Bajar megas'){
+			if ($detalle=='Subir megas'){
 				$data4 = array(
 				'corden' => $nticket,
-				'internet' => $inter,
-				'puntos' => $paquete,
+				'internet' => $suinter,
+				'puntos' => $supaquete,
+			);		
+			$this->db->insert('temporales', $data4);
+			}
+			//bajar megas
+			if ($detalle=='Bajar megas'){
+				$data4 = array(
+				'corden' => $nticket,
+				'internet' => $bainter,
+				'puntos' => $bapaquete,
 			);		
 			$this->db->insert('temporales', $data4);
 			}

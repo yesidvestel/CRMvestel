@@ -43,7 +43,9 @@
 					<th>Estado</th>
                     <th><?php echo $this->lang->line('Method') ?></th>
                     <th><?php echo $this->lang->line('Action') ?></th>
-
+					<?php if ($this->aauth->get_user()->roleid == 5) { ?>
+                    <th><?php echo $this->lang->line('') ?>Administrativa</th>
+					<?php } ?>
 
                 </tr>
                 </thead>
@@ -60,6 +62,9 @@
 					<th>Estado</th>
                     <th><?php echo $this->lang->line('Method') ?></th>
                     <th><?php echo $this->lang->line('Action') ?></th>
+					<?php if ($this->aauth->get_user()->roleid == 5) { ?>
+                    <th><?php echo $this->lang->line('') ?>Administrativa</th>
+					<?php } ?>
                 </tr>
                 </tfoot>
             </table>
