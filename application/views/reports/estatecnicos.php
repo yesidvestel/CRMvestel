@@ -434,7 +434,7 @@ table {
 											</td>
 										</tr>
 										<tr>
-											<td class="static">Recon. Tv</td>
+											<td class="static">Reconexion</td>
 											<?php $conteo=0; foreach ($tipos['instalaciones_Reconexion'] as $row) {?>												
 											<td ><?php echo $row;$conteo+=$row; } ?></td>
 											<td align="center"><?php echo $conteo; ?></td>
