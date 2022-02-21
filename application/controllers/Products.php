@@ -371,10 +371,7 @@ class Products extends CI_Controller
     public function warehouseproduct_list()
     {
         $catid = $this->input->get('id');
-
-
-        $list = $this->products->get_datatables($catid, true);
-
+        $list = $this->products->get_datatables();
         $data = array();
         $no = $this->input->post('start');
         foreach ($list as $prd) {
@@ -393,8 +390,8 @@ class Products extends CI_Controller
 
         $output = array(
             "draw" => $_POST['draw'],
-            "recordsTotal" => $this->products->count_all($catid, true),
-            "recordsFiltered" => $this->products->count_filtered($catid, true),
+            "recordsTotal" => $this->products->count_all(),
+            "recordsFiltered" => $this->products->count_filtered(),
             "data" => $data,
         );
         //output to json format

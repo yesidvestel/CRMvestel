@@ -6,8 +6,50 @@
             <div class="message"></div>
         </div>
         <div class="grid_3 grid_4 table-responsive animated fadeInRight">
-            <h5><?php echo $this->lang->line('Products') ?></h5>
+			<?php $almacen=$this->db->get_where('product_warehouse',array('id'=>$_GET['id']))->row(); ?>
+            <h5><?php echo $almacen->title;?></h5>
+			<!-- paneles -->
+            <div class="card">
+                    <div class="card-body">
+                        	<label class="col-sm-12 col-form-label"
+                                       for="pay_cat"><h5>FILTRAR </h5> </label>
+                            <div class="tab-content px-3 pt-1">
+								
+                                <div role="tabpanel" class="tab-pane fade active in" id="active" aria-labelledby="active-tab" aria-expanded="true">
+                                    <div class="form-group row">
+                                        
+                                        <label class="col-sm-2">Categoria</label>
 
+                                        <div class="col-sm-6">
+                                            <select name="cate" class="form-control select-box" id="cate">
+                                                
+                                                <option value=''>Todas</option>
+                                                <?php
+                                                    foreach ($categoria as $row) {
+                                                        $cid = $row['id'];
+                                                        $title = $row['title'];
+                                                        echo "<option value='$cid'>$title</option>";
+                                                    }
+                                                    ?>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                                <label class="col-sm-3 col-form-label" for="pay_cat"></label>
+
+                                <div class="col-sm-4">
+                                    <input type="button" class="btn btn-primary btn-md" value="VER" onclick="filtrar()">
+
+
+                                </div>
+                            </div>
+                </div>
+                <!-- fin paneles -->
             <hr>
             <table id="productstable" class="display" cellspacing="0" width="100%">
                 <thead>
@@ -45,7 +87,7 @@
 <script type="text/javascript">
 
     var table;
-
+var id_warehouse="<?=$_GET['id'] ?>";
     $(document).ready(function () {
 
         //datatables
@@ -60,6 +102,7 @@
                 "url": "<?php echo site_url('products/warehouseproduct_list') . '?id=' . $_GET['id']; ?>",
                 "type": "POST"
             },
+			
 
             //Set column definition initialisation properties.
             "columnDefs": [
@@ -72,6 +115,16 @@
         });
 
     });
+	function filtrar(){
+        var categoria=$("#cate").val();
+		if(categoria==""){
+            table.ajax.url( baseurl+'products/warehouseproduct_list?id='+id_warehouse).load();     
+        }else{
+            table.ajax.url( baseurl+"products/warehouseproduct_list?id="+id_warehouse+"&categoria="+categoria ).load();     
+        }
+       
+
+    }
 </script>
 <div id="delete_model" class="modal fade">
     <div class="modal-dialog">

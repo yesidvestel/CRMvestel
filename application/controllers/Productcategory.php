@@ -79,6 +79,7 @@ class Productcategory Extends CI_Controller
     public function viewwarehouse()
     {
         $data['cat'] = $this->products_cat->warehouse();
+        $data['categoria'] = $this->products_cat->category_list();
         $head['title'] = "View Product Warehouse";
         $head['usernm'] = $this->aauth->get_user()->username;
         $this->load->view('fixed/header', $head);
