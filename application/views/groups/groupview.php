@@ -436,7 +436,7 @@
                                            
                                             <select style="width: 100%;" id="tegnologia_multiple" name="tegnologia_multiple[]" class="form-control select-box" multiple="multiple">
                                                          
-                                                        <option value='Sin Teg'>Sin Teg.</option>
+                                                        <option value='Sin Teg'>Sin definir</option>
                                                         <option value='FTTH'>FTTH</option>
                                                         <option value='EOC'>EOC</option>                                                        
                                              </select>
