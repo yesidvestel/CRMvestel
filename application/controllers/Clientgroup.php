@@ -557,11 +557,20 @@ class Clientgroup extends CI_Controller
                 }
             }
             //end fitro por servicios con morosos 
-
+            $equipo=$this->db->get_where("equipos",array("asignado"=>$customers->id))->row();
+            //end fitro por servicios con morosos 
+            $tegnologia="Sin Teg.";
+            if(isset($equipo)){
+                $tegnologia=$equipo->t_instalacion;
+                if($tegnologia==""){
+                    $tegnologia="Sin Teg.";
+                }
+            }
             if($customer_moroso){
                 $customers->deuda=$debe_customer;
                 $customers->suscripcion=$valor_ultima_factura;            
                 $customers->suscripcion_str=$suscripcion_str;
+                $customers->tegnologia=$tegnologia;
                 $lista_customers2[] = $customers;
             }else{
 
@@ -577,7 +586,7 @@ class Clientgroup extends CI_Controller
         $this->load->library('Excel');
     
     //define column headers
-    $headers = array('Abonado' => 'string','Cedula' => 'string', 'Nombre' => 'string', 'Celular' => 'string', 'Direccion' => 'string','Barrio' => 'string','Serv. Suscritos' => 'string', 'Estado' => 'string','Deuda' => 'integer','Suscripcion' => 'integer','Ingreso' => 'integer');
+    $headers = array('Abonado' => 'string','Cedula' => 'string', 'Nombre' => 'string', 'Celular' => 'string', 'Direccion' => 'string','Barrio' => 'string','Serv. Suscritos' => 'string', 'Tegnologia' => 'string','Estado' => 'string','Deuda' => 'integer','Suscripcion' => 'integer','Ingreso' => 'integer');
     
     //fetch data from database
     //$salesinfo = $this->product_model->get_salesinfo();
@@ -609,6 +618,7 @@ class Clientgroup extends CI_Controller
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ));
     
     //write rows to sheet1
@@ -621,7 +631,7 @@ class Clientgroup extends CI_Controller
                             }else{
                                 $str_barrio= $obj_barrio->barrio;    
                             }
-            $writer->writeSheetRow('Customers '.$cust_group->title,array($customer->abonado,$customer->documento ,$customer->name.' '.$customer->unoapellido, $customer->celular, $direccion,$str_barrio ,$customer->suscripcion_str,$customer->usu_estado,$customer->deuda,$customer->suscripcion,$customer->money));
+            $writer->writeSheetRow('Customers '.$cust_group->title,array($customer->abonado,$customer->documento ,$customer->name.' '.$customer->unoapellido, $customer->celular, $direccion,$str_barrio ,$customer->suscripcion_str,$customer->tegnologia,$customer->usu_estado,$customer->deuda,$customer->suscripcion,$customer->money));
     }
         
         
@@ -724,7 +734,7 @@ class Clientgroup extends CI_Controller
             if($customers->checked_seleccionado==1){
                 $str_checked="checked";
             }
-
+            $equipo=$this->db->get_where("equipos",array("asignado"=>$customers->id))->row();
             $row[] = '<input '.$str_checked.' id="input_'.$customers->id.'" type="checkbox" name="x" class="clientes_para_enviar_sms" data-id-customer="'.$customers->id.'"  data-celular="'.$customers->celular.'" style="cursor:pointer; margin-left: 9px;" onclick="agregar_customer_envio_sms(this)" ></input>';    
             $row[] = $no;
 			$row[] = $customers->abonado;
@@ -748,6 +758,11 @@ class Clientgroup extends CI_Controller
                 $servicios_str="<input ".$str_checked." onclick='ck_facturas_electronicas(this)' data-id='".$customers->id."' class='cl-ck-f-electronicas' style='cursor:pointer;' title='activar o desactivar este usuario de la facturacion electronica' type='checkbox'/>&nbsp".$servicios_str;
             }
             $row[] = $servicios_str;
+            $tegnologia="Sin Teg.";
+            if(isset($equipo)){
+                $tegnologia=$equipo->t_instalacion;
+            }
+            $row[] = $tegnologia;
 			$row[] = '<span class="st-'.$customers->usu_estado. '">' .$customers->usu_estado. '</span>';
             $row[] = '<a href="' . base_url() . 'llamadas/index?id=' . $customers->id . '" class="btn btn-primary btn-sm"><span class=" icon-mobile-phone"></span> Llamar</a>';
 			if ($this->aauth->get_user()->roleid > 4) {
@@ -1282,8 +1297,12 @@ class Clientgroup extends CI_Controller
                         $customer_moroso=false;                     
                 }*/
             }
+            $equipo=$this->db->get_where("equipos",array("asignado"=>$customers->id))->row();
             //end fitro por servicios con morosos 
-
+            $tegnologia="Sin Teg.";
+            if(isset($equipo)){
+                $tegnologia=$equipo->t_instalacion;
+            }
             if($customer_moroso){
                 if(($x>=$minimo && $x<$maximo) || $_POST['length']=="100"){
                     $no++;                
@@ -1325,6 +1344,9 @@ class Clientgroup extends CI_Controller
                                 $suscripcion_str="<input ".$str_checked." onclick='ck_facturas_electronicas(this)' data-id='".$customers->id."' class='cl-ck-f-electronicas' style='cursor:pointer;' title='activar o desactivar este usuario de la facturacion electronica' type='checkbox'/>&nbsp".$suscripcion_str;
                             }
                             $row[] = $suscripcion_str;
+
+                           
+                            $row[] = $tegnologia;
                             $row[] = '<span class="st-'.$customers->usu_estado. '">' .$customers->usu_estado. '</span>';
                             $row[] = amountFormat($debe_customer);
                             $row[] = amountFormat($valor_ultima_factura);
@@ -1348,6 +1370,7 @@ class Clientgroup extends CI_Controller
                 $array_add['debe_customer']=$debe_customer;
                 $array_add['valor_ultima_factura']=$valor_ultima_factura;
                 $array_add['suscripcion_str']=$suscripcion_str;
+                $array_add['tegnologia']=$tegnologia;
                 //$customers->ingreso=$money['credit']-$money['debit'];
                 $listax[]=$array_add;
                 
@@ -1439,6 +1462,10 @@ class Clientgroup extends CI_Controller
                                 $datos_cuentas->suscripcion_str="<input ".$str_checked." onclick='ck_facturas_electronicas(this)' data-id='".$customers->id."' class='cl-ck-f-electronicas' style='cursor:pointer;' title='activar o desactivar este usuario de la facturacion electronica' type='checkbox'/>&nbsp".$datos_cuentas->suscripcion_str;
                             }
                             $row[] = $datos_cuentas->suscripcion_str;
+                            if($datos_cuentas->tegnologia==""){
+                                $datos_cuentas->tegnologia="Sin Teg.";
+                            }
+                            $row[] = $datos_cuentas->tegnologia;
                             $row[] = '<span class="st-'.$customers->usu_estado. '">' .$customers->usu_estado. '</span>';
                             $row[] = amountFormat($datos_cuentas->debe_customer);
                             $row[] = amountFormat($datos_cuentas->valor_ultima_factura);
