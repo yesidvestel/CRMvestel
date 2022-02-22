@@ -771,7 +771,7 @@ class Clientgroup extends CI_Controller
                 $servicios_str="<input ".$str_checked." onclick='ck_facturas_electronicas(this)' data-id='".$customers->id."' class='cl-ck-f-electronicas' style='cursor:pointer;' title='activar o desactivar este usuario de la facturacion electronica' type='checkbox'/>&nbsp".$servicios_str;
             }
             $row[] = $servicios_str;
-            $tegnologia="Sin Teg.";
+            $tegnologia="Sin definir";
             if(isset($equipo)){
                 $tegnologia=$equipo->t_instalacion;
             }
