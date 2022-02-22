@@ -566,6 +566,19 @@ class Clientgroup extends CI_Controller
                     $tegnologia="Sin Teg.";
                 }
             }
+
+            if($customer_moroso && $_GET['tegnologia_multiple']!="null"){
+
+                if($tegnologia=="FTTH"  && strpos($_GET['tegnologia_multiple'], "FTTH")!==false){
+                    $customer_moroso=true;
+                }else if($tegnologia=="EOC"  && strpos($_GET['tegnologia_multiple'], "EOC")!==false){
+                    $customer_moroso=true;
+                }else if($tegnologia=="Sin Teg." && strpos($_GET['tegnologia_multiple'], "Sin Teg")!==false){
+                    $customer_moroso=true;
+                }else{
+                    $customer_moroso=false;
+                }
+            }
             if($customer_moroso){
                 $customers->deuda=$debe_customer;
                 $customers->suscripcion=$valor_ultima_factura;            
@@ -1299,10 +1312,24 @@ class Clientgroup extends CI_Controller
             }
             $equipo=$this->db->get_where("equipos",array("asignado"=>$customers->id))->row();
             //end fitro por servicios con morosos 
+
             $tegnologia="Sin Teg.";
             if(isset($equipo)){
                 $tegnologia=$equipo->t_instalacion;
             }
+            if($customer_moroso && $_GET['tegnologia_multiple']!="null"){
+
+                if($tegnologia=="FTTH"  && strpos($_GET['tegnologia_multiple'], "FTTH")!==false){
+                    $customer_moroso=true;
+                }else if($tegnologia=="EOC"  && strpos($_GET['tegnologia_multiple'], "EOC")!==false){
+                    $customer_moroso=true;
+                }else if(($tegnologia=="Sin Teg." || $tegnologia=="") && strpos($_GET['tegnologia_multiple'], "Sin Teg")!==false){
+                    $customer_moroso=true;
+                }else{
+                    $customer_moroso=false;
+                }
+            }
+            
             if($customer_moroso){
                 if(($x>=$minimo && $x<$maximo) || $_POST['length']=="100"){
                     $no++;                
@@ -1345,7 +1372,9 @@ class Clientgroup extends CI_Controller
                             }
                             $row[] = $suscripcion_str;
 
-                           
+                           if($tegnologia==""){
+                                $tegnologia="Sin Teg.";
+                            }
                             $row[] = $tegnologia;
                             $row[] = '<span class="st-'.$customers->usu_estado. '">' .$customers->usu_estado. '</span>';
                             $row[] = amountFormat($debe_customer);
@@ -1986,7 +2015,25 @@ class Clientgroup extends CI_Controller
                 }
             }
             //end fitro por servicios con morosos 
+            $equipo=$this->db->get_where("equipos",array("asignado"=>$customers->id))->row();
+            //end fitro por servicios con morosos 
 
+            $tegnologia="Sin Teg.";
+            if(isset($equipo)){
+                $tegnologia=$equipo->t_instalacion;
+            }
+            if($customer_moroso && $_GET['tegnologia_multiple']!="null"){
+
+                if($tegnologia=="FTTH"  && strpos($_GET['tegnologia_multiple'], "FTTH")!==false){
+                    $customer_moroso=true;
+                }else if($tegnologia=="EOC"  && strpos($_GET['tegnologia_multiple'], "EOC")!==false){
+                    $customer_moroso=true;
+                }else if(($tegnologia=="Sin Teg." || $tegnologia=="") && strpos($_GET['tegnologia_multiple'], "Sin Teg")!==false){
+                    $customer_moroso=true;
+                }else{
+                    $customer_moroso=false;
+                }
+            }
             if($customer_moroso){
                 $this->db->update("customers",array("checked_seleccionado"=>1),array('id' =>$customers->id));
                     //$listax[]=array('id' =>$customers->id ,"celular"=>$customers->celular);                                    
