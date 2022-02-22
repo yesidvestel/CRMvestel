@@ -169,7 +169,7 @@
                                 </li>
                                  <li class="nav-item">
                                     <a class="nav-link" id="tegnologia-tab" data-toggle="tab" href="#tegnologia"
-                                       aria-controls="tegnologia"> Tegnologia</a>
+                                       aria-controls="tegnologia"> Tecnología</a>
                                 </li>
                                <!-- <li class="nav-item">
                                     <a class="nav-link" id="thread-tab" data-toggle="tab" href="#activities"
@@ -430,7 +430,7 @@
                                     <div class="form-group row">
                                 
                                         <label class="col-sm-2 col-form-label"
-                                               for="pay_cat">Tipo de Tegnologia</label>
+                                               for="pay_cat">Tipo de Tecnología</label>
 
                                         <div class="col-sm-6">
                                            
