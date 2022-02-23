@@ -401,25 +401,25 @@ table {
 										
 										<tr>
 											<td class="static">
-												<div class="cl-instalaciones_Reconexion" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_Reconexion()"><i><u>Reconexion</u></i></div>
+												<div class="cl-instalaciones_Reconexion_tv_e_internet" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_Reconexion_tv_e_internet()"><i><u>Reconexion tv+int</u></i></div>
 												
-													<table class="tb_tec_info_instalaciones_Reconexion"><tbody>
+													<table class="tb_tec_info_instalaciones_Reconexion_tv_e_internet"><tbody>
 														<?php $lista_clases_css8=""; 
 															foreach ($lista_de_tecnicos as $key => $value) {
-																$name_class="instalaciones_Reconexion_".$value['username'];
+																$name_class="instalaciones_Reconexion_tv_e_internet_".$value['username'];
 																$lista_clases_css8.=",.".$name_class."";
 																echo "<tr class='".$name_class."'><td>".$value['username']."</td></tr>";
 														}  ?>	
 														
 													</tbody></table> 
 											</td>
-											<?php $conteo=0; foreach ($tipos['instalaciones_Reconexion'] as $key1=> $row) {?>												
-												<td class="first-col" style="padding-right: 0px;padding-left: 0px;text-align: center;">
-													<div class="cl-instalaciones_Reconexion" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_Reconexion()"><?php echo $row;$conteo+=$row; ?></div>
+											<?php $conteo=0; foreach ($tipos['instalaciones_Reconexion_tv_e_internet'] as $key1=> $row) {?>												
+												<td class="first-col" style="padding-right: 0px;padding-left: 0px;text-align: center;vertical-align: middle;">
+													<div class="cl-instalaciones_Reconexion_tv_e_internet" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_Reconexion_tv_e_internet()"><?php echo $row;$conteo+=$row; ?></div>
 														
-														<table class="tb_tec_info_instalaciones_Reconexion" style='width: 100px;'><tbody>
-															<?php foreach ($lista_por_tecnicos['instalaciones_Reconexion'][$key1] as $key => $value2) {
-																echo "<tr class='instalaciones_Reconexion_".$key."' ><td style='width: 100px;text-align: center;'>".($value2['Reconexion_de_internet']['puntuacion']+$value2['Reconexion_de_tv']['puntuacion'])."p</td></tr>";																
+														<table class="tb_tec_info_instalaciones_Reconexion_tv_e_internet" style='width: 100px;'><tbody>
+															<?php foreach ($lista_por_tecnicos['instalaciones_Reconexion_tv_e_internet'][$key1] as $key => $value2) {
+																echo "<tr class='instalaciones_Reconexion_tv_e_internet_".$key."' ><td style='width: 100px;text-align: center;'>".($value2['puntuacion'])."p</td></tr>";																
 															} ?>	
 														</tbody></table> 	
 												</td>
@@ -427,11 +427,85 @@ table {
 
 												
 											
-											<td align="center" >
-												<div   class="cl-instalaciones_Reconexion" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_Reconexion()"><?php echo $conteo; ?></div>
-														<table class="tb_tec_info_instalaciones_Reconexion" style='width: 200px;text-align: center;'><tbody>
-															<?php foreach ($lista_datos_cuentas_tipos_por_tecnico['instalaciones_Reconexion'] as $key => $value2) {
-																echo "<tr class='instalaciones_Reconexion_".$key."' ><td style='width: 200px;'><strong>".($value2['Reconexion_de_internet']['puntuacion']+$value2['Reconexion_de_tv']['puntuacion'])."</strong> pts </td></tr>";																
+											<td align="center" style="vertical-align: middle;">
+												<div   class="cl-instalaciones_Reconexion_tv_e_internet" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_Reconexion_tv_e_internet()"><?php echo $conteo; ?></div>
+														<table class="tb_tec_info_instalaciones_Reconexion_tv_e_internet" style='width: 200px;text-align: center;vertical-align: middle;'><tbody>
+															<?php foreach ($lista_datos_cuentas_tipos_por_tecnico['instalaciones_Reconexion_tv_e_internet'] as $key => $value2) {
+																echo "<tr class='instalaciones_Reconexion_tv_e_internet_".$key."' ><td style='width: 200px;'><strong>".($value2['puntuacion'])."</strong> pts </td></tr>";																
+															} ?>	
+														</tbody></table> 	
+											</td>
+										</tr>
+										<tr>
+											<td class="static">
+												<div class="cl-instalaciones_Reconexion_tv" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_Reconexion_tv()"><i><u>Reconexion tv</u></i></div>
+												
+													<table class="tb_tec_info_instalaciones_Reconexion_tv"><tbody>
+														<?php $lista_clases_css13=""; 
+															foreach ($lista_de_tecnicos as $key => $value) {
+																$name_class="instalaciones_Reconexion_tv_".$value['username'];
+																$lista_clases_css13.=",.".$name_class."";
+																echo "<tr class='".$name_class."'><td>".$value['username']."</td></tr>";
+														}  ?>	
+														
+													</tbody></table> 
+											</td>
+											<?php $conteo=0; foreach ($tipos['instalaciones_Reconexion_tv'] as $key1=> $row) {?>												
+												<td class="first-col" style="padding-right: 0px;padding-left: 0px;text-align: center;vertical-align: middle;">
+													<div class="cl-instalaciones_Reconexion_tv" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_Reconexion_tv()"><?php echo $row;$conteo+=$row; ?></div>
+														
+														<table class="tb_tec_info_instalaciones_Reconexion_tv" style='width: 100px;'><tbody>
+															<?php foreach ($lista_por_tecnicos['instalaciones_Reconexion_tv'][$key1] as $key => $value2) {
+																echo "<tr class='instalaciones_Reconexion_tv_".$key."' ><td style='width: 100px;text-align: center;'>".($value2['puntuacion'])."p</td></tr>";																
+															} ?>	
+														</tbody></table> 	
+												</td>
+											<?php } ?>
+
+												
+											
+											<td align="center" style="vertical-align: middle;">
+												<div   class="cl-instalaciones_Reconexion_tv" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_Reconexion_tv()"><?php echo $conteo; ?></div>
+														<table class="tb_tec_info_instalaciones_Reconexion_tv" style='width: 200px;text-align: center;vertical-align: middle;'><tbody>
+															<?php foreach ($lista_datos_cuentas_tipos_por_tecnico['instalaciones_Reconexion_tv'] as $key => $value2) {
+																echo "<tr class='instalaciones_Reconexion_tv_".$key."' ><td style='width: 200px;'><strong>".($value2['puntuacion'])."</strong> pts </td></tr>";																
+															} ?>	
+														</tbody></table> 	
+											</td>
+										</tr>
+										<tr>
+											<td class="static">
+												<div class="cl-instalaciones_Reconexion_internet" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_Reconexion_internet()"><i><u>Reconexion int</u></i></div>
+												
+													<table class="tb_tec_info_instalaciones_Reconexion_internet"><tbody>
+														<?php $lista_clases_css14=""; 
+															foreach ($lista_de_tecnicos as $key => $value) {
+																$name_class="instalaciones_Reconexion_internet_".$value['username'];
+																$lista_clases_css14.=",.".$name_class."";
+																echo "<tr class='".$name_class."'><td>".$value['username']."</td></tr>";
+														}  ?>	
+														
+													</tbody></table> 
+											</td>
+											<?php $conteo=0; foreach ($tipos['instalaciones_Reconexion_internet'] as $key1=> $row) {?>												
+												<td class="first-col" style="padding-right: 0px;padding-left: 0px;text-align: center;vertical-align: middle;">
+													<div class="cl-instalaciones_Reconexion_internet" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_Reconexion_internet()"><?php echo $row;$conteo+=$row; ?></div>
+														
+														<table class="tb_tec_info_instalaciones_Reconexion_internet" style='width: 100px;'><tbody>
+															<?php foreach ($lista_por_tecnicos['instalaciones_Reconexion_internet'][$key1] as $key => $value2) {
+																echo "<tr class='instalaciones_Reconexion_internet_".$key."' ><td style='width: 100px;text-align: center;'>".($value2['puntuacion'])."p</td></tr>";																
+															} ?>	
+														</tbody></table> 	
+												</td>
+											<?php } ?>
+
+												
+											
+											<td align="center" style="vertical-align: middle;" >
+												<div   class="cl-instalaciones_Reconexion_internet" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_Reconexion_internet()"><?php echo $conteo; ?></div>
+														<table class="tb_tec_info_instalaciones_Reconexion_internet" style='width: 200px;text-align: center;vertical-align: middle;'><tbody>
+															<?php foreach ($lista_datos_cuentas_tipos_por_tecnico['instalaciones_Reconexion_internet'] as $key => $value2) {
+																echo "<tr class='instalaciones_Reconexion_internet_".$key."' ><td style='width: 200px;'><strong>".($value2['puntuacion'])."</strong> pts </td></tr>";																
 															} ?>	
 														</tbody></table> 	
 											</td>
@@ -599,7 +673,7 @@ table {
 											<td align="center" style="background-color:#719FD0 " >
 												<div   class="cl-instalaciones_total" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_total()"><?php echo $conteo; ?></div>
 														<table class="tb_tec_info_instalaciones_total" style='width: 200px;text-align: center;background-color:#fff'><tbody>
-															<?php foreach ($lista_datos_cuentas_tipos_por_tecnico['instalaciones_Reconexion'] as $key => $value2) {
+															<?php foreach ($lista_datos_cuentas_tipos_por_tecnico['instalaciones_tv_e_internet'] as $key => $value2) {
 																$x=$lista_datos_cuentas_tipos_por_tecnico['instalaciones_tv_e_internet'][$key];
 																$total=$x['FTTH']['puntuacion']+$x['EOC']['puntuacion']+$x['puntos_adicionales']['puntuacion']+$x['puntos_adicionales_multiples']['puntuacion'];
 
@@ -628,6 +702,15 @@ table {
 																$total+=$x['puntuacion'];
 
 																$x=$lista_datos_cuentas_tipos_por_tecnico['instalaciones_Corte_Tv'][$key];
+																$total+=$x['puntuacion'];
+
+																$x=$lista_datos_cuentas_tipos_por_tecnico['instalaciones_Reconexion_tv_e_internet'][$key];
+																$total+=$x['puntuacion'];
+
+																$x=$lista_datos_cuentas_tipos_por_tecnico['instalaciones_Reconexion_tv'][$key];
+																$total+=$x['puntuacion'];
+
+																$x=$lista_datos_cuentas_tipos_por_tecnico['instalaciones_Reconexion_internet'][$key];
 																$total+=$x['puntuacion'];
 																
 																echo "<tr class='instalaciones_total_".$key."' ><td style='width: 200px;'><strong>".($total)."</strong> pts </td></tr>";																
@@ -668,6 +751,8 @@ table {
 		var lista_clases_css10="<?=$lista_clases_css10 ?>";
 		var lista_clases_css11="<?=$lista_clases_css11 ?>";
 		var lista_clases_css12="<?=$lista_clases_css12 ?>";
+		var lista_clases_css13="<?=$lista_clases_css13 ?>";
+		var lista_clases_css14="<?=$lista_clases_css14 ?>";
 		
 			$(".cl-instalaciones_tv_e_internet"+lista_clases_css1).mouseover(function(){
 				var x1="."+$(this).attr("class");
@@ -775,7 +860,7 @@ table {
 				/*$(x1).css("-webkit-transform","");
 				$(x1).css("transform","");*/
 			});
-			$(".cl-instalaciones_Reconexion"+lista_clases_css8).mouseover(function(){
+			$(".cl-instalaciones_Reconexion_tv_e_internet"+lista_clases_css8).mouseover(function(){
 				var x1="."+$(this).attr("class");
 				$(x1).css("background-color","#d2b48c");
 				
@@ -785,7 +870,7 @@ table {
 				$(x1).css("transform","translateX(-7px)");*/
 			});
 			
-			$(".cl-instalaciones_Reconexion"+lista_clases_css8).mouseout(function (){
+			$(".cl-instalaciones_Reconexion_tv_e_internet"+lista_clases_css8).mouseout(function (){
 				var x1="."+$(this).attr("class");
 				$(x1).css("background-color","");
 				$(x1).css("box-shadow","");
@@ -861,6 +946,40 @@ table {
 				/*$(x1).css("-webkit-transform","");
 				$(x1).css("transform","");*/
 			});
+			$(".cl-instalaciones_Reconexion_tv"+lista_clases_css13).mouseover(function(){
+				var x1="."+$(this).attr("class");
+				$(x1).css("background-color","#d2b48c");
+				
+				
+				$(x1).css("box-shadow","1px 1px #53a7ea,2px 2px #53a7ea,3px 3px #53a7ea");
+				/*$(x1).css("-webkit-transform","translateX(-7px)");
+				$(x1).css("transform","translateX(-7px)");*/
+			});
+			
+			$(".cl-instalaciones_Reconexion_tv"+lista_clases_css13).mouseout(function (){
+				var x1="."+$(this).attr("class");
+				$(x1).css("background-color","");
+				$(x1).css("box-shadow","");
+				/*$(x1).css("-webkit-transform","");
+				$(x1).css("transform","");*/
+			});
+			$(".cl-instalaciones_Reconexion_internet"+lista_clases_css14).mouseover(function(){
+				var x1="."+$(this).attr("class");
+				$(x1).css("background-color","#d2b48c");
+				
+				
+				$(x1).css("box-shadow","1px 1px #53a7ea,2px 2px #53a7ea,3px 3px #53a7ea");
+				/*$(x1).css("-webkit-transform","translateX(-7px)");
+				$(x1).css("transform","translateX(-7px)");*/
+			});
+			
+			$(".cl-instalaciones_Reconexion_internet"+lista_clases_css14).mouseout(function (){
+				var x1="."+$(this).attr("class");
+				$(x1).css("background-color","");
+				$(x1).css("box-shadow","");
+				/*$(x1).css("-webkit-transform","");
+				$(x1).css("transform","");*/
+			});
 
 			
 
@@ -886,8 +1005,14 @@ function desactivar_activar_tabla_instalaciones_AgregarInternet(){
 function desactivar_activar_tabla_instalaciones_Revision(){
 	$(".tb_tec_info_instalaciones_Revision").fadeToggle("fast");
 }
-function desactivar_activar_tabla_instalaciones_Reconexion(){
-	$(".tb_tec_info_instalaciones_Reconexion").fadeToggle("fast");	
+function desactivar_activar_tabla_instalaciones_Reconexion_tv_e_internet(){
+	$(".tb_tec_info_instalaciones_Reconexion_tv_e_internet").fadeToggle("fast");	
+}
+function desactivar_activar_tabla_instalaciones_Reconexion_tv(){
+	$(".tb_tec_info_instalaciones_Reconexion_tv").fadeToggle("fast");		
+}
+function desactivar_activar_tabla_instalaciones_Reconexion_internet(){
+	$(".tb_tec_info_instalaciones_Reconexion_internet").fadeToggle("fast");			
 }
 function desactivar_activar_tabla_instalaciones_Corte_Tv(){
 	$(".tb_tec_info_instalaciones_Corte_Tv").fadeToggle("fast");		
@@ -906,7 +1031,9 @@ function mostrar_ocultar(){
 	desactivar_activar_tabla_instalaciones_Corte_Tv();
 	desactivar_activar_tabla_instalaciones_Corte_Internet();
 	desactivar_activar_tabla_instalaciones_Corte_tv_e_internet();
-	desactivar_activar_tabla_instalaciones_Reconexion();
+	desactivar_activar_tabla_instalaciones_Reconexion_tv_e_internet();
+	desactivar_activar_tabla_instalaciones_Reconexion_tv();
+	desactivar_activar_tabla_instalaciones_Reconexion_internet();
 	desactivar_activar_tabla_instalaciones_Revision();
 	desactivar_activar_tabla_instalaciones_AgregarInternet();
 	desactivar_activar_tabla_instalaciones_Traslado();
