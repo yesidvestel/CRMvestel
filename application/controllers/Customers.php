@@ -304,6 +304,21 @@ class Customers extends CI_Controller
             $this->customers->actualizar_debit_y_credit($value['id']);
         }
     }
+    public function cuenta_firmas(){
+        $lista_customers=$this->db->get_where("customers")->result_array();
+        $tienen=0;
+        $no_tienen=0;
+        foreach ($lista_customers as $key => $value) {
+            if($this->customers->validar_firma($value['id'])){
+               $tienen++; 
+            }else{
+                $no_tienen++; 
+            }
+            
+        }
+        echo $tienen." usuarios tienen firma , ".$no_tienen." usuarios no tienen firma";
+
+    }
     public function view()
     {
 		
