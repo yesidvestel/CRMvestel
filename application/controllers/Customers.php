@@ -103,6 +103,7 @@ class Customers extends CI_Controller
             $fileName = 'assets/firmas_digitales/'.$_POST['customer_id'].'.png';
 
             file_put_contents($fileName, $fileData);
+            $this->db->update("customers",array("firma_digital"=>"1"),array("id"=>$_POST['customer_id']));
             redirect(base_url()."customers/view?id=".$_POST['customer_id']);
         }
         
@@ -310,7 +311,8 @@ class Customers extends CI_Controller
         $no_tienen=0;
         foreach ($lista_customers as $key => $value) {
             if($this->customers->validar_firma($value['id'])){
-               $tienen++; 
+               $this->db->update("customers",array("firma_digital"=>"1"),array("id"=>$value['id']));
+               $tienen++;
             }else{
                 $no_tienen++; 
             }
