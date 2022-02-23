@@ -621,6 +621,12 @@ table {
 																$x=$lista_datos_cuentas_tipos_por_tecnico['instalaciones_Reconexion'][$key];
 																$total+=$x['Reconexion_de_internet']['puntuacion']+$x['Reconexion_de_tv']['puntuacion'];
 
+																$x=$lista_datos_cuentas_tipos_por_tecnico['instalaciones_Corte_tv_e_internet'][$key];
+																$total+=$x['puntuacion'];
+
+																$x=$lista_datos_cuentas_tipos_por_tecnico['instalaciones_Corte_Internet'][$key];
+																$total+=$x['puntuacion'];
+
 																$x=$lista_datos_cuentas_tipos_por_tecnico['instalaciones_Corte_Tv'][$key];
 																$total+=$x['puntuacion'];
 																
