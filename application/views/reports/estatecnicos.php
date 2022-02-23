@@ -454,28 +454,27 @@ table {
 											<td style="text-align: center;"><?php echo $row;$conteo+=$row; } ?></td>
 											<td align="center"><?php echo $conteo; ?></td>
 										</tr>
-										
 										<tr>
 											<td class="static">
-												<div class="cl-instalaciones_Corte" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_Corte()"><i><u>Corte</u></i></div>
+												<div class="cl-instalaciones_Corte_tv_e_internet" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_Corte_tv_e_internet()"><i><u>Corte Tv+Int</u></i></div>
 												
-													<table class="tb_tec_info_instalaciones_Corte"><tbody>
-														<?php $lista_clases_css9=""; 
+													<table class="tb_tec_info_instalaciones_Corte_tv_e_internet"><tbody>
+														<?php $lista_clases_css12=""; 
 															foreach ($lista_de_tecnicos as $key => $value) {
-																$name_class="instalaciones_Corte_".$value['username'];
-																$lista_clases_css9.=",.".$name_class."";
+																$name_class="instalaciones_Corte_tv_e_internet_".$value['username'];
+																$lista_clases_css12.=",.".$name_class."";
 																echo "<tr class='".$name_class."'><td>".$value['username']."</td></tr>";
 														}  ?>	
 														
 													</tbody></table> 
 											</td>
-											<?php $conteo=0; foreach ($tipos['instalaciones_Corte'] as $key1=> $row) {?>												
+											<?php $conteo=0; foreach ($tipos['instalaciones_Corte_tv_e_internet'] as $key1=> $row) {?>												
 												<td class="first-col" style="padding-right: 0px;padding-left: 0px;text-align: center;">
-													<div class="cl-instalaciones_Corte" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_Corte()"><?php echo $row;$conteo+=$row; ?></div>
+													<div class="cl-instalaciones_Corte_tv_e_internet" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_Corte_tv_e_internet()"><?php echo $row;$conteo+=$row; ?></div>
 														
-														<table class="tb_tec_info_instalaciones_Corte" style='width: 100px;'><tbody>
-															<?php foreach ($lista_por_tecnicos['instalaciones_Corte'][$key1] as $key => $value2) {
-																echo "<tr class='instalaciones_Corte_".$key."' ><td style='width: 100px;text-align: center;'>".($value2['Corte_de_internet']['puntuacion']+$value2['Corte_de_tv']['puntuacion'])."p</td></tr>";																
+														<table class="tb_tec_info_instalaciones_Corte_tv_e_internet" style='width: 100px;'><tbody>
+															<?php foreach ($lista_por_tecnicos['instalaciones_Corte_tv_e_internet'][$key1] as $key => $value2) {
+																echo "<tr class='instalaciones_Corte_tv_e_internet_".$key."' ><td style='width: 100px;text-align: center;'>".($value2['puntuacion'])."p</td></tr>";																
 															} ?>	
 														</tbody></table> 	
 												</td>
@@ -484,14 +483,90 @@ table {
 												
 											
 											<td align="center" >
-												<div   class="cl-instalaciones_Corte" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_Corte()"><?php echo $conteo; ?></div>
-														<table class="tb_tec_info_instalaciones_Corte" style='width: 200px;text-align: center;'><tbody>
-															<?php foreach ($lista_datos_cuentas_tipos_por_tecnico['instalaciones_Corte'] as $key => $value2) {
-																echo "<tr class='instalaciones_Corte_".$key."' ><td style='width: 200px;'><strong>".($value2['Corte_de_internet']['puntuacion']+$value2['Corte_de_tv']['puntuacion'])."</strong> pts </td></tr>";																
+												<div   class="cl-instalaciones_Corte_tv_e_internet" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_Corte_tv_e_internet()"><?php echo $conteo; ?></div>
+														<table class="tb_tec_info_instalaciones_Corte_tv_e_internet" style='width: 200px;text-align: center;'><tbody>
+															<?php foreach ($lista_datos_cuentas_tipos_por_tecnico['instalaciones_Corte_tv_e_internet'] as $key => $value2) {
+																echo "<tr class='instalaciones_Corte_tv_e_internet_".$key."' ><td style='width: 200px;'><strong>".($value2['puntuacion'])."</strong> pts </td></tr>";																
 															} ?>	
 														</tbody></table> 	
 											</td>
 										</tr>
+										<tr>
+											<td class="static">
+												<div class="cl-instalaciones_Corte_Tv" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_Corte_Tv()"><i><u>Corte Tv</u></i></div>
+												
+													<table class="tb_tec_info_instalaciones_Corte_Tv"><tbody>
+														<?php $lista_clases_css9=""; 
+															foreach ($lista_de_tecnicos as $key => $value) {
+																$name_class="instalaciones_Corte_Tv_".$value['username'];
+																$lista_clases_css9.=",.".$name_class."";
+																echo "<tr class='".$name_class."'><td>".$value['username']."</td></tr>";
+														}  ?>	
+														
+													</tbody></table> 
+											</td>
+											<?php $conteo=0; foreach ($tipos['instalaciones_Corte_Tv'] as $key1=> $row) {?>												
+												<td class="first-col" style="padding-right: 0px;padding-left: 0px;text-align: center;">
+													<div class="cl-instalaciones_Corte_Tv" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_Corte_Tv()"><?php echo $row;$conteo+=$row; ?></div>
+														
+														<table class="tb_tec_info_instalaciones_Corte_Tv" style='width: 100px;'><tbody>
+															<?php foreach ($lista_por_tecnicos['instalaciones_Corte_Tv'][$key1] as $key => $value2) {
+																echo "<tr class='instalaciones_Corte_Tv_".$key."' ><td style='width: 100px;text-align: center;'>".($value2['puntuacion'])."p</td></tr>";																
+															} ?>	
+														</tbody></table> 	
+												</td>
+											<?php } ?>
+
+												
+											
+											<td align="center" >
+												<div   class="cl-instalaciones_Corte_Tv" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_Corte_Tv()"><?php echo $conteo; ?></div>
+														<table class="tb_tec_info_instalaciones_Corte_Tv" style='width: 200px;text-align: center;'><tbody>
+															<?php foreach ($lista_datos_cuentas_tipos_por_tecnico['instalaciones_Corte_Tv'] as $key => $value2) {
+																echo "<tr class='instalaciones_Corte_Tv_".$key."' ><td style='width: 200px;'><strong>".($value2['puntuacion'])."</strong> pts </td></tr>";																
+															} ?>	
+														</tbody></table> 	
+											</td>
+										</tr>
+										<tr>
+											<td class="static">
+												<div class="cl-instalaciones_Corte_Internet" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_Corte_Internet()"><i><u>Corte Int</u></i></div>
+												
+													<table class="tb_tec_info_instalaciones_Corte_Internet"><tbody>
+														<?php $lista_clases_css11=""; 
+															foreach ($lista_de_tecnicos as $key => $value) {
+																$name_class="instalaciones_Corte_Internet_".$value['username'];
+																$lista_clases_css11.=",.".$name_class."";
+																echo "<tr class='".$name_class."'><td>".$value['username']."</td></tr>";
+														}  ?>	
+														
+													</tbody></table> 
+											</td>
+											<?php $conteo=0; foreach ($tipos['instalaciones_Corte_Internet'] as $key1=> $row) {?>												
+												<td class="first-col" style="padding-right: 0px;padding-left: 0px;text-align: center;">
+													<div class="cl-instalaciones_Corte_Internet" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_Corte_Internet()"><?php echo $row;$conteo+=$row; ?></div>
+														
+														<table class="tb_tec_info_instalaciones_Corte_Internet" style='width: 100px;'><tbody>
+															<?php foreach ($lista_por_tecnicos['instalaciones_Corte_Internet'][$key1] as $key => $value2) {
+																echo "<tr class='instalaciones_Corte_Internet_".$key."' ><td style='width: 100px;text-align: center;'>".($value2['puntuacion'])."p</td></tr>";																
+															} ?>	
+														</tbody></table> 	
+												</td>
+											<?php } ?>
+
+												
+											
+											<td align="center" >
+												<div   class="cl-instalaciones_Corte_Internet" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_Corte_Internet()"><?php echo $conteo; ?></div>
+														<table class="tb_tec_info_instalaciones_Corte_Internet" style='width: 200px;text-align: center;'><tbody>
+															<?php foreach ($lista_datos_cuentas_tipos_por_tecnico['instalaciones_Corte_Internet'] as $key => $value2) {
+																echo "<tr class='instalaciones_Corte_Internet_".$key."' ><td style='width: 200px;'><strong>".($value2['puntuacion'])."</strong> pts </td></tr>";																
+															} ?>	
+														</tbody></table> 	
+											</td>
+										</tr>
+
+										
 									
 										<tr id="detalles_totales">
 											<td class="static" style="background-color:#719FD0 ">
@@ -546,8 +621,8 @@ table {
 																$x=$lista_datos_cuentas_tipos_por_tecnico['instalaciones_Reconexion'][$key];
 																$total+=$x['Reconexion_de_internet']['puntuacion']+$x['Reconexion_de_tv']['puntuacion'];
 
-																$x=$lista_datos_cuentas_tipos_por_tecnico['instalaciones_Corte'][$key];
-																$total+=$x['Corte_de_internet']['puntuacion']+$x['Corte_de_tv']['puntuacion'];
+																$x=$lista_datos_cuentas_tipos_por_tecnico['instalaciones_Corte_Tv'][$key];
+																$total+=$x['puntuacion'];
 																
 																echo "<tr class='instalaciones_total_".$key."' ><td style='width: 200px;'><strong>".($total)."</strong> pts </td></tr>";																
 															} ?>	
@@ -585,6 +660,8 @@ table {
 		var lista_clases_css8="<?=$lista_clases_css8 ?>";
 		var lista_clases_css9="<?=$lista_clases_css9 ?>";
 		var lista_clases_css10="<?=$lista_clases_css10 ?>";
+		var lista_clases_css11="<?=$lista_clases_css11 ?>";
+		var lista_clases_css12="<?=$lista_clases_css12 ?>";
 		
 			$(".cl-instalaciones_tv_e_internet"+lista_clases_css1).mouseover(function(){
 				var x1="."+$(this).attr("class");
@@ -710,7 +787,7 @@ table {
 				$(x1).css("transform","");*/
 			});
 
-			$(".cl-instalaciones_Corte"+lista_clases_css9).mouseover(function(){
+			$(".cl-instalaciones_Corte_Tv"+lista_clases_css9).mouseover(function(){
 				var x1="."+$(this).attr("class");
 				$(x1).css("background-color","#d2b48c");
 				
@@ -720,14 +797,13 @@ table {
 				$(x1).css("transform","translateX(-7px)");*/
 			});
 			
-			$(".cl-instalaciones_Corte"+lista_clases_css9).mouseout(function (){
+			$(".cl-instalaciones_Corte_Tv"+lista_clases_css9).mouseout(function (){
 				var x1="."+$(this).attr("class");
 				$(x1).css("background-color","");
 				$(x1).css("box-shadow","");
 				/*$(x1).css("-webkit-transform","");
 				$(x1).css("transform","");*/
 			});
-
 			$(".cl-instalaciones_total"+lista_clases_css10).mouseover(function(){
 				var x1="."+$(this).attr("class");
 				$(x1).css("background-color","#d2b48c");
@@ -745,6 +821,42 @@ table {
 				/*$(x1).css("-webkit-transform","");
 				$(x1).css("transform","");*/
 			});
+			$(".cl-instalaciones_Corte_Internet"+lista_clases_css11).mouseover(function(){
+				var x1="."+$(this).attr("class");
+				$(x1).css("background-color","#d2b48c");
+				
+				
+				$(x1).css("box-shadow","1px 1px #53a7ea,2px 2px #53a7ea,3px 3px #53a7ea");
+				/*$(x1).css("-webkit-transform","translateX(-7px)");
+				$(x1).css("transform","translateX(-7px)");*/
+			});
+			
+			$(".cl-instalaciones_Corte_Internet"+lista_clases_css11).mouseout(function (){
+				var x1="."+$(this).attr("class");
+				$(x1).css("background-color","");
+				$(x1).css("box-shadow","");
+				/*$(x1).css("-webkit-transform","");
+				$(x1).css("transform","");*/
+			});
+			$(".cl-instalaciones_Corte_tv_e_internet"+lista_clases_css12).mouseover(function(){
+				var x1="."+$(this).attr("class");
+				$(x1).css("background-color","#d2b48c");
+				
+				
+				$(x1).css("box-shadow","1px 1px #53a7ea,2px 2px #53a7ea,3px 3px #53a7ea");
+				/*$(x1).css("-webkit-transform","translateX(-7px)");
+				$(x1).css("transform","translateX(-7px)");*/
+			});
+			
+			$(".cl-instalaciones_Corte_tv_e_internet"+lista_clases_css12).mouseout(function (){
+				var x1="."+$(this).attr("class");
+				$(x1).css("background-color","");
+				$(x1).css("box-shadow","");
+				/*$(x1).css("-webkit-transform","");
+				$(x1).css("transform","");*/
+			});
+
+			
 
 		
     		
@@ -771,15 +883,23 @@ function desactivar_activar_tabla_instalaciones_Revision(){
 function desactivar_activar_tabla_instalaciones_Reconexion(){
 	$(".tb_tec_info_instalaciones_Reconexion").fadeToggle("fast");	
 }
-function desactivar_activar_tabla_instalaciones_Corte(){
-	$(".tb_tec_info_instalaciones_Corte").fadeToggle("fast");		
+function desactivar_activar_tabla_instalaciones_Corte_Tv(){
+	$(".tb_tec_info_instalaciones_Corte_Tv").fadeToggle("fast");		
 }
 function desactivar_activar_tabla_instalaciones_total(){
 		$(".tb_tec_info_instalaciones_total").fadeToggle("fast");		
 }
+function desactivar_activar_tabla_instalaciones_Corte_Internet(){
+	$(".tb_tec_info_instalaciones_Corte_Internet").fadeToggle("fast");			
+}
+function desactivar_activar_tabla_instalaciones_Corte_tv_e_internet(){
+	$(".tb_tec_info_instalaciones_Corte_tv_e_internet").fadeToggle("fast");				
+}
 function mostrar_ocultar(){
 	desactivar_activar_tabla_instalaciones_total();
-	desactivar_activar_tabla_instalaciones_Corte();
+	desactivar_activar_tabla_instalaciones_Corte_Tv();
+	desactivar_activar_tabla_instalaciones_Corte_Internet();
+	desactivar_activar_tabla_instalaciones_Corte_tv_e_internet();
 	desactivar_activar_tabla_instalaciones_Reconexion();
 	desactivar_activar_tabla_instalaciones_Revision();
 	desactivar_activar_tabla_instalaciones_AgregarInternet();
@@ -804,14 +924,14 @@ mostrar_ocultar();
 		ev.preventDefault();
 		posicionScroll+=250
 		$("#x2").scrollLeft(posicionScroll);
-		(this).css("color","white");
+		$(this).css("color","white");
 	});
 
 	$(".btn-flotante2").click(function(ev){
 		ev.preventDefault();
 		posicionScroll=0
 		$("#x2").scrollLeft(posicionScroll);
-		(this).css("color","white");
+		$(this).css("color","white");
 	});
 	$(".btn-flotante3").click(function(ev){
 		ev.preventDefault();
