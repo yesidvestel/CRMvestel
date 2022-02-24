@@ -829,6 +829,9 @@ table {
 																$x=$lista_datos_cuentas_tipos_por_tecnico['instalaciones_Revision_internet'][$key];
 																$total+=$x['puntuacion'];
 																
+																$x=$lista_datos_cuentas_tipos_por_tecnico['instalaciones_migracion'][$key];
+																$total+=$x['puntuacion'];
+																
 																echo "<tr class='instalaciones_total_".$key."' ><td style='width: 200px;'><strong>".($total)."</strong> pts </td></tr>";																
 															} ?>	
 														</tbody></table> 	
