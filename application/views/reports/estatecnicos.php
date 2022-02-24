@@ -564,7 +564,7 @@ table {
 												<td class="first-col" style="padding-right: 0px;padding-left: 0px;text-align: center;vertical-align: middle;">
 													<div class="cl-instalaciones_Reconexion_internet" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_Reconexion_internet()"><?php echo $row;$conteo+=$row; ?></div>
 														
-														<table class="tb_tec_info_instalaciones_Reconexion_internet" style='width: 100px;'><tbody>
+														<table class="tb_tec_info_instalaciones_Reconexion_internet" style='width: 100px;vertical-align: middle;'><tbody>
 															<?php foreach ($lista_por_tecnicos['instalaciones_Reconexion_internet'][$key1] as $key => $value2) {
 																echo "<tr class='instalaciones_Reconexion_internet_".$key."' ><td style='width: 100px;text-align: center;'>".($value2['puntuacion'])."p</td></tr>";																
 															} ?>	
@@ -712,7 +712,43 @@ table {
 														</tbody></table> 	
 											</td>
 										</tr>
+										<tr>
+											<td class="static">
+												<div class="cl-instalaciones_migracion" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_migracion()"><i><u>Migracion</u></i></div>
+												
+													<table class="tb_tec_info_instalaciones_migracion"><tbody>
+														<?php $lista_clases_css17=""; 
+															foreach ($lista_de_tecnicos as $key => $value) {
+																$name_class="instalaciones_migracion_".$value['username'];
+																$lista_clases_css17.=",.".$name_class."";
+																echo "<tr class='".$name_class."'><td>".$value['username']."</td></tr>";
+														}  ?>	
+														
+													</tbody></table> 
+											</td>
+											<?php $conteo=0; foreach ($tipos['instalaciones_migracion'] as $key1=> $row) {?>												
+												<td class="first-col" style="padding-right: 0px;padding-left: 0px;text-align: center;">
+													<div class="cl-instalaciones_migracion" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_migracion()"><?php echo $row;$conteo+=$row; ?></div>
+														
+														<table class="tb_tec_info_instalaciones_migracion" style='width: 100px;'><tbody>
+															<?php foreach ($lista_por_tecnicos['instalaciones_migracion'][$key1] as $key => $value2) {
+																echo "<tr class='instalaciones_migracion_".$key."' ><td style='width: 100px;text-align: center;'>".($value2['puntuacion'])."p</td></tr>";																
+															} ?>	
+														</tbody></table> 	
+												</td>
+											<?php } ?>
 
+												
+											
+											<td align="center" >
+												<div   class="cl-instalaciones_migracion" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_migracion()"><?php echo $conteo; ?></div>
+														<table class="tb_tec_info_instalaciones_migracion" style='width: 200px;text-align: center;'><tbody>
+															<?php foreach ($lista_datos_cuentas_tipos_por_tecnico['instalaciones_migracion'] as $key => $value2) {
+																echo "<tr class='instalaciones_migracion_".$key."' ><td style='width: 200px;'><strong>".($value2['puntuacion'])."</strong> pts </td></tr>";																
+															} ?>	
+														</tbody></table> 	
+											</td>
+										</tr>
 										
 									
 										<tr id="detalles_totales">
@@ -835,6 +871,7 @@ table {
 		var lista_clases_css14="<?=$lista_clases_css14 ?>";
 		var lista_clases_css15="<?=$lista_clases_css15 ?>";
 		var lista_clases_css16="<?=$lista_clases_css16 ?>";
+		var lista_clases_css17="<?=$lista_clases_css17 ?>";
 		
 			$(".cl-instalaciones_tv_e_internet"+lista_clases_css1).mouseover(function(){
 				var x1="."+$(this).attr("class");
@@ -1096,6 +1133,23 @@ table {
 				/*$(x1).css("-webkit-transform","");
 				$(x1).css("transform","");*/
 			});
+			$(".cl-instalaciones_migracion"+lista_clases_css17).mouseover(function(){
+				var x1="."+$(this).attr("class");
+				$(x1).css("background-color","#d2b48c");
+				
+				
+				$(x1).css("box-shadow","1px 1px #53a7ea,2px 2px #53a7ea,3px 3px #53a7ea");
+				/*$(x1).css("-webkit-transform","translateX(-7px)");
+				$(x1).css("transform","translateX(-7px)");*/
+			});
+			
+			$(".cl-instalaciones_migracion"+lista_clases_css17).mouseout(function (){
+				var x1="."+$(this).attr("class");
+				$(x1).css("background-color","");
+				$(x1).css("box-shadow","");
+				/*$(x1).css("-webkit-transform","");
+				$(x1).css("transform","");*/
+			});
 
 			
 
@@ -1148,6 +1202,9 @@ function desactivar_activar_tabla_instalaciones_Corte_Internet(){
 function desactivar_activar_tabla_instalaciones_Corte_tv_e_internet(){
 	$(".tb_tec_info_instalaciones_Corte_tv_e_internet").fadeToggle("fast");				
 }
+function desactivar_activar_tabla_instalaciones_migracion(){
+	$(".tb_tec_info_instalaciones_migracion").fadeToggle("fast");					
+}
 function mostrar_ocultar(){
 	desactivar_activar_tabla_instalaciones_total();
 	desactivar_activar_tabla_instalaciones_Corte_Tv();
@@ -1163,7 +1220,8 @@ function mostrar_ocultar(){
 	desactivar_activar_tabla_instalaciones_Traslado();
 	desactivar_activar_tabla_instalaciones_Agregar_Tv();
 	desactivar_activar_tabla_instalaciones_internet();
-	desactivar_activar_tabla_instalaciones_tv_e_internet();	
+	desactivar_activar_tabla_instalaciones_tv_e_internet();
+	desactivar_activar_tabla_instalaciones_migracion();	
 }
 mostrar_ocultar();
 
