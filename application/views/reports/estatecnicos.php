@@ -783,14 +783,37 @@ table {
 												<div   class="cl-instalaciones_total" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_total()"><?php echo $conteo; ?></div>
 														<table class="tb_tec_info_instalaciones_total" style='width: 200px;text-align: center;background-color:#fff'><tbody>
 															<?php foreach ($lista_datos_cuentas_tipos_por_tecnico['instalaciones_tv_e_internet'] as $key => $value2) {
+																    $puntuacion_instalaciones_FTTH=array("cantidad"=>0,"puntuacion"=>0);
+																    $puntuacion_instalaciones_EOC=array("cantidad"=>0,"puntuacion"=>0);
+																    $puntuacion_traslado_EOC=array("cantidad"=>0,"puntuacion"=>0);
+																    $puntuacion_traslado_FTTH=array("cantidad"=>0,"puntuacion"=>0);
+																    $puntuacion_migracion_FTTH=array("cantidad"=>0,"puntuacion"=>0);//preguntar a cuales ordenes se relaciona
+																    $puntuacion_agregar_internet_FTTH=array("cantidad"=>0,"puntuacion"=>0);
+																    $puntuacion_agregar_tv=array("cantidad"=>0,"puntuacion"=>0);
+																    $puntuacion_punto_adicional=array("cantidad"=>0,"puntuacion"=>0);
+																    $puntuacion_punto_adicional_multiple=array("cantidad"=>0,"puntuacion"=>0);
+																    $puntuacion_revision_internet=array("cantidad"=>0,"puntuacion"=>0);
+																    $puntuacion_revision_tv=array("cantidad"=>0,"puntuacion"=>0);
+																    $puntuacion_reconexion=array("cantidad"=>0,"puntuacion"=>0);
+																    $puntuacion_desconexion=array("cantidad"=>0,"puntuacion"=>0);
+
 																$x=$lista_datos_cuentas_tipos_por_tecnico['instalaciones_tv_e_internet'][$key];
 																$total=$x['FTTH']['puntuacion']+$x['EOC']['puntuacion']+$x['puntos_adicionales']['puntuacion']+$x['puntos_adicionales_multiples']['puntuacion'];
+																$puntuacion_instalaciones_FTTH=$x['FTTH'];
+																$puntuacion_instalaciones_EOC=$x['EOC'];
 
 																$x=$lista_datos_cuentas_tipos_por_tecnico['instalaciones_internet'][$key];
 																$total+=$x['FTTH']['puntuacion']+$x['EOC']['puntuacion'];
 
+																$puntuacion_instalaciones_FTTH['cantidad']+=$x['FTTH']['cantidad'];
+																$puntuacion_instalaciones_FTTH['puntuacion']+=$x['FTTH']['puntuacion'];
+																$puntuacion_instalaciones_EOC['cantidad']+=$x['EOC']['cantidad'];
+																$puntuacion_instalaciones_EOC['puntuacion']+=$x['EOC']['puntuacion'];
+
 																$x=$lista_datos_cuentas_tipos_por_tecnico['instalaciones_Traslado'][$key];
 																$total+=$x['FTTH']['puntuacion']+$x['EOC']['puntuacion'];
+																$puntuacion_traslado_FTTH=$x['FTTH'];
+																$puntuacion_traslado_EOC=$x['EOC'];
 
 																$x=$lista_datos_cuentas_tipos_por_tecnico['instalaciones_AgregarInternet'][$key];
 																$total+=$x['FTTH']['puntuacion']+$x['EOC']['puntuacion'];
@@ -832,7 +855,7 @@ table {
 																$x=$lista_datos_cuentas_tipos_por_tecnico['instalaciones_migracion'][$key];
 																$total+=$x['puntuacion'];
 																
-																echo "<tr class='instalaciones_total_".$key."' ><td style='width: 200px;'><strong>".($total)."</strong> pts </td></tr>";																
+																echo "<tr class='instalaciones_total_".$key."' ><td style='width: 200px;cursor:pointer;' class='td_totalizador' data-username='".$key."' data-instalaciones-ftth='".$puntuacion_instalaciones_FTTH['cantidad'].",".$puntuacion_instalaciones_FTTH['puntuacion']."' data-instalaciones-eoc='".$puntuacion_instalaciones_EOC['cantidad'].",".$puntuacion_instalaciones_EOC['puntuacion']."' data-instalaciones-traslado-ftth='".$puntuacion_traslado_FTTH['cantidad'].",".$puntuacion_traslado_FTTH['puntuacion']."' data-instalaciones-traslado-eoc='".$puntuacion_traslado_EOC['cantidad'].",".$puntuacion_traslado_EOC['puntuacion']."'><strong>".($total)."</strong> pts </td></tr>";																
 															} ?>	
 														</tbody></table> 	
 											</td>
@@ -857,8 +880,137 @@ table {
         </div>
     </div>
 </div>
+
+<div id="modal_informativo" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Descripcion usuario : <strong id="modal_username"></strong></h4>
+            </div>
+            <div class="modal-body" style="text-align:center;">
+            <div class="table-responsive ">
+                <table class="table mb-1 table-hover" style="display: inline;text-align: center;">
+                	<thead>
+                		<tr>
+                			<th>Tipo de Servicio</th>
+                			<th>Cantidad</th>
+                			<th>Puntuacion</th>
+                		</tr>
+                	</thead>
+                	<tbody>
+                		<tr>
+                			<td>Instalación Ftth</td>
+                			<td id="modal-instalaciones-ftth-c">0</td>
+                			<td id="modal-instalaciones-ftth-p">0</td>
+                		</tr>
+                		<tr>
+                			<td>Instalación EOC</td>
+                			<td id="modal-instalaciones-eoc-c">0</td>
+                			<td id="modal-instalaciones-eoc-p">0</td>
+                		</tr>
+                		<tr>
+                			<td>Traslado EOC</td>
+                			<td id="modal-instalaciones-traslado-eoc-c">0</td>
+                			<td id="modal-instalaciones-traslado-eoc-p">0</td>
+                		</tr>
+                		<tr>
+                			<td>Taslado Ftth</td>
+                			<td id="modal-instalaciones-traslado-ftth-c">0</td>
+                			<td id="modal-instalaciones-traslado-ftth-p">0</td>
+                		</tr>
+                		<tr>
+                			<td>Migracion Ftth</td>
+                			<td id="modal-instalaciones-migracion-ftth-c">0</td>
+                			<td id="modal-instalaciones-migracion-ftth-p">0</td>
+                		</tr>
+                		<tr>
+                			<td>Agregar Internet Ftth</td>
+                			<td id="modal-instalaciones-agregar-internet-ftth-c">0</td>
+                			<td id="modal-instalaciones-agregar-internet-ftth-p">0</td>
+                		</tr>
+                		<tr>
+                			<td>Agregar tv</td>
+                			<td id="modal-instalaciones-agregar-tv-ftth-c">0</td>
+                			<td id="modal-instalaciones-agregar-tv-ftth-p">0</td>
+                		</tr>
+                		<tr>
+                			<td>Punto Adicional</td>
+                			<td id="modal-instalaciones-punto-adicional-c">0</td>
+                			<td id="modal-instalaciones-punto-adicional-p">0</td>
+                		</tr>
+                		<tr>
+                			<td>Punto Adicional Multiple</td>
+                			<td id="modal-instalaciones-punto-adicional-m-c">0</td>
+                			<td id="modal-instalaciones-punto-adicional-m-p">0</td>
+                		</tr>
+                		<tr>
+                			<td>Revision de internet</td>
+                			<td id="modal-instalaciones-revision-internet-c">0</td>
+                			<td id="modal-instalaciones-revision-internet-p">0</td>
+                		</tr>
+                		<tr>
+                			<td>Revision de Tv</td>
+                			<td id="modal-instalaciones-revision-tv-c">0</td>
+                			<td id="modal-instalaciones-revision-tv-p">0</td>
+                		</tr>
+                		<tr>
+                			<td>Reconexion</td>
+                			<td id="modal-instalaciones-reconexion-c">0</td>
+                			<td id="modal-instalaciones-reconexion-p">0</td>
+                		</tr>
+                		<tr>
+                			<td>Desconexion</td>
+                			<td id="modal-instalaciones-desconexion-c">0</td>
+                			<td id="modal-instalaciones-desconexion-p">0</td>
+                		</tr>
+
+                	</tbody>
+                	<tfoot>
+                		<tr>
+                			<th style="vertical-align: middle;"><strong>Total:</strong></th>
+                			<th></th>
+                			<th style="text-align: center;">0<br>$0</th>
+                		</tr>
+                	</tfoot>
+                </table>
+            </div>
+
+            </div>
+            <div class="modal-footer">
+                
+                <button type="button" data-dismiss="modal"
+                        class="btn"><?php echo $this->lang->line('Cancel') ?> </button>
+                        <button type="button" data-dismiss="modal"
+                        class="btn btn-success">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script type="text/javascript">
 	document.addEventListener("DOMContentLoaded", function(event) {
+		$(".td_totalizador").click(function (ev){
+			$("#modal_username").text($(this).data("username"));
+			var datax=$(this).data("instalaciones-ftth").split(",");
+			$("#modal-instalaciones-ftth-c").text(datax[0]);
+			$("#modal-instalaciones-ftth-p").text(datax[1]);
+
+			var datax=$(this).data("instalaciones-eoc").split(",");
+			$("#modal-instalaciones-eoc-c").text(datax[0]);
+			$("#modal-instalaciones-eoc-p").text(datax[1]);
+			console.log(datax);
+			var datax=$(this).data("instalaciones-traslado-ftth").split(",");
+			$("#modal-instalaciones-traslado-eoc-c").text(datax[0]);
+			$("#modal-instalaciones-traslado-eoc-p").text(datax[1]);
+
+			var datax=$(this).data("instalaciones-traslado-eoc").split(",");
+			$("#modal-instalaciones-traslado-ftth-c").text(datax[0]);
+			$("#modal-instalaciones-traslado-ftth-p").text(datax[1]);
+
+			$("#modal_informativo").modal("show");
+		});
+
 		var lista_clases_css1="<?=$lista_clases_css1 ?>";
 		var lista_clases_css2="<?=$lista_clases_css2 ?>";
 		var lista_clases_css3="<?=$lista_clases_css3 ?>";
