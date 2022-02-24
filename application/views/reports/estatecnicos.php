@@ -1000,11 +1000,11 @@ table {
 			$("#modal-instalaciones-eoc-c").text(datax[0]);
 			$("#modal-instalaciones-eoc-p").text(datax[1]);
 			console.log(datax);
-			var datax=$(this).data("instalaciones-traslado-ftth").split(",");
+			var datax=$(this).data("instalaciones-traslado-eoc").split(",");
 			$("#modal-instalaciones-traslado-eoc-c").text(datax[0]);
 			$("#modal-instalaciones-traslado-eoc-p").text(datax[1]);
 
-			var datax=$(this).data("instalaciones-traslado-eoc").split(",");
+			var datax=$(this).data("instalaciones-traslado-ftth").split(",");
 			$("#modal-instalaciones-traslado-ftth-c").text(datax[0]);
 			$("#modal-instalaciones-traslado-ftth-p").text(datax[1]);
 
