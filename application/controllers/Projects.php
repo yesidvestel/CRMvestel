@@ -453,13 +453,13 @@ class Projects Extends CI_Controller
 
         foreach ($list as $task) {
             $no++;
-            $name = '<a class="check text-default" data-id="' . $task->id . '" data-stat="Due"> <i class="icon-check"></i> </a><a href="#" data-id="' . $task->id . '" class="view_task">' . $task->name . '</a>';
+            $name = '<a class="check text-default" data-id="' . $task->id . '" data-stat="'.$task->status.'"> <i class="icon-check"></i> </a><a href="#" data-id="' . $task->id . '" class="view_task">' . $task->name . '</a>';
             if ($task->status == 'Done') {
-                $name = '<a class="check text-success" data-id="' . $task->id . '" data-stat="Done"> <i class="icon-check"></i> </a><a href="#" data-id="' . $task->id . '" class="view_task">' . $task->name . '</a>';
+                $name = '<a class="check text-success" data-id="' . $task->id . '" data-stat="'.$task->status.'"> <i class="icon-check"></i> </a><a href="#" data-id="' . $task->id . '" class="view_task">' . $task->name . '</a>';
             }
             $row = array();
             $row[] = $no;
-            $row[] = '<a href="#" class="btn btn-primary btn-sm rounded set-task" data-id="' . $task->id . '" data-stat="0"> SET </a>' . $name;
+            $row[] = '<a href="#" class="btn btn-primary btn-sm rounded set-task" data-id="' . $task->id . '" data-stat="'.$task->status.'"> SET </a>' . $name;
             $row[] = dateformat($task->duedate);
             $row[] = dateformat($task->start);
             $row[] = '<span class="task_' . $task->status . '">' . $this->lang->line($task->status) . '</span>';

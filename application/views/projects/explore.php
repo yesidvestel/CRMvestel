@@ -579,10 +579,12 @@
                                     <div class="row">
                                         <div class="col-xs-12 mb-1"><label
                                                     for="status"><?php echo $this->lang->line('Change Status') ?></label>
-                                            <select name="stat" class="form-control mb-1">
-                                                <option value="Due">Due</option>
-                                                <option value="Progress">Progress</option>
-                                                <option value="Done">Done</option>
+                                            <select name="stat" class="form-control mb-1" id="status_task">
+                                                <?php 
+                                                    echo"<option value='Due'>".$this->lang->line('Due')."</option>
+                                                    <option value='Done'>".$this->lang->line('Done')."</option>
+                                                    <option value='Progress'>".$this->lang->line('Progress')."</option>";
+                                                    ?>
                                             </select>
 
                                         </div>
@@ -829,7 +831,7 @@
             $(document).on('click', ".set-task", function (e) {
                 e.preventDefault();
                 $('#taskid').val($(this).attr('data-id'));
-
+                $("#status_task").val($(this).attr('data-stat'));
                 $('#pop_model').modal({backdrop: 'static', keyboard: false});
 
             });

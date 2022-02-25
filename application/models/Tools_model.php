@@ -101,7 +101,7 @@ class Tools_model extends CI_Model
     public function edittask($id, $name, $status, $priority, $stdate, $tdate, $employee, $content)
     {
 
-        $data = array('tdate' => date('Y-m-d H:i:s'), 'name' => $name, 'status' => $status, 'start' => $stdate, 'duedate' => $tdate, 'description' => $content, 'eid' => $employee, 'related' => 0, 'priority' => $priority, 'rid' => 0);
+        $data = array('tdate' => date('Y-m-d H:i:s'), 'name' => $name, 'status' => $status, 'start' => $stdate, 'duedate' => $tdate, 'description' => $content, 'eid' => $employee, 'priority' => $priority);//, 'rid' => 0,'related' => 0, 
         $this->db->set($data);
         $this->db->where('id', $id);
         return $this->db->update('todolist');
