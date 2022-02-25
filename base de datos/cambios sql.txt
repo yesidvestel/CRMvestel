@@ -1,4 +1,6 @@
-﻿ALTER TABLE `customers` ADD `firma_digital` TINYINT NULL DEFAULT NULL AFTER `tegnologia_instalacion`;
+﻿INSERT INTO `products` (`pid`, `pcat`, `warehouse`, `sede`, `product_name`, `product_code`, `product_price`, `fproduct_price`, `taxrate`, `disrate`, `qty`, `product_des`, `alert`, `id_prod_transfer`) VALUES (NULL, '4', '30', '4', '15MegasD', '15MGD', '299900', '299900', '0', '0', '50000', '', '0', '0')
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `customers` ADD `firma_digital` TINYINT NULL DEFAULT NULL AFTER `tegnologia_instalacion`;
 --------------------------------------------------------------------------------------------------------
 ALTER TABLE `estadisticas_servicios` ADD `internet_y_tv` INT NULL AFTER `n_tv`;
 -----------------------------------------------------------------------------------
