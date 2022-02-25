@@ -192,9 +192,11 @@ class Reports_model extends CI_Model
         $header_sql='SELECT t1.id_factura as id_factura_orden,t1.asignado as tec_asignado,t1.detalle as detalle,t1.section as section, datetable.date as fecha1 
             from datetable left join (select * from tickets 
             join customers on tickets.cid=customers.id where';
-
-        $footer_sql='  tickets.status="Resuelto" and 
-            customers.gid='.$sede.' '.$filtro_tecnico.') as t1 
+        $text_sede_fot="";
+        if($sede!="all"){
+            $text_sede_fot=" and customers.gid=".$sede;
+        }
+        $footer_sql='  tickets.status="Resuelto" '.$text_sede_fot.' '.$filtro_tecnico.') as t1 
             on datetable.date = date_format(t1.fecha_final,"%Y-%m-%d") 
             where datetable.date BETWEEN date_format("'.$fecha->format("Y-m").'-01","%Y-%m-%d") 
             and date_format("'.$fecha->format("Y-m-t").'","%Y-%m-%d")
@@ -232,7 +234,14 @@ $lista_datos=array();
         if ($tec != 'all') {
             $lista_tecnicos=$this->db->query("SELECT username from aauth_users where username='".$tec."'")->result_array();    
         }else{
-            $lista_tecnicos=$this->db->query("SELECT username from aauth_users where (roleid=2 or roleid=3 ) and sede_accede=".$sede." or (username='NaimeSistemas' or username='CamiloSistemas' or username='CesarRiosTEC' or username='AnnieAtencion' or username='SoniaCajera')")->result_array();    
+            if($sede=="all"){
+                $sede="";
+            }else{
+                $sede="and sede_accede=".$sede;    
+            }
+            
+
+            $lista_tecnicos=$this->db->query("SELECT username from aauth_users where (roleid=2 or roleid=3 )  ".$sede." or (username='NaimeSistemas' or username='CamiloSistemas' or username='CesarRiosTEC' or username='AnnieAtencion' or username='SoniaCajera')")->result_array();    
             $lista_tecnicos[]=array("username"=>"Sin_Asignar");
         }
         
@@ -807,9 +816,11 @@ $date1=date("Y-m-d",strtotime($fecha->format("Y-m")."-01"."- 1 year"));
             $header_sql='SELECT  t1.detalle as detalle,t1.section as section, YEAR(datetable.date) as year,MONTH(datetable.date) as month
             from datetable left join (select * from tickets 
             join customers on tickets.cid=customers.id where';
-
-        $footer_sql='  tickets.status="Resuelto" and 
-            customers.gid='.$sede.' '.$filtro_tecnico.') as t1 
+$texto_sede="";
+if($sede!="all"){
+    $texto_sede=" and customers.gid=".$sede;
+}
+        $footer_sql='  tickets.status="Resuelto" '.$texto_sede.' '.$filtro_tecnico.') as t1 
             on datetable.date = date_format(t1.fecha_final,"%Y-%m-%d") 
             where datetable.date BETWEEN date_format("'.($date1).'","%Y-%m-%d") 
             and date_format("'.$fecha->format("Y-m-t").'","%Y-%m-%d")';
