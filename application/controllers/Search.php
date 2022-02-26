@@ -118,11 +118,11 @@ class Search extends CI_Controller
     public function user()
     {
 
-        $name = $this->input->get('username', true);
+        $name = $this->input->get('keyword');
 
 
-        if (!$name = NULL) {
-            $query = $this->db->query("SELECT id,username FROM aauth_users WHERE username  LIKE '" . $name . "%' LIMIT 6");
+        if (!$name == NULL) {
+            $query = $this->db->query("SELECT id,username FROM aauth_users WHERE username  LIKE '%" . $name . "%'");
 
             $result = $query->result_array();
 
