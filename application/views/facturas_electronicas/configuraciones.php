@@ -182,12 +182,15 @@
                             },13000);
                         },15000);
 
+                    }else{
+                        timer = setTimeout("temporizador()", 2800);  
                     }
                 }else{
                     data_aux=data;
-                    $cuenta_bug=0;                    
+                    $cuenta_bug=0; 
+                     timer = setTimeout("temporizador()", 2800);                   
                 }
-                timer = setTimeout("temporizador()", 2800);  
+                
             }
             
         });
