@@ -57,7 +57,7 @@
                                 <label class="col-sm-3 col-form-label" for="pay_cat"></label>
 
                                 <div class="col-sm-4">
-                                    <input type="button" id="detener" class="btn btn-primary btn-md" value="Recargar">
+                                    
                                     <input type="button" id="enviar" class="btn btn-primary btn-md" value="Generar">
 
 
@@ -116,10 +116,7 @@
             }
         });
     }
-    $("#detener").click(function(ev){
-         fc_detener();
-
-    });
+    
     function fc_detener(accion){
         xhr.abort();
          $.get(x1+"webservice/detener.php?pay_acc="+pay_acc+"&accion="+accion,{},function(data){
