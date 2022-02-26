@@ -57,6 +57,7 @@
                                 <label class="col-sm-3 col-form-label" for="pay_cat"></label>
 
                                 <div class="col-sm-4">
+                                    <input type="button" id="detener" class="btn btn-primary btn-md" value="Recargar">
                                     <input type="button" id="enviar" class="btn btn-primary btn-md" value="Generar">
 
 
@@ -85,14 +86,23 @@
     var timer;
     var b=0;
     var pay_acc;
+    var xhr;
+    var x1=baseurl.replace("CRMvestel/","");
+    var data_aux="nada";
+    var cuenta_bug=0;
     $("#enviar").click(function(ev){
         ev.preventDefault();
         $(enviar).attr("disabled","true");
+        proceso_facturacion();
+        
+    });
+
+    function proceso_facturacion(){
         pay_acc=$("#cuentas_ option:selected").val();
         var sdate=$("#sdate2").val();
         b=0;
         timer=setTimeout("temporizador()",2800);
-        $.ajax({
+        xhr=$.ajax({
             url: baseurl+"facturasElectronicas/generar_facturas_action",
             type:"POST",
             dataType: "json",
@@ -105,11 +115,21 @@
                 window.location.href = baseurl+"facturasElectronicas/visualizar_resumen_ejecucion?fecha="+response.fecha+"&sede="+response.sede;
             }
         });
-        
+    }
+    $("#detener").click(function(ev){
+         fc_detener();
+
     });
+    function fc_detener(accion){
+        xhr.abort();
+         $.get(x1+"webservice/detener.php?pay_acc="+pay_acc+"&accion="+accion,{},function(data){
+
+         });
+    }
+    
     function temporizador(){
         var porcentaje=0;
-        var x1=baseurl.replace("CRMvestel/","");
+        
 
         $.get(x1+"webservice/ws.php?pay_acc="+pay_acc,{},function(data){
             var datos=data.split(",");
@@ -144,6 +164,32 @@
             if(datos[0]==datos[1] && b>=4){
                 clearTimeout(timer);
             }else{
+                console.log(cuenta_bug);
+                console.log(data_aux);
+                console.log(data);
+                if(data_aux==data){
+                    if(cuenta_bug!=null){
+                        cuenta_bug++;    
+                    }
+                    
+                    if(cuenta_bug!=null && cuenta_bug>=35){
+                        
+                        console.log("aqui");
+                        cuenta_bug=null;
+                        fc_detener("detener");
+                        setTimeout(function(){
+                            fc_detener("iniciar");
+                            cuenta_bug=0;
+                            setTimeout(function(){
+                                    proceso_facturacion();
+                            },13000);
+                        },15000);
+
+                    }
+                }else{
+                    data_aux=data;
+                    $cuenta_bug=0;                    
+                }
                 timer = setTimeout("temporizador()", 2800);  
             }
             

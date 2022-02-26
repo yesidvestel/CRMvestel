@@ -440,8 +440,16 @@ $this->load->model("customers_model","customers");
                 $file = fopen("assets/facturas_electronicas_seguimiento_".$_POST['pay_acc'].".txt", "w");            
                 fwrite($file, $cuenta.",".$total_customer.",".$total_f_creadas);
                 fclose($file);
+                $file = fopen("assets/facturas_electronicas_seguimiento.txt", "w");            
+                fwrite($file, "inicio");
+                fclose($file);
         
         foreach ($customers as $key => $value) {
+            $x1=file_get_contents($_SERVER['DOCUMENT_ROOT'].'/CRMvestel/assets/facturas_electronicas_seguimiento.txt', FILE_USE_INCLUDE_PATH);
+            if($x1=="detener"){
+                break;
+                exit;
+            }
             $cuenta++;
             
                 $servicios=$this->customers->servicios_detail($value['id']);
@@ -488,6 +496,7 @@ $x++;
             //var_dump($x);
             //echo date('h:i:s') . "\n";
                         $creo=$this->facturas_electronicas->generar_factura_customer_para_multiple($datos,$api);
+                        //$creo=array("status"=>true);
                         //sleep(7);
                         if($creo['status']==true){
                             $datos_del_proceso['facturas_creadas'][]=$value['id'];
@@ -506,9 +515,10 @@ $x++;
                 }
 
             if($cuenta%2==0 || $cuenta>=($total_customer-2)){
-                $file = fopen("assets/facturas_electronicas_seguimiento_".$_POST['pay_acc'].".txt", "w");            
-                fwrite($file, $cuenta.",".$total_customer.",".$total_f_creadas);
-                fclose($file);
+
+                    $file = fopen("assets/facturas_electronicas_seguimiento_".$_POST['pay_acc'].".txt", "w");            
+                    fwrite($file, $cuenta.",".$total_customer.",".$total_f_creadas);
+                    fclose($file);
             }
 
         }
