@@ -169,7 +169,7 @@
                         cuenta_bug++;    
                     }
                     
-                    if(cuenta_bug!=null && cuenta_bug>=77){//estaba en 35 pero para probar un lapso de tiempo mas logebo lo edito si no funciona correctamente es volverlo a 35
+                    if(cuenta_bug!=null && cuenta_bug>=35){//estaba en 35 pero para probar un lapso de tiempo mas logebo lo edito si no funciona correctamente es volverlo a 35
                         
                         console.log("aqui");
                         cuenta_bug=null;
