@@ -1962,8 +1962,8 @@ public function getCustomerJson(){
   ],
   "comments": "Comentarios",
   "related_users": {
-    "seller_id": 282,
-    "collector_id": 282
+    "seller_id": 321,
+    "collector_id": 321
   }
 }';
 return $str;

@@ -170,7 +170,7 @@ class Facturas_electronicas_model extends CI_Model
             $json_customer->phones[0]->number=$customer->celular;
             $json_customer->contacts[0]->first_name=$firs_name." ".$second_name;
             $json_customer->contacts[0]->last_name=$first_last_name." ".$second_last_name;
-            $json_customer->contacts[0]->email="vestelsas@gmail.com";
+            $json_customer->contacts[0]->email="vesgatelevision@gmail.com";
 
             $json_customer->contacts[0]->phone->number=$customer->celular;
             $json_customer->comments="Estrato : ".$customer->estrato;
@@ -205,13 +205,15 @@ class Facturas_electronicas_model extends CI_Model
             $dataApiTV->payments[0]->id="2863";
 
             $consulta_siigo1=$api->getCustomer($customer->documento,1);
-            //var_dump($consulta_siigo1['results']);
-            if($consulta_siigo1['results'][0]['id']==null){
+           
+            
+            if($consulta_siigo1['pagination']['total_results']==0){
                     $api->saveCustomer($json_customer,1);//para crear cliente en siigo si no existe
             }else{
                     //$api->updateCustomer($json_customer,$consulta_siigo1['results'][0]['id'],2);//para acturalizar cliente en siigo 
             }
         }
+        
         if($dataApiNET!=null){
             $dataApiNET=json_decode($dataApiNET);
             $dataApiNET->document->id="27274";
@@ -224,8 +226,15 @@ class Facturas_electronicas_model extends CI_Model
             $dataApiNET->payments[0]->id="2512";
 
             $consulta_siigo1=$api->getCustomer($customer->documento,2);
-            //var_dump($consulta_siigo1['results']);
-            if($consulta_siigo1['results'][0]['id']==null){
+          
+            
+            if($consulta_siigo1['pagination']['total_results']==0){
+                    $json_customer=json_decode($json_customer);
+                    $json_customer->related_users->seller_id=282;
+                    $json_customer->related_users->collector_id=282;
+                    $json_customer->contacts[0]->email="vestelsas@gmail.com";
+                    $json_customer=json_encode($json_customer);
+                    //$json_customer=str_replace("321", "282", subject)
                     $api->saveCustomer($json_customer,2);//para crear cliente en siigo si no existe
             }else{
                     //$api->updateCustomer($json_customer,$consulta_siigo1['results'][0]['id'],2);//para acturalizar cliente en siigo 
