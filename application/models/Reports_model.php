@@ -241,7 +241,7 @@ $lista_datos=array();
             }
             
 
-            $lista_tecnicos=$this->db->query("SELECT username from aauth_users where (roleid=2 or roleid=3 )  ".$sede." or (username='NaimeSistemas' or username='CamiloSistemas' or username='CesarRiosTEC' or username='AnnieAtencion' or username='SoniaCajera')")->result_array();    
+            $lista_tecnicos=$this->db->query("SELECT username from aauth_users where (roleid=2 or roleid=3 )  ".$sede." or (username='NaimeSistemas' or username='CamiloSistemas' or username='CesarRiosTEC' or username='AnnieAtencion' or username='SoniaCajera' or username='LuisHurtadoTEC' or username='YesidBarrera' or username='LinaPaola')")->result_array();    
             $lista_tecnicos[]=array("username"=>"Sin_Asignar");
         }
         
