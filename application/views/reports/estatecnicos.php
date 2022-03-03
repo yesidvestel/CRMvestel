@@ -1100,15 +1100,16 @@ table {
 			$("#modal-instalaciones-desconexion-c").text(datax[0]);
 			$("#modal-instalaciones-desconexion-p").text(datax[1]);
 			total_puntuacion+=parseInt(datax[1]);
-			var total_precio="0 $";
+			var total_precio=0;
 			if(total_puntuacion>=160 && total_puntuacion <=200){
-
+				total_precio=total_puntuacion*400;
 			}else if(total_puntuacion>=201 && total_puntuacion <=299){
-
+				total_precio=total_puntuacion*600;
 			}else if(total_puntuacion>=300){
-				
+				total_precio=total_puntuacion*800;
 			}
-
+			total_precio= new Intl.NumberFormat('es-ES', {  }).format(total_precio);
+			$("#modal-total-precio").text("$ "+total_precio);
 			$("#modal-total").text(total_puntuacion);
 			$("#modal_informativo").modal("show");
 		});
