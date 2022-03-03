@@ -74,10 +74,11 @@ class Tools Extends CI_Controller
             $tdate = $this->input->post('taskdate');
             $employee = $this->input->post('employee');
             $content = $this->input->post('content');
+            $puntuacion = $this->input->post('puntuacion');
             $stdate = datefordatabase($stdate);
             $tdate = datefordatabase($tdate);
 
-            if ($this->tools->edittask($id, $name, $estado, $priority, $stdate, $tdate, $employee, $content)) {
+            if ($this->tools->edittask($id, $name, $estado, $priority, $stdate, $tdate, $employee, $content,$puntuacion)) {
                 echo json_encode(array('status' => 'Success', 'message' => $this->lang->line('UPDATED')));
             } else {
                 echo json_encode(array('status' => 'Error', 'message' => $this->lang->line('ERROR')));
@@ -165,6 +166,7 @@ class Tools Extends CI_Controller
 			'employee' => $task['emp'],
 			'idorden' => $task['idorden'], 
 			'assign' => $task['assign'], 
+            'puntuacion' => $task['puntuacion'],
 			'priority' => $task['priority'], 
 			'archivo' => $data['attach']));
     }

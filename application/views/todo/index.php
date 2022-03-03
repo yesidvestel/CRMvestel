@@ -211,6 +211,13 @@
 
                         </div>
                     </div>
+                     <div class="row" >
+                                        <div class="col-xs-12 mb-1">Puntuación
+                                            <strong><span
+                                                        id="puntuacion"></span></strong>
+
+                                        </div>
+                                    </div>
 					<div class="modal-footer">
                   	<table class="table table-striped">
 						<thead>
@@ -287,6 +294,11 @@
                     $('#employee').html(data.employee);
                     $('#assign').html(data.assign);
                     $('#priority').html(data.priority);
+                    if(data.puntuacion==null || data.puntuacion=="null"){
+                            $('#puntuacion').html("Sin Puntuacion");    
+                        }else{
+                            $('#puntuacion').html(data.puntuacion);
+                        }
 					//$('#archivo').html(data.archivo);
 					var x =data.archivo;
 					var objetos="";

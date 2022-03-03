@@ -57,7 +57,28 @@
 
                     </div>
                 </div>
+ <?php if($this->aauth->get_user()->roleid>3){ ?>
+<div class="form-group row">
 
+                    <label class="col-sm-2 col-form-label"
+                           for="pay_cat">Puntuación</label>
+
+                    <div class="col-sm-4">
+                        <select name="puntuacion" class="form-control">
+                            <?php for ($i=0; $i <=100 ; $i++) { 
+                                if($task['puntuacion']==$i){
+
+                                    echo "<option selected='true' value='".$i."'>".$i." puntos</option>";
+                                }else{
+                                    echo "<option value='".$i."'>".$i." puntos</option>";   
+                                }
+                            } ?>
+                        </select>
+
+
+                    </div>
+                </div>
+            <?php } ?>
                 <div class="form-group row">
 
                     <label class="col-sm-2 control-label"

@@ -693,6 +693,13 @@
 
                                         </div>
                                     </div>
+                                    <div class="row" >
+                                        <div class="col-xs-12 mb-1">Puntuación
+                                            <strong><span
+                                                        id="puntuacion"></span></strong>
+
+                                        </div>
+                                    </div>
 
                                     <div class="modal-footer">
                                         <input type="hidden" class="form-control"
@@ -857,6 +864,12 @@
                         $('#task_title').html(data.name);
                         $('#employee').html(data.employee);
                         $('#assign').html(data.assign);
+                        if(data.puntuacion==null || data.puntuacion=="null"){
+                            $('#puntuacion').html("Sin Puntuacion");    
+                        }else{
+                            $('#puntuacion').html(data.puntuacion);
+                        }
+                        
                         $('#priority').html(data.priority);
                     }
 

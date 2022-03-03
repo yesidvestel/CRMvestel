@@ -98,10 +98,14 @@ class Tools_model extends CI_Model
         return $this->db->insert('todolist', $data);
     }
 
-    public function edittask($id, $name, $status, $priority, $stdate, $tdate, $employee, $content)
+    public function edittask($id, $name, $status, $priority, $stdate, $tdate, $employee, $content,$puntuacion)
     {
-
-        $data = array('tdate' => date('Y-m-d H:i:s'), 'name' => $name, 'status' => $status, 'start' => $stdate, 'duedate' => $tdate, 'description' => $content, 'eid' => $employee, 'priority' => $priority);//, 'rid' => 0,'related' => 0, 
+        if(empty($puntuacion)){
+            $data = array('tdate' => date('Y-m-d H:i:s'), 'name' => $name, 'status' => $status, 'start' => $stdate, 'duedate' => $tdate, 'description' => $content, 'eid' => $employee, 'priority' => $priority);//, 'rid' => 0,'related' => 0, 
+        }else{
+            $data = array('tdate' => date('Y-m-d H:i:s'), 'name' => $name, 'status' => $status, 'start' => $stdate, 'duedate' => $tdate, 'description' => $content, 'eid' => $employee, 'priority' => $priority,"puntuacion"=>$puntuacion);//, 'rid' => 0,'related' => 0,     
+        }
+        
         $this->db->set($data);
         $this->db->where('id', $id);
         return $this->db->update('todolist');
