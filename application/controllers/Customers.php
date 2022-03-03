@@ -1628,7 +1628,9 @@ if($data['servicios']['estado']=="Inactivo"){
         $this->load->library('CellVozApi');
         $api = new CellVozApi();
         $retorno=$api->getToken();                
-        $api->enviar_msm($retorno->getToken());
+        var_dump($retorno['token']);
+        //var_dump($_SESSION['variables_cellvoz']->api_key);
+        $api->alternativa_por_curl_envio_sms_invividual($retorno['token'],"3142349563","mensaje duber");
                
     }
 

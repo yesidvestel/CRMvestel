@@ -2288,7 +2288,7 @@ if ($valido) {
                 }
                 //var_dump($mensajes_a_enviar);
                 if($_COOKIE['cancelar_envio_mensajes']=="false"){
-                    $var=$api->envio_sms_masivos_por_curl($retorno->getToken(),$mensajes_a_enviar,$name_campaign);            
+                    $var=$api->envio_sms_masivos_por_curl($retorno['token'],$mensajes_a_enviar,$name_campaign);            
                 }                
                 //$mensaje=json_decode($var);
                 /*if($mensaje->success==true){
@@ -2300,7 +2300,7 @@ if ($valido) {
                 $mensaje="Enviado";
             }else{
                 if($_COOKIE['cancelar_envio_mensajes']=="false"){
-                    $var=$api->enviar_msm($retorno->getToken(),$number,$message);    
+                    $var=$api->enviar_msm($retorno['token'],$number,$message);    
                 }
                 $mensaje=$var->getMessage();
             }
