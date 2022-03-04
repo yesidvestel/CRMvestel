@@ -202,6 +202,11 @@ class Reports_model extends CI_Model
             and date_format("'.$fecha->format("Y-m-t").'","%Y-%m-%d")
             ';
 
+$header_sql2='select * from todolist 
+            join aauth_users on todolist.eid=aauth_users.id where start BETWEEN date_format("'.$fecha->format("Y-m").'-01","%Y-%m-%d") 
+            and date_format("'.$fecha->format("Y-m-t").'","%Y-%m-%d") and status="Done" and puntuacion is not null';
+$lista_tareas=$this->db->query($header_sql2)->result_array();
+           
         //nuevo codigo //falta utilizar el last_date($fecha); y colocar $fecha->format("Y-m")."01"; para el tema de las fechas
 
 
@@ -227,6 +232,7 @@ $lista_datos=array();
         $lista_datos['instalaciones_Corte_Internet']=array();
         $lista_datos['instalaciones_Corte_tv_e_internet']=array();
         $lista_datos['instalaciones_migracion']=array();
+        $lista_datos['tareas_en_proyectos']=array();
         $lista_datos['total_dia']=array();
 
         $lista_datos_cuentas_tipos_por_tecnico=$lista_datos;
@@ -268,7 +274,7 @@ for ($i=1; $i <=intval($fecha->format("t")) ; $i++) {
                     }else if($key=="instalaciones_Revision"){
                                 $lista_tecnicos_organizada[$key][$date1][$value2['username']]=array("Revision_de_Internet"=>array("cantidad"=>0,"puntuacion"=>0),
                                 "Revision_de_television"=>array("cantidad"=>0,"puntuacion"=>0));
-                    }else if($key=="instalaciones_Corte_Tv" || $key=="instalaciones_Corte_Internet" || $key=="instalaciones_Corte_tv_e_internet" || $key=="instalaciones_Reconexion_tv_e_internet" || $key=="instalaciones_Reconexion_tv" || $key=="instalaciones_Reconexion_internet" || $key=="instalaciones_Revision_tv_e_internet" || $key=="instalaciones_Revision_tv" || $key=="instalaciones_Revision_internet" || $key=="instalaciones_migracion"){
+                    }else if($key=="instalaciones_Corte_Tv" || $key=="instalaciones_Corte_Internet" || $key=="instalaciones_Corte_tv_e_internet" || $key=="instalaciones_Reconexion_tv_e_internet" || $key=="instalaciones_Reconexion_tv" || $key=="instalaciones_Reconexion_internet" || $key=="instalaciones_Revision_tv_e_internet" || $key=="instalaciones_Revision_tv" || $key=="instalaciones_Revision_internet" || $key=="instalaciones_migracion" || $key=="tareas_en_proyectos"){
                                 $lista_tecnicos_organizada[$key][$date1][$value2['username']]=array("cantidad"=>0,"puntuacion"=>0);
                     }else{
 
@@ -312,7 +318,7 @@ for ($i=1; $i <=intval($fecha->format("t")) ; $i++) {
                         }else if($key2=="instalaciones_Revision"){
                                 $lista_datos_cuentas_tipos_por_tecnico[$key2][$value['username']]=array("Revision_de_Internet"=>array("cantidad"=>0,"puntuacion"=>0),
                                 "Revision_de_television"=>array("cantidad"=>0,"puntuacion"=>0));
-                        }else if($key2=="instalaciones_Corte_Tv" || $key2=="instalaciones_Corte_Internet" || $key2=="instalaciones_Corte_tv_e_internet" || $key2=="instalaciones_Reconexion_tv_e_internet" || $key2=="instalaciones_Reconexion_tv" || $key2=="instalaciones_Reconexion_internet" || $key2=="instalaciones_Revision_tv_e_internet" || $key2=="instalaciones_Revision_tv" || $key2=="instalaciones_Revision_internet" || $key2=="instalaciones_migracion"){
+                        }else if($key2=="instalaciones_Corte_Tv" || $key2=="instalaciones_Corte_Internet" || $key2=="instalaciones_Corte_tv_e_internet" || $key2=="instalaciones_Reconexion_tv_e_internet" || $key2=="instalaciones_Reconexion_tv" || $key2=="instalaciones_Reconexion_internet" || $key2=="instalaciones_Revision_tv_e_internet" || $key2=="instalaciones_Revision_tv" || $key2=="instalaciones_Revision_internet" || $key2=="instalaciones_migracion" || $key2=="tareas_en_proyectos"){
                                 $lista_datos_cuentas_tipos_por_tecnico[$key2][$value['username']]=array("cantidad"=>0,"puntuacion"=>0);
                         }else{
                             $lista_datos_cuentas_tipos_por_tecnico[$key2][$value['username']]=0;
@@ -693,6 +699,21 @@ foreach ($est as $key => $value) {
     }
 
 }
+
+foreach ($lista_tareas as $key => $value) {
+    $key1=$value['start'];
+    if(isset($lista_tecnicos_organizada['tareas_en_proyectos'][$key1][$value['username']])){
+            $lista_datos['tareas_en_proyectos'][$key1]++;        
+            $lista_datos['total_dia'][$key1]++;
+            $lista_tecnicos_organizada['tareas_en_proyectos'][$key1][$value['username']]['cantidad']++;
+            $lista_tecnicos_organizada['tareas_en_proyectos'][$key1][$value['username']]['puntuacion']+=intval($value['puntuacion']);
+            $lista_datos_cuentas_tipos_por_tecnico['tareas_en_proyectos'][$value['username']]['cantidad']++;
+            $lista_datos_cuentas_tipos_por_tecnico['tareas_en_proyectos'][$value['username']]['puntuacion']+=intval($value['puntuacion']);
+            $lista_tecnicos_organizada['total_dia'][$key1][$value['username']]+=intval($value['puntuacion']);
+     
+    }
+}
+
         /*$lista_datos=array();
 
         $lista_datos['instalaciones_tv_e_internet']=$this->db->query($header_sql.' tickets.detalle="Instalacion" and tickets.section like "%mega%" and tickets.section like "%Television%" '.$footer_sql)->result_array();
