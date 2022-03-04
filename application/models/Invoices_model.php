@@ -89,13 +89,14 @@ class Invoices_model extends CI_Model
         $lista_facturas= $this->db->query("select * from invoices where csd=".$id." order by tid desc")->result_array();
         foreach ($lista_facturas as $key => $value) {
             $calculo= $this->db->query("select sum(credit-debit) as calculo from transactions where tid=".$value['tid']." and estado is null")->result_array();
-            if($calculo[0]['calculo']>$value['total']){
+
+            if($calculo[0]['calculo']>=$value['total']){
                     $informacion['tr_saldo_adelantado']= $this->db->query("select * from transactions where tid=".$value['tid']." and estado is null and credit>0 order by credit desc limit 1")->result_array();//si no bota la transaccion correcta se debe de colocar en orden ascendente
                     $informacion['factura_saldo_adelantado']=$value;
                     
                     $disponible=$calculo[0]['calculo']-$value['total'];
                     $informacion['facturas_adelantadas']= $this->calculo_de_facturas_adelantadas($disponible,$id);
-
+                    break;
             }
         }
         return $informacion;
