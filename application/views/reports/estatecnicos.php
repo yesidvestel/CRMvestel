@@ -1156,7 +1156,7 @@ table {
 			var total_precio=0;
 			if(total_puntuacion <=200){
 				total_precio=total_puntuacion*600;
-			}else 
+			}else{ 
 				total_precio=total_puntuacion*800;
 			}
 			total_precio= new Intl.NumberFormat('es-ES', {  }).format(total_precio);
