@@ -1154,9 +1154,9 @@ table {
 			total_puntuacion+=parseInt(datax[1]);
 
 			var total_precio=0;
-			if(total_puntuacion <=200){
+			if(total_puntuacion>=165 && total_puntuacion <=200){
 				total_precio=total_puntuacion*600;
-			}else{ 
+			}else if(total_puntuacion>200){ 
 				total_precio=total_puntuacion*800;
 			}
 			total_precio= new Intl.NumberFormat('es-ES', {  }).format(total_precio);
