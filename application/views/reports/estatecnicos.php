@@ -750,7 +750,43 @@ table {
 											</td>
 										</tr>
 										
-									
+									<tr>
+                                            <td class="static">
+                                                <div class="cl-tareas_en_proyectos" style="cursor: pointer;" onclick="desactivar_activar_tabla_tareas_en_proyectos()"><i><u>Tareas</u></i></div>
+                                                
+                                                    <table class="tb_tec_info_tareas_en_proyectos"><tbody>
+                                                        <?php $lista_clases_css20=""; 
+                                                            foreach ($lista_de_tecnicos as $key => $value) {
+                                                                $name_class="tareas_en_proyectos_".$value['username'];
+                                                                $lista_clases_css17.=",.".$name_class."";
+                                                                echo "<tr class='".$name_class."'><td>".$value['username']."</td></tr>";
+                                                        }  ?>   
+                                                        
+                                                    </tbody></table> 
+                                            </td>
+                                            <?php $conteo=0; foreach ($tipos['tareas_en_proyectos'] as $key1=> $row) {?>                                                
+                                                <td class="first-col" style="padding-right: 0px;padding-left: 0px;text-align: center;">
+                                                    <div class="cl-tareas_en_proyectos" style="cursor: pointer;" onclick="desactivar_activar_tabla_tareas_en_proyectos()"><?php echo $row;$conteo+=$row; ?></div>
+                                                        
+                                                        <table class="tb_tec_info_tareas_en_proyectos" style='width: 100px;'><tbody>
+                                                            <?php foreach ($lista_por_tecnicos['tareas_en_proyectos'][$key1] as $key => $value2) {
+                                                                echo "<tr class='tareas_en_proyectos_".$key."' ><td style='width: 100px;text-align: center;'>".($value2['puntuacion'])."p</td></tr>";                                                               
+                                                            } ?>    
+                                                        </tbody></table>    
+                                                </td>
+                                            <?php } ?>
+
+                                                
+                                            
+                                            <td align="center" >
+                                                <div   class="cl-tareas_en_proyectos" style="cursor: pointer;" onclick="desactivar_activar_tabla_tareas_en_proyectos()"><?php echo $conteo; ?></div>
+                                                        <table class="tb_tec_info_tareas_en_proyectos" style='width: 200px;text-align: center;'><tbody>
+                                                            <?php foreach ($lista_datos_cuentas_tipos_por_tecnico['tareas_en_proyectos'] as $key => $value2) {
+                                                                echo "<tr class='tareas_en_proyectos_".$key."' ><td style='width: 200px;'><strong>".($value2['puntuacion'])."</strong> pts </td></tr>";                                                             
+                                                            } ?>    
+                                                        </tbody></table>    
+                                            </td>
+                                        </tr>
 										<tr id="detalles_totales">
 											<td class="static" style="background-color:#719FD0 ">
 												<div class="cl-instalaciones_total" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_total()"><i><u>TOTAL DIA</u></i></div>
@@ -797,6 +833,7 @@ table {
 																    $puntuacion_revision_tv=array("cantidad"=>0,"puntuacion"=>0);
 																    $puntuacion_reconexion=array("cantidad"=>0,"puntuacion"=>0);
 																    $puntuacion_desconexion=array("cantidad"=>0,"puntuacion"=>0);
+																    $puntuacion_tareas=array("cantidad"=>0,"puntuacion"=>0);
 
 																$x=$lista_datos_cuentas_tipos_por_tecnico['instalaciones_tv_e_internet'][$key];
 																$total=$x['FTTH']['puntuacion']+$x['EOC']['puntuacion']+$x['puntos_adicionales']['puntuacion']+$x['puntos_adicionales_multiples']['puntuacion'];
@@ -883,6 +920,10 @@ table {
 																$total+=$x['puntuacion'];
 																$puntuacion_migracion_FTTH=$x;
 
+																$x=$lista_datos_cuentas_tipos_por_tecnico['tareas_en_proyectos'][$key];
+																$total+=$x['puntuacion'];
+																$puntuacion_tareas=$x;
+
 																$puntuaciones=" data-instalaciones-ftth='".$puntuacion_instalaciones_FTTH['cantidad'].",".$puntuacion_instalaciones_FTTH['puntuacion']."' 
 																				data-instalaciones-eoc='".$puntuacion_instalaciones_EOC['cantidad'].",".$puntuacion_instalaciones_EOC['puntuacion']."' 
 																				data-instalaciones-traslado-ftth='".$puntuacion_traslado_FTTH['cantidad'].",".$puntuacion_traslado_FTTH['puntuacion']."' 
@@ -896,7 +937,8 @@ table {
 																				data-instalaciones-revision-internet='".$puntuacion_revision_internet['cantidad'].",".$puntuacion_revision_internet['puntuacion']."' 
 																				data-instalaciones-revision-tv='".$puntuacion_revision_tv['cantidad'].",".$puntuacion_revision_tv['puntuacion']."' 
 																				data-instalaciones-reconexion='".$puntuacion_reconexion['cantidad'].",".$puntuacion_reconexion['puntuacion']."' 
-																				data-instalaciones-desconexion='".$puntuacion_desconexion['cantidad'].",".$puntuacion_desconexion['puntuacion']."' "; 
+																				data-instalaciones-desconexion='".$puntuacion_desconexion['cantidad'].",".$puntuacion_desconexion['puntuacion']."' 
+																				data-tareas='".$puntuacion_tareas['cantidad'].",".$puntuacion_tareas['puntuacion']."' "; 
 
 																echo "<tr class='instalaciones_total_".$key."' ><td style='width: 200px;cursor:pointer;' class='td_totalizador' data-username='".$key."' ".$puntuaciones." ><strong>".($total)."</strong> pts </td></tr>";																
 															} ?>	
@@ -1013,6 +1055,11 @@ table {
                 			<td id="modal-instalaciones-desconexion-c">0</td>
                 			<td id="modal-instalaciones-desconexion-p">0</td>
                 		</tr>
+                		<tr>
+                			<td>Tareas</td>
+                			<td id="modal-tareas-c">0</td>
+                			<td id="modal-tareas-p">0</td>
+                		</tr>
 
                 	</tbody>
                 	<tfoot>
@@ -1100,6 +1147,12 @@ table {
 			$("#modal-instalaciones-desconexion-c").text(datax[0]);
 			$("#modal-instalaciones-desconexion-p").text(datax[1]);
 			total_puntuacion+=parseInt(datax[1]);
+
+			var datax=$(this).data("tareas").split(",");
+			$("#modal-tareas-c").text(datax[0]);
+			$("#modal-tareas-p").text(datax[1]);
+			total_puntuacion+=parseInt(datax[1]);
+
 			var total_precio=0;
 			if(total_puntuacion>=160 && total_puntuacion <=200){
 				total_precio=total_puntuacion*400;
@@ -1130,6 +1183,7 @@ table {
 		var lista_clases_css15="<?=$lista_clases_css15 ?>";
 		var lista_clases_css16="<?=$lista_clases_css16 ?>";
 		var lista_clases_css17="<?=$lista_clases_css17 ?>";
+		var lista_clases_css20="<?=$lista_clases_css20 ?>";
 		
 			$(".cl-instalaciones_tv_e_internet"+lista_clases_css1).mouseover(function(){
 				var x1="."+$(this).attr("class");
@@ -1409,6 +1463,26 @@ table {
 				$(x1).css("transform","");*/
 			});
 
+			$(".cl-tareas_en_proyectos"+lista_clases_css20).mouseover(function(){
+				var x1="."+$(this).attr("class");
+				$(x1).css("background-color","#d2b48c");
+				
+				
+				$(x1).css("box-shadow","1px 1px #53a7ea,2px 2px #53a7ea,3px 3px #53a7ea");
+				/*$(x1).css("-webkit-transform","translateX(-7px)");
+				$(x1).css("transform","translateX(-7px)");*/
+			});
+			
+			$(".cl-tareas_en_proyectos"+lista_clases_css20).mouseout(function (){
+				var x1="."+$(this).attr("class");
+				$(x1).css("background-color","");
+				$(x1).css("box-shadow","");
+				/*$(x1).css("-webkit-transform","");
+				$(x1).css("transform","");*/
+			});
+
+			
+
 			
 
 		
@@ -1463,6 +1537,9 @@ function desactivar_activar_tabla_instalaciones_Corte_tv_e_internet(){
 function desactivar_activar_tabla_instalaciones_migracion(){
 	$(".tb_tec_info_instalaciones_migracion").fadeToggle("fast");					
 }
+function desactivar_activar_tabla_tareas_en_proyectos(){
+		$(".tb_tec_info_tareas_en_proyectos").fadeToggle("fast");						
+}
 function mostrar_ocultar(){
 	desactivar_activar_tabla_instalaciones_total();
 	desactivar_activar_tabla_instalaciones_Corte_Tv();
@@ -1480,6 +1557,7 @@ function mostrar_ocultar(){
 	desactivar_activar_tabla_instalaciones_internet();
 	desactivar_activar_tabla_instalaciones_tv_e_internet();
 	desactivar_activar_tabla_instalaciones_migracion();	
+	desactivar_activar_tabla_tareas_en_proyectos();
 }
 mostrar_ocultar();
 
