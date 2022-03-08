@@ -74,9 +74,25 @@ class Manager Extends CI_Controller
         $head['usernm'] = $this->aauth->get_user()->username;
         $head['title'] = 'historial tarea';
         $data['id_tarea']=$_GET['id'];
+        $data['historial']=$this->manager->getHistorialTareas($_GET['id']);
+
         $this->load->view('fixed/header', $head);
         $this->load->view('todo/historial',$data);
         $this->load->view('fixed/footer');
+    }
+
+    public function guardar_historia_tarea(){
+        $data=array();
+        $data['titulo']=$this->input->post("titulo");
+        $data['comentario']=$this->input->post("content");
+        $data['id_tarea']=$this->input->post("id_tarea");
+        $data['id_usuario_historial']=$this->aauth->get_user()->id;
+
+        $this->manager->guardar($data);
+
+    }
+    public function borrar_historia_tarea(){
+        $this->db->delete("historial_tareas",array("id_historial_tareas"=>$_POST['id']));
     }
 
     public function todo_load_list()

@@ -152,4 +152,36 @@ class Manager_model extends CI_Model
         $result = $query->result_array();
         return $result;
     }
+    public function getHistorialTareas($id){
+        $historial=$this->db->query("select * from historial_tareas where id_tarea=".$id." order by fecha desc")->result_array();
+         
+         return $historial;
+    }  
+    public function guardar($data){
+        $data['fecha']=date("Y-m-d H:i:s");
+        $data['color']="#0b97f4";//$this->randomColor();
+        $this->db->insert("historial_tareas",$data);
+    }
+    function randomColor(){
+         $str = "#";
+         for($i = 0 ; $i < 6 ; $i++){
+         $randNum = rand(0, 15);
+         switch ($randNum) {
+         case 10: $randNum = "A"; 
+         break;
+         case 11: $randNum = "B"; 
+         break;
+         case 12: $randNum = "C"; 
+         break;
+         case 13: $randNum = "D"; 
+         break;
+         case 14: $randNum = "E"; 
+         break;
+         case 15: $randNum = "F"; 
+         break; 
+         }
+         $str .= $randNum;
+         }
+         return $str;
+    }
 }

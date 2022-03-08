@@ -1,4 +1,21 @@
-﻿ALTER TABLE `todolist` ADD `puntuacion` SMALLINT NULL DEFAULT NULL AFTER `rid`;
+﻿CREATE TABLE IF NOT EXISTS `crm`.`historial_tareas` (
+  `id_historial_tareas` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id_usuario_historial` INT(11) NULL DEFAULT NULL,
+  `id_tarea` INT(11) NULL DEFAULT NULL,
+  `comentario` TEXT NULL DEFAULT NULL,
+  `fecha` DATETIME NULL DEFAULT NULL,
+  PRIMARY KEY (`id_historial_tareas`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+ALTER TABLE `historial_tareas` ADD `titulo` VARCHAR(250) NULL AFTER `fecha`;
+
+ALTER TABLE `historial_tareas` ADD `color` VARCHAR(20) NULL AFTER `titulo`;
+
+
+
+--------------------------------------------------------------------------------------
+ALTER TABLE `todolist` ADD `puntuacion` SMALLINT NULL DEFAULT NULL AFTER `rid`;
 
 ------------------------------------------------------------------------------------------------
 INSERT INTO `products` (`pid`, `pcat`, `warehouse`, `sede`, `product_name`, `product_code`, `product_price`, `fproduct_price`, `taxrate`, `disrate`, `qty`, `product_des`, `alert`, `id_prod_transfer`) VALUES (NULL, '4', '30', '4', '15MegasD', '15MGD', '299900', '299900', '0', '0', '50000', '', '0', '0')
