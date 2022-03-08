@@ -70,6 +70,14 @@ class Manager Extends CI_Controller
 			'archivo' => $data['attach']));
     }
 
+    public function historial(){
+        $head['usernm'] = $this->aauth->get_user()->username;
+        $head['title'] = 'historial tarea';
+        $data['id_tarea']=$_GET['id'];
+        $this->load->view('fixed/header', $head);
+        $this->load->view('todo/historial',$data);
+        $this->load->view('fixed/footer');
+    }
 
     public function todo_load_list()
     {
@@ -91,7 +99,7 @@ class Manager Extends CI_Controller
             $row[] = $task->start;
             $row[] = '<span class="task_' . $task->status . '">' . $this->lang->line($task->status) . '</span>';
 
-            $row[] = '<a href="#" data-id="' . $task->id . '" class="view_task btn-sm btn-indigo"> <i class="icon-eye"> View</i> </a>';
+            $row[] = '<a href="#" data-id="' . $task->id . '" class="view_task btn-sm btn-indigo"> <i class="icon-eye"> View</i> </a>&nbsp; <a href="'.base_url().'manager/historial?id='.$task->id.'" data-id="' . $task->id . '" class="historial_task btn-sm btn-indigo"> <i class="icon-eye"> Historial</i> </a>';
 
 
             $data[] = $row;
