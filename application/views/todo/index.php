@@ -92,6 +92,7 @@
                     <th><?php echo $this->lang->line('Task') ?></th>
                     <th><?php echo $this->lang->line('Due Date') ?></th>
                     <th><?php echo $this->lang->line('Start') ?></th>
+                    <th><?php echo $this->lang->line('') ?>Asignado a</th>
                     <th><?php echo $this->lang->line('Status') ?></th>
                     <th><?php echo $this->lang->line('Actions') ?></th>
 

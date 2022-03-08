@@ -22,7 +22,7 @@ class Tools_model extends CI_Model
 {
 
     var $column_order = array('status', 'name', 'duedate', 'tdate', null);
-    var $column_search = array('name', 'duedate', 'tdate');
+    var $column_search = array('todolist.name','employee_profile.name', 'duedate', 'tdate');
     var $notecolumn_order = array(null, 'title', 'cdate', null);
     var $notecolumn_search = array('id', 'title', 'cdate');
     var $order = array('id' => 'asc');
@@ -30,12 +30,14 @@ class Tools_model extends CI_Model
     private function _task_datatables_query($cday = '')
     {
 		$colaborador = $this->aauth->get_user()->id;
+		 $this->db->select('todolist.*,employee_profile.name AS emp');
         $this->db->from('todolist');
         if ($cday) {
             $this->db->where('DATE(duedate)=', $cday);
         }
 		$this->db->where('eid', $colaborador);
 		$this->db->or_where('aid', $colaborador);
+		$this->db->join('employee_profile', 'employee_profile.id = todolist.eid', 'left');
         $i = 0;
 
         foreach ($this->column_search as $item) // loop column

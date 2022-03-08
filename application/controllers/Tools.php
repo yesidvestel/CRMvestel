@@ -209,6 +209,7 @@ class Tools Extends CI_Controller
             $row[] = '<a href="#" class="btn btn-primary btn-sm rounded set-task" data-id="' . $task->id . '" data-stat="0"> SET </a>' . $name;
             $row[] = dateformat($task->duedate);
             $row[] = dateformat($task->start);
+            $row[] = $task->emp;
             $row[] = '<span class="task_' . $task->status . '">' . $this->lang->line($task->status) . '</span>';
 
             $row[] = '<a class="btn-info btn-sm" href="edittask?id=' . $task->id . '" data-object-id="' . $task->id . '"> <i class="icon-pencil"></i> </a>&nbsp;<a class="btn-brown btn-sm delete-object" href="#" data-object-id="' . $task->id . '"> <i class="icon-trash-o"></i> </a>';
