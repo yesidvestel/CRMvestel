@@ -1214,10 +1214,12 @@ if($ya_agrego_equipos==false){
 				$this->db->set('subtotal', $factura->subtotal+$producto2->product_price);
 				$this->db->set('total', $factura->total+$producto2->product_price);
 				$this->db->set('items', $factura->items+1);*/
+                $factura = $this->db->get_where('invoices',array('tid'=>$idfactura))->row();
                 $this->db->set('estado_tv', 'Cortado');
 				$this->db->where('tid', $idfactura);
         		$this->db->update('invoices');
 			if ($factura->combo==='no' || $factura->combo=='' || $factura->combo==null || $factura->combo=='-' || $factura->estado_combo=="Cortado" || $factura->estado_combo=="Suspendido"){
+                
 				$this->db->set('ron', 'Cortado');
 				//$this->db->set('television', 'no');
 				$this->db->where('tid', $idfactura);
