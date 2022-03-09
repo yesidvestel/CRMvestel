@@ -168,6 +168,17 @@ class Manager_model extends CI_Model
         $this->db->select('*');
         $this->db->from('archivos_historias_tareas');
         $this->db->where('id_tarea', $id);        
+        $this->db->order_by("id","desc");
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+    public function p_files_historial_tareas($id)
+    {
+
+        $this->db->select('*');
+        $this->db->from('archivos_historias_tareas');
+        $this->db->where('id_historia_tarea', $id); 
+        $this->db->order_by("id","desc");       
         $query = $this->db->get();
         return $query->result_array();
     }

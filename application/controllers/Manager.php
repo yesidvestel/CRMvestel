@@ -94,7 +94,7 @@ class Manager Extends CI_Controller
             $data=array();
             $data['id_tarea']=$id;
             if(!empty($_GET['historia_id'])){
-                $data['id_historial_tarea']=$_GET['historia_id'];
+                $data['id_historia_tarea']=$_GET['historia_id'];
             }
             $data['nombre']=$files;
             $this->manager->save_file($data);
