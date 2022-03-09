@@ -152,7 +152,7 @@
                                 data-dismiss="modal"><?php echo $this->lang->line('Close'); ?></button>
                        
                         <button type="button" class="btn btn-primary"
-                                id="enviar"><?php echo $this->lang->line('Change Status'); ?></button>
+                                id="enviar">Guardar</button>
                     </div>
                 </form>
             </div>
