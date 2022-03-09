@@ -162,6 +162,18 @@ class Manager_model extends CI_Model
         $data['color']="#0b97f4";//$this->randomColor();
         $this->db->insert("historial_tareas",$data);
     }
+    public function p_files($id)
+    {
+
+        $this->db->select('*');
+        $this->db->from('archivos_historias_tareas');
+        $this->db->where('id_tarea', $id);        
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+    public function save_file($data){
+        $this->db->insert("archivos_historias_tareas",$data);
+    }
     function randomColor(){
          $str = "#";
          for($i = 0 ; $i < 6 ; $i++){

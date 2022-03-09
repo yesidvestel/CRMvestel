@@ -75,10 +75,31 @@ class Manager Extends CI_Controller
         $head['title'] = 'historial tarea';
         $data['id_tarea']=$_GET['id'];
         $data['historial']=$this->manager->getHistorialTareas($_GET['id']);
-
+        $data['p_files']=$this->manager->p_files($_GET['id']);
         $this->load->view('fixed/header', $head);
         $this->load->view('todo/historial',$data);
         $this->load->view('fixed/footer');
+    }
+
+     public function file_handling()
+    {
+        $id = $this->input->get('id');
+        $this->load->library("Uploadhandler_generic", array(
+            'accept_file_types' => '/\.(gif|jpe?g|png|docx|docs|txt|pdf|xls)$/i', 'upload_dir' => FCPATH . 'userfiles/historias_tareas/', 'upload_url' => base_url() . 'userfiles/historias_tareas/'
+        ));
+        $files = (string)$this->uploadhandler_generic->filenaam();
+        if ($files != '') {
+            //$fid = rand(100, 9999);
+            $data=array();
+            $data['id_tarea']=$id;
+            if(!empty($_GET['historia_id'])){
+                $data['id_historial_tarea']=$_GET['historia_id'];
+            }
+            $data['nombre']=$files;
+            $this->manager->save_file($data);
+        }
+
+
     }
 
     public function guardar_historia_tarea(){

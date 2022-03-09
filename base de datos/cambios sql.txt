@@ -1,4 +1,14 @@
-﻿CREATE TABLE IF NOT EXISTS `crm`.`historial_tareas` (
+﻿CREATE TABLE IF NOT EXISTS `crm`.`archivos_historias_tareas` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `id_tarea` INT(11) NULL DEFAULT NULL,
+  `id_historia_tarea` INT(11) NULL DEFAULT NULL,
+  `nombre` VARCHAR(250) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+CREATE TABLE IF NOT EXISTS `crm`.`historial_tareas` (
   `id_historial_tareas` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `id_usuario_historial` INT(11) NULL DEFAULT NULL,
   `id_tarea` INT(11) NULL DEFAULT NULL,
