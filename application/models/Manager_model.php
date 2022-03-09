@@ -174,6 +174,11 @@ class Manager_model extends CI_Model
     public function save_file($data){
         $this->db->insert("archivos_historias_tareas",$data);
     }
+    public function get_tarea($id){
+
+        return $this->db->get_where("todolist",array("id"=>$id))->row();
+
+    }
     function randomColor(){
          $str = "#";
          for($i = 0 ; $i < 6 ; $i++){

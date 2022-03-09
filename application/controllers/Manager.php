@@ -74,6 +74,7 @@ class Manager Extends CI_Controller
         $head['usernm'] = $this->aauth->get_user()->username;
         $head['title'] = 'historial tarea';
         $data['id_tarea']=$_GET['id'];
+        $data['tarea']=$this->manager->get_tarea($_GET['id']);
         $data['historial']=$this->manager->getHistorialTareas($_GET['id']);
         $data['p_files']=$this->manager->p_files($_GET['id']);
         $this->load->view('fixed/header', $head);

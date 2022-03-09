@@ -7,9 +7,10 @@
                         <div class="card-block">
                              <div id="notify" class="alert alert-success" style="display:none" >
                                 <a href="#" class="close" data-dismiss="alert">&times;</a>
-                                            asdasdasd
+                                            
                                   <div class="message"></div>
                             </div>
+                            <h3 align="center"><strong><?=$tarea->name ?></strong></h3>
                             <p></p>
                             <ul class="nav nav-tabs nav-justified">
                                 
@@ -108,9 +109,11 @@
 
                                 </div>
                     </div>
-                </div>
-        </div>
 
+                </div>
+
+        </div>
+            <p><strong>[Descripcion de la Tarea]</strong><?=$tarea->description  ?></p>
     </div>
 </article>
 
@@ -119,7 +122,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title"><?php echo $this->lang->line('Change Status'); ?></h4>
+                <h4 class="modal-title">Agregar</h4>
             </div>
 
             <div class="modal-body">
