@@ -159,6 +159,17 @@ p.pid='$id' ");
         }
 
         if ($this->db->insert('product_warehouse', $data)) {
+
+            $data_h=array();
+            $data_h['modulo']="Inventarios";
+            $data_h['accion']="Agregar nuevo almacén de productos {insert}";
+            $data_h['id_usuario']=$this->aauth->get_user()->id;
+            $data_h['fecha']=date("Y-m-d H:i:s");
+            $data_h['descripcion']=json_encode($data);
+            $data_h['id_fila']=$this->db->insert_id();
+            $data_h['tabla']="product_warehouse";
+            $this->db->insert("historial_crm",$data_h);
+            
             echo json_encode(array('status' => 'Success', 'message' =>
                 $this->lang->line('ADDED')));
         } else {
