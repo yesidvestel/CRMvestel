@@ -10,6 +10,7 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 ALTER TABLE `historial_crm` ADD `id_fila` INT NOT NULL COMMENT 'id de la fila creada o editada en el modulo' AFTER `descripcion`;
 ALTER TABLE `historial_crm` ADD `tabla` VARCHAR(100) NOT NULL AFTER `id_fila`;
+ALTER TABLE `historial_crm` ADD `nombre_columna` VARCHAR(100) NOT NULL AFTER `tabla`;
 -------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS `crm`.`archivos_historias_tareas` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,

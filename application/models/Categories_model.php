@@ -170,6 +170,18 @@ p.pid='$id' ");
         $this->db->where('id', $catid);
 
         if ($this->db->update('product_cat')) {
+
+            $data2=array();
+            $data2['modulo']="Inventarios";
+            $data2['accion']="Edit Product Category {update}";
+            $data2['id_usuario']=$this->aauth->get_user()->id;
+            $data2['fecha']=date("Y-m-d H:i:s");
+            $data2['descripcion']=json_encode($data);
+            $data2['id_fila']=$catid;
+            $data2['tabla']="product_cat";
+            $data2['nombre_columna']="id";
+            $this->db->insert("historial_crm",$data2);
+
             echo json_encode(array('status' => 'Success', 'message' =>
                 $this->lang->line('UPDATED')));
         } else {

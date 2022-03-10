@@ -172,7 +172,8 @@ class Productcategory Extends CI_Controller
             $data2['fecha']=date("Y-m-d H:i:s");
             $data2['descripcion']="Todos los productos donde pcat=".$id;
             $data2['tabla']="products";
-            //$data2['id_fila']=$id;
+            $data2['nombre_columna']="pcat";
+            $data2['id_fila']=$id;
             $this->db->insert("historial_crm",$data2);
             
             $this->db->delete('product_cat', array('id' => $id));
@@ -185,6 +186,7 @@ class Productcategory Extends CI_Controller
             $data2['descripcion']="Eliminacion de la Categoria";
             $data2['tabla']="product_cat";
             $data2['id_fila']=$id;
+            $data2['nombre_columna']="id";
             $this->db->insert("historial_crm",$data2);
 
             echo json_encode(array('status' => 'Success', 'message' => $this->lang->line('Product Category with products')));
