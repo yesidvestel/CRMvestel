@@ -165,7 +165,28 @@ class Productcategory Extends CI_Controller
         $id = $this->input->post('deleteid');
         if ($id) {
             $this->db->delete('products', array('pcat' => $id));
+            $data2=array();
+            $data2['modulo']="Inventarios";
+            $data2['accion']="Eliminacion de material en categoria de materiales {delete}";
+            $data2['id_usuario']=$this->aauth->get_user()->id;
+            $data2['fecha']=date("Y-m-d H:i:s");
+            $data2['descripcion']="Todos los productos donde pcat=".$id;
+            $data2['tabla']="products";
+            //$data2['id_fila']=$id;
+            $this->db->insert("historial_crm",$data2);
+            
             $this->db->delete('product_cat', array('id' => $id));
+
+            $data2=array();
+            $data2['modulo']="Inventarios";
+            $data2['accion']="Eliminacion de material en categoria de materiales {delete}";
+            $data2['id_usuario']=$this->aauth->get_user()->id;
+            $data2['fecha']=date("Y-m-d H:i:s");
+            $data2['descripcion']="Eliminacion de la Categoria";
+            $data2['tabla']="product_cat";
+            $data2['id_fila']=$id;
+            $this->db->insert("historial_crm",$data2);
+
             echo json_encode(array('status' => 'Success', 'message' => $this->lang->line('Product Category with products')));
         } else {
             echo json_encode(array('status' => 'Error', 'message' => $this->lang->line('ERROR')));

@@ -1,4 +1,17 @@
-﻿CREATE TABLE IF NOT EXISTS `crm`.`archivos_historias_tareas` (
+﻿CREATE TABLE IF NOT EXISTS `crm`.`historial_crm` (
+  `id` BIGINT(19) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `modulo` VARCHAR(250) NULL DEFAULT NULL,
+  `accion` VARCHAR(250) NULL DEFAULT NULL,
+  `id_usuario` VARCHAR(250) NULL DEFAULT NULL,
+  `fecha` DATETIME NULL DEFAULT NULL,
+  `descripcion` VARCHAR(2000) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+ALTER TABLE `historial_crm` ADD `id_fila` INT NOT NULL COMMENT 'id de la fila creada o editada en el modulo' AFTER `descripcion`;
+ALTER TABLE `historial_crm` ADD `tabla` VARCHAR(100) NOT NULL AFTER `id_fila`;
+-------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `crm`.`archivos_historias_tareas` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `id_tarea` INT(11) NULL DEFAULT NULL,
   `id_historia_tarea` INT(11) NULL DEFAULT NULL,

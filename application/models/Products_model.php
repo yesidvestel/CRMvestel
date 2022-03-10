@@ -199,6 +199,15 @@ class Products_model extends CI_Model
         );
 
         if ($this->db->insert('products', $data)) {
+            $data2=array();
+            $data2['modulo']="Inventarios";
+            $data2['accion']="Ingreso de material {insert}";
+            $data2['id_usuario']=$this->aauth->get_user()->id;
+            $data2['fecha']=date("Y-m-d H:i:s");
+            $data2['descripcion']=json_encode($data);
+            $data2['id_fila']=$this->db->insert_id();
+            $data2['tabla']="products";
+            $this->db->insert("historial_crm",$data2);
             echo json_encode(array('status' => 'Success', 'message' =>
                 $this->lang->line('ADDED')));
         } else {
