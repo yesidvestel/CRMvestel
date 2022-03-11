@@ -229,14 +229,44 @@ class Products extends CI_Controller
             //var_dump($transferencia_ordenes);
             foreach ($transferencia as $key => $value) {
                 $this->db->delete('transferencias', array('id_transferencia' => $value->id_transferencia));
-                  
+                       $data_h=array();
+                        $data_h['modulo']="Inventarios";
+                        $data_h['accion']="Eliminacion de productos en lista de almacenes {delete}";
+                        $data_h['id_usuario']=$this->aauth->get_user()->id;
+                        $data_h['fecha']=date("Y-m-d H:i:s");
+                        $data_h['descripcion']=json_encode($value);
+                        $data_h['tabla']="transferencias";
+                        $data_h['nombre_columna']="id_transferencia";
+                        $data_h['id_fila']=$value->id_transferencia;
+                        $this->db->insert("historial_crm",$data_h);
             }
             foreach ($transferencia_ordenes as $key => $value) {
                 $this->db->delete('transferencia_products_orden', array('idtransferencia_products_orden' => $value->idtransferencia_products_orden));
                   
+                        $data_h=array();
+                        $data_h['modulo']="Inventarios";
+                        $data_h['accion']="Eliminacion de productos en lista de almacenes {delete}";
+                        $data_h['id_usuario']=$this->aauth->get_user()->id;
+                        $data_h['fecha']=date("Y-m-d H:i:s");
+                        $data_h['descripcion']=json_encode($value);
+                        $data_h['tabla']="transferencia_products_orden";
+                        $data_h['nombre_columna']="idtransferencia_products_orden";
+                        $data_h['id_fila']=$value->idtransferencia_products_orden;
+                        $this->db->insert("historial_crm",$data_h);
             }
 
             $this->db->delete('products', array('pid' => $id));
+
+                        $data_h=array();
+                        $data_h['modulo']="Inventarios";
+                        $data_h['accion']="Eliminacion de productos en lista de almacenes {delete}";
+                        $data_h['id_usuario']=$this->aauth->get_user()->id;
+                        $data_h['fecha']=date("Y-m-d H:i:s");
+                        $data_h['descripcion']="Eliminacion del producto {delete}";
+                        $data_h['tabla']="products";
+                        $data_h['nombre_columna']="pid";
+                        $data_h['id_fila']=$id;
+                        $this->db->insert("historial_crm",$data_h);
             echo json_encode(array('status' => 'Success', 'message' => $this->lang->line('DELETED')));
         } else {
             echo json_encode(array('status' => 'Error', 'message' => $this->lang->line('ERROR')));
