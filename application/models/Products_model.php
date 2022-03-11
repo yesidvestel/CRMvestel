@@ -266,6 +266,18 @@ class Products_model extends CI_Model
         $this->db->where('pid', $pid);
 
         if ($this->db->update('products')) {
+
+            $data_h=array();
+            $data_h['modulo']="Inventarios";
+            $data_h['accion']="Editar producto {update}";
+            $data_h['id_usuario']=$this->aauth->get_user()->id;
+            $data_h['fecha']=date("Y-m-d H:i:s");
+            $data_h['descripcion']=json_encode($data);
+            $data_h['id_fila']=$pid;
+            $data_h['tabla']="products";
+            $data_h['nombre_columna']="pid";
+            
+            $this->db->insert("historial_crm",$data_h);
             echo json_encode(array('status' => 'Success', 'message' =>
                 $this->lang->line('UPDATED')));
         } else {
