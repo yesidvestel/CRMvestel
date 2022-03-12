@@ -141,6 +141,16 @@ class Supplier_model extends CI_Model
 
         if ($this->db->insert('supplier', $data)) {
             $cid = $this->db->insert_id();
+                $data_h=array();
+                $data_h['modulo']="Orden de Compra";
+                $data_h['accion']="Añadir proveedor {insert}";
+                $data_h['id_usuario']=$this->aauth->get_user()->id;
+                $data_h['fecha']=date("Y-m-d H:i:s");
+                $data_h['descripcion']=json_encode($data);
+                $data_h['id_fila']=$cid;
+                $data_h['tabla']="supplier";
+                $this->db->insert("historial_crm",$data_h);
+
             echo json_encode(array('status' => 'Success', 'message' =>
                 $this->lang->line('UPDATED') . ' <a href="' . base_url('supplier/view?id=' . $cid) . '" class="btn btn-info btn-sm"><span class="icon-eye"></span> ' . $this->lang->line('View') . '</a>', 'cid' => $cid));
         } else {
