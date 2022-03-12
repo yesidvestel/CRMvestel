@@ -381,6 +381,18 @@ FROM products ");
                 $transferido_a=$producto_b->pid;
                 $datay['qty']=$qty_nuevo_pt+intval($producto_b->qty);
                 $this->db->update('products',$datay,array("pid"=>$id_a_transferir));
+
+                    $data_h=array();
+                    $data_h['modulo']="Inventarios";
+                    $data_h['accion']="Transferencia de acciones {update}";
+                    $data_h['id_usuario']=$this->aauth->get_user()->id;
+                    $data_h['fecha']=date("Y-m-d H:i:s");
+                    $data_h['descripcion']=json_encode($datay);
+                    $data_h['id_fila']=$id_a_transferir;
+                    $data_h['tabla']="products";
+                    $data_h['nombre_columna']="pid";
+                    $this->db->insert("historial_crm",$data_h);
+
             }else{
 
                 $producto_por_nombre = $this->db->get_where('products',array('product_name'=>$producto->product_name,'warehouse'=>$to_warehouse))->row();
@@ -402,17 +414,59 @@ FROM products ");
                         $datay['qty']=$qty_nuevo_pt+intval($producto_por_nombre->qty);
                         
                         $this->db->update('products',$datay,array("pid"=>$producto_por_nombre->pid));
+                                $data_h=array();
+                                $data_h['modulo']="Inventarios";
+                                $data_h['accion']="Transferencia de acciones {update}";
+                                $data_h['id_usuario']=$this->aauth->get_user()->id;
+                                $data_h['fecha']=date("Y-m-d H:i:s");
+                                $data_h['descripcion']=json_encode($datay);
+                                $data_h['id_fila']=$producto_por_nombre->pid;
+                                $data_h['tabla']="products";
+                                $data_h['nombre_columna']="pid";
+                                $this->db->insert("historial_crm",$data_h);
                     }else{
-                        $this->db->insert('products',$value);    
+                        $this->db->insert('products',$value);  
+
+                            $data_h=array();
+                            $data_h['modulo']="Inventarios";
+                            $data_h['accion']="Transferencia de acciones {insert}";
+                            $data_h['id_usuario']=$this->aauth->get_user()->id;
+                            $data_h['fecha']=date("Y-m-d H:i:s");
+                            $data_h['descripcion']=json_encode($value);
+                            $data_h['id_fila']=$this->db->insert_id();
+                            $data_h['tabla']="products";
+                            $this->db->insert("historial_crm",$data_h);  
                     }
                     
                     $transferido_a=$data_transfer['producto_b'];
 
                     $this->db->insert('transferencias',$data_transfer);
+
+                            $data_h=array();
+                            $data_h['modulo']="Inventarios";
+                            $data_h['accion']="Transferencia de acciones {insert}";
+                            $data_h['id_usuario']=$this->aauth->get_user()->id;
+                            $data_h['fecha']=date("Y-m-d H:i:s");
+                            $data_h['descripcion']=json_encode($data_transfer);
+                            $data_h['id_fila']=$this->db->insert_id();
+                            $data_h['tabla']="transferencias";
+                            $this->db->insert("historial_crm",$data_h); 
             }
             //trabajando sobre el producto a transferir
             $datax['qty']=$qty_viejo_pt;
             $this->db->update('products',$datax,array('pid'=>$producto->pid));
+
+                $data_h=array();
+                $data_h['modulo']="Inventarios";
+                $data_h['accion']="Transferencia de acciones {update}";
+                $data_h['id_usuario']=$this->aauth->get_user()->id;
+                $data_h['fecha']=date("Y-m-d H:i:s");
+                $data_h['descripcion']=json_encode($datax);
+                $data_h['id_fila']=$producto->pid;
+                $data_h['tabla']="products";
+                $data_h['nombre_columna']="pid";
+                $this->db->insert("historial_crm",$data_h);
+
             }
         }
         echo json_encode(array('status'=>"success",'transferido_a'=>$transferido_a));
