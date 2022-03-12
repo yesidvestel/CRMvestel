@@ -675,6 +675,16 @@ class Purchase extends CI_Controller
                      $this->db->set('status', "recibido");                     
                      $this->db->where('tid', $tid);
                      $this->db->update('purchase');
+                        $data_h=array();
+                        $data_h['modulo']="Orden de Compra";
+                        $data_h['accion']="Cambiar Estado {update}";
+                        $data_h['id_usuario']=$this->aauth->get_user()->id;
+                        $data_h['fecha']=date("Y-m-d H:i:s");
+                        $data_h['descripcion']="recibido";
+                        $data_h['id_fila']=$tid;
+                        $data_h['tabla']="purchase";
+                        $data_h['nombre_columna']="tid";
+                        $this->db->insert("historial_crm",$data_h);
 
                 }else{
 
@@ -703,12 +713,33 @@ class Purchase extends CI_Controller
                             $data['alert']=$product->alert;
                             if($cantidad_a_pasar!=0){
                                 $this->db->insert("products",$data);
+                                        $data_h=array();
+                                        $data_h['modulo']="Orden de Compra";
+                                        $data_h['accion']="Cambiar Estado {insert}";
+                                        $data_h['id_usuario']=$this->aauth->get_user()->id;
+                                        $data_h['fecha']=date("Y-m-d H:i:s");
+                                        $data_h['descripcion']=json_encode($data);
+                                        $data_h['id_fila']=$this->db->insert_id();;
+                                        $data_h['tabla']="products";
+                                        $data_h['nombre_columna']="pid";
+                                        $this->db->insert("historial_crm",$data_h);
                             }
 
                         }else{
                             $data=array();
                             $data['qty']=$productos[0]['qty']+$cantidad_a_pasar;
                             $this->db->update("products",$data,array("pid"=>$productos[0]['pid']));
+
+                                     $data_h=array();
+                                        $data_h['modulo']="Orden de Compra";
+                                        $data_h['accion']="Cambiar Estado {update}";
+                                        $data_h['id_usuario']=$this->aauth->get_user()->id;
+                                        $data_h['fecha']=date("Y-m-d H:i:s");
+                                        $data_h['descripcion']=json_encode($data);
+                                        $data_h['id_fila']=$productos[0]['pid'];
+                                        $data_h['tabla']="products";
+                                        $data_h['nombre_columna']="pid";
+                                        $this->db->insert("historial_crm",$data_h);
                         }
                         if($pr1['qty_en_almacen']==null || $pr1['qty_en_almacen']=='null'){
                             $pr1['qty_en_almacen']==0;
@@ -718,7 +749,16 @@ class Purchase extends CI_Controller
                             $pasar_a_recivido=false;
                         }
                         $this->db->update("purchase_items",array("qty_en_almacen"=>$pr1['qty_en_almacen']),array("id"=>$pr1['id']));
-
+                                        $data_h=array();
+                                        $data_h['modulo']="Orden de Compra";
+                                        $data_h['accion']="Cambiar Estado {update}";
+                                        $data_h['id_usuario']=$this->aauth->get_user()->id;
+                                        $data_h['fecha']=date("Y-m-d H:i:s");
+                                        $data_h['descripcion']=json_encode(array("qty_en_almacen"=>$pr1['qty_en_almacen']));
+                                        $data_h['id_fila']=$pr1['id'];
+                                        $data_h['tabla']="purchase_items";
+                                        $data_h['nombre_columna']="id";
+                                        $this->db->insert("historial_crm",$data_h);
                     }
                     if($pasar_a_recivido){
                         $status="recibido";
@@ -734,7 +774,16 @@ class Purchase extends CI_Controller
                      $this->db->where('tid', $tid);
                      $this->db->update('purchase');
 
-
+                                        $data_h=array();
+                                        $data_h['modulo']="Orden de Compra";
+                                        $data_h['accion']="Cambiar Estado {update}";
+                                        $data_h['id_usuario']=$this->aauth->get_user()->id;
+                                        $data_h['fecha']=date("Y-m-d H:i:s");
+                                        $data_h['descripcion']="actualizar_stock=".$update_stock." almacen_seleccionado=".$almacen." status=".$status ;
+                                        $data_h['id_fila']=$tid;
+                                        $data_h['tabla']="purchase";
+                                        $data_h['nombre_columna']="tid";
+                                        $this->db->insert("historial_crm",$data_h);
 
                 }
 
@@ -754,6 +803,16 @@ class Purchase extends CI_Controller
             $this->db->set('status', $status);
             $this->db->where('tid', $tid);
             $this->db->update('purchase');
+                                        $data_h=array();
+                                        $data_h['modulo']="Orden de Compra";
+                                        $data_h['accion']="Cambiar Estado {update}";
+                                        $data_h['id_usuario']=$this->aauth->get_user()->id;
+                                        $data_h['fecha']=date("Y-m-d H:i:s");
+                                        $data_h['descripcion']="status=".$status ;
+                                        $data_h['id_fila']=$tid;
+                                        $data_h['tabla']="purchase";
+                                        $data_h['nombre_columna']="tid";
+                                        $this->db->insert("historial_crm",$data_h);
 
             echo json_encode(array('status' => 'Success', 'message' =>
             'Purchase Order Status updated successfully!', 'pstatus' => $status));
