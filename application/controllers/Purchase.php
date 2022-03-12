@@ -237,7 +237,29 @@ class Purchase extends CI_Controller
 
         if ($flag == true) {
             $this->db->insert_batch('purchase_items', $productlist);
+                          $data_h=array();
+                            $data_h['modulo']="Orden de Compra";
+                            $data_h['accion']="Nueva Orden {insert}";
+                            $data_h['id_usuario']=$this->aauth->get_user()->id;
+                            $data_h['fecha']=date("Y-m-d H:i:s");
+                            $data_h['descripcion']=json_encode($productlist);
+                            $data_h['id_fila']=$this->db->insert_id();
+                            $data_h['tabla']="purchase_items";
+                            $data_h['nombre_columna']="id";
+                            $this->db->insert("historial_crm",$data_h);
             if ($this->db->insert('purchase', $data)) {
+
+                            $data_h=array();
+                            $data_h['modulo']="Orden de Compra";
+                            $data_h['accion']="Nueva Orden {insert}";
+                            $data_h['id_usuario']=$this->aauth->get_user()->id;
+                            $data_h['fecha']=date("Y-m-d H:i:s");
+                            $data_h['descripcion']=json_encode($data);
+                            $data_h['id_fila']=$this->db->insert_id();
+                            $data_h['tabla']="purchase";
+                            $data_h['nombre_columna']="id";
+                            $this->db->insert("historial_crm",$data_h);
+
                 echo json_encode(array('status' => 'Success', 'message' => $this->lang->line('Purchase order success')."<a href='view?id=$invocieno' class='btn btn-info btn-lg'><span class='icon-file-text2' aria-hidden='true'></span>".$this->lang->line('View')." </a>"));
             } else {
                 echo json_encode(array('status' => 'Error', 'message' => $this->lang->line('ERROR')));
@@ -453,6 +475,16 @@ class Purchase extends CI_Controller
         $prodindex = 0;
 
         $this->db->delete('purchase_items', array('tid' => $invocieno));
+           $data_h=array();
+            $data_h['modulo']="Orden de Compra";
+            $data_h['accion']="Eliminacion de items para la edicion del purchase {delete}";
+            $data_h['id_usuario']=$this->aauth->get_user()->id;
+            $data_h['fecha']=date("Y-m-d H:i:s");
+            $data_h['descripcion']="Todos los purchase_items donde tid=".$invocieno;
+            $data_h['tabla']="purchase_items";
+            $data_h['nombre_columna']="tid";
+            $data_h['id_fila']=$invocieno;
+            $this->db->insert("historial_crm",$data_h);
         if ($tax == 'yes') {
             $taxstatus = 1;
 
@@ -563,7 +595,27 @@ class Purchase extends CI_Controller
         if ($flag) {
 
             if ($this->db->update('purchase', $data)) {
+                    $data_h=array();
+                    $data_h['modulo']="Orden de Compra";
+                    $data_h['accion']="edicion del purchase {update}";
+                    $data_h['id_usuario']=$this->aauth->get_user()->id;
+                    $data_h['fecha']=date("Y-m-d H:i:s");
+                    $data_h['descripcion']=json_encode($data);
+                    $data_h['id_fila']=$invocieno;
+                    $data_h['tabla']="purchase";
+                    $data_h['nombre_columna']="id";
+                    
                 $this->db->insert_batch('purchase_items', $productlist);
+                    $data_h=array();
+                    $data_h['modulo']="Orden de Compra";
+                    $data_h['accion']="Edicion del purchase {insert}";
+                    $data_h['id_usuario']=$this->aauth->get_user()->id;
+                    $data_h['fecha']=date("Y-m-d H:i:s");
+                    $data_h['descripcion']=json_encode($productlist);
+                    $data_h['tabla']="purchase_items";
+                    $data_h['nombre_columna']="id";
+                    $data_h['id_fila']=$this->db->insert_id();;
+                    $this->db->insert("historial_crm",$data_h);
                 echo json_encode(array('status' => 'Success', 'message' =>
                     "Purchase order has  been updated successfully! <a href='view?id=$invocieno' class='btn btn-info btn-lg'><span class='icon-file-text2' aria-hidden='true'></span> View </a> "));
             } else {
