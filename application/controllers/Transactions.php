@@ -784,6 +784,16 @@ $this->load->helper('cookie');
                 $data2['section']=$paquete;
                 $data2['id_factura']=$tid;
                 $this->db->insert('tickets',$data2);
+                         $data_h=array();
+                            $data_h['modulo']="Ventas";
+                            $data_h['accion']="Administrar Facturas > Ver Factura > Hacer el pago {insert}";
+                            $data_h['id_usuario']=$this->aauth->get_user()->id;
+                            $data_h['fecha']=date("Y-m-d H:i:s");
+                            $data_h['descripcion']=json_encode($data2);
+                            $data_h['id_fila']=$this->db->insert_id();
+                            $data_h['tabla']="tickets";
+                            $data_h['nombre_columna']="idt";
+                            $this->db->insert("historial_crm",$data_h);
 		}if ($reconexion==si && $mes2>$mes1){
 				$data2['codigo']=$tidactualmasuno[0]->tid;
 				$data2['subject']='servicio';
@@ -795,12 +805,32 @@ $this->load->helper('cookie');
                 $data2['section']=$paquete;
                 $data2['id_factura']='';
                 $this->db->insert('tickets',$data2);
+                        $data_h=array();
+                            $data_h['modulo']="Ventas";
+                            $data_h['accion']="Administrar Facturas > Ver Factura > Hacer el pago {insert}";
+                            $data_h['id_usuario']=$this->aauth->get_user()->id;
+                            $data_h['fecha']=date("Y-m-d H:i:s");
+                            $data_h['descripcion']=json_encode($data2);
+                            $data_h['id_fila']=$this->db->insert_id();
+                            $data_h['tabla']="tickets";
+                            $data_h['nombre_columna']="idt";
+                            $this->db->insert("historial_crm",$data_h);
 				$data4 = array(
 				'corden' => $data2['codigo'],
 				'tv' => $tv,
 				'internet' => $paquete,				
 			);		
 			$this->db->insert('temporales', $data4);
+                    $data_h=array();
+                            $data_h['modulo']="Ventas";
+                            $data_h['accion']="Administrar Facturas > Ver Factura > Hacer el pago {insert}";
+                            $data_h['id_usuario']=$this->aauth->get_user()->id;
+                            $data_h['fecha']=date("Y-m-d H:i:s");
+                            $data_h['descripcion']=json_encode($data4);
+                            $data_h['id_fila']=$this->db->insert_id();
+                            $data_h['tabla']="temporales";
+                            $data_h['nombre_columna']="id";
+                            $this->db->insert("historial_crm",$data_h);
 			}
 
         if($pmethod=='Balance'){
@@ -811,6 +841,16 @@ $this->load->helper('cookie');
                 $this->db->set('balance', "balance-$amount", FALSE);
                 $this->db->where('id', $cid);
                 $this->db->update('customers');
+                        $data_h=array();
+                            $data_h['modulo']="Ventas";
+                            $data_h['accion']="Administrar Facturas > Ver Factura > Hacer el pago {update}";
+                            $data_h['id_usuario']=$this->aauth->get_user()->id;
+                            $data_h['fecha']=date("Y-m-d H:i:s");
+                            $data_h['descripcion']=json_encode(array("balance"=>"balance-$amount"));
+                            $data_h['id_fila']=$cid;
+                            $data_h['tabla']="customers";
+                            $data_h['nombre_columna']="id";
+                            $this->db->insert("historial_crm",$data_h);
             }
             else{
 
@@ -818,6 +858,16 @@ $this->load->helper('cookie');
                 $this->db->set('balance', 0, FALSE);
                 $this->db->where('id', $cid);
                 $this->db->update('customers');
+                        $data_h=array();
+                            $data_h['modulo']="Ventas";
+                            $data_h['accion']="Administrar Facturas > Ver Factura > Hacer el pago {update}";
+                            $data_h['id_usuario']=$this->aauth->get_user()->id;
+                            $data_h['fecha']=date("Y-m-d H:i:s");
+                            $data_h['descripcion']=json_encode(array("balance"=>"0"));
+                            $data_h['id_fila']=$cid;
+                            $data_h['tabla']="customers";
+                            $data_h['nombre_columna']="id";
+                            $this->db->insert("historial_crm",$data_h);
             }
         }
         $id_banco=null;
@@ -866,8 +916,17 @@ $this->load->helper('cookie');
         );
 
         $this->db->insert('transactions', $data);
-        $this->db->insert_id();
-        
+       $ins_x= $this->db->insert_id();
+                            $data_h=array();
+                            $data_h['modulo']="Ventas";
+                            $data_h['accion']="Administrar Facturas > Ver Factura > Hacer el pago {insert}";
+                            $data_h['id_usuario']=$this->aauth->get_user()->id;
+                            $data_h['fecha']=date("Y-m-d H:i:s");
+                            $data_h['descripcion']=json_encode($data);
+                            $data_h['id_fila']=$ins_x;
+                            $data_h['tabla']="transactions";
+                            $data_h['nombre_columna']="id";
+                            $this->db->insert("historial_crm",$data_h);
         $idtr = $this->db->select('max(id) as id')->from('transactions')->where(array("tid"=>$tid))->get()->result();
         $ids_transacciones[]=$idtr[0]->id;
 
@@ -887,12 +946,31 @@ $this->load->helper('cookie');
             $this->db->set('status', 'partial');
             $this->db->where('tid', $tid);
             $this->db->update('invoices');
-
+                        $data_h=array();
+                            $data_h['modulo']="Ventas";
+                            $data_h['accion']="Administrar Facturas > Ver Factura > Hacer el pago {update}";
+                            $data_h['id_usuario']=$this->aauth->get_user()->id;
+                            $data_h['fecha']=date("Y-m-d H:i:s");
+                            $data_h['descripcion']=json_encode(array("status"=>"partial","pamnt"=>"pamnt+$amount","pmethod"=>$pmethod));
+                            $data_h['id_fila']=$tid;
+                            $data_h['tabla']="invoices";
+                            $data_h['nombre_columna']="tid";
+                            $this->db->insert("historial_crm",$data_h);
 
             //account update
             $this->db->set('lastbal', "lastbal+$amount", FALSE);
             $this->db->where('id', $acid);
             $this->db->update('accounts');
+                            $data_h=array();
+                            $data_h['modulo']="Ventas";
+                            $data_h['accion']="Administrar Facturas > Ver Factura > Hacer el pago {update}";
+                            $data_h['id_usuario']=$this->aauth->get_user()->id;
+                            $data_h['fecha']=date("Y-m-d H:i:s");
+                            $data_h['descripcion']=json_encode(array("lastbal"=>"lastbal+$amount"));
+                            $data_h['id_fila']=$acid;
+                            $data_h['tabla']="accounts";
+                            $data_h['nombre_columna']="id";
+                            $this->db->insert("historial_crm",$data_h);
             $paid_amount = $invresult->pamnt + $amount;
             $status = 'Partial';
             $totalrm = $totalrm - $amount;
@@ -912,12 +990,30 @@ $this->load->helper('cookie');
             $this->db->set('status', 'paid');
             $this->db->where('tid', $tid);
             $this->db->update('invoices');
-			
+			                $data_h=array();
+                            $data_h['modulo']="Ventas";
+                            $data_h['accion']="Administrar Facturas > Ver Factura > Hacer el pago {update}";
+                            $data_h['id_usuario']=$this->aauth->get_user()->id;
+                            $data_h['fecha']=date("Y-m-d H:i:s");
+                            $data_h['descripcion']=json_encode(array("status"=>"paid","pamnt"=>"pamnt+$amount","pmethod"=>$pmethod));
+                            $data_h['id_fila']=$acid;
+                            $data_h['tabla']="invoices";
+                            $data_h['nombre_columna']="tid";
+                            $this->db->insert("historial_crm",$data_h);
             //acount update
             $this->db->set('lastbal', "lastbal+$amount", FALSE);
             $this->db->where('id', $acid);
             $this->db->update('accounts');
-
+                            $data_h=array();
+                            $data_h['modulo']="Ventas";
+                            $data_h['accion']="Administrar Facturas > Ver Factura > Hacer el pago {update}";
+                            $data_h['id_usuario']=$this->aauth->get_user()->id;
+                            $data_h['fecha']=date("Y-m-d H:i:s");
+                            $data_h['descripcion']=json_encode(array("lastbal"=>"lastbal+$amount"));
+                            $data_h['id_fila']=$acid;
+                            $data_h['tabla']="accounts";
+                            $data_h['nombre_columna']="tid";
+                            $this->db->insert("historial_crm",$data_h);
             $totalrm = 0;
             $status = 'Paid';
             $paid_amount = $amount;			
