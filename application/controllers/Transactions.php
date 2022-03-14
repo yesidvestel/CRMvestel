@@ -1270,6 +1270,16 @@ $this->load->model('customers_model', 'customers');
         $this->db->set('status', 'anulado');
         $this->db->where('tid', $tid);
         $this->db->update('purchase');
+                $data_h=array();
+                $data_h['modulo']="Orden de Compra";
+                $data_h['accion']="Cancelar orden de compra {update}";
+                $data_h['id_usuario']=$this->aauth->get_user()->id;
+                $data_h['fecha']=date("Y-m-d H:i:s");
+                $data_h['descripcion']=json_encode(array("pamnt"=>"0.00","status"=>"anular"));
+                $data_h['id_fila']=$tid;
+                $data_h['tabla']="purchase";
+                $data_h['nombre_columna']="tid";
+                $this->db->insert("historial_crm",$data_h);
         //reverse
         $this->db->select('credit,acid');
         $this->db->from('transactions');
@@ -1282,6 +1292,16 @@ $this->load->model('customers_model', 'customers');
             $this->db->set('lastbal', "lastbal+$amt", FALSE);
             $this->db->where('id', $trans['acid']);
             $this->db->update('accounts');
+                    $data_h=array();
+                    $data_h['modulo']="Orden de Compra";
+                    $data_h['accion']="Cancelar orden de compra {update}";
+                    $data_h['id_usuario']=$this->aauth->get_user()->id;
+                    $data_h['fecha']=date("Y-m-d H:i:s");
+                    $data_h['descripcion']=json_encode(array("lastbal"=>"lastbal+$amt"));
+                    $data_h['id_fila']=$trans['acid'];
+                    $data_h['tabla']="accounts";
+                    $data_h['nombre_columna']="id";
+                    $this->db->insert("historial_crm",$data_h);
         }
         $this->db->select('pid,qty');
         $this->db->from('purchase_items');
@@ -1293,8 +1313,29 @@ $this->load->model('customers_model', 'customers');
             $this->db->set('qty', "qty-$amt", FALSE);
             $this->db->where('pid', $prd['pid']);
             $this->db->update('products');
+                    $data_h=array();
+                    $data_h['modulo']="Orden de Compra";
+                    $data_h['accion']="Cancelar orden de compra {update}";
+                    $data_h['id_usuario']=$this->aauth->get_user()->id;
+                    $data_h['fecha']=date("Y-m-d H:i:s");
+                    $data_h['descripcion']=json_encode(array("qty"=>"qty-$amt"));
+                    $data_h['id_fila']=$prd['pid'];
+                    $data_h['tabla']="products";
+                    $data_h['nombre_columna']="pid";
+                    $this->db->insert("historial_crm",$data_h);
         }
         $this->db->delete('transactions', array('tid' => $tid, 'ext' => 1));
+
+                    $data_h=array();
+                    $data_h['modulo']="Orden de Compra";
+                    $data_h['accion']="Cancelar orden de compra {delete}";
+                    $data_h['id_usuario']=$this->aauth->get_user()->id;
+                    $data_h['fecha']=date("Y-m-d H:i:s");
+                    $data_h['descripcion']=json_encode(array('tid' => $tid, 'ext' => 1));
+                    $data_h['id_fila']=$tid;
+                    $data_h['tabla']="transactions";
+                    $data_h['nombre_columna']="tid,ext";
+                    $this->db->insert("historial_crm",$data_h);
         echo json_encode(array('status' => 'Success', 'message' =>
             $this->lang->line('Purchase canceled!')));
     }

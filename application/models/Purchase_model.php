@@ -105,10 +105,40 @@ class Purchase_model extends CI_Model
             $this->db->set('qty', "qty-$amt", FALSE);
             $this->db->where('pid', $prd['pid']);
             $this->db->update('products');
+                    $data_h=array();
+                    $data_h['modulo']="Orden de Compra";
+                    $data_h['accion']="Eliminar orden de compra {update}";
+                    $data_h['id_usuario']=$this->aauth->get_user()->id;
+                    $data_h['fecha']=date("Y-m-d H:i:s");
+                    $data_h['descripcion']=json_encode(array("qty"=>"qty-$amt"));
+                    $data_h['id_fila']=$prd['pid'];
+                    $data_h['tabla']="products";
+                    $data_h['nombre_columna']="pid";
+                    $this->db->insert("historial_crm",$data_h);
         }
 
         $this->db->delete('purchase', array('tid' => $id));
+                    $data_h=array();
+                    $data_h['modulo']="Orden de Compra";
+                    $data_h['accion']="Eliminar orden de compra {delete}";
+                    $data_h['id_usuario']=$this->aauth->get_user()->id;
+                    $data_h['fecha']=date("Y-m-d H:i:s");
+                    $data_h['descripcion']="Eliminar";
+                    $data_h['id_fila']=$id;
+                    $data_h['tabla']="purchase";
+                    $data_h['nombre_columna']="tid";
+                    $this->db->insert("historial_crm",$data_h);
         $this->db->delete('purchase_items', array('tid' => $id));
+                    $data_h=array();
+                    $data_h['modulo']="Orden de Compra";
+                    $data_h['accion']="Eliminar orden de compra {delete}";
+                    $data_h['id_usuario']=$this->aauth->get_user()->id;
+                    $data_h['fecha']=date("Y-m-d H:i:s");
+                    $data_h['descripcion']="Eliminar";
+                    $data_h['id_fila']=$id;
+                    $data_h['tabla']="purchase_items";
+                    $data_h['nombre_columna']="tid";
+                    $this->db->insert("historial_crm",$data_h);
 
         if ($this->db->trans_complete()) {
             return true;
