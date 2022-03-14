@@ -1681,6 +1681,17 @@ foreach ($lista as $key => $value) {
         $itc = 0;
 
         $this->db->delete('invoice_items', array('tid' => $invocieno));
+
+                        $data_h=array();
+                        $data_h['modulo']="Ventas";
+                        $data_h['accion']="Editar Factura {delete}";
+                        $data_h['id_usuario']=$this->aauth->get_user()->id;
+                        $data_h['fecha']=date("Y-m-d H:i:s");
+                        $data_h['descripcion']=json_encode(array('tid' => $invocieno));
+                        $data_h['tabla']="invoice_items";
+                        $data_h['nombre_columna']="tid";
+                        $data_h['id_fila']=$invocieno;
+                        $this->db->insert("historial_crm",$data_h);
         if ($tax == 'yes') {
             $taxstatus = 1;
 
@@ -1739,6 +1750,16 @@ foreach ($lista as $key => $value) {
                     $this->db->set('qty', "qty-$amt", FALSE);
                     $this->db->where('pid', $product_id[$key]);
                     $this->db->update('products');
+                            $data_h=array();
+                            $data_h['modulo']="Ventas";
+                            $data_h['accion']="Editar Factura {update}";
+                            $data_h['id_usuario']=$this->aauth->get_user()->id;
+                            $data_h['fecha']=date("Y-m-d H:i:s");
+                            $data_h['descripcion']=json_encode(array('qty' => "qty-$amt"));
+                            $data_h['tabla']="products";
+                            $data_h['nombre_columna']="pid";
+                            $data_h['id_fila']=$product_id[$key];
+                            $this->db->insert("historial_crm",$data_h);
                 }
                 $itc += $amt;
 
@@ -1789,6 +1810,16 @@ foreach ($lista as $key => $value) {
                     $this->db->set('qty', "qty-$amt", FALSE);
                     $this->db->where('pid', $product_id[$key]);
                     $this->db->update('products');
+                            $data_h=array();
+                            $data_h['modulo']="Ventas";
+                            $data_h['accion']="Editar Factura {update}";
+                            $data_h['id_usuario']=$this->aauth->get_user()->id;
+                            $data_h['fecha']=date("Y-m-d H:i:s");
+                            $data_h['descripcion']=json_encode(array('qty' => "qty-$amt"));
+                            $data_h['tabla']="products";
+                            $data_h['nombre_columna']="pid";
+                            $data_h['id_fila']=$product_id[$key];
+                            $this->db->insert("historial_crm",$data_h);
                 }
 
 
@@ -1840,8 +1871,27 @@ foreach ($lista as $key => $value) {
         if ($flag) {
 
             if ($this->db->update('invoices', $data)) {
+                            $data_h=array();
+                            $data_h['modulo']="Ventas";
+                            $data_h['accion']="Editar Factura {update}";
+                            $data_h['id_usuario']=$this->aauth->get_user()->id;
+                            $data_h['fecha']=date("Y-m-d H:i:s");
+                            $data_h['descripcion']=json_encode($data);
+                            $data_h['tabla']="invoices";
+                            $data_h['nombre_columna']="tid";
+                            $data_h['id_fila']=$invocieno;
+                            $this->db->insert("historial_crm",$data_h);
                 $this->db->insert_batch('invoice_items', $productlist);
-
+                            $data_h=array();
+                            $data_h['modulo']="Ventas";
+                            $data_h['accion']="Editar Factura {insert}";
+                            $data_h['id_usuario']=$this->aauth->get_user()->id;
+                            $data_h['fecha']=date("Y-m-d H:i:s");
+                            $data_h['descripcion']=json_encode($productlist);
+                            $data_h['tabla']="invoice_items";
+                            $data_h['nombre_columna']="id";
+                            $data_h['id_fila']=$this->db->insert_id();
+                            $this->db->insert("historial_crm",$data_h);
                 $this->load->model('customers_model', 'customers');
                 $servicios_detail=$this->customers->servicios_detail($customer_id);            
                 if($servicios_detail['tid']!=0 && $servicios_detail['tid']!=null && $servicios_detail['tid']!=''){
@@ -1853,9 +1903,29 @@ foreach ($lista as $key => $value) {
                     if($datox==0){
                             //due
                         $this->db->update("invoices",array("status"=>"paid"),array("tid"=>$servicios_detail['tid']));
+                                $data_h=array();
+                                $data_h['modulo']="Ventas";
+                                $data_h['accion']="Editar Factura {update}";
+                                $data_h['id_usuario']=$this->aauth->get_user()->id;
+                                $data_h['fecha']=date("Y-m-d H:i:s");
+                                $data_h['descripcion']=json_encode(array("status"=>"paid"));
+                                $data_h['tabla']="invoices";
+                                $data_h['nombre_columna']="tid";
+                                $data_h['id_fila']=$servicios_detail['tid'];
+                                $this->db->insert("historial_crm",$data_h);
                     }else if($datox>0){
                             //partial
                         $this->db->update("invoices",array("status"=>"partial"),array("tid"=>$servicios_detail['tid']));
+                                    $data_h=array();
+                                    $data_h['modulo']="Ventas";
+                                    $data_h['accion']="Editar Factura {update}";
+                                    $data_h['id_usuario']=$this->aauth->get_user()->id;
+                                    $data_h['fecha']=date("Y-m-d H:i:s");
+                                    $data_h['descripcion']=json_encode(array("status"=>"partial"));
+                                    $data_h['tabla']="invoices";
+                                    $data_h['nombre_columna']="tid";
+                                    $data_h['id_fila']=$servicios_detail['tid'];
+                                    $this->db->insert("historial_crm",$data_h);
                     }
                 }
                 echo json_encode(array('status' => 'Success', 'message' => $this->lang->line('Invoice has  been updated') . " <a href='view?id=$invocieno' class='btn btn-info btn-lg'><span class='icon-file-text2' aria-hidden='true'></span> " . $this->lang->line('View') . " </a> "));
@@ -1885,6 +1955,16 @@ foreach ($lista as $key => $value) {
                     $this->db->set('qty', "qty+$dqty", FALSE);
                     $this->db->where('pid', $prid);
                     $this->db->update('products');
+                                    $data_h=array();
+                                    $data_h['modulo']="Ventas";
+                                    $data_h['accion']="Editar Factura {update}";
+                                    $data_h['id_usuario']=$this->aauth->get_user()->id;
+                                    $data_h['fecha']=date("Y-m-d H:i:s");
+                                    $data_h['descripcion']=json_encode(array("qty"=>"qty+$dqty"));
+                                    $data_h['tabla']="products";
+                                    $data_h['nombre_columna']="pid";
+                                    $data_h['id_fila']=$prid;
+                                    $this->db->insert("historial_crm",$data_h);
                 }
             }
 
