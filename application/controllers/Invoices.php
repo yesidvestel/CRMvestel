@@ -797,6 +797,16 @@ var_dump("aqui2");*/
                     $this->db->set('qty', "qty-$amt", FALSE);
                     $this->db->where('pid', $product_id[$key]);
                     $this->db->update('products');
+                          $data_h=array();
+                            $data_h['modulo']="Ventas";
+                            $data_h['accion']="Nueva Factura {update}";
+                            $data_h['id_usuario']=$this->aauth->get_user()->id;
+                            $data_h['fecha']=date("Y-m-d H:i:s");
+                            $data_h['descripcion']=json_encode(array("qty"=>"qty-$amt"));
+                            $data_h['id_fila']=$product_id[$key];
+                            $data_h['tabla']="products";
+                            $data_h['nombre_columna']="pid";
+                            $this->db->insert("historial_crm",$data_h);
                 }
                 $itc += $amt;
 
@@ -849,6 +859,16 @@ var_dump("aqui2");*/
                 $this->db->set('qty', "qty-$amt", FALSE);
                 $this->db->where('pid', $product_id[$key]);
                 $this->db->update('products');
+                            $data_h=array();
+                            $data_h['modulo']="Ventas";
+                            $data_h['accion']="Nueva Factura {update}";
+                            $data_h['id_usuario']=$this->aauth->get_user()->id;
+                            $data_h['fecha']=date("Y-m-d H:i:s");
+                            $data_h['descripcion']=json_encode(array("qty"=>"qty-$amt"));
+                            $data_h['id_fila']=$product_id[$key];
+                            $data_h['tabla']="products";
+                            $data_h['nombre_columna']="pid";
+                            $this->db->insert("historial_crm",$data_h);
             }
 
 
@@ -909,6 +929,17 @@ var_dump("aqui2");*/
 
         if ($flag == true) {
             $this->db->insert_batch('invoice_items', $productlist);
+
+                            $data_h=array();
+                            $data_h['modulo']="Ventas";
+                            $data_h['accion']="Nueva Factura {insert}";
+                            $data_h['id_usuario']=$this->aauth->get_user()->id;
+                            $data_h['fecha']=date("Y-m-d H:i:s");
+                            $data_h['descripcion']=json_encode($productlist);
+                            $data_h['id_fila']=$this->db->insert_id();
+                            $data_h['tabla']="invoice_items";
+                            $data_h['nombre_columna']="id";
+                            $this->db->insert("historial_crm",$data_h);
 			$tidactualmasuno= $this->db->select('max(codigo)+1 as codigo')->from('tickets')->get()->result();
 			if ($television=='no'){
 				$tv = '';
@@ -926,6 +957,16 @@ var_dump("aqui2");*/
 				$pto = ' + '.$puntos.' Puntos';
 			}
             if ($this->db->insert('invoices', $data)) {
+                            $data_h=array();
+                            $data_h['modulo']="Ventas";
+                            $data_h['accion']="Nueva Factura {insert}";
+                            $data_h['id_usuario']=$this->aauth->get_user()->id;
+                            $data_h['fecha']=date("Y-m-d H:i:s");
+                            $data_h['descripcion']=json_encode($data);
+                            $data_h['id_fila']=$this->db->insert_id();
+                            $data_h['tabla']="invoices";
+                            $data_h['nombre_columna']="id";
+                            $this->db->insert("historial_crm",$data_h);
 				$username = $this->aauth->get_user()->username;
 				if (($television !== no) || $combo !== no){
 				$data2['codigo']=$tidactualmasuno[0]->codigo;	
@@ -941,11 +982,30 @@ var_dump("aqui2");*/
                 $data2['id_invoice']=$invocieno;
 				$data2['id_factura']=null;
                 $this->db->insert('tickets',$data2);
+                            $data_h=array();
+                            $data_h['modulo']="Ventas";
+                            $data_h['accion']="Nueva Factura {insert}";
+                            $data_h['id_usuario']=$this->aauth->get_user()->id;
+                            $data_h['fecha']=date("Y-m-d H:i:s");
+                            $data_h['descripcion']=json_encode($data2);
+                            $data_h['id_fila']=$this->db->insert_id();
+                            $data_h['tabla']="tickets";
+                            $data_h['nombre_columna']="idt";
+                            $this->db->insert("historial_crm",$data_h);
 				//actualizar estado usuario
 				$this->db->set('usu_estado', 'Instalar');
         		$this->db->where('id', $customer_id);
         		$this->db->update('customers');
-                
+                            $data_h=array();
+                            $data_h['modulo']="Ventas";
+                            $data_h['accion']="Nueva Factura {update}";
+                            $data_h['id_usuario']=$this->aauth->get_user()->id;
+                            $data_h['fecha']=date("Y-m-d H:i:s");
+                            $data_h['descripcion']=json_encode(array("usu_estado"=>"Instalar"));
+                            $data_h['id_fila']=$customer_id;
+                            $data_h['tabla']="customers";
+                            $data_h['nombre_columna']="id";
+                            $this->db->insert("historial_crm",$data_h);
                     
 				}
 $this->load->model('customers_model', 'customers');
@@ -959,9 +1019,29 @@ $this->load->model('customers_model', 'customers');
                     if($datox==0){
                             //due
                         $this->db->update("invoices",array("status"=>"paid"),array("tid"=>$servicios_detail['tid']));
+                            $data_h=array();
+                            $data_h['modulo']="Ventas";
+                            $data_h['accion']="Nueva Factura {update}";
+                            $data_h['id_usuario']=$this->aauth->get_user()->id;
+                            $data_h['fecha']=date("Y-m-d H:i:s");
+                            $data_h['descripcion']=json_encode(array("status"=>"paid"));
+                            $data_h['id_fila']=$servicios_detail['tid'];
+                            $data_h['tabla']="invoices";
+                            $data_h['nombre_columna']="tid";
+                            $this->db->insert("historial_crm",$data_h);
                     }else if($datox>0){
                             //partial
                         $this->db->update("invoices",array("status"=>"partial"),array("tid"=>$servicios_detail['tid']));
+                                $data_h=array();
+                                $data_h['modulo']="Ventas";
+                                $data_h['accion']="Nueva Factura {update}";
+                                $data_h['id_usuario']=$this->aauth->get_user()->id;
+                                $data_h['fecha']=date("Y-m-d H:i:s");
+                                $data_h['descripcion']=json_encode(array("status"=>"partial"));
+                                $data_h['id_fila']=$servicios_detail['tid'];
+                                $data_h['tabla']="invoices";
+                                $data_h['nombre_columna']="tid";
+                                $this->db->insert("historial_crm",$data_h);
                     }
                 }
 
@@ -987,6 +1067,16 @@ $this->load->model('customers_model', 'customers');
             $data = array('pid' => $project, 'meta_key' => 11, 'meta_data' => $invocieno, 'value' => '0');
 
             $this->db->insert('project_meta', $data);
+                     $data_h=array();
+                        $data_h['modulo']="Ventas";
+                        $data_h['accion']="Nueva Factura {insert}";
+                        $data_h['id_usuario']=$this->aauth->get_user()->id;
+                        $data_h['fecha']=date("Y-m-d H:i:s");
+                        $data_h['descripcion']=json_encode($data);
+                        $data_h['id_fila']=$this->db->insert_id();
+                        $data_h['tabla']="project_meta";
+                        $data_h['nombre_columna']="id";
+                        $this->db->insert("historial_crm",$data_h);
 
         }
 
