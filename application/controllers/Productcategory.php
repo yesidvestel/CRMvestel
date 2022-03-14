@@ -214,7 +214,7 @@ class Productcategory Extends CI_Controller
 
             $data_h=array();
             $data_h['modulo']="Inventarios";
-            $data_h['accion']="Eliminacion de material en Almacenes {delete}";
+            $data_h['accion']="Eliminacion de Almacen {delete}";
             $data_h['id_usuario']=$this->aauth->get_user()->id;
             $data_h['fecha']=date("Y-m-d H:i:s");
             $data_h['descripcion']="Todos los productos donde pcat=".$id;

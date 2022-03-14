@@ -477,7 +477,7 @@ class Purchase extends CI_Controller
         $this->db->delete('purchase_items', array('tid' => $invocieno));
            $data_h=array();
             $data_h['modulo']="Orden de Compra";
-            $data_h['accion']="Eliminacion de items para la edicion del purchase {delete}";
+            $data_h['accion']="Edicion del purchase {delete}";
             $data_h['id_usuario']=$this->aauth->get_user()->id;
             $data_h['fecha']=date("Y-m-d H:i:s");
             $data_h['descripcion']="Todos los purchase_items donde tid=".$invocieno;
@@ -597,7 +597,7 @@ class Purchase extends CI_Controller
             if ($this->db->update('purchase', $data)) {
                     $data_h=array();
                     $data_h['modulo']="Orden de Compra";
-                    $data_h['accion']="edicion del purchase {update}";
+                    $data_h['accion']="Edicion del purchase {update}";
                     $data_h['id_usuario']=$this->aauth->get_user()->id;
                     $data_h['fecha']=date("Y-m-d H:i:s");
                     $data_h['descripcion']=json_encode($data);
