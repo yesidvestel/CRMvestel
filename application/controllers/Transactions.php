@@ -563,6 +563,17 @@ class Transactions extends CI_Controller
                 $data2['section']=$paquete;
                 $data2['id_factura']=$factura_asociada->tid;
                 $this->db->insert('tickets',$data2);
+
+                          $data_h=array();
+                            $data_h['modulo']="Usuarios";
+                            $data_h['accion']="Administrar Usuarios > Ver Usuario > Ver Facturas > Hacer el Pago (pago multiple) {insert}";
+                            $data_h['id_usuario']=$this->aauth->get_user()->id;
+                            $data_h['fecha']=date("Y-m-d H:i:s");
+                            $data_h['descripcion']=json_encode($data2);
+                            $data_h['id_fila']=$this->db->insert_id();
+                            $data_h['tabla']="tickets";
+                            $data_h['nombre_columna']="idt";
+                            $this->db->insert("historial_crm",$data_h);
                 $reconexion_gen="si";
         }if ($reconexion==si && $mes2>$mes1){
                 $data2['codigo']=$tidactualmasuno[0]->tid;
@@ -575,6 +586,16 @@ class Transactions extends CI_Controller
                 $data2['section']=$paquete;
                 $data2['id_factura']='';
                 $this->db->insert('tickets',$data2);
+                            $data_h=array();
+                            $data_h['modulo']="Usuarios";
+                            $data_h['accion']="Administrar Usuarios > Ver Usuario > Ver Facturas > Hacer el Pago (pago multiple) {insert}";
+                            $data_h['id_usuario']=$this->aauth->get_user()->id;
+                            $data_h['fecha']=date("Y-m-d H:i:s");
+                            $data_h['descripcion']=json_encode($data2);
+                            $data_h['id_fila']=$this->db->insert_id();
+                            $data_h['tabla']="tickets";
+                            $data_h['nombre_columna']="idt";
+                            $this->db->insert("historial_crm",$data_h);
                 $data4 = array(
                 'corden' => $data2['codigo'],
                 'tv' => $tv,
@@ -582,6 +603,16 @@ class Transactions extends CI_Controller
             );      
                 $reconexion_gen="si";
             $this->db->insert('temporales', $data4);
+                            $data_h=array();
+                            $data_h['modulo']="Usuarios";
+                            $data_h['accion']="Administrar Usuarios > Ver Usuario > Ver Facturas > Hacer el Pago (pago multiple) {insert}";
+                            $data_h['id_usuario']=$this->aauth->get_user()->id;
+                            $data_h['fecha']=date("Y-m-d H:i:s");
+                            $data_h['descripcion']=json_encode($data4);
+                            $data_h['id_fila']=$this->db->insert_id();
+                            $data_h['tabla']="temporales";
+                            $data_h['nombre_columna']="id";
+                            $this->db->insert("historial_crm",$data_h);
             }
         }
 }
@@ -593,6 +624,16 @@ class Transactions extends CI_Controller
                 $this->db->set('balance', "balance-$amount", FALSE);
                 $this->db->where('id', $cid);
                 $this->db->update('customers');
+                            $data_h=array();
+                            $data_h['modulo']="Usuarios";
+                            $data_h['accion']="Administrar Usuarios > Ver Usuario > Ver Facturas > Hacer el Pago (pago multiple) {update}";
+                            $data_h['id_usuario']=$this->aauth->get_user()->id;
+                            $data_h['fecha']=date("Y-m-d H:i:s");
+                            $data_h['descripcion']=json_encode(array("balance"=>"balance-$amount"));
+                            $data_h['id_fila']=$cid;
+                            $data_h['tabla']="customers";
+                            $data_h['nombre_columna']="id";
+                            $this->db->insert("historial_crm",$data_h);
             }
             else{
 
@@ -600,6 +641,17 @@ class Transactions extends CI_Controller
                 $this->db->set('balance', 0, FALSE);
                 $this->db->where('id', $cid);
                 $this->db->update('customers');
+
+                         $data_h=array();
+                            $data_h['modulo']="Usuarios";
+                            $data_h['accion']="Administrar Usuarios > Ver Usuario > Ver Facturas > Hacer el Pago (pago multiple) {update}";
+                            $data_h['id_usuario']=$this->aauth->get_user()->id;
+                            $data_h['fecha']=date("Y-m-d H:i:s");
+                            $data_h['descripcion']=json_encode(array("balance"=>"0"));
+                            $data_h['id_fila']=$cid;
+                            $data_h['tabla']="customers";
+                            $data_h['nombre_columna']="id";
+                            $this->db->insert("historial_crm",$data_h);
             }
         }
         $id_banco=null;
@@ -613,7 +665,18 @@ class Transactions extends CI_Controller
                     $id_banco=$cuenta[0]->id;
                     $mas=intval($cuenta[0]->lastbal)+intval($amount);
                     $data5['lastbal']=$mas;
-                    $this->db->update('accounts',$data5,array('id' =>$id_banco ));    
+                    $this->db->update('accounts',$data5,array('id' =>$id_banco ));   
+
+                            $data_h=array();
+                            $data_h['modulo']="Usuarios";
+                            $data_h['accion']="Administrar Usuarios > Ver Usuario > Ver Facturas > Hacer el Pago (pago multiple) {update}";
+                            $data_h['id_usuario']=$this->aauth->get_user()->id;
+                            $data_h['fecha']=date("Y-m-d H:i:s");
+                            $data_h['descripcion']=json_encode($data5);
+                            $data_h['id_fila']=$id_banco;
+                            $data_h['tabla']="accounts";
+                            $data_h['nombre_columna']="id";
+                            $this->db->insert("historial_crm",$data_h); 
                 }
                 
             }else{
@@ -623,7 +686,17 @@ class Transactions extends CI_Controller
                     $id_banco=$cuenta[0]->id;
                     $mas=intval($cuenta[0]->lastbal)+intval($amount);
                     $data5['lastbal']=$mas;
-                    $this->db->update('accounts',$data5,array('id' =>$id_banco ));    
+                    $this->db->update('accounts',$data5,array('id' =>$id_banco )); 
+                            $data_h=array();
+                            $data_h['modulo']="Usuarios";
+                            $data_h['accion']="Administrar Usuarios > Ver Usuario > Ver Facturas > Hacer el Pago (pago multiple) {update}";
+                            $data_h['id_usuario']=$this->aauth->get_user()->id;
+                            $data_h['fecha']=date("Y-m-d H:i:s");
+                            $data_h['descripcion']=json_encode($data5);
+                            $data_h['id_fila']=$id_banco;
+                            $data_h['tabla']="accounts";
+                            $data_h['nombre_columna']="id";
+                            $this->db->insert("historial_crm",$data_h);    
                 }
                 
 
@@ -653,7 +726,18 @@ class Transactions extends CI_Controller
         );
 
         $this->db->insert('transactions', $data);
-        $this->db->insert_id();
+        $h_x1=$this->db->insert_id();
+
+                            $data_h=array();
+                            $data_h['modulo']="Usuarios";
+                            $data_h['accion']="Administrar Usuarios > Ver Usuario > Ver Facturas > Hacer el Pago (pago multiple) {insert}";
+                            $data_h['id_usuario']=$this->aauth->get_user()->id;
+                            $data_h['fecha']=date("Y-m-d H:i:s");
+                            $data_h['descripcion']=json_encode($data);
+                            $data_h['id_fila']=$h_x1;
+                            $data_h['tabla']="transactions";
+                            $data_h['nombre_columna']="id";
+                            $this->db->insert("historial_crm",$data_h);
         $idtr = $this->db->select('max(id) as id')->from('transactions')->where(array("tid"=>$tid))->get()->result();
         $ids_transacciones[]=$idtr[0]->id;
 
@@ -673,11 +757,31 @@ class Transactions extends CI_Controller
             $this->db->where('tid', $tid);
             $this->db->update('invoices');
 
-
+                        $data_h=array();
+                            $data_h['modulo']="Usuarios";
+                            $data_h['accion']="Administrar Usuarios > Ver Usuario > Ver Facturas > Hacer el Pago (pago multiple) {update}";
+                            $data_h['id_usuario']=$this->aauth->get_user()->id;
+                            $data_h['fecha']=date("Y-m-d H:i:s");
+                            $data_h['descripcion']=json_encode(array("status"=>"partial","pamnt"=>"pamnt+$amount","pmethod"=>$pmethod));
+                            $data_h['id_fila']=$tid;
+                            $data_h['tabla']="invoices";
+                            $data_h['nombre_columna']="tid";
+                            $this->db->insert("historial_crm",$data_h);
             //account update
             $this->db->set('lastbal', "lastbal+$amount", FALSE);
             $this->db->where('id', $acid);
             $this->db->update('accounts');
+
+                    $data_h=array();
+                            $data_h['modulo']="Usuarios";
+                            $data_h['accion']="Administrar Usuarios > Ver Usuario > Ver Facturas > Hacer el Pago (pago multiple) {update}";
+                            $data_h['id_usuario']=$this->aauth->get_user()->id;
+                            $data_h['fecha']=date("Y-m-d H:i:s");
+                            $data_h['descripcion']=json_encode(array("lastbal"=>"lastbal+$amount"));
+                            $data_h['id_fila']=$acid;
+                            $data_h['tabla']="accounts";
+                            $data_h['nombre_columna']="id";
+                            $this->db->insert("historial_crm",$data_h);
             $paid_amount = $invresult->pamnt + $amount;
             $status = 'Partial';
             $totalrm = $totalrm - $amount;
@@ -695,10 +799,30 @@ class Transactions extends CI_Controller
             $this->db->set('status', 'paid');
             $this->db->where('tid', $tid);
             $this->db->update('invoices');
+                    $data_h=array();
+                            $data_h['modulo']="Usuarios";
+                            $data_h['accion']="Administrar Usuarios > Ver Usuario > Ver Facturas > Hacer el Pago (pago multiple) {update}";
+                            $data_h['id_usuario']=$this->aauth->get_user()->id;
+                            $data_h['fecha']=date("Y-m-d H:i:s");
+                            $data_h['descripcion']=json_encode(array("status"=>"paid","pamnt"=>"pamnt+$amount","pmethod"=>$pmethod));
+                            $data_h['id_fila']=$tid;
+                            $data_h['tabla']="invoices";
+                            $data_h['nombre_columna']="tid";
+                            $this->db->insert("historial_crm",$data_h);
             //acount update
             $this->db->set('lastbal', "lastbal+$amount", FALSE);
             $this->db->where('id', $acid);
             $this->db->update('accounts');
+                        $data_h=array();
+                            $data_h['modulo']="Usuarios";
+                            $data_h['accion']="Administrar Usuarios > Ver Usuario > Ver Facturas > Hacer el Pago (pago multiple) {update}";
+                            $data_h['id_usuario']=$this->aauth->get_user()->id;
+                            $data_h['fecha']=date("Y-m-d H:i:s");
+                            $data_h['descripcion']=json_encode(array("lastbal"=>"lastbal+$amount"));
+                            $data_h['id_fila']=$acid;
+                            $data_h['tabla']="accounts";
+                            $data_h['nombre_columna']="id";
+                            $this->db->insert("historial_crm",$data_h);
 
             $totalrm = 0;
             $status = 'Paid';
