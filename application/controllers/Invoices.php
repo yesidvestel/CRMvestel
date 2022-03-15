@@ -1096,32 +1096,59 @@ $this->load->model('customers_model', 'customers');
         $status = $this->input->post('status');
 		$tv = $this->input->post('television');
 		$int = $this->input->post('internet');
-        
+        $datax=array();
         if($tv!="por_defecto"){
 			if($tv !='no'){
 		  		$this->db->set('television', $tv);
 				$this->db->set('estado_tv', '');
+                $datax['television']=$tv;
+                $datax['estado_tv']='';
 			}else{
 				$this->db->set('estado_tv', 'Cortado');
+
+                $datax['estado_tv']='Cortado';
 			}
         }
          if($int!="por_defecto" && $tv!="Television"){
 			 if($int != 'no'){
                 $this->db->set('combo', $int);
 			 	$this->db->set('estado_combo', '');
+                $datax['combo']=$int;
+                $datax['estado_combo']='';
 			 }else{
 				$this->db->set('estado_combo', 'Cortado'); 
+                $datax['estado_combo']='Cortado';
 			 }
         }
         $this->db->set('ron', $status);
         $this->db->where('tid', $tid);
+        $datax['ron']=$status;
         //$this->db->update('invoices');
 		$this->db->update('invoices');	
-            
+             $data_h=array();
+                $data_h['modulo']="Ventas";
+                $data_h['accion']="Administrar Facturas > ver factura > instalar {update}";
+                $data_h['id_usuario']=$this->aauth->get_user()->id;
+                $data_h['fecha']=date("Y-m-d H:i:s");
+                $data_h['descripcion']=json_encode($datax);
+                $data_h['id_fila']=$tid;
+                $data_h['tabla']="invoices";
+                $data_h['nombre_columna']="tid";
+                $this->db->insert("historial_crm",$data_h);
 		 //estado usuario
 		$this->db->set('usu_estado', $status);
         $this->db->where('id', $usr);
         $this->db->update('customers');
+            $data_h=array();
+                $data_h['modulo']="Ventas";
+                $data_h['accion']="Administrar Facturas > ver factura > instalar {update}";
+                $data_h['id_usuario']=$this->aauth->get_user()->id;
+                $data_h['fecha']=date("Y-m-d H:i:s");
+                $data_h['descripcion']=json_encode(array("usu_estado"=>$status));
+                $data_h['id_fila']=$usr;
+                $data_h['tabla']="customers";
+                $data_h['nombre_columna']="id";
+                $this->db->insert("historial_crm",$data_h);
         echo json_encode(array('status' => 'Success', 'message' =>
             $this->lang->line('UPDATED'), 'pstatus' => $status));
     }
@@ -1988,7 +2015,16 @@ foreach ($lista as $key => $value) {
         $this->db->set('status', $status);
         $this->db->where('tid', $tid);
         $this->db->update('invoices');
-
+             $data_h=array();
+            $data_h['modulo']="Ventas";
+            $data_h['accion']="Administrar Facturas > ver factura > cambiar estado {update}";
+            $data_h['id_usuario']=$this->aauth->get_user()->id;
+            $data_h['fecha']=date("Y-m-d H:i:s");
+            $data_h['descripcion']=json_encode(array("status"=>$status));
+            $data_h['id_fila']=$tid;
+            $data_h['tabla']="invoices";
+            $data_h['nombre_columna']="tid";
+            $this->db->insert("historial_crm",$data_h);
         echo json_encode(array('status' => 'Success', 'message' =>
             $this->lang->line('UPDATED'), 'pstatus' => $status));
     }
