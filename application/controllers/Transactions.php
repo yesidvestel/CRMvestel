@@ -1451,6 +1451,17 @@ $this->load->model('customers_model', 'customers');
             $this->db->update('products');
         }
         $this->db->delete('transactions', array('tid' => $tid));
+
+        $data_h=array();
+            $data_h['modulo']="Ventas";
+            $data_h['accion']="Administrar Facturas > ver factura > anular {update}";
+            $data_h['id_usuario']=$this->aauth->get_user()->id;
+            $data_h['fecha']=date("Y-m-d H:i:s");
+            $data_h['descripcion']="se anula la factura en cuestion realizando la devolucion de las cantidades de productos y eliminando las trasnsacciones asociadas";
+            $data_h['id_fila']=$tid;
+            $data_h['tabla']="invoices";
+            $data_h['nombre_columna']="tid";
+            $this->db->insert("historial_crm",$data_h);
         echo json_encode(array('status' => 'Success', 'message' =>
             $this->lang->line('Invoice canceled')));
     }
