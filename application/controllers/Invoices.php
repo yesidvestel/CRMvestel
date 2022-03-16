@@ -592,7 +592,16 @@ var_dump("aqui2");*/
 
         }
         
-        
+         $data_h=array();
+            $data_h['modulo']="Ventas";
+            $data_h['accion']="Generar Facturas Mensuales {insert}";
+            $data_h['id_usuario']=$this->aauth->get_user()->id;
+            $data_h['fecha']=date("Y-m-d H:i:s");
+            $data_h['descripcion']="Generacion de facturacion mensual, junto con la acomodacion de pagos adelantados en sede ".$caja1->holder." fecha seleccionada ".$sdate;
+            $data_h['id_fila']="0";
+            $data_h['tabla']="invoices";
+            $data_h['nombre_columna']="";
+            $this->db->insert("historial_crm",$data_h);
 
         
         //$this->load->model('transactions_model');
