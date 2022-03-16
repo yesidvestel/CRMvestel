@@ -697,7 +697,16 @@ $data['datos_informe']=array("trans_type"=>$trans_type);
 
 
            ini_set('memory_limit', '64M');
-
+                    $data_h=array();
+                    $data_h['modulo']="Ventas";
+                    $data_h['accion']="Cierre > Ver > Cierre de Caja {view}";
+                    $data_h['id_usuario']=$this->aauth->get_user()->id;
+                    $data_h['fecha']=date("Y-m-d H:i:s");
+                    $data_h['descripcion']="Se realizo el cierre de caja de la sede ".$caja1->holder;
+                    $data_h['id_fila']=0;
+                    $data_h['tabla']="";
+                    $data_h['nombre_columna']="";
+                    $this->db->insert("historial_crm",$data_h);
            $foot= $this->load->view('fixed/footer', $head,true);
             $contenido=$this->load->view('reports/sacar_pdf_editado', $data,true);
             $this->load->library('pdf_cierre_de_caja');
