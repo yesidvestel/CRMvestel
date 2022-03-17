@@ -296,7 +296,9 @@ class Products extends CI_Controller
 				'pcat' => 3,
 				'warehouse' => $almacen->id,
 				'product_name' => $equipo->mac,
-				'product_code' => $equipo->codigo
+				'product_code' => $equipo->codigo,
+				'qty' => 1,
+				'alert' => 0
 			);
 			if ($this->db->insert('products', $data2)){
 				//agregar par de tickets
