@@ -435,6 +435,7 @@ FROM products ");
                             $data_h['descripcion']=json_encode($value);
                             $data_h['id_fila']=$this->db->insert_id();
                             $data_h['tabla']="products";
+                            $data_h['nombre_columna']="pid";
                             $this->db->insert("historial_crm",$data_h);  
                     }
                     
@@ -450,6 +451,7 @@ FROM products ");
                             $data_h['descripcion']=json_encode($data_transfer);
                             $data_h['id_fila']=$this->db->insert_id();
                             $data_h['tabla']="transferencias";
+                            $data_h['nombre_columna']="id_transferencia";
                             $this->db->insert("historial_crm",$data_h); 
             }
             //trabajando sobre el producto a transferir

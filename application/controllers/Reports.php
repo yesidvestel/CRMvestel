@@ -58,7 +58,49 @@ class Reports extends CI_Controller
 
     }
 	//estadisticas tecnicos
+public function historial_crm(){
 
+        $head['title'] = "Historial CRM";
+        $head['usernm'] = $this->aauth->get_user()->username;
+        $this->load->view('fixed/header', $head);
+        if ($this->aauth->get_user()->roleid >= 5) {
+            $this->load->view('reports/historial_crm');
+        }
+        $this->load->view('fixed/footer');
+}
+public function historial_list(){
+    $this->load->model("Historial_model","historial");
+    $list = $this->historial->get_datatables();
+    $data = array();
+    $no = $this->input->post('start');
+    foreach ($list as $key => $value) {            
+            $no++;  
+            $row = array();
+            $row[]=$value->id;
+            $row[]=$value->fecha;
+            $row[]=$value->modulo;
+            $row[]=$value->accion;
+            if($value->id_fila==""||$value->id_fila==0||$value->id_fila==null){
+                $row[]=$value->tabla;
+            }else{
+                $row[]=$value->tabla.", ".$value->nombre_columna."=".$value->id_fila;
+            }
+            $user=$this->db->get_where("aauth_users",array("id"=>$value->id_usuario))->row();
+            $row[]=$user->username;
+            $row[]='<div style="text-align:center"><a class="btn-small btn-info ver-mas" ><i class="icon-book"></i></a></div>';
+            $data[]=$row;
+
+    }
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->historial->count_all(),
+            "recordsFiltered" => $this->historial->count_filtered(),
+            "data" => $data,
+        );
+        //output to json format
+        echo json_encode($output);
+
+}
     public function statecnicos()
 
     {

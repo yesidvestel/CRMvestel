@@ -615,6 +615,11 @@
                         <li>
                             <a href="<?php echo base_url(); ?>reports/taxstatement"><?php echo $this->lang->line('TAX').' '.$this->lang->line('Statements'); ?> </a>
                         </li>
+                        <?php if ($this->aauth->get_user()->roleid >= 5) {?>
+                        <li>
+                            <a href="<?php echo base_url(); ?>reports/historial_crm">Historial CRM</a>
+                        </li>
+                        <?php } ?>
 
                     </ul>
                 </li>
