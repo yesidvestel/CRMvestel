@@ -74,13 +74,13 @@ public function historial_list(){
     $data = array();
     $no = $this->input->post('start');
     setlocale(LC_TIME, "spanish");
-
+mb_internal_encoding('UTF-8');
     foreach ($list as $key => $value) {            
             $no++;  
             $row = array();
             $row[]=$value->id;
             $x=new DateTime($value->fecha);
-            $row[]=utf8_encode(strftime("%A,".$x->format("d")." de %B del ".$x->format("Y"), strtotime($value->fecha)));
+            $row[]=strftime("%A,".$x->format("d")." de %B del ".$x->format("Y"), strtotime($value->fecha));
             $row[]=$value->modulo;
             $row[]=$value->accion;
             if($value->id_fila==""||$value->id_fila==0||$value->id_fila==null){
