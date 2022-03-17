@@ -73,11 +73,14 @@ public function historial_list(){
     $list = $this->historial->get_datatables();
     $data = array();
     $no = $this->input->post('start');
+    setlocale(LC_TIME, "spanish");
+
     foreach ($list as $key => $value) {            
             $no++;  
             $row = array();
             $row[]=$value->id;
-            $row[]=$value->fecha;
+            $x=new DateTime($value->fecha);
+            $row[]=utf8_encode(strftime("%A,".$x->format("d")." de %B del ".$x->format("Y"), strtotime($value->fecha)));
             $row[]=$value->modulo;
             $row[]=$value->accion;
             if($value->id_fila==""||$value->id_fila==0||$value->id_fila==null){
@@ -87,7 +90,7 @@ public function historial_list(){
             }
             $user=$this->db->get_where("aauth_users",array("id"=>$value->id_usuario))->row();
             $row[]=$user->username;
-            $row[]='<div style="text-align:center"><a class="btn-small btn-info ver-mas" ><i class="icon-book"></i></a></div>';
+            $row[]="<div style='text-align:center'><a class='btn-small btn-info ver-mas'  data-descripcion='".$value->descripcion."'><i class='icon-book'></i></a></div>";
             $data[]=$row;
 
     }

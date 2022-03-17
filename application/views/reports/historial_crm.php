@@ -8,7 +8,7 @@
         <h4>Historial</h4>
         <hr>
         <div class="grid_3 grid_4">
-            <table id="tabla-historial" class="table-striped" cellspacing="0" width="100%">
+            <table id="tabla-historial" class="table-striped table-hover" cellspacing="0" width="100%">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -39,7 +39,45 @@
         </div>
         </div>
 </article>
+<div id="pop_model" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Información Adicional</h4>
+            </div>
 
+            <div class="modal-body">
+                <div id="parrafo">
+                    
+                </div>
+                <div id="tabla" class="table-responsive" align="center" >
+                    <table class="table mb-1 table-hover" style="display: inline;text-align: center;">
+                        <thead style="background-color:#3BAFDA">
+                            <tr>
+                                <th style="text-align:center;">Atributo</th>
+                                <th style="text-align:center;">Contenido</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody1">
+                            
+                        </tbody>
+                        <tfoot style="background-color:#3BAFDA">
+                            <tr>
+                                <th style="text-align:center;">Atributo</th>
+                                <th style="text-align:center;">Contenido</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                 <button type="button" class="btn btn-primary"
+                        data-dismiss="modal">Aceptar </button>
+            </div>
+        </div>
+    </div>
+</div>
 <script type="text/javascript">
     var tb;
     $(document).ready(function(){
@@ -85,8 +123,33 @@
             
 
         });
-        $(".ver-mas").on("click",function(){
-            console.log("asdasd");
-        });
+
+    });
+
+    $(document).on("click",".ver-mas",function(e){
+        let contenido;
+            contenido=$(this).data("descripcion");
+
+            
+            if(typeof contenido ==="string"){
+                    $("#parrafo").html("<p>"+contenido+"</p>");
+                    $("#tabla").css("display","none");
+                    $("#parrafo").css("display","");    
+            }else{
+                    var content="";
+                    
+                     for(var clave in contenido){
+                        console.log(clave);
+                        content+="<tr><td>"+clave+"</td><td>"+contenido[clave]+"</td></tr>";
+                     }
+                    
+                    $("#tbody1").html(content);
+                    $("#parrafo").css("display","none");
+                    $("#tabla").css("display","");    
+            }
+            
+
+        //console.log(contenido);
+        $("#pop_model").modal("show");
     });
 </script>
