@@ -504,6 +504,7 @@
                                                 class="icon-tasks"></i> Ver Equipos</a>
 
                                 </div>
+								<?php if ($this->aauth->get_user()->roleid > 3) { ?>
 								<div class="col-md-4" style="margin-top: 5px;">
 
                                     <a href="#pop_model2" data-toggle="modal" onclick="funcion_status();" data-remote="false" 
@@ -511,6 +512,7 @@
                                                 class="icon-user"></i> Cambio Titular </a>
 
                                 </div>
+								<?php } ?>
 								<div class="col-md-4" style="margin-top: 5px;">
 
                                     <a href="<?php echo base_url('llamadas/index?id=' . $details['id']) ?>"
@@ -518,6 +520,7 @@
                                                 class="icon-mobile-phone"></i> Ate. Usuario</a>
 
                                 </div>
+								<?php if ($this->aauth->get_user()->roleid > 3) { ?>
                                 <div class="col-md-4" style="margin-top: 5px;">
 
                                     <a href="<?php echo base_url('facturasElectronicas?id=' . $details['id']) ?>"
@@ -525,6 +528,7 @@
                                                 class="icon-file-text2"></i> Facturas Electronicas</a>
 
                                 </div>
+								<?php } ?>
 								<div class="col-md-4" style="margin-top: 5px;">
 
                                     <a href="#pop_model3" data-toggle="modal" onclick="funcion_status();"
