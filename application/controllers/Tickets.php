@@ -1280,6 +1280,23 @@ if($ya_agrego_equipos==false){
                 $customerx=$this->db->get_where("customers",array('id' =>$ticket->cid ))->row();
                 $this->customers->desactivar_estado_usuario($customerx->name_s,$customerx->gid,$customerx->tegnologia_instalacion);
 		}
+		if($ticket->detalle=="Retiro voluntario"){			
+			$this->db->set('ron', 'Retirado');
+			//$this->db->set('television', 'no');
+			//$this->db->set('combo', 'no');
+            $this->db->set('estado_tv', 'Suspendido');
+            $this->db->set('estado_combo', 'Suspendido');
+
+        	$this->db->where('tid', $idfactura);
+        	$this->db->update('invoices');
+			//actualizar estado usuario
+				$this->db->set('usu_estado', 'Retirado');
+        		$this->db->where('id', $ticket->cid);
+        		$this->db->update('customers');
+                 //mikrotik
+                $customerx=$this->db->get_where("customers",array('id' =>$ticket->cid ))->row();
+                $this->customers->desactivar_estado_usuario($customerx->name_s,$customerx->gid,$customerx->tegnologia_instalacion);
+		}
 		if($ticket->detalle=="Suspension Television"){
 			$factura = $this->db->get_where('invoices',array('tid'=>$idfactura))->row();
 			if ($factura->combo===no){

@@ -526,9 +526,9 @@
     });
 	// selecion de orden
 	<?php if ($this->aauth->get_user()->roleid == 5) { ?>
-	var perfil_servicio = new Array ("...","Reconexion Combo","Reconexion Television","Recuperación cable modem","Veeduria","Reconexion Internet","AgregarInternet","AgregarTelevision","Migracion","Bajar_megas","Cambio de equipo","Corte Combo","Corte Internet","Corte Television","Equipo adicional","Instalacion","Punto nuevo","Subir_megas","Suspension Combo","Suspension Internet","Suspension Television","Traslado","Toma Adicional");
+	var perfil_servicio = new Array ("...","Reconexion Combo","Reconexion Television","Retiro voluntario","Recuperación cable modem","Veeduria","Reconexion Internet","AgregarInternet","AgregarTelevision","Migracion","Bajar_megas","Cambio de equipo","Corte Combo","Corte Internet","Corte Television","Equipo adicional","Instalacion","Punto nuevo","Subir_megas","Suspension Combo","Suspension Internet","Suspension Television","Traslado","Toma Adicional");
 	<?php } else if ($this->aauth->get_user()->roleid == 4) { ?>
-	var perfil_servicio = new Array ("...","AgregarInternet","AgregarTelevision","Recuperación cable modem","Migracion","Veeduria","Bajar_megas","Cambio de equipo","Corte Combo","Corte Internet","Corte Television","Equipo adicional","Instalacion","Punto nuevo","Subir_megas","Suspension Combo","Suspension Internet","Suspension Television","Traslado","Toma Adicional");
+	var perfil_servicio = new Array ("...","AgregarInternet","AgregarTelevision","Retiro voluntario","Recuperación cable modem","Migracion","Veeduria","Bajar_megas","Cambio de equipo","Corte Combo","Corte Internet","Corte Television","Equipo adicional","Instalacion","Punto nuevo","Subir_megas","Suspension Combo","Suspension Internet","Suspension Television","Traslado","Toma Adicional");
 	<?php } else { ?>
 	var perfil_servicio = new Array ("...","AgregarInternet","AgregarTelevision","Recuperación cable modem","Migracion","Veeduria","Bajar_megas","Cambio de equipo","Corte Combo","Corte Internet","Corte Television","Equipo adicional","Instalacion","Punto nuevo","Subir_megas","Traslado","Toma Adicional");
 	<?php }; ?>
