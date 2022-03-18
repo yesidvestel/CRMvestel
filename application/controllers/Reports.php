@@ -80,7 +80,7 @@ public function historial_list(){
             $row = array();
             $row[]=$value->id;
             $x=new DateTime($value->fecha);
-            $row[]= utf8_encode(strftime("%A,".$x->format("d")." de %B del ".$x->format("Y"), strtotime($value->fecha)));
+            $row[]= utf8_encode(strftime("%A,".$x->format("d")." de %B del ".$x->format("Y"), strtotime($value->fecha)))."-<u>".$x->format("g").":".$x->format("s")." ".$x->format("a")."</u>";
             $row[]=$value->modulo;
             $row[]=$value->accion;
             if($value->id_fila==""||$value->id_fila==0||$value->id_fila==null){
