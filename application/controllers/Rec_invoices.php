@@ -174,6 +174,16 @@ class Rec_invoices extends CI_Controller
                     $this->db->set('qty', "qty-$amt", FALSE);
                     $this->db->where('pid', $product_id[$key]);
                     $this->db->update('products');
+                        $data_h=array();
+                        $data_h['modulo']="Reciclaje de Ventas";
+                        $data_h['accion']="Nueva Factura {update}";
+                        $data_h['id_usuario']=$this->aauth->get_user()->id;
+                        $data_h['fecha']=date("Y-m-d H:i:s");
+                        $data_h['descripcion']=json_encode(array("qty"=>"qty-$amt"));
+                        $data_h['id_fila']=$product_id[$key];
+                        $data_h['tabla']="products";
+                        $data_h['nombre_columna']="pid";
+                        $this->db->insert("historial_crm",$data_h);
                 }
                 $itc += $amt;
 
@@ -219,6 +229,16 @@ class Rec_invoices extends CI_Controller
                     $this->db->set('qty', "qty-$amt", FALSE);
                     $this->db->where('pid', $product_id[$key]);
                     $this->db->update('products');
+                            $data_h=array();
+                        $data_h['modulo']="Reciclaje de Ventas";
+                        $data_h['accion']="Nueva Factura {update}";
+                        $data_h['id_usuario']=$this->aauth->get_user()->id;
+                        $data_h['fecha']=date("Y-m-d H:i:s");
+                        $data_h['descripcion']=json_encode(array("qty"=>"qty-$amt"));
+                        $data_h['id_fila']=$product_id[$key];
+                        $data_h['tabla']="products";
+                        $data_h['nombre_columna']="pid";
+                        $this->db->insert("historial_crm",$data_h);
                 }
 
 
@@ -237,7 +257,27 @@ class Rec_invoices extends CI_Controller
 
         if ($flag == true) {
             $this->db->insert_batch('rec_invoice_items', $productlist);
+                        $data_h=array();
+                        $data_h['modulo']="Reciclaje de Ventas";
+                        $data_h['accion']="Nueva Factura {insert}";
+                        $data_h['id_usuario']=$this->aauth->get_user()->id;
+                        $data_h['fecha']=date("Y-m-d H:i:s");
+                        $data_h['descripcion']=json_encode($productlist);
+                        $data_h['id_fila']=$this->db->insert_id();
+                        $data_h['tabla']="rec_invoice_items";
+                        $data_h['nombre_columna']="id";
+                        $this->db->insert("historial_crm",$data_h);
             if ($this->db->insert('rec_invoices', $data)) {
+                    $data_h=array();
+                        $data_h['modulo']="Reciclaje de Ventas";
+                        $data_h['accion']="Nueva Factura {insert}";
+                        $data_h['id_usuario']=$this->aauth->get_user()->id;
+                        $data_h['fecha']=date("Y-m-d H:i:s");
+                        $data_h['descripcion']=json_encode($data);
+                        $data_h['id_fila']=$this->db->insert_id();
+                        $data_h['tabla']="rec_invoices";
+                        $data_h['nombre_columna']="id";
+                        $this->db->insert("historial_crm",$data_h);
                 echo json_encode(array('status' => 'Success', 'message' =>
                     $this->lang->line('Invoice Success') . " <a href='view?id=$invocieno' class='btn btn-info btn-lg'><span class='icon-file-text2' aria-hidden='true'></span>" . $this->lang->line('View') . " </a>"));
             } else {
@@ -420,6 +460,16 @@ class Rec_invoices extends CI_Controller
         $tq = 0;
 
         $this->db->delete('rec_invoice_items', array('tid' => $invocieno));
+                 $data_h=array();
+                        $data_h['modulo']="Reciclaje de Ventas";
+                        $data_h['accion']="Editar Factura {delete}";
+                        $data_h['id_usuario']=$this->aauth->get_user()->id;
+                        $data_h['fecha']=date("Y-m-d H:i:s");
+                        $data_h['descripcion']="se eliminan los items";
+                        $data_h['id_fila']=$invocieno;
+                        $data_h['tabla']="rec_invoice_items";
+                        $data_h['nombre_columna']="tid";
+                        $this->db->insert("historial_crm",$data_h);
         if ($tax == 'yes') {
             $taxstatus = 1;
 
@@ -466,6 +516,15 @@ class Rec_invoices extends CI_Controller
                     $this->db->set('qty', "qty-$amt", FALSE);
                     $this->db->where('pid', $product_id[$key]);
                     $this->db->update('products');
+                            $data_h['modulo']="Reciclaje de Ventas";
+                            $data_h['accion']="Editar Factura {update}";
+                            $data_h['id_usuario']=$this->aauth->get_user()->id;
+                            $data_h['fecha']=date("Y-m-d H:i:s");
+                            $data_h['descripcion']=json_encode(array("qty"=>"qty-$amt"));
+                            $data_h['id_fila']=$product_id[$key];
+                            $data_h['tabla']="products";
+                            $data_h['nombre_columna']="pid";
+                            $this->db->insert("historial_crm",$data_h);
                 }
 
             }
@@ -506,6 +565,15 @@ class Rec_invoices extends CI_Controller
                     $this->db->set('qty', "qty-$amt", FALSE);
                     $this->db->where('pid', $product_id[$key]);
                     $this->db->update('products');
+                            $data_h['modulo']="Reciclaje de Ventas";
+                            $data_h['accion']="Editar Factura {update}";
+                            $data_h['id_usuario']=$this->aauth->get_user()->id;
+                            $data_h['fecha']=date("Y-m-d H:i:s");
+                            $data_h['descripcion']=json_encode(array("qty"=>"qty-$amt"));
+                            $data_h['id_fila']=$product_id[$key];
+                            $data_h['tabla']="products";
+                            $data_h['nombre_columna']="pid";
+                            $this->db->insert("historial_crm",$data_h);
                 }
 
             }
@@ -521,7 +589,25 @@ class Rec_invoices extends CI_Controller
         if ($flag) {
 
             if ($this->db->update('rec_invoices', $data)) {
+                            $data_h['modulo']="Reciclaje de Ventas";
+                            $data_h['accion']="Editar Factura {update}";
+                            $data_h['id_usuario']=$this->aauth->get_user()->id;
+                            $data_h['fecha']=date("Y-m-d H:i:s");
+                            $data_h['descripcion']=json_encode($data);
+                            $data_h['id_fila']=$invocieno;
+                            $data_h['tabla']="rec_invoices";
+                            $data_h['nombre_columna']="tid";
+                            $this->db->insert("historial_crm",$data_h);
                 $this->db->insert_batch('rec_invoice_items', $productlist);
+                            $data_h['modulo']="Reciclaje de Ventas";
+                            $data_h['accion']="Editar Factura {insert}";
+                            $data_h['id_usuario']=$this->aauth->get_user()->id;
+                            $data_h['fecha']=date("Y-m-d H:i:s");
+                            $data_h['descripcion']=json_encode($productlist);
+                            $data_h['id_fila']=$this->db->insert_id();;
+                            $data_h['tabla']="rec_invoice_items";
+                            $data_h['nombre_columna']="id";
+                            $this->db->insert("historial_crm",$data_h);
                 echo json_encode(array('status' => 'Success', 'message' =>
                     $this->lang->line('Invoice has  been updated') . "<a href='view?id=$invocieno' class='btn btn-info btn-lg'><span class='icon-file-text2' aria-hidden='true'></span> View </a> "));
             } else {
