@@ -74,19 +74,25 @@ public function historial_list(){
     $data = array();
     $no = $this->input->post('start');
     setlocale(LC_TIME, "spanish");
-mb_internal_encoding('UTF-8');
+
     foreach ($list as $key => $value) {            
             $no++;  
             $row = array();
             $row[]=$value->id;
             $x=new DateTime($value->fecha);
-            $row[]=strftime("%A,".$x->format("d")." de %B del ".$x->format("Y"), strtotime($value->fecha));
+            $row[]= utf8_encode(strftime("%A,".$x->format("d")." de %B del ".$x->format("Y"), strtotime($value->fecha)));
             $row[]=$value->modulo;
             $row[]=$value->accion;
             if($value->id_fila==""||$value->id_fila==0||$value->id_fila==null){
                 $row[]=$value->tabla;
             }else{
-                $row[]=$value->tabla.", ".$value->nombre_columna."=".$value->id_fila;
+                if($value->nombre_columna=="pid" && isset($value->id_fila) && $value->id_fila!=0){
+                    $prod=$this->db->get_where("products",array("pid"=>$value->id_fila))->row();
+                    $row[]=$value->tabla.", "."codigo"."=".$prod->product_code;    
+                }else{
+                    $row[]=$value->tabla.", ".$value->nombre_columna."=".$value->id_fila;    
+                }
+                
             }
             $user=$this->db->get_where("aauth_users",array("id"=>$value->id_usuario))->row();
             $row[]=$user->username;
