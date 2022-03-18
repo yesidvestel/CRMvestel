@@ -277,6 +277,17 @@ class Products extends CI_Controller
         $id = $this->input->post('deleteid');
         if ($id) {
             $this->db->delete('equipos', array('id' => $id));
+
+                      $data_h=array();
+                        $data_h['modulo']="Redes";
+                        $data_h['accion']="Administrar Equipos > Borrar {delete}";
+                        $data_h['id_usuario']=$this->aauth->get_user()->id;
+                        $data_h['fecha']=date("Y-m-d H:i:s");
+                        $data_h['descripcion']="Eliminacion";
+                        $data_h['tabla']="equipos";
+                        $data_h['nombre_columna']="id";
+                        $data_h['id_fila']=$id;
+                        $this->db->insert("historial_crm",$data_h);
             echo json_encode(array('status' => 'Success', 'message' => $this->lang->line('DELETED')));
         } else {
             echo json_encode(array('status' => 'Error', 'message' => $this->lang->line('ERROR')));
