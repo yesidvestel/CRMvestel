@@ -86,7 +86,10 @@ public function historial_list(){
             if($value->id_fila==""||$value->id_fila==0||$value->id_fila==null){
                 $row[]=$value->tabla;
             }else{
-                if($value->nombre_columna=="pid" && isset($value->id_fila) && $value->id_fila!=0){
+                if($value->accion=="Ingreso de equipo {insert}"){
+                    $prod=$this->db->get_where("equipos",array("id"=>$value->id_fila))->row();
+                    $row[]=$value->tabla.", "."codigo"."=".$prod->codigo;   
+                }else if($value->nombre_columna=="pid" && isset($value->id_fila) && $value->id_fila!=0){
                     $prod=$this->db->get_where("products",array("pid"=>$value->id_fila))->row();
                     $row[]=$value->tabla.", "."codigo"."=".$prod->product_code;    
                 }else{
