@@ -1348,7 +1348,18 @@ $this->load->model('customers_model', 'customers');
         );
 
         $this->db->insert('transactions', $data);
-        $this->db->insert_id();
+       $id_t= $this->db->insert_id();
+             $data_h=array();
+            $data_h['modulo']="Reciclaje de ventas";
+            $data_h['accion']="Adminstrar Facaturas > Ver > Hacer el pago {insert}";
+            $data_h['id_usuario']=$this->aauth->get_user()->id;
+            $data_h['fecha']=date("Y-m-d H:i:s");
+            $data_h['descripcion']=json_encode($data);
+            $data_h['id_fila']=$this->db->insert_id();
+            $data_h['tabla']="transactions";
+            $data_h['nombre_columna']="id";
+            $this->db->insert("historial_crm",$data_h);
+
 
         $this->db->select('invoiceduedate,total,csd,pamnt,rec');
         $this->db->from('rec_invoices');
@@ -1365,12 +1376,32 @@ $this->load->model('customers_model', 'customers');
             $this->db->set('status', 'partial');
             $this->db->where('tid', $tid);
             $this->db->update('rec_invoices');
+                     $data_h=array();
+                    $data_h['modulo']="Reciclaje de ventas";
+                    $data_h['accion']="Adminstrar Facaturas > Ver > Hacer el pago {update}";
+                    $data_h['id_usuario']=$this->aauth->get_user()->id;
+                    $data_h['fecha']=date("Y-m-d H:i:s");
+                    $data_h['descripcion']=json_encode(array("pamnt"=>"pamnt+$amount","pmethod"=>$pmethod));
+                    $data_h['id_fila']=$tid;
+                    $data_h['tabla']="rec_invoices";
+                    $data_h['nombre_columna']="tid";
+                    $this->db->insert("historial_crm",$data_h);
 
 
             //account update
             $this->db->set('lastbal', "lastbal+$amount", FALSE);
             $this->db->where('id', $acid);
             $this->db->update('accounts');
+                    $data_h=array();
+                    $data_h['modulo']="Reciclaje de ventas";
+                    $data_h['accion']="Adminstrar Facaturas > Ver > Hacer el pago {update}";
+                    $data_h['id_usuario']=$this->aauth->get_user()->id;
+                    $data_h['fecha']=date("Y-m-d H:i:s");
+                    $data_h['descripcion']=json_encode(array("lastbal"=>"lastbal+$amount"));
+                    $data_h['id_fila']=$acid;
+                    $data_h['tabla']="accounts";
+                    $data_h['nombre_columna']="id";
+                    $this->db->insert("historial_crm",$data_h);
             $paid_amount = $invresult->pamnt + $amount;
             $status = 'Partial';
             $totalrm = $totalrm - $amount;
@@ -1388,11 +1419,30 @@ $this->load->model('customers_model', 'customers');
             $this->db->set('status', 'paid');
             $this->db->where('tid', $tid);
             $this->db->update('rec_invoices');
+                         $data_h=array();
+                        $data_h['modulo']="Reciclaje de ventas";
+                        $data_h['accion']="Adminstrar Facaturas > Ver > Hacer el pago {update}";
+                        $data_h['id_usuario']=$this->aauth->get_user()->id;
+                        $data_h['fecha']=date("Y-m-d H:i:s");
+                        $data_h['descripcion']=json_encode(array("pmethod"=>$pmethod,"pamnt"=>"pamnt+$amount","status"=>"paid"));
+                        $data_h['id_fila']=$tid;
+                        $data_h['tabla']="rec_invoices";
+                        $data_h['nombre_columna']="tid";
+                        $this->db->insert("historial_crm",$data_h);
             //acount update
             $this->db->set('lastbal', "lastbal+$amount", FALSE);
             $this->db->where('id', $acid);
             $this->db->update('accounts');
-
+                        $data_h=array();
+                        $data_h['modulo']="Reciclaje de ventas";
+                        $data_h['accion']="Adminstrar Facaturas > Ver > Hacer el pago {update}";
+                        $data_h['id_usuario']=$this->aauth->get_user()->id;
+                        $data_h['fecha']=date("Y-m-d H:i:s");
+                        $data_h['descripcion']=json_encode(array("lastbal"=>"lastbal+$amount"));
+                        $data_h['id_fila']=$acid;
+                        $data_h['tabla']="accounts";
+                        $data_h['nombre_columna']="id";
+                        $this->db->insert("historial_crm",$data_h);
             $totalrm = 0;
             $status = 'Paid';
             $paid_amount = $amount;
