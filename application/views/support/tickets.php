@@ -178,8 +178,6 @@
                                                    	
                                                    	<option value='AgregarInternet'>AgregarInternet</option>
                                                   	<option value='AgregarTelevision'>AgregarTelevision</option>
-													<option value='Bajar 5 Mg'>Bajar 5 Mg</option>
-													<option value='Bajar 3 Mg'>Bajar 3 Mg</option>
 													<option value='Cambio de equipo'>Cambio de equipo</option>
 													<option value='Corte Combo'>Corte Combo</option>
 													<option value='Corte Internet'>Corte Internet</option>
@@ -192,10 +190,11 @@
 													<option value='Revision de television'>Revision de television</option>
 													<option value='Reconexion Combo'>Reconexion Combo</option>
 													<option value='Reconexion Internet'>Reconexion Internet</option>
+													<option value='Retiro voluntario'>Retiro voluntario</option>
 													<option value='Reconexion Television'>Reconexion Television</option>
 													<option value='Recuperación cable modem'>Recuperación cable modem</option>
-													<option value='Subir 5 Mg'>Subir 5 Mg</option>
-													<option value='Subir 10 Mg'>Subir 10 Mg</option>
+													<option value='Subir megas'>Subir megas</option>
+													<option value='Bajar megas'>Bajar megas</option>
 													<option value='Suspension Combo'>Suspension Combo</option>
 													<option value='Suspension Internet'>Suspension Internet</option>
 													<option value='Suspension Television'>Suspension Television</option>
