@@ -79,7 +79,7 @@ class Dashboard extends CI_Controller
             $this->load->view('fixed/header', $head);
             $this->load->view('products/products');
             $this->load->view('fixed/footer');
-        } else if ($this->aauth->get_user()->roleid == 2){
+        } else if ($this->aauth->get_user()->roleid >= 2){
             $head['title'] = "Manage Invoices";
             $head['usernm'] = $this->aauth->get_user()->username;
             $this->load->view('fixed/header', $head);
