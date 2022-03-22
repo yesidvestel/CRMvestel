@@ -145,7 +145,7 @@
                                 
                             </div>
                             <hr>
-                             <strong>DATOS DE INTEGRACION</strong>
+                             <strong>DATOS DE INTEGRACION</strong> <i class="icon-circle" style="color: <?= $color?>;"></i><i class="icon-circle" style="color: <?= $color?>;"></i><i class="icon-circle" style="color: <?= $color?>;"></i><i class="icon-circle" style="color: <?= $color?>;"></i>
                             <hr>                                  
                                     <?php if ($this->aauth->get_user()->roleid > 4) { ?>
                                     <a class="btn btn-success" href="<?=base_url().'customers/edita_estado_usuario?username='.$details['name_s'].'&id_cm='.$details['id']?>&id_sede=<?=$details['gid']?>"><?= ($estado_mikrotik=='true') ? "Activar" : "Desactivar" ?></a>                                 

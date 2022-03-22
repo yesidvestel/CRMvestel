@@ -342,6 +342,10 @@ class Customers extends CI_Controller
 		$data['attach'] = $this->customers->attach($custid);
         $data['validar_firma']=$this->customers->validar_firma($custid);
         $data['estado_mikrotik']=$this->customers->get_estado_mikrotik($data['details']['name_s'],$data['details']['gid'],$data['details']['tegnologia_instalacion']);        
+        $data['color']="#5ccb5f";
+        if(empty($data['estado_mikrotik'])){
+            $data['color']="red";
+        }
         $this->customers->actualizar_debit_y_credit($custid);
         if($data['servicios']['estado_combo']=="Cortado"){
             $data['servicios']['combo']=$data['servicios']['combo']="<b><i class='sts-Cortado'>".$data['servicios']['paquete']."</i></b>";   
