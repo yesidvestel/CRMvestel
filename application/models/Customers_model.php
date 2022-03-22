@@ -1150,7 +1150,7 @@ class Customers_model extends CI_Model
                   "?name" => $user_name,
                   ));
          $API->disconnect();
-         var_dump($arrID);
+         
          return $arrID[0]['disabled'];
 
         }else{
