@@ -1122,7 +1122,7 @@ class Customers_model extends CI_Model
         include (APPPATH."libraries\RouterosAPI.php");
         set_time_limit(3000);
          $API = new RouterosAPI();
-        $API->debug = false;
+        $API->debug = true;
         $datos_consulta_ip=array("id_sede"=>$id_sede,"tegnologia"=>$tegnologia_instalacion);
         if ($API->connect($this->get_ip_coneccion_microtik_por_sede($datos_consulta_ip), $_SESSION['variables_MikroTik']->username, $_SESSION['variables_MikroTik']->password)) {
             //$user_name="user_prueba_duber_disabled";
@@ -1132,6 +1132,25 @@ class Customers_model extends CI_Model
                   ));
          $API->disconnect();
 
+         return $arrID[0]['disabled'];
+
+        }else{
+            
+        }
+    }
+    public function get_estado_mikrotik2($user_name,$id_sede,$tegnologia_instalacion,$API){
+        
+        set_time_limit(3000);
+        
+        $datos_consulta_ip=array("id_sede"=>$id_sede,"tegnologia"=>$tegnologia_instalacion);
+        if ($API->connect($this->get_ip_coneccion_microtik_por_sede($datos_consulta_ip), $_SESSION['variables_MikroTik']->username, $_SESSION['variables_MikroTik']->password)) {
+            //$user_name="user_prueba_duber_disabled";
+            $arrID=$API->comm("/ppp/secret/getall", 
+                  array(
+                  "?name" => $user_name,
+                  ));
+         $API->disconnect();
+         var_dump($arrID);
          return $arrID[0]['disabled'];
 
         }else{

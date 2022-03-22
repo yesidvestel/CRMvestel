@@ -57,10 +57,10 @@
                                             }else if($key=="ip_Monterrey"){
                                                 $color=$color_monterrey;
                                             }
-
+                                            if(isset($color)){
                                     ?>
                                         <i class="icon-circle" style="color: <?= $color?>;"></i><i class="icon-circle" style="color: <?= $color?>;"></i><i class="icon-circle" style="color: <?= $color?>;"></i><i class="icon-circle" style="color: <?= $color?>;"></i>
-                                    
+                                    <?php } ?>
                                 </div>
 
                             </div>

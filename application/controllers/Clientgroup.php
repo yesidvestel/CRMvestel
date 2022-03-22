@@ -52,15 +52,19 @@ class Clientgroup extends CI_Controller
         $head['usernm'] = $this->aauth->get_user()->username;   
         $head['title'] = "Editar Variables apis";   
         $data['apis']=$this->db->get_where("variables_de_entorno")->result_array();
-        $data['estado_yopal']=$this->customers->get_estado_mikrotik("nn",2,"GPON");        
-        $data['estado_villanueva_gpon']=$this->customers->get_estado_mikrotik("nn",3,"GPON");        
-        $data['estado_villanueva_epon']=$this->customers->get_estado_mikrotik("nn",3,"EPON");        
-        $data['estado_monterrey']=$this->customers->get_estado_mikrotik("nn",4,"GPON");        
+include (APPPATH."libraries\RouterosAPI.php");
+         $API = new RouterosAPI();
+        $API->debug = false;
+
+        $data['estado_yopal']=$this->customers->get_estado_mikrotik2("nn",2,"GPON",$API);        
+        $data['estado_villanueva_gpon']=$this->customers->get_estado_mikrotik2("nn",3,"GPON",$API);        
+        $data['estado_villanueva_epon']=$this->customers->get_estado_mikrotik2("nn",3,"EPON",$API);        
+        $data['estado_monterrey']=$this->customers->get_estado_mikrotik2("nn",4,"GPON",$API);        
         $data['color_yopal']="#5ccb5f";
         $data['color_villanueva_gpon']="#5ccb5f";
         $data['color_villanueva_epon']="#5ccb5f";
         $data['color_monterrey']="#5ccb5f";
-        
+
         if(empty($data['estado_yopal'])){
             $data['color_yopal']="red";
         }
