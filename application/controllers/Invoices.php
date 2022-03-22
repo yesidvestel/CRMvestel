@@ -40,7 +40,43 @@ class Invoices extends CI_Controller
         }
 
     }
+public function notas(){
+        $head['title'] = "Notas Debito/Credito";
+        $head['usernm'] = $this->aauth->get_user()->username;
+        $this->load->view('fixed/header', $head);
+        $this->load->view('invoices/notas_credito_debito');
+        $this->load->view('fixed/footer');
 
+}
+public function notas_list(){
+$this->load->model("Notas_model","notas");
+    $list = $this->notas->get_datatables();
+    $data = array();
+    $no = $this->input->post('start');
+    setlocale(LC_TIME, "spanish");
+
+    foreach ($list as $key => $value) {            
+            $no++;  
+            $row = array();
+            $row[]=$value->id;
+            $row[]=$value->tid;
+            $row[]=$value->invoicedate;
+            $row[]=$value->csd;
+            $row[]=amountFormat($value->subtotal);
+            $row[]=$value->product;
+            $row[]="";//"<div style='text-align:center'><a class='btn-small btn-info ver-mas'  data-descripcion='".$value->descripcion."'><i class='icon-book'></i></a></div>";
+            $data[]=$row;
+
+    }
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->notas->count_all(),
+            "recordsFiltered" => $this->notas->count_filtered(),
+            "data" => $data,
+        );
+        //output to json format
+        echo json_encode($output);
+}
     //create invoice
     public function create()
     {
