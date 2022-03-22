@@ -46,8 +46,21 @@
 
                                 <div class="col-sm-9">
                                     <input type="text" name="<?=$row['nombre_api'].'_'.$key?>" class="form-control" value="<?=$value?>">
+                                    <?php if($key=="ip_Yopal"){
+                                                $color=$color_yopal;
+                                            }else if($key=="Ip_Villanueva_GPON"){
+                                                $color=$color_villanueva_gpon;
+                                            }else if($key=="Ip_Villanueva_EPON"){
+                                                $color=$color_villanueva_epon;
+                                            }else if($key=="Ip_Villanueva_EOC"){
+                                                $color=$color_villanueva_epon;
+                                            }else if($key=="ip_Monterrey"){
+                                                $color=$color_monterrey;
+                                            }
 
-
+                                    ?>
+                                        <i class="icon-circle" style="color: <?= $color?>;"></i><i class="icon-circle" style="color: <?= $color?>;"></i><i class="icon-circle" style="color: <?= $color?>;"></i><i class="icon-circle" style="color: <?= $color?>;"></i>
+                                    
                                 </div>
 
                             </div>
