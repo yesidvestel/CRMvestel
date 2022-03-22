@@ -1474,6 +1474,6 @@
 <!-- / main menu-->
 
 <script type="text/javascript">
-    var abcd=$( 'a[href*="http://localhost/CRMvestel/settings/activate"]' );
+    var abcd=$( 'a[href*="'+baseurl+'settings/activate"]' );
     $(abcd[0]).parent().remove();
 </script>
