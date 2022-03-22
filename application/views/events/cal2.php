@@ -133,7 +133,7 @@
 
 
         <div id='calendar'></div>
-            <div class="card card-block" <?= ($this->aauth->get_user()->roleid<4) ? 'style="display:none;"':''  ?>>
+            <div class="card card-block" <?= ($this->aauth->get_user()->roleid<3) ? 'style="display:none;"':''  ?>>
                 <div class="form-group row" >
                     <label class="col-sm-2 col-form-label" for="tecnicos_f">Tecnico</label>
                     <div class="col-sm-6">
@@ -253,7 +253,7 @@
     // Here i define the base_url
 
     // Fullcalendar
-   <?php if ($this->aauth->get_user()->roleid <= 3) { ?>
+   <?php if ($this->aauth->get_user()->roleid < 3) { ?>
     contruccion_calendar();
   <?php } ?>
 });
