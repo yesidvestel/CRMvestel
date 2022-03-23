@@ -15,10 +15,12 @@
                         
                         <th>ID</th>
                         <th>TID</th>
-                        <th>Fecha</th>
+                        <th>Fecha Fac</th>
+                        <th>Fecha Creada</th>
                         <th>Cliente</th>
                         <th>Valor</th>
                         <th>Tipo</th>
+                        <th>Usuario</th>
                         <th>Acciones</th>
                         
 
@@ -33,10 +35,12 @@
 
                         <th>ID</th>
                         <th>TID</th>
-                        <th>Fecha</th>
+                        <th>Fecha Fac</th>
+                        <th>Fecha Creada</th>
                         <th>Cliente</th>
                         <th>Valor</th>
                         <th>Tipo</th>
+                        <th>Usuario</th>
                         <th>Acciones</th>
                     </tr>
                 </tfoot>

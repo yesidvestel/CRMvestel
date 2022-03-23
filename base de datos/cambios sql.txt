@@ -1,4 +1,10 @@
-﻿CREATE TABLE IF NOT EXISTS `crm`.`historial_crm` (
+﻿ALTER TABLE `invoice_items` ADD `fecha_creacion` DATETIME NULL AFTER `id_usuario_crea`;
+ALTER TABLE `invoice_items` ADD `id_usuario_crea` INT NULL AFTER `tax_removed`;
+
+
+
+
+CREATE TABLE IF NOT EXISTS `crm`.`historial_crm` (
   `id` BIGINT(19) UNSIGNED NOT NULL AUTO_INCREMENT,
   `modulo` VARCHAR(250) NULL DEFAULT NULL,
   `accion` VARCHAR(250) NULL DEFAULT NULL,

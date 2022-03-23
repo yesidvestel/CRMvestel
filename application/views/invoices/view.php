@@ -236,8 +236,12 @@
                         $str_1="";
                         if($row['product']=="Nota Credito" || $row['product']=="Nota Debito"){
                             $str_1='<a href="#" class="btn btn-danger btn-sm eliminar_nota" data-id="'.$row['id'].'"><span class="icon-trash"></span></a>&nbsp';
-                        }
-                                        echo '<tr><td colspan=5>'.$str_1. $row['product_des'] . '</td></tr>';
+                        }   $varuser="";
+                            if(isset($row['id_usuario_crea'])){
+                                $us1=$this->db->get_where("employee_profile",array("id"=>$row['id_usuario_crea']))->row();
+                                    $varuser="nota creada por : ".$us1->name;
+                            }
+                                        echo '<tr><td colspan=5>'.$str_1. $row['product_des'].$varuser . '</td></tr>';
                                         $c++;
                                     } ?>
 

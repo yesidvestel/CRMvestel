@@ -21,12 +21,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Notas_model extends CI_Model
 {
     var $table="invoice_items";
-    var $column_order = array("invoice_items.id","invoice_items.tid","invoices.invoicedate","invoices.csd","invoice_items.subtotal","invoice_items.product");
-    var $column_search = array("invoice_items.id","invoice_items.tid","invoices.invoicedate","invoices.csd","invoice_items.subtotal","invoice_items.product");
+    var $column_order = array("invoice_items.id","invoice_items.tid","invoices.invoicedate","fecha_creacion","name","invoice_items.subtotal","invoice_items.product");
+    var $column_search = array("invoice_items.id","invoice_items.tid","invoices.invoicedate","fecha_creacion","name","invoice_items.subtotal","invoice_items.product");
     
     private function _get_datatables_query()
     {
-        $this->db->select("invoice_items.id as id,invoice_items.tid as tid,invoices.invoicedate as invoicedate,invoices.csd as csd,invoice_items.subtotal as subtotal,invoice_items.product as product,customers.name as name,customers.unoapellido as apellido");
+        $this->db->select("invoice_items.id as id,invoice_items.tid as tid,invoices.invoicedate as invoicedate,invoices.csd as csd,invoice_items.subtotal as subtotal,invoice_items.product as product,customers.name as name,customers.unoapellido as apellido,invoice_items.id_usuario_crea as id_usuario,invoice_items.fecha_creacion as fecha_creacion");
         $this->db->from($this->table);
         $this->db->join("invoices","invoice_items.tid=invoices.tid");
         $this->db->join("customers","customers.id=invoices.csd");
@@ -64,7 +64,7 @@ class Notas_model extends CI_Model
     function get_datatables()
     {
         $this->_get_datatables_query();
-//        $this->db->order_by("id","desc");
+        $this->db->order_by("invoice_items.id","desc");
         if ($this->input->post('length') != -1)
             $this->db->limit($this->input->post('length'), $this->input->post('start'));
         $query = $this->db->get();

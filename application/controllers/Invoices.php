@@ -53,17 +53,30 @@ $this->load->model("Notas_model","notas");
     $list = $this->notas->get_datatables();
     $data = array();
     $no = $this->input->post('start');
-    setlocale(LC_TIME, "spanish");
+    //setlocale(LC_TIME, "spanish");
 
     foreach ($list as $key => $value) {            
             $no++;  
             $row = array();
             $row[]=$value->id;
-            $row[]=$value->tid;
+            $row[]="<a href='".base_url()."invoices/view?id=".$value->tid."'>Fac. #".$value->tid."</a>";;
             $row[]=$value->invoicedate;
+            if(isset($value->fecha_creacion)){
+                $row[]=$value->fecha_creacion;    
+            }else{
+                $row[]="Sin Fecha";    
+            }
+            
             $row[]="<a href='".base_url()."customers/view?id=".$value->csd."'>".$value->name." ".$value->apellido."</a>";
             $row[]=amountFormat($value->subtotal);
             $row[]=$value->product;
+            if(isset($value->id_usuario)){
+                $us1=$this->db->get_where("employee_profile",array("id"=>$value->id_usuario))->row();
+                 $row[]=$us1->name;    
+            }else{
+                $row[]="NN";    
+            }
+            
             $row[]="";//"<div style='text-align:center'><a class='btn-small btn-info ver-mas'  data-descripcion='".$value->descripcion."'><i class='icon-book'></i></a></div>";
             $data[]=$row;
 
@@ -2316,6 +2329,8 @@ foreach ($lista as $key => $value) {
                     }
                 }
                     $data_invoice_item['subtotal']=$data_invoice_item['price'];
+                    $data_invoice_item['id_usuario_crea']=$this->aauth->get_user()->id;
+                    $data_invoice_item['fecha_creacion']=date("Y-m-d H:i:s");
                     //var_dump($data_invoice);
                     $this->db->insert("invoice_items",$data_invoice_item);
                     $this->db->update("invoices",$data_invoice,array("tid"=>$id_factura));
