@@ -26,9 +26,10 @@ class Notas_model extends CI_Model
     
     private function _get_datatables_query()
     {
-        $this->db->select("invoice_items.id as id,invoice_items.tid as tid,invoices.invoicedate as invoicedate,invoices.csd as csd,invoice_items.subtotal as subtotal,invoice_items.product as product");
+        $this->db->select("invoice_items.id as id,invoice_items.tid as tid,invoices.invoicedate as invoicedate,invoices.csd as csd,invoice_items.subtotal as subtotal,invoice_items.product as product,customers.name as name,customers.unoapellido as apellido");
         $this->db->from($this->table);
         $this->db->join("invoices","invoice_items.tid=invoices.tid");
+        $this->db->join("customers","customers.id=invoices.csd");
         $this->db->where_in("invoice_items.product",array("Nota Credito","Nota Debito"));
         $i=0;
         foreach ($this->column_search as $item) // loop column

@@ -61,7 +61,7 @@ $this->load->model("Notas_model","notas");
             $row[]=$value->id;
             $row[]=$value->tid;
             $row[]=$value->invoicedate;
-            $row[]=$value->csd;
+            $row[]="<a href='".base_url()."customers/view?id=".$value->csd."'>".$value->name." ".$value->apellido."</a>";
             $row[]=amountFormat($value->subtotal);
             $row[]=$value->product;
             $row[]="";//"<div style='text-align:center'><a class='btn-small btn-info ver-mas'  data-descripcion='".$value->descripcion."'><i class='icon-book'></i></a></div>";
