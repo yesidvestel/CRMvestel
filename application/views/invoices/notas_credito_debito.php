@@ -135,30 +135,16 @@
 
     });
 
-    $(document).on("click",".ver-mas",function(e){
-        let contenido;
-            contenido=$(this).data("descripcion");
-
-            
-            if(typeof contenido ==="string"){
-                    $("#parrafo").html("<p>"+contenido+"</p>");
-                    $("#tabla").css("display","none");
-                    $("#parrafo").css("display","");    
-            }else{
-                    var content="";
-                    
-                     for(var clave in contenido){
-                        console.log(clave);
-                        content+="<tr><td>"+clave+"</td><td>"+contenido[clave]+"</td></tr>";
-                     }
-                    
-                    $("#tbody1").html(content);
-                    $("#parrafo").css("display","none");
-                    $("#tabla").css("display","");    
-            }
-            
-
-        //console.log(contenido);
-        $("#pop_model").modal("show");
+    $(document).on("click",".eliminar_nota",function(e){
+        e.preventDefault();
+        var id_nota=$(this).data("id");
+        var p=confirm("¿Desea eliminar la nota?");
+        if(p){
+                $.post(baseurl+"invoices/eliminar_nota",{id_nota:id_nota},function(data){
+                    if(data=="Realizado"){
+                        location.reload();
+                    }
+                });    
+        }
     });
 </script>

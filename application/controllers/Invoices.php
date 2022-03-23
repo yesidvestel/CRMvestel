@@ -77,7 +77,7 @@ $this->load->model("Notas_model","notas");
                 $row[]="NN";    
             }
             
-            $row[]="";//"<div style='text-align:center'><a class='btn-small btn-info ver-mas'  data-descripcion='".$value->descripcion."'><i class='icon-book'></i></a></div>";
+            $row[]='<a href="#" class="btn btn-danger btn-sm eliminar_nota" data-id="'.$value->id.'"><span class="icon-trash"></span></a>&nbsp';//"<div style='text-align:center'><a class='btn-small btn-info ver-mas'  data-descripcion='".$value->descripcion."'><i class='icon-book'></i></a></div>";
             $data[]=$row;
 
     }
