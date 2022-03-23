@@ -1138,20 +1138,19 @@ class Customers_model extends CI_Model
             
         }
     }
-    public function get_estado_mikrotik2($user_name,$id_sede,$tegnologia_instalacion,$API){
+    public function get_estado_mikrotik2($id_sede,$tegnologia_instalacion,$API){
         
         set_time_limit(3000);
         
         $datos_consulta_ip=array("id_sede"=>$id_sede,"tegnologia"=>$tegnologia_instalacion);
         if ($API->connect($this->get_ip_coneccion_microtik_por_sede($datos_consulta_ip), $_SESSION['variables_MikroTik']->username, $_SESSION['variables_MikroTik']->password)) {
             //$user_name="user_prueba_duber_disabled";
-            $arrID=$API->comm("/ppp/secret/getall", 
-                  array(
-                  "?name" => $user_name,
-                  ));
+            $arrID=$API->comm("/ppp/secret/getall");
          $API->disconnect();
-
-         return $arrID[0]['disabled'];
+         
+            return $arrID[0]['disabled'];    
+         
+         
 
         }else{
             
