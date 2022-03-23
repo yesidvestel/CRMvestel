@@ -381,7 +381,7 @@
                                         <div class="col-sm-6">
                                            
                                             <select style="width: 100%;" id="deudores_multiple" name="deudores_multiple[]" class="form-control select-box" multiple="multiple">
-                                                         
+                                                        <option value='menosdeunmes'>Menos del Mes</option>
                                                         <option value='1mes'>Corriente</option>
                                                         <option value='masdeunmes'>Mas del Mes</option>
                                                         <option value='2meses'>Mas de 2 meses</option>

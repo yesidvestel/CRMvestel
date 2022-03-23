@@ -447,6 +447,19 @@ include (APPPATH."libraries\RouterosAPI.php");
                                 $invoice->total=$suma;
                             }*/
                    // }
+                     if( isset($filtro_deudores_multiple_2['menosdeunmes'])){
+                        if($fact_valida && $debe_customer<$invoice->total && $debe_customer>0 && $customer_moroso==false && $invoice->total>0){
+                            $customer_moroso=true;
+                            $valor_ultima_factura=$invoice->total;
+                            break;                    
+                        }else if($fact_valida){
+                            $filtros_deuda_customers++;
+                            if($filtros_deuda_customers==$n_filtro_deudores){
+                                break;    
+                            }
+                            
+                        }
+                    }    
                     if( isset($filtro_deudores_multiple_2['1mes'])){
                         if($fact_valida && $debe_customer==$invoice->total && $customer_moroso==false && $invoice->total>0){
                             $customer_moroso=true;
@@ -1197,6 +1210,19 @@ include (APPPATH."libraries\RouterosAPI.php");
                                 $invoice->total=$suma;
                             }*/
                    // }
+                    if( isset($filtro_deudores_multiple_2['menosdeunmes'])){
+                        if($fact_valida && $debe_customer<$invoice->total && $debe_customer>0 && $customer_moroso==false && $invoice->total>0){
+                            $customer_moroso=true;
+                            $valor_ultima_factura=$invoice->total;
+                            break;                    
+                        }else if($fact_valida){
+                            $filtros_deuda_customers++;
+                            if($filtros_deuda_customers==$n_filtro_deudores){
+                                break;    
+                            }
+                            
+                        }
+                    }        
                     if( isset($filtro_deudores_multiple_2['1mes'])){
                         if($fact_valida && $debe_customer==$invoice->total && $customer_moroso==false && $invoice->total>0){
                             $customer_moroso=true;
@@ -1898,6 +1924,19 @@ include (APPPATH."libraries\RouterosAPI.php");
                                 $invoice->total=$suma;
                             }*/
                    // }
+                    if( isset($filtro_deudores_multiple_2['menosdeunmes'])){
+                        if($fact_valida && $debe_customer<$invoice->total && $debe_customer>0 && $customer_moroso==false && $invoice->total>0){
+                            $customer_moroso=true;
+                            $valor_ultima_factura=$invoice->total;
+                            break;                    
+                        }else if($fact_valida){
+                            $filtros_deuda_customers++;
+                            if($filtros_deuda_customers==$n_filtro_deudores){
+                                break;    
+                            }
+                            
+                        }
+                    }    
                     if(isset($filtro_deudores_multiple_2['1mes'])){
                         if($fact_valida && $debe_customer==$invoice->total && $customer_moroso==false && $invoice->total>0){
                             $customer_moroso=true;
