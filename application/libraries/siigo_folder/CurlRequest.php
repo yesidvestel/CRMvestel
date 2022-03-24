@@ -19,9 +19,9 @@ class CurlRequest
             CURLOPT_POST => 1,
             CURLOPT_HEADER => 0,
             CURLOPT_URL => $url,
-            CURLOPT_FRESH_CONNECT => 0,
+            CURLOPT_FRESH_CONNECT => 10,
             CURLOPT_RETURNTRANSFER => 1,
-            CURLOPT_FORBID_REUSE => 0,
+            CURLOPT_FORBID_REUSE => 1,
             CURLOPT_TIMEOUT => 0,
             CURLOPT_POSTFIELDS => $post
         ];
