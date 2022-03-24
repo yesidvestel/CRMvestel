@@ -113,9 +113,7 @@ function contruccion_calendar(){
             currentEvent = calEvent;
 
             // Open modal to edit or delete event
-            modal({
-                // Available buttons when editing
-                buttons: {
+            var btns_config={
                     delete: {
                         id: 'delete-event',
                         css: 'btn-danger',
@@ -126,10 +124,25 @@ function contruccion_calendar(){
                         css: 'btn-success',
                         label: 'Actualizar'
                     }
-                },
+                };
+            if(parseInt(rolid_user)<4){
+                btns_config={
+                    update: {
+                        id: 'update-event',
+                        css: 'btn-success',
+                        label: 'Actualizar'
+                    }
+                };
+            }
+            var configuraciones1={
+                // Available buttons when editing
+                buttons: btns_config,
                 title: 'Editar Evento "' + calEvent.el.fcSeg.eventRange.def.title + '"',
                 event: calEvent.event
-            });
+            };
+
+
+            modal(configuraciones1);
         }
            
       
