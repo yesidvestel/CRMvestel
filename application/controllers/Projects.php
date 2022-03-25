@@ -465,7 +465,7 @@ class Projects Extends CI_Controller
             $row[] = dateformat($task->start);
             $row[] = '<span class="task_' . $task->status . '">' . $this->lang->line($task->status) . '</span>';
 
-            $row[] = '<a class="btn-info btn-sm" href="' . base_url('projects') . '/edittask?id=' . $task->id . '" data-object-id="' . $task->id . '"> <i class="icon-pencil"></i> </a>&nbsp;<a class="btn-brown btn-sm delete-custom" data-did="3" href="#"  data-object-id="' . $task->id . '"> <i class="icon-trash-o"></i> </a>';
+            $row[] = '<a class="btn-info btn-sm" href="' . base_url('projects') . '/edittask?id=' . $task->id . '" data-object-id="' . $task->id . '"> <i class="icon-pencil"></i> </a>&nbsp;<a class="btn-brown btn-sm delete-custom" data-did="3" href="#"  data-object-id="' . $task->id . '"> <i class="icon-trash-o"></i> </a>&nbsp; <a href="'.base_url().'manager/historial?id='.$task->id.'" data-id="' . $task->id . '" class="historial_task btn-sm btn-indigo" title="Historial"> <i class="icon-eye"></i> </a>';
 
 
             $data[] = $row;
