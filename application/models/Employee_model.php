@@ -149,7 +149,7 @@ class Employee_model extends CI_Model
 		$confemp,$conffa,$confmon,$conffec,$confcat,
 		$confmet,$confrest,$confcorr,$confterm,$confaut,
 		$confseg,$conftem,$confsop,$conface,$confupt,
-		$confapi,$tar)
+		$confapi,$tar,$dathistorial,$conotas)
     {
         $data = array(
             'name' => $name,
@@ -281,6 +281,8 @@ class Employee_model extends CI_Model
 				'conface'=>$conface,
 				'confupt'=>$confupt,
 				'confapi'=>$confapi,
+                'conotas'=>$conotas,
+                'dathistorial'=>$dathistorial,
 				'tar'=>$tar
             );
 
@@ -579,7 +581,7 @@ class Employee_model extends CI_Model
 		$confemp,$conffa,$confmon,$conffec,$confcat,
 		$confmet,$confrest,$confcorr,$confterm,$confaut,
 		$confseg,$conftem,$confsop,$conface,$confupt,
-		$confapi,$tar)
+		$confapi,$tar,$dathistorial,$conotas)
     {
         $data = array(
             'id' => $id,
@@ -702,6 +704,8 @@ class Employee_model extends CI_Model
 				'conface'=>$conface,
 				'confupt'=>$confupt,
 				'confapi'=>$confapi,
+                'conotas'=>$conotas,
+                'dathistorial'=>$dathistorial,
 				'tar'=>$tar
             );
 
