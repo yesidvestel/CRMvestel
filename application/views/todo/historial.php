@@ -1,3 +1,4 @@
+<?php $lista_productos_orden=$this->db->get_where('transferencia_products_orden',array('id_tarea'=>$id_tarea))->result_array(); ?>
 <article class="content">
     <div class="card card-block">
         <div class="card">
@@ -23,6 +24,10 @@
                                 <li class="nav-item">
                                     <a class="nav-link" id="linkOpt-tab" data-toggle="tab" href="#files"
                                        aria-controls="files"><?php echo $this->lang->line('Files') ?></a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="linkmaterial-tab" data-toggle="tab" href="#material"
+                                       aria-controls="material">Material </a>
                                 </li>
                                 
                             </ul>
@@ -141,6 +146,39 @@
                                     <br>
                                 </div><!-- aqui termina lo de los archivos -->
 
+                                <div class="tab-pane fade" id="material" role="tabpanel" aria-labelledby="files-tab"
+                                     aria-expanded="false">
+                                    
+                                        <p><a href="#pop_model3" data-toggle="modal"  data-remote="false" class="btn btn-success sub-btn" title="Change Status">ASIGNAR MATERIAL</a></p>
+
+                                    <div class="table-responsive">
+                                        <table  class="table-responsive tfr my_stripe" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th colspan="3" ><h5 align="left"><strong>Material usado en la red</strong></h5></th>
+                                            </tr>
+                                            <tr>
+                                                <th style="text-align: center;" width="10%">PID</th>
+                                                <th style="text-align: center;" width="40%">Nombre</th>
+                                                <th style="text-align: center;" width="30%">Cantidad Tot.</th>
+                                                <th style="text-align: center;" width="20%">Valor a Transferir</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            <?php foreach ($lista_productos_orden as $key => $prod) { $prod_padre=$this->db->get_where('products',array('pid'=>$prod['products_pid']))->row(); ?>        
+                                                <tr>
+                                                    <td style="text-align: center;" width="10%"><?=$prod_padre->pid?></td>
+                                                    <td style="text-align: center;" width="30%"><?=$prod_padre->product_name?></td>
+                                                    <td style="text-align: center;" width="20%"><?=$prod['cantidad']?></td>
+                                                    <td style="text-align: center;" width="20%"><a onclick="eliminar_prod_lista(<?=$prod['idtransferencia_products_orden']?>)"><img src="<?=base_url()?>/assets/img/trash.png"></a></td>
+                                                </tr>
+                                            <?php } ?>
+                                        </tbody>
+                                    </table>
+                                    </div>
+
+                                </div><!-- aqui termina lo de los materiales -->
 
                                 </div>
                     </div>
@@ -148,10 +186,59 @@
                 </div>
 
         </div>
-            <p><strong>[Descripcion de la Tarea]</strong><?=$tarea->description  ?></p>
+            <p><strong>[Descripcion de la Tarea]</strong><?php $x1a=explode('<img src="data', $tarea->description);echo $x1a[0];  ?></p>
     </div>
 </article>
+<div id="pop_model3" class="modal fade">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title">Asignar Material</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form id="form_model3">
 
+                            <div class="form-group row">
+
+                        <div class="col-sm-10">
+                            <label class="col-sm-4 col-form-label" for="name">Nombre del articulo</label> 
+                            <select class="form-control select-box" id="lista_productos" name="lista_productos[]" multiple="multiple" style="width: 100%;">
+                                <?php foreach ($lista_productos_tecnico as $key => $producto) { ?>
+                                    <option value="<?=$producto['pid']?>"  data-qty="<?=$producto['qty']?>" data-pid="<?=$producto['pid']?>" data-product_name="<?=$producto['product_name']?>" ><?=$producto['product_name']?></option>
+                               <?php } ?>
+                            </select>
+                        </div>
+                                     </div>   
+                                     <table width="80%" style="text-align: center;" class="table-responsive tfr my_stripe">
+                                            <thead >
+                                                <tr>
+                                                    <th style="text-align: center;" width="10%">PID</th>
+                                                    <th style="text-align: center;" width="30%">Nombre</th>
+                                                    <th style="text-align: center;" width="20%">Cantidad Tot.</th>
+                                                    <th style="text-align: center;" width="20%">Valor a Transferir</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="itemsx">
+                                                <tr id="remover_fila">
+                                                    <td>PID</td>
+                                                    <td>Nombre</td>
+                                                    <td>##</td>
+                                                    <td><input type="number" name="" data-max="5" data-pid="0" class="form-control" onfocusout="validar_numeros(this);" disabled></td>   
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <br>
+                                        <input  type="button" class="btn btn-primary" value="Agregar" onclick="guardar_productos()">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Volver</button>
+
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+</div>                
 <div id="pop_model" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -244,6 +331,87 @@
 <script type="text/javascript">
     var id_tarea="<?= $_GET['id'] ?>";
     var id_historia_tarea=0;
+    function eliminar_prod_lista(idtransferencia_products_orden){
+        var confirmacion =confirm("¿Deseas realmente eliminar este item ?");
+        if(confirmacion==true){
+            $.post(baseurl+"tickets/eliminar_prod_lista",{id:idtransferencia_products_orden},function(data){
+                alert("Producto Eliminado");
+                window.location.reload();
+            });
+        }
+    }
+    function validar_numeros (input){
+        var valorInput =parseInt($(input).val());
+        var valorMaximo = parseInt($(input).data('max'));
+        var valor_pid=parseInt($(input).data('pid'));
+        if(isNaN(valorInput)){
+            $(input).val(0);
+        }else if(valorInput<0){
+            $(input).val(0);    
+        }else if(valorInput>valorMaximo){
+            $(input).val(valorMaximo);
+        }
+        // cambia el valor total del la listaProductos y pasar los valores al input para que se envien al submit
+        valorInput =parseInt($(input).val());
+        var index_cambiar=0;
+        $(listaProductos).each(function(index,value){
+            if(value.pid==valor_pid){
+                index_cambiar=index;
+            }
+        });
+        listaProductos[index_cambiar].qty=valorInput;
+    }
+    var id_orden_n="<?=$id_tarea?>";
+    function guardar_productos(){
+        var datos_lista=$("#lista_productos").val();
+        if(datos_lista==null){
+            $("#lista_productos").attr("required", true);
+            $("#document_add").click();
+            setTimeout(function(){
+            $("#lista_productos").attr("required", false);    
+            },1000);
+        }else{
+         $.post(baseurl+"manager/add_products_tarea",{lista:listaProductos,id_orden_n:id_orden_n},function(data){
+                alert("Productos Agregados");
+                window.location.reload();
+            });   
+        }
+    }
+    $("#lista_productos").select2();
+    let listaProductos=[];
+    $("#lista_productos").on('select2:select',function(e){
+                var itemSeleccionado;
+                itemSeleccionado= {pid:e.params.data.element.dataset.pid,qty:e.params.data.element.dataset.qty,product_name:e.params.data.element.dataset.product_name};
+
+                
+                listaProductos.push(itemSeleccionado);
+                $("#remover_fila").html('');
+                var max_var=itemSeleccionado.qty;
+                if(max_var<0){
+                    max_var=0;
+                }
+                $("#itemsx").append('<tr id="fila_'+itemSeleccionado.pid+'"> <td>'+itemSeleccionado.pid+'</td><td>'+itemSeleccionado.product_name+'</td>       <td>'+itemSeleccionado.qty+'</td>           <td><input type="number" name="" data-max="'+max_var+'" data-pid="'+itemSeleccionado.pid+'" class="form-control" onfocusout="validar_numeros(this);" value="'+max_var+'"></td>     </tr>');
+
+console.log(e);
+console.log(itemSeleccionado);
+                 
+            });
+
+        $("#lista_productos").on("select2:unselect",function(e){
+        console.log("eliminado "+e.params.data.element.dataset.pid);
+        
+        $("#fila_"+e.params.data.element.dataset.pid).remove();
+        var remove_index=0;
+        $(listaProductos).each(function(index,value){
+            if(e.params.data.element.dataset.pid==value.pid){
+                remove_index=index;
+            }    
+            
+            
+        });
+        listaProductos.splice(remove_index,1);
+        
+    });
     $("#add_historia").click(function(e){
         e.preventDefault();
 
@@ -264,6 +432,7 @@
         });
     });
      $(function () {
+        
         $(".borrar_item").click(function(ev){
             ev.preventDefault();            
             id_historia_tarea=$(this).data("object-id");

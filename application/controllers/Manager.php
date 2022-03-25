@@ -77,9 +77,38 @@ class Manager Extends CI_Controller
         $data['tarea']=$this->manager->get_tarea($_GET['id']);
         $data['historial']=$this->manager->getHistorialTareas($_GET['id']);
         $data['p_files']=$this->manager->p_files($_GET['id']);
+        $orden = $this->aauth->get_user()->username;
+        
+        $almacen= $this->db->get_where('product_warehouse',array('id_tecnico'=>$orden))->row();
+        $data['lista_productos_tecnico']=$this->db->get_where('products',array('warehouse'=>$almacen->id))->result_array();
+
         $this->load->view('fixed/header', $head);
         $this->load->view('todo/historial',$data);
         $this->load->view('fixed/footer');
+    }
+    public function add_products_tarea(){
+        
+        foreach ($_POST['lista'] as $key => $producto) {
+             $vary=intval($producto['qty']);
+             if($vary>0){
+                $tf_prod_orden=$this->db->get_where('transferencia_products_orden',array("products_pid"=>$producto['pid'],"id_tarea"=>$_POST['id_orden_n']))->row();
+                if(empty($tf_prod_orden)){
+                    $dats['products_pid']=$producto['pid'];
+                    $dats['id_tarea']=$_POST['id_orden_n'];
+                    $dats['cantidad']=$producto['qty'];
+                    //proceso de descontar cantidades del almacen
+                    $producto_padre=$this->db->get_where('products',array('pid'=>$producto['pid']))->row();
+                    $x1=intval($producto_padre->qty);
+                    $x1=$x1-$vary;
+                    $datx['qty']=$x1;
+                    $this->db->update('products',$datx,array('pid'=>$producto['pid']));
+                    // end proceso de descontar cantidades del almacen
+                    $this->db->insert('transferencia_products_orden',$dats);
+                }
+             }
+        }
+
+        echo "Correcto";
     }
 
      public function file_handling()
