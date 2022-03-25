@@ -1,4 +1,8 @@
-﻿ALTER TABLE `invoice_items` ADD `fecha_creacion` DATETIME NULL AFTER `id_usuario_crea`;
+﻿ALTER TABLE `aauth_users` ADD `conotas` TINYINT(4) NULL AFTER `cofae`;
+ALTER TABLE `aauth_users` ADD `dathistorial` TINYINT(4) NULL AFTER `datimp`;
+
+--------------------------------------------------------------------------------------------
+ALTER TABLE `invoice_items` ADD `fecha_creacion` DATETIME NULL AFTER `id_usuario_crea`;
 ALTER TABLE `invoice_items` ADD `id_usuario_crea` INT NULL AFTER `tax_removed`;
 
 

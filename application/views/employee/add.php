@@ -148,6 +148,11 @@
 												  	<td align="lift" colspan="2">EMPLEADOS</td>
 												</tr>
 												<tr>
+                                                    <td align="right"></td>
+                                                    <td align="right"><input type="checkbox" name="conotas" ></input></td>
+                                                    <td align="lift">Notas Debito/Credito</td>
+                                                </tr>
+												<tr>
 													<td><input type="checkbox" name="us"></input></td>
 												  	<td align="lift" colspan="2">USUARIOS</td>
 												  	<td><input type="checkbox" name="tes"></input></td>
@@ -219,6 +224,7 @@
 												  	<td><input type="checkbox" name="placor"></input></td>
 												  	<td align="lift">Correo</td>
 												</tr>
+
 												<tr>
 												  	<td><input type="checkbox" name="mo"></input></td>
 												  	<td align="lift" colspan="2">MOVILES</td>
@@ -335,10 +341,18 @@
 												  	<td><input type="checkbox" name="confcorr"></input></td>
 												  	<td align="lift">Correo</td>
 												</tr>
+												 <tr>
+                                                    <td align="right"></td>
+                                                    <td><input type="checkbox" name="encatslis" ></input></td>
+                                                    <td align="lift">Lista ATS</td>
+                                                    <td align="right"></td>
+                                                    <td align="right"><input type="checkbox" name="dathistorial" ></input></td>
+                                                    <td align="lift">Historial CRM</td>
+                                                </tr>
 												<tr>
 												  	<td align="right"></td>
-												  	<td><input type="checkbox" name="encatslis"></input></td>
-												  	<td align="lift">Lista ATS</td>
+												  	<td></td>
+												  	<td align="lift"></td>
 												  	<td><input type="checkbox" name="not"></input></td>
 												  	<td align="lift" colspan="2">NOTAS</td>
 													<td align="right"></td>
@@ -597,6 +611,7 @@ function select_checkbox_segun_rol(){
 			$("input[name=cocie]").prop("checked",true);
 			$("input[name=cofa]").prop("checked",true);
 			$("input[name=cofae]").prop("checked",true);
+			$("input[name=conotas]").prop("checked",true);
 			//usuarios
 			$("input[name=us]").prop("checked",true);
 			$("input[name=usnue]").prop("checked",true);
@@ -660,6 +675,7 @@ function select_checkbox_segun_rol(){
 			$("input[name=datgas]").prop("checked",true);
 			$("input[name=dattrans]").prop("checked",true);
 			$("input[name=datimp]").prop("checked",true);
+			$("input[name=dathistorial]").prop("checked",true);
 			//notas
 			$("input[name=not]").prop("checked",true);
 			//calendario

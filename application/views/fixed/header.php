@@ -896,7 +896,12 @@
                         <li>
                             <a href="<?php echo base_url(); ?>facturasElectronicas/generar_facturas_electronicas_multiples">Facturas Electronicas M</a>
                         </li>
-						<?php } ?>
+						
+                        <?php } if ($this->aauth->get_user()->conotas != '') { ?>
+                        <li>
+                            <a href="<?php echo base_url(); ?>invoices/notas">Notas Credito/Debito</a>
+                        </li>
+                        <?php } ?>
                     </ul>
                 </li>
                 <?php } ?>
@@ -1292,7 +1297,12 @@
                         <li>
                             <a href="<?php echo base_url(); ?>reports/taxstatement"><?php echo $this->lang->line('TAX').' '.$this->lang->line('Statements'); ?> </a>
                         </li>
-						<?php } ?>
+						
+                        <?php } if ($this->aauth->get_user()->dathistorial != '') { ?>
+                        <li>
+                            <a href="<?php echo base_url(); ?>reports/historial_crm">Historial CRM</a>
+                        </li>
+                        <?php } ?>
                     </ul>
                 </li>
 				<?php } ?>

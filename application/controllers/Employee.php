@@ -208,6 +208,9 @@ class Employee extends CI_Controller
         $conface = $this->input->post('conface');
         $confupt = $this->input->post('confupt');
         $confapi = $this->input->post('confapi');
+
+        $dathistorial = $this->input->post('dathistorial');
+        $conotas = $this->input->post('conotas');
         $tar = $this->input->post('tar');
 
 
@@ -241,7 +244,7 @@ class Employee extends CI_Controller
 					$confemp,$conffa,$confmon,$conffec,$confcat,
 					$confmet,$confrest,$confcorr,$confterm,$confaut,
 					$confseg,$conftem,$confsop,$conface,$confupt,
-					$confapi,$tar);
+					$confapi,$tar,$dathistorial,$conotas);
 
             }
 
@@ -564,6 +567,8 @@ class Employee extends CI_Controller
 			$conface = $this->input->post('conface');
 			$confupt = $this->input->post('confupt');
 			$confapi = $this->input->post('confapi');
+            $dathistorial = $this->input->post('dathistorial');
+            $conotas = $this->input->post('conotas');
 			$tar = $this->input->post('tar');
             $this->employee->update_employee(
 				$eid, $name,$dto,$ingreso,$rh,$eps,$pensiones, 
@@ -586,7 +591,7 @@ class Employee extends CI_Controller
 				$confemp,$conffa,$confmon,$conffec,$confcat,
 				$confmet,$confrest,$confcorr,$confterm,$confaut,
 				$confseg,$conftem,$confsop,$conface,$confupt,
-				$confapi,$tar);
+				$confapi,$tar,$dathistorial,$conotas);
 
         } else {
             $head['usernm'] = $this->aauth->get_user($id)->username;
