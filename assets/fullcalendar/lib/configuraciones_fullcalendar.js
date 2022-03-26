@@ -157,7 +157,16 @@ function contruccion_calendar(){
         $('.modal-footer button:not(".btn-default")').remove();
         // Set input values
         try {
-            $("#ver_orden_id").attr("href",baseurl+"tickets/thread/?id="+data.event._def.extendedProps.idt);
+            
+
+            if(data.event._def.extendedProps.id_tarea==null){
+                $("#ver_orden_id").attr("href",baseurl+"tickets/thread/?id="+data.event._def.extendedProps.idt);    
+                $("#ver_orden_id").children().text("Ver Orden");
+            }else{
+                $("#ver_orden_id").attr("href",baseurl+"manager/historial/?id="+data.event._def.extendedProps.id_tarea);    
+                $("#ver_orden_id").children().text("Ver Tarea");
+            }
+            
         }
         catch (e) {
        
@@ -166,6 +175,7 @@ function contruccion_calendar(){
         
         //console.log(data);
         $('#idorden').val(data.event ? data.event._def.extendedProps.idorden : '');
+        $('#idtarea').val(data.event ? data.event._def.extendedProps.id_tarea : '');
         $('#title').val(data.event ? data.event._def.title : '');        
         $('#description').val(data.event ? data.event._def.extendedProps.description : '');
         $('#rol').val(data.event ? data.event._def.extendedProps.rol : '');
@@ -210,10 +220,11 @@ function contruccion_calendar(){
 
     // Handle click on Update Button
     $('.modal').on('click', '#update-event',  function(e){
-        if(validator(['idorden', 'title', 'description', 'rol'])) {
+        if(validator([ 'title', 'description', 'rol'])) {
             $.post(base_url+'events/updateEvent', {
                 id: currentEvent.event._def.extendedProps.idevent,
                 idorden: $('#idorden').val(),
+                idtarea: $('#idtarea').val(),
                 title: $('#title').val(),
                 description: $('#description').val(),
                 color: $('#color').val(),

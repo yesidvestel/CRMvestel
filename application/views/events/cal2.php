@@ -191,6 +191,7 @@ var rolid_user="<?=$this->aauth->get_user()->roleid ?>";
 
                     </div>
           <input id="idorden" name="idorden" type="text" style="visibility: hidden;" class="form-control input-md"/>
+          <input id="idtarea" name="idtarea" type="text" style="visibility: hidden;" class="form-control input-md"/>
                     <div class="row form-group">
                         <label class="col-md-4 control-label" for="title"><?php echo $this->lang->line('Title')  ?></label>
                         <div class="col-md-8">
