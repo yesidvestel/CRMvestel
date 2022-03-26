@@ -93,11 +93,33 @@ class Tools_model extends CI_Model
         return $query->num_rows();
     }
 
-    public function addtask($name, $estado, $priority, $stdate, $tdate, $employee, $assign, $content, $ordenn)
+    public function addtask($name, $estado, $priority, $stdate, $tdate, $employee, $assign, $content, $ordenn,$agendar,$fagenda,$hora)
     {
 
         $data = array('tdate' => date('Y-m-d H:i:s'), 'name' => $name, 'status' => $estado, 'start' => $stdate, 'duedate' => $tdate, 'description' => $content, 'idorden' => $ordenn, 'eid' => $employee, 'aid' => $assign, 'related' => 0, 'priority' => $priority, 'rid' => 0);
-        return $this->db->insert('todolist', $data);
+        if( $this->db->insert('todolist', $data)){
+            $id_x=$this->db->insert_id();
+            if ($agendar=="si"){
+                $hora2=date("H:i",strtotime($hora));
+                $start = new DateTime($fagenda);
+                $obj_employe=$this->db->get_where("employee_profile",array("id"=>$employee))->row();
+                $data2 = array(
+                    'id_tarea' => $id_x,
+                    'title' => ' Tarea #'.$id_x.' '.$name.' '.$hora,
+                    'start' => date($start->format("Y-m-d")." ".$hora2),
+                    'end' => '',
+                    'description' => strip_tags($content),
+                    'color' => '#4CB0CB',
+                    'rol' => $obj_employe->username,
+                    'asigno' => $this->aauth->get_user()->id
+                );      
+                $this->db->insert('events', $data2);
+            }
+            return true;
+        }else{
+            return false;
+        }
+
     }
 
     public function edittask($id, $name, $status, $priority, $stdate, $tdate, $employee, $content,$puntuacion)
