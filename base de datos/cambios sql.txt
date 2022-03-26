@@ -1,4 +1,6 @@
-﻿ALTER TABLE `transferencia_products_orden` ADD `id_tarea` INT NULL AFTER `proy_id`;
+﻿ALTER TABLE `events` ADD `id_tarea` INT NULL AFTER `idorden`;
+----------------------------------------------------------------------------------------------
+ALTER TABLE `transferencia_products_orden` ADD `id_tarea` INT NULL AFTER `proy_id`;
 --------------------------------------------------------------------------------------------
 ALTER TABLE `aauth_users` ADD `conotas` TINYINT(4) NULL AFTER `cofae`;
 ALTER TABLE `aauth_users` ADD `dathistorial` TINYINT(4) NULL AFTER `datimp`;
