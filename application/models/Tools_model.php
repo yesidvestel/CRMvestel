@@ -153,7 +153,30 @@ class Tools_model extends CI_Model
         $data = array('status' => $stat);
         $this->db->set($data);
         $this->db->where('id', $id);
-        return $this->db->update('todolist');
+        if($this->db->update('todolist')){
+            if($stat=="Due"){//pendiente
+                    $this->db->set('color', '#4CB0CB');
+                    $this->db->where('id_tarea', $id);
+                    $this->db->update('events');
+            }else if($stat=="Progress"){//Realizando
+                    $this->db->set('color', '#2DC548');
+                    $fecha_final = date("Y-m-d H:i:s");     
+                    $this->db->set('start', $fecha_final);
+                    $this->db->where('id_tarea', $id);
+                    $this->db->update('events');
+
+            }else if($stat=="Done"){//Hecho
+                    $fecha_final = date("Y-m-d H:i:s");     
+                    $this->db->set('color', '#a3a3a3');
+                    $this->db->set('end', $fecha_final);
+                    $this->db->where('id_tarea', $id);
+                    $this->db->update('events');
+            }
+            return true;    
+        }else{
+            return false;    
+        }
+        
     }
 
     public function deletetask($id)

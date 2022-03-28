@@ -1040,7 +1040,9 @@ $(document).on('click', "#submit_model4", function (e) {
 function saveMData(o_data,action_url) {
 
     var errorNum = farmCheck();
-
+if(action_url=="tools/set_task"){
+    errorNum=0;
+}
     if (errorNum > 0) {
         $("#notify").removeClass("alert-success").addClass("alert-danger").fadeIn();
         $("#notify .message").html("<strong>Error, Campo requerido vacio</strong>");
