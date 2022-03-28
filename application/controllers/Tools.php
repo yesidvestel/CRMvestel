@@ -139,7 +139,7 @@ class Tools Extends CI_Controller
         $stdate = datefordatabase($stdate);
         $tdate = datefordatabase($tdate);
 
-        if ($this->tools->addtask($name, $estado, $priority, $stdate, $tdate, $employee, $assign, $content, $ordenn,$agendar,$fagenda,$hora)) {
+        if ($this->tools->addtask2($name, $estado, $priority, $stdate, $tdate, $employee, $assign, $content, $ordenn,$agendar,$fagenda,$hora)) {
             echo json_encode(array('status' => 'Success', 'message' => $this->lang->line('New Task Added')));
         } else {
             echo json_encode(array('status' => 'Error', 'message' => $this->lang->line('ERROR')));

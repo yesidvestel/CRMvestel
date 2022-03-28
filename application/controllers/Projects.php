@@ -331,9 +331,12 @@ class Projects Extends CI_Controller
         $assign = $this->aauth->get_user()->id;
         $stdate = datefordatabase($stdate);
         $tdate = datefordatabase($tdate);
+        $agendar = $this->input->post('agendar');
+        $fagenda = $this->input->post('f_agenda');
+        $hora = $this->input->post('hora');
         // $out=$this->projects->addtask($name, $status, $priority, $stdate, $tdate, $employee, $assign, $content, $prid, $milestone);
         // print_r($out);
-        if ($this->projects->addtask($name, $status, $priority, $stdate, $tdate, $employee, $assign, $content, $prid, $milestone,$puntuacion)) {
+        if ($this->projects->addtask($name, $status, $priority, $stdate, $tdate, $employee, $assign, $content, $prid, $milestone,$puntuacion,$agendar,$fagenda,$hora)) {
 
             echo json_encode(array('status' => 'Success', 'message' => $this->lang->line('New Task Added') . '&nbsp; Return to project <a href="' . base_url("projects/explore?id=" . $prid) . '" class="btn btn-primary btn-xs"><i class="icon-eye"></i> ' . $this->lang->line('Yes') . '</a>'));
 

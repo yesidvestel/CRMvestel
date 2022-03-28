@@ -242,7 +242,7 @@ class Projects_model extends CI_Model
     }
 
 
-    public function addtask($name, $status, $priority, $stdate, $tdate, $employee, $assign, $content, $prid, $milestone,$puntuacion)
+    public function addtask($name, $status, $priority, $stdate, $tdate, $employee, $assign, $content, $prid, $milestone,$puntuacion,$agendar,$fagenda,$hora)
     {
         if(empty($puntuacion)){
             $data = array('tdate' => date('Y-m-d H:i:s'), 'name' => $name, 'status' => $status, 'start' => $stdate, 'duedate' => $tdate, 'description' => $content, 'eid' => $employee, 'aid' => $assign, 'related' => 1, 'priority' => $priority, 'rid' => $prid);
@@ -260,7 +260,23 @@ class Projects_model extends CI_Model
             }
 
             $out = $this->communication($prid, $name);
-
+            
+            if ($agendar=="si"){
+                $hora2=date("H:i",strtotime($hora));
+                $start = new DateTime($fagenda);
+                $obj_employe=$this->db->get_where("employee_profile",array("id"=>$employee))->row();
+                $data2 = array(
+                    'id_tarea' => $last,
+                    'title' => ' Tarea #'.$last.' '.$name.' '.$hora,
+                    'start' => date($start->format("Y-m-d")." ".$hora2),
+                    'end' => '',
+                    'description' => strip_tags($content),
+                    'color' => '#4CB0CB',
+                    'rol' => $obj_employe->username,
+                    'asigno' => $this->aauth->get_user()->id
+                );      
+                $this->db->insert('events', $data2);
+            }
             return 1;
         } else {
             return 0;
