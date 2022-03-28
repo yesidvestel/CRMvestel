@@ -133,7 +133,7 @@ class Tools_model extends CI_Model
 
     }
 
-    public function edittask($id, $name, $status, $priority, $stdate, $tdate, $employee, $content,$puntuacion)
+    public function edittask($id, $name, $status, $priority, $stdate, $tdate, $employee, $content,$puntuacion,$agendar,$fagenda,$hora)
     {
         if(empty($puntuacion)){
             $data = array('tdate' => date('Y-m-d H:i:s'), 'name' => $name, 'status' => $status, 'start' => $stdate, 'duedate' => $tdate, 'description' => $content, 'eid' => $employee, 'priority' => $priority);//, 'rid' => 0,'related' => 0, 
@@ -143,7 +143,50 @@ class Tools_model extends CI_Model
         
         $this->db->set($data);
         $this->db->where('id', $id);
-        return $this->db->update('todolist');
+        if($this->db->update('todolist')){
+                $hora2=date("H:i",strtotime($hora));
+                $start = new DateTime($fagenda);
+                $obj_employe=$this->db->get_where("employee_profile",array("id"=>$employee))->row();
+            if ($agendar=="si"){
+                
+                $data2 = array(
+                    'id_tarea' => $id,
+                    'title' => ' Tarea #'.$id.' '.$name.' '.$hora,
+                    'start' => date($start->format("Y-m-d")." ".$hora2),
+                    'end' => '',
+                    'description' => strip_tags($content),
+                    'color' => '#4CB0CB',
+                    'rol' => $obj_employe->username,
+                    'asigno' => $this->aauth->get_user()->id
+                );      
+                $this->db->insert('events', $data2);
+            }else if($agendar=="actualizar"){
+                $color="#4CB0CB";
+                if($status=="Due"){//Pendiente
+                    $color="#4CB0CB";
+                }else if($status=="Done"){//HECho
+                    $color="#a3a3a3";
+                }else if($status=="Progress"){//Progreso
+                    $color="#2DC548";
+                }
+                $data2 = array(
+                    'title' => ' Tarea #'.$id.' '.$name.' '.$hora,
+                    'start' => date($start->format("Y-m-d")." ".$hora2),
+                    'end' => '',
+                    'description' => strip_tags($content),
+                    'color' => $color,
+                    'rol' => $obj_employe->username,
+                    'asigno' => $this->aauth->get_user()->id
+                );    
+            
+
+                $this->db->update('events', $data2,array("id_tarea"=>$id));
+            }
+
+            return true;
+        }else{
+            return false;
+        }
         //return $this->db->insert('todolist', $data);
     }
 

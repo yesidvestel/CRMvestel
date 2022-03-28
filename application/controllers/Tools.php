@@ -77,8 +77,10 @@ class Tools Extends CI_Controller
             $puntuacion = $this->input->post('puntuacion');
             $stdate = datefordatabase($stdate);
             $tdate = datefordatabase($tdate);
-
-            if ($this->tools->edittask($id, $name, $estado, $priority, $stdate, $tdate, $employee, $content,$puntuacion)) {
+        $agendar = $this->input->post('agendar');
+        $fagenda = $this->input->post('f_agenda');
+        $hora = $this->input->post('hora');
+            if ($this->tools->edittask($id, $name, $estado, $priority, $stdate, $tdate, $employee, $content,$puntuacion,$agendar,$fagenda,$hora)) {
                 echo json_encode(array('status' => 'Success', 'message' => $this->lang->line('UPDATED')));
             } else {
                 echo json_encode(array('status' => 'Error', 'message' => $this->lang->line('ERROR')));

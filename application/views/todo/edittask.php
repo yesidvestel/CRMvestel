@@ -124,6 +124,49 @@
 
                     </div>
                 </div>
+                 <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label"
+                                    for="pay_cat">Agendar</label>
+                                    <div class="col-sm-2">
+                                        
+                                        <div class="input-group">
+                                        <select name="agendar" id="agendar" class="form-control mb-1">
+                                                <option value='no'>No</option>
+                                                <option value='si'>Si</option>
+                                                <option value='actualizar'>Actualizar</option>
+                                            </select>
+                                        </div>
+                                        </div>
+                                    <div class="col-sm-3 agendar-cl">
+                                        
+
+                                        <div class="input-group">
+                                            <div class="input-group-addon"><span class="icon-calendar4"
+                                                                                 aria-hidden="true"></span></div>
+                                            <input type="text" class="form-control"
+                                                   placeholder="Billing Date" name="f_agenda"
+                                                   data-toggle="datepicker"
+                                                   autocomplete="false" >
+                                            
+                                        </div>
+                                        
+                                    
+                                </div>
+                                    <div class="col-sm-3 agendar-cl">
+                                        
+
+                                        <div class="input-group">
+                                            <div class="input-group-addon"><span class="icon-calendar4"
+                                                                                 aria-hidden="true"></span></div>
+                                            <input type="text" class="form-control"
+                                           placeholder="End Date" name="hora"
+                                            autocomplete="false" value="<?php echo date("g:i a") ?>">
+                                            
+                                        </div>
+                                        
+                                    
+                                </div>
+                            </div>
                 <div class="form-group row">
 
                     <label class="col-sm-2 control-label"
@@ -186,7 +229,14 @@
     </div>
 </article>
 <script type="text/javascript">
-
+ $("#agendar").change(function(){
+            if($(this).val()=="no"){
+                $(".agendar-cl").css("display","none");    
+            }else{
+                $(".agendar-cl").css("display","");
+            }
+            
+        });
     $(function () {
         $('.select-box').select2();
 
