@@ -60,7 +60,7 @@
                                             if(isset($color)){
                                     ?>
                                         <i class="icon-circle" style="color: <?= $color?>;"></i><i class="icon-circle" style="color: <?= $color?>;"></i><i class="icon-circle" style="color: <?= $color?>;"></i><i class="icon-circle" style="color: <?= $color?>;"></i>
-                                    <?php } ?>
+                                    <?php $color=null;} ?>
                                 </div>
 
                             </div>

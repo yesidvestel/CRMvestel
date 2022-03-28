@@ -1,4 +1,6 @@
-﻿ALTER TABLE `events` ADD `id_tarea` INT NULL AFTER `idorden`;
+﻿INSERT INTO `variables_de_entorno` (`id`, `valor`, `nombre_api`) VALUES (NULL, '{\"user\":\"sistemas@vestel.com.co\",\"password\":\"Vestel1957*\"}', 'payu');
+---------------------------------------------------------------------------
+ALTER TABLE `events` ADD `id_tarea` INT NULL AFTER `idorden`;
 ----------------------------------------------------------------------------------------------
 ALTER TABLE `transferencia_products_orden` ADD `id_tarea` INT NULL AFTER `proy_id`;
 --------------------------------------------------------------------------------------------
