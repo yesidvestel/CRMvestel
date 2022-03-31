@@ -159,7 +159,7 @@ function contruccion_calendar(){
         try {
             
 
-            if(data.event._def.extendedProps.id_tarea==null){
+            if(data.event._def.extendedProps.id_tarea==null || data.event._def.extendedProps.id_tarea==0|| data.event._def.extendedProps.id_tarea=="0" || data.event._def.extendedProps.id_tarea==""){
                 $("#ver_orden_id").attr("href",baseurl+"tickets/thread/?id="+data.event._def.extendedProps.idt);    
                 $("#ver_orden_id").children().text("Ver Orden");
             }else{
