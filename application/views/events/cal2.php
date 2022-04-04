@@ -227,19 +227,30 @@ var rolid_user="<?=$this->aauth->get_user()->roleid ?>";
         </div>
     </div>
 </div>
+
 <script type="text/javascript">
   $("#btn-filtrar").click(function(ev){
     ev.preventDefault();
- 
+    
      var tecnico=$("#tecnicos_f option:selected").val();
      var movil=$("#movil_f option:selected").val();
+    
+    var fecha_ultimo_evento="<?= (isset($this->aauth->get_user()->fecha_ultimo_evento))? $this->aauth->get_user()->fecha_ultimo_evento:"null" ?>";
+    var propiedates={initialDate: fecha_ultimo_evento,initialView:'timeGridDay'};
+        if(fecha_ultimo_evento=="null"){
+            propiedates.initialDate="<?=date("Y-m-d") ?>";
+            propiedates.initialView="dayGridMonth";
+        }
      if(tecnico=="all"){
             $.removeCookie("tecnico");
      }else{
         $.cookie("tecnico",tecnico);   
      }
      if(calendar==null){
-        contruccion_calendar();
+
+        contruccion_calendar(propiedates);
+        
+//calendar.changeView('timeGridDay',"2022-04-01");
      }else{
         calendar.refetchEvents();
      }
@@ -247,7 +258,13 @@ var rolid_user="<?=$this->aauth->get_user()->roleid ?>";
        
     });
   $(function(){
-    
+    var fecha_ultimo_evento="<?= (isset($this->aauth->get_user()->fecha_ultimo_evento))? $this->aauth->get_user()->fecha_ultimo_evento:"null" ?>";
+    var propiedates={initialDate: fecha_ultimo_evento,initialView:'timeGridDay'};
+        if(fecha_ultimo_evento=="null"){
+            propiedates.initialDate="<?=date("Y-m-d") ?>";
+            propiedates.initialView="dayGridMonth";
+        }
+        
     $.removeCookie('tecnico');
 
     $('#color').colorpicker(); // Colopicker
@@ -255,7 +272,7 @@ var rolid_user="<?=$this->aauth->get_user()->roleid ?>";
 
     // Fullcalendar
    <?php if ($this->aauth->get_user()->roleid < 3) { ?>
-    contruccion_calendar();
+    contruccion_calendar(propiedates);
   <?php } ?>
 });
 </script>

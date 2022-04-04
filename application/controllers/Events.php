@@ -79,6 +79,17 @@ class Events extends CI_Controller
         $result = $this->events_model->getEvents($start, $end);
         echo json_encode($result);
     }
+    public function fecha_ultimo_evento_set(){
+        $data=array();
+
+          $data['fecha_ultimo_evento']=$this->input->post('fecha');
+          
+          if($data['fecha_ultimo_evento']==""){
+                $data['fecha_ultimo_evento']=null;
+          }
+          $id= $this->aauth->get_user()->id;
+        $this->db->update("aauth_users",$data,array("id"=>$id));
+    }
     public function get_nombre_movil(){
         $var=$this->db->get_where("moviles",array('id_movil'=>$_POST['id']))->row();
         echo "movil#".$var->id_movil." - ".$var->nombre;

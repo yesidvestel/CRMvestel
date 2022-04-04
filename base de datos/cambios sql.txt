@@ -1,4 +1,6 @@
-﻿ALTER TABLE `equipos` ADD `imagen` INT NOT NULL AFTER `master`;
+﻿ALTER TABLE `aauth_users` ADD `fecha_ultimo_evento` DATE NULL AFTER `tar`;
+-------------------------------------------------------------------------------
+ALTER TABLE `equipos` ADD `imagen` INT NOT NULL AFTER `master`;
 ----------------------------------------------------------------------
 INSERT INTO `variables_de_entorno` (`id`, `valor`, `nombre_api`) VALUES (NULL, '{\"user\":\"sistemas@vestel.com.co\",\"password\":\"Vestel1957*\"}', 'payu');
 ---------------------------------------------------------------------------

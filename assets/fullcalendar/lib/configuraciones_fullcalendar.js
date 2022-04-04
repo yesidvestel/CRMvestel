@@ -4,7 +4,7 @@ var base_url=baseurl;
 var currentDate; // Holds the day clicked when adding a new event
 var currentEvent; // Holds the event object when editing an event
 
-function contruccion_calendar(){
+function contruccion_calendar(propiedades){
      var calendarEl = document.getElementById('calendar');
          calendar = new FullCalendar.Calendar(calendarEl, {
       headerToolbar: {
@@ -18,7 +18,8 @@ function contruccion_calendar(){
         events: base_url+'events/getEvents' ,
         selectable: true,
         
-        //initialDate: '2020-09-12',
+        initialDate: propiedades.initialDate,
+        initialView:propiedades.initialView,
         locale: 'es',
         editable: true, // Make the event resizable true     
         selectMirror: true,
@@ -42,6 +43,13 @@ function contruccion_calendar(){
                 title: 'Add Event' // Modal title
             });
         }, 
+        datesSet:function(date){
+            if(date.view.type!="timeGridDay"){
+                    $.post(baseurl+"events/fecha_ultimo_evento_set",{'fecha':null},function(data){
+
+                });
+            }
+        },
         eventDrop: function(event, delta, revertFunc,start,end) {
             start = moment(event.event._instance.range.start).format('YYYY-MM-DD HH:mm:ss');
             if(event.end){
@@ -138,7 +146,8 @@ function contruccion_calendar(){
                 // Available buttons when editing
                 buttons: btns_config,
                 title: 'Editar Evento "' + calEvent.el.fcSeg.eventRange.def.title + '"',
-                event: calEvent.event
+                event: calEvent.event,
+                fecha: moment(calEvent.el.fcSeg.eventRange.range.end).format('YYYY-MM-DD')
             };
 
 
@@ -162,6 +171,10 @@ function contruccion_calendar(){
             if(data.event._def.extendedProps.id_tarea==null || data.event._def.extendedProps.id_tarea==0|| data.event._def.extendedProps.id_tarea=="0" || data.event._def.extendedProps.id_tarea==""){
                 $("#ver_orden_id").attr("href",baseurl+"tickets/thread/?id="+data.event._def.extendedProps.idt);    
                 $("#ver_orden_id").children().text("Ver Orden");
+                
+                $.post(baseurl+"events/fecha_ultimo_evento_set",{'fecha':data.fecha},function(data){
+
+                });
             }else{
                 $("#ver_orden_id").attr("href",baseurl+"manager/historial/?id="+data.event._def.extendedProps.id_tarea);    
                 $("#ver_orden_id").children().text("Ver Tarea");
