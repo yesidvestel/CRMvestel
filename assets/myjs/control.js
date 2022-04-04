@@ -719,6 +719,22 @@ $("#submit-data").on("click", function(e) {
     var action_url= $('#action-url').val();
     addObject(o_data,action_url);
 });
+$("#submit-data_eq").on("click", function(e) {
+    e.preventDefault();
+    var o_data =  $("#data_form").serializeArray();
+     var form_data = new FormData();
+     var file_date=$("#equipofile").prop("files")[0];
+     form_data.append("equipofile",file_date);
+      //var indexed_array = {};
+
+    $.map(o_data, function(n, i){console.log(n['name']);
+        form_data.append(n['name'], n['value']);
+    });
+
+     
+    var action_url= $('#action-url').val();
+    addObject_eq(form_data,action_url);
+});
 $("#submit-data2").on("click", function(e) {
     e.preventDefault();
     var o_data =  $("#data_form2").serialize();
@@ -768,7 +784,53 @@ function addObject(action,action_url) {
     }
 
 }
+function addObject_eq(action,action_url) {
 
+
+    var errorNum = farmCheck();
+    var $btn;
+    if (errorNum > 0) {
+        $("#notify").removeClass("alert-success").addClass("alert-warning").fadeIn();
+        $("#notify .message").html("<strong>Error</strong>: It appears you have forgotten to complete something!");
+        $("html, body").scrollTop($("body").offset().top);
+    } else {
+
+        $.ajax({
+
+            url: baseurl + action_url,
+            cache: false,
+            contentType: false,
+            data: action,
+            dataType: 'JSON',
+            enctype: 'multipart/form-data',
+            processData: false,
+            method: "POST",
+            success: function (data) {
+                
+                if (data.status == "Success") {
+                    $("#notify .message").html("<strong>" + data.status + "</strong>: " + data.message);
+                    $("#notify").removeClass("alert-danger").addClass("alert-success").fadeIn();
+                    $("html, body").scrollTop($("body").offset().top);
+                    $("#data_form").remove();
+
+                } else {
+                    $("#notify .message").html("<strong>" + data.status + "</strong>: " + data.message);
+                    $("#notify").removeClass("alert-success").addClass("alert-danger").fadeIn();
+                    $("html, body").scrollTop($("body").offset().top);
+
+                }
+
+            },
+            error: function (data) {
+                $("#notify .message").html("<strong>" + data.status + "</strong>: " + data.message);
+                $("#notify").removeClass("alert-success").addClass("alert-warning").fadeIn();
+                $("html, body").scrollTop($("body").offset().top);
+
+            }
+        });
+    }
+
+}
 //
 function actionProduct(actionurl) {
 

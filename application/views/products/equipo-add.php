@@ -5,7 +5,7 @@
 
             <div class="message"></div>
         </div>
-        <form method="post" id="data_form" class="form-horizontal">
+        <form method="post" id="data_form" class="form-horizontal" enctype="multipart/form-data" accept-charset="utf-8">
             <div class="grid_3 grid_4">
                 <h5><?php echo $this->lang->line('') ?>Agregar nuevo Equipo</h5>
                 <hr>
@@ -173,10 +173,19 @@
                 </div>
                 <div class="form-group row">
 
+                <label class="col-sm-2 col-form-label" for="name">Imagen</label>
+
+                <div class="col-sm-8">
+                    <input type="file" name="equipofile" id="equipofile" size="20"/><br>
+                    <small>(png, jpg, gif, jpeg)</small>
+                </div>
+            </div>
+                <div class="form-group row">
+
                     <label class="col-sm-2 col-form-label"></label>
 
                     <div class="col-sm-4">
-                        <input type="submit" id="submit-data" class="btn btn-success margin-bottom"
+                        <input type="submit" id="submit-data_eq" class="btn btn-success margin-bottom"
                                value="<?php echo $this->lang->line('Add material') ?>Agregar Material" data-loading-text="Adding...">
                         <input type="hidden" value="products/addequipo" id="action-url">
                     </div>

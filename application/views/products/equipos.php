@@ -72,6 +72,7 @@
                 <thead>
                 <tr>
                     <th>#</th>
+                    <th>IMG</th>
 					<th>Codigo</th>
                     <th>MAC</th>
                     <th>Serial</th>
@@ -91,6 +92,7 @@
                 <tfoot>
                 <tr>
                     <th>#</th>
+                    <th>IMG</th>
 					<th>Codigo</th>
                     <th>MAC</th>
                     <th>Serial</th>
@@ -153,6 +155,12 @@
         });
         miniDash();
     });
+    $(document).on("click",".cl-imagen_equipo",function(ev){
+        var codigo=$(this).data("codigo");
+        $("#titulo_img").text("Imagen equipo : #"+codigo);
+        $("#img_casc").attr("src",$(this).attr("src"));
+        $("#img_model").modal("show");
+    });
 </script>
 <div id="delete_model" class="modal fade">
     <div class="modal-dialog">
@@ -170,6 +178,27 @@
                 <input type="hidden" id="action-url" value="products/delete_e">
                 <button type="button" data-dismiss="modal" class="btn btn-primary"
                         id="delete-confirm"><?php echo $this->lang->line('Delete') ?></button>
+                <button type="button" data-dismiss="modal"
+                        class="btn"><?php echo $this->lang->line('Cancel') ?></button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="img_model" class="modal fade">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="titulo_img"></h4>
+            </div>
+            <div class="modal-body" style="text-align:center;">
+                <img src="" id="img_casc" width="500px">
+            </div>
+            <div class="modal-footer">
+                
+                <button type="button" data-dismiss="modal"
+                        class="btn btn-primary">Aceptar</button>
                 <button type="button" data-dismiss="modal"
                         class="btn"><?php echo $this->lang->line('Cancel') ?></button>
             </div>

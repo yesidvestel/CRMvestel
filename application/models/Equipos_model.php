@@ -22,7 +22,7 @@ class Equipos_model extends CI_Model
 {
 
     var $table = 'equipos';	
-    var $column_order = array(null, 'codigo','mac', 'serial', 'estado', 'asignado', 'marca', null); //set column field database for datatable orderable
+    var $column_order = array(null,null, 'codigo','mac', 'serial', 'estado', 'asignado', 'marca', null); //set column field database for datatable orderable
     var $column_search = array('codigo', 'mac','serial','estado','almacen','asignado','marca'); //Establecer base de datos de campo de columna para la tabla de datos
     var $order = array('id' => 'desc'); // default order
 	
@@ -168,6 +168,10 @@ class Equipos_model extends CI_Model
         }
 
     }
+    public function editar_imagen_equipo($codigo,$nombre_img){
+    $data_x['imagen']=$nombre_img;
+    return $this->db->update("equipos",$data_x,array("codigo"=>$codigo));
+}
 
     public function edit($pid, $catid, $warehouse, $product_name, $product_code, $product_price, $factoryprice, $taxrate, $disrate, $product_qty,$product_qty_alert,$product_desc)
     {

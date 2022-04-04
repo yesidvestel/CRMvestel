@@ -145,7 +145,13 @@ class Products extends CI_Controller
 			$usuario = $this->db->get_where('customers', array('id' => $prd->asignado))->row();
             $no++;
             $row = array();
-            $row[] = $no;           	
+            $row[] = $no;  
+            if(empty($prd->imagen)){
+                $row[]="Sin Img.";
+            }else{
+                $row[] = '<img class="cl-imagen_equipo" data-codigo="'.$prd->codigo.'" style="cursor:pointer" src="'.base_url().'userfiles/support/'.$prd->imagen.'" width="50px;">';              
+            }
+            
 			$row[] = $prd->codigo;
             $row[] = $prd->mac;
             $row[] = $prd->serial;
@@ -201,7 +207,8 @@ class Products extends CI_Controller
 
     }
 	public function addequipo()
-    {
+    {ini_set('memory_limit', '500M');
+            set_time_limit(200000);
         $codigo = $this->input->post('codigo');
         $proveedor = $this->input->post('proveedor');
         $almacen = $this->input->post('almacen');
@@ -215,6 +222,35 @@ class Products extends CI_Controller
         $observacion = $this->input->post('observacion');
 		if ($codigo) {
         	$this->products->addequipo($codigo,$proveedor,$almacen,$mac,$serial,$llegada,$final,$marca,$asignado,$estado,$observacion);
+            $codigo_equipo=$codigo;
+            $attach = $_FILES['equipofile']['name'];
+
+           
+             if ($attach) {
+                $config['upload_path'] = './userfiles/support';
+                $config['allowed_types'] = 'png|jpg|jpeg|gif';
+                $config['max_size'] = 900000;
+                $extencion=explode(".", $attach);
+                $config['file_name'] = "imagen_equipo_".$codigo_equipo.".".$extencion[1];
+                
+              
+    
+                
+                    $this->load->library('upload', $config);
+                    if (!$this->upload->do_upload('equipofile')) {
+                        
+                        $data['response'] = 0;
+                        $data['responsetext'] = 'File Upload Error 2';
+
+                    } else {
+                        $data['response'] = 1;
+                        $data['responsetext'] = 'Reply Added Successfully.';
+                        $filename = $this->upload->data()['file_name'];
+                        $this->equipos->editar_imagen_equipo($codigo_equipo,$filename);
+                        
+                    }
+                
+             }
 		}
 
 
