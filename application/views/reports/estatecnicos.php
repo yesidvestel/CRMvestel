@@ -343,7 +343,7 @@ table {
 														
 														<table class="tb_tec_info_instalaciones_Traslado" style='width: 100px;'><tbody>
 															<?php foreach ($lista_por_tecnicos['instalaciones_Traslado'][$key1] as $key => $value2) {
-																echo "<tr class='instalaciones_Traslado_".$key."' ><td style='width: 100px;text-align: center;'>".($value2['FTTH']['puntuacion']+$value2['EOC']['puntuacion'])."p</td></tr>";																
+																echo "<tr class='instalaciones_Traslado_".$key."' ><td style='width: 100px;text-align: center;'>".($value2['FTTH']['puntuacion']+$value2['EOC']['puntuacion']+$value2['TV']['puntuacion'])."p</td></tr>";																
 															} ?>	
 														</tbody></table> 	
 												</td>
@@ -355,7 +355,7 @@ table {
 												<div   class="cl-instalaciones_Traslado" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_Traslado()"><?php echo $conteo; ?></div>
 														<table class="tb_tec_info_instalaciones_Traslado" style='width: 200px;text-align: center;'><tbody>
 															<?php foreach ($lista_datos_cuentas_tipos_por_tecnico['instalaciones_Traslado'] as $key => $value2) {
-																echo "<tr class='instalaciones_Traslado_".$key."' ><td style='width: 200px;'><strong>".($value2['FTTH']['puntuacion']+$value2['EOC']['puntuacion'])."</strong> pts </td></tr>";																
+																echo "<tr class='instalaciones_Traslado_".$key."' ><td style='width: 200px;'><strong>".($value2['FTTH']['puntuacion']+$value2['EOC']['puntuacion']+$value2['TV']['puntuacion'])."</strong> pts </td></tr>";																
 															} ?>	
 														</tbody></table> 	
 											</td>
@@ -823,6 +823,7 @@ table {
 																    $puntuacion_instalaciones_EOC=array("cantidad"=>0,"puntuacion"=>0);
 																    $puntuacion_traslado_EOC=array("cantidad"=>0,"puntuacion"=>0);
 																    $puntuacion_traslado_FTTH=array("cantidad"=>0,"puntuacion"=>0);
+																    $puntuacion_traslado_TV=array("cantidad"=>0,"puntuacion"=>0);
 																    $puntuacion_migracion_FTTH=array("cantidad"=>0,"puntuacion"=>0);//preguntar a cuales ordenes se relaciona
 																    $puntuacion_agregar_internet_FTTH=array("cantidad"=>0,"puntuacion"=>0);
 																    $puntuacion_agregar_internet_EOC=array("cantidad"=>0,"puntuacion"=>0);
@@ -851,9 +852,10 @@ table {
 																$puntuacion_instalaciones_EOC['puntuacion']+=$x['EOC']['puntuacion'];
 
 																$x=$lista_datos_cuentas_tipos_por_tecnico['instalaciones_Traslado'][$key];
-																$total+=$x['FTTH']['puntuacion']+$x['EOC']['puntuacion'];
+																$total+=$x['FTTH']['puntuacion']+$x['EOC']['puntuacion']+$x['TV']['puntuacion'];
 																$puntuacion_traslado_FTTH=$x['FTTH'];
 																$puntuacion_traslado_EOC=$x['EOC'];
+																$puntuacion_traslado_TV=$x['TV'];
 
 																$x=$lista_datos_cuentas_tipos_por_tecnico['instalaciones_AgregarInternet'][$key];
 																$total+=$x['FTTH']['puntuacion']+$x['EOC']['puntuacion'];
@@ -928,6 +930,7 @@ table {
 																				data-instalaciones-eoc='".$puntuacion_instalaciones_EOC['cantidad'].",".$puntuacion_instalaciones_EOC['puntuacion']."' 
 																				data-instalaciones-traslado-ftth='".$puntuacion_traslado_FTTH['cantidad'].",".$puntuacion_traslado_FTTH['puntuacion']."' 
 																				data-instalaciones-traslado-eoc='".$puntuacion_traslado_EOC['cantidad'].",".$puntuacion_traslado_EOC['puntuacion']."'  
+																				data-instalaciones-traslado-tv='".$puntuacion_traslado_TV['cantidad'].",".$puntuacion_traslado_TV['puntuacion']."'  
 																				data-instalaciones-migracion='".$puntuacion_migracion_FTTH['cantidad'].",".$puntuacion_migracion_FTTH['puntuacion']."' 
 																				data-instalaciones-agregar-internet-ftth='".$puntuacion_agregar_internet_FTTH['cantidad'].",".$puntuacion_agregar_internet_FTTH['puntuacion']."' 
 																				data-instalaciones-agregar-internet-eoc='".$puntuacion_agregar_internet_EOC['cantidad'].",".$puntuacion_agregar_internet_EOC['puntuacion']."' 
@@ -1006,6 +1009,11 @@ table {
                 			<td id="modal-instalaciones-traslado-ftth-p">0</td>
                 		</tr>
                 		<tr>
+                			<td>Taslado TV</td>
+                			<td id="modal-instalaciones-traslado-tv-c">0</td>
+                			<td id="modal-instalaciones-traslado-tv-p">0</td>
+                		</tr>
+                		<tr>
                 			<td>Migracion Ftth</td>
                 			<td id="modal-instalaciones-migracion-ftth-c">0</td>
                 			<td id="modal-instalaciones-migracion-ftth-p">0</td>
@@ -1065,7 +1073,7 @@ table {
                 	<tfoot>
                 		<tr>
                 			<th style="vertical-align: middle;"><strong >Total:</strong></th>
-                			<th></th>
+                			<th style="vertical-align: middle;text-align: center;" id="cantidad-td"></th>
                 			<th style="text-align: center;"><strong id="modal-total">0</strong><br><strong id="modal-total-precio">$0</strong></th>
                 		</tr>
                 	</tfoot>
@@ -1088,70 +1096,92 @@ table {
 		$(".td_totalizador").click(function (ev){
 			$("#modal_username").text($(this).data("username"));
 			 var total_puntuacion=0;
+			 var cantidad=0;
 			var datax=$(this).data("instalaciones-ftth").split(",");
 			$("#modal-instalaciones-ftth-c").text(datax[0]);
 			$("#modal-instalaciones-ftth-p").text(datax[1]);
 			total_puntuacion+=parseInt(datax[1]);
+			cantidad+=parseInt(datax[0]);
 			var datax=$(this).data("instalaciones-eoc").split(",");
 			$("#modal-instalaciones-eoc-c").text(datax[0]);
 			$("#modal-instalaciones-eoc-p").text(datax[1]);
 			total_puntuacion+=parseInt(datax[1]);
+			cantidad+=parseInt(datax[0]);
 			var datax=$(this).data("instalaciones-traslado-eoc").split(",");
 			$("#modal-instalaciones-traslado-eoc-c").text(datax[0]);
 			$("#modal-instalaciones-traslado-eoc-p").text(datax[1]);
 			total_puntuacion+=parseInt(datax[1]);
+			cantidad+=parseInt(datax[0]);
 			var datax=$(this).data("instalaciones-traslado-ftth").split(",");
 			$("#modal-instalaciones-traslado-ftth-c").text(datax[0]);
 			$("#modal-instalaciones-traslado-ftth-p").text(datax[1]);
 			total_puntuacion+=parseInt(datax[1]);
+			cantidad+=parseInt(datax[0]);
+
+			var datax=$(this).data("instalaciones-traslado-tv").split(",");
+			$("#modal-instalaciones-traslado-tv-c").text(datax[0]);
+			$("#modal-instalaciones-traslado-tv-p").text(datax[1]);
+			total_puntuacion+=parseInt(datax[1]);
+			cantidad+=parseInt(datax[0]);
 
 			var datax=$(this).data("instalaciones-migracion").split(",");
 			$("#modal-instalaciones-migracion-ftth-c").text(datax[0]);
 			$("#modal-instalaciones-migracion-ftth-p").text(datax[1]);
 			total_puntuacion+=parseInt(datax[1]);
+			cantidad+=parseInt(datax[0]);
 			var datax=$(this).data("instalaciones-agregar-internet-ftth").split(",");
 			$("#modal-instalaciones-agregar-internet-ftth-c").text(datax[0]);
 			$("#modal-instalaciones-agregar-internet-ftth-p").text(datax[1]);
 			total_puntuacion+=parseInt(datax[1]);
+			cantidad+=parseInt(datax[0]);
 			var datax=$(this).data("instalaciones-agregar-internet-eoc").split(",");
 			$("#modal-instalaciones-agregar-internet-eoc-c").text(datax[0]);
 			$("#modal-instalaciones-agregar-internet-eoc-p").text(datax[1]);
 			total_puntuacion+=parseInt(datax[1]);
+			cantidad+=parseInt(datax[0]);
 			var datax=$(this).data("instalaciones-agregar-tv").split(",");
 			$("#modal-instalaciones-agregar-tv-c").text(datax[0]);
 			$("#modal-instalaciones-agregar-tv-p").text(datax[1]);
 			total_puntuacion+=parseInt(datax[1]);
+			cantidad+=parseInt(datax[0]);
 			var datax=$(this).data("instalaciones-puntos-adicionales").split(",");
 			$("#modal-instalaciones-punto-adicional-c").text(datax[0]);
 			$("#modal-instalaciones-punto-adicional-p").text(datax[1]);
 			total_puntuacion+=parseInt(datax[1]);
+			cantidad+=parseInt(datax[0]);
 			var datax=$(this).data("instalaciones-puntos-adicionales-multiples").split(",");
 			$("#modal-instalaciones-punto-adicional-m-c").text(datax[0]);
 			$("#modal-instalaciones-punto-adicional-m-p").text(datax[1]);
 			total_puntuacion+=parseInt(datax[1]);
+			cantidad+=parseInt(datax[0]);
 			
 
 			var datax=$(this).data("instalaciones-revision-internet").split(",");
 			$("#modal-instalaciones-revision-internet-c").text(datax[0]);
 			$("#modal-instalaciones-revision-internet-p").text(datax[1]);
 			total_puntuacion+=parseInt(datax[1]);
+			cantidad+=parseInt(datax[0]);
 			var datax=$(this).data("instalaciones-revision-tv").split(",");
 			$("#modal-instalaciones-revision-tv-c").text(datax[0]);
 			$("#modal-instalaciones-revision-tv-p").text(datax[1]);
 			total_puntuacion+=parseInt(datax[1]);
+			cantidad+=parseInt(datax[0]);
 			var datax=$(this).data("instalaciones-reconexion").split(",");
 			$("#modal-instalaciones-reconexion-c").text(datax[0]);
 			$("#modal-instalaciones-reconexion-p").text(datax[1]);
 			total_puntuacion+=parseInt(datax[1]);
+			cantidad+=parseInt(datax[0]);
 			var datax=$(this).data("instalaciones-desconexion").split(",");
 			$("#modal-instalaciones-desconexion-c").text(datax[0]);
 			$("#modal-instalaciones-desconexion-p").text(datax[1]);
 			total_puntuacion+=parseInt(datax[1]);
+			cantidad+=parseInt(datax[0]);
 
 			var datax=$(this).data("tareas").split(",");
 			$("#modal-tareas-c").text(datax[0]);
 			$("#modal-tareas-p").text(datax[1]);
 			total_puntuacion+=parseInt(datax[1]);
+			cantidad+=parseInt(datax[0]);
 
 			var total_precio=0;
 			if(total_puntuacion>=165 && total_puntuacion <=200){
@@ -1162,6 +1192,7 @@ table {
 			total_precio= new Intl.NumberFormat('es-ES', {  }).format(total_precio);
 			$("#modal-total-precio").text("$ "+total_precio);
 			$("#modal-total").text(total_puntuacion);
+			$("#cantidad-td").text(cantidad);
 			$("#modal_informativo").modal("show");
 		});
 
