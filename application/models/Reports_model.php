@@ -262,7 +262,7 @@ for ($i=1; $i <=intval($fecha->format("t")) ; $i++) {
             foreach ($lista_datos as $key => $value) {
                 $lista_datos[$key][$date1]=0;
                 foreach ($lista_tecnicos as $key2 => $value2) {
-                    if($key=="instalaciones_tv_e_internet" || $key=="instalaciones_internet" || $key=="instalaciones_Traslado" || $key=="instalaciones_AgregarInternet"){
+                    if($key=="instalaciones_tv_e_internet" || $key=="instalaciones_internet" || $key=="instalaciones_tv" || $key=="instalaciones_Traslado" || $key=="instalaciones_AgregarInternet"){
                             $lista_tecnicos_organizada[$key][$date1][$value2['username']]=array("EOC"=>array("cantidad"=>0,"puntuacion"=>0),
                                 "FTTH"=>array("cantidad"=>0,"puntuacion"=>0),"TV"=>array("cantidad"=>0,"puntuacion"=>0),
                                 "puntos_adicionales"=>array("cantidad"=>0,"puntuacion"=>0),
@@ -306,7 +306,7 @@ for ($i=1; $i <=intval($fecha->format("t")) ; $i++) {
 
         foreach ($lista_datos_cuentas_tipos_por_tecnico as $key2 => $value2) {
                    foreach ($lista_tecnicos as $key => $value) {
-                        if($key2=="instalaciones_tv_e_internet" || $key2=="instalaciones_internet" || $key2=="instalaciones_Traslado" || $key2=="instalaciones_AgregarInternet"){
+                        if($key2=="instalaciones_tv_e_internet" || $key2=="instalaciones_internet"|| $key2=="instalaciones_tv" || $key2=="instalaciones_Traslado" || $key2=="instalaciones_AgregarInternet"){
                             $lista_datos_cuentas_tipos_por_tecnico[$key2][$value['username']]=array("EOC"=>array("cantidad"=>0,"puntuacion"=>0),
                                 "FTTH"=>array("cantidad"=>0,"puntuacion"=>0),"TV"=>array("cantidad"=>0,"puntuacion"=>0),
                                 "puntos_adicionales"=>array("cantidad"=>0,"puntuacion"=>0),
@@ -367,11 +367,33 @@ foreach ($est as $key => $value) {
                         $lista_datos_cuentas_tipos_por_tecnico['instalaciones_tv_e_internet'][$value['tec_asignado']]['EOC']['cantidad']++;
                         $lista_datos_cuentas_tipos_por_tecnico['instalaciones_tv_e_internet'][$value['tec_asignado']]['EOC']['puntuacion']+=$puntuacion_instalaciones_EOC;
                         $lista_tecnicos_organizada['total_dia'][$key1][$value['tec_asignado']]+=$puntuacion_instalaciones_EOC;
+                    }else{
+                        /*var_dump("inicio 4");
+                                var_dump($value);
+                                var_dump($invoice);
+                                var_dump($equipo);
+                                var_dump("fin");*/
+                                $lista_tecnicos_organizada['instalaciones_internet'][$key1][$value['tec_asignado']]['TV']['cantidad']++;
+                                    $lista_tecnicos_organizada['instalaciones_internet'][$key1][$value['tec_asignado']]['TV']['puntuacion']+=$puntuacion_instalaciones_EOC;
+                                    $lista_datos_cuentas_tipos_por_tecnico['instalaciones_internet'][$value['tec_asignado']]['TV']['cantidad']++;
+                                    $lista_datos_cuentas_tipos_por_tecnico['instalaciones_internet'][$value['tec_asignado']]['TV']['puntuacion']+=$puntuacion_instalaciones_EOC;
+                                    $lista_tecnicos_organizada['total_dia'][$key1][$value['tec_asignado']]+=$puntuacion_instalaciones_EOC;
+                               
                     }
 
                 }else{ //esto son las que por alguna razon ya no tienen un equipo asignado
                         //$lista_tecnicos_organizada['instalaciones_tv_e_internet'][$key1][$value['tec_asignado']]++;//esta es para las cuentas diarias de tipo de servicio por dia
                         //$lista_datos_cuentas_tipos_por_tecnico['instalaciones_tv_e_internet'][$value['tec_asignado']]++;//esta para la totalizacion del tipo de servicio por tecnico    
+                            /*var_dump("inicio 3");
+                                var_dump($value);
+                                var_dump($invoice);
+                                var_dump($equipo);
+                                var_dump("fin");*/
+                                $lista_tecnicos_organizada['instalaciones_tv'][$key1][$value['tec_asignado']]['TV']['cantidad']++;
+                                    $lista_tecnicos_organizada['instalaciones_tv'][$key1][$value['tec_asignado']]['TV']['puntuacion']+=$puntuacion_instalaciones_EOC;
+                                    $lista_datos_cuentas_tipos_por_tecnico['instalaciones_tv'][$value['tec_asignado']]['TV']['cantidad']++;
+                                    $lista_datos_cuentas_tipos_por_tecnico['instalaciones_tv'][$value['tec_asignado']]['TV']['puntuacion']+=$puntuacion_instalaciones_EOC;
+                                    $lista_tecnicos_organizada['total_dia'][$key1][$value['tec_asignado']]+=$puntuacion_instalaciones_EOC;
                 }
 
                 if($invoice->puntos=="1" || $invoice->puntos==1){
@@ -395,6 +417,12 @@ foreach ($est as $key => $value) {
                     $lista_tecnicos_organizada['instalaciones_tv'][$key1][$value['tec_asignado']]++;
                     //$lista_tecnicos_organizada['total_dia'][$key1][$value['tec_asignado']]++;//al final creo que se puede elimianar este array
                     $lista_datos_cuentas_tipos_por_tecnico['instalaciones_tv'][$value['tec_asignado']]++;
+
+                    $lista_tecnicos_organizada['instalaciones_tv'][$key1][$value['tec_asignado']]['TV']['cantidad']++;
+                                    $lista_tecnicos_organizada['instalaciones_tv'][$key1][$value['tec_asignado']]['TV']['puntuacion']+=$puntuacion_instalaciones_EOC;
+                                    $lista_datos_cuentas_tipos_por_tecnico['instalaciones_tv'][$value['tec_asignado']]['TV']['cantidad']++;
+                                    $lista_datos_cuentas_tipos_por_tecnico['instalaciones_tv'][$value['tec_asignado']]['TV']['puntuacion']+=$puntuacion_instalaciones_EOC;
+                                    $lista_tecnicos_organizada['total_dia'][$key1][$value['tec_asignado']]+=$puntuacion_instalaciones_EOC;
                 }
                 if($x2===false && $x4===false ){
                         $lista_datos['instalaciones_internet'][$key1]++;   
@@ -417,11 +445,34 @@ foreach ($est as $key => $value) {
                                     $lista_datos_cuentas_tipos_por_tecnico['instalaciones_internet'][$value['tec_asignado']]['EOC']['cantidad']++;
                                     $lista_datos_cuentas_tipos_por_tecnico['instalaciones_internet'][$value['tec_asignado']]['EOC']['puntuacion']+=$puntuacion_instalaciones_EOC;
                                     $lista_tecnicos_organizada['total_dia'][$key1][$value['tec_asignado']]+=$puntuacion_instalaciones_EOC;
+                                }else{
+                                    /*var_dump("inicio 1");
+                                var_dump($value);
+                                var_dump($invoice);
+                                var_dump($equipo);
+                                var_dump("fin");*/
+                                     $lista_tecnicos_organizada['instalaciones_internet'][$key1][$value['tec_asignado']]['TV']['cantidad']++;
+                                    $lista_tecnicos_organizada['instalaciones_internet'][$key1][$value['tec_asignado']]['TV']['puntuacion']+=$puntuacion_instalaciones_EOC;
+                                    $lista_datos_cuentas_tipos_por_tecnico['instalaciones_internet'][$value['tec_asignado']]['TV']['cantidad']++;
+                                    $lista_datos_cuentas_tipos_por_tecnico['instalaciones_internet'][$value['tec_asignado']]['TV']['puntuacion']+=$puntuacion_instalaciones_EOC;
+                                    $lista_tecnicos_organizada['total_dia'][$key1][$value['tec_asignado']]+=$puntuacion_instalaciones_EOC;
+                               
                                 }
 
                             }else{ //esto son las que por alguna razon ya no tienen un equipo asignado
                                     //$lista_tecnicos_organizada['instalaciones_tv_e_internet'][$key1][$value['tec_asignado']]++;//esta es para las cuentas diarias de tipo de servicio por dia
                                     //$lista_datos_cuentas_tipos_por_tecnico['instalaciones_tv_e_internet'][$value['tec_asignado']]++;//esta para la totalizacion del tipo de servicio por tecnico    
+                               /* var_dump("inicio 2");
+                                var_dump($value);
+                                var_dump($invoice);
+                                var_dump($equipo);
+                                var_dump("fin");*/
+                                $lista_tecnicos_organizada['instalaciones_internet'][$key1][$value['tec_asignado']]['TV']['cantidad']++;
+                                    $lista_tecnicos_organizada['instalaciones_internet'][$key1][$value['tec_asignado']]['TV']['puntuacion']+=$puntuacion_instalaciones_EOC;
+                                    $lista_datos_cuentas_tipos_por_tecnico['instalaciones_internet'][$value['tec_asignado']]['TV']['cantidad']++;
+                                    $lista_datos_cuentas_tipos_por_tecnico['instalaciones_internet'][$value['tec_asignado']]['TV']['puntuacion']+=$puntuacion_instalaciones_EOC;
+                                    $lista_tecnicos_organizada['total_dia'][$key1][$value['tec_asignado']]+=$puntuacion_instalaciones_EOC;
+                               
                             }
                         
                         
@@ -478,11 +529,27 @@ foreach ($est as $key => $value) {
                                     $lista_datos_cuentas_tipos_por_tecnico['instalaciones_AgregarInternet'][$value['tec_asignado']]['EOC']['cantidad']++;
                                     $lista_datos_cuentas_tipos_por_tecnico['instalaciones_AgregarInternet'][$value['tec_asignado']]['EOC']['puntuacion']+=$puntuacion_instalaciones_EOC;
                                     $lista_tecnicos_organizada['total_dia'][$key1][$value['tec_asignado']]+=$puntuacion_instalaciones_EOC;
+                                }else{
+                                    $lista_tecnicos_organizada['instalaciones_AgregarInternet'][$key1][$value['tec_asignado']]['TV']['cantidad']++;
+                                    $lista_tecnicos_organizada['instalaciones_AgregarInternet'][$key1][$value['tec_asignado']]['TV']['puntuacion']+=$puntuacion_instalaciones_EOC;
+                                    $lista_datos_cuentas_tipos_por_tecnico['instalaciones_AgregarInternet'][$value['tec_asignado']]['TV']['cantidad']++;
+                                    $lista_datos_cuentas_tipos_por_tecnico['instalaciones_AgregarInternet'][$value['tec_asignado']]['TV']['puntuacion']+=$puntuacion_instalaciones_EOC;
+                                    $lista_tecnicos_organizada['total_dia'][$key1][$value['tec_asignado']]+=$puntuacion_instalaciones_EOC;
                                 }
 
                             }else{ //esto son las que por alguna razon ya no tienen un equipo asignado
                                     //$lista_tecnicos_organizada['instalaciones_tv_e_internet'][$key1][$value['tec_asignado']]++;//esta es para las cuentas diarias de tipo de servicio por dia
                                     //$lista_datos_cuentas_tipos_por_tecnico['instalaciones_tv_e_internet'][$value['tec_asignado']]++;//esta para la totalizacion del tipo de servicio por tecnico    
+                                /*var_dump("inicio");
+                                var_dump($value);
+                                var_dump($invoice);
+                                var_dump($equipo);
+                                var_dump("fin"); sin teg*/
+                                $lista_tecnicos_organizada['instalaciones_AgregarInternet'][$key1][$value['tec_asignado']]['TV']['cantidad']++;
+                                    $lista_tecnicos_organizada['instalaciones_AgregarInternet'][$key1][$value['tec_asignado']]['TV']['puntuacion']+=$puntuacion_instalaciones_EOC;
+                                    $lista_datos_cuentas_tipos_por_tecnico['instalaciones_AgregarInternet'][$value['tec_asignado']]['TV']['cantidad']++;
+                                    $lista_datos_cuentas_tipos_por_tecnico['instalaciones_AgregarInternet'][$value['tec_asignado']]['TV']['puntuacion']+=$puntuacion_instalaciones_EOC;
+                                    $lista_tecnicos_organizada['total_dia'][$key1][$value['tec_asignado']]+=$puntuacion_instalaciones_EOC;
                             }
 
 
