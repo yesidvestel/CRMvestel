@@ -217,6 +217,7 @@ $lista_datos=array();
         $lista_datos['instalaciones_tv']=array();
         $lista_datos['instalaciones_internet']=array();
         $lista_datos['instalaciones_Agregar_Tv']=array();
+        $lista_datos['instalaciones_punto_nuevo']=array();
         $lista_datos['instalaciones_AgregarInternet']=array();
         $lista_datos['instalaciones_Traslado']=array();
         $lista_datos['instalaciones_Revision_tv_e_internet']=array();
@@ -267,7 +268,7 @@ for ($i=1; $i <=intval($fecha->format("t")) ; $i++) {
                                 "FTTH"=>array("cantidad"=>0,"puntuacion"=>0),"TV"=>array("cantidad"=>0,"puntuacion"=>0),
                                 "puntos_adicionales"=>array("cantidad"=>0,"puntuacion"=>0),
                                 "puntos_adicionales_multiples"=>array("cantidad"=>0,"puntuacion"=>0));
-                    }else if($key=="instalaciones_Agregar_Tv"){
+                    }else if($key=="instalaciones_Agregar_Tv" || $key=="instalaciones_punto_nuevo"){
                                 $lista_tecnicos_organizada[$key][$date1][$value2['username']]=array("Agregar_Tv"=>array("cantidad"=>0,"puntuacion"=>0),
                                 "puntos_adicionales"=>array("cantidad"=>0,"puntuacion"=>0),
                                 "puntos_adicionales_multiples"=>array("cantidad"=>0,"puntuacion"=>0));
@@ -311,7 +312,7 @@ for ($i=1; $i <=intval($fecha->format("t")) ; $i++) {
                                 "FTTH"=>array("cantidad"=>0,"puntuacion"=>0),"TV"=>array("cantidad"=>0,"puntuacion"=>0),
                                 "puntos_adicionales"=>array("cantidad"=>0,"puntuacion"=>0),
                                 "puntos_adicionales_multiples"=>array("cantidad"=>0,"puntuacion"=>0));
-                        }else if($key2=="instalaciones_Agregar_Tv"){
+                        }else if($key2=="instalaciones_Agregar_Tv" || $key2=="instalaciones_punto_nuevo"){
                             $lista_datos_cuentas_tipos_por_tecnico[$key2][$value['username']]=array("Agregar_Tv"=>array("cantidad"=>0,"puntuacion"=>0),
                                 "puntos_adicionales"=>array("cantidad"=>0,"puntuacion"=>0),
                                 "puntos_adicionales_multiples"=>array("cantidad"=>0,"puntuacion"=>0));
@@ -773,6 +774,33 @@ foreach ($est as $key => $value) {
             
                     //$lista_datos_cuentas_tipos_por_tecnico['instalaciones_Traslado'][$value['tec_asignado']]++;
             }
+    }else if($value['detalle']=="punto nuevo"){
+            $lista_datos['instalaciones_punto_nuevo'][$key1]++;        
+            $lista_datos['total_dia'][$key1]++;
+        //$lista_tecnicos_organizada['total_dia'][$key1][$value['tec_asignado']]++;
+        
+        $invoice=$this->db->get_where("invoices",array("tid"=>$value['id_factura_orden']))->row();
+        $px=0;
+                if($invoice->puntos=="0"|| $invoice->puntos==0 || $invoice->puntos=="1" || $invoice->puntos==1){$px=$puntuacion_punto_adicional;var_dump($puntuacion_punto_adicional);
+                        $lista_tecnicos_organizada['instalaciones_punto_nuevo'][$key1][$value['tec_asignado']]['puntos_adicionales']['cantidad']++;
+                        $lista_tecnicos_organizada['instalaciones_punto_nuevo'][$key1][$value['tec_asignado']]['puntos_adicionales']['puntuacion']+=$puntuacion_punto_adicional;
+                        $lista_datos_cuentas_tipos_por_tecnico['instalaciones_punto_nuevo'][$value['tec_asignado']]['puntos_adicionales']['cantidad']++;
+                        $lista_datos_cuentas_tipos_por_tecnico['instalaciones_punto_nuevo'][$value['tec_asignado']]['puntos_adicionales']['puntuacion']+=$puntuacion_punto_adicional;
+                        $lista_tecnicos_organizada['total_dia'][$key1][$value['tec_asignado']]+=$puntuacion_punto_adicional;
+                }else if($invoice->puntos>=2){$px=$puntuacion_punto_adicional_multiple;
+                        $lista_tecnicos_organizada['instalaciones_punto_nuevo'][$key1][$value['tec_asignado']]['puntos_adicionales']['cantidad']++;
+                        $lista_tecnicos_organizada['instalaciones_punto_nuevo'][$key1][$value['tec_asignado']]['puntos_adicionales']['puntuacion']+=$puntuacion_punto_adicional_multiple;
+                        $lista_datos_cuentas_tipos_por_tecnico['instalaciones_punto_nuevo'][$value['tec_asignado']]['puntos_adicionales_multiples']['cantidad']++;
+                        $lista_datos_cuentas_tipos_por_tecnico['instalaciones_punto_nuevo'][$value['tec_asignado']]['puntos_adicionales_multiples']['puntuacion']+=$puntuacion_punto_adicional_multiple;
+                        $lista_tecnicos_organizada['total_dia'][$key1][$value['tec_asignado']]+=$puntuacion_punto_adicional_multiple;
+                }
+
+                         $lista_tecnicos_organizada['instalaciones_punto_nuevo'][$key1][$value['tec_asignado']]['Agregar_Tv']['cantidad']++;
+                        $lista_tecnicos_organizada['instalaciones_punto_nuevo'][$key1][$value['tec_asignado']]['Agregar_Tv']['puntuacion']+=$px;
+                        $lista_datos_cuentas_tipos_por_tecnico['instalaciones_punto_nuevo'][$value['tec_asignado']]['Agregar_Tv']['cantidad']++;
+                        $lista_datos_cuentas_tipos_por_tecnico['instalaciones_punto_nuevo'][$value['tec_asignado']]['Agregar_Tv']['puntuacion']+=$px;
+                        $lista_tecnicos_organizada['total_dia'][$key1][$value['tec_asignado']]+=$px;
+             
     }
 
 }

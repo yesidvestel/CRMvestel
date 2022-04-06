@@ -749,6 +749,43 @@ table {
 														</tbody></table> 	
 											</td>
 										</tr>
+										<tr>
+											<td class="static">
+												<div class="cl-instalaciones_punto_nuevo" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_punto_nuevo()"><i><u>Punto Nuevo</u></i></div>
+												
+													<table class="tb_tec_info_instalaciones_punto_nuevo"><tbody>
+														<?php $lista_clases_css27=""; 
+															foreach ($lista_de_tecnicos as $key => $value) {
+																$name_class="instalaciones_punto_nuevo_".$value['username'];
+																$lista_clases_css27.=",.".$name_class."";
+																echo "<tr class='".$name_class."'><td>".$value['username']."</td></tr>";
+														}  ?>	
+														
+													</tbody></table> 
+											</td>
+											<?php $conteo=0; foreach ($tipos['instalaciones_punto_nuevo'] as $key1=> $row) {?>												
+												<td class="first-col" style="padding-right: 0px;padding-left: 0px;text-align: center;">
+													<div class="cl-instalaciones_punto_nuevo" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_punto_nuevo()"><?php echo $row;$conteo+=$row; ?></div>
+														
+														<table class="tb_tec_info_instalaciones_punto_nuevo" style='width: 100px;'><tbody>
+															<?php foreach ($lista_por_tecnicos['instalaciones_punto_nuevo'][$key1] as $key => $value2) {
+																echo "<tr class='instalaciones_punto_nuevo_".$key."' ><td style='width: 100px;text-align: center;'>".($value2['puntos_adicionales']['puntuacion']+$value2['puntos_adicionales_multiples']['puntuacion'])."p</td></tr>";																
+															} ?>	
+														</tbody></table> 	
+												</td>
+											<?php } ?>
+
+												
+											
+											<td align="center" >
+												<div   class="cl-instalaciones_punto_nuevo" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_punto_nuevo()"><?php echo $conteo; ?></div>
+														<table class="tb_tec_info_instalaciones_punto_nuevo" style='width: 200px;text-align: center;'><tbody>
+															<?php foreach ($lista_datos_cuentas_tipos_por_tecnico['instalaciones_punto_nuevo'] as $key => $value2) {
+																echo "<tr class='instalaciones_punto_nuevo_".$key."' ><td style='width: 200px;'><strong>".($value2['puntos_adicionales']['puntuacion']+$value2['puntos_adicionales_multiples']['puntuacion'])."</strong> pts </td></tr>";																
+															} ?>	
+														</tbody></table> 	
+											</td>
+										</tr>
 										
 									<tr>
                                             <td class="static">
@@ -877,6 +914,14 @@ table {
 																$x=$lista_datos_cuentas_tipos_por_tecnico['instalaciones_Agregar_Tv'][$key];
 																$total+=$x['Agregar_Tv']['puntuacion']+$x['puntos_adicionales']['puntuacion']+$x['puntos_adicionales_multiples']['puntuacion'];
 																	$puntuacion_agregar_tv=$x['Agregar_Tv'];
+																	$puntuacion_punto_adicional['cantidad']+=$x['puntos_adicionales']['cantidad'];
+																	$puntuacion_punto_adicional['puntuacion']+=$x['puntos_adicionales']['puntuacion'];
+																	$puntuacion_punto_adicional_multiple['cantidad']+=$x['puntos_adicionales_multiples']['cantidad'];
+																	$puntuacion_punto_adicional_multiple['puntuacion']+=$x['puntos_adicionales_multiples']['puntuacion'];
+
+																$x=$lista_datos_cuentas_tipos_por_tecnico['instalaciones_punto_nuevo'][$key];
+																$total+=$x['Agregar_Tv']['puntuacion'];
+																	//$puntuacion_agregar_tv=$x['Agregar_Tv'];
 																	$puntuacion_punto_adicional['cantidad']+=$x['puntos_adicionales']['cantidad'];
 																	$puntuacion_punto_adicional['puntuacion']+=$x['puntos_adicionales']['puntuacion'];
 																	$puntuacion_punto_adicional_multiple['cantidad']+=$x['puntos_adicionales_multiples']['cantidad'];
@@ -1261,6 +1306,7 @@ table {
 		var lista_clases_css16="<?=$lista_clases_css16 ?>";
 		var lista_clases_css17="<?=$lista_clases_css17 ?>";
 		var lista_clases_css20="<?=$lista_clases_css20 ?>";
+		var lista_clases_css27="<?=$lista_clases_css27 ?>";
 		
 			$(".cl-instalaciones_tv_e_internet"+lista_clases_css1).mouseover(function(){
 				var x1="."+$(this).attr("class");
@@ -1309,6 +1355,23 @@ table {
 			});
 			
 			$(".cl-instalaciones_Agregar_Tv"+lista_clases_css3).mouseout(function (){
+				var x1="."+$(this).attr("class");
+				$(x1).css("background-color","");
+				$(x1).css("box-shadow","");
+				/*$(x1).css("-webkit-transform","");
+				$(x1).css("transform","");*/
+			});
+			$(".cl-instalaciones_punto_nuevo"+lista_clases_css27).mouseover(function(){
+				var x1="."+$(this).attr("class");
+				$(x1).css("background-color","#d2b48c");
+				
+				
+				$(x1).css("box-shadow","1px 1px #53a7ea,2px 2px #53a7ea,3px 3px #53a7ea");
+				/*$(x1).css("-webkit-transform","translateX(-7px)");
+				$(x1).css("transform","translateX(-7px)");*/
+			});
+			
+			$(".cl-instalaciones_punto_nuevo"+lista_clases_css27).mouseout(function (){
 				var x1="."+$(this).attr("class");
 				$(x1).css("background-color","");
 				$(x1).css("box-shadow","");
@@ -1617,6 +1680,10 @@ function desactivar_activar_tabla_instalaciones_migracion(){
 function desactivar_activar_tabla_tareas_en_proyectos(){
 		$(".tb_tec_info_tareas_en_proyectos").fadeToggle("fast");						
 }
+function desactivar_activar_tabla_instalaciones_punto_nuevo(){
+		$(".tb_tec_info_instalaciones_punto_nuevo").fadeToggle("fast");						
+}
+
 function mostrar_ocultar(){
 	desactivar_activar_tabla_instalaciones_total();
 	desactivar_activar_tabla_instalaciones_Corte_Tv();
@@ -1635,6 +1702,7 @@ function mostrar_ocultar(){
 	desactivar_activar_tabla_instalaciones_tv_e_internet();
 	desactivar_activar_tabla_instalaciones_migracion();	
 	desactivar_activar_tabla_tareas_en_proyectos();
+	desactivar_activar_tabla_instalaciones_punto_nuevo();
 }
 mostrar_ocultar();
 
