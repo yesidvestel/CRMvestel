@@ -786,8 +786,81 @@ table {
 														</tbody></table> 	
 											</td>
 										</tr>
-										
 									<tr>
+											<td class="static">
+												<div class="cl-instalaciones_recuperacion_cable_modem" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_recuperacion_cable_modem()"><i><u>Rec. modem</u></i></div>
+												
+													<table class="tb_tec_info_instalaciones_recuperacion_cable_modem"><tbody>
+														<?php $lista_clases_css37=""; 
+															foreach ($lista_de_tecnicos as $key => $value) {
+																$name_class="instalaciones_recuperacion_cable_modem_".$value['username'];
+																$lista_clases_css37.=",.".$name_class."";
+																echo "<tr class='".$name_class."'><td>".$value['username']."</td></tr>";
+														}  ?>	
+														
+													</tbody></table> 
+											</td>
+											<?php $conteo=0; foreach ($tipos['instalaciones_recuperacion_cable_modem'] as $key1=> $row) {?>												
+												<td class="first-col" style="padding-right: 0px;padding-left: 0px;text-align: center;vertical-align: middle;">
+													<div class="cl-instalaciones_recuperacion_cable_modem" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_recuperacion_cable_modem()"><?php echo $row;$conteo+=$row; ?></div>
+														
+														<table class="tb_tec_info_instalaciones_recuperacion_cable_modem" style='width: 100px;vertical-align: middle;'><tbody>
+															<?php foreach ($lista_por_tecnicos['instalaciones_recuperacion_cable_modem'][$key1] as $key => $value2) {
+																echo "<tr class='instalaciones_recuperacion_cable_modem_".$key."' ><td style='width: 100px;text-align: center;'>".($value2['puntuacion'])."p</td></tr>";																
+															} ?>	
+														</tbody></table> 	
+												</td>
+											<?php } ?>
+
+												
+											
+											<td align="center" style="vertical-align: middle;" >
+												<div   class="cl-instalaciones_recuperacion_cable_modem" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_recuperacion_cable_modem()"><?php echo $conteo; ?></div>
+														<table class="tb_tec_info_instalaciones_recuperacion_cable_modem" style='width: 200px;text-align: center;vertical-align: middle;'><tbody>
+															<?php foreach ($lista_datos_cuentas_tipos_por_tecnico['instalaciones_recuperacion_cable_modem'] as $key => $value2) {
+																echo "<tr class='instalaciones_recuperacion_cable_modem_".$key."' ><td style='width: 200px;'><strong>".($value2['puntuacion'])."</strong> pts </td></tr>";																
+															} ?>	
+														</tbody></table> 	
+											</td>
+										</tr>	
+									<tr>
+										<tr>
+											<td class="static">
+												<div class="cl-instalaciones_veeduria" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_veeduria()"><i><u>Veeduria</u></i></div>
+												
+													<table class="tb_tec_info_instalaciones_veeduria"><tbody>
+														<?php $lista_clases_css47=""; 
+															foreach ($lista_de_tecnicos as $key => $value) {
+																$name_class="instalaciones_veeduria_".$value['username'];
+																$lista_clases_css47.=",.".$name_class."";
+																echo "<tr class='".$name_class."'><td>".$value['username']."</td></tr>";
+														}  ?>	
+														
+													</tbody></table> 
+											</td>
+											<?php $conteo=0; foreach ($tipos['instalaciones_veeduria'] as $key1=> $row) {?>												
+												<td class="first-col" style="padding-right: 0px;padding-left: 0px;text-align: center;vertical-align: middle;">
+													<div class="cl-instalaciones_veeduria" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_veeduria()"><?php echo $row;$conteo+=$row; ?></div>
+														
+														<table class="tb_tec_info_instalaciones_veeduria" style='width: 100px;vertical-align: middle;'><tbody>
+															<?php foreach ($lista_por_tecnicos['instalaciones_veeduria'][$key1] as $key => $value2) {
+																echo "<tr class='instalaciones_veeduria_".$key."' ><td style='width: 100px;text-align: center;'>".($value2['puntuacion'])."p</td></tr>";																
+															} ?>	
+														</tbody></table> 	
+												</td>
+											<?php } ?>
+
+												
+											
+											<td align="center" style="vertical-align: middle;" >
+												<div   class="cl-instalaciones_veeduria" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_veeduria()"><?php echo $conteo; ?></div>
+														<table class="tb_tec_info_instalaciones_veeduria" style='width: 200px;text-align: center;vertical-align: middle;'><tbody>
+															<?php foreach ($lista_datos_cuentas_tipos_por_tecnico['instalaciones_veeduria'] as $key => $value2) {
+																echo "<tr class='instalaciones_veeduria_".$key."' ><td style='width: 200px;'><strong>".($value2['puntuacion'])."</strong> pts </td></tr>";																
+															} ?>	
+														</tbody></table> 	
+											</td>
+										</tr>
                                             <td class="static">
                                                 <div class="cl-tareas_en_proyectos" style="cursor: pointer;" onclick="desactivar_activar_tabla_tareas_en_proyectos()"><i><u>Tareas</u></i></div>
                                                 
@@ -875,6 +948,8 @@ table {
 																    $puntuacion_reconexion=array("cantidad"=>0,"puntuacion"=>0);
 																    $puntuacion_desconexion=array("cantidad"=>0,"puntuacion"=>0);
 																    $puntuacion_suspencion=array("cantidad"=>0,"puntuacion"=>0);
+																    $puntuacion_recuperacion=array("cantidad"=>0,"puntuacion"=>0);
+																    $puntuacion_veeduria=array("cantidad"=>0,"puntuacion"=>0);
 																    $puntuacion_tareas=array("cantidad"=>0,"puntuacion"=>0);
 
 																$x=$lista_datos_cuentas_tipos_por_tecnico['instalaciones_tv_e_internet'][$key];
@@ -976,6 +1051,16 @@ table {
 																	$puntuacion_reconexion['cantidad']+=$x['cantidad'];
 																	$puntuacion_reconexion['puntuacion']+=$x['puntuacion'];
 
+																$x=$lista_datos_cuentas_tipos_por_tecnico['instalaciones_recuperacion_cable_modem'][$key];
+																$total+=$x['puntuacion'];
+																	$puntuacion_recuperacion['cantidad']+=$x['cantidad'];
+																	$puntuacion_recuperacion['puntuacion']+=$x['puntuacion'];
+
+																$x=$lista_datos_cuentas_tipos_por_tecnico['instalaciones_veeduria'][$key];
+																$total+=$x['puntuacion'];
+																	$puntuacion_veeduria['cantidad']+=$x['cantidad'];
+																	$puntuacion_veeduria['puntuacion']+=$x['puntuacion'];
+
 																$x=$lista_datos_cuentas_tipos_por_tecnico['instalaciones_Revision_tv_e_internet'][$key];
 																$total+=$x['puntuacion'];
 																	$puntuacion_revision_tv=$x;
@@ -1017,6 +1102,8 @@ table {
 																				data-instalaciones-reconexion='".$puntuacion_reconexion['cantidad'].",".$puntuacion_reconexion['puntuacion']."' 
 																				data-instalaciones-desconexion='".$puntuacion_desconexion['cantidad'].",".$puntuacion_desconexion['puntuacion']."' 
 																				data-instalaciones-suspencion='".$puntuacion_suspencion['cantidad'].",".$puntuacion_suspencion['puntuacion']."' 
+																				data-instalaciones-veeduria='".$puntuacion_recuperacion['cantidad'].",".$puntuacion_recuperacion['puntuacion']."' 
+																				data-instalaciones-recuperacion='".$puntuacion_veeduria['cantidad'].",".$puntuacion_veeduria['puntuacion']."' 
 																				data-tareas='".$puntuacion_tareas['cantidad'].",".$puntuacion_tareas['puntuacion']."' "; 
 
 																echo "<tr class='instalaciones_total_".$key."' ><td style='width: 200px;cursor:pointer;' class='td_totalizador' data-username='".$key."' ".$puntuaciones." ><strong>".($total)."</strong> pts </td></tr>";																
@@ -1160,6 +1247,16 @@ table {
                 			<td id="modal-instalaciones-suspencion-p">0</td>
                 		</tr>
                 		<tr>
+                			<td>Veeduria</td>
+                			<td id="modal-instalaciones-veeduria-c">0</td>
+                			<td id="modal-instalaciones-veeduria-p">0</td>
+                		</tr>
+                		<tr>
+                			<td>Recuperación Cable Modem</td>
+                			<td id="modal-instalaciones-recuperacion-c">0</td>
+                			<td id="modal-instalaciones-recuperacion-p">0</td>
+                		</tr>
+                		<tr>
                 			<td>Tareas</td>
                 			<td id="modal-tareas-c">0</td>
                 			<td id="modal-tareas-p">0</td>
@@ -1299,6 +1396,18 @@ table {
 			total_puntuacion+=parseInt(datax[1]);
 			cantidad+=parseInt(datax[0]);
 
+			var datax=$(this).data("instalaciones-veeduria").split(",");
+			$("#modal-instalaciones-veeduria-c").text(datax[0]);
+			$("#modal-instalaciones-veeduria-p").text(datax[1]);
+			total_puntuacion+=parseInt(datax[1]);
+			cantidad+=parseInt(datax[0]);
+
+			var datax=$(this).data("instalaciones-recuperacion").split(",");
+			$("#modal-instalaciones-recuperacion-c").text(datax[0]);
+			$("#modal-instalaciones-recuperacion-p").text(datax[1]);
+			total_puntuacion+=parseInt(datax[1]);
+			cantidad+=parseInt(datax[0]);
+
 			var datax=$(this).data("tareas").split(",");
 			$("#modal-tareas-c").text(datax[0]);
 			$("#modal-tareas-p").text(datax[1]);
@@ -1336,6 +1445,8 @@ table {
 		var lista_clases_css17="<?=$lista_clases_css17 ?>";
 		var lista_clases_css20="<?=$lista_clases_css20 ?>";
 		var lista_clases_css27="<?=$lista_clases_css27 ?>";
+		var lista_clases_css37="<?=$lista_clases_css37 ?>";
+		var lista_clases_css47="<?=$lista_clases_css47 ?>";
 		
 			$(".cl-instalaciones_tv_e_internet"+lista_clases_css1).mouseover(function(){
 				var x1="."+$(this).attr("class");
@@ -1614,6 +1725,40 @@ table {
 				/*$(x1).css("-webkit-transform","");
 				$(x1).css("transform","");*/
 			});
+			$(".cl-instalaciones_recuperacion_cable_modem"+lista_clases_css14).mouseover(function(){
+				var x1="."+$(this).attr("class");
+				$(x1).css("background-color","#d2b48c");
+				
+				
+				$(x1).css("box-shadow","1px 1px #53a7ea,2px 2px #53a7ea,3px 3px #53a7ea");
+				/*$(x1).css("-webkit-transform","translateX(-7px)");
+				$(x1).css("transform","translateX(-7px)");*/
+			});
+			
+			$(".cl-instalaciones_recuperacion_cable_modem"+lista_clases_css14).mouseout(function (){
+				var x1="."+$(this).attr("class");
+				$(x1).css("background-color","");
+				$(x1).css("box-shadow","");
+				/*$(x1).css("-webkit-transform","");
+				$(x1).css("transform","");*/
+			});
+			$(".cl-instalaciones_veeduria"+lista_clases_css14).mouseover(function(){
+				var x1="."+$(this).attr("class");
+				$(x1).css("background-color","#d2b48c");
+				
+				
+				$(x1).css("box-shadow","1px 1px #53a7ea,2px 2px #53a7ea,3px 3px #53a7ea");
+				/*$(x1).css("-webkit-transform","translateX(-7px)");
+				$(x1).css("transform","translateX(-7px)");*/
+			});
+			
+			$(".cl-instalaciones_veeduria"+lista_clases_css14).mouseout(function (){
+				var x1="."+$(this).attr("class");
+				$(x1).css("background-color","");
+				$(x1).css("box-shadow","");
+				/*$(x1).css("-webkit-transform","");
+				$(x1).css("transform","");*/
+			});
 			$(".cl-instalaciones_migracion"+lista_clases_css17).mouseover(function(){
 				var x1="."+$(this).attr("class");
 				$(x1).css("background-color","#d2b48c");
@@ -1712,6 +1857,12 @@ function desactivar_activar_tabla_tareas_en_proyectos(){
 function desactivar_activar_tabla_instalaciones_punto_nuevo(){
 		$(".tb_tec_info_instalaciones_punto_nuevo").fadeToggle("fast");						
 }
+function desactivar_activar_tabla_instalaciones_recuperacion_cable_modem(){
+		$(".tb_tec_info_instalaciones_recuperacion_cable_modem").fadeToggle("fast");						
+}
+function desactivar_activar_tabla_instalaciones_veeduria(){
+		$(".tb_tec_info_instalaciones_veeduria").fadeToggle("fast");						
+}
 
 function mostrar_ocultar(){
 	desactivar_activar_tabla_instalaciones_total();
@@ -1732,6 +1883,8 @@ function mostrar_ocultar(){
 	desactivar_activar_tabla_instalaciones_migracion();	
 	desactivar_activar_tabla_tareas_en_proyectos();
 	desactivar_activar_tabla_instalaciones_punto_nuevo();
+	desactivar_activar_tabla_instalaciones_recuperacion_cable_modem();
+	desactivar_activar_tabla_instalaciones_veeduria();
 }
 mostrar_ocultar();
 
