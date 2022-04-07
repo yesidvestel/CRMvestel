@@ -874,6 +874,7 @@ table {
 																    $puntuacion_revision_tv=array("cantidad"=>0,"puntuacion"=>0);
 																    $puntuacion_reconexion=array("cantidad"=>0,"puntuacion"=>0);
 																    $puntuacion_desconexion=array("cantidad"=>0,"puntuacion"=>0);
+																    $puntuacion_suspencion=array("cantidad"=>0,"puntuacion"=>0);
 																    $puntuacion_tareas=array("cantidad"=>0,"puntuacion"=>0);
 
 																$x=$lista_datos_cuentas_tipos_por_tecnico['instalaciones_tv_e_internet'][$key];
@@ -944,6 +945,22 @@ table {
 																$total+=$x['puntuacion'];
 																	$puntuacion_desconexion['cantidad']+=$x['cantidad'];
 																	$puntuacion_desconexion['puntuacion']+=$x['puntuacion'];
+																/*suspencion*/
+																	$x=$lista_datos_cuentas_tipos_por_tecnico['instalaciones_Suspension_Combo'][$key];
+																	$total+=$x['puntuacion'];
+																		$puntuacion_suspencion['cantidad']=$x['cantidad'];
+																		$puntuacion_suspencion['puntuacion']=$x['puntuacion'];
+
+																	$x=$lista_datos_cuentas_tipos_por_tecnico['instalaciones_Suspension_Internet'][$key];
+																	$total+=$x['puntuacion'];
+																		$puntuacion_suspencion['cantidad']+=$x['cantidad'];
+																		$puntuacion_suspencion['puntuacion']+=$x['puntuacion'];
+
+																	$x=$lista_datos_cuentas_tipos_por_tecnico['instalaciones_Suspension_Television'][$key];
+																	$total+=$x['puntuacion'];
+																		$puntuacion_suspencion['cantidad']+=$x['cantidad'];
+																		$puntuacion_suspencion['puntuacion']+=$x['puntuacion'];
+																/**/
 
 																$x=$lista_datos_cuentas_tipos_por_tecnico['instalaciones_Reconexion_tv_e_internet'][$key];
 																$total+=$x['puntuacion'];
@@ -999,6 +1016,7 @@ table {
 																				data-instalaciones-revision-tv='".$puntuacion_revision_tv['cantidad'].",".$puntuacion_revision_tv['puntuacion']."' 
 																				data-instalaciones-reconexion='".$puntuacion_reconexion['cantidad'].",".$puntuacion_reconexion['puntuacion']."' 
 																				data-instalaciones-desconexion='".$puntuacion_desconexion['cantidad'].",".$puntuacion_desconexion['puntuacion']."' 
+																				data-instalaciones-suspencion='".$puntuacion_suspencion['cantidad'].",".$puntuacion_suspencion['puntuacion']."' 
 																				data-tareas='".$puntuacion_tareas['cantidad'].",".$puntuacion_tareas['puntuacion']."' "; 
 
 																echo "<tr class='instalaciones_total_".$key."' ><td style='width: 200px;cursor:pointer;' class='td_totalizador' data-username='".$key."' ".$puntuaciones." ><strong>".($total)."</strong> pts </td></tr>";																
@@ -1137,6 +1155,11 @@ table {
                 			<td id="modal-instalaciones-desconexion-p">0</td>
                 		</tr>
                 		<tr>
+                			<td>Suspencion</td>
+                			<td id="modal-instalaciones-suspencion-c">0</td>
+                			<td id="modal-instalaciones-suspencion-p">0</td>
+                		</tr>
+                		<tr>
                 			<td>Tareas</td>
                 			<td id="modal-tareas-c">0</td>
                 			<td id="modal-tareas-p">0</td>
@@ -1267,6 +1290,12 @@ table {
 			var datax=$(this).data("instalaciones-desconexion").split(",");
 			$("#modal-instalaciones-desconexion-c").text(datax[0]);
 			$("#modal-instalaciones-desconexion-p").text(datax[1]);
+			total_puntuacion+=parseInt(datax[1]);
+			cantidad+=parseInt(datax[0]);
+
+			var datax=$(this).data("instalaciones-suspencion").split(",");
+			$("#modal-instalaciones-suspencion-c").text(datax[0]);
+			$("#modal-instalaciones-suspencion-p").text(datax[1]);
 			total_puntuacion+=parseInt(datax[1]);
 			cantidad+=parseInt(datax[0]);
 
