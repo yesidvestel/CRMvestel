@@ -162,7 +162,12 @@ class Settings extends CI_Controller
 
     public function email()
     {
+/*
+recordatorio
 
+correo : vestelsas@gmail.com
+contraseña de aplicacion para crm : okqttqhqjmtaolbw
+*/
         if ($this->input->post()) {
             $host = $this->input->post('host');
             $port = $this->input->post('port');
