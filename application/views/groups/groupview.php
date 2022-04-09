@@ -171,6 +171,10 @@
                                     <a class="nav-link" id="tegnologia-tab" data-toggle="tab" href="#tegnologia"
                                        aria-controls="tegnologia"> Tecnología</a>
                                 </li>
+                                  <li class="nav-item">
+                                    <a class="nav-link" id="estado_anterior-tab" data-toggle="tab" href="#estado_anterior"
+                                       aria-controls="estado_anterior"> Estado Anterior</a>
+                                </li>
                                <!-- <li class="nav-item">
                                     <a class="nav-link" id="thread-tab" data-toggle="tab" href="#activities"
                                        aria-controls="activities">Otro Filtro</a>
@@ -445,6 +449,55 @@
                                     </div>
 
                                 </div>
+                                 <div class="tab-pane fade" id="estado_anterior" role="tabpanel" aria-labelledby="milestones-tab" aria-expanded="false">
+                                    <div class="form-group row">
+                                
+                                        <label class="col-sm-2 col-form-label"
+                                               for="pay_cat">Habilitar</label>
+
+                                        <div class="col-sm-6">
+                                           
+                                            <select style="width: 100%;" id="ultimo_estado_sel" name="ultimo_estado_sel" class="form-control">
+                                                         
+                                                        <option value='No'>No</option>
+                                                        <option value='Si'>Si</option>
+                                             </select>
+
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="form-group row" id="div_filtrar_fecha_cambio" style="display:none">
+                                         <label class="col-sm-2 col-form-label"
+                                               for="pay_cat">Filtrar por fecha de cambio</label>
+
+                                        <div class="col-sm-6">
+                                           
+                                            <select style="width: 100%;" id="sel_filtrar_fecha_cambio" name="sel_filtrar_fecha_cambio" class="form-control">
+                                                         
+                                                        <option value='No'>No</option>
+                                                        <option value='Si'>Si</option>
+                                             </select>
+                                             
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="form-group row" id="div_fechas_filtro_cambio_estado" style="display:none;">
+                                        <label class="col-sm-2 col-form-label"
+                                               for="pay_cat" id="label_fechas">Fechas</label>
+
+                                        <div class="col-sm-2">
+                                            <input type="text" class="form-control required"
+                                                   placeholder="Start Date" name="sdate3" id="sdate3"
+                                                    autocomplete="false">
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <input type="text" class="form-control required"
+                                                   placeholder="End Date" name="edate2" id="edate2"
+                                                   data-toggle="datepicker" autocomplete="false">
+                                        </div>
+                                    </div>
+
+                                </div>
                                 
                                 
                                 
@@ -531,7 +584,23 @@
 </article>
 
 <script type="text/javascript">
-
+$("#ultimo_estado_sel").on("change",function(e){
+    if($(this).val()=="Si"){
+        $("#div_filtrar_fecha_cambio").css("display","");
+    }else{
+        $("#div_filtrar_fecha_cambio").css("display","none");
+        $("#div_fechas_filtro_cambio_estado").css("display","none");
+        location.reload();
+    }
+    $("#sel_filtrar_fecha_cambio").val("No");
+});
+$("#sel_filtrar_fecha_cambio").on("change",function(){
+    if($(this).val()=="Si"){
+        $("#div_fechas_filtro_cambio_estado").css("display","");
+    }else{
+        $("#div_fechas_filtro_cambio_estado").css("display","none");
+    }
+});
     function selet_all_customers(elemento){
         
            
@@ -965,15 +1034,21 @@
     function nuevas_columnas(){
         if(!columnasAgregadas){
               tb.destroy();
-              $("#despues_de_thead").after("<th class='cols_adicionadas'>Ingreso</th>");
+               var ultimo_estado_sel=$("#ultimo_estado_sel option:selected").val();
+             
+               $("#despues_de_thead").after("<th class='cols_adicionadas'>Ingreso</th>");
               $("#despues_de_tfoot").after("<th class='cols_adicionadas'>Ingreso</th>");
               $("#despues_de_thead").after("<th class='cols_adicionadas'>Suscripcion</th>");
               $("#despues_de_tfoot").after("<th class='cols_adicionadas'>Suscripcion</th>");
               $("#despues_de_thead").after("<th class='cols_adicionadas'>Deuda</th>");
               $("#despues_de_tfoot").after("<th class='cols_adicionadas'>Deuda</th>");
-
-              
-
+            
+            if(ultimo_estado_sel=="Si"){
+                    $("#despues_de_thead").after("<th class='cols_adicionadas'>Ult. Estado</th>");
+                    $("#despues_de_tfoot").after("<th class='cols_adicionadas'>Ult. Estado</th>");
+                    $("#despues_de_thead").after("<th class='cols_adicionadas'>Fecha Cambio</th>");
+                    $("#despues_de_tfoot").after("<th class='cols_adicionadas'>Fecha Cambio</th>");
+              }
               
            
       
@@ -1000,6 +1075,12 @@
             var barrios_multiple=$("#barrios_multiple").val();
             var deudores_multiple=$("#deudores_multiple").val();
             var tegnologia_multiple=$("#tegnologia_multiple").val();
+
+
+            var sel_filtrar_fecha_cambio=$("#sel_filtrar_fecha_cambio option:selected").val();
+            var sdate3=$("#sdate3").val();
+            var edate2=$("#edate2").val();
+
               tb=$('#fclientstable').DataTable({
 
                 "processing": true, //Feature control the processing indicator.
@@ -1008,7 +1089,7 @@
 
                 // Load data for the table's content from an Ajax source
                 "ajax": {
-                    "url": "<?php echo site_url('clientgroup/load_morosos') . '?id=' . $group['id']; ?>&localidad="+localidad+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&pagination_start="+pagination_start+"&pagination_end="+pagination_end+"&checked_ind_service="+checked_ind_service+"&check_usuarios_a_facturar="+check_usuarios_a_facturar+"&estados_multiple="+estados_multiple+"&localidad_multiple="+localidad_multiple+"&barrios_multiple="+barrios_multiple+"&deudores_multiple="+deudores_multiple+"&tegnologia_multiple="+tegnologia_multiple,
+                    "url": "<?php echo site_url('clientgroup/load_morosos') . '?id=' . $group['id']; ?>&localidad="+localidad+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&pagination_start="+pagination_start+"&pagination_end="+pagination_end+"&checked_ind_service="+checked_ind_service+"&check_usuarios_a_facturar="+check_usuarios_a_facturar+"&estados_multiple="+estados_multiple+"&localidad_multiple="+localidad_multiple+"&barrios_multiple="+barrios_multiple+"&deudores_multiple="+deudores_multiple+"&tegnologia_multiple="+tegnologia_multiple+"&ultimo_estado_sel="+ultimo_estado_sel,
                     "type": "POST",
                     error: function (xhr, error, code)
                     {
@@ -1108,13 +1189,16 @@
             var tegnologia_multiple=$("#tegnologia_multiple").val();
                 //color:blue;font-weight:900
             
-            
+            var ultimo_estado_sel=$("#ultimo_estado_sel option:selected").val();
+            var sel_filtrar_fecha_cambio=$("#sel_filtrar_fecha_cambio option:selected").val();
+            var sdate3=$("#sdate3").val();
+            var edate2=$("#edate2").val();
                
 
              
             //if(morosos!=""){
                 if(columnasAgregadas){
-                    tb.ajax.url( baseurl+"clientgroup/load_morosos?id=<?=$_GET['id']?>&localidad="+localidad+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&checked_ind_service="+checked_ind_service+"&check_usuarios_a_facturar="+check_usuarios_a_facturar+"&estados_multiple="+estados_multiple+"&localidad_multiple="+localidad_multiple+"&barrios_multiple="+barrios_multiple+"&deudores_multiple="+deudores_multiple+"&tegnologia_multiple="+tegnologia_multiple).load();               
+                    tb.ajax.url( baseurl+"clientgroup/load_morosos?id=<?=$_GET['id']?>&localidad="+localidad+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&checked_ind_service="+checked_ind_service+"&check_usuarios_a_facturar="+check_usuarios_a_facturar+"&estados_multiple="+estados_multiple+"&localidad_multiple="+localidad_multiple+"&barrios_multiple="+barrios_multiple+"&deudores_multiple="+deudores_multiple+"&tegnologia_multiple="+tegnologia_multiple+"&ultimo_estado_sel="+ultimo_estado_sel).load();               
                 }else{
                     nuevas_columnas();
                     $("option[value=100]").text("Todo");

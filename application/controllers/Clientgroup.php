@@ -1386,8 +1386,42 @@ include (APPPATH."libraries\RouterosAPI.php");
                     $customer_moroso=false;
                 }
             }
-            
+            if($_GET['ultimo_estado_sel']=="Si"){
+
+            }   
             if($customer_moroso){
+                $array_add=array("id"=>$customers->id);
+
+                if($_GET['ultimo_estado_sel']=="Si"){
+                                $ul_estado="Activo";
+                                $actual="";
+                                $lista_ordenes=$this->db->select("*")->from("tickets")->where("cid=".$customers->id)->order_by("idt","desc")->get()->result();
+                                foreach ($lista_ordenes as $key2 => $value3 ) {
+                                    if($value3->status=="Resuelto" && isset($lista_ordenes[$key2+1]->detalle) && $lista_ordenes[$key2+1]->status=="Resuelto"){
+                                        if(strpos($value3->detalle, "Suspension")!==false){
+                                        $actual="Suspendido";
+                                        if(strpos($lista_ordenes[$key2+1]->detalle, "Reconexion")!==false || strpos($lista_ordenes[$key2+1]->detalle, "Corte")!==false){
+                                            $ul_estado="Cortado";
+                                           
+                                        }
+                                        
+                                         break;
+                                        }
+                                    }
+                                        
+                                }
+                                //var_dump($ul_estado);
+                                if(!empty($lista_ordenes[0]->fecha_final)){
+                                    $array_add['fecha_ultimo_estado']=$lista_ordenes[0]->fecha_final;
+                                    $array_add['ultimo_estado']=$ul_estado;
+                                }else{
+                                    $array_add['fecha_ultimo_estado']="Sin";
+                                    $array_add['ultimo_estado']="Sin";
+                                }
+                                
+                                    
+                            }
+
                 if(($x>=$minimo && $x<$maximo) || $_POST['length']=="100"){
                     $no++;                
                     
@@ -1434,6 +1468,12 @@ include (APPPATH."libraries\RouterosAPI.php");
                             }
                             $row[] = $tegnologia;
                             $row[] = '<span class="st-'.$customers->usu_estado. '">' .$customers->usu_estado. '</span>';
+                            if($_GET['ultimo_estado_sel']=="Si"){
+                                    $row[] = $array_add['fecha_ultimo_estado'];
+                                    $row[] = '<span class="st-'.$array_add['ultimo_estado']. '">' .$array_add['ultimo_estado']. '</span>';
+                            }
+                                
+
                             $row[] = amountFormat($debe_customer);
                             $row[] = amountFormat($valor_ultima_factura);
                             $row[] = amountFormat($money['credit']-$money['debit']);
@@ -1452,7 +1492,6 @@ include (APPPATH."libraries\RouterosAPI.php");
                 }
 
                 $x++;
-                $array_add=array("id"=>$customers->id);
                 $array_add['debe_customer']=$debe_customer;
                 $array_add['valor_ultima_factura']=$valor_ultima_factura;
                 $array_add['suscripcion_str']=$suscripcion_str;
@@ -1553,6 +1592,11 @@ include (APPPATH."libraries\RouterosAPI.php");
                             }
                             $row[] = $datos_cuentas->tegnologia;
                             $row[] = '<span class="st-'.$customers->usu_estado. '">' .$customers->usu_estado. '</span>';
+                            //var_dump($datos_cuentas->fecha_ultimo_estado);
+                            if($_GET['ultimo_estado_sel']=="Si"){
+                                $row[] = $datos_cuentas->fecha_ultimo_estado;
+                                $row[] = '<span class="st-'.$datos_cuentas->ultimo_estado. '">' .$datos_cuentas->ultimo_estado. '</span>';
+                            }
                             $row[] = amountFormat($datos_cuentas->debe_customer);
                             $row[] = amountFormat($datos_cuentas->valor_ultima_factura);
                             $row[] = amountFormat($money['credit']-$money['debit']);
