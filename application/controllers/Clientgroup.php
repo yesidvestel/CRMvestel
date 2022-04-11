@@ -1395,28 +1395,55 @@ include (APPPATH."libraries\RouterosAPI.php");
                 if($_GET['ultimo_estado_sel']=="Si"){
                                 $ul_estado="Activo";
                                 $actual="";
-                                $lista_ordenes=$this->db->select("*")->from("tickets")->where("cid=".$customers->id)->order_by("idt","desc")->get()->result();
+                                $lista_ordenes=$this->db->select("*")->from("tickets")->where("cid=".$customers->id)->order_by("fecha_final,idt","desc")->get()->result();
+                                $array_add['fecha_ultimo_estado']=null;
                                 foreach ($lista_ordenes as $key2 => $value3 ) {
-                                    if($value3->status=="Resuelto" && isset($lista_ordenes[$key2+1]->detalle) && $lista_ordenes[$key2+1]->status=="Resuelto"){
-                                        if(strpos($value3->detalle, "Suspension")!==false){
-                                        $actual="Suspendido";
-                                        if(strpos($lista_ordenes[$key2+1]->detalle, "Reconexion")!==false || strpos($lista_ordenes[$key2+1]->detalle, "Corte")!==false){
-                                            $ul_estado="Cortado";
-                                           
-                                        }
-                                        
-                                         break;
+                                    if($value3->status=="Resuelto" && isset($lista_ordenes[$key2+1]->detalle)){
+                                        if($customers->usu_estado=="Suspendido"){
+
+//var_dump($value3->detalle);
+                                                       
+                                                if(strpos($value3->detalle, "Suspension")!==false){
+                                        $varx=false;
+                                                $actual="Suspendido";
+
+                                                    if((strpos($lista_ordenes[$key2+1]->detalle, "Reconexion")!==false || strpos($lista_ordenes[$key2+1]->detalle, "Corte")!==false) && $lista_ordenes[$key2+1]->status=="Resuelto"){
+                                                        $ul_estado="Cortado";
+                                                       
+                                                       $varx=true;
+                                                    }else if(strpos($lista_ordenes[$key2+1]->detalle, "Instalacion")!==false){
+                                                        if($lista_ordenes[$key2+1]->status=="Resuelto"){
+                                                            $ul_estado="Activo";
+                                                        }else{
+                                                            $ul_estado="Instalar";
+                                                        }
+                                                        $varx=true;
+                                                    }
+                                                    if(!empty($value3->fecha_final)){
+                                                        $array_add['fecha_ultimo_estado']=$value3->fecha_final;    
+                                                    }else {
+                                                        $array_add['fecha_ultimo_estado']=$value3->created;    
+                                                    }
+                                                    
+                                                if($varx){
+
+                                                 break;
+                                                }
+                                                }
                                         }
                                     }
                                         
                                 }
                                 //var_dump($ul_estado);
-                                if(!empty($lista_ordenes[0]->fecha_final)){
-                                    $array_add['fecha_ultimo_estado']=$lista_ordenes[0]->fecha_final;
+                                if(!empty($array_add['fecha_ultimo_estado'])){
+                                    //$array_add['fecha_ultimo_estado']=$lista_ordenes[0]->fecha_final;
                                     $array_add['ultimo_estado']=$ul_estado;
                                 }else{
                                     $array_add['fecha_ultimo_estado']="Sin";
                                     $array_add['ultimo_estado']="Sin";
+                                    /*var_dump($lista_ordenes);
+                                                       var_dump($value3->cid);
+                                                       var_dump("fin");*/
                                 }
                                 
                                     
