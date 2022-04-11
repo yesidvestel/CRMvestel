@@ -367,7 +367,136 @@ class Customers_model extends CI_Model
         return $servicios;
         
     }
+public function calculo_ultimo_estado ($array_add,$customers){
+ $ul_estado="Activo";
+                                $actual="";
+                                $lista_ordenes=$this->db->select("*")->from("tickets")->where("cid=".$customers->id)->order_by("fecha_final,idt","desc")->get()->result();
+                                $array_add['fecha_ultimo_estado']=null;
+                                foreach ($lista_ordenes as $key2 => $value3 ) {
+                                    if($value3->status=="Resuelto" ){
+                                        if($customers->usu_estado=="Suspendido" ){
 
+
+                                                       
+                                                if(strpos($value3->detalle, "Suspension")!==false || !empty($array_add['fecha_ultimo_estado'])){
+                                                     /*var_dump($value3->detalle);
+                                                       var_dump($value3->cid);
+                                                       var_dump($lista_ordenes[$key2+1]->detalle);*/
+                                                    $varx=false;
+                                                $actual="Suspendido";
+                                                if(isset($lista_ordenes[$key2+1]->detalle)){
+                                                    if((strpos($lista_ordenes[$key2+1]->detalle, "Reconexion")!==false || strpos($lista_ordenes[$key2+1]->detalle, "Corte")!==false) && $lista_ordenes[$key2+1]->status=="Resuelto"){
+                                                        $ul_estado="Cortado";
+                                                       
+                                                       $varx=true;
+                                                    }else if(strpos($lista_ordenes[$key2+1]->detalle, "Instalacion")!==false){
+                                                        if($lista_ordenes[$key2+1]->status=="Resuelto"){
+                                                            $ul_estado="Activo";
+                                                        }else{
+                                                            $ul_estado="Instalar";
+                                                        }
+                                                        $varx=true;
+                                                    }                                                    
+                                                   }//var_dump("fin");
+                                                        if(empty($array_add['fecha_ultimo_estado'])){
+                                                           if(!empty($value3->fecha_final)){
+                                                                $array_add['fecha_ultimo_estado']=$value3->fecha_final;    
+                                                            }else {
+                                                                $array_add['fecha_ultimo_estado']=$value3->created;    
+                                                            }
+                                                        }
+                                                    if($varx){
+                                                           
+                                                     break;
+                                                    }
+                                                }
+                                        }else if($customers->usu_estado=="Cortado"){
+                                                if(strpos($value3->detalle, "Corte")!==false || !empty($array_add['fecha_ultimo_estado'])){
+                                                     /*var_dump($value3->detalle);
+                                                       var_dump($value3->cid);
+                                                       var_dump($lista_ordenes[$key2+1]->detalle);*/
+                                                    $varx=false;
+                                                $actual="Cortado";
+                                                if(isset($lista_ordenes[$key2+1]->detalle)){
+                                                    if(strpos($lista_ordenes[$key2+1]->detalle, "Suspension")!==false  && $lista_ordenes[$key2+1]->status=="Resuelto"){
+                                                        $ul_estado="Suspendido";
+                                                       
+                                                       $varx=true;
+                                                    }else if(strpos($lista_ordenes[$key2+1]->detalle, "Instalacion")!==false){
+                                                        if($lista_ordenes[$key2+1]->status=="Resuelto"){
+                                                            $ul_estado="Activo";
+                                                        }else{
+                                                            $ul_estado="Instalar";
+                                                        }
+                                                        $varx=true;
+                                                    }                                                    
+                                                   }//var_dump("fin");
+                                                        if(empty($array_add['fecha_ultimo_estado'])){
+                                                           if(!empty($value3->fecha_final)){
+                                                                $array_add['fecha_ultimo_estado']=$value3->fecha_final;    
+                                                            }else {
+                                                                $array_add['fecha_ultimo_estado']=$value3->created;    
+                                                            }
+                                                        }
+                                                    if($varx){
+                                                           
+                                                     break;
+                                                    }
+                                                }
+                                        }else if($customers->usu_estado=="Instalar"){
+                                                if(strpos($value3->detalle, "Corte")!==false || !empty($array_add['fecha_ultimo_estado'])){
+                                                     /*var_dump($value3->detalle);
+                                                       var_dump($value3->cid);
+                                                       var_dump($lista_ordenes[$key2+1]->detalle);*/
+                                                    $varx=false;
+                                                $actual="Instalar";
+                                                if(isset($lista_ordenes[$key2+1]->detalle)){
+                                                    if((strpos($lista_ordenes[$key2+1]->detalle, "Reconexion")!==false || strpos($lista_ordenes[$key2+1]->detalle, "Corte")!==false) && $lista_ordenes[$key2+1]->status=="Resuelto"){
+                                                        $ul_estado="Cortado";
+                                                       
+                                                       $varx=true;
+                                                    }else if(strpos($lista_ordenes[$key2+1]->detalle, "Suspension")!==false  && $lista_ordenes[$key2+1]->status=="Resuelto"){
+                                                        $ul_estado="Suspendido";
+                                                       
+                                                       $varx=true;
+                                                    }else if(strpos($lista_ordenes[$key2+1]->detalle, "Instalacion")!==false){
+                                                        if($lista_ordenes[$key2+1]->status=="Resuelto"){
+                                                            $ul_estado="Activo";
+                                                        }else{
+                                                            $ul_estado="Instalar";
+                                                        }
+                                                        $varx=true;
+                                                    }                                                    
+                                                   }//var_dump("fin");
+                                                        if(empty($array_add['fecha_ultimo_estado'])){
+                                                           if(!empty($value3->fecha_final)){
+                                                                $array_add['fecha_ultimo_estado']=$value3->fecha_final;    
+                                                            }else {
+                                                                $array_add['fecha_ultimo_estado']=$value3->created;    
+                                                            }
+                                                        }
+                                                    if($varx){
+                                                           
+                                                     break;
+                                                    }
+                                                }
+                                        }
+                                    }
+                                        
+                                }
+                                //var_dump($ul_estado);
+                                if(!empty($array_add['fecha_ultimo_estado'])){
+                                    //$array_add['fecha_ultimo_estado']=$lista_ordenes[0]->fecha_final;
+                                    $array_add['ultimo_estado']=$ul_estado;
+                                }else{
+                                    $array_add['fecha_ultimo_estado']="Sin Orden";
+                                    $array_add['ultimo_estado']="Sin Orden";
+                                    /*var_dump($lista_ordenes);
+                                                       var_dump($value3->cid);
+                                                       var_dump("fin");*/
+                                }
+                                return $array_add;
+}
     public function get_ip_coneccion_microtik_por_sede($datos){
         //$this->load->library("Aauth");
         //$id_sede=$this->aauth->get_user()->sede_accede;
