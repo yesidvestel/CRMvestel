@@ -1407,7 +1407,7 @@ include (APPPATH."libraries\RouterosAPI.php");
                                                      /*var_dump($value3->detalle);
                                                        var_dump($value3->cid);
                                                        var_dump($lista_ordenes[$key2+1]->detalle);*/
-                                        $varx=false;
+                                                    $varx=false;
                                                 $actual="Suspendido";
                                                 if(isset($lista_ordenes[$key2+1]->detalle)){
                                                     if((strpos($lista_ordenes[$key2+1]->detalle, "Reconexion")!==false || strpos($lista_ordenes[$key2+1]->detalle, "Corte")!==false) && $lista_ordenes[$key2+1]->status=="Resuelto"){
@@ -1434,10 +1434,39 @@ include (APPPATH."libraries\RouterosAPI.php");
                                                            
                                                      break;
                                                     }
-                                                }else{
-                                                    
-
-
+                                                }
+                                        }else if($customers->usu_estado=="Cortado"){
+                                                if(strpos($value3->detalle, "Corte")!==false || !empty($array_add['fecha_ultimo_estado'])){
+                                                     /*var_dump($value3->detalle);
+                                                       var_dump($value3->cid);
+                                                       var_dump($lista_ordenes[$key2+1]->detalle);*/
+                                                    $varx=false;
+                                                $actual="Suspendido";
+                                                if(isset($lista_ordenes[$key2+1]->detalle)){
+                                                    if(strpos($lista_ordenes[$key2+1]->detalle, "Suspension")!==false  && $lista_ordenes[$key2+1]->status=="Resuelto"){
+                                                        $ul_estado="Suspendido";
+                                                       
+                                                       $varx=true;
+                                                    }else if(strpos($lista_ordenes[$key2+1]->detalle, "Instalacion")!==false){
+                                                        if($lista_ordenes[$key2+1]->status=="Resuelto"){
+                                                            $ul_estado="Activo";
+                                                        }else{
+                                                            $ul_estado="Instalar";
+                                                        }
+                                                        $varx=true;
+                                                    }                                                    
+                                                   }//var_dump("fin");
+                                                        if(empty($array_add['fecha_ultimo_estado'])){
+                                                           if(!empty($value3->fecha_final)){
+                                                                $array_add['fecha_ultimo_estado']=$value3->fecha_final;    
+                                                            }else {
+                                                                $array_add['fecha_ultimo_estado']=$value3->created;    
+                                                            }
+                                                        }
+                                                    if($varx){
+                                                           
+                                                     break;
+                                                    }
                                                 }
                                         }
                                     }
