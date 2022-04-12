@@ -1637,5 +1637,55 @@ if($data['servicios']['estado']=="Inactivo"){
         $api->alternativa_por_curl_envio_sms_invividual($retorno['token'],"3142349563","mensaje duber");
                
     }
+    public function conexion_prueba_po(){
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt_array($curl, array(
+          CURLOPT_URL => 'https://api.payulatam.com/payments-api/4.0/service.cgi',
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => '',
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 399,
+          CURLOPT_FOLLOWLOCATION => true,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => 'POST',
+          CURLOPT_POSTFIELDS =>'{
+                           "test": true,
+                           "language": "es",
+                           "command": "GET_PAYMENT_METHODS",
+                           "merchant": {
+                              "apiLogin": "8wOQ5r2pCRoSTjG",
+                              "apiKey": "K4N2CDMArYqCPshu5rvbycCnOG"
+                           }
+                        }',
+          CURLOPT_HTTPHEADER => array(
+            'Content-Type: application/json;charset=utf-8',
+            'Accept: application/json',
+            'Content-Length: length'
+            
+          ),
+        ));
+/*
+        POST /payments-api/4.0/service.cgi HTTP/1.1
+        Host: sandbox.api.payulatam.com
+        Content-Type: application/json; charset=utf-8
+        Accept: application/json
+        Content-Length: length
+
+
+        //
+
+        API KEY
+        K4N2CDMArYqCPshu5rvbycCnOG
+        API LOGIN
+        8wOQ5r2pCRoSTjG
+        Llave pública
+        PK6j0O320V6rQb8Y0t76238y1t
+*/
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+        var_dump($response);
+    }
 
 }
