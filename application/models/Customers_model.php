@@ -481,6 +481,7 @@ public function calculo_ultimo_estado ($array_add,$customers){
                                                     }
                                                 }
                                         }else if($customers->usu_estado=="Activo"){
+                                            
                                                 if(strpos($value3->detalle, "Instalacion")!==false || !empty($array_add['fecha_ultimo_estado'])){
                                                      /*var_dump($value3->detalle);
                                                        var_dump($value3->cid);
