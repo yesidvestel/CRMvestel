@@ -1249,7 +1249,7 @@ if($data['servicios']['estado']=="Inactivo"){
         
         $data['invoice']['multi'] = 0;
 
-        ini_set('memory_limit', '64M');
+        ini_set('memory_limit', '128M');
 
         $html = $this->load->view('customers/view-print-'.RTL, $data, true);
 
