@@ -1,4 +1,6 @@
-﻿ALTER TABLE `aauth_users` ADD `fecha_ultimo_evento` DATE NULL AFTER `tar`;
+﻿ALTER TABLE `customers` ADD `ultimo_estado` VARCHAR(50) NULL AFTER `firma_digital`, ADD `fecha_cambio` DATETIME NULL AFTER `ultimo_estado`;
+--------------------------------------------------------------------------------
+ALTER TABLE `aauth_users` ADD `fecha_ultimo_evento` DATE NULL AFTER `tar`;
 -------------------------------------------------------------------------------
 ALTER TABLE `equipos` ADD `imagen` INT NOT NULL AFTER `master`;
 ----------------------------------------------------------------------

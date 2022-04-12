@@ -1216,6 +1216,9 @@ if($data['servicios']['estado']=="Inactivo"){
         	$this->db->where('tid', $factura);
         	$this->db->update('invoices');
 		   //actualizar estado usuario
+            $customer=$this->db->get_where("customers",array('id' =>$id))->row();  
+            $this->db->set("ultimo_estado",$customer->usu_estado);
+                $this->db->set("fecha_cambio",date("Y-m-d H:i:s"));
 		   	$this->db->set('usu_estado', 'Compromiso');
         	$this->db->where('id', $id);
         	$this->db->update('customers');

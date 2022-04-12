@@ -942,6 +942,8 @@ if($ya_agrego_equipos==false){
             $this->db->insert('invoices',$data);    
             $dataz['id_factura']=$data['tid'];
 			//actualizar estado usuario
+                $this->db->set("ultimo_estado",$customer->usu_estado);
+                $this->db->set("fecha_cambio",date("Y-m-d H:i:s"));
 				$this->db->set('usu_estado', 'Activo');
         		$this->db->where('id', $ticket->cid);
         		$this->db->update('customers');
@@ -1083,6 +1085,8 @@ if($ya_agrego_equipos==false){
         	$this->db->where('tid', $idfactura);
         	$this->db->update('invoices');
 			//actualizar estado usuario
+            $this->db->set("ultimo_estado",$customer->usu_estado);
+                $this->db->set("fecha_cambio",date("Y-m-d H:i:s"));
 				$this->db->set('usu_estado', 'Activo');
         		$this->db->where('id', $ticket->cid);
         		$this->db->update('customers');
@@ -1101,6 +1105,8 @@ if($ya_agrego_equipos==false){
         	$this->db->where('tid', $idfactura);
         	$this->db->update('invoices');
 			//actualizar estado usuario
+            $this->db->set("ultimo_estado",$customer->usu_estado);
+                $this->db->set("fecha_cambio",date("Y-m-d H:i:s"));
 				$this->db->set('usu_estado', 'Activo');
         		$this->db->where('id', $ticket->cid);
         		$this->db->update('customers');
@@ -1116,6 +1122,8 @@ if($ya_agrego_equipos==false){
         	$this->db->where('tid', $idfactura);
         	$this->db->update('invoices');
 			//actualizar estado usuario
+            $this->db->set("ultimo_estado",$customer->usu_estado);
+                $this->db->set("fecha_cambio",date("Y-m-d H:i:s"));
 				$this->db->set('usu_estado', 'Activo');
         		$this->db->where('id', $ticket->cid);
         		$this->db->update('customers');
@@ -1152,6 +1160,8 @@ if($ya_agrego_equipos==false){
         		$this->db->where('tid', $idfactura);
         		$this->db->update('invoices');
 			//actualizar estado usuario
+                $this->db->set("ultimo_estado",$customer->usu_estado);
+                $this->db->set("fecha_cambio",date("Y-m-d H:i:s"));
 				$this->db->set('usu_estado', 'Cortado');
         		$this->db->where('id', $ticket->cid);
         		$this->db->update('customers');
@@ -1171,6 +1181,8 @@ if($ya_agrego_equipos==false){
 				$reconexion = '1';
 			}
 				//actualizar estado usuario
+            $this->db->set("ultimo_estado",$customer->usu_estado);
+                $this->db->set("fecha_cambio",date("Y-m-d H:i:s"));
 				$this->db->set('usu_estado', $nestado);
         		$this->db->where('id', $ticket->cid);
         		if($this->db->update('customers')){
@@ -1225,6 +1237,8 @@ if($ya_agrego_equipos==false){
 				$this->db->where('tid', $idfactura);
         		$this->db->update('invoices');
 				//actualizar estado usuario
+                $this->db->set("ultimo_estado",$customer->usu_estado);
+                $this->db->set("fecha_cambio",date("Y-m-d H:i:s"));
 				$this->db->set('usu_estado', 'Cortado');
         		$this->db->where('id', $ticket->cid);
         		$this->db->update('customers');
@@ -1237,6 +1251,8 @@ if($ya_agrego_equipos==false){
         		$this->db->where('tid', $idfactura);
         		$this->db->update('invoices');
 				//actualizar estado usuario
+                $this->db->set("ultimo_estado",$customer->usu_estado);
+                $this->db->set("fecha_cambio",date("Y-m-d H:i:s"));
 				$this->db->set('usu_estado', 'Activo');
         		$this->db->where('id', $ticket->cid);
         		$this->db->update('customers');
@@ -1273,6 +1289,8 @@ if($ya_agrego_equipos==false){
         	$this->db->where('tid', $idfactura);
         	$this->db->update('invoices');
 			//actualizar estado usuario
+            $this->db->set("ultimo_estado",$customer->usu_estado);
+                $this->db->set("fecha_cambio",date("Y-m-d H:i:s"));
 				$this->db->set('usu_estado', 'Suspendido');
         		$this->db->where('id', $ticket->cid);
         		$this->db->update('customers');
@@ -1290,6 +1308,8 @@ if($ya_agrego_equipos==false){
         	$this->db->where('tid', $idfactura);
         	$this->db->update('invoices');
 			//actualizar estado usuario
+            $this->db->set("ultimo_estado",$customer->usu_estado);
+                $this->db->set("fecha_cambio",date("Y-m-d H:i:s"));
 				$this->db->set('usu_estado', 'Retirado');
         		$this->db->where('id', $ticket->cid);
         		$this->db->update('customers');
@@ -1310,6 +1330,8 @@ if($ya_agrego_equipos==false){
         	$this->db->where('tid', $idfactura);
         	$this->db->update('invoices');
 			//actualizar estado usuario
+            $this->db->set("ultimo_estado",$customer->usu_estado);
+                $this->db->set("fecha_cambio",date("Y-m-d H:i:s"));
 				$this->db->set('usu_estado', $status2);
         		$this->db->where('id', $ticket->cid);
         		$this->db->update('customers');
@@ -1327,6 +1349,8 @@ if($ya_agrego_equipos==false){
         	$this->db->where('tid', $idfactura);
         	$this->db->update('invoices');
 			//actualizar estado usuario
+            $this->db->set("ultimo_estado",$customer->usu_estado);
+                $this->db->set("fecha_cambio",date("Y-m-d H:i:s"));
 				$this->db->set('usu_estado', $status2);
         		$this->db->where('id', $ticket->cid);
         		$this->db->update('customers');

@@ -1051,6 +1051,10 @@ var_dump("aqui2");*/
                             $data_h['nombre_columna']="idt";
                             $this->db->insert("historial_crm",$data_h);
 				//actualizar estado usuario
+                            $customerx1=$this->db->get_where("customers",array('id' =>$customer_id))->row();  
+                $this->db->set("ultimo_estado",$customerx1->usu_estado);
+                $this->db->set("fecha_cambio",date("Y-m-d H:i:s"));
+
 				$this->db->set('usu_estado', 'Instalar');
         		$this->db->where('id', $customer_id);
         		$this->db->update('customers');
@@ -1194,6 +1198,9 @@ $this->load->model('customers_model', 'customers');
                 $data_h['nombre_columna']="tid";
                 $this->db->insert("historial_crm",$data_h);
 		 //estado usuario
+                $customerx1=$this->db->get_where("customers",array('id' =>$usr))->row();  
+                $this->db->set("ultimo_estado",$customerx1->usu_estado);
+                $this->db->set("fecha_cambio",date("Y-m-d H:i:s"));       
 		$this->db->set('usu_estado', $status);
         $this->db->where('id', $usr);
         $this->db->update('customers');
