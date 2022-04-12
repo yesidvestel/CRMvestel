@@ -480,6 +480,46 @@ public function calculo_ultimo_estado ($array_add,$customers){
                                                      break;
                                                     }
                                                 }
+                                        }else if($customers->usu_estado=="Activo"){
+                                                if(strpos($value3->detalle, "Instalacion")!==false || !empty($array_add['fecha_ultimo_estado'])){
+                                                     /*var_dump($value3->detalle);
+                                                       var_dump($value3->cid);
+                                                       var_dump($lista_ordenes[$key2+1]->detalle);*/
+                                                    $varx=false;
+                                                $actual="Instalar";
+                                                if(isset($lista_ordenes[$key2+1]->detalle)){
+                                                    if((strpos($lista_ordenes[$key2+1]->detalle, "Reconexion")!==false || strpos($lista_ordenes[$key2+1]->detalle, "Corte")!==false) && $lista_ordenes[$key2+1]->status=="Resuelto"){
+                                                        $ul_estado="Cortado";
+                                                       
+                                                       $varx=true;
+                                                    }else if(strpos($lista_ordenes[$key2+1]->detalle, "Suspension")!==false  && $lista_ordenes[$key2+1]->status=="Resuelto"){
+                                                        $ul_estado="Suspendido";
+                                                       
+                                                       $varx=true;
+                                                    }else if(strpos($lista_ordenes[$key2+1]->detalle, "Instalacion")!==false){
+                                                        if($lista_ordenes[$key2+1]->status=="Resuelto"){
+                                                            $ul_estado="Activo";
+                                                        }else{
+                                                            $ul_estado="Instalar";
+                                                        }
+                                                        $varx=true;
+                                                    }                                                    
+                                                   }else{
+                                                        $varx=true;
+                                                        $ul_estado="Instalar";
+                                                   }//var_dump("fin");
+                                                        if(empty($array_add['fecha_ultimo_estado'])){
+                                                           if(!empty($value3->fecha_final)){
+                                                                $array_add['fecha_ultimo_estado']=$value3->fecha_final;    
+                                                            }else {
+                                                                $array_add['fecha_ultimo_estado']=$value3->created;    
+                                                            }
+                                                        }
+                                                    if($varx){
+                                                           
+                                                     break;
+                                                    }
+                                                }
                                         }
                                     }
                                         
