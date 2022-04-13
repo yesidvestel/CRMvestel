@@ -356,7 +356,7 @@ class Purchase extends CI_Controller
         $data['employee'] = $this->purchase->employee($data['invoice']['eid']);
         $data['invoice']['multi'] = 0;
 
-        ini_set('memory_limit', '64M');
+        ini_set('memory_limit', '128M');
 
         $html = $this->load->view('purchase/view-print-'.LTR, $data, true);
 
