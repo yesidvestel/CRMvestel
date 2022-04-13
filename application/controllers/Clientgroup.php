@@ -623,6 +623,16 @@ include (APPPATH."libraries\RouterosAPI.php");
                     $customer_moroso=false;
                 }
             }
+             $array_add=array("id"=>$customers->id,"valido"=>$customer_moroso);
+
+                if($_GET['ultimo_estado_sel']=="Si"){
+                               if($customer_moroso){
+                                    $array_add= $this->customers->calculo_ultimo_estado($array_add,$customers);  
+                                    $customer_moroso=$array_add['valido'];
+                                    $customers->fecha_ultimo_estado=$array_add['fecha_ultimo_estado']."";
+                                    $customers->ultimo_estado=$array_add['ultimo_estado'];
+                               }
+                }
             if($customer_moroso){
                 $customers->deuda=$debe_customer;
                 $customers->suscripcion=$valor_ultima_factura;            
@@ -644,7 +654,10 @@ include (APPPATH."libraries\RouterosAPI.php");
     
     //define column headers
     $headers = array('Abonado' => 'string','Cedula' => 'string', 'Nombre' => 'string', 'Celular' => 'string', 'Direccion' => 'string','Barrio' => 'string','Serv. Suscritos' => 'string', 'Tegnologia' => 'string','Estado' => 'string','Deuda' => 'integer','Suscripcion' => 'integer','Ingreso' => 'integer');
-    
+    if($_GET['ultimo_estado_sel']=="Si"){
+        $headers['UltimoEstado']="string";
+        $headers['FechaCambio']="string";
+    }
     //fetch data from database
     //$salesinfo = $this->product_model->get_salesinfo();
     
@@ -662,7 +675,7 @@ include (APPPATH."libraries\RouterosAPI.php");
     $writer->setTempDir(sys_get_temp_dir());
     
     //write headers el primer campo que es nombre de la hoja de excel deve de coincidir en writeSheetHeader y writeSheetRow para tener en cuenta si se piensan agregar otras hojas o algo por el estilo
-    $writer->writeSheetHeader('Customers '.$cust_group->title, $headers,$col_options = array(
+    $col_options = array(
 
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
@@ -676,7 +689,14 @@ include (APPPATH."libraries\RouterosAPI.php");
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
-));
+);
+     if($_GET['ultimo_estado_sel']=="Si"){
+        $col_options[]=array('font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center');
+        $col_options[]=array('font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center');
+    }
+    
+    $writer->writeSheetHeader('Customers '.$cust_group->title, $headers,$col_options);
+
     
     //write rows to sheet1
     foreach ($lista_customers2 as $key => $customer) {            
@@ -688,7 +708,12 @@ include (APPPATH."libraries\RouterosAPI.php");
                             }else{
                                 $str_barrio= $obj_barrio->barrio;    
                             }
-            $writer->writeSheetRow('Customers '.$cust_group->title,array($customer->abonado,$customer->documento ,$customer->name.' '.$customer->unoapellido, $customer->celular, $direccion,$str_barrio ,$customer->suscripcion_str,$customer->tegnologia,$customer->usu_estado,$customer->deuda,$customer->suscripcion,$customer->money));
+                            if($_GET['ultimo_estado_sel']=="Si"){
+                                $writer->writeSheetRow('Customers '.$cust_group->title,array($customer->abonado,$customer->documento ,$customer->name.' '.$customer->unoapellido, $customer->celular, $direccion,$str_barrio ,$customer->suscripcion_str,$customer->tegnologia,$customer->usu_estado,$customer->deuda,$customer->suscripcion,$customer->money,$customer->ultimo_estado,$customer->fecha_ultimo_estado));                    
+                            }else{
+                                $writer->writeSheetRow('Customers '.$cust_group->title,array($customer->abonado,$customer->documento ,$customer->name.' '.$customer->unoapellido, $customer->celular, $direccion,$str_barrio ,$customer->suscripcion_str,$customer->tegnologia,$customer->usu_estado,$customer->deuda,$customer->suscripcion,$customer->money));                    
+                            }
+            
     }
         
         
@@ -1386,17 +1411,16 @@ include (APPPATH."libraries\RouterosAPI.php");
                     $customer_moroso=false;
                 }
             }
-            if($_GET['ultimo_estado_sel']=="Si"){
-
-            }   
-            if($customer_moroso){
-                $array_add=array("id"=>$customers->id);
+           $array_add=array("id"=>$customers->id,"valido"=>$customer_moroso);
 
                 if($_GET['ultimo_estado_sel']=="Si"){
-                               
-                              $array_add= $this->customers->calculo_ultimo_estado($array_add,$customers);
-                                    
-                            }
+                               if($customer_moroso){
+                                    $array_add= $this->customers->calculo_ultimo_estado($array_add,$customers);  
+                                    $customer_moroso=$array_add['valido'];
+                               }
+                }   
+            if($customer_moroso){
+                
 
                 if(($x>=$minimo && $x<$maximo) || $_POST['length']=="100"){
                     $no++;                
@@ -2124,6 +2148,14 @@ include (APPPATH."libraries\RouterosAPI.php");
                     $customer_moroso=false;
                 }
             }
+             $array_add=array("id"=>$customers->id,"valido"=>$customer_moroso);
+
+                if($_GET['ultimo_estado_sel']=="Si"){
+                               if($customer_moroso){
+                                    $array_add= $this->customers->calculo_ultimo_estado($array_add,$customers);  
+                                    $customer_moroso=$array_add['valido'];
+                               }
+                }
             if($customer_moroso){
                 $this->db->update("customers",array("checked_seleccionado"=>1),array('id' =>$customers->id));
                     //$listax[]=array('id' =>$customers->id ,"celular"=>$customers->celular);                                    

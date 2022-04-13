@@ -584,9 +584,11 @@
 </article>
 
 <script type="text/javascript">
+    var columnasUlEsAgregadas=false;
 $("#ultimo_estado_sel").on("change",function(e){
     if($(this).val()=="Si"){
         $("#div_filtrar_fecha_cambio").css("display","");
+        columnasAgregadas=false;
     }else{
         $("#div_filtrar_fecha_cambio").css("display","none");
         $("#div_fechas_filtro_cambio_estado").css("display","none");
@@ -627,8 +629,13 @@ $("#sel_filtrar_fecha_cambio").on("change",function(){
             var barrios_multiple=$("#barrios_multiple").val();
             var deudores_multiple=$("#deudores_multiple").val();
             var tegnologia_multiple=$("#tegnologia_multiple").val();
-            
-            var url =baseurl+"clientgroup/get_filtrados_para_checked?id=<?=$_GET['id']?>&localidad="+localidad+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&checked_ind_service="+checked_ind_service+"&estados_multiple="+estados_multiple+"&localidad_multiple="+localidad_multiple+"&barrios_multiple="+barrios_multiple+"&deudores_multiple="+deudores_multiple+"&tegnologia_multiple="+tegnologia_multiple;
+
+            var ultimo_estado_sel=$("#ultimo_estado_sel option:selected").val();
+            var sel_filtrar_fecha_cambio=$("#sel_filtrar_fecha_cambio option:selected").val();
+            var sdate3=$("#sdate3").val();
+            var edate2=$("#edate2").val();
+
+            var url =baseurl+"clientgroup/get_filtrados_para_checked?id=<?=$_GET['id']?>&localidad="+localidad+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&checked_ind_service="+checked_ind_service+"&estados_multiple="+estados_multiple+"&localidad_multiple="+localidad_multiple+"&barrios_multiple="+barrios_multiple+"&deudores_multiple="+deudores_multiple+"&tegnologia_multiple="+tegnologia_multiple+"&ultimo_estado_sel="+ultimo_estado_sel+"&sel_filtrar_fecha_cambio="+sel_filtrar_fecha_cambio+"&sdate3="+sdate3+"&edate2="+edate2;
              if(elemento.checked==true){
                 $("#div_notify3").html('<div id="notify3" class="alert alert-success" style="display:none;"><a href="#" class="close" data-dismiss="alert">&times;</a><div class="message3">></div></div>');
                     $("#notify3 .message3").html("<strong> Cargando</strong>: <img src='<?=base_url()?>/assets/img/iconocargando.gif'>");
@@ -1035,19 +1042,21 @@ $("#sel_filtrar_fecha_cambio").on("change",function(){
         if(!columnasAgregadas){
               tb.destroy();
                var ultimo_estado_sel=$("#ultimo_estado_sel option:selected").val();
-             
+             if(ultimo_estado_sel=="No" || columnasUlEsAgregadas==false){
                $("#despues_de_thead").after("<th class='cols_adicionadas'>Ingreso</th>");
               $("#despues_de_tfoot").after("<th class='cols_adicionadas'>Ingreso</th>");
               $("#despues_de_thead").after("<th class='cols_adicionadas'>Suscripcion</th>");
               $("#despues_de_tfoot").after("<th class='cols_adicionadas'>Suscripcion</th>");
               $("#despues_de_thead").after("<th class='cols_adicionadas'>Deuda</th>");
               $("#despues_de_tfoot").after("<th class='cols_adicionadas'>Deuda</th>");
-            
+              columnasUlEsAgregadas=true;
+            }
             if(ultimo_estado_sel=="Si"){
                     $("#despues_de_thead").after("<th class='cols_adicionadas'>Ult. Estado</th>");
                     $("#despues_de_tfoot").after("<th class='cols_adicionadas'>Ult. Estado</th>");
                     $("#despues_de_thead").after("<th class='cols_adicionadas'>Fecha Cambio</th>");
                     $("#despues_de_tfoot").after("<th class='cols_adicionadas'>Fecha Cambio</th>");
+
               }
               
            
@@ -1089,7 +1098,7 @@ $("#sel_filtrar_fecha_cambio").on("change",function(){
 
                 // Load data for the table's content from an Ajax source
                 "ajax": {
-                    "url": "<?php echo site_url('clientgroup/load_morosos') . '?id=' . $group['id']; ?>&localidad="+localidad+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&pagination_start="+pagination_start+"&pagination_end="+pagination_end+"&checked_ind_service="+checked_ind_service+"&check_usuarios_a_facturar="+check_usuarios_a_facturar+"&estados_multiple="+estados_multiple+"&localidad_multiple="+localidad_multiple+"&barrios_multiple="+barrios_multiple+"&deudores_multiple="+deudores_multiple+"&tegnologia_multiple="+tegnologia_multiple+"&ultimo_estado_sel="+ultimo_estado_sel,
+                    "url": "<?php echo site_url('clientgroup/load_morosos') . '?id=' . $group['id']; ?>&localidad="+localidad+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&pagination_start="+pagination_start+"&pagination_end="+pagination_end+"&checked_ind_service="+checked_ind_service+"&check_usuarios_a_facturar="+check_usuarios_a_facturar+"&estados_multiple="+estados_multiple+"&localidad_multiple="+localidad_multiple+"&barrios_multiple="+barrios_multiple+"&deudores_multiple="+deudores_multiple+"&tegnologia_multiple="+tegnologia_multiple+"&ultimo_estado_sel="+ultimo_estado_sel+"&sel_filtrar_fecha_cambio="+sel_filtrar_fecha_cambio+"&sdate3="+sdate3+"&edate2="+edate2,
                     "type": "POST",
                     error: function (xhr, error, code)
                     {
@@ -1198,7 +1207,7 @@ $("#sel_filtrar_fecha_cambio").on("change",function(){
              
             //if(morosos!=""){
                 if(columnasAgregadas){
-                    tb.ajax.url( baseurl+"clientgroup/load_morosos?id=<?=$_GET['id']?>&localidad="+localidad+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&checked_ind_service="+checked_ind_service+"&check_usuarios_a_facturar="+check_usuarios_a_facturar+"&estados_multiple="+estados_multiple+"&localidad_multiple="+localidad_multiple+"&barrios_multiple="+barrios_multiple+"&deudores_multiple="+deudores_multiple+"&tegnologia_multiple="+tegnologia_multiple+"&ultimo_estado_sel="+ultimo_estado_sel).load();               
+                    tb.ajax.url( baseurl+"clientgroup/load_morosos?id=<?=$_GET['id']?>&localidad="+localidad+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&checked_ind_service="+checked_ind_service+"&check_usuarios_a_facturar="+check_usuarios_a_facturar+"&estados_multiple="+estados_multiple+"&localidad_multiple="+localidad_multiple+"&barrios_multiple="+barrios_multiple+"&deudores_multiple="+deudores_multiple+"&tegnologia_multiple="+tegnologia_multiple+"&ultimo_estado_sel="+ultimo_estado_sel+"&sel_filtrar_fecha_cambio="+sel_filtrar_fecha_cambio+"&sdate3="+sdate3+"&edate2="+edate2).load();               
                 }else{
                     nuevas_columnas();
                     $("option[value=100]").text("Todo");
@@ -1244,7 +1253,13 @@ $("#sel_filtrar_fecha_cambio").on("change",function(){
             var barrios_multiple=$("#barrios_multiple").val();
             var deudores_multiple=$("#deudores_multiple").val();
             var tegnologia_multiple=$("#tegnologia_multiple").val();
-            var url_redirect=baseurl+"clientgroup/explortar_a_excel?id=<?=$_GET['id']?>&localidad="+localidad+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&checked_ind_service="+checked_ind_service+"&check_usuarios_a_facturar="+check_usuarios_a_facturar+"&estados_multiple="+estados_multiple+"&localidad_multiple="+localidad_multiple+"&barrios_multiple="+barrios_multiple+"&deudores_multiple="+deudores_multiple+"&tegnologia_multiple="+tegnologia_multiple;
+
+            var ultimo_estado_sel=$("#ultimo_estado_sel option:selected").val();
+            var sel_filtrar_fecha_cambio=$("#sel_filtrar_fecha_cambio option:selected").val();
+            var sdate3=$("#sdate3").val();
+            var edate2=$("#edate2").val();
+
+            var url_redirect=baseurl+"clientgroup/explortar_a_excel?id=<?=$_GET['id']?>&localidad="+localidad+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&checked_ind_service="+checked_ind_service+"&check_usuarios_a_facturar="+check_usuarios_a_facturar+"&estados_multiple="+estados_multiple+"&localidad_multiple="+localidad_multiple+"&barrios_multiple="+barrios_multiple+"&deudores_multiple="+deudores_multiple+"&tegnologia_multiple="+tegnologia_multiple+"&ultimo_estado_sel="+ultimo_estado_sel+"&sel_filtrar_fecha_cambio="+sel_filtrar_fecha_cambio+"&sdate3="+sdate3+"&edate2="+edate2;
             window.location.replace(url_redirect);
 
     }

@@ -368,6 +368,9 @@ class Customers_model extends CI_Model
         
     }
 public function calculo_ultimo_estado ($array_add,$customers){
+ $sdate=new DateTime($_GET['sdate3']." 00:00:00");
+ $edate=new DateTime($_GET['edate2']." 23:59:59");
+    if(empty($customers->ultimo_estado)){
  $ul_estado="Activo";
                                 $actual="";
                                 $lista_ordenes=$this->db->select("*")->from("tickets")->where("cid=".$customers->id)->order_by("fecha_final,idt","desc")->get()->result();
@@ -481,7 +484,7 @@ public function calculo_ultimo_estado ($array_add,$customers){
                                                     }
                                                 }
                                         }else if($customers->usu_estado=="Activo"){
-                                            
+
                                                 if(strpos($value3->detalle, "Instalacion")!==false || !empty($array_add['fecha_ultimo_estado'])){
                                                      /*var_dump($value3->detalle);
                                                        var_dump($value3->cid);
@@ -529,14 +532,39 @@ public function calculo_ultimo_estado ($array_add,$customers){
                                 if(!empty($array_add['fecha_ultimo_estado'])){
                                     //$array_add['fecha_ultimo_estado']=$lista_ordenes[0]->fecha_final;
                                     $array_add['ultimo_estado']=$ul_estado;
+                                    $fecha_ultimo_estado= new DateTime($array_add['fecha_ultimo_estado']);
+                                    if($_GET['sel_filtrar_fecha_cambio']=="Si"){
+                                        if($sdate<=$fecha_ultimo_estado && $edate>=$fecha_ultimo_estado){
+                                            $array_add['valido']=true;
+                                        }else{
+                                            $array_add['valido']=false;
+                                        }
+                                    }
                                 }else{
                                     $array_add['fecha_ultimo_estado']="Sin Orden";
                                     $array_add['ultimo_estado']="Sin Orden";
                                     /*var_dump($lista_ordenes);
                                                        var_dump($value3->cid);
                                                        var_dump("fin");*/
+                                     
+                                    if($_GET['sel_filtrar_fecha_cambio']=="Si"){
+                                        $array_add['valido']=false;
+                                    }
                                 }
                                 return $array_add;
+                            }else{
+                                    $array_add['fecha_ultimo_estado']=$customers->fecha_cambio;
+                                    $array_add['ultimo_estado']=$customers->ultimo_estado;
+                                    $fecha_ultimo_estado= new DateTime($array_add['fecha_ultimo_estado']);
+                                    if($_GET['sel_filtrar_fecha_cambio']=="Si"){
+                                        if($sdate<=$fecha_ultimo_estado && $edate>=$fecha_ultimo_estado){
+                                            $array_add['valido']=true;
+                                        }else{
+                                            $array_add['valido']=false;
+                                        }
+                                    }
+                                    return $array_add;
+                            }
 }
     public function get_ip_coneccion_microtik_por_sede($datos){
         //$this->load->library("Aauth");
