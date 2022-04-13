@@ -2201,7 +2201,7 @@ foreach ($lista as $key => $value) {
         $data['invoice'] = $this->invocies->invoice_details($tid, $this->limited);
         if ($data['invoice']) $data['products'] = $this->invocies->invoice_products($tid);
         if ($data['invoice']) $data['employee'] = $this->invocies->employee($data['invoice']['eid']);
-        ini_set('memory_limit', '64M');
+        ini_set('memory_limit', '128M');
         $html = $this->load->view('invoices/proforma', $data, true);
         //PDF Rendering
         $this->load->library('pdf');
