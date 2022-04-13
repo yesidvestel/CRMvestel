@@ -1584,7 +1584,7 @@ foreach ($lista as $key => $value) {
        
 
 
-        ini_set('memory_limit', '64M');
+        ini_set('memory_limit', '128M');
 
         $html = $this->load->view('invoices/view-print-'.LTR2, $data, true);
         $html2 = $this->load->view('invoices/header-print-'.LTR, $data, true);
@@ -1651,7 +1651,7 @@ foreach ($lista as $key => $value) {
             $data['employee']=null;
         }
        
-        ini_set('memory_limit', '64M');
+        ini_set('memory_limit', '128M');
         $html = $this->load->view('invoices/proforma_estado_user', $data, true);
         //echo $html;
         
@@ -1672,7 +1672,7 @@ foreach ($lista as $key => $value) {
     {
 
         
-        ini_set('memory_limit', '64M');
+        ini_set('memory_limit', '128M');
         $nombre_fichero=$this->input->get("file_name").".txt";
 
         $html = file_get_contents('userfiles/txt_para_pdf_resivos/body_'.$nombre_fichero, FILE_USE_INCLUDE_PATH);
