@@ -1724,7 +1724,7 @@ function cancelar_envio_mensajes(){
 $(document).ready(function(){
     setTimeout(function(){
         $('#scroll1').doubleScroll();
-    },1000);
+    },2500);
 	$("#cmbCiudades").change(function(){
         cuando_cambia_de_ciudad();
 	});
