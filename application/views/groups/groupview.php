@@ -118,6 +118,7 @@
 }
 </style>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+
 <article class="content content items-list-page">
     <div class="card card-block">
         <div id="notify" class="alert alert-success" style="display:none;">
@@ -533,7 +534,7 @@
                         class="fa fa-envelope"></i>Cortar Usuarios</a>
             <hr>
 
-            <div class="table-responsive">
+            <div id="scroll1">
             <table id="fclientstable" class="table table-hover" cellspacing="0" width="100%">
                 <thead>
                 <tr >
@@ -1721,6 +1722,9 @@ function cancelar_envio_mensajes(){
 //traer localidad			
 
 $(document).ready(function(){
+    setTimeout(function(){
+        $('#scroll1').doubleScroll();
+    },1000);
 	$("#cmbCiudades").change(function(){
         cuando_cambia_de_ciudad();
 	});
