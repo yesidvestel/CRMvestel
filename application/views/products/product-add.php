@@ -30,7 +30,7 @@
                            for="product_cat"><?php echo $this->lang->line('') ?>Categoria Material</label>
 
                     <div class="col-sm-6">
-                        <select name="product_cat" class="form-control">
+                        <select name="product_cat" id="product_cat" class="form-control servs">
                             <?php
                             foreach ($cat as $row) {
                                 $cid = $row['id'];
@@ -50,7 +50,7 @@
                            for="product_cat"><?php echo $this->lang->line('Warehouse') ?></label>
 
                     <div class="col-sm-6">
-                        <select name="product_warehouse" class="form-control">
+                        <select name="product_warehouse" id="product_warehouse" class="form-control servs">
                             <?php
                             foreach ($warehouse as $row) {
                                 $cid = $row['id'];
@@ -62,6 +62,33 @@
 
 
                     </div>
+                </div>
+                <div id="div_desc_servicio" style="display:none">
+                <div class="form-group row">
+
+                    <label class="col-sm-2 col-form-label"
+                           for="product_cat">Tipo Servicio</label>
+
+                    <div class="col-sm-6">
+                        <select name="tipo_servicio" id="tipo_servicio" class="form-control servs">
+                            <option>Recurrente</option>
+                            <option>Fijo</option>                            
+                        </select>
+
+
+                    </div>
+                </div>
+                <div class="form-group row">
+
+                    <label class="col-sm-2 col-form-label"
+                           for="valores_servicio"><?php echo $this->lang->line('') ?>Valores de Servicio</label>
+
+                    <div class="col-sm-6">
+                        <input type="text" placeholder="Valores Servicio ej: 1,2,3,4,5 o 1-5 o pepe,lucas,juan"
+                               class="form-control" name="valores_servicio" id="valores_servicio">
+                               <small>Valores Servicio ej: 1,2,3,4,5 o 1-5 o pepe,lucas,juan</small>
+                    </div>
+                </div>
                 </div>
 				<div class="form-group row">
 
@@ -204,4 +231,19 @@
         </form>
     </div>
 </article>
+<script type="text/javascript">
+    $(document).on("change",'.servs',function(e){
+        if($("#product_cat").val()=="4" && $("#product_warehouse").val()=="7"){
+            $("#tipo_servicio").addClass("required");
+            $("#valores_servicio").addClass("required");
+            $("#div_desc_servicio").css("display","");
+        }else{
+            $("#tipo_servicio").removeClass("required");
+            $("#valores_servicio").removeClass("required");
+            
+            $("#div_desc_servicio").css("display","none");
+        }
+    });
+
+</script>
 
