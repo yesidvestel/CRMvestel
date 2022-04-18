@@ -71,8 +71,22 @@
 
                     <div class="col-sm-6">
                         <select name="tipo_servicio" id="tipo_servicio" class="form-control servs">
-                            <option>Recurrente</option>
-                            <option>Fijo</option>                            
+                            <option value="Recurrente">Recurrente</option>
+                            <option value="Fijo">Fijo</option>                            
+                        </select>
+
+
+                    </div>
+                </div>
+                <div class="form-group row">
+
+                    <label class="col-sm-2 col-form-label"
+                           for="product_cat">Pertenece a</label>
+
+                    <div class="col-sm-6">
+                        <select name="servicio_pertenece_a" id="servicio_pertenece_a" class="form-control servs">
+                            <option value="Tv">Tv</option>
+                            <option value="Internet">Internet</option>                            
                         </select>
 
 
@@ -236,10 +250,12 @@
         if($("#product_cat").val()=="4" && $("#product_warehouse").val()=="7"){
             $("#tipo_servicio").addClass("required");
             $("#valores_servicio").addClass("required");
+            $("#servicio_pertenece_a").addClass("required");
             $("#div_desc_servicio").css("display","");
         }else{
             $("#tipo_servicio").removeClass("required");
             $("#valores_servicio").removeClass("required");
+            $("#servicio_pertenece_a").removeClass("required");
             
             $("#div_desc_servicio").css("display","none");
         }
