@@ -532,7 +532,9 @@
 <a href=""  class="btn btn-danger btn-md" onclick="abrir_modal_corte_usuarios(event)"><i
                         class="fa fa-envelope"></i>Cortar Usuarios</a>
             <hr>
-            <table id="fclientstable" class="table-striped" cellspacing="0" width="100%">
+
+            <div class="table-responsive">
+            <table id="fclientstable" class="table table-hover" cellspacing="0" width="100%">
                 <thead>
                 <tr >
                     <th><input type="checkbox" <?= ($cuenta!=0) ? 'checked':'' ?>  name="" style="cursor: pointer;" onclick="selet_all_customers(this)">&nbspSMS</th>
@@ -576,6 +578,7 @@
                 </tr>
                 </tfoot>
             </table>
+            </div>
             
         </div>
         
