@@ -136,14 +136,7 @@ include (APPPATH."libraries\RouterosAPI.php");
                 $_GET['localidad_multiple']=str_replace("-", "", $_GET['localidad_multiple']);
                     
                     $localidad_multiple=explode(",", $_GET['localidad_multiple']) ;
-                    if ($_GET['localidad'] != '' && $_GET['localidad'] != '-' && $_GET['localidad'] != '0') {
-                                if($localidad_multiple[0]!="null" && $localidad_multiple[0]!=null && $localidad_multiple[0]!=""){
-                                        $localidad_multiple[]=$_GET['localidad'];
-                                }else{
-                                        $localidad_multiple[0]=$_GET['localidad'];
-                                }
-                                
-                        }
+                    
                         $localidades2=array();
                         if($multiplev[0]!="null" && $multiplev[0]!=null){
                                $customer_b= $this->db->get_where("customers",array("barrio"=>intval($multiplev[0])))->row();
@@ -919,14 +912,7 @@ include (APPPATH."libraries\RouterosAPI.php");
                 $_GET['localidad_multiple']=str_replace("-", "", $_GET['localidad_multiple']);
                     
                     $localidad_multiple=explode(",", $_GET['localidad_multiple']) ;
-                    if ($_GET['localidad'] != '' && $_GET['localidad'] != '-' && $_GET['localidad'] != '0') {
-                                if($localidad_multiple[0]!="null" && $localidad_multiple[0]!=null && $localidad_multiple[0]!=""){
-                                        $localidad_multiple[]=$_GET['localidad'];
-                                }else{
-                                        $localidad_multiple[0]=$_GET['localidad'];
-                                }
-                                
-                        }
+                 
                         $localidades2=array();
                         if($multiplev[0]!="null" && $multiplev[0]!=null){
                                $customer_b= $this->db->get_where("customers",array("barrio"=>intval($multiplev[0])))->row();
@@ -1659,14 +1645,7 @@ include (APPPATH."libraries\RouterosAPI.php");
                 $_GET['localidad_multiple']=str_replace("-", "", $_GET['localidad_multiple']);
                     
                     $localidad_multiple=explode(",", $_GET['localidad_multiple']) ;
-                    if ($_GET['localidad'] != '' && $_GET['localidad'] != '-' && $_GET['localidad'] != '0') {
-                                if($localidad_multiple[0]!="null" && $localidad_multiple[0]!=null && $localidad_multiple[0]!=""){
-                                        $localidad_multiple[]=$_GET['localidad'];
-                                }else{
-                                        $localidad_multiple[0]=$_GET['localidad'];
-                                }
-                                
-                        }
+                    
                         $localidades2=array();
                         if($multiplev[0]!="null" && $multiplev[0]!=null){
                                $customer_b= $this->db->get_where("customers",array("barrio"=>intval($multiplev[0])))->row();
