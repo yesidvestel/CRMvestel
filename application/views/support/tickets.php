@@ -427,9 +427,9 @@
 });
 $(window).on('load', function (e) {
     var x1a=$('#doctable').width();
-    var d1=(x1a*7.7)/100;
-    $('.div1').width(x1a+d1);
-    $('.div2').width(x1a);
+    
+    $('.div1').width(x1a+170);
+    $('.div2').width(x1a+170);
 });
     $(document).ready(function () {
 

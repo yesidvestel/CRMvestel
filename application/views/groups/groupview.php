@@ -571,7 +571,7 @@
                 <tbody>
                 </tbody>
 
-                <tfoot>
+                <tfoot id="tf1">
                 <tr >
                     <th>SMS</th>
                     <th>#</th>
@@ -1038,11 +1038,12 @@ $("#sel_filtrar_fecha_cambio").on("change",function(){
         $('.wrapper1').scrollLeft($('.wrapper2').scrollLeft());
     });
 });
+    var aumento=170;
 $(window).on('load', function (e) {
      var x1a=$('#fclientstable').width();
-    var d1=(x1a*9.5)/100;
-    $('.div1').width(x1a+d1);
-    $('.div2').width(x1a);
+    //var d1=(x1a*9.5)/100;
+    $('.div1').width(x1a+aumento);
+    $('.div2').width(x1a+aumento);
 }); 
 </script>
 <script type="text/javascript">
@@ -1083,20 +1084,19 @@ $(window).on('load', function (e) {
               $("#despues_de_tfoot").after("<th class='cols_adicionadas'>Deuda</th>");
               columnasUlEsAgregadas=true;
               var x1a=$('#fclientstable').width();
-                       
-                        $('.div1').width(x1a);
-                        $('.div2').width(x1a);
+                //var d1=(x1a*9.5)/100;
+                $('.div1').width(x1a-500);
+                $('.div2').width(x1a-500);
             }
             if(ultimo_estado_sel=="Si"){
                     $("#despues_de_thead").after("<th class='cols_adicionadas'>Ult. Estado</th>");
                     $("#despues_de_tfoot").after("<th class='cols_adicionadas'>Ult. Estado</th>");
                     $("#despues_de_thead").after("<th class='cols_adicionadas'>Fecha Cambio</th>");
                     $("#despues_de_tfoot").after("<th class='cols_adicionadas'>Fecha Cambio</th>");
-                    var x1a=$('#fclientstable').width();
-                       var x1a=$('#doctable').width();
-                        var d1=(x1a*2)/100;
-                        $('.div1').width(x1a);
-                        $('.div2').width(x1a);
+                   var x1a=$('#fclientstable').width();
+                    //var d1=(x1a*9.5)/100;
+                    $('.div1').width(x1a-500);
+                    $('.div2').width(x1a-500);
 
               }
               
