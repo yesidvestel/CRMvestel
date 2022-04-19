@@ -1,3 +1,9 @@
+<style type="text/css">
+    .wrapper1, .wrapper2 { width: 100%; overflow-x: scroll; overflow-y: hidden; }
+.wrapper1 { height: 20px; }
+.div1 { height: 20px; }
+.div2 { overflow: none; }
+</style>
 <style>
 .st-Activo, .st-Instalar , .st-Cortado, .st-Suspendido, .st-Exonerado, .st-Compromiso
 {
@@ -116,6 +122,9 @@
 #checkboxes4 label:hover {
   background-color: #1e90ff;
 }
+
+
+
 </style>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 
@@ -533,8 +542,11 @@
 <a href=""  class="btn btn-danger btn-md" onclick="abrir_modal_corte_usuarios(event)"><i
                         class="fa fa-envelope"></i>Cortar Usuarios</a>
             <hr>
-
-            <div id="scroll1">
+<div class="wrapper1">
+    <div class="div1"></div>
+</div>
+            <div class="wrapper2">
+                <div class="div2">
             <table id="fclientstable" class="table table-hover" cellspacing="0" width="100%">
                 <thead>
                 <tr >
@@ -579,6 +591,7 @@
                 </tr>
                 </tfoot>
             </table>
+            </div>
             </div>
             
         </div>
@@ -1016,7 +1029,22 @@ $("#sel_filtrar_fecha_cambio").on("change",function(){
         </div>
     </div>
 </div>
-
+<script type="text/javascript">
+    $(function () {
+    $('.wrapper1').on('scroll', function (e) {
+        $('.wrapper2').scrollLeft($('.wrapper1').scrollLeft());
+    }); 
+    $('.wrapper2').on('scroll', function (e) {
+        $('.wrapper1').scrollLeft($('.wrapper2').scrollLeft());
+    });
+});
+$(window).on('load', function (e) {
+     var x1a=$('#fclientstable').width();
+    var d1=(x1a*9.5)/100;
+    $('.div1').width(x1a+d1);
+    $('.div2').width(x1a);
+}); 
+</script>
 <script type="text/javascript">
     
     function  filtrado_fechas(){
@@ -1054,12 +1082,21 @@ $("#sel_filtrar_fecha_cambio").on("change",function(){
               $("#despues_de_thead").after("<th class='cols_adicionadas'>Deuda</th>");
               $("#despues_de_tfoot").after("<th class='cols_adicionadas'>Deuda</th>");
               columnasUlEsAgregadas=true;
+              var x1a=$('#fclientstable').width();
+                       
+                        $('.div1').width(x1a);
+                        $('.div2').width(x1a);
             }
             if(ultimo_estado_sel=="Si"){
                     $("#despues_de_thead").after("<th class='cols_adicionadas'>Ult. Estado</th>");
                     $("#despues_de_tfoot").after("<th class='cols_adicionadas'>Ult. Estado</th>");
                     $("#despues_de_thead").after("<th class='cols_adicionadas'>Fecha Cambio</th>");
                     $("#despues_de_tfoot").after("<th class='cols_adicionadas'>Fecha Cambio</th>");
+                    var x1a=$('#fclientstable').width();
+                       var x1a=$('#doctable').width();
+                        var d1=(x1a*2)/100;
+                        $('.div1').width(x1a);
+                        $('.div2').width(x1a);
 
               }
               
@@ -1216,6 +1253,7 @@ $("#sel_filtrar_fecha_cambio").on("change",function(){
                     nuevas_columnas();
                     $("option[value=100]").text("Todo");
                 }
+
            /* }else{
                 tb.ajax.url( baseurl+'clientgroup/grouplist?estado='+estado+"&id=<?=$_GET['id']?>&localidad="+localidad+"&barrio="+barrio+"&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios).load();         
             }*/
@@ -1722,9 +1760,7 @@ function cancelar_envio_mensajes(){
 //traer localidad			
 
 $(document).ready(function(){
-    setTimeout(function(){
-        $('#scroll1').doubleScroll();
-    },2500);
+   
 	$("#cmbCiudades").change(function(){
         cuando_cambia_de_ciudad();
 	});

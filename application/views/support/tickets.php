@@ -1,3 +1,9 @@
+<style type="text/css">
+   .wrapper1, .wrapper2 { width: 100%; overflow-x: scroll; overflow-y: hidden; }
+.wrapper1 { height: 20px; }
+.div1 { height: 20px; }
+.div2 { overflow: none; }
+</style>
 <article class="content">
     <div class="card card-block">
         <div id="notify" class="alert alert-success" style="display:none;">
@@ -285,9 +291,13 @@
                             </div>
                 </div>
                 <!-- fin paneles -->
-
-			<div class="table-responsive">
-				<a href="#" onclick="redirect_to_export()" class="btn btn-success btn-md">Exportar a Excel .XLSX</a>
+                <a href="#" onclick="redirect_to_export()" class="btn btn-success btn-md">Exportar a Excel .XLSX</a>
+<div class="wrapper1">
+    <div class="div1"></div>
+</div>
+			<div class="wrapper2">
+				
+                <div class="div2">
             <table id="doctable" class="table table-hover" cellspacing="0" width="100%">
                 <thead>
                 <tr>
@@ -325,6 +335,7 @@
                 </tbody>
 
             </table>
+            </div>
 			</div>
 			<?php if ($this->aauth->get_user()->roleid >= 3) { ?>
 			<div class="col-md-12">
@@ -405,6 +416,21 @@
 </div>
 <script type="text/javascript">
     var tb;
+   
+    $(function () {
+    $('.wrapper1').on('scroll', function (e) {
+        $('.wrapper2').scrollLeft($('.wrapper1').scrollLeft());
+    }); 
+    $('.wrapper2').on('scroll', function (e) {
+        $('.wrapper1').scrollLeft($('.wrapper2').scrollLeft());
+    });
+});
+$(window).on('load', function (e) {
+    var x1a=$('#doctable').width();
+    var d1=(x1a*7.7)/100;
+    $('.div1').width(x1a+d1);
+    $('.div2').width(x1a);
+});
     $(document).ready(function () {
 
         tb=$('#doctable').DataTable({
@@ -451,7 +477,7 @@
 
  
 
-     
+ 
 
        
     });
