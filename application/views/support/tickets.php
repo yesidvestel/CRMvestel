@@ -428,8 +428,8 @@
 $(window).on('load', function (e) {
     var x1a=$('#doctable').width();
     
-    $('.div1').width(x1a+200);
-    $('.div2').width(x1a+200);
+    $('.div1').width(x1a+210);
+    $('.div2').width(x1a+210);
 });
     $(document).ready(function () {
 
