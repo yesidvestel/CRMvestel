@@ -841,7 +841,7 @@ if($ya_agrego_equipos==false){
         // lista_de_invoice_items es la lista de itemes para insertar
         $lista_de_invoice_items = $this->db->select('*')->from('invoice_items')->where("tid='".$ticket->id_invoice."' && ( pid =23 or pid =27)")->get()->result();
         $total=0;
-		$tax2=0;
+		$tax2=0;//var_dump($invoice[0]);
         //cod x
 		if ($ticket->codigo===$temporal->corden){
 			$data['csd']=$ticket->cid;
@@ -868,6 +868,7 @@ if($ya_agrego_equipos==false){
 					$datay['totaltax']=0;
                     $datay['price']=$x;
                     $datay['subtotal']=$x;     
+                    //var_dump($data);
                     if($ticket->detalle=="Instalacion" && $ticket->id_factura==null  && $status=="Resuelto" || $ticket->id_factura==0 || $ticket->detalle=="Reconexion Combo2" || $ticket->detalle=="Reconexion Television2" || $ticket->detalle=="Reconexion Internet2"){
                         $this->db->insert('invoice_items',$datay);    
                     }
@@ -949,9 +950,10 @@ if($ya_agrego_equipos==false){
         		$this->db->update('customers');
 				//id factura si se dividio orden
 				$this->db->set('id_factura', $data['tid']);							
-        		$this->db->where('par', $ticket->par);
+        		
 				//$this->db->where('codigo'!== $ticket->codigo);
                 if($ticket->par!=null){
+                    $this->db->where('par', $ticket->par);
         		  $this->db->update('tickets');
                 }
                 //mikrotik
