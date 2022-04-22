@@ -94,7 +94,7 @@
                                         <div class="input-group">
                                             <div class="input-group-addon"><span class="icon-bookmark-o"
                                                                                  aria-hidden="true"></span></div>
-                                            <select type="text" class="form-control" placeholder="Reference #" name="refer" onchange="cambia()">
+                                            <select type="text" class="form-control" placeholder="Reference #" name="refer" id="refer" onchange="cambia()">
 												<?php
 												foreach ($sede as $row) {
 													$cid = $row['id'];
@@ -331,7 +331,7 @@
                                                                             </div>
                                                                         </div>
                                                                         <?php foreach ($servicios_por_sedes as $key => $value1) { ?>
-                                                                            <div id="servs_tv_sede_<?=$value1['title']?>" data-id-sede="<?=$value1['id'] ?>">
+                                                                            <div id="servs_tv_sede_<?=$value1['title']?>" data-id-sede="<?=$value1['id'] ?>" class="servs_sede_<?=$value1['title']?> serv_sedes">
 
                                                                                 <?php if(count($value1['servicios_tv'])!=0){ 
                                                                                     foreach ($value1['servicios_tv'] as $key => $serv) {?>
@@ -407,7 +407,7 @@
 
                                                             <div class="modal-body" id="body_modal">
                                                               <?php foreach ($servicios_por_sedes as $key => $value1) { ?>
-                                                                            <div id="servs_internet_sede_<?=$value1['title']?>" data-id-sede="<?=$value1['id'] ?>">
+                                                                            <div id="servs_internet_sede_<?=$value1['title']?>" class="servs_sede_<?=$value1['title']?> serv_sedes" data-id-sede="<?=$value1['id'] ?>">
 
                                                                                 <?php if(count($value1['servicios_internet'])!=0){ 
                                                                                     foreach ($value1['servicios_internet'] as $key => $serv) {?>
@@ -890,6 +890,14 @@
     </div>
 </div>
 <script type="text/javascript">
+    cambia();
+    function cambia(){
+        var sede_sel=$("#refer option:selected").val();
+        $(".serv_sedes").css("display","none");
+        $(".servs_sede_"+sede_sel).css("display","");
+
+
+    }
 function ShowSelected()
 {
 /* Para obtener el valor */
