@@ -305,7 +305,69 @@
                                     <select name="television" class="selectpicker form-control">
                                         <option value="no">No</option>
                                         <option value="Television">Si</option>
-                                    </select></td>
+                                    </select>
+                                <a href="" class="btn-small btn-primary" id="btn-mas-tv">Mas Tv</a>
+                                <!--inicio modal elementos tv-->
+                                                <div id="modal_mas_tv" class="modal fade">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                                <h4 class="modal-title">Servicios Adicionales Tv</h4>
+                                                            </div>
+
+                                                            <div class="modal-body" id="body_modal">
+                                                                     <div class="form-group row">
+
+                                                                            <label class="col-sm-3 control-label"
+                                                                                   for="sdate2">Punto Adicional</label>
+                                                                            <div  class="col-sm-9">
+                                                                             <select name="puntos" class="selectpicker form-control">
+                                                                                <option value="0">no</option>
+                                                                                <?php for ($i=1;$i<=30;$i++){
+                                                                                echo '<option value="'.$i.'">'.$i.'</option>';}?>
+                                                                            </select>
+                                                                                <small></small>
+                                                                            </div>
+                                                                        </div>
+                                                                        <?php foreach ($servicios_por_sedes as $key => $value1) { ?>
+                                                                            <div id="servs_tv_sede_<?=$value1['title']?>" data-id-sede="<?=$value1['id'] ?>">
+
+                                                                                <?php if(count($value1['servicios_tv'])!=0){ 
+                                                                                    foreach ($value1['servicios_tv'] as $key => $serv) {?>
+                                                                                            <div class="form-group row">
+
+                                                                                                <label class="col-sm-3 control-label"
+                                                                                                       for="sdate2"><?=$serv['product_name'] ?></label>
+                                                                                                <div  class="col-sm-9">
+                                                                                                 <select name="serv_add_<?=$serv['pid']  ?>" class="selectpicker form-control">
+                                                                                                    <option value="0">no </option>
+                                                                                                    <?php foreach ($serv['valores'] as $key => $valora1) {
+                                                                                                    echo '<option value="'.$valora1.'">'.$valora1.'</option>';}?>
+                                                                                                </select>
+                                                                                                    <small></small>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                    <?php } ?>
+                                                                                <?php } ?>
+                                                                                
+                                                                            </div>
+                                                                        <?php } ?>
+
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <a data-dismiss="modal" href="#" class="btn btn-success">Guardar</a>
+                                                                <button type="button" class="btn btn-default"
+                                                                        data-dismiss="modal"><?php echo $this->lang->line('Close') ?> </button>
+                                                                
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                <!--inicio modal elementos tv-->        
+                                </td>
+
+
                                 <td colspan="4" align="right"><strong><?php echo $this->lang->line('Grand Total') ?>
                                         (<span
                                                 class="currenty lightMode"><?php echo $this->config->item('currency'); ?></span>)</strong>
@@ -333,13 +395,33 @@
 											}
 											?>
 										
-                                    </select></td>
-								<td colspan="2">Punto Adicional 
-								<select name="puntos" class="selectpicker form-control">
-										<option value="0">no</option>
-										<?php for ($i=1;$i<=30;$i++){
-										echo '<option value="'.$i.'">'.$i.'</option>';}?>
-                                    </select></td>
+                                    </select><a href="" class="btn-small btn-primary" id="btn-mas-internet">Mas Internet</a>        
+                                    <!--inicio modal elementos internet-->
+                                                <div id="modal-mas-internet" class="modal fade">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                                <h4 class="modal-title">Servicios Adicionales Internet</h4>
+                                                            </div>
+
+                                                            <div class="modal-body" id="body_modal">
+                                                              
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button  class="btn btn-success" >Guardar</button>
+                                                                <button type="button" class="btn btn-default"
+                                                                        data-dismiss="modal"><?php echo $this->lang->line('Close') ?> </button>
+                                                                
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                <!--inicio modal elementos internet-->
+
+                                </td>
+
+								
                                 <td align="right" colspan="6"><input type="submit" class="btn btn-success sub-btn" value="<?php echo $this->lang->line('Generate Invoice') ?> " id="submit-data" data-loading-text="Creating...">
 
                                 </td>
@@ -799,7 +881,14 @@ alert(selected);
 }
 </script>
 <script type="text/javascript">	
-	
+	$(document).on('click','#btn-mas-internet',function(e){
+        e.preventDefault();
+        $("#modal-mas-internet").modal("show");
+    });
+    $(document).on('click','#btn-mas-tv',function(e){
+        e.preventDefault();
+        $("#modal_mas_tv").modal("show");
+    });
 	var Iplocal_2 = new Array ("10.0.0.1");
 	var Iplocal_3 = new Array ("80.0.0.1");
 	var Iplocal_4 = new Array ("10.1.100.1");

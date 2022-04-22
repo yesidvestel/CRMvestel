@@ -510,5 +510,38 @@ setlocale(LC_TIME, "spanish");
             return $this->db->delete('meta_data', array('rid' => $id, 'type' => $type, 'col1' => $name));
         }
     }
+    public function get_servicios(){
+        //$array=array();//array("servicios_tv"=>array(),"servicios_internet"=>array());
+        $lista_sedes=$this->db->get_where("customers_group")->result_array();
+        foreach($lista_sedes as $key=> $value){
+            $lista_sedes[$key]['servicios_tv']=$this->db->get_where("products",array("pcat"=>"4","warehouse"=>"7","sede"=>$value['id'],"valores!="=>null,"pertence_a_tv_o_net"=>"Tv"))->result_array();
+            $lista_sedes[$key]['servicios_internet']=$this->db->get_where("products",array("pcat"=>4,"warehouse"=>7,"sede"=>$value['id'],"valores!="=>null,"pertence_a_tv_o_net"=>"Internet"))->result_array();
+            foreach ($lista_sedes[$key]['servicios_tv'] as $key2 => $value2) {
+                
+                $x1=explode("-", $value2['valores']);
+                if(count($x1)==2){
+                        if(is_numeric($x1[0]) && is_numeric($x1[1])){
+                            $var1=array();
+                            for ($i=$x1[0]; $i <=$x1[1]; $i++) { 
+                                $var1[]=$i;
+                            }
+                            $lista_sedes[$key]['servicios_tv'][$key2]['valores']=$var1;
+                        }else{
+                            $lista_sedes[$key]['servicios_tv'][$key2]=array();
+                        }
+                }else{
+                    try {
+                        $lista_sedes[$key]['servicios_tv'][$key2]['valores']=explode(",", $value2['valores']);    
+                    } catch (Exception $e) {
+                        $lista_sedes[$key]['servicios_tv'][$key2]=array();
+                    }
+                    
+                }
+            }
+        }
+        //var_dump($lista_sedes);
+        //var_dump($this->db->get_where("products",array("pcat"=>"4","warehouse"=>"7","sede"=>"2","pertence_a_tv_o_net"=>"Tv"))->result_array());
+        return $lista_sedes;
+    }
 
 }

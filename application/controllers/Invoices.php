@@ -106,6 +106,7 @@ $this->load->model("Notas_model","notas");
         $data['currency'] = $this->invocies->currencies();
         $head['title'] = "New Invoice";
 		$data['departamentos'] = $this->customers->departamentos_list();
+        $data['servicios_por_sedes']=$this->invocies->get_servicios();
         $head['usernm'] = $this->aauth->get_user()->username;
         $this->load->view('fixed/header', $head);
         $this->load->view('invoices/newinvoice', $data);
