@@ -538,6 +538,28 @@ setlocale(LC_TIME, "spanish");
                     
                 }
             }
+            foreach ($lista_sedes[$key]['servicios_internet'] as $key2 => $value2) {
+                
+                $x1=explode("-", $value2['valores']);
+                if(count($x1)==2){
+                        if(is_numeric($x1[0]) && is_numeric($x1[1])){
+                            $var1=array();
+                            for ($i=$x1[0]; $i <=$x1[1]; $i++) { 
+                                $var1[]=$i;
+                            }
+                            $lista_sedes[$key]['servicios_internet'][$key2]['valores']=$var1;
+                        }else{
+                            $lista_sedes[$key]['servicios_internet'][$key2]=array();
+                        }
+                }else{
+                    try {
+                        $lista_sedes[$key]['servicios_internet'][$key2]['valores']=explode(",", $value2['valores']);    
+                    } catch (Exception $e) {
+                        $lista_sedes[$key]['servicios_internet'][$key2]=array();
+                    }
+                    
+                }
+            }
         }
         //var_dump($lista_sedes);
         //var_dump($this->db->get_where("products",array("pcat"=>"4","warehouse"=>"7","sede"=>"2","pertence_a_tv_o_net"=>"Tv"))->result_array());

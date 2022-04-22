@@ -338,7 +338,7 @@
                                                                                             <div class="form-group row">
 
                                                                                                 <label class="col-sm-3 control-label"
-                                                                                                       for="sdate2"><?=$serv['product_name'] ?></label>
+                                                                                                       for="serv_add_<?=$serv['pid']  ?>"><?=$serv['product_name'] ?></label>
                                                                                                 <div  class="col-sm-9">
                                                                                                  <select name="serv_add_<?=$serv['pid']  ?>" class="selectpicker form-control">
                                                                                                     <option value="0">no </option>
@@ -406,7 +406,29 @@
                                                             </div>
 
                                                             <div class="modal-body" id="body_modal">
-                                                              
+                                                              <?php foreach ($servicios_por_sedes as $key => $value1) { ?>
+                                                                            <div id="servs_internet_sede_<?=$value1['title']?>" data-id-sede="<?=$value1['id'] ?>">
+
+                                                                                <?php if(count($value1['servicios_internet'])!=0){ 
+                                                                                    foreach ($value1['servicios_internet'] as $key => $serv) {?>
+                                                                                            <div class="form-group row">
+
+                                                                                                <label class="col-sm-3 control-label"
+                                                                                                       for="serv_add_<?=$serv['pid']  ?>"><?=$serv['product_name'] ?></label>
+                                                                                                <div  class="col-sm-9">
+                                                                                                 <select name="serv_add_<?=$serv['pid']  ?>" class="selectpicker form-control">
+                                                                                                    <option value="0">no </option>
+                                                                                                    <?php foreach ($serv['valores'] as $key => $valora1) {
+                                                                                                    echo '<option value="'.$valora1.'">'.$valora1.'</option>';}?>
+                                                                                                </select>
+                                                                                                    <small></small>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                    <?php } ?>
+                                                                                <?php } ?>
+                                                                                
+                                                                            </div>
+                                                                        <?php } ?>
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button  class="btn btn-success" >Guardar</button>
