@@ -386,6 +386,7 @@ setlocale(LC_TIME, "spanish");
                         $this->db->insert("historial_crm",$data_h);
 
             if ($this->db->trans_complete()) {
+                $this->db->delete("servicios_adicionales",array("tid_invoice"=>$id));
                 return true;
             } else {
                 return false;

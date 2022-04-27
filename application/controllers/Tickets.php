@@ -969,7 +969,7 @@ if($ya_agrego_equipos==false){
                         $data_item_serv['tid']=$data['tid'];
                         $data_item_serv['product']=$producto->product_name;
                         $data_item_serv['qty']=$serv_val['valor'];
-                        if(!is_int($serv_val['valor'])){
+                        if(!is_numeric($serv_val['valor'])){
                             $data_item_serv['qty']=1;
                         }
                         /*falta calcular el precio segun los dias y añadir el valor de estos item_invoice al valor de la factura*/

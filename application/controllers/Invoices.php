@@ -128,7 +128,7 @@ $this->load->model("Notas_model","notas");
         
         $caja1=$this->db->get_where('accounts',array('id' =>$_POST['pay_acc']))->row();
         //$customers = $this->db->get_where("customers", array("usu_estado"=>'Activo',"ciudad"=>$caja1->holder))->result_array();
-        $customers_list = $this->db->query("select * from customers where (usu_estado='Activo' or usu_estado='Compromiso') and gid ='".$caja1->sede."' ")->result_array();
+        $customers_list = $this->db->query("select * from customers where (usu_estado='Activo' or usu_estado='Compromiso') and gid ='".$caja1->sede."'")->result_array();
         $ciudades= array();
         $sdate=$this->input->post("sdate");
         $date1= new DateTime($sdate);
@@ -305,6 +305,7 @@ $this->load->model('customers_model', 'customers');
                             }
                             $factura_data['puntos']=$puntos;
 $list_servs=$this->invocies->servicios_adicionales_recurrentes($value2->tid);
+
                                  foreach ($list_servs as $key_s => $serv_val) {
                                     $data_serv=array();
                                     $data_serv['tid_invoice']=$factura_data['tid'];
@@ -319,9 +320,11 @@ $list_servs=$this->invocies->servicios_adicionales_recurrentes($value2->tid);
                                             $data_item_serv['tid']=$factura_data['tid'];
                                             $data_item_serv['product']=$producto->product_name;
                                             $data_item_serv['qty']=$serv_val['valor'];
-                                            if(!is_int($serv_val['valor'])){
+                                            var_dump($data_item_serv['qty']);
+                                            if(!is_numeric($serv_val['valor'])){
                                                 $data_item_serv['qty']=1;
                                             }
+                                            
                                             /*falta calcular el precio segun los dias y añadir el valor de estos item_invoice al valor de la factura*/
                                             $x=0;
                                             $x=$producto->product_price;
@@ -757,6 +760,7 @@ var_dump("aqui2");*/
         $data['warehouse'] = $this->invocies->warehouses();
         $this->load->model('plugins_model', 'plugins');
         $data['exchange'] = $this->plugins->universal_api(5);
+        $data['servicios_por_sedes']=$this->invocies->get_servicios();
 
         $this->load->view('fixed/header', $head);
         if ($data['invoice']) $this->load->view('invoices/edit', $data);
@@ -1071,7 +1075,7 @@ var_dump("aqui2");*/
                                                 $data_serv['valor']=$valor;
                                                 $precio=$product_serv->product_price;
                                                 if(is_int($valor)){
-                                                    $precio*$valor;
+                                                    //$precio*$valor;
                                                 }
                                                 $data_serv['subtotal']=$precio;
                                                 $data_serv['total']=$precio;
@@ -2018,8 +2022,41 @@ foreach ($lista as $key => $value) {
         $this->db->where('tid', $invocieno);
 
         if ($flag) {
-
+/**/
             if ($this->db->update('invoices', $data)) {
+
+                            foreach ($_POST as $llave => $valor) {
+                                    if(strpos($llave,"serv_add_")!==false){
+                                        $pid_serv=str_replace("serv_add_", "", $llave);
+                                        if($valor!="0"){
+                                                
+                                                $product_serv=$this->db->get_where("products",array("pid"=>$pid_serv))->row();
+                                               // $servicios_adicionales.=" + ".$valor." ".$product_serv->product_name;    
+                                                $data_serv=array();
+                                                $data_serv['tid_invoice']=$invocieno;
+                                                $data_serv['pid']=$pid_serv;
+                                                $data_serv['valor']=$valor;
+                                                $precio=$product_serv->product_price;
+                                                if(is_int($valor)){
+                                                 //   $precio*$valor;
+                                                }
+                                                $data_serv['subtotal']=$precio;
+                                                $data_serv['total']=$precio;
+                                                $servicios_adicional_antiguo=$this->db->get_where("servicios_adicionales",array("tid_invoice"=>$invocieno,"pid"=>$pid_serv))->row();
+                                                
+                                                if(isset($servicios_adicional_antiguo)){
+                                                    $this->db->update("servicios_adicionales",array("valor"=>$valor),array("id"=>$servicios_adicional_antiguo->id));
+                                                }else{
+                                                    
+                                                    $this->db->insert("servicios_adicionales",$data_serv);    
+                                                }
+                                                
+                                        }else if($valor=="0"){
+                                            $this->db->delete("servicios_adicionales",array("pid"=>$pid_serv,"tid_invoice"=>$invocieno));
+                                        }
+                                        
+                                    }
+                            }
                             $data_h=array();
                             $data_h['modulo']="Ventas";
                             $data_h['accion']="Editar Factura {update}";
