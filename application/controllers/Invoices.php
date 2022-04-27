@@ -128,7 +128,7 @@ $this->load->model("Notas_model","notas");
         
         $caja1=$this->db->get_where('accounts',array('id' =>$_POST['pay_acc']))->row();
         //$customers = $this->db->get_where("customers", array("usu_estado"=>'Activo',"ciudad"=>$caja1->holder))->result_array();
-        $customers_list = $this->db->query("select * from customers where (usu_estado='Activo' or usu_estado='Compromiso') and gid ='".$caja1->sede."'")->result_array();
+        $customers_list = $this->db->query("select * from customers where (usu_estado='Activo' or usu_estado='Compromiso') and gid ='".$caja1->sede."' ")->result_array();
         $ciudades= array();
         $sdate=$this->input->post("sdate");
         $date1= new DateTime($sdate);
@@ -241,6 +241,7 @@ $this->load->model('customers_model', 'customers');
                                 $television_data['totaldiscount']=0;
                                 
                                     $this->db->insert("invoice_items",$television_data);
+
                                 
 
 
@@ -303,7 +304,38 @@ $this->load->model('customers_model', 'customers');
                                 
                             }
                             $factura_data['puntos']=$puntos;
-
+$list_servs=$this->invocies->servicios_adicionales_recurrentes($value2->tid);
+                                 foreach ($list_servs as $key_s => $serv_val) {
+                                    $data_serv=array();
+                                    $data_serv['tid_invoice']=$factura_data['tid'];
+                                    $data_serv['pid']=$serv_val['pid'];
+                                    $data_serv['valor']=$serv_val['valor'];
+                                    $data_serv['subtotal']=$serv_val['subtotal'];
+                                    $data_serv['total']=$serv_val['total'];
+                                    $this->db->insert("servicios_adicionales",$data_serv);
+                                    $producto = $this->db->get_where('products',array('pid'=>$serv_val['pid']))->row();
+                                            $data_item_serv=array();
+                                            $data_item_serv['pid']=$producto->pid;
+                                            $data_item_serv['tid']=$factura_data['tid'];
+                                            $data_item_serv['product']=$producto->product_name;
+                                            $data_item_serv['qty']=$serv_val['valor'];
+                                            if(!is_int($serv_val['valor'])){
+                                                $data_item_serv['qty']=1;
+                                            }
+                                            /*falta calcular el precio segun los dias y añadir el valor de estos item_invoice al valor de la factura*/
+                                            $x=0;
+                                            $x=$producto->product_price;
+                                       
+                                        
+                                        $factura_data['subtotal']+=round($x*$data_item_serv['qty']);;
+                                        $factura_data['total']+=round($x*$data_item_serv['qty']);;
+                                        //$tax2+=$datay['totaltax'];
+                                            $data_item_serv['tax']=0;
+                                            $data_item_serv['totaltax']='';
+                                            $data_item_serv['price']=$x;
+                                            $data_item_serv['subtotal']=round($x*$data_item_serv['qty']);
+                                            $this->db->insert('invoice_items',$data_item_serv);
+                                }
                             //falta los puntos no se olvide hacer igual que en tickets y luego preguntar que alli se valora cada uno en ves de despues de 3 puntos
                             //y crear el invoice
                             if($factura_data['total']!=0){
@@ -762,7 +794,7 @@ var_dump("aqui2");*/
     //action
     public function action()
     {
-
+        
         $customer_id = $this->input->post('customer_id');
         $invocieno = $this->input->post('invocieno');
         $invoicedate = $this->input->post('invoicedate');
@@ -1026,6 +1058,29 @@ var_dump("aqui2");*/
                             $data_h['tabla']="invoices";
                             $data_h['nombre_columna']="id";
                             $this->db->insert("historial_crm",$data_h);
+                            $servicios_adicionales="";
+                            foreach ($_POST as $llave => $valor) {
+                                    if(strpos($llave,"serv_add_")!==false){
+                                        if($valor!="0"){
+                                                $pid_serv=str_replace("serv_add_", "", $llave);
+                                                $product_serv=$this->db->get_where("products",array("pid"=>$pid_serv))->row();
+                                                $servicios_adicionales.=" + ".$valor." ".$product_serv->product_name;    
+                                                $data_serv=array();
+                                                $data_serv['tid_invoice']=$invocieno;
+                                                $data_serv['pid']=$pid_serv;
+                                                $data_serv['valor']=$valor;
+                                                $precio=$product_serv->product_price;
+                                                if(is_int($valor)){
+                                                    $precio*$valor;
+                                                }
+                                                $data_serv['subtotal']=$precio;
+                                                $data_serv['total']=$precio;
+                                                $this->db->insert("servicios_adicionales",$data_serv);
+                                        }
+                                        
+                                    }
+                            }
+
 				$username = $this->aauth->get_user()->username;
 				if (($television !== no) || $combo !== no){
 				$data2['codigo']=$tidactualmasuno[0]->codigo;	
@@ -1035,7 +1090,7 @@ var_dump("aqui2");*/
                 $data2['cid']=$customer_id;
 				$data2['col']=$username;
                 $data2['status']='Pendiente';
-				$data2['section']=$tv.$int.$pto;	
+				$data2['section']=$tv.$int.$pto.$servicios_adicionales;	
                 //Tipo de instalacion
 					
                 $data2['id_invoice']=$invocieno;
@@ -1400,6 +1455,7 @@ function eliminar_resivos_de_pago(){
         if ($data['invoice']) $data['activity'] = $this->invocies->invoice_transactions($tid);
 
         $data['employee'] = $this->invocies->employee($data['invoice']['eid']);
+        $data['servicios_adicionales'] = $this->invocies->servicios_adicionales($tid,true);
 
         $head['usernm'] = $this->aauth->get_user()->username;
         $this->load->view('fixed/header', $head);

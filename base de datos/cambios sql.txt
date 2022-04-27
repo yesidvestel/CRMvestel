@@ -1,4 +1,16 @@
-﻿ALTER TABLE `customers` ADD `ultimo_estado` VARCHAR(50) NULL AFTER `firma_digital`, ADD `fecha_cambio` DATETIME NULL AFTER `ultimo_estado`;
+﻿CREATE TABLE IF NOT EXISTS `crm5`.`servicios_adicionales` (
+  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `tid_invoice` INT(11) NOT NULL,
+  `pid` INT(11) NOT NULL,
+  `valor` VARCHAR(50) NOT NULL COMMENT 'valor es decir la cantidad o valor de lo que solicita ejemplo 5 repetidores',
+  `subtotal` INT(11) NOT NULL,
+  `total` INT(11) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+-------------------------------------------------------------------------------------------------------------
+ALTER TABLE `customers` ADD `ultimo_estado` VARCHAR(50) NULL AFTER `firma_digital`, ADD `fecha_cambio` DATETIME NULL AFTER `ultimo_estado`;
 --------------------------------------------------------------------------------
 ALTER TABLE `aauth_users` ADD `fecha_ultimo_evento` DATE NULL AFTER `tar`;
 -------------------------------------------------------------------------------

@@ -716,7 +716,7 @@ class Tickets Extends CI_Controller
    }else{
     $ya_agrego_equipos=true;
     if($ticket->detalle=="Instalacion" && $status=="Resuelto"){
-            if($temporal->internet!="no" && $temporal->internet!=null){
+            if(isset($temporal) && $temporal->internet!="no" && $temporal->internet!=null){
                 $equipo=$this->db->get_where("equipos", array('asignado' => $ticket->cid))->row();
                 if(empty($equipo)){
                         $ya_agrego_equipos=false;
@@ -765,10 +765,15 @@ if($ya_agrego_equipos==false){
 }else if($hiso_devolucion_de_equipo==false){
         echo json_encode(array('status' => 'Error', 'message' =>"Por favor realice la devolucion del equipo antes de cerrar la orden ", 'pstatus' => "error"));
 }else{
-
-		$tv = $temporal->tv;
-		$inter = $temporal->internet;
-		$ptos = $temporal->puntos;
+    $tv =null;
+        $inter = null;
+        $ptos = null;
+    if(isset($temporal)){
+        $tv = $temporal->tv;
+        $inter = $temporal->internet;
+        $ptos = $temporal->puntos;
+    }
+		
 		$idfactura = $ticket->id_factura;
         $data;
 		$detalle = $this->input->post('detalle');
@@ -790,11 +795,11 @@ if($ya_agrego_equipos==false){
 		$priority = 'Low';
 		$stdate = $stdate2;
 		$tdate = '';
-		if($ciudad==YOPAL || $ciudad==Yopal){
+		if($ciudad=="YOPAL" || $ciudad=="Yopal"){
 		$employee = 65;
-		}if($ciudad==Monterrey){
+		}if($ciudad=="Monterrey"){
 			$employee = 52;
-		}if($ciudad==Villanueva){
+		}if($ciudad=="Villanueva"){
 			$employee = 74;
 		}
 		$assign = $this->aauth->get_user()->id;
@@ -843,7 +848,7 @@ if($ya_agrego_equipos==false){
         $total=0;
 		$tax2=0;//var_dump($invoice[0]);
         //cod x
-		if ($ticket->codigo===$temporal->corden){
+		if (isset($temporal) && $ticket->codigo===$temporal->corden){
 			$data['csd']=$ticket->cid;
 			$data['television']=$temporal->tv;
 			$data['combo']=$temporal->internet;
@@ -855,7 +860,7 @@ if($ya_agrego_equipos==false){
         $datay['discount']=0;
         
         $datay['totaldiscount']=0;			
-                if($data['combo']!==no || $inter===no){
+                if($data['combo']!=="no" || $inter==="no"){
                     $producto = $this->db->get_where('products',array('product_name'=>$data['combo']))->row();
                     $x=intval($producto->product_price);
                     $x=($x/31)*$diferencia->days;
@@ -863,7 +868,10 @@ if($ya_agrego_equipos==false){
                     $datay['pid']=$producto->pid;
                     $datay['product']=$producto->product_name;
 					$datay['qty']=1;
-					$tax2+=$datay['totaltax'];
+                    if(isset($datay['totaltax'])){
+                        $tax2+=$datay['totaltax'];    
+                    }
+					
 					$datay['tax']=0;
 					$datay['totaltax']=0;
                     $datay['price']=$x;
@@ -874,14 +882,15 @@ if($ya_agrego_equipos==false){
                     }
                 }
                 
-                if($data['television']!==no AND $data['refer']!==Mocoa || $tv!==no && $ciudad!==Mocoa){                
+                if($data['television']!=="no" AND $data['refer']!=="Mocoa" || $tv!=="no" && $ciudad!=="Mocoa"){                
                     $producto = $this->db->get_where('products',array('product_name'=>$data['television']))->row();
                     $datay['pid']=$producto->pid;
                     $datay['product']=$producto->product_name;
 					$datay['qty']=1;
-                    $x=intval($producto->product_price);
-                    $x=($x/31)*$diferencia->days;					
-                    $y=(3992/31)*$diferencia->days;
+                    $x=round($producto->product_price);
+                    $x=round($x/31);
+                    $x=round($x*$diferencia->days);					
+                    $y=round(round(3992/31)*$diferencia->days);
                     $total+=$x;
 					$tax2+=$datay['totaltax'];
 					$datay['price']=$x;
@@ -892,13 +901,14 @@ if($ya_agrego_equipos==false){
                         $this->db->insert('invoice_items',$datay);
                     }
 				}
-					if($data['puntos']!=='0' || $ptos!=='0'){                
+					if($data['puntos']!=='0' && $ptos!=='0' && $ptos!==0){                
                     $producto = $this->db->get_where('products',array('pid'=>158))->row();
                     $datay['pid']=$producto->pid;
                     $datay['product']=$producto->product_name;
 					$datay['qty']=$data['puntos'];
-                    $x=intval($producto->product_price);
-                    $x=($x/31)*$diferencia->days;
+                    $x=$producto->product_price;
+                    $x=round($x/31);
+                    $x=round($x*$diferencia->days);
                     $total+=$x*$datay['qty'];
 					$tax2+=$datay['totaltax'];
 					$datay['tax']=0;
@@ -909,7 +919,7 @@ if($ya_agrego_equipos==false){
                         $this->db->insert('invoice_items',$datay);
                     }
                 }
-				if($data['television']!==no AND $data['refer']==Mocoa || $tv!==no && $ciudad==Mocoa){                
+				if($data['television']!=="no" AND $data['refer']=="Mocoa" || $tv!=="no" && $ciudad=="Mocoa"){                
                     $producto = $this->db->get_where('products',array('pid'=>159))->row();
                     $datay['pid']=$producto->pid;
                     $datay['product']=$producto->product_name;
@@ -940,7 +950,47 @@ if($ya_agrego_equipos==false){
         $msg1="";
         if($ticket->detalle=="Instalacion" && $ticket->id_factura==null || $ticket->id_factura==0 && $status=="Resuelto" || $ticket->detalle=="Reconexion Combo2" || $ticket->detalle=="Reconexion Television2" || $ticket->detalle=="Reconexion Internet2"){
             $customerx=$this->db->get_where("customers",array('id' =>$ticket->cid ))->row();
+            if(isset($ticket->id_invoice) && $ticket->id_invoice!=0 && $ticket->id_invoice!="0" ){
+                $this->load->model('invoices_model', 'invoices');
+                $list_servs=$this->invoices->servicios_adicionales($ticket->id_invoice,false);
+                //var_dump($ticket->id_invoice);
+                //var_dump($list_servs);
+                foreach ($list_servs as $key_s => $serv_val) {
+                    $data_serv=array();
+                    $data_serv['tid_invoice']=$data['tid'];
+                    $data_serv['pid']=$serv_val['pid'];
+                    $data_serv['valor']=$serv_val['valor'];
+                    $data_serv['subtotal']=$serv_val['subtotal'];
+                    $data_serv['total']=$serv_val['total'];
+                    $this->db->insert("servicios_adicionales",$data_serv);
+                        $producto = $this->db->get_where('products',array('pid'=>$serv_val['pid']))->row();
+                        $data_item_serv=array();
+                        $data_item_serv['pid']=$producto->pid;
+                        $data_item_serv['tid']=$data['tid'];
+                        $data_item_serv['product']=$producto->product_name;
+                        $data_item_serv['qty']=$serv_val['valor'];
+                        if(!is_int($serv_val['valor'])){
+                            $data_item_serv['qty']=1;
+                        }
+                        /*falta calcular el precio segun los dias y añadir el valor de estos item_invoice al valor de la factura*/
+$x=0;
+                        $x=$producto->product_price;
+                    $x=round($x/31);
+                    $x=round($x*$diferencia->days);
+                    $total+=round($x*$data_item_serv['qty']);
+                    //$tax2+=$datay['totaltax'];
+                        $data_item_serv['tax']=0;
+                        $data_item_serv['totaltax']='';
+                        $data_item_serv['price']=$x;
+                        $data_item_serv['subtotal']=round($x*$data_item_serv['qty']);
+                        $this->db->insert('invoice_items',$data_item_serv);
+                }
+            }
+            $data['subtotal']=$total;
+            
+            $data['total']=$data['subtotal']+$data['tax'];
             $this->db->insert('invoices',$data);    
+
             $dataz['id_factura']=$data['tid'];
 			//actualizar estado usuario
                 $this->db->set("ultimo_estado",$customer->usu_estado);

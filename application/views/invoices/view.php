@@ -266,34 +266,35 @@
 
                                         <p class="lead mt-1"><br>Servicios Asignados:</p>
                                         <code>
-                                            <?php 
+                                            <?php $servs_eco=""; 
 												if ($invoice['television'] == no ){
-													echo '';
+													$servs_eco.= '';
 												} else{
                                                         if($invoice['estado_tv'] == "Cortado"){
-                                                                echo "<b><i class='sts-Cortado'>".$invoice['television']." (cortado)</i></b>";
+                                                                $servs_eco.= "<b><i class='sts-Cortado'>".$invoice['television']." (cortado)</i></b>";
                                                         }else if($invoice['estado_tv'] == "Suspendido"){
-                                                                echo "<b><i class='sts-Suspendido'>".$invoice['television']." (suspendido)</i></b>";
+                                                                $servs_eco.= "<b><i class='sts-Suspendido'>".$invoice['television']." (suspendido)</i></b>";
                                                         }else{
-                                                            echo $invoice['television'];    
+                                                            $servs_eco.= $invoice['television'];    
                                                         }
 													}
 											if ($invoice['combo'] == no ){
-													echo '';
+													$servs_eco.= '';
 												} else{
 
                                                      if($invoice['estado_combo'] == "Cortado"){
-                                                                echo " mas <b><i class='sts-Cortado'>".$invoice['combo']." (cortado)</i></b>";
+                                                                $servs_eco.= " mas <b><i class='sts-Cortado'>".$invoice['combo']." (cortado)</i></b>";
                                                         }else if($invoice['estado_combo'] == "Suspendido"){
-                                                                echo " mas <b><i class='sts-Suspendido'>".$invoice['combo']." (suspendido)</i></b>";
+                                                                $servs_eco.= " mas <b><i class='sts-Suspendido'>".$invoice['combo']." (suspendido)</i></b>";
                                                         }else{
-                                                            echo ' mas '.$invoice['combo'];
+                                                            $servs_eco.= ' mas '.$invoice['combo'];
                                                         }
 													}
 											if ($invoice['puntos'] == 0 ){
-													echo '';
+													$servs_eco.= '';
 												} else{
-													echo ' mas '.$invoice['puntos'].' puntos adicionales';}?>
+													$servs_eco.= ' mas '.$invoice['puntos'].' puntos adicionales';}?>
+                                                    <?= $servs_eco.$servicios_adicionales; ?>
                                         </code>
 										<p class="lead mt-1"><br>Nota:</p>
 										 <code>

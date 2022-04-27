@@ -565,5 +565,39 @@ setlocale(LC_TIME, "spanish");
         //var_dump($this->db->get_where("products",array("pcat"=>"4","warehouse"=>"7","sede"=>"2","pertence_a_tv_o_net"=>"Tv"))->result_array());
         return $lista_sedes;
     }
+    public function servicios_adicionales($tid,$return_text){
+        $lista_servs=$this->db->get_where("servicios_adicionales",array("tid_invoice"=>$tid))->result_array();
+        $text="";
+        foreach ($lista_servs as $key => $value) {
+            $producto=$this->db->get_where("products",array("pid"=>$value['pid']))->row();
+            $text.=" mas ".$value['valor']." ".$producto->product_name;
+        }
+        if($return_text){
+            return $text;    
+        }else{
+            return $lista_servs;
+        }
+        
+
+    }
+    public function servicios_adicionales_recurrentes($tid,$tv){
+        $lista_servs1=$this->db->get_where("servicios_adicionales",array("tid_invoice"=>$tid))->result_array();
+        $lista_servs=array();
+        
+        foreach ($lista_servs1 as $key => $value) {
+            $producto=$this->db->get_where("products",array("pid"=>$value['pid']))->row();
+             if($producto->tipo_servicio=="Recurrente"){
+                    $lista_servs[]=$value;
+            }
+            
+        }
+        
+            
+        
+        return $lista_servs;
+        
+        
+
+    }
 
 }

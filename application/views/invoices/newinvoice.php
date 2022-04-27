@@ -340,7 +340,7 @@
                                                                                                 <label class="col-sm-3 control-label"
                                                                                                        for="serv_add_<?=$serv['pid']  ?>"><?=$serv['product_name'] ?></label>
                                                                                                 <div  class="col-sm-9">
-                                                                                                 <select name="serv_add_<?=$serv['pid']  ?>" class="selectpicker form-control">
+                                                                                                 <select name="serv_add_<?=$serv['pid']  ?>" class="selectpicker form-control select_sede_<?=$value1['title']?>">
                                                                                                     <option value="0">no </option>
                                                                                                     <?php foreach ($serv['valores'] as $key => $valora1) {
                                                                                                     echo '<option value="'.$valora1.'">'.$valora1.'</option>';}?>
@@ -416,7 +416,7 @@
                                                                                                 <label class="col-sm-3 control-label"
                                                                                                        for="serv_add_<?=$serv['pid']  ?>"><?=$serv['product_name'] ?></label>
                                                                                                 <div  class="col-sm-9">
-                                                                                                 <select name="serv_add_<?=$serv['pid']  ?>" class="selectpicker form-control">
+                                                                                                 <select name="serv_add_<?=$serv['pid']  ?>" class="selectpicker form-control select_sede_<?=$value1['title']?>">
                                                                                                     <option value="0">no </option>
                                                                                                     <?php foreach ($serv['valores'] as $key => $valora1) {
                                                                                                     echo '<option value="'.$valora1.'">'.$valora1.'</option>';}?>
@@ -431,7 +431,7 @@
                                                                         <?php } ?>
                                                             </div>
                                                             <div class="modal-footer">
-                                                                <button  class="btn btn-success" >Guardar</button>
+                                                                <a data-dismiss="modal" href="#" class="btn btn-success">Guardar</a>
                                                                 <button type="button" class="btn btn-default"
                                                                         data-dismiss="modal"><?php echo $this->lang->line('Close') ?> </button>
                                                                 
@@ -891,10 +891,15 @@
 </div>
 <script type="text/javascript">
     cambia();
+    var sede_actual=$("#refer option:selected").val();
     function cambia(){
         var sede_sel=$("#refer option:selected").val();
         $(".serv_sedes").css("display","none");
         $(".servs_sede_"+sede_sel).css("display","");
+        if(sede_actual!=sede_sel){
+            $(".select_sede_"+sede_actual).val("0");
+        }
+        sede_actual=$("#refer option:selected").val();
 
 
     }
