@@ -69,7 +69,11 @@ base_url(); ?>assets/vendors/js/ui/unison.min.js" type="text/javascript"></scrip
         var opx2 = winh - sideh + 180;
         document.getElementById('rough').style.height = opx2 + "px";
     });
-    $("head").html('<link rel="shortcut icon" type="image/x-icon" href="'+baseurl+'assets/images/ico/favicon.png">');
+    
+    if($("head link").length==0){
+        $("head").html('<link rel="shortcut icon" type="image/x-icon" href="'+baseurl+'assets/images/ico/favicon.png">');
+    }
+    
 </script>
 </body>
 </html>
