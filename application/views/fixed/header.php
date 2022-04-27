@@ -88,8 +88,8 @@
                 <li class="nav-item"><a href="<?php echo base_url() ?>dashboard/" class="navbar-brand nav-link"><img
                                 alt="branding logo" src="<?php echo base_url(); ?>userfiles/theme/logo-header.png"
                                 data-expand="<?php echo base_url(); ?>userfiles/theme/logo-header.png"
-                                data-collapse="<?php echo base_url(); ?>assets/images/logo/logo-80x80.png"
-                                class="brand-logo height-50"></a></li>
+                                data-collapse="<?php echo base_url(); ?>assets/images/logo/logo-80x80.png" style="height: 60%; display: block;"
+                              ></a></li>
                 <li class="nav-item hidden-md-up float-xs-right"><a data-toggle="collapse" data-target="#navbar-mobile"
                                                                     class="nav-link open-navbar-container"><i
                                 class="icon-ellipsis pe-2x icon-icon-rotate-right-right"></i></a></li>
