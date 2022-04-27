@@ -60,7 +60,7 @@ class Dashboard extends CI_Controller
             $data['goals'] = $this->tools_model->goals(1);
             $data['stock'] = $this->dashboard_model->stock($sede);
             $head['usernm'] = $this->aauth->get_user()->username;
-            $head['title'] = 'Dashboard';
+            $head['title'] = 'Panel';
             $this->load->view('fixed/header', $head);
             $this->load->view('dashboard', $data);
             $this->load->view('fixed/footer');
