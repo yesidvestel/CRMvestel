@@ -320,7 +320,7 @@ $list_servs=$this->invocies->servicios_adicionales_recurrentes($value2->tid);
                                             $data_item_serv['tid']=$factura_data['tid'];
                                             $data_item_serv['product']=$producto->product_name;
                                             $data_item_serv['qty']=$serv_val['valor'];
-                                            var_dump($data_item_serv['qty']);
+                                            //var_dump($data_item_serv['qty']);
                                             if(!is_numeric($serv_val['valor'])){
                                                 $data_item_serv['qty']=1;
                                             }

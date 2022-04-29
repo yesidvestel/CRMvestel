@@ -232,8 +232,37 @@ class Quote_model extends CI_Model
 			'asignado' => $tec,
             'asignacion_movil'=>$movil,
         );
-		
+
         if ($this->db->insert('tickets', $data)) {
+            $id_t1=$this->db->insert_id();
+            $servicios_adicionales="";
+                            foreach ($_POST as $llave => $valor) {
+                                    if(strpos($llave,"serv_add_")!==false){
+                                        if($valor!="0"){
+                                                $pid_serv=str_replace("serv_add_", "", $llave);
+                                                $product_serv=$this->db->get_where("products",array("pid"=>$pid_serv))->row();
+                                                $servicios_adicionales.=" + ".$valor." ".$product_serv->product_name;    
+                                                $data_serv=array();
+                                                $data_serv['tid_invoice']=0;
+                                                $data_serv['idt_ticket']=$id_t1;
+                                                $data_serv['pid']=$pid_serv;
+                                                $data_serv['valor']=$valor;
+                                                $precio=$product_serv->product_price;
+                                                if(is_int($valor)){
+                                                    //$precio*$valor;
+                                                }
+                                                $data_serv['subtotal']=$precio;
+                                                $data_serv['total']=$precio;
+                                                $this->db->insert("servicios_adicionales",$data_serv);
+                                        }
+                                        
+                                    }
+                            }
+                            if($servicios_adicionales!=""){
+                                $servicios_adicionales=$obs." ".$servicios_adicionales;
+                                $this->db->update("tickets",array("section"=>$servicios_adicionales),array("idt"=>$id_t1));
+                            }
+
 			//agregar agenda
 		$boleta = $this->db->get_where('tickets', array('codigo' => $nticket))->row();
 		$abonado = $this->db->get_where('customers', array('id' => $boleta->cid))->row();

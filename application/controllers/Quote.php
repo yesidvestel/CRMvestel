@@ -58,6 +58,11 @@ class Quote extends CI_Controller
         $head['usernm'] = $this->aauth->get_user()->username;
         $data['warehouse'] = $this->quote->warehouses();
         $data['moviles'] = $this->moviles->get_datatables1();
+        $data['servicios_por_sedes']=$this->invocies->get_servicios();
+        if(isset( $data['details']['gid'])){
+        	$data['sede_actual']=$this->db->get_where("customers_group",array("id"=>$data['details']['gid']))->row();
+        }
+        //var_dump($data['sede_actual']);
         $conteo=$this->db->get_where("tickets",array("cid"=>$custid,"status"=>"Pendiente"))->result_array();        
         $data['conteo_pendientes']=count($conteo);
         $this->load->view('fixed/header', $head);

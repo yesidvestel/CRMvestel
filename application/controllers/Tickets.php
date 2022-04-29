@@ -24,6 +24,7 @@ class Tickets Extends CI_Controller
     {
         parent::__construct();
         $this->load->model('ticket_model', 'ticket');
+        $this->load->model('invoices_model', 'invoices');
         $this->load->library("Aauth");
         if (!$this->aauth->is_loggedin()) {
             redirect('/user/', 'refresh');
@@ -950,9 +951,10 @@ if($ya_agrego_equipos==false){
         $msg1="";
         if($ticket->detalle=="Instalacion" && $ticket->id_factura==null || $ticket->id_factura==0 && $status=="Resuelto" || $ticket->detalle=="Reconexion Combo2" || $ticket->detalle=="Reconexion Television2" || $ticket->detalle=="Reconexion Internet2"){
             $customerx=$this->db->get_where("customers",array('id' =>$ticket->cid ))->row();
-            if(isset($ticket->id_invoice) && $ticket->id_invoice!=0 && $ticket->id_invoice!="0" ){
-                $this->load->model('invoices_model', 'invoices');
+           // if(isset($ticket->id_invoice) && $ticket->id_invoice!=0 && $ticket->id_invoice!="0" ){
+                
                 $list_servs=$this->invoices->servicios_adicionales($ticket->id_invoice,false);
+                $list_servs=$this->invoices->servicios_adicionales_idt($ticket->idt,$lista_servs);
                 //var_dump($ticket->id_invoice);
                 //var_dump($list_servs);
                 foreach ($list_servs as $key_s => $serv_val) {
@@ -985,7 +987,7 @@ $x=0;
                         $data_item_serv['subtotal']=round($x*$data_item_serv['qty']);
                         $this->db->insert('invoice_items',$data_item_serv);
                 }
-            }
+           // }
             $data['subtotal']=$total;
             
             $data['total']=$data['subtotal']+$data['tax'];
@@ -1412,6 +1414,7 @@ $x=0;
 		}
 		if($ticket->detalle=="AgregarTelevision"){			
 			$producto = $this->db->get_where('products',array('product_name'=>'Television'))->row();
+            $total=0;
 					$datay['tid']=$idfactura;
                     $datay['pid']=$producto->pid;
                     $datay['product']=$producto->product_name;
@@ -1424,9 +1427,52 @@ $x=0;
 					$datay['price']=$x;
                     $datay['tax']=19;
 					$datay['totaltax']=$y;
-					$datay['subtotal']=$x+$datay['totaltax'];                    
+					$datay['subtotal']=$x+$datay['totaltax'];     
+                    //var_dump($total);
+                    /*serv ads*/  
+                    $list_servs=$this->invoices->servicios_adicionales($idfactura,false);
+                $list_servs=$this->invoices->servicios_adicionales_idt($ticket->idt,$lista_servs);
+                //var_dump($ticket->id_invoice);
+                //var_dump($list_servs);
+                foreach ($list_servs as $key_s => $serv_val) {
+                    $data_serv=array();
+                    $data_serv['tid_invoice']=$idfactura;
+                    $data_serv['pid']=$serv_val['pid'];
+                    $data_serv['valor']=$serv_val['valor'];
+                    $data_serv['subtotal']=$serv_val['subtotal'];
+                    $data_serv['total']=$serv_val['total'];
+                    $this->db->insert("servicios_adicionales",$data_serv);
+                        $producto = $this->db->get_where('products',array('pid'=>$serv_val['pid']))->row();
+                        $data_item_serv=array();
+                        $data_item_serv['pid']=$producto->pid;
+                        $data_item_serv['tid']=$idfactura;
+                        $data_item_serv['product']=$producto->product_name;
+                        $data_item_serv['qty']=$serv_val['valor'];
+                        if(!is_numeric($serv_val['valor'])){
+                            $data_item_serv['qty']=1;
+                        }
+                        /*falta calcular el precio segun los dias y añadir el valor de estos item_invoice al valor de la factura*/
+$x=0;
+                        $x=$producto->product_price;
+                    $x=round($x/31);
+                    $x=round($x*$diferencia->days);
+                    $total+=round($x*$data_item_serv['qty']);
+                    //$tax2+=$datay['totaltax'];
+                        $data_item_serv['tax']=0;
+                        $data_item_serv['totaltax']='';
+                        $data_item_serv['price']=$x;
+                        $data_item_serv['subtotal']=round($x*$data_item_serv['qty']);
+                        $this->db->insert('invoice_items',$data_item_serv);
+                }
+           // }
+            //$data['subtotal']=$total;
+            
+            //$data['total']=$data['subtotal']+$data['tax'];             
+                    /*end serv ads*/
                     $this->db->insert('invoice_items',$datay);
             $factura = $this->db->get_where('invoices',array('tid'=>$idfactura))->row();
+            //var_dump($factura->subtotal);
+            //var_dump($total);
 				$this->db->set('subtotal', $factura->subtotal+$total);
 				$this->db->set('tax', $factura->tax+$tax2);
 				$this->db->set('total', $factura->total+$total+$tax2);
@@ -1462,7 +1508,41 @@ $x=0;
                     $this->db->insert('invoice_items',$datay);
 
                 }
-            
+             /*serv ads*/  
+                    $list_servs=$this->invoices->servicios_adicionales($idfactura,false);
+                $list_servs=$this->invoices->servicios_adicionales_idt($ticket->idt,$lista_servs);
+                //var_dump($ticket->id_invoice);
+                //var_dump($list_servs);
+                foreach ($list_servs as $key_s => $serv_val) {
+                    $data_serv=array();
+                    $data_serv['tid_invoice']=$idfactura;
+                    $data_serv['pid']=$serv_val['pid'];
+                    $data_serv['valor']=$serv_val['valor'];
+                    $data_serv['subtotal']=$serv_val['subtotal'];
+                    $data_serv['total']=$serv_val['total'];
+                    $this->db->insert("servicios_adicionales",$data_serv);
+                        $producto = $this->db->get_where('products',array('pid'=>$serv_val['pid']))->row();
+                        $data_item_serv=array();
+                        $data_item_serv['pid']=$producto->pid;
+                        $data_item_serv['tid']=$idfactura;
+                        $data_item_serv['product']=$producto->product_name;
+                        $data_item_serv['qty']=$serv_val['valor'];
+                        if(!is_numeric($serv_val['valor'])){
+                            $data_item_serv['qty']=1;
+                        }
+                        /*falta calcular el precio segun los dias y añadir el valor de estos item_invoice al valor de la factura*/
+$x=0;
+                        $x=$producto->product_price;
+                    $x=round($x/31);
+                    $x=round($x*$diferencia->days);
+                    $total+=round($x*$data_item_serv['qty']);
+                    //$tax2+=$datay['totaltax'];
+                        $data_item_serv['tax']=0;
+                        $data_item_serv['totaltax']='';
+                        $data_item_serv['price']=$x;
+                        $data_item_serv['subtotal']=round($x*$data_item_serv['qty']);
+                        $this->db->insert('invoice_items',$data_item_serv);
+                }
 				$this->db->set('subtotal', $factura->subtotal+$total);
 				$this->db->set('tax', $factura->tax);
 				$this->db->set('total', $factura->total+$total);

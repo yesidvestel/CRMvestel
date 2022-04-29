@@ -581,6 +581,16 @@ setlocale(LC_TIME, "spanish");
         
 
     }
+    public function servicios_adicionales_idt($idt_ticket,$listax){
+        $lista_servs=$this->db->get_where("servicios_adicionales",array("idt_ticket"=>$idt_ticket))->result_array();
+        foreach ($lista_servs as $key => $value) {
+            $listax[]=$value;
+        }
+        
+        return $listax;
+        
+
+    }
     public function servicios_adicionales_recurrentes($tid,$tv){
         $lista_servs1=$this->db->get_where("servicios_adicionales",array("tid_invoice"=>$tid))->result_array();
         $lista_servs=array();

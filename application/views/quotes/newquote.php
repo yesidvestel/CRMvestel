@@ -9,8 +9,96 @@
                     <div class="message"></div>
                 </div>
                 <form method="post" id="data_form" name="soporte">
+ <!--inicio modal elementos tv-->
+                                                <div id="modal_mas_tv" class="modal fade">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                                <h4 class="modal-title">Servicios Adicionales Tv</h4>
+                                                            </div>
 
+                                                            <div class="modal-body" id="body_modal">
+                                                                     
+                                                                        <?php foreach ($servicios_por_sedes as $key => $value1) { ?>
+                                                                            <div id="servs_tv_sede_<?=$value1['title']?>" data-id-sede="<?=$value1['id'] ?>" class="servs_sede_<?=$value1['title']?> serv_sedes">
 
+                                                                                <?php if(count($value1['servicios_tv'])!=0){ 
+                                                                                    foreach ($value1['servicios_tv'] as $key => $serv) {?>
+                                                                                            <div class="form-group row">
+
+                                                                                                <label class="col-sm-3 control-label"
+                                                                                                       for="serv_add_<?=$serv['pid']  ?>"><?=$serv['product_name'] ?></label>
+                                                                                                <div  class="col-sm-9">
+                                                                                                 <select name="serv_add_<?=$serv['pid']  ?>" class="selectpicker form-control select_sedex select_sede_<?=$value1['title']?>">
+                                                                                                    <option value="0">no </option>
+                                                                                                    <?php foreach ($serv['valores'] as $key => $valora1) {
+                                                                                                    echo '<option value="'.$valora1.'">'.$valora1.'</option>';}?>
+                                                                                                </select>
+                                                                                                    <small></small>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                    <?php } ?>
+                                                                                <?php } ?>
+                                                                                
+                                                                            </div>
+                                                                        <?php } ?>
+
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <a data-dismiss="modal" href="#" class="btn btn-success">Guardar</a>
+                                                                <button type="button" class="btn btn-default"
+                                                                        data-dismiss="modal"><?php echo $this->lang->line('Close') ?> </button>
+                                                                
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                <!--fin modal elementos tv--> 
+ 							<!--inicio modal elementos internet-->
+                                                <div id="modal-mas-internet" class="modal fade">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                                <h4 class="modal-title">Servicios Adicionales Internet</h4>
+                                                            </div>
+
+                                                            <div class="modal-body" id="body_modal">
+                                                              <?php foreach ($servicios_por_sedes as $key => $value1) { ?>
+                                                                            <div id="servs_internet_sede_<?=$value1['title']?>" class="servs_sede_<?=$value1['title']?> serv_sedes" data-id-sede="<?=$value1['id'] ?>">
+
+                                                                                <?php if(count($value1['servicios_internet'])!=0){ 
+                                                                                    foreach ($value1['servicios_internet'] as $key => $serv) {?>
+                                                                                            <div class="form-group row">
+
+                                                                                                <label class="col-sm-3 control-label"
+                                                                                                       for="serv_add_<?=$serv['pid']  ?>"><?=$serv['product_name'] ?></label>
+                                                                                                <div  class="col-sm-9">
+                                                                                                 <select name="serv_add_<?=$serv['pid']  ?>" class="selectpicker form-control select_sedex select_sede_<?=$value1['title']?>">
+                                                                                                    <option value="0">no </option>
+                                                                                                    <?php foreach ($serv['valores'] as $key => $valora1) {
+                                                                                                    echo '<option value="'.$valora1.'">'.$valora1.'</option>';}?>
+                                                                                                </select>
+                                                                                                    <small></small>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                    <?php } ?>
+                                                                                <?php } ?>
+                                                                                
+                                                                            </div>
+                                                                        <?php } ?>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <a data-dismiss="modal" href="#" class="btn btn-success">Guardar</a>
+                                                                <button type="button" class="btn btn-default"
+                                                                        data-dismiss="modal"><?php echo $this->lang->line('Close') ?> </button>
+                                                                
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                <!--inicio modal elementos internet-->
                     <div class="row">
 
 
@@ -333,8 +421,11 @@
 												<option value="no">No</option>
                                         		<option value="Television">Si</option>
 											</select>
+											<a style="margin-top: -15px;" href="" class="btn-small btn-primary btn-mas-tv" >Mas Tv</a>
 										</div>
+
                                    </div>
+                                      
 									<div class="col-sm-4">
 									<label for="invociedate" class="caption">Internet</label>
 										<div class="input-group">									
@@ -348,8 +439,10 @@
 													}
 												?>
 											</select>
+											<a href="" style="margin-top: -15px;" class="btn-small btn-primary btn-mas-internet">Mas Internet</a>        
 										</div>
                                    </div>
+                                   
 									<div class="col-sm-4">
 									<label for="invociedate" class="caption">Puntos</label>
 										<div class="input-group">									
@@ -372,6 +465,7 @@
 												<option value="no">No</option>
                                         		<option value="Television">Si</option>
 											</select>
+											<a style="margin-top: -15px;" href="" class="btn-small btn-primary btn-mas-tv" >Mas Tv</a>
 										</div>
                                    </div>
 									<div class="col-sm-4">
@@ -495,6 +589,7 @@
 													}
 												?>
 											</select>
+											<a href="" style="margin-top: -15px;" class="btn-small btn-primary btn-mas-internet">Mas Internet</a>        
 										</div>
                                    </div>
 								</div>
@@ -580,6 +675,24 @@
     </div>
 </div>
 <script type="text/javascript">
+	/* codigo servicios*/
+	var sede_sel="<?=$sede_actual->title  ?>";
+ $(".serv_sedes").css("display","none");
+ $(".servs_sede_"+sede_sel).css("display","");
+
+	
+
+
+$(document).on('click','.btn-mas-internet',function(e){
+        e.preventDefault();
+        $("#modal-mas-internet").modal("show");
+    });
+    $(document).on('click','.btn-mas-tv',function(e){
+        e.preventDefault();
+        $("#modal_mas_tv").modal("show");
+    });
+
+/* end  codigo servicios*/
 	<?= ($conteo_pendientes>0) ? '$("#modal_pendientes").modal("show");':''?>	
     $(function () {
         $('.summernote').summernote({
@@ -695,6 +808,7 @@
 		var selectValor = '#'+$("#detalle option:selected").val();			
 			$('#ocultar').children('div').hide();			
 			$('#ocultar').children(selectValor).show();
+			$(".select_sedex").val("0");
 	}
 //traer barrio			
 $(document).ready(function(){
