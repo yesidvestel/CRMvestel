@@ -145,13 +145,7 @@ class Products extends CI_Controller
 			$usuario = $this->db->get_where('customers', array('id' => $prd->asignado))->row();
             $no++;
             $row = array();
-            $row[] = $no;  
-            if(empty($prd->imagen)){
-                $row[]="Sin Img.";
-            }else{
-                $row[] = '<img class="cl-imagen_equipo" data-codigo="'.$prd->codigo.'" style="cursor:pointer" src="'.base_url().'userfiles/support/'.$prd->imagen.'" width="50px;">';              
-            }
-            
+            $row[] = $no;
 			$row[] = $prd->codigo;
             $row[] = $prd->mac;
             $row[] = $prd->serial;
@@ -169,7 +163,12 @@ class Products extends CI_Controller
 			}else{$row[]= 'N/A';}
 			if ($prd->puerto!=='0'){
 			$row[] = $prd->puerto;
-			}else{$row[]= 'N/A';}	
+			}else{$row[]= 'N/A';}
+			if(empty($prd->imagen)){
+                $row[]="Sin Img.";
+            }else{
+                $row[] = '<img class="cl-imagen_equipo" data-codigo="'.$prd->codigo.'" style="cursor:pointer" src="'.base_url().'userfiles/support/'.$prd->imagen.'" width="50px;">';              
+            }
             $row[] = '<a href="' . base_url() . 'products/editequipoview?id=' . $prd->id . '" class="btn btn-primary btn-xs"><span class="icon-pencil"></span> ' . $this->lang->line('Edit') . '</a> 
 					  <a href="#" data-object-id="' . $prd->id  . '" class="btn btn-danger btn-xs  delete-object"><span class="icon-bin"></span> ' . $this->lang->line('Delete') . '</a>
 					  <a href="#" data-object-id2="' . $prd->id  . '" class="btn btn-warning clasignar"><span class="icon-arrow-up"></span> ' . $this->lang->line('') . 'Asignar</a>';
