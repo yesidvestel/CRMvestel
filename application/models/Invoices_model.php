@@ -591,7 +591,7 @@ setlocale(LC_TIME, "spanish");
         
 
     }
-    public function servicios_adicionales_recurrentes($tid,$tv){
+    public function servicios_adicionales_recurrentes($tid){
         $lista_servs1=$this->db->get_where("servicios_adicionales",array("tid_invoice"=>$tid))->result_array();
         $lista_servs=array();
         
