@@ -1101,6 +1101,10 @@ public function statistics_services(){
     $data=array();
     if(empty($extraccion_dia) || (isset($_GET['tipo']) && $_GET['tipo']=="process")){
         $lista_customers_activos=$this->db->query("select * from customers where (usu_estado='Activo' or usu_estado='Compromiso')")->result();
+        $lista_customers_cortados=$this->db->query("select * from customers where (usu_estado='Cortado')")->result();
+        $lista_customers_cartera=$this->db->query("select * from customers where (usu_estado='Cartera')")->result();
+        $lista_customers_suspendidos=$this->db->query("select * from customers where (usu_estado='Suspendido')")->result();
+        $lista_customers_retirado=$this->db->query("select * from customers where (usu_estado='Retirado')")->result();
         $this->load->model("customers_model","customers");
         $internet=0;
         $tv=0;
@@ -1124,10 +1128,81 @@ public function statistics_services(){
                 $activo_con_algun_servicio++;
             }
         }
+		foreach ($lista_customers_cortados as $key => $value) {
+            $servicios=$this->customers->servicios_detail($value->id);
+            $validar=false;
+            if($servicios["television"]!="no" && $servicios["television"]!="" && $servicios["television"]!="-"){
+                $tvcor++;
+                $validar=true;
+            } 
+            if($servicios["combo"]!="no" && $servicios["combo"]!="" && $servicios["combo"]!="-"){
+                $internetcor++;      
+                if($validar){
+                    $internet_y_tv_cor++;
+                }
+                $validar=true;
+            }
+        }
+		//cartera
+		foreach ($lista_customers_cartera as $key => $value) {
+            $servicios=$this->customers->servicios_detail($value->id);
+            $validar=false;
+            if($servicios["television"]!="no" && $servicios["television"]!="" && $servicios["television"]!="-"){
+                $tvcar++;
+                $validar=true;
+            } 
+            if($servicios["combo"]!="no" && $servicios["combo"]!="" && $servicios["combo"]!="-"){
+                $internetcar++;      
+                if($validar){
+                    $internet_y_tv_cor++;
+                }
+                $validar=true;
+            }
+        }
+		//suspendidos
+		foreach ($lista_customers_suspendidos as $key => $value) {
+            $servicios=$this->customers->servicios_detail($value->id);
+            $validar=false;
+            if($servicios["television"]!="no" && $servicios["television"]!="" && $servicios["television"]!="-"){
+                $tvsus++;
+                $validar=true;
+            } 
+            if($servicios["combo"]!="no" && $servicios["combo"]!="" && $servicios["combo"]!="-"){
+                $internetsus++;      
+                if($validar){
+                    $internet_y_tv_cor++;
+                }
+                $validar=true;
+            }
+        }
+		//retirados
+		foreach ($lista_customers_retirado as $key => $value) {
+            $servicios=$this->customers->servicios_detail($value->id);
+            $validar=false;
+            if($servicios["television"]!="no" && $servicios["television"]!="" && $servicios["television"]!="-"){
+                $tvret++;
+                $validar=true;
+            } 
+            if($servicios["combo"]!="no" && $servicios["combo"]!="" && $servicios["combo"]!="-"){
+                $internetret++;      
+                if($validar){
+                    $internet_y_tv_cor++;
+                }
+                $validar=true;
+            }
+        }
         $data['n_internet']=$internet;
         $data['n_tv']=$tv;
         $data['internet_y_tv']=$internet_y_tv;
         $data['n_activo']=$activo_con_algun_servicio;
+        $data['cor_int']=$internetcor;
+        $data['cor_tv']=$tvcor;
+        $data['car_int']=$internetcar;
+        $data['car_tv']=$tvcar;
+        $data['sus_int']=$internetsus;
+        $data['sus_tv']=$tvsus;
+        $data['ret_int']=$internetret;
+        $data['ret_tv']=$tvret;
         $data['fecha']=date("Y-m-d");
         if(empty($extraccion_dia)){
             $this->db->insert("estadisticas_servicios",$data);    
