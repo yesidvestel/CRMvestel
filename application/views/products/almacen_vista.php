@@ -81,6 +81,7 @@
 					<th>Vlan</th>
 					<th>Nat</th>
 					<th>P/to Nat</th>
+					<th>Img</th>
                     <th><?php echo $this->lang->line('Settings') ?></th>
 
 
@@ -102,6 +103,7 @@
 					<th>Vlan</th>
 					<th>Nat</th>
 					<th>P/to Nat</th>
+					<th>Img</th>
                     <th><?php echo $this->lang->line('Settings') ?></th>
 
                 </tr>
