@@ -1261,7 +1261,11 @@
                                 class="menu-title"> <?php echo $this->lang->line('Data & Reports') ?> </span><i
                                 class="fa arrow"></i> </a>
                     <ul class="menu-content">
-						<?php if ($this->aauth->get_user()->datest != '') { ?>
+						<?php if ($this->aauth->get_user()->datservicios != '') { ?>
+						<li>
+                            <a href="<?php echo base_url(); ?>reports/statistics_services">Estadisticas Servicios</a>
+                        </li>
+						<?php } if ($this->aauth->get_user()->datest != '') { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>reports/statistics"><?php echo $this->lang->line('Statistics') ?></a>
                         </li>

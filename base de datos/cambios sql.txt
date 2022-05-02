@@ -106,6 +106,7 @@ update transactions set tid=-1 where note like "%Saldo 2021%";
 -----------------------------------------para verificar y colocar bandera para saber cuales son las transacciones de caja----------------------
 UPDATE `variables_de_entorno` SET `valor` = '{\"username\":\"api.crmvestel\",\"password\":\"duber123\",\"ip_Yopal\":\"190.14.233.186:8728\",\"Ip_Villanueva_GPON\":\"190.14.238.114:8728\",\"Ip_Villanueva_EPON\":\"190.14.238.114:8780\",\"Ip_Villanueva_EOC\":\"190.14.238.114:8780\",\"ip_Monterrey\":\"190.14.248.42:8728\"}' WHERE `variables_de_entorno`.`id` = 3
 ALTER TABLE `customers` ADD `tegnologia_instalacion` VARCHAR(25) NULL AFTER `credit`;
+ALTER TABLE `aauth_users` ADD `datservicios` tinyint(4) NULL AFTER `dathistorial`;
 -----------------------------------------------------------------------------------------------------------------
 ALTER TABLE `estadisticas_servicios` 
 ADD `cor_int` INT(11) NULL DEFAULT NULL AFTER `n_activo`, 

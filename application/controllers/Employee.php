@@ -568,6 +568,7 @@ class Employee extends CI_Controller
 			$confupt = $this->input->post('confupt');
 			$confapi = $this->input->post('confapi');
             $dathistorial = $this->input->post('dathistorial');
+            $datservicios = $this->input->post('datservicios');
             $conotas = $this->input->post('conotas');
 			$tar = $this->input->post('tar');
             $this->employee->update_employee(
@@ -591,7 +592,7 @@ class Employee extends CI_Controller
 				$confemp,$conffa,$confmon,$conffec,$confcat,
 				$confmet,$confrest,$confcorr,$confterm,$confaut,
 				$confseg,$conftem,$confsop,$conface,$confupt,
-				$confapi,$tar,$dathistorial,$conotas);
+				$confapi,$tar,$dathistorial,$datservicios,$conotas);
 
         } else {
             $head['usernm'] = $this->aauth->get_user($id)->username;

@@ -149,7 +149,7 @@ class Employee_model extends CI_Model
 		$confemp,$conffa,$confmon,$conffec,$confcat,
 		$confmet,$confrest,$confcorr,$confterm,$confaut,
 		$confseg,$conftem,$confsop,$conface,$confupt,
-		$confapi,$tar,$dathistorial,$conotas)
+		$confapi,$tar,$dathistorial,$datservicios,$conotas)
     {
         $data = array(
             'name' => $name,
@@ -283,6 +283,7 @@ class Employee_model extends CI_Model
 				'confapi'=>$confapi,
                 'conotas'=>$conotas,
                 'dathistorial'=>$dathistorial,
+                'datservicios'=>$datservicios,
 				'tar'=>$tar
             );
 

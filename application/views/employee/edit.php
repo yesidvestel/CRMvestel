@@ -476,6 +476,14 @@
                                                     <td align="lift">Historial CRM</td>
                                                 </tr>
 												<tr>
+                                                    <td align="right"></td>
+                                                    <td></td>
+                                                    <td align="lift"></td>
+                                                    <td align="right"></td>
+                                                    <td align="right"><input type="checkbox" name="datservicios" <?= ($user['datservicios']=='0')?'checked':'' ?>></input></td>
+                                                    <td align="lift">Estadisticas Servicios</td>
+                                                </tr>
+												<tr>
 												  	<td align="right"></td>
 												  	<td></td>
 												  	<td align="lift"></td>
