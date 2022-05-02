@@ -11,7 +11,7 @@
                     <div class="card border-grey border-lighten-3 m-0">
                         <div class="card-header no-border">
                             <div class="card-title text-xs-center">
-                                <div class="p-1"><img width="100%" src="<?php echo substr_replace(base_url(), '', -4); ?>userfiles/company/<?php echo $this->config->item('logo'); ?>"
+                                <div class="p-1"><img width="100%" src="<?php echo substr_replace(base_url(), '', -4); ?>crm/assets/logo1.png"
                                                       alt="Logo"></div>
                             </div>
                             <h4 class="card-subtitle line-on-side text-muted text-xs-center  pt-2"><span><?php echo $this->lang->line('Customer Login Panel')  ?></span>
