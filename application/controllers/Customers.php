@@ -1641,6 +1641,7 @@ if($data['servicios']['estado']=="Inactivo"){
                
     }
     public function conexion_prueba_po(){
+        ///public_html/templates/shaper_helix3/index.php
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt_array($curl, array(
@@ -1689,6 +1690,47 @@ if($data['servicios']['estado']=="Inactivo"){
 
         curl_close($curl);
         var_dump($response);
+    }
+    public function actualizar_cortados_antiguos(){
+        $lista=$this->db->query("SELECT * FROM `invoices` where ron='Cortado' and (combo is null or combo='' or combo='no') and (television is null or television='' or television='no') ORDER BY `estado_tv` DESC")->result();
+        foreach ($lista as $key => $value) {
+            $lista_facturas=$this->db->query("SELECT * FROM `invoices` WHERE csd=".$value->csd." order by tid desc")->result();
+            $television="";
+            $combo="";
+            foreach ($lista_facturas as $key2 => $value2) {
+                if($value2->combo!="null" && $value2->combo!=null && $value2->combo!="" && $value2->combo!="no"){
+                    if($combo==""){
+                        $combo=$value2->combo;    
+                    }
+                    
+                }
+
+                if($value2->television!="null"  && $value2->television!=null  && $value2->television!="" && $value2->television!="no"){
+                    if($combo==""){
+                        $television=$value2->television;    
+                    }
+                    
+                }
+            }
+            $data=array();
+            if($combo!="null" && $combo!=null || $combo!=""  && $combo!="no" && ($value->combo=="null" || $value->combo==null || $value->combo=="" || $value->combo=="no")){
+                    
+                    $data['combo']=$combo;
+                    $data['estado_combo']="Cortado";
+
+            }
+
+            if($television!="null"  && $television!=null  && $television!=""  && $television!="no" && ($value->television=="null" || $value->television==null || $value->television=="" || $value->television=="no")){
+                   $data['television']=$television;
+                    $data['estado_tv']="Cortado";
+                    
+            }
+            var_dump($value->tid);
+            var_dump($data);
+            echo"otro<br>";
+            $this->db->update("invoices",$data,array("tid"=>$value->tid));
+
+        }
     }
 
 }
