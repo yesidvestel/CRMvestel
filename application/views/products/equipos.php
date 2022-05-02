@@ -72,7 +72,6 @@
                 <thead>
                 <tr>
                     <th>#</th>
-                    <th>IMG</th>
 					<th>Codigo</th>
                     <th>MAC</th>
                     <th>Serial</th>
@@ -83,6 +82,7 @@
 					<th>Vlan</th>
 					<th>Nat</th>
 					<th>P/to Nat</th>
+					<th>IMG</th>
                     <th><?php echo $this->lang->line('Settings') ?></th>
                 </tr>
                 </thead>
@@ -92,7 +92,6 @@
                 <tfoot>
                 <tr>
                     <th>#</th>
-                    <th>IMG</th>
 					<th>Codigo</th>
                     <th>MAC</th>
                     <th>Serial</th>
@@ -103,6 +102,7 @@
 					<th>Vlan</th>
 					<th>Nat</th>
 					<th>P/to Nat</th>
+					<th>IMG</th>
                     <th><?php echo $this->lang->line('Settings') ?></th>
                 </tr>
                 </tfoot>
