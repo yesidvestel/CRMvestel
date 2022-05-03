@@ -198,12 +198,11 @@ $this->load->model("customers_model","customers");
             $dataApiTV->payments[0]->id="2863";
 
             $consulta_siigo1=$api->getCustomer($customer->documento,1);
-           
-            
+           //var_dump($consulta_siigo1);
             if($consulta_siigo1['pagination']['total_results']==0){
                     $api->saveCustomer($json_customer,1);//para crear cliente en siigo si no existe
             }else{
-                    //$api->updateCustomer($json_customer,$consulta_siigo1['results'][0]['id'],2);//para acturalizar cliente en siigo 
+                    $api->updateCustomer($json_customer,$consulta_siigo1['results'][0]['id'],1);//para acturalizar cliente en siigo 
             }
         }
         if($dataApiNET!=null){
@@ -229,7 +228,7 @@ $this->load->model("customers_model","customers");
                     //$json_customer=str_replace("321", "282", subject)
                     $api->saveCustomer($json_customer,2);//para crear cliente en siigo si no existe
             }else{
-                    //$api->updateCustomer($json_customer,$consulta_siigo1['results'][0]['id'],2);//para acturalizar cliente en siigo 
+                    $api->updateCustomer($json_customer,$consulta_siigo1['results'][0]['id'],2);//para acturalizar cliente en siigo 
             }
         }
         
@@ -315,7 +314,7 @@ $this->load->model("customers_model","customers");
         // end customer data facturacion_electronica_siigo table insert
         
         $dataApiTV=json_encode($dataApiTV);
-
+         //var_dump($dataApiTV);
         $dataApiNET=json_encode($dataApiNET); 
         //var_dump($dataApiNET);
         //var_dump($dataApiTV);
@@ -426,6 +425,8 @@ $this->load->model("customers_model","customers");
     }
     public function generar_facturas_action(){
         set_time_limit(10000);
+        ini_set ( 'max_execution_time', 10000);
+        ini_set ( 'max_execution_time', 10000);
        
         $this->load->model("customers_model","customers");
         $this->load->model("facturas_electronicas_model","facturas_electronicas");
