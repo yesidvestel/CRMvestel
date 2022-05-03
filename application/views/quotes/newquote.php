@@ -417,7 +417,7 @@
 									<div class="col-sm-4">
 									<label for="invociedate" class="caption">Television</label>
 										<div class="input-group">									
-											<select name="tele" class="form-control mb-1">
+											<select name="tele" class="form-control mb-1 instalacion" id="tele_instalacion">
 												<option value="no">No</option>
                                         		<option value="Television">Si</option>
 											</select>
@@ -429,7 +429,7 @@
 									<div class="col-sm-4">
 									<label for="invociedate" class="caption">Internet</label>
 										<div class="input-group">									
-											<select name="inter" class="form-control mb-1">
+											<select name="inter" class="form-control mb-1 instalacion" id="internet_instalacion">
 												<option value="no">No</option>
 												<?php
 													foreach ($paquete as $row) {
@@ -680,7 +680,21 @@
  $(".serv_sedes").css("display","none");
  $(".servs_sede_"+sede_sel).css("display","");
 
-	
+$(document).on('change',".instalacion",function(e){
+    validacion_instalacion();
+    
+});	
+function validacion_instalacion (){
+    var tele_instalacion=$("#tele_instalacion option:selected").val();
+    var internet_instalacion=$("#internet_instalacion option:selected").val();
+    if(tele_instalacion!="no"|| internet_instalacion!="no"){
+        $("#submit-data").removeAttr("disabled");
+    }else{
+        $("#submit-data").attr("disabled","disabled");
+    }
+    console.log(tele_instalacion);
+    console.log(internet_instalacion);
+}
 
 
 $(document).on('click','.btn-mas-internet',function(e){
@@ -801,6 +815,12 @@ $(document).on('click','.btn-mas-internet',function(e){
 		ocultar();
 		$('#detalle').on('change',function(){
 			ocultar();
+            if($("#detalle option:selected").val()=="Instalacion"){
+                validacion_instalacion();
+            }else{
+                $("#submit-data").removeAttr("disabled");
+            }
+            
 		});
 	});
 	
