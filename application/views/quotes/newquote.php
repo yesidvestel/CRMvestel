@@ -182,7 +182,7 @@
 									<div class="col-sm-6">
 										<label for="invociedate" class="caption">Factura mes</label>
 										<div class="input-group">
-										<select name="factura" class="form-control mb-1">
+										<select id="factura" name="factura" class="form-control mb-1">
 												<option value='null'>-</option>
 												<?php
 											
@@ -688,12 +688,14 @@ function validacion_instalacion (){
     var tele_instalacion=$("#tele_instalacion option:selected").val();
     var internet_instalacion=$("#internet_instalacion option:selected").val();
     if(tele_instalacion!="no"|| internet_instalacion!="no"){
+        $(".instalacion").css("border-color","");
         $("#submit-data").removeAttr("disabled");
     }else{
+        $(".instalacion").css("border-color","red");
         $("#submit-data").attr("disabled","disabled");
     }
-    console.log(tele_instalacion);
-    console.log(internet_instalacion);
+    //console.log(tele_instalacion);
+    //console.log(internet_instalacion);
 }
 
 
@@ -817,8 +819,13 @@ $(document).on('click','.btn-mas-internet',function(e){
 			ocultar();
             if($("#detalle option:selected").val()=="Instalacion"){
                 validacion_instalacion();
+                $("#factura").val("null");
+                $("#factura").attr("disabled","disabled");
             }else{
                 $("#submit-data").removeAttr("disabled");
+                $("#factura").removeAttr("disabled");
+                var facx=$("#factura").children()[2];
+                $("#factura").val($(facx).val());
             }
             
 		});
