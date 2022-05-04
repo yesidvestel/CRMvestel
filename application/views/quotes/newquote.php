@@ -824,7 +824,8 @@ $(document).on('click','.btn-mas-internet',function(e){
             }else{
                 $("#submit-data").removeAttr("disabled");
                 $("#factura").removeAttr("disabled");
-                var facx=$("#factura").children()[2];
+                var facx=$("#factura").children();
+                facx=$("#factura").children()[facx.length-1];
                 $("#factura").val($(facx).val());
             }
             
