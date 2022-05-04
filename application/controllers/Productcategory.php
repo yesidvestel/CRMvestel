@@ -90,7 +90,7 @@ class Productcategory Extends CI_Controller
         
         $this->db->select("*");
         $this->db->from("products");
-		//$this->db->join('customers', 'tickets.cid=customers.id', 'left');
+		$this->db->join('product_cat', 'products.pcat=product_cat.id', 'left');
 		//$this->db->join('barrio', 'customers.barrio=barrio.idBarrio', 'left');
         $this->db->order_by("pid","DESC");
 		//$usuario=$this->db->get_where("customers",array('id' => $_GET['id']))->row();
@@ -105,6 +105,7 @@ class Productcategory Extends CI_Controller
     $headers = array(
 		'Item' => 'string',
         'Codigo' => 'string', 
+        'Categoria' => 'string', 
         'cantidad' => 'string');
     
     //fetch data from database
@@ -129,12 +130,17 @@ class Productcategory Extends CI_Controller
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ));
     
     //write rows to sheet1
 	
     foreach ($lista_products as $key => $productos) {
-            $writer->writeSheetRow('Inventarios ',array($productos->product_name,$productos->product_code ,$productos->qty));
+            $writer->writeSheetRow('Inventarios ',array(
+				$productos->product_name,
+				$productos->product_code,
+				$productos->title,
+				$productos->qty));
         
     }
         
