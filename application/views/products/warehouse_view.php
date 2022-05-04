@@ -48,8 +48,10 @@
 
                                 </div>
                             </div>
+					<a href="#" onclick="redirect_to_export()" class="btn btn-success btn-md">Exportar a Excel .XLSX</a>
                 </div>
                 <!-- fin paneles -->
+
             <hr>
             <table id="productstable" class="display" cellspacing="0" width="100%">
                 <thead>
@@ -123,6 +125,12 @@ var id_warehouse="<?=$_GET['id'] ?>";
             table.ajax.url( baseurl+"products/warehouseproduct_list?id="+id_warehouse+"&categoria="+categoria ).load();     
         }
        
+
+    }
+	function redirect_to_export(){
+         //var tecnico=$("#tecnicos2").val();
+        var url_redirect=baseurl+'productcategory/explortar_a_excel?id=<?=$_GET['id']?>';
+            window.location.replace(url_redirect);
 
     }
 </script>

@@ -86,6 +86,89 @@ class Productcategory Extends CI_Controller
         $this->load->view('products/warehouse_view', $data);
         $this->load->view('fixed/footer');
     }
+	public function explortar_a_excel(){
+        
+        $this->db->select("*");
+        $this->db->from("products");
+		//$this->db->join('customers', 'tickets.cid=customers.id', 'left');
+		//$this->db->join('barrio', 'customers.barrio=barrio.idBarrio', 'left');
+        $this->db->order_by("pid","DESC");
+		//$usuario=$this->db->get_where("customers",array('id' => $_GET['id']))->row();
+		$this->db->where("warehouse",$_GET['id']);
+		
+        $lista_products=$this->db->get()->result();
+        $this->load->library('Excel');
+		$lista_products2=array();
+		
+    
+    //define column headers
+    $headers = array(
+		'Item' => 'string',
+        'Codigo' => 'string', 
+        'cantidad' => 'string');
+    
+    //fetch data from database
+    //$salesinfo = $this->product_model->get_salesinfo();
+    
+    //create writer object
+    $writer = new Excel();
+    
+        //meta data info
+    $keywords = array('xlsx','CUSTOMERS','VESTEL');
+    $writer->setTitle('Reporte Tickets ');
+    $writer->setSubject('');
+    $writer->setAuthor('VESTEL');
+    $writer->setCompany('VESTEL');
+    $writer->setKeywords($keywords);
+    $writer->setDescription('Reporte Inventarios ');
+    $writer->setTempDir(sys_get_temp_dir());
+    
+    //write headers el primer campo que es nombre de la hoja de excel deve de coincidir en writeSheetHeader y writeSheetRow para tener en cuenta si se piensan agregar otras hojas o algo por el estilo
+    $writer->writeSheetHeader('Inventarios ',$headers,$col_options = array(
+
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+));
+    
+    //write rows to sheet1
+	
+    foreach ($lista_products as $key => $productos) {
+            $writer->writeSheetRow('Inventarios ',array($productos->product_name,$productos->product_code ,$productos->qty));
+        
+    }
+        
+        
+    
+    $fecha_actual= date("d-m-Y");
+    $dia= date("N");
+    $this->load->model('reports_model', 'reports');
+    $fecha_actual=$this->reports->obtener_dia($dia)." ".$fecha_actual;
+    $fileLocation = 'Inventario '.$fecha_actual.'.xlsx';
+    
+    //write to xlsx file
+    $writer->writeToFile($fileLocation);
+    //echo $writer->writeToString();
+    
+    //force download
+    header('Content-Description: File Transfer');
+    header("Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+    header("Content-Disposition: attachment; filename=".basename($fileLocation));
+    header("Content-Transfer-Encoding: binary");
+    header("Expires: 0");
+    header("Pragma: public");
+    header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+    header('Content-Length: ' . filesize($fileLocation)); //Remove
+
+    ob_clean();
+    flush();
+
+    readfile($fileLocation);
+    unlink($fileLocation);
+    exit(0);
+       
+
+    }
 	public function viewalmacen()
     {
 		$this->load->model('ticket_model', 'ticket');
