@@ -997,6 +997,7 @@ $x=0;
 			//actualizar estado usuario
                 $this->db->set("ultimo_estado",$customer->usu_estado);
                 $this->db->set("fecha_cambio",date("Y-m-d H:i:s"));
+                $this->db->set("f_contrato",date("Y-m-d"));
 				$this->db->set('usu_estado', 'Activo');
         		$this->db->where('id', $ticket->cid);
         		$this->db->update('customers');
@@ -1480,7 +1481,12 @@ $x=0;
                 $this->db->set('estado_tv', null);
 				$this->db->set('puntos', $ptos);
         		$this->db->where('tid', $idfactura);
-        		$this->db->update('invoices');
+        		if ($this->db->update('invoices')){
+			//actualizar contrato usuario
+                $this->db->set("f_contrato",date("Y-m-d"));
+        		$this->db->where('id', $ticket->cid);
+        		$this->db->update('customers');
+				}
 			
 		}
 		//nuevo servicio
@@ -1549,7 +1555,12 @@ $x=0;
 				$this->db->set('combo', $inter);
                 $this->db->set('estado_combo', null);
         		$this->db->where('tid', $idfactura);
-        		$this->db->update('invoices');
+        		if ($this->db->update('invoices')){
+					//actualizar contrato usuario
+					$this->db->set("f_contrato",date("Y-m-d"));
+					$this->db->where('id', $ticket->cid);
+					$this->db->update('customers');
+					}
 
                   //mikrotik
                 $customerx=$this->db->get_where("customers",array('id' =>$ticket->cid ))->row();
