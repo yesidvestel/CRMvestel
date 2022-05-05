@@ -33,6 +33,9 @@ class Invoices extends CI_Controller
     public function index()
     {
         $head['title'] = "Manage Invoices";
+        //$_SESSION['url_web_service']="http://localhost/CRMvestel/Servicio";//pruebas_locales
+        $_SESSION['url_web_service']="http://www.mydic-vestel.com/Servicio";//produccion
+
         $this->load->view('includes/header');
         $this->load->view('invoices/invoices');
         $this->load->view('includes/footer');
@@ -40,8 +43,75 @@ class Invoices extends CI_Controller
 
 
     public function ajax_list()
-    {
-        $query = $this->db->query("SELECT currency FROM app_system WHERE id=1 LIMIT 1");
+    { /*
+        !! IMPORTANTE °°
+
+        HAY QUE PASARLE EL ID DEL CUSTOMER DEL USUARIO QUE INICIO SESSION A LA VARIABLE CSD QUE SE ENVIA A EL SERVIDOR DE VESTEL
+    */
+$start = $this->input->post('start');
+$length = $this->input->post('length');
+$search = $_POST['search']['value'];
+if($search!=""){
+    $search='"search": '.$search.',';
+}
+$order = $this->input->post('order');
+if($order==null){
+    $order="";
+}else{
+    $order='"order":'.json_encode($order).',';
+}
+
+//var_dump($search);
+        $curl = curl_init();
+        //curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt_array($curl, array(
+          CURLOPT_URL => $_SESSION['url_web_service'].'/inv_list',
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => '',
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 0,
+          CURLOPT_FOLLOWLOCATION => true,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => 'POST',
+          CURLOPT_POSTFIELDS =>'{
+                           "cid": 4847,
+                           "start": '.$start.',
+                           "length": '.$length.',
+                           '.$search.$order.'
+                           "command": "GET_PAYMENT_METHODS",
+                           "merchant": {
+                              "apiLogin": "8wOQ5r2pCRoSTjG",
+                              "apiKey": "K4N2CDMArYqCPshu5rvbycCnOG"
+                           }
+                        }',
+                        CURLOPT_HTTPHEADER => array(
+            'Content-Type: application/json;charset=utf-8',
+            'Accept: application/json',
+          )
+          
+        ));
+       $respuesta= curl_exec($curl);
+        curl_close($curl);
+        echo $respuesta;
+        /*$curl = curl_init();
+
+curl_setopt_array($curl, array(
+  CURLOPT_URL => 'http://localhost/webservice/consulta.php',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 0,
+  CURLOPT_FOLLOWLOCATION => true,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'POST',
+));
+
+$response = curl_exec($curl);
+
+curl_close($curl);
+echo $response;*/
+
+       /* $query = $this->db->query("SELECT currency FROM app_system WHERE id=1 LIMIT 1");
         $row = $query->row_array();
 
         $this->config->set_item('currency', $row["currency"]);
@@ -75,7 +145,7 @@ class Invoices extends CI_Controller
         );
         //output to json format
         echo json_encode($output);
-
+    */
     }
 
     public function view()
