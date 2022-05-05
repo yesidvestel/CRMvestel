@@ -272,6 +272,8 @@ setlocale(LC_TIME, "spanish");
 		}else{
 		$this->db->where('sede', $sede);
 		}
+        $this->db->where(array('warehouse!='=>"7"));
+        
         $query = $this->db->get();
         return $query->result_array();
     }
