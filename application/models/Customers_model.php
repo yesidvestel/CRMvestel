@@ -2288,5 +2288,8 @@ return $str;
         var_dump($valor_sin_iva); 
         var_dump($valortotal);*/
     }
+    public function get_customer_id($cid){
+        return $this->db->get_where("customers",array("id"=>$cid))->row();
+    }
 
 }
