@@ -107,7 +107,7 @@ class User_model extends CI_Model
      */
     function get_users($userID = '')
     {
-        $this->db->select('users.*,customers.picture');
+        $this->db->select('users.*');//,customers.picture /* hay que agregar un campo en users para la foto de perfil*/
         $this->db->from('users');
         $this->db->where('users.is_deleted', '0');
         if (isset($userID) && $userID != '') {
@@ -118,7 +118,7 @@ class User_model extends CI_Model
             $this->db->where('users.users_id !=', '1');
         }
 
-        $this->db->join('customers', 'users.cid = customers.id', 'left');
+        //$this->db->join('customers', 'users.cid = customers.id', 'left');
         $result = $this->db->get()->result();
         return $result;
     }

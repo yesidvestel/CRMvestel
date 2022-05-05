@@ -24,6 +24,7 @@ class Payments extends CI_Controller
     {
         parent::__construct();
         $this->load->model('payments_model', 'payments');
+        
         if (!is_login()) {
             redirect(base_url() . 'user/profile', 'refresh');
         }
@@ -33,6 +34,9 @@ class Payments extends CI_Controller
     public function index()
     {
         $head['title'] = "Payments";
+
+        
+        
         $this->load->view('includes/header');
         $this->load->view('payments/payments');
         $this->load->view('includes/footer');

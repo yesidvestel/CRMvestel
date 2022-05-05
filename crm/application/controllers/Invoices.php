@@ -35,7 +35,6 @@ class Invoices extends CI_Controller
         $head['title'] = "Manage Invoices";
         //$_SESSION['url_web_service']="http://localhost/CRMvestel/Servicio";//pruebas_locales
         $_SESSION['url_web_service']="http://www.mydic-vestel.com/Servicio";//produccion
-
         $this->load->view('includes/header');
         $this->load->view('invoices/invoices');
         $this->load->view('includes/footer');
@@ -60,6 +59,7 @@ if($order==null){
 }else{
     $order='"order":'.json_encode($order).',';
 }
+$cid=$this->session->userdata('user_details')[0]->cid;
 
 //var_dump($search);
         $curl = curl_init();
@@ -74,7 +74,7 @@ if($order==null){
           CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
           CURLOPT_CUSTOMREQUEST => 'POST',
           CURLOPT_POSTFIELDS =>'{
-                           "cid": 4847,
+                           "cid": '.$cid.',
                            "start": '.$start.',
                            "length": '.$length.',
                            '.$search.$order.'

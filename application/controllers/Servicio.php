@@ -155,7 +155,7 @@ header("Content-Type:application/json");
             }else{
                 $resivos_var='';
             }
-            $row[] = '<a  href="' . base_url("invoices/view?id=$invoices->tid") . '" class="btn btn-success btn-xs"><i class="icon-file-text"></i> '.$this->lang->line('View').'</a> &nbsp; '.$resivos_var.'&nbsp;&nbsp;';
+            $row[] = '<a  href="https://vestel.com.co/crm/invoices/view?id='.$invoices->tid.'" class="btn btn-success btn-xs"><i class="icon-file-text"></i> '.$this->lang->line('View').'</a> &nbsp; '.$resivos_var.'&nbsp;&nbsp;';
             //$row[] = '<a href="#" data-object-id="' . $invoices->tid . '" class="btn btn-danger btn-xs delete-object"><span class="icon-trash"></span></a>';
             $data[] = $row;
         }

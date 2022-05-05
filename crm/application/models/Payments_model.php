@@ -169,6 +169,11 @@ class Payments_model extends CI_Model
         $query = $this->db->get();
         return $query->result_array();
     }
+    public function get_user_cid(){
+        $id=$this->session->userdata('user_details')[0]->users_id;
+        $user_data=$this->db->get_where("users",array("users_id"=>$id))->row();
+        return $user_data->cid;
+    }
 
 
 }
