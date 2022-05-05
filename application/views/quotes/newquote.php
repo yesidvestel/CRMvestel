@@ -486,7 +486,7 @@
                                     </div>
 									<div class="col-sm-4">
 										<label for="invociedate" class="caption">Paquete</label>
-											<select name="suinter" class="form-control mb-1">
+											<select id="suinter" name="suinter" class="form-control mb-1 subir-megas">
 												<option value="no">No</option>
 												<?php
 													foreach ($paquete as $row) {
@@ -500,7 +500,7 @@
 									<div class="col-sm-4">
 									<label for="invociedate" class="caption">Perfil Mikrotik</label>
 										<div class="input-group">									
-											<select name="supaquete" class="form-control mb-1">
+											<select name="supaquete" id="supaquete" class="form-control mb-1 subir-megas">
 												<option value="0">no</option>
 													<?php for ($i=1;$i<=10;$i++){
 													echo '	<option value="'.$i*'10'.'Megas">'.$i*'10'.'Megas</option>
@@ -518,7 +518,7 @@
                                     </div>
 									<div class="col-sm-4">
 										<label for="invociedate" class="caption">Paquete</label>
-											<select name="bainter" class="form-control mb-1">
+											<select name="bainter" id="bainter" class="form-control mb-1 bajar-megas">
 												<option value="no">No</option>
 												<?php
 													foreach ($paquete as $row) {
@@ -532,7 +532,7 @@
 									<div class="col-sm-4">
 									<label for="invociedate" class="caption">Perfil Mikrotik</label>
 										<div class="input-group">									
-											<select name="bapaquete" class="form-control mb-1">
+											<select name="bapaquete" id="bapaquete" class="form-control mb-1 bajar-megas">
 												<option value="0">no</option>
 													<?php for ($i=1;$i<=10;$i++){
 													echo '	<option value="'.$i*'10'.'Megas">'.$i*'10'.'Megas</option>
@@ -697,6 +697,37 @@ function validacion_instalacion (){
     //console.log(tele_instalacion);
     //console.log(internet_instalacion);
 }
+$(document).on('change',".subir-megas",function(e){
+    validacion_subir_megas();
+    
+}); 
+function validacion_subir_megas (){
+    var suinter=$("#suinter option:selected").val();
+    var supaquete=$("#supaquete option:selected").val();
+    console.log(suinter);
+    console.log(supaquete);
+    var habilitar=true;
+    if(supaquete=="0" ){
+        $("#supaquete").css("border-color","red");
+        $("#submit-data").attr("disabled","disabled");
+        habilitar=false;
+
+    }else{
+        $("#supaquete").css("border-color","");
+    }
+    if(suinter=="no"){
+        $("#suinter").css("border-color","red");
+        $("#submit-data").attr("disabled","disabled");
+        habilitar=false;        
+    }else{
+        $("#suinter").css("border-color","");
+    }
+
+    if(habilitar){
+        $("#submit-data").removeAttr("disabled");
+    }
+    
+}
 
 
 $(document).on('click','.btn-mas-internet',function(e){
@@ -827,6 +858,11 @@ $(document).on('click','.btn-mas-internet',function(e){
                 var facx=$("#factura").children();
                 facx=$("#factura").children()[facx.length-1];
                 $("#factura").val($(facx).val());
+
+                if($("#detalle option:selected").val()=="Subir_megas"){
+                    validacion_subir_megas();
+                    
+                }
             }
             
 		});
