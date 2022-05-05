@@ -704,8 +704,6 @@ $(document).on('change',".subir-megas",function(e){
 function validacion_subir_megas (){
     var suinter=$("#suinter option:selected").val();
     var supaquete=$("#supaquete option:selected").val();
-    console.log(suinter);
-    console.log(supaquete);
     var habilitar=true;
     if(supaquete=="0" ){
         $("#supaquete").css("border-color","red");
@@ -728,7 +726,36 @@ function validacion_subir_megas (){
     }
     
 }
+$(document).on('change',".bajar-megas",function(e){
+    validacion_bajar_megas();
+    
+});
+function validacion_bajar_megas (){
+    var bainter=$("#bainter option:selected").val();
+    var bapaquete=$("#bapaquete option:selected").val();
+    
+    var habilitar=true;
+    if(bainter=="no" ){
+        $("#bainter").css("border-color","red");
+        $("#submit-data").attr("disabled","disabled");
+        habilitar=false;
 
+    }else{
+        $("#bainter").css("border-color","");
+    }
+    if(bapaquete=="0"){
+        $("#bapaquete").css("border-color","red");
+        $("#submit-data").attr("disabled","disabled");
+        habilitar=false;        
+    }else{
+        $("#bapaquete").css("border-color","");
+    }
+
+    if(habilitar){
+        $("#submit-data").removeAttr("disabled");
+    }
+    
+}
 
 $(document).on('click','.btn-mas-internet',function(e){
         e.preventDefault();
@@ -861,6 +888,9 @@ $(document).on('click','.btn-mas-internet',function(e){
 
                 if($("#detalle option:selected").val()=="Subir_megas"){
                     validacion_subir_megas();
+                    
+                }else if($("#detalle option:selected").val()=="Bajar_megas"){
+                    validacion_bajar_megas();
                     
                 }
             }
