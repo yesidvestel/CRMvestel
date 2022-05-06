@@ -66,9 +66,9 @@
                 </li>
                 <li class="nav-item"><a href="<?php echo base_url() ?>" class="navbar-brand nav-link"><img
                                 alt="branding logo"
-                                src="<?php echo substr_replace(base_url(), '', -4); ?>userfiles/theme/logo-header.png"
-                                data-expand="<?php echo substr_replace(base_url(), '', -4); ?>userfiles/theme/logo-header.png"
-                                data-collapse="<?php echo substr_replace(base_url(), '', -4) ?>assets/images/logo/logo-80x80.png"
+                                src="<?php echo substr_replace(base_url(), '', -4); ?>crm/userfiles/theme/logo-header.png"
+                                data-expand="<?php echo substr_replace(base_url(), '', -4); ?>crm/userfiles/theme/logo-header.png"
+                                data-collapse="<?php echo substr_replace(base_url(), '', -4) ?>crm/assets/images/logo/logo-80x80.png"
                                 class="brand-logo height-50"></a></li>
                 <li class="nav-item hidden-md-up float-xs-right"><a data-toggle="collapse" data-target="#navbar-mobile"
                                                                     class="nav-link open-navbar-container"><i
@@ -86,12 +86,19 @@
                 </ul>
                 <ul class="nav navbar-nav float-xs-right">
 
-
+                        <?php $xa2=$this->db->get_where("users",array("users_id"=>$this->session->userdata('user_details')[0]->users_id))->row(); 
+                        $ruta="userfiles/customers/".$xa2->img_profile;
+                        if(!file_exists($ruta)){
+                            $ruta="assets/images/user.png";
+                        }else{
+                            $ruta=base_url()."".$ruta;
+                        } 
+                        ?>
 
                     <li class="dropdown dropdown-user nav-item"><a href="#" data-toggle="dropdown"
                                                                    class="dropdown-toggle nav-link dropdown-user-link"><span
                                     class="avatar avatar-online"><img
-                                        src="<?php echo base_url(); ?>assets/images/user.png"
+                                        src="<?php echo $ruta ?>"
                                         alt="avatar"><i></i></span></a>
                         <div class="dropdown-menu dropdown-menu-right"><a href="<?php echo base_url(); ?>user/profile"
                                                                           class="dropdown-item"><i

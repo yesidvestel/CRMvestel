@@ -1,4 +1,6 @@
-﻿CREATE TABLE IF NOT EXISTS `crm5`.`servicios_adicionales` (
+﻿ALTER TABLE `users` ADD `img_profile` VARCHAR(100) NULL AFTER `cid`;
+----------------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `crm5`.`servicios_adicionales` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `tid_invoice` INT(11) NOT NULL,
   `pid` INT(11) NOT NULL,

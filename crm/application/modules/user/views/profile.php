@@ -26,7 +26,7 @@
                                     <div class="pic_size" id="image-holder">
 
                                         <img class="height-200 setpropileam"
-                                             src="../../userfiles/customers/<?php $profile_pic = $user_data[0]->picture;
+                                             src="/crm/userfiles/customers/<?php $profile_pic = $user_data[0]->img_profile;
                                              echo isset($profile_pic) ? $profile_pic : 'user.png'; ?>"
                                              alt="User profile picture">
                                     </div>

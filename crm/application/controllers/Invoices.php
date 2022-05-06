@@ -42,11 +42,7 @@ class Invoices extends CI_Controller
 
 
     public function ajax_list()
-    { /*
-        !! IMPORTANTE °°
-
-        HAY QUE PASARLE EL ID DEL CUSTOMER DEL USUARIO QUE INICIO SESSION A LA VARIABLE CSD QUE SE ENVIA A EL SERVIDOR DE VESTEL
-    */
+    { 
 $start = $this->input->post('start');
 $length = $this->input->post('length');
 $search = $_POST['search']['value'];

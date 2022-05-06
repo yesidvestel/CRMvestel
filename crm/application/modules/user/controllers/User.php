@@ -323,13 +323,13 @@ if($this->captcha){
             $exp = explode('.', $filename);
             $ext = end($exp);
             $newname = "cutsm_upl_" . time() . "." . $ext;
-            $config['upload_path'] = '../userfiles/customers/';
-            $config['upload_url'] = '../userfiles/customers/';
+            $config['upload_path'] = 'userfiles/customers/';
+            $config['upload_url'] = 'userfiles/customers/';
             $config['allowed_types'] = "gif|jpg|jpeg|png";
             $config['max_size'] = '2000000';
             $config['file_name'] = $newname;
             $this->load->library('upload', $config);
-            move_uploaded_file($tmpname, "../userfiles/customers/" . $newname);
+            move_uploaded_file($tmpname, "userfiles/customers/" . $newname);
             return $newname;
         }
     }
@@ -418,9 +418,9 @@ if($this->captcha){
                 unset($data['password']);
             }
             $data['profile_pic'] = $profile_pic;
-            $data2['picture'] = $profile_pic;
+            $data2['img_profile'] = $profile_pic;
             $this->User_model->updateRow('users', 'users_id', $id, $data);
-            $this->User_model->updateRow('customers', 'id', $this->session->userdata('user_details')[0]->cid, $data2);
+            $this->User_model->updateRow('users', 'users_id', $id, $data2);
             $this->session->set_flashdata('messagePr', 'Your data updated Successfully..');
             redirect(base_url() . 'user/' . $redirect, 'refresh');
         } else {

@@ -51,11 +51,14 @@ $(document).ready(function() {
       var image_holder = $("#image-holder");
       image_holder.empty();
       var reader = new FileReader();
+      //$("#image-holder").html("");
       reader.onload = function (e) {
+        
         $("<img />", {
           "src": e.target.result,
-          "class": "thumb-image setpropileam"
+          "class": "height-200 thumb-image setpropileam"
         }).appendTo(image_holder);
+        
       }
       image_holder.show();
       reader.readAsDataURL($(this)[0].files[0]);
