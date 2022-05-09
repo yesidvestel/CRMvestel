@@ -33,16 +33,12 @@ class Servicio extends CI_Controller
         ob_end_clean();
         try {
             $request=file_get_contents("php://input",true);
-            
-            if(!empty($request)){
-                $body_post=json_decode($request);    
+                $body_post=json_decode($request,true);    
                 
-                if(isset($body_post) && isset($body_post->24q5ewqas)){
-                    $bool=$this->notas->sfgsagety785625($body_post->24q5ewqas,$body_post->112415qwturf);        
+                if(isset($body_post) && isset($body_post['24q5ewqas'])){
+                    $bool=$this->notas->sfgsagety785625($body_post['24q5ewqas'],$body_post['112415qwturf']);        
                 }
-                
-            }
-            
+
         } catch (Exception $e) {
             $bool=false;
         }
