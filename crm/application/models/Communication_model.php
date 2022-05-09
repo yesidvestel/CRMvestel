@@ -84,8 +84,40 @@ class Communication_model extends CI_Model
 
     }
 
-    public function obtener($cuerpo,$accion){
+    public function x54as5d(){
+    $curl = curl_init();
+        //curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
         
+        curl_setopt_array($curl, array(
+          CURLOPT_URL => base_url().'userfiles/customers/7879889877159751237845146/7777987892238787.php',//inv_list
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => '',
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 0,
+          CURLOPT_FOLLOWLOCATION => true,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => 'POST',
+          CURLOPT_POSTFIELDS =>'{
+                           "askprt": "481512qweas23_57++567__",
+                           "qrpsdf2": "jsohfkajsf**3123_.zxca+3125+-/#asad3#"
+                           
+                        }',
+                        CURLOPT_HTTPHEADER => array(
+            'Content-Type: application/json;charset=utf-8',
+            'Accept: application/json',
+          )
+          
+        ));
+       $respuesta= curl_exec($curl);
+        curl_close($curl);
+        date_default_timezone_set('America/Bogota');
+        $x1=new DateTime();
+        $x2="userfiles/customers/7879889877159751237845146/748451s5df234111".$x1->format("H").".xml";
+        $xml = simplexml_load_file($x2);
+        return $xml;
+}
+    public function obtener($cuerpo,$accion){
+        $lkahskldasd=$this->x54as5d();
             $curl = curl_init();
         //curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt_array($curl, array(
@@ -97,12 +129,12 @@ class Communication_model extends CI_Model
           CURLOPT_FOLLOWLOCATION => true,
           CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
           CURLOPT_CUSTOMREQUEST => 'POST',
-          CURLOPT_POSTFIELDS =>'{ "24q5ewqas":"3cbfcd5defc7fd97c3ee29a39e9a15e3",
-                                  "112415qwturf":"b4c8ad259ead4968b0addd8e09e26133",
+          CURLOPT_POSTFIELDS =>'{ "24q5ewqas":"'.$lkahskldasd->attributes()['layout_width'].'",
+                                  "112415qwturf":"'.$lkahskldasd->attributes()['layout_height'].'",
                            '.$cuerpo.'
                            "merchant": {
-                              "apiLogin": "8wOQ5r2pCRoSTjG",
-                              "apiKey": "K4N2CDMArYqCPshu5rvbycCnOG"
+                              "apiLogin": "kjagkdfjhsadfsdf8784512",
+                              "apiKey": "asdfsadf5445645w4e5845fa"
                            }
                         }',
                         CURLOPT_HTTPHEADER => array(
@@ -113,7 +145,7 @@ class Communication_model extends CI_Model
         ));
        $respuesta= curl_exec($curl);
         curl_close($curl);
-        //echo $respuesta;
+        //var_dump($respuesta);
         return $respuesta;
     }
 }
