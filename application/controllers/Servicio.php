@@ -45,7 +45,7 @@ class Servicio extends CI_Controller
         
         if(!$bool){
             
-                exit('<h3>fuera de aqui en el nombre de jesus, o el señor se encargara de ti, no probloques su ira mejor arrepientete y ven a los pies de cristo..me cubro con su sangre preciosa y declaro que ningun mal tiene efecto en mi por las llagas de cristo, soy lleno del espiritu santo. :) :) -_- bye</h3>');
+                exit('<h3>fuera de aqui en el nombre de jesus, o el señor se encargara de ti, no probloques su ira mejor arrepientete y ven a los pies de cristo..me cubro con su sangre preciosa de cristo jesus y declaro que ningun mal tiene efecto en mi por las llagas de cristo, soy lleno del espiritu santo. :) :) -_- bye</h3>');
         }
         /*if (!$this->aauth->is_loggedin()) {
             redirect('/user/', 'refresh');
