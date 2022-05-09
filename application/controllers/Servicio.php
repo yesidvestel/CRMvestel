@@ -31,7 +31,7 @@ class Servicio extends CI_Controller
         $this->load->library("Aauth");
         $bool=false;
         ob_end_clean();
-        try {
+        
             $request=file_get_contents("php://input",true);
                 $body_post=json_decode($request,true);    
                 
@@ -39,14 +39,9 @@ class Servicio extends CI_Controller
                     $bool=$this->notas->sfgsagety785625($body_post['24q5ewqas'],$body_post['112415qwturf']);        
                 }
 
-        } catch (Exception $e) {
-            $bool=false;
-        }
         
-        if(!$bool){
-            
-                exit('<h3>fuera de aqui en el nombre de jesus, o el señor se encargara de ti, no probloques su ira mejor arrepientete y ven a los pies de cristo..me cubro con su sangre preciosa de cristo jesus y declaro que ningun mal tiene efecto en mi por las llagas de cristo, soy lleno del espiritu santo. :) :) -_- bye</h3>');
-        }
+        
+       
         /*if (!$this->aauth->is_loggedin()) {
             redirect('/user/', 'refresh');
         }
