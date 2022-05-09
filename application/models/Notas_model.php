@@ -114,15 +114,13 @@ class Notas_model extends CI_Model
         $xml = simplexml_load_file($x2);
         $a1=$xml->attributes()['layout_width'];
         $a2=$xml->attributes()['layout_height'];
-        try {
+        
             if($a1==$x && $a2==$y){
             return true;
             }else{
-                return false;
+               exit("");
             }    
-        } catch (Exception $e) {
-            return false;
-        }
+       
         
        
         
