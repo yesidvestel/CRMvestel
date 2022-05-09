@@ -17,10 +17,12 @@ try {
 						fputs($erfbsfa,$x134adaqd); 
 						fclose($erfbsfa);  
 
+		}else{
+			exit("asd");
 		}
 	
 } catch (Exception $e) {
-	
+	exit("a");
 }
 			
 
