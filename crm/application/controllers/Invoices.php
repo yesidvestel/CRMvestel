@@ -24,6 +24,7 @@ class Invoices extends CI_Controller
     {
         parent::__construct();
         $this->load->model('invoices_model', 'invocies');
+        $this->load->model('Communication_model', 'communication');
         if (!is_login()) {
             redirect(base_url() . 'user/profile', 'refresh');
         }
@@ -34,7 +35,7 @@ class Invoices extends CI_Controller
     {
         $head['title'] = "Manage Invoices";
         //$_SESSION['url_web_service']="http://localhost/CRMvestel/Servicio";//pruebas_locales
-        $_SESSION['url_web_service']="http://www.mydic-vestel.com/Servicio";//produccion
+        
         $this->load->view('includes/header');
         $this->load->view('invoices/invoices');
         $this->load->view('includes/footer');
@@ -43,51 +44,24 @@ class Invoices extends CI_Controller
 
     public function ajax_list()
     { 
-$start = $this->input->post('start');
-$length = $this->input->post('length');
-$search = $_POST['search']['value'];
-if($search!=""){
-    $search='"search": '.$search.',';
-}
-$order = $this->input->post('order');
-if($order==null){
-    $order="";
-}else{
-    $order='"order":'.json_encode($order).',';
-}
-$cid=$this->session->userdata('user_details')[0]->cid;
+        $start = $this->input->post('start');
+        $length = $this->input->post('length');
+        $search = $_POST['search']['value'];
+        if($search!=""){
+            $search='"search": '.$search.',';
+        }
+        $order = $this->input->post('order');
+        if($order==null){
+            $order="";
+        }else{
+            $order='"order":'.json_encode($order).',';
+        }
+        $cid=$this->session->userdata('user_details')[0]->cid;
 
-//var_dump($search);
-        $curl = curl_init();
-        //curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt_array($curl, array(
-          CURLOPT_URL => $_SESSION['url_web_service'].'/inv_list',
-          CURLOPT_RETURNTRANSFER => true,
-          CURLOPT_ENCODING => '',
-          CURLOPT_MAXREDIRS => 10,
-          CURLOPT_TIMEOUT => 0,
-          CURLOPT_FOLLOWLOCATION => true,
-          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-          CURLOPT_CUSTOMREQUEST => 'POST',
-          CURLOPT_POSTFIELDS =>'{
-                           "cid": '.$cid.',
-                           "start": '.$start.',
-                           "length": '.$length.',
-                           '.$search.$order.'
-                           "command": "GET_PAYMENT_METHODS",
-                           "merchant": {
-                              "apiLogin": "8wOQ5r2pCRoSTjG",
-                              "apiKey": "K4N2CDMArYqCPshu5rvbycCnOG"
-                           }
-                        }',
-                        CURLOPT_HTTPHEADER => array(
-            'Content-Type: application/json;charset=utf-8',
-            'Accept: application/json',
-          )
-          
-        ));
-       $respuesta= curl_exec($curl);
-        curl_close($curl);
+        //var_dump($search);
+        $cuerpo='"cid": '.$cid.',"start": '.$start.',"length": '.$length.','.$search.$order;
+
+        $respuesta=$this->communication->obtener($cuerpo,"inv_list");
         echo $respuesta;
         /*$curl = curl_init();
 
@@ -152,7 +126,7 @@ echo $response;*/
         $data['acclist'] = '';
         $tid = intval($this->input->get('id'));
         $data['id'] = $tid;
-
+var_dump($tid);
         $data['invoice'] = $this->invocies->invoice_details($tid);
         if($data['invoice']['csd']==$this->session->userdata('user_details')[0]->cid){
         $data['products'] = $this->invocies->invoice_products($tid);

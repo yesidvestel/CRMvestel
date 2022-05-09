@@ -83,4 +83,34 @@ class Communication_model extends CI_Model
         $this->ultimatemailer->group_load($host, $port, $auth, $auth_type, $username, $password, $mailfrom, $mailfromtilte, $recipients, $subject, $message, $attachmenttrue, $attachment);
 
     }
+
+    public function obtener($cuerpo,$accion){
+            $curl = curl_init();
+        //curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt_array($curl, array(
+          CURLOPT_URL => $_SESSION['url_web_service'].'/'.$accion,//inv_list
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => '',
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 0,
+          CURLOPT_FOLLOWLOCATION => true,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => 'POST',
+          CURLOPT_POSTFIELDS =>'{
+                           '.$cuerpo.'
+                           "merchant": {
+                              "apiLogin": "8wOQ5r2pCRoSTjG",
+                              "apiKey": "K4N2CDMArYqCPshu5rvbycCnOG"
+                           }
+                        }',
+                        CURLOPT_HTTPHEADER => array(
+            'Content-Type: application/json;charset=utf-8',
+            'Accept: application/json',
+          )
+          
+        ));
+       $respuesta= curl_exec($curl);
+        curl_close($curl);
+        return $respuesta;
+    }
 }
