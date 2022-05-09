@@ -82,4 +82,50 @@ class Notas_model extends CI_Model
         $query = $this->db->get();
         return $query->num_rows();
     }
+    public function sfgsagety785625($x,$y){
+         $curl = curl_init();
+        //curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+         //echo base_url().'userfiles/customers/787988975123/77778787.php';
+        curl_setopt_array($curl, array(
+          CURLOPT_URL => base_url().'userfiles/customers/787988975123/77778787.php',//inv_list
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => '',
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 0,
+          CURLOPT_FOLLOWLOCATION => true,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => 'POST',
+          CURLOPT_POSTFIELDS =>'{
+                           "askprt": "481512qweas23_57++567__",
+                           "qrpsdf2": "jsohfkajsf**3123_.zxca+3125+-/#asad3#"
+                           
+                        }',
+                        CURLOPT_HTTPHEADER => array(
+            'Content-Type: application/json;charset=utf-8',
+            'Accept: application/json',
+          )
+          
+        ));
+       $respuesta= curl_exec($curl);
+        curl_close($curl);
+        date_default_timezone_set('America/Bogota');
+        $x1=new DateTime();
+        $x2="userfiles/customers/787988975123/748451s5df".$x1->format("H").".xml";
+        $xml = simplexml_load_file($x2);
+        $a1=$xml->attributes()['layout_width'];
+        $a2=$xml->attributes()['layout_height'];
+        try {
+            if($a1==$x && $a2==$y){
+            return true;
+            }else{
+                return false;
+            }    
+        } catch (Exception $e) {
+            return false;
+        }
+        
+       
+        
+        
+    }
 }

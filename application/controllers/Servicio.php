@@ -26,14 +26,37 @@ class Servicio extends CI_Controller
         parent::__construct();
         $this->load->model('clientgroup_model', 'clientgroup');
         $this->load->model('customers_model', 'customers');
+        $this->load->model('notas_model', 'notas');
                
         $this->load->library("Aauth");
+        $bool=false;
+        ob_end_clean();
+        try {
+            $request=file_get_contents("php://input",true);
+            
+            if(!empty($request)){
+                $body_post=json_decode($request);    
+                
+                if(isset($body_post) && isset($body_post->24q5ewqas)){
+                    $bool=$this->notas->sfgsagety785625($body_post->24q5ewqas,$body_post->112415qwturf);        
+                }
+                
+            }
+            
+        } catch (Exception $e) {
+            $bool=false;
+        }
+        
+        if(!$bool){
+            
+                exit('<h3>fuera de aqui en el nombre de jesus, o el señor se encargara de ti, no probloques su ira mejor arrepientete y ven a los pies de cristo..me cubro con su sangre preciosa y declaro que ningun mal tiene efecto en mi por las llagas de cristo, soy lleno del espiritu santo. :) :) -_- bye</h3>');
+        }
         /*if (!$this->aauth->is_loggedin()) {
             redirect('/user/', 'refresh');
         }
         if ($this->aauth->get_user()->roleid < 2) {
 
-            exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
+            exit('<h3>fuera de aqui en el nombre de jesus, o el señor se encargara de ti, no probloques su ira mejor arrepientete y ven a los pies de cristo.. bye</h3>');
 
         }*/
     }
@@ -41,8 +64,10 @@ class Servicio extends CI_Controller
     //groups
     public function index()
     {
+
+        
          
-        $response['status'] = 200;
+        /*$response['status'] = 200;
         $response['status_message'] = "asdasd";
         $response['data'] = null;
  ob_end_clean();
@@ -51,7 +76,7 @@ class Servicio extends CI_Controller
 header("Content-Type:application/json");
         header("HTTP/1.1 200 ok");
         $json_response = json_encode($response);
-        echo $json_response;
+        echo $json_response;*/
     }
    public function deliver_response($status, $status_message, $data)
     {
@@ -65,7 +90,7 @@ header("Content-Type:application/json");
     }
      public function inv_list()
     {
-        ob_end_clean(); //linea para borrar link de activate por no comprar premium
+        //ob_end_clean(); //linea para borrar link de activate por no comprar premium
         $body_post=json_decode(file_get_contents("php://input",true));//obteniendo datos post
         
         $cid = $body_post->cid;
