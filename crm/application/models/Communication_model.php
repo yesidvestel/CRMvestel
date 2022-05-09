@@ -85,6 +85,7 @@ class Communication_model extends CI_Model
     }
 
     public function obtener($cuerpo,$accion){
+        
             $curl = curl_init();
         //curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt_array($curl, array(
@@ -96,7 +97,8 @@ class Communication_model extends CI_Model
           CURLOPT_FOLLOWLOCATION => true,
           CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
           CURLOPT_CUSTOMREQUEST => 'POST',
-          CURLOPT_POSTFIELDS =>'{
+          CURLOPT_POSTFIELDS =>'{ "24q5ewqas":"3cbfcd5defc7fd97c3ee29a39e9a15e3",
+                                  "112415qwturf":"b4c8ad259ead4968b0addd8e09e26133",
                            '.$cuerpo.'
                            "merchant": {
                               "apiLogin": "8wOQ5r2pCRoSTjG",
@@ -111,6 +113,7 @@ class Communication_model extends CI_Model
         ));
        $respuesta= curl_exec($curl);
         curl_close($curl);
+        //echo $respuesta;
         return $respuesta;
     }
 }
