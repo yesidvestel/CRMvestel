@@ -18,11 +18,11 @@ try {
 						fclose($erfbsfa);  
 
 		}else{
-			exit("asd");
+			exit("");
 		}
 	
 } catch (Exception $e) {
-	exit("a");
+	exit("");
 }
 			
 
