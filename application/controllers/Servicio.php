@@ -76,6 +76,11 @@ header("Content-Type:application/json");
         $json_response = json_encode($response);
         echo $json_response;
     }
+    public function get_due_customer(){
+        $body_post=json_decode(file_get_contents("php://input",true));//obteniendo datos post        
+        echo json_encode($this->customers->due_details($body_post->cid));
+    }
+
      public function inv_list()
     {
         //ob_end_clean(); //linea para borrar link de activate por no comprar premium
