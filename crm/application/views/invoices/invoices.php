@@ -11,7 +11,24 @@
             <div class="card card-block">
                 <div class="box-header with-border">
                     <h3 class="box-title"><?php echo $this->lang->line('Invoices') ?></h3>
-                    <p><br></p>
+            <div class="card card-block">
+                
+                
+                
+                <div class="row m-t-lg">
+                    <div class="col-md-1">
+                    <strong>TOTAL</strong>
+                    </div>
+                    <div class="col-md-10" id="total_text">
+                    
+                    <?php 
+                            setlocale(LC_MONETARY,"es_CO");
+                            echo money_format("%.0n", ($due->total-$due->pamnt));
+                    ?>
+                    </div>
+                </div>
+            </div>
+                    
                     <table id="invoices" class="cell-border example1 table table-striped table1 delSelTable">
                         <thead>
                         <tr>

@@ -45,7 +45,7 @@ class Payments extends CI_Controller
            $curl = curl_init();
         //curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt_array($curl, array(
-          CURLOPT_URL => 'https://sandbox.api.payulatam.com/payments-api/4.0/service.cgi',
+          CURLOPT_URL => 'https://api.payulatam.com/payments-api/4.0/service.cgi',
           CURLOPT_RETURNTRANSFER => true,
           CURLOPT_ENCODING => '',
           CURLOPT_MAXREDIRS => 10,

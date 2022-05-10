@@ -35,9 +35,14 @@ class Invoices extends CI_Controller
     {
         $head['title'] = "Manage Invoices";
         //$_SESSION['url_web_service']="http://localhost/CRMvestel/Servicio";//pruebas_locales
+        $cid=$this->session->userdata('user_details')[0]->cid;
+        $cuerpo='"cid": '.$cid.",";
+        
+        $data['due']=$this->communication->obtener($cuerpo,"get_due_customer");
+        $data['due']=json_decode($data['due']);
         
         $this->load->view('includes/header');
-        $this->load->view('invoices/invoices');
+        $this->load->view('invoices/invoices',$data);
         $this->load->view('includes/footer');
     }
 
