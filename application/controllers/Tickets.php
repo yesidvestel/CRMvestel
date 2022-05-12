@@ -680,7 +680,7 @@ class Tickets Extends CI_Controller
 		$tid = $this->input->post('tid');		
         $status = $this->input->post('status');
         $fecha_final = $this->input->post('fecha_final'); 
-        if($fecha_final=="null" || $fecha_final==null){
+        if($fecha_final=="null" || $fecha_final==null || $this->aauth->get_user()->roleid!="2" || $this->aauth->get_user()->roleid!=2){
             $fecha_final = date("Y-m-d H:i:s");     
         }
         
