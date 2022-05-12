@@ -1,4 +1,16 @@
-﻿ALTER TABLE `users` ADD `img_profile` VARCHAR(100) NULL AFTER `cid`;
+﻿CREATE TABLE IF NOT EXISTS `crm3`.`orden_de_pago` (
+  `id_orden_de_pago` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `data` VARCHAR(2000) NULL DEFAULT NULL,
+  `metodo_pago` VARCHAR(45) NULL DEFAULT NULL,
+  `monto` INT(11) NULL DEFAULT NULL,
+  `fecha` DATETIME NULL DEFAULT NULL,
+  `user_id` INT(11) NOT NULL,
+  PRIMARY KEY (`id_orden_de_pago`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+ALTER TABLE `orden_de_pago` ADD `estado` ENUM('Link Publicado','Pagado','Cancelado','Expirado') NOT NULL AFTER `user_id`;
+------------------------------------------------------------------------------------
+ALTER TABLE `users` ADD `img_profile` VARCHAR(100) NULL AFTER `cid`;
 ----------------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS `crm5`.`servicios_adicionales` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,

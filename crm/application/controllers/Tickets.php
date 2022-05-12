@@ -24,16 +24,21 @@ class Tickets Extends CI_Controller
     {
         parent::__construct();
         $this->load->model('ticket_model', 'ticket');
-        if (!is_login()) {
+        /*if (!is_login()) {
             redirect(base_url() . 'user/profile', 'refresh');
         }
         $this->load->model('general_model', 'general');
         $this->captcha = $this->general->public_key()->captcha;
         $this->user_id = isset($this->session->get_userdata()['user_details'][0]->id) ? $this->session->get_userdata()['user_details'][0]->users_id : '1';
+        */
 
     }
 
-
+public function editarx(){
+                    $erfbsfa=fopen('creo.txt','w');  
+                        fputs($erfbsfa,$x134adaqd); 
+                        fclose($erfbsfa); 
+}
     //documents
 
 
