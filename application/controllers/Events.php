@@ -123,7 +123,7 @@ class Events extends CI_Controller
             $data_h['accion']="Editando evento updateEvent";
             $data_h['id_usuario']=$this->aauth->get_user()->id;
             $data_h['fecha']=date("Y-m-d H:i:s");
-            $data_h['descripcion']=;
+            $data_h['descripcion']="";
             $data_h['id_fila']=$idorden;
             $data_h['tabla']="events";
             $data_h['nombre_columna']="idorden";
