@@ -448,6 +448,15 @@ class Quote extends CI_Controller
 				);
 				$this->db->where('idorden', $nticket);
 				$this->db->update('events', $data2);
+				$data_h['modulo']="Quotes";
+                $data_h['accion']="Editando evento quotes linea 450";
+                $data_h['id_usuario']=$this->aauth->get_user()->id;
+                $data_h['fecha']=date("Y-m-d H:i:s");
+                $data_h['descripcion']=json_encode($data2);
+                $data_h['id_fila']=$nticket;
+                $data_h['tabla']="events";
+                $data_h['nombre_columna']="idorden";
+                $this->db->insert("historial_crm",$data_h);
 			}else if ($agendar==si){
 			$boleta = $this->db->get_where('tickets', array('codigo' => $nticket))->row();
 			$abonado = $this->db->get_where('customers', array('id' => $boleta->cid))->row();

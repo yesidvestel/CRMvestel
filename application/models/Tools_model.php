@@ -181,6 +181,15 @@ class Tools_model extends CI_Model
             
 
                 $this->db->update('events', $data2,array("id_tarea"=>$id));
+                $data_h['modulo']="Tareas editar";
+                $data_h['accion']="Editando evento tarea Tools_model linea 185";
+                $data_h['id_usuario']=$this->aauth->get_user()->id;
+                $data_h['fecha']=date("Y-m-d H:i:s");
+                $data_h['descripcion']=json_encode($data2);
+                $data_h['id_fila']=$id;
+                $data_h['tabla']="events";
+                $data_h['nombre_columna']="id";
+                $this->db->insert("historial_crm",$data_h);
             }
 
             return true;
@@ -215,6 +224,15 @@ class Tools_model extends CI_Model
                     $this->db->where('id_tarea', $id);
                     $this->db->update('events');
             }
+            $data_h['modulo']="tools";
+                $data_h['accion']="Editando evento tarea Tools_model linea 228";
+                $data_h['id_usuario']=$this->aauth->get_user()->id;
+                $data_h['fecha']=date("Y-m-d H:i:s");
+                $data_h['descripcion']="";
+                $data_h['id_fila']=$id;
+                $data_h['tabla']="events";
+                $data_h['nombre_columna']="id";
+                $this->db->insert("historial_crm",$data_h);
             return true;    
         }else{
             return false;    

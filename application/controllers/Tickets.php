@@ -183,6 +183,15 @@ class Tickets Extends CI_Controller
             }
 			
 			$condicion2['idorden']=$id_orden;
+            $data_h['modulo']="tickets";
+                $data_h['accion']="Editando evento ticket linea 187";
+                $data_h['id_usuario']=$this->aauth->get_user()->id;
+                $data_h['fecha']=date("Y-m-d H:i:s");
+                $data_h['descripcion']=json_encode($data2);
+                $data_h['id_fila']=$id_orden;
+                $data_h['tabla']="events";
+                $data_h['nombre_columna']="idorden";
+                $this->db->insert("historial_crm",$data_h);
 			$this->db->update('events',$data2,$condicion2);
         }
         echo "correcto";
@@ -699,6 +708,15 @@ class Tickets Extends CI_Controller
 				$this->db->set('start', $fecha_final);
 				$this->db->where('idorden', $ticket->codigo);
 				$this->db->update('events');
+                $data_h['modulo']="tickets";
+                $data_h['accion']="Editando evento ticket linea 703";
+                $data_h['id_usuario']=$this->aauth->get_user()->id;
+                $data_h['fecha']=date("Y-m-d H:i:s");
+                $data_h['descripcion']=$fecha_final;
+                $data_h['id_fila']=$ticket->codigo;
+                $data_h['tabla']="events";
+                $data_h['nombre_columna']="idorden";
+                $this->db->insert("historial_crm",$data_h);
         };
         echo json_encode(array('msg1'=>"Realizando",'tid'=>0,'status' => 'Success', 'message' =>
             $this->lang->line('UPDATED'), 'pstatus' => $status));
@@ -711,6 +729,15 @@ class Tickets Extends CI_Controller
             $this->db->set('color', '#a3a3a3');
             $this->db->where('idorden', $ticket->codigo);
             $this->db->update('events');
+             $data_h['modulo']="Tickets";
+                $data_h['accion']="Editando evento ticket linea 724";
+                $data_h['id_usuario']=$this->aauth->get_user()->id;
+                $data_h['fecha']=date("Y-m-d H:i:s");
+                $data_h['descripcion']="";
+                $data_h['id_fila']=$ticket->codigo;
+                $data_h['tabla']="events";
+                $data_h['nombre_columna']="idorden";
+                $this->db->insert("historial_crm",$data_h);
         };
         echo json_encode(array('msg1'=>"Anulada",'tid'=>0,'status' => 'Success', 'message' =>
             $this->lang->line('UPDATED'), 'pstatus' => $status));
@@ -811,6 +838,15 @@ if($ya_agrego_equipos==false){
 			$this->db->set('color', '#a3a3a3');
         	$this->db->where('idorden', $ticket->codigo);
         	$this->db->update('events');
+            $data_h['modulo']="tickets";
+                $data_h['accion']="Editando evento ticket linea 832";
+                $data_h['id_usuario']=$this->aauth->get_user()->id;
+                $data_h['fecha']=date("Y-m-d H:i:s");
+                $data_h['descripcion']="";
+                $data_h['id_fila']=$ticket->codigo;
+                $data_h['tabla']="events";
+                $data_h['nombre_columna']="idorden";
+                $this->db->insert("historial_crm",$data_h);
 		}
         if(isset($invoice[0])){
             foreach ($invoice[0] as $key => $value) {
@@ -1599,6 +1635,15 @@ $x=0;
 			$this->db->set('end', $fecha_final);
         	$this->db->where('idorden', $ticket->codigo);
         	$this->db->update('events');
+            $data_h['modulo']="Tickets";
+                $data_h['accion']="Editando evento ticket linea 1630";
+                $data_h['id_usuario']=$this->aauth->get_user()->id;
+                $data_h['fecha']=date("Y-m-d H:i:s");
+                $data_h['descripcion']="editando end=".$fecha_final;
+                $data_h['id_fila']=$ticket->codigo;
+                $data_h['tabla']="events";
+                $data_h['nombre_columna']="idorden";
+                $this->db->insert("historial_crm",$data_h);
 		};
 				
 		

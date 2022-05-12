@@ -125,6 +125,7 @@ class Manager_model extends CI_Model
                     $this->db->set('color', '#4CB0CB');
                     $this->db->where('id_tarea', $id);
                     $this->db->update('events');
+
             }else if($stat=="Progress"){//Realizando
                     $this->db->set('color', '#2DC548');
                     $fecha_final = date("Y-m-d H:i:s");     
@@ -139,6 +140,15 @@ class Manager_model extends CI_Model
                     $this->db->where('id_tarea', $id);
                     $this->db->update('events');
             }
+            $data_h['modulo']="Tareas";
+                $data_h['accion']="Editando evento tarea manager_model linea 144";
+                $data_h['id_usuario']=$this->aauth->get_user()->id;
+                $data_h['fecha']=date("Y-m-d H:i:s");
+                $data_h['descripcion']="";
+                $data_h['id_fila']=$id;
+                $data_h['tabla']="events";
+                $data_h['nombre_columna']="id";
+                $this->db->insert("historial_crm",$data_h);
             return true;
         }else{
             return false ;    

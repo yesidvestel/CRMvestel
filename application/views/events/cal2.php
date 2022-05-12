@@ -2,6 +2,7 @@
 <link href='<?=base_url() ?>assets/fullcalendar/lib/main.css' rel='stylesheet' />
 <script src='<?=base_url() ?>assets/fullcalendar/lib/main.js'></script>
 <script>
+    
 var rolid_user="<?=$this->aauth->get_user()->roleid ?>";
   /*document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');

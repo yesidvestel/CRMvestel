@@ -119,6 +119,15 @@ class Events extends CI_Controller
         $description = $this->input->post('description');
         $color = $this->input->post('color');
 		$rol = $this->input->post('rol');
+        $data_h['modulo']="Events";
+            $data_h['accion']="Editando evento updateEvent";
+            $data_h['id_usuario']=$this->aauth->get_user()->id;
+            $data_h['fecha']=date("Y-m-d H:i:s");
+            $data_h['descripcion']=;
+            $data_h['id_fila']=$idorden;
+            $data_h['tabla']="events";
+            $data_h['nombre_columna']="idorden";
+            $this->db->insert("historial_crm",$data_h);
         $result = $this->events_model->updateEvent($id, $idorden,$idtarea, $title, $description, $color, $rol);
         echo $result;
     }
@@ -132,7 +141,16 @@ class Events extends CI_Controller
 
     public function dragUpdateEvent()
     {
-        if($this->aauth->get_user()->roleid!="2" || $this->aauth->get_user()->roleid!=2){
+        $data_h['modulo']="Events";
+            $data_h['accion']="Editando evento ".$_POST['id']." events dragUpdateEvent";
+            $data_h['id_usuario']=$this->aauth->get_user()->id;
+            $data_h['fecha']=date("Y-m-d H:i:s");
+            $data_h['descripcion']=$_POST['start']." | ". $_POST['end'];
+            $data_h['id_fila']=$_POST['id'];
+            $data_h['tabla']="events";
+            $data_h['nombre_columna']="id";
+            $this->db->insert("historial_crm",$data_h);
+        if($this->aauth->get_user()->roleid!="2" && $this->aauth->get_user()->roleid!=2){
                 $result = $this->events_model->dragUpdateEvent();
                 echo $result;
         }
