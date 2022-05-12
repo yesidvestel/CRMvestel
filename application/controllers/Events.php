@@ -132,9 +132,11 @@ class Events extends CI_Controller
 
     public function dragUpdateEvent()
     {
-
-        $result = $this->events_model->dragUpdateEvent();
-        echo $result;
+        if($this->aauth->get_user()->roleid!="2" || $this->aauth->get_user()->roleid!=2){
+                $result = $this->events_model->dragUpdateEvent();
+                echo $result;
+        }
+        
     }
 
 }
