@@ -195,24 +195,30 @@ class Payments extends CI_Controller
 
     public function ajax_list()
     {
-        $query = $this->db->query("SELECT currency FROM app_system WHERE id=1 LIMIT 1");
-        $row = $query->row_array();
+        //$query = $this->db->query("SELECT currency FROM app_system WHERE id=1 LIMIT 1");
+        //$row = $query->row_array();
 
-        $this->config->set_item('currency', $row["currency"]);
+        //$this->config->set_item('currency', $row["currency"]);
 
 
         $list = $this->payments->get_datatables();
         $data = array();
 
         $no = $this->input->post('start');
-        $curr = $this->config->item('currency');
+       // $curr = $this->config->item('currency');
 
         foreach ($list as $invoices) {
             $no++;
             $row = array();
-            $row[] = $invoices->date;
-            $row[] = $curr . ' ' . $invoices->credit;
-            $row[] = $curr . ' ' . $invoices->debit;
+            $row[] = $invoices->fecha;
+            $row[] = $invoices->monto;
+            $row[] = $invoices->metodo_pago;
+            $row[] = $invoices->estado;
+            $x=json_decode($invoices->data);
+            $row[] = "<a href='".$x->transactionResponse->extraParameters->URL_PAYMENT_RECEIPT_HTML."' >Ver Link</a>";
+            
+            
+            $row[] = $invoices->data;
 
 
             $data[] = $row;

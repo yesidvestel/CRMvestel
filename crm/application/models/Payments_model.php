@@ -20,10 +20,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Payments_model extends CI_Model
 {
-    var $table = 'transactions';
-    var $column_order = array(null, 'date', 'debit', 'credit', null);
-    var $column_search = array('date', 'debit', 'credit', null);
-    var $order = array('id' => 'desc');
+    var $table = 'orden_de_pago';
+    var $column_order = array(null, 'fecha', 'monto', 'metodo_pago', "estado","data");
+    var $column_search = array('fecha', 'monto', 'metodo_pago', "estado","data");
+    var $order = array('id_orden_de_pago' => 'desc');
 
     public function __construct()
     {
@@ -72,7 +72,7 @@ class Payments_model extends CI_Model
     {
 
         $this->db->from($this->table);
-        $this->db->where('transactions.payerid', $this->session->userdata('user_details')[0]->cid);
+        $this->db->where('orden_de_pago.user_id', $this->session->userdata('user_details')[0]->cid);
 
         $i = 0;
 
@@ -107,7 +107,7 @@ class Payments_model extends CI_Model
     function get_datatables()
     {
         $this->_get_datatables_query();
-        $this->db->where('transactions.payerid', $this->session->userdata('user_details')[0]->cid);
+        $this->db->where('orden_de_pago.user_id', $this->session->userdata('user_details')[0]->cid);
         if ($_POST['length'] != -1)
             $this->db->limit($_POST['length'], $_POST['start']);
         $query = $this->db->get();
@@ -117,7 +117,7 @@ class Payments_model extends CI_Model
     function count_filtered()
     {
         $this->_get_datatables_query();
-        $this->db->where('transactions.payerid', $this->session->userdata('user_details')[0]->cid);
+        $this->db->where('orden_de_pago.user_id', $this->session->userdata('user_details')[0]->cid);
         $query = $this->db->get();
         return $query->num_rows();
     }
@@ -125,7 +125,7 @@ class Payments_model extends CI_Model
     public function count_all()
     {
         $this->db->from($this->table);
-        $this->db->where('transactions.payerid', $this->session->userdata('user_details')[0]->cid);
+        $this->db->where('orden_de_pago.user_id', $this->session->userdata('user_details')[0]->cid);
         return $this->db->count_all_results();
     }
 

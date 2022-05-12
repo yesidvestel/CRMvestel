@@ -16,8 +16,12 @@
                         <thead>
                         <tr>
                             <th><?php echo $this->lang->line('Date') ?></th>
-                            <th><?php echo $this->lang->line('Debit') ?></th>
-                            <th><?php echo $this->lang->line('Credit') ?></th>
+                            <th>Monto</th>
+                            <th>Metodo Pago </th>
+                             <th>Estado</th>
+                             <th>Link</th>
+                            <th>Data</th>
+                            
 
 
                         </tr>
@@ -27,9 +31,12 @@
 
                         <tfoot>
                         <tr>
-                            <th><?php echo $this->lang->line('Date') ?></th>
-                            <th><?php echo $this->lang->line('Debit') ?></th>
-                            <th><?php echo $this->lang->line('Credit') ?></th>
+                             <th><?php echo $this->lang->line('Date') ?></th>
+                            <th>Monto</th>
+                            <th>Metodo Pago </th>
+                             <th>Estado</th>
+                             <th>Link</th>
+                            <th>Data</th>
 
 
                         </tr>
