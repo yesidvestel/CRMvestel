@@ -12,7 +12,8 @@
                 <div class="box-header with-border">
                     <h3 class="box-title"><?php echo $this->lang->line('Payments') ?></h3>
                     <p><br></p>
-                    <table id="invoices" class="cell-border example1 table table-striped table1 delSelTable">
+                    <div class="table-responsive">
+                    <table cellspacing="0" width="100%" id="invoices" class="cell-border example1 table table-striped table1 delSelTable table-hover">
                         <thead>
                         <tr>
                             <th><?php echo $this->lang->line('Date') ?></th>
@@ -42,6 +43,7 @@
                         </tr>
                         </tfoot>
                     </table>
+                    </div>
                 </div>
             </div>
         </div>

@@ -24,7 +24,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 
-$config['base_url'] = 'http://localhost/CRMvestel/crm/';
+$config['base_url'] = 'https://vestel.com.co/crm/';
 
 /*
 |--------------------------------------------------------------------------
@@ -78,7 +78,7 @@ $config['url_suffix'] = '';
 | than english.
 |
 */
-$config['language']	= 'spanish';
+$config['language']	= 'english';
 
 /*
 |--------------------------------------------------------------------------

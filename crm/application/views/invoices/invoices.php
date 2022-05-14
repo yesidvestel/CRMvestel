@@ -28,8 +28,16 @@
                     </div>
                 </div>
             </div>
+            <div class="card card-block" id="div_pag_efect">
+                
+                
+                
+                <button data-tbtn="1"  class="btn btn-warning pg"> <img width="150px" src="userfiles/efecty.png"></button>
+                <button data-tbtn="2" class="btn btn-info pg"> <img width="150px" src="userfiles/logo_baloto.png"></button>
+
+            </div><div class="table-responsive">
                     
-                    <table id="invoices" class="cell-border example1 table table-striped table1 delSelTable">
+                    <table id="invoices" class="cell-border example1 table table-striped table1 delSelTable table-hover" cellspacing="0" width="100%">
                         <thead>
                         <tr>
 
@@ -59,13 +67,35 @@
                         </tfoot>
                     </table>
                 </div>
+                </div>
             </div>
         </div>
 
 
     </div>
 </div>
+<div id="modal_refer" class="modal fade" >
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" >
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title"> Referencia de pago </h4>
+            </div>
 
+            <div class="modal-body" >
+               <iframe id="pag_refer" width="100%" height="100%" src="">
+                   
+               </iframe>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal"><?php echo $this->lang->line('Close') ?> </button>
+                <button data-dismiss="modal" type="button" class="btn btn-primary"
+                        id="sendNow">Aceptar </button>
+            </div>
+        </div>
+    </div>
+</div>
 <script type="text/javascript">
     $(document).ready(function () {
 
@@ -85,6 +115,31 @@
             ],
 
         });
+
+    });
+    function abrir_modal(){
+            var px=window.innerHeight;
+            px=px-195;
+             px=px+"px";
+            console.log(px);
+            $("#pag_refer").attr("height",px);
+            
+            $("#modal_refer").modal("show");//
+    }
+    $(document).on("click",".pg",function(event){
+            var tbtn=$(this).data("tbtn");
+            $(".pg").attr("disabled","disabled");
+        
+            $.post(baseurl+"payments/pg_ef",{"a1":tbtn},function(data){
+                if(data.status=="SUCCESS"){
+                    $("#div_pag_efect").append("<h3>Si cerraste la referencia de pago abrela nuevamente <button class='btn btn-primary' onclick='abrir_modal();'>AQUI</button> o dirigete directamente a este link : <a href='"+data.url+"'>"+data.url+"</a></h3>");
+                    $("#pag_refer").attr("src",data.url);
+                    abrir_modal();
+                }else{
+                    alert("Ocurrio un error informa a VESTEL POR FAVOR");
+                }
+            },'json');
+
 
     });
 </script>

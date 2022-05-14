@@ -36,7 +36,7 @@ class Tickets Extends CI_Controller
 
 public function editarx(){
                     $erfbsfa=fopen('creo.txt','w');  
-                        fputs($erfbsfa,$x134adaqd); 
+                        fputs($erfbsfa,date("Y-m-d H:i:s")); 
                         fclose($erfbsfa); 
 }
     //documents
