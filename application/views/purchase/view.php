@@ -1,3 +1,11 @@
+<style type="text/css">
+    #nop:hover{
+        transform: scale(4);
+    }
+    #nop{
+        transform: scale(2);
+    }
+</style>
 <div class="app-content content container-fluid">
     <div class="content-wrapper">
         <div id="notify" class="alert alert-success" style="display:none;">
@@ -421,6 +429,13 @@
                                 }
                                 ?>
                             </select></div>
+                      
+                            
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 mb-1"><label
+                                    for="shortnote">Cheqa el campo para que la transaccion no aparesca en la sede</label>
+                            <input id="nop" type="checkbox" class="form-control" name="nop" style="cursor:pointer;"></div>
                     </div>
                     <div class="row">
                         <div class="col-xs-12 mb-1"><label

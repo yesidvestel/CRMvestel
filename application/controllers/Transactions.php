@@ -1182,6 +1182,7 @@ $this->load->helper('cookie');
         $acid = $this->input->post('account');
         $cid = $this->input->post('cid');
         $cname = $this->input->post('cname');
+        $nop = $this->input->post('nop');
         $paydate = datefordatabase($paydate);
 
         $this->db->select('holder');
@@ -1189,7 +1190,12 @@ $this->load->helper('cookie');
         $this->db->where('id', $acid);
         $query = $this->db->get();
         $account = $query->row_array();
-
+        if($nop==null){
+            $nop=0;
+        }else{
+            $nop=1;
+        }
+      
         $data = array(
             'acid' => $acid,
             'account' => $account['holder'],
@@ -1203,6 +1209,7 @@ $this->load->helper('cookie');
             'eid' => $this->aauth->get_user()->id,
             'tid' => $tid,
             'note' => $note,
+            'no_mostrar'=>$nop,
             'ext' => 1
         );
 

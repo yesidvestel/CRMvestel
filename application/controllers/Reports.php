@@ -243,6 +243,7 @@ public function historial_list(){
             $datex=new DateTime($sdate);
             $edate=$datex->format('Y-m-d')." 23:59:00";
             $caja1=$this->db->get_where('accounts',array('id' =>$pay_acc))->row();
+            $_SESSION['pay_acc__']=$pay_acc;
             //egresos
             $list = $this->reports->get_statements($pay_acc, $trans_type, $sdate, $edate);
             $ordenes_compra=$this->reports->get_statements($pay_acc, "Expense", $sdate, $edate);//listo gastos en esta cuenta

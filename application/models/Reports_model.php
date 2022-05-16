@@ -52,11 +52,15 @@ class Reports_model extends CI_Model
 
     public function get_statements($pay_acc, $trans_type, $sdate, $edate)
     {
-       
+        $adicional="";
+       if($_SESSION['pay_acc__']!="6" && $_SESSION['pay_acc__']!="7" && $_SESSION['pay_acc__']!="8"){
+            $adicional=" AND no_mostrar=0";
+       }
+
         if ($trans_type == 'All') {
-            $where = "acid='$pay_acc' AND (DATE(date) BETWEEN '$sdate' AND '$edate')  ";
+            $where = "acid='$pay_acc' AND (DATE(date) BETWEEN '$sdate' AND '$edate')  ".$adicional;
         } else {
-            $where = "acid='$pay_acc' AND (DATE(date) BETWEEN '$sdate' AND '$edate') AND type='$trans_type'";
+            $where = "acid='$pay_acc' AND (DATE(date) BETWEEN '$sdate' AND '$edate') AND type='$trans_type'".$adicional;
         }
         $this->db->select('*');
         $this->db->from('transactions');

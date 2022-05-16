@@ -1,4 +1,6 @@
-﻿CREATE TABLE IF NOT EXISTS `crm3`.`orden_de_pago` (
+﻿ALTER TABLE `transactions` ADD `no_mostrar` TINYINT(5) NOT NULL DEFAULT '0' AFTER `estado`;
+----------------------------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `crm3`.`orden_de_pago` (
   `id_orden_de_pago` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `data` VARCHAR(2000) NULL DEFAULT NULL,
   `metodo_pago` VARCHAR(45) NULL DEFAULT NULL,
