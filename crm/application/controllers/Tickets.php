@@ -44,9 +44,12 @@ header("HTTP/1.1 200 ok");
 //$body_post=json_decode(file_get_contents("php://input",true));
 $data=array();
 $data['data']=file_get_contents("php://input",true);
-$data['fecha']=date("Y-m-d H:i:s");
-
-$this->db->insert("data_reception",$data);
+/*if($data['data']!=null && $data['data']!=""){
+    $data['fecha']=date("Y-m-d H:i:s");
+    $this->db->insert("data_reception",$data);    
+}*/
+ $data['fecha']=date("Y-m-d H:i:s");
+$this->db->insert("data_reception",$data);    
 echo json_encode($data);
 }
     //documents
