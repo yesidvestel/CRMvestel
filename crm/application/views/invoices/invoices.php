@@ -32,8 +32,8 @@
                 
                 
                 
-                <button data-tbtn="1"  class="btn btn-warning pg"> <img width="150px" src="userfiles/efecty.png"></button>
-                <button data-tbtn="2" class="btn btn-info pg"> <img width="150px" src="userfiles/logo_baloto.png"></button>
+                <button data-tbtn="1"  class="btn btn-warning pg"> <img width="150px" src="<?=base_url() ?>userfiles/efecty.png"></button>
+                <button data-tbtn="2" class="btn btn-info pg"> <img width="150px" src="<?=base_url()  ?>userfiles/logo_baloto.png"></button>
 
             </div><div class="table-responsive">
                     

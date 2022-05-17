@@ -54,7 +54,110 @@ class Servicio extends CI_Controller
     {
 
         
-         
+          $curl = curl_init();
+        //curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt_array($curl, array(
+          CURLOPT_URL => 'http://vestel.com.co/crm/tickets/data_reception',
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => '',
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 0,
+          CURLOPT_FOLLOWLOCATION => true,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => 'POST',
+          CURLOPT_POSTFIELDS =>'{
+   "language": "es",
+   "command": "SUBMIT_TRANSACTION",
+   "merchant": {
+      "apiKey": "x",
+      "apiLogin": "x"
+   },
+   "transaction": {
+      "order": {
+         "accountId": "975762",
+         "referenceCode": "PRODUCT_TEST_2021_06_23T19",
+         "description": "Payment test description",
+         "language": "es",
+         "signature": "020d76e74528c63c95aa14f0bcf6decf",
+         "notifyUrl": "https://vestel.com.co/crm/tickets/editarx",
+         "additionalValues": {
+            "TX_VALUE": {
+               "value": 65000,
+               "currency": "COP"
+         },
+            "TX_TAX": {
+               "value": 10378,
+               "currency": "COP"
+         },
+            "TX_TAX_RETURN_BASE": {
+               "value": 54622,
+               "currency": "COP"
+         }
+         },
+         "buyer": {
+            "merchantBuyerId": "1",
+            "fullName": "First name and second buyer name",
+            "emailAddress": "buyer_test@test.com",
+            "contactPhone": "7563126",
+            "dniNumber": "123456789",
+            "shippingAddress": {
+               "street1": "Cr 23 No. 53-50",
+               "street2": "5555487",
+               "city": "Bogotá",
+               "state": "Bogotá D.C.",
+               "country": "CO",
+               "postalCode": "000000",
+               "phone": "7563126"
+            }
+         },
+         "shippingAddress": {
+            "street1": "Cr 23 No. 53-50",
+            "street2": "5555487",
+            "city": "Bogotá",
+            "state": "Bogotá D.C.",
+            "country": "CO",
+            "postalCode": "0000000",
+            "phone": "7563126"
+         }
+      },
+      "payer": {
+         "merchantPayerId": "1",
+         "fullName": "First name and second payer name",
+         "emailAddress": "payer_test@test.com",
+         "contactPhone": "7563126",
+         "dniNumber": "5415668464654",
+         "billingAddress": {
+            "street1": "Cr 23 No. 53-50",
+            "street2": "125544",
+            "city": "Bogotá",
+            "state": "Bogotá D.C.",
+            "country": "CO",
+            "postalCode": "000000",
+            "phone": "7563126"
+         }
+      },
+      "type": "AUTHORIZATION_AND_CAPTURE",
+      "paymentMethod": "EFECTY",
+      "expirationDate": "2022-05-12T20:58:35.804",//2022-05-14T11:24:32.804
+      "paymentCountry": "CO",
+      "ipAddress": "127.0.0.1"
+   },
+   "test": false
+}
+',
+          CURLOPT_HTTPHEADER => array(
+            'Content-Type: application/json;charset=utf-8',
+            'Accept: application/json',
+            //'Content-Length: length' //esta linea es la que causa el error por esta es la longitud de los bites de la informacion enviada por post, revisar codigo java en android ws
+            
+          ),
+        ));
+
+         $respuesta= curl_exec($curl);
+         var_dump(curl_error($curl));
+        curl_close($curl);
+        var_dump($respuesta);
+        echo $respuesta;
         /*$response['status'] = 200;
         $response['status_message'] = "asdasd";
         $response['data'] = null;

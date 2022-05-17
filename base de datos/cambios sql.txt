@@ -1,4 +1,7 @@
-﻿ALTER TABLE `transactions` ADD `no_mostrar` TINYINT(5) NOT NULL DEFAULT '0' AFTER `estado`;
+﻿CREATE TABLE `vestel_com_co_crm_202231794677`.`data_reception` ( `id` INT NULL AUTO_INCREMENT , `data` TEXT NOT NULL , `fecha` DATETIME NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+
+--------------------------------------------------------------------------------------------------------
+ALTER TABLE `transactions` ADD `no_mostrar` TINYINT(5) NOT NULL DEFAULT '0' AFTER `estado`;
 ----------------------------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS `crm3`.`orden_de_pago` (
   `id_orden_de_pago` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,

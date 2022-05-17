@@ -39,6 +39,16 @@ public function editarx(){
                         fputs($erfbsfa,date("Y-m-d H:i:s")); 
                         fclose($erfbsfa); 
 }
+public function data_reception(){    
+header("HTTP/1.1 200 ok");
+//$body_post=json_decode(file_get_contents("php://input",true));
+$data=array();
+$data['data']=file_get_contents("php://input",true);
+$data['fecha']=date("Y-m-d H:i:s");
+
+$this->db->insert("data_reception",$data);
+echo json_encode($data);
+}
     //documents
 
 

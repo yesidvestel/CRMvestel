@@ -318,6 +318,45 @@ class Payments extends CI_Controller
         curl_close($curl);
         echo $respuesta;
     }
+    public function lsita_bancos(){
+        $var="K4N2CDMArYqCPshu5rvbycCnOG~967931~PRODUCT_TEST_2021_06_23T19~65000~COP";
+        var_dump(md5($var));
+           $curl = curl_init();
+        //curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt_array($curl, array(
+          CURLOPT_URL => 'https://api.payulatam.com/payments-api/4.0/service.cgi',
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => '',
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 399,
+          CURLOPT_FOLLOWLOCATION => true,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => 'POST',
+          CURLOPT_POSTFIELDS =>'{
+                           "test": false,
+                           "language": "es",
+                           "command": "GET_BANKS_LIST",
+                           "merchant": {
+                              "apiLogin": "8wOQ5r2pCRoSTjG",
+                              "apiKey": "K4N2CDMArYqCPshu5rvbycCnOG"
+                           },
+                            "bankListInformation": {
+                              "paymentMethod": "PSE",
+                              "paymentCountry": "CO"
+                           }
+                        }',
+          CURLOPT_HTTPHEADER => array(
+            'Content-Type: application/json;charset=utf-8',
+            'Accept: application/json',
+            //'Content-Length: length' //esta linea es la que causa el error por esta es la longitud de los bites de la informacion enviada por post, revisar codigo java en android ws
+            
+          ),
+        ));
+
+         $respuesta= curl_exec($curl);
+        curl_close($curl);
+        echo $respuesta;
+    }
 
     public function recharge()
     {
