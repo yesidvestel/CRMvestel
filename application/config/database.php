@@ -5,8 +5,8 @@ $active_group = 'default';
 $query_builder = TRUE;
 $hostname ='localhost';
 $username ='root';
-$password ='12345678';
-$database ='crm3';	
+$password ='tVsur@2019*';
+$database ='crm';    	
 
 $db['default'] = array(
 	'dsn'	=> '',
