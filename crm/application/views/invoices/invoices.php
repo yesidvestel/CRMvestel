@@ -1,3 +1,9 @@
+<style type="text/css">
+    .color_li{
+        background-color:rgb(249, 249, 249);
+        margin-bottom: 2px;
+    }
+</style>
 <div class="app-content content container-fluid">
     <div class="content-wrapper">
         <div class="content-header row">
@@ -102,11 +108,43 @@
         <div class="modal-content" >
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title"> Referencia de pago </h4>
+                <h4 class="modal-title"> PSE </h4>
             </div>
 
             <div class="modal-body" >
-               
+               <img src="<?=base_url() ?>userfiles/top_pse.png" width="100%">
+               <table>
+                   <tr>
+                       <td></td>
+                       <td><ol ><li class="color_li">Todas la compras y pagos por PSE son realizados en linea y la confirmacion es inmediata</li><li class="color_li">Algunos bancos tienen un procedimiento de autenticacion en su pagina (por ejemplo, una segunda clave), es posible que necesites tramitar una autorizacion ante tu banco. si tienes dudas contacta con nosotros o directamente al area de atencion al cliente de tu banco.</li></ol></td>
+                       <td></td>
+                   </tr>
+                   
+               </table>
+               <div align="center">
+               <div style="width: 50%;">
+               <div class="row">
+                           <div class="form group"  >
+                               <label class="col-sm-3 control-label" for="pse_bank">Banco * &nbsp;</label>
+                               <div class="col-sm-9">
+                                    <select id="pse_bank" class="form-control">
+                                        <option>1</option>
+                                        <option>1</option>
+                                    </select>
+                               </div>
+                           </div>
+                           </div>
+                           </div>
+                           </div>
+               <table align="center">
+                   <tr>
+                       
+                       <td >
+                        
+                       </td>
+                       
+                   </tr>
+               </table>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default"
