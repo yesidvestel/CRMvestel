@@ -5,7 +5,7 @@ $active_group = 'default';
 $query_builder = TRUE;
 $hostname ='localhost';
 $username ='root';
-$password ='tVsur@2019*';
+$password ='12345678';//'tVsur@2019*';
 $database ='crm';	
 
 $db['default'] = array(

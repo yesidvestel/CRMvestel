@@ -341,7 +341,7 @@ class Customers extends CI_Controller
 		$data['facturalist'] = $this->ticket->factura_list($custid);
 		$data['attach'] = $this->customers->attach($custid);
         $data['validar_firma']=$this->customers->validar_firma($custid);
-        $data['estado_mikrotik']=$this->customers->get_estado_mikrotik($data['details']['name_s'],$data['details']['gid'],$data['details']['tegnologia_instalacion']);        
+        //$data['estado_mikrotik']=$this->customers->get_estado_mikrotik($data['details']['name_s'],$data['details']['gid'],$data['details']['tegnologia_instalacion']);        
         $data['color']="#5ccb5f";
         if(empty($data['estado_mikrotik'])){
             $data['color']="red";
@@ -1643,7 +1643,7 @@ if($data['servicios']['estado']=="Inactivo"){
     public function conexion_prueba_po(){
         ///public_html/templates/shaper_helix3/index.php
         $curl = curl_init();
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        //curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt_array($curl, array(
           CURLOPT_URL => 'https://api.payulatam.com/payments-api/4.0/service.cgi',
           CURLOPT_RETURNTRANSFER => true,
@@ -1665,7 +1665,7 @@ if($data['servicios']['estado']=="Inactivo"){
           CURLOPT_HTTPHEADER => array(
             'Content-Type: application/json;charset=utf-8',
             'Accept: application/json',
-            'Content-Length: length'
+            //'Content-Length: length' //esta linea es la que causa el error por esta es la longitud de los bites de la informacion enviada por post, revisar codigo java en android ws
             
           ),
         ));

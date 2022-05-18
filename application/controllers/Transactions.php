@@ -35,6 +35,11 @@ class Transactions extends CI_Controller
 
         }
     }
+    public function input_mask(){
+        $this->load->view('fixed/header');
+        $this->load->view('transactions/mask',$data);
+        $this->load->view('fixed/footer');
+    }
 	public function explortar_a_excel(){
         
         $this->db->select("*");
