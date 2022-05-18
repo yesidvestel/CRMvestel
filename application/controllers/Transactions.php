@@ -37,6 +37,7 @@ class Transactions extends CI_Controller
     }
     public function input_mask(){
         $this->load->view('fixed/header');
+        $data=array();
         $this->load->view('transactions/mask',$data);
         $this->load->view('fixed/footer');
     }
