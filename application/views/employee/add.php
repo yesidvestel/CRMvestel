@@ -110,8 +110,8 @@
 												  	<td><input type="checkbox" name="coadm"></input></td>
 												  	<td align="lift">Administrar facturas</td>
 												  	<td align="right"></td>
-												  	<td><input type="checkbox" name="redbod"></input></td>
-												  	<td align="lift">Bodega de equipos</td>
+												  	<td><input type="checkbox" name="redcon"></input></td>
+												  	<td align="lift">conexiones</td>
 													<td align="right"></td>
 													<td><input type="checkbox" name="invcat"></input></td>
 												  	<td align="lift">Categorias material</td>
@@ -120,8 +120,9 @@
 												  	<td align="right"></td>
 												  	<td><input type="checkbox" name="cocie"></input></td>
 												  	<td align="lift">Cierre</td>
-												  	<td><input type="checkbox" name="com"></input></td>
-												  	<td align="lift" colspan="2">ORDEN DE COMPRA</td>
+												  	<td align="right"></td>
+												  	<td><input type="checkbox" name="redbod"></input></td>
+												  	<td align="lift">Bodega de equipos</td>
 													<td align="right"></td>
 													<td><input type="checkbox" name="invalm"></input></td>
 												  	<td align="lift">Almacenes</td>
@@ -130,9 +131,8 @@
 												  	<td align="right"></td>
 												  	<td><input type="checkbox" name="cofa"></input></td>
 												  	<td align="lift">Facturacion</td>
-												  	<td align="right"></td>
-												  	<td><input type="checkbox" name="comnue"></input></td>
-												  	<td align="lift">Nueva orden</td>
+												  	<td><input type="checkbox" name="com"></input></td>
+												  	<td align="lift" colspan="2">ORDEN DE COMPRA</td>
 													<td align="right"></td>
 													<td><input type="checkbox" name="invtrs"></input></td>
 												  	<td align="lift">Traspasos</td>
@@ -142,6 +142,17 @@
 												  	<td><input type="checkbox" name="cofae"></input></td>
 												  	<td align="lift">Facturacion electronica</td>
 												  	<td align="right"></td>
+												  	<td><input type="checkbox" name="comnue"></input></td>
+												  	<td align="lift">Nueva orden</td>
+													<td align="right"></td>
+													<td></td>
+												  	<td align="lift"></td>
+												</tr>
+												<tr>
+												  	<td align="right"></td>
+												  	<td align="right"><input type="checkbox" name="conotas" ></input></td>
+                                                    <td align="lift">Notas Debito/Credito</td>
+												  	<td align="right"></td>
 												  	<td><input type="checkbox" name="comadm"></input></td>
 												  	<td align="lift">Administrar ordenes</td>
 													<td><input type="checkbox" name="emp"></input></td>
@@ -149,8 +160,7 @@
 												</tr>
 												<tr>
                                                     <td align="right"></td>
-                                                    <td align="right"><input type="checkbox" name="conotas" ></input></td>
-                                                    <td align="lift">Notas Debito/Credito</td>
+                                                    
                                                 </tr>
 												<tr>
 													<td><input type="checkbox" name="us"></input></td>

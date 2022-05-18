@@ -149,7 +149,7 @@ class Employee_model extends CI_Model
 		$confemp,$conffa,$confmon,$conffec,$confcat,
 		$confmet,$confrest,$confcorr,$confterm,$confaut,
 		$confseg,$conftem,$confsop,$conface,$confupt,
-		$confapi,$tar,$dathistorial,$datservicios,$conotas)
+		$confapi,$tar,$dathistorial,$datservicios,$conotas,$redcon)
     {
         $data = array(
             'name' => $name,
@@ -218,6 +218,7 @@ class Employee_model extends CI_Model
 				'reding'=>$reding,
 				'redadm'=>$redadm,
 				'redbod'=>$redbod,
+				'redcon'=>$redcon,
 				'comp'=>$com,
 				'comnue'=>$comnue,
 				'comadm'=>$comadm,
@@ -582,7 +583,7 @@ class Employee_model extends CI_Model
 		$confemp,$conffa,$confmon,$conffec,$confcat,
 		$confmet,$confrest,$confcorr,$confterm,$confaut,
 		$confseg,$conftem,$confsop,$conface,$confupt,
-		$confapi,$tar,$dathistorial,$conotas)
+		$confapi,$tar,$dathistorial,$conotas,$redcon)
     {
         $data = array(
             'id' => $id,
@@ -642,6 +643,7 @@ class Employee_model extends CI_Model
 				'reding'=>$reding,
 				'redadm'=>$redadm,
 				'redbod'=>$redbod,
+				'redcon'=>$redcon,
 				'comp'=>$com,
 				'comnue'=>$comnue,
 				'comadm'=>$comadm,

@@ -237,8 +237,8 @@
 												  	<td><input type="checkbox" name="coadm" <?= ($user['coadm']=='0')?'checked':'' ?>></input></td>
 												  	<td align="lift">Administrar facturas</td>
 												  	<td align="right"></td>
-												  	<td><input type="checkbox" name="redbod" <?= ($user['redbod']=='0')?'checked':'' ?>></input></td>
-												  	<td align="lift">Bodega de equipos</td>
+												  	<td><input type="checkbox" name="redcon" <?= ($user['redcon']=='0')?'checked':'' ?>></input></td>
+												  	<td align="lift">Conexiones</td>
 													<td align="right"></td>
 													<td><input type="checkbox" name="invcat" <?= ($user['invcat']=='0')?'checked':'' ?>></input></td>
 												  	<td align="lift">Categorias material</td>
@@ -247,8 +247,9 @@
 												  	<td align="right"></td>
 												  	<td><input type="checkbox" name="cocie" <?= ($user['cocie']=='0')?'checked':'' ?>></input></td>
 												  	<td align="lift">Cierre</td>
-												  	<td><input type="checkbox" name="com" <?= ($user['com']=='0')?'checked':'' ?>></input></td>
-												  	<td align="lift" colspan="2">ORDEN DE COMPRA</td>
+												  	<td align="right"></td>
+												  	<td><input type="checkbox" name="redbod" <?= ($user['redbod']=='0')?'checked':'' ?>></input></td>
+												  	<td align="lift">Bodega de equipos</td>
 													<td align="right"></td>
 													<td><input type="checkbox" name="invalm" <?= ($user['invalm']=='0')?'checked':'' ?>></input></td>
 												  	<td align="lift">Almacenes</td>
@@ -257,9 +258,8 @@
 												  	<td align="right"></td>
 												  	<td><input type="checkbox" name="cofa" <?= ($user['cofa']=='0')?'checked':'' ?>></input></td>
 												  	<td align="lift">Facturacion</td>
-												  	<td align="right"></td>
-												  	<td><input type="checkbox" name="comnue" <?= ($user['comnue']=='0')?'checked':'' ?>></input></td>
-												  	<td align="lift">Nueva orden</td>
+												  	<td><input type="checkbox" name="com" <?= ($user['com']=='0')?'checked':'' ?>></input></td>
+												  	<td align="lift" colspan="2">ORDEN DE COMPRA</td>
 													<td align="right"></td>
 													<td><input type="checkbox" name="invtrs" <?= ($user['invtrs']=='0')?'checked':'' ?>></input></td>
 												  	<td align="lift">Traspasos</td>
@@ -269,6 +269,16 @@
 												  	<td><input type="checkbox" name="cofae" <?= ($user['cofae']=='0')?'checked':'' ?>></input></td>
 												  	<td align="lift">Facturacion electronica</td>
 												  	<td align="right"></td>
+												  	<td><input type="checkbox" name="comnue" <?= ($user['comnue']=='0')?'checked':'' ?>></input></td>
+												  	<td align="lift">Nueva orden</td>
+													<td align="right"></td>
+													
+												</tr>
+												<tr>
+												  	<td align="right"></td>
+												  	<td align="right"><input type="checkbox" name="conotas" <?= ($user['conotas']=='0')?'checked':'' ?>></input></td>
+                                                    <td align="lift">Notas Debito/Credito</td>
+												  	<td align="right"></td>
 												  	<td><input type="checkbox" name="comadm" <?= ($user['comadm']=='0')?'checked':'' ?>></input></td>
 												  	<td align="lift">Administrar ordenes</td>
 													<td><input type="checkbox" name="emp" <?= ($user['emp']=='0')?'checked':'' ?>></input></td>
@@ -276,8 +286,6 @@
 												</tr>
                                                 <tr>
                                                     <td align="right"></td>
-                                                    <td align="right"><input type="checkbox" name="conotas" <?= ($user['conotas']=='0')?'checked':'' ?>></input></td>
-                                                    <td align="lift">Notas Debito/Credito</td>
                                                 </tr>
 												<tr>
 													<td><input type="checkbox" name="us" <?= ($user['us']=='0')?'checked':'' ?>></input></td>

@@ -208,10 +208,10 @@ class Employee extends CI_Controller
         $conface = $this->input->post('conface');
         $confupt = $this->input->post('confupt');
         $confapi = $this->input->post('confapi');
-
         $dathistorial = $this->input->post('dathistorial');
         $conotas = $this->input->post('conotas');
         $tar = $this->input->post('tar');
+        $redcon = $this->input->post('redcon');
 
 
         $a = $this->aauth->create_user($email, $password, $username);
@@ -244,7 +244,7 @@ class Employee extends CI_Controller
 					$confemp,$conffa,$confmon,$conffec,$confcat,
 					$confmet,$confrest,$confcorr,$confterm,$confaut,
 					$confseg,$conftem,$confsop,$conface,$confupt,
-					$confapi,$tar,$dathistorial,$conotas);
+					$confapi,$tar,$dathistorial,$conotas,$redcon);
 
             }
 
@@ -571,6 +571,7 @@ class Employee extends CI_Controller
             $datservicios = $this->input->post('datservicios');
             $conotas = $this->input->post('conotas');
 			$tar = $this->input->post('tar');
+			$redcon = $this->input->post('redcon');
             $this->employee->update_employee(
 				$eid, $name,$dto,$ingreso,$rh,$eps,$pensiones, 
 				$phone, $phonealt, $address, $city, $region, $country,
@@ -592,7 +593,7 @@ class Employee extends CI_Controller
 				$confemp,$conffa,$confmon,$conffec,$confcat,
 				$confmet,$confrest,$confcorr,$confterm,$confaut,
 				$confseg,$conftem,$confsop,$conface,$confupt,
-				$confapi,$tar,$dathistorial,$datservicios,$conotas);
+				$confapi,$tar,$dathistorial,$datservicios,$conotas,$redcon);
 
         } else {
             $head['usernm'] = $this->aauth->get_user($id)->username;

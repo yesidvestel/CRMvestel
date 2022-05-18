@@ -309,6 +309,9 @@
 						<li>
                             <a href="<?php echo base_url(); ?>productcategory/almacen">Bodega equipos</a>
                         </li>
+						<li>
+                            <a href="<?php echo base_url(); ?>redes/sedes">Conexiones</a>
+                        </li>
 					</ul>
 				</li>
                 <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "products") {
@@ -932,6 +935,11 @@
 						<?php if ($this->aauth->get_user()->redbod != '') { ?>
 						<li>
                             <a href="<?php echo base_url(); ?>productcategory/almacen">Bodega equipos</a>
+                        </li>
+						<?php } ?>
+						<?php if ($this->aauth->get_user()->redcon != '') { ?>
+						<li>
+                            <a href="<?php echo base_url(); ?>redes/sedes">Conexiones</a>
                         </li>
 						<?php } ?>
 					</ul>
