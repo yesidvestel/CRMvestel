@@ -44,7 +44,7 @@ class Dashboard extends CI_Controller
         $month = date("m");
         $year = date("Y");
 		$sede = $this->input->get('sede');
-        if ($this->aauth->get_user()->roleid > 4 || $this->aauth->get_user()->testran == 0) {
+        if ($this->aauth->get_user()->roleid > 4 || $this->aauth->get_user()->testran != '') {
             $data['todayin'] = $this->dashboard_model->todayInvoice($today, $sede);
             $data['todayitems'] = $this->dashboard_model->todayItems($today,$sede);
             $data['incomechart'] = $this->dashboard_model->incomeChart($today, $month, $year, $sede);
