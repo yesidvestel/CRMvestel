@@ -44,7 +44,7 @@ class Dashboard extends CI_Controller
         $month = date("m");
         $year = date("Y");
 		$sede = $this->input->get('sede');
-        if ($this->aauth->get_user()->roleid > 3) {
+        if ($this->aauth->get_user()->roleid > 4 || $this->aauth->get_user()->testran == 0) {
             $data['todayin'] = $this->dashboard_model->todayInvoice($today, $sede);
             $data['todayitems'] = $this->dashboard_model->todayItems($today,$sede);
             $data['incomechart'] = $this->dashboard_model->incomeChart($today, $month, $year, $sede);
@@ -79,7 +79,7 @@ class Dashboard extends CI_Controller
             $this->load->view('fixed/header', $head);
             $this->load->view('products/products');
             $this->load->view('fixed/footer');
-        } else if ($this->aauth->get_user()->roleid >= 2){
+        } else if ($this->aauth->get_user()->roleid >= 4){
             $head['title'] = "Manage Invoices";
             $head['usernm'] = $this->aauth->get_user()->username;
             $this->load->view('fixed/header', $head);
