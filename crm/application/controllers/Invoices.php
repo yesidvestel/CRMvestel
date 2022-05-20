@@ -28,6 +28,8 @@ class Invoices extends CI_Controller
         if (!is_login()) {
             redirect(base_url() . 'user/profile', 'refresh');
         }
+        $_SESSION['user_p']="8wOQ5r2pCRoSTjG";
+        $_SESSION['key_p']="K4N2CDMArYqCPshu5rvbycCnOG";
     }
 
     //invoices list
@@ -36,6 +38,8 @@ class Invoices extends CI_Controller
         $head['title'] = "Manage Invoices";
         //$_SESSION['url_web_service']="http://localhost/CRMvestel/Servicio";//pruebas_locales
         $cid=$this->session->userdata('user_details')[0]->cid;
+        $this->load->model('Payments_model', 'payments');
+       $data['list_banks']= $this->payments->get_list_banks_pse();
         $cuerpo='"cid": '.$cid.",";
         
         $data['due']=$this->communication->obtener($cuerpo,"get_due_customer");

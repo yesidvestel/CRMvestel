@@ -1,7 +1,22 @@
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
 <style type="text/css">
     .color_li{
         background-color:rgb(249, 249, 249);
         margin-bottom: 2px;
+        text-align: justify-all;
+    }
+    .label_pse{
+        text-align: left;
+    }
+    .row_pse{
+        /*margin-bottom: 10px;*/
+    }
+    #pse_terms{
+        transform: scale(1.5);
+        cursor: pointer;
+    }
+    #pse_terms:hover{
+        transform: scale(3);
     }
 </style>
 <div class="app-content content container-fluid">
@@ -121,36 +136,90 @@
                    </tr>
                    
                </table>
+            <form method="post" action="#">
                <div align="center">
-               <div style="width: 50%;">
-               <div class="row">
+               <div style="width: 70%;">
+                    <div class="row row_pse">
                            <div class="form group"  >
-                               <label class="col-sm-3 control-label" for="pse_bank">Banco * &nbsp;</label>
+                               <label class="col-sm-3 control-label label_pse" for="pse_bank">Banco* &nbsp;</label>
                                <div class="col-sm-9">
-                                    <select id="pse_bank" class="form-control">
-                                        <option>1</option>
-                                        <option>1</option>
+                                    <select id="pse_bank" class="form-control" required>
+                                        
+                                        <?php foreach ($list_banks as $key => $value): ?>
+
+                                                <option value="<?= ($value->pseCode==0) ? '':$value->pseCode ?>"><?=$value->description ?></option>
+                                        <?php endforeach ?>
                                     </select>
                                </div>
                            </div>
+                    </div>
+                    <div class="row row_pse">
+                           <div class="form group"  >
+                               <label class="col-sm-3 control-label label_pse" for="pse_bank">Tipo de persona* &nbsp;</label>
+                               <div class="col-sm-9">
+                                    <select id="pse_person_type" class="form-control">
+                                            <option value="N">Natural</option>
+                                            <option value="J">Jurídica</option>
+                                    </select>
+                               </div>
                            </div>
+                    </div>
+                    <div class="row row_pse">
+                           <div class="form group"  >
+                               <label class="col-sm-3 control-label label_pse" for="pse_bank">Documento* &nbsp;</label>
+                               <div class="col-sm-5">
+                                    <select id="pse_documnet_type" class="form-control" required>
+                                            <option value="CC">CC - Cédula de ciudadanía.</option>
+                                            <option value="CE">CE - Cédula de extranjería.</option>
+                                            <option value="NIT">NIT - Número de Identificación Tributaria (Empresas).</option>
+                                            <option value="TI">TI - Tarjeta de identidad.</option>
+                                            <option value="PP">PP - Pasaporte.</option>
+                                            <option value="IDC">IDC - Identificador único de cliente, para el caso de ID’s únicos de clientes/usuarios de servicios públicos.</option>
+                                            <option value="CEL">CEL - En caso de identificarse a través de la línea del móvil.</option>
+                                            <option value="RC">RC - Registro civil de nacimiento.</option>
+                                            <option value="DE">DE - Documento de identificación extranjero.</option>
+                                    </select>
+                               </div>
+                               <div class="col-sm-4">
+                                    <input required type="tel" maxlength="30" placeholder="Numero de documento" name="pse_doc" id="pse_doc" class="form-control">
+                               </div>
                            </div>
+                    </div>
+                    <div class="row row_pse">
+                           <div class="form group"  >
+                               <label class="col-sm-3 control-label label_pse" for="pse_bank">Celular* &nbsp;</label>
+                               <div class="col-sm-9">
+                                    <input required type="tel" name="" id="pse_telefono" class="form-control">
+                               </div>
                            </div>
-               <table align="center">
-                   <tr>
-                       
-                       <td >
-                        
-                       </td>
-                       
-                   </tr>
-               </table>
+                    </div>
+                    <div class="row row_pse">
+                           <div class="form group"  >
+                               <label class="col-sm-3 control-label label_pse" for="pse_bank"></label>
+                               <div class="col-sm-9">
+                                    Aceptar terminos, condiciones y tratamiento de tus datos*
+                                    <input required type="checkbox" name="" id="pse_terms" class="form-control">
+                               </div> 
+                           </div>
+                    </div>
+                    <br>
+                    <div class="row row_pse">
+                           <div class="form group"  >
+                               <label class="col-sm-3 control-label label_pse" for="pse_bank"></label>
+                               <div class="col-sm-9">
+                                    <button type="submit" class="btn btn-lg btn-success"><img width="10%" src="<?=base_url()  ?>userfiles/Pay-PNG-HD.png">Pagar<img width="10%" src="<?=base_url()  ?>userfiles/Pay-PNG-HD.png"></button>
+                               </div>
+                           </div>
+                    </div>
+               </div>
+               </div>
+               </form>
+               
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default"
-                        data-dismiss="modal"><?php echo $this->lang->line('Close') ?> </button>
+                
                 <button data-dismiss="modal" type="button" class="btn btn-primary"
-                        id="sendNow">Aceptar </button>
+                        id="sendNow">Salir</button>
             </div>
         </div>
     </div>
@@ -174,6 +243,8 @@
             ],
 
         });
+        $("#pse_doc").mask('#.##0', {reverse: true});
+        $("#pse_telefono").mask('(000) 000-0000');
 
     });
     function abrir_modal(){

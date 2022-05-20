@@ -58,8 +58,8 @@ class Payments extends CI_Controller
    "language": "es",
    "command": "SUBMIT_TRANSACTION",
    "merchant": {
-      "apiKey": "K4N2CDMArYqCPshu5rvbycCnOG",
-      "apiLogin": "8wOQ5r2pCRoSTjG"
+      "apiKey": "'.$_SESSION['key_p'].'",
+      "apiLogin": "'.$_SESSION['user_p'].'"
    },
    "transaction": {
       "order": {
@@ -164,7 +164,7 @@ class Payments extends CI_Controller
         $data_orden['expire_date']=date("Y-m-d H:i:s",strtotime($fecha_actual."+ 1 days")); 
         $xd=new DateTime($data_orden['expire_date']);
         $fecha_expiracion=$xd->format("Y-m-d")."T".$xd->format("H:i:s").".804";
-       $var="K4N2CDMArYqCPshu5rvbycCnOG~967931~".$data_orden['nombre_referencia']."~".$data_orden['monto']."~COP";
+       $var=$_SESSION['key_p']."~967931~".$data_orden['nombre_referencia']."~".$data_orden['monto']."~COP";
         
         $this->db->insert("orden_de_pago",$data_orden);
 
@@ -173,8 +173,8 @@ class Payments extends CI_Controller
    "language": "es",
    "command": "SUBMIT_TRANSACTION",
    "merchant": {
-      "apiKey": "K4N2CDMArYqCPshu5rvbycCnOG",
-      "apiLogin": "8wOQ5r2pCRoSTjG"
+      "apiKey": "'.$_SESSION['key_p'].'",
+      "apiLogin": "'.$_SESSION['user_p'].'"
    },
    "transaction": {
       "order": {
@@ -302,8 +302,8 @@ class Payments extends CI_Controller
                            "language": "es",
                            "command": "GET_PAYMENT_METHODS",
                            "merchant": {
-                              "apiLogin": "8wOQ5r2pCRoSTjG",
-                              "apiKey": "K4N2CDMArYqCPshu5rvbycCnOG"
+                              "apiKey": "'.$_SESSION['key_p'].'",
+                              "apiLogin": "'.$_SESSION['user_p'].'"
                            }
                         }',
           CURLOPT_HTTPHEADER => array(
@@ -337,8 +337,8 @@ class Payments extends CI_Controller
                            "language": "es",
                            "command": "GET_BANKS_LIST",
                            "merchant": {
-                              "apiLogin": "8wOQ5r2pCRoSTjG",
-                              "apiKey": "K4N2CDMArYqCPshu5rvbycCnOG"
+                              "apiKey": "'.$_SESSION['key_p'].'",
+                              "apiLogin": "'.$_SESSION['user_p'].'"
                            },
                             "bankListInformation": {
                               "paymentMethod": "PSE",

@@ -174,6 +174,45 @@ class Payments_model extends CI_Model
         $user_data=$this->db->get_where("users",array("users_id"=>$id))->row();
         return $user_data->cid;
     }
+    public function get_list_banks_pse(){
+
+            $curl = curl_init();
+        //curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt_array($curl, array(
+          CURLOPT_URL => 'https://api.payulatam.com/payments-api/4.0/service.cgi',
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => '',
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 399,
+          CURLOPT_FOLLOWLOCATION => true,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => 'POST',
+          CURLOPT_POSTFIELDS =>'{
+                           "test": false,
+                           "language": "es",
+                           "command": "GET_BANKS_LIST",
+                           "merchant": {
+                              "apiKey": "'.$_SESSION['key_p'].'",
+                              "apiLogin": "'.$_SESSION['user_p'].'"
+                           },
+                            "bankListInformation": {
+                              "paymentMethod": "PSE",
+                              "paymentCountry": "CO"
+                           }
+                        }',
+          CURLOPT_HTTPHEADER => array(
+            'Content-Type: application/json;charset=utf-8',
+            'Accept: application/json',
+            
+          ),
+        ));
+
+         $respuesta= curl_exec($curl);
+        curl_close($curl);
+        $lista=json_decode($respuesta);
+        return $lista->banks;        
+
+    }
 
 
 }
