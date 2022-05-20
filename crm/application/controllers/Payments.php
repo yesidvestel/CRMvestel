@@ -357,7 +357,10 @@ class Payments extends CI_Controller
         curl_close($curl);
         echo $respuesta;
     }
-
+    public function pse_reseption(){
+        var_dump($_POST);
+        
+    }
     public function recharge()
     {
         $head['title'] = "Payments";

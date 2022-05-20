@@ -136,14 +136,14 @@
                    </tr>
                    
                </table>
-            <form method="post" action="#">
+            <form method="post" action="#" id="form_pse">
                <div align="center">
                <div style="width: 70%;">
                     <div class="row row_pse">
                            <div class="form group"  >
                                <label class="col-sm-3 control-label label_pse" for="pse_bank">Banco* &nbsp;</label>
                                <div class="col-sm-9">
-                                    <select id="pse_bank" class="form-control" required>
+                                    <select id="pse_bank" name="pse_bank" class="form-control" required>
                                         
                                         <?php foreach ($list_banks as $key => $value): ?>
 
@@ -155,9 +155,9 @@
                     </div>
                     <div class="row row_pse">
                            <div class="form group"  >
-                               <label class="col-sm-3 control-label label_pse" for="pse_bank">Tipo de persona* &nbsp;</label>
+                               <label class="col-sm-3 control-label label_pse" for="pse_person_type">Tipo de persona* &nbsp;</label>
                                <div class="col-sm-9">
-                                    <select id="pse_person_type" class="form-control">
+                                    <select id="pse_person_type" name="pse_person_type" class="form-control">
                                             <option value="N">Natural</option>
                                             <option value="J">Jurídica</option>
                                     </select>
@@ -166,9 +166,9 @@
                     </div>
                     <div class="row row_pse">
                            <div class="form group"  >
-                               <label class="col-sm-3 control-label label_pse" for="pse_bank">Documento* &nbsp;</label>
+                               <label class="col-sm-3 control-label label_pse" for="pse_documnet_type">Documento* &nbsp;</label>
                                <div class="col-sm-5">
-                                    <select id="pse_documnet_type" class="form-control" required>
+                                    <select id="pse_documnet_type" name="pse_documnet_type" class="form-control" required>
                                             <option value="CC">CC - Cédula de ciudadanía.</option>
                                             <option value="CE">CE - Cédula de extranjería.</option>
                                             <option value="NIT">NIT - Número de Identificación Tributaria (Empresas).</option>
@@ -187,18 +187,18 @@
                     </div>
                     <div class="row row_pse">
                            <div class="form group"  >
-                               <label class="col-sm-3 control-label label_pse" for="pse_bank">Celular* &nbsp;</label>
+                               <label class="col-sm-3 control-label label_pse" for="pse_telefono">Celular* &nbsp;</label>
                                <div class="col-sm-9">
-                                    <input required type="tel" name="" id="pse_telefono" class="form-control">
+                                    <input required type="tel" name="pse_telefono" id="pse_telefono" class="form-control">
                                </div>
                            </div>
                     </div>
                     <div class="row row_pse">
                            <div class="form group"  >
-                               <label class="col-sm-3 control-label label_pse" for="pse_bank"></label>
+                               <label class="col-sm-3 control-label label_pse" for="pse_terms"></label>
                                <div class="col-sm-9">
                                     Aceptar terminos, condiciones y tratamiento de tus datos*
-                                    <input required type="checkbox" name="" id="pse_terms" class="form-control">
+                                    <input required type="checkbox" name="pse_terms" id="pse_terms" class="form-control">
                                </div> 
                            </div>
                     </div>
@@ -207,7 +207,7 @@
                            <div class="form group"  >
                                <label class="col-sm-3 control-label label_pse" for="pse_bank"></label>
                                <div class="col-sm-9">
-                                    <button type="submit" class="btn btn-lg btn-success"><img width="10%" src="<?=base_url()  ?>userfiles/Pay-PNG-HD.png">Pagar<img width="10%" src="<?=base_url()  ?>userfiles/Pay-PNG-HD.png"></button>
+                                    <button id="btn_pse_sub" type="submit" class="btn btn-lg btn-success"><img width="10%" src="<?=base_url()  ?>userfiles/Pay-PNG-HD.png">Pagar<img width="10%" src="<?=base_url()  ?>userfiles/Pay-PNG-HD.png"></button>
                                </div>
                            </div>
                     </div>
@@ -225,6 +225,7 @@
     </div>
 </div>
 <script type="text/javascript">
+    var intests=0;
     $(document).ready(function () {
 
         var table = $('#invoices').DataTable({
@@ -275,4 +276,24 @@
             }
 
     });
+    
+    $(document).on("submit","#form_pse",function(e){
+        e.preventDefault();
+        if(intests==0){
+            console.log("hola mundo");
+            var data_form=$("#form_pse").serialize();
+            $.post(baseurl+"payments/pse_reseption",data_form,function(data){
+
+            });  
+            intests++;  
+            $("#btn_pse_sub").attr("disabled","disabled");
+        }else{
+
+            console.log("no mas intenst")
+        }
+        
+    });
+
+
+
 </script>
