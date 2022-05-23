@@ -183,7 +183,7 @@ header("Content-Type:application/json");
         $body_post=json_decode(file_get_contents("php://input",true));//obteniendo datos post        
         $data_response=array();
         $data_response['due']=$this->customers->due_details($body_post->cid);
-        $data_response['data_customer']=$this->db->get_where("customers",array("cid"=>$body_post->cid))->row()
+        $data_response['data_customer']=$this->db->get_where("customers",array("id"=>$body_post->cid))->row()
         echo json_encode($data_response);
     }
 
