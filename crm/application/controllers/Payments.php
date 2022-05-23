@@ -183,7 +183,7 @@ class Payments extends CI_Controller
          "description": "Payment test description",
          "language": "es",
          "signature": "'.$signature.'",
-         "notifyUrl": "https://vestel.com.co/crm/tickets/editarx",
+         "notifyUrl": "https://vestel.com.co/crm/tickets/data_reception",
          "additionalValues": {
              "TX_VALUE": {
                "value": '.$data_orden['monto'].',
@@ -358,8 +358,151 @@ class Payments extends CI_Controller
         echo $respuesta;
     }
     public function pse_reseption(){
-        var_dump($_POST);
+        //var_dump($_POST);
+        $deviceSessionId = md5(session_id().microtime());
+        //var_dump($deviceSessionId);
+        //var_dump($_COOKIE['ci_sessions']);
+        date_default_timezone_set('America/Bogota');
+        $data_orden=array("user_id"=>$this->session->userdata('user_details')[0]->cid);
+        $data_orden['monto']="15000";
+        $data_orden['metodo_pago']="PSE";
+        //minimo baloto 15000 minimo efecty 20000
         
+        $data_orden['fecha']=date("Y-m-d H:i:s");
+        $data_orden['nombre_referencia']="test_".date("Y_m_d_H_i_s")."_".$this->session->userdata('user_details')[0]->cid;
+        $fecha_actual = date("Y-m-d H:i:s");
+        //sumo 1 día
+         
+        $data_orden['expire_date']=date("Y-m-d H:i:s",strtotime($fecha_actual."+ 1 days")); 
+        $xd=new DateTime($data_orden['expire_date']);
+        $fecha_expiracion=$xd->format("Y-m-d")."T".$xd->format("H:i:s").".804";
+       $var=$_SESSION['key_p']."~967931~".$data_orden['nombre_referencia']."~".$data_orden['monto']."~COP";
+        $data_orden['SessionId']=$deviceSessionId;
+        $this->db->insert("orden_de_pago",$data_orden);
+
+        $signature=md5($var);
+       $cuerpo_de_la_respuesta='{
+   "language": "es",
+   "command": "SUBMIT_TRANSACTION",
+   "merchant": {
+      "apiKey": "'.$_SESSION['key_p'].'",
+      "apiLogin": "'.$_SESSION['user_p'].'"
+   },
+   "transaction": {
+      "order": {
+         "accountId": "975762",
+         "referenceCode": "'.$data_orden['nombre_referencia'].'",
+         "description": "Payment test description",
+         "language": "es",
+         "signature": "'.$signature.'",
+         "notifyUrl": "https://vestel.com.co/crm/tickets/data_reception",
+         "additionalValues": {
+            "TX_VALUE": {
+               "value": '.$data_orden['monto'].',
+               "currency": "COP"
+         },
+            "TX_TAX": {
+               "value": 0,
+               "currency": "COP"
+         }
+         },
+         "buyer": {
+            "merchantBuyerId": "1",
+            "fullName": "First name and second buyer name",
+            "emailAddress": "pruebas@payulatam.com",
+            "contactPhone": "7563126",
+            "dniNumber": "123456789",
+            "shippingAddress": {
+               "street1": "Cr 23 No. 53-50",
+               "street2": "5555487",
+               "city": "Bogotá",
+               "state": "Bogotá D.C.",
+               "country": "CO",
+               "postalCode": "000000",
+               "phone": "7563126"
+            }
+         },
+         "shippingAddress": {
+            "street1": "Cr 23 No. 53-50",
+            "street2": "5555487",
+            "city": "Bogotá",
+            "state": "Bogotá D.C.",
+            "country": "CO",
+            "postalCode": "0000000",
+            "phone": "7563126"
+         }
+      },
+      "payer": {
+         "merchantPayerId": "1",
+         "fullName": "First name and second payer name",
+         "emailAddress": "pruebas@payulatam.com",
+         "contactPhone": "7563126",
+         "dniNumber": "5415668464654",
+         "billingAddress": {
+            "street1": "Cr 23 No. 53-50",
+            "street2": "125544",
+            "city": "Bogotá",
+            "state": "Bogotá D.C.",
+            "country": "CO",
+            "postalCode": "000000",
+            "phone": "7563126"
+         }
+      },
+      "extraParameters": {
+         "RESPONSE_URL": "https://vestel.com.co/crm/invoices/",
+         "PSE_REFERENCE1": "127.0.0.1",
+         "FINANCIAL_INSTITUTION_CODE": "'.$_POST['pse_bank'].'",
+         "USER_TYPE": "'.$_POST['pse_person_type'].'",
+         "PSE_REFERENCE2": "CC",
+         "PSE_REFERENCE3": "123456789"
+      },
+      "type": "AUTHORIZATION_AND_CAPTURE",
+      "paymentMethod": "PSE",
+      "paymentCountry": "CO",
+      "deviceSessionId": "'.$deviceSessionId.'",
+      "ipAddress": "127.0.0.1",
+      "cookie": "'.$_COOKIE['ci_sessions'].'",
+      "userAgent": "'.$_SERVER['HTTP_USER_AGENT'].'"
+   },
+   "test": false
+}';
+        
+          $curl = curl_init();
+        //curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt_array($curl, array(
+          CURLOPT_URL => 'https://api.payulatam.com/payments-api/4.0/service.cgi',
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => '',
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 399,
+          CURLOPT_FOLLOWLOCATION => true,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => 'POST',
+          CURLOPT_POSTFIELDS =>$cuerpo_de_la_respuesta,
+          CURLOPT_HTTPHEADER => array(
+            'Content-Type: application/json;charset=utf-8',
+            'Accept: application/json',
+            //'Content-Length: length' //esta linea es la que causa el error por esta es la longitud de los bites de la informacion enviada por post, revisar codigo java en android ws
+            
+          ),
+        ));
+
+         $respuesta= curl_exec($curl);
+        curl_close($curl);
+        //var_dump($respuesta);
+        //var_dump($cuerpo_de_la_respuesta);
+        $dataup=array("data"=>$respuesta);
+        $this->db->update("orden_de_pago",$dataup,array("nombre_referencia"=>$data_orden['nombre_referencia']));
+        $data_json=json_decode($respuesta);
+        //$x->transactionResponse->extraParameters->URL_PAYMENT_RECEIPT_HTML
+        $r=array("status"=>"SUCCESS");
+        if($data_json->code=="SUCCESS"){
+            $r['url']=$data_json->transactionResponse->extraParameters->BANK_URL;
+        }else{
+            $r=array("status"=>"Error");
+        }
+        //pruebas@payulatam.com
+        echo json_encode($r);
     }
     public function recharge()
     {
@@ -394,7 +537,12 @@ class Payments extends CI_Controller
             $row[] = $invoices->metodo_pago;
             $row[] = $invoices->estado;
             $x=json_decode($invoices->data);
-            $row[] = "<a href='".$x->transactionResponse->extraParameters->URL_PAYMENT_RECEIPT_HTML."' >Ver Link</a>";
+            if($invoices->metodo_pago=="PSE"){
+                $row[] = "<a href='".$x->transactionResponse->extraParameters->BANK_URL."' >Ver Link</a>";
+            }else{
+                $row[] = "<a href='".$x->transactionResponse->extraParameters->URL_PAYMENT_RECEIPT_HTML."' >Ver Link</a>";    
+            }
+            
             
             
             $row[] = $invoices->data;

@@ -1,4 +1,6 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <style type="text/css">
     .color_li{
         background-color:rgb(249, 249, 249);
@@ -18,6 +20,16 @@
     #pse_terms:hover{
         transform: scale(3);
     }
+   
+.select2-selection__rendered {
+    line-height: 80px !important;
+}
+.select2-container .select2-selection--single {
+    height: 80px !important;
+}
+.select2-selection__arrow {
+    height: 80px !important;
+}
 </style>
 <div class="app-content content container-fluid">
     <div class="content-wrapper">
@@ -139,15 +151,15 @@
             <form method="post" action="#" id="form_pse">
                <div align="center">
                <div style="width: 70%;">
-                    <div class="row row_pse">
+                    <div class="row row_pse"  >
                            <div class="form group"  >
                                <label class="col-sm-3 control-label label_pse" for="pse_bank">Banco* &nbsp;</label>
                                <div class="col-sm-9">
-                                    <select id="pse_bank" name="pse_bank" class="form-control" required>
+                                    <select id="pse_bank" name="pse_bank" style="width:100%" class="select-box form-control" required>
                                         
                                         <?php foreach ($list_banks as $key => $value): ?>
 
-                                                <option value="<?= ($value->pseCode==0) ? '':$value->pseCode ?>"><?=$value->description ?></option>
+                                                <option data-image="<?= ($value->pseCode==0) ? '':base_url() .'userfiles/'.$value->pseCode.'.png' ?>" value="<?= ($value->pseCode==0) ? '':$value->pseCode ?>"><?= ($value->pseCode==0) ? 'Selecciona una opcion...':$value->description ?></option>
                                         <?php endforeach ?>
                                     </select>
                                </div>
@@ -280,11 +292,19 @@
     $(document).on("submit","#form_pse",function(e){
         e.preventDefault();
         if(intests==0){
-            console.log("hola mundo");
+            //console.log("hola mundo");
             var data_form=$("#form_pse").serialize();
             $.post(baseurl+"payments/pse_reseption",data_form,function(data){
-
-            });  
+                    if(data.status=="SUCCESS"){
+                        $("#modal_pse").modal("hide");
+                        $("#div_pag_efect").append("<h3>Si no fuiste redirigido dirigete directamente este link para finalizar el proceso de pago : <a href='"+data.url+"'>"+data.url+"</a></h3>");
+                        $("#pag_refer").attr("src",data.url);
+                        window.location.href =data.url;
+                        //abrir_modal();
+                    }else{
+                        alert("Ocurrio un error informa a VESTEL POR FAVOR");
+                    }
+            },'json');  
             intests++;  
             $("#btn_pse_sub").attr("disabled","disabled");
         }else{
@@ -294,6 +314,29 @@
         
     });
 
+$("#pse_bank").select2(
+{
+    templateResult: formState,
+    templateSelection: formState,
+    
+}
+);
+function formState(opt){
+
+    if(!opt.id){
+        return opt.text.toUpperCase();
+    }
+    var optimage=$(opt.element).attr('data-image');
+    console.log(optimage);
+    if(!optimage){
+        return opt.text.toUpperCase();
+    }else{
+        var $opt=$('<span><img src="'+optimage+'" width="57px" />&nbsp;&nbsp;'+opt.text.toUpperCase()+'</span>');
+        return $opt
+    }
+
+
+}
 
 
 </script>
