@@ -80,10 +80,11 @@
       console.log();
       if($body.data('menu')=="vertical-menu"){
          $("img[alt='branding logo']").addClass("brand-logo");
-          $("img[alt='branding logo']").css("height","35px");
+         $(".header-navbar .navbar-header .navbar-brand").addClass("acondicionando_logo");
+            
       }else{
-        $("img[alt='branding logo']").addClass("brand-logo height-60-per");
-        //$(".header-navbar .navbar-header .navbar-brand","35px']").css("padding","10px 29%;");
+        $("img[alt='branding logo']").addClass("brand-logo height-60-per acondicionando_logo");
+        $(".header-navbar .navbar-header .navbar-brand").removeClass("acondicionando_logo");
       }
       
       if($('.main-menu-content').length > 0){

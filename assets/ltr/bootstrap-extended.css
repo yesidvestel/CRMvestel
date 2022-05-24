@@ -591,9 +591,12 @@ button:focus {
     position: relative;
     padding: 0rem 1rem 0 0.5rem;
     transition: 300ms ease all; }
-    .header-navbar .navbar-header .navbar-brand {
-      /*padding: 10px 29%; */
+    /*.header-navbar .navbar-header .navbar-brand {
+      padding: 10px 29%; 
       padding-left: 40px;
+    }*/
+    .acondicionando_logo{
+      padding: 10px 29%; 
     }
   .header-navbar .navbar-container {
     padding: 0rem 1rem;
