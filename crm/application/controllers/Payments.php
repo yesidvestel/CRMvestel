@@ -157,7 +157,7 @@ class Payments extends CI_Controller
             $data_orden['metodo_pago']="BALOTO";    
         }
         $data_orden['fecha']=date("Y-m-d H:i:s");
-        $data_orden['nombre_referencia']="test_".date("Y_m_d_H_i_s")."_".$this->session->userdata('user_details')[0]->cid;
+        $data_orden['nombre_referencia']="pago_".date("Y_m_d_H_i_s_U");
         $fecha_actual = date("Y-m-d H:i:s");
         //sumo 1 día
          
@@ -169,7 +169,30 @@ class Payments extends CI_Controller
         $this->db->insert("orden_de_pago",$data_orden);
 
         $signature=md5($var);
+
+        $fullname=$_SESSION['dt_customer']->name." ".$_SESSION['dt_customer']->dosnombre." ".$_SESSION['dt_customer']->unoapellido." ".$_SESSION['dt_customer']->dosapellido;
+        $email="buyer_test@test.com";
+      $regex = "/^([a-zA-Z0-9\.]+@+[a-zA-Z]+(\.)+[a-zA-Z]{2,3})$/";
+        if(isset($_SESSION['dt_customer']->email) && preg_match($regex, $_SESSION['dt_customer']->email)){
+            $email=$_SESSION['dt_customer']->email;
+        }
+        $celular="7563126";
+
+        if(strlen($_SESSION['dt_customer']->celular)>10 || preg_match_all("/[^0-9]/",$_SESSION['dt_customer']->celular)!=0){
+                
+                if(strlen($_SESSION['dt_customer']->celular2)>10 || preg_match_all("/[^0-9]/",$_SESSION['dt_customer']->celular2)!=0){
+                      $celular="7563126";
+                
+                }else{
+                     $celular=$_SESSION['dt_customer']->celular2;                     
+                }
+
+         }else{
+                  $celular=$_SESSION['dt_customer']->celular;  
+         }
+
        $cuerpo_de_la_respuesta='{
+        
    "language": "es",
    "command": "SUBMIT_TRANSACTION",
    "merchant": {
@@ -180,10 +203,11 @@ class Payments extends CI_Controller
       "order": {
          "accountId": "975762",
          "referenceCode": "'.$data_orden['nombre_referencia'].'",
-         "description": "Payment test description",
+         "description": "pago servicios vestel",
          "language": "es",
          "signature": "'.$signature.'",
          "notifyUrl": "https://vestel.com.co/crm/tickets/data_reception",
+         "partnerId":975762,
          "additionalValues": {
              "TX_VALUE": {
                "value": '.$data_orden['monto'].',
@@ -197,9 +221,9 @@ class Payments extends CI_Controller
          },
          "buyer": {
             "merchantBuyerId": "1",
-            "fullName": "First name and second buyer name",
-            "emailAddress": "buyer_test@test.com",
-            "contactPhone": "7563126",
+            "fullName": "'.$fullname.'",
+            "emailAddress": "'.$email.'",
+            "contactPhone": "'.$celular.'",
             "dniNumber": "123456789",
             "shippingAddress": {
                "street1": "Cr 23 No. 53-50",
@@ -208,7 +232,7 @@ class Payments extends CI_Controller
                "state": "Bogotá D.C.",
                "country": "CO",
                "postalCode": "000000",
-               "phone": "7563126"
+               "phone": "'.$celular.'"
             }
          },
          "shippingAddress": {
@@ -218,14 +242,14 @@ class Payments extends CI_Controller
             "state": "Bogotá D.C.",
             "country": "CO",
             "postalCode": "0000000",
-            "phone": "7563126"
+            "phone": "'.$celular.'"
          }
       },
       "payer": {
          "merchantPayerId": "1",
-         "fullName": "First name and second payer name",
-         "emailAddress": "payer_test@test.com",
-         "contactPhone": "7563126",
+         "fullName": "'.$fullname.'",
+         "emailAddress": "'.$email.'",
+         "contactPhone": "'.$celular.'",
          "dniNumber": "5415668464654",
          "billingAddress": {
             "street1": "Cr 23 No. 53-50",
@@ -245,7 +269,7 @@ class Payments extends CI_Controller
    },
    "test": false
 }';
-        
+        //var_dump($cuerpo_de_la_respuesta);
           $curl = curl_init();
         //curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt_array($curl, array(
