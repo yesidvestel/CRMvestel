@@ -80,6 +80,7 @@
       console.log();
       if($body.data('menu')=="vertical-menu"){
          $("img[alt='branding logo']").addClass("brand-logo");
+         $("img[alt='branding logo']").css("height","35px");
          $(".header-navbar .navbar-header .navbar-brand").addClass("acondicionando_logo");
             
       }else{
