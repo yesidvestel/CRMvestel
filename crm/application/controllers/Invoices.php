@@ -42,8 +42,12 @@ class Invoices extends CI_Controller
        $data['list_banks']= $this->payments->get_list_banks_pse();
         $cuerpo='"cid": '.$cid.",";
         
-        $data['due']=$this->communication->obtener($cuerpo,"get_due_customer");
-        $data['due']=json_decode($data['due']);
+        $data['dt']=$this->communication->obtener($cuerpo,"get_due_customer");
+
+        $data['dt']=json_decode($data['dt']);
+
+        $data['due']=$data['dt']->due;
+        $_SESSION['dt_customer']=$data['dt']->data_customer;
         
         $this->load->view('includes/header');
         $this->load->view('invoices/invoices',$data);
