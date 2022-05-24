@@ -293,7 +293,7 @@
     },
 
     expand: function() {console.log("HOLAAAA2");
-    $("img[alt='branding logo']").attr("src","http://localhost/CRMvestel/userfiles/theme/logo-header.png");
+    $("img[alt='branding logo']").attr("src",baseurl+"userfiles/theme/logo-header.png");
     
       if (this.expanded === false) {
         if( $body.data('menu') == 'vertical-menu'){
@@ -329,7 +329,7 @@
     collapse: function() {console.log("HOLAAAA1");
     //http://localhost/CRMvestel/assets/images/logo/logo-80x80.png
 
-    $("img[alt='branding logo']").attr("src","http://localhost/CRMvestel/assets/images/logo/logo-80x80.png");
+    $("img[alt='branding logo']").attr("src",baseurl+"assets/images/logo/logo-80x80.png");
       if (this.collapsed === false) {
         if( ($body.data('menu') == 'vertical-menu' ) ){
           this.changeLogo('collapse');
