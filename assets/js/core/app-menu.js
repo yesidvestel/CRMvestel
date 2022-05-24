@@ -83,6 +83,7 @@
           $("img[alt='branding logo']").css("height","35px");
       }else{
         $("img[alt='branding logo']").addClass("brand-logo height-60-per");
+        $(".header-navbar .navbar-header .navbar-brand","35px']").css("padding","10px 29%;");
       }
       
       if($('.main-menu-content').length > 0){
