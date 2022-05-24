@@ -1161,7 +1161,7 @@ if($data['servicios']['estado']=="Inactivo"){
 		
         $data_h=array();
             $data_h['modulo']="Customers";
-            $data_h['accion']="Cambio de titular update";
+            $data_h['accion']="Cambio de titular {update}";
             $data_h['id_usuario']=$this->aauth->get_user()->id;
             $data_h['fecha']=date("Y-m-d H:i:s");
             $data_h['descripcion']=json_encode($data1);
