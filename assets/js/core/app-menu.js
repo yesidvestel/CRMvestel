@@ -77,6 +77,8 @@
     },
 
     init: function() {
+      
+      $("img[alt='branding logo']").addClass("brand-logo height-50");
       if($('.main-menu-content').length > 0){
         this.container = $('.main-menu-content');
 
@@ -111,7 +113,7 @@
       }
     },
 
-    change: function() {
+    change: function() {console.log("HOLAAAA");
       var currentBreakpoint = Unison.fetch.now(); // Current Breakpoint
 
       this.reset();
@@ -290,7 +292,9 @@
       });
     },
 
-    expand: function() {
+    expand: function() {console.log("HOLAAAA2");
+    $("img[alt='branding logo']").attr("src","http://localhost/CRMvestel/userfiles/theme/logo-header.png");
+    
       if (this.expanded === false) {
         if( $body.data('menu') == 'vertical-menu'){
           this.changeLogo('expand');
@@ -322,7 +326,10 @@
       }
     },
 
-    collapse: function() {
+    collapse: function() {console.log("HOLAAAA1");
+    //http://localhost/CRMvestel/assets/images/logo/logo-80x80.png
+
+    $("img[alt='branding logo']").attr("src","http://localhost/CRMvestel/assets/images/logo/logo-80x80.png");
       if (this.collapsed === false) {
         if( ($body.data('menu') == 'vertical-menu' ) ){
           this.changeLogo('collapse');
