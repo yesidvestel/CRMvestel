@@ -84,7 +84,7 @@
         $(".header-navbar .navbar-header .navbar-brand").removeClass("acondicionando_logo"); 
             
       }else{
-        $("img[alt='branding logo']").addClass("brand-logo height-60-per acondicionando_logo");        
+        $("img[alt='branding logo']").addClass("brand-logo height-60-per");        
         $(".header-navbar .navbar-header .navbar-brand").addClass("acondicionando_logo");
       }
       
