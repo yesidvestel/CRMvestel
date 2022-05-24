@@ -77,16 +77,9 @@
     },
 
     init: function() {
-      console.log();
-      if($body.data('menu')=="vertical-menu"){
-         $("img[alt='branding logo']").addClass("brand-logo");
-         $("img[alt='branding logo']").css("height","35px");
-        $(".header-navbar .navbar-header .navbar-brand").removeClass("acondicionando_logo"); 
-            
-      }else{
-        $("img[alt='branding logo']").addClass("brand-logo height-60-per");        
-        $(".header-navbar .navbar-header .navbar-brand").addClass("acondicionando_logo");
-      }
+      
+       
+
       
       if($('.main-menu-content').length > 0){
         this.container = $('.main-menu-content');
@@ -102,6 +95,7 @@
         // ------------------------------
         this.drillDownMenu();
       }
+
     },
 
     drillDownMenu: function(screenSize){
@@ -120,9 +114,21 @@
           });
         }
       }
+      
+       if(!$("body").hasClass("vertical-menu")){
+         $("img[alt='branding logo']").addClass("brand-logo");
+         $("img[alt='branding logo']").css("height","35px");
+        $(".header-navbar .navbar-header .navbar-brand").removeClass("acondicionando_logo"); 
+            console.log("que 1"+$("body").hasClass("vertical-menu"));
+      }else{
+        $("img[alt='branding logo']").addClass("brand-logo height-60-per");        
+        $(".header-navbar .navbar-header .navbar-brand").addClass("acondicionando_logo");
+        console.log("que 2"+$("body").hasClass("vertical-menu"));
+      }
     },
 
     change: function() {console.log("HOLAAAA");
+
       var currentBreakpoint = Unison.fetch.now(); // Current Breakpoint
 
       this.reset();
@@ -301,7 +307,7 @@
       });
     },
 
-    expand: function() {console.log("HOLAAAA2");
+    expand: function() {console.log("HOLAAAA2"+$body.data('menu'));
     $("img[alt='branding logo']").attr("src",baseurl+"userfiles/theme/logo-header.png");
     
       if (this.expanded === false) {
@@ -335,9 +341,13 @@
       }
     },
 
-    collapse: function() {console.log("HOLAAAA1");
+    collapse: function() {console.log("HOLAAAA1"+$body.data('menu'));
     //http://localhost/CRMvestel/assets/images/logo/logo-80x80.png
+    setTimeout(function(){
+      $("img[alt='branding logo']").removeClass("height-60-per");       
+    },1000);
 
+$("img[alt='branding logo']").addClass("height-50"); 
     $("img[alt='branding logo']").attr("src",baseurl+"assets/images/logo/logo-80x80.png");
       if (this.collapsed === false) {
         if( ($body.data('menu') == 'vertical-menu' ) ){
