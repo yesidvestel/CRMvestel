@@ -593,7 +593,7 @@ button:focus {
     transition: 300ms ease all; }
     .header-navbar .navbar-header .navbar-brand {
       /*padding: 10px 29%; */
-
+      padding-left: 40px;
     }
   .header-navbar .navbar-container {
     padding: 0rem 1rem;
