@@ -77,8 +77,14 @@
     },
 
     init: function() {
+      console.log();
+      if($body.data('menu')=="vertical-menu"){
+         $("img[alt='branding logo']").addClass("brand-logo");
+          $("img[alt='branding logo']").css("height","35px");
+      }else{
+        $("img[alt='branding logo']").addClass("brand-logo height-60-per");
+      }
       
-      $("img[alt='branding logo']").addClass("brand-logo height-50");
       if($('.main-menu-content').length > 0){
         this.container = $('.main-menu-content');
 
