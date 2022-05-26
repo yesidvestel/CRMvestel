@@ -214,7 +214,11 @@
 														<option value='Retirado'>Retirado</option>
 														<option value='Depurado'>Depurado</option>
                                                     </select>
+
                                               </div>
+                                               
+                                                    <input type="checkbox" name="sin_factura_actual" id="sin_factura_actual" style="cursor: pointer;transform: scale(2);">&nbsp;&nbsp;Sin Factura Actual
+
                                         </div>
                                     </div>
 
@@ -1117,6 +1121,7 @@ $(window).on('load', function (e) {
                 var edate=$("#edate").val();
                 var checked_ind_service =$("#check1").prop('checked');
                 var check_usuarios_a_facturar=$("#check2").prop('checked');
+                var check_sin_factura_actual=$("#sin_factura_actual").prop('checked');
 
                  var estados_multiple=$("#estado_multiple").val();
             var localidad_multiple=$("#localidad_multiple").val();
@@ -1137,7 +1142,7 @@ $(window).on('load', function (e) {
 
                 // Load data for the table's content from an Ajax source
                 "ajax": {
-                    "url": "<?php echo site_url('clientgroup/load_morosos') . '?id=' . $group['id']; ?>&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&pagination_start="+pagination_start+"&pagination_end="+pagination_end+"&checked_ind_service="+checked_ind_service+"&check_usuarios_a_facturar="+check_usuarios_a_facturar+"&estados_multiple="+estados_multiple+"&localidad_multiple="+localidad_multiple+"&barrios_multiple="+barrios_multiple+"&deudores_multiple="+deudores_multiple+"&tegnologia_multiple="+tegnologia_multiple+"&ultimo_estado_sel="+ultimo_estado_sel+"&sel_filtrar_fecha_cambio="+sel_filtrar_fecha_cambio+"&sdate3="+sdate3+"&edate2="+edate2,
+                    "url": "<?php echo site_url('clientgroup/load_morosos') . '?id=' . $group['id']; ?>&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&pagination_start="+pagination_start+"&pagination_end="+pagination_end+"&checked_ind_service="+checked_ind_service+"&check_usuarios_a_facturar="+check_usuarios_a_facturar+"&estados_multiple="+estados_multiple+"&localidad_multiple="+localidad_multiple+"&barrios_multiple="+barrios_multiple+"&deudores_multiple="+deudores_multiple+"&tegnologia_multiple="+tegnologia_multiple+"&ultimo_estado_sel="+ultimo_estado_sel+"&sel_filtrar_fecha_cambio="+sel_filtrar_fecha_cambio+"&sdate3="+sdate3+"&edate2="+edate2+"&check_sin_factura_actual="+check_sin_factura_actual,
                     "type": "POST",
                     error: function (xhr, error, code)
                     {
@@ -1229,6 +1234,7 @@ $(window).on('load', function (e) {
             var edate=$("#edate").val();
             var checked_ind_service =$("#check1").prop('checked');
             var check_usuarios_a_facturar=$("#check2").prop('checked');
+            var check_sin_factura_actual=$("#sin_factura_actual").prop('checked');
             
             var estados_multiple=$("#estado_multiple").val();
             var localidad_multiple=$("#localidad_multiple").val();
@@ -1246,7 +1252,7 @@ $(window).on('load', function (e) {
              
             //if(morosos!=""){
                 if(columnasAgregadas){
-                    tb.ajax.url( baseurl+"clientgroup/load_morosos?id=<?=$_GET['id']?>&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&checked_ind_service="+checked_ind_service+"&check_usuarios_a_facturar="+check_usuarios_a_facturar+"&estados_multiple="+estados_multiple+"&localidad_multiple="+localidad_multiple+"&barrios_multiple="+barrios_multiple+"&deudores_multiple="+deudores_multiple+"&tegnologia_multiple="+tegnologia_multiple+"&ultimo_estado_sel="+ultimo_estado_sel+"&sel_filtrar_fecha_cambio="+sel_filtrar_fecha_cambio+"&sdate3="+sdate3+"&edate2="+edate2).load();               
+                    tb.ajax.url( baseurl+"clientgroup/load_morosos?id=<?=$_GET['id']?>&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&checked_ind_service="+checked_ind_service+"&check_usuarios_a_facturar="+check_usuarios_a_facturar+"&estados_multiple="+estados_multiple+"&localidad_multiple="+localidad_multiple+"&barrios_multiple="+barrios_multiple+"&deudores_multiple="+deudores_multiple+"&tegnologia_multiple="+tegnologia_multiple+"&ultimo_estado_sel="+ultimo_estado_sel+"&sel_filtrar_fecha_cambio="+sel_filtrar_fecha_cambio+"&sdate3="+sdate3+"&edate2="+edate2+"&check_sin_factura_actual="+check_sin_factura_actual).load();               
                 }else{
                     nuevas_columnas();
                     $("option[value=100]").text("Todo");
@@ -1287,6 +1293,7 @@ $(window).on('load', function (e) {
             var edate=$("#edate").val();
             var checked_ind_service =$("#check1").prop('checked');
             var check_usuarios_a_facturar=$("#check2").prop('checked');
+            var check_sin_factura_actual=$("#sin_factura_actual").prop('checked');
 
             var estados_multiple=$("#estado_multiple").val();
             var localidad_multiple=$("#localidad_multiple").val();
@@ -1299,7 +1306,7 @@ $(window).on('load', function (e) {
             var sdate3=$("#sdate3").val();
             var edate2=$("#edate2").val();
 
-            var url_redirect=baseurl+"clientgroup/explortar_a_excel?id=<?=$_GET['id']?>&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&checked_ind_service="+checked_ind_service+"&check_usuarios_a_facturar="+check_usuarios_a_facturar+"&estados_multiple="+estados_multiple+"&localidad_multiple="+localidad_multiple+"&barrios_multiple="+barrios_multiple+"&deudores_multiple="+deudores_multiple+"&tegnologia_multiple="+tegnologia_multiple+"&ultimo_estado_sel="+ultimo_estado_sel+"&sel_filtrar_fecha_cambio="+sel_filtrar_fecha_cambio+"&sdate3="+sdate3+"&edate2="+edate2;
+            var url_redirect=baseurl+"clientgroup/explortar_a_excel?id=<?=$_GET['id']?>&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&checked_ind_service="+checked_ind_service+"&check_usuarios_a_facturar="+check_usuarios_a_facturar+"&estados_multiple="+estados_multiple+"&localidad_multiple="+localidad_multiple+"&barrios_multiple="+barrios_multiple+"&deudores_multiple="+deudores_multiple+"&tegnologia_multiple="+tegnologia_multiple+"&ultimo_estado_sel="+ultimo_estado_sel+"&sel_filtrar_fecha_cambio="+sel_filtrar_fecha_cambio+"&sdate3="+sdate3+"&edate2="+edate2+"&check_sin_factura_actual="+check_sin_factura_actual;
             window.location.replace(url_redirect);
 
     }
