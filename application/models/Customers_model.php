@@ -751,6 +751,15 @@ public function calculo_ultimo_estado ($array_add,$customers){
         $this->db->where('id', $id);
 
         if ($this->db->update('customers')) {
+            $data_h['modulo']="Customers";
+                $data_h['accion']="Editando customer";
+                $data_h['id_usuario']=$this->aauth->get_user()->id;
+                $data_h['fecha']=date("Y-m-d H:i:s");
+                $data_h['descripcion']=json_encode($data);
+                $data_h['id_fila']=$id;
+                $data_h['tabla']="customers";
+                $data_h['nombre_columna']="id";
+                $this->db->insert("historial_crm",$data_h);
             $data = array(
                 'name' => $name,
                 'email' => $email
