@@ -345,7 +345,7 @@
     //http://localhost/CRMvestel/assets/images/logo/logo-80x80.png
     setTimeout(function(){
       $("img[alt='branding logo']").removeClass("height-60-per");       
-    },1000);
+    },100);
 
 $("img[alt='branding logo']").addClass("height-50"); 
     $("img[alt='branding logo']").attr("src",baseurl+"assets/images/logo/logo-80x80.png");
