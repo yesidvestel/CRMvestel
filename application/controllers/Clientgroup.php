@@ -641,6 +641,19 @@ include (APPPATH."libraries\RouterosAPI.php");
                 $customers->suscripcion=$valor_ultima_factura;            
                 $customers->suscripcion_str=$suscripcion_str;
                 $customers->tegnologia=$tegnologia;
+                 if($_GET['check_agregar_ultima_transaccion']=="true"){
+
+                        $ultima=$this->db->query("select * from transactions where payerid=".$customers->id." and credit>0 ORDER BY transactions.date desc,transactions.id desc ")->result_array();
+                        if(count($ultima)!=0){
+
+                                $customers->fechaUltimaTransaccion=$ultima[0]['date'];
+                                $customers->ValorUltimaTransaccion=amountFormat($ultima[0]['credit']);    
+                        }else{
+                            $customers->fechaUltimaTransaccion="No Tiene";
+                            $customers->ValorUltimaTransaccion="No Tiene";    
+                        }
+                        
+                 }
                 $lista_customers2[] = $customers;
             }else{
 
@@ -661,6 +674,11 @@ include (APPPATH."libraries\RouterosAPI.php");
         $headers['UltimoEstado']="string";
         $headers['FechaCambio']="string";
     }
+    if($_GET['check_agregar_ultima_transaccion']=="true"){
+        $headers['fechaUltimaTransaccion']="string";
+        $headers['ValorUltimaTransaccion']="string";   
+    }
+
     //fetch data from database
     //$salesinfo = $this->product_model->get_salesinfo();
     
@@ -697,7 +715,10 @@ include (APPPATH."libraries\RouterosAPI.php");
         $col_options[]=array('font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center');
         $col_options[]=array('font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center');
     }
-    
+    if($_GET['check_agregar_ultima_transaccion']=="true"){
+        $col_options[]=array('font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center');
+        $col_options[]=array('font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center');
+    }
     $writer->writeSheetHeader('Customers '.$cust_group->title, $headers,$col_options);
 
     
@@ -711,11 +732,18 @@ include (APPPATH."libraries\RouterosAPI.php");
                             }else{
                                 $str_barrio= $obj_barrio->barrio;    
                             }
+                            $array_excel=array();
                             if($_GET['ultimo_estado_sel']=="Si"){
-                                $writer->writeSheetRow('Customers '.$cust_group->title,array($customer->abonado,$customer->documento ,$customer->name.' '.$customer->unoapellido, $customer->celular, $direccion,$str_barrio ,$customer->suscripcion_str,$customer->tegnologia,$customer->usu_estado,$customer->deuda,$customer->suscripcion,$customer->money,$customer->ultimo_estado,$customer->fecha_ultimo_estado));                    
+                                $array_excel=array($customer->abonado,$customer->documento ,$customer->name.' '.$customer->unoapellido, $customer->celular, $direccion,$str_barrio ,$customer->suscripcion_str,$customer->tegnologia,$customer->usu_estado,$customer->deuda,$customer->suscripcion,$customer->money,$customer->ultimo_estado,$customer->fecha_ultimo_estado);
                             }else{
-                                $writer->writeSheetRow('Customers '.$cust_group->title,array($customer->abonado,$customer->documento ,$customer->name.' '.$customer->unoapellido, $customer->celular, $direccion,$str_barrio ,$customer->suscripcion_str,$customer->tegnologia,$customer->usu_estado,$customer->deuda,$customer->suscripcion,$customer->money));                    
+                                $array_excel=array($customer->abonado,$customer->documento ,$customer->name.' '.$customer->unoapellido, $customer->celular, $direccion,$str_barrio ,$customer->suscripcion_str,$customer->tegnologia,$customer->usu_estado,$customer->deuda,$customer->suscripcion,$customer->money);
                             }
+
+                            if($_GET['check_agregar_ultima_transaccion']=="true"){
+                                $array_excel[]=$customer->fechaUltimaTransaccion;
+                                $array_excel[]=$customer->ValorUltimaTransaccion; 
+                            }
+                            $writer->writeSheetRow('Customers '.$cust_group->title,$array_excel);
             
     }
         

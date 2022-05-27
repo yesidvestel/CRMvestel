@@ -217,7 +217,8 @@
 
                                               </div>
                                                
-                                                    <input type="checkbox" name="sin_factura_actual" id="sin_factura_actual" style="cursor: pointer;transform: scale(2);">&nbsp;&nbsp;Sin Factura Actual
+                                                    <input type="checkbox" name="sin_factura_actual" id="sin_factura_actual" style="cursor: pointer;transform: scale(2);">&nbsp;&nbsp;Sin Factura Actual<br>
+                                                    <input type="checkbox" name="agregar_ultima_transaccion" id="agregar_ultima_transaccion" style="cursor: pointer;transform: scale(2);">&nbsp;&nbsp;Al exportar agregar ultima transaccion
 
                                         </div>
                                     </div>
@@ -1294,6 +1295,7 @@ $(window).on('load', function (e) {
             var checked_ind_service =$("#check1").prop('checked');
             var check_usuarios_a_facturar=$("#check2").prop('checked');
             var check_sin_factura_actual=$("#sin_factura_actual").prop('checked');
+            var check_agregar_ultima_transaccion=$("#agregar_ultima_transaccion").prop('checked');
 
             var estados_multiple=$("#estado_multiple").val();
             var localidad_multiple=$("#localidad_multiple").val();
@@ -1306,7 +1308,7 @@ $(window).on('load', function (e) {
             var sdate3=$("#sdate3").val();
             var edate2=$("#edate2").val();
 
-            var url_redirect=baseurl+"clientgroup/explortar_a_excel?id=<?=$_GET['id']?>&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&checked_ind_service="+checked_ind_service+"&check_usuarios_a_facturar="+check_usuarios_a_facturar+"&estados_multiple="+estados_multiple+"&localidad_multiple="+localidad_multiple+"&barrios_multiple="+barrios_multiple+"&deudores_multiple="+deudores_multiple+"&tegnologia_multiple="+tegnologia_multiple+"&ultimo_estado_sel="+ultimo_estado_sel+"&sel_filtrar_fecha_cambio="+sel_filtrar_fecha_cambio+"&sdate3="+sdate3+"&edate2="+edate2+"&check_sin_factura_actual="+check_sin_factura_actual;
+            var url_redirect=baseurl+"clientgroup/explortar_a_excel?id=<?=$_GET['id']?>&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&checked_ind_service="+checked_ind_service+"&check_usuarios_a_facturar="+check_usuarios_a_facturar+"&estados_multiple="+estados_multiple+"&localidad_multiple="+localidad_multiple+"&barrios_multiple="+barrios_multiple+"&deudores_multiple="+deudores_multiple+"&tegnologia_multiple="+tegnologia_multiple+"&ultimo_estado_sel="+ultimo_estado_sel+"&sel_filtrar_fecha_cambio="+sel_filtrar_fecha_cambio+"&sdate3="+sdate3+"&edate2="+edate2+"&check_sin_factura_actual="+check_sin_factura_actual+"&check_agregar_ultima_transaccion="+check_agregar_ultima_transaccion;
             window.location.replace(url_redirect);
 
     }
