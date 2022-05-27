@@ -115,7 +115,7 @@ class Manager Extends CI_Controller
     {
         $id = $this->input->get('id');
         $this->load->library("Uploadhandler_generic", array(
-            'accept_file_types' => '/\.(gif|jpe?g|png|docx|docs|txt|pdf|xls)$/i', 'upload_dir' => FCPATH . 'userfiles/historias_tareas/', 'upload_url' => base_url() . 'userfiles/historias_tareas/'
+            'accept_file_types' => '/\.(gif|jpe?g|png|docx|docs|txt|pdf|xls|xlsx)$/i', 'upload_dir' => FCPATH . 'userfiles/historias_tareas/', 'upload_url' => base_url() . 'userfiles/historias_tareas/'
         ));
         $files = (string)$this->uploadhandler_generic->filenaam();
         if ($files != '') {
