@@ -1528,7 +1528,7 @@ include (APPPATH."libraries\RouterosAPI.php");
                 $x++;
                 $array_add['debe_customer']=$debe_customer;
                 $array_add['valor_ultima_factura']=$valor_ultima_factura;
-                $array_add['suscripcion_str']=$suscripcion_str;
+                $array_add['suscripcion_str']=utf8_encode($suscripcion_str);
                 $array_add['tegnologia']=$tegnologia;
                 //$customers->ingreso=$money['credit']-$money['debit'];
                 $listax[]=$array_add;
