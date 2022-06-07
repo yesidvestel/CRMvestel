@@ -1101,8 +1101,8 @@ public function statistics_services(){
     $extraccion_dia=$this->db->get_where("estadisticas_servicios",array("fecha"=>date("Y-m-d")))->row();
     $data=array();
     if(empty($extraccion_dia) || (isset($_GET['tipo']) && $_GET['tipo']=="process")){
-        $lista_customers_activos=$this->db->query("select * from customers where (usu_estado='Activo' or usu_estado='Compromiso')")->result();
-        $lista_customers_cortados=$this->db->query("select * from customers where (usu_estado='Cortado')")->result();
+        $lista_customers_activos=$this->db->query("select * from customers where gid='2' and usu_estado='Activo'")->result();
+        $lista_customers_cortados=$this->db->query("select * from customers where (usu_estado='Cortado' and gid='4')")->result();
         $lista_customers_cartera=$this->db->query("select * from customers where (usu_estado='Cartera')")->result();
         $lista_customers_suspendidos=$this->db->query("select * from customers where (usu_estado='Suspendido')")->result();
         $lista_customers_retirado=$this->db->query("select * from customers where (usu_estado='Retirado')")->result();
@@ -1114,11 +1114,14 @@ public function statistics_services(){
         foreach ($lista_customers_activos as $key => $value) {
             $servicios=$this->customers->servicios_detail($value->id);
             $validar=false;
-            if($servicios["television"]!="no" && $servicios["television"]!="" && $servicios["television"]!="-"){
+            if($servicios["television"]=="Television" /*&& 
+			   $servicios["estado_tv"]!="Cortado"*/){
                 $tv++;
                 $validar=true;
             } 
-            if($servicios["combo"]!="no" && $servicios["combo"]!="" && $servicios["combo"]!="-"){
+            if($servicios["combo"]!="no" &&
+			   $servicios["combo"]!="" &&
+			   $servicios["combo"]!="-"){
                 $internet++;      
                 if($validar){
                     $internet_y_tv++;
@@ -1132,11 +1135,17 @@ public function statistics_services(){
 		foreach ($lista_customers_cortados as $key => $value) {
             $servicios=$this->customers->servicios_detail($value->id);
             $validar=false;
-            if($servicios["television"]!="no" && $servicios["television"]!="" && $servicios["television"]!="-"){
+            if(/*$servicios["television"]=="no" && 
+			   $servicios["television"]=="" && 
+			   $servicios["television"]=="-"||*/ 
+			   $servicios["estado_tv"]==="Cortado"){
                 $tvcor++;
                 $validar=true;
             } 
-            if($servicios["combo"]!="no" && $servicios["combo"]!="" && $servicios["combo"]!="-"){
+            if(/*$servicios["combo"]=="no" &&
+			   $servicios["combo"]=="" &&
+			   $servicios["combo"]=="-" ||*/
+			   $servicios["estado_combo"]==="Cortado"){
                 $internetcor++;      
                 if($validar){
                     $internet_y_tv_cor++;
@@ -1148,11 +1157,19 @@ public function statistics_services(){
 		foreach ($lista_customers_cartera as $key => $value) {
             $servicios=$this->customers->servicios_detail($value->id);
             $validar=false;
-            if($servicios["television"]!="no" && $servicios["television"]!="" && $servicios["television"]!="-"){
+            if($servicios["television"]!="no" &&
+			   $servicios["television"]!="" &&
+			   $servicios["television"]!="-" ||
+			  	($servicios["estado_combo"]=="Cortado" ||
+			   $servicios["estado_combo"]=="Suspendido")){
                 $tvcar++;
                 $validar=true;
             } 
-            if($servicios["combo"]!="no" && $servicios["combo"]!="" && $servicios["combo"]!="-"){
+            if($servicios["combo"]!="no" &&
+			   $servicios["combo"]!="" &&
+			   $servicios["combo"]!="-" ||
+			  	($servicios["estado_combo"]=="Cortado" ||
+			   $servicios["estado_combo"]=="Suspendido")){
                 $internetcar++;      
                 if($validar){
                     $internet_y_tv_cor++;
@@ -1164,11 +1181,19 @@ public function statistics_services(){
 		foreach ($lista_customers_suspendidos as $key => $value) {
             $servicios=$this->customers->servicios_detail($value->id);
             $validar=false;
-            if($servicios["television"]!="no" && $servicios["television"]!="" && $servicios["television"]!="-"){
+            if($servicios["television"]!="no" &&
+			   $servicios["television"]!="" &&
+			   $servicios["television"]!="-" ||
+			  ($servicios["estado_combo"]=="Cortado" ||
+			   $servicios["estado_combo"]=="Suspendido")){
                 $tvsus++;
                 $validar=true;
             } 
-            if($servicios["combo"]!="no" && $servicios["combo"]!="" && $servicios["combo"]!="-"){
+            if($servicios["combo"]!="no" &&
+			   $servicios["combo"]!="" &&
+			   $servicios["combo"]!="-" ||
+			  	($servicios["estado_combo"]=="Cortado" ||
+			   $servicios["estado_combo"]=="Suspendido")){
                 $internetsus++;      
                 if($validar){
                     $internet_y_tv_cor++;
