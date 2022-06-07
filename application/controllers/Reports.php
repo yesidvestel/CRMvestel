@@ -1097,15 +1097,45 @@ $data['datos_informe']=array("trans_type"=>$trans_type);
         return $var_lista;
 
     }
+    public function pruebas(){
+$lista_customers_activos=$this->db->query("select * from customers where (gid='2' or gid='3' or gid='4') and usu_estado='Activo'")->result();
+$this->load->model("customers_model","customers");
+        $internet=0;
+        $tv=0;
+        $activo_con_algun_servicio=0;
+        $internet_y_tv=0;
+        foreach ($lista_customers_activos as $key => $value) {
+            $servicios=$this->customers->servicios_detail($value->id);
+            $validar=false;
+            if($servicios["television"]=="Television" || $servicios["television"]=="television"/*&& 
+               $servicios["estado_tv"]!="Cortado"*/){
+                $tv++;
+                $validar=true;
+            } 
+            if($servicios["combo"]!="no" &&
+               $servicios["combo"]!="" &&
+               $servicios["combo"]!="-"){
+                $internet++;      
+                if($validar){
+                    $internet_y_tv++;
+                }
+                $validar=true;
+            } 
+            if($validar){
+                $activo_con_algun_servicio++;
+            }
+        }
+var_dump($tv);
+    }
 public function statistics_services(){
     $extraccion_dia=$this->db->get_where("estadisticas_servicios",array("fecha"=>date("Y-m-d")))->row();
     $data=array();
     if(empty($extraccion_dia) || (isset($_GET['tipo']) && $_GET['tipo']=="process")){
-        $lista_customers_activos=$this->db->query("select * from customers where gid='2' and usu_estado='Activo'")->result();
-        $lista_customers_cortados=$this->db->query("select * from customers where (usu_estado='Cortado' and gid='4')")->result();
-        $lista_customers_cartera=$this->db->query("select * from customers where (usu_estado='Cartera')")->result();
-        $lista_customers_suspendidos=$this->db->query("select * from customers where (usu_estado='Suspendido')")->result();
-        $lista_customers_retirado=$this->db->query("select * from customers where (usu_estado='Retirado')")->result();
+        $lista_customers_activos=$this->db->query("select * from customers where (gid='2' or gid='3' or gid='4') and  usu_estado='Activo'")->result();
+        $lista_customers_cortados=$this->db->query("select * from customers where (gid='2' or gid='3' or gid='4') and usu_estado='Cortado'")->result();
+        $lista_customers_cartera=$this->db->query("select * from customers where (gid='2' or gid='3' or gid='4') and usu_estado='Cartera'")->result();
+        $lista_customers_suspendidos=$this->db->query("select * from customers where (gid='2' or gid='3' or gid='4') and usu_estado='Suspendido'")->result();
+        $lista_customers_retirado=$this->db->query("select * from customers where (gid='2' or gid='3' or gid='4') and usu_estado='Retirado'")->result();
         $this->load->model("customers_model","customers");
         $internet=0;
         $tv=0;
