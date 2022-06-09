@@ -267,7 +267,7 @@
                                     <h5 class="primary"> <?php echo $this->lang->line('') ?>Usuarios</h5>
                                     <h5 class="text-bold-400"><?php echo $actotal;
                                         echo '/' . $goals['users'] ?></h5>
-                                    <progress class="progress progress-striped progress-pink mt-1 mb-0"
+                                    <progress class="progress progress-striped progress-primary mt-1 mb-0"
                                               value="<?php $ipt = sprintf("%0.2f", (($actotal) * 100) / $goals['users']);
                                               echo $ipt; ?>" max="100"></progress>
                                 </div>

@@ -172,11 +172,11 @@ class Dashboard_model extends CI_Model
     {
 		if ($sede == ''){
 		$query = $this->db->query("SELECT i.tid,i.invoicedate,i.total,i.status,c.name
-		FROM invoices AS i LEFT JOIN customers AS c ON i.csd=c.id ORDER BY i.tid DESC LIMIT 10");
+		FROM invoices AS i LEFT JOIN customers AS c ON i.csd=c.id ORDER BY i.tid DESC LIMIT 13");
 		return $query->result_array();
 		}
         $query = $this->db->query("SELECT i.tid,i.invoicedate,i.total,i.status,c.name
-		FROM invoices AS i LEFT JOIN customers AS c ON i.csd=c.id WHERE refer='$sede' ORDER BY i.tid DESC LIMIT 10");
+		FROM invoices AS i LEFT JOIN customers AS c ON i.csd=c.id WHERE refer='$sede' ORDER BY i.tid DESC LIMIT 13");
 		return $query->result_array();
 		
 		
