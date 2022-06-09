@@ -225,7 +225,8 @@
             <td>
                 <?php echo '<strong>'.$customer->name .' '. $customer->dosnombre .'</strong><br>';
                 echo $customer->unoapellido .' '. $customer->dosapellido .  '<br>';
-                echo $customer->departamento .'/'.$customer->ciudad . '<br>' .$customer->tipo_documento.': ' .$customer->documento . '<br>'.$this->lang->line('Phone').': ' . $customer->celular . '<br>' . $this->lang->line('Email') . ' : ' . $customer->email;
+                echo $customer->ciudad . '<br>' .$customer->tipo_documento.': ' .$customer->documento . '<br>'.$this->lang->line('Phone').': ' . $customer->celular . '<br>
+				Direccion: ' . $customer->nomenclatura.' '.$customer->numero1.$customer->adicionauno.' # '.$customer->numero2.$customer->adicional2.' - '.$customer->numero3.'/'.$customer->referencia;
                 
                 ?>
             </td>
