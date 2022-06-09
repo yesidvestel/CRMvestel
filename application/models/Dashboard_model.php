@@ -184,7 +184,17 @@ class Dashboard_model extends CI_Model
 
     }
 
-    public function tasks($id)
+    public function lista_usuarios()
+    {
+        $this->db->select('*');
+        $this->db->from('estadisticas_servicios');
+        //$this->db->limit(1);
+        $this->db->order_by('DATE(fecha)','DESC');
+        $query = $this->db->get();
+        $result = $query->row_array();
+        return $result;
+    }
+	public function tasks($id)
     {
         $this->db->select('*');
         $this->db->from('todolist');

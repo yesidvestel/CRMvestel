@@ -56,6 +56,7 @@ class Dashboard extends CI_Controller
             $data['todayinexp'] = $this->dashboard_model->todayInexp($today, $sede);
             $data['recent_payments'] = $this->dashboard_model->recent_payments($sede);
             $data['tasks'] = $this->dashboard_model->tasks($this->aauth->get_user()->id);
+            $data['list_users'] = $this->dashboard_model->lista_usuarios();
             $data['recent'] = $this->dashboard_model->recentInvoices($sede);
             $data['goals'] = $this->tools_model->goals(1);
             $data['stock'] = $this->dashboard_model->stock($sede);

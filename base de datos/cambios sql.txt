@@ -13,8 +13,8 @@ CREATE TABLE IF NOT EXISTS `crm3`.`orden_de_pago` (
   PRIMARY KEY (`id_orden_de_pago`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
-ALTER TABLE `orden_de_pago` ADD `estado` ENUM('Link Publicado','Pagado','Cancelado','Expirado') NOT NULL AFTER `user_id`;
-ALTER TABLE `orden_de_pago` ADD `nombre_referencia` VARCHAR(200) NULL DEFAULT NULL AFTER `estado`;
+ALTER TABLE `goals` ADD `users` ENUM('Link Publicado','Pagado','Cancelado','Expirado') NOT NULL AFTER `user_id`;
+ALTER TABLE `goals` ADD `users` BIGINT(20) NULL DEFAULT NULL AFTER `netincome`;
 ALTER TABLE `orden_de_pago` ADD `expire_date` DATETIME NULL DEFAULT NULL AFTER `nombre_referencia`;
 ------------------------------------------------------------------------------------
 ALTER TABLE `users` ADD `img_profile` VARCHAR(100) NULL AFTER `cid`;
