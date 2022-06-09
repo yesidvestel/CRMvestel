@@ -243,9 +243,10 @@ class Tools Extends CI_Controller
             $expense = $this->input->post('expense');
             $sales = $this->input->post('sales');
             $netincome = $this->input->post('netincome');
+            $users = $this->input->post('usuarios');
 
 
-            if ($this->tools->setgoals($income, $expense, $sales, $netincome)) {
+            if ($this->tools->setgoals($income, $expense, $sales, $netincome, $users)) {
                 echo json_encode(array('status' => 'Success', 'message' => $this->lang->line('UPDATED')));
             } else {
                 echo json_encode(array('status' => 'Error', 'message' => $this->lang->line('ERROR')));

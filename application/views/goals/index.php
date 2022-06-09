@@ -61,7 +61,17 @@
                                value="<?php echo $goals['netincome'] ?>">
                     </div>
                 </div>
+				<div class="form-group row">
 
+                    <label class="col-sm-2 col-form-label"
+                           for="netincome"><?php echo $this->lang->line('') ?>Usuarios</label>
+
+                    <div class="col-sm-5">
+                        <input type="text" placeholder="Net Income"
+                               class="form-control margin-bottom  required" name="usuarios"
+                               value="<?php echo $goals['users'] ?>">
+                    </div>
+                </div>
 
                 <div class="form-group row">
 

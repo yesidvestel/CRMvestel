@@ -12,8 +12,14 @@
         echo "{ x: '" . $row['date'] . "', y: " . intval($row['total']) . "},";
     }
         ?>];
-
+	
 </script>
+<?php 
+	$slint = $list_users['n_internet']-$list_users['internet_y_tv'];
+	$sltv = $list_users['n_tv']-$list_users['internet_y_tv'];
+	$actotal = $list_users['internet_y_tv']+$slint+$sltv;
+
+?>
 
 <div class="app-content content container-fluid">
     <div class="content-wrapper">
@@ -153,6 +159,7 @@
                                     <progress class="progress progress-xs mt-2 progress-indigo" value="100"
                                               max="100"></progress>
                                 </div>
+								
                             </div>
                         </div>
                     </div>
@@ -245,6 +252,23 @@
                                         echo '/' . amountFormat($goals['netincome']) ?></h5>
                                     <progress class="progress progress-striped progress-pink mt-1 mb-0"
                                               value="<?php $ipt = sprintf("%0.2f", (($tt_inc - $tt_exp) * 100) / $goals['netincome']);
+                                              echo $ipt; ?>" max="100"></progress>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+					<div class="card">
+                        <div class="card-body">
+                            <div class="media">
+                                <div class="p-1 text-xs-center btn-primary media-left media-middle">
+                                    <i class="icon-group font-large-2 white"></i>
+                                </div>
+                                <div class="p-1 media-body">
+                                    <h5 class="primary"> <?php echo $this->lang->line('') ?>Usuarios</h5>
+                                    <h5 class="text-bold-400"><?php echo $actotal;
+                                        echo '/' . $goals['users'] ?></h5>
+                                    <progress class="progress progress-striped progress-primary mt-1 mb-0"
+                                              value="<?php $ipt = sprintf("%0.2f", (($actotal) * 100) / $goals['users']);
                                               echo $ipt; ?>" max="100"></progress>
                                 </div>
                             </div>
