@@ -293,6 +293,7 @@ include (APPPATH."libraries\RouterosAPI.php");
                 $filtros_deuda_customers=0;
                 foreach ($lista_invoices as $key => $invoice) {
                     $suma=0;
+					$suscripcion_str="";
                     if($invoice->combo!="no" && $invoice->combo!="" && $invoice->combo!="-"){
                         $fact_valida=true;
                         $_var_tiene_internet=true;
@@ -314,6 +315,7 @@ include (APPPATH."libraries\RouterosAPI.php");
                     $puntosvar="";
                     if($fact_valida){
                         if($_var_tiene_tv){
+							$producto=null;
                             if(str_replace(" ", "", $invoice->refer)=="Mocoa"){
                                 $producto=$this->db->get_where('products', array("pid"=>"159"))->row();
                                 $suma+=$producto->product_price;
@@ -334,22 +336,24 @@ include (APPPATH."libraries\RouterosAPI.php");
                             $suma+=$punto_adicional->product_price*$invoice->puntos;
                        }
                         //esto es para los estados
-            if($invoice->estado_tv=="Cortado"){
+            if($_var_tiene_tv && $invoice->estado_tv=="Cortado"){
 				if($_GET['sel_servicios']=="TV" || $_GET['sel_servicios']=="Combo"){
-                    $var_excluir=true;    
+                    //$var_excluir=true;    
                 }
+                $var_excluir=false;
                 if(strpos($_GET['estados_multiple'], "Cortado")!==false ){
                     $var_excluir=false;                    
                 }
                 $suscripcion_str="(Tv cortada".$puntosvar.")";   
-            }else if($invoice->estado_tv=="Suspendido"){
+            }else if($_var_tiene_tv && $invoice->estado_tv=="Suspendido"){
                 $suscripcion_str="(Tv suspendida".$puntosvar.")";
 				if($_GET['sel_servicios']=="TV" || $_GET['sel_servicios']=="Combo"){
-                    $var_excluir=true;    
+                    //$var_excluir=true;    
                 }
                 if(strpos($_GET['estados_multiple'], "Suspendido")!==false){
                     $var_excluir=false;                    
-                }				
+                }	
+                $var_excluir=false;			
             }
 
 //esto es para los estados
@@ -369,20 +373,21 @@ include (APPPATH."libraries\RouterosAPI.php");
                                 if($suscripcion_str!=""){
                                     if($invoice->estado_combo=="Cortado"){
 										if($_GET['sel_servicios']=="Internet" || $_GET['sel_servicios']=="Combo"){
-                                            $var_excluir=true;    
+                                            //$var_excluir=true;    
                                         }
                                         if(strpos($_GET['estados_multiple'], "Cortado")!==false ){
                                             $var_excluir=false;                    
                                         }										
-									
+									$var_excluir=false;
                                         $suscripcion_str.="+"."(".$var_e." cortado)";   
                                     }else if($invoice->estado_combo=="Suspendido"){
 										if($_GET['sel_servicios']=="Internet" || $_GET['sel_servicios']=="Combo"){
-                                            $var_excluir=true;    
+                                           // $var_excluir=true;    
                                         }
                                         if(strpos($_GET['estados_multiple'], "Suspendido")!==false){
                                             $var_excluir=false;                    
                                         }
+                                        $var_excluir=false;
                                         $suscripcion_str.="+"."(".$var_e." suspendido)";   
                                     }else{
                                         $suscripcion_str.="+".$var_e;    
@@ -391,19 +396,21 @@ include (APPPATH."libraries\RouterosAPI.php");
                                 }else{
                                     if($invoice->estado_combo=="Cortado"){
 										if($_GET['sel_servicios']=="Internet" || $_GET['sel_servicios']=="Combo"){
-                                            $var_excluir=true;    
+                                           // $var_excluir=true;    
                                         }
                                         if(strpos($_GET['estados_multiple'], "Cortado")!==false){
                                             $var_excluir=false;                    
-                                        }  										
+                                        }  
+                                        $var_excluir=false;										
                                         $suscripcion_str="(".$var_e." cortado)";   
                                     }else if($invoice->estado_combo=="Suspendido"){
 										 if($_GET['sel_servicios']=="Internet" || $_GET['sel_servicios']=="Combo"){
-                                            $var_excluir=true;    
+                                           // $var_excluir=true;    
                                         }
                                         if(strpos($_GET['estados_multiple'], "Suspendido")!==false){
                                             $var_excluir=false;                    
                                         }
+                                        $var_excluir=false;
                                         $suscripcion_str="(".$var_e." suspendido)";   
                                     }else{
                                         $suscripcion_str=$var_e;
@@ -1110,6 +1117,7 @@ include (APPPATH."libraries\RouterosAPI.php");
                 $filtros_deuda_customers=0;
                 foreach ($lista_invoices as $key => $invoice) {
                     $suma=0;
+                    $suscripcion_str="";
                     if($invoice->combo!="no" && $invoice->combo!="" && $invoice->combo!="-"){
                         $fact_valida=true;
                         $_var_tiene_internet=true;
@@ -1152,20 +1160,20 @@ include (APPPATH."libraries\RouterosAPI.php");
                             $suma+=$punto_adicional->product_price*$invoice->puntos;
                        }
 //esto es para los estados
-            if($invoice->estado_tv=="Cortado"){
+            if($_var_tiene_tv && $invoice->estado_tv=="Cortado"){
                 
                 if($_GET['sel_servicios']=="TV" || $_GET['sel_servicios']=="Combo"){
-                    $var_excluir=true;    
+                    //$var_excluir=true;    
                 }
                 if(strpos($_GET['estados_multiple'], "Cortado")!==false ){
                     $var_excluir=false;                    
-                }
+                }$var_excluir=false;
                 $suscripcion_str="<b><i class='sts-Cortado'>Tv".$puntosvar."</i></b>";   
-            }else if($invoice->estado_tv=="Suspendido"){                
+            }else if($_var_tiene_tv && $invoice->estado_tv=="Suspendido"){                
                 $suscripcion_str="<b><i class='sts-Suspendido'>Tv".$puntosvar."</i></b>";   
                 if($_GET['sel_servicios']=="TV" || $_GET['sel_servicios']=="Combo"){
-                    $var_excluir=true;    
-                }
+                  //  $var_excluir=true;    
+                }$var_excluir=false;
                 if(strpos($_GET['estados_multiple'], "Suspendido")!==false){
                     $var_excluir=false;                    
                 }
@@ -1186,20 +1194,20 @@ include (APPPATH."libraries\RouterosAPI.php");
                                 if($suscripcion_str!=""){
                                     if($invoice->estado_combo=="Cortado"){
                                         if($_GET['sel_servicios']=="Internet" || $_GET['sel_servicios']=="Combo"){
-                                            $var_excluir=true;    
+                                            //$var_excluir=true;    
                                         }
                                         if(strpos($_GET['estados_multiple'], "Cortado")!==false ){
                                             $var_excluir=false;                    
                                         }
-                                        
+                                        $var_excluir=false;
                                         $suscripcion_str.="+"."<b><i class='sts-Cortado'>".$var_e."</i></b>";   
                                     }else if($invoice->estado_combo=="Suspendido"){
                                         if($_GET['sel_servicios']=="Internet" || $_GET['sel_servicios']=="Combo"){
-                                            $var_excluir=true;    
+                                            //$var_excluir=true;    
                                         }
                                         if(strpos($_GET['estados_multiple'], "Suspendido")!==false){
                                             $var_excluir=false;                    
-                                        }
+                                        }$var_excluir=false;
                                         $suscripcion_str.="+"."<b><i class='sts-Suspendido'>".$var_e."</i></b>";   
                                     }else{
                                         $suscripcion_str.="+".$var_e;    
@@ -1208,19 +1216,19 @@ include (APPPATH."libraries\RouterosAPI.php");
                                 }else{
                                     if($invoice->estado_combo=="Cortado"){
                                         if($_GET['sel_servicios']=="Internet" || $_GET['sel_servicios']=="Combo"){
-                                            $var_excluir=true;    
+                                            //$var_excluir=true;    
                                         }
                                         if(strpos($_GET['estados_multiple'], "Cortado")!==false){
                                             $var_excluir=false;                    
-                                        }               
+                                        }  $var_excluir=false;             
                                         $suscripcion_str="<b><i class='sts-Cortado'>".$var_e."</i></b>";   
                                     }else if($invoice->estado_combo=="Suspendido"){
                                         if($_GET['sel_servicios']=="Internet" || $_GET['sel_servicios']=="Combo"){
-                                            $var_excluir=true;    
+                                            //$var_excluir=true;    
                                         }
                                         if(strpos($_GET['estados_multiple'], "Suspendido")!==false){
                                             $var_excluir=false;                    
-                                        }
+                                        }$var_excluir=false;
                                         $suscripcion_str="<b><i class='sts-Suspendido'>".$var_e."</i></b>";   
                                     }else{
                                         $suscripcion_str=$var_e;    
@@ -1538,7 +1546,7 @@ include (APPPATH."libraries\RouterosAPI.php");
             }
              
         }
-        
+        //var_dump($c);
         $datax['datos']=json_encode($listax);//cuanto esto falle por ser muchos customers y toque buscar una solucion seria guardarlo en dos campos mitad y mitad es decir el count /2 serian los items a guardar en datoa y en dato b el resto de igual forma en el proceso de lectura se leen los dos y de unifican en una sola variable
         $this->db->update("filtros_historial",$datax, array("id"=>$this->aauth->get_user()->id));                
         if($this->db->affected_rows()==0){
@@ -1888,19 +1896,19 @@ include (APPPATH."libraries\RouterosAPI.php");
                        }
 						
 				//esto es para los estados
-							if($invoice->estado_tv=="Cortado"){
+							if($_var_tiene_tv && $invoice->estado_tv=="Cortado"){
 								if($_GET['sel_servicios']=="TV" || $_GET['sel_servicios']=="Combo"){
-									$var_excluir=true;    
+									//$var_excluir=true;    
 								}
 								if(strpos($_GET['estados_multiple'], "Cortado")!==false ){
 									$var_excluir=false;                    
-								}
+								}$var_excluir=false; 
 								$suscripcion_str="<b><i class='sts-Cortado'>Tv".$puntosvar."</i></b>";   
-							}else if($invoice->estado_tv=="Suspendido"){
+							}else if($_var_tiene_tv && $invoice->estado_tv=="Suspendido"){
 								$suscripcion_str="<b><i class='sts-Suspendido'>Tv".$puntosvar."</i></b>";   
 								if($_GET['sel_servicios']=="TV" || $_GET['sel_servicios']=="Combo"){
-									$var_excluir=true;    
-								}
+									//$var_excluir=true;    
+								}$var_excluir=false; 
 								if(strpos($_GET['estados_multiple'], "Suspendido")!==false){
 									$var_excluir=false;                    
 								}
@@ -1922,20 +1930,20 @@ include (APPPATH."libraries\RouterosAPI.php");
                                 if($suscripcion_str!=""){
                                     if($invoice->estado_combo=="Cortado"){
                                         if($_GET['sel_servicios']=="Internet" || $_GET['sel_servicios']=="Combo"){
-                                            $var_excluir=true;    
+                                           // $var_excluir=true;    
                                         }
                                         if(strpos($_GET['estados_multiple'], "Cortado")!==false ){
                                             $var_excluir=false;                    
-                                        }
+                                        }$var_excluir=false; 
                                         
                                         $suscripcion_str.="+"."<b><i class='sts-Cortado'>".$var_e."</i></b>";   
                                     }else if($invoice->estado_combo=="Suspendido"){
                                         if($_GET['sel_servicios']=="Internet" || $_GET['sel_servicios']=="Combo"){
-                                            $var_excluir=true;    
+                                            //$var_excluir=true;    
                                         }
                                         if(strpos($_GET['estados_multiple'], "Suspendido")!==false){
                                             $var_excluir=false;                    
-                                        }
+                                        }$var_excluir=false; 
                                         $suscripcion_str.="+"."<b><i class='sts-Suspendido'>".$var_e."</i></b>";   
                                     }else{
                                         $suscripcion_str.="+".$var_e;    
@@ -1944,19 +1952,19 @@ include (APPPATH."libraries\RouterosAPI.php");
                                 }else{
                                     if($invoice->estado_combo=="Cortado"){
 										if($_GET['sel_servicios']=="Internet" || $_GET['sel_servicios']=="Combo"){
-                                            $var_excluir=true;    
+                                            //$var_excluir=true;    
                                         }
                                         if(strpos($_GET['estados_multiple'], "Cortado")!==false){
                                             $var_excluir=false;                    
-                                        }               
+                                        } $var_excluir=false;               
                                         $suscripcion_str="<b><i class='sts-Cortado'>".$var_e."</i></b>";   
                                     }else if($invoice->estado_combo=="Suspendido"){
                                         if($_GET['sel_servicios']=="Internet" || $_GET['sel_servicios']=="Combo"){
-                                            $var_excluir=true;    
+                                            //$var_excluir=true;    
                                         }
                                         if(strpos($_GET['estados_multiple'], "Suspendido")!==false){
                                             $var_excluir=false;                    
-                                        }
+                                        }$var_excluir=false; 
                                         $suscripcion_str="<b><i class='sts-Suspendido'>".$var_e."</i></b>";   
                                     }else{
                                         $suscripcion_str=$var_e;    
