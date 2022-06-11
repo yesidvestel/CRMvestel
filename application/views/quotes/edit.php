@@ -526,13 +526,13 @@
     });
 	// selecion de orden
 	<?php if ($this->aauth->get_user()->roleid == 5) { ?>
-	var perfil_servicio = new Array ("...","Reconexion Combo","Reconexion Television","Retiro voluntario","Recuperación cable modem","Veeduria","Reconexion Internet","AgregarInternet","AgregarTelevision","Migracion","Bajar_megas","Cambio de equipo","Corte Combo","Corte Internet","Corte Television","Equipo adicional","Instalacion","Punto nuevo","Subir_megas","Suspension Combo","Suspension Internet","Suspension Television","Traslado","Toma Adicional");
+	var perfil_servicio = new Array ("...","Reconexion Combo","Reinstalación","Reconexion Television","Retiro voluntario","Recuperación cable modem","Veeduria","Reconexion Internet","AgregarInternet","AgregarTelevision","Migracion","Bajar_megas","Cambio de equipo","Corte Combo","Corte Internet","Corte Television","Equipo adicional","Instalacion","Punto nuevo","Subir_megas","Suspension Combo","Suspension Internet","Suspension Television","Traslado","Toma Adicional");
 	<?php } else if ($this->aauth->get_user()->roleid == 4) { ?>
-	var perfil_servicio = new Array ("...","AgregarInternet","AgregarTelevision","Retiro voluntario","Recuperación cable modem","Migracion","Veeduria","Bajar_megas","Cambio de equipo","Corte Combo","Corte Internet","Corte Television","Equipo adicional","Instalacion","Punto nuevo","Subir_megas","Suspension Combo","Suspension Internet","Suspension Television","Traslado","Toma Adicional");
+	var perfil_servicio = new Array ("...","AgregarInternet","Reinstalación","AgregarTelevision","Retiro voluntario","Recuperación cable modem","Migracion","Veeduria","Bajar_megas","Cambio de equipo","Corte Combo","Corte Internet","Corte Television","Equipo adicional","Instalacion","Punto nuevo","Subir_megas","Suspension Combo","Suspension Internet","Suspension Television","Traslado","Toma Adicional");
 	<?php } else { ?>
-	var perfil_servicio = new Array ("...","AgregarInternet","AgregarTelevision","Recuperación cable modem","Migracion","Veeduria","Bajar_megas","Cambio de equipo","Corte Combo","Corte Internet","Corte Television","Equipo adicional","Instalacion","Punto nuevo","Subir_megas","Traslado","Toma Adicional");
+	var perfil_servicio = new Array ("...","AgregarInternet","Reinstalación","AgregarTelevision","Recuperación cable modem","Migracion","Veeduria","Bajar_megas","Cambio de equipo","Corte Combo","Corte Internet","Corte Television","Equipo adicional","Instalacion","Punto nuevo","Subir_megas","Traslado","Toma Adicional");
 	<?php }; ?>
-	var perfil_reclamo = new Array ("...","Revision_de_Internet","Revision_de_television","Revision tv e internet");	
+	var perfil_reclamo = new Array ("...","Revision_de_Internet","Reinstalación","Revision_de_television","Revision tv e internet");	
 							//crear funcion que ejecute el cambio
 							function cambia(){
 								var subject;
