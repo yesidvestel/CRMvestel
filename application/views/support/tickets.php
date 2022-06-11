@@ -196,6 +196,7 @@
 													<option value='Revision de television'>Revision de television</option>
 													<option value='Revision tv e internet'>Revision tv e internet</option>
 													<option value='Reconexion Combo'>Reconexion Combo</option>
+													<option value='Reinstalación'>Reinstalación</option>
 													<option value='Reconexion Internet'>Reconexion Internet</option>
 													<option value='Retiro voluntario'>Retiro voluntario</option>
 													<option value='Reconexion Television'>Reconexion Television</option>
