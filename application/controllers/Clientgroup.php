@@ -1886,7 +1886,7 @@ include (APPPATH."libraries\RouterosAPI.php");
                                 $producto=$this->db->get_where('products', array("pid"=>"27"))->row();
                                 $suma+=$producto->product_price+3992;
                             }
-                            if($producto!=null){
+                            if($producto!=null){$var_excluir=false;
                                 $suscripcion_str="Tv";
                             }
                             
@@ -1930,7 +1930,7 @@ include (APPPATH."libraries\RouterosAPI.php");
                                     break;
                                 }
                             }
-                            if(!empty($var_e)){
+                            if(!empty($var_e)){$var_excluir=false;
                                 if($suscripcion_str!=""){
                                     if($invoice->estado_combo=="Cortado"){
                                         if($_GET['sel_servicios']=="Internet" || $_GET['sel_servicios']=="Combo"){
@@ -1979,6 +1979,8 @@ include (APPPATH."libraries\RouterosAPI.php");
                             
                         }
                         
+                    }else{
+                        $var_excluir=true;
                     }
                     $invoice->total=$suma;
                    // if(!$fact_valida){
