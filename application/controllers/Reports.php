@@ -1146,11 +1146,11 @@ public function statistics_services(){
     $data=array();
     ini_set('memory_limit', '-1');
     if(empty($extraccion_dia) || (isset($_GET['tipo']) && $_GET['tipo']=="process")){
-        $lista_customers_activos=$this->db->query("select * from customers where (gid='2' or gid='3' or gid='4') and  (usu_estado='Activo' or usu_estado='Compromiso')")->result();
-        $lista_customers_cortados=$this->db->query("select * from customers where gid='2' or gid='3' or gid='4'")->result();
-        $lista_customers_cartera=$this->db->query("select * from customers where (gid='2' or gid='3' or gid='4') and usu_estado='Cartera'")->result();
+        $lista_customers_activos=$this->db->query("select * from customers where gid='2' and  (usu_estado='Activo' or usu_estado='Compromiso')")->result();
+        $lista_customers_cortados=$this->db->query("select * from customers where gid='2' and (usu_estado='Cortado' or usu_estado='Activo')")->result();
+        $lista_customers_cartera=$this->db->query("select * from customers where gid='2' and usu_estado='Cartera'")->result();
         //$lista_customers_suspendidos=$this->db->query("select * from customers where gid='2' and usu_estado='Suspendido'")->result();
-        $lista_customers_retirado=$this->db->query("select * from customers where (gid='2' or gid='3' or gid='4') and usu_estado='Retirado'")->result();
+        $lista_customers_retirado=$this->db->query("select * from customers where gid='2' and usu_estado='Retirado'")->result();
         $this->load->model("customers_model","customers");
         $obtenido_activos=$this->customers->conteo($lista_customers_activos);
         $obtenido_cortados=$this->customers->conteo($lista_customers_cortados);
