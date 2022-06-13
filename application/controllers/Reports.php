@@ -1098,44 +1098,24 @@ $data['datos_informe']=array("trans_type"=>$trans_type);
 
     }
     public function pruebas(){
-$lista_customers_activos=$this->db->query("select * from customers where usu_estado='Activo' AND gid='2'")->result();
+
+ini_set('memory_limit', '-1');
 $this->load->model("customers_model","customers");
-        $internet=0;
-        $tv=0;
-        $activo_con_algun_servicio=0;
-        $internet_y_tv=0;
-        foreach ($lista_customers_activos as $key => $value) {
-            $servicios=$this->customers->servicios_detail($value->id);
-            $validar=false;
-            if($servicios["television"]=="Television"/*&& 
-               $servicios["estado_tv"]!="Cortado"*/){
-                $tv++;
-                $validar=true;
-            } 
-            if($servicios["combo"]!="no" &&
-               $servicios["combo"]!="" &&
-               $servicios["combo"]!="-"){
-                $internet++;      
-                if($validar){
-                    $internet_y_tv++;
-                }
-                $validar=true;
-            } 
-            if($validar){
-                $activo_con_algun_servicio++;
-            }
-        }
-var_dump($tv);
+$lista_customers_activos=$this->db->query("select * from customers where (gid='2' or gid='3' or gid='4') and  (usu_estado='Activo' or usu_estado='Compromiso')")->result();
+        $lista_customers_cortados=$this->db->query("select * from customers where gid='2' or gid='3' or gid='4'")->result();
+        $lista_customers_cartera=$this->db->query("select * from customers where (gid='2' or gid='3' or gid='4') and usu_estado='Cartera'")->result();
+        //$lista_customers_suspendidos=$this->db->query("select * from customers where gid='2' and usu_estado='Suspendido'")->result();
+        $lista_customers_retirado=$this->db->query("select * from customers where (gid='2' or gid='3' or gid='4') and usu_estado='Retirado'")->result();
+        $this->load->model("customers_model","customers");
+        $obtenido_activos=$this->customers->conteo($lista_customers_activos);
+        $obtenido_cortados=$this->customers->conteo($lista_customers_cortados);
+        $obtenido_cartera=$this->customers->conteo($lista_customers_cartera);
+        $obtenido_retirado=$this->customers->conteo($lista_customers_retirado);
+
+
     }
-public function statistics_services(){
-    $extraccion_dia=$this->db->get_where("estadisticas_servicios",array("fecha"=>date("Y-m-d")))->row();
-    $data=array();
-    if(empty($extraccion_dia) || (isset($_GET['tipo']) && $_GET['tipo']=="process")){
+    public function pr1(){
         $lista_customers_activos=$this->db->query("select * from customers where gid='2' and  (usu_estado='Activo' or usu_estado='Compromiso')")->result();
-        $lista_customers_cortados=$this->db->query("select * from customers where gid='2' and (usu_estado='Cortado' or usu_estado='Activo')")->result();
-        $lista_customers_cartera=$this->db->query("select * from customers where gid='2' and usu_estado='Cartera'")->result();
-        $lista_customers_suspendidos=$this->db->query("select * from customers where gid='2' and usu_estado='Suspendido'")->result();
-        $lista_customers_retirado=$this->db->query("select * from customers where gid='2' and usu_estado='Retirado'")->result();
         $this->load->model("customers_model","customers");
         $internet=0;
         $tv=0;
@@ -1144,11 +1124,11 @@ public function statistics_services(){
         foreach ($lista_customers_activos as $key => $value) {
             $servicios=$this->customers->servicios_detail($value->id);
             $validar=false;
-            if($servicios["television"]=="Television" && $servicios["estado_tv"]!="Cortado"){
+            if($servicios["television"]=="Television"){
                 $tv++;
                 $validar=true;
             } 
-            if($servicios["combo"]!="no" && $servicios["estado_combo"]!="Cortado"){
+            if($servicios["combo"]!="no" ){
                 $internet++;      
                 if($validar){
                     $internet_y_tv++;
@@ -1159,82 +1139,37 @@ public function statistics_services(){
                 $activo_con_algun_servicio++;
             }
         }
-		foreach ($lista_customers_cortados as $key => $value) {
-            $servicios=$this->customers->servicios_detail($value->id);
-            $validar=false;
-            if($servicios["estado_tv"]=="Cortado"){
-                $tvcor++;
-                $validar=true;
-            } 
-            if($servicios["estado_combo"]=="Cortado"){
-                $internetcor++;      
-                if($validar){
-                    $internet_y_tv_cor++;
-                }
-                $validar=true;
-            }
-        }
-		//cartera
-		foreach ($lista_customers_cartera as $key => $value) {
-			$servicios = $this->db->from("invoices")->where("csd",$value->id)->order_by('invoicedate,tid',"DESC")->get()->result();
-            //$servicios=$this->customers->servicios_detail($value->id);
-            $validar=false;
-            if($servicios->television!="no"){
-                $tvcar++;
-                $validar=true;
-            } 
-            if($servicios["combo"]!="no" || $servicios["combo"]!=""){
-                $internetcar++;      
-                if($validar){
-                    $internet_y_tv_cor++;
-                }
-                $validar=true;
-            }
-        }
-		//suspendidos
-		foreach ($lista_customers_suspendidos as $key => $value) {
-            $servicios = $this->db->from("invoices")->where("csd",$value->id)->order_by('invoicedate,tid',"DESC")->get()->result();
-            $validar=false;
-            if($servicios["television"]!="no"){
-                $tvsus++;
-                $validar=true;
-            } 
-            if($servicios["combo"]!="no"){
-                $internetsus++;      
-                if($validar){
-                    $internet_y_tv_cor++;
-                }
-                $validar=true;
-            }
-        }
-		//retirados
-		foreach ($lista_customers_retirado as $key => $value) {
-            $servicios=$this->customers->servicios_detail($value->id);
-            $validar=false;
-            if($servicios["television"]!="no"){
-                $tvret++;
-                $validar=true;
-            } 
-            if($servicios["combo"]!="no"){
-                $internetret++;      
-                if($validar){
-                    $internet_y_tv_cor++;
-                }
-                $validar=true;
-            }
-        }
-        $data['n_internet']=$internet;
-        $data['n_tv']=$tv;
-        $data['internet_y_tv']=$internet_y_tv;
-        $data['n_activo']=$activo_con_algun_servicio;
-        $data['cor_int']=$internetcor;
-        $data['cor_tv']=$tvcor;
-        $data['car_int']=$internetcar;
-        $data['car_tv']=$tvcar;
-        $data['sus_int']=$internetsus;
-        $data['sus_tv']=$tvsus;
-        $data['ret_int']=$internetret;
-        $data['ret_tv']=$tvret;
+        var_dump($tv);
+    }
+public function statistics_services(){
+    $extraccion_dia=$this->db->get_where("estadisticas_servicios",array("fecha"=>date("Y-m-d")))->row();
+    $data=array();
+    ini_set('memory_limit', '-1');
+    if(empty($extraccion_dia) || (isset($_GET['tipo']) && $_GET['tipo']=="process")){
+        $lista_customers_activos=$this->db->query("select * from customers where (gid='2' or gid='3' or gid='4') and  (usu_estado='Activo' or usu_estado='Compromiso')")->result();
+        $lista_customers_cortados=$this->db->query("select * from customers where gid='2' or gid='3' or gid='4'")->result();
+        $lista_customers_cartera=$this->db->query("select * from customers where (gid='2' or gid='3' or gid='4') and usu_estado='Cartera'")->result();
+        //$lista_customers_suspendidos=$this->db->query("select * from customers where gid='2' and usu_estado='Suspendido'")->result();
+        $lista_customers_retirado=$this->db->query("select * from customers where (gid='2' or gid='3' or gid='4') and usu_estado='Retirado'")->result();
+        $this->load->model("customers_model","customers");
+        $obtenido_activos=$this->customers->conteo($lista_customers_activos);
+        $obtenido_cortados=$this->customers->conteo($lista_customers_cortados);
+        $obtenido_cartera=$this->customers->conteo($lista_customers_cartera);
+        $obtenido_retirado=$this->customers->conteo($lista_customers_retirado);
+
+       
+        $data['n_internet']=$obtenido_activos['net'];
+        $data['n_tv']=$obtenido_activos['tv'];
+        $data['internet_y_tv']=$obtenido_activos['internet_y_tv'];
+        $data['n_activo']=$obtenido_activos['activo_con_algun_servicio'];
+        $data['cor_int']=$obtenido_cortados['internetcor'];
+        $data['cor_tv']=$obtenido_cortados['tvcor'];
+        $data['car_int']=$obtenido_cartera['net'];
+        $data['car_tv']=$obtenido_cartera['tv'];
+        $data['sus_int']=$obtenido_cortados['internet_sus'];
+        $data['sus_tv']=$obtenido_cortados['tv_sus'];
+        $data['ret_int']=$obtenido_retirado['net'];
+        $data['ret_tv']=$obtenido_retirado['tv'];
         $data['fecha']=date("Y-m-d");
         if(empty($extraccion_dia)){
             $this->db->insert("estadisticas_servicios",$data);    
