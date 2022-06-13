@@ -291,6 +291,158 @@ class Customers_model extends CI_Model
         $query = $this->db->get();
         return $query->row_array();
     }
+    public function conteo($lista_customers){
+        $tv=0;
+$internet=0;
+$internet_y_tv=0;
+$activo_con_algun_servicio=0;
+$tvcor=0;
+$internetcor=0;
+$internet_y_tv_cor=0;
+$tv_sus=0;
+$internet_sus=0;
+$internet_y_tv_sus=0;
+
+
+foreach ($lista_customers as $key => $customer) {
+$var_excluir=false;
+            $lista_invoices = $this->db->from("invoices")->where("csd",$customer->id)->order_by('invoicedate,tid',"DESC")->get()->result();
+            $customer_moroso=false;
+            $valor_ultima_factura=0;
+            $_var_tiene_internet=false;
+            $_var_tiene_tv=false;
+            $suscripcion_str="";
+            $tv_cortado=false;
+            $net_cortado=false;
+            $tv_suspendido=false;
+            $net_suspendido=false;
+            
+                $fact_valida=false;
+                $filtros_deuda_customers=0;
+                foreach ($lista_invoices as $key => $invoice) {
+                    $suma=0;
+                    if($invoice->combo!="no" && $invoice->combo!="" && $invoice->combo!="-"){
+                        $fact_valida=true;
+                        $_var_tiene_internet=true;
+                    }
+                    if($invoice->television!="no" && $invoice->television!="" && $invoice->television!="-"){
+                        $fact_valida=true;
+                        $_var_tiene_tv=true;
+                    }
+                    if($invoice->ron!="" && $invoice->ron!=null){
+                        $fact_valida=true;
+                    }
+                    $afiliacion_traslado_omitir=$this->db->query('SELECT * FROM `invoice_items` where (product like "%afiliacion%" or product like "%traslado%") and tid="'.$invoice->tid.'"')->result_array();
+                        if(count($afiliacion_traslado_omitir)!=0){
+                            $fact_valida=false;
+                    }
+
+                    if($invoice->tipo_factura=="Fija" || $invoice->tipo_factura=="Nota Credito" || $invoice->tipo_factura=="Nota Debito"){
+                         $fact_valida=false;
+                    }
+                    if($fact_valida){
+                        if($_var_tiene_tv){
+                            $var_excluir=false;
+                                          
+                            
+                        }
+                  
+                        
+                //esto es para los estados
+                            if($_var_tiene_tv && $invoice->estado_tv=="Cortado"){
+                               $tv_cortado=true;
+                                $var_excluir=false; 
+                               
+                            }else if($_var_tiene_tv && $invoice->estado_tv=="Suspendido"){
+                                $var_excluir=false; 
+                                $tv_suspendido=true;
+                               
+                            }
+
+                //esto es para los estados 
+
+                        if($_var_tiene_internet){$var_excluir=false;
+                            $lista_de_productos=$this->db->from("products")->like("product_name","mega","both")->get()->result();
+                           
+                            
+                                    if($invoice->estado_combo=="Cortado"){
+                                        $var_excluir=false; 
+                                        $net_cortado=true;                                        
+                                    }else if($invoice->estado_combo=="Suspendido"){
+                                        $var_excluir=false; 
+                                        $net_suspendido=true;                                        
+                                    }                                  
+                               
+                            
+                        }
+                        
+                    }else{
+                        $var_excluir=true;
+                    }
+                    if($fact_valida){
+                            $customer_moroso=true;
+                            //$valor_ultima_factura=$invoice->total;
+                            break;
+                        }
+
+        }
+                $mor_tv=$customer_moroso;
+                $mor_net=$customer_moroso;
+                if( !$_var_tiene_tv){//preguntar que si solo debe de filtrar los que tienen tv o si tiene tv pero tambien internet lo puede listar lo mismo con la de internet
+                            $mor_tv=false;     
+                }
+                if(!$_var_tiene_internet){
+                            $mor_net=false;     
+                }
+            //$customer_moroso=true;
+            if($var_excluir){
+                $mor_tv=false;     
+                $mor_net=false;     
+            }
+            if($mor_tv){
+                $tv++;
+                if($tv_cortado){
+                    $tvcor++;
+
+                }
+                if($tv_suspendido){
+                    $tv_sus++;
+                }
+            }
+            if($mor_net){
+                $internet++;
+                if($net_cortado){
+                    $internetcor++;
+                }
+                 if($net_suspendido){
+                    $internet_sus++;
+                }
+            }
+            if(($mor_tv && !$tv_cortado) || ($mor_net && !$net_cortado)){
+                $activo_con_algun_servicio++;
+            }
+            /*if(($mor_tv && !$tv_cortado) && ($mor_net && !$net_cortado)){
+               $internet_y_tv++; 
+            }*/
+            if($mor_tv  && $mor_net ){
+               $internet_y_tv++;
+               if($tv_cortado && $net_cortado){
+                    $internet_y_tv_cor++;
+                    
+                } 
+                 if($tv_suspendido && $net_suspendido){
+                    $internet_y_tv_sus++;
+                }
+            }
+
+
+
+        
+        }
+        
+        return array("tv"=>$tv,"net"=>$internet,"activo_con_algun_servicio"=>$activo_con_algun_servicio,"internet_y_tv"=>$internet_y_tv,"tvcor"=>$tvcor,"internetcor"=>$internetcor,"internet_y_tv_cor"=>$internet_y_tv_cor,"tv_sus"=>$tv_sus,"internet_sus"=>$internet_sus,"internet_y_tv_sus"=>$internet_y_tv_sus);
+        
+    }
          public function servicios_detail($custid)
     {
         $lista_invoices = $this->db->from("invoices")->where("csd",$custid)->order_by('invoicedate,tid',"DESC")->get()->result();
