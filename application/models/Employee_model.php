@@ -131,25 +131,7 @@ class Employee_model extends CI_Model
     public function update_employee(
 		$id, $name,$dto,$ingreso,$rh,$eps,$pensiones, 
 		$phone, $phonealt, $address, $city, $region, $country,
-		$roleid,$co,$coape,$conue,$coadm,
-		$cocie,$cofa,$cofae,$us,$usnue,$usadm,$usgru,
-		$tik,$tiknue,$tikadm,$mo,$monue,$moadm,$pro,
-		$pronue,$proadm,$enc,$encllam,$encnue,$encenc,
-		$encats,$encatslis,$proy,$proynue,$proyadm,
-		$cuen,$cuenadm,$cuennue,$cuenbal,$cuendec,
-		$red,$reding,$redadm,$redbod,$com,$comnue,
-		$comadm,$tes,$testran,$tesanu,$tesnuetransac,
-		$tesnuetransfer,$tesing,$tesgas,$testransfer,
-		$dat,$datest,$datdec,$datrep,$datusu,$datpro,
-		$dating,$datgas,$dattrans,$datimp,$not,$cal,
-		$doct,$pag,$pagconf,$pagvia,$pagmon,$pagcam,
-		$pagban,$inv,$inving,$invadm,$invcat,$invalm,
-		$invtrs,$emp,$comp,$comprec,$compurl,$comptwi,
-		$compcurr,$pla,$placor,$plamen,$platem,$conf,
-		$confemp,$conffa,$confmon,$conffec,$confcat,
-		$confmet,$confrest,$confcorr,$confterm,$confaut,
-		$confseg,$conftem,$confsop,$conface,$confupt,
-		$confapi,$tar,$dathistorial,$datservicios,$conotas,$redcon)
+		$roleid,$data_perms)
     {
         $data = array(
             'name' => $name,
@@ -178,120 +160,18 @@ class Employee_model extends CI_Model
 				}else{
 					$roleid2 = $roleid;
 				}
-			 $data1 = array(
-                'roleid' => $roleid2,
-				'co'=>$co,
-				'coape'=>$coape,
-				'conue'=>$conue,
-				'coadm'=>$coadm,
-				'cocie'=>$cocie,
-				'cofa'=>$cofa,
-				'cofae'=>$cofae,
-				'us'=>$us,
-				'usnue'=>$usnue,
-				'usadm'=>$usadm,
-				'usgru'=>$usgru,
-				'tik'=>$tik,
-				'tiknue'=>$tiknue,
-				'tikadm'=>$tikadm,
-				'mo'=>$mo,
-				'monue'=>$monue,
-				'moadm'=>$moadm,
-				'pro'=>$pro,
-				'pronue'=>$pronue,
-				'proadm'=>$proadm,
-				'enc'=>$enc,
-				'encllam'=>$encllam,
-				'encnue'=>$encnue,
-				'encenc'=>$encenc,
-				'encats'=>$encats,
-				'encatslis'=>$encatslis,
-				'proy'=>$proy,
-				'proynue'=>$proynue,
-				'proyadm'=>$proyadm,
-				'cuen'=>$cuen,
-				'cuenadm'=>$cuenadm,
-				'cuennue'=>$cuennue,
-				'cuenbal'=>$cuenbal,
-				'cuendec'=>$cuendec,
-				'red'=>$red,
-				'reding'=>$reding,
-				'redadm'=>$redadm,
-				'redbod'=>$redbod,
-				'redcon'=>$redcon,
-				'comp'=>$com,
-				'comnue'=>$comnue,
-				'comadm'=>$comadm,
-				'tes'=>$tes,
-				'testran'=>$testran,
-				'tesanu'=>$tesanu,
-				'tesnuetransac'=>$tesnuetransac,
-				'tesnuetransfer'=>$tesnuetransfer,
-				'tesing'=>$tesing,
-				'tesgas'=>$tesgas,
-				'testransfer'=>$testransfer,
-				'dat'=>$dat,
-				'datest'=>$datest,
-				'datdec'=>$datdec,
-				'datrep'=>$datrep,
-				'datusu'=>$datusu,
-				'datpro'=>$datpro,
-				'dating'=>$dating,
-				'datgas'=>$datgas,
-				'dattrans'=>$dattrans,
-				'datimp'=>$datimp,
-				'not'=>$not,
-				'cal'=>$cal,
-				'doct'=>$doct,
-				'pag'=>$pag,
-				'pagconf'=>$pagconf,
-				'pagvia'=>$pagvia,
-				'pagmon'=>$pagmon,
-				'pagcam'=>$pagcam,
-				'pagban'=>$pagban,
-				'inv'=>$inv,
-				'inving'=>$inving,
-				'invadm'=>$invadm,
-				'invcat'=>$invcat,
-				'invalm'=>$invalm,
-				'invtrs'=>$invtrs,
-				'emp'=>$emp,
-				'com'=>$comp,
-				'comprec'=>$comprec,
-				'compurl'=>$compurl,
-				'comptwi'=>$comptwi,
-				'compcurr'=>$compcurr,
-				'pla'=>$pla,
-				'placor'=>$placor,
-				'plamen'=>$plamen,
-				'platem'=>$platem,
-				'conf'=>$conf,
-				'confemp'=>$confemp,
-				'conffa'=>$conffa,
-				'confmon'=>$confmon,
-				'conffec'=>$conffec,
-				'confcat'=>$confcat,
-				'confmet'=>$confmet,
-				'confrest'=>$confrest,
-				'confcorr'=>$confcorr,
-				'confterm'=>$confterm,
-				'confaut'=>$confaut,
-				'confseg'=>$confseg,
-				'conftem'=>$conftem,
-				'confsop'=>$confsop,
-				'conface'=>$conface,
-				'confupt'=>$confupt,
-				'confapi'=>$confapi,
-                'conotas'=>$conotas,
-                'dathistorial'=>$dathistorial,
-                'datservicios'=>$datservicios,
-				'tar'=>$tar
-            );
+
+                $data1=array("roleid"=>$roleid2);
+
 
             $this->db->set($data1);
             $this->db->where('id', $id);
 
             $this->db->update('aauth_users');
+
+            foreach ($data_perms as $key_ => $per_) {
+                $this->db->update("permisos_usuario",array("is_checked"=>$per_['valor']),array("id"=>$per_['id_permiso']));
+            }
 
             $data_h=array();
             $data_h['modulo']="Empleados";
@@ -576,25 +456,7 @@ class Employee_model extends CI_Model
 		$id, $username, $name,$dto,$ingreso,$rh,
 		$eps,$pensiones, $roleid, $phone, 
 		$address, $city, $region, $country,
-		$co,$coape,$conue,$coadm,
-		$cocie,$cofa,$cofae,$us,$usnue,$usadm,$usgru,
-		$tik,$tiknue,$tikadm,$mo,$monue,$moadm,$pro,
-		$pronue,$proadm,$enc,$encllam,$encnue,$encenc,
-		$encats,$encatslis,$proy,$proynue,$proyadm,
-		$cuen,$cuenadm,$cuennue,$cuenbal,$cuendec,
-		$red,$reding,$redadm,$redbod,$com,$comnue,
-		$comadm,$tes,$testran,$tesanu,$tesnuetransac,
-		$tesnuetransfer,$tesing,$tesgas,$testransfer,
-		$dat,$datest,$datdec,$datrep,$datusu,$datpro,
-		$dating,$datgas,$dattrans,$datimp,$not,$cal,
-		$doct,$pag,$pagconf,$pagvia,$pagmon,$pagcam,
-		$pagban,$inv,$inving,$invadm,$invcat,$invalm,
-		$invtrs,$emp,$comp,$comprec,$compurl,$comptwi,
-		$compcurr,$pla,$placor,$plamen,$platem,$conf,
-		$confemp,$conffa,$confmon,$conffec,$confcat,
-		$confmet,$confrest,$confcorr,$confterm,$confaut,
-		$confseg,$conftem,$confsop,$conface,$confupt,
-		$confapi,$tar,$dathistorial,$conotas,$redcon)
+		$data_perms)
     {
         $data = array(
             'id' => $id,
@@ -616,117 +478,20 @@ class Employee_model extends CI_Model
         if ($this->db->insert('employee_profile', $data)) {
             $data1 = array(
                 'roleid' => $roleid,
-				'co'=>$co,
-				'coape'=>$coape,
-				'conue'=>$conue,
-				'coadm'=>$coadm,
-				'cocie'=>$cocie,
-				'cofa'=>$cofa,
-				'cofae'=>$cofae,
-				'us'=>$us,
-				'usnue'=>$usnue,
-				'usadm'=>$usadm,
-				'usgru'=>$usgru,
-				'tik'=>$tik,
-				'tiknue'=>$tiknue,
-				'tikadm'=>$tikadm,
-				'mo'=>$mo,
-				'monue'=>$monue,
-				'moadm'=>$moadm,
-				'pro'=>$pro,
-				'pronue'=>$pronue,
-				'proadm'=>$proadm,
-				'enc'=>$enc,
-				'encllam'=>$encllam,
-				'encnue'=>$encnue,
-				'encenc'=>$encenc,
-				'encats'=>$encats,
-				'encatslis'=>$encatslis,
-				'proy'=>$proy,
-				'proynue'=>$proynue,
-				'proyadm'=>$proyadm,
-				'cuen'=>$cuen,
-				'cuenadm'=>$cuenadm,
-				'cuennue'=>$cuennue,
-				'cuenbal'=>$cuenbal,
-				'cuendec'=>$cuendec,
-				'red'=>$red,
-				'reding'=>$reding,
-				'redadm'=>$redadm,
-				'redbod'=>$redbod,
-				'redcon'=>$redcon,
-				'comp'=>$com,
-				'comnue'=>$comnue,
-				'comadm'=>$comadm,
-				'tes'=>$tes,
-				'testran'=>$testran,
-				'tesanu'=>$tesanu,
-				'tesnuetransac'=>$tesnuetransac,
-				'tesnuetransfer'=>$tesnuetransfer,
-				'tesing'=>$tesing,
-				'tesgas'=>$tesgas,
-				'testransfer'=>$testransfer,
-				'dat'=>$dat,
-				'datest'=>$datest,
-				'datdec'=>$datdec,
-				'datrep'=>$datrep,
-				'datusu'=>$datusu,
-				'datpro'=>$datpro,
-				'dating'=>$dating,
-				'datgas'=>$datgas,
-				'dattrans'=>$dattrans,
-				'datimp'=>$datimp,
-				'not'=>$not,
-				'cal'=>$cal,
-				'doct'=>$doct,
-				'pag'=>$pag,
-				'pagconf'=>$pagconf,
-				'pagvia'=>$pagvia,
-				'pagmon'=>$pagmon,
-				'pagcam'=>$pagcam,
-				'pagban'=>$pagban,
-				'inv'=>$inv,
-				'inving'=>$inving,
-				'invadm'=>$invadm,
-				'invcat'=>$invcat,
-				'invalm'=>$invalm,
-				'invtrs'=>$invtrs,
-				'emp'=>$emp,
-				'com'=>$comp,
-				'comprec'=>$comprec,
-				'compurl'=>$compurl,
-				'comptwi'=>$comptwi,
-				'compcurr'=>$compcurr,
-				'pla'=>$pla,
-				'placor'=>$placor,
-				'plamen'=>$plamen,
-				'platem'=>$platem,
-				'conf'=>$conf,
-				'confemp'=>$confemp,
-				'conffa'=>$conffa,
-				'confmon'=>$confmon,
-				'conffec'=>$conffec,
-				'confcat'=>$confcat,
-				'confmet'=>$confmet,
-				'confrest'=>$confrest,
-				'confcorr'=>$confcorr,
-				'confterm'=>$confterm,
-				'confaut'=>$confaut,
-				'confseg'=>$confseg,
-				'conftem'=>$conftem,
-				'confsop'=>$confsop,
-				'conface'=>$conface,
-				'confupt'=>$confupt,
-				'confapi'=>$confapi,
-                'conotas'=>$conotas,
-                'dathistorial'=>$dathistorial,
-				'tar'=>$tar
+				
             );
 
             $this->db->set($data1);
             $this->db->where('id', $id);
 
             $this->db->update('aauth_users');
+            foreach ($data_perms as $key1 => $value1) {
+                 $data_p=array();
+                    $data_p['is_checked']=$value1['valor'];
+                    $data_p['id_modulo']=$value1['id_modulo'];
+                    $data_p['id_usuario']=$id;   
+                    $this->db->insert("permisos_usuario",$data_p);
+            }
             echo json_encode(array('status' => 'Success', 'message' =>
                 $this->lang->line('ADDED')));
         } else {
@@ -761,6 +526,45 @@ class Employee_model extends CI_Model
         $this->db->where('eid', $eid);
         $query = $this->db->get();
         return $query->row_array();
+    }
+    public function get_modulos_add(){
+        return $this->db->query('SELECT * FROM modulos')->result();
+    }
+    public function get_modulos_padres(){
+        return $this->db->query('SELECT * FROM modulos WHERE rol="Padre" order by orden')->result();
+    }
+    public function get_modulos_cliente($id_user){
+        $lista_permisos1=$this->db->query("SELECT permisos_usuario.id,permisos_usuario.id_modulo,permisos_usuario.is_checked,modulos.codigo FROM permisos_usuario inner join  modulos on modulos.id_modulo=permisos_usuario.id_modulo WHERE id_usuario=".$id_user)->result();        
+        $lista_permisos2=array();
+        foreach ($lista_permisos1 as $key => $value) {
+            $lista_permisos2[$value->codigo]=$value->is_checked;
+        }
+        return $lista_permisos2;
+    }
+    public function get_modulos_cliente2($id_user){
+        $count_modulos=$this->db->query("select count(*) as count from modulos")->result();
+        
+        $lista_permisos1=$this->db->query("SELECT permisos_usuario.id,permisos_usuario.id_modulo,permisos_usuario.is_checked,modulos.codigo FROM permisos_usuario inner join  modulos on modulos.id_modulo=permisos_usuario.id_modulo WHERE id_usuario=".$id_user)->result();        
+        if(intval($count_modulos[0]->count) != count($lista_permisos1)){
+            $lista_mod=$this->db->query("select * from modulos")->result();    
+            $lista_permisos2=array();
+            foreach ($lista_permisos1 as $key => $value) {
+                $lista_permisos2[$value->codigo]=$value->is_checked;
+            }
+            //var_dump($lista_permisos2);
+            foreach ($lista_mod as $key => $value2) {
+                if(!array_key_exists($value2->codigo,$lista_permisos2)){
+                    $data_perm=array();
+                    $data_perm['is_checked']=null;
+                    $data_perm['id_modulo']=$value2->id_modulo;
+                    $data_perm['id_usuario']=$id_user;   
+                    $this->db->insert("permisos_usuario",$data_perm);
+                }
+            }
+            $lista_permisos1=$this->db->query("SELECT permisos_usuario.id,permisos_usuario.id_modulo,permisos_usuario.is_checked,modulos.codigo FROM permisos_usuario inner join  modulos on modulos.id_modulo=permisos_usuario.id_modulo WHERE id_usuario=".$id_user)->result();        
+        }
+        
+        return $lista_permisos1;
     }
 
 

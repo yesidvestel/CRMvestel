@@ -1,3 +1,14 @@
+<?php 
+$lista_permisos1=$this->db->query("SELECT permisos_usuario.id,permisos_usuario.id_modulo,permisos_usuario.is_checked,modulos.codigo FROM permisos_usuario inner join  modulos on modulos.id_modulo=permisos_usuario.id_modulo WHERE id_usuario=".$this->aauth->get_user()->id)->result();        
+        $lista_permisos_us=array();
+        foreach ($lista_permisos1 as $key => $value) {
+            $lista_permisos_us[$value->codigo]=$value->is_checked;
+        }
+//$lista_permisos_us=$this->employee->get_modulos_cliente($this->aauth->get_user()->id);
+//var_dump($lista_permisos_us['comp']);
+?>
+
+
 <!DOCTYPE html>
 <html lang="en" data-textdirection="ltr" class="loading">
 <head>
@@ -66,6 +77,8 @@
     <script src="<?php echo base_url('assets/myjs/datepicker.min.js') . APPVER; ?>"></script>
     <script src="<?php echo base_url('assets/myjs/summernote-bs4.min.js') . APPVER; ?>"></script>
     <script src="<?php echo base_url('assets/myjs/select2.min.js') . APPVER; ?>"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
 
 
     <script type="text/javascript">var baseurl = '<?php echo base_url() ?>';</script>
@@ -850,7 +863,10 @@
 			
 			<!--- HEAD ----->
             <?php if ($this->aauth->get_user()->roleid <= 4) { ?>
-				<?php if ($this->aauth->get_user()->co != '') { ?>
+                <?php 
+
+//$lista_permisos_us=$this->employee->get_modulos_cliente($this->aauth->get_user()->id); ?>
+				<?php if ($lista_permisos_us['co'] != null) { ?>
                 <li class="navigation-header"><span
                             data-i18n="nav.category.support">Cobranza</span><i
                             data-toggle="tooltip"
@@ -870,37 +886,37 @@
                     <i class="icon-arrow"></i></span></a>
 					
                     <ul class="menu-content">
-						<?php if ($this->aauth->get_user()->coape != '') { ?>
+						<?php if ($lista_permisos_us['coape'] != null) { ?>
 						<li>
                             <a href="<?php echo base_url(); ?>invoices/apertura">Apertura</a>
                         </li>
 						<?php } ?>
-						<?php if ($this->aauth->get_user()->conue != '') { ?>
+						<?php if ($lista_permisos_us['conue'] != null) { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>invoices/create"><?php echo $this->lang->line('New Invoice'); ?></a>
                         </li>
 						<?php } ?>
-						<?php if ($this->aauth->get_user()->coadm != '') { ?>
+						<?php if ($lista_permisos_us['coadm'] != null) { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>invoices"><?php echo $this->lang->line('Manage Invoices'); ?></a>
                         </li>
 						<?php } ?>
-						<?php if ($this->aauth->get_user()->cocie != '') { ?>
+						<?php if ($lista_permisos_us['cocie'] != null) { ?>
 						<li>
                             <a href="<?php echo base_url(); ?>reports/cierre">Cierre</a>
                         </li>
 						<?php } ?>
-						<?php if ($this->aauth->get_user()->cofa != '') { ?>
+						<?php if ($lista_permisos_us['cofa'] != null) { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>invoices/generar_facturas">Generar Facturas</a>
                         </li>
 						<?php } ?>
-						<?php if ($this->aauth->get_user()->cofae != '') { ?>
+						<?php if ($lista_permisos_us['cofae'] != null) { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>facturasElectronicas/generar_facturas_electronicas_multiples">Facturas Electronicas M</a>
                         </li>
 						
-                        <?php } if ($this->aauth->get_user()->conotas != '') { ?>
+                        <?php } if ($lista_permisos_us['conotas'] != null) { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>invoices/notas">Notas Credito/Debito</a>
                         </li>
@@ -909,7 +925,7 @@
                 </li>
                 <?php } ?>
 				<!--- MENU REDES--->
-				<?php if ($this->aauth->get_user()->red != '') { ?>
+				<?php if ($lista_permisos_us['red'] != null) { ?>
                 <li class="navigation-header"><span><?php echo $this->lang->line('Stock') ?></span><i
                             data-toggle="tooltip" data-placement="right"
                             data-original-title="Stock"
@@ -922,22 +938,22 @@
                                 class="menu-title"><?php echo $this->lang->line('') ?>Redes</span><i
                                 class="fa arrow"></i> </a>
                     <ul class="menu-content">
-						<?php if ($this->aauth->get_user()->reding != '') { ?>
+						<?php if ($lista_permisos_us['reding'] != null) { ?>
 						<li>
                             <a href="<?php echo base_url(); ?>products/equipoadd"><?php echo $this->lang->line('') ?>Ingreso de Equipo</a>
                         </li>
 						<?php } ?>
-						<?php if ($this->aauth->get_user()->redadm != '') { ?>
+						<?php if ($lista_permisos_us['redadm'] != null) { ?>
 						<li>
                             <a href="<?php echo base_url(); ?>products/equipos"><?php echo $this->lang->line('') ?>Administrar equipos</a>
                         </li>
 						<?php } ?>
-						<?php if ($this->aauth->get_user()->redbod != '') { ?>
+						<?php if ($lista_permisos_us['redbod'] != null) { ?>
 						<li>
                             <a href="<?php echo base_url(); ?>productcategory/almacen">Bodega equipos</a>
                         </li>
 						<?php } ?>
-						<?php if ($this->aauth->get_user()->redcon != '') { ?>
+						<?php if ($lista_permisos_us['redcon'] != null) { ?>
 						<li>
                             <a href="<?php echo base_url(); ?>redes/sedes">Conexiones</a>
                         </li>
@@ -946,7 +962,7 @@
 				</li>
 				<?php } ?>
 				<!--- MENU INVENTARIOS--->
-				<?php if ($this->aauth->get_user()->inv != '') { ?>
+				<?php if ($lista_permisos_us['inv'] != null) { ?>
                 <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "products") {
                     echo ' open';
                 } ?>">
@@ -954,27 +970,27 @@
                                 class="menu-title"><?php echo $this->lang->line('') ?>Inventarios</span><i
                                 class="fa arrow"></i> </a>
                     <ul class="menu-content">
-						<?php if ($this->aauth->get_user()->inving != '') { ?>
+						<?php if ($lista_permisos_us['inving'] != null) { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>products/add"><?php echo $this->lang->line('') ?>Ingreso de material</a>
                         </li>
 						<?php } ?>
-						<?php if ($this->aauth->get_user()->invadm != '') { ?>
+						<?php if ($lista_permisos_us['invadm'] != null) { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>products"><?php echo $this->lang->line('') ?>Administrar material</a>
                         </li>
 						<?php } ?>
-						<?php if ($this->aauth->get_user()->invcat != '') { ?>
+						<?php if ($lista_permisos_us['invcat'] != null) { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>productcategory"><?php echo $this->lang->line('') ?>Categoria de material</a>
                         </li>
 						<?php } ?>
-						<?php if ($this->aauth->get_user()->invalm != '') { ?>
+						<?php if ($lista_permisos_us['invalm'] != null) { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>productcategory/warehouse"><?php echo $this->lang->line('Warehouses') ?></a>
                         </li>
 						<?php } ?>
-						<?php if ($this->aauth->get_user()->invtrs != '') { ?>
+						<?php if ($lista_permisos_us['invtrs'] != null) { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>products/stock_transfer"><?php echo $this->lang->line('') ?>Traspasos</a>
                         </li>
@@ -983,7 +999,7 @@
                 </li>
 				<?php } ?>
 				<!---ORDENES DE SERVICIOS --->
-				<?php if ($this->aauth->get_user()->comp != '') { ?>
+				<?php if ($lista_permisos_us['com'] != null) { ?>
                 <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "purchase") {
                     echo ' open';
                 } ?>">
@@ -993,12 +1009,12 @@
                                 class="menu-title"> <?php echo $this->lang->line('Purchase Order') ?> </span><i
                                 class="fa arrow"></i> </a>
                     <ul class="menu-content">
-						<?php if ($this->aauth->get_user()->comnue != '') { ?>
+						<?php if ($lista_permisos_us['comnue'] != null) { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>purchase/create"><?php echo $this->lang->line('New Order') ?></a>
                         </li>
 						<?php } ?>
-						<?php if ($this->aauth->get_user()->comadm != '') { ?>
+						<?php if ($lista_permisos_us['comadm'] != null) { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>purchase"><?php echo $this->lang->line('Manage Orders') ?></a>
                         </li>
@@ -1007,7 +1023,7 @@
                 </li>
 				<?php } ?>
 				 <!--- MENU CRM--->
-				<?php if ($this->aauth->get_user()->us != '') { ?>
+				<?php if ($lista_permisos_us['us'] != null) { ?>
                 <li class="navigation-header"><span><?php echo $this->lang->line('CRM') ?></span><i
                             data-toggle="tooltip" data-placement="right"
                             data-original-title="CRM"
@@ -1022,17 +1038,17 @@
 					<!---ADMINISTRADOR DE USUARIOS--->
 					
                     <ul class="menu-content">
-						<?php if ($this->aauth->get_user()->usnue != '') { ?>
+						<?php if ($lista_permisos_us['usnue'] != null) { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>customers/create"><?php echo $this->lang->line('') ?>Nuevo Usuario</a>
                         </li>
 						<?php } ?>
-						<?php if ($this->aauth->get_user()->usadm != '') { ?>
+						<?php if ($lista_permisos_us['usadm'] != null) { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>customers"><?php echo $this->lang->line('') ?>Administrar Usuarios</a>
 						</li>
 						<?php } ?>
-						<?php if ($this->aauth->get_user()->usgru != '') { ?>
+						<?php if ($lista_permisos_us['usgru'] != null) { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>clientgroup"><?php echo $this->lang->line('Manage Groups') ?></a>
                         </li>
@@ -1041,7 +1057,7 @@
                 </li>
 				<?php } ?>
 				<!--- SOPORTE TECNICO --->
-				<?php if ($this->aauth->get_user()->tik != '') { ?>
+				<?php if ($lista_permisos_us['tik'] != null) { ?>
                 <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "tickets") {
                     echo ' open';
                 } ?>">
@@ -1049,12 +1065,12 @@
                                 class="menu-title"><?php echo $this->lang->line('Support Tickets') ?></span><i
                                 class="fa arrow"></i> </a>
                     <ul class="menu-content">
-						<?php if ($this->aauth->get_user()->tiknue != '') { ?>
+						<?php if ($lista_permisos_us['tiknue'] != null) { ?>
 						<li>
                             <a href="<?php echo base_url(); ?>quote/create"><?php echo $this->lang->line(''); ?>Nuevo ticket</a>
                         </li>
 						<?php } ?>
-						<?php if ($this->aauth->get_user()->tikadm != '') { ?>
+						<?php if ($lista_permisos_us['tikadm'] != null) { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>tickets"><?php echo $this->lang->line('Manage Tickets') ?></a>
                         </li>
@@ -1063,7 +1079,7 @@
                 </li>
 				<?php } ?>
 				<!--- moviles --->
-				<?php if ($this->aauth->get_user()->mo != '') { ?>
+				<?php if ($lista_permisos_us['mo'] != null) { ?>
                 <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "moviles") {
                     echo ' open';
                 } ?>">
@@ -1071,12 +1087,12 @@
                                 class="menu-title">Moviles</span><i
                                 class="fa arrow"></i> </a>
                     <ul class="menu-content">
-						<?php if ($this->aauth->get_user()->monue != '') { ?>
+						<?php if ($lista_permisos_us['monue'] != null) { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>moviles/create"><?php echo $this->lang->line(''); ?>Nueva movil</a>
                         </li>
 						<?php } ?>
-						<?php if ($this->aauth->get_user()->moadm != '') { ?>
+						<?php if ($lista_permisos_us['moadm'] != null) { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>moviles">Administrar Moviles</a>
                         </li>
@@ -1086,7 +1102,7 @@
                 </li>
 				<?php } ?>
 				<!--- PROVEDORES--->
-				<?php if ($this->aauth->get_user()->pro != '') { ?>
+				<?php if ($lista_permisos_us['pro'] != null) { ?>
                 <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "supplier") {
                     echo ' open';
                 } ?>">
@@ -1094,12 +1110,12 @@
                                 class="menu-title"> <?php echo $this->lang->line('Suppliers') ?> </span><i
                                 class="fa arrow"></i> </a>
                     <ul class="menu-content">
-						<?php if ($this->aauth->get_user()->pronue != '') { ?>
+						<?php if ($lista_permisos_us['pronue'] != null) { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>supplier/create"><?php echo $this->lang->line('New Supplier') ?></a>
                         </li>
 						<?php } ?>
-						<?php if ($this->aauth->get_user()->proadm != '') { ?>
+						<?php if ($lista_permisos_us['proadm'] != null) { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>supplier"><?php echo $this->lang->line('Manage Suppliers') ?></a>
                         </li>
@@ -1108,7 +1124,7 @@
                 </li>
 				<?php } ?>
 				<!--- ENCUENTAS --->
-				<?php if ($this->aauth->get_user()->enc != '') { ?>
+				<?php if ($lista_permisos_us['enc'] != null) { ?>
                 <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "encuesta") {
                     echo ' open';
                 } ?>">
@@ -1116,27 +1132,27 @@
                                 class="menu-title">Encuestas</span><i
                                 class="fa arrow"></i> </a>
                     <ul class="menu-content">
-						<?php if ($this->aauth->get_user()->encllam != '') { ?>
+						<?php if ($lista_permisos_us['encllam'] != null) { ?>
 						<li>
                             <a href="<?php echo base_url(); ?>llamadas/list_llamadas"><?php echo $this->lang->line(''); ?>Lista de llamadas</a>
                         </li>
 						<?php } ?>
-						<?php if ($this->aauth->get_user()->encnue != '') { ?>
+						<?php if ($lista_permisos_us['encnue'] != null) { ?>
 						<li>
                             <a href="<?php echo base_url(); ?>encuesta/create"><?php echo $this->lang->line(''); ?>Nueva Encuenta</a>
                         </li>
 						<?php } ?>
-						<?php if ($this->aauth->get_user()->encenc != '') { ?>
+						<?php if ($lista_permisos_us['encenc'] != null) { ?>
 						<li>
                             <a href="<?php echo base_url(); ?>encuesta/index"><?php echo $this->lang->line('') ?>Lista Encuestas</a>
                         </li>
 						<?php } ?>
-						<?php if ($this->aauth->get_user()->encats != '') { ?>
+						<?php if ($lista_permisos_us['encats'] != null) { ?>
 						<li>
                             <a href="<?php echo base_url(); ?>encuesta/newats"><?php echo $this->lang->line(''); ?>Nueva ATS</a>
                         </li>
 						<?php } ?>
-						<?php if ($this->aauth->get_user()->encatslis != '') { ?>
+						<?php if ($lista_permisos_us['encatslis'] != null) { ?>
 						<li>
                             <a href="<?php echo base_url(); ?>encuesta/listats"><?php echo $this->lang->line(''); ?>Lista de ATS</a>
                         </li>
@@ -1145,7 +1161,7 @@
                 </li>
 				<?php } ?>
                 <!---------------- GESTION DE PROYECTOS ----------------->
-				<?php if ($this->aauth->get_user()->proy != '') { ?>
+				<?php if ($lista_permisos_us['proy'] != null) { ?>
                 <li class="navigation-header"><span><?php echo $this->lang->line('Project') ?></span><i
                             data-toggle="tooltip" data-placement="right"
                             data-original-title="Balance"
@@ -1158,12 +1174,12 @@
                                 class="menu-title"> <?php echo $this->lang->line('Project Management') ?> </span><i
                                 class="fa arrow"></i> </a>
                     <ul class="menu-content">
-						<?php if ($this->aauth->get_user()->proynue != '') { ?>
+						<?php if ($lista_permisos_us['proynue'] != null) { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>projects/addproject"><?php echo $this->lang->line('New Project') ?></a>
                         </li>
 						<?php } ?>
-						<?php if ($this->aauth->get_user()->proyadm != '') { ?>
+						<?php if ($lista_permisos_us['proyadm'] != null) { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>projects"><?php echo $this->lang->line('Manage Projects') ?></a>
                         </li>
@@ -1172,12 +1188,12 @@
                 </li>
 			    <?php } ?>
 			    <!--- TAREAS---->
-				<?php if ($this->aauth->get_user()->tar != '') { ?>
+				<?php if ($lista_permisos_us['tar'] != null) { ?>
                 <li><a href="<?php echo base_url(); ?>tools/todo"><i class="icon-android-done-all"></i><span
                                 class="menu-title"> <?php echo $this->lang->line('') ?>Listado de Tareas</span></a></li>
 				<?php } ?>
                 <!---------------- end project ----------------->
-				<?php if ($this->aauth->get_user()->cuen != '') { ?>
+				<?php if ($lista_permisos_us['cuen'] != null) { ?>
                 <li class="navigation-header"><span><?php echo $this->lang->line('Balance') ?></span><i
                             data-toggle="tooltip" data-placement="right"
                             data-original-title="Balance"
@@ -1190,21 +1206,21 @@
                                 class="menu-title"> <?php echo $this->lang->line('Accounts') ?></span><i
                                 class="fa arrow"></i> </a>
                     <ul class="menu-content">
-						<?php if ($this->aauth->get_user()->cuenadm != '') { ?>
+						<?php if ($lista_permisos_us['cuenadm'] != null) { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>accounts"><?php echo $this->lang->line('Manage Accounts') ?></a>
                         </li>
 						<?php } ?>
-						<?php if ($this->aauth->get_user()->cuennue != '') { ?>
+						<?php if ($lista_permisos_us['cuennue'] != null) { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>accounts/add"><?php echo $this->lang->line('New Account') ?></a>
                         </li>
-						<?php } if ($this->aauth->get_user()->cuenbal != '') { ?>
+						<?php } if ($lista_permisos_us['cuenbal'] != null) { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>accounts/balancesheet"><?php echo $this->lang->line('BalanceSheet') ?></a>
                         </li>
 						<?php } ?>
-						<?php if ($this->aauth->get_user()->cuendec != '') { ?>
+						<?php if ($lista_permisos_us['cuendec'] != null) { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>reports/accountstatement"><?php echo $this->lang->line('Account Statements') ?></a>
                         </li>
@@ -1213,7 +1229,7 @@
                 </li>
 				<?php } ?>
 						<!--- TESORERIA--->
-				<?php if ($this->aauth->get_user()->tes != '') { ?>
+				<?php if ($lista_permisos_us['tes'] != null) { ?>
                 <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "transactions") {
                     echo ' open';
                 } ?>">
@@ -1221,31 +1237,31 @@
                                 class="menu-title"> <?php echo $this->lang->line('') ?>Tesoreria</span><i
                                 class="fa arrow"></i> </a>
                     <ul class="menu-content">
-						<?php if ($this->aauth->get_user()->testran != '') { ?>
+						<?php if ($lista_permisos_us['testran'] != null) { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>transactions"><?php echo $this->lang->line('View Transactions') ?></a>
                         </li>
-						<?php } if ($this->aauth->get_user()->tesanu != '') { ?>
+						<?php } if ($lista_permisos_us['tesanu'] != null) { ?>
                          <li>
                             <a href="<?php echo base_url(); ?>transactions/anulaciones"><?php echo $this->lang->line('View Anulations') ?></a>
                         </li>
-						<?php } if ($this->aauth->get_user()->tesnuetransac != '') { ?>
+						<?php } if ($lista_permisos_us['tesnuetransac'] != null) { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>transactions/add"><?php echo $this->lang->line('New Transaction') ?></a>
                         </li>
-						<?php } if ($this->aauth->get_user()->tesnuetransfer != '') { ?>
+						<?php } if ($lista_permisos_us['tesnuetransfer'] != null) { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>transactions/transfer"><?php echo $this->lang->line('New Transfer') ?></a>
                         </li>
-						<?php } if ($this->aauth->get_user()->tesing != '') { ?>
+						<?php } if ($lista_permisos_us['tesing'] != null) { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>transactions/income"><?php echo $this->lang->line('Income'); ?></a>
                         </li>
-						<?php } if ($this->aauth->get_user()->tesgas != '') { ?>
+						<?php } if ($lista_permisos_us['tesgas'] != null) { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>transactions/expense"><?php echo $this->lang->line('Expense') ?></a>
                         </li>
-						<?php } if ($this->aauth->get_user()->testransfer != '') { ?>
+						<?php } if ($lista_permisos_us['testransfer'] != null) { ?>
 						<li>
                             <a href="<?php echo base_url(); ?>transactions/transferencia">Transferencias</a>
                         </li>
@@ -1254,7 +1270,7 @@
                 </li>
 				<?php } ?>
 				<!--- DATOS Y REPORTES--->
-				<?php if ($this->aauth->get_user()->dat != '') { ?>
+				<?php if ($lista_permisos_us['dat'] != null) { ?>
                 <li class="navigation-header"><span><?php echo $this->lang->line('Miscellaneous') ?></span><i
                             data-toggle="tooltip" data-placement="right"
                             data-original-title="Miscellaneous"
@@ -1269,48 +1285,48 @@
                                 class="menu-title"> <?php echo $this->lang->line('Data & Reports') ?> </span><i
                                 class="fa arrow"></i> </a>
                     <ul class="menu-content">
-						<?php if ($this->aauth->get_user()->datservicios != '') { ?>
+						<?php if ($lista_permisos_us['datservicios'] != null) { ?>
 						<li>
                             <a href="<?php echo base_url(); ?>reports/statistics_services">Estadisticas Servicios</a>
                         </li>
-						<?php } if ($this->aauth->get_user()->datest != '') { ?>
+						<?php } if ($lista_permisos_us['datest'] != null) { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>reports/statistics"><?php echo $this->lang->line('Statistics') ?></a>
                         </li>
-						<?php } if ($this->aauth->get_user()->datdec != '') { ?>
+						<?php } if ($lista_permisos_us['datdec'] != null) { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>reports/accountstatement"><?php echo $this->lang->line('Account Statements')?></a>
                         </li>
-						<?php } if ($this->aauth->get_user()->datrep != '') { ?>
+						<?php } if ($lista_permisos_us['datrep'] != null) { ?>
 						<li>
                             <a href="<?php echo base_url(); ?>reports/filreptec">Reporte Tecnicos</a>
                         </li>
-						<?php } if ($this->aauth->get_user()->datusu!= '') { ?>
+						<?php } if ($lista_permisos_us['datusu']!= '') { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>reports/customerstatement"><?php echo $this->lang->line('Customer') . ' ' . $this->lang->line('Account Statements') ?></a>
                         </li>
-						<?php } if ($this->aauth->get_user()->datpro != '') { ?>
+						<?php } if ($lista_permisos_us['datpro'] != null) { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>reports/supplierstatement"><?php echo $this->lang->line('Supplier') . ' ' . $this->lang->line('Account Statements') ?></a>
                         </li>
-						<?php } if ($this->aauth->get_user()->dating != '') { ?>
+						<?php } if ($lista_permisos_us['dating'] != null) { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>reports/incomestatement"><?php echo $this->lang->line('Calculate Income'); ?></a>
                         </li>
-						<?php } if ($this->aauth->get_user()->datgas != '') { ?>
+						<?php } if ($lista_permisos_us['datgas'] != null) { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>reports/expensestatement"><?php echo $this->lang->line('Calculate Expenses') ?></a>
                         </li>
-						<?php } if ($this->aauth->get_user()->dattrans != '') { ?>
+						<?php } if ($lista_permisos_us['dattrans'] != null) { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>reports/customerviewstatement"><?php echo $this->lang->line('Clients Transactions') ?></a>
                         </li>
-						<?php } if ($this->aauth->get_user()->datimp != '') { ?>
+						<?php } if ($lista_permisos_us['datimp'] != null) { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>reports/taxstatement"><?php echo $this->lang->line('TAX').' '.$this->lang->line('Statements'); ?> </a>
                         </li>
 						
-                        <?php } if ($this->aauth->get_user()->dathistorial != '') { ?>
+                        <?php } if ($lista_permisos_us['dathistorial'] != null) { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>reports/historial_crm">Historial CRM</a>
                         </li>
@@ -1320,21 +1336,21 @@
 				<?php } ?>
 						<!--- HERRAMIENTAS---->
 				
-				<?php if ($this->aauth->get_user()->not != '') { ?>
+				<?php if ($lista_permisos_us['not'] != null) { ?>
                 <li><a href="<?php echo base_url(); ?>tools/notes"><i class="icon-android-clipboard"></i><span
                                 class="menu-title"> <?php echo $this->lang->line('Notes') ?></span></a></li>
 				<?php } ?>
-				<?php if ($this->aauth->get_user()->cal != '') { ?>
+				<?php if ($lista_permisos_us['cal'] != null) { ?>
                 <li><a href="<?php echo base_url(); ?>events"><i class="icon-calendar2"></i><span
                                 class="menu-title"> <?php echo $this->lang->line('Calendar') ?></span></a></li>
 				<?php } ?>
-				<?php if ($this->aauth->get_user()->doct != '') { ?>
+				<?php if ($lista_permisos_us['doct'] != null) { ?>
                 <li><a href="<?php echo base_url(); ?>tools/documents"><i class="icon-android-download"></i><span
                                 class="menu-title"><?php echo $this->lang->line('Documents') ?></span></a></li>
 				<?php } ?>
 			<!--- menu configuraciones------->
 			
-				<?php if ($this->aauth->get_user()->conf != '') { ?>
+				<?php if ($lista_permisos_us['conf'] != null) { ?>
                 <li class="navigation-header"><span>Configure</span><i data-toggle="tooltip" data-placement="right"
                                                                        data-original-title="Configure"
                                                                        class="icon-ellipsis icon-ellipsis"></i>
@@ -1346,68 +1362,68 @@
                                 class="menu-title"> <?php echo $this->lang->line('Settings') ?></span><i
                                 class="fa arrow"></i> </a>
                     <ul class="menu-content">
-						<?php if ($this->aauth->get_user()->confemp != '') { ?>
+						<?php if ($lista_permisos_us['confemp'] != null) { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>settings/company"><?php echo $this->lang->line('Company'); ?></a>
                         </li>
-						<?php } if ($this->aauth->get_user()->conffa != '') { ?>
+						<?php } if ($lista_permisos_us['conffa'] != null) { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>settings/billing"><?php echo $this->lang->line('Billing') ?>
                                 & Language</a>
                         </li>
-						<?php } if ($this->aauth->get_user()->confmon != '') { ?>
+						<?php } if ($lista_permisos_us['confmon'] != null) { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>settings/currency"><?php echo $this->lang->line('Currency') ?></a>
                         </li>
-						<?php } if ($this->aauth->get_user()->conffec != '') { ?>
+						<?php } if ($lista_permisos_us['conffec'] != null) { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>settings/dtformat"><?php echo $this->lang->line('Date & Time Format') ?></a>
                         </li>
-						<?php } if ($this->aauth->get_user()->confcat != '') { ?>
+						<?php } if ($lista_permisos_us['confcat'] != null) { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>transactions/categories"><?php echo $this->lang->line('Transaction Categories') ?></a>
                         </li>
-						<?php } if ($this->aauth->get_user()->confmet != '') { ?>
+						<?php } if ($lista_permisos_us['confmet'] != null) { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>tools/setgoals"><?php echo $this->lang->line('Set Goals') ?></a>
                         </li>
-						<?php } if ($this->aauth->get_user()->confrest != '') { ?>
+						<?php } if ($lista_permisos_us['confrest'] != null) { ?>
                         <li>
 							<a href="<?php echo base_url(); ?>restapi"><?php echo $this->lang->line('REST API') ?></a>
                         </li>
-						<?php } if ($this->aauth->get_user()->confcorr != '') { ?>
+						<?php } if ($lista_permisos_us['confcorr'] != null) { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>settings/email"><?php echo $this->lang->line('Email Config') ?></a>
                         </li>
-						<?php } if ($this->aauth->get_user()->confterm != '') { ?>
+						<?php } if ($lista_permisos_us['confterm'] != null) { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>settings/billing_terms"><?php echo $this->lang->line('Billing Terms') ?></a>
                         </li>
-						<?php } if ($this->aauth->get_user()->confaut != '') { ?>
+						<?php } if ($lista_permisos_us['confaut'] != null) { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>cronjob"><?php echo $this->lang->line('Automatic Corn Job') ?></a>
                         </li>
-						<?php } if ($this->aauth->get_user()->confseg != '') { ?>
+						<?php } if ($lista_permisos_us['confseg'] != null) { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>plugins/recaptcha"><?php echo $this->lang->line('Security') ?></a>
                         </li>
-						<?php } if ($this->aauth->get_user()->conftem != '') { ?>
+						<?php } if ($lista_permisos_us['conftem'] != null) { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>settings/theme"><?php echo $this->lang->line('Theme') ?></a>
                         </li>
-						<?php } if ($this->aauth->get_user()->confsop != '') { ?>
+						<?php } if ($lista_permisos_us['confsop'] != null) { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>settings/tickets"><?php echo $this->lang->line('Support Tickets') ?></a>
                         </li>
-						<?php } if ($this->aauth->get_user()->conface != '') { ?>
+						<?php } if ($lista_permisos_us['conface'] != null) { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>settings/about"><?php echo $this->lang->line('About') ?></a>
                         </li>
-						<?php } if ($this->aauth->get_user()->confupt != '') { ?>
+						<?php } if ($lista_permisos_us['confupt'] != null) { ?>
                           <li>
                             <a href="<?php echo base_url(); ?>webupdate">Update</a>
                         </li>
-						<?php } if ($this->aauth->get_user()->confapi != '') { ?>
+						<?php } if ($lista_permisos_us['confapi'] != null) { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>clientgroup/apis_vars_edit">Editar Variables Apis</a>
                         </li>
@@ -1417,12 +1433,12 @@
                     </ul>
                 </li>
 				<?php } ?>
-				<?php if ($this->aauth->get_user()->emp != '') { ?>
+				<?php if ($lista_permisos_us['emp'] != null) { ?>
                 <li><a href="<?php echo base_url(); ?>employee"><i class="icon-users"></i><span
                                 class="menu-title"> <?php echo $this->lang->line('Employees') ?></span></a>
                 </li>
 				<?php } ?>
-				<?php if ($this->aauth->get_user()->conf != '') { ?>
+				<?php if ($lista_permisos_us['pag'] != null) { ?>
                 <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "paymentgateways") {
                     echo ' open';
                 } ?>">
@@ -1430,23 +1446,23 @@
                                 class="menu-title"> <?php echo $this->lang->line('Payment Settings') ?> </span><i
                                 class="fa arrow"></i> </a>
                     <ul class="menu-content">
-						<?php if ($this->aauth->get_user()->conf != '') { ?>
+						<?php if ($lista_permisos_us['pagconf'] != null) { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>paymentgateways/settings"><?php echo $this->lang->line('Payment Settings') ?></a>
                         </li>
-						<?php } if ($this->aauth->get_user()->confupt != '') { ?>
+						<?php } if ($lista_permisos_us['pagvia'] != null) { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>paymentgateways"><?php echo $this->lang->line('Payment Gateways') ?></a>
                         </li>
-						<?php } if ($this->aauth->get_user()->confupt != '') { ?>
+						<?php } if ($lista_permisos_us['pagmon'] != null) { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>paymentgateways/currencies"><?php echo $this->lang->line('Payment Currencies') ?></a>
                         </li>
-						<?php } if ($this->aauth->get_user()->confupt != '') { ?>
+						<?php } if ($lista_permisos_us['pagcam'] != null) { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>paymentgateways/exchange"><?php echo $this->lang->line('Currency Exchange') ?></a>
                         </li>
-						<?php } if ($this->aauth->get_user()->confupt != '') { ?>
+						<?php } if ($lista_permisos_us['pagban'] != null) { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>paymentgateways/bank_accounts"><?php echo $this->lang->line('Bank Accounts') ?></a>
                         </li>
@@ -1456,7 +1472,7 @@
                 </li>
 				<?php } ?>
 				<!---PLUGIN----->
-				<?php if ($this->aauth->get_user()->com != '') { ?>
+				<?php if ($lista_permisos_us['comp'] != null) { ?>
                 <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "plugins") {
                     echo ' open';
                 } ?>">
@@ -1464,19 +1480,19 @@
                                 class="menu-title"> <?php echo $this->lang->line('Plugins') ?> </span><i
                                 class="fa arrow"></i> </a>
                     <ul class="menu-content">
-						<?php if ($this->aauth->get_user()->comprec != '') { ?>
+						<?php if ($lista_permisos_us['comprec'] != null) { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>plugins/recaptcha">reCaptcha Security</a>
                         </li>
-						<?php } if ($this->aauth->get_user()->compurl != '') { ?>
+						<?php } if ($lista_permisos_us['compurl'] != null) { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>plugins/shortner">URL Shortener</a>
                         </li>
-						<?php } if ($this->aauth->get_user()->comptwi != '') { ?>
+						<?php } if ($lista_permisos_us['comptwi'] != null) { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>plugins/twilio">Twilio SMS</a>
                         </li>
-						<?php } if ($this->aauth->get_user()->compcurr != '') { ?>
+						<?php } if ($lista_permisos_us['compcurr'] != null) { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>paymentgateways/exchange">Currency Exchange API</a>
                         </li>

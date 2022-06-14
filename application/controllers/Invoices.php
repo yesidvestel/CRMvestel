@@ -1389,8 +1389,8 @@ $no++;
 
         $output = array(
             "draw" => $_POST['draw'],
-            "recordsTotal" => count($lista_invoices),
-            "recordsFiltered" => count($lista_invoices),
+            "recordsTotal" => count($lista_resivos),
+            "recordsFiltered" => count($lista_resivos),
             "data" => $data,
         );
         //output to json format

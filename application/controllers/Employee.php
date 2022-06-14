@@ -34,7 +34,22 @@ class Employee extends CI_Controller
 
         }
     }
-
+public function codigo_generar_inserts_permisos(){
+    $users=$this->db->get_where("aauth_users")->result_array();
+    $lista_de_modulos=$this->db->get_where("modulos")->result_array();
+    foreach ($users as $key => $user) {
+        
+        foreach ($lista_de_modulos as $key2 => $mod) {
+            $data_insert=array();
+            $data_insert['id_modulo']=$mod['id_modulo'];
+            $data_insert['id_usuario']=$user['id'];
+            $data_insert['is_checked']=$user[$mod['codigo']];
+            var_dump($data_insert);
+            echo "<br>";    
+            $this->db->insert("permisos_usuario",$data_insert);
+        }
+    }
+}
     public function index()
     {
         $head['usernm'] = $this->aauth->get_user()->username;
@@ -65,9 +80,9 @@ class Employee extends CI_Controller
 
         $head['usernm'] = $this->aauth->get_user()->username;
         $head['title'] = 'Add Employee';
-
+$data['modulos_padre']=$this->employee->get_modulos_padres();
         $this->load->view('fixed/header', $head);
-        $this->load->view('employee/add');
+        $this->load->view('employee/add',$data);
         $this->load->view('fixed/footer');
 
 
@@ -107,7 +122,7 @@ class Employee extends CI_Controller
         $city = $this->input->post('city');
         $region = $this->input->post('region');
         $country = $this->input->post('country');
-        $co = $this->input->post('co');
+        /*$co = $this->input->post('co');
         $coape = $this->input->post('coape');
         $conue = $this->input->post('conue');
         $coadm = $this->input->post('coadm');
@@ -211,10 +226,17 @@ class Employee extends CI_Controller
         $dathistorial = $this->input->post('dathistorial');
         $conotas = $this->input->post('conotas');
         $tar = $this->input->post('tar');
-        $redcon = $this->input->post('redcon');
+        $redcon = $this->input->post('redcon');*/
 
 
         $a = $this->aauth->create_user($email, $password, $username);
+
+            $data_perms=array();
+            $lista_permisos=$this->employee->get_modulos_add();
+            foreach ($lista_permisos as $key => $per) {
+                    $data_perms[$per->codigo]=array("valor"=>$this->input->post($per->codigo),"id_modulo"=>$per->id_modulo);
+            }
+         
 
         if ((string)$this->aauth->get_user($a)->id != $this->aauth->get_user()->id) {
             $nuid = (string)$this->aauth->get_user($a)->id;
@@ -226,29 +248,12 @@ class Employee extends CI_Controller
 					$nuid, (string)$this->aauth->get_user($a)->username, 
 					$name,$dto,$ingreso,$rh,$eps,$pensiones, 
 					$roleid, $phone, $address, $city, 
-					$region, $country,$co,$coape,$conue,$coadm,
-					$cocie,$cofa,$cofae,$us,$usnue,$usadm,$usgru,
-					$tik,$tiknue,$tikadm,$mo,$monue,$moadm,$pro,
-					$pronue,$proadm,$enc,$encllam,$encnue,$encenc,
-					$encats,$encatslis,$proy,$proynue,$proyadm,
-					$cuen,$cuenadm,$cuennue,$cuenbal,$cuendec,
-					$red,$reding,$redadm,$redbod,$com,$comnue,
-					$comadm,$tes,$testran,$tesanu,$tesnuetransac,
-					$tesnuetransfer,$tesing,$tesgas,$testransfer,
-					$dat,$datest,$datdec,$datrep,$datusu,$datpro,
-					$dating,$datgas,$dattrans,$datimp,$not,$cal,
-					$doct,$pag,$pagconf,$pagvia,$pagmon,$pagcam,
-					$pagban,$inv,$inving,$invadm,$invcat,$invalm,
-					$invtrs,$emp,$comp,$comprec,$compurl,$comptwi,
-					$compcurr,$pla,$placor,$plamen,$platem,$conf,
-					$confemp,$conffa,$confmon,$conffec,$confcat,
-					$confmet,$confrest,$confcorr,$confterm,$confaut,
-					$confseg,$conftem,$confsop,$conface,$confupt,
-					$confapi,$tar,$dathistorial,$conotas,$redcon);
+					$region, $country,$data_perms);
 
             }
 
         } else {
+
             echo json_encode(array('status' => 'Error', 'message' =>
                 'There has been an error, please try again.'));
         }
@@ -451,6 +456,7 @@ class Employee extends CI_Controller
 
         $id = $this->input->get('id');
         $this->load->model('employee_model', 'employee');
+
         if ($this->input->post()) {
             $eid = $this->input->post('eid');
             $name = $this->input->post('name');
@@ -466,7 +472,7 @@ class Employee extends CI_Controller
             $region = $this->input->post('region');
             $country = $this->input->post('country');
 			$roleid = $this->input->post('roleid');
-			$co = $this->input->post('co');
+			/*$co = $this->input->post('co');
 			$coape = $this->input->post('coape');
 			$conue = $this->input->post('conue');
 			$coadm = $this->input->post('coadm');
@@ -571,29 +577,16 @@ class Employee extends CI_Controller
             $datservicios = $this->input->post('datservicios');
             $conotas = $this->input->post('conotas');
 			$tar = $this->input->post('tar');
-			$redcon = $this->input->post('redcon');
+			$redcon = $this->input->post('redcon');*/
+            $data_perms=array();
+            $lista_permisos=$this->employee->get_modulos_cliente2($eid);
+            foreach ($lista_permisos as $key => $per) {
+                    $data_perms[$per->codigo]=array("valor"=>$this->input->post($per->codigo),"id_permiso"=>$per->id);
+            }
             $this->employee->update_employee(
 				$eid, $name,$dto,$ingreso,$rh,$eps,$pensiones, 
 				$phone, $phonealt, $address, $city, $region, $country,
-				$roleid,$co,$coape,$conue,$coadm,
-				$cocie,$cofa,$cofae,$us,$usnue,$usadm,$usgru,
-				$tik,$tiknue,$tikadm,$mo,$monue,$moadm,$pro,
-				$pronue,$proadm,$enc,$encllam,$encnue,$encenc,
-				$encats,$encatslis,$proy,$proynue,$proyadm,
-				$cuen,$cuenadm,$cuennue,$cuenbal,$cuendec,
-				$red,$reding,$redadm,$redbod,$com,$comnue,
-				$comadm,$tes,$testran,$tesanu,$tesnuetransac,
-				$tesnuetransfer,$tesing,$tesgas,$testransfer,
-				$dat,$datest,$datdec,$datrep,$datusu,$datpro,
-				$dating,$datgas,$dattrans,$datimp,$not,$cal,
-				$doct,$pag,$pagconf,$pagvia,$pagmon,$pagcam,
-				$pagban,$inv,$inving,$invadm,$invcat,$invalm,
-				$invtrs,$emp,$comp,$comprec,$compurl,$comptwi,
-				$compcurr,$pla,$placor,$plamen,$platem,$conf,
-				$confemp,$conffa,$confmon,$conffec,$confcat,
-				$confmet,$confrest,$confcorr,$confterm,$confaut,
-				$confseg,$conftem,$confsop,$conface,$confupt,
-				$confapi,$tar,$dathistorial,$datservicios,$conotas,$redcon);
+				$roleid,$data_perms);
 
         } else {
             $head['usernm'] = $this->aauth->get_user($id)->username;
@@ -602,6 +595,9 @@ class Employee extends CI_Controller
 
             $data['user'] = $this->employee->employee_details($id);
             $data['eid'] = intval($id);
+            $data['modulos_padre']=$this->employee->get_modulos_padres();
+            $data['modulos_usuario']=$this->employee->get_modulos_cliente($id);
+            
             $this->load->view('fixed/header', $head);
             $this->load->view('employee/edit', $data);
             $this->load->view('fixed/footer');
