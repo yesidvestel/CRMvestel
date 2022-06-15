@@ -36,8 +36,153 @@
                         </div>
 						
                     </div>
+					<div class="card">
+                        <div class="card-header no-border">
+                            <h4 style="text-align: center;" class="card-title">Usuarios por Estados <a class="float-xs-right"
+                                                                                               href="<?php echo base_url() ?>reports/refresh_data?tipo=estadisticas_servicios"><i
+                                class="icon-refresh2"></i></a></h4>
+                             <div class="row">
+				            	<div class="col-xl-12 col-lg-12"><!-- ['y','z','a','b','c','d','e','f','g','h','i','j'] -->
+								
+									<table border="1">
+								<tr>
+								<th>Franquicia</th>	
+								<th>Estado</th>	
+								<th>Internet</th>	
+								<th>Tv + Internet</th>	
+								<th>Television</th>	
+								<th>Total</th>	
+								<th>Cartera</th>	
+								</tr>
+								<tr>
+									<td rowspan="5">Yopal</td>	
+									<td>Activo</td>	
+									<td><?php echo $intsolo=$list_users['n_internet']-$list_users['internet_y_tv'] ?></td>	
+									<td><?php echo $combo=$list_users['internet_y_tv'] ?></td>	
+									<td><?php echo $tvsolo=$list_users['n_tv']-$list_users['internet_y_tv'] ?></td>	
+									<td><?php echo $intsolo+$tvsolo+$combo ?></td>	
+									<td>0</td>	
+								</tr>
+								<tr>	
+									<td>Cortado</td>	
+									<td><?php echo $intsolo2=$list_users['cor_int']-$list_users['internet_y_tv_cor'] ?></td>	
+									<td><?php echo $combo2=$list_users['internet_y_tv_cor'] ?></td>	
+									<td><?php echo $tvsolo2=$list_users['cor_tv']-$list_users['internet_y_tv_cor'] ?></td>	
+									<td><?php echo $intsolo2+$tvsolo2+$combo2 ?></td>	
+									<td>0</td>	
+								</tr>
+								<tr>	
+									<td>Cartera</td>	
+									<td>0</td>	
+									<td>0</td>	
+									<td>0</td>	
+									<td>0</td>	
+									<td>0</td>	
+								</tr>
+								<tr>	
+									<td>Suspendido</td>	
+									<td>0</td>	
+									<td>0</td>	
+									<td>0</td>	
+									<td>0</td>	
+									<td>0</td>	
+								</tr>
+								<tr>	
+									<td>Retirado</td>	
+									<td>0</td>	
+									<td>0</td>	
+									<td>0</td>	
+									<td>0</td>	
+									<td>0</td>	
+								</tr>
+								<tr>
+									<td rowspan="5">Monterrey</td>	
+									<td>Activo</td>	
+									<td>0</td>	
+									<td>0</td>	
+									<td>0</td>	
+									<td>0</td>	
+									<td>0</td>	
+								</tr>
+								<tr>	
+									<td>Cortado</td>	
+									<td>0</td>	
+									<td>0</td>	
+									<td>0</td>	
+									<td>0</td>	
+									<td>0</td>	
+								</tr>
+								<tr>	
+									<td>Cartera</td>	
+									<td>0</td>	
+									<td>0</td>	
+									<td>0</td>	
+									<td>0</td>	
+									<td>0</td>	
+								</tr>
+								<tr>	
+									<td>Suspendido</td>	
+									<td>0</td>	
+									<td>0</td>	
+									<td>0</td>	
+									<td>0</td>	
+									<td>0</td>	
+								</tr>
+								<tr>	
+									<td>Retirado</td>	
+									<td>0</td>	
+									<td>0</td>	
+									<td>0</td>	
+									<td>0</td>	
+									<td>0</td>	
+								</tr>
+								<tr>
+									<td rowspan="5">Villanueva</td>	
+									<td>Activo</td>	
+									<td>0</td>	
+									<td>0</td>	
+									<td>0</td>	
+									<td>0</td>	
+									<td>0</td>	
+								</tr>
+								<tr>	
+									<td>Cortado</td>	
+									<td>0</td>	
+									<td>0</td>	
+									<td>0</td>	
+									<td>0</td>	
+									<td>0</td>	
+								</tr>
+								<tr>	
+									<td>Cartera</td>	
+									<td>0</td>	
+									<td>0</td>	
+									<td>0</td>	
+									<td>0</td>	
+									<td>0</td>	
+								</tr>
+								<tr>	
+									<td>Suspendido</td>	
+									<td>0</td>	
+									<td>0</td>	
+									<td>0</td>	
+									<td>0</td>	
+									<td>0</td>	
+								</tr>
+								<tr>	
+									<td>Retirado</td>	
+									<td>0</td>	
+									<td>0</td>	
+									<td>0</td>	
+									<td>0</td>	
+									<td>0</td>	
+								</tr>
+								</table>
+				            	</div>
+				            </div>
+                        </div>
                 </div>
-			
+				
             </div>
 
        </div>
@@ -57,7 +202,7 @@ var datos={
             <?php foreach ($lista_estadisticas as $key => $row) {
             $datex = new DateTime($row['fecha']);
             //$num = cal_days_in_month(CAL_GREGORIAN, $row['month'], $row['year']);
-            echo "{ x: '".($datex->format("Y-m-d"))."',z: " . intval($row['n_internet']) . ",a: " . intval($row['n_tv']) .",b: " . intval($row['cor_int']) .",c: " . intval($row['cor_tv']) .",d: " . intval($row['car_int']) .",e: " . intval($row['car_int']) .",f: " . intval($row['sus_int']) .",g: " . intval($row['sus_tv']) .",h: " . intval($row['ret_int']) .",i: " . intval($row['ret_tv']) ."},";//,z: " . intval($tipos['instalaciones_tv'][$key]['numero']) . "
+            echo "{ x: '".($datex->format("Y-m-d"))."',z: " . intval($row['n_internet']+$row['n_internet_vill']+$row['n_internet_mon']) . ",a: " . intval($row['n_tv']+$row['n_tv_vill']+$row['n_tv_mon']) .",b: " . intval($row['cor_int']+$row['cor_int_vill']+$row['cor_int_mon']) .",c: " . intval($row['cor_tv']+$row['cor_tv_vill']+$row['cor_tv_mon']) .",d: " . intval($row['car_int']+$row['cor_tv_vill']+$row['cor_tv_mon']) .",e: " . intval($row['car_int']+$row['car_int_vill']+$row['car_int_mon']) .",f: " . intval($row['sus_int']+$row['sus_int_vill']+$row['sus_int_mon']) .",g: " . intval($row['sus_tv']+$row['sus_tv_vill']+$row['sus_tv_mon']) .",h: " . intval($row['ret_int']+$row['ret_int_vill']+$row['ret_int_mon']) .",i: " . intval($row['ret_tv']+$row['ret_tv_vill']+$row['ret_tv_mon']) ."},";//,z: " . intval($tipos['instalaciones_tv'][$key]['numero']) . "
             
         } ?>
 

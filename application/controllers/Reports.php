@@ -1164,8 +1164,10 @@ public function statistics_services(){
         $data['n_activo']=$obtenido_activos['activo_con_algun_servicio'];
         $data['cor_int']=$obtenido_cortados['internetcor'];
         $data['cor_tv']=$obtenido_cortados['tvcor'];
+        $data['internet_y_tv_cor']=$obtenido_cortados['internet_y_tv_cor'];
         $data['car_int']=$obtenido_cartera['net'];
         $data['car_tv']=$obtenido_cartera['tv'];
+        $data['internet_y_tv_car']=$obtenido_cartera['internet_y_tv'];
         $data['sus_int']=$obtenido_cortados['internet_sus'];
         $data['sus_tv']=$obtenido_cortados['tv_sus'];
         $data['ret_int']=$obtenido_retirado['net'];
@@ -1181,6 +1183,8 @@ public function statistics_services(){
     if(empty($_GET['tipo'])){
         $lista_estadisticas=$this->db->order_by("fecha","asc")->get_where("estadisticas_servicios")->result_array();
         $datos=array("lista_estadisticas"=>$lista_estadisticas);
+		$this->load->model('dashboard_model');
+		$datos['list_users'] = $this->dashboard_model->lista_usuarios();
         $this->load->view("fixed/header");
         $this->load->view("reports/statistics_services",$datos);
         $this->load->view("fixed/footer");    
