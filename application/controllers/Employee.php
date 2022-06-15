@@ -55,9 +55,15 @@ public function codigo_generar_inserts_permisos(){
         $head['usernm'] = $this->aauth->get_user()->username;
         $head['title'] = 'Employees List';
         $data['employee'] = $this->employee->list_employee();
+        $data['modulos_padre']=$this->employee->get_modulos_padres();
+        //$data['modulos_usuario']=$this->employee->get_modulos_cliente($id);
         $this->load->view('fixed/header', $head);
         $this->load->view('employee/list', $data);
         $this->load->view('fixed/footer');
+    }
+    public function get_permios_employe(){
+            $lista=$this->employee->get_modulos_cliente($_POST['id']);
+            echo json_encode($lista);
     }
 
 

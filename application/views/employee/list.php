@@ -1,3 +1,12 @@
+<style type="text/css">
+    
+    .jstree-default .jstree-themeicon-custom{
+        background-color: #1D2B36;
+    }
+    .jstree-default .jstree-clicked {
+      background: none;
+    }
+</style>
 <article class="content">
     <div class="card card-block">
         <div id="notify" class="alert alert-success" style="display:none;">
@@ -45,14 +54,17 @@
                         $status = 'Active';
                         $btn = "<a href='#' data-object-id='" . $aid . "' class='btn btn-orange btn-xs delete-object' title='Disable'><i class='icon-eye-slash'></i> " . $this->lang->line('Disable') ."</a>";
                     }					
-
+                $ver="<a href='" . base_url("employee/view?id=$aid") . "' class='btn btn-success btn-xs'><i class='icon-file-text'></i> " . $this->lang->line('View') ."</a>";
+                if($this->aauth->get_user()->roleid != 5){
+                    $ver="<a href='#' data-name='".$name."' data-id-empleado='".$aid."' data-role='".$role."' class='btn btn-success btn-xs ver-permisos'><i class='icon-file-text'></i> " . $this->lang->line('View') ."</a>";
+                }
                     echo "<tr>
                     <td>$i</td>
                     <td>$name</td>
                     <td>$role</td>                 
                     <td>$status</td>
 					<td>$hora</td>
-                    <td><a href='" . base_url("employee/view?id=$aid") . "' class='btn btn-success btn-xs'><i class='icon-file-text'></i> " . $this->lang->line('View') ."</a></td>";
+                    <td>".$ver."</td>";
 					if ($this->aauth->get_user()->roleid == 5) {
 					echo "<td>$btn&nbsp;&nbsp;<a href='#pop_model' data-toggle='modal' data-remote='false' data-object-id='" . $aid . "' class='btn btn-danger btn-xs delemp' title='Delete'><i class='icon-trash-o'></i></a></td>
 					
@@ -93,9 +105,85 @@
         $('#empid').val($(this).attr('data-object-id'));
 
     });
+    $(document).on("click",".ver-permisos",function (e){
+        e.preventDefault();
+        var nombre=$(this).data("name");
+        var id_=$(this).data("id-empleado");
+        var role=$(this).data("role");
+        if(role=="Super usuario"){
+            $(".checkbox_modulos").prop('checked', true);  
+        }else{
+            $(".checkbox_modulos").prop('checked', false);
+            $.post(baseurl+"employee/get_permios_employe",{"id":id_},function(data){
+               for (let i in data) {
+                var chec=false;
+                if(data[i]==0 ){
+                    chec=true;
+                }
+                //var input='<input class="checkbox_modulos" type="checkbox"  name="'+i+'" id="'+i+'" '+chec+'>';
+                $("#"+i).prop('checked', chec);
+                //$("#"+i).replaceWith(input);
+              
+            }
+            },'json');
+        }
+        
+        $("#titulo_perms").html("Permisos Usuario : "+nombre);
+        $("#role_text").html("Rol : "+role);
+        $("#info-modal").modal("show");
+    });
+    $(function () { 
+        $('.tres_view').jstree(); 
+        $('.tres_view').on('ready.jstree', function() {
+            $(".tres_view").jstree("open_all");          
+        }); 
+
+    });
 </script>
 
+<div id="info-modal" class="modal fade">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="titulo_perms">Permisos usuario</h4>
+                <h5 id="role_text"></h5>
+            </div>
+            <div class="modal-body">
+                 <div align="center">
+                    <table id="table_permisos" >
+                                    <?php          
+                                                    $col=0;foreach ($modulos_padre as $ke1 => $mod) {$col++;       ?>
+                                        <?php if($col==1){echo "<tr>";} ?>
+                                                                                
+                                                        <td style="border: orange double 1px;vertical-align: top;">
+                                                            <div class="tres_view">
+                                                              <ul>
 
+                                                                <li data-jstree='{"icon":"btn btn-primary <?=$mod->icono?>"}'>&nbsp;<?=$mod->nombre  ?>&nbsp;&nbsp;<input  class="checkbox_modulos" type="checkbox" name="<?=$mod->codigo  ?>" id="<?=$mod->codigo  ?>">
+                                                                  <ul>
+                                                                    <?php $lista_de_hijos=$this->db->query("SELECT * FROM modulos where  id_padre=".$mod->id_modulo." order by id_modulo")->result(); ?>
+                                                                    <?php foreach ($lista_de_hijos as $keyh => $hijo) {?>
+                                                                        <li><input  class="checkbox_modulos" type="checkbox" name="<?=$hijo->codigo ?>" id="<?=$hijo->codigo ?>">&nbsp;<?=$hijo->nombre  ?></li>
+                                                                    <?php } ?>
+                                                                  </ul>
+                                                                </li>
+                                                              </ul>
+                                                            </div>
+                                                        </td>
+                        
+                                        <?php if($col==2){$col=0;echo "</tr>";}} ?>
+                                        </table>
+                 </div>
+            </div>
+            <div class="modal-footer">
+                
+                <button type="button" data-dismiss="modal" class="btn">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
 <div id="delete_model" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
