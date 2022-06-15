@@ -148,4 +148,12 @@ class Communication_model extends CI_Model
         //var_dump($respuesta);
         return $respuesta;
     }
+    public function get_deuda_customer($cid){
+        $cuerpo='"cid": '.$cid.",";
+        $dt=$this->obtener($cuerpo,"get_due_customer");
+        $dt=json_decode($dt);
+        $due=$dt->due;
+        $monto=$due->total-$due->pamnt;
+        return $monto;
+    }
 }

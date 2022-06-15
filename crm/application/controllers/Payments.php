@@ -147,9 +147,21 @@ class Payments extends CI_Controller
         echo $respuesta;
     }
     public function pg_ef(){
+      $this->load->model('Communication_model', 'communication');
         date_default_timezone_set('America/Bogota');
         $data_orden=array("user_id"=>$this->session->userdata('user_details')[0]->cid);
-        $data_orden['monto']="20000";
+        
+        $monto=$this->communication->get_deuda_customer($this->session->userdata('user_details')[0]->cid);
+        if($monto<20000){
+            $r=array("status"=>"Error","message"=>"Monto menor de 20000");
+            echo json_encode($r);
+            exit();
+            //mensaje para que se hacerque a pagar en las oficinas o por pse pues es muy poco el valor
+        }else{
+        $data_orden['monto']="".$monto; 
+        }
+
+        
         //minimo baloto 15000 minimo efecty 20000
         if($_POST['a1']=="1"){
             $data_orden['metodo_pago']="EFECTY";    
@@ -302,7 +314,7 @@ class Payments extends CI_Controller
         if($data_json->code=="SUCCESS"){
             $r['url']=$data_json->transactionResponse->extraParameters->URL_PAYMENT_RECEIPT_HTML;
         }else{
-            $r=array("status"=>"Error");
+            $r=array("status"=>"Error","message"=>"comunicate con nosotros");
         }
         echo json_encode($r);
         

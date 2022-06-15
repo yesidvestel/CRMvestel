@@ -282,7 +282,7 @@
                         $("#pag_refer").attr("src",data.url);
                         abrir_modal();
                     }else{
-                        alert("Ocurrio un error informa a VESTEL POR FAVOR");
+                        alert("Ocurrio un error informa a VESTEL POR FAVOR , "+data.message);
                     }
                 },'json');
             }
