@@ -1322,7 +1322,7 @@ if($data['servicios']['estado']=="Inactivo"){
                 }
                 $row[] = '<input type="checkbox" name="x" class="facturas_para_pagar" data-id-ultima-factura="'.$ultima_factura['tid'].'" data-total=" '.$total_factura.'" data-idfacturas="'.$invoices->tid.'" data-status="'.$invoices->status.'" data-ron="no" data-rec="'.$invoices->rec.'" data-refer="" style="cursor:pointer; margin-left: 9px;" onclick="agregar_factura(this)" ></input>';    
             }
-			
+			$row[0]=utf8_encode($row[0]);
             $row[] = $no;
             $row[] = $invoices->tid;
             $row[] = $invoices->tipo_factura;
