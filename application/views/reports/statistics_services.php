@@ -202,7 +202,7 @@ var datos={
             <?php foreach ($lista_estadisticas as $key => $row) {
             $datex = new DateTime($row['fecha']);
             //$num = cal_days_in_month(CAL_GREGORIAN, $row['month'], $row['year']);
-            echo "{ x: '".($datex->format("Y-m-d"))."',z: " . intval($row['n_internet']+$row['n_internet_vill']+$row['n_internet_mon']) . ",a: " . intval($row['n_tv']+$row['n_tv_vill']+$row['n_tv_mon']) .",b: " . intval($row['cor_int']+$row['cor_int_vill']+$row['cor_int_mon']) .",c: " . intval($row['cor_tv']+$row['cor_tv_vill']+$row['cor_tv_mon']) .",d: " . intval($row['car_int']+$row['cor_tv_vill']+$row['cor_tv_mon']) .",e: " . intval($row['car_int']+$row['car_int_vill']+$row['car_int_mon']) .",f: " . intval($row['sus_int']+$row['sus_int_vill']+$row['sus_int_mon']) .",g: " . intval($row['sus_tv']+$row['sus_tv_vill']+$row['sus_tv_mon']) .",h: " . intval($row['ret_int']+$row['ret_int_vill']+$row['ret_int_mon']) .",i: " . intval($row['ret_tv']+$row['ret_tv_vill']+$row['ret_tv_mon']) ."},";//,z: " . intval($tipos['instalaciones_tv'][$key]['numero']) . "
+            echo "{ x: '".($datex->format("Y-m-d"))."',z: " . intval($row['n_internet']) . ",a: " . intval($row['n_tv']) .",b: " . intval($row['cor_int']) .",c: " . intval($row['cor_tv']) .",d: " . intval($row['car_int']) .",e: " . intval($row['car_int']) .",f: " . intval($row['sus_int']) .",g: " . intval($row['sus_tv']) .",h: " . intval($row['ret_int']) .",i: " . intval($row['ret_tv']) ."},";//,z: " . intval($tipos['instalaciones_tv'][$key]['numero']) . "
             
         } ?>
 

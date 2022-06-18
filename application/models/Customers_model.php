@@ -302,7 +302,7 @@ $internet_y_tv_cor=0;
 $tv_sus=0;
 $internet_sus=0;
 $internet_y_tv_sus=0;
-
+$deuda_todos=0;
 
 foreach ($lista_customers as $key => $customer) {
 $var_excluir=false;
@@ -319,6 +319,12 @@ $var_excluir=false;
             
                 $fact_valida=false;
                 $filtros_deuda_customers=0;
+                $deuda_todos_=$this->due_details2($customer->id);
+                $deuda_todos_=$deuda_todos_['total']-$deuda_todos_['pamnt'];
+                if($deuda_todos_>0){
+                    //var_dump($deuda_todos_);
+                    $deuda_todos+=intval($deuda_todos_);
+                }
                 foreach ($lista_invoices as $key => $invoice) {
                     $suma=0;
                     if($invoice->combo!="no" && $invoice->combo!="" && $invoice->combo!="-"){
@@ -439,8 +445,10 @@ $var_excluir=false;
 
         
         }
-        
-        return array("tv"=>$tv,"net"=>$internet,"activo_con_algun_servicio"=>$activo_con_algun_servicio,"internet_y_tv"=>$internet_y_tv,"tvcor"=>$tvcor,"internetcor"=>$internetcor,"internet_y_tv_cor"=>$internet_y_tv_cor,"tv_sus"=>$tv_sus,"internet_sus"=>$internet_sus,"internet_y_tv_sus"=>$internet_y_tv_sus);
+
+        //var_dump($deuda_todos);
+        //exit();
+        return array("tv"=>$tv,"net"=>$internet,"activo_con_algun_servicio"=>$activo_con_algun_servicio,"internet_y_tv"=>$internet_y_tv,"tvcor"=>$tvcor,"internetcor"=>$internetcor,"internet_y_tv_cor"=>$internet_y_tv_cor,"tv_sus"=>$tv_sus,"internet_sus"=>$internet_sus,"internet_y_tv_sus"=>$internet_y_tv_sus,"deuda_todos"=>$deuda_todos);
         
     }
          public function servicios_detail($custid)
@@ -2452,5 +2460,6 @@ return $str;
     public function get_customer_id($cid){
         return $this->db->get_where("customers",array("id"=>$cid))->row();
     }
+    
 
 }

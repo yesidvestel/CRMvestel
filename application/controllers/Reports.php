@@ -1164,14 +1164,15 @@ public function statistics_services(){
         $data['n_activo']=$obtenido_activos['activo_con_algun_servicio'];
         $data['cor_int']=$obtenido_cortados['internetcor'];
         $data['cor_tv']=$obtenido_cortados['tvcor'];
-        $data['internet_y_tv_cor']=$obtenido_cortados['internet_y_tv_cor'];
+        //$data['internet_y_tv_cor']=$obtenido_cortados['internet_y_tv_cor'];
         $data['car_int']=$obtenido_cartera['net'];
         $data['car_tv']=$obtenido_cartera['tv'];
-        $data['internet_y_tv_car']=$obtenido_cartera['internet_y_tv'];
+        //$data['internet_y_tv_car']=$obtenido_cartera['internet_y_tv'];
         $data['sus_int']=$obtenido_cortados['internet_sus'];
         $data['sus_tv']=$obtenido_cortados['tv_sus'];
         $data['ret_int']=$obtenido_retirado['net'];
         $data['ret_tv']=$obtenido_retirado['tv'];
+        $data['debido_activos']=$obtenido_activos['deuda_todos'];
         $data['fecha']=date("Y-m-d");
         if(empty($extraccion_dia)){
             $this->db->insert("estadisticas_servicios",$data);    
