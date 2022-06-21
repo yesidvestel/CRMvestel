@@ -1,4 +1,49 @@
-﻿ALTER TABLE `estadisticas_servicios` ADD `debido_activos` INT NULL AFTER `ret_tv`;
+﻿//estadisticas servicios
+
+ALTER TABLE `estadisticas_servicios` ADD `debido_cortados` INT NULL AFTER `debido_activos`;
+ALTER TABLE `estadisticas_servicios` ADD `debido_cartera` INT NULL AFTER `debido_cortados`;
+ALTER TABLE `estadisticas_servicios` ADD `debido_suspendidos` INT NULL AFTER `debido_cartera`;
+ALTER TABLE `estadisticas_servicios` ADD `debido_retirados` INT NULL AFTER `debido_suspendidos`;
+ALTER TABLE `estadisticas_servicios` ADD `n_internet_vill` INT NULL AFTER `debido_retirados`;
+ALTER TABLE `estadisticas_servicios` ADD `n_tv_vill` INT NULL AFTER `n_internet_vill`;
+ALTER TABLE `estadisticas_servicios` ADD `internet_y_tv_act_vill` INT NULL AFTER `n_tv_vill`;
+ALTER TABLE `estadisticas_servicios` ADD `cor_int_vill` INT NULL AFTER `internet_y_tv_act_vill`;
+ALTER TABLE `estadisticas_servicios` ADD `cor_tv_vill` INT NULL AFTER `cor_int_vill`;
+ALTER TABLE `estadisticas_servicios` ADD `internet_y_tv_cor_vill` INT NULL AFTER `cor_tv_vill`;
+ALTER TABLE `estadisticas_servicios` ADD `car_int_vill` INT NULL AFTER `internet_y_tv_cor_vill`;
+ALTER TABLE `estadisticas_servicios` ADD `car_tv_vill` INT NULL AFTER `car_int_vill`;
+ALTER TABLE `estadisticas_servicios` ADD `internet_y_tv_car_vill` INT NULL AFTER `car_tv_vill`;
+ALTER TABLE `estadisticas_servicios` ADD `sus_int_vill` INT NULL AFTER `internet_y_tv_car_vill`;
+ALTER TABLE `estadisticas_servicios` ADD `sus_tv_vill` INT NULL AFTER `sus_int_vill`;
+ALTER TABLE `estadisticas_servicios` ADD `internet_y_tv_sus_vill` INT NULL AFTER `sus_tv_vill`;
+ALTER TABLE `estadisticas_servicios` ADD `ret_int_vill` INT NULL AFTER `internet_y_tv_sus_vill`;
+ALTER TABLE `estadisticas_servicios` ADD `ret_tv_vill` INT NULL AFTER `ret_int_vill`;
+ALTER TABLE `estadisticas_servicios` ADD `internet_y_tv_ret_vill` INT NULL AFTER `ret_tv_vill`;
+ALTER TABLE `estadisticas_servicios` ADD `debido_act_vill` INT NULL AFTER `internet_y_tv_ret_vill`;
+ALTER TABLE `estadisticas_servicios` ADD `debido_cor_vill` INT NULL AFTER `debido_act_vill`;
+ALTER TABLE `estadisticas_servicios` ADD `debido_car_vill` INT NULL AFTER `debido_cor_vill`;
+ALTER TABLE `estadisticas_servicios` ADD `debido_sus_vill` INT NULL AFTER `debido_car_vill`;
+ALTER TABLE `estadisticas_servicios` ADD `debido_ret_vill` INT NULL AFTER `debido_sus_vill`;
+ALTER TABLE `estadisticas_servicios` ADD `n_internet_mon` INT NULL AFTER `debido_ret_vill`;
+ALTER TABLE `estadisticas_servicios` ADD `n_tv_mon` INT NULL AFTER `n_internet_mon`;
+ALTER TABLE `estadisticas_servicios` ADD `internet_y_tv_act_mon` INT NULL AFTER `n_tv_mon`;
+ALTER TABLE `estadisticas_servicios` ADD `cor_int_mon` INT NULL AFTER `internet_y_tv_act_mon`;
+ALTER TABLE `estadisticas_servicios` ADD `cor_tv_mon` INT NULL AFTER `cor_int_mon`;
+ALTER TABLE `estadisticas_servicios` ADD `internet_y_tv_cor_mon` INT NULL AFTER `cor_tv_mon`;
+ALTER TABLE `estadisticas_servicios` ADD `car_int_mon` INT NULL AFTER `internet_y_tv_cor_mon`;
+ALTER TABLE `estadisticas_servicios` ADD `car_tv_mon` INT NULL AFTER `car_int_mon`;
+ALTER TABLE `estadisticas_servicios` ADD `internet_y_tv_car_mon` INT NULL AFTER `car_tv_mon`;
+ALTER TABLE `estadisticas_servicios` ADD `sus_int_mon` INT NULL AFTER `internet_y_tv_car_mon`;
+ALTER TABLE `estadisticas_servicios` ADD `sus_tv_mon` INT NULL AFTER `sus_int_mon`;
+ALTER TABLE `estadisticas_servicios` ADD `internet_y_tv_sus_mon` INT NULL AFTER `sus_tv_mon`;
+ALTER TABLE `estadisticas_servicios` ADD `ret_int_mon` INT NULL AFTER `internet_y_tv_sus_mon`;
+ALTER TABLE `estadisticas_servicios` ADD `ret_tv_mon` INT NULL AFTER `ret_int_mon`;
+ALTER TABLE `estadisticas_servicios` ADD `internet_y_tv_ret_mon` INT NULL AFTER `ret_tv_mon`;
+ALTER TABLE `estadisticas_servicios` ADD `debido_act_mon` INT NULL AFTER `internet_y_tv_ret_mon`;
+ALTER TABLE `estadisticas_servicios` ADD `debido_cor_mon` INT NULL AFTER `debido_act_mon`;
+ALTER TABLE `estadisticas_servicios` ADD `debido_car_mon` INT NULL AFTER `debido_cor_mon`;
+ALTER TABLE `estadisticas_servicios` ADD `debido_sus_mon` INT NULL AFTER `debido_car_mon`;
+ALTER TABLE `estadisticas_servicios` ADD `debido_ret_mon` INT NULL AFTER `debido_sus_mon`;
 ----------------------------------------------------------------------------------------------------------------------------------------
 CREATE TABLE `vestel_com_co_crm_202231794677`.`data_reception` ( `id` INT NULL AUTO_INCREMENT , `data` TEXT NOT NULL , `fecha` DATETIME NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
 
