@@ -565,8 +565,17 @@
                             <select name="vlan" class="form-control mb-1" onchange="funcion_status();">
                                 <option value="null">-</option>
                                 <option value="101">101</option>
-                                <?php for ($i=1;$i<=36;$i++){
+                                <?php for ($i=1;$i<=16;$i++){
                                 echo '<option value="'.$i*'10'.'">'.$i*'10'.'</option>';
+                                }
+								for ($i=170;$i<=185;$i++){
+                                echo '<option value="'.$i.'">'.$i.'</option>';
+                                }
+								for ($i=19;$i<=36;$i++){
+                                echo '<option value="'.$i*'10'.'">'.$i*'10'.'</option>';
+                                }
+								for ($i=380;$i<=395;$i++){
+                                	echo '<option value="'.$i.'">'.$i.'</option>';
                                 }?>
                             </select>
                         </div>
