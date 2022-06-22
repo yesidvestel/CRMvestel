@@ -80,7 +80,8 @@
                                                                                                href="<?php echo base_url() ?>reports/refresh_data?tipo=estadisticas_servicios"><i
                                 class="icon-refresh2"></i></a></h4>
                              <div class="row">
-								 <?php foreach ($lista_estadisticas as $key => $row) { 
+                             	<?php 	$x1=array_reverse($lista_estadisticas);?>
+								 <?php foreach ($x1 as $key => $row) { 
 									$datex = new DateTime($row['fecha']);?>	
 				            	<div class="col-md-6 mb-1"><!-- ['y','z','a','b','c','d','e','f','g','h','i','j'] -->
 							 
