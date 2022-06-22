@@ -3,8 +3,8 @@
 	table{
 		font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
     	font-size: 12px;
-		margin: 45px;
-		width: 90%;
+		/*margin: 5px;*/
+		width: 100%;
 		text-align: left;
 		border-collapse: collapse;
 	}
@@ -17,6 +17,7 @@
 		border-bottom: 1px solid #fff; 
 		border-right: 1px solid #fff; 
 		color: #039;
+		text-align: center;
 	}
 	td {    
 		padding: 8px;     
@@ -79,9 +80,14 @@
                                                                                                href="<?php echo base_url() ?>reports/refresh_data?tipo=estadisticas_servicios"><i
                                 class="icon-refresh2"></i></a></h4>
                              <div class="row">
-				            	<div class="col-xl-12 col-lg-12"><!-- ['y','z','a','b','c','d','e','f','g','h','i','j'] -->
-								
-								<table width="100px">
+								 <?php foreach ($lista_estadisticas as $key => $row) { 
+									$datex = new DateTime($row['fecha']);?>	
+				            	<div class="col-md-6 mb-1"><!-- ['y','z','a','b','c','d','e','f','g','h','i','j'] -->
+							 
+							<table>
+								<tr>
+								<td><?PHP echo $datex->format("d-m-Y") ?></td>
+								</tr>
 								<tr>
 								<th>Franquicia</th>	
 								<th>Estado</th>	
@@ -94,128 +100,130 @@
 								<tr>
 									<td rowspan="5">Yopal</td>	
 									<td>Activo</td>	
-									<td><?php echo $intsolo=$list_users['n_internet']-$list_users['internet_y_tv'] ?></td>	
-									<td><?php echo $combo=$list_users['internet_y_tv'] ?></td>	
-									<td><?php echo $tvsolo=$list_users['n_tv']-$list_users['internet_y_tv'] ?></td>	
+									<td><?php echo $intsolo=$row['n_internet']-$row['internet_y_tv'] ?></td>	
+									<td><?php echo $combo=$row['internet_y_tv'] ?></td>	
+									<td><?php echo $tvsolo=$row['n_tv']-$row['internet_y_tv'] ?></td>	
 									<td><?php echo $intsolo+$tvsolo+$combo ?></td>	
-									<td><?php echo amountFormat($list_users['debido_activos']) ?></td>	
+									<td><?php echo amountFormat($row['debido_activos']) ?></td>	
 								</tr>
 								<tr>	
 									<td>Cortado</td>	
-									<td><?php echo $intsolo2=$list_users['cor_int']-$list_users['internet_y_tv_cor'] ?></td>	
-									<td><?php echo $combo2=$list_users['internet_y_tv_cor'] ?></td>	
-									<td><?php echo $tvsolo2=$list_users['cor_tv']-$list_users['internet_y_tv_cor'] ?></td>	
+									<td><?php echo $intsolo2=$row['cor_int']-$row['internet_y_tv_cor'] ?></td>	
+									<td><?php echo $combo2=$row['internet_y_tv_cor'] ?></td>	
+									<td><?php echo $tvsolo2=$row['cor_tv']-$row['internet_y_tv_cor'] ?></td>	
 									<td><?php echo $intsolo2+$tvsolo2+$combo2 ?></td>	
-									<td><?php echo amountFormat($list_users['debido_cortados']) ?></td>	
+									<td><?php echo amountFormat($row['debido_cortados']) ?></td>	
 								</tr>
 								<tr>	
 									<td>Cartera</td>	
-									<td><?php echo $intsolo2=$list_users['car_int']-$list_users['internet_y_tv_car'] ?></td>	
-									<td><?php echo $combo2=$list_users['internet_y_tv_car'] ?></td>	
-									<td><?php echo $tvsolo2=$list_users['car_tv']-$list_users['internet_y_tv_car'] ?></td>	
+									<td><?php echo $intsolo2=$row['car_int']-$row['internet_y_tv_car'] ?></td>	
+									<td><?php echo $combo2=$row['internet_y_tv_car'] ?></td>	
+									<td><?php echo $tvsolo2=$row['car_tv']-$row['internet_y_tv_car'] ?></td>	
 									<td><?php echo $intsolo2+$tvsolo2+$combo2 ?></td>	
-									<td><?php echo amountFormat($list_users['debido_cartera']) ?></td>	
+									<td><?php echo amountFormat($row['debido_cartera']) ?></td>	
 								</tr>
 								<tr>	
 									<td>Suspendido</td>	
-									<td><?php echo $intsolo2=$list_users['sus_int']-$list_users['internet_y_tv_sus'] ?></td>	
-									<td><?php echo $combo2=$list_users['internet_y_tv_sus'] ?></td>	
-									<td><?php echo $tvsolo2=$list_users['sus_tv']-$list_users['internet_y_tv_sus'] ?></td>	
+									<td><?php echo $intsolo2=$row['sus_int']-$row['internet_y_tv_sus'] ?></td>	
+									<td><?php echo $combo2=$row['internet_y_tv_sus'] ?></td>	
+									<td><?php echo $tvsolo2=$row['sus_tv']-row['internet_y_tv_sus'] ?></td>	
 									<td><?php echo $intsolo2+$tvsolo2+$combo2 ?></td>	
-									<td><?php echo amountFormat($list_users['debido_suspendidos']) ?></td>
+									<td><?php echo amountFormat($row['debido_suspendidos']) ?></td>
 								</tr>
 								<tr>	
 									<td>Retirado</td>	
-									<td><?php echo $intsolo2=$list_users['ret_int']-$list_users['internet_y_tv_ret'] ?></td>	
-									<td><?php echo $combo2=$list_users['internet_y_tv_ret'] ?></td>	
-									<td><?php echo $tvsolo2=$list_users['ret_tv']-$list_users['internet_y_tv_ret'] ?></td>	
+									<td><?php echo $intsolo2=$row['ret_int']-$row['internet_y_tv_ret'] ?></td>	
+									<td><?php echo $combo2=$row['internet_y_tv_ret'] ?></td>	
+									<td><?php echo $tvsolo2=$row['ret_tv']-$row['internet_y_tv_ret'] ?></td>	
 									<td><?php echo $intsolo2+$tvsolo2+$combo2 ?></td>	
-									<td><?php echo amountFormat($list_users['debido_retirados']) ?></td>
+									<td><?php echo amountFormat($row['debido_retirados']) ?></td>
 								</tr>
 								<tr>
 									<td rowspan="5">Monterrey</td>	
 									<td>Activo</td>	
-									<td><?php echo $intsolo=$list_users['n_internet_mon']-$list_users['internet_y_tv_act_mon'] ?></td>	
-									<td><?php echo $combo=$list_users['internet_y_tv_act_mon'] ?></td>	
-									<td><?php echo $tvsolo=$list_users['n_tv_mon']-$list_users['internet_y_tv_act_mon'] ?></td>	
+									<td><?php echo $intsolo=$row['n_internet_mon']-$row['internet_y_tv_act_mon'] ?></td>	
+									<td><?php echo $combo=$row['internet_y_tv_act_mon'] ?></td>	
+									<td><?php echo $tvsolo=$row['n_tv_mon']-$row['internet_y_tv_act_mon'] ?></td>	
 									<td><?php echo $intsolo+$tvsolo+$combo ?></td>	
-									<td><?php echo amountFormat($list_users['debido_act_mon']) ?></td>	
+									<td><?php echo amountFormat($row['debido_act_mon']) ?></td>	
 								</tr>
 								<tr>	
 									<td>Cortado</td>	
-									<td><?php echo $intsolo2=$list_users['cor_int_mon']-$list_users['internet_y_tv_cor_mon'] ?></td>	
-									<td><?php echo $combo2=$list_users['internet_y_tv_cor_mon'] ?></td>	
-									<td><?php echo $tvsolo2=$list_users['cor_tv_mon']-$list_users['internet_y_tv_cor_mon'] ?></td>	
+									<td><?php echo $intsolo2=$row['cor_int_mon']-$row['internet_y_tv_cor_mon'] ?></td>	
+									<td><?php echo $combo2=$row['internet_y_tv_cor_mon'] ?></td>	
+									<td><?php echo $tvsolo2=$row['cor_tv_mon']-$row['internet_y_tv_cor_mon'] ?></td>	
 									<td><?php echo $intsolo2+$tvsolo2+$combo2 ?></td>	
-									<td><?php echo amountFormat($list_users['debido_cor_mon']) ?></td>	
+									<td><?php echo amountFormat($row['debido_cor_mon']) ?></td>	
 								</tr>
 								<tr>	
 									<td>Cartera</td>	
-									<td><?php echo $intsolo2=$list_users['car_int_mon']-$list_users['internet_y_tv_car_mon'] ?></td>	
-									<td><?php echo $combo2=$list_users['internet_y_tv_car_mon'] ?></td>	
-									<td><?php echo $tvsolo2=$list_users['car_tv_mon']-$list_users['internet_y_tv_car_mon'] ?></td>	
+									<td><?php echo $intsolo2=$row['car_int_mon']-$row['internet_y_tv_car_mon'] ?></td>	
+									<td><?php echo $combo2=$row['internet_y_tv_car_mon'] ?></td>	
+									<td><?php echo $tvsolo2=$row['car_tv_mon']-$row['internet_y_tv_car_mon'] ?></td>	
 									<td><?php echo $intsolo2+$tvsolo2+$combo2 ?></td>	
-									<td><?php echo amountFormat($list_users['debido_car_mon']) ?></td>		
+									<td><?php echo amountFormat($row['debido_car_mon']) ?></td>		
 								</tr>
 								<tr>	
 									<td>Suspendido</td>	
-									<td><?php echo $intsolo2=$list_users['sus_int_mon']-$list_users['internet_y_tv_sus_mon'] ?></td>	
-									<td><?php echo $combo2=$list_users['internet_y_tv_sus_mon'] ?></td>	
-									<td><?php echo $tvsolo2=$list_users['sus_tv_mon']-$list_users['internet_y_tv_sus_mon'] ?></td>	
+									<td><?php echo $intsolo2=$row['sus_int_mon']-$row['internet_y_tv_sus_mon'] ?></td>	
+									<td><?php echo $combo2=$row['internet_y_tv_sus_mon'] ?></td>	
+									<td><?php echo $tvsolo2=$row['sus_tv_mon']-$row['internet_y_tv_sus_mon'] ?></td>	
 									<td><?php echo $intsolo2+$tvsolo2+$combo2 ?></td>	
-									<td><?php echo amountFormat($list_users['debido_sus_mon']) ?></td>	
+									<td><?php echo amountFormat($row['debido_sus_mon']) ?></td>	
 								</tr>
 								<tr>	
 									<td>Retirado</td>	
-									<td><?php echo $intsolo2=$list_users['ret_int_mon']-$list_users['internet_y_tv_ret_mon'] ?></td>	
-									<td><?php echo $combo2=$list_users['internet_y_tv_ret_mon'] ?></td>	
-									<td><?php echo $tvsolo2=$list_users['ret_tv_mon']-$list_users['internet_y_tv_ret_mon'] ?></td>	
+									<td><?php echo $intsolo2=$row['ret_int_mon']-$row['internet_y_tv_ret_mon'] ?></td>	
+									<td><?php echo $combo2=$row['internet_y_tv_ret_mon'] ?></td>	
+									<td><?php echo $tvsolo2=$row['ret_tv_mon']-$row['internet_y_tv_ret_mon'] ?></td>	
 									<td><?php echo $intsolo2+$tvsolo2+$combo2 ?></td>	
-									<td><?php echo amountFormat($list_users['debido_ret_mon']) ?></td>	
+									<td><?php echo amountFormat($row['debido_ret_mon']) ?></td>	
 								</tr>
 								<tr>
 									<td rowspan="5">Villanueva</td>	
 									<td>Activo</td>	
-									<td><?php echo $intsolo=$list_users['n_internet_vill']-$list_users['internet_y_tv_act_vill'] ?></td>	
-									<td><?php echo $combo=$list_users['internet_y_tv_act_vill'] ?></td>	
-									<td><?php echo $tvsolo=$list_users['n_tv_vill']-$list_users['internet_y_tv_act_vill'] ?></td>	
+									<td><?php echo $intsolo=$row['n_internet_vill']-$row['internet_y_tv_act_vill'] ?></td>	
+									<td><?php echo $combo=$row['internet_y_tv_act_vill'] ?></td>	
+									<td><?php echo $tvsolo=$row['n_tv_vill']-$row['internet_y_tv_act_vill'] ?></td>	
 									<td><?php echo $intsolo+$tvsolo+$combo ?></td>	
-									<td><?php echo amountFormat($list_users['debido_act_vill']) ?></td>
+									<td><?php echo amountFormat($row['debido_act_vill']) ?></td>
 								</tr>
 								<tr>	
 									<td>Cortado</td>	
-									<td><?php echo $intsolo2=$list_users['cor_int_vill']-$list_users['internet_y_tv_cor_vill'] ?></td>	
-									<td><?php echo $combo2=$list_users['internet_y_tv_cor_vill'] ?></td>	
-									<td><?php echo $tvsolo2=$list_users['cor_tv_vill']-$list_users['internet_y_tv_cor_vill'] ?></td>	
+									<td><?php echo $intsolo2=$row['cor_int_vill']-$row['internet_y_tv_cor_vill'] ?></td>	
+									<td><?php echo $combo2=$row['internet_y_tv_cor_vill'] ?></td>	
+									<td><?php echo $tvsolo2=$row['cor_tv_vill']-$row['internet_y_tv_cor_vill'] ?></td>	
 									<td><?php echo $intsolo2+$tvsolo2+$combo2 ?></td>	
-									<td><?php echo amountFormat($list_users['debido_cor_vill']) ?></td>	
+									<td><?php echo amountFormat($row['debido_cor_vill']) ?></td>	
 								</tr>
 								<tr>	
 									<td>Cartera</td>	
-									<td><?php echo $intsolo2=$list_users['car_int_vill']-$list_users['internet_y_tv_car_vill'] ?></td>	
-									<td><?php echo $combo2=$list_users['internet_y_tv_car_vill'] ?></td>	
-									<td><?php echo $tvsolo2=$list_users['car_tv_vill']-$list_users['internet_y_tv_car_vill'] ?></td>	
+									<td><?php echo $intsolo2=$row['car_int_vill']-$row['internet_y_tv_car_vill'] ?></td>	
+									<td><?php echo $combo2=$row['internet_y_tv_car_vill'] ?></td>	
+									<td><?php echo $tvsolo2=$row['car_tv_vill']-$row['internet_y_tv_car_vill'] ?></td>	
 									<td><?php echo $intsolo2+$tvsolo2+$combo2 ?></td>	
-									<td><?php echo amountFormat($list_users['debido_car_vill']) ?></td>	
+									<td><?php echo amountFormat($row['debido_car_vill']) ?></td>	
 								</tr>
 								<tr>	
 									<td>Suspendido</td>	
-									<td><?php echo $intsolo2=$list_users['sus_int_vill']-$list_users['internet_y_tv_sus_vill'] ?></td>	
-									<td><?php echo $combo2=$list_users['internet_y_tv_sus_vill'] ?></td>	
-									<td><?php echo $tvsolo2=$list_users['sus_tv_vill']-$list_users['internet_y_tv_sus_vill'] ?></td>	
+									<td><?php echo $intsolo2=$row['sus_int_vill']-$row['internet_y_tv_sus_vill'] ?></td>	
+									<td><?php echo $combo2=$row['internet_y_tv_sus_vill'] ?></td>	
+									<td><?php echo $tvsolo2=$row['sus_tv_vill']-$row['internet_y_tv_sus_vill'] ?></td>	
 									<td><?php echo $intsolo2+$tvsolo2+$combo2 ?></td>	
-									<td><?php echo amountFormat($list_users['debido_sus_vill']) ?></td>
+									<td><?php echo amountFormat($row['debido_sus_vill']) ?></td>
 								</tr>
 								<tr>	
 									<td>Retirado</td>	
-									<td><?php echo $intsolo2=$list_users['ret_int_vill']-$list_users['internet_y_tv_ret_vill'] ?></td>	
-									<td><?php echo $combo2=$list_users['internet_y_tv_ret_vill'] ?></td>	
-									<td><?php echo $tvsolo2=$list_users['ret_tv_vill']-$list_users['internet_y_tv_ret_vill'] ?></td>	
+									<td><?php echo $intsolo2=$row['ret_int_vill']-$row['internet_y_tv_ret_vill'] ?></td>	
+									<td><?php echo $combo2=$row['internet_y_tv_ret_vill'] ?></td>	
+									<td><?php echo $tvsolo2=$row['ret_tv_vill']-$row['internet_y_tv_ret_vill'] ?></td>	
 									<td><?php echo $intsolo2+$tvsolo2+$combo2 ?></td>	
-									<td><?php echo amountFormat($list_users['debido_ret_vill']) ?></td>
+									<td><?php echo amountFormat($row['debido_ret_vill']) ?></td>
 								</tr>
 								</table>
+									
 				            	</div>
+								 <?php } ?>
 				            </div>
                         </div>
                 </div>
