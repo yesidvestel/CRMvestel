@@ -56,10 +56,10 @@
 
             </div>
             <div class="row">
-                <div class="col-xl-12 col-lg-12">
+                <div class="col-xl-6 col-md-6 col-sm-12">
                     <div class="card">
                         <div class="card-header no-border">
-                            <h6 class="card-title"><?php echo $this->lang->line('') ?>Comparativo de ingresos</h6>
+                            <h6 class="card-title"><?php echo $this->lang->line('') ?>Comparativo de ingresos y gastos mes actual</h6>
 
                         
 
@@ -68,12 +68,12 @@
                                     <li class="nav-item">
                                         <a class="nav-link active" id="base-tab1" data-toggle="tab" aria-controls="tab1"
                                            href="#sales"
-                                           aria-expanded="true"><?php echo $this->lang->line('income') ?> actuales</a>
+                                           aria-expanded="true"><?php echo $this->lang->line('income') ?></a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" id="base-tab2" data-toggle="tab" aria-controls="tab2"
                                            href="#transactions1"
-                                           aria-expanded="false"><?php echo $this->lang->line('') ?>Ingresos mes anterior</a>
+                                           aria-expanded="false"><?php echo $this->lang->line('expenses') ?></a>
                                     </li>
 
 
@@ -85,14 +85,49 @@
 
                                     </div>
                                     <div class="tab-pane" id="transactions1" data-toggle="tab" aria-expanded="false">
-                                        <div id="dashboard-income-chart2"></div>
+                                        <div></div>
                                     </div>
 
                                 </div>
 						</div>
                     </div>
                 </div>
+				 <div class="col-xl-6 col-md-6">
+                    <div class="card">
+                        <div class="card-header no-border">
+                            <h6 class="card-title"><?php echo $this->lang->line('') ?>Comparativo de ingresos y gastos mes anterior</h6>
 
+                        
+
+                         <p><?php echo $this->lang->line('') ?></p>
+                                <ul class="nav nav-tabs">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="base-tab1" data-toggle="tab" aria-controls="tab1"
+                                           href="#sales"
+                                           aria-expanded="true"><?php echo $this->lang->line('income') ?></a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="base-tab2" data-toggle="tab" aria-controls="tab2"
+                                           href="#transactions1"
+                                           aria-expanded="false"><?php echo $this->lang->line('expenses') ?></a>
+                                    </li>
+
+
+                                </ul>
+                                <div class="tab-content pt-1">
+                                    <div role="tabpanel" class="tab-pane active" id="sales" aria-expanded="true"
+                                         data-toggle="tab">
+                                        <div id="dashboard-income-chart2"></div>
+
+                                    </div>
+                                    <div class="tab-pane" id="transactions1" data-toggle="tab" aria-expanded="false">
+                                        <div></div>
+                                    </div>
+
+                                </div>
+						</div>
+                    </div>
+                </div>
             </div>
 			<div class="row">
                 <div class="col-xl-12 col-lg-12">
