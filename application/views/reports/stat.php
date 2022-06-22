@@ -1,3 +1,26 @@
+<script type="text/javascript">
+    var dataVisits = [
+        <?php $tt_inc = 0;foreach ($incomechart as $row) {
+        $tt_inc += $row['total'];
+        echo "{ x: '" . $row['date'] . "', y: " . intval($row['total']) . "},";
+    }
+        ?>
+    ];
+    var dataVisits2 = [
+        <?php $tt_exp = 0; foreach ($expensechart as $row) {
+        $tt_exp += $row['total'];
+        echo "{ x: '" . $row['date'] . "', y: " . intval($row['total']) . "},";
+    }
+        ?>]; 
+	var dataVisits3 = [
+        <?php $tt_inc2 = 0;foreach ($incomechart2 as $row) {
+        $tt_inc2 += $row['total'];
+        echo "{ x: '" . $row['date'] . "', y: " . intval($row['total']) . "},";
+    }
+        ?>
+    ];
+	
+</script>
 <div class="app-content content container-fluid">
     <div class="content-wrapper">
         <div class="content-header">
@@ -33,6 +56,45 @@
 
             </div>
             <div class="row">
+                <div class="col-xl-12 col-lg-12">
+                    <div class="card">
+                        <div class="card-header no-border">
+                            <h6 class="card-title"><?php echo $this->lang->line('') ?>Comparativo de ingresos</h6>
+
+                        
+
+                         <p><?php echo $this->lang->line('') ?></p>
+                                <ul class="nav nav-tabs">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="base-tab1" data-toggle="tab" aria-controls="tab1"
+                                           href="#sales"
+                                           aria-expanded="true"><?php echo $this->lang->line('income') ?> actuales</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="base-tab2" data-toggle="tab" aria-controls="tab2"
+                                           href="#transactions1"
+                                           aria-expanded="false"><?php echo $this->lang->line('') ?>Ingresos mes anterior</a>
+                                    </li>
+
+
+                                </ul>
+                                <div class="tab-content pt-1">
+                                    <div role="tabpanel" class="tab-pane active" id="sales" aria-expanded="true"
+                                         data-toggle="tab">
+                                        <div id="dashboard-income-chart"></div>
+
+                                    </div>
+                                    <div class="tab-pane" id="transactions1" data-toggle="tab" aria-expanded="false">
+                                        <div id="dashboard-income-chart2"></div>
+                                    </div>
+
+                                </div>
+						</div>
+                    </div>
+                </div>
+
+            </div>
+			<div class="row">
                 <div class="col-xl-12 col-lg-12">
                     <div class="card">
                         <div class="card-header no-border">
@@ -123,7 +185,7 @@
 
  ?>    
 <script type="text/javascript">
-
+	
 
     $('#invoices-sales-chart').empty();
 
@@ -175,5 +237,88 @@
         lineColors: ['#34cea7', '#ff6e40'],
     });
 
+	function drawIncomeChart(dataVisits) {
 
+        $('#dashboard-income-chart').empty();
+
+        Morris.Area({
+            element: 'dashboard-income-chart',
+            data: dataVisits,
+            xkey: 'x',
+            ykeys: ['y'],
+            ymin: 'auto 40',
+            labels: ['<?php echo  $this->lang->line('Amount') ?>'],
+            xLabels: "day",
+            hideHover: 'auto',
+            resize: true,
+            lineColors: [
+                '#34cea7',
+            ],
+            pointFillColors: [
+                '#ff6e40',
+            ],
+            fillOpacity: 0.4,
+        });
+
+
+    }
+	function drawIncomeChart2(dataVisits3) {
+
+        $('#dashboard-income-chart2').empty();
+
+        Morris.Area({
+            element: 'dashboard-income-chart2',
+            data: dataVisits3,
+            xkey: 'x',
+            ykeys: ['y'],
+            ymin: 'auto 40',
+            labels: ['<?php echo  $this->lang->line('Amount') ?>'],
+            xLabels: "day",
+            hideHover: 'auto',
+            resize: true,
+            lineColors: [
+                '#34cea7',
+            ],
+            pointFillColors: [
+                '#ff6e40',
+            ],
+            fillOpacity: 0.4,
+        });
+
+
+    }
+	
+	
+	 function drawExpenseChart(dataVisits2) {
+
+        $('#dashboard-expense-chart').empty();
+
+        Morris.Area({
+            element: 'dashboard-expense-chart',
+            data: dataVisits2,
+            xkey: 'x',
+            ykeys: ['y'],
+            ymin: 'auto 0',
+            labels: ['<?php echo  $this->lang->line('Amount') ?>'],
+            xLabels: "day",
+            hideHover: 'auto',
+            resize: true,
+            lineColors: [
+                '#ff6e40',
+            ],
+            pointFillColors: [
+                '#34cea7',
+            ]
+        });
+
+
+    }
+	drawIncomeChart(dataVisits);
+	drawIncomeChart2(dataVisits3);
+	
+
+    $('a[data-toggle=tab').on('shown.bs.tab', function (e) {
+        window.dispatchEvent(new Event('resize'));
+      
+    });
 </script>

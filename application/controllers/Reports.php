@@ -48,8 +48,16 @@ class Reports extends CI_Controller
     public function statistics()
 
     {
-
+		$this->load->model("dashboard_model");
+		$today = date("Y-m-d");
+        $month = date("m");
+        $month2 = date("m",strtotime($today."- 1 month"));
+        $year = date("Y");
+		$sede = "";//$this->input->get('sede');
         $data['stat'] = $this->reports->statistics();
+		$data['incomechart'] = $this->dashboard_model->incomeChart($today, $month, $year,$sede);
+		$data['incomechart2'] = $this->dashboard_model->incomeChart($today, $month2, $year,$sede);
+        $data['expensechart'] = $this->dashboard_model->expenseChart($today, $month2, $year,$sede);
         $head['title'] = "Statisticst";
         $head['usernm'] = $this->aauth->get_user()->username;
         $this->load->view('fixed/header', $head);
