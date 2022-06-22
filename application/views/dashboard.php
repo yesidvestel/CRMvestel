@@ -359,11 +359,11 @@
                                 <div class="tab-content pt-1">
                                     <div role="tabpanel" class="tab-pane active" id="sales" aria-expanded="true"
                                          data-toggle="tab">
-                                        <div id="dashboard-expense-chart"></div>
+                                        <div id="dashboard-income-chart"></div>
 
                                     </div>
                                     <div class="tab-pane" id="transactions1" data-toggle="tab" aria-expanded="false">
-                                        <div id="dashboard-income-chart"></div>
+                                        <div id="dashboard-expense-chart"></div>
                                     </div>
 
                                 </div>
