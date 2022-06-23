@@ -2463,7 +2463,7 @@ return $str;
     public function pay_invoices($cid,$monto){
          $ids_facturas =$this->input->post('facturas_seleccionadas');
             $x="";
-        $array_facturas=explode("-", $ids_facturas);
+        $array_facturas=explode("-", $ids_facturas);//hay que cambiar la lista de las facturas
         $monto=$monto;
         $monto_aux=$monto;
         $valor_restante_monto=0;
@@ -2521,6 +2521,7 @@ return $str;
             }            
             $factura_var = $this->db->get_where('invoices',array('tid'=>$id_factura))->row();
             $customer=$this->db->get_where('customers',array('id'=>$factura_var->csd))->row();
+            $ultima_factura=$this->customers->servicios_detail($factura_var->csd);
             //codigo copiado
              $tid = $id_factura;
         $amount = $montos[$id_factura];
@@ -2528,17 +2529,26 @@ return $str;
         $note = "Pago de la factura #".$id_factura." por PAYU";
         $pmethod = "Cash";
         $banco = "";
-        $acid = $this->input->post('account');
+        $acid = $customer->gid;
         $cid = $factura_var->csd;
         $cname = $customer->name;
         $paydate = datefordatabase($paydate);
-        $this->db->select('holder');
+        $this->db->select('holder,id');
         $this->db->from('accounts');
-        $this->db->where('id', $acid);
+        $this->db->where('sede', $acid);
         $query = $this->db->get();
         $account = $query->row_array();
+        $acid=$account['id'];
+        $reconexion = "no";
+        if(!empty($ultima_factura['tid'])){
 
-        $reconexion = $this->input->post('reconexion');
+               $fu= $this->db->get_where("invoices",array("tid"=>$ultima_factura['tid']))->row();
+               if($fu->ron=="Cortado" || $fu->rec=="1"){
+                    $reconexion="si";
+               }
+
+        }
+        $this->input->post('reconexion');
         
         $tipo = $this->input->post('tipo');
         
