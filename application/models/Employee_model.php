@@ -541,6 +541,14 @@ class Employee_model extends CI_Model
         }
         return $lista_permisos2;
     }
+    public function get_client_specific_permission($id_user,$code_perm){
+        $lista_permisos1=$this->db->query("SELECT permisos_usuario.id,permisos_usuario.id_modulo,permisos_usuario.is_checked,modulos.codigo FROM permisos_usuario inner join  modulos on modulos.id_modulo=permisos_usuario.id_modulo WHERE modulos.codigo='".$code_perm."' and  id_usuario=".$id_user)->result();        
+        $lista_permisos2=array();
+        foreach ($lista_permisos1 as $key => $value) {
+            $lista_permisos2[$value->codigo]=$value->is_checked;
+        }
+        return $lista_permisos2[$code_perm];
+    }
     public function get_modulos_cliente2($id_user){
         $count_modulos=$this->db->query("select count(*) as count from modulos")->result();
         
