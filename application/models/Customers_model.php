@@ -2461,9 +2461,10 @@ return $str;
         return $this->db->get_where("customers",array("id"=>$cid))->row();
     }
     public function pay_invoices($cid,$monto){
-         $ids_facturas =$this->input->post('facturas_seleccionadas');
-            $x="";
-        $array_facturas=explode("-", $ids_facturas);//hay que cambiar la lista de las facturas
+         
+        $array_facturas=$this->db->query('SELECT * FROM invoices WHERE csd='.$cid.' and ( status="partial" or status="due") ORDER BY invoices.invoicedate ASC, tid asc')->result();
+        
+        //SELECT * FROM `invoices` WHERE csd=101 and ( status="partial" or status="due") ORDER BY `invoices`.`invoicedate` ASC, tid asc
         $monto=$monto;
         $monto_aux=$monto;
         $valor_restante_monto=0;
@@ -2472,7 +2473,8 @@ return $str;
         $_id_last_invoice_procesed=0;
         $factura_var=null;
         $pa="no";
-            foreach ($array_facturas as $key => $id_factura) {
+            foreach ($array_facturas as $key => $factura_l1) {
+                $id_factura=$factura_l1->tid;
                 $factura_var = $this->db->get_where('invoices',array('tid'=>$id_factura))->row();                                
                 
                 $total_factura=$factura_var->total;
@@ -2597,7 +2599,7 @@ return $str;
         //generar reconexion
         $username = $this->aauth->get_user()->username;
         $tidactualmasuno= $this->db->select('max(codigo)+1 as tid')->from('tickets')->get()->result();
-        if ($reconexion==si && $mes2===$mes1){
+        if ($reconexion=="si" && $mes2===$mes1){
             $data2['codigo']=$tidactualmasuno[0]->tid;
                 $data2['subject']='servicio';
                 $data2['detalle']=$tipo;
@@ -2620,7 +2622,7 @@ return $str;
                             $data_h['nombre_columna']="idt";
                             $this->db->insert("historial_crm",$data_h);
                 $reconexion_gen="si";
-        }if ($reconexion==si && $mes2>$mes1){
+        }if ($reconexion=="si" && $mes2>$mes1){
                 $data2['codigo']=$tidactualmasuno[0]->tid;
                 $data2['subject']='servicio';
                 $data2['detalle']=$tipo.'2';
@@ -2649,7 +2651,7 @@ return $str;
                 $reconexion_gen="si";
             $this->db->insert('temporales', $data4);
                             $data_h=array();
-                            $data_h['modulo']="Usuarios Servicio";
+                            $data_h['modulo']="Usuarios Servicio PAYU";
                             $data_h['accion']="Hacer el Pago {update}";
                             $data_h['id_usuario']=$cid;
                             $data_h['fecha']=date("Y-m-d H:i:s");
@@ -2665,10 +2667,8 @@ return $str;
         $id_banco=null;
         $banco=null;
         
-            if ($pmethod==Cash){
-        $note="Pago de la factura #".$tid." ".$customer->name." ".$customer->unoapellido." ".$customer->documento." metodo: efectivo";
-            }if ($pmethod==Bank){
-            $note="Pago de la factura #".$tid." ".$customer->name." ".$customer->unoapellido." ".$customer->documento." metodo: Consignacion";  
+            if ($pmethod=="Cash"){
+        $note="Pago de la factura #".$tid." ".$customer->name." ".$customer->unoapellido." ".$customer->documento." metodo: efectivo PAYU";
             }
     $data = array(
             'acid' => $acid,
@@ -2680,7 +2680,7 @@ return $str;
             'payerid' => $cid,
             'method' => $pmethod,
             'date' => $paydate,
-            'eid' => $this->aauth->get_user()->id,
+            'eid' => 0,
             'tid' => $tid,
             'note' => $note,
             'ext' => 0,
@@ -2692,8 +2692,8 @@ return $str;
         $h_x1=$this->db->insert_id();
 
                             $data_h=array();
-                            $data_h['modulo']="Usuarios Servicio";
-                            $data_h['accion']="Administrar Usuarios > Ver Usuario > Ver Facturas > Hacer el Pago (pago multiple) {update}";
+                            $data_h['modulo']="Usuarios Servicio PAYU";
+                            $data_h['accion']="Hacer el Pago {update}";
                             $data_h['id_usuario']=$cid;
                             $data_h['fecha']=date("Y-m-d H:i:s");
                             $data_h['descripcion']=json_encode($data);
@@ -2721,8 +2721,8 @@ return $str;
             $this->db->update('invoices');
 
                         $data_h=array();
-                            $data_h['modulo']="Usuarios Servicio";
-                            $data_h['accion']="Administrar Usuarios > Ver Usuario > Ver Facturas > Hacer el Pago (pago multiple) {update}";
+                            $data_h['modulo']="Usuarios Servicio PAYU";
+                            $data_h['accion']="Hacer el Pago {update}";
                             $data_h['id_usuario']=$cid;
                             $data_h['fecha']=date("Y-m-d H:i:s");
                             $data_h['descripcion']=json_encode(array("status"=>"partial","pamnt"=>"pamnt+$amount","pmethod"=>$pmethod));
@@ -2736,8 +2736,8 @@ return $str;
             $this->db->update('accounts');
 
                     $data_h=array();
-                            $data_h['modulo']="Usuarios Servicio";
-                            $data_h['accion']="Administrar Usuarios > Ver Usuario > Ver Facturas > Hacer el Pago (pago multiple) {update}";
+                            $data_h['modulo']="Usuarios Servicio PAYU";
+                            $data_h['accion']="Hacer el Pago {update}";
                             $data_h['id_usuario']=$cid;
                             $data_h['fecha']=date("Y-m-d H:i:s");
                             $data_h['descripcion']=json_encode(array("lastbal"=>"lastbal+$amount"));
@@ -2750,21 +2750,14 @@ return $str;
             $totalrm = $totalrm - $amount;
         } else {
 
-            //$today = $invresult->invoiceduedate;
-            //$addday = $invresult->rec;
-
-
-            //$ndate = date("Y-m-d", strtotime($today . " +" . $addday . 's'));
-
-            //$this->db->set('invoiceduedate', $ndate);
             $this->db->set('pmethod', $pmethod);
             $this->db->set('pamnt', "pamnt+$amount", FALSE);
             $this->db->set('status', 'paid');
             $this->db->where('tid', $tid);
             $this->db->update('invoices');
                     $data_h=array();
-                            $data_h['modulo']="Usuarios Servicio";
-                            $data_h['accion']="Administrar Usuarios > Ver Usuario > Ver Facturas > Hacer el Pago (pago multiple) {update}";
+                           $data_h['modulo']="Usuarios Servicio PAYU";
+                            $data_h['accion']="Hacer el Pago {update}";
                             $data_h['id_usuario']=$cid;
                             $data_h['fecha']=date("Y-m-d H:i:s");
                             $data_h['descripcion']=json_encode(array("status"=>"paid","pamnt"=>"pamnt+$amount","pmethod"=>$pmethod));
@@ -2777,8 +2770,8 @@ return $str;
             $this->db->where('id', $acid);
             $this->db->update('accounts');
                         $data_h=array();
-                            $data_h['modulo']="Usuarios Servicio";
-                            $data_h['accion']="Administrar Usuarios > Ver Usuario > Ver Facturas > Hacer el Pago (pago multiple) {update}";
+                            $data_h['modulo']="Usuarios Servicio PAYU";
+                            $data_h['accion']="Hacer el Pago {update}";
                             $data_h['id_usuario']=$cid;
                             $data_h['fecha']=date("Y-m-d H:i:s");
                             $data_h['descripcion']=json_encode(array("lastbal"=>"lastbal+$amount"));
@@ -2793,22 +2786,14 @@ return $str;
 
 
         }
-
-
-       // $activitym = "<tr><td>" . substr($paydate, 0, 10) . "</td><td>$pmethod</td><td>$amount</td><td>$note</td></tr>";
-
-
-        //echo json_encode(array('status' => 'Success', 'message' =>
-            //$this->lang->line('Transaction has been added'), 'pstatus' => $this->lang->line($status), 'activity' => $activitym, 'amt' => $totalrm, 'ttlpaid' => $paid_amount));
-            //codigo cop fin
         }
-        $this->load->model('customers_model', 'customers');
-        $this->customers->actualizar_debit_y_credit($cid);
+        
+        $this->actualizar_debit_y_credit($cid);
         if(count($ids_transacciones)!=0){
-            $this->input->set_cookie("ids_transacciones",json_encode($ids_transacciones),3600,null);
+            //$this->input->set_cookie("ids_transacciones",json_encode($ids_transacciones),3600,null);
             
         }else{
-            $this->input->set_cookie("ids_transacciones",null,3600,null);
+            //$this->input->set_cookie("ids_transacciones",null,3600,null);
             
         }
     }
