@@ -694,9 +694,9 @@
     });
     $(function () { 
         $('.tres_view').jstree(); 
-        $('.tres_view').on('ready.jstree', function() {
+        /*$('.tres_view').on('ready.jstree', function() {
             $(".tres_view").jstree("open_all");          
-        }); 
+        }); se comenta codigo para expandir el arbol de permisos */
 
     });
     $(document).on("click",'.checkbox_modulos',function(ev){
