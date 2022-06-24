@@ -2540,33 +2540,49 @@ return $str;
         $account = $query->row_array();
         $acid=$account['id'];
         $reconexion = "no";
+        $fu=null;
+        $var_net_="no";
+        $var_tv_="no";
         if(!empty($ultima_factura['tid'])){
 
                $fu= $this->db->get_where("invoices",array("tid"=>$ultima_factura['tid']))->row();
                if($fu->ron=="Cortado" || $fu->rec=="1"){
                     $reconexion="si";
+                    
+                    $combo1=strtolower($fu->combo);
+                    $var_net=false;
+                    $var_tv=false;
+                    if(strpos($combo1,"mega")){
+                        $var_net=true;
+                        $var_net_=$fu->combo;
+                    }
+                    if($fu->television!="" && $fu->television!=null && $fu->television!="no"){
+                        $var_tv=true;
+                        $var_tv_=$fu->television;
+                    }
+                    if($var_tv && $var_net){
+                            $tipo="Reconexion Combo";
+                    }else if($var_tv){
+                            $tipo="Reconexion Television";
+                    }else if($var_net){
+                            $tipo="Reconexion Internet";
+                    }
+
+                    
                }
 
         }
-        $this->input->post('reconexion');
         
-        $tipo = $this->input->post('tipo');
+        
+        
         
         if($reconexion=="si"){
-            $factura_asociada = $this->input->post('factura_asociada');    
+            $factura_asociada = $ultima_factura['tid']; 
      if($reconexion_gen=="no"){//&& $factura_asociada==$factura_var->tid
         $factura_asociada = $this->db->get_where('invoices',array('tid'=>$factura_asociada))->row();
         $fcuenta = $factura_asociada->invoicedate;
-        $paquete="no";
-        $var1 = $this->input->post('paquete_yopal_monterrey');
-        $var2 = $this->input->post('paquete_villanueva');
-        if($var1!="no"){
-            $paquete=$var1;    
-        }else if($var2!="no"){
-            $paquete=$var2;    
-        }else{
-            $paquete = "no";    
-        }
+        $paquete=$var_net_;
+        
         
 
         $mes1 = date("Y-m",strtotime($fcuenta));
@@ -2594,8 +2610,8 @@ return $str;
                 $this->db->insert('tickets',$data2);
 
                           $data_h=array();
-                            $data_h['modulo']="Usuarios Servicio";
-                            $data_h['accion']="Administrar Usuarios > Ver Usuario > Ver Facturas > Hacer el Pago (pago multiple) {update}";
+                            $data_h['modulo']="Usuarios Servicio PAYU";
+                            $data_h['accion']="Hacer el Pago {update}";
                             $data_h['id_usuario']=$cid;
                             $data_h['fecha']=date("Y-m-d H:i:s");
                             $data_h['descripcion']=json_encode($data2);
@@ -2616,8 +2632,8 @@ return $str;
                 $data2['id_factura']='';
                 $this->db->insert('tickets',$data2);
                             $data_h=array();
-                            $data_h['modulo']="Usuarios Servicio";
-                            $data_h['accion']="Administrar Usuarios > Ver Usuario > Ver Facturas > Hacer el Pago (pago multiple) {update}";
+                            $data_h['modulo']="Usuarios Servicio PAYU";
+                            $data_h['accion']="Hacer el Pago {update}";
                             $data_h['id_usuario']=$cid;
                             $data_h['fecha']=date("Y-m-d H:i:s");
                             $data_h['descripcion']=json_encode($data2);
@@ -2634,7 +2650,7 @@ return $str;
             $this->db->insert('temporales', $data4);
                             $data_h=array();
                             $data_h['modulo']="Usuarios Servicio";
-                            $data_h['accion']="Administrar Usuarios > Ver Usuario > Ver Facturas > Hacer el Pago (pago multiple) {update}";
+                            $data_h['accion']="Hacer el Pago {update}";
                             $data_h['id_usuario']=$cid;
                             $data_h['fecha']=date("Y-m-d H:i:s");
                             $data_h['descripcion']=json_encode($data4);
@@ -2645,92 +2661,10 @@ return $str;
             }
         }
 }
-        if($pmethod=='Balance'){
-
-            $customer = $this->transactions->check_balance($cid);
-            if($customer['balance']>=$amount){
-
-                $this->db->set('balance', "balance-$amount", FALSE);
-                $this->db->where('id', $cid);
-                $this->db->update('customers');
-                            $data_h=array();
-                            $data_h['modulo']="Usuarios Servicio";
-                            $data_h['accion']="Administrar Usuarios > Ver Usuario > Ver Facturas > Hacer el Pago (pago multiple) {update}";
-                            $data_h['id_usuario']=$cid;
-                            $data_h['fecha']=date("Y-m-d H:i:s");
-                            $data_h['descripcion']=json_encode(array("balance"=>"balance-$amount"));
-                            $data_h['id_fila']=$cid;
-                            $data_h['tabla']="customers";
-                            $data_h['nombre_columna']="id";
-                            $this->db->insert("historial_crm",$data_h);
-            }
-            else{
-
-                $amount=$customer['balance'];
-                $this->db->set('balance', 0, FALSE);
-                $this->db->where('id', $cid);
-                $this->db->update('customers');
-
-                         $data_h=array();
-                            $data_h['modulo']="Usuarios Servicio";
-                            $data_h['accion']="Administrar Usuarios > Ver Usuario > Ver Facturas > Hacer el Pago (pago multiple) {update}";
-                            $data_h['id_usuario']=$cid;
-                            $data_h['fecha']=date("Y-m-d H:i:s");
-                            $data_h['descripcion']=json_encode(array("balance"=>"0"));
-                            $data_h['id_fila']=$cid;
-                            $data_h['tabla']="customers";
-                            $data_h['nombre_columna']="id";
-                            $this->db->insert("historial_crm",$data_h);
-            }
-        }
+        
         $id_banco=null;
-        if($pmethod!="Bank"){
-            $banco=null;
-        }else{
-            if($banco=="Bancolombia"){
-                $cuenta = $this->db->select("*")->from('accounts')->like('holder','Bancolombia','both')->get();
-                $cuenta = $cuenta->result();
-                if($cuenta!=null){
-                    $id_banco=$cuenta[0]->id;
-                    $mas=intval($cuenta[0]->lastbal)+intval($amount);
-                    $data5['lastbal']=$mas;
-                    $this->db->update('accounts',$data5,array('id' =>$id_banco ));   
-
-                            $data_h=array();
-                            $data_h['modulo']="Usuarios Servicio";
-                            $data_h['accion']="Administrar Usuarios > Ver Usuario > Ver Facturas > Hacer el Pago (pago multiple) {update}";
-                            $data_h['id_usuario']=$cid;
-                            $data_h['fecha']=date("Y-m-d H:i:s");
-                            $data_h['descripcion']=json_encode($data5);
-                            $data_h['id_fila']=$id_banco;
-                            $data_h['tabla']="accounts";
-                            $data_h['nombre_columna']="id";
-                            $this->db->insert("historial_crm",$data_h); 
-                }
-                
-            }else{
-                $cuenta = $this->db->select("*")->from('accounts')->like('holder','BBVA','both')->get();
-                $cuenta = $cuenta->result();
-                if($cuenta!=null){
-                    $id_banco=$cuenta[0]->id;
-                    $mas=intval($cuenta[0]->lastbal)+intval($amount);
-                    $data5['lastbal']=$mas;
-                    $this->db->update('accounts',$data5,array('id' =>$id_banco )); 
-                            $data_h=array();
-                            $data_h['modulo']="Usuarios Servicio";
-                            $data_h['accion']="Administrar Usuarios > Ver Usuario > Ver Facturas > Hacer el Pago (pago multiple) {update}";
-                            $data_h['id_usuario']=$cid;
-                            $data_h['fecha']=date("Y-m-d H:i:s");
-                            $data_h['descripcion']=json_encode($data5);
-                            $data_h['id_fila']=$id_banco;
-                            $data_h['tabla']="accounts";
-                            $data_h['nombre_columna']="id";
-                            $this->db->insert("historial_crm",$data_h);    
-                }
-                
-
-            }
-        }
+        $banco=null;
+        
             if ($pmethod==Cash){
         $note="Pago de la factura #".$tid." ".$customer->name." ".$customer->unoapellido." ".$customer->documento." metodo: efectivo";
             }if ($pmethod==Bank){
