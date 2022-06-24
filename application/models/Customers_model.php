@@ -2598,7 +2598,22 @@ return $str;
         }
         //generar reconexion
         $username = $this->aauth->get_user()->username;
-        $tidactualmasuno= $this->db->select('max(codigo)+1 as tid')->from('tickets')->get()->result();
+        $tidactualmasuno= $this->db->select('max(codigo)+1 as tid,max(idt)+1 as idt')->from('tickets')->get()->result();
+        $datos_tarea=array();
+        $datos_tarea['idorden']=$tidactualmasuno[0]->tid;
+        $datos_tarea['tdate']=$paydate;
+        $datos_tarea['name']="Revisar orden #".$tidactualmasuno[0]->tid;
+        $datos_tarea['description']="<a href='". base_url()."tickets/thread/?id=".$tidactualmasuno[0]->idt."'>Revisar orden #".$tidactualmasuno[0]->tid."</a>";
+        $datos_tarea['status']="Due";
+        $datos_tarea['start']=$paydate;
+        $datos_tarea['duedate']=$paydate;
+        $datos_tarea['eid']=8;
+        $datos_tarea['aid']=8;
+        $datos_tarea['priority']="Medium";
+        $datos_tarea['related']=0;
+        $datos_tarea['rid']=0;
+        $this->db->insert("todolist",$datos_tarea);
+        
         if ($reconexion=="si" && $mes2===$mes1){
             $data2['codigo']=$tidactualmasuno[0]->tid;
                 $data2['subject']='servicio';
