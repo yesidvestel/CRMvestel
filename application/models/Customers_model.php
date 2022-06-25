@@ -2548,19 +2548,38 @@ return $str;
         if(!empty($ultima_factura['tid'])){
 
                $fu= $this->db->get_where("invoices",array("tid"=>$ultima_factura['tid']))->row();
-               if($fu->ron=="Cortado" || $fu->rec=="1"){
+               //if($fu->ron=="Cortado" || $fu->rec=="1"){
+                   
+                   
+                   
+                   
                     $reconexion="si";
                     
                     $combo1=strtolower($fu->combo);
                     $var_net=false;
                     $var_tv=false;
                     if(strpos($combo1,"mega")){
-                        $var_net=true;
-                        $var_net_=$fu->combo;
+                        if($fu->ron=="Activo" || $fu->ron=="Compromiso"){
+                            if($fu->estado_combo=="Cortado"){
+                                $var_net=true;
+                                $var_net_=$fu->combo;
+                            }
+                        }else{
+                               $var_net=true;
+                               $var_net_=$fu->combo;
+                        }
+                        
                     }
-                    if($fu->television!="" && $fu->television!=null && $fu->television!="no"){
-                        $var_tv=true;
-                        $var_tv_=$fu->television;
+                    if($fu->television!="" && $fu->television!=null && $fu->television!="no"){                                                
+                        if($fu->ron=="Activo" || $fu->ron=="Compromiso"){
+                            if($fu->estado_tv=="Cortado"){
+                                $var_tv=true;
+                                $var_tv_=$fu->television;
+                            }
+                        }else{
+                              $var_tv=true;
+                               $var_tv_=$fu->television;
+                        }
                     }
                     if($var_tv && $var_net){
                             $tipo="Reconexion Combo";
@@ -2568,10 +2587,12 @@ return $str;
                             $tipo="Reconexion Television";
                     }else if($var_net){
                             $tipo="Reconexion Internet";
+                    }else{
+                        $reconexion="no";
                     }
 
                     
-               }
+               //}
 
         }
         
@@ -2805,7 +2826,7 @@ return $str;
         
         $this->actualizar_debit_y_credit($cid);
         if(count($ids_transacciones)!=0){
-            $this->generar_pdf_tirilla_de_pago($id_fact_pagadas,"si",$valor_restante_monto,$pa);
+            $this->generar_pdf_tirilla_de_pago($id_fact_pagadas,"si",$valor_restante_monto,$pa,$ids_transacciones);
             //$this->input->set_cookie("ids_transacciones",json_encode($ids_transacciones),3600,null);
             
         }else{
@@ -2813,7 +2834,7 @@ return $str;
             
         }
     }
-    public function generar_pdf_tirilla_de_pago($id,$multiple,$vrm,$pa)
+    public function generar_pdf_tirilla_de_pago($id,$multiple,$vrm,$pa,$ids_transacciones)
     {
 $this->load->model('invoices_model', 'invocies');
         $tid = $id;
@@ -2884,7 +2905,7 @@ $this->load->model('invoices_model', 'invocies');
             fclose($file);
 /* end  Escritura de archivos para visualizar pdfs de resivos*/
 /* guardando datos de registro para la lectura de los pdfs*/
-$ids_transactions=json_decode($this->input->cookie('ids_transacciones'));
+$ids_transactions=$ids_transacciones;
 foreach ($lista as $key => $value) {
         $inv=$this->db->get_where("invoices",array("tid"=>$value))->row();
         $array=json_decode($inv->resivos_guardados);
