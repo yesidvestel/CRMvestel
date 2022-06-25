@@ -2805,12 +2805,97 @@ return $str;
         
         $this->actualizar_debit_y_credit($cid);
         if(count($ids_transacciones)!=0){
+            $this->generar_pdf_tirilla_de_pago($id_fact_pagadas,"si",$valor_restante_monto,$pa);
             //$this->input->set_cookie("ids_transacciones",json_encode($ids_transacciones),3600,null);
             
         }else{
             //$this->input->set_cookie("ids_transacciones",null,3600,null);
             
         }
+    }
+    public function generar_pdf_tirilla_de_pago($id,$multiple,$vrm,$pa)
+    {
+$this->load->model('invoices_model', 'invocies');
+        $tid = $id;
+        $is_multiple = false;
+        if(!empty($multiple)){
+                $is_multiple=true;
+        }
+        
+        $lista= explode(",",$tid);
+        $tid=$lista[0];
+
+        $data['id'] = $tid;
+        $data['is_multiple'] = $is_multiple;
+        $data['title'] = "Invoice $tid";
+        $data['vrm']=0;
+        $data['pa']="no";
+        if(!empty($vrm)){
+                $data['vrm']=$vrm;
+        }
+        if(!empty($pa)){
+                $data['pa']=$pa;
+        }
+
+        $data['invoice'] = $this->invocies->invoice_details($tid, $this->limited);
+        if ($data['invoice']) $data['products'] = $this->invocies->invoice_products($tid);
+        if ($data['invoice']) $data['employee'] = $this->invocies->employee($data['invoice']['eid']);
+        $this->load->model('customers_model', 'customers');
+        $data['due'] = $this->due_details($data['invoice']['csd']);
+        
+        
+                $data['invoice']['total2']=$data['invoice']['total'];
+                $data['invoice']['discount2']=$data['invoice']['discount'];
+                $data['invoice']['multi2']=$data['invoice']['multi'];
+                $data['invoice']['pamnt2']=$data['invoice']['pamnt'];
+                $data['lista_invoices']= array();
+        foreach ($lista as $key => $id_factura) {
+            if($key!=0){
+                $inv=$this->invocies->invoice_details($id_factura, $this->limited);
+                $data['lista_invoices'][]=$inv;
+                $data['invoice']['total2']+=$inv['total'];
+                $data['invoice']['discount2']+=$inv['discount'];
+                $data['invoice']['multi2']+=$inv['multi'];
+                $data['invoice']['pamnt2']+=$inv['pamnt'];
+                //$data['invoice']['termtit2'].=$inv['terms'];
+               
+            }
+        }
+
+        $lista_de_facturas_sin_pagar=$this->db->query('SELECT * FROM `invoices` WHERE csd="'.$data['invoice']['csd'].'" and (status="partial" or status="due")')->result_array();
+        $data['lista_de_facturas_sin_pagar']=$lista_de_facturas_sin_pagar;
+        $data['facturas_adelantadas_list']=$this->invocies->calculo_de_facturas_adelantadas($data['vrm'],$data['invoice']['csd']);
+        ini_set('memory_limit', '128M');
+
+        $html = $this->load->view('invoices/view-print-'.LTR, $data, true);
+        $html2 = $this->load->view('invoices/header-print-'.LTR, $data, true);
+
+                /* Escritura de archivos para visualizar pdfs de resivos*/
+        if(!is_dir("userfiles/txt_para_pdf_resivos/")){
+             mkdir("userfiles/txt_para_pdf_resivos/", 0777, true);
+        }
+        $x=getdate()[0];
+                    $file = fopen("userfiles/txt_para_pdf_resivos/header_".$tid."_".$x.".txt", "w");
+            fwrite($file, $html2 );
+            fclose($file);
+
+            $file = fopen("userfiles/txt_para_pdf_resivos/body_".$tid."_".$x.".txt", "w");            
+            fwrite($file, $html );
+            fclose($file);
+/* end  Escritura de archivos para visualizar pdfs de resivos*/
+/* guardando datos de registro para la lectura de los pdfs*/
+$ids_transactions=json_decode($this->input->cookie('ids_transacciones'));
+foreach ($lista as $key => $value) {
+        $inv=$this->db->get_where("invoices",array("tid"=>$value))->row();
+        $array=json_decode($inv->resivos_guardados);
+        $fecha_actual=new DateTime();
+        $var_a=array("date"=>$fecha_actual->format("d-m-Y"),"file_name"=>$tid."_".$x,"id_transacciones"=>$ids_transactions);
+        $array[]=$var_a;
+        $this->db->update("invoices",array("resivos_guardados"=>json_encode($array)),array("tid"=>$value));
+}
+       
+        
+
     }
 
 }
