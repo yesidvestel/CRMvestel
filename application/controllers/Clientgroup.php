@@ -2702,4 +2702,12 @@ if ($valido) {
 
          
     }
+    public function pay_due_customer_p(){
+       ob_end_clean();
+        $data_response['cid']="794";
+        $data_response['monto']="50000";
+        
+        $this->customers->pay_invoices($data_response['cid'],$data_response['monto']);
+        echo json_encode($data_response);
+    }
 }
