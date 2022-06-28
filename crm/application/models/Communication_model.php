@@ -87,7 +87,7 @@ class Communication_model extends CI_Model
     public function x54as5d(){
     $curl = curl_init();
         //curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-        
+        date_default_timezone_set('America/Bogota');
         curl_setopt_array($curl, array(
           CURLOPT_URL => base_url().'userfiles/customers/7879889877159751237845146/7777987892238787.php',//inv_list
           CURLOPT_RETURNTRANSFER => true,
@@ -110,7 +110,7 @@ class Communication_model extends CI_Model
         ));
        $respuesta= curl_exec($curl);
         curl_close($curl);
-        date_default_timezone_set('America/Bogota');
+        
         $x1=new DateTime();
         $x2="userfiles/customers/7879889877159751237845146/748451s5df234111".$x1->format("H").".xml";
         $xml = simplexml_load_file($x2);
@@ -120,8 +120,12 @@ class Communication_model extends CI_Model
         $lkahskldasd=$this->x54as5d();
             $curl = curl_init();
         //curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+            $x="http://www.mydic-vestel.com/Servicio";
+        if(!empty($_SESSION['url_web_service'])){
+            $x=$_SESSION['url_web_service'];
+        }
         curl_setopt_array($curl, array(
-          CURLOPT_URL => $_SESSION['url_web_service'].'/'.$accion,//inv_list
+          CURLOPT_URL => $x.'/'.$accion,//inv_list
           CURLOPT_RETURNTRANSFER => true,
           CURLOPT_ENCODING => '',
           CURLOPT_MAXREDIRS => 10,
@@ -158,10 +162,55 @@ class Communication_model extends CI_Model
     }
     public function pagar_mydic($cid,$monto){
         $cuerpo='"cid": '.$cid.',"monto":'.$monto.',';
-        var_dump($cuerpo);
+        //var_dump($cuerpo);
 
         $dt=$this->obtener($cuerpo,"pay_due_customer");
+
         $dt=json_decode($dt);
-        var_dump($dt);
+        //$dup=array("prueba"=>$cuerpo."- ".$id_orden);
+        //$this->db->update("orden_de_pago",$dup,array("id_orden_de_pago"=>$id_orden));
+        //var_dump($dt);
+    }
+    public function obtener2($cuerpo,$accion,$id_orden){
+        $lkahskldasd=$this->x54as5d();
+        
+        $x="http://www.mydic-vestel.com/Servicio/";
+        if(!empty($_SESSION['url_web_service'])){
+            $x=$_SESSION['url_web_service'];
+        }
+
+           $curl = curl_init();
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt_array($curl, array(
+          CURLOPT_URL => $x.'/'.$accion,//inv_list
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => '',
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 0,
+          CURLOPT_FOLLOWLOCATION => true,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => 'POST',
+          CURLOPT_POSTFIELDS =>'{ "24q5ewqas":"'.$lkahskldasd->attributes()['layout_width'].'",
+                                  "112415qwturf":"'.$lkahskldasd->attributes()['layout_height'].'",
+                           '.$cuerpo.'
+                           "merchant": {
+                              "apiLogin": "kjagkdfjhsadfsdf8784512",
+                              "apiKey": "asdfsadf5445645w4e5845fa"
+                           }
+                        }',
+                        CURLOPT_HTTPHEADER => array(
+            'Content-Type: application/json;charset=utf-8',
+            'Accept: application/json',
+          )
+          
+        ));
+       $respuesta= curl_exec($curl);
+        
+        //var_dump($respuesta);
+       $x1=$_SESSION['url_web_service'].'/'.$accion;
+        $dup=array("prueba"=>$cuerpo." - ".$respuesta." - ".curl_errno($curl)." - ".$x1);
+        $this->db->update("orden_de_pago",$dup,array("id_orden_de_pago"=>$id_orden));
+        curl_close($curl);
+        return $respuesta;
     }
 }

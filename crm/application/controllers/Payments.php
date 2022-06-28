@@ -395,12 +395,23 @@ class Payments extends CI_Controller
     }
     public function pse_reseption(){
         //var_dump($_POST);
+        $this->load->model('Communication_model', 'communication');
         $deviceSessionId = md5(session_id().microtime());
         //var_dump($deviceSessionId);
         //var_dump($_COOKIE['ci_sessions']);
         date_default_timezone_set('America/Bogota');
         $data_orden=array("user_id"=>$this->session->userdata('user_details')[0]->cid);
-        $data_orden['monto']="15000";
+        //$data_orden['monto']="15000";
+        $data_orden['monto']=$this->communication->get_deuda_customer($this->session->userdata('user_details')[0]->cid);
+        //var_dump($data_orden['monto']);
+        if($data_orden['monto']<15000){
+            $r=array("status"=>"Error","message"=>"Monto menor de 15000");
+            echo json_encode($r);
+            exit();
+            //mensaje para que se hacerque a pagar en las oficinas o por pse pues es muy poco el valor
+        }else{
+        $data_orden['monto']="".$data_orden['monto']; 
+        }
         $data_orden['metodo_pago']="PSE";
         //minimo baloto 15000 minimo efecty 20000
         
@@ -445,7 +456,7 @@ class Payments extends CI_Controller
          "buyer": {
             "merchantBuyerId": "1",
             "fullName": "First name and second buyer name",
-            "emailAddress": "pruebas@payulatam.com",
+            "emailAddress": "pruebas2@payulatam.com",
             "contactPhone": "7563126",
             "dniNumber": "123456789",
             "shippingAddress": {
@@ -471,7 +482,7 @@ class Payments extends CI_Controller
       "payer": {
          "merchantPayerId": "1",
          "fullName": "First name and second payer name",
-         "emailAddress": "pruebas@payulatam.com",
+         "emailAddress": "pruebas2@payulatam.com",
          "contactPhone": "7563126",
          "dniNumber": "5415668464654",
          "billingAddress": {
@@ -535,6 +546,7 @@ class Payments extends CI_Controller
         if($data_json->code=="SUCCESS"){
             $r['url']=$data_json->transactionResponse->extraParameters->BANK_URL;
         }else{
+
             $r=array("status"=>"Error");
         }
         //pruebas@payulatam.com
