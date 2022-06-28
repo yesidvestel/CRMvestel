@@ -2826,7 +2826,7 @@ return $str;
         
         $this->actualizar_debit_y_credit($cid);
         if(count($ids_transacciones)!=0){
-            $this->generar_pdf_tirilla_de_pago($id_fact_pagadas,"si",$valor_restante_monto,$pa,$ids_transacciones);
+            $this->generar_pdf_tirilla_de_pago($id_fact_pagadas,"si",$valor_restante_monto,$pa,$ids_transacciones,$factura_var->csd);
             //$this->input->set_cookie("ids_transacciones",json_encode($ids_transacciones),3600,null);
             
         }else{
@@ -2834,7 +2834,7 @@ return $str;
             
         }
     }
-    public function generar_pdf_tirilla_de_pago($id,$multiple,$vrm,$pa,$ids_transacciones)
+    public function generar_pdf_tirilla_de_pago($id,$multiple,$vrm,$pa,$ids_transacciones,$csd)
     {
 $this->load->model('invoices_model', 'invocies');
         $tid = $id;
@@ -2914,6 +2914,13 @@ foreach ($lista as $key => $value) {
         $array[]=$var_a;
         $this->db->update("invoices",array("resivos_guardados"=>json_encode($array)),array("tid"=>$value));
 }
+$customer=$this->db->get_where("customers",array("id"=>$csd))->row();
+$this->load->model('Communication_model', 'communication'); 
+$cuerpo="Saludos cordiales de parte de vestel para nosotros es muy satisfactorio contar con tigo, por tal motivo te enviamos el comprobante de pago de tu factura, gracias por utilizar nuestros servicios, abre la siguiente url para visualizarlo : http://www.mydic-vestel.com/comprobantes?name=".$tid."_".$x;
+$customer->email="pescafelipe@gmail.com";
+$this->communication->send_email($customer->email,"Comprobante de pago VESTEL","Comprobante de pago VESTEL",$cuerpo);
+
+
        
         
 

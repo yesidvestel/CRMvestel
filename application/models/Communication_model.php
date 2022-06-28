@@ -38,7 +38,7 @@ class Communication_model extends CI_Model
         $port = $smtpresult['port'];
         $auth = $smtpresult['auth'];
 		$auth_type = $smtpresult['auth_type'];
-        $username = $smtpresult['username'];;
+        $username = $smtpresult['username'];
         $password = $smtpresult['password'];
         $mailfrom = $smtpresult['sender'];
         $mailfromtilte = $this->config->item('ctitle');
