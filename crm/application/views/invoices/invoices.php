@@ -201,7 +201,15 @@
                            <div class="form group"  >
                                <label class="col-sm-3 control-label label_pse" for="pse_telefono">Celular* &nbsp;</label>
                                <div class="col-sm-9">
-                                    <input required type="tel" name="pse_telefono" id="pse_telefono" class="form-control">
+                                    <input required type="tel" placeholder="Celular" name="pse_telefono" id="pse_telefono" class="form-control">
+                               </div>
+                           </div>
+                    </div>
+                    <div class="row row_pse">
+                           <div class="form group"  >
+                               <label class="col-sm-3 control-label label_pse" for="pse_correo">Correo* &nbsp;</label>
+                               <div class="col-sm-9">
+                                    <input required type="email" placeholder="Correo" name="pse_correo" id="pse_correo" class="form-control">
                                </div>
                            </div>
                     </div>
