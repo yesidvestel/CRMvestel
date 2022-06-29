@@ -234,7 +234,8 @@ class Tickets Extends CI_Controller
         $head['title'] = 'Add Support Reply';		
         $this->load->view('fixed/header', $head);
             ini_set('memory_limit', '500M');
-
+		
+	
         if ($this->input->post('content')) {
             set_time_limit(200000);
 			$psolucion = $this->input->post('solucion');
@@ -816,9 +817,9 @@ if($status=="Resuelto" && file_exists($nombre_archiv)==false && strpos(strtolowe
         $this->db->update('invoices');
 		
 		//alerta de revision
-		$ciudad = $usuario->ciudad;
-        $ciudad=$this->db->get_where("ciudad",array("idCiudad"=>$ciudad))->row();
-        $ciudad=$ciudad->ciudad;
+		$ciudad2 = $usuario->ciudad;
+        $ciudad3=$this->db->get_where("ciudad",array("idCiudad"=>$ciudad2))->row();
+        $ciudad=$ciudad3->ciudad;
 		if ($status==='Resuelto' && $ticket->detalle==='Instalacion'){
 		$stdate2 = datefordatabase($fecha_final);
 		$name = 'Revisar orden #'.$ticket->codigo;
@@ -826,13 +827,17 @@ if($status=="Resuelto" && file_exists($nombre_archiv)==false && strpos(strtolowe
 		$priority = 'Low';
 		$stdate = $stdate2;
 		$tdate = '';
-		if($ciudad=="YOPAL" || $ciudad=="Yopal"){
-		$employee = 101;
+		$asignacion = $this->db->get_where('asignaciones', array('detalle' => 'encuesta','tipo'=> $ciudad))->row();
+		
+			//var_dump($asignacion->colaborador);
+		$employee = $asignacion->colaborador;
+		/*if($ciudad=="YOPAL" || $ciudad=="Yopal"){
+		$employee = 8;
 		}if($ciudad=="Monterrey"){
 			$employee = 52;
 		}if($ciudad=="Villanueva"){
 			$employee = 74;
-		}
+		}*/
 		$assign = $this->aauth->get_user()->id;
 		$content = 'Revisar orden #'.$ticket->codigo;
 		$ordenn = $ticket->codigo;
