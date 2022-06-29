@@ -439,7 +439,7 @@ class Payments extends CI_Controller
       "order": {
          "accountId": "975762",
          "referenceCode": "'.$data_orden['nombre_referencia'].'",
-         "description": "Payment test description",
+         "description": "Pago de facturas vestel",
          "language": "es",
          "signature": "'.$signature.'",
          "notifyUrl": "https://vestel.com.co/crm/tickets/data_reception",
@@ -456,9 +456,9 @@ class Payments extends CI_Controller
          "buyer": {
             "merchantBuyerId": "1",
             "fullName": "First name and second buyer name",
-            "emailAddress": "pruebas2@payulatam.com",
-            "contactPhone": "7563126",
-            "dniNumber": "123456789",
+            "emailAddress": "'.$_POST['pse_correo'].'",
+            "contactPhone": "'.$_POST['pse_telefono'].'",
+            "dniNumber": "'.$_POST['pse_doc'].'",
             "shippingAddress": {
                "street1": "Cr 23 No. 53-50",
                "street2": "5555487",
@@ -482,9 +482,9 @@ class Payments extends CI_Controller
       "payer": {
          "merchantPayerId": "1",
          "fullName": "First name and second payer name",
-         "emailAddress": "pruebas2@payulatam.com",
+         "emailAddress": "'.$_POST['pse_correo'].'",
          "contactPhone": "7563126",
-         "dniNumber": "5415668464654",
+         "dniNumber": "'.$_POST['pse_doc'].'",
          "billingAddress": {
             "street1": "Cr 23 No. 53-50",
             "street2": "125544",
@@ -492,7 +492,7 @@ class Payments extends CI_Controller
             "state": "Bogotá D.C.",
             "country": "CO",
             "postalCode": "000000",
-            "phone": "7563126"
+            "phone": "'.$_POST['pse_telefono'].'"
          }
       },
       "extraParameters": {

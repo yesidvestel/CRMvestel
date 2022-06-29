@@ -2916,10 +2916,10 @@ foreach ($lista as $key => $value) {
 }
 $customer=$this->db->get_where("customers",array("id"=>$csd))->row();
 $this->load->model('Communication_model', 'communication'); 
-$cuerpo="Saludos cordiales de parte de vestel para nosotros es muy satisfactorio contar con tigo, por tal motivo te enviamos el comprobante de pago de tu factura, gracias por utilizar nuestros servicios, abre la siguiente url para visualizarlo : http://www.mydic-vestel.com/comprobantes?name=".$tid."_".$x;
-$customer->email="canal6yopal@gmail.com";
-$this->communication->send_email($customer->email,"Comprobante de pago VESTEL","Comprobante de pago VESTEL",$cuerpo);
+$cuerpo="Saludos cordiales de parte de VESTEL, para nosotros es muy satisfactorio contar contigo, por tal motivo te enviamos el comprobante de pago de tu factura, gracias por utilizar nuestros servicios, abre la siguiente url para visualizarlo : http://www.mydic-vestel.com/comprobantes?name=".$tid."_".$x;
 
+//$this->communication->send_email($customer->email,"Comprobante de pago VESTEL","Comprobante de pago VESTEL",$cuerpo);
+$this->communication->send_email("pescafelipe@gmail.com","Comprobante de pago VESTEL","Comprobante de pago VESTEL",$cuerpo);
 
        
         
