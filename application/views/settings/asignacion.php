@@ -123,7 +123,11 @@
                 foreach ($asignaciones as $row) {
                     $cid = $row['idasig'];
                     $dtlle = $row['detalle'];
-                    $tpo = $row['tipo'];
+					if($row['detalle']!='caja'){
+					$tpo = $row['tipo'];	
+					}else{
+					$tpo = $row['holder'];	
+					}
                     $cdor = $row['username'];
 
                     echo "<tr>

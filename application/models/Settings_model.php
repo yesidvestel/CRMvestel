@@ -182,6 +182,7 @@ class Settings_model extends CI_Model
         $this->db->select('*');
         $this->db->from('asignaciones');
 		$this->db->join('employee_profile', 'asignaciones.colaborador=employee_profile.id', 'left');
+		$this->db->join('accounts', 'asignaciones.tipo=accounts.id', 'left');
         $query = $this->db->get();
         return $query->result_array();
     }
