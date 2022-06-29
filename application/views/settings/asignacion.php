@@ -101,17 +101,63 @@
 
                                 </div>
                             </div>
-
+							
                         </form>
                     </div>
                 </div>
 
             </div>
+			<table id="cgrtable" class="display" cellspacing="0" width="100%">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th><?php echo $this->lang->line('') ?>Detalle</th>
+                    <th><?php echo $this->lang->line('') ?>Tipo</th>
+                    <th><?php echo $this->lang->line('') ?>Colaborador</th>
 
+
+                </tr>
+                </thead>
+                <tbody>
+                <?php $i = 1;
+                foreach ($asignaciones as $row) {
+                    $cid = $row['idasig'];
+                    $dtlle = $row['detalle'];
+                    $tpo = $row['tipo'];
+                    $cdor = $row['username'];
+
+                    echo "<tr>
+                    <td>$i</td>
+                    <td>$dtlle</td>
+                    <td>$tpo</td>
+                    <td>$cdor</td>
+					</tr>";
+                    $i++;
+                }
+                ?>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th>#</th>
+                    <th><?php echo $this->lang->line('') ?>Detalle</th>
+                    <th><?php echo $this->lang->line('') ?>Tipo</th>
+                    <th><?php echo $this->lang->line('') ?>Colaborador</th>
+                </tr>
+                </tfoot>
+            </table>
         </div>
     </div>
 </article>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        //datatables
+        $('#cgrtable').DataTable({});
+
+    });
+</script>
 <script>
+
 $(document).ready(function(){
 		ocultar();
 		$('#detalle').on('change',function(){

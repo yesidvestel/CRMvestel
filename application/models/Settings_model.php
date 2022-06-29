@@ -175,7 +175,17 @@ class Settings_model extends CI_Model
         }
 
     }
-
+	 public function asig_list()
+    {
+		 /*$query = $this->db->query("SELECT * FROM asignaciones LEFT JOIN employee_profile ON asignaciones.colaborador=employee_profile.id");
+        return $query->result_array();*/
+        $this->db->select('*');
+        $this->db->from('asignaciones');
+		$this->db->join('employee_profile', 'asignaciones.colaborador=employee_profile.id', 'left');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+	
     public function companylogo($id, $pic)
     {
         $this->db->select('logo');

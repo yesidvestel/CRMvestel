@@ -227,6 +227,7 @@ contraseña de aplicacion para crm : okqttqhqjmtaolbw
 		$this->load->model('ticket_model', 'ticket');
 		$this->load->model('customers_model', 'customers');
 		$this->load->model('accounts_model', 'accounts');
+		$data['asignaciones'] = $this->settings->asig_list();
 		$data['accounts'] = $this->accounts->accountslist();
 		$data['customergrouplist'] = $this->customers->group_list();
 		$data['tecnicoslista'] = $this->ticket->tecnico_list();
