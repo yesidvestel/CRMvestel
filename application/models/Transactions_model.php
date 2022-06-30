@@ -142,11 +142,13 @@ class Transactions_model extends CI_Model
 
     public function acc_list()
     {
+		
 		$user = $this->aauth->get_user()->id;
+		$this->load->model('employee_model', 'employee'); 
 		$asignacion = $this->db->get_where('asignaciones', array('detalle' => 'caja','colaborador'=>$user))->row();		
         $this->db->select('*');
         $this->db->from('accounts');
-		if ($sedeacc != '0'){
+		if ($this->employee->get_client_specific_permission($this->aauth->get_user()->id,"testran") != null){
 			$this->db->where('id', $asignacion->tipo);
 			$this->db->or_where('sede', '0');
 		}
