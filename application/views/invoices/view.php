@@ -118,15 +118,14 @@
                                 <a href="#pop_model" data-toggle="modal" data-remote="false"
                                    class="btn btn-large btn-cyan mb-1" title="Change Status"
                                 ><span class="icon-tab"></span> <?php echo $this->lang->line('Change Status') ?></a>
-								
+									<a href="#cancel-bill" class="btn btn-danger mb-1" id="cancel-bill"><i
+                                            class="icon-minus-circle"> </i> <?php echo $this->lang->line('') ?>Anular
+                                </a>
+								<?php } if ($this->aauth->get_user()->usadm != null || $this->aauth->get_user()->roleid > 3) { ?>
                                 <a href="#pop_model2" data-toggle="modal" data-remote="false"
                                    class="btn btn-large btn-orange mb-1" title="Change Status"
                                 ><span class="icon-tab"></span> <?php echo $invoice['ron'] ?> </a>
-									
-                                <a href="#cancel-bill" class="btn btn-danger mb-1" id="cancel-bill"><i
-                                            class="icon-minus-circle"> </i> <?php echo $this->lang->line('') ?>Anular
-                                </a>
-									<?php } ?>
+								<?php } ?>
                                       <div class="btn-group ">
                                     <button type="button" class="btn btn-primary mb-1 btn-min-width dropdown-toggle"
                                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
@@ -843,6 +842,7 @@
                                     for="pmethod"><?php echo $this->lang->line('Mark As') ?></label>
                             <select name="status" class="form-control mb-1">
 								<option value="<?php echo $invoice['ron'] ?>">>><?php echo $invoice['ron'] ?></option>
+								<?php if ($this->aauth->get_user()->roleid > 3) { ?>
                                 <option value="Activo"><?php echo $this->lang->line('') ?>Activo</option>
                                 <option value="Instalar"><?php echo $this->lang->line('') ?>Instalar</option>
                                 <option value="Cortado"><?php echo $this->lang->line('') ?>Cortado</option>
@@ -850,8 +850,11 @@
                                 <option value="Exonerado"><?php echo $this->lang->line('') ?>Exonerado</option>
                                 <option value="Retirado"><?php echo $this->lang->line('') ?>Retirado</option>
                                 <option value="Compromiso"><?php echo $this->lang->line('') ?>Compromiso</option>
+								<?php } ?>
                                 <option value="Cartera"><?php echo $this->lang->line('') ?>Cartera</option>
+								<?php if ($this->aauth->get_user()->roleid > 3) { ?>
 								<option value="Depurado"><?php echo $this->lang->line('') ?>Depurado</option>
+								<?php } ?>
                             </select>
 
                         </div>
