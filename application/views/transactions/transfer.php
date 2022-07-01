@@ -40,7 +40,7 @@
                     <div class="col-sm-6">
                         <select name="pay_acc2" class="form-control">
                             <?php
-                            foreach ($accounts as $row) {
+                            foreach ($tcuentas as $row) {
                                 $cid = $row['id'];
                                 $acn = $row['acn'];
                                 $holder = $row['holder'];

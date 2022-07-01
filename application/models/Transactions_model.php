@@ -154,6 +154,13 @@ class Transactions_model extends CI_Model
 		}
         $query = $this->db->get();
         return $query->result_array();
+    } 
+	public function tdascuentas()
+    {			
+        $this->db->select('*');
+        $this->db->from('accounts');
+        $query = $this->db->get();
+        return $query->result_array();
     }
 
     public function addcat($name)

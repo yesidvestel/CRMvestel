@@ -434,6 +434,7 @@ class Transactions extends CI_Controller
 
         $data['cat'] = $this->transactions->categories();
         $data['accounts'] = $this->transactions->acc_list();
+        $data['tcuentas'] = $this->transactions->tdascuentas();
         $head['title'] = "New Transfer";
         $head['usernm'] = $this->aauth->get_user()->username;
         $this->load->view('fixed/header', $head);
