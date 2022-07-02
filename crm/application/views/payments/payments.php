@@ -1,3 +1,11 @@
+<style type="text/css">
+    .cl-pagado{
+        background-color: #00ff7f;
+        border-radius: 30px;
+        text-align: center;
+        font-weight: bolder;
+    }
+</style>
 <div class="app-content content container-fluid">
     <div class="content-wrapper">
         <div class="content-header row">
@@ -20,8 +28,8 @@
                             <th>Monto</th>
                             <th>Metodo Pago </th>
                              <th>Estado</th>
-                             <th>Link</th>
-                            <th>Data</th>
+                             <!--th>Link</th-->
+                            <!--th>Data</th-->
                             
 
 
@@ -36,8 +44,8 @@
                             <th>Monto</th>
                             <th>Metodo Pago </th>
                              <th>Estado</th>
-                             <th>Link</th>
-                            <th>Data</th>
+                             <!--th>Link</th-->
+                            <!--th>Data</th-->
 
 
                         </tr>

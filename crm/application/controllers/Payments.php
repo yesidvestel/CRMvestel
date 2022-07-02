@@ -401,7 +401,7 @@ class Payments extends CI_Controller
         //var_dump($_COOKIE['ci_sessions']);
         date_default_timezone_set('America/Bogota');
         $data_orden=array("user_id"=>$this->session->userdata('user_details')[0]->cid);
-        //$data_orden['monto']="15000";
+        //$data_orden['monto']=15000;
         $data_orden['monto']=$this->communication->get_deuda_customer($this->session->userdata('user_details')[0]->cid);
         //var_dump($data_orden['monto']);
         if($data_orden['monto']<15000){
@@ -583,7 +583,12 @@ class Payments extends CI_Controller
             $row[] = $invoices->fecha;
             $row[] = $invoices->monto;
             $row[] = $invoices->metodo_pago;
-            $row[] = $invoices->estado;
+            if($invoices->estado=="Pagado"){
+                $row[] = "<div class='cl-pagado'>".$invoices->estado."</div>";    
+            }else{
+                $row[] = $invoices->estado;
+            }
+            
             $x=json_decode($invoices->data);
             if($invoices->metodo_pago=="PSE"){
                 $row[] = "<a href='".$x->transactionResponse->extraParameters->BANK_URL."' >Ver Link</a>";
@@ -593,7 +598,7 @@ class Payments extends CI_Controller
             
             
             
-            $row[] = $invoices->data;
+            //$row[] = $invoices->data;
 
 
             $data[] = $row;
