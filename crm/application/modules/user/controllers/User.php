@@ -9,7 +9,8 @@ class User extends CI_Controller
         parent::__construct();
         $this->load->model('User_model');
 		$this->load->model('general_model','general');
-        $_SESSION['url_web_service']="http://www.mydic-vestel.com/Servicio";
+        $_SESSION['url_web_service']="http://www.saves-vestel.com/Servicio";
+        //$_SESSION['url_web_service']="http://localhost/CRMvestel/Servicio";
 		$this->captcha = $this->general->public_key()->captcha;
         $this->user_id = isset($this->session->get_userdata()['user_details'][0]->id) ? $this->session->get_userdata()['user_details'][0]->users_id : '1';
 

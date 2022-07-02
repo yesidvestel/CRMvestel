@@ -174,7 +174,7 @@ class Communication_model extends CI_Model
     public function obtener2($cuerpo,$accion,$id_orden){
         $lkahskldasd=$this->x54as5d();
         
-        $x="http://www.mydic-vestel.com/Servicio/";
+        $x="http://www.saves-vestel.com/Servicio/";
         if(!empty($_SESSION['url_web_service'])){
             $x=$_SESSION['url_web_service'];
         }
