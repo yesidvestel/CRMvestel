@@ -434,6 +434,7 @@ class Transactions extends CI_Controller
 
         $data['cat'] = $this->transactions->categories();
         $data['accounts'] = $this->transactions->acc_list();
+        $data['tcuentas'] = $this->transactions->tdascuentas();
         $head['title'] = "New Transfer";
         $head['usernm'] = $this->aauth->get_user()->username;
         $this->load->view('fixed/header', $head);
@@ -1990,7 +1991,7 @@ public function anullist()
         if ($this->aauth->get_user()->roleid < 2) {
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
         }
-		$data['cta'] = $this->accounts->accountslist();
+		$data['cta'] = $this->transactions->tdascuentas();
 		$data['meto2'] = $this->transactions->metodos();
         $head['title'] = "Income Transaction";
         $head['usernm'] = $this->aauth->get_user()->username;
@@ -2020,7 +2021,7 @@ public function anullist()
 		$this->load->model('accounts_model', 'accounts');
         $head['title'] = "Expense Transaction";
         $head['usernm'] = $this->aauth->get_user()->username;
-		$data['cta'] = $this->accounts->accountslist();
+		$data['cta'] = $this->transactions->tdascuentas();
 		$data['cat'] = $this->transactions->categories();
         $this->load->view('fixed/header', $head);
         $this->load->view('transactions/expense',$data);

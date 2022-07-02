@@ -130,7 +130,63 @@ class Settings_model extends CI_Model
         }
 
     }
+	public function add_asig($dtalle,$cja,$sdes,$col)
+    {
+		//var_dump($_POST);
+		//$asignacion = $this->db->get_where('asignaciones', array('tipo'=> $cja))->row();
+		$x1=$sdes;
+		if($_POST['detalle']=="caja"){
+			$x1=$_POST['caja'];
+		}
+		$sql="select * from asignaciones where detalle='".$_POST['detalle']."' and tipo='".$x1."' ";
+		$asignaciones=$this->db->query($sql)->result();
+		if($dtalle=='encuesta'){
+        $data = array(
+            'detalle' => $dtalle,
+            'tipo' => $sdes,
+            'colaborador' => $col
+        );
+		}else if($dtalle=='caja'){
+        $data = array(
+            'detalle' => $dtalle,
+            'tipo' => $cja,
+            'colaborador' => $col
+        );
+		}
+        //$this->db->set($data);
+        //$this->db->where('id', $id);
+		var_dump($sql);
+		var_dump($asignaciones);
+		if(count($asignaciones)!=0){
+			//update
+			$fun=$this->db->update('asignaciones', $data,array("idasig"=>$asignaciones[0]->idasig));
+		}else {
+			
+			$fun=$this->db->insert('asignaciones', $data);
+			
+		}
+		
+        if ($fun) {
+            echo json_encode(array('status' => 'Success', 'message' =>
+                $this->lang->line('UPDATED')));
+        } else {
+            echo json_encode(array('status' => 'Error', 'message' =>
+                $this->lang->line('ERROR')));
+        }
 
+    }
+	 public function asig_list()
+    {
+		 /*$query = $this->db->query("SELECT * FROM asignaciones LEFT JOIN employee_profile ON asignaciones.colaborador=employee_profile.id");
+        return $query->result_array();*/
+        $this->db->select('*');
+        $this->db->from('asignaciones');
+		$this->db->join('employee_profile', 'asignaciones.colaborador=employee_profile.id', 'left');
+		$this->db->join('accounts', 'asignaciones.tipo=accounts.id', 'left');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+	
     public function companylogo($id, $pic)
     {
         $this->db->select('logo');

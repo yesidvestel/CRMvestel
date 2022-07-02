@@ -234,7 +234,8 @@ class Tickets Extends CI_Controller
         $head['title'] = 'Add Support Reply';		
         $this->load->view('fixed/header', $head);
             ini_set('memory_limit', '500M');
-
+		
+	
         if ($this->input->post('content')) {
             set_time_limit(200000);
 			$psolucion = $this->input->post('solucion');
@@ -705,7 +706,7 @@ class Tickets Extends CI_Controller
             if ($this->db->update('tickets')){
 				//cambio color realizando
 				$this->db->set('color', '#2DC548');
-				$this->db->set('start', $fecha_final);
+				$this->db->set('start', date("Y-m-d H:i:s"));
 				$this->db->where('idorden', $ticket->codigo);
 				$this->db->update('events');
                 $data_h['modulo']="tickets";
@@ -816,9 +817,9 @@ if($status=="Resuelto" && file_exists($nombre_archiv)==false && strpos(strtolowe
         $this->db->update('invoices');
 		
 		//alerta de revision
-		$ciudad = $usuario->ciudad;
-        $ciudad=$this->db->get_where("ciudad",array("idCiudad"=>$ciudad))->row();
-        $ciudad=$ciudad->ciudad;
+		$ciudad2 = $usuario->ciudad;
+        $ciudad3=$this->db->get_where("ciudad",array("idCiudad"=>$ciudad2))->row();
+        $ciudad=$ciudad3->ciudad;
 		if ($status==='Resuelto' && $ticket->detalle==='Instalacion'){
 		$stdate2 = datefordatabase($fecha_final);
 		$name = 'Revisar orden #'.$ticket->codigo;
@@ -826,13 +827,17 @@ if($status=="Resuelto" && file_exists($nombre_archiv)==false && strpos(strtolowe
 		$priority = 'Low';
 		$stdate = $stdate2;
 		$tdate = '';
-		if($ciudad=="YOPAL" || $ciudad=="Yopal"){
-		$employee = 101;
+		$asignacion = $this->db->get_where('asignaciones', array('detalle' => 'encuesta','tipo'=> $ciudad))->row();
+		
+			//var_dump($asignacion->colaborador);
+		$employee = $asignacion->colaborador;
+		/*if($ciudad=="YOPAL" || $ciudad=="Yopal"){
+		$employee = 8;
 		}if($ciudad=="Monterrey"){
 			$employee = 52;
 		}if($ciudad=="Villanueva"){
 			$employee = 74;
-		}
+		}*/
 		$assign = $this->aauth->get_user()->id;
 		$content = 'Revisar orden #'.$ticket->codigo;
 		$ordenn = $ticket->codigo;
@@ -1633,9 +1638,16 @@ $x=0;
         $dataz['status']=$status;
         $dataz['fecha_final']=$fecha_final;
         if ($this->db->update('tickets',$dataz,array('idt'=>$tid))){
+			if ($status=='Pendiente'){
+				$color = '#4CB0CB';
+				$this->db->set('start', date("Y-m-d H:i:s"));
+			}else{
+				$color = '#a3a3a3';
+				$this->db->set('end', $fecha_final);
+			}
 			//cambio color al finalizar
-			$this->db->set('color', '#a3a3a3');
-			$this->db->set('end', $fecha_final);
+			$this->db->set('color', $color);
+			
         	$this->db->where('idorden', $ticket->codigo);
         	$this->db->update('events');
             $data_h['modulo']="Tickets";

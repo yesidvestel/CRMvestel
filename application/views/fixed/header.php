@@ -680,6 +680,9 @@ $lista_permisos1=$this->db->query("SELECT permisos_usuario.id,permisos_usuario.i
                         <li>
                             <a href="<?php echo base_url(); ?>settings/currency"><?php echo $this->lang->line('Currency') ?></a>
                         </li>
+						<li>
+                            <a href="<?php echo base_url(); ?>settings/asignacion"><?php echo $this->lang->line('') ?>Asignaciones</a>
+                        </li>
                         <li>
                             <a href="<?php echo base_url(); ?>settings/dtformat"><?php echo $this->lang->line('Date & Time Format') ?></a>
                         </li>

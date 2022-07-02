@@ -222,7 +222,31 @@ contraseña de aplicacion para crm : okqttqhqjmtaolbw
         $this->load->view('settings/about');
         $this->load->view('fixed/footer');
     }
+	public function asignacion()
+    {
+		$this->load->model('ticket_model', 'ticket');
+		$this->load->model('customers_model', 'customers');
+		$this->load->model('accounts_model', 'accounts');
+		$data['asignaciones'] = $this->settings->asig_list();
+		$data['accounts'] = $this->accounts->accountslist();
+		$data['customergrouplist'] = $this->customers->group_list();
+		$data['tecnicoslista'] = $this->ticket->tecnico_list();
+        $head['title'] = "Asignaciones";		
+        $this->load->view('fixed/header', $head);
+        $this->load->view('settings/asignacion',$data);
+        $this->load->view('fixed/footer');
+    }
+	
+	public function add_asignar()
+    {
+            $dtalle = $this->input->post('detalle');
+            $cja = $this->input->post('caja');
+            $sdes = $this->input->post('sedes');
+            $col = $this->input->post('colaborador');
+            $this->settings->add_asig($dtalle,$cja,$sdes,$col);
 
+       
+    }
     public function add_term()
     {
 
