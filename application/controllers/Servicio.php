@@ -171,7 +171,7 @@ class Servicio extends CI_Controller
             */
             
             $row[] = $no;
-            $row[] = $invoices->tid;
+            //$row[] = $invoices->tid;
             
             //$row[] = $invoices->tipo_factura;
             $row[] = $invoices->invoicedate;
