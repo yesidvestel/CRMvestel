@@ -172,7 +172,7 @@ class Servicio extends CI_Controller
             
             $row[] = $no;
             $row[] = $invoices->tid;
-            $row[] = $usuario->name;
+            
             //$row[] = $invoices->tipo_factura;
             $row[] = $invoices->invoicedate;
             //$row[] = '<span class="st-' . $invoices->ron . '">' . $invoices->ron . '</span>';

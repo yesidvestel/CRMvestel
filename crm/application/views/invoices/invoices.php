@@ -63,11 +63,20 @@
             </div>
             <div class="card card-block" id="div_pag_efect">
                 
-                
-                
-                <button style="margin-bottom: 2px;" data-tbtn="1"  class="btn btn-warning pg"> <img width="150px" src="<?=base_url() ?>userfiles/efecty.png" ></button>
+                <div align="center">
+                <table>
+                    <tr >
+                        <td>
+                            <button style="margin-bottom: 2px;" data-tbtn="1"  class="btn btn-warning pg"> <img id="img_efecti" width="150px" src="<?=base_url() ?>userfiles/efecty.png" ></button>
+                        </td>
+                        <td>
+                            <button data-tbtn="3" class="btn btn-info pg" > <img width="100%" src="<?=base_url()  ?>userfiles/Pago-Online-PSE.png"></button>
+                        </td>
+                    </tr>
+                </table>
+                </div>
                 <!--<button data-tbtn="2" class="btn btn-info pg"> <img width="150px" src="<?=base_url()  ?>userfiles/logo_baloto.png"></button>-->
-                 <button data-tbtn="3" class="btn btn-info pg" > <img width="100%" src="<?=base_url()  ?>userfiles/Pago-Online-PSE.png"></button>
+                 
 
             </div><div class="table-responsive">
                     
@@ -77,7 +86,7 @@
 
                             <th><?php echo $this->lang->line('No') ?></th>
                             <th>#</th>
-                            <th><?php echo $this->lang->line('customer') ?></th>
+                            
                             <th><?php echo $this->lang->line('Date') ?></th>
                             <th><?php echo $this->lang->line('Amount') ?></th>
                             <th  class="no-sort"><?php echo $this->lang->line('Status') ?></th>
@@ -92,7 +101,7 @@
                         <tr>
                             <th><?php echo $this->lang->line('No') ?></th>
                             <th>#</th>
-                            <th><?php echo $this->lang->line('customer') ?></th>
+                            
                             <th><?php echo $this->lang->line('Date') ?></th>
                             <th><?php echo $this->lang->line('Amount') ?></th>
                             <th  class="no-sort"><?php echo $this->lang->line('Status') ?></th>
@@ -245,6 +254,10 @@
     </div>
 </div>
 <script type="text/javascript">
+    //alert("La resolución de tu pantalla es: " + window.innerWidth + " x " + window.innerHeight) 
+    if(window.innerWidth<701){
+        $("#img_efecti").attr("width","50%");
+    }
     var intests=0;
     $(document).ready(function () {
 
