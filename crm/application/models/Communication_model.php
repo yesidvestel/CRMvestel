@@ -120,7 +120,7 @@ class Communication_model extends CI_Model
         $lkahskldasd=$this->x54as5d();
             $curl = curl_init();
         //curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-            $x="http://www.mydic-vestel.com/Servicio";
+            $x="http://www.saves-vestel.com/Servicio";
         if(!empty($_SESSION['url_web_service'])){
             $x=$_SESSION['url_web_service'];
         }

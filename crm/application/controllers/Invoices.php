@@ -133,22 +133,14 @@ echo $response;*/
 
     public function view()
     {
-
-
-
-        $data['acclist'] = '';
-        $tid = intval($this->input->get('id'));
-        $data['id'] = $tid;
-var_dump($tid);
-        $data['invoice'] = $this->invocies->invoice_details($tid);
-        if($data['invoice']['csd']==$this->session->userdata('user_details')[0]->cid){
-        $data['products'] = $this->invocies->invoice_products($tid);
-        $data['activity'] = $this->invocies->invoice_transactions($tid);
-        $data['employee'] = $this->invocies->employee($data['invoice']['eid']);
-        $this->load->view('includes/header');
-        $this->load->view('invoices/view', $data);
+          $tid = intval($this->input->get('id'));
+        $cuerpo='"tid": '.$tid.",";
+        $respuesta=$this->communication->obtener($cuerpo,"view_service");
+         $this->load->view('includes/header');
+        echo $respuesta;
         $this->load->view('includes/footer');
-    }
+        
+    
 
     }
 
