@@ -303,14 +303,14 @@
             //console.log("hola mundo");
             var data_form=$("#form_pse").serialize();
             $.post(baseurl+"payments/pse_reseption",data_form,function(data){
-                    if(data.status=="SUCCESS"){
+                    if(data.status=="SUCCESS" && data.url!=null){
                         $("#modal_pse").modal("hide");
                         $("#div_pag_efect").append("<h3>Si no fuiste redirigido dirigete directamente este link para finalizar el proceso de pago : <a href='"+data.url+"'>"+data.url+"</a></h3>");
                         $("#pag_refer").attr("src",data.url);
                         window.location.href =data.url;
                         //abrir_modal();
                     }else{
-                        alert("Ocurrio un error informa a VESTEL POR FAVOR");
+                        alert("Ocurrio un error informa a VESTEL POR FAVOR o intentalo mas tarde");
                     }
             },'json');  
             intests++;  
