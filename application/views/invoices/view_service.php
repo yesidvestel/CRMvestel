@@ -35,7 +35,7 @@
                     <!-- Invoice Company Details -->
                     <div id="invoice-company-details" class="row mt-2">
                         <div class="col-md-6 col-sm-12 text-xs-center text-md-left"><p></p>
-                            <img src="<?php echo base_url('userfiles/company/' . $this->config->item('logo')) ?>"
+                            <img src="https://vestel.com.co/crm/userfiles/theme/logo-header.png"
                                  class="img-responsive p-1 m-b-2" style="max-height: 180px;">
 
                         </div>
@@ -141,9 +141,9 @@
                                         <p class="lead mt-1"><br>Servicios Asignados:</p>
                                         <code>
                                             <?php $servs_eco=""; 
-												if ($invoice['television'] == no ){
-													$servs_eco.= '';
-												} else{
+                                                if ($invoice['television'] == no ){
+                                                    $servs_eco.= '';
+                                                } else{
                                                         if($invoice['estado_tv'] == "Cortado"){
                                                                 $servs_eco.= "<b><i class='sts-Cortado'>".$invoice['television']." (cortado)</i></b>";
                                                         }else if($invoice['estado_tv'] == "Suspendido"){
@@ -151,10 +151,10 @@
                                                         }else{
                                                             $servs_eco.= $invoice['television'];    
                                                         }
-													}
-											if ($invoice['combo'] == no ){
-													$servs_eco.= '';
-												} else{
+                                                    }
+                                            if ($invoice['combo'] == no ){
+                                                    $servs_eco.= '';
+                                                } else{
 
                                                      if($invoice['estado_combo'] == "Cortado"){
                                                                 $servs_eco.= " mas <b><i class='sts-Cortado'>".$invoice['combo']." (cortado)</i></b>";
@@ -163,15 +163,15 @@
                                                         }else{
                                                             $servs_eco.= ' mas '.$invoice['combo'];
                                                         }
-													}
-											if ($invoice['puntos'] == 0 ){
-													$servs_eco.= '';
-												} else{
-													$servs_eco.= ' mas '.$invoice['puntos'].' puntos adicionales';}?>
+                                                    }
+                                            if ($invoice['puntos'] == 0 ){
+                                                    $servs_eco.= '';
+                                                } else{
+                                                    $servs_eco.= ' mas '.$invoice['puntos'].' puntos adicionales';}?>
                                                     <?= $servs_eco.$servicios_adicionales; ?>
                                         </code>
-										<p class="lead mt-1"><br>Nota:</p>
-										 <code>
+                                        <p class="lead mt-1"><br>Nota:</p>
+                                         <code>
                                             <?php echo $invoice['notes'] ?>
                                         </code>
                                     </div>
@@ -222,7 +222,7 @@
                                 </div>
                                 <div class="text-xs-center">
                                     <p><?php echo $this->lang->line('Authorized person') ?></p>
-                                    <?php echo '<img src="' . FCPATH . 'userfiles/employee_sign/' . $employee['sign'] . '" alt="signature" class="height-100"/>
+                                    <?php echo '
                                     <h6>(' . $employee['name'] . ')</h6>
                                     <p class="text-muted">' . user_role($employee['roleid']) . '</p>'; ?>
                                 </div>

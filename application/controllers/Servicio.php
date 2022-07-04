@@ -76,7 +76,7 @@ class Servicio extends CI_Controller
         //$head['usernm'] = $this->aauth->get_user()->username;
         //$this->load->view('fixed/header', $head);
         $d2= $this->load->view('invoices/view_service', $data,true);
-        var_dump($d2);
+        echo $d2;
         //$this->load->view('fixed/footer');
 
     }
