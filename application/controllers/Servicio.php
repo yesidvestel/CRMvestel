@@ -193,7 +193,7 @@ class Servicio extends CI_Controller
                                 }
             if($lisa_resivos_agregar_st!=""){
             $resivos_var='<div class="btn-group dropup">
-                                    <button type="button" class="btn btn-success dropdown-toggle"
+                                    <button style="margin-top:1px;" type="button" class="btn btn-success dropdown-toggle"
                                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
                                                 class="icon-download"></i> 
                                     </button>
