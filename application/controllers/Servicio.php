@@ -53,6 +53,33 @@ class Servicio extends CI_Controller
     public function index()
     {
     }
+    public function view_service()
+    {
+        $this->load->model('invoices_model', 'invocies');
+        $this->load->model('accounts_model');
+        ini_set('memory_limit', '128M');
+        $body_post=json_decode(file_get_contents("php://input",true));
+        $data_response=array();
+        
+        
+        $tid = intval($body_post->tid);
+        $data['id'] = $tid;
+        //$head['title'] = "View Invoice $tid";
+        $data['invoice'] = $this->invocies->invoice_details($tid, $this->limited);
+        
+        if ($data['invoice']) $data['products'] = $this->invocies->invoice_products($tid);
+        if ($data['invoice']) $data['activity'] = $this->invocies->invoice_transactions($tid);
+
+        $data['employee'] = $this->invocies->employee($data['invoice']['eid']);
+        $data['servicios_adicionales'] = $this->invocies->servicios_adicionales($tid,true);
+
+        //$head['usernm'] = $this->aauth->get_user()->username;
+        //$this->load->view('fixed/header', $head);
+        $d2= $this->load->view('invoices/view_service', $data,true);
+        var_dump($d2);
+        //$this->load->view('fixed/footer');
+
+    }
     public function pay_due_customer(){
         $body_post=json_decode(file_get_contents("php://input",true));
         $data_response=array();
