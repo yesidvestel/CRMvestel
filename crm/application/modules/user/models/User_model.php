@@ -15,7 +15,8 @@ class User_model extends CI_Model
     {
         $email = $this->input->post('email');
         $password = $this->input->post('password');
-        $this->db->where("is_deleted='0' AND (name='$email' OR email='$email')");
+        //$this->db->where("is_deleted='0' AND (name='$email' OR email='$email')");
+        $this->db->where("is_deleted='0' AND cid='$email'");
         $result = $this->db->get('users')->result();
         if (!empty($result)) {
             if (password_verify($password, $result[0]->password)) {
