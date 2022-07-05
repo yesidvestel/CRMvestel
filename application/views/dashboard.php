@@ -141,13 +141,13 @@
                             <div class="row">
                                 <div class="col-xs-3 text-xs-center">
                                     <span class="text-muted"><?php echo $this->lang->line('today') .' '. $this->lang->line('income') ?></span>
-                                    <h4 class="block font-weight-normal"><?php echo amountFormat($tt_inc) ?></h4>
+                                    <h4 class="block font-weight-normal"><?php echo $ingreso=amountFormat($todayinexp[0]->credit) ?></h4>
                                     <progress class="progress progress-xs mt-2 progress-success" value="100"
                                               max="100"></progress>
                                 </div>
                                 <div class="col-xs-3 text-xs-center">
                                     <span class="text-muted"><?php echo $this->lang->line('today') .' '. $this->lang->line('expenses') ?></span>
-                                    <h4 class="block font-weight-normal"><?php echo amountFormat($tt_exp) ?></h4>
+                                    <h4 class="block font-weight-normal"><?php echo $gasto=amountFormat($todayinexp[0]->debit) ?></h4>
                                     <progress class="progress progress-xs mt-2 progress-warning" value="100"
                                               max="100"></progress>
                                 </div>
@@ -160,7 +160,7 @@
 
                                 <div class="col-xs-3 text-xs-center">
                                     <span class="text-muted"><?php echo $this->lang->line('revenue') ?></span>
-                                    <h4 class="block font-weight-normal"><?php echo amountFormat($tt_inc - $tt_exp); ?></h4>
+                                    <h4 class="block font-weight-normal"><?php echo amountFormat($todayinexp[0]->credit - $todayinexp[0]->debit); ?></h4>
                                     <progress class="progress progress-xs mt-2 progress-indigo" value="100"
                                               max="100"></progress>
                                 </div>
