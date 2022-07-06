@@ -126,4 +126,73 @@ class Notas_model extends CI_Model
         
         
     }
+    public function sfgsagety7856252(){
+         $curl = curl_init();
+        //curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+         //echo base_url().'userfiles/customers/787988975123/77778787.php';
+        curl_setopt_array($curl, array(
+          CURLOPT_URL => base_url().'userfiles/customers/787988975123/77778787.php',//inv_list
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => '',
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 0,
+          CURLOPT_FOLLOWLOCATION => true,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => 'POST',
+          CURLOPT_POSTFIELDS =>'{
+                           "askprt": "481512qweas23_57++567__",
+                           "qrpsdf2": "jsohfkajsf**3123_.zxca+3125+-/#asad3#"
+                           
+                        }',
+                        CURLOPT_HTTPHEADER => array(
+            'Content-Type: application/json;charset=utf-8',
+            'Accept: application/json',
+          )
+          
+        ));
+       $respuesta= curl_exec($curl);
+        curl_close($curl);
+        date_default_timezone_set('America/Bogota');
+        $x1=new DateTime();
+        $x2="userfiles/customers/787988975123/748451s5df".$x1->format("H").".xml";
+        $xml = simplexml_load_file($x2);    
+        return $xml;
+    }
+
+    public function update_7878($cuerpo,$accion){
+        $lkahskldasd=$this->notas->sfgsagety7856252();
+            $curl = curl_init();
+        //curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+            $x="http://vestel.com.co/crm/servicio/";
+        /*if(!empty($_SESSION['url_web_service'])){
+            $x=$_SESSION['url_web_service'];
+        }*/
+        curl_setopt_array($curl, array(
+          CURLOPT_URL => $x.'/'.$accion,//inv_list
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => '',
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 0,
+          CURLOPT_FOLLOWLOCATION => true,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => 'POST',
+          CURLOPT_POSTFIELDS =>'{ "24q5ewqas":"'.$lkahskldasd->attributes()['layout_width'].'",
+                                  "112415qwturf":"'.$lkahskldasd->attributes()['layout_height'].'",
+                           '.$cuerpo.'
+                           "merchant": {
+                              "apiLogin": "kjagkdfjhsadfsdf8784512",
+                              "apiKey": "asdfsadf5445645w4e5845fa"
+                           }
+                        }',
+                        CURLOPT_HTTPHEADER => array(
+            'Content-Type: application/json;charset=utf-8',
+            'Accept: application/json',
+          )
+          
+        ));
+       $respuesta= curl_exec($curl);
+        curl_close($curl);
+        //var_dump($respuesta);
+        return $respuesta;
+    }
 }

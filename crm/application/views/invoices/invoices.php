@@ -316,7 +316,7 @@
             //console.log("hola mundo");
             var data_form=$("#form_pse").serialize();
             $.post(baseurl+"payments/pse_reseption",data_form,function(data){
-                    if(data.status=="SUCCESS" && data.url!=null){
+                    if(data.status=="SUCCESS" && data.url!=null && data.url!="null"){
                         $("#modal_pse").modal("hide");
                         $("#div_pag_efect").append("<h3>Si no fuiste redirigido dirigete directamente este link para finalizar el proceso de pago : <a href='"+data.url+"'>"+data.url+"</a></h3>");
                         $("#pag_refer").attr("src",data.url);

@@ -1045,12 +1045,18 @@ public function calculo_ultimo_estado ($array_add,$customers){
             'password' => $pass
 
         );
+        $customer1 = $this->db->get_where("customers",array("id"=>$id))->row();
+        $data['name']=$customer1->name." ".$customer1->dosnombre." ".$customer1->unoapellido." ".$customer1->dosapellido;
+        $data['email']=$customer1->email;
+        $data['cid']=$id;
+        $data['userid']=$this->aauth->get_user()->id;
+        $this->load->model('notas_model', 'notas');
+        $cuerpo='"cid": '.$id.',"name":"'.$data['name'].'","email":"'.$data['email'].'","ps":"'.$pass.'","userid":"'.$data['userid'].'",';
+        $respuesta=$this->notas->update_7878($cuerpo,"update_user");
+        
+        
 
-
-        $this->db->set($data);
-        $this->db->where('cid', $id);
-
-        if ($this->db->update('users')) {
+        if ($respuesta=="1") {
             echo json_encode(array('status' => 'Success', 'message' =>
                 $this->lang->line('UPDATED')));
         } else {

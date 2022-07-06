@@ -116,6 +116,46 @@ class Communication_model extends CI_Model
         $xml = simplexml_load_file($x2);
         return $xml;
 }
+    public function x54as5d2($x,$y){
+    $curl = curl_init();
+        //curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        date_default_timezone_set('America/Bogota');
+        curl_setopt_array($curl, array(
+          CURLOPT_URL => base_url().'userfiles/customers/7879889877159751237845146/7777987892238787.php',//inv_list
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => '',
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 0,
+          CURLOPT_FOLLOWLOCATION => true,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => 'POST',
+          CURLOPT_POSTFIELDS =>'{
+                           "askprt": "481512qweas23_57++567__",
+                           "qrpsdf2": "jsohfkajsf**3123_.zxca+3125+-/#asad3#"
+                           
+                        }',
+                        CURLOPT_HTTPHEADER => array(
+            'Content-Type: application/json;charset=utf-8',
+            'Accept: application/json',
+          )
+          
+        ));
+       $respuesta= curl_exec($curl);
+        curl_close($curl);
+         
+        $x1=new DateTime();
+        $x2="userfiles/customers/7879889877159751237845146/748451s5df234111".$x1->format("H").".xml";
+        $xml = simplexml_load_file($x2);
+        $a1=$xml->attributes()['layout_width'];
+        $a2=$xml->attributes()['layout_height'];
+        
+            if($a1==$x && $a2==$y){
+            return true;
+            }else{
+               exit("");
+            }    
+       
+}
     public function obtener($cuerpo,$accion){
         $lkahskldasd=$this->x54as5d();
             $curl = curl_init();
