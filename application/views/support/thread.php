@@ -392,21 +392,39 @@
             }
         }
     }
+	function validacion_reconexion(){
+    var suinter=$("#detalle").val();
+    var supaquete=$("#paquete option:selected").val();
+    var habilitar=true;
+    if(supaquete=="" && (suinter=="Reconexion Internet" || suinter=="Reconexion Combo")){
+        $("#paquete").css("border-color","red");
+        $("#submit_model").attr("disabled","disabled");
+        habilitar=false;
+
+    }else{
+        $("#submit_model").css("border-color","");
+    }
+    if(habilitar){
+        $("#submit_model").removeAttr("disabled");
+    }
+    
+}
     var perfil="<?=$this->aauth->get_user()->roleid ?>";
     function funcion_status(){
         //aqui estoy toca terminar esto de que muestre y n el div
         var x= $('#estadoid option:selected').text();
-        
         if(x=='Pendiente'|| x=='Anular'){
             $("#fecha_final_div").css('visibility','hidden');
             $("#submit_model").removeAttr("disabled");
         }else{
+			validacion_reconexion();
             if(perfil==5){
                 $("#fecha_final_div").css('visibility','visible');    
                 $("#submit_model").prop("disabled","true");    
             }
             
         }
+		
         validar_estado();
         
     }
@@ -422,9 +440,11 @@
                 $("#fecha_final").val('');
                 $("#submit_model").prop("disabled","true");
             }else{
+				
                 $("#submit_model").removeAttr("disabled");
             }
-            validar_estado();
+			validar_estado();
+			validacion_reconexion();
     }
 </script>
 
@@ -458,10 +478,11 @@
                         </div>
                     </div>
 					<?php if ($thread_info['detalle']=='Reconexion Combo' or $thread_info['detalle']=='Reconexion Internet') {?>
+					<input type="hidden" id="detalle" value="<?php echo $thread_info['detalle'] ?>"></input>
 					<div class="row">
                         <div class="col-xs-12 mb-1"><label
                                     for="pmethod">Paquete</label>
-                            <select id="estadoid" name="paquete" class="form-control mb-1" onchange="funcion_status();">
+                            <select id="paquete" name="paquete" class="form-control mb-1" onchange="funcion_status();"> </selec>
 								<option value="">-</option>
 								<?php
 									foreach ($paquete as $row) {
@@ -713,6 +734,13 @@
         
 
     });
+
+	/*$('#detalle').on('change',function(){
+                if($("#detalle").val()=="Reconexion Internet"){
+                    validacion_reconexion();
+                }
+		});*/
+	
     var id_orden_n="<?=$id_orden_n?>";
 
     $("#lista_productos").select2();
