@@ -25,6 +25,8 @@ class facturasElectronicas extends CI_Controller
     {
         parent::__construct();
         //$this->load->model('customers_model', 'customers');
+        $this->load->model("customers_model","customers");
+        $this->load->model("facturas_electronicas_model","facturas_electronicas");
         $this->load->library("Aauth");
         if (!$this->aauth->is_loggedin()) {
             redirect('/user/', 'refresh');
@@ -434,7 +436,16 @@ $this->load->model("customers_model","customers");
         echo json_encode($array_return);
     }
     public function procesar_usuarios_a_facturar(){
-        $retorno=array("estado"=>"procesado");
+        $dateTime=new DateTime($_POST['sdate']);
+        $caja1=$this->db->get_where('accounts',array('id' =>$_POST['pay_acc']))->row();
+        $se_facturo = $this->db->query("SELECT * FROM facturacion_electronica_siigo WHERE fecha ='".$dateTime->format("Y-m-d")."' and customer_id=".$_POST['id_customer'])->result_array();//and id=8241
+        $retorno=array();
+        if(count($se_facturo)!=0){
+            $retorno["estado"]="procesado 2";
+        }else{
+            $retorno["estado"]="procesado";
+        }
+        
         echo json_encode($retorno);
 
     }

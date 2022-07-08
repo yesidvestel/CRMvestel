@@ -139,7 +139,8 @@ function iniciar_facturacion(){
             $.post(baseurl+"facturasElectronicas/procesar_usuarios_a_facturar",{'pay_acc':pay_acc,'sdate':sdate,'id_customer':id_customer},function(data){
 
 
-                    if(data.estado=="procesado"){
+                    if(data.estado=="procesado" || data.estado=="procesado 2"){
+                        console.log(data.estado);
                         i++;
                     }
 
