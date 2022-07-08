@@ -24,6 +24,7 @@ class Ticket_model extends CI_Model
 
     //documents list
 	var $table = 'customers';
+	var $table2 = 'tickets';
     var $doccolumn_order = array(null, null, 'codigo', 'subject', 'detalle', 'created','fecha_final','abonado','documento', 'id_factura', 'ciudad','status', null);
     var $doccolumn_search = array('idt', 'codigo', 'detalle', 'created', 'abonado', 'id_factura', 'ciudad.ciudad','barrio.barrio','status');
 
@@ -212,8 +213,9 @@ class Ticket_model extends CI_Model
 
     private function ticket_datatables_query($filt,$filt2)
     {
-       //$this->db->select("*,");
-        $this->db->from('tickets');
+       	//$this->db->select('tickets.*,customers.id,customers.name,customers.unoapellido,customers.documento,customers.ciudad,customers.barrio,ciudad.idCiudad,ciudad.ciudad AS cda,barrio.idBarrio,barrio.barrio AS brrio,equipos.asignado,equipos.t_instalacion');
+        $this->db->from($this->table2);
+		
          if ($filt2['estado'] != '' && $filt2['estado'] != 'null' && $filt2['estado'] != null) {
             $this->db->where_in('status', explode(",", $filt2['estado']));       
         }
@@ -249,6 +251,7 @@ class Ticket_model extends CI_Model
 		$this->db->join('customers', 'tickets.cid=customers.id', 'left');
 		$this->db->join('ciudad', 'customers.ciudad=ciudad.idCiudad', 'left');
 		$this->db->join('barrio', 'customers.barrio=barrio.idBarrio', 'left');
+		//$this->db->join('equipos', 'tickets.cid=equipos.asignado', 'left');
         $i = 0;
 
         foreach ($this->doccolumn_search as $item) // loop column

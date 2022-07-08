@@ -98,6 +98,7 @@ class Tickets Extends CI_Controller
 		$obsv2 = str_replace('</p>','',$obsv);
         foreach ($list as $ticket) {
 			$agenda=$this->db->get_where('events',array('idorden'=>$ticket->codigo))->row();
+			$equipo=$this->db->get_where('equipos',array('asignado'=>$ticket->id))->row();
 			$obsv = str_replace('<p>','',$ticket->section);
 			$obsv2 = str_replace('</p>','',$obsv);
             $row = array();
@@ -140,6 +141,7 @@ class Tickets Extends CI_Controller
             }
 			$row[] = $ticket->ciudad;
 			$row[] = $ticket->barrio;
+			$row[] = $equipo->t_instalacion;
 			if(isset($agenda->idorden)){
 				$row[] = "<span class=' icon-check' style='color:green'></span>";
 			}else{
@@ -526,7 +528,8 @@ class Tickets Extends CI_Controller
 		'Direccion' => 'string',
 		'Referencia' => 'string',
 		'Barrio' => 'string',					 
-        'Sede' => 'string');
+        'Sede' => 'string',
+        'Tecnologia' => 'string');
     
     //fetch data from database
     //$salesinfo = $this->product_model->get_salesinfo();
@@ -564,6 +567,7 @@ class Tickets Extends CI_Controller
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ));
     
     //write rows to sheet1
@@ -571,13 +575,31 @@ class Tickets Extends CI_Controller
     foreach ($lista_tickets as $key => $tickets) {
 		$obsv = str_replace('<p>','',$tickets->section);
 		$obsv2 = str_replace('</p>','',$obsv);
+		$equipo=$this->db->get_where('equipos',array('asignado'=>$tickets->id))->row();
         if($tickets->codigo=="" || $tickets->codigo==null){
             $tickets->codigo="Sin Codigo";
         }
         if($tickets->fecha_final == '0000-00-00' || $tickets->fecha_final == '' || $tickets->fecha_final == null){
             $tickets->fecha_final="Sin Realizar";
         }
-            $writer->writeSheetRow('Tickets ',array($tickets->codigo,$tickets->subject ,$tickets->detalle, $tickets->created,$tickets->fecha_final,$tickets->abonado ,$tickets->name.' '.$tickets->unoapellido,$tickets->documento,$tickets->celular,$tickets->status,$obsv2,$tickets->id_factura,$tickets->asignado,$tickets->nomenclatura.' '.$tickets->numero1.$tickets->adicionauno.' # '.$tickets->numero2.$tickets->adicional2.' - '.$tickets->numero3,$tickets->residencia.'/'.$tickets->referencia,$tickets->barrio,$tickets->ciudad));
+            $writer->writeSheetRow('Tickets ',array(
+				$tickets->codigo,
+				$tickets->subject,
+				$tickets->detalle, 
+				$tickets->created,
+				$tickets->fecha_final,
+				$tickets->abonado,
+				$tickets->name.' '.$tickets->unoapellido,
+				$tickets->documento,
+				$tickets->celular,
+				$tickets->status,
+				$obsv2,
+				$tickets->id_factura,
+				$tickets->asignado,
+				$tickets->nomenclatura.' '.$tickets->numero1.$tickets->adicionauno.' # '.$tickets->numero2.$tickets->adicional2.' - '.$tickets->numero3,$tickets->residencia.'/'.$tickets->referencia,
+				$tickets->barrio,
+				$tickets->ciudad,
+				$equipo->t_instalacion));
         
     }
         

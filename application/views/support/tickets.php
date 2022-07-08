@@ -320,6 +320,7 @@
 					<th>Asignado</th>
 					<th>Sede</th>
 					<th>Barrio</th>
+					<th>Tecnologia</th>
 					<th>Agenda</th>
 					<th>Estado</th>
                     <th>Accion</th>
