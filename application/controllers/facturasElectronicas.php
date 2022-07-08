@@ -423,6 +423,49 @@ $this->load->model("customers_model","customers");
         $this->load->view('facturas_electronicas/facturas_creadas', $data);
         $this->load->view('fixed/footer');
     }
+    public function obtener_lista_usuarios_a_facturar(){
+        $numero_total;
+        $caja1=$this->db->get_where('accounts',array('id' =>$_POST['pay_acc']))->row();
+        $dateTime=new DateTime($_POST['sdate']);
+        $customers_t = $this->db->query("select id from customers where (usu_estado='Activo' or usu_estado='Compromiso') and (gid ='".$caja1->sede."' and facturar_electronicamente='1')")->result_array();//and id=8241
+        $numero_total=count($customers_t);
+        $usuarios_restantes_lista = $this->db->query("select customers.id from customers LEFT join facturacion_electronica_siigo on customers.id=facturacion_electronica_siigo.customer_id and fecha='".$dateTime->format("Y-m-d")."' where (customers.usu_estado='Activo' or customers.usu_estado='Compromiso') and (customers.gid ='".$caja1->sede."' and customers.facturar_electronicamente='1') and facturacion_electronica_siigo.id is null")->result_array();//and id=8241
+        $array_return =array("total_usuarios"=>$numero_total,"lista_usuarios_a_facturar"=>$usuarios_restantes_lista);
+        echo json_encode($array_return);
+    }
+    public function procesar_usuarios_a_facturar(){
+        $retorno=array("estado"=>"procesado");
+        echo json_encode($retorno);
+
+    }
+    public function generar_facturas_ajax(){
+        //la idea es desde el cliente dar la orden de consultar el siguiente usuario que falte e ir generando y retornando el resultado;
+        //uno a uno
+        $this->load->model("customers_model","customers");
+        $this->load->model("facturas_electronicas_model","facturas_electronicas");
+        $caja1=$this->db->get_where('accounts',array('id' =>$_POST['pay_acc']))->row();
+        $customers = $this->db->query("select * from customers where (usu_estado='Activo' or usu_estado='Compromiso') and (gid ='".$caja1->sede."' and facturar_electronicamente='1')")->result_array();//and id=8241
+        $datos_del_proceso=array("facturas_creadas"=>array(),"facturas_con_errores"=>array(),"facturas_anteriormente_creadas"=>array());
+        $dateTime=new DateTime($_POST['sdate']);
+        $x=0;
+         $this->load->library('SiigoAPI');
+        $api = new SiigoAPI();
+        $api->getAuth(1);
+        $api->getAuth2(2);
+        $cuenta=0;
+        $datos_file=array();        
+        $total_customer=count($customers);
+        $total_f_creadas=$this->db->query("SELECT COUNT(*) as cuenta_f FROM `facturacion_electronica_siigo` inner join customers on customers.id=facturacion_electronica_siigo.customer_id where customers.gid='".$caja1->sede."' and facturacion_electronica_siigo.fecha = '".$dateTime->format("Y-m-d")."'")->result_array();
+        $total_f_creadas=intval($total_f_creadas[0]['cuenta_f']);
+        
+                $file = fopen("assets/facturas_electronicas_seguimiento_".$_POST['pay_acc'].".txt", "w");            
+                fwrite($file, $cuenta.",".$total_customer.",".$total_f_creadas);
+                fclose($file);
+                $file = fopen("assets/facturas_electronicas_seguimiento.txt", "w");            
+                fwrite($file, "inicio");
+                fclose($file);
+
+    }
     public function generar_facturas_action(){
         set_time_limit(10000);
         ini_set ( 'max_execution_time', 10000);
@@ -504,8 +547,8 @@ $this->load->model("customers_model","customers");
 $x++;
             //var_dump($x);
             //echo date('h:i:s') . "\n";
-                        $creo=$this->facturas_electronicas->generar_factura_customer_para_multiple($datos,$api);
-                        //$creo=array("status"=>true);
+                        //$creo=$this->facturas_electronicas->generar_factura_customer_para_multiple($datos,$api);
+                        $creo=array("status"=>true);
                         //sleep(7);
                         if($creo['status']==true){
                             $datos_del_proceso['facturas_creadas'][]=$value['id'];

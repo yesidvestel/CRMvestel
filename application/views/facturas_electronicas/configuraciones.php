@@ -17,7 +17,7 @@
                 <div class="col-md-6">
                     <div class="card card-block sameheight-item">
 
-                        <form action="<?php echo base_url() ?>facturasElectronicas/generar_facturas_action" method="post" role="form">
+                        <form id="formulario_fac_electronicas" action="<?php echo base_url() ?>facturasElectronicas/generar_facturas_action" method="post" role="form">
                             <div class="form-group row">
                                 <label class="col-sm-3 col-form-label"
                                        for="pay_cat"><?php echo $this->lang->line('') ?>Sede</label>
@@ -58,7 +58,7 @@
 
                                 <div class="col-sm-4">
                                     
-                                    <input type="button" id="enviar" class="btn btn-primary btn-md" value="Generar">
+                                    <input type="submit" id="enviar" class="btn btn-primary btn-md" value="Generar">
 
 
                                 </div>
@@ -90,13 +90,63 @@
     var x1=baseurl.replace("CRMvestel/","");
     var data_aux="nada";
     var cuenta_bug=0;
+    var datos_recorrer;
+    var i=0;
+    var total=0;
     $("#enviar").click(function(ev){
         ev.preventDefault();
         $(enviar).attr("disabled","true");
-        proceso_facturacion();
+        var pay_acc=$("#cuentas_ option:selected").val();
+        var sdate=$("#sdate2").val();
+        $.post(baseurl+"facturasElectronicas/obtener_lista_usuarios_a_facturar",{'pay_acc':pay_acc,'sdate':sdate},function(data){
+            
+            datos_recorrer=data.lista_usuarios_a_facturar;
+            total=datos_recorrer.length;
+            $("#span_progress1").text("0/"+total);
+
+            iniciar_facturacion();
+        },'json');
+        //proceso_facturacion();
         
     });
+    /*$("#formulario_fac_electronicas").submit(function (ev){
+        ev.preventDefault();
+        var url =$(this).attr("action");
+        //antes de iniciar consultar para que me retorne el total de usuarios, luego en cada consulta me retorna los valores
+        $.post(url,{},function(data){
 
+        },'json');
+    });*/
+    
+function iniciar_facturacion(){
+        var pay_acc=$("#cuentas_ option:selected").val();
+        var sdate=$("#sdate2").val();
+        
+        if(i<parseInt(total)){
+            var id_customer=datos_recorrer[i].id;
+             var num1=i+1;
+                var porcentaje=parseInt((num1*100)/parseInt(total));
+                console.log(num1+"-"+total+"-"+porcentaje);
+                $('#progress').LineProgressbar({
+                    percentage: porcentaje,
+                    animation: false,
+                    fillBackgroundColor: '#1abc9c',
+                    height: '25px',
+                    radius: '10px'
+                });  
+                
+                    $("#span_progress1").text(num1+"/"+total);
+            $.post(baseurl+"facturasElectronicas/procesar_usuarios_a_facturar",{'pay_acc':pay_acc,'sdate':sdate,'id_customer':id_customer},function(data){
+
+
+                    if(data.estado=="procesado"){
+                        i++;
+                    }
+
+                    iniciar_facturacion();
+            },'json');
+        }
+}
     function proceso_facturacion(){
         pay_acc=$("#cuentas_ option:selected").val();
         var sdate=$("#sdate2").val();
@@ -112,7 +162,7 @@
             },
             success: function(response) { 
                 
-                window.location.href = baseurl+"facturasElectronicas/visualizar_resumen_ejecucion?fecha="+response.fecha+"&sede="+response.sede;
+                //window.location.href = baseurl+"facturasElectronicas/visualizar_resumen_ejecucion?fecha="+response.fecha+"&sede="+response.sede;
             }
         });
     }
@@ -158,7 +208,7 @@
                 });  
                 $("#span_progressfg").text(datos[2]+"/"+datos[1]);
             }
-            if(datos[0]==datos[1] && b>=4){
+            /*if(datos[0]==datos[1] && b>=4){
                 clearTimeout(timer);
             }else{
                 console.log(cuenta_bug);
@@ -178,7 +228,7 @@
                             fc_detener("iniciar");
                             cuenta_bug=0;
                             setTimeout(function(){
-                                    proceso_facturacion();
+                                   // proceso_facturacion();
                             },13000);
                         },15000);
 
@@ -191,9 +241,10 @@
                      timer = setTimeout("temporizador()", 2800);                   
                 }
                 
-            }
+            }*/
             
         });
+        setTimeout("temporizador()",2800);
         
     }
     $('#progress').LineProgressbar({
