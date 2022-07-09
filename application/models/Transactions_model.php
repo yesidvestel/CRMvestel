@@ -23,7 +23,7 @@ class Transactions_model extends CI_Model
     var $table = 'transactions';
     var $column_order = array('date', 'acid', 'debit', 'credit', 'payer', 'tid', 'method','note', 'estado');
     var $column_search = array('id', 'date', 'acid', 'debit', 'credit', 'payer', 'tid', 'method','note', 'estado');
-    var $order = array('id' => 'desc');
+    var $order = array('date' => 'desc');
     var $opt = '';
 
     private function _get_datatables_query($filt2)
@@ -243,7 +243,7 @@ class Transactions_model extends CI_Model
                 'cat' => '',
                 'method' => '',
                 'eid' => $eid,
-                'note' => 'Transferred by ' . $account['holder'],
+                'note' => 'Transferido por ' . $account['holder'],
                 'ext'=>9
             );
             $this->db->insert('transactions', $data);
@@ -266,7 +266,7 @@ class Transactions_model extends CI_Model
                 'cat' => '',
                 'method' => '',
                 'eid' => $eid,
-                'note' => 'Transferred to ' . $account['holder'],
+                'note' => 'Transferido a ' . $account['holder'],
                 'ext'=>9
             );
 
