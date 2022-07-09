@@ -290,6 +290,7 @@ class Facturas_electronicas_model extends CI_Model
 
             //falta verificar el caso de la tv de mocoa que cambian los valores
         }
+        $producto_existe=false;
          if($dataApiNET!=null){
             $array_servicios=$this->customers->servicios_detail($customer->id);
             if($array_servicios['combo']!="no"){
@@ -299,6 +300,7 @@ class Facturas_electronicas_model extends CI_Model
                 foreach ($lista_de_productos as $key => $prod) {
                     $prod->product_name=strtolower(str_replace(" ", "",$prod->product_name ));
                     if($prod->product_name==$array_servicios['combo']){
+                        $producto_existe=true;
                         //var_dump($prod->product_name);
                         $dataApiNET->items[0]->code="I01";
 
@@ -350,10 +352,10 @@ class Facturas_electronicas_model extends CI_Model
         $retorno=array("mensaje"=>"No");
         if($dataApiTV!=null && $dataApiTV!="null"){
             $retorno = $api->accionar($api,$dataApiTV,1);     
-            if($dataApiNET!=null && $dataApiNET!="null"){
+            if($dataApiNET!=null && $dataApiNET!="null" && $producto_existe==true){
                 $retorno = $api->accionar($api,$dataApiNET,2);     
             }
-        }else if($dataApiNET!=null && $dataApiNET!="null"){
+        }else if($dataApiNET!=null && $dataApiNET!="null" && $producto_existe==true){
             $retorno = $api->accionar($api,$dataApiNET,2);     
         }
         

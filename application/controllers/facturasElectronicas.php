@@ -27,6 +27,7 @@ class facturasElectronicas extends CI_Controller
         //$this->load->model('customers_model', 'customers');
         $this->load->model("customers_model","customers");
         $this->load->model("facturas_electronicas_model","facturas_electronicas");
+        $this->load->library('SiigoAPI');
         $this->load->library("Aauth");
         if (!$this->aauth->is_loggedin()) {
             redirect('/user/', 'refresh');
@@ -429,6 +430,14 @@ $this->load->model("customers_model","customers");
         $numero_total;
         $caja1=$this->db->get_where('accounts',array('id' =>$_POST['pay_acc']))->row();
         $dateTime=new DateTime($_POST['sdate']);
+        
+        
+        $api = new SiigoAPI();
+        $api->getAuth(1);
+        $api->getAuth2(2);
+        $_SESSION['api_siigo']=$api;
+        $_SESSION['errores']=array();
+
         $customers_t = $this->db->query("select id from customers where (usu_estado='Activo' or usu_estado='Compromiso') and (gid ='".$caja1->sede."' and facturar_electronicamente='1')")->result_array();//and id=8241
         $numero_total=count($customers_t);
         $usuarios_restantes_lista = $this->db->query("select customers.id from customers LEFT join facturacion_electronica_siigo on customers.id=facturacion_electronica_siigo.customer_id and fecha='".$dateTime->format("Y-m-d")."' where (customers.usu_estado='Activo' or customers.usu_estado='Compromiso') and (customers.gid ='".$caja1->sede."' and customers.facturar_electronicamente='1') and facturacion_electronica_siigo.id is null")->result_array();//and id=8241
@@ -442,12 +451,84 @@ $this->load->model("customers_model","customers");
         $retorno=array();
         if(count($se_facturo)!=0){
             $retorno["estado"]="procesado 2";
+            echo json_encode($retorno);
         }else{
+            $ret=$this->facturar_customer($_POST['id_customer'],$_POST['sdate']);
             $retorno["estado"]="procesado";
+            echo json_encode($retorno);
         }
         
-        echo json_encode($retorno);
+        
 
+    }
+    public function fe(){
+        $query=$this->db->query("select * from customers where (usu_estado='Activo' or usu_estado='Compromiso') and (gid ='2' and facturar_electronicamente='1' and (f_elec_tv=1 or  f_elec_tv is null))")->result_array();
+        
+        foreach ($query as $key => $value) {
+            $servicios=$this->customers->servicios_detail($value['id']);
+            if($servicios['television']!="no" && $servicios['television']!="-" &&$servicios['television']!="" &&$servicios['television']!="null" && $servicios['television']!=null){
+
+            }else{
+                echo $value['id']."<br>";
+            }
+        }
+    }
+    public function facturar_customer($id_customer,$sdate){
+
+            $servicios=$this->customers->servicios_detail($id_customer);
+                $puntos = $this->customers->due_details($id_customer);
+                //guardare en un array la variable servicios = combo o tv o internet y la variable puntos con no o el numero de puntos
+                // el orden es prima los servicios que tiene actualmente como hay seleccion por el admin si el servicio existe se toma la seleccion si no se omite,
+                //°° IMPORTANTE °°  por otro lado si agrega servicios y estan seteadas las opciones con un solo servicio ejemplo, el admin debe de setear las opciones de facturacion electronica porque generara segun este seteado
+                $customer_data=$this->db->get_where("customers",array("id"=>$id_customer))->row();
+
+                $datos=array();
+                if($puntos['puntos']=="0"){
+                    $datos['puntos']="no";
+                }else{
+                    $datos['puntos']=$puntos['puntos'];
+                }
+                if($customer_data->f_elec_puntos=="0"){
+                    $datos['puntos']="no";
+                }
+                $datos['servicios']=null;
+                if($servicios['television']!="no" && $servicios['television']!="-" &&$servicios['television']!="" &&$servicios['television']!="null" && $servicios['television']!=null){
+                    
+                    if($servicios['combo']!="no" && $servicios['combo']!="-" && $servicios['combo']!="" && $servicios['combo']!="null" && $servicios['combo']!=null){
+                            $datos['servicios']="Combo";
+                            if($customer_data->f_elec_internet=="0"){
+                                $datos['servicios']="Television";
+                            }else if($customer_data->f_elec_tv=="0"){
+                                $datos['servicios']="Internet";
+                            }
+                    }else{
+                        $datos['servicios']="Television";    
+                    }                    
+                }else if($servicios['combo']!="no" && $servicios['combo']!="-" && $servicios['combo']!="" && $servicios['combo']!="null" && $servicios['combo']!=null){
+                      $datos['servicios']="Internet";                    
+                }
+                $datos['sdate']=$sdate;
+                $datos['id']=$id_customer;
+                if($datos['servicios']!=null){
+                    
+                   
+            
+                        $creo=$this->facturas_electronicas->generar_factura_customer_para_multiple($datos,$_SESSION['api_siigo']);
+                        $creo=array("status"=>true);
+                        //sleep(7);
+                        if($creo['status']==true){
+                                return  true;                        
+                        }else{
+                            $_SESSION['errores'][]=array("id"=>$value['id'],"error"=>$creo['respuesta']);                            
+                            return false;
+                        }
+                   
+                    //--CostCenterCode para agregar la sede 
+                    //--falta agregar el centro de costo 
+                    //se agrego centro de costo falta validar las demas sedes
+                    // y validar que si ya se creo la factura en esta fecha no volverla a crear
+
+                }
     }
     public function generar_facturas_ajax(){
         //la idea es desde el cliente dar la orden de consultar el siguiente usuario que falte e ir generando y retornando el resultado;
@@ -459,10 +540,6 @@ $this->load->model("customers_model","customers");
         $datos_del_proceso=array("facturas_creadas"=>array(),"facturas_con_errores"=>array(),"facturas_anteriormente_creadas"=>array());
         $dateTime=new DateTime($_POST['sdate']);
         $x=0;
-         $this->load->library('SiigoAPI');
-        $api = new SiigoAPI();
-        $api->getAuth(1);
-        $api->getAuth2(2);
         $cuenta=0;
         $datos_file=array();        
         $total_customer=count($customers);
@@ -655,8 +732,9 @@ var_dump($response);
 
     }
     public function lista_facturas_generadas(){
-
-        $lista_invoices=$this->db->query("SELECT *,facturacion_electronica_siigo.id as id_fac_elec FROM facturacion_electronica_siigo inner join customers on customers.id=facturacion_electronica_siigo.customer_id where fecha='".$_GET['fecha']."' and gid='".$_GET['pay_acc']."'")->result_array();
+        $dt= new DateTime($_GET['fecha']);
+        $caja1=$this->db->get_where('accounts',array('id' =>$_GET['pay_acc']))->row();
+        $lista_invoices=$this->db->query("SELECT *,facturacion_electronica_siigo.id as id_fac_elec FROM facturacion_electronica_siigo inner join customers on customers.id=facturacion_electronica_siigo.customer_id where fecha='".$dt->format("Y-m-d")."' and gid='".$caja1->sede."'")->result_array();
         $no = $this->input->post('start');
         $data=array();
         $x=0;

@@ -19,7 +19,7 @@ class CurlRequest
             CURLOPT_POST => 1,
             CURLOPT_HEADER => 0,
             CURLOPT_URL => $url,
-            CURLOPT_FRESH_CONNECT => 2,
+            CURLOPT_FRESH_CONNECT => 4,
             CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_FORBID_REUSE => 1,
             CURLOPT_TIMEOUT => 0,

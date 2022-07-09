@@ -75,14 +75,20 @@
         <div id="progress" data-init="true"></div>
         <div style="margin-top: -25px;"><span id="span_progress1">0/0</span></div>
         <br>
-        <p>Progreso facturas generadas para la fecha seleccionada</p>
+        <p>Progreso proceso en ejecucion</p>
         <div id="progressfg" data-init="true"></div>
-        <div style="margin-top: -25px;"><span id="span_progressfg">0/0</span></div>
+        <!--div style="margin-top: -25px;"><span id="span_progressfg">0/0</span></div-->
     </div>
 </article>
 
 <?php //se hizo el cambio de fecha en el archivo views/fixed/footer ?>
 <script type="text/javascript">
+    function progress_one(valorx){
+         $('#progressfg').LineProgressbar({
+                    percentage: valorx,
+                    animation: true
+                });
+    }
     var timer;
     var b=0;
     var pay_acc;
@@ -93,16 +99,21 @@
     var datos_recorrer;
     var i=0;
     var total=0;
+    var total_a_facturar=0;
+    var va_en=0;
     $("#enviar").click(function(ev){
         ev.preventDefault();
         $(enviar).attr("disabled","true");
         var pay_acc=$("#cuentas_ option:selected").val();
         var sdate=$("#sdate2").val();
+         progress_one(40);
         $.post(baseurl+"facturasElectronicas/obtener_lista_usuarios_a_facturar",{'pay_acc':pay_acc,'sdate':sdate},function(data){
-            
+            progress_one(90);
             datos_recorrer=data.lista_usuarios_a_facturar;
             total=datos_recorrer.length;
-            $("#span_progress1").text("0/"+total);
+            total_a_facturar= parseInt( data.total_usuarios);
+           va_en =parseInt(total_a_facturar-datos_recorrer.length);
+            $("#span_progress1").text(va_en+"/"+total_a_facturar);
 
             iniciar_facturacion();
         },'json');
@@ -117,16 +128,17 @@
 
         },'json');
     });*/
-    
+    var errores=0;
 function iniciar_facturacion(){
         var pay_acc=$("#cuentas_ option:selected").val();
         var sdate=$("#sdate2").val();
-        
+        progress_one(10);
         if(i<parseInt(total)){
             var id_customer=datos_recorrer[i].id;
-             var num1=i+1;
-                var porcentaje=parseInt((num1*100)/parseInt(total));
-                console.log(num1+"-"+total+"-"+porcentaje);
+             //var num1=va_en+1;
+             va_en++;
+                var porcentaje=parseInt((va_en*100)/parseInt(total_a_facturar));
+                //console.log(va_en+"-"+va_en+"-"+total+"-"+porcentaje);
                 $('#progress').LineProgressbar({
                     percentage: porcentaje,
                     animation: false,
@@ -135,20 +147,35 @@ function iniciar_facturacion(){
                     radius: '10px'
                 });  
                 
-                    $("#span_progress1").text(num1+"/"+total);
+                    $("#span_progress1").text(va_en+"/"+total_a_facturar);
+                    progress_one(40);
             $.post(baseurl+"facturasElectronicas/procesar_usuarios_a_facturar",{'pay_acc':pay_acc,'sdate':sdate,'id_customer':id_customer},function(data){
 
 
                     if(data.estado=="procesado" || data.estado=="procesado 2"){
                         console.log(data.estado);
                         i++;
+                        progress_one(100);
+                        iniciar_facturacion();
                     }
 
-                    iniciar_facturacion();
-            },'json');
+                    
+            },'json').fail(function(xhr, status, error) {
+                if(errores>5){
+                    i++;
+                    errores=0;
+                }else{
+                    va_en--;    
+                }
+                
+                console.log("ubo un error");
+                iniciar_facturacion();
+            });
+        }else{
+            window.location.href = baseurl+"facturasElectronicas/visualizar_resumen_ejecucion?fecha="+sdate+"&sede="+pay_acc;
         }
 }
-    function proceso_facturacion(){
+   /* function proceso_facturacion(){
         pay_acc=$("#cuentas_ option:selected").val();
         var sdate=$("#sdate2").val();
         b=0;
@@ -242,12 +269,12 @@ function iniciar_facturacion(){
                      timer = setTimeout("temporizador()", 2800);                   
                 }
                 
-            }*/
+            }
             
         });
         setTimeout("temporizador()",2800);
         
-    }
+    }*/
     $('#progress').LineProgressbar({
         percentage: 0,
         animation: true,
