@@ -462,19 +462,22 @@ $this->load->model("customers_model","customers");
 
     }
     public function fe(){
-        $query=$this->db->query("select * from customers where (usu_estado='Activo' or usu_estado='Compromiso') and (gid ='2' and facturar_electronicamente='1' and (f_elec_tv=1 or  f_elec_tv is null))")->result_array();
-        
+        $query=$this->db->query("select * from customers where (usu_estado='Activo' or usu_estado='Compromiso') and (gid ='3' and facturar_electronicamente='1' and (f_elec_tv=1 or  f_elec_tv is null))")->result_array();
+        $num=0;
         foreach ($query as $key => $value) {
             $servicios=$this->customers->servicios_detail($value['id']);
             if($servicios['television']!="no" && $servicios['television']!="-" &&$servicios['television']!="" &&$servicios['television']!="null" && $servicios['television']!=null){
-
+                $num++;
             }else{
                 echo $value['id']."<br>";
             }
         }
+        echo "TOTAL : ".$num;
     }
     public function facturar_customer($id_customer,$sdate){
-
+set_time_limit(150);
+        ini_set ( 'max_execution_time', 150);
+        ini_set ( 'max_execution_time', 150);
             $servicios=$this->customers->servicios_detail($id_customer);
                 $puntos = $this->customers->due_details($id_customer);
                 //guardare en un array la variable servicios = combo o tv o internet y la variable puntos con no o el numero de puntos
@@ -635,7 +638,7 @@ $this->load->model("customers_model","customers");
 $x++;
             //var_dump($x);
             //echo date('h:i:s') . "\n";
-                        //$creo=$this->facturas_electronicas->generar_factura_customer_para_multiple($datos,$api);
+                        $creo=$this->facturas_electronicas->generar_factura_customer_para_multiple($datos,$api);
                         $creo=array("status"=>true);
                         //sleep(7);
                         if($creo['status']==true){
