@@ -117,6 +117,7 @@
 							<select name="marca" class="form-control">
 								<option value="Bestcom">Bestcom</option>
 								<option value="Kyngtype">Kyngtype</option>
+								<option value="Huawei">Huawei</option>
 								<option value="Wifi">Wifi</option>
 								<option value="Cisco">Cisco</option>
 								<option value="Mikotik">Mikrotik</option>
