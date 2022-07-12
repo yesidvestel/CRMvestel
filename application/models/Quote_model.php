@@ -203,7 +203,7 @@ class Quote_model extends CI_Model
 		if($movil==0){
             $movil=null;
         }
-		if($detalle=='Instalacion'){
+		if($detalle=='Instalacion' || $detalle=='Activacion'){
 			$obs = $tv2.$int2.$pto2.$section;
 		}else if($detalle=='AgregarInternet'){
 			$obs = $int2.' '.$section;
@@ -296,7 +296,7 @@ class Quote_model extends CI_Model
 			$this->db->insert('temporales', $data3);
 			}
 			//servicio instalacion
-			if ($detalle=='Instalacion'){
+			if ($detalle=='Instalacion' || $detalle=='Activacion'){
 				$data4 = array(
 				'corden' => $nticket,
 				'tv' => $tv,

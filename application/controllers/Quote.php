@@ -369,7 +369,7 @@ class Quote extends CI_Controller
 				$this->db->update('temporales', $data3);
 		}
 		//instalacion
-		if ($detalle==='Instalacion'){
+		if ($detalle==='Instalacion' || $detalle==='Activacion'){
 			$data3 = array(					
 					'tv' => $tv,
 					'internet' => $inter,            

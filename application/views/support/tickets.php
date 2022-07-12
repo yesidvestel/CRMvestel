@@ -184,6 +184,8 @@
                                                    	
                                                    	<option value='AgregarInternet'>AgregarInternet</option>
                                                   	<option value='AgregarTelevision'>AgregarTelevision</option>
+                                                   	<option value='Activacion'>Activacion</option>
+                                                  	<option value='AgregarTelevision'>AgregarTelevision</option>
 													<option value='Cambio de equipo'>Cambio de equipo</option>
 													<option value='Corte Combo'>Corte Combo</option>
 													<option value='Corte Internet'>Corte Internet</option>
