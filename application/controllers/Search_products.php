@@ -131,7 +131,7 @@ class Search_products extends CI_Controller
 
 
         if ($name) {
-            $query = $this->db->query("SELECT id,mac,estado,asignado FROM equipos WHERE UPPER(id)  LIKE '" . strtoupper($name) . "%' OR UPPER(mac)  LIKE '%" . strtoupper($name) . "%' OR UPPER(estado)  LIKE '" . strtoupper($name) ."%' LIMIT 6");
+            $query = $this->db->query("SELECT id,mac,serial,estado,asignado FROM equipos WHERE UPPER(id)  LIKE '" . strtoupper($name) . "%' OR UPPER(mac)  LIKE '%" . strtoupper($name) ."%' OR UPPER(serial)  LIKE '%" . strtoupper($name) . "%' OR UPPER(estado)  LIKE '" . strtoupper($name) ."%' LIMIT 3");
 
             $result = $query->result_array();
 
@@ -140,7 +140,7 @@ class Search_products extends CI_Controller
             foreach ($result as $row) {
 
 
-                echo "<li onClick=\"selectEquipo('" . $row['id'] . "','" . $row['mac'] . " ','" . $row['estado'] . " ','" . $row['asignado'] . "','" . $row['documento'] . "','" . $row['celular'] . "','" . $row['email'] . "')\"><span>$i</span><p>" . $row['mac'] . " &nbsp; &nbsp  " . $row['estado'] . "&nbsp; &nbsp  " . $row['asignado'] . "</p></li>";
+                echo "<li onClick=\"selectEquipo('" . $row['id'] . "','" . $row['mac'] . " ','" . $row['serial'] . " ','" . $row['estado'] . "','" . $row['asignado'] . "','" . $row['celular'] . "','" . $row['email'] . "')\"><span>$i</span><p>" . $row['serial'] . " &nbsp; &nbsp  " .$row['mac'] . " &nbsp; &nbsp  " . $row['estado'] . "&nbsp; &nbsp  " . $row['asignado'] . "</p></li>";
                 $i++;
             } 
             echo '</ol>';
