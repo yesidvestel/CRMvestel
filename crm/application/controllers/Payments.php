@@ -455,7 +455,7 @@ class Payments extends CI_Controller
          },
          "buyer": {
             "merchantBuyerId": "1",
-            "fullName": "First name and second buyer name",
+            "fullName": "'.$this->session->userdata('user_details')[0]->name.'",
             "emailAddress": "'.$_POST['pse_correo'].'",
             "contactPhone": "'.$_POST['pse_telefono'].'",
             "dniNumber": "'.$_POST['pse_doc'].'",
@@ -481,7 +481,7 @@ class Payments extends CI_Controller
       },
       "payer": {
          "merchantPayerId": "1",
-         "fullName": "First name and second payer name",
+         "fullName": "'.$this->session->userdata('user_details')[0]->name.'",
          "emailAddress": "'.$_POST['pse_correo'].'",
          "contactPhone": "7563126",
          "dniNumber": "'.$_POST['pse_doc'].'",
