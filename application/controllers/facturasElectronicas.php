@@ -517,7 +517,7 @@ set_time_limit(150);
                    
             
                         $creo=$this->facturas_electronicas->generar_factura_customer_para_multiple($datos,$_SESSION['api_siigo']);
-                        $creo=array("status"=>true);
+                        //$creo=array("status"=>true);
                         //sleep(7);
                         if($creo['status']==true){
                                 return  true;                        
