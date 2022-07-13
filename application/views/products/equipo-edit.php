@@ -122,6 +122,7 @@
 								<option value="<?php echo $equipos['marca'] ?>">>> <?php echo $equipos['marca'] ?></option>
 								<option value="Bestcom">Bestcom</option>
 								<option value="Kyngtype">Kyngtype</option>
+								<option value="Huawei">Huawei</option>
 								<option value="Wifi">Wifi</option>
 								<option value="Cisco">Cisco</option>
 								<option value="Mikrotik">Mikrotik</option>
