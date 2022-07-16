@@ -357,6 +357,55 @@ $this->load->model("customers_model","customers");
         	//}
         }
     }
+        public function recorrer_facturas(){
+            ob_end_clean();
+        $fecha="2022-07-01";
+        $fecha_filtro="2022-08-15";
+        $api = new SiigoAPI();
+        $api->getAuth(1);
+        $api->getAuth2(2);
+        $page_total=189;
+         //$lista_x=json_decode($api->getInvoices(2,$fecha));
+         //var_dump($lista_x);
+        for ($i=1; $i <=$page_total ; $i++) { 
+            $lista_x=json_decode($api->getInvoices($i,$fecha));
+            foreach ($lista_x->results as $key => $value) {
+                $data['id_invoice']=$value->id;
+                $data['nombre']=$value->name;
+                $data['fecha']=$value->date;
+                $this->db->insert("filas_a_borrar",$data);
+            }    
+        }
+        
+                    
+
+
+    }
+    public function borrar_facturas(){
+
+        $lista_f=$this->db->get_where("filas_a_borrar")->result_array();
+         $api = new SiigoAPI();
+        $api->getAuth(1);
+        foreach ($lista_f as $key => $value) {
+            
+            if($value['borrado']==0){
+                $api->deleteInvoice($value['id_invoice']);
+                $this->db->update('filas_a_borrar',array("borrado"=>1),array("id"=>$value['id']));    
+            }
+            
+            
+        }
+    }
+public function borrar_facturas_v(){
+        $this->load->model('customers_model', 'customers');
+        $this->load->model('transactions_model');
+        $head['title'] = "Generar Facturas Electronicas";
+        $head['usernm'] = $this->aauth->get_user()->username;
+        $data['accounts'] = $this->transactions_model->acc_list();
+        $this->load->view('fixed/header', $head);
+        $this->load->view('facturas_electronicas/borrar_facturas',$data);
+        $this->load->view('fixed/footer');       
+    }
     public function activar_desactivar_usuario(){
         $id=$this->input->post("id");
         $selected=$this->input->post("selected");
@@ -443,6 +492,38 @@ $this->load->model("customers_model","customers");
         $usuarios_restantes_lista = $this->db->query("select customers.id from customers LEFT join facturacion_electronica_siigo on customers.id=facturacion_electronica_siigo.customer_id and fecha='".$dateTime->format("Y-m-d")."' where (customers.usu_estado='Activo' or customers.usu_estado='Compromiso') and (customers.gid ='".$caja1->sede."' and customers.facturar_electronicamente='1') and facturacion_electronica_siigo.id is null")->result_array();//and id=8241
         $array_return =array("total_usuarios"=>$numero_total,"lista_usuarios_a_facturar"=>$usuarios_restantes_lista);
         echo json_encode($array_return);
+    }
+    public function lista_facturas_a_borrar(){
+        $numero_total;
+        $caja1=$this->db->get_where('accounts',array('id' =>$_POST['pay_acc']))->row();
+        $dateTime=new DateTime($_POST['sdate']);
+        
+        
+        $api = new SiigoAPI();
+        $api->getAuth(1);
+        $api->getAuth2(2);
+        $_SESSION['api_siigo']=$api;
+        $_SESSION['errores']=array();
+
+        $customers_t = $this->db->query("select id_invoice from filas_a_borrar where borrado!=1 ")->result_array();//and id=8241
+        $numero_total=count($customers_t);
+        $usuarios_restantes_lista = $customers_t;
+        $array_return =array("total_usuarios"=>$numero_total,"lista_usuarios_a_facturar"=>$usuarios_restantes_lista);
+        echo json_encode($array_return);
+    }
+    public function procesar_invoice_a_borrar(){
+        $dateTime=new DateTime($_POST['sdate']);
+        $caja1=$this->db->get_where('accounts',array('id' =>$_POST['pay_acc']))->row();
+        
+            //var_dump($_POST['id_inv']);
+            $ret=$this->borrar_factura($_POST['id_inv'],$dateTime->format("Y-m-d"));
+            $retorno["estado"]="procesado";
+            $retorno["idv"]=$_POST['id_inv'];
+            echo json_encode($retorno);
+        
+        
+        
+
     }
     public function procesar_usuarios_a_facturar(){
         $dateTime=new DateTime($_POST['sdate']);
@@ -532,6 +613,15 @@ set_time_limit(150);
                     // y validar que si ya se creo la factura en esta fecha no volverla a crear
 
                 }
+    }
+    public function borrar_factura($id_invoice,$sdate){
+set_time_limit(150);
+        ini_set ( 'max_execution_time', 150);
+        ini_set ( 'max_execution_time', 150);
+        var_dump($id_invoice);
+         $_SESSION['api_siigo']->deleteInvoice($id_invoice);
+                $this->db->update('filas_a_borrar',array("borrado"=>1),array("id_invoice"=>$id_invoice)); 
+            
     }
     public function generar_facturas_ajax(){
         //la idea es desde el cliente dar la orden de consultar el siguiente usuario que falte e ir generando y retornando el resultado;

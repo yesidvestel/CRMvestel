@@ -49,7 +49,7 @@ class CurlRequest
     {   
         $defaults = array(
             CURLOPT_URL => $url,
-            CURLOPT_HEADER => 0,
+            CURLOPT_HEADER => 3,
             CURLOPT_RETURNTRANSFER => TRUE,
             CURLOPT_TIMEOUT => 0
         );

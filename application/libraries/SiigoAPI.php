@@ -122,28 +122,56 @@ class SiigoAPI
      * 
      * @return array Listado de facturas que se encuentran en la página indicada
      */
-    public function getInvoices($page)
+    public function getInvoices($page,$fecha)
     {
-        _log("Consultando facturas");
-        $url = "{$this->urlBase}/Invoice/GetAll?numberPage=$page&namespace=v1";
-        $i = 0;
-        do {
-            $cOptions = [
-                CURLOPT_HTTPHEADER => [
-                    "Authorization: Bearer {$this->token}",
-                    "Content-Type: application/json",
-                    "Ocp-Apim-Subscription-Key: {$this->subscriptionKey}",
-                ],
-            ];
-            list($httpCode, $resp) = $this->cReq->curlGet($url, [], $cOptions);
-            if ($httpCode === 401) {
-                $this->getAuth();
-            }
-            $i += 1;
-        } while ($i < 2 && $httpCode === 401);
-        _log("Consulta de facturas finalizada [$httpCode]");
+        $curl = curl_init();
+curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);//linea importante cuando no funciona
+curl_setopt_array($curl, array(
+  CURLOPT_URL => 'https://api.siigo.com/v1/invoices?page='.$page.'&created_start='.$fecha,
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 0,
+  CURLOPT_FOLLOWLOCATION => true,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'GET',
+  CURLOPT_HTTPHEADER => array(
+    'Content-Type: application/json',
+    'Authorization: Bearer '.$this->token2
+  ),
+));
 
-        return json_decode($resp, true);
+$response = curl_exec($curl);
+
+curl_close($curl);
+return $response;
+
+    }
+    public function deleteInvoice($id)
+    {
+       $curl = curl_init();
+curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);//linea importante cuando no funciona
+curl_setopt_array($curl, array(
+  CURLOPT_URL => 'https://api.siigo.com/v1/invoices/'.$id,
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 0,
+  CURLOPT_FOLLOWLOCATION => true,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'DELETE',
+  CURLOPT_HTTPHEADER => array(
+    'Content-Type: application/json',
+    'Authorization: Bearer '.$this->token2
+  ),
+));
+
+$response = curl_exec($curl);
+
+curl_close($curl);
+echo $response;
+
+
     }
 /**
      * Obtiene un listado de facturas
