@@ -2545,7 +2545,7 @@ return $str;
         $amount = $montos[$id_factura];
         $paydate = date("Y-m-d");
         $note = "Pago de la factura #".$id_factura." por PAYU";
-        $pmethod = "Cash";
+        $pmethod = "PAYU";
         $banco = "";
         $acid = $customer->gid;
         $cid = $factura_var->csd;
