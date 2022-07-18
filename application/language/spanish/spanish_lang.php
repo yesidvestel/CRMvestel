@@ -207,6 +207,7 @@ $lang['Public Access URL'] = "URL de acceso público";
 $lang['Payment Confirmation'] = "Confirmación de pago";
 $lang['Cash'] = "Efectivo";
 $lang['Card'] = "Tarjeta";
+$lang['PAYU'] = "PAYU";
 $lang['Account'] = "Cuenta";
 $lang['Cancel Invoice'] = "Cancelar factura";
 $lang['You can not revert'] = "¡No puedes revertir esta acción! Estás seguro ?";
