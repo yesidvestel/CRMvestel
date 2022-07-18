@@ -480,6 +480,9 @@ $lista_permisos1=$this->db->query("SELECT permisos_usuario.id,permisos_usuario.i
                     <ul class="menu-content">
 						<li>
                             <a href="<?php echo base_url(); ?>llamadas/list_llamadas"><?php echo $this->lang->line(''); ?>Lista de llamadas</a>
+                        </li>
+						<li>
+                            <a href="<?php echo base_url(); ?>llamadas/list_compromisos"><?php echo $this->lang->line(''); ?>Lista de Acuerdos</a>
                         </li> 
 						<li>
                             <a href="<?php echo base_url(); ?>encuesta/create"><?php echo $this->lang->line(''); ?>Nueva Encuenta</a>

@@ -276,6 +276,48 @@ class llamadas extends CI_Controller
         echo json_encode($output);
 
     }
+	//lista de compromisos
+	public function com_list()
+    {
+        $cid = $this->input->post('cid');
+        $list = $this->llamadas->com_datatables($cid);
+        $data = array();
+		$this->load->model('customers_model', 'customers');
+        $no = $this->input->post('start');
+
+        foreach ($list as $llamada) {
+			$idusuario = $llamada->iduser;
+			$fcha = $llamada->fcha;
+			$due=$this->customers->due_details($idusuario);
+			$debe_customer=($due['total']-$due['pamnt']);
+			$pagos=$this->customers->pago_details($idusuario,$fcha);
+			$pago_customer=$pagos['pago'];
+            $no++;
+            $row = array();
+            $row[] = $no;
+            $row[] = date("d/m/Y", strtotime($llamada->fcha));
+            $row[] = date("g:i a", strtotime($llamada->hra));
+            $row[] = $llamada->responsable;
+            $row[] = $llamada->name.' '.$llamada->unoapellido;
+            $row[] = $llamada->documento;
+			$row[] = amountFormat($debe_customer);
+			$row[] = amountFormat($pago_customer);			
+			$row[] = $llamada->notes;
+            $row[] = '<a href="' . base_url("customers/view?id=$llamada->iduser") . '" class="btn btn-success btn-xs"><i class="icon-file-text"></i> ' . $this->lang->line('View').' Usuario' . '</a> &nbsp; &nbsp;<a href="#" data-object-id="' . $llamada->id . '" class="btn btn-danger btn-xs delete-object"><span class="icon-trash"></span></a>';
+
+            $data[] = $row;
+        }
+
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->llamadas->com_count_all($cid),
+            "recordsFiltered" => $this->llamadas->com_count_filtered($cid),
+            "data" => $data,
+        );
+        //output to json format
+        echo json_encode($output);
+
+    }
 	public function delete_i()
     {
         $id = $this->input->post('deleteid');
@@ -315,6 +357,18 @@ class llamadas extends CI_Controller
         $head['title'] = 'View Supplier Invoices';
         $this->load->view('fixed/header', $head);
         $this->load->view('llamadas/invoices', $data);
+        $this->load->view('fixed/footer');
+    }
+	public function list_compromisos()
+    {
+        $custid = $this->input->get('id');
+        $this->load->model('ticket_model', 'ticket');
+		$data['tecnicoslista'] = $this->ticket->tecnico_list();
+        //$data['money'] = $this->supplier->money_details($custid);
+        $head['usernm'] = $this->aauth->get_user()->username;
+        $head['title'] = 'View Supplier Invoices';
+        $this->load->view('fixed/header', $head);
+        $this->load->view('llamadas/compromisos', $data);
         $this->load->view('fixed/footer');
     }
 

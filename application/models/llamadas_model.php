@@ -22,9 +22,9 @@ class llamadas_model extends CI_Model
 {
 
     var $table = 'llamadas';
-    var $column_order = array(null, 'id', 'fcha', 'hra', 'responsable','tllamada','trespuesta','drespuesta','notes');
-    var $column_search = array('id', 'fcha', 'hra', 'responsable','tllamada','trespuesta','drespuesta','notes');
-    var $order = array('id' => 'desc');
+    var $column_order = array(null, 'fcha', 'hra', 'responsable','customers.name','customers.documento');
+    var $column_search = array('fcha', 'hra', 'responsable','customers.name','customers.documento');
+    var $order = array('fcha' => 'desc');
     
 
 
@@ -375,6 +375,78 @@ class llamadas_model extends CI_Model
     }
 
     public function inv_count_all($cid)
+    {
+        $this->db->from('llamadas');
+        $this->db->where('id', $cid);
+        return $this->db->count_all_results();
+    }
+	private function _com_datatables_query($cid)
+    {
+		//traer llamadas
+		$this->db->select('llamadas.*,customers.id AS idcus,customers.name,customers.unoapellido,customers.documento');
+        $this->db->from($this->table);
+		$this->db->where('drespuesta', 'Acuerdo de Pago'); 
+		if($_GET['tecnico']!='' && $_GET['tecnico']!='0' && $_GET['tecnico']!='undefined'){
+         $this->db->where('responsable=', $_GET['tecnico']);   
+        }
+		if($_GET['tipo']!='' && $_GET['tipo']!='0' && $_GET['tipo']!='undefined'){
+         $this->db->where('tllamada=', $_GET['tipo']);   
+        }
+        if($_GET['filtro_fecha']!='' && $_GET['filtro_fecha']!='undefined'){
+            
+            $fecha_incial= new DateTime($_GET['sdate']);
+            $fecha_final= new DateTime($_GET['edate']);
+         $this->db->where('fcha>=', $fecha_incial->format("Y-m-d"));   
+         $this->db->where('fcha<=', $fecha_final->format("Y-m-d"));   
+        }
+		$this->db->join('customers', 'llamadas.iduser = customers.id', 'left');
+        $i = 0;
+
+        foreach ($this->column_search as $item) // loop column
+        {
+            if ($_POST['search']['value']) // if datatable send POST for search
+            {
+
+                if ($i === 0) // first loop
+                {
+                    $this->db->group_start(); // open bracket. query Where with OR clause better with bracket. because maybe can combine with other WHERE with AND.
+                    $this->db->like($item, $_POST['search']['value']);
+                } else {
+                    $this->db->or_like($item, $_POST['search']['value']);
+                }
+
+                if (count($this->column_search) - 1 == $i) //last loop
+                    $this->db->group_end(); //close bracket
+            }
+            $i++;
+        }
+
+        if (isset($_POST['order'])) // here order processing
+        {
+            $this->db->order_by($this->column_order[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);
+        } else if (isset($this->order)) {
+            $order = $this->order;
+            $this->db->order_by(key($order), $order[key($order)]);
+        }
+    }
+
+    function com_datatables($cid)
+    {
+        $this->_com_datatables_query($cid);
+        if ($_POST['length'] != -1)
+            $this->db->limit($_POST['length'], $_POST['start']);
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    function com_count_filtered($cid)
+    {
+        $this->_com_datatables_query($cid);
+        $query = $this->db->get();
+        return $query->num_rows();
+    }
+
+    public function com_count_all($cid)
     {
         $this->db->from('llamadas');
         $this->db->where('id', $cid);
