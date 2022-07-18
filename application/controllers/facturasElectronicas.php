@@ -364,8 +364,8 @@ $this->load->model("customers_model","customers");
         $api = new SiigoAPI();
         $api->getAuth(1);
         $api->getAuth2(2);
-        $page_total=189;
-         //$lista_x=json_decode($api->getInvoices(2,$fecha));
+        $page_total=22;
+         //$lista_x=json_decode($api->getInvoices(1,$fecha));
          //var_dump($lista_x);
         for ($i=1; $i <=$page_total ; $i++) { 
             $lista_x=json_decode($api->getInvoices($i,$fecha));
@@ -373,7 +373,7 @@ $this->load->model("customers_model","customers");
                 $data['id_invoice']=$value->id;
                 $data['nombre']=$value->name;
                 $data['fecha']=$value->date;
-                $this->db->insert("filas_a_borrar",$data);
+                //$this->db->insert("filas_a_borrar",$data);
             }    
         }
         
