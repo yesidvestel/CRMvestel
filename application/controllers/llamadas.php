@@ -136,7 +136,7 @@ class llamadas extends CI_Controller
         $fchavence = $this->input->post('fchavence');
 		$fecha = datefordatabase($fcha);
 		if($drespuesta!='Acuerdo de Pago'){
-			$fechavence = null;
+			$fechavence ='0000-00-00';
 		}else{
 			$fechavence = datefordatabase($fchavence);
 		}
@@ -294,23 +294,29 @@ class llamadas extends CI_Controller
         foreach ($list as $llamada) {
 			$idusuario = $llamada->iduser;
 			$fcha = $llamada->fcha;
+			$fchavence = $llamada->fecha_vence;
 			$due=$this->customers->due_details($idusuario);
 			$debe_customer=($due['total']-$due['pamnt']);
-			$pagos=$this->customers->pago_details($idusuario,$fcha);
+			$pagos=$this->customers->pago_details($idusuario,$fcha,$fchavence);
 			$pago_customer=$pagos['pago'];
             $no++;
             $row = array();
             $row[] = $no;
             $row[] = date("d/m/Y", strtotime($llamada->fcha));
             $row[] = date("g:i a", strtotime($llamada->hra));
+            $row[] = date("d/m/Y", strtotime($llamada->fecha_vence));
+			if ($this->aauth->get_user()->roleid > 3) {
             $row[] = $llamada->responsable;
+			}
             $row[] = $llamada->name.' '.$llamada->unoapellido;
             $row[] = $llamada->documento;
 			$row[] = amountFormat($debe_customer);
 			$row[] = amountFormat($pago_customer);			
 			$row[] = $llamada->notes;
-            $row[] = '<a href="' . base_url("customers/view?id=$llamada->iduser") . '" class="btn btn-success btn-xs"><i class="icon-file-text"></i> ' . $this->lang->line('View').' Usuario' . '</a> &nbsp; &nbsp;<a href="#" data-object-id="' . $llamada->id . '" class="btn btn-danger btn-xs delete-object"><span class="icon-trash"></span></a>';
-
+            $row[] = '<a href="' . base_url("customers/view?id=$llamada->iduser") . '" class="btn btn-success btn-xs"><i class="icon-file-text"></i> ' . $this->lang->line('View').' Usuario' . '</a>';
+			if ($this->aauth->get_user()->roleid > 4) {
+            $row[] = '<a href="#" data-object-id="' . $llamada->id . '" class="btn btn-danger btn-xs delete-object"><span class="icon-trash"></span></a>';
+			}
             $data[] = $row;
         }
 

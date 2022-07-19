@@ -282,13 +282,14 @@ class Customers_model extends CI_Model
         $query = $this->db->get();
         return $query->row_array();
     }
-	public function pago_details($custid,$fcha)
+	public function pago_details($custid,$fcha,$fchavence)
     {
 
        $this->db->select('*, SUM(credit) AS pago');
         $this->db->from('transactions');
         $this->db->where('payerid', $custid);
         $this->db->where('date>=', $fcha);
+        $this->db->where('date<=', $fchavence);
         $query = $this->db->get();
         return $query->row_array();
     }

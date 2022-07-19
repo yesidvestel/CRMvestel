@@ -15,11 +15,13 @@
                             <div class="form-group row">
 								<label class="col-sm-12 col-form-label"
                                        for="pay_cat"><h5>FILTRAR</h5></label>
+								<?php if ($this->aauth->get_user()->roleid > 3) { ?>
                                 <label class="col-sm-2 col-form-label"
                                        for="pay_cat">Realizadas por</label>
 
                                 <div class="col-sm-6">
                                     <select name="tec" class="form-control" id="tecnicos2">
+										
                                         <option value='0'>Todos</option>
                                         <?php
 											foreach ($tecnicoslista as $row) {
@@ -30,6 +32,7 @@
 											?>
                                     </select>
                                 </div>
+								<?php } ?>
                             </div>
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label"
@@ -39,6 +42,7 @@
                                     <select name="trans_type" class="form-control" id="fechas" onchange="filtrado_fechas()">
                                         <option value=''>Todas</option>
                                         <option value='fcreada'>Especificar Fecha</option>
+                                        <option value='fecha_final'>Fecha Vencimiento</option>
                                         
                                     </select>
                                 </div>                              
@@ -55,6 +59,21 @@
 								<div class="col-sm-2">
 									<input type="text" class="form-control required"
                                            placeholder="End Date" name="edate" id="edate"
+                                           data-toggle="datepicker" autocomplete="false">
+								</div>
+                            </div>
+							<div class="form-group row" id="div_fecha_final" style="display: none">
+                                <label class="col-sm-2 col-form-label"
+                                       for="pay_cat" id="label_fecha_final">Fechas Vence</label>
+
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control required" data-toggle="datepicker" 
+                                           placeholder="Start Date" name="sdatefin" id="sdatefin"
+                                            autocomplete="false">
+                                </div>
+								<div class="col-sm-2">
+									<input type="text" class="form-control required"
+                                           placeholder="End Date" name="edatefin" id="edatefin"
                                            data-toggle="datepicker" autocomplete="false">
 								</div>
                             </div>
@@ -77,14 +96,19 @@
                     <th>#</th>
                     <th>Fecha</th>
                     <th>Hora</th>
+                    <th>Vence</th>
+					<?php if ($this->aauth->get_user()->roleid > 3) { ?>
                     <th>Realizado por</th>
+					<?php } ?>
                     <th>Usuario</th>
                     <th>Documento</th>
 					<th>Debe</th>
 					<th>Pago</th>					
 					<th>Observacion</th>
                     <th class="no-sort"><?php echo $this->lang->line('Settings') ?></th>
-
+					<?php if ($this->aauth->get_user()->roleid > 4) { ?>
+                    <th class="no-sort"><?php echo $this->lang->line('') ?>Eliminar</th>
+					<?php } ?>
 
                 </tr>
                 </thead>
@@ -96,14 +120,19 @@
                     <th>#</th>
                     <th>Fecha</th>
                     <th>Hora</th>
+                    <th>Vence</th>
+					<?php if ($this->aauth->get_user()->roleid > 3) { ?>
                     <th>Realizado por</th>
+					<?php } ?>
                     <th>Usuario</th>
                     <th>Documento</th>
 					<th>Debe</th>
 					<th>Pago</th>					
 					<th>Observacion</th>
                     <th class="no-sort"><?php echo $this->lang->line('Settings') ?></th>
-
+					<?php if ($this->aauth->get_user()->roleid > 4) { ?>
+                    <th class="no-sort"><?php echo $this->lang->line('') ?>Eliminar</th>
+					<?php } ?>
                 </tr>
                 </tfoot>
             </table>
@@ -139,6 +168,7 @@
 </div>
 <script type="text/javascript">
     var table;
+	var id_col="<?=$_GET['id'] ?>";
     $(document).ready(function () {
 
         table = $('#invoices').DataTable({
@@ -146,7 +176,7 @@
             "serverSide": true,
             "order": [],
             "ajax": {
-                "url": "<?php echo site_url('llamadas/com_list')?>",
+                "url": "<?php echo site_url('llamadas/com_list'). '?id=' . $_GET['id']; ?>",
                 "type": "POST",
                 //"data": {'cid':<?php //echo $_GET['id'] ?> }
             },
@@ -165,12 +195,14 @@
 		var tipo=$("#tipo option:selected").val();
         var opcion_seleccionada=$("#fechas option:selected").val();
         var edate=$("#edate").val();
+        var edatefin=$("#edatefin").val();
         var sdate=$("#sdate").val();
+        var sdatefin=$("#sdatefin").val();
         if(tecnico=="" && tipo=="" && opcion_seleccionada==""){
-            table.ajax.url( baseurl+'llamadas/com_list' ).load();     
+            table.ajax.url( baseurl+'llamadas/com_list').load();     
         }else{
             //var tec=$("#tecnicos2 option:selected").data("id");
-            table.ajax.url( baseurl+"llamadas/com_list?tecnico="+tecnico+"&tipo="+tipo+"&edate="+edate+"&sdate="+sdate+"&filtro_fecha="+opcion_seleccionada ).load();     
+            table.ajax.url( baseurl+"llamadas/com_list?tecnico="+tecnico+"&tipo="+tipo+"&edate="+edate+"&edatefin="+edatefin+"&sdate="+sdate+"&sdatefin="+sdatefin+"&filtro_fecha="+opcion_seleccionada ).load();     
         }
        
 
@@ -183,5 +215,12 @@
         }else{
             $("#div_fechas").hide();
         }
+		 if(opcion_seleccionada=="fecha_final"){
+            $("#div_fecha_final").show();
+            $("#label_fecha_final").text("Fechas")
+        }else{
+            $("#div_fecha_final").hide();
+        }
     }
+	
 </script>

@@ -384,21 +384,32 @@ class llamadas_model extends CI_Model
 	private function _com_datatables_query($cid)
     {
 		//traer llamadas
+		$col = $this->aauth->get_user()->username;
+		$rol = $this->aauth->get_user()->roleid;
 		$this->db->select('llamadas.*,customers.id AS idcus,customers.name,customers.unoapellido,customers.documento');
         $this->db->from($this->table);
-		$this->db->where('drespuesta', 'Acuerdo de Pago'); 
+		$this->db->where('drespuesta', 'Acuerdo de Pago');
+		if($rol<4){
+		$this->db->where("responsable", $col);
+		}
 		if($_GET['tecnico']!='' && $_GET['tecnico']!='0' && $_GET['tecnico']!='undefined'){
-         $this->db->where('responsable=', $_GET['tecnico']);   
+         		$this->db->where('responsable=', $_GET['tecnico']);
         }
 		if($_GET['tipo']!='' && $_GET['tipo']!='0' && $_GET['tipo']!='undefined'){
          $this->db->where('tllamada=', $_GET['tipo']);   
         }
         if($_GET['filtro_fecha']!='' && $_GET['filtro_fecha']!='undefined'){
-            
+            if($_GET['filtro_fecha']=='fcreada'){
             $fecha_incial= new DateTime($_GET['sdate']);
             $fecha_final= new DateTime($_GET['edate']);
          $this->db->where('fcha>=', $fecha_incial->format("Y-m-d"));   
-         $this->db->where('fcha<=', $fecha_final->format("Y-m-d"));   
+         $this->db->where('fcha<=', $fecha_final->format("Y-m-d"));
+			} if($_GET['filtro_fecha']=='fecha_final'){
+				$fecha_incial2= new DateTime($_GET['sdatefin']);
+            	$fecha_final2= new DateTime($_GET['edatefin']);
+         		$this->db->where('fecha_vence>=', $fecha_incial2->format("Y-m-d"));   
+         		$this->db->where('fecha_vence<=', $fecha_final2->format("Y-m-d"));
+			}
         }
 		$this->db->join('customers', 'llamadas.iduser = customers.id', 'left');
         $i = 0;
