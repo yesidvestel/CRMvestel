@@ -415,7 +415,7 @@ class Tools Extends CI_Controller
         if ($this->input->post('title')) {
             $title = $this->input->post('title');
             $config['upload_path'] = './userfiles/documents';
-            $config['allowed_types'] = 'docx|docs|txt|pdf|xls';
+            $config['allowed_types'] = 'docx|docs|txt|pdf|xls|xlsx';
             $config['max_size'] = 3000;
             $this->load->library('upload', $config);
 
