@@ -176,7 +176,7 @@
             "serverSide": true,
             "order": [],
             "ajax": {
-                "url": "<?php echo site_url('llamadas/com_list'). '?id=' . $_GET['id']; ?>",
+                "url": "<?php echo site_url('llamadas/com_list')?>",
                 "type": "POST",
                 //"data": {'cid':<?php //echo $_GET['id'] ?> }
             },
