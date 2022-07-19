@@ -68,7 +68,7 @@ if($results['response_message_pol']=="APPROVED"){
     $this->db->update("orden_de_pago",$dup,array("id_orden_de_pago"=>$orden[0]->id_orden_de_pago));
     
     //$monto=$this->communication->get_deuda_customer($this->session->userdata('user_details')[0]->cid);
-    $this->communication->pagar_mydic($orden[0]->user_id,$orden[0]->monto);
+    $this->communication->pagar_mydic($orden[0]->user_id,$orden[0]->monto,$results['reference_sale']);
 
 }else if($results['response_message_pol']=="EXPIRED_TRANSACTION"){
     $dup=array("estado"=>"Expirado");
@@ -106,7 +106,8 @@ if($results['response_message_pol']=="APPROVED"){
 }else if($results['response_message_pol']=="EXCEEDED_AMOUNT"){   $dup=array("estado"=>"El valor excede el máximo permitido por la entidad");
     $this->db->update("orden_de_pago",$dup,array("id_orden_de_pago"=>$orden[0]->id_orden_de_pago));
 }else if($results['response_message_pol']=="ABANDONED_TRANSACTION"){     $dup=array("estado"=>"Transacción abandonada por el pagador");
-    //$this->communication->pagar_mydic($orden[0]->user_id,$orden[0]->monto);
+    //$dt1=json_decode($orden[0]->data);
+    $this->communication->pagar_mydic($orden[0]->user_id,$orden[0]->monto,$results['reference_sale']);
     $this->db->update("orden_de_pago",$dup,array("id_orden_de_pago"=>$orden[0]->id_orden_de_pago));
     
 }else if($results['response_message_pol']=="CREDIT_CARD_NOT_AUTHORIZED_FOR_INTERNET_TRANSACTIONS"){  $dup=array("estado"=>"Tarjeta no autorizada para comprar por internet");
