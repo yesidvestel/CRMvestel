@@ -2556,7 +2556,7 @@ return $str;
         $this->db->where('sede', $acid);
         $query = $this->db->get();
         $account = $query->row_array();
-        $note = "Pago de la factura #".$id_factura." metodo: PAYU, Sede: ".$account['holder'];
+        $note = "Pago de la factura #".$id_factura." metodo: PAYU, Sede: ".$account['holder'].", referencia: ".$id_orden;
         $mt=$this->db->get_where("accounts",array("holder"=>"PAYU"))->row();
         $acid=$mt->id;
         $reconexion = "no";
