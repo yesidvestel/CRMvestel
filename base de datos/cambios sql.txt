@@ -1,4 +1,6 @@
-﻿//estadisticas servicios
+﻿INSERT INTO `accounts` (`id`, `acn`, `holder`, `sede`, `adate`, `lastbal`, `code`) VALUES (NULL, '967931', 'PAYU', '0', '', '31642', 'Cuenta PAYU');
+
+//estadisticas servicios
 
 ALTER TABLE `estadisticas_servicios` ADD `debido_cortados` INT NULL AFTER `debido_activos`;
 ALTER TABLE `estadisticas_servicios` ADD `debido_cartera` INT NULL AFTER `debido_cortados`;

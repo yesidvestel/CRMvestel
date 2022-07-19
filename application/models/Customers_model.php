@@ -2544,7 +2544,7 @@ return $str;
              $tid = $id_factura;
         $amount = $montos[$id_factura];
         $paydate = date("Y-m-d");
-        $note = "Pago de la factura #".$id_factura." por PAYU";
+        
         $pmethod = "PAYU";
         $banco = "";
         $acid = $customer->gid;
@@ -2556,7 +2556,9 @@ return $str;
         $this->db->where('sede', $acid);
         $query = $this->db->get();
         $account = $query->row_array();
-        $acid=$account['id'];
+        $note = "Pago de la factura #".$id_factura." metodo: PAYU, Sede: ".$account['holder'];
+        $mt=$this->db->get_where("accounts",array("holder"=>"PAYU"))->row();
+        $acid=$mt->id;
         $reconexion = "no";
         $fu=null;
         $var_net_="no";
@@ -2724,7 +2726,7 @@ return $str;
             }
     $data = array(
             'acid' => $acid,
-            'account' => $account['holder'],
+            'account' => $mt->id,
             'type' => 'Income',
             'cat' => 'Sales',
             'credit' => $amount,
