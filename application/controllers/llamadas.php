@@ -133,10 +133,16 @@ class llamadas extends CI_Controller
         $drespuesta = $this->input->post('drespuesta');
         $responsable = $this->input->post('responsable');
         $fcha = $this->input->post('fcha');
+        $fchavence = $this->input->post('fchavence');
 		$fecha = datefordatabase($fcha);
+		if($drespuesta!='Acuerdo de Pago'){
+			$fechavence = null;
+		}else{
+			$fechavence = datefordatabase($fchavence);
+		}
         $hra = date("H:i",strtotime($this->input->post('hra')));
         $notes = $this->input->post('notes');        
-        $this->llamadas->add($iduser, $tllamada, $trespuesta, $drespuesta, $responsable, $fecha, $hra, $notes);
+        $this->llamadas->add($iduser, $tllamada, $trespuesta, $drespuesta, $responsable, $fecha, $hra, $fechavence, $notes);
         echo json_encode(array('status' => 'Success', 'message' => "Agregado Exitoso"));
 
     }
@@ -276,7 +282,7 @@ class llamadas extends CI_Controller
         echo json_encode($output);
 
     }
-	//lista de compromisos
+	//lista de acuerdos
 	public function com_list()
     {
         $cid = $this->input->post('cid');
