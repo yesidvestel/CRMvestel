@@ -150,6 +150,14 @@
 							<input type="text" class="form-control" name="hra" autocomplete="off" value="<?php echo date("g:i a") ?>" readonly/>                            
                         </div>
 					</div>
+					<div id="ocultar">
+					<div class="frmSearch col-sm-6" id="Acuerdo">
+						<label for="cst" class="caption  col-form-label">Fecha de vencimiento</label>
+						<div>
+							<input type="text" class="form-control" name="fchavence" autocomplete="off" value="<?php echo date("Y/m/d") ?>"/>
+                        </div>
+					</div>
+					</div>
 					<div class="frmSearch col-sm-12">
 						<label for="cst" class="caption  col-form-label">Observacion</label>
 						<div>
@@ -251,11 +259,13 @@
             ],
         });
     });
+	
 </script>
 <script src="<?php echo base_url('assets/myjs/jquery.ui.widget.js') ?>"></script>
 <!-- The basic File Upload plugin -->
 <script src="<?php echo base_url('assets/myjs/jquery.fileupload.js') ?>"></script>
 <script>
+	
 /*jslint unparam: true */
     /*global window, $ */
     $(function () {
@@ -300,6 +310,26 @@
         });
 
     });
+	$(document).ready(function(){
+		ocultar();
+		$('#detalle').on('change',function(){
+			ocultar();
+			
+		});
+	});
+	
+	function ocultar(){
+		var selectValor = $("#detalle option:selected").val();			
+		if(selectValor=="Acuerdo de Pago"){
+			$('#ocultar').children('div').show();			
+		}else{
+			$('#ocultar').children('div').hide();			
+		}
+			
+			
+			
+	}
+	
 </script>
 
 <div id="delete_model" class="modal fade">

@@ -124,7 +124,7 @@ class llamadas_model extends CI_Model
     }
 
 
-    public function add($iduser, $tllamada, $trespuesta, $drespuesta, $responsable, $fecha, $hra, $notes)
+    public function add($iduser, $tllamada, $trespuesta, $drespuesta, $responsable, $fecha, $hra, $fechavence, $notes)
     {
         $data = array(
             'iduser' => $iduser,
@@ -132,8 +132,9 @@ class llamadas_model extends CI_Model
             'trespuesta' => $trespuesta,
             'drespuesta' => $drespuesta,
             'responsable' => $responsable,
-            'fcha' => $fecha,
+            'fcha' => $fecha,            
             'hra' => $hra,
+			'fecha_vence' => $fechavence,
             'notes' => $notes
         );
 			$this->db->insert('llamadas', $data);
