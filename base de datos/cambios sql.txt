@@ -50,6 +50,9 @@ CREATE TABLE `vestel_com_co_crm_202231794677`.`data_reception` ( `id` INT NULL A
 --------------------------------------------------------------------------------------------------------
 ALTER TABLE `transactions` ADD `no_mostrar` TINYINT(5) NOT NULL DEFAULT '0' AFTER `estado`;
 ----------------------------------------------------------------------------------------------
+ACUERDOS DE PAGO
+ALTER TABLE `llamadas` ADD `fecha_vence` DATE NULL AFTER `hra`;
+----------------------------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS `crm3`.`orden_de_pago` (
   `id_orden_de_pago` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `data` VARCHAR(2000) NULL DEFAULT NULL,
