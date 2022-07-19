@@ -200,8 +200,8 @@ class Communication_model extends CI_Model
         $monto=$due->total-$due->pamnt;
         return $monto;
     }
-    public function pagar_mydic($cid,$monto){
-        $cuerpo='"cid": '.$cid.',"monto":'.$monto.',';
+    public function pagar_mydic($cid,$monto,$id_orden){
+        $cuerpo='"cid": '.$cid.',"monto":'.$monto.',"idorden":"'.$id_orden.'",';
         //var_dump($cuerpo);
 
         $dt=$this->obtener($cuerpo,"pay_due_customer");

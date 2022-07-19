@@ -2477,7 +2477,7 @@ return $str;
     public function get_customer_id($cid){
         return $this->db->get_where("customers",array("id"=>$cid))->row();
     }
-    public function pay_invoices($cid,$monto){
+    public function pay_invoices($cid,$monto,$id_orden){
          
         $array_facturas=$this->db->query('SELECT * FROM invoices WHERE csd='.$cid.' and ( status="partial" or status="due") ORDER BY invoices.invoicedate ASC, tid asc')->result();
         
@@ -2545,7 +2545,7 @@ return $str;
              $tid = $id_factura;
         $amount = $montos[$id_factura];
         $paydate = date("Y-m-d");
-        $note = "Pago de la factura #".$id_factura." por PAYU";
+        
         $pmethod = "PAYU";
         $banco = "";
         $acid = $customer->gid;
@@ -2557,7 +2557,9 @@ return $str;
         $this->db->where('sede', $acid);
         $query = $this->db->get();
         $account = $query->row_array();
-        $acid=$account['id'];
+        $note = "Pago de la factura #".$id_factura." metodo: PAYU, Sede: ".$account['holder'].", referencia: ".$id_orden;
+        $mt=$this->db->get_where("accounts",array("holder"=>"PAYU"))->row();
+        $acid=$mt->id;
         $reconexion = "no";
         $fu=null;
         $var_net_="no";
@@ -2725,7 +2727,7 @@ return $str;
             }
     $data = array(
             'acid' => $acid,
-            'account' => $account['holder'],
+            'account' => $mt->id,
             'type' => 'Income',
             'cat' => 'Sales',
             'credit' => $amount,
@@ -2738,7 +2740,8 @@ return $str;
             'note' => $note,
             'ext' => 0,
             'nombre_banco'=>$banco,
-            'id_banco'=>$id_banco
+            'id_banco'=>$id_banco,
+            'id_orden_payu'=>$id_orden
         );
 
         $this->db->insert('transactions', $data);
