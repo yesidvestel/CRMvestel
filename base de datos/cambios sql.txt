@@ -1,4 +1,7 @@
-﻿INSERT INTO `accounts` (`id`, `acn`, `holder`, `sede`, `adate`, `lastbal`, `code`) VALUES (NULL, '967931', 'PAYU', '0', '', '31642', 'Cuenta PAYU');
+﻿ALTER TABLE `transactions` ADD `id_orden_payu` VARCHAR(30) NULL AFTER `no_mostrar`;
+
+
+INSERT INTO `accounts` (`id`, `acn`, `holder`, `sede`, `adate`, `lastbal`, `code`) VALUES (NULL, '967931', 'PAYU', '0', '', '31642', 'Cuenta PAYU');
 
 //estadisticas servicios
 

@@ -85,13 +85,14 @@ class Servicio extends CI_Controller
         $data_response=array();
         $data_response['cid']=$body_post->cid;
         $data_response['monto']=$body_post->monto;
-        $this->customers->pay_invoices($data_response['cid'],$data_response['monto']);
+        $data_response['idorden']=$body_post->idorden;
+        $this->customers->pay_invoices($data_response['cid'],$data_response['monto'],$data_response['idorden']);
         echo json_encode($data_response);
     }
     public function pay_due_customer_p(){
        
-        $data_response['cid']="505";
-        $data_response['monto']="118161";
+        $data_response['cid']="17612";
+        $data_response['monto']="41946";
         
         $this->customers->pay_invoices($data_response['cid'],$data_response['monto']);
         echo json_encode($data_response);
