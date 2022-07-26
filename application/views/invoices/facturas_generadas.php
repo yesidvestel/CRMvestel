@@ -6,7 +6,9 @@
             <div class="message"></div>
         </div>
         <div class="grid_3 grid_4">
-            <h6><?php echo $this->lang->line('') ?>Facturas Generadas</h6>
+            <h6><?php echo $this->lang->line('') ?>Facturas Generadas </h6>
+             <hr>
+             &nbsp;&nbsp;&nbsp;&nbsp;<a class="btn btn-danger" href="<?=base_url().'invoices/generar_pdf_facturas_generadas?fecha='.$fecha.'&pay_acc='.$pay_acc ?>">Exportar a PDF <img width="20px" src="<?=base_url()?>assets/images/icons/pdf.png"></a> &nbsp;<a class="btn btn-success" href="#">Exportar a Excel<img width="20px" src="<?=base_url()?>assets/images/icons/excel.png"></a>
              <hr>
             
 

@@ -739,7 +739,33 @@ var_dump("aqui2");*/
         //output to json format
         echo json_encode($output);
     }
+public function generar_pdf_facturas_generadas(){
+    ob_end_clean();
+    ini_set('memory_limit', '1500000M');
+    ini_set("pcre.backtrack_limit", "3000000");
 
+    $lista_invoices=$this->db->query("SELECT  customers.id as id,customers.name as name, customers.unoapellido as apellido,customers.celular as celular,customers.documento as documento,invoices.tid as tid, invoices.total as total, invoices.television as television, invoices.combo as combo  FROM invoices inner join customers on invoices.csd=customers.id where invoices.invoicedate= '".$_GET['fecha']."' and refer='".$_GET['pay_acc']."' and  notes='.'")->result_array();
+       //var_dump($lista_invoices[0]['name']);
+    $data=array("lista"=>$lista_invoices);
+    setlocale(LC_TIME, "spanish");
+     $x= new DateTime($_GET['fecha']);
+     $data['fecha']=utf8_encode(strftime("%A,".$x->format("d")." de %B del ".$x->format("Y"), strtotime($x)));
+     $data['sede']=$_GET['pay_acc'];
+        $html = $this->load->view('invoices/generar_pdf_facturas_generadas.php', $data, true);
+        //echo $html;
+        // importante verificar los nombres y colocarle utf8 para caracteres especiales
+        //PDF Rendering
+        $this->load->library('pdf');
+        $pdf = $this->pdf->load();
+        $pdf->SetHTMLFooter("<div style='text-align:right;'><i><b><small>{PAGENO} de {nbpg}</small></b></i></div>");
+        $pdf->WriteHTML($html);
+        if ($this->input->get('d')) {
+            $pdf->Output('Proforma_#' . $tid . '.pdf', 'D');
+        } else {
+            $pdf->Output('Proforma_#' . $tid . '.pdf', 'I');
+        }
+    
+}
     //edit invoice
     public function edit()
     {
