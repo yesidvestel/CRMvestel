@@ -479,7 +479,7 @@ public function historial_list(){
         //$data['income'] = $this->reports->incomestatement();
         //$head['title'] = "Account Statement";
         //$head['usernm'] = $this->aauth->get_user()->username;
-$data['datos_informe']=array("trans_type"=>$trans_type);
+		$data['datos_informe']=array("trans_type"=>$trans_type);
         //codigo listar
           $data['fecha']=$sdate;  
              //hice esto para hacer que el cierre sea de un dia si se desea reestablecer a entre fechas solo comentar la linea 57;
@@ -671,10 +671,22 @@ $data['datos_informe']=array("trans_type"=>$trans_type);
             $datec = array(
                 //'fcierre' => $fecha,
                 //'hcierre' => $hora,
-                'roleid' => '0'
+                'conue' => null,
+				'cocie' => null,
             );
-            $this->db->where('id', $iduser);
-            $this->db->update('aauth_users', $datec);
+			$this->db->where('id', $iduser);
+			$this->db->update('aauth_users', $datec);
+			//QUITAR PERMISOS
+            $this->db->where('id_usuario', $iduser);
+			if($this->db->where('id_modulo', 3)){
+				$this->db->set('is_checked', null);
+				$this->db->update('permisos_usuario');
+			}
+			if($this->db->where('id_modulo', 5)){
+				$this->db->set('is_checked', null);
+				$this->db->update('permisos_usuario');
+			}
+            		
             $valor_efectivo_caja=intval($_SESSION['valor_efectivo_caja']);
             $this->load->library("Festivos");
             if($valor_efectivo_caja>0){
@@ -1130,6 +1142,7 @@ $lista_customers_activos=$this->db->query("select * from customers where (gid='2
         $activo_con_algun_servicio=0;
         $internet_y_tv=0;
         foreach ($lista_customers_activos as $key => $value) {
+            $servicios=$this->customers->servicios_detail($value->id);
             $servicios=$this->customers->servicios_detail($value->id);
             $validar=false;
             if($servicios["television"]=="Television"){

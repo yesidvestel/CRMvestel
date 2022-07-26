@@ -97,7 +97,7 @@ class Employee_model extends CI_Model
     }
     public function list_employee()
     {
-        $this->db->select('employee_profile.*,aauth_users.banned,aauth_users.last_login,aauth_users.roleid');
+        $this->db->select('employee_profile.*,aauth_users.banned,aauth_users.last_login,aauth_users.finicial,aauth_users.hinicial,aauth_users.fcierre,aauth_users.hcierre,aauth_users.roleid');
         $this->db->from('employee_profile');
         $this->db->join('aauth_users', 'employee_profile.id = aauth_users.id', 'left');
         $this->db->order_by('aauth_users.roleid', 'DESC');

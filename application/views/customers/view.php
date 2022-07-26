@@ -470,6 +470,7 @@
                             </div>
                             <hr>
                             <div class="row mt-3">
+								<?php if ($this->aauth->get_user()->roleid > 3 || $this->aauth->get_user()->cocie != null) { ?>
                                 <div class="col-md-4">
 
                                     <a href="<?php echo base_url('customers/invoices?id=' . $details['id']) ?>"
@@ -477,6 +478,7 @@
                                                 class="icon-file-text2"></i> <?php echo $this->lang->line('View Invoices') ?></a>
 
                                 </div>
+								<?php } ?>
                                 <div class="col-md-4" style="margin-top: 5px;">
                                     <a href="<?php echo base_url('customers/transactions?id=' . $details['id']) ?>"
                                        class="btn btn-success btn-lg" style="width: 250px"><i
