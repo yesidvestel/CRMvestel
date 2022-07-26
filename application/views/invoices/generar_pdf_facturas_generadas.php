@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Estado Usuario#<?php echo $id ?></title>
+    <title>Reporte Facturas Generadas,<?=$sede." - ".$fecha ?> </title>
     <style type="text/css">
         #clientes td{
             text-align: center;
@@ -76,7 +76,7 @@
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($lista as $key => $value) {  
+            <?php foreach ($lista as $key => $value) {
                 if($key%2==0){
                     $colorear="";
                 }else{

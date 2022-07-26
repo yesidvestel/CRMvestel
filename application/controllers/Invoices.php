@@ -749,20 +749,21 @@ public function generar_pdf_facturas_generadas(){
     $data=array("lista"=>$lista_invoices);
     setlocale(LC_TIME, "spanish");
      $x= new DateTime($_GET['fecha']);
-     $data['fecha']=utf8_encode(strftime("%A,".$x->format("d")." de %B del ".$x->format("Y"), strtotime($x)));
+     $data['fecha']=utf8_encode(strftime("%A,".$x->format("d")." de %B del ".$x->format("Y"), strtotime($_GET['fecha'])));
+     //$data['fecha']=utf8_encode(strftime("%A,".$x->format("d")." de %B del ".$x->format("Y"), strtotime("02-06-2022 00:00:00")))."-<u>".$x->format("g").":".$x->format("s")." ".$x->format("a")."</u>";
      $data['sede']=$_GET['pay_acc'];
         $html = $this->load->view('invoices/generar_pdf_facturas_generadas.php', $data, true);
         //echo $html;
-        // importante verificar los nombres y colocarle utf8 para caracteres especiales
+        
         //PDF Rendering
         $this->load->library('pdf');
         $pdf = $this->pdf->load();
-        $pdf->SetHTMLFooter("<div style='text-align:right;'><i><b><small>{PAGENO} de {nbpg}</small></b></i></div>");
+        $pdf->SetHTMLFooter("<div style='text-align:right;'><i><b><small>{PAGENO}/{nbpg}</small></b></i></div>");
         $pdf->WriteHTML($html);
         if ($this->input->get('d')) {
-            $pdf->Output('Proforma_#' . $tid . '.pdf', 'D');
+            $pdf->Output('Reporte Facturas Generadas '.$_GET['sede']." - ".$_GET['fecha'].".pdf", 'D');
         } else {
-            $pdf->Output('Proforma_#' . $tid . '.pdf', 'I');
+            $pdf->Output('Reporte Facturas Generadas '.$_GET['sede']." - ".$_GET['fecha'].".pdf", 'I');
         }
     
 }
