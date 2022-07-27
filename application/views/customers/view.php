@@ -77,7 +77,7 @@
                                         </a>
 
                                     </div>
-									<?php if ($this->aauth->get_user()->roleid == 5) { ?>
+									<?php if ($this->aauth->get_user()->roleid == 5 || $this->aauth->get_user()->conftem != null) { ?>
                                     <div class="col-md-6">
                                         <a href="<?php echo base_url('customers/edit?id=' . $details['id']) ?>"
                                            class="btn btn-info btn-md"><i
