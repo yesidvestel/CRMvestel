@@ -824,7 +824,7 @@ $(document).on('click','.btn-mas-internet',function(e){
         });
     });
 	// selecion de orden
-	<?php  if ($this->aauth->get_user()->roleid == 5) { ?>
+	<?php  if ($this->aauth->get_user()->roleid == 5 || $this->aauth->get_user()->tiknue != null) { ?>
 	
 	var perfil_servicio = new Array ("...","Reconexion Combo","Reinstalación","Activacion","Reconexion Television","Retiro voluntario","Recuperación cable modem","Veeduria","Reconexion Internet","AgregarInternet","AgregarTelevision","Migracion","Bajar_megas","Cambio de equipo","Corte Combo","Corte Internet","Corte Television","Equipo adicional","Instalacion","Punto nuevo","Subir_megas","Suspension Combo","Suspension Internet","Suspension Television","Traslado","Toma Adicional");
 	<?php } else if ($this->aauth->get_user()->roleid == 4) { ?>
