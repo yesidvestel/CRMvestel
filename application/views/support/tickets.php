@@ -307,6 +307,7 @@
                 <tr>
 					<th>#</th>
 					<th><i class="icon-marquee"></th>
+					<th>tpo</th>
 					<th>N° orden</th>	
                     <th><?php echo $this->lang->line('Subject') ?></th>
 					<th style="">Detalle</th>

@@ -54,6 +54,10 @@ class Tickets Extends CI_Controller
         $this->load->view('fixed/header', $head);
         $this->load->view('support/tickets', $data);
         $this->load->view('fixed/footer');
+		$date1 = new DateTime("2015-02-14");
+		$date2 = new DateTime("now");
+		$diff = $date1->diff($date2);
+		var_dump($diff->days);
 
 
     }
@@ -96,7 +100,21 @@ class Tickets Extends CI_Controller
         $no = $this->input->post('start');
 		$obsv = str_replace('<p>','',$tickets->section);
 		$obsv2 = str_replace('</p>','',$obsv);
+		//date_default_timezone_set("America/Lima");
+		$actual = new DateTime("now");
+		
         foreach ($list as $ticket) {
+			$ticketfcha = new DateTime($ticket->created);
+			$dias=$actual->diff($ticketfcha);
+			$creadamas1 = date("Y-m-d",strtotime($ticket->created."+ 1 days"));
+			$creadamas2 = date("Y-m-d",strtotime($ticket->created."+ 3 days"));
+			if($dias->days<=2){
+				$color = '#24B130';
+			}if($dias->days>=3 && $dias->days<=4){
+				$color = '#C5962E';
+			}if($dias->days>=5){
+				$color = '#B82325';
+			}
 			$agenda=$this->db->get_where('events',array('idorden'=>$ticket->codigo))->row();
 			$equipo=$this->db->get_where('equipos',array('asignado'=>$ticket->id))->row();
 			$obsv = str_replace('<p>','',$ticket->section);
@@ -105,6 +123,7 @@ class Tickets Extends CI_Controller
             $no++;			
             $row[] = $no;
 			$row[] = '<input id="input_'.$ticket->codigo.'" type="checkbox" style="margin-left: 9px;cursor:pointer;" onclick="asignar_orden(this)" data-id="'.$ticket->codigo.'">';
+			$row[] = '<i class="icon-circle" style="color: '.$color.';"></i>';
 			$row[] = $ticket->codigo;
             $row[] = $ticket->subject;
 			$row[] = $ticket->detalle;
