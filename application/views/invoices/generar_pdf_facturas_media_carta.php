@@ -146,6 +146,10 @@
 {
  background-color: #808000 ;
 }
+
+.tbs-servs{
+    font-size: 8px;
+}
     </style>
 </head>
 <body >
@@ -167,7 +171,7 @@
 
     <hr>
     <pagebreak>
-    <?php  */?>
+    <?php */ ?>
     
     <?php foreach ($lista as $keyc => $custmr) { 
         $sub_total=0;
@@ -275,15 +279,10 @@
 //codigo x
 
     $sub_t += $row['total'];
-    $servicios_asignados="";
- 
-        $list_items= $this->db->get_where("invoice_items",array("tid"=>$row['tid']))->result_array();
-       foreach ($list_items as $key => $value) {
-           $servicios_asignados.="*".$value['product'];
-           if($key<(count($list_items)-1)){
-            $servicios_asignados.="<br >";
-           }
-       }
+    
+       /*if($servicios_asignados!=""){
+            $servicios_asignados="<thead><tr><th class='tbs-servs'>Prod</th><th class='tbs-servs'>Cant.</th> <th class='tbs-servs'>Iva</th><th class='tbs-servs'>Sub.</th> <th class='tbs-servs'>Total.</th></tr></thead><tbody>".$servicios_asignados."</tbody>";
+       }*/
         $f1 = date(" F ",strtotime($row['invoicedate']));
         $transacciones_factura=array();
         if($total_customer<0){                                                    
@@ -305,6 +304,48 @@
         $sub_total+=$row['subtotal'];
         $tax_total+=$row['tax'];
 
+$servicios_asignados="";
+ 
+        $list_items= $this->db->get_where("invoice_items",array("tid"=>$row['tid']))->result_array();
+
+        $fac1=$this->db->get_where('invoices',array("tid"=>$row['tid']))->row();
+
+        
+        $prs=-10;
+        if($fac1->pamnt<$fac1->total && $fac1->pamnt>1){
+            $restante=$fac1->total-$fac1->pamnt;
+            $prs=($restante*100)/$fac1->total;
+        }
+       foreach ($list_items as $key => $value) {
+        $servicios_asignados.=$value['product'];
+        if($prs!=-10){
+
+            $value['price']=($value['price']*$prs)/100;
+            $value['totaltax']=($value['totaltax']*$prs)/100;
+        }
+        if($value['totaltax']!=0){
+           
+           if($value['qty']>1){
+                $servicios_asignados.=": (iva{".round($value['totaltax'])."}+".round($value['price']).")*".$value['qty']; 
+           }else{
+                $servicios_asignados.=": iva{".round($value['totaltax'])."}+".round($value['price']); 
+           }
+        }else{
+            if($value['qty']>1){
+                $servicios_asignados.=": subtotal{".round($value['price'])."}*".$value['qty']; 
+            }
+        }
+        if($value['qty']>1){
+            $value['subtotal']=($value['price']+$value['totaltax'])*$value['qty'];
+        }else{
+            $value['subtotal']=$value['price']+$value['totaltax'];
+        }
+        $servicios_asignados.=" = ".amountFormat($value['subtotal']);           
+            //$servicios_asignados.="<tr ><td class='tbs-servs'>".$value['product']."</td><td class='tbs-servs'>".$value['qty']."</td><td class='tbs-servs'>".$value['totaltax']."</td><td class='tbs-servs'>".$value['price']."</td><td class='tbs-servs'>".$value['subtotal']."</td>";
+           if($key<(count($list_items)-1)){
+            $servicios_asignados.="<br >";
+           }
+       }
 // end codigo x
 
 if($mostrar){
