@@ -92,4 +92,44 @@ class Clientgroup_model extends CI_Model
         }
 
     }
+       public function get_datos_customer_pdf($csd){
+        $data=array();
+        $data['acclist'] = $this->accounts_model->accountslist();
+
+        $csd = intval($csd);
+        $data['customer'] = $this->db->get_where("customers",array("id"=>$csd))->row();
+        
+        $data['due'] = $this->customers->due_details($csd);
+
+        $total_customer=$data['due']['total']-$data['due']['pamnt'];
+        // var_dump($total_customer);
+        //$data['transaccion'] = $this->invocies->ultima_transaccion_realizada($csd);
+        if($total_customer>0){
+            $data['products'] = $this->invocies->invoice_sin_pagar($csd);        
+        }else if($total_customer==0){
+            $data['products'] = $this->invocies->ultima_factura($csd);        
+        }else{
+            $informacion = $this->invocies->pagadas_adelantadas($csd);        
+            $data['products']=array("0"=>$informacion['factura_saldo_adelantado']);
+            $data['tr_saldo_adelantado']=$informacion['tr_saldo_adelantado'][0];
+            //$data['transaccion']=$informacion['tr_saldo_adelantado'];
+            $data['facturas_adelantadas']=$informacion['facturas_adelantadas'];
+
+        }
+        $data['total_customer']=$total_customer;
+
+//end cambios nuevos
+
+         $data['id'] = $csd;
+        $data['title'] = "Estado Usuario $tid";
+        $data['customer']->ciudad=$this->db->get_where("ciudad",array("idCiudad"=>$data['customer']->ciudad))->row()->ciudad;               
+        //$data['invoice'] = $this->invocies->invoice_details($tid, $this->limited);
+        //if ($data['invoice']) $data['products'] = $this->invocies->invoice_products($tid);
+        if(isset($data['products'][0]['eid'])){
+            $data['employee']=$this->invocies->employee($data['products'][0]['eid']);     
+        }else{
+            $data['employee']=null;
+        }
+            return $data;
+    }
 }

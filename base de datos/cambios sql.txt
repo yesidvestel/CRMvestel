@@ -1,4 +1,25 @@
-﻿ALTER TABLE `transactions` ADD `id_orden_payu` VARCHAR(30) NULL AFTER `no_mostrar`;
+﻿
+
+ALTER TABLE `accounts` ADD `direccion` VARCHAR(500) NOT NULL AFTER `code`;
+ALTER TABLE `accounts` ADD `departamento` VARCHAR(500) NOT NULL AFTER `direccion`;
+ALTER TABLE `accounts` ADD `telefono` VARCHAR(50) NULL AFTER `direccion`;
+UPDATE `app_system` SET `logo` = '1574342263394687344.png' WHERE `app_system`.`id` = 1;
+
+UPDATE `accounts` SET `departamento` = 'Casanare' WHERE `accounts`.`id` = 1;
+UPDATE `accounts` SET `departamento` = 'Casanare' WHERE `accounts`.`id` = 3;
+UPDATE `accounts` SET `departamento` = 'Casanare' WHERE `accounts`.`id` = 4;
+UPDATE `accounts` SET `departamento` = 'Casanare' WHERE `accounts`.`id` = 5;
+UPDATE `accounts` SET `direccion` = 'Carrera 20 N° 26 - 80 Provivienda' WHERE `accounts`.`id` = 3;
+UPDATE `accounts` SET `direccion` = 'Carrera 7 N° 11 - 47 Bello Horizonte' WHERE `accounts`.`id` = 1;
+UPDATE `accounts` SET `direccion` = 'Calle 20A N° 13 - 36 Barrio Esteros' WHERE `accounts`.`id` = 5;
+
+
+UPDATE `accounts` SET `telefono` = '(320) 431-8846' WHERE `accounts`.`id` = 1;
+UPDATE `accounts` SET `telefono` = '(320) 234-3866' WHERE `accounts`.`id` = 3;
+UPDATE `accounts` SET `telefono` = '(314) 353-3265' WHERE `accounts`.`id` = 5;
+-----------------------------------------------------
+
+ALTER TABLE `transactions` ADD `id_orden_payu` VARCHAR(30) NULL AFTER `no_mostrar`;
 
 
 INSERT INTO `accounts` (`id`, `acn`, `holder`, `sede`, `adate`, `lastbal`, `code`) VALUES (NULL, '967931', 'PAYU', '0', '', '31642', 'Cuenta PAYU');

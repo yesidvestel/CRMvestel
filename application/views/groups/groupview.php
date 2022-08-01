@@ -544,6 +544,8 @@
 			<a href="#" onclick="redirect_to_export()" class="btn btn-success btn-md">Exportar a Excel .XLSX</a>
 <a href=""  class="btn btn-danger btn-md" onclick="abrir_modal_corte_usuarios(event)"><i
                         class="fa fa-envelope"></i>Cortar Usuarios</a>
+                        <a href=""  class="btn btn-danger btn-md" onclick="abrir_modal_corte_usuarios(event)"><i
+                        class="fa fa-envelope"></i>Cortar Usuarios</a>&nbsp;<a class="btn btn-danger" href="<?=base_url().'clientgroup/descargar_pdf_falctura_usuarios_media_carta?gid='.$_GET['id'] ?>">Exportar a PDF <img width="20px" src="<?=base_url()?>assets/images/icons/pdf.png"></a>
             <hr>
 <div class="wrapper1">
     <div class="div1"></div>
