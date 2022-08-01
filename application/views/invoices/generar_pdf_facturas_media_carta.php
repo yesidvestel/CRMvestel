@@ -153,7 +153,7 @@
     </style>
 </head>
 <body >
-    <?php /* ?>
+    <?php  ?>
     <table id="t-titulo" width="100%"  align="center" >
         <tbody>
             <tr>
@@ -171,7 +171,7 @@
 
     <hr>
     <pagebreak>
-    <?php */ ?>
+    <?php ?>
     
     <?php foreach ($lista as $keyc => $custmr) { 
         $sub_total=0;
