@@ -30,6 +30,7 @@ class Accounts_model extends CI_Model
 
     public function accountslist()
     {
+		$sedeacc = $this->aauth->get_user()->sede_accede;
 		$user = $this->aauth->get_user()->id;
 		$asignacion = $this->db->get_where('asignaciones', array('detalle' => 'caja','colaborador'=>$user))->row();		
         $this->db->select('*');
