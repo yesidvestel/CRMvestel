@@ -176,9 +176,9 @@
     <?php foreach ($lista as $keyc => $custmr) { 
         $sub_total=0;
         $tax_total=0;
-        $factura = $this->customers->servicios_detail($custmr['id']);
+        $factura = $this->customers->servicios_detail($custmr->id);
        
-        $phoneNumber = $custmr['celular'];
+        $phoneNumber = $custmr->celular;
         $c1="";
         if(  strlen($phoneNumber)==10 )
         {
@@ -190,7 +190,7 @@
         }else{
             $phoneNumber="";
         }
-        $phoneNumber2=$custmr['celular2'];
+        $phoneNumber2=$custmr->celular2;
         if(  strlen($phoneNumber2)==10 )
         {
             $areaCode = substr($phoneNumber2, 0, 3);
@@ -201,7 +201,7 @@
         }else{
             $phoneNumber2="";
         }
-
+$barrio =$this->db->get_where("barrio",array("idBarrio"=>$custmr->barrio))->row();
 ?>
     
 <div id="tabla_contenido" >
@@ -209,19 +209,19 @@
                 
 <!-- Inicio Factura-->
     <!-- Encabezado-->
-        <div id="td_tid"><small><?= "#".$factura['tid'] ?></small></div>
+         <div id="td_tid"><small><?= "#".$factura['tid'] ?></small></div>
      
-        <div id="saludo"  ><h4>Sr(a) <?=$custmr['name']." ".$custmr['dosnombre']." ".$custmr['unoapellido']." ".$custmr['dosapellido'] ?></h4>
-            <h6><?= strtoupper( $custmr['tipo_documento']." : ".number_format($custmr['documento'],0,",",".")) ?></h6>
-            <h6>Direccion : <?= $custmr['nomenclatura'] . ' ' . $custmr['numero1'] . $custmr['adicionauno'].' Nº '.$custmr['numero2'].$custmr['adicional2'].' - '.$custmr['numero3'].", ".$sede; ?></h6>
+        <div id="saludo"  ><h4>Sr(a) <?=$custmr->name." ".$custmr->dosnombre." ".$custmr->unoapellido." ".$custmr->dosapellido ?></h4>
+            <h6><?= strtoupper( $custmr->tipo_documento." : ".number_format($custmr->documento,0,",","."))." - Abonado: #".$custmr->abonado ?></h6>
+            <h6>Direccion : <?= $custmr->nomenclatura . ' ' . $custmr->numero1 . $custmr->adicionauno.' Nº '.$custmr->numero2.$custmr->adicional2.' - '.$custmr->numero3." - Br:".$barrio->barrio.", ".$sede; ?></h6>
             <h6>Telefono : <?= $phoneNumber.$phoneNumber2 ?></h6>
-            <h6 style="line-height:10px;font-size: 8px;padding-top: -23px;">Resive un cordial saludo de parte de <?=$company->cname ?>, a continuacion te presentamos el documento de cobro de los servicios del hogar.</h6>
+            <h6 style="line-height:10px;font-size: 8px;padding-top: -23px;padding-right: 3px;">Reciba un cordial saludo de parte de <?=$company->cname ?>, a continuación, presentamos el documento de cobro de sus servicios hogar.</h6>
         </div>
         <div id="logo-div"> <img id="logo" src="<?=base_url()."userfiles/company/".$company->logo  ?>"></div>
     <!-- Encabezado-->
     <br>
     <!--Cuerpo Facturas-->
-    <?php $data=$this->clientgroup->get_datos_customer_pdf($custmr['id']); 
+    <?php $data=$this->clientgroup->get_datos_customer_pdf($custmr->id); 
         foreach ($data as $key2 => $value2) {
             ${$key2}=$value2;
         }

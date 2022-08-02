@@ -2726,7 +2726,7 @@ if ($valido) {
         $data['fecha']=$fecha_actual->format("Y-m-d");
         $x= new DateTime($data['fecha']);
         $data['fecha']=utf8_encode(strftime("%A,".$x->format("d")." de %B del ".$x->format("Y"), strtotime($data['fecha'])));
-        $data['lista'] = $this->db->get_where("customers",array("checked_seleccionado"=>1,"gid"=>$_GET['gid']))->result_array();
+        $data['lista']=$this->db->query("SELECT * FROM customers where checked_seleccionado=1 and gid=".$_GET['gid']." order by barrio")->result();
         //var_dump($lista[0]['abonado']);
         /*datos nuevos*/
          $this->load->model('accounts_model');
