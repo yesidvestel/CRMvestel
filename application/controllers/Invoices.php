@@ -136,7 +136,7 @@ $this->load->model("Notas_model","notas");
         $time_sdate1=strtotime($sdate1);
         $customers_afectados=array();
 $this->load->model('customers_model', 'customers');
-        foreach ($customers_list as $key => $value) {            
+        foreach ($customers_list as $key => $value) {break;            
             $invoices = $this->db->select("*")->from("invoices")->where('csd='.$value['id'])->order_by('invoicedate',"DESC")->get()->result();
             
             $este_usuario_sele_creo_ahora=false;
@@ -767,6 +767,116 @@ public function generar_pdf_facturas_generadas(){
         }
     
 }
+    public function generar_excel_facturas_generadas(){
+        ob_end_clean();
+        set_time_limit(3000);
+         setlocale(LC_TIME, "spanish");
+     $x= new DateTime($_GET['fecha']);
+     $fecha=utf8_encode(strftime("%A ".$x->format("d")." de %B del ".$x->format("Y"), strtotime($_GET['fecha'])));
+     //$data['fecha']=utf8_encode(strftime("%A,".$x->format("d")." de %B del ".$x->format("Y"), strtotime("02-06-2022 00:00:00")))."-<u>".$x->format("g").":".$x->format("s")." ".$x->format("a")."</u>";
+     $sede=$_GET['pay_acc'];
+     $nombrex="Facturas Generadas - ".$sede." - ".$fecha;
+     $nombrey="Facturas Generadas,".$sede;
+        $lista_invoices=$this->db->query("SELECT  customers.id as id,customers.abonado as abonado,customers.name as name, customers.unoapellido as apellido,customers.celular as celular,customers.documento as documento,invoices.tid as tid, invoices.total as total, invoices.television as television, invoices.combo as combo  FROM invoices inner join customers on invoices.csd=customers.id where invoices.invoicedate= '".$_GET['fecha']."' and refer='".$_GET['pay_acc']."' and  notes='.'")->result_array();
+
+         $this->load->library('Excel');
+    
+    //define column headers
+        $headers = array('#' => 'integer','ID Usuario' => 'integer','Abonado' => 'integer','NOMBRE' => 'string', 'DOCUMENTO' => 'string', 'CELULAR' => 'string', 'TID FACTURA' => 'integer','SERVICIOS' => 'string','TOTAL' => 'string');
+
+        $writer = new Excel();
+    
+        //meta data info
+    $keywords = array('xlsx','CUSTOMERS','VESTEL');
+    //$writer->setTitle('Reporte Facturas Generadas '.$sede." - ".$fecha);
+    $writer->setTitle($nombrey);
+    $writer->setSubject('');
+    $writer->setAuthor('VESTEL');
+    $writer->setCompany('VESTEL');
+    $writer->setKeywords($keywords);
+    $writer->setDescription($nombrey);
+    $writer->setTempDir(sys_get_temp_dir());
+    
+    //write headers el primer campo que es nombre de la hoja de excel deve de coincidir en writeSheetHeader y writeSheetRow para tener en cuenta si se piensan agregar otras hojas o algo por el estilo
+    $col_options = array(
+
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+);
+$writer->writeSheetHeader($nombrey, $headers,$col_options);
+    foreach ($lista_invoices as $key => $value) {
+        $array_facturas=array();
+        $array_facturas[]=$key+1;
+        $array_facturas[]=$value['id'];
+        $array_facturas[]=$value['abonado'];
+        $array_facturas[]=utf8_encode($value['name']." ".$value['apellido']);
+        $array_facturas[]=number_format($value['documento'],0,",",".");
+
+              $phoneNumber = $value['celular'];
+
+                if(  strlen($phoneNumber)==10 )
+                {
+                    $areaCode = substr($phoneNumber, 0, 3);
+                    $nextThree = substr($phoneNumber, 3, 3);
+                    $lastFour = substr($phoneNumber, 6, 4);
+                    $result =  $phoneNumber = '('.$areaCode.') '.$nextThree.'-'.$lastFour;
+                }else{
+                    $result=$value['celular'];
+                }
+
+                $servs="";
+                if($value['television']!="no" && $value['television']!="" && $value['television']!="-"){
+                    $servs="Tv";
+                    if($value['combo']!="no" && $value['combo']!="" && $value['combo']!="-"){
+                        $servs.="+".$value['combo'];
+                    
+                    }
+                }else{
+                    $servs=$value['combo'];
+                }
+
+        $array_facturas[]=$result;
+        $array_facturas[]=$value['tid'];
+        $array_facturas[]=$servs;
+        $array_facturas[]="$ ".number_format($value['total'],0,",",".");
+
+            $writer->writeSheetRow($nombrey,$array_facturas);
+
+
+
+       }
+       //$this->load->model('reports_model', 'reports');
+       $fileLocation = $nombrex.'.xlsx';
+       $writer->writeToFile($fileLocation);
+    //echo $writer->writeToString();
+    
+    //force download
+    header('Content-Description: File Transfer');
+    header("Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+    header("Content-Disposition: attachment; filename=".basename($fileLocation));
+    header("Content-Transfer-Encoding: binary");
+    header("Expires: 0");
+    header("Pragma: public");
+    header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+    header('Content-Length: ' . filesize($fileLocation)); //Remove
+
+    ob_clean();
+    flush();
+
+    readfile($fileLocation);
+    unlink($fileLocation);
+    exit(0);
+    
+
+    }
     //edit invoice
     public function edit()
     {
