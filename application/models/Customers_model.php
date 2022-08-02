@@ -296,7 +296,7 @@ class Customers_model extends CI_Model
     public function due_details2($custid)
     {
 
-       $this->db->select('SUM(total) AS total,SUM(pamnt) AS pamnt');
+       $this->db->select('SUM(total) AS total,SUM(pamnt) AS pamnt,estado_tv,estado_combo');
         $this->db->from('invoices');
         $this->db->where('csd', $custid);
         $query = $this->db->get();
@@ -314,6 +314,7 @@ $tv_sus=0;
 $internet_sus=0;
 $internet_y_tv_sus=0;
 $deuda_todos=0;
+$int_tvcor=0;
 
 foreach ($lista_customers as $key => $customer) {
 $var_excluir=false;
@@ -378,7 +379,8 @@ $var_excluir=false;
 
                 //esto es para los estados 
 
-                        if($_var_tiene_internet){$var_excluir=false;
+                        if($_var_tiene_internet){
+							$var_excluir=false;
                             $lista_de_productos=$this->db->from("products")->like("product_name","mega","both")->get()->result();
                            
                             
@@ -412,10 +414,10 @@ $var_excluir=false;
                             $mor_net=false;     
                 }
             //$customer_moroso=true;
-            if($var_excluir){
+            /*if($var_excluir){
                 $mor_tv=false;     
                 $mor_net=false;     
-            }
+            }*/
             if($mor_tv){
                 $tv++;
                 if($tv_cortado){
@@ -435,12 +437,12 @@ $var_excluir=false;
                     $internet_sus++;
                 }
             }
-            if(($mor_tv && !$tv_cortado) || ($mor_net && !$net_cortado)){
+            if($mor_tv && ($net_cortado || $net_suspendido)){
                 $activo_con_algun_servicio++;
             }
-            /*if(($mor_tv && !$tv_cortado) && ($mor_net && !$net_cortado)){
-               $internet_y_tv++; 
-            }*/
+            if($mor_net && ($tv_cortado || $tv_suspendido)){
+               $int_tvcor++; 
+            }
             if($mor_tv  && $mor_net ){
                $internet_y_tv++;
                if($tv_cortado && $net_cortado){
@@ -451,15 +453,14 @@ $var_excluir=false;
                     $internet_y_tv_sus++;
                 }
             }
-
-
-
+			
+      			
         
         }
 
         //var_dump($deuda_todos);
         //exit();
-        return array("tv"=>$tv,"net"=>$internet,"activo_con_algun_servicio"=>$activo_con_algun_servicio,"internet_y_tv"=>$internet_y_tv,"tvcor"=>$tvcor,"internetcor"=>$internetcor,"internet_y_tv_cor"=>$internet_y_tv_cor,"tv_sus"=>$tv_sus,"internet_sus"=>$internet_sus,"internet_y_tv_sus"=>$internet_y_tv_sus,"deuda_todos"=>$deuda_todos);
+        return array("tv"=>$tv,"net"=>$internet,"int_tvcor"=>$int_tvcor,"activo_con_algun_servicio"=>$activo_con_algun_servicio,"internet_y_tv"=>$internet_y_tv,"tvcor"=>$tvcor,"internetcor"=>$internetcor,"internet_y_tv_cor"=>$internet_y_tv_cor,"tv_sus"=>$tv_sus,"internet_sus"=>$internet_sus,"internet_y_tv_sus"=>$internet_y_tv_sus,"deuda_todos"=>$deuda_todos);
         
     }
          public function servicios_detail($custid)

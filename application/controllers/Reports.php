@@ -1162,13 +1162,27 @@ $lista_customers_activos=$this->db->query("select * from customers where (gid='2
         }
         var_dump($tv);
     }
+	public function statistics_services1()
+
+    {
+        $lista_estadisticas=$this->db->order_by("fecha","asc")->get_where("estadisticas_servicios")->result_array();
+        $datos=array("lista_estadisticas"=>$lista_estadisticas);
+		$this->load->model('dashboard_model');
+		$datos['list_users'] = $this->dashboard_model->lista_usuarios();
+        $head['title'] = "Por estados";
+        $head['usernm'] = $this->aauth->get_user()->username;
+        $this->load->view("fixed/header");
+        $this->load->view("reports/statistics_services",$datos);
+        $this->load->view("fixed/footer");
+
+    }
 public function statistics_services(){
     $extraccion_dia=$this->db->get_where("estadisticas_servicios",array("fecha"=>date("Y-m-d")))->row();
     $data=array();
     ini_set('memory_limit', '-1');
     if(empty($extraccion_dia) || (isset($_GET['tipo']) && $_GET['tipo']=="process")){
         $lista_customers_activos=$this->db->query("select * from customers where gid='2' and  (usu_estado='Activo' or usu_estado='Compromiso')")->result();
-        $lista_customers_cortados=$this->db->query("select * from customers where gid='2' and (usu_estado='Cortado' or usu_estado='Activo')")->result();
+        $lista_customers_cortados=$this->db->query("select * from customers where gid='2' and usu_estado='Cortado'")->result();
         $lista_customers_cartera=$this->db->query("select * from customers where gid='2' and usu_estado='Cartera'")->result();
         $lista_customers_suspendidos=$this->db->query("select * from customers where gid='2' and usu_estado='Suspendido'")->result();
         $lista_customers_retirado=$this->db->query("select * from customers where gid='2' and usu_estado='Retirado'")->result();
@@ -1179,7 +1193,7 @@ public function statistics_services(){
         $obtenido_suspendidos=$this->customers->conteo($lista_customers_suspendidos);
         $obtenido_retirado=$this->customers->conteo($lista_customers_retirado);
 		$lista_vill_activos=$this->db->query("select * from customers where gid='3' and  (usu_estado='Activo' or usu_estado='Compromiso')")->result();
-        $lista_vill_cortados=$this->db->query("select * from customers where gid='3' and (usu_estado='Cortado' or usu_estado='Activo')")->result();
+        $lista_vill_cortados=$this->db->query("select * from customers where gid='3' and usu_estado='Cortado'")->result();
         $lista_vill_cartera=$this->db->query("select * from customers where gid='3' and usu_estado='Cartera'")->result();
         $lista_vill_suspendidos=$this->db->query("select * from customers where gid='3' and usu_estado='Suspendido'")->result();
         $lista_vill_retirado=$this->db->query("select * from customers where gid='3' and usu_estado='Retirado'")->result();        
@@ -1189,7 +1203,7 @@ public function statistics_services(){
         $obtenido_suspendidos_vill=$this->customers->conteo($lista_vill_suspendidos);
         $obtenido_retirado_vill=$this->customers->conteo($lista_vill_retirado);
 		$lista_mon_activos=$this->db->query("select * from customers where gid='4' and  (usu_estado='Activo' or usu_estado='Compromiso')")->result();
-        $lista_mon_cortados=$this->db->query("select * from customers where gid='4' and (usu_estado='Cortado' or usu_estado='Activo')")->result();
+        $lista_mon_cortados=$this->db->query("select * from customers where gid='4' and usu_estado='Cortado'")->result();
         $lista_mon_cartera=$this->db->query("select * from customers where gid='4' and usu_estado='Cartera'")->result();
         $lista_mon_suspendidos=$this->db->query("select * from customers where gid='4' and usu_estado='Suspendido'")->result();
         $lista_mon_retirado=$this->db->query("select * from customers where gid='4' and usu_estado='Retirado'")->result();        
@@ -1199,9 +1213,9 @@ public function statistics_services(){
         $obtenido_suspendidos_mon=$this->customers->conteo($lista_mon_suspendidos);
         $obtenido_retirado_mon=$this->customers->conteo($lista_mon_retirado);
 		
-        $data['n_internet']=$obtenido_activos['net'];
-        $data['n_tv']=$obtenido_activos['tv'];
-        $data['internet_y_tv']=$obtenido_activos['internet_y_tv'];
+        $data['n_internet']=$obtenido_activos['net']-$obtenido_activos['activo_con_algun_servicio'];
+        $data['n_tv']=$obtenido_activos['tv']-$obtenido_activos['int_tvcor'];
+        $data['internet_y_tv']=$obtenido_activos['internet_y_tv']-($obtenido_activos['int_tvcor']+$obtenido_activos['activo_con_algun_servicio']);
         $data['n_activo']=$obtenido_activos['activo_con_algun_servicio'];
         $data['cor_int']=$obtenido_cortados['internetcor'];
         $data['cor_tv']=$obtenido_cortados['tvcor'];
@@ -1220,9 +1234,9 @@ public function statistics_services(){
         $data['debido_cartera']=$obtenido_cartera['deuda_todos'];
         $data['debido_suspendidos']=$obtenido_suspendidos['deuda_todos'];
         $data['debido_retirados']=$obtenido_retirado['deuda_todos'];
-		$data['n_internet_vill']=$obtenido_activos_vill['net'];
-        $data['n_tv_vill']=$obtenido_activos_vill['tv'];
-        $data['internet_y_tv_act_vill']=$obtenido_activos_vill['internet_y_tv'];
+		$data['n_internet_vill']=$obtenido_activos_vill['net']-$obtenido_activos_vill['activo_con_algun_servicio'];
+        $data['n_tv_vill']=$obtenido_activos_vill['tv']-$obtenido_activos_vill['int_tvcor'];
+        $data['internet_y_tv_act_vill']=$obtenido_activos_vill['internet_y_tv']-($obtenido_activos_vill['activo_con_algun_servicio']+$obtenido_activos_vill['int_tvcor']);
         $data['cor_int_vill']=$obtenido_cortados_vill['internetcor'];
         $data['cor_tv_vill']=$obtenido_cortados_vill['tvcor'];
         $data['internet_y_tv_cor_vill']=$obtenido_cortados_vill['internet_y_tv_cor'];
@@ -1240,9 +1254,9 @@ public function statistics_services(){
         $data['debido_car_vill']=$obtenido_cartera_vill['deuda_todos'];
         $data['debido_sus_vill']=$obtenido_suspendidos_vill['deuda_todos'];
         $data['debido_ret_vill']=$obtenido_retirado_vill['deuda_todos'];
-		$data['n_internet_mon']=$obtenido_activos_mon['net'];
-        $data['n_tv_mon']=$obtenido_activos_mon['tv'];
-        $data['internet_y_tv_act_mon']=$obtenido_activos_mon['internet_y_tv'];
+		$data['n_internet_mon']=$obtenido_activos_mon['net']-$obtenido_activos_mon['activo_con_algun_servicio'];
+        $data['n_tv_mon']=$obtenido_activos_mon['tv']-$obtenido_activos_mon['int_tvcor'];
+        $data['internet_y_tv_act_mon']=$obtenido_activos_mon['internet_y_tv']-($obtenido_activos_mon['activo_con_algun_servicio']+$obtenido_activos_mon['int_tvcor']);
         $data['cor_int_mon']=$obtenido_cortados_mon['internetcor'];
         $data['cor_tv_mon']=$obtenido_cortados_mon['tvcor'];
         $data['internet_y_tv_cor_mon']=$obtenido_cortados_mon['internet_y_tv_cor'];
@@ -1281,6 +1295,7 @@ public function statistics_services(){
     }
     
 }
+	
     public function customerstatements()
     {
 
