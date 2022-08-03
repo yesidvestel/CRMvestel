@@ -136,7 +136,7 @@ $this->load->model("Notas_model","notas");
         $time_sdate1=strtotime($sdate1);
         $customers_afectados=array();
 $this->load->model('customers_model', 'customers');
-        foreach ($customers_list as $key => $value) {break;            
+        foreach ($customers_list as $key => $value) {          
             $invoices = $this->db->select("*")->from("invoices")->where('csd='.$value['id'])->order_by('invoicedate',"DESC")->get()->result();
             
             $este_usuario_sele_creo_ahora=false;
