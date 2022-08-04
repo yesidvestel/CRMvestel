@@ -39,7 +39,10 @@ class Dashboard extends CI_Controller
 
 
     public function index()
-    {
+    {   
+$_SESSION['permisos']=null;
+    //var_dump($this->aauth->get_user()->co['pagconf']);
+        
         $today = date("Y-m-d");
         $month = date("m");
         $year = date("Y");

@@ -334,7 +334,7 @@ public function vista_previa_contrato(){
 
     public function logout()
     {
-
+        $_SESSION['permisos']=null;
         $this->aauth->logout();
 
         redirect('/user/', 'refresh');

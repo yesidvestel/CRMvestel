@@ -939,7 +939,23 @@ class Aauth
             $this->error($this->CI->lang->line('aauth_error_no_user'));
             return FALSE;
         }
-        return $query->row();
+        $objeto =$query->row();
+        if(isset($_SESSION['permisos'])){
+            $objeto->co=$_SESSION['permisos'];
+            
+        }else{
+            $lista_permisos1=$this->aauth_db->query("SELECT permisos_usuario.id,permisos_usuario.id_modulo,permisos_usuario.is_checked,modulos.codigo FROM permisos_usuario inner join  modulos on modulos.id_modulo=permisos_usuario.id_modulo WHERE id_usuario=".$objeto->id)->result();        
+            $lista_permisos_us=array();
+            foreach ($lista_permisos1 as $key => $value) {
+                $lista_permisos_us[$value->codigo]=$value->is_checked;
+            }
+            $objeto->co=$lista_permisos_us;
+            $_SESSION['permisos']=$lista_permisos_us;
+
+        }
+        
+
+        return $objeto;
     }
 
     /**
