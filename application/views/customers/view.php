@@ -114,7 +114,7 @@
 
                                         <li class="list-group-item">
                                             <span class="tag tag-default tag-pill bg-danger float-xs-right"><?php echo amountFormat(($due['total']-$due['pamnt'])) ?></span>
-                                            <?php echo $this->lang->line('Total Due') ?>
+                                            <?php echo $this->lang->line('') ?>TOTAL A PAGAR
 											
                                         </li>
 
