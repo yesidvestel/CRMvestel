@@ -241,8 +241,8 @@ setlocale(LC_TIME, "spanish");
 		$data = array(
 			'finicial' => $bill_fecha,
 			'hinicial' => $hora,
-			'conue' => 0,
-			'cocie' => 0,
+			/*'conue' => 0,
+			'cocie' => 0,*/
 			);
 		//$this->db->set($data);
 		
