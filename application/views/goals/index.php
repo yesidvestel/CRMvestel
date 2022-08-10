@@ -72,6 +72,82 @@
                                value="<?php echo $goals['users'] ?>">
                     </div>
                 </div>
+				<div class="form-group row">
+
+                    <label class="col-sm-2 col-form-label"
+                           for="netincome"><?php echo $this->lang->line('') ?>Vesagro</label>
+
+                    <div class="col-sm-5">
+                        <input type="text" placeholder="Net Income"
+                               class="form-control margin-bottom  required" name="vesagro"
+                               value="<?php echo $goals['vesagro'] ?>">
+                    </div>
+                </div>
+				<div class="form-group row">
+
+                    <label class="col-sm-2 col-form-label"
+                           for="netincome"><?php echo $this->lang->line('') ?>Servicios</label>
+
+                    <div class="col-sm-5">
+                        <input type="text" placeholder="Net Income"
+                               class="form-control margin-bottom  required" name="servicios"
+                               value="<?php echo $goals['servicios'] ?>">
+                    </div>
+                </div>
+				<div class="form-group row">
+
+                    <label class="col-sm-2 col-form-label"
+                           for="netincome"><?php echo $this->lang->line('') ?>Compras</label>
+
+                    <div class="col-sm-5">
+                        <input type="text" placeholder="Net Income"
+                               class="form-control margin-bottom  required" name="compras"
+                               value="<?php echo $goals['compras'] ?>">
+                    </div>
+                </div>
+				<div class="form-group row">
+
+                    <label class="col-sm-2 col-form-label"
+                           for="netincome"><?php echo $this->lang->line('') ?>Creditos y Acuerdos</label>
+
+                    <div class="col-sm-5">
+                        <input type="text" placeholder="Net Income"
+                               class="form-control margin-bottom  required" name="creditos"
+                               value="<?php echo $goals['creditos'] ?>">
+                    </div>
+                </div>
+				<div class="form-group row">
+
+                    <label class="col-sm-2 col-form-label"
+                           for="netincome"><?php echo $this->lang->line('') ?>Nomina</label>
+
+                    <div class="col-sm-5">
+                        <input type="text" placeholder="Net Income"
+                               class="form-control margin-bottom  required" name="nomina"
+                               value="<?php echo $goals['nomina'] ?>">
+                    </div>
+                </div>
+				<div class="form-group row">
+
+                    <label class="col-sm-2 col-form-label"
+                           for="netincome"><?php echo $this->lang->line('') ?>Socios</label>
+
+                    <div class="col-sm-5">
+                        <input type="text" placeholder="Net Income"
+                               class="form-control margin-bottom  required" name="socios"
+                               value="<?php echo $goals['socios'] ?>">
+                    </div>
+                </div><div class="form-group row">
+
+                    <label class="col-sm-2 col-form-label"
+                           for="netincome"><?php echo $this->lang->line('') ?>Oficial</label>
+
+                    <div class="col-sm-5">
+                        <input type="text" placeholder="Net Income"
+                               class="form-control margin-bottom  required" name="oficial"
+                               value="<?php echo $goals['oficial'] ?>">
+                    </div>
+                </div>
 
                 <div class="form-group row">
 

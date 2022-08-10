@@ -214,6 +214,17 @@ ADD `sus_int` INT(11) NULL DEFAULT NULL AFTER `car_tv`,
 ADD `sus_tv` INT(11) NULL DEFAULT NULL AFTER `sus_int`,
 ADD `ret_int` INT(11) NULL DEFAULT NULL AFTER `sus_tv`,
 ADD `ret_tv` INT(11) NULL DEFAULT NULL AFTER `ret_int`;
+----------------------------------------------------------------------------------------------------------
+CAMBIOS METAS DE GASTOS
+---------------------------------------------------------
+ALTER TABLE `goals` 
+ADD `vesagro` BIGINT(20) NOT NULL AFTER `users`, 
+ADD `servicios` BIGINT(20) NOT NULL AFTER `vesagro`, 
+ADD `compras` BIGINT(20) NOT NULL AFTER `servicios`, 
+ADD `creditos` BIGINT(20) NOT NULL AFTER `compras`,
+ADD `nomina` BIGINT(20) NOT NULL AFTER `creditos`,
+ADD `socios` BIGINT(20) NOT NULL AFTER `nomina`,
+ADD `oficial` BIGINT(20) NOT NULL AFTER `socios`;
 ---------------------------------------------------------------------------------------
 ALTER TABLE `tickets` ADD `asignacion_movil` INT NULL DEFAULT NULL AFTER `par`;
 -----------------------------cambios para poder cambiar variables desde el sistema para ejemplo cellvos o otras integraciones-------------

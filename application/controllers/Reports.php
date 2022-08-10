@@ -151,6 +151,7 @@ public function historial_list(){
         $year = date("Y");
 		$gsto = $this->input->get('tipo');
 		//var_dump($gsto);
+		$this->load->model('tools_model');
         $gastototal = $this->reports->gastos($month,$year);
 		$data['gasvesagro']=$gastototal['vesagro'];
 		$data['servicios']=$gastototal['servicios'];
@@ -159,6 +160,7 @@ public function historial_list(){
 		$data['socios']=$gastototal['socios'];
 		$data['oficial']=$gastototal['oficial'];
 		$data['creditos']=$gastototal['creditos'];
+		$data['goals'] = $this->tools_model->goals(1);
         $head['title'] = "Metas Mensuales";
         $head['usernm'] = $this->aauth->get_user()->username;
         $this->load->view('fixed/header', $head);

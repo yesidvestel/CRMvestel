@@ -27,9 +27,9 @@ $tt_inc = 0;foreach ($gastototal as $row) {
                                 </div>
                                 <div class="p-1 media-body">
                                     <h5 class="orange"><?php echo $this->lang->line('') ?>Vesagro</h5>
-                                    <h5 class="text-bold-400"><?php  echo amountFormat($gasvesagro) . '/' . amountFormat($goals['expense']) ?></h5>
+                                    <h5 class="text-bold-400"><?php  echo amountFormat($gasvesagro) . '/' . amountFormat($goals['vesagro']) ?></h5>
                                     <progress class="progress progress-striped progress-orange mt-1 mb-0"
-                                              value="<?php $ipt = sprintf("%0.2f", ($tt_exp * 100) / $goals['expense']);
+                                              value="<?php $ipt = sprintf("%0.2f", ($gasvesagro* 100) / $goals['vesagro']);
                                               echo $ipt; ?>" max="100"></progress>
                                 </div>
                             </div>
@@ -43,9 +43,9 @@ $tt_inc = 0;foreach ($gastototal as $row) {
                                 </div>
                                 <div class="p-1 media-body">
                                     <h5 class="orange"> <?php echo $this->lang->line('') ?>Servicios</h5>
-                                    <h5 class="text-bold-400"><?php echo amountFormat($servicios) . '/' . amountFormat($goals['expense']) ?></h5>
+                                    <h5 class="text-bold-400"><?php echo amountFormat($servicios) . '/' . amountFormat($goals['servicios']) ?></h5>
                                     <progress class="progress progress-striped progress-orange mt-1 mb-0"
-                                              value="<?php $ipt = sprintf("%0.2f", ($tt_exp * 100) / $goals['expense']);
+                                              value="<?php $ipt = sprintf("%0.2f", ($servicios * 100) / $goals['servicios']);
                                               echo $ipt; ?>" max="100"></progress>
                                 </div>
                             </div>
@@ -59,9 +59,9 @@ $tt_inc = 0;foreach ($gastototal as $row) {
                                 </div>
                                 <div class="p-1 media-body">
                                     <h5 class="orange"> <?php echo $this->lang->line('') ?>Compras</h5>
-                                    <h5 class="text-bold-400"><?php echo amountFormat($compras) . '/' . amountFormat($goals['expense']) ?></h5>
+                                    <h5 class="text-bold-400"><?php echo amountFormat($compras) . '/' . amountFormat($goals['compras']) ?></h5>
                                     <progress class="progress progress-striped progress-orange mt-1 mb-0"
-                                              value="<?php $ipt = sprintf("%0.2f", ($tt_exp * 100) / $goals['expense']);
+                                              value="<?php $ipt = sprintf("%0.2f", ($compras * 100) / $goals['compras']);
                                               echo $ipt; ?>" max="100"></progress>
                                 </div>
                             </div>
@@ -75,9 +75,9 @@ $tt_inc = 0;foreach ($gastototal as $row) {
                                 </div>
                                 <div class="p-1 media-body">
                                     <h5 class="orange"> <?php echo $this->lang->line('') ?>Creditos y Acuerdos</h5>
-                                    <h5 class="text-bold-400"><?php echo amountFormat($creditos) . '/' . amountFormat($goals['expense']) ?></h5>
+                                    <h5 class="text-bold-400"><?php echo amountFormat($creditos) . '/' . amountFormat($goals['creditos']) ?></h5>
                                     <progress class="progress progress-striped progress-orange mt-1 mb-0"
-                                              value="<?php $ipt = sprintf("%0.2f", ($tt_exp * 100) / $goals['expense']);
+                                              value="<?php $ipt = sprintf("%0.2f", ($creditos * 100) / $goals['creditos']);
                                               echo $ipt; ?>" max="100"></progress>
                                 </div>
                             </div>
@@ -96,9 +96,9 @@ $tt_inc = 0;foreach ($gastototal as $row) {
                                 </div>
                                 <div class="p-1 media-body">
                                     <h5 class="orange"> <?php echo $this->lang->line('') ?>Nomina</h5>
-                                    <h5 class="text-bold-400"><?php echo amountFormat($nomina) . '/' . amountFormat($goals['expense']) ?></h5>
+                                    <h5 class="text-bold-400"><?php echo amountFormat($nomina) . '/' . amountFormat($goals['nomina']) ?></h5>
                                     <progress class="progress progress-striped progress-orange mt-1 mb-0"
-                                              value="<?php $ipt = sprintf("%0.2f", ($tt_exp * 100) / $goals['expense']);
+                                              value="<?php $ipt = sprintf("%0.2f", ($nomina * 100) / $goals['nomina']);
                                               echo $ipt; ?>" max="100"></progress>
                                 </div>
                             </div>
@@ -112,9 +112,9 @@ $tt_inc = 0;foreach ($gastototal as $row) {
                                 </div>
                                 <div class="p-1 media-body">
                                     <h5 class="orange"> <?php echo $this->lang->line('') ?>Socios</h5>
-                                    <h5 class="text-bold-400"><?php echo amountFormat($socios) . '/' . amountFormat($goals['expense']) ?></h5>
+                                    <h5 class="text-bold-400"><?php echo amountFormat($socios) . '/' . amountFormat($goals['socios']) ?></h5>
                                     <progress class="progress progress-striped progress-orange mt-1 mb-0"
-                                              value="<?php $ipt = sprintf("%0.2f", ($tt_exp * 100) / $goals['expense']);
+                                              value="<?php $ipt = sprintf("%0.2f", ($socios * 100) / $goals['socios']);
                                               echo $ipt; ?>" max="100"></progress>
                                 </div>
                             </div>
@@ -128,9 +128,9 @@ $tt_inc = 0;foreach ($gastototal as $row) {
                                 </div>
                                 <div class="p-1 media-body">
                                     <h5 class="orange"> <?php echo $this->lang->line('') ?>Oficial</h5>
-                                    <h5 class="text-bold-400"><?php echo amountFormat($oficial) . '/' . amountFormat($goals['expense']) ?></h5>
+                                    <h5 class="text-bold-400"><?php echo amountFormat($oficial) . '/' . amountFormat($goals['oficial']) ?></h5>
                                     <progress class="progress progress-striped progress-orange mt-1 mb-0"
-                                              value="<?php $ipt = sprintf("%0.2f", ($tt_exp * 100) / $goals['expense']);
+                                              value="<?php $ipt = sprintf("%0.2f", ($oficial * 100) / $goals['oficial']);
                                               echo $ipt; ?>" max="100"></progress>
                                 </div>
                             </div>
