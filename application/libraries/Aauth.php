@@ -940,19 +940,19 @@ class Aauth
             return FALSE;
         }
         $objeto =$query->row();
-        if(isset($_SESSION['permisos'])){
+      /*  if(isset($_SESSION['permisos'])){
             $objeto->co=$_SESSION['permisos'];
             
-        }else{
+        }else{*/
             $lista_permisos1=$this->aauth_db->query("SELECT permisos_usuario.id,permisos_usuario.id_modulo,permisos_usuario.is_checked,modulos.codigo FROM permisos_usuario inner join  modulos on modulos.id_modulo=permisos_usuario.id_modulo WHERE id_usuario=".$objeto->id)->result();        
             $lista_permisos_us=array();
             foreach ($lista_permisos1 as $key => $value) {
                 $lista_permisos_us[$value->codigo]=$value->is_checked;
             }
             $objeto->co=$lista_permisos_us;
-            $_SESSION['permisos']=$lista_permisos_us;
+            /*$_SESSION['permisos']=$lista_permisos_us;
 
-        }
+        }*/
         
 
         return $objeto;
