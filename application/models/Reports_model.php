@@ -49,6 +49,36 @@ class Reports_model extends CI_Model
 
         return $result;
     }
+	public function gastos($month,$year)
+    {
+		$gas_vesagro = 0;
+		$gas_servicios = 0;
+        $query = $this->db->query("SELECT * FROM transactions WHERE ((DATE(date) BETWEEN DATE('$year-$month-01') AND DATE('$year-$month-31')  AND CURDATE()) AND type!='Transfer') and estado is null and tid!=-1 ")->result();
+		 foreach ($query as $key => $gasto) {
+			 if($gasto->cat=='Vesagro'){
+				 $gas_vesagro+=$gasto->debit;
+			 }
+			 if($gasto->cat=='Servicios'){
+				 $gas_servicios-=$gasto->debit;
+			 }
+			 if($gasto->cat=='Compras'){
+				 $gas_compras-=$gasto->debit;
+			 }
+			 if($gasto->cat=='Nomina'){
+				 $gas_nomina-=$gasto->debit;
+			 } 
+			 if($gasto->cat=='Socios'){
+				 $gas_socios-=$gasto->debit;
+			 } 
+			 if($gasto->cat=='Oficial'){
+				 $gas_oficial-=$gasto->debit;
+			 }
+			 if($gasto->cat=='Creditos y Acuerdos'){
+				 $gas_creditos-=$gasto->debit;
+			 }
+		 }
+		return array("vesagro"=>$gas_vesagro,"servicios"=>$gas_servicios,"compras"=>$gas_compras,"nomina"=>$gas_nomina,"socios"=>$gas_socios,"oficial"=>$gas_oficial,"creditos"=>$gas_creditos);
+    }
 
     public function get_statements($pay_acc, $trans_type, $sdate, $edate)
     {

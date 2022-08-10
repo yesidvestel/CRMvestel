@@ -143,6 +143,29 @@ public function historial_list(){
         $this->load->view('fixed/footer');
 
     }
+ 	public function metas()
+
+    {
+		$today = date("Y-m-d");
+        $month = date("m");
+        $year = date("Y");
+		$gsto = $this->input->get('tipo');
+		//var_dump($gsto);
+        $gastototal = $this->reports->gastos($month,$year);
+		$data['gasvesagro']=$gastototal['vesagro'];
+		$data['servicios']=$gastototal['servicios'];
+		$data['compras']=$gastototal['compras'];
+		$data['nomina']=$gastototal['nomina'];
+		$data['socios']=$gastototal['socios'];
+		$data['oficial']=$gastototal['oficial'];
+		$data['creditos']=$gastototal['creditos'];
+        $head['title'] = "Metas Mensuales";
+        $head['usernm'] = $this->aauth->get_user()->username;
+        $this->load->view('fixed/header', $head);
+        $this->load->view('reports/metas', $data);
+        $this->load->view('fixed/footer');
+
+    }
 
     //accounts section
 

@@ -609,6 +609,9 @@ $lista_permisos1=$this->db->query("SELECT permisos_usuario.id,permisos_usuario.i
                         <li>
                             <a href="<?php echo base_url(); ?>reports/statistics"><?php echo $this->lang->line('Statistics') ?></a>
                         </li>
+						<li>
+                            <a href="<?php echo base_url(); ?>reports/metas"><?php echo $this->lang->line('') ?>Metas</a>
+                        </li>
                         <li>
                             <a href="<?php echo base_url(); ?>reports/accountstatement"><?php echo $this->lang->line('Account Statements')
 								
