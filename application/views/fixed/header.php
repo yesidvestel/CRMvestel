@@ -1307,6 +1307,10 @@ $lista_permisos1=$this->db->query("SELECT permisos_usuario.id,permisos_usuario.i
                         <li>
                             <a href="<?php echo base_url(); ?>reports/statistics"><?php echo $this->lang->line('Statistics') ?></a>
                         </li>
+						<?php } if ($lista_permisos_us['datmet'] != null) { ?>
+						<li>
+                            <a href="<?php echo base_url(); ?>reports/metas"><?php echo $this->lang->line('') ?>Metas</a>
+                        </li>
 						<?php } if ($lista_permisos_us['datdec'] != null) { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>reports/accountstatement"><?php echo $this->lang->line('Account Statements')?></a>
