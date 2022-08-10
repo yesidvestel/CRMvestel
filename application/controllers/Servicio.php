@@ -209,7 +209,6 @@ class Servicio extends CI_Controller
                                     <div class="dropdown-menu" style="left:-100">
                                         '.$lisa_resivos_agregar_st.'
                                         <div class="dropdown-divider"></div>
-                                        <a onclick="eliminiar_resivos_de_pago(\''.$invoices->tid.'\');" class="dropdown-item" style="padding:3px 0px;text-align:center;">Eliminar</a>
                                     </div>
                                 </div>';
 
