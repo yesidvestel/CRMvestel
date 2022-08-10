@@ -59,22 +59,22 @@ class Reports_model extends CI_Model
 				 $gas_vesagro+=$gasto->debit;
 			 }
 			 if($gasto->cat=='Servicios'){
-				 $gas_servicios-=$gasto->debit;
+				 $gas_servicios+=$gasto->debit;
 			 }
 			 if($gasto->cat=='Compras'){
-				 $gas_compras-=$gasto->debit;
+				 $gas_compras+=$gasto->debit;
 			 }
 			 if($gasto->cat=='Nomina'){
-				 $gas_nomina-=$gasto->debit;
+				 $gas_nomina+=$gasto->debit;
 			 } 
 			 if($gasto->cat=='Socios'){
-				 $gas_socios-=$gasto->debit;
+				 $gas_socios+=$gasto->debit;
 			 } 
 			 if($gasto->cat=='Oficial'){
-				 $gas_oficial-=$gasto->debit;
+				 $gas_oficial+=$gasto->debit;
 			 }
 			 if($gasto->cat=='Creditos y Acuerdos'){
-				 $gas_creditos-=$gasto->debit;
+				 $gas_creditos+=$gasto->debit;
 			 }
 		 }
 		return array("vesagro"=>$gas_vesagro,"servicios"=>$gas_servicios,"compras"=>$gas_compras,"nomina"=>$gas_nomina,"socios"=>$gas_socios,"oficial"=>$gas_oficial,"creditos"=>$gas_creditos);
