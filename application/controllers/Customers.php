@@ -1343,6 +1343,14 @@ if($data['servicios']['estado']=="Inactivo"){
                                            href="'.base_url().'invoices/printinvoice2?file_name='.$value->file_name.'">&nbsp;&nbsp;R'.$key.' - '.$fecha->format("d/m/Y").'</a>';
                                     $lisa_resivos_agregar_st.='<div class="dropdown-divider"></div>';
                                 }
+                                $lista_rb=$this->db->get_where("recibos_de_pago",array("tid"=>$invoices->tid))->result_array();
+                                foreach ($lista_rb as $key_l => $value_rb) {
+                                    $fecha = new DateTime($value_rb['date']);
+                                    $lisa_resivos_agregar_st.='<a class="dropdown-item" style="padding:3px 0px;"
+                                           href="'.base_url().'invoices/printinvoice2?file_name='.$value_rb['file_name'].'">&nbsp;&nbsp;R'.$key_l.' - '.$fecha->format("d/m/Y").'</a>';
+                                    $lisa_resivos_agregar_st.='<div class="dropdown-divider"></div>';   
+                                }
+
             if($lisa_resivos_agregar_st!=""){
             $resivos_var='<div class="btn-group dropup">
                                     <button type="button" class="btn btn-success dropdown-toggle"
@@ -1518,9 +1526,9 @@ if($data['servicios']['estado']=="Inactivo"){
 		$this->load->model('accounts_model');
 		$data['acclist'] = $this->accounts_model->accountslist();
     if(isset($_GET['fac_pag'])){
-            $x=$this->db->query("select transactions.id as id,resivos_guardados from transactions inner join invoices on invoices.tid=transactions.tid where transactions.payerid=".$data['invoice']['csd']." order by id desc")->result_array();
-            $array=json_decode($x[0]['resivos_guardados']);        
-            $data['ultimo_resivo']=$array[count($array)-1]->file_name;
+            $x=$this->db->query("select transactions.id as id,recibos_de_pago.file_name from transactions inner join transactions_ids_recibos_de_pago on transactions_ids_recibos_de_pago.id_transaccion=transactions.id inner join recibos_de_pago on recibos_de_pago.id=transactions_ids_recibos_de_pago.id_recibo_de_pago where transactions.payerid=".$data['invoice']['csd']." order by id desc")->result_array();
+            
+            $data['ultimo_resivo']=$x[0]['file_name'];
     }
         
         $this->load->view('fixed/header', $head);

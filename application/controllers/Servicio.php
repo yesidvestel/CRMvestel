@@ -91,10 +91,10 @@ class Servicio extends CI_Controller
     }
     public function pay_due_customer_p(){
        
-        $data_response['cid']="17612";
-        $data_response['monto']="41946";
-        
-        $this->customers->pay_invoices($data_response['cid'],$data_response['monto']);
+        $data_response['cid']="17729";
+        $data_response['monto']="97903";
+        $data_response['idorden']="0000000";
+        $this->customers->pay_invoices($data_response['cid'],$data_response['monto'],$data_response['idorden']);
         echo json_encode($data_response);
     }
    public function deliver_response($status, $status_message, $data)

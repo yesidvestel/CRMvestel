@@ -2926,25 +2926,31 @@ $this->load->model('invoices_model', 'invocies');
             fclose($file);
 /* end  Escritura de archivos para visualizar pdfs de resivos*/
 /* guardando datos de registro para la lectura de los pdfs*/
-$ids_transactions=$ids_transacciones;
-foreach ($lista as $key => $value) {
-        $inv=$this->db->get_where("invoices",array("tid"=>$value))->row();
-        $array=json_decode($inv->resivos_guardados);
-        $fecha_actual=new DateTime();
-        $var_a=array("date"=>$fecha_actual->format("d-m-Y"),"file_name"=>$tid."_".$x,"id_transacciones"=>$ids_transactions);
-        $array[]=$var_a;
-        $this->db->update("invoices",array("resivos_guardados"=>json_encode($array)),array("tid"=>$value));
-}
+
 $customer=$this->db->get_where("customers",array("id"=>$csd))->row();
 $this->load->model('Communication_model', 'communication'); 
-$cuerpo="Saludos cordiales de parte de VESTEL, para nosotros es muy satisfactorio contar contigo, por tal motivo te enviamos el comprobante de pago de tu factura, gracias por utilizar nuestros servicios, abre la siguiente url para visualizarlo : http://www.mydic-vestel.com/comprobantes?name=".$tid."_".$x;
+$cuerpo="Saludos cordiales de parte de VESTEL, para nosotros es muy satisfactorio contar contigo, por tal motivo te enviamos el comprobante de pago de tu factura, gracias por utilizar nuestros servicios, abre la siguiente url para visualizarlo : http://www.saves-vestel.com/comprobantes?name=".$tid."_".$x;
+        $ids_transactions=$ids_transacciones;
 
-//$this->communication->send_email($customer->email,"Comprobante de pago VESTEL","Comprobante de pago VESTEL",$cuerpo);
-$this->communication->send_email("pescafelipe@gmail.com","Comprobante de pago VESTEL","Comprobante de pago VESTEL",$cuerpo);
+foreach ($lista as $key => $value) {
+        $inv=$this->db->get_where("invoices",array("tid"=>$value))->row();   
+         if($ids_transactions!=null && is_array($ids_transactions)){
+                 $fecha_actual=new DateTime();
 
-       
-        
+                $data_recib=array("date"=>$fecha_actual->format("Y-m-d h:i:s"),"file_name"=>$tid."_".$x,"tid"=>$value);
+                $this->db->insert("recibos_de_pago",$data_recib);
+                $id_recibo=$this->db->insert_id();
+                foreach ($ids_transactions as $key_tr => $value_tr) {
+                    $data_xy=array("id_recibo_de_pago"=>$id_recibo,"id_transaccion"=>$value_tr);
+                    $this->db->insert("transactions_ids_recibos_de_pago",$data_xy);
+                }
+            
+         }
 
     }
+    $this->communication->send_email($customer->email,"Comprobante de pago VESTEL","Comprobante de pago VESTEL",$cuerpo);
+$this->communication->send_email("pescafelipe@gmail.com","Comprobante de pago VESTEL","Comprobante de pago VESTEL",$cuerpo);
 
+
+}
 }

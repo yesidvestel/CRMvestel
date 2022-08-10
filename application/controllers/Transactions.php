@@ -849,12 +849,16 @@ class Transactions extends CI_Controller
         $this->load->model('customers_model', 'customers');
         $this->customers->actualizar_debit_y_credit($cid);
         if(count($ids_transacciones)!=0){
-            $this->input->set_cookie("ids_transacciones",json_encode($ids_transacciones),3600,null);
+            
+            $data_ids=array("ids_transacciones_rp"=>json_encode($ids_transacciones));
+            $this->db->update("customers",$data_ids,array("id"=>$cid));
             
         }else{
-            $this->input->set_cookie("ids_transacciones",null,3600,null);
+            $data_ids=array("ids_transacciones_rp"=>json_encode($ids_transacciones));
+            $this->db->update("customers",$data_ids,array("id"=>$cid));
             
         }
+        
         $link ="<a href='".base_url()."invoices/printinvoice?id=".$id_fact_pagadas."' class='btn btn-info btn-lg'><span class='icon-file-text2' aria-hidden='true'></span>Ver PDF Facturas Pagadas</a>";
         echo json_encode(array('status'=>"Success",'message' =>$this->lang->line('Transaction has been added ').$link,"id_fact_pagadas"=>$id_fact_pagadas,"valor_restante_monto"=>$valor_restante_monto,"pa"=>$pa));
     }
@@ -1161,10 +1165,12 @@ $this->load->helper('cookie');
         $this->load->model('customers_model', 'customers');
         $this->customers->actualizar_debit_y_credit($cid);
         if(count($ids_transacciones)!=0){
-            $this->input->set_cookie("ids_transacciones",json_encode($ids_transacciones),3600,null);
+            $data_ids=array("ids_transacciones_rp"=>json_encode($ids_transacciones));
+            $this->db->update("customers",$data_ids,array("id"=>$cid));
             
         }else{
-            $this->input->set_cookie("ids_transacciones",null,3600,null);
+            $data_ids=array("ids_transacciones_rp"=>json_encode($ids_transacciones));
+            $this->db->update("customers",$data_ids,array("id"=>$cid));
             
         }
         echo json_encode(array('status' => 'Success', 'message' =>
@@ -1931,54 +1937,31 @@ public function anullist()
 
             
             $tr1=$this->db->get_where("transactions",array("id"=>$id))->row();
-
-        $resultado=$this->db->query("select * from invoices where csd='".$tr1->payerid."' and resivos_guardados like '%".$id."%'")->result();
-        if(count($resultado)>0){
-
-            $result=array();
-            $x1=0;
-             foreach ($resultado as $key1 => $value) {
-                $varx=json_decode($value->resivos_guardados);
-                //var_dump($varx);
-                //echo(" antes de <br>");
-
-
-                foreach ($varx as $key2 => $value2) {
-                    
-                    if(array_search($id,$value2->id_transacciones)!==false){
-                        if($x1==0){
-                            foreach ($value2->id_transacciones as $key3 => $trid) {
-                                $tr=$this->db->get_where("transactions",array("id"=>$trid,"estado"=>null))->row();
-                                if(isset($tr)){
-                                    
-                                    $res=$this->transactions->delt($trid);
-                                    if($trid==$id){
-                                        $result=$res;
-                                    }
+$ids_tr=$this->db->get_where("transactions_ids_recibos_de_pago",array("id_transaccion"=>$id))->result_array();
+$recibo_pago=$this->db->get_where("recibos_de_pago",array("id"=>$ids_tr[0]['id_recibo_de_pago']))->row();
+$lista_resivos=$this->db->get_where("recibos_de_pago",array("file_name"=>$recibo_pago->file_name))->result_array();
+if(count($lista_resivos)>0){
+$result=array();
+        foreach ($lista_resivos as $key_r => $value_r) {
+            $lista_tr_rb=$this->db->get_where("transactions_ids_recibos_de_pago",array("id_recibo_de_pago"=>$value_r['id']))->result_array();
+                    foreach ($lista_tr_rb as $key_tr => $value_tr) {
+                            $tr=$this->db->get_where("transactions",array("id"=>$value_tr['id_transaccion'],"estado"=>null))->row();
+                            if(isset($tr)){
+                               $res= $this->transactions->delt($value_tr['id_transaccion']);
+                                if($value_tr['id_transaccion']==$id){
+                                    $result=$res;
                                 }
-                                
-                            }
-                        }
-                       // var_dump("aqui");
-
-                        unset($varx[$key2]);
-                        $x1++;
-                        break;
+                            }         
                     }
-                }
-                //var_dump($value->tid);
-                //var_dump($varx);
-                $varx=json_encode($varx);
-                $this->db->update("invoices",array("resivos_guardados"=>$varx),array("tid"=>$value->tid));
-                //var_dump($varx);
-                //echo("despues de <br>");
-            }
-            echo json_encode($result);
+            $this->db->delete("transactions_ids_recibos_de_pago",array("id_recibo_de_pago"=>$value_r['id']));
+            $this->db->delete("recibos_de_pago",array("id"=>$value_r['id']));
 
-        }else{
-            echo json_encode($this->transactions->delt($id));//liena importante
         }
-           
+    echo json_encode($result);
+}else{
+    echo json_encode($this->transactions->delt($id));//liena importante
+}
+     
         } else {
             echo json_encode(array('status' => 'Error', 'message' => 'Error!'));
         }

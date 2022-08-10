@@ -1,4 +1,12 @@
-﻿
+﻿--cambios modificaciones resivos de pago--------------------------------------------------
+
+ALTER TABLE `customers` ADD `ids_transacciones_rp` VARCHAR(170) NULL AFTER `fecha_cambio`;
+        
+        CREATE TABLE `crm`.`recibos_de_pago` (`id` INT NOT NULL AUTO_INCREMENT , `date` DATETIME NOT NULL , `file_name` VARCHAR(200) NOT NULL ,`tid` INT NOT NULL, PRIMARY KEY (`id`)) ENGINE = InnoDB;
+        
+        CREATE TABLE `crm`.`transactions_ids_recibos_de_pago` (`id` INT NOT NULL AUTO_INCREMENT , `id_recibo_de_pago` INT NOT NULL , `id_transaccion` INT NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;        
+
+-------------------------------------------------------------------------------------------
 
 ALTER TABLE `accounts` ADD `direccion` VARCHAR(500) NOT NULL AFTER `code`;
 ALTER TABLE `accounts` ADD `departamento` VARCHAR(500) NOT NULL AFTER `direccion`;
