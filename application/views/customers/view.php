@@ -470,7 +470,7 @@
                             </div>
                             <hr>
                             <div class="row mt-3">
-								<?php if ($this->aauth->get_user()->roleid > 3 || $this->aauth->get_user()->cocie != null) { ?>
+								<?php if ($this->aauth->get_user()->roleid > 3 || $this->aauth->get_user()->co['cocie'] != null) { ?>
                                 <div class="col-md-4">
 
                                     <a href="<?php echo base_url('customers/invoices?id=' . $details['id']) ?>"
