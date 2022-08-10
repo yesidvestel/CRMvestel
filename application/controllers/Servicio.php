@@ -180,7 +180,7 @@ class Servicio extends CI_Controller
             $row[] = amountFormat($invoices->total);
             $row[] = '<span class="st-' . $invoices->status . '">' . $this->lang->line(ucwords($invoices->status)) . '</span>';
 
-            $lisa_resivos_agregar_st="";
+             $lisa_resivos_agregar_st="";
                                 //$transacciones = $this->db->get_where("transactions",array("tid"=>$invoices->tid,"estado"=>null))->result_array();
                                 $lista_de_resivos=json_decode($invoices->resivos_guardados);
                                 if($lista_de_resivos==null){
@@ -189,19 +189,27 @@ class Servicio extends CI_Controller
                                 foreach ($lista_de_resivos as $key => $value) {
                                     $fecha = new DateTime($value->date);
                                     $lisa_resivos_agregar_st.='<a class="dropdown-item" style="padding:3px 0px;"
-                                           href="'.base_url().'comprobantes?name='.$value->file_name.'">&nbsp;&nbsp;R'.$key.' - '.$fecha->format("d/m/Y").'</a>';
+                                           href="'.base_url().'invoices/printinvoice2?file_name='.$value->file_name.'">&nbsp;&nbsp;R'.$key.' - '.$fecha->format("d/m/Y").'</a>';
                                     $lisa_resivos_agregar_st.='<div class="dropdown-divider"></div>';
                                 }
+                                $lista_rb=$this->db->get_where("recibos_de_pago",array("tid"=>$invoices->tid))->result_array();
+                                foreach ($lista_rb as $key_l => $value_rb) {
+                                    $fecha = new DateTime($value_rb['date']);
+                                    $lisa_resivos_agregar_st.='<a class="dropdown-item" style="padding:3px 0px;"
+                                           href="'.base_url().'invoices/printinvoice2?file_name='.$value_rb['file_name'].'">&nbsp;&nbsp;R'.$key_l.' - '.$fecha->format("d/m/Y").'</a>';
+                                    $lisa_resivos_agregar_st.='<div class="dropdown-divider"></div>';   
+                                }
+
             if($lisa_resivos_agregar_st!=""){
             $resivos_var='<div class="btn-group dropup">
-                                    <button style="margin-top:1px;" type="button" class="btn btn-success dropdown-toggle"
+                                    <button type="button" class="btn btn-success dropdown-toggle"
                                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
                                                 class="icon-download"></i> 
                                     </button>
                                     <div class="dropdown-menu" style="left:-100">
                                         '.$lisa_resivos_agregar_st.'
-                                        
-                                        
+                                        <div class="dropdown-divider"></div>
+                                        <a onclick="eliminiar_resivos_de_pago(\''.$invoices->tid.'\');" class="dropdown-item" style="padding:3px 0px;text-align:center;">Eliminar</a>
                                     </div>
                                 </div>';
 
