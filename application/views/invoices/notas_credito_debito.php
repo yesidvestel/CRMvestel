@@ -6,6 +6,7 @@
             <div class="message"></div>
         </div>
         <h4>Notas Credito/Debito</h4>
+		<a href="#" onclick="redirect_to_export()" class="btn btn-success btn-md">Exportar a Excel .XLSX</a>
         <hr>
         <div class="grid_3 grid_4">
             <table id="tabla-notas" class="table-striped table-hover" cellspacing="0" width="100%">
@@ -147,4 +148,10 @@
                 });    
         }
     });
+	function redirect_to_export(){
+         
+        var url_redirect=baseurl+'invoices/explortar_a_excel_notas';
+            window.location.replace(url_redirect);
+
+    }
 </script>

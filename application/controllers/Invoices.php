@@ -48,6 +48,100 @@ public function notas(){
         $this->load->view('fixed/footer');
 
 }
+public function explortar_a_excel_notas(){
+        
+        $this->db->select("invoice_items.*,invoices.tid as itid,invoices.invoicedate,invoice_items.id as id2,customers.id as id3, customers.name");
+        $this->db->from("invoice_items");
+		$this->db->where_in("invoice_items.product",array("Nota Credito","Nota Debito"));
+		$this->db->join("invoices","invoice_items.tid=invoices.tid", 'left');
+        $this->db->join("customers","invoices.csd=customers.id", 'left');
+        $this->db->order_by("fecha_creacion","DESC");
+        $lista_debito=$this->db->get()->result();
+        $this->load->library('Excel');
+		$lista_debito2=array();
+		
+    
+    //define column headers
+    $headers = array(
+        'Id' => 'string', 
+        '# Cuenta' => 'string', 
+        'Fecha cuenta' => 'date',
+		'Fcha creada' => 'datetime',
+		'Usuario' => 'string',
+		'Valor' => 'integer',
+		'Tipo' => 'string',
+		'Responsable' => 'string',
+	);
+    
+    //fetch data from database
+    //$salesinfo = $this->product_model->get_salesinfo();
+    
+    //create writer object
+    $writer = new Excel();
+    
+        //meta data info
+    $keywords = array('xlsx','CUSTOMERS','VESTEL');
+    $writer->setTitle('Reporte Notas ');
+    $writer->setSubject('');
+    $writer->setAuthor('VESTEL');
+    $writer->setCompany('VESTEL');
+    $writer->setKeywords($keywords);
+    $writer->setDescription('Reporte Notas ');
+    $writer->setTempDir(sys_get_temp_dir());
+    
+    //write headers el primer campo que es nombre de la hoja de excel deve de coincidir en writeSheetHeader y writeSheetRow para tener en cuenta si se piensan agregar otras hojas o algo por el estilo
+    $writer->writeSheetHeader('Reporte Notas ',$headers,$col_options = array(
+
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+));
+    
+    //write rows to sheet1
+	
+    foreach ($lista_debito as $key => $debito) {
+		//$fecha = date("d/m/Y",strtotime($debito->fecha_creacion));
+		 $us1=$this->db->get_where("employee_profile",array("id"=>$debito->id_usuario_crea))->row();
+            $writer->writeSheetRow('Reporte Notas ',array($debito->id,$debito->tid,$debito->invoicedate,$debito->fecha_creacion,$debito->name,$debito->subtotal,$debito->product,$us1->name));
+        
+    }
+        
+        
+    
+    $fecha_actual= date("d-m-Y");
+    $dia= date("N");
+    $this->load->model('reports_model', 'reports');
+    $fecha_actual=$this->reports->obtener_dia($dia)." ".$fecha_actual;
+    $fileLocation = 'Notas '.$fecha_actual.'.xlsx';
+    
+    //write to xlsx file
+    $writer->writeToFile($fileLocation);
+    //echo $writer->writeToString();
+    
+    //force download
+    header('Content-Description: File Transfer');
+    header("Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+    header("Content-Disposition: attachment; filename=".basename($fileLocation));
+    header("Content-Transfer-Encoding: binary");
+    header("Expires: 0");
+    header("Pragma: public");
+    header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+    header('Content-Length: ' . filesize($fileLocation)); //Remove
+
+    ob_clean();
+    flush();
+
+    readfile($fileLocation);
+    unlink($fileLocation);
+    exit(0);
+       
+
+    }
 public function notas_list(){
 $this->load->model("Notas_model","notas");
     $list = $this->notas->get_datatables();
