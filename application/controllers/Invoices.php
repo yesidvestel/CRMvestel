@@ -55,10 +55,11 @@ $this->load->model("Notas_model","notas");
     $no = $this->input->post('start');
     //setlocale(LC_TIME, "spanish");
 
-    foreach ($list as $key => $value) {            
+    foreach ($list as $key => $value) { 
+		
             $no++;  
             $row = array();
-            $row[]=$value->id;
+            $row[]=$value->id2;
             $row[]="<a href='".base_url()."invoices/view?id=".$value->tid."'>Fac. #".$value->tid."</a>";;
             $row[]=$value->invoicedate;
             if(isset($value->fecha_creacion)){
@@ -70,9 +71,9 @@ $this->load->model("Notas_model","notas");
             $row[]="<a href='".base_url()."customers/view?id=".$value->csd."'>".$value->name." ".$value->apellido."</a>";
             $row[]=amountFormat($value->subtotal);
             $row[]=$value->product;
-            if(isset($value->id_usuario)){
-                $us1=$this->db->get_where("employee_profile",array("id"=>$value->id_usuario))->row();
-                 $row[]=$us1->name;    
+            if(isset($value->id_usuario_crea)){
+                $us1=$this->db->get_where("employee_profile",array("id"=>$value->id_usuario_crea))->row();
+                 $row[]=$us1->name;  
             }else{
                 $row[]="NN";    
             }
