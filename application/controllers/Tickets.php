@@ -1213,11 +1213,11 @@ $x=0;
             $this->db->update('customers');
 		}
 		if($ticket->detalle=="Reconexion Combo"){
-			$paquete = $this->input->post('paquete');
+			/*$paquete = $this->input->post('paquete');
             if($paquete=="null" || $paquete==null || $paquete=="" || $paquete=="-"){
                         $paquete = $ticket->section;
-                    }
-			$this->db->set('combo', $paquete);
+                    }*/
+			//$this->db->set('combo', $paquete);
 			$this->db->set('television', 'Television');
             $this->db->set('estado_tv', null);
             $this->db->set('estado_combo', null);
@@ -1235,11 +1235,11 @@ $x=0;
                 $this->customers->activar_estado_usuario($customerx->name_s,$customerx->gid,$customerx->tegnologia_instalacion);
 		}		
 		if($ticket->detalle=="Reconexion Internet"){
-			$paquete = $this->input->post('paquete');
+			/*$paquete = $this->input->post('paquete');
             if($paquete=="null" || $paquete==null || $paquete=="" || $paquete=="-"){
                         $paquete = $ticket->section;
-                    }
-			$this->db->set('combo', $paquete);			
+                    }*/
+			//$this->db->set('combo', $paquete);			
             $this->db->set('estado_combo', null);
 			$this->db->set('ron', 'Activo');
         	$this->db->where('tid', $idfactura);

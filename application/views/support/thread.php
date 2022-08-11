@@ -392,7 +392,7 @@
             }
         }
     }
-	function validacion_reconexion(){
+	/*function validacion_reconexion(){
     var suinter=$("#detalle").val();
     var supaquete=$("#paquete option:selected").val();
     var habilitar=true;
@@ -408,7 +408,7 @@
         $("#submit_model").removeAttr("disabled");
     }
     
-}
+}*/
     var perfil="<?=$this->aauth->get_user()->roleid ?>";
     function funcion_status(){
         //aqui estoy toca terminar esto de que muestre y n el div
@@ -417,7 +417,7 @@
             $("#fecha_final_div").css('visibility','hidden');
             $("#submit_model").removeAttr("disabled");
         }else{
-			validacion_reconexion();
+			//validacion_reconexion();
             if(perfil==5){
                 $("#fecha_final_div").css('visibility','visible');    
                 $("#submit_model").prop("disabled","true");    
@@ -477,7 +477,7 @@
 
                         </div>
                     </div>
-					<?php if ($thread_info['detalle']=='Reconexion Combo' or $thread_info['detalle']=='Reconexion Internet') {?>
+					<!--<?php /*if ($thread_info['detalle']=='Reconexion Combo' or $thread_info['detalle']=='Reconexion Internet') {?>
 					<input type="hidden" id="detalle" value="<?php echo $thread_info['detalle'] ?>"></input>
 					<div class="row">
                         <div class="col-xs-12 mb-1"><label
@@ -496,7 +496,7 @@
                         </div>
 						
                     </div>
-					<?php } ?>
+					<?php }*/ ?>-->
 					<?php if ($thread_info['detalle']=='Toma Adicional') {?>
 					<div class="row">
                         <div class="col-xs-12 mb-1"><label
