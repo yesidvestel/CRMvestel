@@ -383,6 +383,119 @@ class llamadas extends CI_Controller
         $this->load->view('llamadas/compromisos', $data);
         $this->load->view('fixed/footer');
     }
+	public function explortar_a_excel2(){
+        
+        $this->db->select("*");
+        $this->db->from("llamadas");
+		//$this->db->join('customers', 'tickets.cid=customers.id', 'left');
+		if ($_GET['tecnico'] != '' && $_GET['tecnico'] != '-' && $_GET['tecnico'] != '0') {
+                $this->db->where('responsable=', $_GET['tecnico']);
+            }
+		if ($_GET['tipo'] != '' && $_GET['tipo'] != '-' && $_GET['tipo'] != '0') {
+                $this->db->where('tllamada=', $_GET['tipo']);
+           }
+		if($_GET['opcselect']!=''){
+
+            $dateTime= new DateTime($_GET['sdate']);
+            $sdate=$dateTime->format("Y-m-d");
+            $dateTime= new DateTime($_GET['edate']);
+            $edate=$dateTime->format("Y-m-d");
+            if($_GET['opcselect']=="fcreada"){
+                $this->db->where('fcha>=', $sdate);   
+                $this->db->where('fcha<=', $edate);       
+            }
+            
+        }
+        $this->db->order_by("id","DESC");
+        $lista_creditos=$this->db->get()->result();
+        $this->load->library('Excel');
+		$lista_creditos2=array();
+		
+    
+    //define column headers
+    $headers = array(
+        'Fecha' => 'date', 
+        'Hora' => 'string',
+        'Responsable' => 'string',
+		'Tipo de llamada' => 'string',
+		'Respuesta' => 'string',
+		'Detalle' => 'string',
+		'Observacion' => 'string');
+    
+    //fetch data from database
+    //$salesinfo = $this->product_model->get_salesinfo();
+    
+    //create writer object
+    $writer = new Excel();
+    
+        //meta data info
+    $keywords = array('xlsx','CUSTOMERS','VESTEL');
+    $writer->setTitle('Reporte llamadas ');
+    $writer->setSubject('');
+    $writer->setAuthor('VESTEL');
+    $writer->setCompany('VESTEL');
+    $writer->setKeywords($keywords);
+    $writer->setDescription('Reporte llamadas ');
+    $writer->setTempDir(sys_get_temp_dir());
+    
+    //write headers el primer campo que es nombre de la hoja de excel deve de coincidir en writeSheetHeader y writeSheetRow para tener en cuenta si se piensan agregar otras hojas o algo por el estilo
+    $writer->writeSheetHeader('Llamadas ',$headers,$col_options = array(
+
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+));
+    
+    //write rows to sheet1
+	
+    foreach ($lista_creditos as $key => $creditos) {
+		//$fecha = date("d/m/Y",strtotime($creditos->date));
+            $writer->writeSheetRow('Llamadas ',array(
+				$creditos->fcha,
+				$creditos->hra,
+				$creditos->responsable,
+				$creditos->tllamada,
+				$creditos->trespuesta,
+				$creditos->drespuesta,
+				$creditos->notes));
+        
+    }
+        
+        
+    
+    $fecha_actual= date("d-m-Y");
+    $dia= date("N");
+    $this->load->model('reports_model', 'reports');
+    $fecha_actual=$this->reports->obtener_dia($dia)." ".$fecha_actual;
+    $fileLocation = 'Creditos '.$fecha_actual.'.xlsx';
+    
+    //write to xlsx file
+    $writer->writeToFile($fileLocation);
+    //echo $writer->writeToString();
+    
+    //force download
+    header('Content-Description: File Transfer');
+    header("Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+    header("Content-Disposition: attachment; filename=".basename($fileLocation));
+    header("Content-Transfer-Encoding: binary");
+    header("Expires: 0");
+    header("Pragma: public");
+    header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+    header('Content-Length: ' . filesize($fileLocation)); //Remove
+
+    ob_clean();
+    flush();
+
+    readfile($fileLocation);
+    unlink($fileLocation);
+    exit(0);
+       
+
+    }
 
 
 }

@@ -7,7 +7,7 @@
         </div>
         <div class="grid_3 grid_4 animated fadeInRight table-responsive">
             <h5>Llamadas</h5>
-
+			
             <hr>
             <div class="card card-block sameheight-item">
 
@@ -86,6 +86,7 @@
                             </div>
                         
                     </div>
+			<a href="#" onclick="redirect_to_export()" class="btn btn-success btn-md">Exportar a Excel .XLSX</a>
             <hr>
             <table id="invoices" class="table-striped" cellspacing="0" width="100%">
                 <thead>
@@ -197,5 +198,15 @@
         }else{
             $("#div_fechas").hide();
         }
+    }
+	function redirect_to_export(){
+         var tecnico=$("#tecnicos2 option:selected").val();
+		var tipo=$("#tipo option:selected").val();
+        var opcion_seleccionada=$("#fechas option:selected").val();
+        var edate=$("#edate").val();
+        var sdate=$("#sdate").val();
+        var url_redirect=baseurl+'llamadas/explortar_a_excel2?sdate='+sdate+"&edate="+edate+"&opcselect="+opcion_seleccionada+"&tecnico="+tecnico+"&tipo="+tipo;
+            window.location.replace(url_redirect);
+
     }
 </script>
