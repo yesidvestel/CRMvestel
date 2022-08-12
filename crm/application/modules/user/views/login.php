@@ -27,7 +27,7 @@
                                 <form class="form-horizontal form-simple"
                                       action="<?php echo base_url() . 'user/auth_user'; ?>" method="post">
                                     <fieldset class="form-group position-relative has-icon-left mb-2">
-                                        <input type="text" name="email" class="form-control" placeholder="Email" required>
+                                        <input type="text" name="email" class="form-control" placeholder="Codigo de Usuario" required>
                                         <div class="form-control-position">
                                             <i class="icon-head"></i>
                                         </div>
