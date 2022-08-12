@@ -594,6 +594,7 @@ class Tickets Extends CI_Controller
     foreach ($lista_tickets as $key => $tickets) {
 		$obsv = str_replace('<p>','',$tickets->section);
 		$obsv2 = str_replace('</p>','',$obsv);
+		$sede=$this->db->get_where("ciudad",array("idCiudad"=>$tickets->ciudad))->row();
 		$equipo=$this->db->get_where('equipos',array('asignado'=>$tickets->id))->row();
         if($tickets->codigo=="" || $tickets->codigo==null){
             $tickets->codigo="Sin Codigo";
@@ -617,7 +618,7 @@ class Tickets Extends CI_Controller
 				$tickets->asignado,
 				$tickets->nomenclatura.' '.$tickets->numero1.$tickets->adicionauno.' # '.$tickets->numero2.$tickets->adicional2.' - '.$tickets->numero3,$tickets->residencia.'/'.$tickets->referencia,
 				$tickets->barrio,
-				$tickets->ciudad,
+				$sede->ciudad,
 				$equipo->t_instalacion));
         
     }
