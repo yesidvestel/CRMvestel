@@ -228,16 +228,17 @@ setlocale(LC_TIME, "spanish");
 	public function activar($tid,$status,$bill_fecha,$hora)
     {
 		//dar permisos
-		if($this->db->where('id_modulo', 3)){
+		
+                $this->db->where('id_modulo', 3);
 				$this->db->where('id_usuario', $tid);
 				$this->db->set('is_checked', 0);
 				$this->db->update('permisos_usuario');
-			}
-			if($this->db->where('id_modulo', 5)){
+		
+			     $this->db->where('id_modulo', 5);
 				$this->db->where('id_usuario', $tid);
 				$this->db->set('is_checked', 0);
 				$this->db->update('permisos_usuario');
-			}
+			
 		$data = array(
 			'finicial' => $bill_fecha,
 			'hinicial' => $hora,
