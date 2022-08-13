@@ -1,3 +1,4 @@
+
 <article class="content content items-list-page">
     <div class="card card-block">
         <div id="notify" class="alert alert-success" style="display:none;">
@@ -128,6 +129,26 @@
 								<option value="">seleccione</option>
                            </select>
                         </div>
+                         <div style="width: 100%;" class="selects-venta-contestada">
+                        	<div style="width: 35%;float: left;position: relative;">
+                        		<select class="form-control" id="add-tv">
+	                           		<option value="">Sin Tv</option>
+	                           		<option value="con-tv">Tv</option>
+                           		</select>
+                        	</div>
+                        	<div style="width: 65%;float: right;position: relative;">
+                        		<select class="form-control select-box"  id="add-net" style="width: 100%;">
+                           		<option value="">Sin Internet</option>
+                           		<?php
+											foreach ($paquete as $row) {
+												$cid = $row['pid'];
+												$title = $row['product_name'];
+												echo "<option value='$title'>$title</option>";
+											}
+											?>
+                           		</select>
+                        	</div>
+                        </div>
 					</div>
                     <div class="frmSearch col-sm-6">
 						<label for="cst" class="caption  col-form-label">Responsable</label>
@@ -180,6 +201,7 @@
 </div>
 
 <script type="text/javascript">
+	ocultar_selects_venta_contestada();
 	function change(tipo, respuesta){
 		tipo = document.getElementById(tipo);
 		respuesta = document.getElementById(respuesta);
@@ -198,6 +220,7 @@
 		}else if (tipo.value == "Recibida"){
 			var optionArray = ["","Contestada","sin Contestar"];
 		};
+		ocultar_selects_venta_contestada();
 	for(option = 0;option < optionArray.length; option++){
     var pair = optionArray[option].split("|");
     var newOption = document.createElement("option");
@@ -206,38 +229,81 @@
     respuesta.options.add(newOption);
   };
 	}
+	$("#add-net").select2();
+	
+	$(".select2-container .select2-selection--single").css("height",$("#add-tv").height());//.select2-container .select2-selection--single
+	function ocultar_selects_venta_contestada(){
+		$(".selects-venta-contestada").hide();
+		$("#add-tv").val("");
+		$("#add-net").val("").trigger('change');
+	}
+	
+	$("#add-tv").change(function(ev){
+		validacion1();
+	});
+	$("#add-net").change(function(ev){
+		validacion1();
+	});
+	function validacion1(){
+		var valor_tv=$("#add-tv option:selected").val();
+		var valor_net=$("#add-net option:selected").val();
+		var option="";
+		if(valor_tv=="con-tv"){
+			if(valor_net!=""){
+				var nombre="Tv+"+valor_net;
+				option="<option value='"+nombre+"'>"+nombre+"</option>";
+			}else{
+				option="<option value='Tv'>Tv</option>";
+			}
+		}else if(valor_net!=""){
+				option="<option value='"+valor_net+"'>"+valor_net+"</option>";
+		}else{
+				option="<option value=''>Selecciona opciones tv/net...</option>";
+		}
+		$("#detalle").children().remove();
+			$("#detalle").append(option);
+	}
 	function change2(respuesta, detalle){
 		respuesta = document.getElementById(respuesta);
 		detalle = document.getElementById(detalle);
 		detalle.value = "";
 		detalle.innerHTML ="";
 		if(respuesta.value == "Venta Contestada"){			
-			var optionArray = ["","Solo Tv","Tv + 5MB","Tv + 10MB","Tv + 15MB","10MB","15MB"];
-		}else if (respuesta.value == "Control Contestado"){
-			var optionArray = ["","Excelente","Bueno","Regular","Malo"];
-		}else if (respuesta.value == "Recuperacion Contestada"){
-			var optionArray = ["","Acuerdo de Pago","Numero equivocado","Cliente inconforme","Informado","No va a pagar","Va a pagar"];
-		}else if (respuesta.value == "Contestada"){
-			var optionArray = ["","Acuerdo de pago","Cliente inconforme","Informado","No va a pagar","Va a pagar"];
-		}else if (respuesta.value == "sin Contestar"){
-			var optionArray = ["","Correo de Voz","Numero no esta en uso","Timbra pero no contestan"];
-		}else if (respuesta.value == "Reclamo"){
-			var optionArray = ["","Mal servicio","Mala atencion","Otros"];
-		}else if (respuesta.value == "Estado de cuenta"){
-			var optionArray = ["","Valor Incorrecto","No aparece pago","Otros"];
-		}else if (respuesta.value == "Actualizar Datos"){
-			var optionArray = ["","De cuenta","Personales","Direccion","Otros"];
-		}else if (respuesta.value == "Otros"){
-			var optionArray = ["","Otros"];
-		}
+			//var optionArray = ["","Solo Tv","Tv + 5MB","Tv + 10MB","Tv + 15MB","10MB","15MB"];
+			
+			$("#detalle").children().remove();
+			$("#detalle").append("<option value=''>Selecciona opciones tv/net...</option>");
+			$(".selects-venta-contestada").show();
+		}else {
+			//$("#detalle").show();
+			ocultar_selects_venta_contestada();
+			if (respuesta.value == "Control Contestado"){
+				var optionArray = ["","Excelente","Bueno","Regular","Malo"];
+			}else if (respuesta.value == "Recuperacion Contestada"){
+				var optionArray = ["","Acuerdo de Pago","Numero equivocado","Cliente inconforme","Informado","No va a pagar","Va a pagar"];
+			}else if (respuesta.value == "Contestada"){
+				var optionArray = ["","Acuerdo de pago","Cliente inconforme","Informado","No va a pagar","Va a pagar"];
+			}else if (respuesta.value == "sin Contestar"){
+				var optionArray = ["","Correo de Voz","Numero no esta en uso","Timbra pero no contestan"];
+			}else if (respuesta.value == "Reclamo"){
+				var optionArray = ["","Mal servicio","Mala atencion","Otros"];
+			}else if (respuesta.value == "Estado de cuenta"){
+				var optionArray = ["","Valor Incorrecto","No aparece pago","Otros"];
+			}else if (respuesta.value == "Actualizar Datos"){
+				var optionArray = ["","De cuenta","Personales","Direccion","Otros"];
+			}else if (respuesta.value == "Otros"){
+				var optionArray = ["","Otros"];
+			}
+			
+		for(option = 0;option < optionArray.length; option++){
+	    var pair = optionArray[option].split("|");
+	    var newOption = document.createElement("option");
+	    newOption.value = pair[0];
+	    newOption.innerHTML = pair[0];
+	    detalle.options.add(newOption);
+	  };
+	}
 		
-	for(option = 0;option < optionArray.length; option++){
-    var pair = optionArray[option].split("|");
-    var newOption = document.createElement("option");
-    newOption.value = pair[0];
-    newOption.innerHTML = pair[0];
-    detalle.options.add(newOption);
-  };
 	}
     $(document).ready(function () {
         $('#clientstable').DataTable({

@@ -37,9 +37,11 @@ class llamadas extends CI_Controller
     }
 
     public function index()
-    {
+    {$this->load->model('invoices_model', 'invocies');
 		$id = $this->input->get('id');
 		$data['attach'] = $this->llamadas->attach($id);
+        $this->db->group_by("product_name");
+        $data['paquete']=$this->invocies->paquetes();
         $head['usernm'] = $this->aauth->get_user()->username;
         $head['title'] = 'Llamadas';
         $this->load->view('fixed/header', $head);
