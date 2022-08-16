@@ -189,7 +189,7 @@ class Servicio extends CI_Controller
                                 foreach ($lista_de_resivos as $key => $value) {
                                     $fecha = new DateTime($value->date);
                                     $lisa_resivos_agregar_st.='<a class="dropdown-item" style="padding:3px 0px;"
-                                           href="'.base_url().'invoices/printinvoice2?file_name='.$value->file_name.'">&nbsp;&nbsp;R'.$key.' - '.$fecha->format("d/m/Y").'</a>';
+                                           href="http://www.saves-vestel.com/comprobantes?name='.$value->file_name.'">&nbsp;&nbsp;R'.$key.' - '.$fecha->format("d/m/Y").'</a>';
                                     $lisa_resivos_agregar_st.='<div class="dropdown-divider"></div>';
                                 }
                                 $lista_rb=$this->db->get_where("recibos_de_pago",array("tid"=>$invoices->tid))->result_array();
