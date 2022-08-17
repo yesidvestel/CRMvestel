@@ -245,6 +245,9 @@
 		validacion1();
 	});
 	function validacion1(){
+		var inp=$("#tipo option:selected").val();
+		var res=$("#respuesta option:selected").val();
+		if(inp=="Para Venta" && res=="Venta Contestada"){
 		var valor_tv=$("#add-tv option:selected").val();
 		var valor_net=$("#add-net option:selected").val();
 		var option="";
@@ -262,13 +265,17 @@
 		}
 		$("#detalle").children().remove();
 			$("#detalle").append(option);
+		}else{
+			$("#detalle").children().remove();
+		}
 	}
 	function change2(respuesta, detalle){
 		respuesta = document.getElementById(respuesta);
 		detalle = document.getElementById(detalle);
 		detalle.value = "";
 		detalle.innerHTML ="";
-		if(respuesta.value == "Venta Contestada"){			
+		var inp=$("#tipo option:selected").val();
+		if(respuesta.value == "Venta Contestada" && inp=="Para Venta"){			
 			//var optionArray = ["","Solo Tv","Tv + 5MB","Tv + 10MB","Tv + 15MB","10MB","15MB"];
 			
 			$("#detalle").children().remove();
@@ -276,7 +283,9 @@
 			$(".selects-venta-contestada").show();
 		}else {
 			//$("#detalle").show();
+			
 			ocultar_selects_venta_contestada();
+			$("#detalle").children().remove();
 			if (respuesta.value == "Control Contestado"){
 				var optionArray = ["","Excelente","Bueno","Regular","Malo"];
 			}else if (respuesta.value == "Recuperacion Contestada"){
