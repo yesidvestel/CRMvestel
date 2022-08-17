@@ -702,7 +702,7 @@ public function historial_list(){
 			$this->db->where('id', $iduser);
 			$this->db->update('aauth_users', $datec);
 			//QUITAR PERMISOS
-            $this->db->where('id_usuario', $iduser);
+            /*$this->db->where('id_usuario', $iduser);
 			$this->db->where('id_modulo', 3);
 				$this->db->set('is_checked', null);
 				$this->db->update('permisos_usuario');
@@ -710,7 +710,7 @@ public function historial_list(){
 			$this->db->where('id_modulo', 5);
 				$this->db->set('is_checked', null);
 				$this->db->update('permisos_usuario');
-			
+			*/
             		
             $valor_efectivo_caja=intval($_SESSION['valor_efectivo_caja']);
             $this->load->library("Festivos");
