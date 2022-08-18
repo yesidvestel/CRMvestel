@@ -1488,6 +1488,18 @@ if($data['servicios']['estado']=="Inactivo"){
         $this->load->view('customers/transactions', $data);
         $this->load->view('fixed/footer');
     }
+	public function hiscuenta()
+    {
+
+		$custid = $this->input->get('id');
+        $data['facturas'] = $this->customers->invoice_list($custid);
+        $data['details'] = $this->customers->details($custid);
+        $head['usernm'] = $this->aauth->get_user()->username;
+        $head['title'] = 'View Customer Transactions';
+        $this->load->view('fixed/header', $head);
+        $this->load->view('customers/his_cuenta', $data);
+        $this->load->view('fixed/footer');
+    }
 	public function soporte()
     {
 

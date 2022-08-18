@@ -153,6 +153,17 @@ class Customers_model extends CI_Model
         return $query->row_array();
 
     }
+	public function invoice_list($custid)
+    {
+
+        $this->db->select('*');
+        $this->db->from('invoices');
+        $this->db->where('csd', $custid);
+		$this->db->order_by('invoicedate', 'desc');
+        $query = $this->db->get();
+        return $query->result_array();
+
+    }
 
     function count_filtered($id = '')
     {

@@ -490,6 +490,12 @@
                                        class="btn btn-primary btn-lg" style="width: 250px"><i
                                                 class="icon-ticket"></i> Generar ticket
                                     </a>
+                                </div>
+								<div class="col-md-4" style="margin-top: 5px;">
+                                    <a href="<?php echo base_url('customers/hiscuenta?id=' . $details['id']) ?>"
+                                       class="btn btn-primary btn-lg" style="width: 250px"><i
+                                                class="icon-ticket"></i> Historial de Cuenta
+                                    </a>
                                 </div>						
 								
 								<div class="col-md-4" style="margin-top: 5px;">
