@@ -77,7 +77,9 @@
     $(document).ready(function () {
 
         //datatables
-        $('#cgrtable').DataTable({});
-
+        $('#cgrtable').DataTable({
+			 order: [[2, 'desc']],
+		});
+			
     });
 </script>
