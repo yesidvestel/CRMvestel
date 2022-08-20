@@ -181,17 +181,17 @@
 	var tb;
     $(document).ready(function () {
         <?php 
-         /*$url1="transactions/translist";
+         $url1="transactions/translist?type=";
             if(isset($_GET['id_tr'])){
                 $url1="transactions/translist?id_tr=".$_GET['id_tr'];
-            }*/
+            }
          ?>
        tb= $('#trans_table').DataTable({
             "processing": true,
             "serverSide": true,
             "stateSave": true,
             "ajax": {
-                "url": "<?php echo site_url('transactions/translist?type=')?>",
+                "url": "<?php echo site_url($url1)?>",
                 "type": "POST"
             },
             "columnDefs": [
