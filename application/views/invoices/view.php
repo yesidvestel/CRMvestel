@@ -357,10 +357,11 @@
 
                     <!-- Invoice Footer -->
 
-                    <div id="invoice-footer"><p class="lead"><?php echo $this->lang->line('Credit Transactions') ?>:</p>
+                    <div id="invoice-footer"><p class="lead"><?php echo $this->lang->line('') ?>Comprobante de Egreso:</p>
                         <table class="table table-striped">
                             <thead>
                             <tr>
+                                <th><?php echo $this->lang->line('') ?>Codigo</th>
                                 <th><?php echo $this->lang->line('Date') ?></th>
                                 <th><?php echo $this->lang->line('Method') ?></th>
                                 <th><?php echo $this->lang->line('Amount') ?></th>
@@ -380,6 +381,7 @@
                                     $row['credit']="-".$row['debit'];
                                 }
                                 echo '<tr>
+                            <td>' . $row['id'] . '</td>
                             <td>' . $row['date'] . '</td>
                             <td>' . $this->lang->line($row['method']) . '</td>
                             <td>' . amountFormat($row['credit']) . '</td>

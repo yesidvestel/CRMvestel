@@ -1669,6 +1669,7 @@ $this->load->model('customers_model', 'customers');
             $no++;
             $row = array();
             $pid = $prd->id;
+            $row[] = $pid;
             $row[] = dateformat($prd->date);
             $row[] = $prd->account;
             $row[] = amountFormat($prd->debit);
@@ -1690,8 +1691,8 @@ $this->load->model('customers_model', 'customers');
 
         $output = array(
             "draw" => $_POST['draw'],
-            "recordsTotal" => $this->transactions->count_all(),
-            "recordsFiltered" => $this->transactions->count_filtered(),
+            "recordsTotal" => $this->transactions->count_all($ttype,$_GET),
+            "recordsFiltered" => $this->transactions->count_filtered($ttype,$_GET),
             "data" => $data,
         );
         //output to json format

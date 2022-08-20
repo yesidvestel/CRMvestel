@@ -138,6 +138,7 @@
                 <thead>
                 <tr>
 
+                    <th><?php echo $this->lang->line('') ?>Codigo</th>
                     <th><?php echo $this->lang->line('Date') ?></th>
                     <th><?php echo $this->lang->line('') ?>Caja</th>
                     <th><?php echo $this->lang->line('Debit') ?></th>
@@ -157,6 +158,7 @@
 
                 <tfoot>
                 <tr>
+                    <th><?php echo $this->lang->line('') ?>Codigo</th>
                     <th><?php echo $this->lang->line('Date') ?></th>
                     <th><?php echo $this->lang->line('') ?>Caja</th>
                     <th><?php echo $this->lang->line('Debit') ?></th>
@@ -179,17 +181,17 @@
 	var tb;
     $(document).ready(function () {
         <?php 
-         $url1="transactions/translist";
+         /*$url1="transactions/translist";
             if(isset($_GET['id_tr'])){
                 $url1="transactions/translist?id_tr=".$_GET['id_tr'];
-            }
+            }*/
          ?>
        tb= $('#trans_table').DataTable({
             "processing": true,
             "serverSide": true,
             "stateSave": true,
             "ajax": {
-                "url": "<?php echo site_url($url1)?>",
+                "url": "<?php echo site_url('transactions/translist?type=')?>",
                 "type": "POST"
             },
             "columnDefs": [
@@ -230,9 +232,9 @@
         var opcion_seleccionada=$("#fechas option:selected").val();
         var sede_filtrar=$("#sede_sel option:selected").val();
         if(cuentas=="" && categorias=="" && opcion_seleccionada==""){
-            tb.ajax.url( baseurl+'transactions/translist').load();     
+            tb.ajax.url( baseurl+'transactions/translist?type=').load();     
         }else{
-            tb.ajax.url( baseurl+"transactions/translist?sdate="+sdate+"&edate="+edate+"&opcselect="+opcion_seleccionada+"&cuentas="+cuentas+"&categorias="+categorias ).load();     
+            tb.ajax.url( baseurl+"transactions/translist?type="+"&sdate="+sdate+"&edate="+edate+"&opcselect="+opcion_seleccionada+"&cuentas="+cuentas+"&categorias="+categorias ).load();     
         }
        
 

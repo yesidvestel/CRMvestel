@@ -21,14 +21,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Transactions_model extends CI_Model
 {
     var $table = 'transactions';
-    var $column_order = array('date', 'acid', 'debit', 'credit', 'payer', 'tid', 'method','note', 'estado');
-    var $column_search = array('id', 'date', 'acid', 'debit', 'credit', 'payer', 'tid', 'method','note', 'estado');
+    var $column_order = array('id', 'date', 'account', 'debit', 'credit', 'payer', 'tid','note',  'method','cat','estado');
+    var $column_search = array('id', 'date', 'account', 'debit', 'credit', 'payer', 'tid','note',  'method','cat','estado');
     var $order = array('date' => 'desc');
     var $opt = '';
 
     private function _get_datatables_query($filt2)
     {
-
+		$this->db->select("*");
         $this->db->from($this->table);
 		if($filt2['opcselect']!=''){
 
@@ -68,6 +68,9 @@ class Transactions_model extends CI_Model
                 //var_dump($this->opt);
                 $this->db->where('type', 'transfer');
                 break;
+			default:
+				$this->db->where('estado');
+				break;
         }
 		
         if($_GET['id_tr']){
@@ -120,14 +123,14 @@ class Transactions_model extends CI_Model
 
     function count_filtered()
     {
-        $this->_get_datatables_query($_GET);
+        $this->_get_datatables_query($ttype,$_GET);
         $query = $this->db->get();
         return $query->num_rows();
     }
 
     public function count_all()
     {
-       $this->_get_datatables_query($_GET);
+       $this->_get_datatables_query($ttype,$_GET);
         $query = $this->db->get();
         return $query->num_rows();  
     }
