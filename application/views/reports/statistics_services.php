@@ -242,6 +242,7 @@ $('#invoices-products-chart').empty();
 
 var datos={
         element: 'invoices-products-chart',
+		 <?php if ($this->aauth->get_user()->sede_accede == 0) { ?>
         data: [
             <?php foreach ($lista_estadisticas as $key => $row) {
             $datex = new DateTime($row['fecha']);
@@ -251,6 +252,40 @@ var datos={
         } ?>
 
         ],
+	//YOPAL
+		<?php } if ($this->aauth->get_user()->sede_accede == 2) { ?>
+        data: [
+            <?php foreach ($lista_estadisticas as $key => $row) {
+            $datex = new DateTime($row['fecha']);
+            //$num = cal_days_in_month(CAL_GREGORIAN, $row['month'], $row['year']);
+            echo "{ x: '".($datex->format("Y-m-d"))."',z: " . intval($row['n_internet']) . ",a: " . intval($row['n_tv']) .",b: " . intval($row['cor_int']) .",c: " . intval($row['cor_tv']) .",d: " . intval($row['car_int']) .",e: " . intval($row['car_tv']) .",f: " . intval($row['sus_int']) .",g: " . intval($row['sus_tv']) .",h: " . intval($row['ret_int']) .",i: " . intval($row['ret_tv']) ."},";//,z: " . intval($tipos['instalaciones_tv'][$key]['numero']) . "
+            
+        } ?>
+
+        ],
+	//MONTERREY
+		<?php } if ($this->aauth->get_user()->sede_accede == 4) { ?>
+        data: [
+            <?php foreach ($lista_estadisticas as $key => $row) {
+            $datex = new DateTime($row['fecha']);
+            //$num = cal_days_in_month(CAL_GREGORIAN, $row['month'], $row['year']);
+            echo "{ x: '".($datex->format("Y-m-d"))."',z: " . intval($row['n_internet_mon']) . ",a: " . intval($row['n_tv_mon']) .",b: " . intval($row['cor_int_mon']) .",c: " . intval($row['cor_tv_mon']) .",d: " . intval($row['car_int_mon']) .",e: " . intval($row['car_tv_mon']) .",f: " . intval($row['sus_int_mon']) .",g: " . intval($row['sus_tv_mon']) .",h: " . intval($row['ret_int_mon']) .",i: " . intval($row['ret_tv_mon']) ."},";//,z: " . intval($tipos['instalaciones_tv'][$key]['numero']) . "
+            
+        } ?>
+
+        ],
+	//VILLANUEVA
+		<?php } if ($this->aauth->get_user()->sede_accede == 3) { ?>
+        data: [
+            <?php foreach ($lista_estadisticas as $key => $row) {
+            $datex = new DateTime($row['fecha']);
+            //$num = cal_days_in_month(CAL_GREGORIAN, $row['month'], $row['year']);
+            echo "{ x: '".($datex->format("Y-m-d"))."',z: " . intval($row['n_internet_vill']) . ",a: " . intval($row['n_tv_vill']) .",b: " . intval($row['cor_int_vill']) .",c: " . intval($row['cor_tv_vill']) .",d: " . intval($row['car_int_vill']) .",e: " . intval($row['car_tv_vill']) .",f: " . intval($row['sus_int_vill']) .",g: " . intval($row['sus_tv_vill']) .",h: " . intval($row['ret_int_vill']) .",i: " . intval($row['ret_tv_vill']) ."},";//,z: " . intval($tipos['instalaciones_tv'][$key]['numero']) . "
+            
+        } ?>
+
+        ],
+		<?php } ?>
         xkey: 'x',
         ykeys: ['z','a','b','c','d','e','f','g','h','i'],
         labels: ['Activos Internet','Activos Television','Cortados Internet','Cortados Television','Car. Internet','Car. Television','Sus. internet','Sus. Television','Ret. Internet','Ret. Television'],
