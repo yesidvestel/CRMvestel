@@ -141,6 +141,14 @@ class Facturas_electronicas_model extends CI_Model
         $second_last_name=strtoupper(str_replace("?", "Ñ",$customer->dosapellido));
         $json_customer->name[0]=$firs_name." ".$second_name;
         $json_customer->name[1]=$first_last_name." ".$second_last_name;
+        /*validaciones por tipo documento*/
+            if($customer->tipo_documento=="NIT"){
+                $json_customer->id_type="31";
+                $json_customer->person_type="Company";
+                $json_customer->name[0].=" ".$first_last_name." ".$second_last_name;
+                unset($json_customer->name[1]);
+            }
+        /*end validaciones por tipo documento*/
         $json_customer->address->address=$customer->nomenclatura . ' ' . $customer->numero1 . $customer->adicionauno.' Nº '.$customer->numero2.$customer->adicional2.' - '.$customer->numero3;
         //$tv_product= $this->db->get_where("products", array('pid' => "27"))->row();
             if($customer->gid==4 ){//monterrey

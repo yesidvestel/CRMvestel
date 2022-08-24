@@ -137,6 +137,14 @@ $this->load->model("customers_model","customers");
         $second_last_name=strtoupper(str_replace("?", "Ñ",$customer->dosapellido));
         $json_customer->name[0]=$firs_name." ".$second_name;
         $json_customer->name[1]=$first_last_name." ".$second_last_name;
+        /*validaciones por tipo documento*/
+            if($customer->tipo_documento=="NIT"){
+                $json_customer->id_type="31";
+                $json_customer->person_type="Company";
+                $json_customer->name[0].=" ".$first_last_name." ".$second_last_name;
+                unset($json_customer->name[1]);
+            }
+        /*end validaciones por tipo documento*/
         $json_customer->address->address=$customer->nomenclatura . ' ' . $customer->numero1 . $customer->adicionauno.' Nº '.$customer->numero2.$customer->adicional2.' - '.$customer->numero3;
         //$tv_product= $this->db->get_where("products", array('pid' => "27"))->row();
             if($customer->gid==4 ){//monterrey
@@ -220,7 +228,7 @@ $this->load->model("customers_model","customers");
             $dataApiNET->payments[0]->id="2512";
 
             $consulta_siigo1=$api->getCustomer($customer->documento,2);
-          
+    
             
             if($consulta_siigo1['pagination']['total_results']==0){
                     $json_customer=json_decode($json_customer);
@@ -230,7 +238,13 @@ $this->load->model("customers_model","customers");
                     $json_customer=json_encode($json_customer);
                     //$json_customer=str_replace("321", "282", subject)
                     $api->saveCustomer($json_customer,2);//para crear cliente en siigo si no existe
+                    
             }else{
+                $json_customer=json_decode($json_customer);
+                    $json_customer->related_users->seller_id=282;
+                    $json_customer->related_users->collector_id=282;
+                    $json_customer->contacts[0]->email="vestelsas@gmail.com";
+                    $json_customer=json_encode($json_customer);
                     $api->updateCustomer($json_customer,$consulta_siigo1['results'][0]['id'],2);//para acturalizar cliente en siigo 
             }
         }
