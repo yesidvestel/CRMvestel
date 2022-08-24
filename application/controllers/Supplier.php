@@ -117,6 +117,7 @@ class Supplier extends CI_Controller
 
     public function addsupplier()
     {
+        $cat = $this->input->post('categoria');
         $name = $this->input->post('name');
 		$nit = $this->input->post('nit');
         $company = $this->input->post('company');
@@ -125,17 +126,19 @@ class Supplier extends CI_Controller
         $address = $this->input->post('address');
         $city = $this->input->post('city');
         $region = $this->input->post('region');
+        $pago = $this->input->post('pago');
         $cuenta = $this->input->post('cuenta');
         $typo = $this->input->post('typo');
         $banco = $this->input->post('banco');
 
-        $this->supplier->add($name, $nit, $company, $phone, $email, $address, $city, $region, $cuenta, $typo, $banco);
+        $this->supplier->add($cat, $name, $nit, $company, $phone, $email, $address, $city, $region, $pago, $cuenta, $typo, $banco);
 
     }
 
     public function editsupplier()
     {
         $id = $this->input->post('id');
+		$cat = $this->input->post('categoria');
         $name = $this->input->post('name');
 		$nit = $this->input->post('nit');
         $company = $this->input->post('company');
@@ -144,12 +147,13 @@ class Supplier extends CI_Controller
         $address = $this->input->post('address');
         $city = $this->input->post('city');
         $region = $this->input->post('region');
+		$pago = $this->input->post('pago');
         $cuenta = $this->input->post('cuenta');
         $typo = $this->input->post('typo');
         $banco = $this->input->post('banco');
 
         if ($id) {
-            $this->supplier->edit($id, $name, $nit, $company, $phone, $email, $address, $city, $region, $cuenta, $typo,$banco);
+            $this->supplier->edit($id, $cat, $name, $nit, $company, $phone, $email, $address, $city, $region, $pago, $cuenta, $typo, $banco);
         }
     }
 

@@ -57,7 +57,7 @@
                     </div>
                     <div class="col-md-8">
                         <div class="card card-block">
-                            <h4><?php echo $this->lang->line('Supplier Details') ?></h4>
+                            <h4><?php if($details['name']==1){ $cat='Productos';}else{$cat='Servicios';} echo $this->lang->line('Supplier Details').' de '.$cat ?></h4>
                             <hr>
                             <div class="row m-t-lg">
                                 <div class="col-md-2">
@@ -140,6 +140,7 @@
 
                             </div>
                             <hr>
+							<?php if ($details['pago']=='Cuenta'){ ?>
                             <div class="row m-t-lg">
                                 <div class="col-md-2">
                                     <strong><?php echo $this->lang->line('') ?>Cuenta</strong>
@@ -152,7 +153,7 @@
 
                             </div>
                             <hr>
-                            
+                            <?php } ?>
                             <hr>
                             <div class="row mt-3">
                                 <div class="col-md-6">

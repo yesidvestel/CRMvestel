@@ -10,9 +10,18 @@
 
                 <h5><?php echo $this->lang->line('Add New supplier Details') ?></h5>
                 <hr>
-
-
                 <div class="form-group row">
+
+                    <label class="col-sm-2 col-form-label" for="name"><?php echo $this->lang->line('') ?>Categoria</label>
+
+                    <div class="col-sm-6">
+                         <select name="categoria" class="form-control" id="ctegoria">
+                            <option value="1">Productos</option>
+                            <option value="2">Servicios</option>
+                         </select>
+                    </div>
+                </div>
+				<div class="form-group row">
 
                     <label class="col-sm-2 col-form-label" for="name"><?php echo $this->lang->line('Name') ?></label>
 
@@ -54,7 +63,7 @@
                     <label class="col-sm-2 col-form-label" for="email"><?php echo $this->lang->line('Email') ?></label>
 
                     <div class="col-sm-6">
-                        <input type="text" placeholder="email"
+                        <input type="text" placeholder="Correo electronico"
                                class="form-control margin-bottom required" name="email">
                     </div>
                 </div>
@@ -87,46 +96,63 @@
                                class="form-control margin-bottom" name="region">
                     </div>
                 </div>
-                <div class="form-group row">
+				<div class="form-group row">
 
                     <label class="col-sm-2 col-form-label"
-                           for="cuenta"><?php echo $this->lang->line('') ?>Cuenta</label>
+                           for="region"><?php echo $this->lang->line('') ?>Pago</label>
 
                     <div class="col-sm-6">
-                        <input type="text" placeholder="N° cuenta"
-                               class="form-control margin-bottom" name="cuenta">
-                    </div>
-                </div>
-                <div class="form-group row">
-
-                    <label class="col-sm-2 col-form-label"
-                           for="postbox"><?php echo $this->lang->line('') ?>Tipo</label>
-
-                    <div class="col-sm-6">
-                        <select name="typo" class="form-control">
-                            <option value='Ahorros'>Ahorros</option>
-                            <option value='Corriente'>Corriente</option>
+                        <select name="pago" class="form-control" id="detalle">
+                            <option value="Efectivo">Efectivo</option>
+                            <option value="Cuenta">Cuenta</option>
                          </select>
                     </div>
                 </div>
-                <div class="form-group row">
+				<div id="ocultar">
+					<div id="Cuenta">
+					<div class="form-group row" >
+						<label class="col-sm-2 col-form-label"
+							   for="cuenta"><?php echo $this->lang->line('') ?>Cuenta</label>
 
-                    <label class="col-sm-2 col-form-label"
-                           for="postbox"><?php echo $this->lang->line('') ?>Banco</label>
+						<div class="col-sm-6">
+							<input type="text" placeholder="N° cuenta"
+								   class="form-control margin-bottom" name="cuenta">
+						</div>
+					</div>
+					<div class="form-group row">
 
-                    <div class="col-sm-6">
-                        <select name="banco" class="form-control">
-                            <option value='Bancolombia'>Bancolombia</option>
-                            <option value='Banco de bogota'>Banco de bogota</option>
-                            <option value='Av villas'>Av villas</option>
-                            <option value='Banco caja social'>Banco caja social</option>
-                            <option value='Banco Agrario'>Banco Agrario</option>
-                            <option value='Banco Davivienda'>Banco Davivienda</option>
-                            <option value='Banco BBVA'>Banco BBVA</option>
-                        </select>
-                    </div>
-                </div>
+						<label class="col-sm-2 col-form-label"
+							   for="postbox"><?php echo $this->lang->line('') ?>Tipo</label>
 
+						<div class="col-sm-6">
+							<select name="typo" class="form-control">
+								<option value=''>-</option>
+								<option value='Ahorros'>Ahorros</option>
+								<option value='Corriente'>Corriente</option>
+							 </select>
+						</div>
+					</div>
+					<div class="form-group row">
+
+						<label class="col-sm-2 col-form-label"
+							   for="postbox"><?php echo $this->lang->line('') ?>Banco</label>
+
+						<div class="col-sm-6">
+							<select name="banco" class="form-control">
+								<option value=''>-</option>
+								<option value='Bancolombia'>Bancolombia</option>
+								<option value='Banco de bogota'>Banco de bogota</option>
+								<option value='Av villas'>Av villas</option>
+								<option value='Banco caja social'>Banco caja social</option>
+								<option value='Banco Agrario'>Banco Agrario</option>
+								<option value='Banco Davivienda'>Banco Davivienda</option>
+								<option value='Banco BBVA'>Banco BBVA</option>
+								<option value='Nequi'>Nequi</option>
+							</select>
+						</div>
+					</div>
+					</div>
+				</div>
 
                 <div class="form-group row">
 
@@ -143,4 +169,19 @@
         </form>
     </div>
 </article>
+<script>
+$(document).ready(function(){
+		ocultar();
+		$('#detalle').on('change',function(){
+			ocultar();
+		});
+	});
+	
+	function ocultar(){
+		var selectValor = '#'+$("#detalle option:selected").val();			
+			$('#ocultar').children('div').hide();			
+			$('#ocultar').children(selectValor).show();
+		console.log(selectValor);
+	}
+</script>
 

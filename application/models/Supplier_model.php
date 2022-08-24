@@ -122,9 +122,10 @@ class Supplier_model extends CI_Model
     }
 
 
-    public function add($name, $nit, $company, $phone, $email, $address, $city, $region, $cuenta, $typo, $banco)
+    public function add($cat, $name, $nit, $company, $phone, $email, $address, $city, $region, $pago, $cuenta, $typo, $banco)
     {
         $data = array(
+            'categoria' => $cat,
             'name' => $name,
 			'nit' => $nit,
             'company' => $company,
@@ -133,6 +134,7 @@ class Supplier_model extends CI_Model
             'address' => $address,
             'city' => $city,
             'region' => $region,
+            'pago' => $pago,
             'cuenta' => $cuenta,
             'typo' => $typo,
             'banco' => $banco
@@ -161,9 +163,10 @@ class Supplier_model extends CI_Model
     }
 
 
-    public function edit($id, $name, $nit, $company, $phone, $email, $address, $city, $region, $cuenta, $typo, $banco)
+    public function edit($id, $cat, $name, $nit, $company, $phone, $email, $address, $city, $region, $pago, $cuenta, $typo, $banco)
     {
         $data = array(
+			'categoria' => $cat,
             'name' => $name,
 			'nit' => $nit,
             'company' => $company,
@@ -172,6 +175,7 @@ class Supplier_model extends CI_Model
             'address' => $address,
             'city' => $city,
             'region' => $region,
+			'pago' => $pago,
             'cuenta' => $cuenta,
             'typo' => $typo,
             'banco' => $banco
