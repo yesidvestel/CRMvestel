@@ -22,10 +22,10 @@
                             <?php
 							if($customer['categoria']==1){
 								$cat='Productos';
-								echo '<option value="'.$cat.'">'.$cat.'</option>
+								echo '<option value="'.$customer['categoria'].'">'.$cat.'</option>
 										<option value="2">Servicios</option>';
 							}else{$cat='Servicios';
-								echo '<option value="'.$cat.'">'.$cat.'</option>
+								echo '<option value="'.$customer['categoria'].'">'.$cat.'</option>
 										<option value="1">Productos</option>';}
 							echo $cat ?>
                          </select>
