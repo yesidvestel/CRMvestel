@@ -373,3 +373,9 @@ ALTER TABLE `encuestas`
 ALTER TABLE `encuestas`
   MODIFY `id` int(50) NOT NULL AUTO_INCREMENT;
 COMMIT;
+----------------------------------------------------------------------------------------------------------
+CAMBIOS PROVEEDORES
+---------------------------------------------------------
+ALTER TABLE `supplier` 
+ADD `categoria` int(10) NOT NULL AFTER `id`, 
+ADD `pago` varchar(20) NOT NULL AFTER `region`;
