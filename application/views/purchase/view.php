@@ -436,7 +436,7 @@
                     </div>
                     <div class="row">
                         <div class="col-xs-12 mb-1"><label
-                                    for="shortnote">Cheqa el campo para que la transaccion no aparesca en la sede</label>
+                                    for="shortnote">Marca la casilla, para que la transacción no aparezca en la sede</label>
                             <input id="nop" type="checkbox" class="form-control" name="nop" style="cursor:pointer;"></div>
                     </div>
                     <div class="row">
