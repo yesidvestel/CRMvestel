@@ -40,9 +40,18 @@ class Supplier extends CI_Controller
     {
 
         $head['usernm'] = $this->aauth->get_user()->username;
-        $head['title'] = 'Supplier';
+        $head['title'] = 'Proveedores de Productos';
         $this->load->view('fixed/header', $head);
         $this->load->view('supplier/clist');
+        $this->load->view('fixed/footer');
+    }
+	public function pro_servicios()
+    {
+
+        $head['usernm'] = $this->aauth->get_user()->username;
+        $head['title'] = 'Proveedores de Servicios';
+        $this->load->view('fixed/header', $head);
+        $this->load->view('supplier/proservis');
         $this->load->view('fixed/footer');
     }
 
@@ -71,7 +80,8 @@ class Supplier extends CI_Controller
 
     public function load_list()
     {
-        $list = $this->supplier->get_datatables();
+		$cat = $this->input->get('cat');
+        $list = $this->supplier->get_datatables($cat);
         $data = array();
         $no = $this->input->post('start');
         foreach ($list as $customers) {

@@ -30,6 +30,7 @@ class Supplier_model extends CI_Model
     var $inv_column_search = array('tid', 'name', 'invoicedate', 'total');
     var $order = array('id' => 'desc');
     var $inv_order = array('purchase.tid' => 'desc');
+	var $opt = '';
 
 
     private function _get_datatables_query($id = '')
@@ -38,6 +39,15 @@ class Supplier_model extends CI_Model
         $this->db->from($this->table);
         if ($id != '') {
             $this->db->where('gid', $id);
+        }
+		switch ($this->opt) {
+            case 1:
+                $this->db->where('categoria', 1);
+                break;
+            case 2:
+                //var_dump($this->opt);
+                $this->db->where('categoria', 2);
+                break;
         }
         $i = 0;
 
@@ -71,9 +81,10 @@ class Supplier_model extends CI_Model
         }
     }
 
-    function get_datatables($id = '')
+    function get_datatables($opt = 'all',$id = '')
     {
-        $this->_get_datatables_query($id);
+		$this->opt = $opt;
+        $this->_get_datatables_query($id,$cat);
         if ($this->input->post('length') != -1)
             $this->db->limit($this->input->post('length'), $this->input->post('start'));
         $query = $this->db->get();

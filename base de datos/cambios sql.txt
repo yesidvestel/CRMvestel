@@ -374,8 +374,10 @@ ALTER TABLE `encuestas`
   MODIFY `id` int(50) NOT NULL AUTO_INCREMENT;
 COMMIT;
 ----------------------------------------------------------------------------------------------------------
-CAMBIOS PROVEEDORES
+CATEGORIA DE PROVEEDORES
 ---------------------------------------------------------
 ALTER TABLE `supplier` 
 ADD `categoria` int(10) NOT NULL AFTER `id`, 
 ADD `pago` varchar(20) NOT NULL AFTER `region`;
+INSERT INTO `modulos`(`rol`, `nombre`, `id_padre`, `codigo`, `orden`, `icono`) VALUES ('Hijo','Proveedor de servicios',75,'proser',0,null)
+UPDATE `modulos` SET `nombre`='Proveedor de Productos' WHERE `id_modulo`=77

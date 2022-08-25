@@ -50,7 +50,7 @@
             'stateSave': true,
             'order': [],
             'ajax': {
-                'url': "<?php echo site_url('supplier/load_list?cat=1')?>",
+                'url': "<?php echo site_url('supplier/load_list?cat=2')?>",
                 'type': 'POST'
             },
             'columnDefs': [
