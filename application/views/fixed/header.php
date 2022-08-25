@@ -466,7 +466,10 @@ $lista_permisos1=$this->db->query("SELECT permisos_usuario.id,permisos_usuario.i
                             <a href="<?php echo base_url(); ?>supplier/create"><?php echo $this->lang->line('New Supplier') ?></a>
                         </li>
                         <li>
-                            <a href="<?php echo base_url(); ?>supplier"><?php echo $this->lang->line('Manage Suppliers') ?></a>
+                            <a href="<?php echo base_url(); ?>supplier"><?php echo $this->lang->line('') ?>Proveedores de Productos</a>
+                        </li>
+						<li>
+                            <a href="<?php echo base_url(); ?>supplier/pro_servicios"><?php echo $this->lang->line('') ?>Proveedores de Servicios</a>
                         </li>
                     </ul>
                 </li>
@@ -1125,8 +1128,12 @@ $lista_permisos1=$this->db->query("SELECT permisos_usuario.id,permisos_usuario.i
                         </li>
 						<?php } ?>
 						<?php if ($lista_permisos_us['proadm'] != null) { ?>
-                        <li>
-                            <a href="<?php echo base_url(); ?>supplier"><?php echo $this->lang->line('Manage Suppliers') ?></a>
+                         <li>
+                            <a href="<?php echo base_url(); ?>supplier"><?php echo $this->lang->line('') ?>Proveedores de Productos</a>
+                        </li>
+						<?php } if ($lista_permisos_us['proser'] != null) { ?>
+						<li>
+                            <a href="<?php echo base_url(); ?>supplier/pro_servicios"><?php echo $this->lang->line('') ?>Proveedores de Servicios</a>
                         </li>
 						<?php } ?>
                     </ul>
