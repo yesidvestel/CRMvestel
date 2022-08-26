@@ -251,7 +251,11 @@ echo $response;
     }
 
     public function updateCustomer($invoiceData,$id,$cuenta) {
-        $this->getAuth($cuenta);
+        if($cuenta==1){
+            $tokenx=$this->token;
+        }else{
+            $tokenx=$this->token2;
+        }
        $ch = curl_init();
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_URL, "$this->urlBase/customers/".$id);
@@ -264,7 +268,7 @@ echo $response;
 
         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
           "Content-Type: application/json",
-          "Authorization: Bearer $this->token"
+          "Authorization: Bearer $tokenx"
         ));
 
         $response = curl_exec($ch);
