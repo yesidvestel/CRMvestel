@@ -158,7 +158,7 @@
 								   for="departamento"><?php echo $this->lang->line('') ?>Departamento</label></h6>
 							<?php echo $this->lang->line('departamentos') ?> 
 							<select id="depar"	class="selectpicker form-control" name="departamento">                            	
-								<option value="<?php echo $customer['idDepartamento'] ?>">>><?php echo $departamento['departamento'] ?></option>
+								<option value="<?php echo $departamento['idDepartamento'] ?>">>><?php echo $departamento['departamento'] ?></option>
 								<?php
 								foreach ($departamentos as $row) {
 									$cid = $row['idDepartamento'];
