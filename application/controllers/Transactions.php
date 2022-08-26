@@ -75,7 +75,7 @@ class Transactions extends CI_Controller
     
     //define column headers
     $headers = array(
-        'Fecha' => 'string', 
+        'Fecha' => 'date', 
         'Cuenta' => 'string',
 		'Valor' => 'integer',
 		'Motivo' => 'string',
@@ -117,7 +117,7 @@ class Transactions extends CI_Controller
 	
     foreach ($lista_debito as $key => $debito) {
 		$fecha = date("d/m/Y",strtotime($debito->date));
-            $writer->writeSheetRow('Debito ',array($fecha,$debito->account,$debito->debit,$debito->playerid,$debito->cat,$debito->tid,$debito->note,$debito->method));
+            $writer->writeSheetRow('Debito ',array($debito->date,$debito->account,$debito->debit,$debito->playerid,$debito->cat,$debito->tid,$debito->note,$debito->method));
         
     }
         
