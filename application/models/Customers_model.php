@@ -2964,4 +2964,14 @@ $this->communication->send_email("pescafelipe@gmail.com","Comprobante de pago VE
 
 
 }
+public function tiene_afiliacion($id){
+        $lista_facturas=$this->db->query("SELECT * FROM invoice_items inner join invoices on invoices.tid=invoice_items.tid where invoices.csd=".$id." and invoice_items.product LIKE '%Afiliación%'  group by invoice_items.product order by invoices.tid desc")->result_array();
+        if(count($lista_facturas)>0){
+            //var_dump($lista_facturas[0]['pid']);
+            return array("estado"=>true,"pid"=>$lista_facturas[0]['pid']);
+        }else{
+            return array("estado"=>false);
+        }
+        
+    }
 }

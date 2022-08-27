@@ -44,6 +44,7 @@ class facturasElectronicas extends CI_Controller
 $this->load->model("customers_model","customers");
         $data['servicios'] = $this->customers->servicios_detail($_GET['id']);
         $data['due'] = $this->customers->due_details($_GET['id']);
+        $data['afiliacion'] = $this->customers->tiene_afiliacion($_GET['id']);
         $this->load->view('fixed/header', $head);
         $this->load->view('customers/facturas_electronicas',$data);
         $this->load->view('fixed/footer');
@@ -94,6 +95,7 @@ $this->load->model("customers_model","customers");
         $this->load->model("customers_model","customers");
          $dataApiTV=null;
         $dataApiNET=null;
+        $data_afiliacion=null;
         if($_POST['servicios']=="Combo"){
             $dataApiNET=$this->customers->getFacturaElectronica(null);
             //var_dump($dataApiNET);
@@ -110,6 +112,24 @@ $this->load->model("customers_model","customers");
             }else{
                 $dataApiTV= $this->customers->getFacturaElectronica(null);    
             }            
+        }else if($_POST['servicios']=="Afiliacion"){
+            $data_afiliacion=array();
+            $data_afiliacion=$this->customers->tiene_afiliacion($_POST['id']);
+            $data_afiliacion['producto']=$this->db->get_where("products",array("pid"=>$data_afiliacion['pid']))->row();
+            if(strpos($data_afiliacion['producto']->product_name, "Afiliación Internet")!==false){
+                $data_afiliacion['tipo']="Internet";
+                $data_afiliacion['valor_internet']="50000";
+                $dataApiNET=$this->customers->getFacturaElectronica(null);
+            }else if(strpos($data_afiliacion['producto']->product_name, "Afiliación Combo")!==false){
+                $data_afiliacion['tipo']="Combo";
+                $data_afiliacion['valor_internet']="30000";
+                $data_afiliacion['valor_tv']="20000";
+                $dataApiNET=$this->customers->getFacturaElectronica(null);
+                $dataApiTV= $this->customers->getFacturaElectronica(null);    
+
+            }else{
+                $data_afiliacion=null;
+            }
         }
         
          $centro_de_costo_code="1074";
@@ -252,7 +272,23 @@ $this->load->model("customers_model","customers");
         
         //var_dump($dataApiNET);
         //falta el manejo de los saldos saldos
-        
+         //codigo afiliaciones
+        if($data_afiliacion!=null){
+                if($dataApiTV!=null){
+                    $dataApiTV->items[0]->description="Afiliación Television";
+                            unset($dataApiTV->items[0]->taxes);
+                            $dataApiTV->items[0]->price="20000";                            
+                            $dataApiTV->payments[0]->value="20000";
+                }   
+
+                if($dataApiNET!=null){
+                    $dataApiNET->items[0]->code="I01";
+                    $dataApiNET->items[0]->description="Afiliación Internet";
+                            unset($dataApiNET->items[0]->taxes);
+                            $dataApiNET->items[0]->price="30000";                            
+                            $dataApiNET->payments[0]->value="30000";
+                } 
+        }else{
        	//falta el manejo de los saldos saldos
         if($dataApiTV!=null){
             $dataApiTV->items[0]->description="Servicio de Televisión por Cable";
@@ -317,7 +353,7 @@ $this->load->model("customers_model","customers");
             }
             //falta esta parte identificar el paquete de internet del usuario y agregar sus valores
         }
-
+}
        	/*var_dump($dateTime->format("Ymd"));
        	var_dump($dataApi->Payments[0]->DueDate);
         var_dump($dataApi->Header->Number);

@@ -80,6 +80,9 @@
                         <?php if($servicios['combo']!="no" && $servicios['television']!="no"){ ?>
                         <option value="Combo">Combo</option>
                         <?php } ?>
+                        <?php if($afiliacion['estado']==true){ ?>
+                        <option value="Afiliacion">--> Afiliación <-- </option>
+                        <?php  } ?>
                     </select>
                     </div>
                 </div>
@@ -143,7 +146,7 @@
     }
     function al_cambiar_de_servicio(){
         var elemento= $("#servicios option:selected").val();
-        if(elemento=="Internet"){
+        if(elemento=="Internet" || elemento=="Afiliacion"){
             $("#div_de_puntos").hide();
         }else{
             $("#div_de_puntos").show();
