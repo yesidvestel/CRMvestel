@@ -30,7 +30,15 @@ base_url(); ?>assets/vendors/js/ui/unison.min.js" type="text/javascript"></scrip
 <script src="<?php echo base_url(); ?>assets/vendors/js/ui/screenfull.min.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/vendors/js/extensions/pace.min.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/myjs/jquery.dataTables.min.js"></script>
-
+<!-- DATATABLE JS-->
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/DataTables/JSZip-2.5.0/jszip.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/DataTables/pdfmake-0.1.36/pdfmake.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/DataTables/pdfmake-0.1.36/vfs_fonts.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/DataTables/DataTables-1.12.1/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/DataTables/Buttons-2.2.3/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/DataTables/Buttons-2.2.3/js/buttons.html5.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/DataTables/Buttons-2.2.3/js/buttons.print.min.js"></script>
+<!--END DATATABLE JS-->
 
 <script type="text/javascript">var dtformat = $('#hdata').attr('data-df');
     var currency = $('#hdata').attr('data-curr');

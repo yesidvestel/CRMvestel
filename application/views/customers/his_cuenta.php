@@ -1,3 +1,11 @@
+<style type="text/css">
+    .buttons-pdf,.buttons-excel{
+        cursor: pointer;
+    }
+    .btn-group, .btn-group-vertical {
+    position: absolute !important;
+}
+</style>
 <article class="content">
     <div class="card card-block">
         <div id="notify" class="alert alert-success" style="display:none;">
@@ -82,7 +90,7 @@
 			language: {
                 "lengthMenu": "Mostrar _MENU_ registros",
                 "zeroRecords": "No se encontraron resultados",
-                "info": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                "info": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros &nbsp",
                 "infoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
                 "infoFiltered": "(filtrado de un total de _MAX_ registros)",
                 "sSearch": "Buscar:",
@@ -94,8 +102,34 @@
 			     },
 			     "sProcessing":"Procesando...",
             },
+            dom: 'Bfrtilp',       
+        buttons:[ 
+            {
+                extend:    'excelHtml5',
+                text:      '<img width="30px" src="<?=base_url()?>assets/images/icons/excel.png"></i>',
+                titleAttr: 'Exportar a Excel',
+                className: 'btn-success',
+                messageTop :'Historial Cuenta <?php echo $details['name'].' '.$details['unoapellido'] ?>'
+            },
+            {
+                extend:    'pdfHtml5',
+                text:      '<img width="30px" src="<?=base_url()?>assets/images/icons/pdf.png"></i> ',
+                titleAttr: 'Exportar a PDF',
+                className: 'btn-success',
+                messageTop :'Historial Cuenta <?php echo $details['name'].' '.$details['unoapellido'] ?>'
+            },
+            {
+                extend:    'print',
+                text:      '<i class="icon-print"></i> ',
+                titleAttr: 'Imprimir',
+                className: 'btn btn-info'
+            },
+        ]
 			
 		});
-			
+	$(".buttons-pdf").removeClass("dt-button");		
+    $(".buttons-excel").removeClass("dt-button");     
+    $(".buttons-print").removeClass("dt-button");     
     });
+
 </script>

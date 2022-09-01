@@ -57,6 +57,9 @@ $lista_permisos1=$this->db->query("SELECT permisos_usuario.id,permisos_usuario.i
     <link rel="stylesheet" href="<?php echo base_url('assets/custom/summernote-bs4.css') . APPVER; ?>">
     <link rel="stylesheet" href="<?php echo base_url('assets/custom/select2.min.css') . APPVER; ?>">
     <!-- END Page Level CSS-->
+    <!-- DATATABLE CSS-->
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/DataTables/Buttons-2.2.3/css/buttons.dataTables.min.css"/>
+    <!--end  DATATABLE CSS-->
     <!-- BEGIN Custom CSS-->
 
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/' . LTR . '/style.css') . APPVER; ?>">
