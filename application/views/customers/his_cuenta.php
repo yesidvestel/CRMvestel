@@ -22,11 +22,13 @@
                     <th>#</th>
                     <th><?php echo $this->lang->line('') ?>Codigo</th>
                     <th><?php echo $this->lang->line('') ?>Fecha</th>
-                    <th><?php echo $this->lang->line('') ?>Debito</th>
-                    <th><?php echo $this->lang->line('') ?>Credito</th>
+                    <th><?php echo $this->lang->line('') ?>Tipo</th>
+                    <th><?php echo $this->lang->line('') ?>Cargo</th>
+                    <th><?php echo $this->lang->line('') ?>Abono</th>
 
 
                 </tr>
+					<i style="background-color: forestgreen"></i>
                 </thead>
                 <tbody>
                 <?php $i = 1;
@@ -43,8 +45,9 @@
                     <td>$i</td>
                     <td>$dtlle</td>
                     <td>$tpo</td>
-                    <td></td>
+                    <td>Factura</td>
                     <td>".amountformat($cdor)."</td>
+                    <td></td>
 					</tr>";
 				   	 $pagos=$this->db->get_where('transactions',array('tid'=>$dtlle,'estado'=>null))->result_array();
 				    foreach ($pagos as $row2) {
@@ -59,8 +62,9 @@
                     <td>$i</td>
                     <td>$cid2</td>
                     <td>$tpo2</td>
-                    <td>".amountformat($cdor2)."</td>
+                    <td>Pago</td>
                     <td></td>
+                    <td>".amountformat($cdor2)."</td>
 					</tr>";
 					}
                     $i++;
@@ -73,14 +77,16 @@
                     <th>#</th>
                     <th><?php echo $this->lang->line('') ?>Codigo</th>
                     <th><?php echo $this->lang->line('') ?>Fecha</th>
-                    <th><?php echo $this->lang->line('') ?>Debito</th>
-                    <th><?php echo $this->lang->line('') ?>Credito</th>
+                    <th><?php echo $this->lang->line('') ?>Tipo</th>
+                    <th><?php echo $this->lang->line('') ?>Cargo</th>
+                    <th><?php echo $this->lang->line('') ?>Abono</th>
                 </tr>
                 </tfoot>
             </table>
         </div>
     </div>
 </article>
+<script src="https://kit.fontawesome.com/317775a1b1.js" crossorigin="anonymous"></script>
 <script type="text/javascript">
     $(document).ready(function () {
 
@@ -106,16 +112,16 @@
         buttons:[ 
             {
                 extend:    'excelHtml5',
-                text:      '<img width="30px" src="<?=base_url()?>assets/images/icons/excel.png"></i>',
+                text:      '<i class="fa-sharp fa-solid fa-file-excel"></i>',
                 titleAttr: 'Exportar a Excel',
-                className: 'btn-success',
+                className: 'btn btn-success',
                 messageTop :'Historial Cuenta <?php echo $details['name'].' '.$details['unoapellido'] ?>'
             },
             {
                 extend:    'pdfHtml5',
-                text:      '<img width="30px" src="<?=base_url()?>assets/images/icons/pdf.png"></i> ',
+                text:      '<i class="fa-sharp fa-solid fa-file-pdf"></i>',
                 titleAttr: 'Exportar a PDF',
-                className: 'btn-success',
+                className: 'btn btn-danger',
                 messageTop :'Historial Cuenta <?php echo $details['name'].' '.$details['unoapellido'] ?>'
             },
             {
