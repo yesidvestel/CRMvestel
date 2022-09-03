@@ -1226,7 +1226,9 @@ $writer->writeSheetHeader($nombrey, $headers,$col_options);
         }else{
 			$status = 'due';
 		}
-		
+		if($total_tax>0){
+            $subtotal=$total-$total_tax;
+        }
         $data = array(
 			'tid' => $invocieno, 
 			'invoicedate' => $bill_date, 
