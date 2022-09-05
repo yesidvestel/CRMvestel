@@ -89,9 +89,9 @@
                 <thead>
                 <tr>
                     <th>#</th>
-                    <th><?php echo $this->lang->line('Task') ?></th>
-                    <th><?php echo $this->lang->line('Due Date') ?></th>
-                    <th><?php echo $this->lang->line('Start') ?></th>
+                    <th><?php echo $this->lang->line('') ?>Detalle</th>
+                    <th><?php echo $this->lang->line('') ?>Generada</th>
+                    <th><?php echo $this->lang->line('') ?>Realizada</th>
                     <th><?php echo $this->lang->line('') ?>Asignado a</th>
                     <th><?php echo $this->lang->line('Status') ?></th>
                     <th><?php echo $this->lang->line('Actions') ?></th>
@@ -250,7 +250,6 @@
 
             "processing": true,
             "serverSide": true,
-            "stateSave": true,
             "ajax": {
                 "url": "<?php echo site_url('tools/todo_load_list')?>",
                 "type": "POST"

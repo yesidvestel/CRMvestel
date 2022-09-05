@@ -21,23 +21,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Tools_model extends CI_Model
 {
 
-    var $column_order = array('status', 'name', 'duedate', 'tdate', null);
-    var $column_search = array('todolist.name','employee_profile.name', 'duedate', 'tdate');
+    var $column_order = array(null,'todolist.name', 'start', 'duedate', 'employee_profile.name','status', null);
+    var $column_search = array('todolist.name','start', 'duedate', 'employee_profile.name', 'status');
     var $notecolumn_order = array(null, 'title', 'cdate', null);
     var $notecolumn_search = array('id', 'title', 'cdate');
-    var $order = array('id' => 'asc');
+    var $order = array('start' => 'desd');
 
-    private function _task_datatables_query($cday = '')
+   private function _task_datatables_query($cday = '')
     {
-		$colaborador = $this->aauth->get_user()->id;
-		 $this->db->select('todolist.*,employee_profile.name AS emp');
+	   $colaborador = $this->aauth->get_user()->id;
+	   $this->db->select('todolist.*,employee_profile.name AS emp');
         $this->db->from('todolist');
         if ($cday) {
             $this->db->where('DATE(duedate)=', $cday);
         }
-		$this->db->where('eid', $colaborador);
-		$this->db->or_where('aid', $colaborador);
+	   	$this->db->where('eid', $colaborador);
+		$this->db->where('aid', $colaborador);	
 		$this->db->join('employee_profile', 'employee_profile.id = todolist.eid', 'left');
+		
+
         $i = 0;
 
         foreach ($this->column_search as $item) // loop column
@@ -67,11 +69,11 @@ class Tools_model extends CI_Model
         }
     }
 
-    function task_datatables($cday = '')
+    function task_datatables()
     {
 
 
-        $this->_task_datatables_query($cday);
+        $this->_task_datatables_query();
 
         if ($this->input->post('length') != -1)
             $this->db->limit($this->input->post('length'), $this->input->post('start'));
@@ -79,16 +81,16 @@ class Tools_model extends CI_Model
         return $query->result();
     }
 
-    function task_count_filtered($cday = '')
+    function task_count_filtered()
     {
-        $this->_task_datatables_query($cday);
+        $this->_task_datatables_query();
         $query = $this->db->get();
         return $query->num_rows();
     }
 
-    public function task_count_all($cday = '')
+    public function task_count_all()
     {
-        $this->_task_datatables_query($cday);
+        $this->_task_datatables_query();
         $query = $this->db->get();
         return $query->num_rows();
     }

@@ -212,8 +212,8 @@ class Tools Extends CI_Controller
             $row = array();
             $row[] = $no;
             $row[] = '<a href="#" class="btn btn-primary btn-sm rounded set-task" data-id="' . $task->id . '" data-stat="0"> SET </a>' . $name;
-            $row[] = dateformat($task->duedate);
             $row[] = dateformat($task->start);
+            $row[] = dateformat($task->duedate);
             $row[] = $task->emp;
             $row[] = '<span class="task_' . $task->status . '">' . $this->lang->line($task->status) . '</span>';
 
