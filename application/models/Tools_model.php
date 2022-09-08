@@ -35,8 +35,9 @@ class Tools_model extends CI_Model
         if ($cday) {
             $this->db->where('DATE(duedate)=', $cday);
         }
+	   	
 	   	$this->db->where('eid', $colaborador);
-		$this->db->where('aid', $colaborador);	
+		$this->db->or_where('aid', $colaborador);	
 		$this->db->join('employee_profile', 'employee_profile.id = todolist.eid', 'left');
 		
 
