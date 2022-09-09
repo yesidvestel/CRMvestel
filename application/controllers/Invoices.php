@@ -2236,7 +2236,9 @@ foreach ($lista as $key => $value) {
                     $total=$total-$var1;
                     
                 }
-
+if($total_tax>0){
+            $subtotal=$total-$total_tax;
+        }
         $data = array(
 			'invoicedate' => $bill_date,
 			'invoiceduedate' => $bill_due_date,

@@ -839,7 +839,7 @@ if($status=="Resuelto" && file_exists($nombre_archiv)==false && strpos(strtolowe
         echo json_encode(array('status' => 'Error', 'message' =>"Por favor agrega un equipo a esta orden antes de cerrarla ", 'pstatus' => "error"));
 }else if($hiso_devolucion_de_equipo==false){
         echo json_encode(array('status' => 'Error', 'message' =>"Por favor realice la devolucion del equipo antes de cerrar la orden ", 'pstatus' => "error"));
-}else{
+}else{$y=0;
     $tv =null;
         $inter = null;
         $ptos = null;
@@ -952,18 +952,29 @@ if($status=="Resuelto" && file_exists($nombre_archiv)==false && strpos(strtolowe
                     $producto = $this->db->get_where('products',array('product_name'=>$data['combo']))->row();
                     $x=intval($producto->product_price);
                     $x=($x/31)*$diferencia->days;
-                    $total+=$x;
+                    
                     $datay['pid']=$producto->pid;
                     $datay['product']=$producto->product_name;
 					$datay['qty']=1;
                     if(isset($datay['totaltax'])){
                         $tax2+=$datay['totaltax'];    
                     }
-					
-					$datay['tax']=0;
-					$datay['totaltax']=0;
-                    $datay['price']=$x;
-                    $datay['subtotal']=$x;     
+					if($producto->taxrate!=0 && $producto->taxrate!=null){
+                        $taxvalue=round(($producto->product_price*$producto->taxrate)/100);
+                        $taxvalue=round(round(($taxvalue/31))*$diferencia->days);
+                        $y=$taxvalue;
+                        $total+=$x;
+                        $datay['tax']=$producto->taxrate;
+                        $datay['totaltax']=$taxvalue;
+                        $datay['price']=$x;
+                        $datay['subtotal']=($x+$taxvalue);         
+                    }else{
+                        $total+=$x;
+                        $datay['tax']=0;
+                        $datay['totaltax']=0;
+                        $datay['price']=$x;
+                        $datay['subtotal']=$x;         
+                    }    
                     //var_dump($data);
                     if(($ticket->detalle=="Instalacion" || $ticket->detalle=="Reconexion Combo2" || $ticket->detalle=="Activacion" || $ticket->detalle=="Reconexion Television2" || $ticket->detalle=="Reconexion Internet2") && ($ticket->id_factura==null || $ticket->id_factura==0)  && $status=="Resuelto"){
                         $this->db->insert('invoice_items',$datay);    
@@ -978,18 +989,36 @@ if($status=="Resuelto" && file_exists($nombre_archiv)==false && strpos(strtolowe
                     $x=round($producto->product_price);
                     $x=round($x/31);
                     $x=round($x*$diferencia->days);					
-                    $y=round(round(3992/31)*$diferencia->days);
+                    /*$z=round(round(3992/31)*$diferencia->days);
+                    $y+=$z;
                     $total+=$x;
 					$tax2+=$datay['totaltax'];
 					$datay['price']=$x;
                     $datay['tax']=19;
-					$datay['totaltax']=$y;
+					$datay['totaltax']=$z;
 					$datay['subtotal']=$x+$datay['totaltax'];
+                    */
+                    if($producto->taxrate!=0 && $producto->taxrate!=null){
+                        $taxvalue=round(($producto->product_price*$producto->taxrate)/100);
+                        $taxvalue=round(round(($taxvalue/31))*$diferencia->days);
+                        $y+=$taxvalue;
+                        $total+=$x;
+                        $datay['tax']=$producto->taxrate;
+                        $datay['totaltax']=$taxvalue;
+                        $datay['price']=$x;
+                        $datay['subtotal']=($x+$taxvalue);     //basarme en este cambio para agregar tv y hacer pruebas de todo, para mañana    
+                    }else{
+                        $total+=$x;
+                        $datay['tax']=0;
+                        $datay['totaltax']=0;
+                        $datay['price']=$x;
+                        $datay['subtotal']=$x;         
+                    }  
                     if(($ticket->detalle=="Instalacion" || $ticket->detalle=="Reconexion Combo2" || $ticket->detalle=="Activacion" || $ticket->detalle=="Reconexion Television2" || $ticket->detalle=="Reconexion Internet2") && ($ticket->id_factura==null || $ticket->id_factura==0)  && $status=="Resuelto"){
                         $this->db->insert('invoice_items',$datay);
                     }
 				}
-					if($data['puntos']!=='0' && $ptos!=='0' && $ptos!==0){                
+					if($data['puntos']!=='0' && $ptos!=='0' && $ptos!==0 && $data['puntos']!=='' && $data['puntos']!==null){                
                     $producto = $this->db->get_where('products',array('pid'=>158))->row();
                     $datay['pid']=$producto->pid;
                     $datay['product']=$producto->product_name;
@@ -1503,19 +1532,39 @@ $x=0;
 		if($ticket->detalle=="AgregarTelevision"){			
 			$producto = $this->db->get_where('products',array('product_name'=>'Television'))->row();
             $total=0;
+            $taxvalue=0;
+            
 					$datay['tid']=$idfactura;
                     $datay['pid']=$producto->pid;
                     $datay['product']=$producto->product_name;
 					$datay['qty']=1;
                     $x=intval($producto->product_price);
                     $x=($x/31)*$diferencia->days;					
-                    $y=(3992/31)*$diferencia->days;
+                    /*$y=(3992/31)*$diferencia->days;
                     $total+=$x;
 					$tax2+=$datay['totaltax'];
 					$datay['price']=$x;
                     $datay['tax']=19;
 					$datay['totaltax']=$y;
-					$datay['subtotal']=$x+$datay['totaltax'];     
+					$datay['subtotal']=$x+$datay['totaltax']; */
+                    /*new changes*/    
+                    if($producto->taxrate!=0 && $producto->taxrate!=null){
+                        $taxvalue=round(($producto->product_price*$producto->taxrate)/100);
+                        $taxvalue=round(round(($taxvalue/31))*$diferencia->days);
+                        //$y+=$taxvalue;
+                        $total+=$x;
+                        $datay['tax']=$producto->taxrate;
+                        $datay['totaltax']=$taxvalue;
+                        $datay['price']=$x;
+                        $datay['subtotal']=($x+$taxvalue);     //basarme en este cambio para agregar tv y hacer pruebas de todo, para mañana    
+                    }else{
+                        $total+=$x;
+                        $datay['tax']=0;
+                        $datay['totaltax']=0;
+                        $datay['price']=$x;
+                        $datay['subtotal']=$x;         
+                    }   
+                    /*end new changes*/    
                     //var_dump($total);
                     /*serv ads*/  
                     $list_servs=$this->invoices->servicios_adicionales($idfactura,false);
@@ -1562,8 +1611,8 @@ $x=0;
             //var_dump($factura->subtotal);
             //var_dump($total);
 				$this->db->set('subtotal', $factura->subtotal+$total);
-				$this->db->set('tax', $factura->tax+$tax2);
-				$this->db->set('total', $factura->total+$total+$tax2);
+				$this->db->set('tax', $factura->tax+$taxvalue);
+				$this->db->set('total', $factura->total+$total+$taxvalue);
 				$this->db->set('television', 'Television');
                 $this->db->set('estado_tv', null);
 				$this->db->set('puntos', $ptos);
@@ -1585,19 +1634,44 @@ $x=0;
         $datay['discount']=0;        
         $datay['totaldiscount']=0;
 			//agregar servicio nuevo
+        $y=0;
                 if($data['combo']!==no){
                     $producto = $this->db->get_where('products',array('product_name'=>$inter))->row();
 					$datay['pid']=$producto->pid;
                     $x=intval($producto->product_price);
                     $x=($x/31)*$diferencia->days;
-                    $total=$x;
+                    
                     $datay['product']=$producto->product_name;
 					$datay['qty']=1;
 					$tax2+=$datay['totaltax'];
-					$datay['tax']=0;
-					$datay['totaltax']=0;
-                    $datay['price']=$x;
-                    $datay['subtotal']=$x;     
+					
+                    /*new */
+                    if($producto->taxrate!=0 && $producto->taxrate!=null){
+                       /* $taxvalue=round(($producto->product_price*$producto->taxrate)/100);
+                        $taxvalue=round(round(($taxvalue/31))*$diferencia->days);
+                        $y=$taxvalue;
+                        $total=($x-$taxvalue);
+                        $datay['tax']=$producto->taxrate;
+                        $datay['totaltax']=$taxvalue;
+                        $datay['price']=($x-$taxvalue);
+                        $datay['subtotal']=$x;  
+*/
+                        $taxvalue=round(($producto->product_price*$producto->taxrate)/100);
+                        $taxvalue=round(round(($taxvalue/31))*$diferencia->days);
+                        $y=$taxvalue;
+                        $total=$x;
+                        $datay['tax']=$producto->taxrate;
+                        $datay['totaltax']=$taxvalue;
+                        $datay['price']=$x;
+                        $datay['subtotal']=($x+$taxvalue);       
+                    }else{
+                        $total=$x;
+                        $datay['tax']=0;
+                        $datay['totaltax']=0;
+                        $datay['price']=$x;
+                        $datay['subtotal']=$x;         
+                    }  
+                    /*end new*/   
                     $this->db->insert('invoice_items',$datay);
 
                 }
@@ -1637,8 +1711,8 @@ $x=0;
                         $this->db->insert('invoice_items',$data_item_serv);
                 }
 				$this->db->set('subtotal', $factura->subtotal+$total);
-				$this->db->set('tax', $factura->tax);
-				$this->db->set('total', $factura->total+$total);
+				$this->db->set('tax', ($factura->tax+$y));
+				$this->db->set('total', $factura->total+($total+$y));
 				$this->db->set('combo', $inter);
                 $this->db->set('estado_combo', null);
         		$this->db->where('tid', $idfactura);
