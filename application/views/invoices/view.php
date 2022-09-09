@@ -854,6 +854,7 @@
                                 <option value="Compromiso"><?php echo $this->lang->line('') ?>Compromiso</option>
 								<?php } ?>
                                 <option value="Cartera"><?php echo $this->lang->line('') ?>Cartera</option>
+								<option value="Reportado"><?php echo $this->lang->line('') ?>Reportado</option>
 								<?php if ($this->aauth->get_user()->roleid > 3) { ?>
 								<option value="Depurado"><?php echo $this->lang->line('') ?>Depurado</option>
 								<?php } ?>

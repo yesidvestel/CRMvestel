@@ -213,6 +213,7 @@
 														<option value='Compromiso'>Compromiso</option>
 														<option value='Retirado'>Retirado</option>
 														<option value='Depurado'>Depurado</option>
+														<option value='Reportado'>Reportado</option>
                                                     </select>
 
                                               </div>
