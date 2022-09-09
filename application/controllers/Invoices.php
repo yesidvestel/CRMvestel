@@ -1497,7 +1497,14 @@ $this->load->model('customers_model', 'customers');
                 $this->db->set("fecha_cambio",date("Y-m-d H:i:s"));       
 		$this->db->set('usu_estado', $status);
         $this->db->where('id', $usr);
-        $this->db->update('customers');
+         if($this->db->update('customers')){
+		 $dataes = array(
+			'cid' => $usr,
+			'fecha' => date("Y-m-d H:i:s"),
+			'estado' => $status,
+			);
+			 $this->db->insert("estados",$dataes);
+		}
             $data_h=array();
                 $data_h['modulo']="Ventas";
                 $data_h['accion']="Administrar Facturas > ver factura > instalar {update}";

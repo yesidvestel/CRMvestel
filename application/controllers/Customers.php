@@ -1476,6 +1476,18 @@ if($data['servicios']['estado']=="Inactivo"){
 
 
     }
+	public function estados()
+    {
+
+		$custid = $this->input->get('id');
+        $data['details'] = $this->customers->details($custid);
+        $data['estado'] = $this->customers->estado_list($custid);
+        $head['usernm'] = $this->aauth->get_user()->username;
+        $head['title'] = 'Estados';
+        $this->load->view('fixed/header', $head);
+        $this->load->view('customers/estados',$data);
+        $this->load->view('fixed/footer');
+    }
     public function transactions()
     {
 

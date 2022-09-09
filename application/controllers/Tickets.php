@@ -1116,7 +1116,15 @@ $x=0;
                 $this->db->set("f_contrato",date("Y-m-d"));
 				$this->db->set('usu_estado', 'Activo');
         		$this->db->where('id', $ticket->cid);
-        		$this->db->update('customers');
+        		//historial estados
+        		if($this->db->update('customers')){
+					 $dataes = array(
+						'cid' => $ticket->cid,
+						'fecha' => date("Y-m-d H:i:s"),
+						'estado' => 'Activo',
+						);
+						 $this->db->insert("estados",$dataes);
+					}
 				//id factura si se dividio orden
 				$this->db->set('id_factura', $data['tid']);							
         		
@@ -1280,7 +1288,15 @@ $x=0;
                 $this->db->set("fecha_cambio",date("Y-m-d H:i:s"));
 				$this->db->set('usu_estado', 'Activo');
         		$this->db->where('id', $ticket->cid);
-        		$this->db->update('customers');
+        		//historial estados
+        		if($this->db->update('customers')){
+				 $dataes = array(
+					'cid' => $ticket->cid,
+					'fecha' => date("Y-m-d H:i:s"),
+					'estado' => 'Activo',
+					);
+					 $this->db->insert("estados",$dataes);
+				}
                  //mikrotik
                 $customerx=$this->db->get_where("customers",array('id' =>$ticket->cid ))->row();
                 $this->customers->activar_estado_usuario($customerx->name_s,$customerx->gid,$customerx->tegnologia_instalacion);
@@ -1297,7 +1313,15 @@ $x=0;
                 $this->db->set("fecha_cambio",date("Y-m-d H:i:s"));
 				$this->db->set('usu_estado', 'Activo');
         		$this->db->where('id', $ticket->cid);
-        		$this->db->update('customers');
+        		//historial estados
+        		if($this->db->update('customers')){
+				 $dataes = array(
+					'cid' => $ticket->cid,
+					'fecha' => date("Y-m-d H:i:s"),
+					'estado' => 'Activo',
+					);
+					 $this->db->insert("estados",$dataes);
+				}
 		}
        
 
@@ -1335,7 +1359,15 @@ $x=0;
                 $this->db->set("fecha_cambio",date("Y-m-d H:i:s"));
 				$this->db->set('usu_estado', 'Cortado');
         		$this->db->where('id', $ticket->cid);
-        		$this->db->update('customers');
+        		//historial estados
+        		if($this->db->update('customers')){
+				 $dataes = array(
+					'cid' => $ticket->cid,
+					'fecha' => date("Y-m-d H:i:s"),
+					'estado' => 'Cortado',
+					);
+					 $this->db->insert("estados",$dataes);
+				}
 
                  //mikrotik
                 $customerx=$this->db->get_where("customers",array('id' =>$ticket->cid ))->row();
@@ -1356,7 +1388,14 @@ $x=0;
                 $this->db->set("fecha_cambio",date("Y-m-d H:i:s"));
 				$this->db->set('usu_estado', $nestado);
         		$this->db->where('id', $ticket->cid);
-        		if($this->db->update('customers')){
+        		//historial estado
+				if($this->db->update('customers')){
+				 $dataes = array(
+					'cid' => $ticket->cid,
+					'fecha' => date("Y-m-d H:i:s"),
+					'estado' => $nestado,
+					);
+					 if($this->db->insert("estados",$dataes)){
 				//agregar reconexion	
 				/*?>$data2['tid']=$idfactura;
 				$data2['pid']=$producto2->pid;
@@ -1381,6 +1420,7 @@ $x=0;
                 $customerx=$this->db->get_where("customers",array('id' =>$ticket->cid ))->row();
                 $this->customers->desactivar_estado_usuario($customerx->name_s,$customerx->gid,$customerx->tegnologia_instalacion);
 				}
+			}
 		}
 		if($ticket->detalle=="Corte Television"){
 			//agregar reconexion
@@ -1412,7 +1452,15 @@ $x=0;
                 $this->db->set("fecha_cambio",date("Y-m-d H:i:s"));
 				$this->db->set('usu_estado', 'Cortado');
         		$this->db->where('id', $ticket->cid);
-        		$this->db->update('customers');
+        		//historial estado
+        		if($this->db->update('customers')){
+				 $dataes = array(
+					'cid' => $ticket->cid,
+					'fecha' => date("Y-m-d H:i:s"),
+					'estado' => 'Cortado',
+					);
+					 $this->db->insert("estados",$dataes);
+				}
 			}else{
 				//actualizar factura
 				$this->db->set('ron', 'Activo');
@@ -1426,7 +1474,15 @@ $x=0;
                 $this->db->set("fecha_cambio",date("Y-m-d H:i:s"));
 				$this->db->set('usu_estado', 'Activo');
         		$this->db->where('id', $ticket->cid);
-        		$this->db->update('customers');
+        		//historial estado
+        		if($this->db->update('customers')){
+				 $dataes = array(
+					'cid' => $ticket->cid,
+					'fecha' => date("Y-m-d H:i:s"),
+					'estado' => 'Activo',
+					);
+					 $this->db->insert("estados",$dataes);
+				}
 			}
 				
 			
@@ -1464,7 +1520,15 @@ $x=0;
                 $this->db->set("fecha_cambio",date("Y-m-d H:i:s"));
 				$this->db->set('usu_estado', 'Suspendido');
         		$this->db->where('id', $ticket->cid);
-        		$this->db->update('customers');
+        		//historial estados
+        		if($this->db->update('customers')){
+				 $dataes = array(
+					'cid' => $ticket->cid,
+					'fecha' => date("Y-m-d H:i:s"),
+					'estado' => 'Suspendido',
+					);
+					 $this->db->insert("estados",$dataes);
+				}
                  //mikrotik
                 $customerx=$this->db->get_where("customers",array('id' =>$ticket->cid ))->row();
                 $this->customers->desactivar_estado_usuario($customerx->name_s,$customerx->gid,$customerx->tegnologia_instalacion);
@@ -1483,7 +1547,15 @@ $x=0;
                 $this->db->set("fecha_cambio",date("Y-m-d H:i:s"));
 				$this->db->set('usu_estado', 'Retirado');
         		$this->db->where('id', $ticket->cid);
-        		$this->db->update('customers');
+        		//historial estado
+        		if($this->db->update('customers')){
+				 $dataes = array(
+					'cid' => $ticket->cid,
+					'fecha' => date("Y-m-d H:i:s"),
+					'estado' => 'Retirado',
+					);
+					 $this->db->insert("estados",$dataes);
+				}
                  //mikrotik
                 $customerx=$this->db->get_where("customers",array('id' =>$ticket->cid ))->row();
                 $this->customers->desactivar_estado_usuario($customerx->name_s,$customerx->gid,$customerx->tegnologia_instalacion);
@@ -1505,7 +1577,15 @@ $x=0;
                 $this->db->set("fecha_cambio",date("Y-m-d H:i:s"));
 				$this->db->set('usu_estado', $status2);
         		$this->db->where('id', $ticket->cid);
-        		$this->db->update('customers');
+        		//historial estado
+        		if($this->db->update('customers')){
+				 $dataes = array(
+					'cid' => $ticket->cid,
+					'fecha' => date("Y-m-d H:i:s"),
+					'estado' => $status2,
+					);
+					 $this->db->insert("estados",$dataes);
+				}
 		}
 		if($ticket->detalle=="Suspension Internet"){
 			$factura = $this->db->get_where('invoices',array('tid'=>$idfactura))->row();
@@ -1524,7 +1604,15 @@ $x=0;
                 $this->db->set("fecha_cambio",date("Y-m-d H:i:s"));
 				$this->db->set('usu_estado', $status2);
         		$this->db->where('id', $ticket->cid);
-        		$this->db->update('customers');
+        		//historial estado
+        		if($this->db->update('customers')){
+				 $dataes = array(
+					'cid' => $ticket->cid,
+					'fecha' => date("Y-m-d H:i:s"),
+					'estado' => $status2,
+					);
+					 $this->db->insert("estados",$dataes);
+				}
                  //mikrotik
                 $customerx=$this->db->get_where("customers",array('id' =>$ticket->cid ))->row();
                 $this->customers->desactivar_estado_usuario($customerx->name_s,$customerx->gid,$customerx->tegnologia_instalacion);

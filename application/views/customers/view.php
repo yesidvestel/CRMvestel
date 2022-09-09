@@ -39,6 +39,10 @@
 {
  background-color: #EB8D25;
 }
+.st-Reportado
+{
+ background-color: #2C60A7;
+}
 .st-Depurado
 {
  background-color: darkcyan;
@@ -493,7 +497,7 @@
                                 </div>
 								<div class="col-md-4" style="margin-top: 5px;">
                                     <a href="<?php echo base_url('customers/hiscuenta?id=' . $details['id']) ?>"
-                                       class="btn btn-primary btn-lg" style="width: 250px"><i
+                                       class="btn btn-success btn-lg" style="width: 250px"><i
                                                 class="icon-ticket"></i> Historial de Cuenta
                                     </a>
                                 </div>						
@@ -501,14 +505,14 @@
 								<div class="col-md-4" style="margin-top: 5px;">
 
                                     <a href="<?php echo base_url('customers/soporte?id=' . $details['id']) ?>"
-                                       class="btn btn-success btn-lg" style="width: 250px"><i
+                                       class="btn btn-primary btn-lg" style="width: 250px"><i
                                                 class="icon-ticket"></i> Ver Tickets </a>
 
                                 </div>
 								<div class="col-md-4" style="margin-top: 5px;">
 
                                     <a href="<?php echo base_url('customers/equipos?id=' . $details['id']) ?>"
-                                       class="btn btn-primary btn-lg" style="width: 250px"><i
+                                       class="btn btn-success btn-lg" style="width: 250px"><i
                                                 class="icon-tasks"></i> Ver Equipos</a>
 
                                 </div>
@@ -516,7 +520,7 @@
 								<div class="col-md-4" style="margin-top: 5px;">
 
                                     <a href="#pop_model2" data-toggle="modal" onclick="funcion_status();" data-remote="false" 
-                                       class="btn btn-success btn-lg" style="width: 250px"><i
+                                       class="btn btn-primary btn-lg" style="width: 250px"><i
                                                 class="icon-user"></i> Cambio Titular </a>
 
                                 </div>
@@ -524,7 +528,7 @@
 								<div class="col-md-4" style="margin-top: 5px;">
 
                                     <a href="<?php echo base_url('llamadas/index?id=' . $details['id']) ?>"
-                                       class="btn btn-primary btn-lg" style="width: 250px"><i
+                                       class="btn btn-success btn-lg" style="width: 250px"><i
                                                 class="icon-mobile-phone"></i> Ate. Usuario</a>
 
                                 </div>
@@ -532,8 +536,15 @@
                                 <div class="col-md-4" style="margin-top: 5px;">
 
                                     <a href="<?php echo base_url('facturasElectronicas?id=' . $details['id']) ?>"
-                                       class="btn btn-success btn-lg" style="width: 250px"><i
+                                       class="btn btn-primary btn-lg" style="width: 250px"><i
                                                 class="icon-file-text2"></i> Facturas Electronicas</a>
+
+                                </div>
+								<div class="col-md-4" style="margin-top: 5px;">
+
+                                    <a  href="<?php echo base_url('customers/estados?id=' . $details['id']) ?>"
+                                       class="btn btn-success btn-lg" style="width: 250px"><i
+                                                class="icon-calendar"></i>Historial estados</a>
 
                                 </div>
 								<?php } ?>

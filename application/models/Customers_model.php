@@ -164,6 +164,15 @@ class Customers_model extends CI_Model
         return $query->result_array();
 
     }
+	public function estado_list($custid)
+    {
+        $this->db->select('*');
+        $this->db->from('estados');
+		$this->db->join('customers', 'estados.cid=customers.id', 'left');
+		$this->db->where('cid', $custid);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
 
     function count_filtered($id = '')
     {
