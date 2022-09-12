@@ -121,6 +121,7 @@
 								<option value="Wifi">Wifi</option>
 								<option value="Cisco">Cisco</option>
 								<option value="Mikotik">Mikrotik</option>
+								<option value="V-sol">V-sol</option>
 							</select>
                         </div>
                     </div>
