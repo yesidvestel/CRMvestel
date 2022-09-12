@@ -433,7 +433,7 @@ class llamadas extends CI_Controller
 		'Documento' => 'integer',
 		'Debe' => 'integer',
 		'Pago' => 'integer',
-		'Nota' => 'integer');
+		'Nota' => 'string');
     
     //fetch data from database
     //$salesinfo = $this->product_model->get_salesinfo();
