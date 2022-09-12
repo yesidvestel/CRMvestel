@@ -476,7 +476,7 @@ class llamadas extends CI_Controller
 			$pagos=$this->customers->pago_details($idusuario,$fcha,$fchavence);
 			$pago_customer=$pagos['pago'];
 				$fecha = date("d/m/Y",strtotime($debito->date));
-					$writer->writeSheetRow('Debito ',array(
+					$writer->writeSheetRow('Acuerdos ',array(
 						$acuerdo->fcha,
 						$acuerdo->hra,
 						$acuerdo->fecha_vence,
