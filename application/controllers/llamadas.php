@@ -376,14 +376,149 @@ class llamadas extends CI_Controller
 	public function list_compromisos()
     {
         $custid = $this->input->get('id');
+		$this->load->model('customers_model', 'customers');
         $this->load->model('ticket_model', 'ticket');
 		$data['tecnicoslista'] = $this->ticket->tecnico_list();
-        //$data['money'] = $this->supplier->money_details($custid);
+        $data['acuerdos'] = $this->llamadas->lista_acuerdo();
         $head['usernm'] = $this->aauth->get_user()->username;
         $head['title'] = 'View Supplier Invoices';
         $this->load->view('fixed/header', $head);
         $this->load->view('llamadas/compromisos', $data);
         $this->load->view('fixed/footer');
+    }
+	public function explortar_acuerdos(){
+		set_time_limit(20000);
+        $this->load->model('customers_model', 'customers');
+        $col = $this->aauth->get_user()->username;
+		$rol = $this->aauth->get_user()->roleid;
+		$this->db->select('llamadas.*,customers.id AS idcus,customers.name,customers.unoapellido,customers.documento');
+        $this->db->from('llamadas');
+		$this->db->where('drespuesta', 'Acuerdo de Pago');
+		if($rol<4){
+		$this->db->where("responsable", $col);
+		}
+		if($_GET['tecnico']!='' && $_GET['tecnico']!='0' && $_GET['tecnico']!='undefined'){
+         		$this->db->where('responsable=', $_GET['tecnico']);
+        }
+		if($_GET['tipo']!='' && $_GET['tipo']!='0' && $_GET['tipo']!='undefined'){
+         $this->db->where('tllamada=', $_GET['tipo']);   
+        }
+        if($_GET['filtro_fecha']!='' && $_GET['filtro_fecha']!='undefined'){
+            if($_GET['filtro_fecha']=='fcreada'){
+            $fecha_incial= new DateTime($_GET['sdate']);
+            $fecha_final= new DateTime($_GET['edate']);
+         $this->db->where('fcha>=', $fecha_incial->format("Y-m-d"));   
+         $this->db->where('fcha<=', $fecha_final->format("Y-m-d"));
+			} if($_GET['filtro_fecha']=='fecha_final'){
+				$fecha_incial2= new DateTime($_GET['sdatefin']);
+            	$fecha_final2= new DateTime($_GET['edatefin']);
+         		$this->db->where('fecha_vence>=', $fecha_incial2->format("Y-m-d"));   
+         		$this->db->where('fecha_vence<=', $fecha_final2->format("Y-m-d"));
+			}
+        }
+		$this->db->join('customers', 'llamadas.iduser=customers.id', 'left');
+        $this->db->order_by("fcha","DESC");
+        $lista_debito=$this->db->get()->result();
+        $this->load->library('Excel');
+		$lista_debito2=array();
+		
+    
+    //define column headers
+    $headers = array(
+        'Fecha' => 'date', 
+        'hora' => 'string',
+		'vence' => 'date',
+		'Realizado por' => 'string',
+		'Usuario' => 'string',
+		'Documento' => 'integer',
+		'Debe' => 'integer',
+		'Pago' => 'integer',
+		'Nota' => 'integer');
+    
+    //fetch data from database
+    //$salesinfo = $this->product_model->get_salesinfo();
+    
+    //create writer object
+    $writer = new Excel();
+    
+        //meta data info
+    $keywords = array('xlsx','CUSTOMERS','VESTEL');
+    $writer->setTitle('Reporte acuerdos ');
+    $writer->setSubject('');
+    $writer->setAuthor('VESTEL');
+    $writer->setCompany('VESTEL');
+    $writer->setKeywords($keywords);
+    $writer->setDescription('Reporte acuerdos ');
+    $writer->setTempDir(sys_get_temp_dir());
+    
+    //write headers el primer campo que es nombre de la hoja de excel deve de coincidir en writeSheetHeader y writeSheetRow para tener en cuenta si se piensan agregar otras hojas o algo por el estilo
+    $writer->writeSheetHeader('Acuerdos ',$headers,$col_options = array(
+
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+));
+    
+    //write rows to sheet1
+	
+    foreach ($lista_debito as $key => $acuerdo) {
+			$idusuario = $acuerdo->iduser;
+			$fcha = $acuerdo->fcha;
+			$fchavence = $acuerdo->fecha_vence;
+			$due=$this->customers->due_details($idusuario);
+			$debe_customer=($due['total']-$due['pamnt']);
+			$pagos=$this->customers->pago_details($idusuario,$fcha,$fchavence);
+			$pago_customer=$pagos['pago'];
+				$fecha = date("d/m/Y",strtotime($debito->date));
+					$writer->writeSheetRow('Debito ',array(
+						$acuerdo->fcha,
+						$acuerdo->hra,
+						$acuerdo->fecha_vence,
+						$acuerdo->responsable,
+						$acuerdo->name.' '.$acuerdo->unoapellido,
+						$acuerdo->documento,
+						$debe_customer,
+						$pago_customer,
+						$acuerdo->notes));
+        
+    }
+        
+        
+    
+    $fecha_actual= date("d-m-Y");
+    $dia= date("N");
+    $this->load->model('reports_model', 'reports');
+    $fecha_actual=$this->reports->obtener_dia($dia)." ".$fecha_actual;
+    $fileLocation = 'Acuerdos '.$fecha_actual.'.xlsx';
+    
+    //write to xlsx file
+    $writer->writeToFile($fileLocation);
+    //echo $writer->writeToString();
+    
+    //force download
+    header('Content-Description: File Transfer');
+    header("Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+    header("Content-Disposition: attachment; filename=".basename($fileLocation));
+    header("Content-Transfer-Encoding: binary");
+    header("Expires: 0");
+    header("Pragma: public");
+    header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+    header('Content-Length: ' . filesize($fileLocation)); //Remove
+
+    ob_clean();
+    flush();
+
+    readfile($fileLocation);
+    unlink($fileLocation);
+    exit(0);
+       
+
     }
 	public function explortar_a_excel2(){
         

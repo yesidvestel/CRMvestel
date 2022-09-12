@@ -381,6 +381,22 @@ class llamadas_model extends CI_Model
         $this->db->where('id', $cid);
         return $this->db->count_all_results();
     }
+	public function lista_acuerdo()
+    {
+		$col = $this->aauth->get_user()->username;
+		$rol = $this->aauth->get_user()->roleid;
+        $this->db->select('llamadas.*,customers.id AS idcus,customers.name,customers.unoapellido,customers.documento');
+        $this->db->from($this->table);
+        $this->db->where('drespuesta', 'Acuerdo de Pago');
+		if($rol<4){
+        $this->db->where("responsable", $col);
+		}
+		$this->db->join('customers', 'llamadas.iduser = customers.id', 'left');
+		$this->db->order_by('fcha', 'desc');
+        $query = $this->db->get();
+        return $query->result_array();
+
+    }
 	private function _com_datatables_query($cid)
     {
 		//traer llamadas
@@ -464,6 +480,7 @@ class llamadas_model extends CI_Model
         $this->db->where('id', $cid);
         return $this->db->count_all_results();
     }
+	
 	public function llamada_delete($id)
     {
 

@@ -7,7 +7,7 @@
         </div>
         <div class="grid_3 grid_4 animated fadeInRight table-responsive">
             <h5>Llamadas</h5>
-
+			
             <hr>
             <div class="card card-block sameheight-item">
 
@@ -89,6 +89,7 @@
                             </div>
                         
                     </div>
+			<a href="#" onclick="redirect_to_export()" class="btn btn-success fa-sharp fa-solid fa-file-excel"></a>
             <hr>
             <table id="invoices" class="table-striped" cellspacing="0" width="100%">
                 <thead>
@@ -113,6 +114,7 @@
                 </tr>
                 </thead>
                 <tbody>
+					
                 </tbody>
 
                 <tfoot>
@@ -166,6 +168,7 @@
         </div>
     </div>
 </div>
+<script src="https://kit.fontawesome.com/317775a1b1.js" crossorigin="anonymous"></script>
 <script type="text/javascript">
     var table;
 	var id_col="<?=$_GET['id'] ?>";
@@ -186,10 +189,60 @@
                     "orderable": false,
                 },
             ],
+			
 
         });
 
     });
+	/*$(document).ready(function () {
+
+        //datatables
+        $('#invoices').DataTable({
+			 order: [[2, 'desc']],
+			language: {
+                "lengthMenu": "Mostrar _MENU_ registros",
+                "zeroRecords": "No se encontraron resultados",
+                "info": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros &nbsp",
+                "infoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                "infoFiltered": "(filtrado de un total de _MAX_ registros)",
+                "sSearch": "Buscar:",
+                "oPaginate": {
+                    "sFirst": "Primero",
+                    "sLast":"Último",
+                    "sNext":"Siguiente",
+                    "sPrevious": "Anterior"
+			     },
+			     "sProcessing":"Procesando...",
+            },
+            dom: 'Bfrtilp',       
+        buttons:[ 
+            {
+                extend:    'excelHtml5',
+                text:      '<i class="fa-sharp fa-solid fa-file-excel"></i>',
+                titleAttr: 'Exportar a Excel',
+                className: 'btn btn-success',
+                messageTop :'Historial Cuenta <?php echo $details['name'].' '.$details['unoapellido'] ?>'
+            },
+            {
+                extend:    'pdfHtml5',
+                text:      '<i class="fa-sharp fa-solid fa-file-pdf"></i>',
+                titleAttr: 'Exportar a PDF',
+                className: 'btn btn-danger',
+                messageTop :'Historial Cuenta <?php echo $details['name'].' '.$details['unoapellido'] ?>'
+            },
+            {
+                extend:    'print',
+                text:      '<i class="icon-print"></i> ',
+                titleAttr: 'Imprimir',
+                className: 'btn btn-info'
+            },
+        ]
+			
+		});
+	$(".buttons-pdf").removeClass("dt-button");		
+    $(".buttons-excel").removeClass("dt-button");     
+    $(".buttons-print").removeClass("dt-button");     
+    });*/
 	function filtrar(){
         var tecnico=$("#tecnicos2 option:selected").val();
 		var tipo=$("#tipo option:selected").val();
@@ -221,6 +274,19 @@
         }else{
             $("#div_fecha_final").hide();
         }
+    }
+	//export excel
+	function redirect_to_export(){
+       var tecnico=$("#tecnicos2 option:selected").val();
+		var tipo=$("#tipo option:selected").val();
+        var opcion_seleccionada=$("#fechas option:selected").val();
+        var edate=$("#edate").val();
+        var edatefin=$("#edatefin").val();
+        var sdate=$("#sdate").val();
+        var sdatefin=$("#sdatefin").val();
+        var url_redirect=baseurl+"llamadas/explortar_acuerdos?tecnico="+tecnico+"&tipo="+tipo+"&edate="+edate+"&edatefin="+edatefin+"&sdate="+sdate+"&sdatefin="+sdatefin+"&filtro_fecha="+opcion_seleccionada;
+            window.location.replace(url_redirect);
+
     }
 	
 </script>
