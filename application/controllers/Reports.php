@@ -272,9 +272,15 @@ public function historial_list(){
         $data['datos_informe']=array("pay_acc"=>$pay_acc,"trans_type"=>$trans_type,"sdate"=>$sdate,"edate"=>$edate);
         //codigo listar
             
-            
+
             $datex=new DateTime($sdate);
+            $data['is_multiple']="no";
+            if(!empty($this->input->post('is_multiple'))){
+                   $datex=new DateTime($edate);
+                   $data['is_multiple']="si";
+            }
             $edate=$datex->format('Y-m-d')." 23:59:00";
+            
             $caja1=$this->db->get_where('accounts',array('id' =>$pay_acc))->row();
             $_SESSION['pay_acc__']=$pay_acc;
             //egresos
@@ -498,6 +504,7 @@ public function historial_list(){
         $trans_type = $this->input->post('trans_type');
         $sdate = $this->input->post('sdate');
         $edate = $this->input->post('edate');
+        $is_multiple = $this->input->post('is_multiple');
         //$ttype = $this->input->post('ttype');
         //$account = $this->accounts->details($pay_acc);
         //$data['filter'] = array($pay_acc, $trans_type, $sdate, $edate, $ttype, $account['holder']);
@@ -509,6 +516,12 @@ public function historial_list(){
           $data['fecha']=$sdate;  
              //hice esto para hacer que el cierre sea de un dia si se desea reestablecer a entre fechas solo comentar la linea 57;
               $datex=new DateTime($sdate);
+              $data['text_add']="";
+            if($is_multiple=="si"){
+                    $datex=new DateTime($edate);
+                    $data['text_add']=" - ".$datex->format("Y-m-d");
+            }
+
             $edate=$datex->format('Y-m-d')." 23:59:00";
             $caja1=$this->db->get_where('accounts',array('id' =>$pay_acc))->row();
             
@@ -911,7 +924,11 @@ public function historial_list(){
         $trans_type = $this->input->post('ty');
         $sdate = datefordatabase($this->input->post('sd'));
         $edate = datefordatabase($this->input->post('ed'));
+        $is_multiple = $this->input->post('ism');
           $datex=new DateTime($sdate);
+          if($is_multiple=="si"){
+                $datex=new DateTime($edate);
+          }
             $edate=$datex->format('Y-m-d')." 23:59:00";
             
         $list = $this->reports->get_statements($pay_acc, $trans_type, $sdate, $edate);
@@ -1033,7 +1050,11 @@ public function historial_list(){
         $trans_type = $this->input->post('trans_type');
         $sdate = $this->input->post('sdate');
         $edate = $this->input->post('edate');
+        $is_multiple = $this->input->post('is_multiple');
           $datex=new DateTime($sdate);
+          if($is_multiple=="si"){
+            $datex=new DateTime($edate);
+          }
             $edate=$datex->format('Y-m-d')." 23:59:00";
             
         $list = $this->reports->get_statements($pay_acc, $trans_type, $sdate, $edate);

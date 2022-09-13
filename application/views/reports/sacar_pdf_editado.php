@@ -826,7 +826,7 @@ $array_afiliaciones=array();
 <table width="100%">
 	<tr>
 		<td width="50%">Caja : <?=$caja?></td>
-		<td width="50%">fecha : <?=$fecha2->format('Y-m-d')?></td>
+		<td width="50%">fecha : <?=$fecha2->format('Y-m-d').$text_add?></td>
 	</tr>
 	<tr>
 		<td width="50%">Hora Apertura : <?=$horas ?></td>

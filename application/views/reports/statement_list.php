@@ -450,7 +450,13 @@
 			$user = $this->aauth->get_user()->id;
 			$cajero = $this->db->get_where('employee_profile', array('id' => $user))->row();
 		 ?>
-
+<?php 
+			 $text_add="";
+			 	if($is_multiple=="si"){
+			 		$edatex1=new DateTime($filter[3]);
+			 			$text_add.=" - ".$edatex1->format("Y-m-d");
+			 	}
+			  ?>
 <article class="content">
 	<form method="POST" action="<?=base_url()?>reports/sacar_pdf" target="_blank">
 		<input type="hidden" name="pay_acc" value="<?=$datos_informe['pay_acc']?>" >
@@ -458,6 +464,7 @@
 		<input type="hidden" name="sdate" value="<?=$datos_informe['sdate']?>">
 		<input type="hidden" name="edate" value="<?=$datos_informe['edate']?>">
 		<input type="hidden" name="caja" value="<?=$filter[5]?>">
+		<input type="hidden" name="is_multiple" value="<?=$is_multiple?>">
 
 		<button class="btn btn-primary" style="margin-left: 3px;" onclick="enviar_a_apertura()">Cierre de Caja</button>
 	
@@ -475,7 +482,7 @@
 			 <hr>
 			 
             <p class="col-sm-6"><?php echo $this->lang->line('') ?>Caja : <?php echo $filter[5] ?></p>
-			 <p class="col-sm-6">Fecha: <?php echo $fecha->format("Y-m-d") ?></p>
+			 <p class="col-sm-6">Fecha: <?php echo $fecha->format("Y-m-d").$text_add; ?></p>
 			 <p class="col-sm-6">Hora apertura: <?php echo $horas ?></p>
 			 <p class="col-sm-6">Hora cierre: <?php echo $horas2 ?></p>
 			 <p class="col-sm-6">Cajero: <?php echo $cajero->name ?></p>
@@ -558,6 +565,7 @@
 				</thead>
 				<tbody>
 					<?php $lista_planes_ordenada=array(); 
+					//var_dump($var_cuenta_planes);habilitar este vardum para contestar si preguntan porque aparecen varios 10m sucede que array(7) { ["Television"]=> int(150) ["10megas(f)"]=> int(19) ["5megas"]=> int(51) ["10megass"]=> int(1) ["10megas(f)(s)"]=> int(2) ["3megas"]=> int(5) ["10megas"]=> int(1) } el array retorna mas o menos esto quiere decir que son diferentes paquetes de 10 megas lo que se podria hacer es especificar pero lo dejare pendiente por tal motivo dejo el comentario 
 							$conteo=0;
 								while ($conteo<count($var_cuenta_planes)) {
 									$proximo_menor_agregar=null;
@@ -1319,7 +1327,7 @@
 
             url: baseurl + 'reports/statements',
             type: 'POST',
-            data: <?php echo "{'ac': '" . $filter[0] . "','sd':'" . $filter[2] . "','ed':'" . $filter[3] . "','ty':'" . $filter[1] . "'}"; ?>,
+            data: <?php echo "{'ac': '" . $filter[0] . "','sd':'" . $filter[2] . "','ed':'" . $filter[3] . "','ty':'" . $filter[1] . "','ism':'".$is_multiple."'}"; ?>,
             dataType: 'html',
             success: function (data) {
                 $('#entries').html(data);

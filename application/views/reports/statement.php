@@ -68,6 +68,7 @@
                                     <input type="text" class="form-control required"
                                            placeholder="End Date" name="edate"
                                            data-toggle="datepicker" autocomplete="false">
+                                           <input type="hidden" name="is_multiple" value="si">
                                 </div>
                             </div>
                             <div class="form-group row">
