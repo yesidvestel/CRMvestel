@@ -32,25 +32,29 @@
         </div>
         <div class="content-body"><!-- stats -->
             <div class="row">
-				<div class="col-md-2 mb-1">
+				<div class="col-md-3 mb-1">
 					<a href="<?php echo base_url('dashboard/index')?>">
 						<input type="text" class="btn btn-primary btn-md" value="TODAS"></a>
 				</div>
-				<div class="col-md-2 mb-1">
+				<div class="col-md-3 mb-1">
 					<a href="<?php echo base_url('dashboard/index?sede=Yopal')?>">
 						<input type="text" class="btn btn-primary btn-md" value="YOPAL"></a>
 				</div>
-				<div class="col-md-2 mb-1">
+				<div class="col-md-3 mb-1">
 				<a href="<?php echo base_url('dashboard/index?sede=Monterrey')?>">
 						<input type="text" class="btn btn-primary btn-md" value="MONTERREY"></a>
 				</div>
-				<div class="col-md-2 mb-1">
+				<div class="col-md-3 mb-1">
 					<a href="<?php echo base_url('dashboard/index?sede=Mocoa')?>">
 						<input type="text" class="btn btn-primary btn-md" value="MOCOA"></a>
 				</div>
-				<div class="col-md-2 mb-1">
+				<div class="col-md-3 mb-1">
 					<a href="<?php echo base_url('dashboard/index?sede=Villanueva')?>">
 						<input type="text" class="btn btn-primary btn-md" value="VILLANUEVA"></a>
+				</div>
+				<div class="col-md-9 mb-1">
+					<a href="<?php echo base_url('dashboard/index?sede=Aguazul')?>">
+						<input type="text" class="btn btn-primary btn-md" value="AGUAZUL"></a>
 				</div>
                 <div class="col-xl-3 col-md-6 col-xs-12">										
                     <div class="card">
