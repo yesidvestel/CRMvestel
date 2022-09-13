@@ -89,11 +89,11 @@ class Supplier extends CI_Controller
 
             $row = array();
             $row[] = $no;
-            $row[] = '<a href="supplier/view?id=' . $customers->id . '">' . $customers->name . '</a>';
+            $row[] = '<a href="'.base_url().'supplier/view?id=' . $customers->id . '">' . $customers->name . '</a>';
             $row[] = $customers->address . ',' . $customers->nit . ',' . $customers->country;
             $row[] = $customers->email;
             $row[] = $customers->phone;
-            $row[] = '<a href="supplier/view?id=' . $customers->id . '" class="btn btn-info btn-sm"><span class="icon-eye"></span> ' . $this->lang->line('View') . '</a> <a href="supplier/edit?id=' . $customers->id . '" class="btn btn-primary btn-sm"><span class="icon-pencil"></span> ' . $this->lang->line('Edit') . '</a> <a href="#" data-object-id="' . $customers->id . '" class="btn btn-danger btn-sm delete-object"><span class="icon-bin"></span></a>';
+            $row[] = '<a href="'.base_url().'supplier/view?id=' . $customers->id . '" class="btn btn-info btn-sm"><span class="icon-eye"></span> ' . $this->lang->line('View') . '</a> <a href="'.base_url().'supplier/edit?id=' . $customers->id . '" class="btn btn-primary btn-sm"><span class="icon-pencil"></span> ' . $this->lang->line('Edit') . '</a> <a href="#" data-object-id="' . $customers->id . '" class="btn btn-danger btn-sm delete-object"><span class="icon-bin"></span></a>';
 
 
             $data[] = $row;
