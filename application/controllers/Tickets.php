@@ -1113,8 +1113,11 @@ $x=0;
 			//actualizar estado usuario
                 $this->db->set("ultimo_estado",$customer->usu_estado);
                 $this->db->set("fecha_cambio",date("Y-m-d H:i:s"));
-                $this->db->set("f_contrato",date("Y-m-d"));
 				$this->db->set('usu_estado', 'Activo');
+			//cambiar fecha contrato
+			if($ticket->detalle!="Reconexion Combo2" || $ticket->detalle!="Reconexion Television2" || 		$ticket->detalle!="Reconexion Internet2"){
+                	$this->db->set("f_contrato",date("Y-m-d"));
+				}
         		$this->db->where('id', $ticket->cid);
         		//historial estados
         		if($this->db->update('customers')){
