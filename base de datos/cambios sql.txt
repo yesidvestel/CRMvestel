@@ -381,3 +381,8 @@ ADD `categoria` int(10) NOT NULL AFTER `id`,
 ADD `pago` varchar(20) NOT NULL AFTER `region`;
 INSERT INTO `modulos`(`rol`, `nombre`, `id_padre`, `codigo`, `orden`, `icono`) VALUES ('Hijo','Proveedor de servicios',75,'proser',0,null)
 UPDATE `modulos` SET `nombre`='Proveedor de Productos' WHERE `id_modulo`=77
+----------------------------------------------------------------------------------------------------------
+METAS ORDENES DE COMPRA
+---------------------------------------------------------
+ALTER TABLE `goals` 
+ADD `purchase` BIGINT(20) NOT NULL AFTER `oficial` 

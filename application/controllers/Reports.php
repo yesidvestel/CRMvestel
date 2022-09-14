@@ -156,9 +156,11 @@ public function historial_list(){
 		$data['gasvesagro']=$gastototal['vesagro'];
 		$data['servicios']=$gastototal['servicios'];
 		$data['compras']=$gastototal['compras'];
+		$data['purchase']=$gastototal['purchase'];
 		$data['nomina']=$gastototal['nomina'];
 		$data['socios']=$gastototal['socios'];
 		$data['oficial']=$gastototal['oficial'];
+		$data['creditos']=$gastototal['creditos'];
 		$data['creditos']=$gastototal['creditos'];
 		$data['goals'] = $this->tools_model->goals(1);
         $head['title'] = "Metas Mensuales";

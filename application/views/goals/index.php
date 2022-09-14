@@ -137,7 +137,8 @@
                                class="form-control margin-bottom  required" name="socios"
                                value="<?php echo $goals['socios'] ?>">
                     </div>
-                </div><div class="form-group row">
+                </div>
+				<div class="form-group row">
 
                     <label class="col-sm-2 col-form-label"
                            for="netincome"><?php echo $this->lang->line('') ?>Oficial</label>
@@ -146,6 +147,17 @@
                         <input type="text" placeholder="Net Income"
                                class="form-control margin-bottom  required" name="oficial"
                                value="<?php echo $goals['oficial'] ?>">
+                    </div>
+                </div>
+				<div class="form-group row">
+
+                    <label class="col-sm-2 col-form-label"
+                           for="netincome"><?php echo $this->lang->line('') ?>Ordenes de compra</label>
+
+                    <div class="col-sm-5">
+                        <input type="text" placeholder="Valor meta"
+                               class="form-control margin-bottom  required" name="purchase"
+                               value="<?php echo $goals['purchase'] ?>">
                     </div>
                 </div>
 

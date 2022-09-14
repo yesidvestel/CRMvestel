@@ -136,6 +136,22 @@ $tt_inc = 0;foreach ($gastototal as $row) {
                             </div>
                         </div>
                     </div>
+						<div class="card">
+                        <div class="card-body">
+                            <div class="media">
+                                <div class="p-1 text-xs-center bg-orange media-left media-middle">
+                                    <i class="icon-list-alt font-large-2 white"></i>
+                                </div>
+                                <div class="p-1 media-body">
+                                    <h5 class="orange"> <?php echo $this->lang->line('') ?>Ordenes de compra</h5>
+                                    <h5 class="text-bold-400"><?php echo amountFormat($purchase) . '/' . amountFormat($goals['purchase']) ?></h5>
+                                    <progress class="progress progress-striped progress-orange mt-1 mb-0"
+                                              value="<?php $ipt = sprintf("%0.2f", ($purchase * 100) / $goals['purchase']);
+                                              echo $ipt; ?>" max="100"></progress>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
             </div>

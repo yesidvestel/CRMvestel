@@ -64,6 +64,9 @@ class Reports_model extends CI_Model
 			 if($gasto->cat=='Compras'){
 				 $gas_compras+=$gasto->debit;
 			 }
+			 if($gasto->cat=='Purchase'){
+				 $gas_purchase+=$gasto->debit;
+			 }
 			 if($gasto->cat=='Nomina'){
 				 $gas_nomina+=$gasto->debit;
 			 } 
@@ -77,7 +80,7 @@ class Reports_model extends CI_Model
 				 $gas_creditos+=$gasto->debit;
 			 }
 		 }
-		return array("vesagro"=>$gas_vesagro,"servicios"=>$gas_servicios,"compras"=>$gas_compras,"nomina"=>$gas_nomina,"socios"=>$gas_socios,"oficial"=>$gas_oficial,"creditos"=>$gas_creditos);
+		return array("vesagro"=>$gas_vesagro,"servicios"=>$gas_servicios,"compras"=>$gas_compras,"nomina"=>$gas_nomina,"socios"=>$gas_socios,"oficial"=>$gas_oficial,"purchase"=>$gas_purchase,"creditos"=>$gas_creditos);
     }
 
     public function get_statements($pay_acc, $trans_type, $sdate, $edate)
