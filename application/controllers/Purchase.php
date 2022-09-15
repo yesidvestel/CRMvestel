@@ -104,6 +104,17 @@ class Purchase extends CI_Controller
         $discountFormat = $this->input->post('discountFormat');
         $pterms = $this->input->post('pterms');
         $i = 0;
+        $pid = $this->input->post('pid');
+        foreach ($pid as $key => $value) {
+            if($value=="0"){
+                $product_name1 = $this->input->post('product_name');
+
+                echo json_encode(array('status' => 'Error', 'message' =>
+                "Por favor, selecciona un producto de la lista, mas no agregues uno que no existe, el producto con error es el de nombre =<strong> ".$product_name1[$key]." </strong>"));
+                exit();   
+            }
+             
+        }
         if ($discountFormat == '0') {
             $discstatus = 0;
         } else {
@@ -118,7 +129,7 @@ class Purchase extends CI_Controller
         $this->db->trans_start();
         //products
 
-        $pid = $this->input->post('pid');
+        //$pid = $this->input->post('pid');
         $productlist = array();
         $prodindex = 0;
         $itc = 0;
