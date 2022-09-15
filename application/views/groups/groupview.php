@@ -219,7 +219,8 @@
                                               </div>
                                                
                                                     <input type="checkbox" name="sin_factura_actual" id="sin_factura_actual" style="cursor: pointer;transform: scale(2);">&nbsp;&nbsp;Sin Factura Actual<br>
-                                                    <input type="checkbox" name="agregar_ultima_transaccion" id="agregar_ultima_transaccion" style="cursor: pointer;transform: scale(2);">&nbsp;&nbsp;Al exportar agregar ultima transaccion
+                                                    <input type="checkbox" name="agregar_ultima_transaccion" id="agregar_ultima_transaccion" style="cursor: pointer;transform: scale(2);">&nbsp;&nbsp;Al exportar agregar ultima transaccion<br>
+                                                    <input type="checkbox" name="filtro_equipo_asignado" id="filtro_equipo_asignado" style="cursor: pointer;transform: scale(2);">&nbsp;&nbsp;Filtrar usuarios que tienen equipo asignado
 
                                         </div>
                                     </div>
@@ -646,6 +647,9 @@ $("#sel_filtrar_fecha_cambio").on("change",function(){
             var sdate=$("#sdate").val();
             var edate=$("#edate").val();
             var checked_ind_service =$("#check1").prop('checked');
+            var check_usuarios_a_facturar=$("#check2").prop('checked');
+            var check_sin_factura_actual=$("#sin_factura_actual").prop('checked');
+
              var estados_multiple=$("#estado_multiple").val();
             var localidad_multiple=$("#localidad_multiple").val();
             var barrios_multiple=$("#barrios_multiple").val();
@@ -656,8 +660,10 @@ $("#sel_filtrar_fecha_cambio").on("change",function(){
             var sel_filtrar_fecha_cambio=$("#sel_filtrar_fecha_cambio option:selected").val();
             var sdate3=$("#sdate3").val();
             var edate2=$("#edate2").val();
+            //14-09-2022
+            var check_equipos_asignados=$("#filtro_equipo_asignado").prop('checked');//este cheq es para filtrar los usuarios con equipos asignados
 
-            var url =baseurl+"clientgroup/get_filtrados_para_checked?id=<?=$_GET['id']?>&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&checked_ind_service="+checked_ind_service+"&estados_multiple="+estados_multiple+"&localidad_multiple="+localidad_multiple+"&barrios_multiple="+barrios_multiple+"&deudores_multiple="+deudores_multiple+"&tegnologia_multiple="+tegnologia_multiple+"&ultimo_estado_sel="+ultimo_estado_sel+"&sel_filtrar_fecha_cambio="+sel_filtrar_fecha_cambio+"&sdate3="+sdate3+"&edate2="+edate2;
+            var url =baseurl+"clientgroup/get_filtrados_para_checked?id=<?=$_GET['id']?>&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&checked_ind_service="+checked_ind_service+"&estados_multiple="+estados_multiple+"&localidad_multiple="+localidad_multiple+"&barrios_multiple="+barrios_multiple+"&deudores_multiple="+deudores_multiple+"&tegnologia_multiple="+tegnologia_multiple+"&ultimo_estado_sel="+ultimo_estado_sel+"&sel_filtrar_fecha_cambio="+sel_filtrar_fecha_cambio+"&sdate3="+sdate3+"&edate2="+edate2+"&check_usuarios_a_facturar="+check_usuarios_a_facturar+"&check_sin_factura_actual="+check_sin_factura_actual+"&check_equipos_asignados="+check_equipos_asignados;
              if(elemento.checked==true){
                 $("#div_notify3").html('<div id="notify3" class="alert alert-success" style="display:none;"><a href="#" class="close" data-dismiss="alert">&times;</a><div class="message3">></div></div>');
                     $("#notify3 .message3").html("<strong> Cargando</strong>: <img src='<?=base_url()?>/assets/img/iconocargando.gif'>");
@@ -1137,6 +1143,8 @@ $(window).on('load', function (e) {
             var sdate3=$("#sdate3").val();
             var edate2=$("#edate2").val();
 
+            var check_equipos_asignados=$("#filtro_equipo_asignado").prop('checked');//este cheq es para filtrar los usuarios con equipos asignados
+
               tb=$('#fclientstable').DataTable({
 
                 "processing": true, //Feature control the processing indicator.
@@ -1145,7 +1153,7 @@ $(window).on('load', function (e) {
 
                 // Load data for the table's content from an Ajax source
                 "ajax": {
-                    "url": "<?php echo site_url('clientgroup/load_morosos') . '?id=' . $group['id']; ?>&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&pagination_start="+pagination_start+"&pagination_end="+pagination_end+"&checked_ind_service="+checked_ind_service+"&check_usuarios_a_facturar="+check_usuarios_a_facturar+"&estados_multiple="+estados_multiple+"&localidad_multiple="+localidad_multiple+"&barrios_multiple="+barrios_multiple+"&deudores_multiple="+deudores_multiple+"&tegnologia_multiple="+tegnologia_multiple+"&ultimo_estado_sel="+ultimo_estado_sel+"&sel_filtrar_fecha_cambio="+sel_filtrar_fecha_cambio+"&sdate3="+sdate3+"&edate2="+edate2+"&check_sin_factura_actual="+check_sin_factura_actual,
+                    "url": "<?php echo site_url('clientgroup/load_morosos') . '?id=' . $group['id']; ?>&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&pagination_start="+pagination_start+"&pagination_end="+pagination_end+"&checked_ind_service="+checked_ind_service+"&check_usuarios_a_facturar="+check_usuarios_a_facturar+"&estados_multiple="+estados_multiple+"&localidad_multiple="+localidad_multiple+"&barrios_multiple="+barrios_multiple+"&deudores_multiple="+deudores_multiple+"&tegnologia_multiple="+tegnologia_multiple+"&ultimo_estado_sel="+ultimo_estado_sel+"&sel_filtrar_fecha_cambio="+sel_filtrar_fecha_cambio+"&sdate3="+sdate3+"&edate2="+edate2+"&check_sin_factura_actual="+check_sin_factura_actual+"&check_equipos_asignados="+check_equipos_asignados,
                     "type": "POST",
                     error: function (xhr, error, code)
                     {
@@ -1250,12 +1258,13 @@ $(window).on('load', function (e) {
             var sel_filtrar_fecha_cambio=$("#sel_filtrar_fecha_cambio option:selected").val();
             var sdate3=$("#sdate3").val();
             var edate2=$("#edate2").val();
-               
+            
+            var check_equipos_asignados=$("#filtro_equipo_asignado").prop('checked');//este cheq es para filtrar los usuarios con equipos asignados   
 
              
             //if(morosos!=""){
                 if(columnasAgregadas){
-                    tb.ajax.url( baseurl+"clientgroup/load_morosos?id=<?=$_GET['id']?>&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&checked_ind_service="+checked_ind_service+"&check_usuarios_a_facturar="+check_usuarios_a_facturar+"&estados_multiple="+estados_multiple+"&localidad_multiple="+localidad_multiple+"&barrios_multiple="+barrios_multiple+"&deudores_multiple="+deudores_multiple+"&tegnologia_multiple="+tegnologia_multiple+"&ultimo_estado_sel="+ultimo_estado_sel+"&sel_filtrar_fecha_cambio="+sel_filtrar_fecha_cambio+"&sdate3="+sdate3+"&edate2="+edate2+"&check_sin_factura_actual="+check_sin_factura_actual).load();               
+                    tb.ajax.url( baseurl+"clientgroup/load_morosos?id=<?=$_GET['id']?>&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&checked_ind_service="+checked_ind_service+"&check_usuarios_a_facturar="+check_usuarios_a_facturar+"&estados_multiple="+estados_multiple+"&localidad_multiple="+localidad_multiple+"&barrios_multiple="+barrios_multiple+"&deudores_multiple="+deudores_multiple+"&tegnologia_multiple="+tegnologia_multiple+"&ultimo_estado_sel="+ultimo_estado_sel+"&sel_filtrar_fecha_cambio="+sel_filtrar_fecha_cambio+"&sdate3="+sdate3+"&edate2="+edate2+"&check_sin_factura_actual="+check_sin_factura_actual+"&check_equipos_asignados="+check_equipos_asignados).load();               
                 }else{
                     nuevas_columnas();
                     $("option[value=100]").text("Todo");
@@ -1310,7 +1319,9 @@ $(window).on('load', function (e) {
             var sdate3=$("#sdate3").val();
             var edate2=$("#edate2").val();
 
-            var url_redirect=baseurl+"clientgroup/explortar_a_excel?id=<?=$_GET['id']?>&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&checked_ind_service="+checked_ind_service+"&check_usuarios_a_facturar="+check_usuarios_a_facturar+"&estados_multiple="+estados_multiple+"&localidad_multiple="+localidad_multiple+"&barrios_multiple="+barrios_multiple+"&deudores_multiple="+deudores_multiple+"&tegnologia_multiple="+tegnologia_multiple+"&ultimo_estado_sel="+ultimo_estado_sel+"&sel_filtrar_fecha_cambio="+sel_filtrar_fecha_cambio+"&sdate3="+sdate3+"&edate2="+edate2+"&check_sin_factura_actual="+check_sin_factura_actual+"&check_agregar_ultima_transaccion="+check_agregar_ultima_transaccion;
+            var check_equipos_asignados=$("#filtro_equipo_asignado").prop('checked');//este cheq es para filtrar los usuarios con equipos asignados
+
+            var url_redirect=baseurl+"clientgroup/explortar_a_excel?id=<?=$_GET['id']?>&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&checked_ind_service="+checked_ind_service+"&check_usuarios_a_facturar="+check_usuarios_a_facturar+"&estados_multiple="+estados_multiple+"&localidad_multiple="+localidad_multiple+"&barrios_multiple="+barrios_multiple+"&deudores_multiple="+deudores_multiple+"&tegnologia_multiple="+tegnologia_multiple+"&ultimo_estado_sel="+ultimo_estado_sel+"&sel_filtrar_fecha_cambio="+sel_filtrar_fecha_cambio+"&sdate3="+sdate3+"&edate2="+edate2+"&check_sin_factura_actual="+check_sin_factura_actual+"&check_agregar_ultima_transaccion="+check_agregar_ultima_transaccion+"&check_equipos_asignados="+check_equipos_asignados;
             window.location.replace(url_redirect);
 
     }

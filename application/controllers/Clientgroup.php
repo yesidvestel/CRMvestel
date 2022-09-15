@@ -645,6 +645,12 @@ include (APPPATH."libraries\RouterosAPI.php");
                     }
                     
                 }
+                if($_GET['check_equipos_asignados']=="true" && $customer_moroso){
+                    $equipo_x=$this->db->get_where("equipos",array("asignado"=>$customers->id))->row();
+                    if(empty($equipo_x)){
+                        $customer_moroso=false;
+                    }
+                }
             if($customer_moroso){
                 $customers->deuda=$debe_customer;
                 $customers->suscripcion=$valor_ultima_factura;            
@@ -1465,6 +1471,12 @@ include (APPPATH."libraries\RouterosAPI.php");
                     }
                     
                 }
+                if($_GET['check_equipos_asignados']=="true" && $customer_moroso){
+                    $equipo_x=$this->db->get_where("equipos",array("asignado"=>$customers->id))->row();
+                    if(empty($equipo_x)){
+                        $customer_moroso=false;
+                    }
+                }
             if($customer_moroso){
                 
 
@@ -2196,6 +2208,22 @@ include (APPPATH."libraries\RouterosAPI.php");
                                     $array_add= $this->customers->calculo_ultimo_estado($array_add,$customers);  
                                     $customer_moroso=$array_add['valido'];
                                }
+                }
+                if($_GET['check_sin_factura_actual']=="true" && $customer_moroso){
+                    $fecha_actual=new DateTime();
+                    $f1=$fecha_actual->format("Y-m")."-01";
+                    $f2=$fecha_actual->format("Y-m-d");
+                    $ultima=$this->db->query("select * from invoices where csd=".$customers->id." and invoicedate BETWEEN '".$f1."' and '".$f2."'")->result_array();
+                    if(count($ultima)!=0){
+                        $customer_moroso=false;
+                    }
+                    
+                }
+                if($_GET['check_equipos_asignados']=="true" && $customer_moroso){
+                    $equipo_x=$this->db->get_where("equipos",array("asignado"=>$customers->id))->row();
+                    if(empty($equipo_x)){
+                        $customer_moroso=false;
+                    }
                 }
             if($customer_moroso){
                 $this->db->update("customers",array("checked_seleccionado"=>1),array('id' =>$customers->id));
