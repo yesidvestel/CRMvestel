@@ -1497,11 +1497,13 @@ $this->load->model('customers_model', 'customers');
                 $this->db->set("fecha_cambio",date("Y-m-d H:i:s"));       
 		$this->db->set('usu_estado', $status);
         $this->db->where('id', $usr);
+		 //Historial estados
          if($this->db->update('customers')){
 		 $dataes = array(
 			'cid' => $usr,
 			'fecha' => date("Y-m-d H:i:s"),
 			'estado' => $status,
+			'col' => $this->aauth->get_user()->id,
 			);
 			 $this->db->insert("estados",$dataes);
 		}

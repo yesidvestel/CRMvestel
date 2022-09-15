@@ -1125,6 +1125,7 @@ $x=0;
 						'cid' => $ticket->cid,
 						'fecha' => date("Y-m-d H:i:s"),
 						'estado' => 'Activo',
+						'col' => $ticket->codigo,
 						);
 						 $this->db->insert("estados",$dataes);
 					}
@@ -1176,7 +1177,6 @@ $x=0;
                         $datay['price']=$x;
                         $datay['totaltax']=$iva;
                         $datay['subtotal']=$x+$iva;
-
                         $this->db->insert("invoice_items",$datay); //descomentar el lunes
                         $inv=$this->db->get_where("invoices",array("tid"=>$datay['tid']))->row();
                         $d_inv=array();
@@ -1271,7 +1271,16 @@ $x=0;
                 $this->db->set("fecha_cambio",date("Y-m-d H:i:s"));
 				$this->db->set('usu_estado', 'Activo');
         		$this->db->where('id', $ticket->cid);
-        		$this->db->update('customers');
+        		//historial estados
+        		if($this->db->update('customers')){
+				 $dataes = array(
+					'cid' => $ticket->cid,
+					'fecha' => date("Y-m-d H:i:s"),
+					'estado' => 'Activo',
+					'col' => $ticket->codigo,
+					);
+					 $this->db->insert("estados",$dataes);
+				}
              //mikrotik
                 $customerx=$this->db->get_where("customers",array('id' =>$ticket->cid ))->row();
                 $this->customers->activar_estado_usuario($customerx->name_s,$customerx->gid,$customerx->tegnologia_instalacion);
@@ -1297,6 +1306,7 @@ $x=0;
 					'cid' => $ticket->cid,
 					'fecha' => date("Y-m-d H:i:s"),
 					'estado' => 'Activo',
+					'col' => $ticket->codigo,
 					);
 					 $this->db->insert("estados",$dataes);
 				}
@@ -1322,6 +1332,7 @@ $x=0;
 					'cid' => $ticket->cid,
 					'fecha' => date("Y-m-d H:i:s"),
 					'estado' => 'Activo',
+					'col' => $ticket->codigo,
 					);
 					 $this->db->insert("estados",$dataes);
 				}
@@ -1368,6 +1379,7 @@ $x=0;
 					'cid' => $ticket->cid,
 					'fecha' => date("Y-m-d H:i:s"),
 					'estado' => 'Cortado',
+					'col' => $ticket->codigo,
 					);
 					 $this->db->insert("estados",$dataes);
 				}
@@ -1397,6 +1409,7 @@ $x=0;
 					'cid' => $ticket->cid,
 					'fecha' => date("Y-m-d H:i:s"),
 					'estado' => $nestado,
+					'col' => $ticket->codigo,
 					);
 					 if($this->db->insert("estados",$dataes)){
 				//agregar reconexion	
@@ -1461,6 +1474,7 @@ $x=0;
 					'cid' => $ticket->cid,
 					'fecha' => date("Y-m-d H:i:s"),
 					'estado' => 'Cortado',
+					'col' => $ticket->codigo,
 					);
 					 $this->db->insert("estados",$dataes);
 				}
@@ -1483,6 +1497,7 @@ $x=0;
 					'cid' => $ticket->cid,
 					'fecha' => date("Y-m-d H:i:s"),
 					'estado' => 'Activo',
+					'col' => $ticket->codigo,
 					);
 					 $this->db->insert("estados",$dataes);
 				}
@@ -1529,6 +1544,7 @@ $x=0;
 					'cid' => $ticket->cid,
 					'fecha' => date("Y-m-d H:i:s"),
 					'estado' => 'Suspendido',
+					'col' => $ticket->codigo,
 					);
 					 $this->db->insert("estados",$dataes);
 				}
@@ -1556,6 +1572,7 @@ $x=0;
 					'cid' => $ticket->cid,
 					'fecha' => date("Y-m-d H:i:s"),
 					'estado' => 'Retirado',
+					'col' => $ticket->codigo,
 					);
 					 $this->db->insert("estados",$dataes);
 				}
@@ -1586,6 +1603,7 @@ $x=0;
 					'cid' => $ticket->cid,
 					'fecha' => date("Y-m-d H:i:s"),
 					'estado' => $status2,
+					'col' => $ticket->codigo,
 					);
 					 $this->db->insert("estados",$dataes);
 				}
@@ -1613,6 +1631,7 @@ $x=0;
 					'cid' => $ticket->cid,
 					'fecha' => date("Y-m-d H:i:s"),
 					'estado' => $status2,
+					'col' => $ticket->codigo,
 					);
 					 $this->db->insert("estados",$dataes);
 				}

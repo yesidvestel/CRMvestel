@@ -39,6 +39,7 @@
                     <th><?php echo $this->lang->line('') ?>usuario</th>
                     <th><?php echo $this->lang->line('') ?>Fecha</th>
                     <th><?php echo $this->lang->line('') ?>Estado</th>
+                    <th><?php echo $this->lang->line('') ?>Realizado</th>
 
 
                 </tr>
@@ -51,12 +52,19 @@
                     $dtlle2 = $row['unoapellido'];
                     $tpo = $row['fecha'];
                     $cdor = $row['estado'];
-
+                    $col = $row['col'];
+					$user=$this->db->get_where("employee_profile",array('id' =>$col))->row();
+					if($col==$user->id){						
+						$realizo = $user->username;
+					}else{
+						$realizo = 'Orden Nº '.$col;
+					}
                     echo "<tr>
                     <td>$i</td>
                     <td>$dtlle $dtlle2</td>
                     <td>$tpo</td>
                     <td>$cdor</td>
+                    <td>$realizo</td>
 					</tr>";
                     $i++;
                 }
@@ -68,6 +76,7 @@
                     <th><?php echo $this->lang->line('') ?>usuario</th>
                     <th><?php echo $this->lang->line('') ?>Fecha</th>
                     <th><?php echo $this->lang->line('') ?>Estado</th>
+                    <th><?php echo $this->lang->line('') ?>Realizado</th>
                 </tr>
                 </tfoot>
             </table>

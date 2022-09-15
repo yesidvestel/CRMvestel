@@ -386,3 +386,8 @@ METAS ORDENES DE COMPRA
 ---------------------------------------------------------
 ALTER TABLE `goals` 
 ADD `purchase` BIGINT(20) NOT NULL AFTER `oficial` 
+----------------------------------------------------------------------------------------------------------
+HISTORIAL DE ESTADOS
+---------------------------------------------------------
+ALTER TABLE `estados` 
+ADD `col` int(10) NOT NULL AFTER `estado` 
