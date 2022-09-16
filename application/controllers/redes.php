@@ -64,8 +64,13 @@ class Redes extends CI_Controller
 	
 	public function cajasnap()
     {
-		$caja = $this->input->get('id');
-		$data['naps'] = $this->redes->naplista($caja);
+		
+        $vlan_orig = $this->db->get_where("equipos",array("id"=>$this->input->get('id')))->row();
+        $caja = $vlan_orig->vlan;
+        $data['vlan']=$vlan_orig->vlan;
+        $almacen_obj=$this->db->get_where("almacen_equipos",array("id"=>$vlan_orig->almacen))->row();
+        $data['almacen']=$almacen_obj->almacen;
+		$data['naps'] = $this->redes->naplista($caja,$vlan_orig->almacen);
 		$data['puertos'] = $this->redes->puertolista();
 		$arrayx=array();
 		foreach ($data['puertos'] as $key => $value) {
@@ -82,7 +87,9 @@ class Redes extends CI_Controller
     }
 	public function get_puertos_html(){
 		$id_nat=$_POST['nat'];
-		$puertos = $this->redes->puertolista($id_nat);
+        $id_equipo=$_POST['id_equipo'];
+        $equipo_obj=$this->db->get_where("equipos",array("id"=>$id_equipo))->row();
+		$puertos = $this->redes->puertolista($id_nat,$equipo_obj->almacen,$equipo_obj->vlan);
 		$return="";
 		$arrayx=array();
 		foreach ($puertos as $key => $value) {

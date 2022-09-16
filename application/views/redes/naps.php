@@ -42,12 +42,12 @@
         <div class="grid_3 grid_4">
             <div class="header-block">
                 <h3 class="title">
-                    <?php echo $this->lang->line('') ?>Lista de Naps
+                    <?php echo $this->lang->line('') ?>Lista de Naps, VLAN  <?=$vlan   ?>, almacen <?=$almacen ?>
                         
                 </h3></div>
 			<?php foreach ($naps as $row) { 
 					$cid = $row['nat']; ?>
-			<a href="#" class="open_modal"  data-nat="<?=$row['nat']?>">
+			<a href="#" class="open_modal"  data-nat="<?=$row['nat']?>" data-id-equipo="<?=$row['id'] ?>">
 			<div class="col-xl-2 col-md-4 col-xs-6">
                     <div class="card">
                         <div class="card-body">
@@ -97,7 +97,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Disponibilidad de puertos</h4>
+                <h4 class="modal-title" id="titulo_modal1">Disponibilidad de puertos</h4>
             </div>			
             <div class="modal-body">
                 <form id="form_model">
@@ -132,8 +132,10 @@
 	$(document).on("click",'.open_modal',function(e){
 		e.preventDefault();
 		var nat =$(this).data("nat");
-		$.post(baseurl+"redes/get_puertos_html",{"nat":nat},function(data){
+        var id_equipo =$(this).data("id-equipo");
+		$.post(baseurl+"redes/get_puertos_html",{"nat":nat,"id_equipo":id_equipo},function(data){
 			$("#bloque_puertos").html(data);
+            $("#titulo_modal1").text("Disponibilidad de puertos, nat N°"+nat);
 		});
 		$("#pop_model").modal("show");
 	});

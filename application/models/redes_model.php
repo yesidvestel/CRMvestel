@@ -35,7 +35,7 @@ class Redes_model extends CI_Model
     }
 	public function vlansdos($sede)
     {
-        $this->db->select('vlan');
+        $this->db->select('vlan,id');
         $this->db->from($this->table);
         $this->db->group_by('vlan');
 		$this->db->where('vlan !=', 0);
@@ -48,17 +48,18 @@ class Redes_model extends CI_Model
         $query = $this->db->query("SELECT c.*,p.pc FROM almacen_equipos AS c LEFT JOIN ( SELECT almacen,COUNT(id) AS pc FROM equipos GROUP BY almacen) AS p ON c.id=p.almacen");
         return $query->result_array();
     }
-	public function naplista($caja)
+	public function naplista($caja,$sede)
     {
-        $this->db->select('nat');
+        $this->db->select('nat,id');
         $this->db->from($this->table);
         $this->db->group_by('nat');
 		$this->db->where('nat !=', 0);
 		$this->db->where('vlan', $caja);
+        $this->db->where('almacen', $sede);
         $query = $this->db->get();
         return $query->result_array();
     }
-	public function puertolista($id=null)
+	public function puertolista($id=null,$almacen=null,$vlan=null)
     {
         $this->db->select('puerto, nat');
         $this->db->from($this->table);
@@ -66,6 +67,8 @@ class Redes_model extends CI_Model
 		$this->db->where('puerto !=', 0);
 		if($id!=null){
 			$this->db->where('nat', $id);	
+            $this->db->where('vlan', $vlan);   
+            $this->db->where('almacen', $almacen);   
 		}else{
 			$this->db->where('nat', 3);
 		}
