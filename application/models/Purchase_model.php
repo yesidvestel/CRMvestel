@@ -21,8 +21,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Purchase_model extends CI_Model
 {
     var $table = 'purchase';
-    var $column_order = array(null, 'tid', 'name', 'invoicedate', 'total', 'status', null);
-    var $column_search = array('tid', 'name', 'invoicedate', 'total');
+    var $column_order = array(null, 'tid', 'name', 'invoicedate','notes', 'total','refer', 'status', null);
+    var $column_search = array('tid', 'name', 'invoicedate','notes', 'total','refer', 'status');
     var $order = array('tid' => 'desc');
 
     public function __construct()
