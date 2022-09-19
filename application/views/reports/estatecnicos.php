@@ -823,7 +823,7 @@ table {
 														</tbody></table> 	
 											</td>
 										</tr>	
-									<tr>
+									
 										<tr>
 											<td class="static">
 												<div class="cl-instalaciones_veeduria" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_veeduria()"><i><u>Veeduria</u></i></div>
@@ -861,6 +861,118 @@ table {
 														</tbody></table> 	
 											</td>
 										</tr>
+										<tr>
+											<td class="static">
+												<div class="cl-instalaciones_activacion" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_activacion()"><i><u>Activación</u></i></div>
+												
+													<table class="tb_tec_info_instalaciones_activacion"><tbody>
+														<?php $lista_clases_css57=""; 
+															foreach ($lista_de_tecnicos as $key => $value) {
+																$name_class="instalaciones_activacion_".$value['username'];
+																$lista_clases_css57.=",.".$name_class."";
+																echo "<tr class='".$name_class."'><td>".$value['username']."</td></tr>";
+														}  ?>	
+														
+													</tbody></table> 
+											</td>
+											<?php $conteo=0; foreach ($tipos['instalaciones_activacion'] as $key1=> $row) {?>												
+												<td class="first-col" style="padding-right: 0px;padding-left: 0px;text-align: center;vertical-align: middle;">
+													<div class="cl-instalaciones_activacion" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_activacion()"><?php echo $row;$conteo+=$row; ?></div>
+														
+														<table class="tb_tec_info_instalaciones_activacion" style='width: 100px;vertical-align: middle;'><tbody>
+															<?php foreach ($lista_por_tecnicos['instalaciones_activacion'][$key1] as $key => $value2) {
+																echo "<tr class='instalaciones_activacion_".$key."' ><td style='width: 100px;text-align: center;'>".($value2['puntuacion'])."p</td></tr>";																
+															} ?>	
+														</tbody></table> 	
+												</td>
+											<?php } ?>
+
+												
+											
+											<td align="center" style="vertical-align: middle;" >
+												<div   class="cl-instalaciones_activacion" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_activacion()"><?php echo $conteo; ?></div>
+														<table class="tb_tec_info_instalaciones_activacion" style='width: 200px;text-align: center;vertical-align: middle;'><tbody>
+															<?php foreach ($lista_datos_cuentas_tipos_por_tecnico['instalaciones_activacion'] as $key => $value2) {
+																echo "<tr class='instalaciones_activacion_".$key."' ><td style='width: 200px;'><strong>".($value2['puntuacion'])."</strong> pts </td></tr>";																
+															} ?>	
+														</tbody></table> 	
+											</td>
+										</tr>
+<tr>
+											<td class="static">
+												<div class="cl-instalaciones_cambio_de_equipo" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_cambio_de_equipo()"><i><u>Cambio de Equipo</u></i></div>
+												
+													<table class="tb_tec_info_instalaciones_cambio_de_equipo"><tbody>
+														<?php $lista_clases_css67=""; 
+															foreach ($lista_de_tecnicos as $key => $value) {
+																$name_class="instalaciones_cambio_de_equipo_".$value['username'];
+																$lista_clases_css67.=",.".$name_class."";
+																echo "<tr class='".$name_class."'><td>".$value['username']."</td></tr>";
+														}  ?>	
+														
+													</tbody></table> 
+											</td>
+											<?php $conteo=0; foreach ($tipos['instalaciones_cambio_de_equipo'] as $key1=> $row) {?>												
+												<td class="first-col" style="padding-right: 0px;padding-left: 0px;text-align: center;vertical-align: middle;">
+													<div class="cl-instalaciones_cambio_de_equipo" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_cambio_de_equipo()"><?php echo $row;$conteo+=$row; ?></div>
+														
+														<table class="tb_tec_info_instalaciones_cambio_de_equipo" style='width: 100px;vertical-align: middle;'><tbody>
+															<?php foreach ($lista_por_tecnicos['instalaciones_cambio_de_equipo'][$key1] as $key => $value2) {
+																echo "<tr class='instalaciones_cambio_de_equipo_".$key."' ><td style='width: 100px;text-align: center;'>".($value2['puntuacion'])."p</td></tr>";																
+															} ?>	
+														</tbody></table> 	
+												</td>
+											<?php } ?>
+
+												
+											
+											<td align="center" style="vertical-align: middle;" >
+												<div   class="cl-instalaciones_cambio_de_equipo" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_cambio_de_equipo()"><?php echo $conteo; ?></div>
+														<table class="tb_tec_info_instalaciones_cambio_de_equipo" style='width: 200px;text-align: center;vertical-align: middle;'><tbody>
+															<?php foreach ($lista_datos_cuentas_tipos_por_tecnico['instalaciones_cambio_de_equipo'] as $key => $value2) {
+																echo "<tr class='instalaciones_cambio_de_equipo_".$key."' ><td style='width: 200px;'><strong>".($value2['puntuacion'])."</strong> pts </td></tr>";																
+															} ?>	
+														</tbody></table> 	
+											</td>
+										</tr>
+										<tr>
+											<td class="static">
+												<div class="cl-instalaciones_equipo_adicional" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_equipo_adicional()"><i><u>Equipo Adicional</u></i></div>
+												
+													<table class="tb_tec_info_instalaciones_equipo_adicional"><tbody>
+														<?php $lista_clases_css77=""; 
+															foreach ($lista_de_tecnicos as $key => $value) {
+																$name_class="instalaciones_equipo_adicional_".$value['username'];
+																$lista_clases_css77.=",.".$name_class."";
+																echo "<tr class='".$name_class."'><td>".$value['username']."</td></tr>";
+														}  ?>	
+														
+													</tbody></table> 
+											</td>
+											<?php $conteo=0; foreach ($tipos['instalaciones_equipo_adicional'] as $key1=> $row) {?>												
+												<td class="first-col" style="padding-right: 0px;padding-left: 0px;text-align: center;vertical-align: middle;">
+													<div class="cl-instalaciones_equipo_adicional" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_equipo_adicional()"><?php echo $row;$conteo+=$row; ?></div>
+														
+														<table class="tb_tec_info_instalaciones_equipo_adicional" style='width: 100px;vertical-align: middle;'><tbody>
+															<?php foreach ($lista_por_tecnicos['instalaciones_equipo_adicional'][$key1] as $key => $value2) {
+																echo "<tr class='instalaciones_equipo_adicional_".$key."' ><td style='width: 100px;text-align: center;'>".($value2['puntuacion'])."p</td></tr>";																
+															} ?>	
+														</tbody></table> 	
+												</td>
+											<?php } ?>
+
+												
+											
+											<td align="center" style="vertical-align: middle;" >
+												<div   class="cl-instalaciones_equipo_adicional" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_equipo_adicional()"><?php echo $conteo; ?></div>
+														<table class="tb_tec_info_instalaciones_equipo_adicional" style='width: 200px;text-align: center;vertical-align: middle;'><tbody>
+															<?php foreach ($lista_datos_cuentas_tipos_por_tecnico['instalaciones_equipo_adicional'] as $key => $value2) {
+																echo "<tr class='instalaciones_equipo_adicional_".$key."' ><td style='width: 200px;'><strong>".($value2['puntuacion'])."</strong> pts </td></tr>";																
+															} ?>	
+														</tbody></table> 	
+											</td>
+										</tr>
+										<tr>
                                             <td class="static">
                                                 <div class="cl-tareas_en_proyectos" style="cursor: pointer;" onclick="desactivar_activar_tabla_tareas_en_proyectos()"><i><u>Tareas</u></i></div>
                                                 
@@ -950,7 +1062,10 @@ table {
 																    $puntuacion_suspencion=array("cantidad"=>0,"puntuacion"=>0);
 																    $puntuacion_recuperacion=array("cantidad"=>0,"puntuacion"=>0);
 																    $puntuacion_veeduria=array("cantidad"=>0,"puntuacion"=>0);
+																    $puntuacion_activacion=array("cantidad"=>0,"puntuacion"=>0);
 																    $puntuacion_tareas=array("cantidad"=>0,"puntuacion"=>0);
+																    $puntuacion_cambio_de_equipo=array("cantidad"=>0,"puntuacion"=>0);
+																    $puntuacion_equipo_adicional=array("cantidad"=>0,"puntuacion"=>0);
 
 																$x=$lista_datos_cuentas_tipos_por_tecnico['instalaciones_tv_e_internet'][$key];
 																$total=$x['FTTH']['puntuacion']+$x['EOC']['puntuacion']+$x['puntos_adicionales']['puntuacion']+$x['puntos_adicionales_multiples']['puntuacion'];
@@ -1061,6 +1176,24 @@ table {
 																	$puntuacion_veeduria['cantidad']+=$x['cantidad'];
 																	$puntuacion_veeduria['puntuacion']+=$x['puntuacion'];
 
+
+																$x=$lista_datos_cuentas_tipos_por_tecnico['instalaciones_activacion'][$key];
+																$total+=$x['puntuacion'];
+																	$puntuacion_activacion['cantidad']+=$x['cantidad'];
+																	$puntuacion_activacion['puntuacion']+=$x['puntuacion'];
+
+																$x=$lista_datos_cuentas_tipos_por_tecnico['instalaciones_cambio_de_equipo'][$key];
+																$total+=$x['puntuacion'];
+																	$puntuacion_cambio_de_equipo['cantidad']+=$x['cantidad'];
+																	$puntuacion_cambio_de_equipo['puntuacion']+=$x['puntuacion'];
+
+																$x=$lista_datos_cuentas_tipos_por_tecnico['instalaciones_equipo_adicional'][$key];
+																$total+=$x['puntuacion'];
+																	$puntuacion_equipo_adicional['cantidad']+=$x['cantidad'];
+																	$puntuacion_equipo_adicional['puntuacion']+=$x['puntuacion'];
+
+
+
 																$x=$lista_datos_cuentas_tipos_por_tecnico['instalaciones_Revision_tv_e_internet'][$key];
 																$total+=$x['puntuacion'];
 																	$puntuacion_revision_tv=$x;
@@ -1102,7 +1235,10 @@ table {
 																				data-instalaciones-reconexion='".$puntuacion_reconexion['cantidad'].",".$puntuacion_reconexion['puntuacion']."' 
 																				data-instalaciones-desconexion='".$puntuacion_desconexion['cantidad'].",".$puntuacion_desconexion['puntuacion']."' 
 																				data-instalaciones-suspencion='".$puntuacion_suspencion['cantidad'].",".$puntuacion_suspencion['puntuacion']."' 
-																				data-instalaciones-veeduria='".$puntuacion_recuperacion['cantidad'].",".$puntuacion_recuperacion['puntuacion']."' 
+																				data-instalaciones-veeduria='".$puntuacion_recuperacion['cantidad'].",".$puntuacion_recuperacion['puntuacion']."'
+																				data-instalaciones-activacion='".$puntuacion_activacion['cantidad'].",".$puntuacion_activacion['puntuacion']."' 
+																				data-instalaciones-cambio-de-equipo='".$puntuacion_cambio_de_equipo['cantidad'].",".$puntuacion_cambio_de_equipo['puntuacion']."' 
+																				data-instalaciones-equipo-adicional='".$puntuacion_equipo_adicional['cantidad'].",".$puntuacion_equipo_adicional['puntuacion']."' 
 																				data-instalaciones-recuperacion='".$puntuacion_veeduria['cantidad'].",".$puntuacion_veeduria['puntuacion']."' 
 																				data-tareas='".$puntuacion_tareas['cantidad'].",".$puntuacion_tareas['puntuacion']."' "; 
 
@@ -1250,6 +1386,21 @@ table {
                 			<td>Veeduria</td>
                 			<td id="modal-instalaciones-veeduria-c">0</td>
                 			<td id="modal-instalaciones-veeduria-p">0</td>
+                		</tr>
+                		<tr>
+                			<td>Activacion</td>
+                			<td id="modal-instalaciones-activacion-c">0</td>
+                			<td id="modal-instalaciones-activacion-p">0</td>
+                		</tr>
+                		<tr>
+                			<td>Cambio de Equipo</td>
+                			<td id="modal-instalaciones-cambio-de-equipo-c">0</td>
+                			<td id="modal-instalaciones-cambio-de-equipo-p">0</td>
+                		</tr>
+                		<tr>
+                			<td>Equipo Adicional</td>
+                			<td id="modal-instalaciones-equipo-adicional-c">0</td>
+                			<td id="modal-instalaciones-equipo-adicional-p">0</td>
                 		</tr>
                 		<tr>
                 			<td>Recuperación Cable Modem</td>
@@ -1402,6 +1553,25 @@ table {
 			total_puntuacion+=parseInt(datax[1]);
 			cantidad+=parseInt(datax[0]);
 
+			var datax=$(this).data("instalaciones-activacion").split(",");
+			$("#modal-instalaciones-activacion-c").text(datax[0]);
+			$("#modal-instalaciones-activacion-p").text(datax[1]);
+			total_puntuacion+=parseInt(datax[1]);
+			cantidad+=parseInt(datax[0]);
+
+			var datax=$(this).data("instalaciones-cambio-de-equipo").split(",");
+			$("#modal-instalaciones-cambio-de-equipo-c").text(datax[0]);
+			$("#modal-instalaciones-cambio-de-equipo-p").text(datax[1]);
+			total_puntuacion+=parseInt(datax[1]);
+			cantidad+=parseInt(datax[0]);
+
+			var datax=$(this).data("instalaciones-equipo-adicional").split(",");
+			$("#modal-instalaciones-equipo-adicional-c").text(datax[0]);
+			$("#modal-instalaciones-equipo-adicional-p").text(datax[1]);
+			total_puntuacion+=parseInt(datax[1]);
+			cantidad+=parseInt(datax[0]);
+
+
 			var datax=$(this).data("instalaciones-recuperacion").split(",");
 			$("#modal-instalaciones-recuperacion-c").text(datax[0]);
 			$("#modal-instalaciones-recuperacion-p").text(datax[1]);
@@ -1447,6 +1617,9 @@ table {
 		var lista_clases_css27="<?=$lista_clases_css27 ?>";
 		var lista_clases_css37="<?=$lista_clases_css37 ?>";
 		var lista_clases_css47="<?=$lista_clases_css47 ?>";
+		var lista_clases_css57="<?=$lista_clases_css57 ?>";
+		var lista_clases_css67="<?=$lista_clases_css67 ?>";
+		var lista_clases_css77="<?=$lista_clases_css77 ?>";
 		
 			$(".cl-instalaciones_tv_e_internet"+lista_clases_css1).mouseover(function(){
 				var x1="."+$(this).attr("class");
@@ -1777,6 +1950,54 @@ table {
 				$(x1).css("transform","");*/
 			});
 
+			$(".cl-instalaciones_activacion"+lista_clases_css57).mouseover(function(){
+				var x1="."+$(this).attr("class");
+				$(x1).css("background-color","#d2b48c");
+				$(x1).css("box-shadow","1px 1px #53a7ea,2px 2px #53a7ea,3px 3px #53a7ea");
+				/*$(x1).css("-webkit-transform","translateX(-7px)");
+				$(x1).css("transform","translateX(-7px)");*/
+			});
+			
+			$(".cl-instalaciones_activacion"+lista_clases_css57).mouseout(function (){
+				var x1="."+$(this).attr("class");
+				$(x1).css("background-color","");
+				$(x1).css("box-shadow","");
+				/*$(x1).css("-webkit-transform","");
+				$(x1).css("transform","");*/
+			});
+
+			$(".cl-instalaciones_cambio_de_equipo"+lista_clases_css67).mouseover(function(){
+				var x1="."+$(this).attr("class");
+				$(x1).css("background-color","#d2b48c");
+				$(x1).css("box-shadow","1px 1px #53a7ea,2px 2px #53a7ea,3px 3px #53a7ea");
+				/*$(x1).css("-webkit-transform","translateX(-7px)");
+				$(x1).css("transform","translateX(-7px)");*/
+			});
+			
+			$(".cl-instalaciones_cambio_de_equipo"+lista_clases_css67).mouseout(function (){
+				var x1="."+$(this).attr("class");
+				$(x1).css("background-color","");
+				$(x1).css("box-shadow","");
+				/*$(x1).css("-webkit-transform","");
+				$(x1).css("transform","");*/
+			});
+
+			$(".cl-instalaciones_equipo_adicional"+lista_clases_css77).mouseover(function(){
+				var x1="."+$(this).attr("class");
+				$(x1).css("background-color","#d2b48c");
+				$(x1).css("box-shadow","1px 1px #53a7ea,2px 2px #53a7ea,3px 3px #53a7ea");
+				/*$(x1).css("-webkit-transform","translateX(-7px)");
+				$(x1).css("transform","translateX(-7px)");*/
+			});
+			
+			$(".cl-instalaciones_equipo_adicional"+lista_clases_css77).mouseout(function (){
+				var x1="."+$(this).attr("class");
+				$(x1).css("background-color","");
+				$(x1).css("box-shadow","");
+				/*$(x1).css("-webkit-transform","");
+				$(x1).css("transform","");*/
+			});
+
 			$(".cl-tareas_en_proyectos"+lista_clases_css20).mouseover(function(){
 				var x1="."+$(this).attr("class");
 				$(x1).css("background-color","#d2b48c");
@@ -1863,6 +2084,15 @@ function desactivar_activar_tabla_instalaciones_recuperacion_cable_modem(){
 function desactivar_activar_tabla_instalaciones_veeduria(){
 		$(".tb_tec_info_instalaciones_veeduria").fadeToggle("fast");						
 }
+function desactivar_activar_tabla_instalaciones_activacion(){
+		$(".tb_tec_info_instalaciones_activacion").fadeToggle("fast");						
+}
+function desactivar_activar_tabla_instalaciones_cambio_de_equipo(){
+		$(".tb_tec_info_instalaciones_cambio_de_equipo").fadeToggle("fast");						
+}
+function desactivar_activar_tabla_instalaciones_equipo_adicional(){
+		$(".tb_tec_info_instalaciones_equipo_adicional").fadeToggle("fast");						
+}
 
 function mostrar_ocultar(){
 	desactivar_activar_tabla_instalaciones_total();
@@ -1885,6 +2115,9 @@ function mostrar_ocultar(){
 	desactivar_activar_tabla_instalaciones_punto_nuevo();
 	desactivar_activar_tabla_instalaciones_recuperacion_cable_modem();
 	desactivar_activar_tabla_instalaciones_veeduria();
+	desactivar_activar_tabla_instalaciones_activacion();
+	desactivar_activar_tabla_instalaciones_cambio_de_equipo();
+	desactivar_activar_tabla_instalaciones_equipo_adicional();
 }
 mostrar_ocultar();
 
