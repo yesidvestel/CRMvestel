@@ -43,6 +43,65 @@ class Redes_model extends CI_Model
         $query = $this->db->get();
         return $query->result_array();
     }
+	public function input_vlan($almacen,$vlan,$detalle)
+    {
+        $data = array(
+			'sede' => $almacen,
+			'vlan' => $vlan,
+			'detalle' => $detalle,
+        );
+
+        $this->db->set($data);
+
+        if ($this->db->insert('vlans')) {
+            echo json_encode(array('status' => 'Success', 'message' =>
+                $this->lang->line('UPDATED')));
+        } else {
+            echo json_encode(array('status' => 'Error', 'message' =>
+                $this->lang->line('ERROR')));
+        }
+    }
+	public function input_nap($almacen,$vlan,$nap,$puertos,$detalle)
+    {
+        $data = array(
+			'sede' => $almacen,
+			'vlan' => $vlan,
+			'nap' => $nap,
+			'puertos' => $puertos,
+			'detalle' => $detalle,
+        );
+
+        $this->db->set($data);
+
+        if ($this->db->insert('naps')) {
+            echo json_encode(array('status' => 'Success', 'message' =>
+                $this->lang->line('UPDATED')));
+        } else {
+            echo json_encode(array('status' => 'Error', 'message' =>
+                $this->lang->line('ERROR')));
+        }
+    }
+	public function input_puerto($almacen,$vlan,$nap,$puerto,$estado,$detalle)
+    {
+        $data = array(
+			'sede' => $almacen,
+			'vlan' => $vlan,
+			'nap' => $nap,
+			'puerto' => $puerto,
+			'estado' => $estado,
+			'detalle' => $detalle,
+        );
+
+        $this->db->set($data);
+
+        if ($this->db->insert('puertos')) {
+            echo json_encode(array('status' => 'Success', 'message' =>
+                $this->lang->line('UPDATED')));
+        } else {
+            echo json_encode(array('status' => 'Error', 'message' =>
+                $this->lang->line('ERROR')));
+        }
+    }
 	public function almacenquery()
     {
         $query = $this->db->query("SELECT c.*,p.pc FROM almacen_equipos AS c LEFT JOIN ( SELECT almacen,COUNT(id) AS pc FROM equipos GROUP BY almacen) AS p ON c.id=p.almacen");
@@ -59,9 +118,51 @@ class Redes_model extends CI_Model
         $query = $this->db->get();
         return $query->result_array();
     }
+	public function vlan_list($id)
+    {
+        $this->db->select('*');
+        $this->db->from('vlans');
+		$this->db->where('sede', $id);
+        $query = $this->db->get();
+        return $query->result();
+    }
+	public function nap_list($id)
+    {
+        $this->db->select('*');
+        $this->db->from('naps');
+		$this->db->where('vlan', $id);
+        $query = $this->db->get();
+        return $query->result();
+    }
+	public function puertos_group($id)
+    {
+        $this->db->select('*');
+        $this->db->from('puertos');
+		$this->db->where('nap', $id);
+		$this->db->where('estado', 'Disponible');
+        $query = $this->db->get();
+        return $query->result();
+    }
+	public function nap_todas()
+    {
+        $this->db->select('*');
+        $this->db->from('naps');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+	public function puertos_list()
+    {
+        $this->db->select('*');
+        $this->db->from('puertos');
+		$this->db->join('almacen_equipos', 'almacen_equipos.id = puertos.sede');
+		$this->db->join('naps', 'naps.idn = puertos.nap');
+		$this->db->join('vlans', 'vlans.idv = puertos.vlan');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
 	public function puertolista($id=null,$almacen=null,$vlan=null)
     {
-        $this->db->select('puerto, nat');
+        $this->db->select('puerto, nat,asignado');
         $this->db->from($this->table);
         $this->db->group_by('puerto');
 		$this->db->where('puerto !=', 0);

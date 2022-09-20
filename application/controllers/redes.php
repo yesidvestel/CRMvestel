@@ -50,6 +50,126 @@ class Redes extends CI_Controller
 		//var_dump($data['vlan2']);
 
     }
+	public function vlanadd()
+    {
+		$this->load->model('categories_model');
+		$sede = $this->input->get('id');
+		$data['almacen'] = $this->categories_model->almacen_list();
+        $head['title'] = "Vlan add";
+        $head['usernm'] = $this->aauth->get_user()->username;
+        $this->load->view('fixed/header', $head);
+        $this->load->view('redes/vlan-add',$data);
+        $this->load->view('fixed/footer');
+		//var_dump($data['vlan2']);
+
+    }
+	public function vlan_input()
+    {
+        
+            $almacen = $this->input->post('almacen');
+            $vlan = $this->input->post('vlan');
+            $detalle = $this->input->post('detalle');
+            $this->redes->input_vlan($almacen,$vlan,$detalle);
+
+    }
+	public function napadd()
+    {
+		$this->load->model('categories_model');
+		$sede = $this->input->get('id');
+		$data['almacen'] = $this->categories_model->almacen_list();
+        $head['title'] = "Vlan add";
+        $head['usernm'] = $this->aauth->get_user()->username;
+        $this->load->view('fixed/header', $head);
+        $this->load->view('redes/nap-add',$data);
+        $this->load->view('fixed/footer');
+		//var_dump($data['vlan2']);
+
+    }
+	public function vlan_list()
+	{ 
+		$id = $this->input->post('id');
+		$vlans = $this->redes->vlan_list($id);
+		//echo '<select  id="cmbCiudades"  class="selectpicker form-control"><option>Seleccionar</option>';
+		$lista_opciones="<option value=''>Seleccionar</option>";
+		foreach ($vlans as $row) {
+			$lista_opciones.= '<option value="' . $row->idv . '">' . $row->vlan . '</option>';
+			
+		}
+		
+		echo $lista_opciones; 
+	}
+	public function puertos_list()
+	{ 
+		$id = $this->input->post('idn');
+		var_dump($id);
+		$vlans = $this->redes->puertos_group($id);
+		//echo '<select  id="cmbCiudades"  class="selectpicker form-control"><option>Seleccionar</option>';
+		$lista_opciones="<option value=''>Seleccionar</option>";
+		foreach ($vlans as $row) {
+			$lista_opciones.= '<option value="' . $row->idp . '">' . $row->puerto . '</option>';
+			
+		}
+		
+		echo $lista_opciones; 
+	}
+	public function nap_input()
+    {
+        
+            $almacen = $this->input->post('almacen');
+            $vlan = $this->input->post('vlan');
+            $nap = $this->input->post('nap');
+            $puertos = $this->input->post('puertos');
+            $detalle = $this->input->post('detalle');
+            $this->redes->input_nap($almacen,$vlan,$nap,$puertos,$detalle);
+
+    }
+	public function puertosadd()
+    {
+		$this->load->model('categories_model');
+		$sede = $this->input->get('id');
+		$data['almacen'] = $this->categories_model->almacen_list();
+        $head['title'] = "Puerto add";
+        $head['usernm'] = $this->aauth->get_user()->username;
+        $this->load->view('fixed/header', $head);
+        $this->load->view('redes/puertos-add',$data);
+        $this->load->view('fixed/footer');
+		//var_dump($data['vlan2']);
+
+    }
+	public function nap_list()
+	{ 
+		$id = $this->input->post('idv');
+		$vlans = $this->redes->nap_list($id);
+		//echo '<select  id="cmbCiudades"  class="selectpicker form-control"><option>Seleccionar</option>';
+		$lista_opciones="<option value=''>Seleccionar</option>";
+		foreach ($vlans as $row) {
+			$lista_opciones.= '<option value="' . $row->idn . '">' . $row->nap . '</option>';
+			
+		}
+		
+		echo $lista_opciones; 
+	}
+	public function puerto_input()
+    {
+        
+            $almacen = $this->input->post('almacen');
+            $vlan = $this->input->post('vlan');
+            $nap = $this->input->post('nap');
+            $puerto = $this->input->post('puerto');
+            $estado = $this->input->post('estado');
+            $detalle = $this->input->post('detalle');
+            $this->redes->input_puerto($almacen,$vlan,$nap,$puerto,$estado,$detalle);
+
+    }
+	public function conexionlist()
+    {
+        $head['usernm'] = $this->aauth->get_user()->username;
+        $data['puertos'] = $this->redes->puertos_list();
+        $head['title'] = 'Email Templates';
+        $this->load->view('fixed/header');
+        $this->load->view('redes/conexionlist',$data);
+        $this->load->view('fixed/footer');
+    }
 	 public function sedes()
     {
 		$data['cat'] = $this->redes->almacenquery();
@@ -97,18 +217,21 @@ class Redes extends CI_Controller
 		}
 		
 		for ($i=1;$i<=16;$i++){
-			
+			$usuario=$this->db->get_where("customers",array("id"=>$value['asignado']))->row();
 			$color="teal";
 			if (isset($arrayx[$i])){ 
 				$color= 'pink';
+				$user = $usuario->abonado;
+				$ids = $usuario->id;
 			}else{ 
 				$color ='teal';
+				$user = '';
 			}
 			/*$return.='<td>
 									<i class="icon-circle contenedor font-large-1">
 									<h5 style="position: absolute" class="centrado2">a</h5></i>
 								</td>';*/
-			$return.='<td><i class="icon-circle contenedor '.$color.' font-large-1"><h5 style="position: absolute" class="centrado2">'.$i.'</h5></i></td>';
+			$return.='<td><i class="icon-circle contenedor '.$color.' font-large-1"><h5 style="position: absolute" class="centrado2">'.$i.'</h5></i><a href="'.base_url("customers/view?id=".$ids).'"  style="text-align: center;font-size: 10px">'.$user.'</a></td>';
 		}
 		echo $return;
 		

@@ -105,13 +105,13 @@
                     
                         <div>
 							
-							<table align="center" width="100%">
+							<table align="center" width="100%" border="1">
 							<tr>
 							<td colspan="16" align="center"><img alt="image" id="dpic" class="img-responsive"
                                      src="<?php echo base_url('userfiles/attach/napaabierta2.png') ?>"></td>	
 							</tr>
 							<tr id="bloque_puertos">
-								
+								<a style="text-align: center;font-size: 10px"></a>
 							</tr>
 							</table>
 							
