@@ -56,7 +56,9 @@ table {
 					<input type="checkbox" id="Agregar_Tv" style="cursor:pointer;" onclick="activar_desactivar_meses(null,'b');" class="case"><b style="cursor:pointer;" onclick="activar_desactivar_meses('Agregar_Tv','b');"><i>&nbsp;Agregar Tv&nbsp;</b></i>
 					<input type="checkbox" id="AgregarInternet" style="cursor:pointer;" onclick="activar_desactivar_meses(null,'c');" class="case"><b style="cursor:pointer;" onclick="activar_desactivar_meses('AgregarInternet','c');"><i>&nbsp;Agregar Internet&nbsp;</b></i>
 					<input type="checkbox" id="Traslado" style="cursor:pointer;" onclick="activar_desactivar_meses(null,'d');" class="case"><b style="cursor:pointer;" onclick="activar_desactivar_meses('Traslado','d');"><i>&nbsp;Traslado&nbsp;</b></i>
-					<input type="checkbox" id="Revision" style="cursor:pointer;" onclick="activar_desactivar_meses(null,'e');" class="case"><b style="cursor:pointer;" onclick="activar_desactivar_meses('Revision','e');"><i>&nbsp;Revision&nbsp;</b></i>
+					<input type="checkbox" id="Revision" style="cursor:pointer;" onclick="activar_desactivar_meses(null,'e');" class="case"><b style="cursor:pointer;" onclick="activar_desactivar_meses('Revision','e');"><i>&nbsp;Revision Tv+Internet&nbsp;</b></i>
+					<input type="checkbox" id="Revision_tv" style="cursor:pointer;" onclick="activar_desactivar_meses(null,'k');" class="case"><b style="cursor:pointer;" onclick="activar_desactivar_meses('Revision_tv','k');"><i>&nbsp;Revision Tv&nbsp;</b></i>
+					<input type="checkbox" id="Revision_internet" style="cursor:pointer;" onclick="activar_desactivar_meses(null,'l');" class="case"><b style="cursor:pointer;" onclick="activar_desactivar_meses('Revision_internet','l');"><i>&nbsp;Revision Internet&nbsp;</b></i>
 					<input type="checkbox" id="Reconexion" style="cursor:pointer;" onclick="activar_desactivar_meses(null,'f');" class="case"><b style="cursor:pointer;" onclick="activar_desactivar_meses('Reconexion','f');"><i>&nbsp;Reconexion&nbsp;</b></i>
 					<input type="checkbox" id="Suspension_Combo" style="cursor:pointer;" onclick="activar_desactivar_meses(null,'g');" class="case"><b style="cursor:pointer;" onclick="activar_desactivar_meses('Suspension_Combo','g');"><i>&nbsp;Suspension Combo&nbsp;</b></i>
 					<input type="checkbox" id="Suspension_Internet" style="cursor:pointer;" onclick="activar_desactivar_meses(null,'h');" class="case"><b style="cursor:pointer;" onclick="activar_desactivar_meses('Suspension_Internet','h');"><i>&nbsp;Suspension Internet&nbsp;</b></i>
@@ -102,7 +104,9 @@ table {
 					<input type="checkbox" id="instalaciones_Agregar_Tv" style="cursor:pointer;" onclick="activar_desactivar_lines(null,'b');" class="case"><b style="cursor:pointer;" onclick="activar_desactivar_lines('instalaciones_Agregar_Tv','b');"><i>&nbsp;Agregar Tv&nbsp;</b></i>
 					<input type="checkbox" id="instalaciones_AgregarInternet" style="cursor:pointer;" onclick="activar_desactivar_lines(null,'c');" class="case"><b style="cursor:pointer;" onclick="activar_desactivar_lines('instalaciones_AgregarInternet','c');"><i>&nbsp;Agregar Internet&nbsp;</b></i>
 					<input type="checkbox" id="instalaciones_Traslado" style="cursor:pointer;" onclick="activar_desactivar_lines(null,'d');" class="case"><b style="cursor:pointer;" onclick="activar_desactivar_lines('instalaciones_Traslado','d');"><i>&nbsp;Traslado&nbsp;</b></i>
-					<input type="checkbox" id="instalaciones_Revision" style="cursor:pointer;" onclick="activar_desactivar_lines(null,'e');" class="case"><b style="cursor:pointer;" onclick="activar_desactivar_lines('instalaciones_Revision','e');"><i>&nbsp;Revision&nbsp;</b></i>
+					<input type="checkbox" id="instalaciones_Revision" style="cursor:pointer;" onclick="activar_desactivar_lines(null,'e');" class="case"><b style="cursor:pointer;" onclick="activar_desactivar_lines('instalaciones_Revision','e');"><i>&nbsp;Revision Tv+Internet&nbsp;</b></i>
+					<input type="checkbox" id="instalaciones_Revision_tv" style="cursor:pointer;" onclick="activar_desactivar_lines(null,'e');" class="case"><b style="cursor:pointer;" onclick="activar_desactivar_lines('instalaciones_Revision_tv','k');"><i>&nbsp;Revision Tv&nbsp;</b></i>
+					<input type="checkbox" id="instalaciones_Revision_internet" style="cursor:pointer;" onclick="activar_desactivar_lines(null,'e');" class="case"><b style="cursor:pointer;" onclick="activar_desactivar_lines('instalaciones_Revision_internet','l');"><i>&nbsp;Revision Internet&nbsp;</b></i>
 					<input type="checkbox" id="instalaciones_Reconexion" style="cursor:pointer;" onclick="activar_desactivar_lines(null,'f');" class="case"><b style="cursor:pointer;" onclick="activar_desactivar_lines('instalaciones_Reconexion','f');"><i>&nbsp;Reconexion&nbsp;</b></i>
 					<input type="checkbox" id="instalaciones_Suspension_Combo" style="cursor:pointer;" onclick="activar_desactivar_lines(null,'g');" class="case"><b style="cursor:pointer;" onclick="activar_desactivar_lines('instalaciones_Suspension_Combo','g');"><i>&nbsp;Suspension Combo&nbsp;</b></i>
 					<input type="checkbox" id="instalaciones_Suspension_Internet" style="cursor:pointer;" onclick="activar_desactivar_lines(null,'h');" class="case"><b style="cursor:pointer;" onclick="activar_desactivar_lines('instalaciones_Suspension_Internet','h');"><i>&nbsp;Suspension Internet&nbsp;</b></i>
@@ -2380,7 +2384,7 @@ mostrar_ocultar();
 	});
 
 	var lista_keysdos=[];
-	var lista_labels_totaldos={y:'Instalaciones Tv + Internet',z:"Instalaciones Tv",a:"Instalaciones Internet",b:"Agregar Tv",c:"Agregar Internet",d:"Traslado",e:"Revision",f:"Reconexion",g:"Suspension Combo",h:"Suspension Internet",i:"Suspension Television",j:"Corte Television"};
+	var lista_labels_totaldos={y:'Instalaciones Tv + Internet',z:"Instalaciones Tv",a:"Instalaciones Internet",b:"Agregar Tv",c:"Agregar Internet",d:"Traslado",e:"Revision Tv+Internet",f:"Reconexion",g:"Suspension Combo",h:"Suspension Internet",i:"Suspension Television",j:"Corte Television",k:"Revision Tv",l:"Revision Internet"};
     var lista_labels_personalizadados=[];
     $('#invoices-sales-chart').empty();
     var datosdos={
@@ -2389,7 +2393,7 @@ mostrar_ocultar();
             <?php foreach ($stat['instalaciones_tv_e_internet'] as $key => $numero) {
             $datex = new DateTime($key);
             //$num = cal_days_in_month(CAL_GREGORIAN, $row['month'], $row['year']);
-            echo "{ x: '".($datex->format("Y-m-t"))."', y: ". intval($stat['instalaciones_tv_e_internet'][$key]) .",z: " . intval($stat['instalaciones_tv'][$key]) . ",a: " . intval($stat['instalaciones_internet'][$key]) . ",b: " . intval($stat['instalaciones_Agregar_Tv'][$key]) .",c:" . intval($stat['instalaciones_AgregarInternet'][$key]) . ",d: " . intval($stat['instalaciones_Traslado'][$key]) . ",e: " . intval($stat['instalaciones_Revision'][$key]) . ",f: " . intval($stat['instalaciones_Reconexion'][$key]) . ",g: " . intval($stat['instalaciones_Suspension_Combo'][$key]) . ",h: " . intval($stat['instalaciones_Suspension_Internet'][$key]) . ",i: " . intval($stat['instalaciones_Suspension_Television'][$key]) . ",j: " . intval($stat['instalaciones_Corte_Television'][$key]) . "},";
+            echo "{ x: '".($datex->format("Y-m-t"))."', y: ". intval($stat['instalaciones_tv_e_internet'][$key]) .",z: " . intval($stat['instalaciones_tv'][$key]) . ",a: " . intval($stat['instalaciones_internet'][$key]) . ",b: " . intval($stat['instalaciones_Agregar_Tv'][$key]) .",c:" . intval($stat['instalaciones_AgregarInternet'][$key]) . ",d: " . intval($stat['instalaciones_Traslado'][$key]) . ",e: " . intval($stat['instalaciones_Revision'][$key]) . ",f: " . intval($stat['instalaciones_Reconexion'][$key]) . ",g: " . intval($stat['instalaciones_Suspension_Combo'][$key]) . ",h: " . intval($stat['instalaciones_Suspension_Internet'][$key]) . ",i: " . intval($stat['instalaciones_Suspension_Television'][$key]) . ",j: " . intval($stat['instalaciones_Corte_Television'][$key]) . ",k: " . intval($stat['instalaciones_Revision_tv'][$key]) .",l: " . intval($stat['instalaciones_Revision_internet'][$key]) ."},";
             
         } ?>
 
@@ -2434,7 +2438,7 @@ mostrar_ocultar();
 		
 	}
     var lista_keys=[];
-    var lista_labels_total={y:'Instalaciones Tv + Internet',z:"Instalaciones Tv",a:"Instalaciones Internet",b:"Agregar Tv",c:"Agregar Internet",d:"Traslado",e:"Revision",f:"Reconexion",g:"Suspension Combo",h:"Suspension Internet",i:"Suspension Television",j:"Corte Television"};
+    var lista_labels_total={y:'Instalaciones Tv + Internet',z:"Instalaciones Tv",a:"Instalaciones Internet",b:"Agregar Tv",c:"Agregar Internet",d:"Traslado",e:"Revision Tv+Internet",f:"Reconexion",g:"Suspension Combo",h:"Suspension Internet",i:"Suspension Television",j:"Corte Television",k:"Revision Tv",l:"Revision Internet"};
     var lista_labels_personalizada=[];
     $('#invoices-products-chart').empty();
 	var datos={
@@ -2443,7 +2447,7 @@ mostrar_ocultar();
             <?php foreach ($tipos['instalaciones_tv_e_internet'] as $key => $row) {
             $datex = new DateTime($key);
             //$num = cal_days_in_month(CAL_GREGORIAN, $row['month'], $row['year']);
-            echo "{ x: '".($datex->format("Y-m-d"))."', y: " . intval($tipos['instalaciones_tv_e_internet'][$key]) . ",z: " . intval($tipos['instalaciones_tv'][$key]) . ",a: " . intval($tipos['instalaciones_internet'][$key]) . ",b: " . intval($tipos['instalaciones_Agregar_Tv'][$key]) . ",c: " . intval($tipos['instalaciones_AgregarInternet'][$key]) . ",d: " . intval($tipos['instalaciones_Traslado'][$key]) . ",e: " . intval($tipos['instalaciones_Revision'][$key]) . ",f: " . intval($tipos['instalaciones_Reconexion'][$key]) . ",g: " . intval($tipos['instalaciones_Suspension_Combo'][$key]) . ",h: " . intval($tipos['instalaciones_Suspension_Internet'][$key]) . ",i: " . intval($tipos['instalaciones_Suspension_Television'][$key]) . ",j: " . intval($tipos['instalaciones_Corte_Television'][$key]) . "},";//,z: " . intval($tipos['instalaciones_tv'][$key]['numero']) . "
+            echo "{ x: '".($datex->format("Y-m-d"))."', y: " . intval($tipos['instalaciones_tv_e_internet'][$key]) . ",z: " . intval($tipos['instalaciones_tv'][$key]) . ",a: " . intval($tipos['instalaciones_internet'][$key]) . ",b: " . intval($tipos['instalaciones_Agregar_Tv'][$key]) . ",c: " . intval($tipos['instalaciones_AgregarInternet'][$key]) . ",d: " . intval($tipos['instalaciones_Traslado'][$key]) . ",e: " . intval($tipos['instalaciones_Revision_tv_e_internet'][$key]) . ",f: " . intval($tipos['instalaciones_Reconexion'][$key]) . ",g: " . intval($tipos['instalaciones_Suspension_Combo'][$key]) . ",h: " . intval($tipos['instalaciones_Suspension_Internet'][$key]) . ",i: " . intval($tipos['instalaciones_Suspension_Television'][$key]) . ",j: " . intval($tipos['instalaciones_Corte_Television'][$key]) . ",k: " . intval($tipos['instalaciones_Revision_tv'][$key]) . ",l: " . intval($tipos['instalaciones_Revision_internet'][$key]) . "},";//,z: " . intval($tipos['instalaciones_tv'][$key]['numero']) . "
             
         } ?>
 

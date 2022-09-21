@@ -658,7 +658,7 @@ foreach ($est as $key => $value) {
             $x5=strpos($value['detalle'], "internet");
             $x7=strpos($value['detalle'], "combo");
 //$key=="instalaciones_Revision_tv_e_internet" || $key=="instalaciones_Revision_tv" || $key=="instalaciones_Revision_internet"
-            if($x7!==false){
+            if(($x7!==false) || ($x4 && $x5)){
                 //if($value['tec_asignado']!=""){
                     $lista_tecnicos_organizada['instalaciones_Revision_tv_e_internet'][$key1][$value['tec_asignado']]['cantidad']++;
                     $lista_tecnicos_organizada['instalaciones_Revision_tv_e_internet'][$key1][$value['tec_asignado']]['puntuacion']+=($puntuacion_revision_tv+$puntuacion_revision_internet);
@@ -1106,6 +1106,8 @@ if($sede!="all"){
         $estadistica['instalaciones_AgregarInternet']=array();
         $estadistica['instalaciones_Traslado']=array();
         $estadistica['instalaciones_Revision']=array();
+        $estadistica['instalaciones_Revision_tv']=array();
+        $estadistica['instalaciones_Revision_internet']=array();
         $estadistica['instalaciones_Reconexion']=array();
         $estadistica['instalaciones_Suspension_Combo']=array();
         $estadistica['instalaciones_Suspension_Internet']=array();
@@ -1161,8 +1163,12 @@ foreach ($est as $key => $value) {
         $estadistica['instalaciones_AgregarInternet'][$key1]++;        
     }else if($value['detalle']=="traslado"){
         $estadistica['instalaciones_Traslado'][$key1]++;        
-    }else if(strpos($value['detalle'], "revision")!==false){
+    }else if( $value['detalle']=="revision tv e internet"){
         $estadistica['instalaciones_Revision'][$key1]++;        
+    }else if($value['detalle']=="revision de internet"){
+        $estadistica['instalaciones_Revision_internet'][$key1]++;        
+    }else if($value['detalle']=="revision de television"){
+        $estadistica['instalaciones_Revision_tv'][$key1]++;        
     }else if(strpos($value['detalle'], "reconexion")!==false){
         $estadistica['instalaciones_Reconexion'][$key1]++;        
     }else if($value['detalle']=="suspension combo"){
