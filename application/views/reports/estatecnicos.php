@@ -973,6 +973,117 @@ table {
 											</td>
 										</tr>
 										<tr>
+											<td class="static">
+												<div class="cl-instalaciones_reinstalacion" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_reinstalacion()"><i><u>Reinstalación</u></i></div>
+												
+													<table class="tb_tec_info_instalaciones_reinstalacion"><tbody>
+														<?php $lista_clases_css87=""; 
+															foreach ($lista_de_tecnicos as $key => $value) {
+																$name_class="instalaciones_reinstalacion_".$value['username'];
+																$lista_clases_css87.=",.".$name_class."";
+																echo "<tr class='".$name_class."'><td>".$value['username']."</td></tr>";
+														}  ?>	
+														
+													</tbody></table> 
+											</td>
+											<?php $conteo=0; foreach ($tipos['instalaciones_reinstalacion'] as $key1=> $row) {?>												
+												<td class="first-col" style="padding-right: 0px;padding-left: 0px;text-align: center;vertical-align: middle;">
+													<div class="cl-instalaciones_reinstalacion" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_reinstalacion()"><?php echo $row;$conteo+=$row; ?></div>
+														
+														<table class="tb_tec_info_instalaciones_reinstalacion" style='width: 100px;vertical-align: middle;'><tbody>
+															<?php foreach ($lista_por_tecnicos['instalaciones_reinstalacion'][$key1] as $key => $value2) {
+																echo "<tr class='instalaciones_reinstalacion_".$key."' ><td style='width: 100px;text-align: center;'>".($value2['puntuacion'])."p</td></tr>";																
+															} ?>	
+														</tbody></table> 	
+												</td>
+											<?php } ?>
+
+												
+											
+											<td align="center" style="vertical-align: middle;" >
+												<div   class="cl-instalaciones_reinstalacion" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_reinstalacion()"><?php echo $conteo; ?></div>
+														<table class="tb_tec_info_instalaciones_reinstalacion" style='width: 200px;text-align: center;vertical-align: middle;'><tbody>
+															<?php foreach ($lista_datos_cuentas_tipos_por_tecnico['instalaciones_reinstalacion'] as $key => $value2) {
+																echo "<tr class='instalaciones_reinstalacion_".$key."' ><td style='width: 200px;'><strong>".($value2['puntuacion'])."</strong> pts </td></tr>";																
+															} ?>	
+														</tbody></table> 	
+											</td>
+										</tr>
+										<tr>
+											<td class="static">
+												<div class="cl-instalaciones_retiro_voluntario" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_retiro_voluntario()"><i><u>Retiro Voluntario</u></i></div>
+												
+													<table class="tb_tec_info_instalaciones_retiro_voluntario"><tbody>
+														<?php $lista_clases_css97=""; 
+															foreach ($lista_de_tecnicos as $key => $value) {
+																$name_class="instalaciones_retiro_voluntario_".$value['username'];
+																$lista_clases_css97.=",.".$name_class."";
+																echo "<tr class='".$name_class."'><td>".$value['username']."</td></tr>";
+														}  ?>	
+														
+													</tbody></table> 
+											</td>
+											<?php $conteo=0; foreach ($tipos['instalaciones_retiro_voluntario'] as $key1=> $row) {?>												
+												<td class="first-col" style="padding-right: 0px;padding-left: 0px;text-align: center;vertical-align: middle;">
+													<div class="cl-instalaciones_retiro_voluntario" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_retiro_voluntario()"><?php echo $row;$conteo+=$row; ?></div>
+														
+														<table class="tb_tec_info_instalaciones_retiro_voluntario" style='width: 100px;vertical-align: middle;'><tbody>
+															<?php foreach ($lista_por_tecnicos['instalaciones_retiro_voluntario'][$key1] as $key => $value2) {
+																echo "<tr class='instalaciones_retiro_voluntario_".$key."' ><td style='width: 100px;text-align: center;'>".($value2['puntuacion'])."p</td></tr>";																
+															} ?>	
+														</tbody></table> 	
+												</td>
+											<?php } ?>
+
+												
+											
+											<td align="center" style="vertical-align: middle;" >
+												<div   class="cl-instalaciones_retiro_voluntario" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_retiro_voluntario()"><?php echo $conteo; ?></div>
+														<table class="tb_tec_info_instalaciones_retiro_voluntario" style='width: 200px;text-align: center;vertical-align: middle;'><tbody>
+															<?php foreach ($lista_datos_cuentas_tipos_por_tecnico['instalaciones_retiro_voluntario'] as $key => $value2) {
+																echo "<tr class='instalaciones_retiro_voluntario_".$key."' ><td style='width: 200px;'><strong>".($value2['puntuacion'])."</strong> pts </td></tr>";																
+															} ?>	
+														</tbody></table> 	
+											</td>
+										</tr>
+										<tr>
+											<td class="static">
+												<div class="cl-instalaciones_toma_adicional" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_toma_adicional()"><i><u>Toma Adicional</u></i></div>
+												
+													<table class="tb_tec_info_instalaciones_toma_adicional"><tbody>
+														<?php $lista_clases_css107=""; 
+															foreach ($lista_de_tecnicos as $key => $value) {
+																$name_class="instalaciones_toma_adicional_".$value['username'];
+																$lista_clases_css107.=",.".$name_class."";
+																echo "<tr class='".$name_class."'><td>".$value['username']."</td></tr>";
+														}  ?>	
+														
+													</tbody></table> 
+											</td>
+											<?php $conteo=0; foreach ($tipos['instalaciones_toma_adicional'] as $key1=> $row) {?>												
+												<td class="first-col" style="padding-right: 0px;padding-left: 0px;text-align: center;vertical-align: middle;">
+													<div class="cl-instalaciones_toma_adicional" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_toma_adicional()"><?php echo $row;$conteo+=$row; ?></div>
+														
+														<table class="tb_tec_info_instalaciones_toma_adicional" style='width: 100px;vertical-align: middle;'><tbody>
+															<?php foreach ($lista_por_tecnicos['instalaciones_toma_adicional'][$key1] as $key => $value2) {
+																echo "<tr class='instalaciones_toma_adicional_".$key."' ><td style='width: 100px;text-align: center;'>".($value2['puntuacion'])."p</td></tr>";																
+															} ?>	
+														</tbody></table> 	
+												</td>
+											<?php } ?>
+
+												
+											
+											<td align="center" style="vertical-align: middle;" >
+												<div   class="cl-instalaciones_toma_adicional" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_toma_adicional()"><?php echo $conteo; ?></div>
+														<table class="tb_tec_info_instalaciones_toma_adicional" style='width: 200px;text-align: center;vertical-align: middle;'><tbody>
+															<?php foreach ($lista_datos_cuentas_tipos_por_tecnico['instalaciones_toma_adicional'] as $key => $value2) {
+																echo "<tr class='instalaciones_toma_adicional_".$key."' ><td style='width: 200px;'><strong>".($value2['puntuacion'])."</strong> pts </td></tr>";																
+															} ?>	
+														</tbody></table> 	
+											</td>
+										</tr>
+										<tr>
                                             <td class="static">
                                                 <div class="cl-tareas_en_proyectos" style="cursor: pointer;" onclick="desactivar_activar_tabla_tareas_en_proyectos()"><i><u>Tareas</u></i></div>
                                                 
@@ -1066,6 +1177,9 @@ table {
 																    $puntuacion_tareas=array("cantidad"=>0,"puntuacion"=>0);
 																    $puntuacion_cambio_de_equipo=array("cantidad"=>0,"puntuacion"=>0);
 																    $puntuacion_equipo_adicional=array("cantidad"=>0,"puntuacion"=>0);
+																    $puntuacion_reinstalacion=array("cantidad"=>0,"puntuacion"=>0);
+																    $puntuacion_retiro_voluntario=array("cantidad"=>0,"puntuacion"=>0);
+																    $puntuacion_toma_adicional=array("cantidad"=>0,"puntuacion"=>0);
 
 																$x=$lista_datos_cuentas_tipos_por_tecnico['instalaciones_tv_e_internet'][$key];
 																$total=$x['FTTH']['puntuacion']+$x['EOC']['puntuacion']+$x['puntos_adicionales']['puntuacion']+$x['puntos_adicionales_multiples']['puntuacion'];
@@ -1193,6 +1307,21 @@ table {
 																	$puntuacion_equipo_adicional['puntuacion']+=$x['puntuacion'];
 
 
+																$x=$lista_datos_cuentas_tipos_por_tecnico['instalaciones_reinstalacion'][$key];
+																$total+=$x['puntuacion'];
+																	$puntuacion_reinstalacion['cantidad']+=$x['cantidad'];
+																	$puntuacion_reinstalacion['puntuacion']+=$x['puntuacion'];
+
+																	$x=$lista_datos_cuentas_tipos_por_tecnico['instalaciones_retiro_voluntario'][$key];
+																$total+=$x['puntuacion'];
+																	$puntuacion_retiro_voluntario['cantidad']+=$x['cantidad'];
+																	$puntuacion_retiro_voluntario['puntuacion']+=$x['puntuacion'];
+
+																	$x=$lista_datos_cuentas_tipos_por_tecnico['instalaciones_toma_adicional'][$key];
+																$total+=$x['puntuacion'];
+																	$puntuacion_toma_adicional['cantidad']+=$x['cantidad'];
+																	$puntuacion_toma_adicional['puntuacion']+=$x['puntuacion'];
+
 
 																$x=$lista_datos_cuentas_tipos_por_tecnico['instalaciones_Revision_tv_e_internet'][$key];
 																$total+=$x['puntuacion'];
@@ -1239,6 +1368,9 @@ table {
 																				data-instalaciones-activacion='".$puntuacion_activacion['cantidad'].",".$puntuacion_activacion['puntuacion']."' 
 																				data-instalaciones-cambio-de-equipo='".$puntuacion_cambio_de_equipo['cantidad'].",".$puntuacion_cambio_de_equipo['puntuacion']."' 
 																				data-instalaciones-equipo-adicional='".$puntuacion_equipo_adicional['cantidad'].",".$puntuacion_equipo_adicional['puntuacion']."' 
+																				data-instalaciones-reinstalacion='".$puntuacion_reinstalacion['cantidad'].",".$puntuacion_reinstalacion['puntuacion']."' 
+																				data-instalaciones-retiro-voluntario='".$puntuacion_retiro_voluntario['cantidad'].",".$puntuacion_retiro_voluntario['puntuacion']."' 
+																				data-instalaciones-toma-adicional='".$puntuacion_toma_adicional['cantidad'].",".$puntuacion_toma_adicional['puntuacion']."' 
 																				data-instalaciones-recuperacion='".$puntuacion_veeduria['cantidad'].",".$puntuacion_veeduria['puntuacion']."' 
 																				data-tareas='".$puntuacion_tareas['cantidad'].",".$puntuacion_tareas['puntuacion']."' "; 
 
@@ -1401,6 +1533,21 @@ table {
                 			<td>Equipo Adicional</td>
                 			<td id="modal-instalaciones-equipo-adicional-c">0</td>
                 			<td id="modal-instalaciones-equipo-adicional-p">0</td>
+                		</tr>
+                		<tr>
+                			<td>Reinstalación</td>
+                			<td id="modal-instalaciones-reinstalacion-c">0</td>
+                			<td id="modal-instalaciones-reinstalacion-p">0</td>
+                		</tr>
+                		<tr>
+                			<td>Retiro Voluntario</td>
+                			<td id="modal-instalaciones-retiro-voluntario-c">0</td>
+                			<td id="modal-instalaciones-retiro-voluntario-p">0</td>
+                		</tr>
+                		<tr>
+                			<td>Toma Adicional</td>
+                			<td id="modal-instalaciones-toma-adicional-c">0</td>
+                			<td id="modal-instalaciones-toma-adicional-p">0</td>
                 		</tr>
                 		<tr>
                 			<td>Recuperación Cable Modem</td>
@@ -1571,6 +1718,26 @@ table {
 			total_puntuacion+=parseInt(datax[1]);
 			cantidad+=parseInt(datax[0]);
 
+			
+
+			var datax=$(this).data("instalaciones-reinstalacion").split(",");
+			$("#modal-instalaciones-reinstalacion-c").text(datax[0]);
+			$("#modal-instalaciones-reinstalacion-p").text(datax[1]);
+			total_puntuacion+=parseInt(datax[1]);
+			cantidad+=parseInt(datax[0]);
+
+			var datax=$(this).data("instalaciones-retiro-voluntario").split(",");
+			$("#modal-instalaciones-retiro-voluntario-c").text(datax[0]);
+			$("#modal-instalaciones-retiro-voluntario-p").text(datax[1]);
+			total_puntuacion+=parseInt(datax[1]);
+			cantidad+=parseInt(datax[0]);
+
+			var datax=$(this).data("instalaciones-toma-adicional").split(",");
+			$("#modal-instalaciones-toma-adicional-c").text(datax[0]);
+			$("#modal-instalaciones-toma-adicional-p").text(datax[1]);
+			total_puntuacion+=parseInt(datax[1]);
+			cantidad+=parseInt(datax[0]);
+
 
 			var datax=$(this).data("instalaciones-recuperacion").split(",");
 			$("#modal-instalaciones-recuperacion-c").text(datax[0]);
@@ -1620,6 +1787,9 @@ table {
 		var lista_clases_css57="<?=$lista_clases_css57 ?>";
 		var lista_clases_css67="<?=$lista_clases_css67 ?>";
 		var lista_clases_css77="<?=$lista_clases_css77 ?>";
+		var lista_clases_css87="<?=$lista_clases_css87 ?>";
+		var lista_clases_css97="<?=$lista_clases_css97 ?>";
+		var lista_clases_css107="<?=$lista_clases_css107 ?>";
 		
 			$(".cl-instalaciones_tv_e_internet"+lista_clases_css1).mouseover(function(){
 				var x1="."+$(this).attr("class");
@@ -1998,6 +2168,54 @@ table {
 				$(x1).css("transform","");*/
 			});
 
+			$(".cl-instalaciones_reinstalacion"+lista_clases_css87).mouseover(function(){
+				var x1="."+$(this).attr("class");
+				$(x1).css("background-color","#d2b48c");
+				$(x1).css("box-shadow","1px 1px #53a7ea,2px 2px #53a7ea,3px 3px #53a7ea");
+				/*$(x1).css("-webkit-transform","translateX(-7px)");
+				$(x1).css("transform","translateX(-7px)");*/
+			});
+			
+			$(".cl-instalaciones_reinstalacion"+lista_clases_css87).mouseout(function (){
+				var x1="."+$(this).attr("class");
+				$(x1).css("background-color","");
+				$(x1).css("box-shadow","");
+				/*$(x1).css("-webkit-transform","");
+				$(x1).css("transform","");*/
+			});
+
+			$(".cl-instalaciones_retiro_voluntario"+lista_clases_css97).mouseover(function(){
+				var x1="."+$(this).attr("class");
+				$(x1).css("background-color","#d2b48c");
+				$(x1).css("box-shadow","1px 1px #53a7ea,2px 2px #53a7ea,3px 3px #53a7ea");
+				/*$(x1).css("-webkit-transform","translateX(-7px)");
+				$(x1).css("transform","translateX(-7px)");*/
+			});
+			
+			$(".cl-instalaciones_retiro_voluntario"+lista_clases_css97).mouseout(function (){
+				var x1="."+$(this).attr("class");
+				$(x1).css("background-color","");
+				$(x1).css("box-shadow","");
+				/*$(x1).css("-webkit-transform","");
+				$(x1).css("transform","");*/
+			});
+
+			$(".cl-instalaciones_toma_adicional"+lista_clases_css107).mouseover(function(){
+				var x1="."+$(this).attr("class");
+				$(x1).css("background-color","#d2b48c");
+				$(x1).css("box-shadow","1px 1px #53a7ea,2px 2px #53a7ea,3px 3px #53a7ea");
+				/*$(x1).css("-webkit-transform","translateX(-7px)");
+				$(x1).css("transform","translateX(-7px)");*/
+			});
+			
+			$(".cl-instalaciones_toma_adicional"+lista_clases_css107).mouseout(function (){
+				var x1="."+$(this).attr("class");
+				$(x1).css("background-color","");
+				$(x1).css("box-shadow","");
+				/*$(x1).css("-webkit-transform","");
+				$(x1).css("transform","");*/
+			});
+
 			$(".cl-tareas_en_proyectos"+lista_clases_css20).mouseover(function(){
 				var x1="."+$(this).attr("class");
 				$(x1).css("background-color","#d2b48c");
@@ -2093,7 +2311,15 @@ function desactivar_activar_tabla_instalaciones_cambio_de_equipo(){
 function desactivar_activar_tabla_instalaciones_equipo_adicional(){
 		$(".tb_tec_info_instalaciones_equipo_adicional").fadeToggle("fast");						
 }
-
+function desactivar_activar_tabla_instalaciones_reinstalacion(){
+		$(".tb_tec_info_instalaciones_reinstalacion").fadeToggle("fast");						
+}
+function desactivar_activar_tabla_instalaciones_retiro_voluntario(){
+		$(".tb_tec_info_instalaciones_retiro_voluntario").fadeToggle("fast");						
+}
+function desactivar_activar_tabla_instalaciones_toma_adicional(){
+		$(".tb_tec_info_instalaciones_toma_adicional").fadeToggle("fast");						
+}
 function mostrar_ocultar(){
 	desactivar_activar_tabla_instalaciones_total();
 	desactivar_activar_tabla_instalaciones_Corte_Tv();
@@ -2118,6 +2344,9 @@ function mostrar_ocultar(){
 	desactivar_activar_tabla_instalaciones_activacion();
 	desactivar_activar_tabla_instalaciones_cambio_de_equipo();
 	desactivar_activar_tabla_instalaciones_equipo_adicional();
+	desactivar_activar_tabla_instalaciones_reinstalacion();
+	desactivar_activar_tabla_instalaciones_retiro_voluntario();
+	desactivar_activar_tabla_instalaciones_toma_adicional();
 }
 mostrar_ocultar();
 
