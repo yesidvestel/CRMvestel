@@ -293,7 +293,7 @@ $lista_datos=array();
             }
             
 
-            $lista_tecnicos=$this->db->query("SELECT username from aauth_users where (roleid=2 or roleid=3 )  ".$sede." or (username='NaimeSistemas' or username='CamiloSistemas' or username='CesarRiosTEC' or username='AnnieAtencion' or username='SoniaCajera' or username='LuisHurtadoTEC' or username='YesidBarrera' or username='LinaPaola')")->result_array();    
+            $lista_tecnicos=$this->db->query("SELECT username from aauth_users where (roleid=2 or roleid=3 )  ".$sede." or (username='NaimeSistemas' or username='CamiloSistemas' or username='CesarRiosTEC' or username='AnnieAtencion' or username='SoniaCajera' or username='LuisHurtadoTEC' or username='YesidBarrera' or username='LinaPaola' or username='SamuelTecnico' or username='cristhian' or username='TatianaAtencion')")->result_array();    
             $lista_tecnicos[]=array("username"=>"Sin_Asignar");
         }
         
@@ -1113,6 +1113,18 @@ if($sede!="all"){
         $estadistica['instalaciones_Suspension_Internet']=array();
         $estadistica['instalaciones_Suspension_Television']=array();
         $estadistica['instalaciones_Corte_Television']=array();
+        $estadistica['instalaciones_corte_tv_e_internet']=array();
+        $estadistica['instalaciones_corte_internet']=array();
+        $estadistica['instalaciones_migracion']=array();
+        $estadistica['instalaciones_punto_nuevo']=array();
+        $estadistica['instalaciones_recuperacion_cable_modem']=array();
+        $estadistica['instalaciones_veeduria']=array();
+        $estadistica['instalaciones_activacion']=array();
+        $estadistica['instalaciones_cambio_de_equipo']=array();
+        $estadistica['instalaciones_equipo_adicional']=array();
+        $estadistica['instalaciones_reinstalacion']=array();
+        $estadistica['instalaciones_retiro_voluntario']=array();
+        $estadistica['instalaciones_toma_adicional']=array();
 
         for ($i=0; $i <=12 ; $i++) { 
             if($i!=0){
@@ -1179,6 +1191,30 @@ foreach ($est as $key => $value) {
         $estadistica['instalaciones_Suspension_Television'][$key1]++;        
     }else if($value['detalle']=="corte television"){
         $estadistica['instalaciones_Corte_Television'][$key1]++;        
+    }else if($value['detalle']=="corte internet"){
+        $estadistica['instalaciones_corte_internet'][$key1]++;        
+    }else if($value['detalle']=="corte combo"){
+        $estadistica['instalaciones_corte_tv_e_internet'][$key1]++;        
+    }else if($value['detalle']=="migracion"){
+        $estadistica['instalaciones_migracion'][$key1]++;        
+    }else if($value['detalle']=="punto nuevo"){
+        $estadistica['instalaciones_punto_nuevo'][$key1]++;        
+    }else if($value['detalle']=="recuperación cable modem"){
+        $estadistica['instalaciones_recuperacion_cable_modem'][$key1]++;        
+    }else if($value['detalle']=="veeduria"){
+        $estadistica['instalaciones_veeduria'][$key1]++;        
+    }else if($value['detalle']=="activacion"){
+        $estadistica['instalaciones_activacion'][$key1]++;        
+    }else if($value['detalle']=="cambio de equipo"){
+        $estadistica['instalaciones_cambio_de_equipo'][$key1]++;        
+    }else if($value['detalle']=="equipo adicional"){
+        $estadistica['instalaciones_equipo_adicional'][$key1]++;        
+    }else if($value['detalle']=="reinstalación"){
+        $estadistica['instalaciones_reinstalacion'][$key1]++;        
+    }else if($value['detalle']=="retiro voluntario"){
+        $estadistica['instalaciones_retiro_voluntario'][$key1]++;        
+    }else if($value['detalle']=="toma adicional"){
+        $estadistica['instalaciones_toma_adicional'][$key1]++;        
     }
 
 }
