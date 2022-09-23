@@ -464,7 +464,17 @@ class Purchase extends CI_Controller
         } else {
             $discstatus = 1;
         }
+        $pid = $this->input->post('pid');
+        foreach ($pid as $key => $value) {
+            if($value=="0"){
+                $product_name1 = $this->input->post('product_name');
 
+                echo json_encode(array('status' => 'Error', 'message' =>
+                "Por favor, selecciona un producto de la lista, mas no agregues uno que no existe, el producto con error es el de nombre =<strong> ".$product_name1[$key]." </strong>"));
+                exit();   
+            }
+             
+        }
         if ($customer_id == 0) {
             echo json_encode(array('status' => 'Error', 'message' =>
                 "Please add a new supplier or search from a previous added!"));
