@@ -78,9 +78,9 @@ class Search_products extends CI_Controller
             $qw = "warehouse='$wid' AND ";
         }
 
-
+			//$qw = "warehouse='2' AND ";
         if ($name) {
-            $query = $this->db->query("SELECT pid,product_name,fproduct_price,taxrate,disrate,product_des FROM products WHERE " . $qw . "UPPER(product_name) LIKE '" . strtoupper($name) . "%' OR UPPER(product_code) LIKE '" . strtoupper($name) . "%' LIMIT 6");
+            $query = $this->db->query("SELECT pid,product_name,fproduct_price,taxrate,disrate,product_des,warehouse FROM products WHERE  warehouse='$wid' AND (UPPER(product_name) LIKE '" . strtoupper($name) . "%' OR UPPER(product_code) LIKE '" . strtoupper($name) . "%') LIMIT 6");
 
             $result = $query->result_array();
 
