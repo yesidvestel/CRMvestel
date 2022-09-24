@@ -1040,7 +1040,7 @@ public function historial_list(){
             echo '<tr><td>'.$row['id'].' - '. $row['date'] . '</td><td>' . $row['note'] . '</td><td>' . amountFormat($row['debit']) . '</td><td>' . amountFormat($row['credit']) . '</td><td>' . amountFormat($balance) . '</td></tr>';
             }
         }
-        echo '<script type="text/javascript">$("#efectivo-caja").text("Efectivo Caja: '.amountFormat($balance2).'")</script>';
+        echo '<script type="text/javascript">valida_cierre('.$balance2.');$("#efectivo-caja").text("Efectivo Caja: '.amountFormat($balance2).'")</script>';
         $_SESSION['valor_efectivo_caja']=$balance2; 
         $_SESSION['valor_efectivo_caja_acid']=$valor_efectivo_caja_acid;
         $_SESSION['valor_efectivo_account']=$account_ef;

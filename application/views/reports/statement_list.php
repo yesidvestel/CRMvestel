@@ -466,7 +466,7 @@
 		<input type="hidden" name="caja" value="<?=$filter[5]?>">
 		<input type="hidden" name="is_multiple" value="<?=$is_multiple?>">
 
-		<button class="btn btn-primary" style="margin-left: 3px;" onclick="enviar_a_apertura()">Cierre de Caja</button>
+		<button id="btn-cierre" disabled class="btn btn-primary" style="margin-left: 3px;" onclick="enviar_a_apertura()">Cierre de Caja</button>
 	
 	</form>
     <div class="card card-block">
@@ -1318,7 +1318,11 @@
 </article>
 <script type="text/javascript">
 
-
+function valida_cierre(valor){
+	if(valor<=0){
+		$("#btn-cierre").removeAttr("disabled");
+	}
+}
     $(document).ready(function () {
 
         $('#entries').html('<td class="text-lg-center" colspan="5">Data loading...</td>');
