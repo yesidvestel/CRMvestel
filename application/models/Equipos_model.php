@@ -36,7 +36,8 @@ class Equipos_model extends CI_Model
     {
          
 			$this->db->from($this->table);
-		 	//$this->db->join('customers', 'customers.id = equipos.asignado');
+		 	$this->db->join('naps', 'naps.idn = equipos.nat','left');
+		 	$this->db->join('vlans', 'vlans.idv = naps.vlan','left');
 		 if ($id > 0) {
 			 $this->db->where("almacen = $id");
 		 }        

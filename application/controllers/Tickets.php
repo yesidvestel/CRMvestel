@@ -236,6 +236,7 @@ class Tickets Extends CI_Controller
 
     public function thread()
     {
+		$this->load->model('redes_model', 'redes');
 		$this->load->model('invoices_model', 'invocies');
 		$this->load->model('customers_model', 'customers');
 		$this->load->model('quote_model', 'quote');
@@ -320,7 +321,7 @@ class Tickets Extends CI_Controller
                     $data['responsetext'] = 'Reply Added Successfully.';
                 }
             }
-
+			$data['naps'] = $this->redes->nap_todas();
             $data['thread_info'] = $this->ticket->thread_info($thread_id);
             $data['thread_list'] = $this->ticket->thread_list($thread_id);
 			$data['temporal'] = $this->quote->group_tempo($codigo);
@@ -330,7 +331,7 @@ class Tickets Extends CI_Controller
 			$data['paquete'] = $this->invocies->paquetes();
             $this->load->view('support/thread', $data);
         } else {
-
+			$data['naps'] = $this->redes->nap_todas();
             $data['thread_info'] = $this->ticket->thread_info($thread_id);
             $data['thread_list'] = $this->ticket->thread_list($thread_id);
 			$data['temporal'] = $this->quote->group_tempo($codigo);
@@ -413,8 +414,7 @@ class Tickets Extends CI_Controller
         $mac = $this->input->post('mac');
 		$tinstalacion = $this->input->post('tinstalacion');
 		$puerto = $this->input->post('puerto');
-		$vlan = $this->input->post('vlan');
-		$nat = $this->input->post('nat');
+		$nap = $this->input->post('nap');
         $master = $this->input->post('master');
 		$idequipo = $this->input->post('idequipo');
 		$es_valido=true;
@@ -441,15 +441,15 @@ class Tickets Extends CI_Controller
                     $txt_error.="<li>Ingresa una master</li>";
                 }
         }else if($tinstalacion=="FTTH"){
-               if($vlan=="null" || $vlan==""){
+               /*if($vlan=="null" || $vlan==""){
                     $es_valido=false;
                     $txt_error.="<li>Selecciona una vlan</li>";
-               }
+               }*/
                 if($puerto=="null" || $puerto==""){
                     $es_valido=false;
                     $txt_error.="<li>Selecciona un puerto nat</li>";
                }
-                if($nat=="null" || $nat==""){
+                if($nap=="null" || $nap==""){
                     $es_valido=false;
                     $txt_error.="<li>ingresa una caja nat</li>";
                }
@@ -469,8 +469,7 @@ class Tickets Extends CI_Controller
             $datae = array(
                     't_instalacion' => $tinstalacion,
                     'puerto' => $puerto,
-                    'vlan' => $vlan,
-                    'nat' => $nat,
+                    'nat' => $nap,
                     'master'=>$master,
                     'asignado' => $id           
                 );  
@@ -478,6 +477,12 @@ class Tickets Extends CI_Controller
 			//devolver equipo a bodega desde el almacen del tecnico
             if ($this->db->update('equipos', $datae)) {
 				$this->db->delete('products', array('product_name' => $mac));
+				$datap = array(
+                    'estado' => 'Ocupado',
+                    'asignado' => $id,          
+                );
+				$this->db->where('idp', $puerto);
+				$this->db->update('puertos', $datap);
 			}
 
             echo json_encode(array('status' => 'Success', 'message' =>

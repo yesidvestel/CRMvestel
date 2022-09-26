@@ -1044,6 +1044,9 @@ if($data['servicios']['estado']=="Inactivo"){
         $no = $this->input->post('start');
 
         foreach ($list as $prd) {
+			
+			$nap = $this->db->get_where('naps', array('idn' => $prd->nat))->row();
+			$vlan = $this->db->get_where('vlans', array('idv' => $nap->vlan))->row();
             $no++;
             $row = array();
             $row[] = $no;
@@ -1055,11 +1058,9 @@ if($data['servicios']['estado']=="Inactivo"){
 			$row[] = $prd->marca;
 			$row[] = $prd->t_instalacion;
 			if ($prd->vlan!=='0'){
-			$row[] = $prd->vlan;
+			$row[] = $vlan->vlan;
 			}else{$row[]= 'N/A';}
-			if ($prd->nat!=='0'){
-			$row[] = $prd->nat;
-			}else{$row[]= 'N/A';}
+			$row[] = $nap->nap;
 			if ($prd->puerto!=='0'){
 			$row[] = $prd->puerto;
 			}else{$row[]= 'N/A';}
@@ -1104,7 +1105,14 @@ if($data['servicios']['estado']=="Inactivo"){
 				'observacion' => $nota
 			);
         $this->db->where('codigo', $codigo);
-        $this->db->update('equipos', $datae);
+        if($this->db->update('equipos', $datae)){
+			$datap = array(
+                    'estado' => 'Disponible',
+                    'asignado' => 0,          
+                );
+				$this->db->where('asignado', $id);
+				$this->db->update('puertos', $datap);
+		}
 
         echo json_encode(array('status' => 'Success', 'message' =>
             $this->lang->line('UPDATED'), 'pstatus' => $status));
@@ -1525,8 +1533,9 @@ if($data['servicios']['estado']=="Inactivo"){
     }
 	public function equipos()
     {
-
+		$this->load->model('redes_model', 'redes');
 		$custid = $this->input->get('id');
+		$data['naps'] = $this->redes->nap_todas();
         $data['details'] = $this->customers->details($custid);        
         $head['usernm'] = $this->aauth->get_user()->username;
         $head['title'] = 'View Customer Transactions';
