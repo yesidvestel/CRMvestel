@@ -159,7 +159,7 @@ class Products extends CI_Controller
 			$row[] = $prd->vlan;
 			}else{$row[]= 'N/A';}
 			if ($prd->nat!=='0'){
-			$row[] = $prd->nap;
+			$row[] = $prd->nat;
 			}else{$row[]= 'N/A';}
 			if ($prd->puerto!=='0'){
 			$row[] = $prd->puerto;

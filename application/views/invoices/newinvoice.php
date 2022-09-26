@@ -56,7 +56,7 @@
                                     <div id="customer_pass" hidden=""></div><?php echo $this->lang->line('') ?> <select
                                             id="warehouses"
                                             class="selectpicker form-control" hidden="">
-                                        <option value="2"><?php echo $this->lang->line('All') ?></option><?php foreach ($warehouse as $row) {
+                                        <option value="0"><?php echo $this->lang->line('All') ?></option><?php foreach ($warehouse as $row) {
                                             echo '<option value="' . $row['id'] . '">' . $row['title'] . '</option>';
                                         } ?>
 
