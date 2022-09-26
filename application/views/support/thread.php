@@ -540,7 +540,7 @@
                 <h4 class="modal-title">Asignar Equipo</h4>
             </div>
 
-            <div class="modal-body">
+            <div class="modal-body form-group row">
                 <div id="notify_asignar" class="alert alert-warning" >
                         <a href="#" class="close" data-dismiss="alert">&times;</a>
 
@@ -580,45 +580,30 @@
                         </div>
                     </div>
                     <div id="ftth_div" style="display: none;">
-                    <div class="frmSearch col-sm-6">
-                        <label for="pmethod" class="caption col-form-label">Vlan</label>
-                        <div class="">
-                            <select name="vlan" class="form-control mb-1" onchange="funcion_status();">
-                                <option value="null">-</option>
-                                <option value="101">101</option>
-                                <?php for ($i=1;$i<=16;$i++){
-                                echo '<option value="'.$i*'10'.'">'.$i*'10'.'</option>';
-                                }
-								for ($i=170;$i<=185;$i++){
-                                echo '<option value="'.$i.'">'.$i.'</option>';
-                                }
-								for ($i=19;$i<=36;$i++){
-                                echo '<option value="'.$i*'10'.'">'.$i*'10'.'</option>';
-                                }
-								for ($i=380;$i<=395;$i++){
-                                	echo '<option value="'.$i.'">'.$i.'</option>';
-                                }?>
-                            </select>
-                        </div>
-                    </div>
-				<div class="frmSearch col-sm-6">
+                    
+                	<div class="col-sm-6">
                         <label for="pmethod" class="caption col-form-label">Caja Nat</label>
-						<div class="">
-                            <input type="text" class="form-control mb-1" name="nat" placeholder="Numero de caja NAT"></input>
-                        </div>
-                    </div>
-			<div class="frmSearch col-sm-6">
-                        <label for="pmethod" class="caption col-form-label">Puerto Nat</label>
-						<div>
-                            <select name="puerto" class="form-control mb-1" onchange="funcion_status();">
-								<option value="null">-</option>
-								<?php for ($i=1;$i<=16;$i++){
-								echo '<option value="'.$i.'">'.$i.'</option>';}?>
+                        <div class="form-group">
+                            <select id="naps_multiple" name="nap" class="form-control select-box" multiple="multiple" style="width: 100%">
+                                   <?php
+									foreach ($naps as $row) {
+										$cid = $row['idn'];
+										$title = $row['nap'];
+										echo "<option value='$cid'>$title</option>";
+									}
+									?>       
                             </select>
                         </div>
                     </div>
+            		<div class="col-sm-6">
+                        <label for="pmethod" class="caption col-form-label">Puerto Nat</label>
+                        <div>
+                            <select name="puerto" class="form-control mb-1" id="cmbpuertos">
+                        	</select>
+                        </div>
                     </div>
-					<br>
+               </div>
+				<div class="frmSearch col-sm-12">
                     <div style="text-align: right;">
                         <button type="button" class="btn btn-default"
                                 data-dismiss="modal">Volver</button>
@@ -627,7 +612,7 @@
                                 id="submit_model2">Asignar</button>
 			
                     </div>
-		
+				</div>
                 </form>
             </div>
         </div>
@@ -884,4 +869,21 @@ $("#firma_link").click(function(ev){
         guardar_datos_firma(2);
 });
     
+</script>
+<script>
+//traer puertos			
+$(document).ready(function(){
+	$("#naps_multiple").change(function(){
+		$("#naps_multiple option:selected").each(function(){
+			idn = $(this).val();
+			//console.log(idDepartamento);
+			$.post(baseurl+"redes/puertos_list",{'idn': idn
+				},function(data){
+				//console.log(data);
+					$("#cmbpuertos").html(data);
+			})
+		})
+	})
+})
+$("#naps_multiple").select2();
 </script>

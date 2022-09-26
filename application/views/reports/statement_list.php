@@ -1319,7 +1319,7 @@
 <script type="text/javascript">
 
 function valida_cierre(valor){
-	if(valor<=0){
+	if(valor>=0){
 		$("#btn-cierre").removeAttr("disabled");
 	}
 }
