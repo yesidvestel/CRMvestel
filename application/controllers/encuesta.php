@@ -336,6 +336,8 @@ class encuesta extends CI_Controller
 		$tarea6 = $this->input->post('tarea6');
 		$tarea7 = $this->input->post('tarea7');
 		$tarea8 = $this->input->post('tarea8');
+		$tarea9 = $this->input->post('tarea9');
+		$tarea10 = $this->input->post('tarea10');
 		$riesgo1 = $this->input->post('riesgo1');
 		$riesgo2 = $this->input->post('riesgo2');
 		$riesgo3 = $this->input->post('riesgo3');
@@ -344,6 +346,8 @@ class encuesta extends CI_Controller
 		$riesgo6 = $this->input->post('riesgo6');
 		$riesgo7 = $this->input->post('riesgo7');
 		$riesgo8 = $this->input->post('riesgo8');
+		$riesgo9 = $this->input->post('riesgo9');
+		$riesgo10 = $this->input->post('riesgo10');
 		$consecuencia1 = $this->input->post('consecuencia1');
 		$consecuencia2 = $this->input->post('consecuencia2');
 		$consecuencia3 = $this->input->post('consecuencia3');
@@ -352,6 +356,8 @@ class encuesta extends CI_Controller
 		$consecuencia6 = $this->input->post('consecuencia6');
 		$consecuencia7 = $this->input->post('consecuencia7');
 		$consecuencia8 = $this->input->post('consecuencia8');
+		$consecuencia9 = $this->input->post('consecuencia9');
+		$consecuencia10 = $this->input->post('consecuencia10');
 		$control1 = $this->input->post('control1');
 		$control2 = $this->input->post('control2');
 		$control3 = $this->input->post('control3');
@@ -360,6 +366,8 @@ class encuesta extends CI_Controller
 		$control6 = $this->input->post('control6');
 		$control7 = $this->input->post('control7');
 		$control8 = $this->input->post('control8');
+		$control9 = $this->input->post('control9');
+		$control10 = $this->input->post('control10');
 		$incidente = $this->input->post('incidente');
 		$seguro = $this->input->post('seguro');
         $this->encuesta->addats(
@@ -373,11 +381,13 @@ class encuesta extends CI_Controller
 			$manual1, $manual2, $electro1,$electro2,$mecan1,$mecan2,
 			$otras1,$otras2,$alto,$acceso,$puntos,$distancia,$prevencion,
 			$proteccion,$trabajadores,$materiales,$peligros,$peligro_otros,
-			$tarea1,$tarea2,$tarea3,$tarea4,$tarea5,$tarea6,$tarea7,$tarea8,
-			$riesgo1,$riesgo2,$riesgo3,$riesgo4,$riesgo5,$riesgo6,$riesgo7,
-			$riesgo8,$consecuencia1,$consecuencia2,$consecuencia3,$consecuencia4,
-			$consecuencia5,$consecuencia6,$consecuencia7,$consecuencia8,$control1,
-			$control2,$control3,$control4,$control5,$control6,$control7,$control8,
+			$tarea1,$tarea2,$tarea3,$tarea4,$tarea5,$tarea6,$tarea7,$tarea8,$tarea9,$tarea10,
+			$riesgo1,$riesgo2,$riesgo3,$riesgo4,$riesgo5,$riesgo6,$riesgo7,$riesgo8,$riesgo9,$riesgo10,
+			$consecuencia1,$consecuencia2,$consecuencia3,$consecuencia4,
+			$consecuencia5,$consecuencia6,$consecuencia7,$consecuencia8,$consecuencia9,
+			$consecuencia10,
+			$control1,$control2,$control3,$control4,$control5,$control6,$control7,$control8,
+			$control9,$control10,
 			$incidente,$seguro);
 
     }

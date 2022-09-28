@@ -399,4 +399,13 @@ ALTER TABLE `naps` CHANGE `vlan` `idvlan` INT(11) NOT NULL;
 ALTER TABLE `naps` CHANGE `detalle` `dir_nap` VARCHAR(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL;
 ALTER TABLE `puertos` CHANGE `nap` `idnap` INT(11) NOT NULL;
 ALTER TABLE `puertos` CHANGE `vlan` `idvlan` INT(11) NOT NULL;
-
+-----------------------------------------------------------------------------------------------------------------
+ALTER TABLE `formularioats` 
+ADD `tarea9` varchar(100) NULL DEFAULT NULL AFTER `tarea8`,
+ADD `tarea10` varchar(100) NULL DEFAULT NULL AFTER `tarea9`,
+ADD `riesgo9` varchar(100) NULL DEFAULT NULL AFTER `riesgo8`,
+ADD `riesgo10` varchar(100) NULL DEFAULT NULL AFTER `riesgo9`,
+ADD `consecuencia9` varchar(100) NULL DEFAULT NULL AFTER `consecuencia8`,
+ADD `consecuencia10` varchar(100) NULL DEFAULT NULL AFTER `consecuencia9`,
+ADD `control9` varchar(100) NULL DEFAULT NULL AFTER `control8`,
+ADD `control10` varchar(100) NULL DEFAULT NULL AFTER `control9`;

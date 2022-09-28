@@ -145,14 +145,25 @@
 									  <td align="left">PSICOSOCIAL: </td>
 										<td><input type="checkbox" name="psico"></input></td>
 									  <td align="left">
-										  <input type="text" name="psico2" size="70%" maxlength="30%" style="border: 0"></input>
+										  <select type="text" class="form-control" id="psico2" name="psico2[]" multiple style="border: 0">
+											<option value="">-</option>
+											<option value="Gestion organizacional">Gestion organizacional</option>
+											<option value="Condiciones de la tarea">Condiciones de la tarea</option>
+											<option value="Jornada de trabajo">Jornada de trabajo</option>
+										</select>
 										</td>
 									</tr>
 									<tr>
 									  <td align="left">QUIMICO: </td>
 										<td><input type="checkbox" name="quimico"></input></td>
 									  <td align="left">
-										  <input type="text" name="quimico2" size="70%" maxlength="30%" style="border: 0"></input>
+										  <select type="text" class="form-control" id="quimico2" name="quimico2[]" multiple style="border: 0">
+											<option value="">-</option>
+											<option value="Polvos inorganicos">Polvos inorganicos</option>
+											<option value="Fibra">Fibra</option>
+											<option value="Liquidos">Liquidos</option>
+											<option value="Gases y vapores">Gases y vapores</option>
+										</select>
 										</td>
 									</tr>
 								  </tbody>
@@ -574,6 +585,58 @@
 										</select></td>
 						</tr>
 						<tr>
+							<td colspan="2"><select type="text" class="form-control" name="tarea9" style="border: 0">
+											<option value="">-</option>
+											<option value="Tensión de fibra">Tensión de fibra</option>
+										</select></td>
+							<td colspan="2"><select type="text" class="form-control" name="riesgo9" style="border: 0">
+											<option value="">-</option>
+											<option value="Trabajo en alturas">Trabajo en alturas</option>
+											<option value="Exceso de iluminacion">Exceso de iluminacion</option>
+											<option value="Contacto con alta y baja tension de electricidad">Contacto con alta y baja tension de electricidad</option>
+											<option value="Mordeduras, rasguños y picaduras.">Mordeduras, rasguños y picaduras.</option>
+											<option value="precipitaciones.">precipitaciones.</option>
+										</select></td>
+							<td colspan="2"><select type="text" class="form-control" name="consecuencia9" style="border: 0">
+											<option value="">-</option>
+											<option value="Caída de personas a distinto nivel">Caída de personas a distinto nivel</option>
+											<option value="Trastornos.">Trastornos.</option>
+											<option value="Sobreesfuerzo, esfuerzo excesivo">Sobreesfuerzo, esfuerzo excesivo</option>
+											<option value="lesiones osteomusculares, heridas, traumas, contusiones">lesiones osteomusculares, heridas, traumas, contusiones</option>
+											<option value="Alteraciones visuales">Alteraciones visuales</option>
+										</select></td>
+							<td colspan="2"><select type="text" class="form-control" name="control9" style="border: 0">
+											<option value="">-</option>
+											<option value="Usos de sistemas de protección contra caídas.">Usos de sistemas de protección contra caídas.</option>
+											<option value="Inspecciones periódicas a elementos de protección personal">Inspecciones periódicas a elementos de protección personal</option>
+											<option value="Formación en trabajo seguro en alturas.">Formación en trabajo seguro en alturas.</option>
+											<option value="Capacitación al personal en identificación y control de peligros y riesgos.">Capacitación al personal en identificación y control de peligros y riesgos.</option>
+										</select></td>
+						</tr>
+						<tr>
+							<td colspan="2"><select type="text" class="form-control" name="tarea10" style="border: 0">
+											<option value="">-</option>
+											<option value="Verificacion del servicio">Verificacion del servicio</option>
+										</select></td>
+							<td colspan="2"><select type="text" class="form-control" name="riesgo10" style="border: 0">
+											<option value="">-</option>
+											<option value="Contacto con microorganismos.">Contacto con microorganismos.</option>
+											<option value="Condiciones de la tarea">Condiciones de la tarea</option>
+											<option value="Contacto con alta y baja tension de electricidad">Contacto con alta y baja tension de electricidad</option>
+											<option value="Postura prologada, mantenida, antigravitacionales.">Postura prologada, mantenida, antigravitacionales.</option>
+										</select></td>
+							<td colspan="2"><select type="text" class="form-control" name="consecuencia10" style="border: 0">
+											<option value="">-</option>
+											<option value="Sobreesfuerzo, esfuerzo excesivo">Sobreesfuerzo, esfuerzo excesivo</option>
+											<option value="Alteraciones visuales.">Alteraciones visuales.</option>
+										</select></td>
+							<td colspan="2"><select type="text" class="form-control" name="control10" style="border: 0">
+											<option value="">-</option>
+											<option value="Inspecciones periódicas a elementos de protección personal.">Inspecciones periódicas a elementos de protección personal.</option>
+											<option value="Capacitación al personal en identificación y control de peligros y riesgos.">Capacitación al personal en identificación y control de peligros y riesgos.</option>
+										</select></td>
+						</tr>
+						<tr>
 							<td align="center" class="titulos" colspan="8">EVALUACION DEL RIESGO</td>
 						</tr>
 						<tr>
@@ -637,6 +700,8 @@ $("#biologico2").select2();
 $("#biomeca2").select2();
 $("#fenomeno2").select2();
 $("#fisico2").select2();	
+$("#psico2").select2();	
+$("#quimico2").select2();	
 $("#manual2").select2();	
 $("#electro2").select2();	
 $("#mecan2").select2();	

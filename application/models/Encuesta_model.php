@@ -193,35 +193,31 @@ class encuesta_model extends CI_Model
         }
 
 	}
-	public function addats(
-		$us, $ubicacion, $fecha, $lugar, 
-		$horain, $horafin, $tarea,$biologico,	
-		$biologico2, $biomeca,$biomeca2,$condicion,
-		$condicion2,$fenomeno,$fenomeno2,$fisico,
-		$fisico2,$psico,$psico2,$quimico,
-		$quimico2, $alturas, $casco, $gafas,
-		$monogafas, $tapaoidos, $guantes,
-		$careta, $arnes, $aux, $eslinga,
-		$respirador, $mosquete, $otros,
-		$manual1, $manual2, $electro1,$electro2,
-		$mecan1,$mecan2,$otras1,$otras2,
-		$alto,$acceso,$puntos,$distancia,
-		$prevencion,$proteccion,$trabajadores,
-		$materiales,$peligros,$peligro_otros,$tarea1,
-		$tarea2,$tarea3,$tarea4,$tarea5,$tarea6,
-		$tarea7,$tarea8,$riesgo1,$riesgo2,$riesgo3,
-		$riesgo4,$riesgo5,$riesgo6,$riesgo7,$riesgo8,
-		$consecuencia1,$consecuencia2,$consecuencia3,
-		$consecuencia4,$consecuencia5,$consecuencia6,
-		$consecuencia7,$consecuencia8,$control1,$control2,
-		$control3,$control4,$control5,$control6,$control7,
-		$control8,$incidente,$seguro)
+	public function addats(	$us, $ubicacion, $fecha, $lugar, $horain, 
+			$horafin, $tarea, $biologico,$biologico2, 
+			$biomeca,$biomeca2,$condicion,$condicion2,
+			$fenomeno,$fenomeno2,$fisico,$fisico2,$psico,
+			$psico2,$quimico,$quimico2, $alturas, $casco, 
+			$gafas, $monogafas, $tapaoidos, $guantes, $careta, 
+			$arnes, $aux, $eslinga, $respirador, $mosquete, $otros,
+			$manual1, $manual2, $electro1,$electro2,$mecan1,$mecan2,
+			$otras1,$otras2,$alto,$acceso,$puntos,$distancia,$prevencion,
+			$proteccion,$trabajadores,$materiales,$peligros,$peligro_otros,
+			$tarea1,$tarea2,$tarea3,$tarea4,$tarea5,$tarea6,$tarea7,$tarea8,$tarea9,$tarea10,
+			$riesgo1,$riesgo2,$riesgo3,$riesgo4,$riesgo5,$riesgo6,$riesgo7,
+			$riesgo8,$riesgo9,$riesgo10,$consecuencia1,$consecuencia2,$consecuencia3,$consecuencia4,
+			$consecuencia5,$consecuencia6,$consecuencia7,$consecuencia8,$consecuencia9,
+			$consecuencia10,$control1,
+			$control2,$control3,$control4,$control5,$control6,$control7,$control8,$control9,$control10,
+			$incidente,$seguro)
     {
 	 
 		$biomeca2=json_encode($biomeca2);
 		$biologico2=json_encode($biologico2);
 		$fenomeno2=json_encode($fenomeno2);
 		$fisico2=json_encode($fisico2);
+		$psico2=json_encode($psico2);
+		$quimico2=json_encode($quimico2);
 		$manual2=json_encode($manual2);
 		$electro2=json_encode($electro2);
 		$mecan2=json_encode($mecan2);
@@ -286,6 +282,8 @@ class encuesta_model extends CI_Model
 			'tarea6' => $tarea6,
 			'tarea7' => $tarea7,
 			'tarea8' => $tarea8,
+			'tarea9' => $tarea9,
+			'tarea10' => $tarea10,
 			'riesgo1' => $riesgo1,
 			'riesgo2' => $riesgo2,
 			'riesgo3' => $riesgo3,
@@ -294,6 +292,8 @@ class encuesta_model extends CI_Model
 			'riesgo6' => $riesgo6,
 			'riesgo7' => $riesgo7,
 			'riesgo8' => $riesgo8,
+			'riesgo9' => $riesgo9,
+			'riesgo10' => $riesgo10,
 			'consecuencia1' => $consecuencia1,
 			'consecuencia2' => $consecuencia2,
 			'consecuencia3' => $consecuencia3,
@@ -302,6 +302,8 @@ class encuesta_model extends CI_Model
 			'consecuencia6' => $consecuencia6,
 			'consecuencia7' => $consecuencia7,
 			'consecuencia8' => $consecuencia8,
+			'consecuencia9' => $consecuencia9,
+			'consecuencia10' => $consecuencia10,
 			'control1' => $control1,
 			'control2' => $control2,
 			'control3' => $control3,
@@ -310,6 +312,8 @@ class encuesta_model extends CI_Model
 			'control6' => $control6,
 			'control7' => $control7,
 			'control8' => $control8,
+			'control9' => $control9,
+			'control10' => $control10,
 			'incidente' => $incidente,
 			'seguro' => $seguro          
 

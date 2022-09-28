@@ -105,14 +105,14 @@
 									  <td align="left">PSICOSOCIAL: </td>
 										<td><input type="checkbox" name="psico" <?= ($rta['psico']=='0')?'checked':'' ?>></input></td>
 									  <td align="left">
-										    &nbsp;&nbsp;<?php echo $rta['psico2']; ?>
+										    &nbsp;&nbsp;<?php $bio = json_decode($rta['psico2']); echo implode(", ",$bio); ?>
 										</td>
 									</tr>
 									<tr>
 									  <td align="left">QUIMICO: </td>
 										<td><input type="checkbox" name="quimico" <?= ($rta['quimico']=='0')?'checked':'' ?>></input></td>
 									  <td align="left">
-										  &nbsp;&nbsp;<?php echo $rta['quimico2']; ?>
+										  &nbsp;&nbsp;<?php $bio = json_decode($rta['quimico2']); echo implode(", ",$bio); ?>
 										</td>
 									</tr>
 								  </tbody>
@@ -305,6 +305,18 @@
 							<td colspan="2"><?php echo $rta['riesgo8']; ?></td>
 							<td colspan="2"><?php echo $rta['consecuencia8']; ?></td>
 							<td colspan="2"><?php echo $rta['control8']; ?></td>
+						</tr>
+						<tr>
+							<td colspan="2"><?php echo $rta['tarea9']; ?></td>
+							<td colspan="2"><?php echo $rta['riesgo9']; ?></td>
+							<td colspan="2"><?php echo $rta['consecuencia9']; ?></td>
+							<td colspan="2"><?php echo $rta['control9']; ?></td>
+						</tr>
+						<tr>
+							<td colspan="2"><?php echo $rta['tarea10']; ?></td>
+							<td colspan="2"><?php echo $rta['riesgo10']; ?></td>
+							<td colspan="2"><?php echo $rta['consecuencia10']; ?></td>
+							<td colspan="2"><?php echo $rta['control10']; ?></td>
 						</tr>
 						<tr>
 							<td align="center" class="titulos" colspan="8">EVALUACION DEL RIESGO</td>
