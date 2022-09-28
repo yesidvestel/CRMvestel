@@ -10,13 +10,14 @@
 
                 <h5>Nuevo Puerto</h5>
                 <hr>
-                
+                <input type="hidden" name="id" value="<?php echo $info["idp"] ?>">
 				<div class="form-group row">
 
                     <label class="col-sm-2 col-form-label" for="body"><?php echo $this->lang->line('') ?>Sede</label>
 
                     <div class="col-sm-6">
                         <select name="almacen" class="form-control" id="almacen">
+							<option value="<?php echo $info["sede"] ?>">>><?php echo $info["almacen"] ?>
                             <?php
                             foreach ($almacen as $row) {
                                 $cid = $row['id'];
@@ -33,6 +34,7 @@
 
                     <div class="col-sm-6">
                        <select name="vlan" class="form-control" id="cmbvlans">
+						   <option value="<?php echo $info['idvlan'] ?>">>><?php echo $info["vlan"] ?>
                         </select>
                     </div>
                 </div>
@@ -42,6 +44,7 @@
 
                     <div class="col-sm-6">
                         <select name="nap" class="form-control" id="cmbnaps">
+							<option value="<?php echo $info['idnap'] ?>">>><?php echo $info["nap"] ?>
                         </select>
                     </div>
                 </div>
@@ -51,6 +54,7 @@
 
                     <div class="col-sm-6">
                        <select name="puerto" class="form-control">
+						   	<option value="<?php echo $info['puerto'] ?>">>><?php echo $info["puerto"] ?>
                             <?php
 							for ($i=1;$i<=16;$i++){
 							echo '<option value="'.$i.'">'.$i.'</option>';}?>
@@ -63,6 +67,7 @@
 
                     <div class="col-sm-6">
                        <select name="estado" class="form-control">
+						   	<option value="<?php echo $info["estado"] ?>">>><?php echo $info["estado"] ?></option>
                             <option value="Disponible">Disponible</option>
                             <option value="Ocupado">Ocupado</option>
                         </select>
@@ -73,7 +78,7 @@
                     <label class="col-sm-2 col-form-label" for="body"><?php echo $this->lang->line('') ?>Detalle</label>
 
                     <div class="col-sm-6">
-                        <input type="text" placeholder="Detalles generales"
+                        <input type="text" placeholder="Detalles generales" value="<?php echo $info["detalle"] ?>"
                                class="form-control margin-bottom" name="detalle">
                     </div>
                 </div>
@@ -84,7 +89,7 @@
 
                     <div class="col-sm-4">
                         <input type="submit" id="submit-data" class="btn btn-success margin-bottom"
-                               value="Crear" data-loading-text="Updating...">
+                               value="Actualizar" data-loading-text="Updating...">
                         <input type="hidden" value="redes/puerto_input" id="action-url">
                     </div>
                 </div>

@@ -391,3 +391,12 @@ HISTORIAL DE ESTADOS
 ---------------------------------------------------------
 ALTER TABLE `estados` 
 ADD `col` int(10) NOT NULL AFTER `estado` 
+----------------------------------------------------------------------------------------------------------
+CONEXIONES AJUSTE 2
+---------------------------------------------------------
+ALTER TABLE `vlans` CHANGE `detalle` `det_vlan` VARCHAR(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL;
+ALTER TABLE `naps` CHANGE `vlan` `idvlan` INT(11) NOT NULL;
+ALTER TABLE `naps` CHANGE `detalle` `dir_nap` VARCHAR(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL;
+ALTER TABLE `puertos` CHANGE `nap` `idnap` INT(11) NOT NULL;
+ALTER TABLE `puertos` CHANGE `vlan` `idvlan` INT(11) NOT NULL;
+

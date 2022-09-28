@@ -31,26 +31,29 @@
                 <tbody>
                 <?php $i = 1;
                 foreach ($puertos as $row) {
+					//$datopuerto = $this->db->get_where('puertos', array('idp' => $row['idp']))->row();
                     $cid = $row['idp'];
                     $sede = $row['almacen'];
+                    $idvlan = $row['idvlan'];
                     $vlan = $row['vlan'];
+                    $idnap = $row['idnap'];
                     $nap = $row['nap'];
                     $puerto = $row['puerto'];
                     $asignado = $row['asignado'];
                     $estado = $row['estado'];
-                    $detalle = $row['detalle'];
+                    $detalle = $row['dir_nap'];
                     echo "<tr>
                     <td>$i</td>
                     <td>$sede</td>
-                    <td>$vlan</td>
-                    <td>$nap</td>
+                    <td>$vlan <a href='" . base_url("redes/vlanedit?id=$idvlan") . "' class='btn btn-cyan btn-xs'><i class='icon-pencil'></i>" . $this->lang->line('') . "</a></td>
+                    <td>$nap  <a href='" . base_url("redes/napedit?id=$idnap") . "' class='btn btn-cyan btn-xs'><i class='icon-pencil'></i>" . $this->lang->line('') . "</a></td>
                     <td>$puerto</td>
                     <td>$asignado</td>
                     <td>$estado</td>
                     <td>$detalle</td>
                     
                   
-                    <td><a href='" . base_url("templates/barrio_edit?id=$cid") . "' class='btn btn-cyan btn-xs'><i class='icon-pencil'></i>" . $this->lang->line('Edit') . "</a>&nbsp&nbsp<a href='#' data-object-id=" . $cid ." class='btn btn-danger btn-xs delete-object'><span class='icon-bin'></span>" . $this->lang->line('Delete') . "</a></td></tr>";
+                    <td><a href='" . base_url("redes/puertosedit?id=$cid") . "' class='btn btn-cyan btn-xs'><i class='icon-pencil'></i>" . $this->lang->line('Edit') . "</a>&nbsp&nbsp<a href='#' data-object-id=" . $cid ." class='btn btn-danger btn-xs delete-object'><span class='icon-bin'></span>" . $this->lang->line('Delete') . "</a></td></tr>";
                     $i++;
                 }
                 ?>

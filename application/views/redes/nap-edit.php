@@ -8,15 +8,16 @@
         <form method="post" id="data_form" class="form-horizontal">
             <div class="grid_3 grid_4">
 
-                <h5>Nuevo Puerto</h5>
+                <h5>Editar NAP</h5>
                 <hr>
-                
+                <input type="hidden" name="id" value="<?php echo $info["idn"] ?>">
 				<div class="form-group row">
 
                     <label class="col-sm-2 col-form-label" for="body"><?php echo $this->lang->line('') ?>Sede</label>
 
                     <div class="col-sm-6">
                         <select name="almacen" class="form-control" id="almacen">
+							<option value="<?php echo $info['sede'] ?>">>><?php echo $info["almacen"] ?></option>
                             <?php
                             foreach ($almacen as $row) {
                                 $cid = $row['id'];
@@ -33,38 +34,28 @@
 
                     <div class="col-sm-6">
                        <select name="vlan" class="form-control" id="cmbvlans">
+                            <option value="<?php echo $info['idvlan'] ?>">>><?php echo $info["vlan"] ?></option>
                         </select>
                     </div>
                 </div>
 				<div class="form-group row">
 
-                    <label class="col-sm-2 col-form-label" for="body"><?php echo $this->lang->line('') ?>Nap</label>
+                    <label class="col-sm-2 col-form-label" for="body"><?php echo $this->lang->line('') ?>Nombre</label>
 
                     <div class="col-sm-6">
-                        <select name="nap" class="form-control" id="cmbnaps">
-                        </select>
+                        <input type="text" placeholder="Nombre de la nap" value="<?php echo $info['nap'] ?>"
+                               class="form-control margin-bottom  required" name="nap">
                     </div>
                 </div>
 				<div class="form-group row">
 
-                    <label class="col-sm-2 col-form-label" for="body"><?php echo $this->lang->line('') ?>Puerto</label>
+                    <label class="col-sm-2 col-form-label" for="body"><?php echo $this->lang->line('') ?>Puertos</label>
 
                     <div class="col-sm-6">
-                       <select name="puerto" class="form-control">
-                            <?php
-							for ($i=1;$i<=16;$i++){
-							echo '<option value="'.$i.'">'.$i.'</option>';}?>
-                        </select>
-                    </div>
-                </div>
-				<div class="form-group row">
-
-                    <label class="col-sm-2 col-form-label" for="body"><?php echo $this->lang->line('') ?>Estodo</label>
-
-                    <div class="col-sm-6">
-                       <select name="estado" class="form-control">
-                            <option value="Disponible">Disponible</option>
-                            <option value="Ocupado">Ocupado</option>
+                       <select name="puertos" class="form-control">
+						   	<option value="<?php echo $info['puertos'] ?>">>><?php echo $info["puertos"] ?></option>
+                            <option value="8">8</option>
+                            <option value="16">16</option>
                         </select>
                     </div>
                 </div>
@@ -73,8 +64,8 @@
                     <label class="col-sm-2 col-form-label" for="body"><?php echo $this->lang->line('') ?>Detalle</label>
 
                     <div class="col-sm-6">
-                        <input type="text" placeholder="Detalles generales"
-                               class="form-control margin-bottom" name="detalle">
+                        <input type="text" placeholder="Detalles generales" value="<?php echo $info['dir_nap'] ?>"
+                               class="form-control margin-bottom  required" name="detalle">
                     </div>
                 </div>
 
@@ -84,8 +75,8 @@
 
                     <div class="col-sm-4">
                         <input type="submit" id="submit-data" class="btn btn-success margin-bottom"
-                               value="Crear" data-loading-text="Updating...">
-                        <input type="hidden" value="redes/puerto_input" id="action-url">
+                               value="Actualizar" data-loading-text="Updating...">
+                        <input type="hidden" value="redes/nap_input" id="action-url">
                     </div>
                 </div>
 
@@ -113,14 +104,28 @@ $(document).ready(function(){
 })
 //traer localidad			
 $(document).ready(function(){
-	$("#cmbvlans").change(function(){
-		$("#cmbvlans option:selected").each(function(){
-			idv = $(this).val();
+	$("#cmbCiudades").change(function(){
+		$("#cmbCiudades option:selected").each(function(){
+			idCiudad = $(this).val();
 			//console.log(idDepartamento);
-			$.post(baseurl+"redes/nap_list",{'idv': idv
+			$.post(baseurl+"customers/localidades_list",{'idCiudad': idCiudad
 				},function(data){
 				//console.log(data);
-					$("#cmbnaps").html(data);
+					$("#cmbLocalidades").html(data);
+			})
+		})
+	})
+})
+//traer barrio			
+$(document).ready(function(){
+	$("#cmbLocalidades").change(function(){
+		$("#cmbLocalidades option:selected").each(function(){
+			idLocalidad = $(this).val();
+			//console.log(idDepartamento);
+			$.post(baseurl+"customers/barrios_list",{'idLocalidad': idLocalidad
+				},function(data){
+				//console.log(data);
+					$("#cmbBarrios").html(data);
 			})
 		})
 	})

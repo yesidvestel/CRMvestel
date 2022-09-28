@@ -8,9 +8,9 @@
         <form method="post" id="data_form" class="form-horizontal">
             <div class="grid_3 grid_4">
 
-                <h5>Nueva Vlan</h5>
+                <h5>Editar Vlan</h5>
                 <hr>
-                <input type="hidden" name="id" value="">
+                <input type="hidden" name="id" value="<?php echo $info["idv"] ?>">
                 
 				<div class="form-group row">
 
@@ -18,6 +18,7 @@
 
                     <div class="col-sm-6">
                         <select name="almacen" class="form-control">
+							<option value="<?php echo $info["sede"] ?>">>><?php echo $info["almacen"] ?></option>
                             <?php
                             foreach ($almacen as $row) {
                                 $cid = $row['id'];
@@ -33,7 +34,7 @@
                     <label class="col-sm-2 col-form-label" for="body"><?php echo $this->lang->line('') ?>vlan</label>
 
                     <div class="col-sm-6">
-                        <input type="text" placeholder="Nombre de la Vlan"
+                        <input type="text" placeholder="Nombre de la Vlan" value="<?php echo $info["vlan"] ?>"
                                class="form-control margin-bottom  required" name="vlan">
                     </div>
                 </div>
@@ -42,7 +43,7 @@
                     <label class="col-sm-2 col-form-label" for="body"><?php echo $this->lang->line('') ?>Detalle</label>
 
                     <div class="col-sm-6">
-                        <input type="text" placeholder="Detalles generales"
+                        <input type="text" placeholder="Detalles generales" value="<?php echo $info['det_vlan'] ?>"
                                class="form-control margin-bottom" name="detalle">
                     </div>
                 </div>
@@ -53,7 +54,7 @@
 
                     <div class="col-sm-4">
                         <input type="submit" id="submit-data" class="btn btn-success margin-bottom"
-                               value="Crear" data-loading-text="Updating...">
+                               value="Actualizar" data-loading-text="Updating...">
                         <input type="hidden" value="redes/vlan_input" id="action-url">
                     </div>
                 </div>

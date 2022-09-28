@@ -55,7 +55,7 @@ class Redes extends CI_Controller
 		$this->load->model('categories_model');
 		$sede = $this->input->get('id');
 		$data['almacen'] = $this->categories_model->almacen_list();
-        $head['title'] = "Vlan add";
+        $head['title'] = "Agregar vlan";
         $head['usernm'] = $this->aauth->get_user()->username;
         $this->load->view('fixed/header', $head);
         $this->load->view('redes/vlan-add',$data);
@@ -63,13 +63,27 @@ class Redes extends CI_Controller
 		//var_dump($data['vlan2']);
 
     }
+	public function vlanedit()
+    {
+		$this->load->model('categories_model');
+		$sede = $this->input->get('id');
+		$data['info'] = $this->redes->vlan($sede);
+		$data['almacen'] = $this->categories_model->almacen_list();
+        $head['title'] = "Editar vlan";
+        $head['usernm'] = $this->aauth->get_user()->username;
+        $this->load->view('fixed/header', $head);
+        $this->load->view('redes/vlan-edit',$data);
+        $this->load->view('fixed/footer');
+
+    }
 	public function vlan_input()
     {
-        
+        	
+            $id = $this->input->post('id');
             $almacen = $this->input->post('almacen');
             $vlan = $this->input->post('vlan');
             $detalle = $this->input->post('detalle');
-            $this->redes->input_vlan($almacen,$vlan,$detalle);
+            $this->redes->input_vlan($id,$almacen,$vlan,$detalle);
 
     }
 	public function napadd()
@@ -77,10 +91,24 @@ class Redes extends CI_Controller
 		$this->load->model('categories_model');
 		$sede = $this->input->get('id');
 		$data['almacen'] = $this->categories_model->almacen_list();
-        $head['title'] = "Vlan add";
+        $head['title'] = "Agregar Nap";
         $head['usernm'] = $this->aauth->get_user()->username;
         $this->load->view('fixed/header', $head);
         $this->load->view('redes/nap-add',$data);
+        $this->load->view('fixed/footer');
+		//var_dump($data['vlan2']);
+
+    }
+	public function napedit()
+    {
+		$this->load->model('categories_model');
+		$sede = $this->input->get('id');
+		$data['info'] = $this->redes->nap($sede);
+		$data['almacen'] = $this->categories_model->almacen_list();
+        $head['title'] = "Editar Nap";
+        $head['usernm'] = $this->aauth->get_user()->username;
+        $this->load->view('fixed/header', $head);
+        $this->load->view('redes/nap-edit',$data);
         $this->load->view('fixed/footer');
 		//var_dump($data['vlan2']);
 
@@ -115,12 +143,13 @@ class Redes extends CI_Controller
 	public function nap_input()
     {
         
+            $id = $this->input->post('id');
             $almacen = $this->input->post('almacen');
             $vlan = $this->input->post('vlan');
             $nap = $this->input->post('nap');
             $puertos = $this->input->post('puertos');
             $detalle = $this->input->post('detalle');
-            $this->redes->input_nap($almacen,$vlan,$nap,$puertos,$detalle);
+            $this->redes->input_nap($id,$almacen,$vlan,$nap,$puertos,$detalle);
 
     }
 	public function puertosadd()
@@ -128,10 +157,25 @@ class Redes extends CI_Controller
 		$this->load->model('categories_model');
 		$sede = $this->input->get('id');
 		$data['almacen'] = $this->categories_model->almacen_list();
-        $head['title'] = "Puerto add";
+        $head['title'] = "Agregar Puerto";
         $head['usernm'] = $this->aauth->get_user()->username;
         $this->load->view('fixed/header', $head);
         $this->load->view('redes/puertos-add',$data);
+        $this->load->view('fixed/footer');
+		//var_dump($data['vlan2']);
+
+    }
+	public function puertosedit()
+    {
+		$this->load->model('categories_model');
+		$sede = $this->input->get('id');
+		$vlans = $this->redes->puerto($id);
+		$data['info'] = $this->redes->puertoinfo($sede);
+		$data['almacen'] = $this->categories_model->almacen_list();
+        $head['title'] = "Puerto add";
+        $head['usernm'] = $this->aauth->get_user()->username;
+        $this->load->view('fixed/header', $head);
+        $this->load->view('redes/puertos-edit',$data);
         $this->load->view('fixed/footer');
 		//var_dump($data['vlan2']);
 
@@ -152,20 +196,21 @@ class Redes extends CI_Controller
 	public function puerto_input()
     {
         
+            $id = $this->input->post('id');
             $almacen = $this->input->post('almacen');
             $vlan = $this->input->post('vlan');
             $nap = $this->input->post('nap');
             $puerto = $this->input->post('puerto');
             $estado = $this->input->post('estado');
             $detalle = $this->input->post('detalle');
-            $this->redes->input_puerto($almacen,$vlan,$nap,$puerto,$estado,$detalle);
+            $this->redes->input_puerto($id,$almacen,$vlan,$nap,$puerto,$estado,$detalle);
 
     }
 	public function conexionlist()
     {
         $head['usernm'] = $this->aauth->get_user()->username;
         $data['puertos'] = $this->redes->puertos_list();
-        $head['title'] = 'Email Templates';
+        $head['title'] = 'Lista conexiones';
         $this->load->view('fixed/header');
         $this->load->view('redes/conexionlist',$data);
         $this->load->view('fixed/footer');
