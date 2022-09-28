@@ -672,7 +672,16 @@ class Redes extends CI_Controller
 
 
     }
+	public function delete_p()
+    {
+        $id = $this->input->post('deleteid');
 
+        if ($this->redes->delete($id)) {
+            echo json_encode(array('status' => 'Success', 'message' => $this->lang->line('DELETED')));
+        } else {
+            echo json_encode(array('status' => 'Error', 'message' => $this->lang->line('ERROR')));
+        }
+    }
 
     public function warehouseproduct_list()
     {

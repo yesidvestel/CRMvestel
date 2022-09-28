@@ -363,7 +363,11 @@ class Redes_model extends CI_Model
             return 1000;
         }
     }
+	public function delete($id)
+    {
 
+        return $this->db->delete('puertos', array('idp' => $id));
+    }
     function count_filtered()
     {
         
@@ -372,7 +376,7 @@ class Redes_model extends CI_Model
         return $query->num_rows();
     }
 	
-
+	
     public function count_all()
     {
         $this->db->from($this->table);

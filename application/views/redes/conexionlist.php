@@ -89,7 +89,7 @@
             </div>
             <div class="modal-footer">
                 <input type="hidden" id="object-id" value="" name="deleteid">
-                <input type="hidden" id="action-url" value="templates/delete_i">
+                <input type="hidden" id="action-url" value="redes/delete_p">
                 <button type="button" data-dismiss="modal" class="btn btn-primary"
                         id="delete-confirm"><?php echo $this->lang->line('Delete') ?></button>
                 <button type="button" data-dismiss="modal"
