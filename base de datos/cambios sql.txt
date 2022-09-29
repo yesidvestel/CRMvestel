@@ -409,3 +409,8 @@ ADD `consecuencia9` varchar(100) NULL DEFAULT NULL AFTER `consecuencia8`,
 ADD `consecuencia10` varchar(100) NULL DEFAULT NULL AFTER `consecuencia9`,
 ADD `control9` varchar(100) NULL DEFAULT NULL AFTER `control8`,
 ADD `control10` varchar(100) NULL DEFAULT NULL AFTER `control9`;
+-----------------------------------------------------------------------------------------------------------------
+ALTER TABLE `vlans` 
+ADD `olt` varchar(100) NULL DEFAULT NULL AFTER `vlan`,
+ADD `bandeja` int(10) NULL DEFAULT NULL AFTER `olt`,
+ADD `puertolt` int(10) NULL DEFAULT NULL AFTER `bandeja`;

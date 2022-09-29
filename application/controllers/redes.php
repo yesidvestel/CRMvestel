@@ -83,7 +83,10 @@ class Redes extends CI_Controller
             $almacen = $this->input->post('almacen');
             $vlan = $this->input->post('vlan');
             $detalle = $this->input->post('detalle');
-            $this->redes->input_vlan($id,$almacen,$vlan,$detalle);
+            $olt = $this->input->post('olt');
+            $bandeja = $this->input->post('bandeja');
+            $puertolt = $this->input->post('puertolt');
+            $this->redes->input_vlan($id,$almacen,$vlan,$olt,$bandeja,$puertolt,$detalle);
 
     }
 	public function napadd()

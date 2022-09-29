@@ -43,11 +43,14 @@ class Redes_model extends CI_Model
         $query = $this->db->get();
         return $query->result_array();
     }
-	public function input_vlan($id,$almacen,$vlan,$detalle)
+	public function input_vlan($id,$almacen,$vlan,$olt,$bandeja,$puertolt,$detalle)
     {
         $data = array(
 			'sede' => $almacen,
 			'vlan' => $vlan,
+			'olt' => $olt,
+			'bandeja' => $bandeja,
+			'puertolt' => $puertolt,
 			'det_vlan' => $detalle,
         );
 

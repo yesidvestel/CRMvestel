@@ -17,7 +17,7 @@
                     <label class="col-sm-2 col-form-label" for="body"><?php echo $this->lang->line('') ?>Almacen</label>
 
                     <div class="col-sm-6">
-                        <select name="almacen" class="form-control">
+                        <select name="almacen" class="form-control" id="almacen" onchange="change(this.id,'respuesta')">
 							<option value="<?php echo $info["sede"] ?>">>><?php echo $info["almacen"] ?></option>
                             <?php
                             foreach ($almacen as $row) {
@@ -36,6 +36,40 @@
                     <div class="col-sm-6">
                         <input type="text" placeholder="Nombre de la Vlan" value="<?php echo $info["vlan"] ?>"
                                class="form-control margin-bottom  required" name="vlan">
+                    </div>
+                </div>
+				<div class="form-group row">
+
+                    <label class="col-sm-2 col-form-label" for="body"><?php echo $this->lang->line('') ?>Olt</label>
+
+                    <div class="col-sm-6">
+                        <select name="olt" class="form-control" id="respuesta">
+                            <option value="<?php echo $info["olt"] ?>">>><?php echo $info["olt"] ?></option>
+                        </select>
+                    </div>
+                </div>
+				<div class="form-group row">
+
+                    <label class="col-sm-2 col-form-label" for="body"><?php echo $this->lang->line('') ?>Conexion</label>
+					<label class="col-sm-1 col-form-label" for="body"><?php echo $this->lang->line('') ?>Bandeja</label>
+
+                    <div class="col-sm-2">
+                        <select name="bandeja" class="form-control">
+							<option value="<?php echo $info["bandeja"] ?>">>><?php echo $info["bandeja"] ?></option>
+                             <?php
+							for ($i=0;$i<=7;$i++){
+							echo '<option value="'.$i.'">'.$i.'</option>';}?>
+                        </select>
+                    </div>
+					<label class="col-sm-1 col-form-label" for="body" style="text-align: right"><?php echo $this->lang->line('') ?>Puerto</label>
+
+                    <div class="col-sm-2">
+                        <select name="puertolt" class="form-control">
+							<option value="<?php echo $info["puertolt"] ?>">>><?php echo $info["puertolt"] ?></option>
+                             <?php
+							for ($i=0;$i<=15;$i++){
+							echo '<option value="'.$i.'">'.$i.'</option>';}?>
+                        </select>
                     </div>
                 </div>
 				<div class="form-group row">
@@ -110,4 +144,26 @@ $(document).ready(function(){
 	})
 })	
 
+</script>
+<script type="text/javascript">
+	function change(almacen, respuesta){
+		almacen = document.getElementById(almacen);
+		respuesta = document.getElementById(respuesta);
+		respuesta.value = "";
+		respuesta.innerHTML ="";
+		if(almacen.value == "4"){			
+			var optionArray = ["Hub local","Hub casimena"];
+		}else if (almacen.value == "5"){
+			var optionArray = ["Hub local"];
+		}else if (almacen.value == "2"){
+			var optionArray = ["Hub local"];
+		};
+	for(option = 0;option < optionArray.length; option++){
+    var pair = optionArray[option].split("|");
+    var newOption = document.createElement("option");
+    newOption.value = pair[0];
+    newOption.innerHTML = pair[0];
+    respuesta.options.add(newOption);
+  };
+	}
 </script>
