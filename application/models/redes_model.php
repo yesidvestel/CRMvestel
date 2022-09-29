@@ -186,7 +186,7 @@ class Redes_model extends CI_Model
     {
         $this->db->select('*');
         $this->db->from('puertos');
-		$this->db->where('nap', $id);
+		$this->db->where('idnap', $id);
 		$this->db->where('estado', 'Disponible');
         $query = $this->db->get();
         return $query->result();
