@@ -444,7 +444,7 @@
                 $("#submit_model").removeAttr("disabled");
             }
 			validar_estado();
-			validacion_reconexion();
+			//validacion_reconexion();
     }
 </script>
 

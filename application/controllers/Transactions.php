@@ -535,7 +535,7 @@ class Transactions extends CI_Controller
      if($reconexion_gen=="no"){//&& $factura_asociada==$factura_var->tid
         $factura_asociada = $this->db->get_where('invoices',array('tid'=>$factura_asociada))->row();
         $fcuenta = $factura_asociada->invoicedate;
-        $paquete="no";
+        /*$paquete="no";
         $var1 = $this->input->post('paquete_yopal_monterrey');
         $var2 = $this->input->post('paquete_villanueva');
         if($var1!="no"){
@@ -544,7 +544,7 @@ class Transactions extends CI_Controller
             $paquete=$var2;    
         }else{
             $paquete = "no";    
-        }
+        }*/
         
 
         $mes1 = date("Y-m",strtotime($fcuenta));
@@ -567,7 +567,7 @@ class Transactions extends CI_Controller
                 $data2['cid']=$cid;
 				$data2['col']=$username;
                 $data2['status']='Pendiente';
-                $data2['section']=$paquete;
+                $data2['section']=$factura_asociada->combo;
                 $data2['id_factura']=$factura_asociada->tid;
                 $this->db->insert('tickets',$data2);
 
@@ -590,7 +590,7 @@ class Transactions extends CI_Controller
                 $data2['cid']=$cid;
 				$data2['col']=$username;
                 $data2['status']='Pendiente';
-                $data2['section']=$paquete;
+                $data2['section']=$factura_asociada->combo;
                 $data2['id_factura']='';
                 $this->db->insert('tickets',$data2);
                             $data_h=array();
@@ -606,7 +606,7 @@ class Transactions extends CI_Controller
                 $data4 = array(
                 'corden' => $data2['codigo'],
                 'tv' => $tv,
-                'internet' => $paquete,             
+                'internet' => $factura_asociada->combo,             
             );      
                 $reconexion_gen="si";
             $this->db->insert('temporales', $data4);
@@ -916,7 +916,7 @@ $this->load->helper('cookie');
                 $data2['cid']=$cid;
 				$data2['col']=$username;
                 $data2['status']='Pendiente';
-                $data2['section']=$paquete;
+                $data2['section']=$factura->combo;
                 $data2['id_factura']=$tid;
                 $this->db->insert('tickets',$data2);
                          $data_h=array();
@@ -937,7 +937,7 @@ $this->load->helper('cookie');
                 $data2['cid']=$cid;
 				$data2['col']=$username;
                 $data2['status']='Pendiente';
-                $data2['section']=$paquete;
+                $data2['section']=$factura->combo;
                 $data2['id_factura']='';
                 $this->db->insert('tickets',$data2);
                         $data_h=array();
@@ -953,7 +953,7 @@ $this->load->helper('cookie');
 				$data4 = array(
 				'corden' => $data2['codigo'],
 				'tv' => $tv,
-				'internet' => $paquete,				
+				'internet' => $factura->combo,				
 			);		
 			$this->db->insert('temporales', $data4);
                     $data_h=array();

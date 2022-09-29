@@ -584,21 +584,21 @@
 								<option value="Reconexion Television">Television</option> 
                             </select></div>
                     </div>
-					<div class="row">
+					<!--<div class="row">
 						
                         <div class="col-xs-12 mb-1"><label
                                     for="shortnote">Paquete</label>
                              <select name="paquete" class="form-control mb-1">
                                 <option value="no">No</option>
                                 <?php
-									foreach ($paquete as $row) {
+									/*foreach ($paquete as $row) {
 										$cid = $row['pid'];
 										$title = $row['product_name'];
 										echo "<option value='$title'>$title</option>";
-									}
+									}*/
 								?>
                             </select></div>
-                    </div>
+                    </div>-->
 					<?php } ?>
                     <div class="modal-footer">
                         <input type="hidden" class="form-control required"
