@@ -490,5 +490,19 @@ class Tools Extends CI_Controller
 
     }
 
-
+function vistas_notificaciones(){
+    $id_us=$this->aauth->get_user()->id;
+    $this->db->update("notificaciones_tarea",array("estado"=>"aceptada"),array("id_notificar"=>$id_us));
+}
+function borrar_notifiaciones(){
+    $id_us=$this->aauth->get_user()->id;
+    $this->db->delete("notificaciones_tarea",array("id_notificar"=>$id_us));
+}
+    function obtener_notificaciones(){
+               $retorno=$this->tools->obtener_notificaciones();
+               if($retorno['hay_emitidas']==false){
+                    $retorno['str_retorno']="";
+               }
+               echo json_encode($retorno);
+    }
 }

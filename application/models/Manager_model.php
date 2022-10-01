@@ -115,7 +115,7 @@ class Manager_model extends CI_Model
 
     public function settask($id, $stat)
     {
-
+$this->load->model('Tools_model', 'tools');
         $data = array('status' => $stat);
         $this->db->set($data);
         $this->db->where('id', $id);
@@ -140,6 +140,7 @@ class Manager_model extends CI_Model
                     $this->db->where('id_tarea', $id);
                     $this->db->update('events');
             }
+            $this->tools->add_notification_task($id,$stat);
             $data_h['modulo']="Tareas";
                 $data_h['accion']="Editando evento tarea manager_model linea 144";
                 $data_h['id_usuario']=$this->aauth->get_user()->id;

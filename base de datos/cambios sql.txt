@@ -1,4 +1,25 @@
-﻿--cambios modificaciones resivos de pago--------------------------------------------------
+﻿------------------------------notificaciones------------------------------------------
+CREATE TABLE `crm`.`notificaciones_tarea` 
+
+
+(`id` INT NOT NULL AUTO_INCREMENT ,
+
+
+ `descripcion` VARCHAR(10) NULL , 
+
+
+`fecha` DATETIME NOT NULL , `id_tarea` INT NOT NULL , 
+
+
+`estado` ENUM('emitida','aceptada') NOT NULL ,
+
+`id_notificar` INT NOT NULL,
+
+ PRIMARY KEY (`id`)) ENGINE = InnoDB;
+ -------------------------------------------------------------------------------------
+
+
+--cambios modificaciones resivos de pago--------------------------------------------------
 
 ALTER TABLE `customers` ADD `ids_transacciones_rp` VARCHAR(170) NULL AFTER `fecha_cambio`;
         

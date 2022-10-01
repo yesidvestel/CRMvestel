@@ -143,7 +143,7 @@ class Tools_model extends CI_Model
         }else{
             $data = array('tdate' => date('Y-m-d H:i:s'), 'name' => $name, 'status' => $status, 'start' => $stdate, 'duedate' => $tdate, 'description' => $content, 'eid' => $employee, 'priority' => $priority,"puntuacion"=>$puntuacion);//, 'rid' => 0,'related' => 0,     
         }
-        
+        $this->tools->add_notification_task($id,$status);
         $this->db->set($data);
         $this->db->where('id', $id);
         if($this->db->update('todolist')){
@@ -227,6 +227,7 @@ class Tools_model extends CI_Model
                     $this->db->where('id_tarea', $id);
                     $this->db->update('events');
             }
+            $this->tools->add_notification_task($id,$stat);
             $data_h['modulo']="tools";
                 $data_h['accion']="Editando evento tarea Tools_model linea 228";
                 $data_h['id_usuario']=$this->aauth->get_user()->id;
@@ -556,6 +557,39 @@ class Tools_model extends CI_Model
         }
 
     }
+    public function add_notification_task($id_tarea,$stat){
+        if($stat=="Done"){
+            $data=array();
+            $tarea=$this->db->get_where("todolist",array("id"=>$id_tarea))->row();
+            $data['id_tarea']=$id_tarea;
+            $data['fecha']=date("Y-m-d H:i:s");
+            $data['estado']="emitida";
+            $data['id_notificar']=$tarea->aid;
+            $this->db->insert("notificaciones_tarea",$data);
+        }else{
+            $this->db->delete("notificaciones_tarea",array("id_tarea"=>$id_tarea));
+        }
+            
+
+}
+ 
+public function obtener_notificaciones(){
+        $id_user1=$this->aauth->get_user()->id;
+        $lista_notificaciones=$this->db->query("select * from notificaciones_tarea inner join todolist on notificaciones_tarea.id_tarea=todolist.id where id_notificar=".$id_user1." order by fecha desc")->result_array();
+        
+        $retorno=array("hay_emitidas"=>false,"str_retorno"=>"");                       
+        foreach ($lista_notificaciones as $key => $value) {
+            if($retorno['hay_emitidas']==false && $value['estado']=="emitida"){
+                $retorno['hay_emitidas']=true;
+            }
+
+            $name = '<a href="#" data-id="' . $value['id_tarea'] . '" class="view_task2">' . $value['name'] . '</a>';
+            $retorno['str_retorno'].= "<li>Tarea #".$value['id_tarea']." <i class='class_resuelta'><b>resuelta</b></i>, ".$name;//&nbsp<a href="#" data-id="' . $value['id_tarea'] . '" class="view_task2 btn-sm btn-indigo"> <i class="icon-eye"></i> </a>
+            $retorno['str_retorno'].= "<br><b class='fecha_hora_small'>".$value['fecha']."</b>"."</li><hr>";
+        }
+        
+        return $retorno;
+}
 
 
 }
