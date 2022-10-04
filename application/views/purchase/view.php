@@ -5,6 +5,9 @@
     #nop{
         transform: scale(2);
     }
+	.anulado{
+		color: red;
+	}
 </style>
 <div class="app-content content container-fluid">
     <div class="content-wrapper">
@@ -253,25 +256,31 @@
                     <div id="invoice-footer"><p class="lead"><?php echo $this->lang->line('') ?>Comprobante de Egreso:</p>
                         <table class="table table-striped">
                             <thead>
-                            <tr>
+                            <tr >
                                 <th><?php echo $this->lang->line('') ?>Codigo</th>
                                 <th><?php echo $this->lang->line('Date') ?></th>
                                 <th><?php echo $this->lang->line('Method') ?></th>
                                 <th><?php echo $this->lang->line('Amount') ?></th>
                                 <th><?php echo $this->lang->line('Note') ?></th>
+                                <th><?php echo $this->lang->line('') ?>Estado</th>
 
 
                             </tr>
                             </thead>
                             <tbody id="activity">
                             <?php foreach ($activity as $row) {
-
+									if($row['estado']=='Anulada'){
+										$color = 'class="anulado"';
+									}else{
+										$color = '';
+									}
                                 echo '<tr>
-                            <td>' . $row['id'] . '</td>
-                            <td>' . $row['date'] . '</td>
-                            <td>' .  $this->lang->line($row['method']) . '</td>
-                            <td>' . amountFormat($row['debit']) . '</td>
-                            <td>' . $row['note'] . '</td>
+                            <td '.$color.'>' . $row['id'] . '</td>
+                            <td '.$color.'>' . $row['date'] . '</td>
+                            <td '.$color.'>' .  $this->lang->line($row['method']) . '</td>
+                            <td '.$color.'>' . amountFormat($row['debit']) . '</td>
+                            <td '.$color.'>' . $row['note'] . '</td>
+                            <td '.$color.'>' . $row['estado'] . '</td>
                         </tr>';
                             } ?>
 
