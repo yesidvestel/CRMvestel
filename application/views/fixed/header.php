@@ -123,7 +123,7 @@ $lista_permisos1=$this->db->query("SELECT permisos_usuario.id,permisos_usuario.i
                 </ul>
                 <div id="head-customerbox-result" class="dropdown dropdown-notification"></div>
                 <ul class="nav navbar-nav float-xs-right">
-
+                    <li class="nav-item"><a id="show_notify_1" href="#" class="nav-link nav-link-label"><i class=" icon-windows"></i></a></li>
                     <li class="dropdown dropdown-notification nav-item"><a href="#" data-toggle="dropdown"
                                                                            class="nav-link nav-link-label"><i
                                     class="ficon icon-bell4"></i><span
