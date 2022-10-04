@@ -155,10 +155,10 @@ class Products extends CI_Controller
 			}else{ $row[] = $prd->asignado;}
 			$row[] = $prd->marca;
 			$row[] = $prd->t_instalacion;
-			if ($prd->vlan!=='0'){
+			if ($prd->idvlan!=='0'){
 			$row[] = $prd->vlan;
 			}else{$row[]= 'N/A';}
-			if ($prd->nat!=='0'){
+			if ($prd->idnat!=='0'){
 			$row[] = $prd->nap;
 			}else{$row[]= 'N/A';}
 			if ($prd->puerto!=='0'){
