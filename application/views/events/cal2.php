@@ -120,7 +120,7 @@ var rolid_user="<?=$this->aauth->get_user()->roleid ?>";
 <script src='<?php echo base_url(); ?>assets/portjs/moment.min.js'></script>
 <script src="<?php echo base_url(); ?>assets/portjs/bootstrapValidator.min.js"></script>
 <script src='<?php echo base_url(); ?>assets/fullcalendar/lib/locales-all.js'></script>
-<script src='<?php echo base_url(); ?>assets/fullcalendar/lib/configuraciones_fullcalendar.js'></script>
+<script src='<?php echo base_url(); ?>assets/fullcalendar/lib/configuraciones_fullcalendar.js?v=<?php echo time();?>'></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 <script src='<?php echo base_url(); ?>assets/portjs/bootstrap-colorpicker.min.js'></script>
 
@@ -174,13 +174,13 @@ var rolid_user="<?=$this->aauth->get_user()->roleid ?>";
             </div>
     </div>
 </article>
-<div class="modal fade">
+<div class="modal fade" id="modal-cal1">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
                             class="sr-only">Close</span></button>
-                <h4 class="modal-title"></h4>
+                <h4 class="modal-title" id="modal-title-cal1"></h4>
             </div>
             <div class="modal-body">
                 <div class="error"></div>
@@ -221,7 +221,7 @@ var rolid_user="<?=$this->aauth->get_user()->roleid ?>";
                     </div>
                 </form>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer" id="modal-footer-cal1">
         <a href="<?php echo base_url('tickets/thread?id=') ?>" id="ver_orden_id"><button type="button" class="btn btn-default" style="background-color:skyblue;color: white">Ver orden</button></a>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
             </div>

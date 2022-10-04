@@ -193,7 +193,7 @@ base_url(); ?>assets/vendors/js/ui/unison.min.js" type="text/javascript"></scrip
                     </div>
                     <div class="modal-footer">
                         <input type="hidden" class="form-control"
-                               name="tid" id="taskid" value="">
+                               name="tid" id="taskid5" value="">
                         <button type="button" class="btn btn-default"
                                 data-dismiss="modal"><?php echo $this->lang->line('Close'); ?></button>
 

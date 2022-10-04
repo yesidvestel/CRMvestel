@@ -161,9 +161,9 @@ function contruccion_calendar(propiedades){
 
      function modal(data) {
         // Set modal title
-        $('.modal-title').html(data.title);
+        $('#modal-title-cal1').html(data.title);
         // Clear buttons except Cancel
-        $('.modal-footer button:not(".btn-default")').remove();
+        $('#modal-footer-cal1 button:not(".btn-default")').remove();
         // Set input values
         try {
             
@@ -203,15 +203,15 @@ function contruccion_calendar(propiedades){
         
         // Create Butttons
         $.each(data.buttons, function(index, button){
-            $('.modal-footer').prepend('<button type="button" id="' + button.id  + '" class="btn ' + button.css + '">' + button.label + '</button>')
+            $('#modal-footer-cal1').prepend('<button type="button" id="' + button.id  + '" class="btn ' + button.css + '">' + button.label + '</button>')
         })
         //Show Modal
-        $('.modal').not("#modal_sede").modal('show');
+        $('#modal-cal1').not("#modal_sede").modal('show');
 
     }
 
     // Handle Click on Add Button
-    $('.modal').on('click', '#add-event',  function(e){
+    $('#modal-cal1').on('click', '#add-event',  function(e){
         if(validator([ 'title', 'description'])) {
             $.post(base_url+'events/addEvent', {
                 //idorden: $('#idorden').val(),
@@ -223,7 +223,7 @@ function contruccion_calendar(propiedades){
                 end: $('#end').val()
             }, function(result){
                 $('.alert').addClass('alert-success').text('Event added successfuly');
-                $('.modal').modal('hide');
+                $('#modal-cal1').modal('hide');
                 calendar.refetchEvents();
                 hide_notify();
             });
@@ -232,7 +232,7 @@ function contruccion_calendar(propiedades){
 
 
     // Handle click on Update Button
-    $('.modal').on('click', '#update-event',  function(e){
+    $('#modal-cal1').on('click', '#update-event',  function(e){
         if(validator([ 'title', 'description', 'rol'])) {
             $.post(base_url+'events/updateEvent', {
                 id: currentEvent.event._def.extendedProps.idevent,
@@ -264,10 +264,10 @@ function contruccion_calendar(propiedades){
 
     // Handle Click on Delete Button
 
-    $('.modal').on('click', '#delete-event',  function(e){
+    $('#modal-cal1').on('click', '#delete-event',  function(e){
         $.get(base_url+'events/deleteEvent?id=' + currentEvent.el.fcSeg.eventRange.def.extendedProps.idevent, function(result){
             $('.alert').addClass('alert-success').text('Event deleted successfully !');
-            $('.modal').modal('hide');
+            $('#modal-cal1').modal('hide');
             calendar.refetchEvents();
             hide_notify();
         });
