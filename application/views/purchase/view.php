@@ -677,13 +677,13 @@
                         <div class="row">
                             <div class="col-xs-12 mb-1">
                                 <label for="salmacen"><?php echo $this->lang->line('Warehouse') ?></label>
-                                <select class="form-control mb-1" name="almacen" <?= ($invoice['almacen_seleccionado']!=0 && $invoice['almacen_seleccionado']!=null) ? 'style="pointer-events:none;"':''  ?>>
+                                <select class="form-control mb-1" name="almacen" <?/*= ($invoice['almacen_seleccionado']!=0 && $invoice['almacen_seleccionado']!=null) ? 'style="pointer-events:none;"':'' */ ?>>
                                     <option value="0" ><?php echo $this->lang->line('All') ?></option><?php foreach ($warehouse as $row) {
                                             $text_select="";
-                                            if($row['id']==$invoice['almacen_seleccionado']){
+                                            /*if($row['id']==$invoice['almacen_seleccionado']){
                                                 $text_select='selected="true"';
-                                            }
-                                            echo '<option '.$text_select.' value="' . $row['id'] . '">' . $row['title'] . '</option>';
+                                            }*/
+                                            echo '<option value="' . $row['id'] . '">' . $row['title'] . '</option>';
                                         } ?>
                                 </select>
                             </div>
