@@ -111,7 +111,7 @@ base_url(); ?>assets/vendors/js/ui/unison.min.js" type="text/javascript"></scrip
                             if($hay_emitidas==false && $value['estado']=="emitida"){
                                 $hay_emitidas=true;
                             }
-                            $name = '<a href="#" data-id="' . $value['id_tarea'] . '" class="view_task2">' . $value['name'] . '</a>';
+                            $name = '<a href="'.base_url().'manager/historial?id='.$value['id_tarea'].'" data-id="' . $value['id_tarea'] . '" class="view_task2">' . $value['name'] . '</a>';
                             echo "<li>Tarea #".$value['id_tarea']." <i class='class_resuelta'><b>resuelta</b></i>, ".$name;//&nbsp<a href="#" data-id="' . $value['id_tarea'] . '" class="view_task2 btn-sm btn-indigo"> <i class="icon-eye"></i> </a>
                             echo "<br><b class='fecha_hora_small'>".$value['fecha']."</b>"."</li><hr>";
                         }
@@ -237,7 +237,12 @@ base_url(); ?>assets/vendors/js/ui/unison.min.js" type="text/javascript"></scrip
             proceso_notificaciones();
         },60000);
     }
-    $(document).on('click', ".view_task2", function (e) {
+    
+    $(document).on('click','#show_notify_1',function(e){
+        e.preventDefault();
+        $("#notificaciones_modal").modal("show");   
+    });
+   /* $(document).on('click', ".view_task2", function (e) {
             e.preventDefault();
 
             var actionurl = 'manager/view_task';
@@ -269,7 +274,7 @@ base_url(); ?>assets/vendors/js/ui/unison.min.js" type="text/javascript"></scrip
 
             });
 
-        });
+        });*/
 </script>
 </body>
 </html>
