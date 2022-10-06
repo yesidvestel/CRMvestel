@@ -46,8 +46,8 @@
                         
                 </h3></div>
 			<?php foreach ($naps as $row) { 
-					$cid = $row['nat']; ?>
-			<a href="#" class="open_modal"  data-nat="<?=$row['nat']?>" data-id-equipo="<?=$row['id'] ?>">
+					$cid = $row['nap']; ?>
+			<a href="#" class="open_modal"  data-nap="<?=$row['idn']?>" data-id-equipo="<?=$row['idn'] ?>">
 			<div class="col-xl-2 col-md-4 col-xs-6">
                     <div class="card">
                         <div class="card-body">
@@ -57,7 +57,7 @@
 										
                                         <img alt="image" id="dpic" class="img-responsive contenedor"
                                      src="<?php echo base_url('userfiles/attach/nap.png') ?>">
-										<h5 style="position: absolute" class="centrado">Nº <?php echo $cid ?></h5>
+										<h5 style="position: absolute" class="centrado"><?php echo $cid ?></h5>
                                     </div>
                                     
                                 </div>
@@ -131,7 +131,7 @@
 	
 	$(document).on("click",'.open_modal',function(e){
 		e.preventDefault();
-		var nat =$(this).data("nat");
+		var nat =$(this).data("nap");
         var id_equipo =$(this).data("id-equipo");
 		$.post(baseurl+"redes/get_puertos_html",{"nat":nat,"id_equipo":id_equipo},function(data){
 			$("#bloque_puertos").html(data);

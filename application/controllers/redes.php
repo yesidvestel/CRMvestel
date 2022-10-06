@@ -234,12 +234,13 @@ class Redes extends CI_Controller
     {
 		
         $vlan_orig = $this->db->get_where("equipos",array("id"=>$this->input->get('id')))->row();
-        $caja = $vlan_orig->vlan;
+        $caja = $this->input->get('id');
         $data['vlan']=$vlan_orig->vlan;
-        $almacen_obj=$this->db->get_where("almacen_equipos",array("id"=>$vlan_orig->almacen))->row();
+        $nap=$this->db->get_where("naps",array("idvlan"=>$caja))->row();
         $data['almacen']=$almacen_obj->almacen;
-		$data['naps'] = $this->redes->naplista($caja,$vlan_orig->almacen);
-		$data['puertos'] = $this->redes->puertolista();
+		$data['naps'] = $this->redes->naplista($caja);
+		$data['puertos'] = $this->redes->puertolista($nap->idn);
+		var_dump($nap->idn);
 		$arrayx=array();
 		foreach ($data['puertos'] as $key => $value) {
 			$arrayx[$value['puerto']]=$value['nat'];		
@@ -257,13 +258,15 @@ class Redes extends CI_Controller
 		$id_nat=$_POST['nat'];
         $id_equipo=$_POST['id_equipo'];
         $equipo_obj=$this->db->get_where("equipos",array("id"=>$id_equipo))->row();
-		$puertos = $this->redes->puertolista($id_nat,$equipo_obj->almacen,$equipo_obj->vlan);
+		$nap=$this->db->get_where("naps",array("idn"=>$id_nat))->row();
+		$puertos = $this->redes->puertolista($id_nat);
 		$return="";
 		$arrayx=array();
 		foreach ($puertos as $key => $value) {
-			$arrayx[$value['puerto']]=$value['nat'];		
+			$arrayx[$value['puerto']]=$value['nap'];		
 		}
-		
+		var_dump($nap->nap);
+		if ($nap->puertos==16){
 		for ($i=1;$i<=16;$i++){
 			$usuario=$this->db->get_where("customers",array("id"=>$value['asignado']))->row();
 			$color="teal";
@@ -280,6 +283,26 @@ class Redes extends CI_Controller
 									<h5 style="position: absolute" class="centrado2">a</h5></i>
 								</td>';*/
 			$return.='<td><i class="icon-circle contenedor '.$color.' font-large-1"><h5 style="position: absolute" class="centrado2">'.$i.'</h5></i><a href="'.base_url("customers/view?id=".$ids).'"  style="text-align: center;font-size: 10px">'.$user.'</a></td>';
+		}
+		}else{
+			for ($i=1;$i<=8;$i++){
+			$usuario=$this->db->get_where("customers",array("id"=>$value['asignado']))->row();
+			$color="teal";
+			if (isset($arrayx[$i])){ 
+				$color= 'pink';
+				$user = $usuario->abonado;
+				$ids = $usuario->id;
+			}else{ 
+				$color ='teal';
+				$user = '';
+			}
+			/*$return.='<td>
+									<i class="icon-circle contenedor font-large-1">
+									<h5 style="position: absolute" class="centrado2">a</h5></i>
+								</td>';*/
+			$return.='<td><i class="icon-circle contenedor '.$color.' font-large-1"><h5 style="position: absolute" class="centrado2">'.$i.'</h5></i><a href="'.base_url("customers/view?id=".$ids).'"  style="text-align: center;font-size: 10px">'.$user.'</a></td>';
+		}
+			
 		}
 		echo $return;
 		

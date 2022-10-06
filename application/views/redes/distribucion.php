@@ -16,7 +16,7 @@
 													
 			<?php foreach ($vlan2 as $row) { 
 					$cid = $row['vlan']; ?>
-			<a href="<?php echo base_url('redes/cajasnap?id=' . $row['id']) ?>">
+			<a href="<?php echo base_url('redes/cajasnap?id=' . $row['idv']) ?>">
 			<div class="col-xl-3 col-md-6 col-xs-12">
                     <div class="card">
                         <div class="card-body">

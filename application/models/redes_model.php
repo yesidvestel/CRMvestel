@@ -35,11 +35,9 @@ class Redes_model extends CI_Model
     }
 	public function vlansdos($sede)
     {
-        $this->db->select('vlan,id');
-        $this->db->from($this->table);
-        $this->db->group_by('vlan');
-		$this->db->where('vlan !=', 0);
-		$this->db->where('almacen', $sede);
+        $this->db->select('*');
+        $this->db->from('vlans');
+		$this->db->where('sede', $sede);
         $query = $this->db->get();
         return $query->result_array();
     }
@@ -125,14 +123,11 @@ class Redes_model extends CI_Model
         $query = $this->db->query("SELECT c.*,p.pc FROM almacen_equipos AS c LEFT JOIN ( SELECT almacen,COUNT(id) AS pc FROM equipos GROUP BY almacen) AS p ON c.id=p.almacen");
         return $query->result_array();
     }
-	public function naplista($caja,$sede)
+	public function naplista($caja)
     {
-        $this->db->select('nat,id');
-        $this->db->from($this->table);
-        $this->db->group_by('nat');
-		$this->db->where('nat !=', 0);
-		$this->db->where('vlan', $caja);
-        $this->db->where('almacen', $sede);
+        $this->db->select('*');
+        $this->db->from('naps');
+		$this->db->where('idvlan', $caja);
         $query = $this->db->get();
         return $query->result_array();
     }
@@ -219,18 +214,13 @@ class Redes_model extends CI_Model
         $query = $this->db->get();
         return $query->result_array();
     }
-	public function puertolista($id=null,$almacen=null,$vlan=null)
+	public function puertolista($id=null)
     {
-        $this->db->select('puerto, nat,asignado');
-        $this->db->from($this->table);
-        $this->db->group_by('puerto');
-		$this->db->where('puerto !=', 0);
+        $this->db->select('*');
+        $this->db->from('puertos');
 		if($id!=null){
-			$this->db->where('nat', $id);	
-            $this->db->where('vlan', $vlan);   
-            $this->db->where('almacen', $almacen);   
-		}else{
-			$this->db->where('nat', 3);
+			$this->db->where('idnap', $id);
+			$this->db->join('naps', 'naps.idn = puertos.idnap');
 		}
 		
         $query = $this->db->get();
