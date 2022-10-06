@@ -240,7 +240,6 @@ class Redes extends CI_Controller
         $data['almacen']=$almacen_obj->almacen;
 		$data['naps'] = $this->redes->naplista($caja);
 		$data['puertos'] = $this->redes->puertolista($nap->idn);
-		var_dump($nap->idn);
 		$arrayx=array();
 		foreach ($data['puertos'] as $key => $value) {
 			$arrayx[$value['puerto']]=$value['nat'];		
@@ -265,9 +264,7 @@ class Redes extends CI_Controller
 		foreach ($puertos as $key => $value) {
 			$arrayx[$value['puerto']]=$value['nap'];		
 		}
-		var_dump($nap->nap);
-		if ($nap->puertos==16){
-		for ($i=1;$i<=16;$i++){
+		for ($i=1;$i<=$nap->puertos;$i++){
 			$usuario=$this->db->get_where("customers",array("id"=>$value['asignado']))->row();
 			$color="teal";
 			if (isset($arrayx[$i])){ 
@@ -284,26 +281,7 @@ class Redes extends CI_Controller
 								</td>';*/
 			$return.='<td><i class="icon-circle contenedor '.$color.' font-large-1"><h5 style="position: absolute" class="centrado2">'.$i.'</h5></i><a href="'.base_url("customers/view?id=".$ids).'"  style="text-align: center;font-size: 10px">'.$user.'</a></td>';
 		}
-		}else{
-			for ($i=1;$i<=8;$i++){
-			$usuario=$this->db->get_where("customers",array("id"=>$value['asignado']))->row();
-			$color="teal";
-			if (isset($arrayx[$i])){ 
-				$color= 'pink';
-				$user = $usuario->abonado;
-				$ids = $usuario->id;
-			}else{ 
-				$color ='teal';
-				$user = '';
-			}
-			/*$return.='<td>
-									<i class="icon-circle contenedor font-large-1">
-									<h5 style="position: absolute" class="centrado2">a</h5></i>
-								</td>';*/
-			$return.='<td><i class="icon-circle contenedor '.$color.' font-large-1"><h5 style="position: absolute" class="centrado2">'.$i.'</h5></i><a href="'.base_url("customers/view?id=".$ids).'"  style="text-align: center;font-size: 10px">'.$user.'</a></td>';
-		}
-			
-		}
+		
 		echo $return;
 		
 	}
