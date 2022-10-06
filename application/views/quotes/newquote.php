@@ -10,41 +10,41 @@
                 </div>
                 <form method="post" id="data_form" name="soporte">
  <!--inicio modal elementos tv-->
-                                                <div id="modal_mas_tv" class="modal fade">
-                                                    <div class="modal-dialog">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                                                <h4 class="modal-title">Servicios Adicionales Tv</h4>
-                                                            </div>
+                            <div id="modal_mas_tv" class="modal fade">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+										<h4 class="modal-title">Servicios Adicionales Tv</h4>
+									</div>
 
-                                                            <div class="modal-body" id="body_modal">
-                                                                     
-                                                                        <?php foreach ($servicios_por_sedes as $key => $value1) { ?>
-                                                                            <div id="servs_tv_sede_<?=$value1['title']?>" data-id-sede="<?=$value1['id'] ?>" class="servs_sede_<?=$value1['title']?> serv_sedes">
+									<div class="modal-body" id="body_modal">
 
-                                                                                <?php if(count($value1['servicios_tv'])!=0){ 
-                                                                                    foreach ($value1['servicios_tv'] as $key => $serv) {?>
-                                                                                            <div class="form-group row">
+												<?php foreach ($servicios_por_sedes as $key => $value1) { ?>
+													<div id="servs_tv_sede_<?=$value1['title']?>" data-id-sede="<?=$value1['id'] ?>" class="servs_sede_<?=$value1['title']?> serv_sedes">
 
-                                                                                                <label class="col-sm-3 control-label"
-                                                                                                       for="serv_add_<?=$serv['pid']  ?>"><?=$serv['product_name'] ?></label>
-                                                                                                <div  class="col-sm-9">
-                                                                                                 <select name="serv_add_<?=$serv['pid']  ?>" class="selectpicker form-control select_sedex select_sede_<?=$value1['title']?>">
-                                                                                                    <option value="0">no </option>
-                                                                                                    <?php foreach ($serv['valores'] as $key => $valora1) {
-                                                                                                    echo '<option value="'.$valora1.'">'.$valora1.'</option>';}?>
-                                                                                                </select>
-                                                                                                    <small></small>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                    <?php } ?>
-                                                                                <?php } ?>
-                                                                                
-                                                                            </div>
-                                                                        <?php } ?>
+														<?php if(count($value1['servicios_tv'])!=0){ 
+															foreach ($value1['servicios_tv'] as $key => $serv) {?>
+																	<div class="form-group row">
 
-                                                            </div>
+																		<label class="col-sm-3 control-label"
+																			   for="serv_add_<?=$serv['pid']  ?>"><?=$serv['product_name'] ?></label>
+																		<div  class="col-sm-9">
+																		 <select name="serv_add_<?=$serv['pid']  ?>" class="selectpicker form-control select_sedex select_sede_<?=$value1['title']?>">
+																			<option value="0">no </option>
+																			<?php foreach ($serv['valores'] as $key => $valora1) {
+																			echo '<option value="'.$valora1.'">'.$valora1.'</option>';}?>
+																		</select>
+																			<small></small>
+																		</div>
+																	</div>
+															<?php } ?>
+														<?php } ?>
+
+													</div>
+												<?php } ?>
+
+									</div>
                                                             <div class="modal-footer">
                                                                 <a data-dismiss="modal" href="#" class="btn btn-success">Guardar</a>
                                                                 <button type="button" class="btn btn-default"
@@ -554,6 +554,7 @@
 									<option value="No prende Cablemoden">No prende Cablemoden</option>
 									<option value="Fibra Rota">Fibra Rota</option>
 									<option value="Cable Caido">Cable Caido</option>
+									<option value="ONU alarmada">ONU alarmada</option>
 									<option value="Desconfigurado Cablemoden">Desconfigurado Cablemoden</option>
 									<option value="Cambio de Tecnologia">Cambio de Tecnologia</option>
 									<option value="No hay Internet">No hay Internet</option>
@@ -826,13 +827,13 @@ $(document).on('click','.btn-mas-internet',function(e){
 	// selecion de orden
 	<?php  if ($this->aauth->get_user()->roleid == 5 || $this->aauth->get_user()->tiknue != null) { ?>
 	
-	var perfil_servicio = new Array ("...","Reconexion Combo","Reinstalación","Activacion","Reconexion Television","Retiro voluntario","Recuperación cable modem","Veeduria","Reconexion Internet","AgregarInternet","AgregarTelevision","Migracion","Bajar_megas","Cambio de equipo","Corte Combo","Corte Internet","Corte Television","Equipo adicional","Instalacion","Punto nuevo","Subir_megas","Suspension Combo","Suspension Internet","Suspension Television","Traslado","Toma Adicional");
+	var perfil_servicio = new Array ("...","Reconexion Combo","Reinstalación","Activacion","Reconexion Television","Retiro voluntario","Cambio de clave","Recuperación cable modem","Veeduria","Reconexion Internet","AgregarInternet","AgregarTelevision","Migracion","Bajar_megas","Cambio de equipo","Corte Combo","Corte Internet","Corte Television","Equipo adicional","Instalacion","Punto nuevo","Subir_megas","Suspension Combo","Suspension Internet","Suspension Television","Traslado","Toma Adicional");
 	<?php } else if ($this->aauth->get_user()->roleid == 4 || $this->aauth->get_user()->usadm != null) { ?>
-	var perfil_servicio = new Array ("...","AgregarInternet","AgregarTelevision","Activacion","Reinstalación","Retiro voluntario","Recuperación cable modem","Migracion","Veeduria","Bajar_megas","Cambio de equipo","Corte Combo","Corte Internet","Corte Television","Equipo adicional","Instalacion","Punto nuevo","Subir_megas","Suspension Combo","Suspension Internet","Suspension Television","Traslado","Toma Adicional");
+	var perfil_servicio = new Array ("...","AgregarInternet","AgregarTelevision","Activacion","Cambio de clave","Reinstalación","Retiro voluntario","Recuperación cable modem","Migracion","Veeduria","Bajar_megas","Cambio de equipo","Corte Combo","Corte Internet","Corte Television","Equipo adicional","Instalacion","Punto nuevo","Subir_megas","Suspension Combo","Suspension Internet","Suspension Television","Traslado","Toma Adicional");
 	<?php } else { ?>
-	var perfil_servicio = new Array ("...","AgregarInternet","AgregarTelevision","Activacion","Reinstalación","Recuperación cable modem","Migracion","Veeduria","Bajar_megas","Cambio de equipo","Corte Combo","Corte Internet","Corte Television","Equipo adicional","Instalacion","Punto nuevo","Subir_megas","Traslado","Toma Adicional");
+	var perfil_servicio = new Array ("...","AgregarInternet","AgregarTelevision","Activacion","Cambio de clave","Reinstalación","Recuperación cable modem","Migracion","Veeduria","Bajar_megas","Cambio de equipo","Corte Combo","Corte Internet","Corte Television","Equipo adicional","Instalacion","Punto nuevo","Subir_megas","Traslado","Toma Adicional");
 	<?php }; ?>
-	var perfil_reclamo = new Array ("...","Revision_de_Internet","Reinstalación","Activacion","Revision_de_television","Revision tv e internet");	
+	var perfil_reclamo = new Array ("...","Revision_de_Internet","Revision_de_television","Revision tv e internet");	
 							//crear funcion que ejecute el cambio
 							function cambia(){
 								var subject;
