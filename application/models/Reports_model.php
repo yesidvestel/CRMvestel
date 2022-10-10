@@ -55,16 +55,18 @@ class Reports_model extends CI_Model
 		$gas_servicios = 0;
         $query = $this->db->query("SELECT * FROM transactions WHERE ((DATE(date) BETWEEN DATE('$year-$month-01') AND DATE('$year-$month-31')  AND CURDATE()) AND type!='Transfer') and estado is null and tid!=-1 ")->result();
 		 foreach ($query as $key => $gasto) {
+			 $orden=$this->db->get_where('purchase',array('tid'=>$gasto->tid))->row();
+			 $prov=$this->db->get_where('supplier',array('id'=>$orden->csd))->row();
 			 if($gasto->cat=='Vesagro'){
 				 $gas_vesagro+=$gasto->debit;
 			 }
-			 if($gasto->cat=='Servicios'){
+			 if($gasto->cat=='Servicios' || ($gasto->cat=='Purchase' && $prov->categoria==2)){
 				 $gas_servicios+=$gasto->debit;
 			 }
 			 if($gasto->cat=='Compras'){
 				 $gas_compras+=$gasto->debit;
 			 }
-			 if($gasto->cat=='Purchase'){
+			 if($gasto->cat=='Purchase' && $prov->categoria==1){
 				 $gas_purchase+=$gasto->debit;
 			 }
 			 if($gasto->cat=='Nomina'){
