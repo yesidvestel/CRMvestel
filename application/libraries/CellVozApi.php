@@ -72,9 +72,9 @@ class CellVozApi
     } 
     public function envio_sms_masivos_por_curl($token,$mensaje,$name_campaign){
         $curl = curl_init();
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        //curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt_array($curl, array(
-          CURLOPT_URL => 'http://api.cellvoz.co/v2/sms/multiple',
+          CURLOPT_URL => 'https://api.cellvoz.com/v2/sms/multiple',
           CURLOPT_RETURNTRANSFER => true,
           CURLOPT_ENCODING => '',
           CURLOPT_MAXREDIRS => 10,
