@@ -24,6 +24,7 @@
                                         <option value="-">-</option>
                                         <option value="encuesta">Encuesta</option>
                                         <option value="caja">Caja</option>
+                                        <option value="titular">Titular</option>
                                     </select>
 
 
@@ -37,6 +38,7 @@
 
                                 <div class="col-sm-9">
                                     <select name="caja" class="form-control" id="caja">
+										<option value="0">-</option>
                                         <?php
                                         foreach ($accounts as $row) {
                                             $cid = $row['id'];
@@ -57,8 +59,9 @@
 
                                 <div class="col-sm-9">
                                     <select name="sedes" class="form-control" id="sede">
+										<option value="">-</option>
                                          <?php
-
+						
 										foreach ($customergrouplist as $row) {
 											$cid = $row['id'];
 											$title = $row['title'];

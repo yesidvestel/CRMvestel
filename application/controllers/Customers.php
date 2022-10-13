@@ -1119,6 +1119,7 @@ if($data['servicios']['estado']=="Inactivo"){
     }
 	public function act_titular()
     {
+		$this->load->model('tools_model', 'tools');
         $id = $this->input->post('iduser');
         $nombres = $this->input->post('dtosantes2');
 		$doc_anterior = $this->input->post('doc12');
@@ -1152,6 +1153,19 @@ if($data['servicios']['estado']=="Inactivo"){
 			'documento' => $doc2);
         $this->db->where('id', $id);
         $this->db->update('customers', $data2);
+		//tarea de revision
+		$name = 'Revisar cambio de titular #'.$doc2;
+		$estado = 'Due';
+		$priority = 'Low';
+		$stdate = date("Y-m-d");
+		$tdate = '';
+		$asignacion = $this->db->get_where('asignaciones', array('detalle' => 'titular'))->row();
+		$employee = $asignacion->colaborador;
+		$assign = $this->aauth->get_user()->id;
+		$content = 'Revisar cambio de titular #'.$doc2;
+		$ordenn = $doc2;
+		$this->tools->addtask($name, $estado, $priority, $stdate, $tdate, $employee, $assign, $content, $ordenn);
+		//---
 		$dt1=new DateTime($fecha);
         $fecha=$dt1->format("Y-m-d");
 		$user = $this->aauth->get_user()->username;

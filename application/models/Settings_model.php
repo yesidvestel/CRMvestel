@@ -134,12 +134,18 @@ class Settings_model extends CI_Model
     {
 		//var_dump($_POST);
 		//$asignacion = $this->db->get_where('asignaciones', array('tipo'=> $cja))->row();
+		
 		$x1=$sdes;
 		if($_POST['detalle']=="caja"){
 			$x1=$_POST['caja'];
 		}
+		if($_POST['detalle']=="titular"){
+			$x1='todas';
+		}
+		
 		$sql="select * from asignaciones where detalle='".$_POST['detalle']."' and tipo='".$x1."' ";
 		$asignaciones=$this->db->query($sql)->result();
+		var_dump($asignaciones);
 		if($dtalle=='encuesta'){
         $data = array(
             'detalle' => $dtalle,
@@ -152,11 +158,15 @@ class Settings_model extends CI_Model
             'tipo' => $cja,
             'colaborador' => $col
         );
+		}else if($dtalle=='titular'){
+		$data = array(
+            'detalle' => $dtalle,
+            'tipo' => 'todas',
+            'colaborador' => $col
+        );
 		}
-        //$this->db->set($data);
+        $this->db->set($data);
         //$this->db->where('id', $id);
-		var_dump($sql);
-		var_dump($asignaciones);
 		if(count($asignaciones)!=0){
 			//update
 			$fun=$this->db->update('asignaciones', $data,array("idasig"=>$asignaciones[0]->idasig));
