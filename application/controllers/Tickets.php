@@ -536,11 +536,12 @@ class Tickets Extends CI_Controller
 		
     
     //define column headers
+		
     $headers = array('N° Orden' => 'string',
         'Tema' => 'string', 
         'Detalle' => 'string', 
         'Fecha Creada' => 'date',
-		'Fecha Cierre' => 'date',
+		'Fecha Cierre' => 'string',
         'Abonado' => 'integer',
 		'Usuario' => 'string',
 		'Documento' => 'integer',
