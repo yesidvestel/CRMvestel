@@ -362,7 +362,7 @@ $fcontrato = $details['f_contrato'];
     </tr>
     <tr>
       <td colspan="4">Suma que le fue diferida del valor total del cargo por conexión</td>
-      <td colspan="2"><?php echo amountFormat(50000)?></td>
+      <td colspan="2"><?php echo amountFormat(70000)?></td>
     </tr>
     <tr>
       <td colspan="4">Fecha inicio permanencia mínima</td>
