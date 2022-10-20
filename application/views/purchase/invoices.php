@@ -1,5 +1,5 @@
 <style>
-.st-finalizado, .st-pendiente , .st-cancelado,.st-abonado, .st-recibido, .st-anulado
+.st-finalizado, .st-pendiente , .st-cancelado,.st-abonado, .st-recibido, .st-anulado, .st-aprobado
 {
 text-transform: capitalize;
     color: #fff;
@@ -26,6 +26,10 @@ text-transform: capitalize;
 .st-recibido
 {
  background-color: #36F;
+}
+.st-aprobado
+{
+ background-color: #A01DB7;
 }
 .st-anulado
 {

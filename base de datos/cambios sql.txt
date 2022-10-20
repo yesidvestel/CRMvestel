@@ -435,3 +435,5 @@ ALTER TABLE `vlans`
 ADD `olt` varchar(100) NULL DEFAULT NULL AFTER `vlan`,
 ADD `bandeja` int(10) NULL DEFAULT NULL AFTER `olt`,
 ADD `puertolt` int(10) NULL DEFAULT NULL AFTER `bandeja`;
+
+ALTER TABLE `purchase` CHANGE `status` `status` ENUM('pendiente','cancelado','abonado','recibido','recibido parcial','finalizado','anulado','aprobado') CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT 'pendiente';

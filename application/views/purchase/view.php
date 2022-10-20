@@ -594,8 +594,11 @@
                         <div class="col-xs-12 mb-1"><label
                                     for="pmethod"><?php echo $this->lang->line('Mark As') ?></label>
                             <select id="status" name="status" class="form-control mb-1" onchange="estado_orden_compra()">
-                                <option value="pendiente" <?= ($invoice['status']=="pendiente") ? 'selected="true"':'' ?> ><?php echo $this->lang->line('') ?>Pendiente</option>                                
-                                <option value="abonado" <?= ($invoice['status']=="abonado") ? 'selected="true"':'' ?> ><?php echo $this->lang->line('') ?>Abonado</option>                                
+                                <option value="pendiente" <?= ($invoice['status']=="pendiente") ? 'selected="true"':'' ?> ><?php echo $this->lang->line('') ?>Pendiente</option>
+								<?php if ($this->aauth->get_user()->username == 'YadiraGerente') { ?>
+                                <option value="aprobado" <?= ($invoice['status']=="aprobado") ? 'selected="true"':'' ?> ><?php echo $this->lang->line('') ?>Aprobado</option>
+								<?php } ?>
+								<option value="aprobado" <?= ($invoice['status']=="abonado") ? 'selected="true"':'' ?> ><?php echo $this->lang->line('') ?>Abonado</option>                                
                                 <option value="cancelado" <?= ($invoice['status']=="cancelado") ? 'selected="true"':'' ?>><?php echo $this->lang->line('') ?>Cancelado</option>
                                 <option value="recibido parcial" <?= ($invoice['status']=="recibido parcial") ? 'selected="true"':'' ?>><?php echo $this->lang->line('') ?>Recibido Parcial</option>
                                 <option value="recibido" <?= ($invoice['status']=="recibido") ? 'selected="true"':'' ?>><?php echo $this->lang->line('') ?>Recibido</option>
