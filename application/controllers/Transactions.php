@@ -559,8 +559,34 @@ class Transactions extends CI_Controller
         //generar reconexion
 		$username = $this->aauth->get_user()->username;
         $tidactualmasuno= $this->db->select('max(codigo)+1 as tid')->from('tickets')->get()->result();
+        $tidactualmasdos= $this->db->select('max(codigo)+2 as tid')->from('tickets')->get()->result();
+		$parmasuno= $this->db->select('max(par)+1 as par')->from('tickets')->get()->result();
         if ($reconexion==si && $mes2===$mes1){
-            $data2['codigo']=$tidactualmasuno[0]->tid;
+			if ($tipo=='Reconexion Combo'){
+				//internet
+				$data2['codigo']=$tidactualmasuno[0]->tid;
+                $data2['subject']='servicio';
+                $data2['detalle']='Reconexion Internet';
+                $data2['created']=$paydate;
+                $data2['cid']=$cid;
+				$data2['col']=$username;
+                $data2['status']='Pendiente';
+                $data2['section']=$factura_asociada->combo;
+                $data2['id_factura']=$factura_asociada->tid;
+                $this->db->insert('tickets',$data2);
+				//tv
+				$data3['codigo']=$tidactualmasdos[0]->tid;
+                $data3['subject']='servicio';
+                $data3['detalle']='Reconexion Television';
+                $data3['created']=$paydate;
+                $data3['cid']=$cid;
+				$data3['col']=$username;
+                $data3['status']='Pendiente';
+                $data3['section']='Television';
+                $data3['id_factura']=$factura_asociada->tid;
+                $this->db->insert('tickets',$data3);
+			}else{
+				$data2['codigo']=$tidactualmasuno[0]->tid;
                 $data2['subject']='servicio';
                 $data2['detalle']=$tipo;
                 $data2['created']=$paydate;
@@ -570,6 +596,8 @@ class Transactions extends CI_Controller
                 $data2['section']=$factura_asociada->combo;
                 $data2['id_factura']=$factura_asociada->tid;
                 $this->db->insert('tickets',$data2);
+			}
+           
 
                           $data_h=array();
                             $data_h['modulo']="Usuarios";
@@ -583,7 +611,33 @@ class Transactions extends CI_Controller
                             $this->db->insert("historial_crm",$data_h);
                 $reconexion_gen="si";
         }if ($reconexion==si && $mes2>$mes1){
-                $data2['codigo']=$tidactualmasuno[0]->tid;
+			if ($tipo=='Reconexion Combo'){
+				//internet
+				$data2['codigo']=$tidactualmasuno[0]->tid;
+                $data2['subject']='servicio';
+                $data2['detalle']='Reconexion Internet2';
+                $data2['created']=$paydate;
+                $data2['cid']=$cid;
+				$data2['col']=$username;
+                $data2['status']='Pendiente';
+                $data2['section']=$factura_asociada->combo;
+                $data2['id_factura']='';
+                $data2['par']=$parmasuno[0]->par;
+                $this->db->insert('tickets',$data2);
+				//tv
+				$data3['codigo']=$tidactualmasdos[0]->tid;
+                $data3['subject']='servicio';
+                $data3['detalle']='Reconexion Television2';
+                $data3['created']=$paydate;
+                $data3['cid']=$cid;
+				$data3['col']=$username;
+                $data3['status']='Pendiente';
+                $data3['section']='Television';
+                $data3['id_factura']='';
+                $data3['par']=$parmasuno[0]->par;
+                $this->db->insert('tickets',$data3);
+			}else{
+				$data2['codigo']=$tidactualmasuno[0]->tid;
                 $data2['subject']='servicio';
                 $data2['detalle']=$tipo.'2';
                 $data2['created']=$paydate;
@@ -593,6 +647,8 @@ class Transactions extends CI_Controller
                 $data2['section']=$factura_asociada->combo;
                 $data2['id_factura']='';
                 $this->db->insert('tickets',$data2);
+			}
+                
                             $data_h=array();
                             $data_h['modulo']="Usuarios";
                             $data_h['accion']="Administrar Usuarios > Ver Usuario > Ver Facturas > Hacer el Pago (pago multiple) {insert}";

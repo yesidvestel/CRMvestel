@@ -216,6 +216,30 @@ class Quote_model extends CI_Model
 		}else{
 			$obs = $section;
 		}
+		if ($detalle=='Reconexion Combo'){
+				//internet
+				$data2['codigo']=$nticket;
+                $data2['subject']=$subject;
+                $data2['detalle']='Reconexion Internet';
+                $data2['created']=$bill_llegada;
+                $data2['cid']=$customer_id;
+				$data2['col']=$gen;
+                $data2['status']='Pendiente';
+                $data2['section']=$obs;
+                $data2['id_factura']=$factura;
+               $in = $this->db->insert('tickets',$data2);
+				//tv
+				$data3['codigo']=$nticket+1;
+                $data3['subject']=$subject;
+                $data3['detalle']='Reconexion Television';
+                $data3['created']=$bill_llegada;
+                $data3['cid']=$customer_id;
+				$data3['col']=$gen;
+                $data3['status']='Pendiente';
+                $data3['section']=$obs;
+                $data3['id_factura']=$factura;
+                $this->db->insert('tickets',$data3);
+			}else{
         $data = array(
 			'codigo' => $nticket,
             'subject' => $subject,
@@ -232,9 +256,10 @@ class Quote_model extends CI_Model
 			'asignado' => $tec,
             'asignacion_movil'=>$movil,
         );
-
-        if ($this->db->insert('tickets', $data)) {
-            $id_t1=$this->db->insert_id();
+			$in = $this->db->insert('tickets', $data);
+		}
+		if ($in) {
+			$id_t1=$this->db->insert_id();
             $servicios_adicionales="";
                             foreach ($_POST as $llave => $valor) {
                                     if(strpos($llave,"serv_add_")!==false){
@@ -338,12 +363,15 @@ class Quote_model extends CI_Model
 			);		
 			$this->db->insert('temporales', $data4);
 			}
+		
             echo json_encode(array('status' => 'Success', 'message' =>
                 $this->lang->line('ADDED')));
         } else {
             echo json_encode(array('status' => 'Error', 'message' =>
                 $this->lang->line('ERROR')));
+		
         }
+		
         
 		
     }

@@ -985,8 +985,8 @@ if($status=="Resuelto" && file_exists($nombre_archiv)==false && strpos(strtolowe
                         $datay['subtotal']=$x;         
                     }    
                     //var_dump($data);
-                    if(($ticket->detalle=="Instalacion" || $ticket->detalle=="Reconexion Combo2" || $ticket->detalle=="Activacion" || $ticket->detalle=="Reconexion Television2" || $ticket->detalle=="Reconexion Internet2") && ($ticket->id_factura==null || $ticket->id_factura==0)  && $status=="Resuelto"){
-                        $this->db->insert('invoice_items',$datay);    
+                    if(($ticket->detalle=="Instalacion" || $ticket->detalle=="Reconexion Combo2" || $ticket->detalle=="Activacion" || $ticket->detalle=="Reconexion Internet2") && ($ticket->id_factura==null || $ticket->id_factura==0)  && $status=="Resuelto"){
+                        $this->db->insert('invoice_items',$datay);  
                     }
                 }
                 
@@ -1023,7 +1023,7 @@ if($status=="Resuelto" && file_exists($nombre_archiv)==false && strpos(strtolowe
                         $datay['price']=$x;
                         $datay['subtotal']=$x;         
                     }  
-                    if(($ticket->detalle=="Instalacion" || $ticket->detalle=="Reconexion Combo2" || $ticket->detalle=="Activacion" || $ticket->detalle=="Reconexion Television2" || $ticket->detalle=="Reconexion Internet2") && ($ticket->id_factura==null || $ticket->id_factura==0)  && $status=="Resuelto"){
+                    if(($ticket->detalle=="Instalacion" || $ticket->detalle=="Reconexion Combo2" || $ticket->detalle=="Activacion" || $ticket->detalle=="Reconexion Television2") && ($ticket->id_factura==null || $ticket->id_factura==0)  && $status=="Resuelto"){
                         $this->db->insert('invoice_items',$datay);
                     }
 				}
@@ -1041,8 +1041,9 @@ if($status=="Resuelto" && file_exists($nombre_archiv)==false && strpos(strtolowe
 					$datay['totaltax']='';
 					$datay['price']=$x;
 					$datay['subtotal']=$x*$datay['qty'];
-                    if(($ticket->detalle=="Instalacion" || $ticket->detalle=="Reconexion Combo2" || $ticket->detalle=="Activacion" || $ticket->detalle=="Reconexion Television2" || $ticket->detalle=="Reconexion Internet2") && ($ticket->id_factura==null || $ticket->id_factura==0)  && $status=="Resuelto"){
+                    if(($ticket->detalle=="Instalacion" || $ticket->detalle=="Reconexion Combo2" || $ticket->detalle=="Activacion" || $ticket->detalle=="Reconexion Television2") && ($ticket->id_factura==null || $ticket->id_factura==0)  && $status=="Resuelto"){
                         $this->db->insert('invoice_items',$datay);
+						
                     }
                 }
 				if($data['television']!=="no" AND $data['refer']=="Mocoa" || $tv!=="no" && $ciudad=="Mocoa"){                
@@ -1058,8 +1059,9 @@ if($status=="Resuelto" && file_exists($nombre_archiv)==false && strpos(strtolowe
 					$datay['totaltax']='';
                     $datay['subtotal']=$x;
 					
-                    if(($ticket->detalle=="Instalacion" || $ticket->detalle=="Reconexion Combo2" || $ticket->detalle=="Activacion" || $ticket->detalle=="Reconexion Television2" || $ticket->detalle=="Reconexion Internet2") && ($ticket->id_factura==null || $ticket->id_factura==0)  && $status=="Resuelto"){
+                    if(($ticket->detalle=="Instalacion" || $ticket->detalle=="Reconexion Combo2" || $ticket->detalle=="Activacion" || $ticket->detalle=="Reconexion Television2") && ($ticket->id_factura==null || $ticket->id_factura==0)  && $status=="Resuelto"){
                         $this->db->insert('invoice_items',$datay);
+						
                     }
                 }
                 
@@ -1116,7 +1118,14 @@ $x=0;
             $data['subtotal']=$total;
             
             $data['total']=$data['subtotal']+$data['tax'];
-            $this->db->insert('invoices',$data);    
+            if($this->db->insert('invoices',$data)){
+				if($ticket->par!=null && ($ticket->detalle=="Reconexion Internet2" || $ticket->detalle=="Reconexion Television2")){
+						$this->db->set('id_factura', $data['tid']);
+						$this->db->where('par', $ticket->par);
+						$this->db->update('tickets');
+					}
+			}
+				
 
             $dataz['id_factura']=$data['tid'];
 			//actualizar estado usuario
@@ -1648,7 +1657,7 @@ $x=0;
                 $customerx=$this->db->get_where("customers",array('id' =>$ticket->cid ))->row();
                 $this->customers->desactivar_estado_usuario($customerx->name_s,$customerx->gid,$customerx->tegnologia_instalacion);
 		}
-		if($ticket->detalle=="AgregarTelevision"){			
+		if($ticket->detalle=="AgregarTelevision" || ($ticket->detalle=="Reconexion Television2" && ($ticket->id_factura!=0 || $ticket->id_factura!=null))){			
 			$producto = $this->db->get_where('products',array('product_name'=>'Television'))->row();
             $total=0;
             $taxvalue=0;
@@ -1745,7 +1754,7 @@ $x=0;
 			
 		}
 		//nuevo servicio
-		if($ticket->detalle=="AgregarInternet"){	
+		if($ticket->detalle=="AgregarInternet" || ($ticket->detalle=="Reconexion Internet2" && ($ticket->id_factura!=0 || $ticket->id_factura!=null))){	
 		$factura = $this->db->get_where('invoices',array('tid'=>$idfactura))->row();
 		$datay['tid']=$idfactura;
         $datay['qty']=1;
