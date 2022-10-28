@@ -63,9 +63,9 @@ class Quote extends CI_Controller
         if(isset( $data['details']['gid'])){
         	$data['sede_actual']=$this->db->get_where("customers_group",array("id"=>$data['details']['gid']))->row();
         }
-        //var_dump($data['sede_actual']);
         $conteo=$this->db->get_where("tickets",array("cid"=>$custid,"status"=>"Pendiente"))->result_array();        
         $data['conteo_pendientes']=count($conteo);
+        $this->load->view('fixed/header', $head);
         $this->load->view('fixed/header', $head);
         $this->load->view('quotes/newquote', $data);
         $this->load->view('fixed/footer');
@@ -91,7 +91,6 @@ class Quote extends CI_Controller
 		$data['localidades'] =$this->customers->localidades_list($data['thread_info']['ciudad']);
 		$data['paquete'] = $this->invocies->paquetes('tv');
 		$data['paqueteinter'] = $this->invocies->paquetes('inter');
-		//var_dump($data['temporal']);
         $data['thread_list'] = $this->ticket->thread_list($thread_id);
 		$data['facturalist'] = $this->ticket->factura_list($custid);
         $head['title'] = "Edit Quote #$tid";

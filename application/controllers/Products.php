@@ -202,7 +202,6 @@ class Products extends CI_Controller
         $valores_servicio = $this->input->post('valores_servicio');
         $tipo_servicio = $this->input->post('tipo_servicio');
         $servicio_pertenece_a = $this->input->post('servicio_pertenece_a');
-		var_dump($sede);
         if ($catid) {
             $this->products->addnew($catid, $warehouse, $sede, $product_name, $product_code,  $product_price, $factoryprice, $taxrate, $disrate, $product_qty,$product_qty_alert,$product_desc,$valores_servicio,$tipo_servicio,$servicio_pertenece_a);
         }

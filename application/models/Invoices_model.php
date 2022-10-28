@@ -286,7 +286,6 @@ setlocale(LC_TIME, "spanish");
         $this->db->from('products');
 		switch ($this->opt) {
             case 'tv':
-				var_dump($this->opt);
                 $this->db->where('sede', 1);
                 break;
             case 'inter':

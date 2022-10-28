@@ -57,7 +57,6 @@ class Tickets Extends CI_Controller
 		$date1 = new DateTime("2015-02-14");
 		$date2 = new DateTime("now");
 		$diff = $date1->diff($date2);
-		var_dump($diff->days);
 
 
     }
