@@ -1565,7 +1565,7 @@ if($data['servicios']['estado']=="Inactivo"){
 		$this->load->model('invoices_model', 'invocies');
         $data['details'] = $this->customers->details($custid);
         $data['money'] = $this->customers->money_details($custid);
-		$data['paquete'] = $this->invocies->paquetes();
+		$data['paquete'] = $this->invocies->paquetes('tv');
         $head['usernm'] = $this->aauth->get_user()->username;
 		$data['invoice'] = $this->customers->invoice_details($custid, $this->limited);
         $head['title'] = 'View Customer Invoices';
