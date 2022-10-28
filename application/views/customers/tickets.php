@@ -96,7 +96,12 @@
                     <th>Factura</th>
 					<th>Asignado</th>
 					<th>Estado</th>
-                    <th>Accion</th>
+					<?php if ($this->aauth->get_user()->roleid >= 3) { ?>
+                    <th>Ver</th>
+                    <th>Editar</th>
+					<?php } if ($this->aauth->get_user()->roleid == 5) { ?>
+                    <th>Eliminar</th>
+					<?php } ?>
 					
 
                 </tr>

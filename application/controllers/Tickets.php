@@ -170,7 +170,7 @@ class Tickets Extends CI_Controller
             $row[] = '<a href="' . base_url('tickets/thread/?id=' . $ticket->idt) . '" class="btn btn-success btn-xs"><i class="icon-file-text"></i> ' . $this->lang->line('View') . '</a>';
 			if ($this->aauth->get_user()->roleid >= 3) {
 			$row[] ='<a href="' . base_url('quote/edit/?id=' . $ticket->idt) . '" class="btn btn-primary btn-sm"><i class="icon-pencil"></i> ' . 'Editar' . '</a>';}
-			if ($this->aauth->get_user()->roleid > 2) {
+			if ($this->aauth->get_user()->roleid == 5) {
 			$row[] =	'<a class="btn btn-danger" onclick="eliminar_ticket('.$ticket->idt.')" > <i class="icon-trash-o "></i> </a>';}
             $data[] = $row;
         }
