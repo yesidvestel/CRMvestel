@@ -869,7 +869,13 @@
 									$estdo = 'Cortado';
 								}else{ $estdo = ''; } echo $invoice['television'].' '.$estdo ?></option>
                             	<option value="no">Suspender</option>
-								<option value="Television">Agregar</option>
+								<?php
+									foreach ($paquete as $row) {
+										$cid = $row['pid'];
+										$title = $row['product_name'];
+										echo "<option value='$title'>$title</option>";
+									}
+									?>
                             </select>
                         </div>
 						<div class="col-xs-6 mb-1"><label
@@ -880,7 +886,7 @@
 								}else{ $estint = ''; } echo $invoice['combo'].' '.$estint ?></option>
 								<option value="no">No</option>
 								<?php
-									foreach ($paquete as $row) {
+									foreach ($paqueteinter as $row) {
 										$cid = $row['pid'];
 										$title = $row['product_name'];
 										echo "<option value='$title'>$title</option>";

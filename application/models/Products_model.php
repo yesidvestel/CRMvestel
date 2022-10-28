@@ -256,7 +256,7 @@ class Products_model extends CI_Model
 
     }
 
-    public function edit($pid, $catid, $warehouse, $sede, $product_name, $product_code, $product_price, $factoryprice, $taxrate, $disrate, $product_qty,$product_qty_alert,$product_desc)
+    public function edit($pid, $catid, $warehouse, $sede, $product_name, $product_code,  $product_price, $factoryprice, $taxrate, $disrate, $product_qty,$product_qty_alert,$product_desc,$valores_servicio,$tipo_servicio,$servicio_pertenece_a)
     {
         $data = array(
             'pcat' => $catid,
@@ -270,7 +270,10 @@ class Products_model extends CI_Model
             'disrate' => $disrate,
             'qty' => $product_qty,
             'product_des' => $product_desc,
-            'alert' => $product_qty_alert
+            'alert' => $product_qty_alert,
+			'tipo_servicio' => $tipo_servicio,
+            'valores' => $valores_servicio,
+            'pertence_a_tv_o_net' => $servicio_pertenece_a
         );
 
 

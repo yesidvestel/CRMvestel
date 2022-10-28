@@ -202,6 +202,7 @@ class Products extends CI_Controller
         $valores_servicio = $this->input->post('valores_servicio');
         $tipo_servicio = $this->input->post('tipo_servicio');
         $servicio_pertenece_a = $this->input->post('servicio_pertenece_a');
+		var_dump($sede);
         if ($catid) {
             $this->products->addnew($catid, $warehouse, $sede, $product_name, $product_code,  $product_price, $factoryprice, $taxrate, $disrate, $product_qty,$product_qty_alert,$product_desc,$valores_servicio,$tipo_servicio,$servicio_pertenece_a);
         }
@@ -222,6 +223,7 @@ class Products extends CI_Controller
         $asignado = $this->input->post('asignado');
         $estado = $this->input->post('estado');
         $observacion = $this->input->post('observacion');
+	 	
 		if ($codigo) {
         	$this->products->addequipo($codigo,$proveedor,$almacen,$mac,$serial,$llegada,$final,$marca,$asignado,$estado,$observacion);
             $codigo_equipo=$codigo;
@@ -421,8 +423,11 @@ class Products extends CI_Controller
         $product_qty = $this->input->post('product_qty');
         $product_qty_alert = $this->input->post('product_qty_alert');
         $product_desc = $this->input->post('product_desc');
+		$valores_servicio = $this->input->post('valores_servicio');
+        $tipo_servicio = $this->input->post('tipo_servicio');
+        $servicio_pertenece_a = $this->input->post('servicio_pertenece_a');
         if ($pid) {
-            $this->products->edit($pid, $catid, $warehouse, $sede, $product_name, $product_code, $product_price, $factoryprice, $taxrate, $disrate, $product_qty,$product_qty_alert,$product_desc);
+            $this->products->edit($pid, $catid, $warehouse, $sede, $product_name, $product_code,  $product_price, $factoryprice, $taxrate, $disrate, $product_qty,$product_qty_alert,$product_desc,$valores_servicio,$tipo_servicio,$servicio_pertenece_a);
         }
 
 

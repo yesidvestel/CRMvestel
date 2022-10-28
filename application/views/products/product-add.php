@@ -64,6 +64,17 @@
                     </div>
                 </div>
                 <div id="div_desc_servicio" style="display:none">
+				<div class="form-group row">
+				<label class="col-sm-2 col-form-label"
+					   for="product_cat">Servicio de</label>
+					<div class="col-sm-6">
+						<select name="sede" class="form-control" id="sede">
+							<option value="">-</option>
+							<option value="1">Television</option>
+							<option value="2">Internet</option>
+						</select>
+					</div>
+				</div>
                 <div class="form-group row">
 
                     <label class="col-sm-2 col-form-label"
@@ -85,6 +96,7 @@
 
                     <div class="col-sm-6">
                         <select name="servicio_pertenece_a" id="servicio_pertenece_a" class="form-control servs">
+                            <option value="">-</option>
                             <option value="Tv">Tv</option>
                             <option value="Internet">Internet</option>                            
                         </select>
@@ -103,32 +115,10 @@
                                <small>Valores Servicio ej: 1,2,3,4,5 o 1-5 o pepe,lucas,juan</small>
                     </div>
                 </div>
+				
                 </div>
-				<div class="form-group row">
-
-                    <label class="col-sm-2 col-form-label"
-                           for="product_cat">Sede</label>
-
-                    <div class="col-sm-6">
-                        <select name="sede" class="form-control">
-							<option value"">-</option>
-                            <?php
-                                foreach ($customergrouplist as $row) {
-                                    $cid = $row['id'];
-                                    $title = $row['title'];
-                                    $selected="";
-                                    if($sede_accede==$cid){
-                                        $selected="selected='true'";
-                                    }
-                                    echo "<option ".$selected." value='$cid'>$title</option>";
-                                    
-                                }
-                                ?>
-                        </select>
-						<small>Seleccione solo si es un SERVICIO</small>
-
-                    </div>
                 </div>
+				
                 <div class="form-group row">
 
                     <label class="col-sm-2 col-form-label"
@@ -249,14 +239,15 @@
     $(document).on("change",'.servs',function(e){
         if($("#product_cat").val()=="4" && $("#product_warehouse").val()=="7"){
             $("#tipo_servicio").addClass("required");
-            $("#valores_servicio").addClass("required");
-            $("#servicio_pertenece_a").addClass("required");
+            //$("#valores_servicio").addClass("required");
+            //$("#servicio_pertenece_a").addClass("required");
+            //$("#sede").addClass("required");
             $("#div_desc_servicio").css("display","");
         }else{
             $("#tipo_servicio").removeClass("required");
-            $("#valores_servicio").removeClass("required");
-            $("#servicio_pertenece_a").removeClass("required");
-            
+            //$("#valores_servicio").removeClass("required");
+            //$("#servicio_pertenece_a").removeClass("required");
+            //$("#sede").removeClass("required");
             $("#div_desc_servicio").css("display","none");
         }
     });

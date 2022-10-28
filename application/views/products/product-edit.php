@@ -32,7 +32,7 @@
                            for="product_cat"><?php echo $this->lang->line('Product Category') ?></label>
 
                     <div class="col-sm-6">
-                        <select name="product_cat" class="form-control">
+                        <select name="product_cat" class="form-control" id="product_cat">
                             <?php
                             echo '<option value="' . $cat_ware['cid'] . '">' . $cat_ware['catt'] . ' (S)</option>';
                             foreach ($cat as $row) {
@@ -52,7 +52,7 @@
                            for="product_cat"><?php echo $this->lang->line('Warehouse') ?></label>
 
                     <div class="col-sm-6">
-                        <select name="product_warehouse" class="form-control">
+                        <select name="product_warehouse" class="form-control servs" id="product_warehouse">
                             <?php
                             echo '<option value="' . $cat_ware['wid'] . '">' . $cat_ware['watt'] . ' (S)</option>';
                             foreach ($warehouse as $row) {
@@ -66,30 +66,67 @@
 
                     </div>
                 </div>
+				<div id="div_desc_servicio" style="display:none">
 				<div class="form-group row">
+				<label class="col-sm-2 col-form-label"
+					   for="product_cat">Servicio de</label>
+					<div class="col-sm-6">
+						 <select name="sede" class="form-control">
+							<?php if($product['sede']==1){
+								$sede = 'Television';
+								}if($product['sede']==2){
+								$sede = 'Internet';
+								}if($product['sede']==0){
+								$sede = '';
+									}
+                           	echo '<option value="'.$product['sede'].'">'.$sede.'</option>';?>
+							<option value="1">Television</option>
+							<option value="2">Internet</option>
+                        </select>
+					</div>
+				</div>
+                <div class="form-group row">
 
                     <label class="col-sm-2 col-form-label"
-                           for="product_cat">sede</label>
+                           for="product_cat">Tipo Servicio</label>
 
                     <div class="col-sm-6">
-                        <select name="sede" class="form-control">
-                            <?php
-                            echo '<option value="' . $sede['id'] . '">' . $sede['title'] . ' (S)</option>
-								<option value="">-</option>';
-                            foreach ($customergrouplist as $row) {
-                                    $cid = $row['id'];
-                                    $title = $row['title'];
-                                    $selected="";
-                                    if($sede_accede==$cid){
-                                        $selected="selected='true'";
-                                    }
-                                    echo "<option ".$selected." value='$cid'>$title</option>";
-                                    
-                                }
-                            ?>
+                        <select name="tipo_servicio" id="tipo_servicio" class="form-control servs">
+                            <option value="<?php echo $product['tipo_servicio'] ?>"><?php echo $product['tipo_servicio'] ?></option>
+                            <option value="Recurrente">Recurrente</option>
+                            <option value="Fijo">Fijo</option>                            
                         </select>
-						<small>Seleccione solo si es un SERVICIO</small>
+
+
                     </div>
+                </div>
+                <div class="form-group row">
+
+                    <label class="col-sm-2 col-form-label"
+                           for="product_cat">Pertenece a</label>
+
+                    <div class="col-sm-6">
+                        <select name="servicio_pertenece_a" id="servicio_pertenece_a" class="form-control servs">
+                            <option value="<?php echo $product['pertence_a_tv_o_net'] ?>"><?php echo $product['pertence_a_tv_o_net'] ?></option>
+                            <option value="">-</option>
+                            <option value="Tv">Tv</option>
+                            <option value="Internet">Internet</option>                            
+                        </select>
+
+
+                    </div>
+                </div>
+                <div class="form-group row">
+
+                    <label class="col-sm-2 col-form-label"
+                           for="valores_servicio"><?php echo $this->lang->line('') ?>Valores de Servicio</label>
+
+                    <div class="col-sm-6">
+                        <input type="text" placeholder="Valores Servicio ej: 1,2,3,4,5 o 1-5 o pepe,lucas,juan" class="form-control" name="valores_servicio" value="<?php echo $product['valores'] ?>" id="valores_servicio">
+                               <small>Valores Servicio ej: 1,2,3,4,5 o 1-5 o pepe,lucas,juan</small>
+                    </div>
+                </div>
+				
                 </div>
                 <div class="form-group row">
 
@@ -209,5 +246,22 @@
         </form>
     </div>
 </article>
+<script type="text/javascript">
+    $(document).on("change",'.servs',function(e){
+        if($("#product_cat").val()=="4" && $("#product_warehouse").val()=="7"){
+            $("#tipo_servicio").addClass("required");
+            //$("#valores_servicio").addClass("required");
+            //$("#servicio_pertenece_a").addClass("required");
+            //$("#sede").addClass("required");
+            $("#div_desc_servicio").css("display","");
+        }else{
+            $("#tipo_servicio").removeClass("required");
+            //$("#valores_servicio").removeClass("required");
+            //$("#servicio_pertenece_a").removeClass("required");
+            //$("#sede").removeClass("required");
+            $("#div_desc_servicio").css("display","none");
+        }
+    });
 
+</script>
 

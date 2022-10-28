@@ -24,6 +24,7 @@ class Invoices_model extends CI_Model
     var $column_order = array(null, 'tid', 'name', 'invoicedate', 'total', 'status', null);
     var $column_search = array('tid', 'name', 'abonado', 'invoicedate', 'total','refer');
     var $order = array('tid' => 'desc');
+	var $opt = '';
 
     public function __construct()
     {
@@ -277,18 +278,22 @@ setlocale(LC_TIME, "spanish");
         $query = $this->db->get();
         return $query->row_array();
     }
-	public function paquetes()
+	public function paquetes($opts)
     {
+		$this->opt = $opts;
 		$sede = $this->aauth->get_user()->sede_accede;
 		$this->db->select('*');
         $this->db->from('products');
-		if ($sede == '0'){
-			$this->db->where('sede >', 0);
-		}else{
-		$this->db->where('sede', $sede);
-		}
-        $this->db->where(array('warehouse!='=>"7"));
-        
+		switch ($this->opt) {
+            case 'tv':
+				var_dump($this->opt);
+                $this->db->where('sede', 1);
+                break;
+            case 'inter':
+                $this->db->where('sede', 2);
+                break;
+			
+        }
         $query = $this->db->get();
         return $query->result_array();
     }
