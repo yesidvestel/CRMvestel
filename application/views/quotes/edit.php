@@ -298,7 +298,13 @@
 											<select name="tele" class="form-control mb-1">
 												<option value="<?php echo $temporal['tv'] ?>"><?php echo $temporal['tv'] ?></option>
 												<option value="no">No</option>
-                                        		<option value="Television">Si</option>
+                                        		<?php
+													foreach ($paquete as $row) {
+														$cid = $row['pid'];
+														$title = $row['product_name'];
+														echo "<option value='$title'>$title</option>";
+													}
+												?>
 											</select>
 										</div>
                                    </div>
@@ -309,7 +315,7 @@
 												<option value="<?php echo $temporal['internet'] ?>"><?php echo $temporal['internet'] ?></option>
 												<option value="no">No</option>
 												<?php
-													foreach ($paquete as $row) {
+													foreach ($paqueteinter as $row) {
 														$cid = $row['pid'];
 														$title = $row['product_name'];
 														echo "<option value='$title'>$title</option>";
@@ -340,7 +346,7 @@
 											<select name="suinter" class="form-control mb-1">
 												<option value="no">No</option>
 												<?php
-													foreach ($paquete as $row) {
+													foreach ($paqueteinter as $row) {
 														$cid = $row['pid'];
 														$title = $row['product_name'];
 														echo "<option value='$title'>$title</option>";
@@ -372,7 +378,7 @@
 											<select name="bainter" class="form-control mb-1">
 												<option value="no">No</option>
 												<?php
-													foreach ($paquete as $row) {
+													foreach ($paqueteinter as $row) {
 														$cid = $row['pid'];
 														$title = $row['product_name'];
 														echo "<option value='$title'>$title</option>";
@@ -405,7 +411,13 @@
 											<select name="teleB" class="form-control mb-1">
 												<option value="<?php echo $temporales->tv ?>"><?php echo $temporales->tv ?></option>
 												<option value="no">No</option>
-                                        		<option value="Television">Si</option>
+                                        		<?php
+													foreach ($paquete as $row) {
+														$cid = $row['pid'];
+														$title = $row['product_name'];
+														echo "<option value='$title'>$title</option>";
+													}
+												?>
 											</select>
 										</div>
                                    </div>
@@ -462,7 +474,7 @@
 												<option value="<?php echo $temporales->internet ?>"><?php echo $temporales->internet ?></option>
 												<option value="no">No</option>
 												<?php
-													foreach ($paquete as $row) {
+													foreach ($paqueteinter as $row) {
 														$cid = $row['pid'];
 														$title = $row['product_name'];
 														echo "<option value='$title'>$title</option>";

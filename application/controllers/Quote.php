@@ -89,7 +89,8 @@ class Quote extends CI_Controller
 		$data['local'] = $this->customers->group_localidad($data['temporal']['localidad']);
 		$data['barrio'] = $this->customers->group_barrio($data['temporal']['barrio']);
 		$data['localidades'] =$this->customers->localidades_list($data['thread_info']['ciudad']);
-		$data['paquete'] = $this->invocies->paquetes();
+		$data['paquete'] = $this->invocies->paquetes('tv');
+		$data['paqueteinter'] = $this->invocies->paquetes('inter');
 		//var_dump($data['temporal']);
         $data['thread_list'] = $this->ticket->thread_list($thread_id);
 		$data['facturalist'] = $this->ticket->factura_list($custid);
