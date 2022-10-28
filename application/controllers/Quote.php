@@ -46,7 +46,7 @@ class Quote extends CI_Controller
 		$custid = $this->input->get('id');
         $data['details'] = $this->customers->details($custid);
         $data['exchange'] = $this->plugins->universal_api(5);
-		$data['paquete'] = $this->invocies->paquetes();
+		$data['paquete'] = $this->invocies->paquetes('tv');
 		$data['tecnicoslista'] = $this->ticket->tecnico_list();
 		$data['localidades'] =$this->customers->localidades_list($data['details']['ciudad']);
 		$data['facturalist'] = $this->ticket->factura_list($custid);

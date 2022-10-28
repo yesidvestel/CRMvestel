@@ -338,7 +338,7 @@ class Tickets Extends CI_Controller
 			$data['local'] = $this->customers->group_localidad($data['temporal']['localidad']);
 			$data['barrio'] = $this->customers->group_barrio($data['temporal']['barrio']);
 			$data['barrio2'] = $this->customers->group_barrio($data['thread_info']['barrio']);
-			$data['paquete'] = $this->invocies->paquetes();
+			$data['paquete'] = $this->invocies->paquetes('tv');
             $this->load->view('support/thread', $data);
 
 

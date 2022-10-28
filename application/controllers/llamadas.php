@@ -41,7 +41,7 @@ class llamadas extends CI_Controller
 		$id = $this->input->get('id');
 		$data['attach'] = $this->llamadas->attach($id);
         $this->db->group_by("product_name");
-        $data['paquete']=$this->invocies->paquetes();
+        $data['paquete']=$this->invocies->paquetes('tv');
         $head['usernm'] = $this->aauth->get_user()->username;
         $head['title'] = 'Llamadas';
         $this->load->view('fixed/header', $head);
