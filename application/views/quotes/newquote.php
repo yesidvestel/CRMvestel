@@ -419,7 +419,13 @@
 										<div class="input-group">									
 											<select name="tele" class="form-control mb-1 instalacion" id="tele_instalacion">
 												<option value="no">No</option>
-                                        		<option value="Television">Si</option>
+                                        		<?php
+													foreach ($paquete as $row) {
+														$cid = $row['pid'];
+														$title = $row['product_name'];
+														echo "<option value='$title'>$title</option>";
+													}
+												?>
 											</select>
 											<a style="margin-top: -15px;" href="" class="btn-small btn-primary btn-mas-tv" >Mas Tv</a>
 										</div>
@@ -432,7 +438,7 @@
 											<select name="inter" class="form-control mb-1 instalacion" id="internet_instalacion">
 												<option value="no">No</option>
 												<?php
-													foreach ($paquete as $row) {
+													foreach ($paqueteinter as $row) {
 														$cid = $row['pid'];
 														$title = $row['product_name'];
 														echo "<option value='$title'>$title</option>";
@@ -463,7 +469,13 @@
 										<div class="input-group">									
 											<select name="teleB" class="form-control mb-1">
 												<option value="no">No</option>
-                                        		<option value="Television">Si</option>
+                                        		<?php
+													foreach ($paquete as $row) {
+														$cid = $row['pid'];
+														$title = $row['product_name'];
+														echo "<option value='$title'>$title</option>";
+													}
+												?>
 											</select>
 											<a style="margin-top: -15px;" href="" class="btn-small btn-primary btn-mas-tv" >Mas Tv</a>
 										</div>
@@ -489,7 +501,7 @@
 											<select id="suinter" name="suinter" class="form-control mb-1 subir-megas">
 												<option value="no">No</option>
 												<?php
-													foreach ($paquete as $row) {
+													foreach ($paqueteinter as $row) {
 														$cid = $row['pid'];
 														$title = $row['product_name'];
 														echo "<option value='$title'>$title</option>";
@@ -521,7 +533,7 @@
 											<select name="bainter" id="bainter" class="form-control mb-1 bajar-megas">
 												<option value="no">No</option>
 												<?php
-													foreach ($paquete as $row) {
+													foreach ($paqueteinter as $row) {
 														$cid = $row['pid'];
 														$title = $row['product_name'];
 														echo "<option value='$title'>$title</option>";
@@ -583,7 +595,7 @@
 											<select name="interB" class="form-control mb-1">
 												<option value="no">No</option>
 												<?php
-													foreach ($paquete as $row) {
+													foreach ($paqueteinter as $row) {
 														$cid = $row['pid'];
 														$title = $row['product_name'];
 														echo "<option value='$title'>$title</option>";
