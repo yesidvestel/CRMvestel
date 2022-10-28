@@ -1390,7 +1390,9 @@ if($data['servicios']['estado']=="Inactivo"){
                 $resivos_var='';
             }
             $row[] = '<a  href="' . base_url("invoices/view?id=$invoices->tid") . '" class="btn btn-success btn-xs"><i class="icon-file-text"></i> '.$this->lang->line('View').'</a> &nbsp; '.$resivos_var.'&nbsp;&nbsp;';
+			if ($this->aauth->get_user()->roleid == 5) {
 			$row[] = '<a href="#" data-object-id="' . $invoices->tid . '" class="btn btn-danger btn-xs delete-object"><span class="icon-trash"></span></a>';
+			}
             $data[] = $row;
         }
 		

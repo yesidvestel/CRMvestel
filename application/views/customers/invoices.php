@@ -97,7 +97,7 @@
                     <th><?php echo $this->lang->line('Total') ?></th>
                     <th class="no-sort"><?php echo $this->lang->line('') ?>Pago</th>
 					<th class="no-sort"><?php echo $this->lang->line('Settings') ?></th>
-					<?php if ($this->aauth->get_user()->roleid > 3) { ?>
+					<?php if ($this->aauth->get_user()->roleid == 5) { ?>
                     <th class="no-sort">Admin</th>
                     <?php } ?>
 
@@ -118,7 +118,7 @@
                     <th><?php echo $this->lang->line('Total') ?></th>
                     <th class="no-sort"><?php echo $this->lang->line('') ?>Pago</th>
 					<th class="no-sort"><?php echo $this->lang->line('Settings') ?></th>
-					<?php if ($this->aauth->get_user()->roleid > 3) { ?>
+					<?php if ($this->aauth->get_user()->roleid == 5) { ?>
                     <th class="no-sort">Admin</th>
 					<?php } ?>
                 </tr>
