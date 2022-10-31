@@ -322,7 +322,7 @@
             $servicios_asignados.=",";
            }
        }
-        $f1 = date(" F ",strtotime($row['invoicedate']));
+        //$f1 = date(" F ",strtotime($row['invoicedate']));
         $transacciones_factura=array();
         if($total_customer<0){                                                    
             $transacciones_factura=$this->db->query("select sum(credit-debit) as total_pagado from transactions where tid=".$row['tid']." and estado is null and id!=".$tr_saldo_adelantado['id'])->result_array();                                                    
@@ -346,8 +346,10 @@
 // end codigo x
 
 if($mostrar){
+     $nombre_es=strtotime($row['invoicedate']);
+     $nombre_es=strftime("%B",$nombre_es);
             echo '<tr class="item' . $flag . '"> <td>'.$c.'</td>
-                            <td>' . ucfirst(strftime("%B", strtotime($f1))).' CTA : ' . $row['tid'] . '</td>
+                            <td>' . ucfirst($nombre_es).' CTA : ' . $row['tid'] . '</td>
                             <td> <code>' . $servicios_asignados.'</code></td>
 							<td style="width:12%;">' . amountExchange($row['subtotal']) . '</td>
                             ';

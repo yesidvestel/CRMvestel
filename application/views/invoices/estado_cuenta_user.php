@@ -165,7 +165,7 @@
                                                    }
                                                }
 
-                                                $f1 = date(" F ",strtotime($row['invoicedate']));
+                                                //$f1 = date(" F ",strtotime($row['invoicedate']));
                                                 $transacciones_factura=array();
                                                 if($total_customer<0){                                                    
                                                     $transacciones_factura=$this->db->query("select sum(credit-debit) as total_pagado from transactions where tid=".$row['tid']." and estado is null and id!=".$tr_saldo_adelantado['id'])->result_array();                                                    
@@ -189,9 +189,11 @@
                                                 $sub_total+=$row['subtotal'];
                                                 $tax_total+=$row['tax'];
                                                 if($mostrar){
+                                                     $nombre_es=strtotime($row['invoicedate']);
+                                                    $nombre_es=strftime("%B",$nombre_es);
                                         echo '<tr>
 <th scope="row">' . $c . '</th>
-                            <td> <a href="'.base_url().'invoices/view?id='.$row['tid'].'">'.ucfirst(strftime("%B", strtotime($f1))).' CTA : ' . $row['tid'] . '</a></td>
+                            <td> <a href="'.base_url().'invoices/view?id='.$row['tid'].'">'.ucfirst($nombre_es).' CTA : ' . $row['tid'] . '</a></td>
                            <td><code>' . $servicios_asignados . '</code></td>
                             <td>' . amountFormat($row['subtotal']) . '</td>                             
                             <td>' . amountFormat($row['tax']) . '</td>
