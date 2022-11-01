@@ -362,10 +362,11 @@
 <script>
     /*jslint unparam: true */
     /*global window, $ */
-    $(function () {
+    //$(function () {
         'use strict';
         // Change this to the location of your server-side upload handler:
-		var comprobante=$("#comprobante").val();
+		var comprobante=$("#comprobante option:selected").val();
+        
         var url = '<?php echo base_url() ?>purchase/file_handling?comprobante='+comprobante+'&id=<?php echo $invoice['tid'] ?>';
         $('#fileupload').fileupload({
             url: url,
@@ -384,8 +385,13 @@
                 );
             }
         }).prop('disabled', !$.support.fileInput)
-            .parent().addClass($.support.fileInput ? undefined : 'disabled');
+            .parent().addClass($.support.fileInput ? undefined : 'disabled')
+        .bind('fileuploadadd', function (e, data) {
+            var comprobante=$("#comprobante option:selected").val();
+            data.url = '<?php echo base_url() ?>purchase/file_handling?comprobante='+comprobante+'&id=<?php echo $invoice['tid'] ?>';
+            
     });
+    //});
 
     $(document).on('click', ".aj_delete", function (e) {
         e.preventDefault();
