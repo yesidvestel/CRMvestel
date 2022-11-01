@@ -857,13 +857,14 @@ class Purchase extends CI_Controller
         }
         else {
             $id = $this->input->get('id');
+            $comp = $this->input->get('comprobante');
             $this->load->library("Uploadhandler_generic", array(
                 'accept_file_types' => '/\.(gif|jpe?g|png|docx|docs|txt|pdf|xls)$/i', 'upload_dir' => FCPATH . 'userfiles/attach/', 'upload_url' => base_url() . 'userfiles/attach/'
             ));
             $files = (string)$this->uploadhandler_generic->filenaam();
             if ($files != '') {
 
-                $this->purchase->meta_insert($id, 4, $files);
+                $this->purchase->meta_insert($id, 4, $files, $comp);
             }
         }
 

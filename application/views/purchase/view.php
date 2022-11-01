@@ -317,18 +317,30 @@
                             <tbody id="activity">
                             <?php foreach ($attach as $row) {
 
-                                echo '<tr><td><a data-url="' . base_url() . 'purchase/file_handling?op=delete&name=' . $row['col1'] . '&invoice=' . $invoice['tid'] . '" class="aj_delete"><i class="btn-danger btn-lg icon-trash-a"></i></a> <a class="n_item" href="' . base_url() . 'userfiles/attach/' . $row['col1'] . '"> ' . $row['col1'] . ' </a></td></tr>';
+                                echo '<tr><td><a data-url="' . base_url() . 'purchase/file_handling?op=delete&name=' . $row['col1'] . '&invoice=' . $invoice['tid'] . '" class="aj_delete"><i class="btn-danger btn-lg icon-trash-a"></i></a> <a class="n_item" href="' . base_url() . 'userfiles/attach/' . $row['col1'] . '"> ' . $row['col1'] .'/'.$row['col2'] . ' </a></td></tr>';
                             } ?>
 
                             </tbody>
                         </table>
                         <!-- The fileinput-button span is used to style the file input field as button -->
                         <span class="btn btn-success fileinput-button">
-        <i class="glyphicon glyphicon-plus"></i>
-        <span>Select files...</span>
-                            <!-- The file input field used as target for the file upload widget -->
-        <input id="fileupload" type="file" name="files[]" multiple>
-    </span>
+							<div id="customerpanel" class="form-group row">
+								<label for="toBizName"
+									   class="caption col-sm-2 col-form-label">Tipo de comprobante<span
+											style="color: red;">*</span></label>                    
+								<div class="col-sm-12">
+									<select name="comprobante" class="form-control" id="comprobante">
+										<option value="Pago">Pago</option>
+										<option value="Recibido">Recibido</option>                      
+									</select>
+								</div>
+
+							</div>
+							<i class="glyphicon glyphicon-plus"></i>
+							<span>Select files...</span>
+												<!-- The file input field used as target for the file upload widget -->
+							<input id="fileupload" type="file" name="files[]" multiple>
+						</span>
                         <br>
                         <pre>Allowed: gif, jpeg, png, docx, docs, txt, pdf, xls </pre>
                         <br>
@@ -353,7 +365,8 @@
     $(function () {
         'use strict';
         // Change this to the location of your server-side upload handler:
-        var url = '<?php echo base_url() ?>purchase/file_handling?id=<?php echo $invoice['tid'] ?>';
+		var comprobante=$("#comprobante").val();
+        var url = '<?php echo base_url() ?>purchase/file_handling?comprobante='+comprobante+'&id=<?php echo $invoice['tid'] ?>';
         $('#fileupload').fileupload({
             url: url,
             dataType: 'json',
