@@ -208,7 +208,16 @@ class Transactions_model extends CI_Model
             $this->db->update('accounts');
             $tr_result=$this->db->insert('transactions', $data);
 
+            $this->load->library("Uploadhandler_generic", array(
+                'accept_file_types' => '/\.(gif|jpe?g|png|docx|docs|txt|pdf|xls)$/i', 'upload_dir' => FCPATH . 'userfiles/attach/', 'upload_url' => base_url() . 'userfiles/attach/'
+            ));
+            ob_clean();
+            $files = (string)$this->uploadhandler_generic->filenaam();
             
+            if ($files != '') {
+
+                $this->purchase->meta_insert($this->db->insert_id(), 77, $files, "no");
+            }
         
 
             $this->load->model('customers_model', 'customers');

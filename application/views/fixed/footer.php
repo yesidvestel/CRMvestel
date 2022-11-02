@@ -51,7 +51,7 @@ base_url(); ?>assets/vendors/js/ui/unison.min.js" type="text/javascript"></scrip
     ;</script>
 <script src="<?php echo base_url('assets/myjs/custom.js') . APPVER; ?>"></script>
 <script src="<?php echo base_url('assets/myjs/basic.js') . APPVER; ?>"></script>
-<script src="<?php echo base_url('assets/myjs/control.js') . APPVER; ?>"></script>
+<script src="<?php echo base_url('assets/myjs/control.js?'.time()) . APPVER; ?>"></script>
 
 <script src="<?php echo base_url('assets/js/core/app.js') . APPVER; ?>" type="text/javascript"></script>
 

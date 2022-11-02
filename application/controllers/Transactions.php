@@ -1919,13 +1919,14 @@ public function anullist()
     }
 
     public function save_trans()
-    {
+    {$this->load->model('purchase_model', 'purchase');
         if ($this->aauth->get_user()->roleid < 2) {
 
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
 
         }
 
+            
         $credit = 0;
         $debit = 0;
         $payer_id = intval($this->input->post('payer_id'));

@@ -1351,4 +1351,7 @@ function valida_cierre(valor){
     	},2000);
     	
     }
+    $(document).on("click",".desabilitado",function(ev){
+    	ev.preventDefault();
+    });
 </script>

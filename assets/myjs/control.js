@@ -719,6 +719,21 @@ $("#submit-data").on("click", function(e) {
     var action_url= $('#action-url').val();
     addObject(o_data,action_url);
 });
+$("#submit-data-tr-nw").on("click", function(e) {
+    e.preventDefault();
+    var o_data =  $("#data_form").serializeArray();
+     var form_data = new FormData();
+     var file_date=$("#fileupload").prop("files")[0];
+     form_data.append("files",file_date);
+
+    $.map(o_data, function(n, i){console.log(n['name']);
+        form_data.append(n['name'], n['value']);
+    });
+
+     
+    var action_url= $('#action-url').val();
+    addObject_eq(form_data,action_url);
+});
 $("#submit-data_eq").on("click", function(e) {
     e.preventDefault();
     var o_data =  $("#data_form").serializeArray();
