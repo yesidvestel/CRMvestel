@@ -1046,7 +1046,7 @@ public function historial_list(){
                 }
                 
                 if(!empty($file_is)){
-                    $img="<a title='Descargar Comprobante' class='btn-sm btn-info' href='".base_url()."userfiles/attach/".$file_is->col1."' ><i class='icon-download'></i></a>&nbsp;&nbsp;";
+                    $img="<a target='_blank' title='Descargar Comprobante' class='btn-sm btn-info' href='".base_url()."userfiles/attach/".$file_is->col1."' ><i class='icon-download'></i></a>&nbsp;&nbsp;";
                 }else{
                     $img="<a title='Sin Comprobante' style='background-color:gray;cursor:default;'  class='btn-sm btn-info desabilitado' href='#'><i class='icon-download'></i></a>&nbsp;&nbsp;";
                 }
