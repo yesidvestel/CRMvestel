@@ -23,7 +23,7 @@
             <section class="card">
                 <div id="invoice-template" class="card-block">
                     <div class="row wrapper white-bg page-heading">
-
+					
                         <div class="col-lg-12">
                             <?php
                             $validtoken = hash_hmac('ripemd160', 'p' . $invoice['tid'], $this->config->item('encryption_key'));
@@ -143,6 +143,7 @@
 
                     <!-- Invoice Items Details -->
                     <div id="invoice-items-details" class="pt-2">
+						<form method="post" id="data_form" class="form-horizontal">
                         <div class="row">
                             <div class="table-responsive col-sm-12">
                                 <table class="table table-striped">
@@ -205,7 +206,7 @@
                             <div class="col-md-5 col-sm-12">
                                 <p class="lead"><?php echo $this->lang->line('Total Due') ?></p>
                                 <div class="table-responsive">
-                                    <table class="table">
+                                    <table class="table" >
                                         <tbody>
                                         <tr>
                                             <td><?php echo $this->lang->line('Sub Total') ?></td>
@@ -241,14 +242,31 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <div class="text-xs-center">
-                                    <p><?php echo $this->lang->line('Authorized person') ?></p>
+                                <div class="text-xs-center  col-sm-6">
+                                    <p><?php echo $this->lang->line('') ?>Generado por</p>
                                     <?php echo '<img src="' . FCPATH . 'userfiles/employee_sign/' . $employee['sign'] . '" alt="signature" class="height-100"/>
                                     <h6>(' . $employee['name'] . ')</h6>
                                     <p class="text-muted">' . user_role($employee['name']) . '</p>'; ?>
                                 </div>
+								<div class="text-xs-center  col-sm-6">
+									 
+									<?php if($invoice['aid']==0){
+										 if ($this->aauth->get_user()->id == 54) {
+										echo '<input type="hidden" name="idorden" value="'.$invoice['tid'].'"></input><input type="hidden" name="estado" value="aprobado"></input><input type="submit" id="submit-data" class="btn btn-success margin-bottom"
+										value="AUTORIZAR" data-loading-text="Adding...">
+                        				<input type="hidden" value="purchase/autorizar" id="action-url">';
+										 }
+									}else{ ?>
+										<p><?php echo $this->lang->line('Authorized person') ?></p>
+										<?php echo '<img src="' . FCPATH . 'userfiles/employee_sign/' . $employeeaut['sign'] . '" alt="signature" class="height-100"/>
+										<h6>(' . $employeeaut['name'] . ')</h6>
+										<p class="text-muted">' . user_role($employeeaut['name']) . '</p>'; 
+									} ?>
+									
+                                </div>
                             </div>
                         </div>
+					</form>
                     </div>
 
                     <!-- Invoice Footer -->
@@ -360,6 +378,8 @@
 <script src="<?php echo base_url('assets/myjs/jquery.ui.widget.js') ?>"></script>
 <script src="<?php echo base_url('assets/myjs/jquery.fileupload.js') ?>"></script>
 <script>
+	//universal create
+
     /*jslint unparam: true */
     /*global window, $ */
     //$(function () {

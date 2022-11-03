@@ -357,7 +357,37 @@
     echo amountExchange($rming, $invoice['multi']);
     echo '</strong></td>
 		</tr>
-		</table><br><div class="sign">'.$this->lang->line('Authorized person').'</div><div class="sign1"><img src="' . FCPATH . 'userfiles/employee_sign/' . $employee['sign'] . '" width="160" height="50" border="0" alt=""></div><div class="sign2">' . $employee['name'] . '</div><div class="sign3">' . user_role($employee['']) . '</div> <div class="terms">' . $invoice['notes'] . '<hr><strong>' . $this->lang->line('Terms') . ':</strong><br>';
+		</table>
+		<br>
+		<table>
+		<tr>
+		<td width="30%">
+			<div class="sign">
+				Generado por</div>
+			<div class="sign1">
+				<img src="' . FCPATH . 'userfiles/employee_sign/' . $employee['sign'] . '" width="160" height="50" border="0" alt="">
+			</div>
+			<div class="sign2">
+				' . $employee['name'] . '
+			</div>
+		</td>
+		<td width="30%">
+			<div class="sign">
+			Autorizado por</div>
+			<div class="sign1">
+				<img src="' . FCPATH . 'userfiles/employee_sign/' . $employeeaut['sign'] . '" width="160" height="50" border="0" alt="">
+			</div>
+			<div class="sign2">
+				' . $employeeaut['name'] . '
+			</div>
+		</td>
+		</tr>
+		</table>
+		
+		<div class="terms">
+			' . $invoice['notes'] . '
+		<hr>
+		<strong>' . $this->lang->line('Terms') . ':</strong><br>';
 
     echo '<strong>' . $invoice['termtit'] . '</strong><br>' . $invoice['terms'];
     ?></div>

@@ -344,16 +344,24 @@ class Purchase extends CI_Controller
         $data['activity'] = $this->purchase->purchase_transactions($tid);
         $data['attach'] = $this->purchase->attach($tid);
         $data['warehouse'] = $this->purchase->warehouses();
-
         $data['employee'] = $this->purchase->employee($data['invoice']['eid']);
-
+        $data['employeeaut'] = $this->purchase->employee($data['invoice']['aid']);
         $head['usernm'] = $this->aauth->get_user()->username;
         $this->load->view('fixed/header', $head);
         $this->load->view('purchase/view', $data);
         $this->load->view('fixed/footer');
 
     }
-
+	public function autorizar()
+    {
+        $idats = $this->input->post('idorden');
+        $estado = $this->input->post('estado');
+        $autor = $this->aauth->get_user()->id;
+		var_dump($idats);
+        if ($idats) {
+            $this->purchase->aut($idats, $estado, $autor);
+        }
+    }
 
     public function printinvoice()
     {
@@ -365,6 +373,7 @@ class Purchase extends CI_Controller
         $data['invoice'] = $this->purchase->purchase_details($tid);
         $data['products'] = $this->purchase->purchase_products($tid);
         $data['employee'] = $this->purchase->employee($data['invoice']['eid']);
+        $data['employeeaut'] = $this->purchase->employee($data['invoice']['aid']);
         $data['invoice']['multi'] = 0;
 
         ini_set('memory_limit', '128M');

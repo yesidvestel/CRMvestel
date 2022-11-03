@@ -24,6 +24,7 @@ class Purchase_model extends CI_Model
     var $column_order = array(null, 'tid', 'name', 'invoicedate','notes', 'total','refer', 'status', null);
     var $column_search = array('tid', 'name', 'invoicedate','notes', 'total','refer', 'status');
     var $order = array('tid' => 'desc');
+	var $opt = '';
 
     public function __construct()
     {
@@ -226,7 +227,26 @@ class Purchase_model extends CI_Model
         $query = $this->db->get();
         return $query->row_array();
     }
+	public function aut($idats, $estado, $autor)
+    {
+        $data = array(
+            'aid' => $autor,
+            'status' => $estado,
+        );
 
+
+        $this->db->set($data);
+        $this->db->where('tid', $idats);
+
+        if ($this->db->update('purchase')) {
+            echo json_encode(array('status' => 'Success', 'message' =>
+                $this->lang->line('UPDATED')));
+        } else {
+            echo json_encode(array('status' => 'Error', 'message' =>
+                $this->lang->line('ERROR')));
+        }
+
+    }
     public function meta_insert($id, $type, $meta_data, $comp)
     {
 
