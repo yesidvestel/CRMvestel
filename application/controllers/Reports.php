@@ -1038,9 +1038,15 @@ public function historial_list(){
                     $balance2 += $row['credit'] - $row['debit'];
                 }
                 $img="";
-                $file_is=$this->db->get_where("meta_data",array("type"=>"77","rid"=>$row['id']))->row();
+                $file_is=null;
+                if($row['type']=="Expense"){
+                    $file_is=$this->db->get_where("meta_data",array("type"=>"4","rid"=>$row['tid'],"col2"=>"Pago"))->row();
+                }else{
+                    $file_is=$this->db->get_where("meta_data",array("type"=>"77","rid"=>$row['id']))->row();    
+                }
+                
                 if(!empty($file_is)){
-                    $img="<a title='Descargar Comprobante' class='btn-sm btn-info' href='".base_url()."userfiles/attach/".$file_is->col1."' download ><i class='icon-download'></i></a>&nbsp;&nbsp;";
+                    $img="<a title='Descargar Comprobante' class='btn-sm btn-info' href='".base_url()."userfiles/attach/".$file_is->col1."' ><i class='icon-download'></i></a>&nbsp;&nbsp;";
                 }else{
                     $img="<a title='Sin Comprobante' style='background-color:gray;cursor:default;'  class='btn-sm btn-info desabilitado' href='#'><i class='icon-download'></i></a>&nbsp;&nbsp;";
                 }
