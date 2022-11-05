@@ -117,7 +117,7 @@ text-transform: capitalize;
             "serverSide": true,
             "order": [],
             "ajax": {
-                "url": "<?php echo site_url('purchase/ajax_list?type=compra')?>",
+                "url": "<?php echo site_url('purchase/ajax_list?type=servicio')?>",
                 "type": "POST"
             },
             "columnDefs": [

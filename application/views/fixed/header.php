@@ -375,7 +375,10 @@ $lista_permisos1=$this->db->query("SELECT permisos_usuario.id,permisos_usuario.i
                             <a href="<?php echo base_url(); ?>purchase/create"><?php echo $this->lang->line('New Order') ?></a>
                         </li>
                         <li>
-                            <a href="<?php echo base_url(); ?>purchase"><?php echo $this->lang->line('Manage Orders') ?></a>
+                            <a href="<?php echo base_url(); ?>purchase">Adm. Ordenes de compra<?php echo $this->lang->line('') ?></a>
+                        </li>
+						<li>
+                            <a href="<?php echo base_url(); ?>purchase/orden_servicio">Adm. Ordenes de servicio<?php echo $this->lang->line('') ?></a>
                         </li>
                     </ul>
                 </li>
@@ -1038,9 +1041,14 @@ $lista_permisos1=$this->db->query("SELECT permisos_usuario.id,permisos_usuario.i
 						<?php } ?>
 						<?php if ($lista_permisos_us['comadm'] != null) { ?>
                         <li>
-                            <a href="<?php echo base_url(); ?>purchase"><?php echo $this->lang->line('Manage Orders') ?></a>
+                            <a href="<?php echo base_url(); ?>purchase">Adm. Ordenes de compra<?php echo $this->lang->line('') ?></a>
+                        </li>
+						<?php } if ($lista_permisos_us['comadmser'] != null) { ?>
+						<li>
+                            <a href="<?php echo base_url(); ?>purchase/orden_servicio">Adm. Ordenes de servicio<?php echo $this->lang->line('') ?></a>
                         </li>
 						<?php } ?>
+						
                     </ul>
                 </li>
 				<?php } ?>

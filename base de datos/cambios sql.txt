@@ -440,3 +440,5 @@ ALTER TABLE `purchase` CHANGE `status` `status` ENUM('pendiente','cancelado','ab
 -----------------------------------------------------------------------------------------------------------------
 ALTER TABLE `purchase` 
 ADD `aid` int(5) NULL DEFAULT 0 AFTER `eid`;
+-----------------------------------------------------------------------------------------------------------------
+INSERT INTO `modulos` (`id_modulo`, `rol`, `nombre`, `id_padre`, `codigo`, `orden`, `icono`) VALUES (NULL, 'Hijo', 'Adm. ordenes de servicio', '20', 'comadmser', '0', NULL);

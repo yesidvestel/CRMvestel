@@ -153,6 +153,15 @@ class Purchase_model extends CI_Model
     {
 
         $this->db->from($this->table);
+		switch ($this->opt) {
+            case 'compra':
+                $this->db->where('supplier.categoria', 1);
+                break;
+            case 'servicio':
+                //var_dump($this->opt);
+                 $this->db->where('supplier.categoria', 2);
+                break;
+        }
         $this->db->join('supplier', 'purchase.csd=supplier.id', 'left');
 
         $i = 0;
@@ -185,8 +194,9 @@ class Purchase_model extends CI_Model
         }
     }
 
-    function get_datatables()
+    function get_datatables($opt = 'all')
     {
+		$this->opt = $opt;
         $this->_get_datatables_query();
         if ($_POST['length'] != -1)
             $this->db->limit($_POST['length'], $_POST['start']);

@@ -82,6 +82,15 @@ class Purchase extends CI_Controller
         $this->load->view('purchase/invoices');
         $this->load->view('fixed/footer');
     }
+	
+	public function orden_servicio()
+    {
+        $head['title'] = "Manage Purchase Orders";
+        $head['usernm'] = $this->aauth->get_user()->username;
+        $this->load->view('fixed/header', $head);
+        $this->load->view('purchase/invoicesSer');
+        $this->load->view('fixed/footer');
+    }
 
     //action
     public function action()
@@ -297,8 +306,8 @@ class Purchase extends CI_Controller
 
     public function ajax_list()
     {
-
-        $list = $this->purchase->get_datatables();
+		$ttype = $this->input->get('type');
+        $list = $this->purchase->get_datatables($ttype);
         $data = array();
 
         $no = $this->input->post('start');
@@ -314,7 +323,7 @@ class Purchase extends CI_Controller
             $row[] = amountFormat($invoices->total);
 			$row[] = $invoices->refer;
             $row[] = '<span class="st-' . $invoices->status . '">' . $invoices->status . '</span>';			
-            $row[] = '<a href="' . base_url("purchase/view?id=$invoices->tid") . '" class="btn btn-success btn-xs"><i class="icon-file-text"></i> ' . $this->lang->line('View') . '</a> &nbsp; <a href="' . base_url("purchase/printinvoice?id=$invoices->tid") . '&d=1" class="btn btn-info btn-xs"  title="Download"><span class="icon-download"></span></a>&nbsp';
+            $row[] = '<a href="' . base_url("purchase/view?id=$invoices->tid") . '" class="btn btn-success btn-xs"><i class="icon-eye"></i></a> &nbsp; <a href="' . base_url("purchase/printinvoice?id=$invoices->tid") . '&d=1" class="btn btn-info btn-xs"  title="Download"><span class="icon-download"></span></a>&nbsp';
 			if ($this->aauth->get_user()->roleid > 4) { 
 			 $row[] = '<a href="#" data-object-id="' . $invoices->tid . '" class="btn btn-danger btn-xs delete-object"><span class="icon-trash"></span></a>';}
 
