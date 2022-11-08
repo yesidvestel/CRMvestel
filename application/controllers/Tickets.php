@@ -988,8 +988,9 @@ if($status=="Resuelto" && file_exists($nombre_archiv)==false && strpos(strtolowe
                         $this->db->insert('invoice_items',$datay);  
                     }
                 }
-                
-                if($data['television']!=="no" AND $data['refer']!=="Mocoa" || $tv!=="no" && $ciudad!=="Mocoa"){                
+                //$_SESSION['x0a']=$total;
+                //$_SESSION['x0a_temporal']=$temporal;
+                if((($data['television']!=="no" && $data['refer']!=="Mocoa") || ($tv!=="no" && $ciudad!=="Mocoa")) && (($ticket->detalle=="Instalacion" || $ticket->detalle=="Reconexion Combo2" || $ticket->detalle=="Activacion" || $ticket->detalle=="Reconexion Television2") && ($ticket->id_factura==null || $ticket->id_factura==0)  && $status=="Resuelto") ){                
                     $producto = $this->db->get_where('products',array('product_name'=>$data['television']))->row();
                     $datay['pid']=$producto->pid;
                     $datay['product']=$producto->product_name;
@@ -1026,6 +1027,7 @@ if($status=="Resuelto" && file_exists($nombre_archiv)==false && strpos(strtolowe
                         $this->db->insert('invoice_items',$datay);
                     }
 				}
+                //$_SESSION['x01a']=$total;
 					if($data['puntos']!=='0' && $ptos!=='0' && $ptos!==0 && $data['puntos']!=='' && $data['puntos']!==null){                
                     $producto = $this->db->get_where('products',array('pid'=>158))->row();
                     $datay['pid']=$producto->pid;
@@ -1045,6 +1047,7 @@ if($status=="Resuelto" && file_exists($nombre_archiv)==false && strpos(strtolowe
 						
                     }
                 }
+                //$_SESSION['x02a']=$total;
 				if($data['television']!=="no" AND $data['refer']=="Mocoa" || $tv!=="no" && $ciudad=="Mocoa"){                
                     $producto = $this->db->get_where('products',array('pid'=>159))->row();
                     $datay['pid']=$producto->pid;
@@ -1063,7 +1066,7 @@ if($status=="Resuelto" && file_exists($nombre_archiv)==false && strpos(strtolowe
 						
                     }
                 }
-                
+                //$_SESSION['x03a']=$total;
 			
        
                
@@ -1075,6 +1078,7 @@ if($status=="Resuelto" && file_exists($nombre_archiv)==false && strpos(strtolowe
         $data['total']=$data['subtotal']+$data['tax'];
         //no haga ni insert ni update si no es instalacion y tambien si ya existe una factura
         $msg1="";
+        //$_SESSION['x1a']=$data;
         if(($ticket->detalle=="Instalacion" || $ticket->detalle=="Reconexion Combo2" || $ticket->detalle=="Activacion" || $ticket->detalle=="Reconexion Television2" || $ticket->detalle=="Reconexion Internet2") && ($ticket->id_factura==null || $ticket->id_factura==0)  && $status=="Resuelto"){
             $customerx=$this->db->get_where("customers",array('id' =>$ticket->cid ))->row();
            // if(isset($ticket->id_invoice) && $ticket->id_invoice!=0 && $ticket->id_invoice!="0" ){
@@ -1117,6 +1121,7 @@ $x=0;
             $data['subtotal']=$total;
             
             $data['total']=$data['subtotal']+$data['tax'];
+            //$_SESSION['x2a']=$data;
             if($this->db->insert('invoices',$data)){
 				if($ticket->par!=null && ($ticket->detalle=="Reconexion Internet2" || $ticket->detalle=="Reconexion Television2")){
 						$this->db->set('id_factura', $data['tid']);
@@ -1753,8 +1758,9 @@ $x=0;
 			
 		}
 		//nuevo servicio
-		if($ticket->detalle=="AgregarInternet" || ($ticket->detalle=="Reconexion Internet2" && ($ticket->id_factura!=0 || $ticket->id_factura!=null))){	
+		if($ticket->detalle=="AgregarInternet" || ($ticket->detalle=="Reconexion Internet2" && ($ticket->id_factura!=0 && $ticket->id_factura!=null))){	
 		$factura = $this->db->get_where('invoices',array('tid'=>$idfactura))->row();
+        //$_SESSION['x1a']=$idfactura;
 		$datay['tid']=$idfactura;
         $datay['qty']=1;
         $datay['tax']=0;

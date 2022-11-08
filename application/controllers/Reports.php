@@ -1549,7 +1549,30 @@ public function statistics_services(){
 
 
     }
+public function debug_errores_tickets(){
+    ob_clean();
 
+    var_dump($_SESSION['x0a']);
+    echo "<br>";
+    echo "<br>";
+    var_dump($_SESSION['x0a_temporal']);
+    echo "<br>";
+    var_dump($_SESSION['x01a']);
+    echo "<br>";
+    echo "<br>";
+    echo "<br>";
+    var_dump($_SESSION['x02a']);
+    echo "<br>";
+    echo "<br>";
+    var_dump($_SESSION['x03a']);
+    echo "<br>";
+    echo "<br>";
+    echo "<br>";
+    var_dump($_SESSION['x1a']);
+    echo "<br>";
+    echo "<br>";echo "<br>";
+    var_dump($_SESSION['x2a']);
+}
     public function taxviewstatements_load()
     {
 
