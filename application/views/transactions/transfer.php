@@ -64,14 +64,41 @@
                                class="form-control margin-bottom  required" name="amount">
                     </div>
                 </div>
+<div class="form-group row">
 
+                    <label class="col-sm-2 col-form-label">Comprobante</label>
+
+                    <div class="col-sm-6">
+                        <span class="btn btn-success fileinput-button">
+                            <!--div id="customerpanel" class="form-group row">
+                                <label for="toBizName"
+                                       class="caption col-sm-2 col-form-label">Tipo de comprobante<span
+                                            style="color: red;">*</span></label>                    
+                                <div class="col-sm-12">
+                                    <select name="comprobante" class="form-control" id="comprobante">
+                                        <option value="Pago">Pago</option>
+                                        <option value="Recibido">Recibido</option>                      
+                                    </select>
+                                </div>
+
+                            </div -->
+                            <i class="glyphicon glyphicon-plus"></i>
+                            <span>Select files...</span>
+                                                <!-- The file input field used as target for the file upload widget -->
+                            <input id="fileupload" type="file" name="files[]" >
+                        </span>
+                        <br>
+                        <pre>Allowed: gif, jpeg, png, docx, docs, txt, pdf, xls </pre>
+                        
+                    </div>
+                </div>
 
                 <div class="form-group row">
 
                     <label class="col-sm-2 col-form-label"></label>
 
                     <div class="col-sm-4">
-                        <input type="submit" id="submit-data" class="btn btn-success margin-bottom"
+                        <input type="submit" id="submit-data-tr-nw" class="btn btn-success margin-bottom"
                                value="<?php echo $this->lang->line('Add transaction') ?>" data-loading-text="Adding...">
                         <input type="hidden" value="transactions/save_transfer" id="action-url">
                     </div>

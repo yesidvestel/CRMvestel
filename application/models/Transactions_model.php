@@ -258,7 +258,8 @@ class Transactions_model extends CI_Model
                 'note' => 'Transferido por ' . $account['holder'],
                 'ext'=>9
             );
-            $this->db->insert('transactions', $data);
+           $this->db->insert('transactions', $data);
+           $id_transferencia2= $this->db->insert_id();
 
 
             $this->db->set('lastbal', "lastbal+$amount", FALSE);
@@ -285,8 +286,28 @@ class Transactions_model extends CI_Model
             $this->db->set('lastbal', "lastbal-$amount", FALSE);
             $this->db->where('id', $pay_acc);
             $this->db->update('accounts');
+$RESULT_TR=$this->db->insert('transactions', $data);
+            $this->load->library("Uploadhandler_generic", array(
+                'accept_file_types' => '/\.(gif|jpe?g|png|docx|docs|txt|pdf|xls)$/i', 'upload_dir' => FCPATH . 'userfiles/attach/', 'upload_url' => base_url() . 'userfiles/attach/'
+            ));
+            ob_clean();
+            $files = (string)$this->uploadhandler_generic->filenaam();
+            
+            if ($files != '') {
 
-            return $this->db->insert('transactions', $data);
+                $this->meta_insert($this->db->insert_id(), 77, $files, "Pago",$id_transferencia2);
+            }
+            return $RESULT_TR;
+        }
+    }
+    public function meta_insert($id, $type, $meta_data, $comp,$id_transfer2)
+    {
+
+        $data = array('type' => $type, 'rid' => $id, 'col1' => $meta_data, 'col2' => $comp,"col3"=>$id_transfer2);
+        if ($id) {
+            return $this->db->insert('meta_data', $data);
+        } else {
+            return 0;
         }
     }
 

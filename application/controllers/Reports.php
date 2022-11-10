@@ -1043,6 +1043,9 @@ public function historial_list(){
                     $file_is=$this->db->get_where("meta_data",array("type"=>"4","rid"=>$row['tid'],"col2"=>"Pago"))->row();
                 }else{
                     $file_is=$this->db->get_where("meta_data",array("type"=>"77","rid"=>$row['id']))->row();    
+                    if(empty($file_is)){
+                        $file_is=$this->db->get_where("meta_data",array("type"=>"77","col3"=>$row['id']))->row();    
+                    }
                 }
                 
                 if(!empty($file_is)){

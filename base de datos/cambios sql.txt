@@ -1,4 +1,6 @@
-﻿------------------------------notificaciones------------------------------------------
+﻿-------------------------------------------------------------------------------------transferencias
+ALTER TABLE `meta_data` ADD `col3` INT NULL AFTER `col2`;
+------------------------------notificaciones------------------------------------------
 CREATE TABLE `crm`.`notificaciones_tarea` 
 
 
