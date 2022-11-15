@@ -327,9 +327,9 @@
 					<th>Tecnologia</th>
 					<th>Agenda</th>
 					<th>Estado</th>
-					<?php if ($this->aauth->get_user()->roleid >= 3) { ?>
+					<?php if ($this->aauth->get_user()->roleid >= 2) { ?>
                     <th>Ver</th>
-					
+					<?php } if ($this->aauth->get_user()->roleid >= 3) { ?>
 					<th>Editar</th>
 					<?php } ?>
 					<?php if ($this->aauth->get_user()->roleid == 5) { ?>
