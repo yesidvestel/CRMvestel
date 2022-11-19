@@ -155,6 +155,43 @@
 									</div>
                                     
                                 </div>
+							<div class="form-group row">
+									<div class="col-sm-12">
+										<label for="invociedate" class="caption">Asignar Colaborador</label>
+										<div class="input-group">
+										<select name="tecnico"  id="tecnico"  class="form-control mb-1">
+												<option value="<?php echo $thread_info['asignado'] ?>"><?php echo $thread_info['asignado'] ?></option>
+												<option value="">-</option>
+												<?php
+													foreach ($tecnicoslista as $row) {
+														$cid = $row['id'];
+														$title = $row['username'];
+														$nombre = $row['name'];
+														echo "<option value='$title'>$nombre</option>";
+													}
+													?>
+											</select>
+										</div>
+                                    </div>
+                                    <div class="col-sm-12">
+										<label for="invociedate" class="caption">Asignar Movil</label>
+										<div class="input-group">
+										<select name="movil"  id="movil"  class="form-control mb-1">
+												<option value="">-</option>
+												<?php
+													foreach ($moviles as $movil) {
+														$id = $movil->id_movil;
+														$nombre = $movil->nombre;
+														if($movil->estado!="Inactiva"){
+															echo "<option value='$id'>id#$id - $nombre</option>";
+														}
+													}
+													?>
+											</select>
+										</div>
+                                    </div>
+                                    
+                            </div>
 							<div id="ocultar">								
 							<div class="form-group row" id="Traslado">
 																		

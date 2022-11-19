@@ -76,6 +76,7 @@ class Quote extends CI_Controller
         $this->load->model('ticket_model', 'ticket');
 		$this->load->model('invoices_model', 'invocies');
 		$this->load->model('customers_model', 'customers');
+		$this->load->model('Moviles_model', 'moviles');
         $thread_id = intval($this->input->get('id'));
 		$ticket = $this->db->get_where('tickets', array('idt' => $thread_id))->row();
 		$custid = $ticket->cid;
@@ -90,6 +91,8 @@ class Quote extends CI_Controller
 		$data['localidades'] =$this->customers->localidades_list($data['thread_info']['ciudad']);
 		$data['paquete'] = $this->invocies->paquetes('tv');
 		$data['paqueteinter'] = $this->invocies->paquetes('inter');
+		$data['tecnicoslista'] = $this->ticket->tecnico_list();
+		$data['moviles'] = $this->moviles->get_datatables1();
         $data['thread_list'] = $this->ticket->thread_list($thread_id);
 		$data['facturalist'] = $this->ticket->factura_list($custid);
         $head['title'] = "Edit Quote #$tid";
@@ -297,6 +300,8 @@ class Quote extends CI_Controller
 		$problema = $this->input->post('problema');
         $section = $this->input->post('section');
 		$factura = $this->input->post('factura');
+		$tec = $this->input->post('tecnico');
+        $movil = $this->input->post('movil');
 		$nomen = $this->input->post('nomenclatura');
 		$nuno = $this->input->post('numero1');
 		$auno = $this->input->post('adicional1');
@@ -346,7 +351,9 @@ class Quote extends CI_Controller
 			'created' => $bill_date,
 			'problema' => $problema,
 			'section' => $section,
-			'id_factura' => $factura
+			'id_factura' => $factura,
+			'asignado' => $tec,
+            'asignacion_movil'=>$movil
 		);
         $this->db->set($data);
         $this->db->where('idt', $customer_id);
