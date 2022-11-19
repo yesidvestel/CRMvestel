@@ -279,7 +279,7 @@ class Transactions_model extends CI_Model
                 'cat' => '',
                 'method' => '',
                 'eid' => $eid,
-                'note' => 'Transferido a ' . $account['holder'],
+                'note' => 'Transferido a ' . $account2['holder'],
                 'ext'=>9
             );
 
