@@ -1028,6 +1028,13 @@ public function historial_list(){
         foreach ($list as $row) {
             
             if($row['estado']!="Anulada"){
+				$sede=$this->db->get_where("invoices",array("tid"=>$row['tid']))->row();
+				if($sede!=null){
+					$pertenece = $sede->refer;
+				}else{
+					$pertenece = $row['account'];
+				}
+				
                 $balance += $row['credit'] - $row['debit'];
                 if($row['method']=="Cash" || $row['method']=="cash"){
                     $balance2 += $row['credit'] - $row['debit'];
@@ -1053,7 +1060,7 @@ public function historial_list(){
                 }else{
                     $img="<a title='Sin Comprobante' style='background-color:gray;cursor:default;'  class='btn-sm btn-info desabilitado' href='#'><i class='icon-download'></i></a>&nbsp;&nbsp;";
                 }
-            echo '<tr><td>'.$img.$row['id'].' - '. $row['date'] . '</td><td>' . $row['note'] . '</td><td>' . amountFormat($row['debit']) . '</td><td>' . amountFormat($row['credit']) . '</td><td>' . amountFormat($balance) . ' </td></tr>';
+            echo '<tr><td>'.$img.$row['id'].' - '. $row['date'] . '</td><td>' . $pertenece . '</td><td>' . $row['note'] . '</td><td>' . amountFormat($row['debit']) . '</td><td>' . amountFormat($row['credit']) . '</td><td>' . amountFormat($balance) . ' </td></tr>';
             }
         }
         echo '<script type="text/javascript">valida_cierre('.$balance2.');$("#efectivo-caja").text("Efectivo Caja: '.amountFormat($balance2).'")</script>';

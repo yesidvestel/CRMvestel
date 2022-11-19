@@ -1285,7 +1285,8 @@
             <table class="table table-striped" cellspacing="0" width="100%">
                 <thead>
                 <tr>
-                    <th><?php echo $this->lang->line('Date') ?></th>
+                    <th>Codigo/<?php echo $this->lang->line('Date') ?></th>
+                    <th>Caja o Cuenta</th>
                     <th><?php echo $this->lang->line('Description') ?></th>
 
                     <th><?php echo $this->lang->line('Debit') ?></th>
@@ -1301,7 +1302,8 @@
 
                 <tfoot>
                 <tr>
-                    <th><?php echo $this->lang->line('Date') ?></th>
+                    <th>Codigo/<?php echo $this->lang->line('Date') ?></th>
+					<th>Caja o Cuenta</th>
                     <th><?php echo $this->lang->line('Description') ?></th>
 
                     <th><?php echo $this->lang->line('Debit') ?></th>
