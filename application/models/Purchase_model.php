@@ -257,10 +257,10 @@ class Purchase_model extends CI_Model
         }
 
     }
-    public function meta_insert($id, $type, $meta_data, $comp)
+    public function meta_insert($id, $type, $meta_data, $comp, $duo)
     {
 
-        $data = array('type' => $type, 'rid' => $id, 'col1' => $meta_data, 'col2' => $comp);
+        $data = array('type' => $type, 'rid' => $id, 'col1' => $meta_data, 'col2' => $comp,'col3'=>$duo);
         if ($id) {
             return $this->db->insert('meta_data', $data);
         } else {

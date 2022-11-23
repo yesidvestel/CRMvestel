@@ -1733,15 +1733,37 @@ $this->load->model('customers_model', 'customers');
             $row[] = $prd->payer;
 			$row[] = $prd->tid.' '.$prd->note;
             $row[] = $this->lang->line($prd->method);
+			if ($ttype!='transferencia'){
 			$row[] = $prd->cat;
+			}
             $row[] = "<span id='estado_".$prd->id."'>".$prd->estado."</span>";
             $texto="";
+			$img="";
+			$file_is=null;
+                if($prd->cat=="Purchase"){
+                    $file_is=$this->db->get_where("meta_data",array("type"=>"4","rid"=>$prd->tid,"col2"=>"Pago"))->row();
+					$idp = $prd->tid;
+                }else{
+                    $file_is=$this->db->get_where("meta_data",array("type"=>"77","rid"=>$prd->id))->row(); 
+					$idp = $prd->id;
+                    if(empty($file_is)){
+                        $file_is=$this->db->get_where("meta_data",array("type"=>"77","col3"=>$prd->id))->row();    
+                    }
+                }
+			if(!empty($file_is)){
+                    $img="<a target='_blank' title='Descargar Comprobante' class='btn btn-xs btn-info' href='".base_url()."userfiles/attach/".$file_is->col1."' ><i class='icon-download'></i></a>&nbsp;&nbsp;";
+                }else{
+                    $img='<a href="#" data-object-id2="' . $idp . '" data-object-cat="' . $prd->cat . '" class="btn btn-xs btn-success" onclick="abrir_modal2(this);" title="Subir Comprobante"><i class="icon-cloud-upload"></i></a>';
+                }
+			if ($ttype=='expense' || $ttype=='transferencia'){
+			$row[] = $img;
+			}
             if($prd->estado!=null){
                 $anulacion = $this->db->get_where("anulaciones",array("transactions_id"=>$prd->id))->row();
 
                 $texto='data-detalle="'.$anulacion->detalle.'" data-razon_anulacion="'.$anulacion->razon_anulacion.'" data-usuario_anula="'.$anulacion->usuario_anula.'"';
             }
-            $row[] = '<a href="' . base_url() . 'transactions/view?id=' . $pid . '" class="btn btn-primary btn-xs"><span class="icon-eye"></span>  '.$this->lang->line('View').'</a> <a href="' . base_url() . 'transactions/print_t?id=' . $pid . '" class="btn btn-info btn-xs"  title="Print"><span class="icon-print"></span></a>&nbsp; &nbsp;<a id="anula'.$pid.'" href="#" data-object-id="' . $pid . '" class="btn btn-danger btn-xs" onclick="abrir_modal(this);" '.$texto.'><span class="icon-bin"></span></a>';
+            $row[] = '<a href="' . base_url() . 'transactions/view?id=' . $pid . '" class="btn btn-primary btn-xs"><span class="icon-eye"></span></a> <a href="' . base_url() . 'transactions/print_t?id=' . $pid . '" class="btn btn-info btn-xs"  title="Print"><span class="icon-print"></span></a>&nbsp; &nbsp;<a id="anula'.$pid.'" href="#" data-object-id="' . $pid . '" class="btn btn-danger btn-xs" onclick="abrir_modal(this);" '.$texto.'><span class="icon-bin"></span></a>';
             $data[] = $row;
         }
 
@@ -1754,7 +1776,33 @@ $this->load->model('customers_model', 'customers');
         //output to json format
         echo json_encode($output);
     }
-public function anullist()
+	public function displaypic()
+    {
+			$this->load->model('purchase_model', 'purchase');
+			$id = $this->input->post('id');
+			$cat = $this->input->post('cat');
+			if ($cat=='Purchase'){
+				$cod = 4;
+			}else{
+				$cod = 77;
+			}
+			if($cat=='transfer'){
+				$duo=$id+1;
+			}else{
+				$duo='';
+			}
+             $this->load->library("Uploadhandler_generic", array(
+                'accept_file_types' => '/\.(gif|jpe?g|png|docx|docs|txt|pdf|xls)$/i', 'upload_dir' => FCPATH . 'userfiles/attach/', 'upload_url' => base_url() . 'userfiles/attach/'
+            ));
+            ob_clean();
+            $files = (string)$this->uploadhandler_generic->filenaam();
+            
+            if ($files != '') {
+
+                $this->purchase->meta_insert($id, $cod, $files, "Pago", $duo);
+            }
+    }
+	public function anullist()
     {
         if ($this->aauth->get_user()->roleid < 2) {
 
@@ -1787,6 +1835,7 @@ public function anullist()
 
                 $texto='data-detalle="'.$anulacion->detalle.'" data-razon_anulacion="'.$anulacion->razon_anulacion.'" data-usuario_anula="'.$anulacion->usuario_anula.'"';
             }
+			
             $row[] = '<a href="' . base_url() . 'transactions/view?id=' . $pid . '" class="btn btn-primary btn-xs"><span class="icon-eye"></span>  '.$this->lang->line('View').'</a> <a href="' . base_url() . 'transactions/print_t?id=' . $pid . '" class="btn btn-info btn-xs"  title="Print"><span class="icon-print"></span></a>';
             $data[] = $row;
         }

@@ -1,3 +1,8 @@
+<style>
+.unstyle {
+  all: unset;
+}
+</style>
 <article class="content">
     <div class="card card-block">
         <div id="notify" class="alert alert-success" style="display:none;">
@@ -148,6 +153,7 @@
                     <th><?php echo $this->lang->line('Method') ?></th>
 					<th>Categoria</th>
 					<th>Estado</th>
+					<th>Comprobante</th>
 					
 
 
@@ -160,8 +166,9 @@
         </div>
     </div>
 </article>
-
+<script src="<?php  echo base_url('assets/myjs/jquery.fileupload.js') ?>"></script>
 <script type="text/javascript">
+	
 var tb;
     $(document).ready(function () {
        tb= $('#trans_table').DataTable({
@@ -262,6 +269,13 @@ var tb;
         
 
     }
+	function abrir_modal2(link){
+        $("#pop_model2").modal("show");
+        $("#object-id2").val($(link).data("object-id2"));
+        $("#object-cat").val($(link).data("object-cat"));
+		var object =$(link).data("object-id2");	
+	}
+	
 </script>
 <div id="delete_model" class="modal fade">
     <div class="modal-dialog">
@@ -275,7 +289,7 @@ var tb;
                 <p><?php echo $this->lang->line('delete this transaction') ?></p>
             </div>
             <div class="modal-footer">
-                <input type="hidden" id="object-id" value="">
+                <input type="text" id="object-id" value="">
                 <input type="hidden" id="action-url" value="transactions/delete_i">
                 <button type="button" data-dismiss="modal" class="btn btn-primary"
                         id="delete-confirm"><?php echo $this->lang->line('Delete') ?></button>
@@ -285,3 +299,50 @@ var tb;
         </div>
     </div>
 </div>
+<div id="pop_model2" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Comprobante</h4>
+            </div>			
+            <div class="modal-body">
+                <form id="form_model2" enctype="multipart/form-data">
+				 <div class="col-sm-6">
+                            <input id="fileupload" type="file" name="files[]" >
+                        </span>
+                        <br>
+                        
+                    </div>
+                </div>
+				<div class="modal-body">
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">Volver</button>
+                        <input type="text" id="object-id2" value="" name="id">
+                        <input type="text" id="object-cat" value="" name="cat">
+                <input type="hidden" id="action-url2" value="transactions/displaypic">
+                <button type="button" data-dismiss="modal" class="btn btn-primary"
+                        id="submit_model2-tr-nw">Subir</button>
+                 </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+$("#submit_model2-tr-nw").on("click", function(e) {
+    e.preventDefault();
+    var o_data =  $("#form_model2").serializeArray();
+     var form_data = new FormData();
+     var file_date=$("#fileupload").prop("files")[0];
+     form_data.append("files",file_date);
+
+    $.map(o_data, function(n, i){console.log(n['name']);
+        form_data.append(n['name'], n['value']);
+    });
+
+     
+    var action_url= $('#action-url2').val();
+    addObject_eq(form_data,action_url);
+});
+</script>
