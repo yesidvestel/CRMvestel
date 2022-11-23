@@ -318,8 +318,8 @@ var tb;
 				<div class="modal-body">
                         <button type="button" class="btn btn-default"
                                 data-dismiss="modal">Volver</button>
-                        <input type="text" id="object-id2" value="" name="id">
-                        <input type="text" id="object-cat" value="" name="cat">
+                        <input type="hidden" id="object-id2" value="" name="id">
+                        <input type="hidden" id="object-cat" value="" name="cat">
                 <input type="hidden" id="action-url2" value="transactions/displaypic">
                 <button type="button" data-dismiss="modal" class="btn btn-primary"
                         id="submit_model2-tr-nw">Subir</button>
