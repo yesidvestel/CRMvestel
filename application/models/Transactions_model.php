@@ -216,7 +216,7 @@ class Transactions_model extends CI_Model
             
             if ($files != '') {
 
-                $this->purchase->meta_insert($this->db->insert_id(), 77, $files, "Pago");
+                $this->purchase->meta_insert($this->db->insert_id(), 77, $files, "Pago","");
             }
         
 
