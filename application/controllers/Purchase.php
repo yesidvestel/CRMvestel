@@ -881,8 +881,7 @@ class Purchase extends CI_Controller
             ));
             $files = (string)$this->uploadhandler_generic->filenaam();
             if ($files != '') {
-
-                $this->purchase->meta_insert($id, 4, $files, $comp);
+                $this->purchase->meta_insert($id, 4, $files, $comp,'');
             }
         }
 
