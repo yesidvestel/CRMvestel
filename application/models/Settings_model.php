@@ -145,7 +145,6 @@ class Settings_model extends CI_Model
 		
 		$sql="select * from asignaciones where detalle='".$_POST['detalle']."' and tipo='".$x1."' ";
 		$asignaciones=$this->db->query($sql)->result();
-		var_dump($asignaciones);
 		if($dtalle=='encuesta'){
         $data = array(
             'detalle' => $dtalle,
@@ -185,6 +184,36 @@ class Settings_model extends CI_Model
         }
 
     }
+	public function add_promo($dtalle,$nombre1,$nombre2,$finicial2,$ffinal2,$porcentaje)
+    {
+		if($dtalle=='actualizar'){
+        $data = array(
+            'f_inicio' => $finicial2,
+            'f_final' => $ffinal2,
+            'porcentaje' => $porcentaje
+        );
+        $this->db->set($data);
+        $this->db->where('idprom', $nombre1);
+		$fun=$this->db->update('promos', $data);
+		}else{
+		$data = array(
+            'pro_nombre' => $nombre2,
+            'f_inicio' => $finicial2,
+            'f_final' => $ffinal2,
+            'porcentaje' => $porcentaje
+        );
+        //$this->db->set($data);
+		$fun=$this->db->insert('promos', $data);	
+		}
+        if ($fun) {
+            echo json_encode(array('status' => 'Success', 'message' =>
+                $this->lang->line('UPDATED')));
+        } else {
+            echo json_encode(array('status' => 'Error', 'message' =>
+                $this->lang->line('ERROR')));
+        }
+
+    }
 	 public function asig_list()
     {
 		 /*$query = $this->db->query("SELECT * FROM asignaciones LEFT JOIN employee_profile ON asignaciones.colaborador=employee_profile.id");
@@ -193,6 +222,14 @@ class Settings_model extends CI_Model
         $this->db->from('asignaciones');
 		$this->db->join('employee_profile', 'asignaciones.colaborador=employee_profile.id', 'left');
 		$this->db->join('accounts', 'asignaciones.tipo=accounts.id', 'left');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+	public function promos_list()
+    {
+		 
+        $this->db->select('*');
+        $this->db->from('promos');
         $query = $this->db->get();
         return $query->result_array();
     }

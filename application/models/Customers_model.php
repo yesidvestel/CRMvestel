@@ -229,6 +229,15 @@ class Customers_model extends CI_Model
         $query = $this->db->get();
         return $query->row_array();
     }
+	public function list_promos()
+    {			
+        $this->db->select('*');
+        $this->db->from('promos');
+		$this->db->where('f_inicio<=', date('Y-m-d'));
+		$this->db->where('f_final>=', date('Y-m-d'));
+        $query = $this->db->get();
+        return $query->result_array();
+    }
 	 public function meta_insert($id, $type, $meta_data)
     {
 

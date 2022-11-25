@@ -397,6 +397,43 @@
         </div>
     </div>
 </div>
+
+<div id="pop_model2" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Descuentos</h4>
+            </div>			
+            <div class="modal-body">
+                <form id="form_model2">
+				 <div class="col-sm-6">
+                             <select name="promo" class="form-control mb-1">
+                               <?php
+								foreach ($promos as $row) {
+									$cid = $row['id'];
+									$title = $row['pro_nombre'];
+									echo "<option value='$title'>$title</option>";
+								}
+								?> 
+                            </select>
+                        
+                    </div>
+                </div>
+				<div class="modal-footer">
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">Volver</button>
+                        <input type="hidden" id="object-id2" value="" name="id">
+                        <!--<input type="hidden" id="object-cat" value="" name="cat">-->
+                <input type="hidden" id="action-url2" value="customers/add_promo">
+                <button type="button" data-dismiss="modal" class="btn btn-primary"
+                        id="submit_model2">Aplicar</button>
+                 </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 <?php /*
     $lista_invoices=$this->db->order_by('status','DESC')->get_where('invoices')->result_array();
     foreach ($lista_invoices as $key => $value) {
@@ -701,5 +738,23 @@ validar_monto_notas();
         },'json');
         //falta obtener datos, conectar al servidor, realizar los calculos, guardar y refrescar tablas 
     }
+	function abrir_modal2(link){
+        $("#pop_model2").modal("show");
+        $("#object-id2").val($(link).data("object-id2"));
+        $("#object-cat").val($(link).data("object-cat"));
+		var object =$(link).data("object-id2");	
+	}
+	$("#submit_model2").on("click", function(e) {
+    e.preventDefault();
+    var o_data =  $("#form_model2").serializeArray();
+     var form_data = new FormData();
 
+    $.map(o_data, function(n, i){console.log(n['name']);
+        form_data.append(n['name'], n['value']);
+    });
+
+     
+    var action_url= $('#action-url2').val();
+    addObject_eq(form_data,action_url);
+});
 </script>

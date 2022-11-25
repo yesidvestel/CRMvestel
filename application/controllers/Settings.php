@@ -247,6 +247,34 @@ contraseña de aplicacion para crm : okqttqhqjmtaolbw
 
        
     }
+	public function promociones()
+    {
+		$this->load->model('ticket_model', 'ticket');
+		$this->load->model('customers_model', 'customers');
+		$this->load->model('accounts_model', 'accounts');
+		$data['promos'] = $this->settings->promos_list();
+		$data['accounts'] = $this->accounts->accountslist();
+		$data['customergrouplist'] = $this->customers->group_list();
+		$data['tecnicoslista'] = $this->ticket->tecnico_list();
+        $head['title'] = "Promociones";		
+        $this->load->view('fixed/header', $head);
+        $this->load->view('settings/promociones',$data);
+        $this->load->view('fixed/footer');
+    }
+	public function add_promo()
+    {
+            $dtalle = $this->input->post('detalle');
+            $nombre1 = $this->input->post('nombre1');
+            $nombre2 = $this->input->post('nombre2');
+            $finicial = $this->input->post('finicial');
+            $finicial2 = datefordatabase($finicial);
+            $ffinal = $this->input->post('ffinal');
+            $ffinal2 = datefordatabase($ffinal);
+            $porcentaje = $this->input->post('porcentaje');
+            $this->settings->add_promo($dtalle,$nombre1,$nombre2,$finicial2,$ffinal2,$porcentaje);
+
+       
+    }
     public function add_term()
     {
 

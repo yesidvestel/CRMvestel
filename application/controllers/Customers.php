@@ -1392,9 +1392,10 @@ if($data['servicios']['estado']=="Inactivo"){
             }else{
                 $resivos_var='';
             }
-            $row[] = '<a  href="' . base_url("invoices/view?id=$invoices->tid") . '" class="btn btn-success btn-xs"><i class="icon-file-text"></i> '.$this->lang->line('View').'</a> &nbsp; '.$resivos_var.'&nbsp;&nbsp;';
+            $row[] = '<a  href="' . base_url("invoices/view?id=$invoices->tid") . '" class="btn btn-success btn-xs" title="Ver"><i class="icon-file-text"></i></a> &nbsp; '.$resivos_var.'&nbsp;&nbsp;<a href="#pop_model" data-object-id2="' . $invoices->tid . '" data-object-cat="' . $prd->cat . '" class="btn btn-xs btn-orange" onclick="abrir_modal2(this);" title="Promociones"><i class="icon-gift"></i></a>';
 			if ($this->aauth->get_user()->roleid == 5) {
 			$row[] = '<a href="#" data-object-id="' . $invoices->tid . '" class="btn btn-danger btn-xs delete-object"><span class="icon-trash"></span></a>';
+			
 			}
             $data[] = $row;
         }
@@ -1570,6 +1571,7 @@ if($data['servicios']['estado']=="Inactivo"){
 		$this->load->model('invoices_model', 'invocies');
         $data['details'] = $this->customers->details($custid);
         $data['money'] = $this->customers->money_details($custid);
+        $data['promos'] = $this->customers->list_promos();
 		$data['paquete'] = $this->invocies->paquetes('tv');
         $head['usernm'] = $this->aauth->get_user()->username;
 		$data['invoice'] = $this->customers->invoice_details($custid, $this->limited);
@@ -1587,7 +1589,27 @@ if($data['servicios']['estado']=="Inactivo"){
         $this->load->view('customers/invoices', $data);
         $this->load->view('fixed/footer');
     }
-
+	public function add_promo()
+    {
+        $id = $this->input->post('id');
+		$user = $this->aauth->get_user()->username;
+        $promo = $this->input->post('promo');
+		$factura=$this->db->get_where("invoices",array('tid' =>$id))->row();
+		$promocion=$this->db->get_where("promos",array('idprom' =>1))->row();
+		$descuento=$factura->total*$promocion->porcentaje;
+		$total = $descuento/100;
+		$datos = array(				
+			'discount' => $total,
+			'total' => $factura->total-$total,
+			'notes' => 'Descuento '.$promocion->pro_nombre,
+		);
+        	$this->db->where('id', $factura->id);
+        	$this->db->update('invoices', $datos);
+		
+        echo json_encode(array('status' => 'Success', 'message' =>
+            $this->lang->line('UPDATED'), 'pstatus' => $status));
+	   
+    }
     public function balance()
     {
 
