@@ -408,10 +408,10 @@
             <div class="modal-body">
                 <form id="form_model2">
 				 <div class="col-sm-6">
-                             <select name="promo" class="form-control mb-1">
+                             <select name="promo" class="form-control mb-1" id="promo">
                                <?php
 								foreach ($promos as $row) {
-									$cid = $row['id'];
+									$cid = $row['idprom'];
 									$title = $row['pro_nombre'];
 									echo "<option value='$cid'>$title</option>";
 								}
@@ -742,6 +742,7 @@ validar_monto_notas();
         $("#pop_model2").modal("show");
         $("#object-id2").val($(link).data("object-id2"));
         $("#object-cat").val($(link).data("object-cat"));
+        $("#promo").val($(link).data("promo"));
 		var object =$(link).data("object-id2");	
 	}
 	$("#submit_model2").on("click", function(e) {
