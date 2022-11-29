@@ -1595,7 +1595,7 @@ if($data['servicios']['estado']=="Inactivo"){
 		$user = $this->aauth->get_user()->username;
         $promo = $this->input->post('promo');
 		$factura=$this->db->get_where("invoices",array('tid' =>$id))->row();
-		$promocion=$this->db->get_where("promos",array('idprom' =>1))->row();
+		$promocion=$this->db->get_where("promos",array('idprom' =>$promo))->row();
 		$descuento=$factura->total*$promocion->porcentaje;
 		$total = $descuento/100;
 		$datos = array(				

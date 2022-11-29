@@ -413,7 +413,7 @@
 								foreach ($promos as $row) {
 									$cid = $row['id'];
 									$title = $row['pro_nombre'];
-									echo "<option value='$title'>$title</option>";
+									echo "<option value='$cid'>$title</option>";
 								}
 								?> 
                             </select>
