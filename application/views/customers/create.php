@@ -705,7 +705,7 @@ alert(selected);
 								}
 								document.formulario1.perfil.options[0].selected = true;
                                 var tegnologia_instalacion1=$("#tegnologia option:selected").val();
-                                if(customergroup=="2" || customergroup=="6"){
+                                if(customergroup=="2"){
                                     $("#Ipremota").val(remote_ip_yopal);
                                     $("#Ipremota2").val(remote_ip_yopal);
                                     if(tegnologia_instalacion1=="GPON"){
@@ -722,6 +722,9 @@ alert(selected);
                                 }else if(customergroup=="4"){
                                     $("#Ipremota").val(remote_ip_monterrey);
                                     $("#Ipremota2").val(remote_ip_monterrey);
+                                }else if(customergroup=="6"){
+                                    $("#Ipremota").val(remote_ip_aguazul);
+                                    $("#Ipremota2").val(remote_ip_aguazul);
                                 }
                                 selecciona_para_agregar();
 							}
