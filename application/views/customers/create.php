@@ -747,9 +747,8 @@ alert(selected);
                                 
                             });	
 	var Iplocal_2 = new Array ("10.0.0.1");
-	var Iplocal_6 = new Array ("10.0.0.1");
     var Iplocal_2gpon = new Array ("10.100.0.1");
-    var Iplocal_6gpon = new Array ("10.100.0.1");
+    var Iplocal_6 = new Array ("10.100.0.1");
 	var Iplocal_3 = new Array ("80.0.0.1");
 	var Iplocal_4 = new Array ("10.1.100.1");
     var Iplocal_3gpon = new Array ("10.20.0.1");
