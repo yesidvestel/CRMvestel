@@ -527,6 +527,7 @@
     var remote_ip_villanueva="<?=$ips_remotas['villanueva']?>";
     var remote_ip_monterrey="<?=$ips_remotas['monterrey']?>";
     var remote_ip_villanueva_gpon="<?=$ips_remotas['villanueva_gpon']?>";
+	var remote_ip_aguazul="<?=$ips_remotas['aguazul']?>";
     function selecciona_para_agregar(){
         var elemento=document.getElementById("copy_address");
         //console.log($("#discountFormatServicio").val());

@@ -56,6 +56,8 @@
                                                 $color=$color_villanueva_epon;
                                             }else if($key=="ip_Monterrey"){
                                                 $color=$color_monterrey;
+                                            }else if($key=="ip_Aguazul"){
+                                                $color=$color_aguazul;
                                             }
                                             if(isset($color)){
                                     ?>
