@@ -81,6 +81,23 @@
 									<input type="text" placeholder="Porcentaje de descuento" name="porcentaje" class="form-control"></input>
                                 </div>
                             </div>
+							<div class="form-group row" id="actualizar">
+                                <label class="col-sm-3 col-form-label"
+                                       for="pay_cat"><?php echo $this->lang->line('') ?>Porcentaje</label>
+                                <div class="col-sm-9">
+									<select type="text" class="form-control"  id="colaborador" name="colaborador[]" multiple style="border: 0">
+											<option value="todos">todos</option>
+											 <?php
+												foreach ($tecnicoslista as $row) {
+													$cid = $row['id'];
+													$title = $row['username'];
+													$nombre = $row['name'];
+													echo "<option value='$cid'>$nombre</option>";
+												}
+												?>
+										</select>
+                                </div>
+                            </div>
                             
                             
                             <div class="form-group row">
@@ -164,7 +181,7 @@ $(document).ready(function(){
 	}
 
 
-
+$("#colaborador").select2();
 </script>
 <?php //se hizo el cambio de fecha en el archivo views/fixed/footer ?>
 <!--<script type="text/javascript">

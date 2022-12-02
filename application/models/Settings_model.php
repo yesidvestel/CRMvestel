@@ -184,13 +184,15 @@ class Settings_model extends CI_Model
         }
 
     }
-	public function add_promo($dtalle,$nombre1,$nombre2,$finicial2,$ffinal2,$porcentaje)
+	public function add_promo($dtalle,$nombre1,$nombre2,$finicial2,$ffinal2,$porcentaje,$colaborador)
     {
+		$colaborador=json_encode($colaborador);
 		if($dtalle=='actualizar'){
         $data = array(
             'f_inicio' => $finicial2,
             'f_final' => $ffinal2,
-            'porcentaje' => $porcentaje
+            'porcentaje' => $porcentaje,
+            'colaborador' => $colaborador
         );
         $this->db->set($data);
         $this->db->where('idprom', $nombre1);
@@ -200,7 +202,8 @@ class Settings_model extends CI_Model
             'pro_nombre' => $nombre2,
             'f_inicio' => $finicial2,
             'f_final' => $ffinal2,
-            'porcentaje' => $porcentaje
+            'porcentaje' => $porcentaje,
+            'colaborador' => $colaborador
         );
         //$this->db->set($data);
 		$fun=$this->db->insert('promos', $data);	

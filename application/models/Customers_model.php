@@ -230,11 +230,14 @@ class Customers_model extends CI_Model
         return $query->row_array();
     }
 	public function list_promos()
-    {			
+    {	
+		$user = $this->aauth->get_user()->id;
         $this->db->select('*');
         $this->db->from('promos');
 		$this->db->where('f_inicio<=', date('Y-m-d'));
 		$this->db->where('f_final>=', date('Y-m-d'));
+		$this->db->like('colaborador', $user);
+		$this->db->or_where('colaborador', 'null');
         $query = $this->db->get();
         return $query->result_array();
     }

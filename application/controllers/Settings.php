@@ -271,7 +271,8 @@ contraseña de aplicacion para crm : okqttqhqjmtaolbw
             $ffinal = $this->input->post('ffinal');
             $ffinal2 = datefordatabase($ffinal);
             $porcentaje = $this->input->post('porcentaje');
-            $this->settings->add_promo($dtalle,$nombre1,$nombre2,$finicial2,$ffinal2,$porcentaje);
+            $colaborador = $this->input->post('colaborador');
+            $this->settings->add_promo($dtalle,$nombre1,$nombre2,$finicial2,$ffinal2,$porcentaje,$colaborador);
 
        
     }
