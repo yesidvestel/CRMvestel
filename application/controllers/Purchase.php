@@ -40,6 +40,8 @@ class Purchase extends CI_Controller
     public function create()
     {
         $this->load->model('customers_model', 'customers');
+		$this->load->model('transactions_model', 'transactions');
+		$data['cat'] = $this->transactions->categories();
         $data['customergrouplist'] = $this->customers->group_list();
         $data['lastinvoice'] = $this->purchase->lastpurchase();
         $data['terms'] = $this->purchase->billingterms();
@@ -59,6 +61,8 @@ class Purchase extends CI_Controller
         $data['id'] = $tid;
         $data['title'] = "Purchase Order $tid";
         $this->load->model('customers_model', 'customers');
+		$this->load->model('transactions_model', 'transactions');
+		$data['cat'] = $this->transactions->categories();
         $data['customergrouplist'] = $this->customers->group_list();
         $data['terms'] = $this->purchase->billingterms();
         $data['invoice'] = $this->purchase->purchase_details($tid);
@@ -100,6 +104,7 @@ class Purchase extends CI_Controller
         $invocieno = $this->input->post('invocieno');
         $invoicedate = $this->input->post('invoicedate');
         $invocieduedate = $this->input->post('invocieduedate');
+        $cat = $this->input->post('categoria');
         $notes = $this->input->post('notes');
         $tax = $this->input->post('tax_handle');
         $subtotal = $this->input->post('subtotal');
@@ -253,7 +258,26 @@ class Purchase extends CI_Controller
         }else{
             $actualizar_stock="0";
         }//falta hacer el proceso en el lado de la actualzacion de estado
-        $data = array('tid' => $invocieno, 'invoicedate' => $bill_date, 'invoiceduedate' => $bill_due_date, 'subtotal' => $subtotal, 'shipping' => $shipping, 'discount' => $total_discount, 'tax' => $total_tax, 'total' => $total, 'notes' => $notes, 'csd' => $customer_id, 'eid' => $this->aauth->get_user()->id, 'items' => $itc, 'taxstatus' => $textst, 'discstatus' => $discstatus, 'format_discount' => $discountFormat, 'refer' => $refer, 'term' => $pterms,"almacen_seleccionado"=>$warehouse,"actualizar_stock"=>$actualizar_stock);
+        $data = array(
+			'tid' => $invocieno, 
+			'invoicedate' => $bill_date, 
+			'invoiceduedate' => $bill_due_date, 
+			'subtotal' => $subtotal, 
+			'shipping' => $shipping, 
+			'discount' => $total_discount, 
+			'tax' => $total_tax, 'total' => $total, 
+			'notes' => $notes, 
+			'csd' => $customer_id, 
+			'idcat' => $cat,
+			'eid' => $this->aauth->get_user()->id, 
+			'items' => $itc, 
+			'taxstatus' => $textst, 
+			'discstatus' => $discstatus, 
+			'format_discount' => $discountFormat, 
+			'refer' => $refer, 
+			'term' => $pterms,
+			"almacen_seleccionado"=>$warehouse,
+			"actualizar_stock"=>$actualizar_stock);
 
         if ($flag == true) {
             $this->db->insert_batch('purchase_items', $productlist);
@@ -466,6 +490,7 @@ class Purchase extends CI_Controller
         $invocieno = $this->input->post('invocieno');
         $invoicedate = $this->input->post('invoicedate');
         $invocieduedate = $this->input->post('invocieduedate');
+        $cat = $this->input->post('categoria');
         $notes = $this->input->post('notes');
         $tax = $this->input->post('tax_handle');
         $subtotal = $this->input->post('subtotal');
@@ -627,7 +652,25 @@ class Purchase extends CI_Controller
         }
         
 
-        $data = array('invoicedate' => $bill_date, 'invoiceduedate' => $bill_due_date, 'subtotal' => $subtotal, 'shipping' => $shipping, 'discount' => $total_discount, 'tax' => $total_tax, 'total' => $total, 'notes' => $notes, 'csd' => $customer_id, 'items' => $i, 'taxstatus' => $taxstatus, 'discstatus' => $discstatus, 'format_discount' => $discountFormat, 'refer' => $refer, 'term' => $pterms,"almacen_seleccionado"=>$warehouse,"actualizar_stock"=>$actualizar_stock);
+        $data = array(
+			'invoicedate' => $bill_date, 
+			'invoiceduedate' => $bill_due_date, 
+			'subtotal' => $subtotal, 
+			'shipping' => $shipping, 
+			'discount' => $total_discount, 
+			'tax' => $total_tax, 
+			'total' => $total, 
+			'notes' => $notes, 
+			'csd' => $customer_id, 
+			'idcat' => $cat, 
+			'items' => $i, 
+			'taxstatus' => $taxstatus, 
+			'discstatus' => $discstatus, 
+			'format_discount' => $discountFormat, 
+			'refer' => $refer, 
+			'term' => $pterms,
+			"almacen_seleccionado"=>$warehouse,
+			"actualizar_stock"=>$actualizar_stock);
         $this->db->set($data);
         $this->db->where('tid', $invocieno);
 

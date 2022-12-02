@@ -227,7 +227,7 @@
             <td>
                 <?php echo '<strong>'.$invoice['name'] . '</strong><br>';
                 if ($invoice['company']) echo $invoice['company'] . '<br>';
-               echo $invoice['address'] . '<br>' . $invoice['city'] . ', ' . $invoice['region'] . '<br>' . 'Nº Cuenta: ' . $invoice['cuenta'] . '-' . $invoice['typo'] . '<br>'.'Banco'.': ' . $invoice['banco'] . '<br>' . $this->lang->line('Email') . ' : ' . $invoice['email'];
+               echo $invoice['address'] . '<br>' . $invoice['city'] . ', ' . $invoice['region'] . '<br>' . 'Nº Cuenta: ' . $invoice['cuenta'] . '-' . $invoice['typo'] . '<br>'.'Banco'.': ' . $invoice['banco'] . '<br>' . $this->lang->line('Email') . ' : ' . $invoice['email']. '<br>' . $this->lang->line('') . ' Categoria: ' . $invoice['idcat'];
                 if ($invoice['taxid']) echo '<br>' . $this->lang->line('Tax') . ' ID: ' . $invoice['taxid'];
                 ?>
             </td>

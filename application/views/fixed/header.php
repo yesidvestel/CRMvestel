@@ -368,7 +368,7 @@ $lista_permisos1=$this->db->query("SELECT permisos_usuario.id,permisos_usuario.i
 					
 					
                     <a href=""> <i class="icon-file"></i><span
-                                class="menu-title"> <?php echo $this->lang->line('Purchase Order') ?> </span><i
+                                class="menu-title"> <?php echo $this->lang->line('') ?>Ordenes </span><i
                                 class="fa arrow"></i> </a>
                     <ul class="menu-content">
                         <li>
@@ -1034,7 +1034,7 @@ $lista_permisos1=$this->db->query("SELECT permisos_usuario.id,permisos_usuario.i
 					
 					
                     <a href=""> <i class="icon-file"></i><span
-                                class="menu-title"> <?php echo $this->lang->line('Purchase Order') ?> </span><i
+                                class="menu-title"> <?php echo $this->lang->line('') ?>Ordenes </span><i
                                 class="fa arrow"></i> </a>
                     <ul class="menu-content">
 						<?php if ($lista_permisos_us['comnue'] != null) { ?>

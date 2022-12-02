@@ -1250,6 +1250,7 @@ $this->load->helper('cookie');
         $pmethod = $this->input->post('pmethod');
         $acid = $this->input->post('account');
         $cid = $this->input->post('cid');
+        $cat = $this->input->post('cat');
         $cname = $this->input->post('cname');
         $nop = $this->input->post('nop');
         $paydate = datefordatabase($paydate);
@@ -1269,7 +1270,7 @@ $this->load->helper('cookie');
             'acid' => $acid,
             'account' => $account['holder'],
             'type' => 'Expense',
-            'cat' => 'Purchase',
+            'cat' => $cat,
             'debit' => $amount,
             'payer' => $cname,
             'payerid' => $cid,

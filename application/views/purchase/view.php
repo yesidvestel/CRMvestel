@@ -135,7 +135,7 @@
 
                         </div>
                         <div class="offset-md-3 col-md-3 col-sm-12 text-xs-center text-md-left">
-                            <?php echo '<p><span class="text-muted">'.$this->lang->line('Order Date').' :</span> ' . dateformat($invoice['invoicedate']) . '</p> <p><span class="text-muted">'.$this->lang->line('Due Date').' :</span> ' . dateformat($invoice['invoiceduedate']) . '</p>  <p><span class="text-muted">'.$this->lang->line('Terms').' :</span> ' . $invoice['termtit'] . '</p>';
+                            <?php echo '<p><span class="text-muted">'.$this->lang->line('Order Date').' :</span> ' . dateformat($invoice['invoicedate']) . '</p> <p><span class="text-muted">'.$this->lang->line('Due Date').' :</span> ' . dateformat($invoice['invoiceduedate']) . '</p>  <p><span class="text-muted">Categoria :</span> ' . $invoice['idcat'] . '</p><p><span class="text-muted">'.$this->lang->line('Terms').' :</span> ' . $invoice['termtit'] . '</p>';
                             ?>
                         </div>
                     </div>
@@ -495,11 +495,11 @@
                                    value="Orden de compra # <?php echo $invoice['tid'] ?>"></div>
                     </div>
                     <div class="modal-footer">
-                        <input type="hidden" class="form-control required"
-                               name="tid" id="invoiceid" value="<?php echo $invoice['tid'] ?>">
+                        <input type="hidden" class="form-control required" name="tid" id="invoiceid" value="<?php echo $invoice['tid'] ?>">
                         <button type="button" class="btn btn-default"
                                 data-dismiss="modal">Volver</button>
                         <input type="hidden" name="cid" value="<?php echo $invoice['cid'] ?>">
+                        <input type="hidden" name="cat" value="<?php echo $invoice['idcat'] ?>">
                                                                                                                                                                                                     
                         <button type="button" class="btn btn-primary" id="purchasepayment"><?php echo $this->lang->line('Do Payment') ?></button>
                     </div>

@@ -161,6 +161,22 @@
                                         </select>
                                     </div>
                                 </div>
+								<div class="col-sm-6">
+
+                                    <div class="form-group">
+                                        <label for="discountFormat" class="caption"><?php echo $this->lang->line('')?>Categoria</label>
+                                            <select class="form-control" name="categoria">
+												<option value="<?php echo $invoice['idcat'] ?>">>><?php echo $invoice['idcat'] ?></option>
+												<?php
+													foreach ($cat as $row) {
+														$cid = $row['id'];
+														$title = $row['name'];
+														echo "<option value='$title'>$title</option>";
+													}
+													?>
+                                            </select>
+                                    </div>
+                                </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-sm-12">

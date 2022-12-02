@@ -83,10 +83,9 @@
                             </div>
 							<div class="form-group row" id="actualizar">
                                 <label class="col-sm-3 col-form-label"
-                                       for="pay_cat"><?php echo $this->lang->line('') ?>Porcentaje</label>
+                                       for="pay_cat"><?php echo $this->lang->line('') ?>Colaborador</label>
                                 <div class="col-sm-9">
 									<select type="text" class="form-control"  id="colaborador" name="colaborador[]" multiple style="border: 0">
-											<option value="todos">todos</option>
 											 <?php
 												foreach ($tecnicoslista as $row) {
 													$cid = $row['id'];

@@ -197,6 +197,9 @@
 			<tr>
             <td><?php echo $this->lang->line('') ?>Sede</td><td><?php echo $invoice['refer'] ?></td>
 			</tr>
+			<tr>
+            <td><?php echo $this->lang->line('') ?>Categoria</td><td><?php echo $invoice['idcat'] ?></td>
+			</tr>
 			<?php } ?>
 			</table>
 			
