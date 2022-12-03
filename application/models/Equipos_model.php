@@ -22,8 +22,8 @@ class Equipos_model extends CI_Model
 {
 
     var $table = 'equipos';	
-    var $column_order = array(null,null, 'codigo','mac', 'serial', 'estado', 'asignado', 'marca', null); //set column field database for datatable orderable
-    var $column_search = array('codigo', 'mac','serial','estado','almacen','asignado','marca'); //Establecer base de datos de campo de columna para la tabla de datos
+    var $column_order = array(null, 'codigo','mac', 'serial', 'estado', 'asignado', 'marca','t_instalacion', null); //set column field database for datatable orderable
+    var $column_search = array('codigo','mac', 'serial', 'estado', 'asignado', 'marca','t_instalacion'); //Establecer base de datos de campo de columna para la tabla de datos
     var $order = array('id' => 'desc'); // default order
 	
     public function __construct()
