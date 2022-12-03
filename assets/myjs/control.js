@@ -1270,6 +1270,7 @@ $("#copy_address").change(function ()
     if($(this).prop("checked") == true){
        // alert("Checkbox is checked." );
        var name=$('#mcustomer_name').val()+$('#mcustomer_dosnombre').val()+$('#mcustomer_unoapellido').val()+$('#mcustomer_dosapellido').val();
+		var coment=$('#cmbBarrios option:selected').text()+" "+$('#abonado').val()+" "+$('#tegnologia').val()
        name=name.replace(/ /g, "");
             name=name.replace(/&/g, "y");
             name=name.replace(/ñ/g, "n");
@@ -1277,7 +1278,7 @@ $("#copy_address").change(function ()
         $('#mcustomer_documento_s').val($('#mcustomer_documento').val());
         $('#mcustomer_email_s').val($('#mcustomer_email').val());
         $('#mcustomer_address1_s').val($('#mcustomer_address1').val());
-        $('#mcustomer_comentario_s').val($('#cmbBarrios option:selected').text());
+        $('#mcustomer_comentario_s').val(coment.toUpperCase());
         $('#region_s').val($('#region').val());
         $('#mcustomer_country_s').val($('#mcustomer_country').val());
         $('#postbox_s').val($('#postbox').val());
