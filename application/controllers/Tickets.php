@@ -1750,7 +1750,7 @@ $x=0;
                 $this->db->set('estado_tv', null);
 				$this->db->set('puntos', $ptos);
         		$this->db->where('tid', $idfactura);
-        		if ($this->db->update('invoices')){
+        		if ($this->db->update('invoices') && $ticket->detalle!="Reconexion Television2"){
 			//actualizar contrato usuario
                 $this->db->set("f_contrato",date("Y-m-d"));
         		$this->db->where('id', $ticket->cid);
@@ -1850,7 +1850,7 @@ $x=0;
 				$this->db->set('combo', $inter);
                 $this->db->set('estado_combo', null);
         		$this->db->where('tid', $idfactura);
-        		if ($this->db->update('invoices')){
+        		if ($this->db->update('invoices')&&$ticket->detalle!="Reconexion Internet2"){
 					//actualizar contrato usuario
 					$this->db->set("f_contrato",date("Y-m-d"));
 					$this->db->where('id', $ticket->cid);
