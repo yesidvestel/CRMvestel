@@ -289,7 +289,7 @@ class Tools_model extends CI_Model
         return $query->row_array();
     }
 
-    public function setgoals($income, $expense, $sales, $netincome, $users,$vesagro,$servicios,$compras,$creditos,$nomina,$socios,$oficial,$purchase)
+    public function setgoals($income, $expense, $sales, $netincome, $users,$vesagro,$servicios,$compras,$creditos,$nomina,$socios,$oficial,$purchase,$internet,$programadora,$impuestos,$publicos,$comisiones,$celulares)
     {
 
 
@@ -307,6 +307,12 @@ class Tools_model extends CI_Model
 			'socios' => $socios,
 			'oficial' => $oficial,
 			'purchase' => $purchase,
+			'internet' => $internet,
+			'programadora' => $programadora,
+			'impuestos' => $impuestos,
+			'publicos' => $publicos,
+			'comisiones' => $comisiones,
+			'celulares' => $celulares,
 		);
         $this->db->set($data);
         $this->db->where('id', 1);

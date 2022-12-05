@@ -83,6 +83,54 @@ $tt_inc = 0;foreach ($gastototal as $row) {
                             </div>
                         </div>
                     </div>
+					<div class="card">
+                        <div class="card-body">
+                            <div class="media">
+                                <div class="p-1 text-xs-center bg-orange media-left media-middle">
+                                    <i class="icon-list-alt font-large-2 white"></i>
+                                </div>
+                                <div class="p-1 media-body">
+                                    <h5 class="orange"> <?php echo $this->lang->line('') ?>Proveedores internet</h5>
+                                    <h5 class="text-bold-400"><?php echo amountFormat($internet) . '/' . amountFormat($goals['internet']) ?></h5>
+                                    <progress class="progress progress-striped progress-orange mt-1 mb-0"
+                                              value="<?php $ipt = sprintf("%0.2f", ($internet * 100) / $goals['internet']);
+                                              echo $ipt; ?>" max="100"></progress>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+					<div class="card">
+                        <div class="card-body">
+                            <div class="media">
+                                <div class="p-1 text-xs-center bg-orange media-left media-middle">
+                                    <i class="icon-list-alt font-large-2 white"></i>
+                                </div>
+                                <div class="p-1 media-body">
+                                    <h5 class="orange"> <?php echo $this->lang->line('') ?>Programadoras</h5>
+                                    <h5 class="text-bold-400"><?php echo amountFormat($programadora) . '/' . amountFormat($goals['programadora']) ?></h5>
+                                    <progress class="progress progress-striped progress-orange mt-1 mb-0"
+                                              value="<?php $ipt = sprintf("%0.2f", ($programadora * 100) / $goals['programadora']);
+                                              echo $ipt; ?>" max="100"></progress>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+					<div class="card">
+                        <div class="card-body">
+                            <div class="media">
+                                <div class="p-1 text-xs-center bg-orange media-left media-middle">
+                                    <i class="icon-list-alt font-large-2 white"></i>
+                                </div>
+                                <div class="p-1 media-body">
+                                    <h5 class="orange"> <?php echo $this->lang->line('') ?>Impuestos</h5>
+                                    <h5 class="text-bold-400"><?php echo amountFormat($impuestos) . '/' . amountFormat($goals['impuestos']) ?></h5>
+                                    <progress class="progress progress-striped progress-orange mt-1 mb-0"
+                                              value="<?php $ipt = sprintf("%0.2f", ($impuestos * 100) / $goals['impuestos']);
+                                              echo $ipt; ?>" max="100"></progress>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
             </div>
@@ -136,7 +184,7 @@ $tt_inc = 0;foreach ($gastototal as $row) {
                             </div>
                         </div>
                     </div>
-						<div class="card">
+					<div class="card">
                         <div class="card-body">
                             <div class="media">
                                 <div class="p-1 text-xs-center bg-orange media-left media-middle">
@@ -147,6 +195,54 @@ $tt_inc = 0;foreach ($gastototal as $row) {
                                     <h5 class="text-bold-400"><?php echo amountFormat($purchase) . '/' . amountFormat($goals['purchase']) ?></h5>
                                     <progress class="progress progress-striped progress-orange mt-1 mb-0"
                                               value="<?php $ipt = sprintf("%0.2f", ($purchase * 100) / $goals['purchase']);
+                                              echo $ipt; ?>" max="100"></progress>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+					<div class="card">
+                        <div class="card-body">
+                            <div class="media">
+                                <div class="p-1 text-xs-center bg-orange media-left media-middle">
+                                    <i class="icon-list-alt font-large-2 white"></i>
+                                </div>
+                                <div class="p-1 media-body">
+                                    <h5 class="orange"> <?php echo $this->lang->line('') ?>Servicios publicos</h5>
+                                    <h5 class="text-bold-400"><?php echo amountFormat($publicos) . '/' . amountFormat($goals['publicos']) ?></h5>
+                                    <progress class="progress progress-striped progress-orange mt-1 mb-0"
+                                              value="<?php $ipt = sprintf("%0.2f", ($publicos * 100) / $goals['publicos']);
+                                              echo $ipt; ?>" max="100"></progress>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+					<div class="card">
+                        <div class="card-body">
+                            <div class="media">
+                                <div class="p-1 text-xs-center bg-orange media-left media-middle">
+                                    <i class="icon-list-alt font-large-2 white"></i>
+                                </div>
+                                <div class="p-1 media-body">
+                                    <h5 class="orange"> <?php echo $this->lang->line('') ?>Comisiones</h5>
+                                    <h5 class="text-bold-400"><?php echo amountFormat($comisiones) . '/' . amountFormat($goals['comisiones']) ?></h5>
+                                    <progress class="progress progress-striped progress-orange mt-1 mb-0"
+                                              value="<?php $ipt = sprintf("%0.2f", ($comisiones * 100) / $goals['comisiones']);
+                                              echo $ipt; ?>" max="100"></progress>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+					<div class="card">
+                        <div class="card-body">
+                            <div class="media">
+                                <div class="p-1 text-xs-center bg-orange media-left media-middle">
+                                    <i class="icon-list-alt font-large-2 white"></i>
+                                </div>
+                                <div class="p-1 media-body">
+                                    <h5 class="orange"> <?php echo $this->lang->line('') ?>Celulares</h5>
+                                    <h5 class="text-bold-400"><?php echo amountFormat($celulares) . '/' . amountFormat($goals['celulares']) ?></h5>
+                                    <progress class="progress progress-striped progress-orange mt-1 mb-0"
+                                              value="<?php $ipt = sprintf("%0.2f", ($celulares * 100) / $goals['celulares']);
                                               echo $ipt; ?>" max="100"></progress>
                                 </div>
                             </div>

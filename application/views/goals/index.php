@@ -160,6 +160,72 @@
                                value="<?php echo $goals['purchase'] ?>">
                     </div>
                 </div>
+				<div class="form-group row">
+
+                    <label class="col-sm-2 col-form-label"
+                           for="netincome"><?php echo $this->lang->line('') ?>Proveedores internet</label>
+
+                    <div class="col-sm-5">
+                        <input type="text" placeholder="Valor meta"
+                               class="form-control margin-bottom  required" name="internet"
+                               value="<?php echo $goals['internet'] ?>">
+                    </div>
+                </div>
+				<div class="form-group row">
+
+                    <label class="col-sm-2 col-form-label"
+                           for="netincome"><?php echo $this->lang->line('') ?>Programadoras</label>
+
+                    <div class="col-sm-5">
+                        <input type="text" placeholder="Valor meta"
+                               class="form-control margin-bottom  required" name="programadora"
+                               value="<?php echo $goals['programadora'] ?>">
+                    </div>
+                </div>
+				<div class="form-group row">
+
+                    <label class="col-sm-2 col-form-label"
+                           for="netincome"><?php echo $this->lang->line('') ?>Impuestos</label>
+
+                    <div class="col-sm-5">
+                        <input type="text" placeholder="Valor meta"
+                               class="form-control margin-bottom  required" name="impuestos"
+                               value="<?php echo $goals['impuestos'] ?>">
+                    </div>
+                </div>
+				<div class="form-group row">
+
+                    <label class="col-sm-2 col-form-label"
+                           for="netincome"><?php echo $this->lang->line('') ?>Servicios publicos</label>
+
+                    <div class="col-sm-5">
+                        <input type="text" placeholder="Valor meta"
+                               class="form-control margin-bottom  required" name="publicos"
+                               value="<?php echo $goals['publicos'] ?>">
+                    </div>
+                </div>
+				<div class="form-group row">
+
+                    <label class="col-sm-2 col-form-label"
+                           for="netincome"><?php echo $this->lang->line('') ?>Comisiones</label>
+
+                    <div class="col-sm-5">
+                        <input type="text" placeholder="Valor meta"
+                               class="form-control margin-bottom  required" name="comisiones"
+                               value="<?php echo $goals['comisiones'] ?>">
+                    </div>
+                </div>
+				<div class="form-group row">
+
+                    <label class="col-sm-2 col-form-label"
+                           for="netincome"><?php echo $this->lang->line('') ?>Celulares</label>
+
+                    <div class="col-sm-5">
+                        <input type="text" placeholder="Valor meta"
+                               class="form-control margin-bottom  required" name="celulares"
+                               value="<?php echo $goals['celulares'] ?>">
+                    </div>
+                </div>
 
                 <div class="form-group row">
 

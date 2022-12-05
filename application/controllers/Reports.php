@@ -161,7 +161,12 @@ public function historial_list(){
 		$data['socios']=$gastototal['socios'];
 		$data['oficial']=$gastototal['oficial'];
 		$data['creditos']=$gastototal['creditos'];
-		$data['creditos']=$gastototal['creditos'];
+		$data['internet']=$gastototal['internet'];
+		$data['programadora']=$gastototal['programadora'];
+		$data['impuestos']=$gastototal['impuestos'];
+		$data['publicos']=$gastototal['publicos'];
+		$data['comisiones']=$gastototal['comisiones'];
+		$data['celulares']=$gastototal['celulares'];
 		$data['goals'] = $this->tools_model->goals(1);
         $head['title'] = "Metas Mensuales";
         $head['usernm'] = $this->aauth->get_user()->username;

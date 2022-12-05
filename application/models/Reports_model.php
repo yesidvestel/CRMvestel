@@ -81,8 +81,26 @@ class Reports_model extends CI_Model
 			 if($gasto->cat=='Creditos y Acuerdos'){
 				 $gas_creditos+=$gasto->debit;
 			 }
+			 if($gasto->cat=='Proveedores internet'){
+				 $gas_internet+=$gasto->debit;
+			 } 
+			 if($gasto->cat=='programadora'){
+				 $gas_programadora+=$gasto->debit;
+			 }
+			 if($gasto->cat=='impuestos'){
+				 $gas_impuestos+=$gasto->debit;
+			 }
+			 if($gasto->cat=='publicos'){
+				 $gas_publicos+=$gasto->debit;
+			 }
+			 if($gasto->cat=='comisiones'){
+				 $gas_comisiones+=$gasto->debit;
+			 }
+			 if($gasto->cat=='celulares'){
+				 $gas_celulares+=$gasto->debit;
+			 }
 		 }
-		return array("vesagro"=>$gas_vesagro,"servicios"=>$gas_servicios,"compras"=>$gas_compras,"nomina"=>$gas_nomina,"socios"=>$gas_socios,"oficial"=>$gas_oficial,"purchase"=>$gas_purchase,"creditos"=>$gas_creditos);
+		return array("vesagro"=>$gas_vesagro,"servicios"=>$gas_servicios,"compras"=>$gas_compras,"nomina"=>$gas_nomina,"socios"=>$gas_socios,"oficial"=>$gas_oficial,"purchase"=>$gas_purchase,"creditos"=>$gas_creditos,"internet"=>$gas_internet,"programadora"=>$gas_programadora,"impuestos"=>$gas_impuestos,"publicos"=>$gas_publicos,"comisiones"=>$gas_comisiones,"celulares"=>$gas_celulares);
     }
 
     public function get_statements($pay_acc, $trans_type, $sdate, $edate)

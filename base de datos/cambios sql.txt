@@ -453,3 +453,13 @@ CATEGORIAS DE ORDENES 1 G
 --------------------------------------
 ALTER TABLE `purchase` 
 ADD `idcat` varchar(50) NULL DEFAULT NULL AFTER `csd`;
+----------------------------------------------------------------------------------------------------------
+NUEVAS METAS 1 G
+--------------------------------------
+ALTER TABLE `goals` 
+ADD `internet` BIGINT(20) NOT NULL AFTER `oficial`,
+ADD `programadora` BIGINT(20) NOT NULL AFTER `internet`,
+ADD `impuestos` BIGINT(20) NOT NULL AFTER `programadora`,
+ADD `publicos` BIGINT(20) NOT NULL AFTER `impuestos`,
+ADD `comisiones` BIGINT(20) NOT NULL AFTER `publicos`,
+ADD `celulares` BIGINT(20) NOT NULL AFTER `comisiones`;
