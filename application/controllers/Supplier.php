@@ -68,9 +68,11 @@ class Supplier extends CI_Controller
     public function view()
     {
         $custid = $this->input->get('id');
+		$this->load->model('customers_model', 'customers');
         $data['details'] = $this->supplier->details($custid);
         $data['customergroup'] = $this->supplier->group_info($data['details']['gid']);
         $data['money'] = $this->supplier->money_details($custid);
+		$data['attach'] = $this->customers->attach($custid,10);
         $head['usernm'] = $this->aauth->get_user()->username;
         $head['title'] = 'View Supplier';
         $this->load->view('fixed/header', $head);
@@ -283,6 +285,32 @@ class Supplier extends CI_Controller
         $this->load->view('fixed/header', $head);
         $this->load->view('supplier/invoices', $data);
         $this->load->view('fixed/footer');
+    }
+	public function file_handling()
+    {ini_set('memory_limit', '500M');
+	 	$this->load->model('customers_model', 'customers');
+        if($this->input->get('op')) {
+            $name = $this->input->get('name');
+            $invoice = $this->input->get('invoice');
+            $type = $this->input->get('type');
+            if ($this->customers->meta_delete($invoice,$type, $name)){
+                echo json_encode(array('status' => 'Success'));
+            }
+        }
+        else {
+			
+            $id = $this->input->get('id');
+            $this->load->library("Uploadhandler_generic", array(
+                 'upload_dir' => FCPATH . 'userfiles/attach/', 'upload_url' => base_url() . 'userfiles/attach/'//'accept_file_types' => '/\.(gif|jpeg|png|docx|docs|txt|pdf|xls)$/i',
+            ));
+            $files = (string)$this->uploadhandler_generic->filenaam();
+            if ($files != '') {
+
+                $this->customers->meta_insert($id, 10, $files);
+            }
+        }
+
+
     }
 
 

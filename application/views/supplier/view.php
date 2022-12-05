@@ -51,7 +51,39 @@
 
                                 </div>
                             </div>
+							<div class="row">
+								<table class="table table-striped">
+									<thead>
+									<tr>
+										<th><?php echo $this->lang->line('Files') ?></th>
+									</tr>
+									</thead>
+									<tbody id="activity">
+									<?php foreach ($attach as $row) {
 
+										echo '<tr><td><a data-url="' . base_url() . 'supplier/file_handling?op=delete&name=' . $row['col1'] . '&type='.$row['type'].'&invoice=' . $details['id'] . '" class="aj_delete"><i class="btn-danger btn-lg icon-trash-a"></i></a> <a class="n_item" href="' . base_url() . 'userfiles/attach/' . $row['col1'] . '"> ' . $row['col1'] . ' </a></td></tr>';
+									} ?>
+
+									</tbody>
+								</table>
+								<!-- The fileinput-button span is used to style the file input field as button -->
+								<span class="btn btn-success fileinput-button">
+								<i class="glyphicon glyphicon-plus"></i>
+								
+									<!-- The file input field used as target for the file upload widget -->
+								<input id="fileupload" type="file" name="files[]" multiple>
+								</span>
+								<br>
+								<pre>tipos: gif, jpeg, png, docx, docs, txt, pdf, xls </pre>
+								<br>
+								<!-- The global progress bar -->
+								<div id="progress2" class="progress">
+									<div class="progress-bar progress-bar-success"></div>
+								</div>
+								<!-- The container for the uploaded files -->
+								<table id="files2" class="files"></table>
+								<br>
+                    </div>
                         </div>
 
                     </div>
@@ -252,29 +284,43 @@
     $(function () {
         'use strict';
         // Change this to the location of your server-side upload handler:
-        var url = '<?php echo base_url() ?>customers/displaypic?id=<?php echo $details['id'] ?>';
+        var url = '<?php echo base_url() ?>supplier/file_handling?id=<?php echo $details['id'] ?>';
         $('#fileupload').fileupload({
             url: url,
             dataType: 'json',
             done: function (e, data) {
+                $.each(data.result.files, function (index, file) {
+                    $('#files2').append('<tr><td><a data-url="<?php echo base_url() ?>supplier/file_handling?op=delete&name=' + file.name + '&invoice=<?php echo $details['id'] ?>" class="aj_delete"><i class="btn-danger btn-sm icon-trash-a"></i> ' + file.name + ' </a></td></tr>');
 
-                //$('<p/>').text(file.name).appendTo('#files');
-                $("#dpic").load(function () {
-                    $(this).hide();
-                    $(this).fadeIn('slow');
-                }).attr('src', '<?php echo base_url() ?>userfiles/customers/' + data.result);
-
-
+                });
             },
             progressall: function (e, data) {
                 var progress = parseInt(data.loaded / data.total * 100, 10);
-                $('#progress .progress-bar').css(
+                $('#progress2 .progress-bar').css(
                     'width',
                     progress + '%'
                 );
             }
         }).prop('disabled', !$.support.fileInput)
             .parent().addClass($.support.fileInput ? undefined : 'disabled');
+    });
+	$(document).on('click', ".aj_delete", function (e) {
+        e.preventDefault();
+
+        var aurl = $(this).attr('data-url');
+        var obj = $(this);
+
+        jQuery.ajax({
+
+            url: aurl,
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                obj.closest('tr').remove();
+                obj.remove();
+            }
+        });
+
     });
 </script>
 <script type="text/javascript">

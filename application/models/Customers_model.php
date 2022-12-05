@@ -252,11 +252,11 @@ class Customers_model extends CI_Model
         }
     }
 
-    public function attach($id)
+    public function attach($id,$cat)
     {
         $this->db->select('meta_data.*');
         $this->db->from('meta_data');
-        $this->db->where('meta_data.type', 6);
+        $this->db->where('meta_data.type', $cat);
         $this->db->where('meta_data.rid', $id);
         $query = $this->db->get();
         return $query->result_array();
@@ -268,9 +268,9 @@ class Customers_model extends CI_Model
         //$x=true;
         
         if ($x || $y) {
-            if($type==null){
+            /*if($type==null){
                 $type=6;
-            }
+            }*/
             return $this->db->delete('meta_data', array('rid' => $id, 'type' => $type, 'col1' => $name));
         }
     }
