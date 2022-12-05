@@ -216,7 +216,7 @@
 		}else if (tipo.value == "whatsapp"){
 			var optionArray = ["","Reclamo","Estado de cuenta","Actualizar Datos","Otros"];
 		}else if (tipo.value == "Para Recuperacion"){
-			var optionArray = ["","Recuperacion Contestada","sin Contestar"];
+			var optionArray = ["","Recuperacion Contestada","sin Contestar","Mensaje"];
 		}else if (tipo.value == "Recibida"){
 			var optionArray = ["","Contestada","sin Contestar"];
 		};
@@ -302,6 +302,8 @@
 				var optionArray = ["","De cuenta","Personales","Direccion","Otros"];
 			}else if (respuesta.value == "Otros"){
 				var optionArray = ["","Otros"];
+			}else if (respuesta.value == "Mensaje"){
+				var optionArray = ["Mensaje de texto","Mensaje de Whatsapp","Otros"];
 			}
 			
 		for(option = 0;option < optionArray.length; option++){
