@@ -560,7 +560,8 @@ class Products extends CI_Controller
 	}
 	public function historial_list(){
 		$this->load->model("Historial_model","historial");
-		$list = $this->historial->get_datatables("Inventarios");
+		$mod = $this->input->get('mod');
+		$list = $this->historial->get_datatables($mod);
 		$data = array();
 		$no = $this->input->post('start');
 		setlocale(LC_TIME, "spanish");

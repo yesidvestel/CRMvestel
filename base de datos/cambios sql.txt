@@ -467,3 +467,7 @@ ADD `celulares` BIGINT(20) NOT NULL AFTER `comisiones`;
 HISTORIAL INVENTARIOS 1 G
 --------------------------------------
 INSERT INTO `modulos` (`id_modulo`, `rol`, `nombre`, `id_padre`, `codigo`, `orden`, `icono`) VALUES (NULL, 'Hijo', 'Historial', '14', 'inhis', '0', NULL);
+----------------------------------------------------------------------------------------------------------
+HISTORIAL ORDENES 1 G
+--------------------------------------
+INSERT INTO `modulos` (`id_modulo`, `rol`, `nombre`, `id_padre`, `codigo`, `orden`, `icono`) VALUES (NULL, 'Hijo', 'Historial ordenes', '20', 'comhis', '0', NULL);

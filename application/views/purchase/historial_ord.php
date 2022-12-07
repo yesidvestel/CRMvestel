@@ -89,7 +89,7 @@
 
             // Load data for the table's content from an Ajax source
             "ajax": {
-                "url": "<?php echo site_url('products/historial_list?mod=Inventarios')?>",
+                "url": "<?php echo site_url('products/historial_list?mod=Orden de Compra')?>",
                 "type": "POST"
             },
 

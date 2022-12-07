@@ -383,6 +383,9 @@ $lista_permisos1=$this->db->query("SELECT permisos_usuario.id,permisos_usuario.i
 						<li>
                             <a href="<?php echo base_url(); ?>purchase/orden_servicio">Adm. Ordenes de servicio<?php echo $this->lang->line('') ?></a>
                         </li>
+						<li>
+                            <a href="<?php echo base_url(); ?>purchase/historial_ord">Historial<?php echo $this->lang->line('') ?></a>
+                        </li>
                     </ul>
                 </li>
                 <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "stockreturn") {
@@ -1056,6 +1059,10 @@ $lista_permisos1=$this->db->query("SELECT permisos_usuario.id,permisos_usuario.i
 						<?php } if ($lista_permisos_us['comadmser'] != null) { ?>
 						<li>
                             <a href="<?php echo base_url(); ?>purchase/orden_servicio">Adm. Ordenes de servicio<?php echo $this->lang->line('') ?></a>
+                        </li>
+						<?php } if ($lista_permisos_us['comhis'] != null) { ?>
+						<li>
+                            <a href="<?php echo base_url(); ?>purchase/historial_ord">Historial<?php echo $this->lang->line('') ?></a>
                         </li>
 						<?php } ?>
 						

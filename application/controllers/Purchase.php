@@ -930,6 +930,14 @@ class Purchase extends CI_Controller
 
 
     }
+	public function historial_ord()
+	{
+		$head['title'] = "Historial CRM";
+		$head['usernm'] = $this->aauth->get_user()->username;
+		$this->load->view('fixed/header', $head);
+			$this->load->view('purchase/historial_ord');
+		$this->load->view('fixed/footer');
+	}
 
 
 
