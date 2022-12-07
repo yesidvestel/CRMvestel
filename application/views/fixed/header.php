@@ -358,6 +358,9 @@ $lista_permisos1=$this->db->query("SELECT permisos_usuario.id,permisos_usuario.i
                         <li>
                             <a href="<?php echo base_url(); ?>products/stock_transfer"><?php echo $this->lang->line('') ?>Traspasos</a>
                         </li>
+						<li>
+                            <a href="<?php echo base_url(); ?>products/historial_inv"><?php echo $this->lang->line('') ?>Historial</a>
+                        </li>
                     </ul>
                 </li>
 				<!---ORDENES DE SERVICIOS --->
@@ -1021,6 +1024,10 @@ $lista_permisos1=$this->db->query("SELECT permisos_usuario.id,permisos_usuario.i
 						<?php if ($lista_permisos_us['invtrs'] != null) { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>products/stock_transfer"><?php echo $this->lang->line('') ?>Traspasos</a>
+                        </li>
+						<?php } if ($lista_permisos_us['inhis'] != null) { ?>
+						<li>
+                            <a href="<?php echo base_url(); ?>products/historial_inv"><?php echo $this->lang->line('') ?>Historial</a>
                         </li>
 						<?php } ?>
                     </ul>

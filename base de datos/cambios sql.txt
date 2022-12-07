@@ -463,3 +463,7 @@ ADD `impuestos` BIGINT(20) NOT NULL AFTER `programadora`,
 ADD `publicos` BIGINT(20) NOT NULL AFTER `impuestos`,
 ADD `comisiones` BIGINT(20) NOT NULL AFTER `publicos`,
 ADD `celulares` BIGINT(20) NOT NULL AFTER `comisiones`;
+----------------------------------------------------------------------------------------------------------
+HISTORIAL INVENTARIOS 1 G
+--------------------------------------
+INSERT INTO `modulos` (`id_modulo`, `rol`, `nombre`, `id_padre`, `codigo`, `orden`, `icono`) VALUES (NULL, 'Hijo', 'Historial', '14', 'inhis', '0', NULL);

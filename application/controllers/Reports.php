@@ -76,60 +76,60 @@ public function historial_crm(){
         }
         $this->load->view('fixed/footer');
 }
-public function historial_list(){
-    $this->load->model("Historial_model","historial");
-    $list = $this->historial->get_datatables();
-    $data = array();
-    $no = $this->input->post('start');
-    setlocale(LC_TIME, "spanish");
+	public function historial_list(){
+		$this->load->model("Historial_model","historial");
+		$list = $this->historial->get_datatables("");
+		$data = array();
+		$no = $this->input->post('start');
+		setlocale(LC_TIME, "spanish");
 
-    foreach ($list as $key => $value) {            
-            $no++;  
-            $row = array();
-            $row[]=$value->id;
-            $x=new DateTime($value->fecha);
-            $row[]= utf8_encode(strftime("%A,".$x->format("d")." de %B del ".$x->format("Y"), strtotime($value->fecha)))."-<u>".$x->format("g").":".$x->format("s")." ".$x->format("a")."</u>";
-            $row[]=$value->modulo;
-            $row[]=$value->accion;
-            if($value->id_fila==""||$value->id_fila==0||$value->id_fila==null){
-                $row[]=$value->tabla;
-            }else{
-                if($value->tabla=="equipos"){
-                    $prod=$this->db->get_where("equipos",array("id"=>$value->id_fila))->row();
-                    if(isset($prod)){
-                        $row[]=$value->tabla.", "."codigo"."=".$prod->codigo;       
-                    }else{
-                        $row[]=$value->tabla.", ".$value->nombre_columna."=".$value->id_fila;    
-                    }
-                    
-                }else if($value->nombre_columna=="pid" && isset($value->id_fila) && $value->id_fila!=0){
-                    $prod=$this->db->get_where("products",array("pid"=>$value->id_fila))->row();
-                    if(isset($prod)){
-                        $row[]=$value->tabla.", "."codigo"."=".$prod->product_code;        
-                    }else{
-                        $row[]=$value->tabla.", ".$value->nombre_columna."=".$value->id_fila;    
-                    }
-                }else{
-                    $row[]=$value->tabla.", ".$value->nombre_columna."=".$value->id_fila;    
-                }
-                
-            }
-            $user=$this->db->get_where("aauth_users",array("id"=>$value->id_usuario))->row();
-            $row[]=$user->username;
-            $row[]="<div style='text-align:center'><a class='btn-small btn-info ver-mas'  data-descripcion='".$value->descripcion."'><i class='icon-book'></i></a></div>";
-            $data[]=$row;
+		foreach ($list as $key => $value) {            
+				$no++;  
+				$row = array();
+				$row[]=$value->id;
+				$x=new DateTime($value->fecha);
+				$row[]= utf8_encode(strftime("%A,".$x->format("d")." de %B del ".$x->format("Y"), strtotime($value->fecha)))."-<u>".$x->format("g").":".$x->format("s")." ".$x->format("a")."</u>";
+				$row[]=$value->modulo;
+				$row[]=$value->accion;
+				if($value->id_fila==""||$value->id_fila==0||$value->id_fila==null){
+					$row[]=$value->tabla;
+				}else{
+					if($value->tabla=="equipos"){
+						$prod=$this->db->get_where("equipos",array("id"=>$value->id_fila))->row();
+						if(isset($prod)){
+							$row[]=$value->tabla.", "."codigo"."=".$prod->codigo;       
+						}else{
+							$row[]=$value->tabla.", ".$value->nombre_columna."=".$value->id_fila;    
+						}
 
-    }
-        $output = array(
-            "draw" => $_POST['draw'],
-            "recordsTotal" => $this->historial->count_all(),
-            "recordsFiltered" => $this->historial->count_filtered(),
-            "data" => $data,
-        );
-        //output to json format
-        echo json_encode($output);
+					}else if($value->nombre_columna=="pid" && isset($value->id_fila) && $value->id_fila!=0){
+						$prod=$this->db->get_where("products",array("pid"=>$value->id_fila))->row();
+						if(isset($prod)){
+							$row[]=$value->tabla.", "."codigo"."=".$prod->product_code;        
+						}else{
+							$row[]=$value->tabla.", ".$value->nombre_columna."=".$value->id_fila;    
+						}
+					}else{
+						$row[]=$value->tabla.", ".$value->nombre_columna."=".$value->id_fila;    
+					}
 
-}
+				}
+				$user=$this->db->get_where("aauth_users",array("id"=>$value->id_usuario))->row();
+				$row[]=$user->username;
+				$row[]="<div style='text-align:center'><a class='btn-small btn-info ver-mas'  data-descripcion='".$value->descripcion."'><i class='icon-book'></i></a></div>";
+				$data[]=$row;
+
+		}
+			$output = array(
+				"draw" => $_POST['draw'],
+				"recordsTotal" => $this->historial->count_all(""),
+				"recordsFiltered" => $this->historial->count_filtered(""),
+				"data" => $data,
+			);
+			//output to json format
+			echo json_encode($output);
+
+	}
     public function statecnicos()
 
     {

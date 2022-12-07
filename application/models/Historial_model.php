@@ -24,10 +24,13 @@ class Historial_model extends CI_Model
     var $column_order = array("id","fecha","modulo","accion",null,"id_usuario");
     var $column_search = array("id","fecha","modulo","accion","tabla","id_fila");
     
-    private function _get_datatables_query()
+    private function _get_datatables_query($mod)
     {
 
         $this->db->from($this->table);
+		if($mod!=""){
+			$this->db->where('modulo',$mod);
+		}
 
         
         $i=0;
@@ -60,24 +63,30 @@ class Historial_model extends CI_Model
             $this->db->order_by(key($order), $order[key($order)]);
         }
     }
-    function get_datatables()
+    function get_datatables($mod)
     {
-        $this->_get_datatables_query();
+        $this->_get_datatables_query($mod);
         $this->db->order_by("id","desc");
         if ($this->input->post('length') != -1)
             $this->db->limit($this->input->post('length'), $this->input->post('start'));
         $query = $this->db->get();
         return $query->result();
     }
-    function count_filtered()
+    function count_filtered($mod)
     {
-        $this->_get_datatables_query();
+        $this->_get_datatables_query($mod);
+		if ($mod != '') {
+            $this->db->where('modulo', $mod);
+        }
         $query = $this->db->get();
         return $query->num_rows();
     }
-    public function count_all()
+    public function count_all($mod)
     {
-        $this->_get_datatables_query();
+        $this->_get_datatables_query($mod);
+		if ($mod != '') {
+            $this->db->where('modulo', $mod);
+        }
         $query = $this->db->get();
         return $query->num_rows();
     }
