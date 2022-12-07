@@ -35,21 +35,23 @@ class Products_model extends CI_Model
         $this->load->database();
     }
 
-    private function _get_datatables_query()
+    private function _get_datatables_query($catid)
     {
 		
         //if ($w) {
-			$this->db->select('products.*,product_warehouse.*,product_cat.*, product_cat.title AS cate');
+			$this->db->select('products.*,product_warehouse.*,product_cat.*, product_cat.title AS cate, product_warehouse.title AS almacen');
             $this->db->from($this->table);
             $this->db->join('product_warehouse', 'product_warehouse.id = products.warehouse');
 			$this->db->join('product_cat', 'product_cat.id = products.pcat');
-            //if ($id > 0) {
-		
+			if($catid!=""){
+			$this->db->where("warehouse",$catid);
+			}
+            if ($id > 0) {
 			if($_GET['categoria']!="" && $_GET['categoria']!=null && $_GET['categoria']!="null"){
             $this->db->where('pcat' , $_GET['categoria']);       
         	}
-                $this->db->where("product_warehouse.id = ".$_GET['id']);
-            //}
+                
+            }
 			
        /* } else {
 			//$this->db->select('products.*,product_warehouse.*,product_cat.*, product_cat.title AS cate');
@@ -90,11 +92,10 @@ class Products_model extends CI_Model
         }
     }
 
-    function get_datatables()
+    function get_datatables($catid)
     {
 	 
-        
-		$this->_get_datatables_query();
+		$this->_get_datatables_query($catid);
         if ($this->input->post('length') != -1)
             $this->db->limit($this->input->post('length'), $this->input->post('start'));
         $query = $this->db->get();
@@ -165,10 +166,10 @@ class Products_model extends CI_Model
         }
     }
 
-    function count_filtered()
+    function count_filtered($catid)
     {
         
-		$this->_get_datatables_query();
+		$this->_get_datatables_query($catid);
         $query = $this->db->get();
         return $query->num_rows();
     }

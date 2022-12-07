@@ -101,7 +101,7 @@ class Products extends CI_Controller
         if ($catid > 0) {
             $list = $this->products->get_datatables($catid);
         } else {
-            $list = $this->products->get_datatables();
+            $list = $this->products->get_datatables("");
         }
         $data = array();
         $no = $this->input->post('start');
@@ -116,7 +116,7 @@ class Products extends CI_Controller
             $row[] = $prd->product_code;
             $row[] = $prd->title;
             $row[] = amountFormat($prd->product_price);
-            $row[] = $prd->warehouse;
+            $row[] = $prd->almacen;
             $row[] = '<a href="' . base_url() . 'products/edit?id=' . $pid . '" class="btn btn-primary btn-xs"><span class="icon-pencil"></span> ' . $this->lang->line('Edit') . '</a> <a href="#" data-object-id="' . $pid . '" class="btn btn-danger btn-xs  delete-object"><span class="icon-bin"></span> ' . $this->lang->line('Delete') . '</a>';
             $data[] = $row;
         }
@@ -456,7 +456,7 @@ class Products extends CI_Controller
     public function warehouseproduct_list()
     {
         $catid = $this->input->get('id');
-        $list = $this->products->get_datatables();
+        $list = $this->products->get_datatables($catid);
         $data = array();
         $no = $this->input->post('start');
         foreach ($list as $prd) {
@@ -475,8 +475,8 @@ class Products extends CI_Controller
 
         $output = array(
             "draw" => $_POST['draw'],
-            "recordsTotal" => $this->products->count_all(),
-            "recordsFiltered" => $this->products->count_filtered(),
+            "recordsTotal" => $this->products->count_all($catid),
+            "recordsFiltered" => $this->products->count_filtered($catid),
             "data" => $data,
         );
         //output to json format
