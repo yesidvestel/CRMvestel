@@ -145,7 +145,7 @@
 
 						<div class="col-sm-6">
 							<input type="text" placeholder="N° cuenta"
-								   class="form-control margin-bottom  required" name="cuenta"
+								   class="form-control margin-bottom" name="cuenta"
 								   value="<?php echo $customer['cuenta'] ?>">
 						</div>
 					</div>
