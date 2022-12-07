@@ -111,6 +111,7 @@
 								<option value="Control de Calidad">Control de Calidad</option>
 								<option value="Para Recuperacion">Para Recuperacion</option>
 								<option value="Recibida">Llamada Recibida</option>
+								<option value="Suspensión y Retiro">Suspensión y Retiro</option>
                            </select>
                         </div>
 					</div>
@@ -219,6 +220,8 @@
 			var optionArray = ["","Recuperacion Contestada","sin Contestar","Mensaje"];
 		}else if (tipo.value == "Recibida"){
 			var optionArray = ["","Contestada","sin Contestar"];
+		}else if (tipo.value == "Suspensión y Retiro"){
+			var optionArray = ["","Suspensión Temporal","Retiro Voluntario"];
 		};
 		ocultar_selects_venta_contestada();
 	for(option = 0;option < optionArray.length; option++){
@@ -304,6 +307,10 @@
 				var optionArray = ["","Otros"];
 			}else if (respuesta.value == "Mensaje"){
 				var optionArray = ["Mensaje de texto","Mensaje de Whatsapp","Otros"];
+			}else if (respuesta.value == "Suspensión Temporal"){
+				var optionArray = ["Suspensión por dos meses","Continua con el servicio","Llamada para activar"];
+			}else if (respuesta.value == "Retiro Voluntario"){
+				var optionArray = ["Mal servicio","Cobertura","Cambio Municipio","No lo necesita","Economía","Ya Tiene Otro Servicio","Continua con el servicio","Llamada para activar"];
 			}
 			
 		for(option = 0;option < optionArray.length; option++){
