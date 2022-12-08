@@ -940,6 +940,7 @@ class Purchase extends CI_Controller
 	}
 	public function explortar_his_ord(){
 		set_time_limit(20000);
+        
         //$this->load->model('customers_model', 'customers');
 		$this->db->select('*');
         $this->db->from('historial_crm');
@@ -954,8 +955,13 @@ class Purchase extends CI_Controller
             if($_GET['filtro_fecha']=='fcreada'){
             $fecha_incial= new DateTime($_GET['sdate']);
             $fecha_final= new DateTime($_GET['edate']);
-         	$this->db->where('fecha>=', $fecha_incial->format("Y-m-d"));   
-			$this->db->where('fecha<=', $fecha_final->format("Y-m-d"));
+            
+            
+            
+            $condicion1='fecha >="'. $fecha_incial->format("Y-m-d 00:00:00").'" AND fecha <="'. $fecha_final->format("Y-m-d 23:59:59").'"';
+         	$this->db->where($condicion1);   
+			
+
 			} if($_GET['filtro_fecha']=='fecha_final'){
 				$fecha_incial2= new DateTime($_GET['sdatefin']);
             	$fecha_final2= new DateTime($_GET['edatefin']);
