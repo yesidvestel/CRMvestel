@@ -938,7 +938,119 @@ class Purchase extends CI_Controller
 			$this->load->view('purchase/historial_ord');
 		$this->load->view('fixed/footer');
 	}
+	public function explortar_his_ord(){
+		set_time_limit(20000);
+        //$this->load->model('customers_model', 'customers');
+		$this->db->select('*');
+        $this->db->from('historial_crm');
+		$this->db->where('modulo', 'Orden de Compra');
+		if($_GET['tecnico']!='' && $_GET['tecnico']!='0' && $_GET['tecnico']!='undefined'){
+         		$this->db->where('responsable=', $_GET['tecnico']);
+        }
+		if($_GET['tipo']!='' && $_GET['tipo']!='0' && $_GET['tipo']!='undefined'){
+         $this->db->where('tllamada=', $_GET['tipo']);   
+        }
+        if($_GET['filtro_fecha']!='' && $_GET['filtro_fecha']!='undefined'){
+            if($_GET['filtro_fecha']=='fcreada'){
+            $fecha_incial= new DateTime($_GET['sdate']);
+            $fecha_final= new DateTime($_GET['edate']);
+         	$this->db->where('fecha>=', $fecha_incial->format("Y-m-d"));   
+			$this->db->where('fecha<=', $fecha_final->format("Y-m-d"));
+			} if($_GET['filtro_fecha']=='fecha_final'){
+				$fecha_incial2= new DateTime($_GET['sdatefin']);
+            	$fecha_final2= new DateTime($_GET['edatefin']);
+         		$this->db->where('fecha_vence>=', $fecha_incial2->format("Y-m-d"));   
+         		$this->db->where('fecha_vence<=', $fecha_final2->format("Y-m-d"));
+			}
+        }
+		//$this->db->join('aauth_users', 'aauth_users.id=id_usuario', 'left');
+        $this->db->order_by("id","DESC");
+        $lista_historial=$this->db->get()->result();
+        $this->load->library('Excel');
+		$lista_historial2=array();
+		
+    
+    //define column headers
+    $headers = array(
+        'id' => 'string', 
+        'accion' => 'string',
+		'fecha' => 'string',
+		'Realizado' => 'string',
+		'descripcion' => 'string'
+	);
+    
+    //fetch data from database
+    //$salesinfo = $this->product_model->get_salesinfo();
+    
+    //create writer object
+    $writer = new Excel();
+    
+        //meta data info
+    $keywords = array('xlsx','CUSTOMERS','VESTEL');
+    $writer->setTitle('Reporte historial');
+    $writer->setSubject('');
+    $writer->setAuthor('VESTEL');
+    $writer->setCompany('VESTEL');
+    $writer->setKeywords($keywords);
+    $writer->setDescription('Reporte historial');
+    $writer->setTempDir(sys_get_temp_dir());
+    
+    //write headers el primer campo que es nombre de la hoja de excel deve de coincidir en writeSheetHeader y writeSheetRow para tener en cuenta si se piensan agregar otras hojas o algo por el estilo
+    $writer->writeSheetHeader('Historial ',$headers,$col_options = array(
 
+		['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+		['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+		['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+		['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+		['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+		));
+    
+    //write rows to sheet1
+	
+    foreach ($lista_historial as $key => $historial) {
+				$user = $this->db->get_where('aauth_users',array('id'=>$historial->id_usuario))->row();
+				$fecha = date("d/m/Y",strtotime($historial->fecha));
+					$writer->writeSheetRow('Historial ',array(
+						$historial->id,
+						$historial->accion,
+						$fecha,
+						$user->username,
+						$historial->descripcion,
+					));
+        
+    }
+        
+        
+    
+    $fecha_actual= date("d-m-Y");
+    $dia= date("N");
+    $this->load->model('reports_model', 'reports');
+    $fecha_actual=$this->reports->obtener_dia($dia)." ".$fecha_actual;
+    $fileLocation = 'Historial '.$fecha_actual.'.xlsx';
+    
+    //write to xlsx file
+    $writer->writeToFile($fileLocation);
+    //echo $writer->writeToString();
+    
+    //force download
+    header('Content-Description: File Transfer');
+    header("Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+    header("Content-Disposition: attachment; filename=".basename($fileLocation));
+    header("Content-Transfer-Encoding: binary");
+    header("Expires: 0");
+    header("Pragma: public");
+    header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+    header('Content-Length: ' . filesize($fileLocation)); //Remove
+
+    ob_clean();
+    flush();
+
+    readfile($fileLocation);
+    unlink($fileLocation);
+    exit(0);
+       
+
+    }
 
 
 }

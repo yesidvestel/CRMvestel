@@ -6,6 +6,87 @@
             <div class="message"></div>
         </div>
         <h4>Historial</h4>
+		<div class="card card-block sameheight-item">
+
+                        
+                            <div class="form-group row">
+								<label class="col-sm-12 col-form-label"
+                                       for="pay_cat"><h5>FILTRAR</h5></label>
+								<?php if ($this->aauth->get_user()->roleid > 3) { ?>
+                                <label class="col-sm-2 col-form-label"
+                                       for="pay_cat">Realizadas por</label>
+
+                                <div class="col-sm-6">
+                                    <select name="tec" class="form-control" id="tecnicos2">
+										
+                                        <option value='0'>Todos</option>
+                                        <?php
+											foreach ($tecnicoslista as $row) {
+												$cid = $row['id'];
+												$title = $row['username'];
+												echo "<option value='$title' data-id='$title'>$title</option>";
+											}
+											?>
+                                    </select>
+                                </div>
+								<?php } ?>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label"
+                                       for="pay_cat">Fechas</label>
+
+                                <div class="col-sm-6">
+                                    <select name="trans_type" class="form-control" id="fechas" onchange="filtrado_fechas()">
+                                        <option value=''>Todas</option>
+                                        <option value='fcreada'>Especificar Fecha</option>
+                                        <option value='fecha_final'>Fecha Vencimiento</option>
+                                        
+                                    </select>
+                                </div>                              
+                            </div>
+				 			<div class="form-group row" id="div_fechas" style="display: none">
+                                <label class="col-sm-2 col-form-label"
+                                       for="pay_cat" id="label_fechas">Fechas</label>
+
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control required"
+                                           placeholder="Start Date" name="sdate" id="sdate"
+                                            autocomplete="false">
+                                </div>
+								<div class="col-sm-2">
+									<input type="text" class="form-control required"
+                                           placeholder="End Date" name="edate" id="edate"
+                                           data-toggle="datepicker" autocomplete="false">
+								</div>
+                            </div>
+							<div class="form-group row" id="div_fecha_final" style="display: none">
+                                <label class="col-sm-2 col-form-label"
+                                       for="pay_cat" id="label_fecha_final">Fechas Vence</label>
+
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control required" data-toggle="datepicker" 
+                                           placeholder="Start Date" name="sdatefin" id="sdatefin"
+                                            autocomplete="false">
+                                </div>
+								<div class="col-sm-2">
+									<input type="text" class="form-control required"
+                                           placeholder="End Date" name="edatefin" id="edatefin"
+                                           data-toggle="datepicker" autocomplete="false">
+								</div>
+                            </div>
+                           
+							<div class="form-group row">
+                                <label class="col-sm-3 col-form-label" for="pay_cat"></label>
+
+                                <div class="col-sm-4">
+                                    <input type="button" class="btn btn-primary btn-md" value="VER" onclick="filtrar()">
+
+
+                                </div>
+                            </div>
+                        
+                    </div>
+		<a href="#" onclick="redirect_to_export()" class="btn btn-success fa-sharp fa-solid fa-file-excel"></a>
         <hr>
         <div class="grid_3 grid_4">
             <table id="tabla-historial" class="table-striped table-hover" cellspacing="0" width="100%">
@@ -78,6 +159,7 @@
         </div>
     </div>
 </div>
+<script src="https://kit.fontawesome.com/317775a1b1.js" crossorigin="anonymous"></script>
 <script type="text/javascript">
     var tb;
     $(document).ready(function(){
@@ -152,4 +234,49 @@
         //console.log(contenido);
         $("#pop_model").modal("show");
     });
+	function filtrar(){
+        var tecnico=$("#tecnicos2 option:selected").val();
+		var tipo=$("#tipo option:selected").val();
+        var opcion_seleccionada=$("#fechas option:selected").val();
+        var edate=$("#edate").val();
+        var edatefin=$("#edatefin").val();
+        var sdate=$("#sdate").val();
+        var sdatefin=$("#sdatefin").val();
+        if(tecnico=="" && tipo=="" && opcion_seleccionada==""){
+            table.ajax.url( baseurl+'products/historial_list?mod=Orden de Compra').load();     
+        }else{
+            //var tec=$("#tecnicos2 option:selected").data("id");
+            table.ajax.url( baseurl+"products/historial_list?tecnico="+tecnico+"&tipo="+tipo+"&edate="+edate+"&edatefin="+edatefin+"&sdate="+sdate+"&sdatefin="+sdatefin+"&filtro_fecha="+opcion_seleccionada+"&mod=Orden de Compra" ).load();     
+        }
+       
+
+    }
+	//export excel
+	function redirect_to_export(){
+       var tecnico=$("#tecnicos2 option:selected").val();
+		var tipo=$("#tipo option:selected").val();
+        var opcion_seleccionada=$("#fechas option:selected").val();
+        var edate=$("#edate").val();
+        var edatefin=$("#edatefin").val();
+        var sdate=$("#sdate").val();
+        var sdatefin=$("#sdatefin").val();
+        var url_redirect=baseurl+"purchase/explortar_his_ord?tecnico="+tecnico+"&tipo="+tipo+"&edate="+edate+"&edatefin="+edatefin+"&sdate="+sdate+"&sdatefin="+sdatefin+"&filtro_fecha="+opcion_seleccionada;
+            window.location.replace(url_redirect);
+
+    }
+	function  filtrado_fechas(){
+        var opcion_seleccionada=$("#fechas option:selected").val();
+        if(opcion_seleccionada=="fcreada"){
+            $("#div_fechas").show();
+            $("#label_fechas").text("Fechas")
+        }else{
+            $("#div_fechas").hide();
+        }
+		 if(opcion_seleccionada=="fecha_final"){
+            $("#div_fecha_final").show();
+            $("#label_fecha_final").text("Fechas")
+        }else{
+            $("#div_fecha_final").hide();
+        }
+    }
 </script>

@@ -66,16 +66,16 @@ class Reports extends CI_Controller
 
     }
 	//estadisticas tecnicos
-public function historial_crm(){
+	public function historial_crm(){
 
-        $head['title'] = "Historial CRM";
-        $head['usernm'] = $this->aauth->get_user()->username;
-        $this->load->view('fixed/header', $head);
-        if ($this->aauth->get_user()->roleid >= 5) {
-            $this->load->view('reports/historial_crm');
-        }
-        $this->load->view('fixed/footer');
-}
+			$head['title'] = "Historial CRM";
+			$head['usernm'] = $this->aauth->get_user()->username;
+			$this->load->view('fixed/header', $head);
+			if ($this->aauth->get_user()->roleid >= 5) {
+				$this->load->view('reports/historial_crm');
+			}
+			$this->load->view('fixed/footer');
+	}
 	public function historial_list(){
 		$this->load->model("Historial_model","historial");
 		$list = $this->historial->get_datatables("");
