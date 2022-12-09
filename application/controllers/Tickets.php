@@ -750,6 +750,16 @@ class Tickets Extends CI_Controller
         $invoice = $this->db->get_where('invoices',array('tid'=>$ticket->id_invoice))->result_array();
 		$temporal=$this->db->get_where('temporales',array('corden'=>$ticket->codigo))->row();
 		if($status=="Realizando"){
+			$q=$this->db->query("select * from tickets where asignado='".$ticket->asignado."' and status='Realizando'")->result();
+			$es_valido=true;
+            if(count($q)>0){
+                $es_valido=false;
+                $txt_error.="<li>Ya tiene una orden abierta <a href='".base_url()."tickets/thread?id=".$q[0]->idt."'><strong>".$q[0]->codigo."</strong></a></li>";  
+            }
+			if(!$es_valido){
+            echo json_encode(array('status' => 'Error', 'message' =>
+                "<br>".$txt_error, 'pstatus' => "error"));                
+        }else{
 			//cambio cuando se esta realizando
             $this->db->set('status', $status);
            // $this->db->set('inicio', date("Y-m-d h:i"));
@@ -771,8 +781,9 @@ class Tickets Extends CI_Controller
                 $data_h['nombre_columna']="idorden";
                 $this->db->insert("historial_crm",$data_h);
         };
+			
         echo json_encode(array('msg1'=>"Realizando",'tid'=>0,'status' => 'Success', 'message' =>
-            $this->lang->line('UPDATED'), 'pstatus' => $status));
+            $this->lang->line('UPDATED'), 'pstatus' => $status));}
    } else if($status=="Anulada"){
     $dataz=array();
         $dataz['status']=$status;
