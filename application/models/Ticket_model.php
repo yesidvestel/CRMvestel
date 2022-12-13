@@ -119,9 +119,12 @@ class Ticket_model extends CI_Model
         $this->db->from('aauth_users');
 		$this->db->join('employee_profile', 'aauth_users.id=employee_profile.id', 'left');
         //$this->db->where('roleid', '2');
+		$areas = array(2,4);//areas a la que pertenecen
+		$this->db->where_in('area', $areas);
 		if ($sedeacc != '0'){
 			$this->db->where('sede_accede', $sedeacc);
 			$this->db->or_where('sede_accede', '0');
+			
 		}
         $this->db->order_by("username");
         $query = $this->db->get();

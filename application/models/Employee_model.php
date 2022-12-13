@@ -127,10 +127,28 @@ class Employee_model extends CI_Model
         $query = $this->db->get();
         return $query->row_array();
     }
+	public function employee_arealist($id)
+    {
+        $this->db->select('*');
+        $this->db->from('areas');
+        $this->db->where('ida!=', $id);
+        //$this->db->join('areas', 'employee_profile.area = areas.ida', 'left');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+	public function employee_area($id)
+    {
+        $this->db->select('*');
+        $this->db->from('areas');
+        $this->db->where('ida', $id);
+        //$this->db->join('areas', 'employee_profile.area = areas.ida', 'left');
+        $query = $this->db->get();
+        return $query->row_array();
+    }
 
     public function update_employee(
 		$id, $name,$dto,$ingreso,$rh,$eps,$pensiones, 
-		$phone, $phonealt, $address, $city, $region, $country,
+		$phone, $phonealt, $address, $city, $region, $country,$area,
 		$roleid,$data_perms)
     {
         $data = array(
@@ -146,6 +164,7 @@ class Employee_model extends CI_Model
             'city' => $city,
             'region' => $region,
             'country' => $country,
+            'area' => $area,
         );
 
 
@@ -193,7 +212,7 @@ class Employee_model extends CI_Model
     }
 	 public function update_user(
 		$id, $name,$dto,$ingreso,$rh,$eps,$pensiones, 
-		$phone, $phonealt, $address, $city, $region, $country
+		$phone, $phonealt, $address, $city, $region, $country, $area
 		)
     {
         $data = array(
@@ -209,6 +228,7 @@ class Employee_model extends CI_Model
             'city' => $city,
             'region' => $region,
             'country' => $country,
+            'area' => $area,
         );
 
 
@@ -455,7 +475,7 @@ class Employee_model extends CI_Model
     public function add_employee(
 		$id, $username, $name,$dto,$ingreso,$rh,
 		$eps,$pensiones, $roleid, $phone, 
-		$address, $city, $region, $country,
+		$address, $city, $region, $country,$area,
 		$data_perms)
     {
         $data = array(
@@ -471,6 +491,7 @@ class Employee_model extends CI_Model
             'city' => $city,
             'region' => $region,
             'country' => $country,
+            'area' => $area,
             'phone' => $phone
         );
 

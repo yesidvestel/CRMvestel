@@ -82,7 +82,7 @@
 								<div class="form-group row">
 
                                     <label class="col-sm-2 col-form-label"
-                                           for="address"><?php echo $this->lang->line('') ?>RH</label>
+                                           for="address"><?php echo $this->lang->line('') ?>Tipo de sangre + RH</label>
 
                                     <div class="col-sm-10">
                                         <input type="text" placeholder="Grupo sanguineo"
@@ -159,12 +159,19 @@
                             <div class="form-group row">
 
                                 <label class="col-sm-2 col-form-label"
-                                       for="phone"><?php echo $this->lang->line('Phone') ?> (Alt)</label>
+                                       for="phone"><?php echo $this->lang->line('') ?>Area</label>
 
                                 <div class="col-sm-10">
-                                    <input type="text" placeholder="altphone"
-                                           class="form-control margin-bottom" name="phonealt"
-                                           value="<?php echo $user['phonealt'] ?>">
+                                   <select name="area" class="form-control margin-bottom">
+									<option value="<?php echo $get_area['ida'] ?>">=><?php echo $get_area['nombre_area'] ?></option>
+									<?php
+										foreach ($area as $row) {
+											$cid = $row['ida'];
+											$title = $row['nombre_area'];
+											echo "<option value='$cid'>$title</option>";
+										}
+										?>
+									</select>
                                 </div>
                             </div>
                             <div class="form-group row">

@@ -86,7 +86,8 @@ public function codigo_generar_inserts_permisos(){
 
         $head['usernm'] = $this->aauth->get_user()->username;
         $head['title'] = 'Add Employee';
-$data['modulos_padre']=$this->employee->get_modulos_padres();
+		$data['modulos_padre']=$this->employee->get_modulos_padres();
+		$data['area'] = $this->employee->employee_arealist('');
         $this->load->view('fixed/header', $head);
         $this->load->view('employee/add',$data);
         $this->load->view('fixed/footer');
@@ -128,6 +129,7 @@ $data['modulos_padre']=$this->employee->get_modulos_padres();
         $city = $this->input->post('city');
         $region = $this->input->post('region');
         $country = $this->input->post('country');
+        $area = $this->input->post('area');
         /*$co = $this->input->post('co');
         $coape = $this->input->post('coape');
         $conue = $this->input->post('conue');
@@ -254,7 +256,7 @@ $data['modulos_padre']=$this->employee->get_modulos_padres();
 					$nuid, (string)$this->aauth->get_user($a)->username, 
 					$name,$dto,$ingreso,$rh,$eps,$pensiones, 
 					$roleid, $phone, $address, $city, 
-					$region, $country,$data_perms);
+					$region, $country,$area,$data_perms);
 
             }
 
@@ -477,6 +479,7 @@ $data['modulos_padre']=$this->employee->get_modulos_padres();
             $city = $this->input->post('city');
             $region = $this->input->post('region');
             $country = $this->input->post('country');
+            $area = $this->input->post('area');
 			$roleid = $this->input->post('roleid');
 			/*$co = $this->input->post('co');
 			$coape = $this->input->post('coape');
@@ -591,15 +594,17 @@ $data['modulos_padre']=$this->employee->get_modulos_padres();
             }
             $this->employee->update_employee(
 				$eid, $name,$dto,$ingreso,$rh,$eps,$pensiones, 
-				$phone, $phonealt, $address, $city, $region, $country,
+				$phone, $phonealt, $address, $city, $region, $country,$area,
 				$roleid,$data_perms);
 
         } else {
             $head['usernm'] = $this->aauth->get_user($id)->username;
             $head['title'] = $head['usernm'] . ' Profile';
-
+			
 
             $data['user'] = $this->employee->employee_details($id);
+            $data['area'] = $this->employee->employee_arealist($data['user']['area']);
+            $data['get_area'] = $this->employee->employee_area($data['user']['area']);
             $data['eid'] = intval($id);
             $data['modulos_padre']=$this->employee->get_modulos_padres();
             $data['modulos_usuario']=$this->employee->get_modulos_cliente($id);

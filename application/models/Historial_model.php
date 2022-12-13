@@ -22,7 +22,7 @@ class Historial_model extends CI_Model
 {
     var $table="historial_crm";
     var $column_order = array("id","fecha","modulo","accion",null,"id_usuario");
-    var $column_search = array("id","fecha","modulo","accion","tabla","id_fila");
+    var $column_search = array("id","fecha","modulo","descripcion","accion","tabla","id_fila");
     
     private function _get_datatables_query($mod)
     {
