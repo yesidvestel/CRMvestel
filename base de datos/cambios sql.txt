@@ -471,3 +471,8 @@ INSERT INTO `modulos` (`id_modulo`, `rol`, `nombre`, `id_padre`, `codigo`, `orde
 HISTORIAL ORDENES 1 G
 --------------------------------------
 INSERT INTO `modulos` (`id_modulo`, `rol`, `nombre`, `id_padre`, `codigo`, `orden`, `icono`) VALUES (NULL, 'Hijo', 'Historial ordenes', '20', 'comhis', '0', NULL);
+----------------------------------------------------------------------------------------------------------
+EMPLEADOS AREA 1 G
+--------------------------------------
+ALTER TABLE `employee_profile` 
+ADD `area` int(10) NOT NULL AFTER `country`,

@@ -139,15 +139,16 @@ public function vista_previa_contrato(){
             $city = $this->input->post('city');
             $region = $this->input->post('region');
             $country = $this->input->post('country');
+            $area = $this->input->post('area');
             $postbox = $this->input->post('postbox');
-            $this->employee->update_user($id, $name,$dto,$ingreso,$rh,$eps,$pensiones, $phone, $phonealt, $address, $city, $region, $country, $postbox);
+            $this->employee->update_user($id, $name,$dto,$ingreso,$rh,$eps,$pensiones, $phone, $phonealt, $address, $city, $region, $country, $area, $postbox);
 
         } else {
             $head['usernm'] = $this->aauth->get_user()->username;
             $head['title'] = $head['usernm'] . ' Profile';
-
-
             $data['user'] = $this->employee->employee_details($id);
+			$data['area'] = $this->employee->employee_arealist($data['user']['area']);
+            $data['get_area'] = $this->employee->employee_area($data['user']['area']);
             $data['eid'] = intval($id);
             $this->load->view('fixed/header', $head);
             $this->load->view('user/edit', $data);
