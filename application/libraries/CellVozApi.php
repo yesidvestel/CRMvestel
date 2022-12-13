@@ -43,13 +43,13 @@ class CellVozApi
 
     public function alternativa_por_curl_envio_sms_invividual($token,$number,$mensaje){
         $curl = curl_init();
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        //curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt_array($curl, array(
-          CURLOPT_URL => 'http://api.cellvoz.co/v2/sms/single',
+          CURLOPT_URL => 'https://api.cellvoz.co/v2/sms/single',
           CURLOPT_RETURNTRANSFER => true,
           CURLOPT_ENCODING => '',
           CURLOPT_MAXREDIRS => 10,
-          CURLOPT_TIMEOUT => 0,
+          CURLOPT_TIMEOUT => 399,
           CURLOPT_FOLLOWLOCATION => true,
           CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
           CURLOPT_CUSTOMREQUEST => 'POST',

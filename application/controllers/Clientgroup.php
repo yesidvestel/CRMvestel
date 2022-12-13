@@ -2482,7 +2482,7 @@ if ($valido) {
                     $mensajes_a_enviar = trim($mensajes_a_enviar, ',');
                 }
                 //var_dump($mensajes_a_enviar);
-                if($_COOKIE['cancelar_envio_mensajes']=="false"){
+                if($_COOKIE['cancelar_envio_mensajes']=="false" || isset($_POST['envio_desde_factura'])){var_dump($mensajes_a_enviar);
                     $var=$api->envio_sms_masivos_por_curl($retorno['token'],$mensajes_a_enviar,$name_campaign);            
                 }                
                 //$mensaje=json_decode($var);
@@ -2491,12 +2491,13 @@ if ($valido) {
                 }else{
                     $mensaje=$mensaje->message;
                 }*/
-
+//falta agregar los numeros del usuario y mensajes de exito
                 $mensaje="Enviado";
             }else{
                 if($_COOKIE['cancelar_envio_mensajes']=="false"){
-                    $var=$api->enviar_msm($retorno['token'],$number,$message);    
+                    $var=$api->alternativa_por_curl_envio_sms_invividual($retorno['token'],$number,$message);    
                 }
+                $mensaje="Enviado";
                 $mensaje=$var->getMessage();
             }
 

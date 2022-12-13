@@ -1687,6 +1687,11 @@ function eliminar_resivos_de_pago(){
         $data['attach'] = $this->invocies->attach($tid);
 		$data['paqueteinter'] = $this->invocies->paquetes('inter');
 		$data['paquete'] = $this->invocies->paquetes('tv');
+        $data['phons'] = $this->invocies->get_phons_csd($data['invoice']['csd']);
+
+        $this->load->model('templates_model','templates');
+        $data['plantillas'] = $this->templates->get_template();
+        
         if ($data['invoice']) $data['products'] = $this->invocies->invoice_products($tid);
         if ($data['invoice']) $data['activity'] = $this->invocies->invoice_transactions($tid);
 

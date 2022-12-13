@@ -278,6 +278,18 @@ setlocale(LC_TIME, "spanish");
         $query = $this->db->get();
         return $query->row_array();
     }
+    public function get_phons_csd($csd){
+        $obj= $this->db->get_where("customers",array("id"=>$csd))->row();
+        $str_retorn="";
+        if(!(strlen($obj->celular)<10 || strlen($obj->celular)>10 || preg_match_all("/[^0-9]/",$obj->celular)!=0)){
+                $str_retorn=$csd."-".$obj->celular;
+        }        
+        if(!(strlen($obj->celular2)<10 || strlen($obj->celular2)>10 || preg_match_all("/[^0-9]/",$obj->celular2)!=0)){
+                $str_retorn=$csd."-".$obj->celular2;
+        }
+
+        return $str_retorn;
+    }
 	public function paquetes($opts)
     {
 		$this->opt = $opts;

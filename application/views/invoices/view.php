@@ -8,6 +8,7 @@
  color: #2224A3;
 }
 </style>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 <div class="app-content content container-fluid">
     <div class="content-wrapper">
         <div id="notify" class="alert alert-success" style="display:none;">
@@ -67,35 +68,10 @@
                                 </div>
 
                                 <!-- SMS -->
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-blue dropdown-toggle mb-1"
-                                            data-toggle="dropdown"
-                                            aria-haspopup="true" aria-expanded="false">
-                            <span
-                                    class="icon-envelope-o"></span> SMS
-                                    </button>
-                                    <div class="dropdown-menu"><a href="#sendSMS" data-toggle="modal"
-                                                                  data-remote="false" class="dropdown-item sendsms"
-                                                                  data-type="notification"><?php echo $this->lang->line('Invoice Notification') ?></a>
-                                        <div class="dropdown-divider"></div>
-                                        <a href="#sendSMS" data-toggle="modal" data-remote="false"
-                                           class="dropdown-item sendsms"
-                                           data-type="reminder"><?php echo $this->lang->line('Payment Reminder') ?></a>
-                                        <a
-                                                href="#sendSMS" data-toggle="modal" data-remote="false"
-                                                class="dropdown-item sendsms"
-                                                data-type="received"><?php echo $this->lang->line('Payment Received') ?></a>
-                                        <div class="dropdown-divider"></div>
-                                        <a href="#sendSMS" data-toggle="modal" data-remote="false"
-                                           class="dropdown-item sendsms" href="#"
-                                           data-type="overdue"><?php echo $this->lang->line('Payment Overdue') ?></a><a
-                                                href="#sendSMS" data-toggle="modal" data-remote="false"
-                                                class="dropdown-item sendbill"
-                                                data-type="refund"><?php echo $this->lang->line('Refund Generated') ?></a>
 
-                                    </div>
-
-                                </div>
+                                <a href="#" id="open_modal_sms" 
+                                   class="btn btn-info mb-1" 
+                                ><span class="icon-envelope-o"></span> SMS</a>
 
                                 <div class="btn-group ">
                                     <button type="button" class="btn btn-success mb-1 btn-min-width dropdown-toggle"
@@ -912,8 +888,125 @@
         </div>
     </div>
 </div>
+<!-- modal sms-->
+<div id="sendSms" class="modal fade">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title"><?php echo $this->lang->line('Sms individual') ?> </h4>
+            </div>
+
+            <div class="modal-body" id="emailbody">
+                <form id="sendSMS_form">
+<div id="div_notify2">
+<div id="notify2" class="alert alert-success" style="display:none;">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+
+            <div class="message2"></div>
+        </div>
+</div>
+<div id="div_notify4">
+
+</div>
+                    
+                    <div class="row">
+                        <div class="col-xs-12 mb-1"><label
+                                    for="plantillas">Plantillas</label>
+                        <select id="plantillas2" name="plantillas2" class="form-control" onchange="cargar_plantilla()">
+                            <option value="">-</option>
+                            
+                            <?php foreach ($plantillas as $key => $value) {
+                                echo "<option value='".$value['id']."' data-texto='".$value['other']."'>".$value['name']."</option>";
+                            } ?>
+                        </select>
+                        </div>
+                    </div>
+                    <div class="row" >
+                        <div class="col-xs-12 mb-1"><label
+                                    for="number">Nombre Campaña</label>
+                            <input type="text" class="form-control"
+                                   name="name_campaign" id="name_campaign" maxlength="10" minlength="10" >
+                        </div>
+                    </div>
+                    <!--div class="row" id="div_numero_individual">
+                        <div class="col-xs-12 mb-1"><label
+                                    for="number">Numero de telefono individual</label>
+                            <input type="text" class="form-control"
+                                   name="number2" id="number2" maxlength="10" minlength="10" >
+                        </div>
+                    </div-->
+                    <div class="row" id="div_envio_masivo">
+                        <div class="col-xs-12 mb-1"><label
+                                    for="number">Numeros</label>
+                            <input type="text" class="form-control" readonly="true" value="<?= $phons  ?>" 
+                                   name="numerosMasivos" id="numerosMasivo" minlength="10" >
+                                   <input type="text" class="form-control" hidden="true" 
+                                   name="ultimo_lote" id="ultimo_lote" value="si">
+                                   <input type="text" class="form-control" hidden="true" 
+                                   name="envio_desde_factura" id="envio_desde_factura" value="si">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 mb-1"><label
+                                    for="shortnote"><?php echo $this->lang->line('Message') ?></label>
+                            <textarea name="text2" class="form-control" maxlength="250" id="contents2" title="Contents"></textarea></div>
+                    </div>
+                    <div align="center"><input type="button" class="btn btn-danger" value="Detener Envio de Mensajes" onclick="cancelar_envio_mensajes();"></div>
+                    <div class="row">
+                        <div class="col-xs-12 mb-1"><label
+                                    for="shortnote">Personalizar</label><br>
+                            <span>1er Nombre = {primer_nombre}</span><br>
+                            <span>2do Nombre = {segundo_nombre}</span><br>
+                            <span>1er Apellido = {primer_apellido}</span><br>
+                            <span>2do Apellido = {segundo_apellido}</span><br>
+                            <span>Saldo = {monto_debe}</span><br>
+                            <span>Documento = {documento}</span><br>
+                            <span>Mes Actual = {mes_actual}</span><br>
+                        </div>
+                    </div>
+                    <input type="hidden" class="form-control"
+                           name="gid" value="<?php echo $group['id'] ?>">
+                    <input type="hidden" id="action-urlSMS" value="clientgroup/sendGroupSms">
+
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal"><?php echo $this->lang->line('Close') ?> </button>
+                <button <?= ($phons=="") ? "disabled='disabled'" :"" ?> type="button" class="btn btn-primary"
+                        id="sendNow2" onclick="enviar_SMS()"><?php echo $this->lang->line('Send') ?> </button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script type="text/javascript">
+    $(document).on("click","#open_modal_sms",function (e){
+        e.preventDefault();
+        $("#sendSms").modal("show");
+    });
+        function cargar_plantilla(){
+        var text=$("#plantillas2 option:selected").data("texto");
+        
+        if($("#plantillas2 option:selected").val()=="38"){
+            $("#contents2").attr("maxlength",250);
+        }else{
+            $("#contents2").attr("maxlength",250);
+        }
+        
+        $("#contents2").val(text);
+    }
+
+     function enviar_SMS(){
+
+         var o_data =  $("#sendSMS_form").serialize();
+        var action_url= $('#action-urlSMS').val();
+
+        $.cookie("cancelar_envio_mensajes", "false");
+        sendMail_g(o_data,action_url);
+}
 $("#seleccion_banco").hide();
     function metodo_de_pago_select(){
         if($("#select_metodo_de_pago option:selected").val()=="Bank"){
