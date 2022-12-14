@@ -175,7 +175,7 @@
                                 </li>
                                  <li class="nav-item">
                                     <a class="nav-link" id="ingreso-tab" data-toggle="tab" href="#ingreso"
-                                       aria-controls="ingreso"> Ingreso</a>
+                                       aria-controls="ingreso"> Ingreso/Contrato</a>
                                 </li>
                                  <li class="nav-item">
                                     <a class="nav-link" id="tegnologia-tab" data-toggle="tab" href="#tegnologia"
@@ -425,13 +425,15 @@
                                             <select name="trans_type" class="form-control" id="fechas" onchange="filtrado_fechas()">
                                                 <option value=''>Todas</option>
                                                 <option value='fecha_ingreso'>De los ingresos</option>
+                                                <option value='fecha_contrato'>Fecha de Contrato</option>
+                                                <option value='1_despues_contrato'>1 año despues de fecha de Contrato</option>
                                                 
                                             </select>
                                         </div>                              
                                     </div>
                                     <div class="form-group row" id="div_fechas" style="display: none">
                                         <label class="col-sm-2 col-form-label"
-                                               for="pay_cat" id="label_fechas">De los ingresos</label>
+                                               for="pay_cat" id="label_fechas7">De los ingresos</label>
 
                                         <div class="col-sm-2">
                                             <input type="text" class="form-control required"
@@ -1062,8 +1064,16 @@ $(window).on('load', function (e) {
     function  filtrado_fechas(){
         var opcion_seleccionada=$("#fechas option:selected").val();
         if(opcion_seleccionada=="fecha_ingreso"){
+            $("#label_fechas7").text("De los ingresos");
             $("#div_fechas").show();
             
+        }else if(opcion_seleccionada=="fecha_contrato"){
+            $("#label_fechas7").text("Fecha del contrato");
+            $("#div_fechas").show();
+            
+        }else if(opcion_seleccionada=="1_despues_contrato"){
+            $("#label_fechas7").text("1 Año despues del Contrato");
+            $("#div_fechas").show();
         }else{
             $("#div_fechas").hide();
         }

@@ -252,6 +252,25 @@ include (APPPATH."libraries\RouterosAPI.php");
         }
         $query_consulta.=$condicionales;
       
+      //fechas contratacion filtro
+       if (isset($_GET['ingreso_select']) && $_GET['ingreso_select']=="fecha_contrato" && $_GET['ingreso_select']!=null) {
+        $dateTime_c= new DateTime($_GET['sdate']);
+                $sdate_c=$dateTime_c->format("Y-m-d");
+                
+                $dateTime_c= new DateTime($_GET['edate']);
+                $edate_c=$dateTime_c->format("Y-m-d");
+                
+          $query_consulta.= " and (f_contrato>= '".$sdate_c."' and f_contrato<='".$edate_c."') ";
+      }else if (isset($_GET['ingreso_select']) && $_GET['ingreso_select']=="1_despues_contrato" && $_GET['ingreso_select']!=null) {
+                $dateTime_c= new DateTime($_GET['sdate']);
+                $sdate_c=$dateTime_c->format("Y-m-d");
+                $sdate_c=date("Y-m-d",strtotime($sdate_c."- 1 year"));
+                $dateTime_c= new DateTime($_GET['edate']);
+                $edate_c=$dateTime_c->format("Y-m-d");
+                $edate_c=date("Y-m-d",strtotime($edate_c."- 1 year"));
+                $query_consulta.= " and (f_contrato>= '".$sdate_c."' and f_contrato<='".$edate_c."') ";
+      }
+//end 
         $query_consulta." order by id DESC";
         
         $lista_customers=$this->db->query($query_consulta)->result();
@@ -275,7 +294,7 @@ include (APPPATH."libraries\RouterosAPI.php");
         foreach ($lista_customers as $key => $customers) {
             $due=$this->customers->due_details($customers->id);
             $money=array();
-                    if(isset($_GET['ingreso_select']) && $_GET['ingreso_select']!="" && $_GET['ingreso_select']!=null){
+                    if(isset($_GET['ingreso_select']) && $_GET['ingreso_select']=="fecha_ingreso" && $_GET['ingreso_select']!=null){
                         $money=$this->customers->money_details($customers->id);
                     }else{
                             $money['credit']=$customers->credit;
@@ -1081,7 +1100,23 @@ include (APPPATH."libraries\RouterosAPI.php");
             $query_consulta= str_replace("and", "", $query_consulta);    
         }
         $query_consulta.=$condicionales;
-      
+       if (isset($_GET['ingreso_select']) && $_GET['ingreso_select']=="fecha_contrato" && $_GET['ingreso_select']!=null) {
+        $dateTime_c= new DateTime($_GET['sdate']);
+                $sdate_c=$dateTime_c->format("Y-m-d");
+                
+                $dateTime_c= new DateTime($_GET['edate']);
+                $edate_c=$dateTime_c->format("Y-m-d");
+                
+          $query_consulta.= " and (f_contrato>= '".$sdate_c."' and f_contrato<='".$edate_c."') ";
+      }else if (isset($_GET['ingreso_select']) && $_GET['ingreso_select']=="1_despues_contrato" && $_GET['ingreso_select']!=null) {
+                $dateTime_c= new DateTime($_GET['sdate']);
+                $sdate_c=$dateTime_c->format("Y-m-d");
+                $sdate_c=date("Y-m-d",strtotime($sdate_c."- 1 year"));
+                $dateTime_c= new DateTime($_GET['edate']);
+                $edate_c=$dateTime_c->format("Y-m-d");
+                $edate_c=date("Y-m-d",strtotime($edate_c."- 1 year"));
+                $query_consulta.= " and (f_contrato>= '".$sdate_c."' and f_contrato<='".$edate_c."') ";
+      }
         $query_consulta." order by id DESC";
         //var_dump($query_consulta);
         $lista_customers=$this->db->query($query_consulta)->result();
@@ -1489,7 +1524,7 @@ include (APPPATH."libraries\RouterosAPI.php");
                     
                     $row = array();
                     $money=array();
-                    if(isset($_GET['ingreso_select']) && $_GET['ingreso_select']!="" && $_GET['ingreso_select']!=null){
+                    if(isset($_GET['ingreso_select']) && $_GET['ingreso_select']=="fecha_ingreso" && $_GET['ingreso_select']!=null){
                         $money=$this->customers->money_details($customers->id);
                     }else{
                             $money['credit']=$customers->credit;
@@ -1614,7 +1649,7 @@ include (APPPATH."libraries\RouterosAPI.php");
                      $datos_cuentas=$customers;
                      $customers=$this->db->get_where("customers",array("id"=>$customers->id))->row();
                      $money=array();     
-                     if(isset($_GET['ingreso_select']) && $_GET['ingreso_select']!="" && $_GET['ingreso_select']!=null){
+                     if(isset($_GET['ingreso_select']) && $_GET['ingreso_select']=="fecha_ingreso" && $_GET['ingreso_select']!=null){
                         $money=$this->customers->money_details($customers->id);
                     }else{
                             $money['credit']=$customers->credit;
@@ -1833,6 +1868,27 @@ include (APPPATH."libraries\RouterosAPI.php");
         }
         $query_consulta.=$condicionales;
       
+//filtro por fechas contratacion
+
+ if (isset($_GET['ingreso_select']) && $_GET['ingreso_select']=="fecha_contrato" && $_GET['ingreso_select']!=null) {
+        $dateTime_c= new DateTime($_GET['sdate']);
+                $sdate_c=$dateTime_c->format("Y-m-d");
+                
+                $dateTime_c= new DateTime($_GET['edate']);
+                $edate_c=$dateTime_c->format("Y-m-d");
+                
+          $query_consulta.= " and (f_contrato>= '".$sdate_c."' and f_contrato<='".$edate_c."') ";
+      }else if (isset($_GET['ingreso_select']) && $_GET['ingreso_select']=="1_despues_contrato" && $_GET['ingreso_select']!=null) {
+                $dateTime_c= new DateTime($_GET['sdate']);
+                $sdate_c=$dateTime_c->format("Y-m-d");
+                $sdate_c=date("Y-m-d",strtotime($sdate_c."- 1 year"));
+                $dateTime_c= new DateTime($_GET['edate']);
+                $edate_c=$dateTime_c->format("Y-m-d");
+                $edate_c=date("Y-m-d",strtotime($edate_c."- 1 year"));
+                $query_consulta.= " and (f_contrato>= '".$sdate_c."' and f_contrato<='".$edate_c."') ";
+      }
+// end filtro por fechas contratacion
+
         $query_consulta." order by id DESC";
         
         $lista_customers=$this->db->query($query_consulta)->result();
