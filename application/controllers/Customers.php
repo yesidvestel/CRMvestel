@@ -95,7 +95,6 @@ class Customers extends CI_Controller
         $api = new CellVozApi();
         $retorno=$api->getToken(); 
         $valido=false;
-		$name_campaign="Bien/ida";
         $img = str_replace('data:image/png;base64,', '', $img);
         $fileData = base64_decode($img);
         if(isset($_POST['type']) && $_POST['type']=="orden"){//en este caso variable customer id es el id de la orden
@@ -109,6 +108,7 @@ class Customers extends CI_Controller
             file_put_contents($fileName, $fileData);
             if($this->db->update("customers",array("firma_digital"=>"1"),array("id"=>$_POST['customer_id']))){
 			$user=$this->db->get_where("customers",array("id"=>$_POST['customer_id']))->row();
+			$name_campaign="Bien".$user->abonado;
 			$mensajes_a_enviar.='{
                                   "codeCountry": "57",
                                   "number": "'.$user->celular.'",
