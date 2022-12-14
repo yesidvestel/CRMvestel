@@ -779,7 +779,11 @@ function addObject(action,action_url) {
                     $("#notify .message").html("<strong>" + data.status + "</strong>: " + data.message);
                     $("#notify").removeClass("alert-danger").addClass("alert-success").fadeIn();
                     $("html, body").scrollTop($("body").offset().top);
-                    if(action_url!="settings/add_promo"){
+                    if(action_url=="settings/add_promo"){
+                        setTimeout(function(){
+                            location.replace(baseurl+'settings/promociones');
+                        },1000);
+                    }else{
                         $("#data_form").remove();    
                     }
                     
