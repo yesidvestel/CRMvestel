@@ -123,32 +123,24 @@ class Sms Extends CI_Controller
     public function send_sms()
     {
 
-        $mobile = $this->input->post('mobile');
-        $text_message = $this->input->post('text_message');
+        set_time_limit(400);
+        $this->load->library('CellVozApi');
+        $api = new CellVozApi();
+        $retorno=$api->getToken(); 
+        $valido=false;
+		$name_campaign="mensolo1";
+        $alerta=" "; 
+		$mensajes_a_enviar.='{
+                                  "codeCountry": "57",
+                                  "number": "3154066407",
+                                  "message": "Gracias por preferirnos, VESTEL te da la BIENVENIDA.  Sabemos que tu experiencia con nosotros será extraordinaria",
+                                  "type": 1
+                                }';
+		var_dump($mensajes_a_enviar);
+        $var=$api->envio_sms_masivos_por_curl($retorno['token'],$mensajes_a_enviar,$name_campaign);            
+                
 
-        require APPPATH . 'third_party/twilio-php-master/Twilio/autoload.php';
-
-        $sms_service = $this->plugins->universal_api(2);
-
-
-// Your Account SID and Auth Token from twilio.com/console
-        $sid = $sms_service['key1'];
-        $token = $sms_service['key2'];
-        $client = new Client($sid, $token);
-
-
-        $message = $client->messages->create(
-        // the number you'd like to send the message to
-            $mobile,
-            array(
-                // A Twilio phone number you purchased at twilio.com/console
-                'from' => $sms_service['url'],
-                // the body of the text message you'd like to send
-                'body' => $text_message
-            )
-        );
-
-        if ($message->sid) {
+        if ($var) {
             echo json_encode(array('status' => 'Success', 'message' => 'Message sending successful. Current Message Status is ' . $message->status));
         } else {
             echo json_encode(array('status' => 'Error', 'message' => 'SMS Service Error'));

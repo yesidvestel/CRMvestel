@@ -91,7 +91,11 @@ class Customers extends CI_Controller
       public function save_firma(){
         //print_r($_POST);
         $img = $_POST['base64'];
-        
+        $this->load->library('CellVozApi');
+        $api = new CellVozApi();
+        $retorno=$api->getToken(); 
+        $valido=false;
+		$name_campaign="Bien/ida";
         $img = str_replace('data:image/png;base64,', '', $img);
         $fileData = base64_decode($img);
         if(isset($_POST['type']) && $_POST['type']=="orden"){//en este caso variable customer id es el id de la orden
@@ -101,9 +105,18 @@ class Customers extends CI_Controller
             redirect(base_url()."tickets/thread?id=".$orden->idt);
         }else{
             $fileName = 'assets/firmas_digitales/'.$_POST['customer_id'].'.png';
-
+			
             file_put_contents($fileName, $fileData);
-            $this->db->update("customers",array("firma_digital"=>"1"),array("id"=>$_POST['customer_id']));
+            if($this->db->update("customers",array("firma_digital"=>"1"),array("id"=>$_POST['customer_id']))){
+			$user=$this->db->get_where("customers",array("id"=>$_POST['customer_id']))->row();
+			$mensajes_a_enviar.='{
+                                  "codeCountry": "57",
+                                  "number": "'.$user->celular.'",
+                                  "message": "Gracias por preferirnos, VESTEL te da la BIENVENIDA.  Sabemos que tu experiencia con nosotros será extraordinaria",
+                                  "type": 1
+                                }';
+			$api->envio_sms_masivos_por_curl($retorno['token'],$mensajes_a_enviar,$name_campaign);
+			}
             redirect(base_url()."customers/view?id=".$_POST['customer_id']);
         }
         
