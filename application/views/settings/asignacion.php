@@ -14,7 +14,8 @@
                 <div class="col-md-6">
                     <div class="card card-block sameheight-item">
 
-                        <form action="<?php echo base_url() ?>settings/add_asignar" method="post" role="form">
+                        
+							<form id="data_form" method="post" role="form">
                             <div class="form-group row">
                                 <label class="col-sm-3 col-form-label"
                                        for="pay_cat"><?php echo $this->lang->line('') ?>Tipo</label>
@@ -99,7 +100,8 @@
                                 <label class="col-sm-3 col-form-label" for="pay_cat"></label>
 
                                 <div class="col-sm-4">
-                                    <input type="submit" class="btn btn-primary btn-md" value="Actualizar">
+                                    <input type="hidden" value="settings/add_asignar" id="action-url">
+                                    <input  id="submit-data" type="submit" class="btn btn-primary btn-md" value="Actualizar">
 
 
                                 </div>
