@@ -427,6 +427,7 @@
                                                 <option value='fecha_ingreso'>De los ingresos</option>
                                                 <option value='fecha_contrato'>Fecha de Contrato</option>
                                                 <option value='1_despues_contrato'>1 año despues de fecha de Contrato</option>
+                                                <option value='desde_siempre_a_fecha'>Fecha de Contrato, desde Siempre Hasta Fecha Indicada</option>
                                                 
                                             </select>
                                         </div>                              
@@ -569,7 +570,7 @@
                     <th>Serv. Suscritos</th>
                     <th>Tecnologia</th>
 					<th id="despues_de_thead">Estado</th>
-                    <th><?php echo $this->lang->line('Settings') ?></th>
+                    <th class="settings_th"><?php echo $this->lang->line('Settings') ?></th>
 					<?php if ($this->aauth->get_user()->roleid > 4) { ?>
 					<th>Config</th>
 					<?php } ?>
@@ -592,7 +593,7 @@
                     <th>Serv. Suscritos</th>
                     <th>Tecnologia</th>
 					<th id="despues_de_tfoot">Estado</th>
-                    <th><?php echo $this->lang->line('Settings') ?></th>
+                    <th class="settings_th"><?php echo $this->lang->line('Settings') ?></th>
 					<?php if ($this->aauth->get_user()->roleid > 4) { ?>
 					<th>Config</th>
 					<?php } ?>
@@ -1063,6 +1064,8 @@ $(window).on('load', function (e) {
     
     function  filtrado_fechas(){
         var opcion_seleccionada=$("#fechas option:selected").val();
+
+        $("#sdate").parent().css("display","");
         if(opcion_seleccionada=="fecha_ingreso"){
             $("#label_fechas7").text("De los ingresos");
             $("#div_fechas").show();
@@ -1073,6 +1076,10 @@ $(window).on('load', function (e) {
             
         }else if(opcion_seleccionada=="1_despues_contrato"){
             $("#label_fechas7").text("1 Año despues del Contrato");
+            $("#div_fechas").show();
+        }else if(opcion_seleccionada=="desde_siempre_a_fecha"){
+            $("#label_fechas7").text("Fecha Contrato Hasta");
+            $("#sdate").parent().css("display","none");
             $("#div_fechas").show();
         }else{
             $("#div_fechas").hide();
@@ -1121,7 +1128,12 @@ $(window).on('load', function (e) {
 
               }
               
-           
+  if(ingreso_select!=""){
+    
+                    $(".settings_th").before("<th class='cols_adicionadas_contrato'>Fecha Contrato</th>");
+                    $('.div1').width(x1a-500);
+                    $('.div2').width(x1a-500);
+  }         
       
                 //var localidad= $("#cmbLocalidades option:selected").val();
                 

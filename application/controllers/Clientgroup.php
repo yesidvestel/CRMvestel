@@ -269,6 +269,11 @@ include (APPPATH."libraries\RouterosAPI.php");
                 $edate_c=$dateTime_c->format("Y-m-d");
                 $edate_c=date("Y-m-d",strtotime($edate_c."- 1 year"));
                 $query_consulta.= " and (f_contrato>= '".$sdate_c."' and f_contrato<='".$edate_c."') ";
+      }else if(isset($_GET['ingreso_select']) && $_GET['ingreso_select']=="desde_siempre_a_fecha" && $_GET['ingreso_select']!=null){
+                $dateTime_c= new DateTime($_GET['edate']);
+                $edate_c=$dateTime_c->format("Y-m-d");
+                
+          $query_consulta.= " and ( f_contrato<='".$edate_c."') ";
       }
 //end 
         $query_consulta." order by id DESC";
@@ -1116,6 +1121,11 @@ include (APPPATH."libraries\RouterosAPI.php");
                 $edate_c=$dateTime_c->format("Y-m-d");
                 $edate_c=date("Y-m-d",strtotime($edate_c."- 1 year"));
                 $query_consulta.= " and (f_contrato>= '".$sdate_c."' and f_contrato<='".$edate_c."') ";
+      }else if(isset($_GET['ingreso_select']) && $_GET['ingreso_select']=="desde_siempre_a_fecha" && $_GET['ingreso_select']!=null){
+                $dateTime_c= new DateTime($_GET['edate']);
+                $edate_c=$dateTime_c->format("Y-m-d");
+                
+          $query_consulta.= " and ( f_contrato<='".$edate_c."') ";
       }
         $query_consulta." order by id DESC";
         //var_dump($query_consulta);
@@ -1575,6 +1585,9 @@ include (APPPATH."libraries\RouterosAPI.php");
                             $row[] = amountFormat($valor_ultima_factura);
                             $row[] = amountFormat($money['credit']-$money['debit']);
                             //$row[]="0";
+                            if(isset($_GET['ingreso_select']) && $_GET['ingreso_select']!="" && $_GET['ingreso_select']!="fecha_ingreso" && $_GET['ingreso_select']!=null){
+                                    $row[] = $customers->f_contrato;
+                            }
                             $row[] = '&nbsp<a href="' . base_url() . 'llamadas/index?id=' . $customers->id . '" class="btn btn-primary btn-sm"><span class=" icon-mobile-phone"></span> Llamar</a>
 							&nbsp<a style="margin-top:1px;" target="_blanck" class="btn btn-info btn-sm"  href="'.base_url().'customers/invoices?id='.$customers->id.'"><span class="icon-eye"></span>&nbsp;Facturas</a>';
                             if ($this->aauth->get_user()->roleid > 4) {
@@ -1697,6 +1710,9 @@ include (APPPATH."libraries\RouterosAPI.php");
                             $row[] = amountFormat($datos_cuentas->debe_customer);
                             $row[] = amountFormat($datos_cuentas->valor_ultima_factura);
                             $row[] = amountFormat($money['credit']-$money['debit']);
+                            if(isset($_GET['ingreso_select']) && $_GET['ingreso_select']!="" && $_GET['ingreso_select']!="fecha_ingreso" && $_GET['ingreso_select']!=null){
+                                    $row[] = $customers->f_contrato;
+                            }
                             $row[] = '<a href="' . base_url() . 'customers/edit?id=' . $customers->id . '" class="btn btn-success btn-sm"><span class="icon-pencil"></span> '.$this->lang->line('Edit').'</a>&nbsp;<a style="margin-top:1px;" target="_blanck" class="btn btn-info btn-sm"  href="'.base_url().'customers/invoices?id='.$customers->id.'"><span class="icon-eye"></span>&nbsp;Facturas</a>';
                             if ($this->aauth->get_user()->roleid > 4) {
                             $row[] = '<a href="#" data-object-id="' . $customers->id . '" class="btn btn-danger btn-sm delete-object"><span class="icon-bin"></span></a>';
@@ -1886,6 +1902,11 @@ include (APPPATH."libraries\RouterosAPI.php");
                 $edate_c=$dateTime_c->format("Y-m-d");
                 $edate_c=date("Y-m-d",strtotime($edate_c."- 1 year"));
                 $query_consulta.= " and (f_contrato>= '".$sdate_c."' and f_contrato<='".$edate_c."') ";
+      }else if(isset($_GET['ingreso_select']) && $_GET['ingreso_select']=="desde_siempre_a_fecha" && $_GET['ingreso_select']!=null){
+                $dateTime_c= new DateTime($_GET['edate']);
+                $edate_c=$dateTime_c->format("Y-m-d");
+                
+          $query_consulta.= " and ( f_contrato<='".$edate_c."') ";
       }
 // end filtro por fechas contratacion
 
