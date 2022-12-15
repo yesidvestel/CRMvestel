@@ -68,10 +68,9 @@
                         $status = 'Active';
                         $btn = "<a href='#' data-object-id='" . $aid . "' class='btn btn-orange btn-xs delete-object' title='Disable'><i class='icon-eye-slash'></i> " . $this->lang->line('Disable') ."</a>";
                     }					
-                $ver="<a href='" . base_url("employee/view?id=$aid") . "' class='btn btn-success btn-xs'><i class='icon-file-text'></i> " . $this->lang->line('View') ."</a>";
-                if($this->aauth->get_user()->roleid != 5){
-                    $ver="<a href='#' data-name='".$name."' data-id-empleado='".$aid."' data-role='".$role."' class='btn btn-success btn-xs ver-permisos'><i class='icon-file-text'></i> " . $this->lang->line('View') ."</a>";
-                }
+                	$ver="<a href='" . base_url("employee/view?id=$aid") . "' class='btn btn-success btn-xs'><i class='icon-file-text'></i> " . $this->lang->line('View') ."</a>";
+                    $permisos="<a href='#' data-name='".$name."' data-id-empleado='".$aid."' data-role='".$role."' class='btn btn-success btn-xs ver-permisos'><i class='icon-file-text'></i> Permisos</a>";
+				
                     echo "<tr>
                     <td>$i</td>
                     <td>$name</td>
@@ -80,7 +79,7 @@
 					<td>$hora</td>
 					<td>$fin$horain</td>
 					<td>$fcrre$horacie</td>
-                    <td>".$ver."</td>";
+                    <td>".$ver.' '.$permisos."</td>";
 					if ($this->aauth->get_user()->roleid == 5) {
 					echo "<td>$btn&nbsp;&nbsp;<a href='#pop_model' data-toggle='modal' data-remote='false' data-object-id='" . $aid . "' class='btn btn-danger btn-xs delemp' title='Delete'><i class='icon-trash-o'></i></a></td>
 					

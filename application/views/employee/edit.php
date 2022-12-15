@@ -215,6 +215,7 @@
                                 </div>
                             </div>
                              <?php if ($this->aauth->get_user()->roleid >= 0) { ?>
+							<?php if ($this->aauth->get_user()->roleid == 5) { ?>
                                     <div class="form-group row">
 
                                         <label class="col-sm-2 col-form-label"
@@ -232,6 +233,7 @@
                                         </div>
                                     </div>
                                     <hr>
+							
                                         <h2 style="text-align: center;">Permisos</h2>
                                         
                                         <div align="center">
@@ -245,7 +247,7 @@
                                         <br>
                                           <br>
                                             <br>
-
+										
                                         <table id="table_permisos" >
 <?php          $col=0;foreach ($modulos_padre as $ke1 => $mod) {$col++;       ?>
     <?php if($col==1){echo "<tr>";} ?>
@@ -280,7 +282,7 @@
                                             <br>
                                             
                                         </div>
-                       
+                       <?php } ?>
                                     <div class="form-group row">
                                         
 
@@ -704,6 +706,7 @@
         </div>
     </div>
 </article>
+
 <script type="text/javascript">
     $("#profile_update").click(function (e) {
         e.preventDefault();
@@ -717,6 +720,7 @@
         });
 
     });
+	
     $(document).on("click",'.checkbox_modulos',function(ev){
         var input='<input class="checkbox_modulos" type="checkbox"  name="'+this.name+'" id="'+this.id+'" ';
         if($(this).is(":checked")){
@@ -1030,4 +1034,6 @@ $("#sl-roleid").on("change",function(ev){
             $("input[name=tar]").prop("checked",true);
         }
 }
+	
+	 
 </script>
