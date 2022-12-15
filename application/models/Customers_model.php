@@ -236,8 +236,10 @@ class Customers_model extends CI_Model
         $this->db->from('promos');
 		$this->db->where('f_inicio<=', date('Y-m-d'));
 		$this->db->where('f_final>=', date('Y-m-d'));
+		$this->db->group_start();
 		$this->db->like('colaborador', $user);
 		$this->db->or_where('colaborador', 'null');
+		$this->db->group_end();
         $query = $this->db->get();
         return $query->result_array();
     }
