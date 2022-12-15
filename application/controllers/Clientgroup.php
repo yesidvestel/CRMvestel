@@ -722,6 +722,10 @@ include (APPPATH."libraries\RouterosAPI.php");
         $headers['ValorUltimaTransaccion']="string";   
     }
 
+if(isset($_GET['ingreso_select']) && $_GET['ingreso_select']!="" && $_GET['ingreso_select']!="fecha_ingreso" && $_GET['ingreso_select']!=null){
+        $headers['fecha_contrato']="string";
+         
+    }
     //fetch data from database
     //$salesinfo = $this->product_model->get_salesinfo();
     
@@ -762,6 +766,10 @@ include (APPPATH."libraries\RouterosAPI.php");
         $col_options[]=array('font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center');
         $col_options[]=array('font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center');
     }
+    if(isset($_GET['ingreso_select']) && $_GET['ingreso_select']!="" && $_GET['ingreso_select']!="fecha_ingreso" && $_GET['ingreso_select']!=null){
+     $col_options[]=array('font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center');
+         
+    }
     $writer->writeSheetHeader('Customers '.$cust_group->title, $headers,$col_options);
 
     
@@ -785,6 +793,10 @@ include (APPPATH."libraries\RouterosAPI.php");
                             if($_GET['check_agregar_ultima_transaccion']=="true"){
                                 $array_excel[]=$customer->fechaUltimaTransaccion;
                                 $array_excel[]=$customer->ValorUltimaTransaccion; 
+                            }
+                            if(isset($_GET['ingreso_select']) && $_GET['ingreso_select']!="" && $_GET['ingreso_select']!="fecha_ingreso" && $_GET['ingreso_select']!=null){
+                                    $array_excel[]=$customer->f_contrato; 
+         
                             }
                             $writer->writeSheetRow('Customers '.$cust_group->title,$array_excel);
             
