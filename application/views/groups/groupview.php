@@ -1127,6 +1127,7 @@ $(window).on('load', function (e) {
                     $('.div2').width(x1a-500);
 
               }
+              var ingreso_select=$("#fechas option:selected").val();
               
   if(ingreso_select!=""){
     
@@ -1147,7 +1148,7 @@ $(window).on('load', function (e) {
                 var direccion = $("#sel_dir_personalizada option:selected").val();
                 var sel_servicios = $("#sel_servicios option:selected").val();
 
-                var ingreso_select=$("#fechas option:selected").val();
+                
                 var sdate=$("#sdate").val();
                 var edate=$("#edate").val();
                 var checked_ind_service =$("#check1").prop('checked');
