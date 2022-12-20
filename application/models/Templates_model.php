@@ -121,6 +121,18 @@ class Templates_model extends CI_Model
                 $this->lang->line('ERROR')));
         }
     }
+	public function insert_mensaje($name_campaign, $emp, $user, $mensaje)
+    {
+        $data = array(
+            'nombre_cam' => $name_campaign,
+            'ide' => $emp,
+            'iduser' => $user,
+            'sms' => $mensaje,
+        );
+
+        $this->db->set($data);
+        $this->db->insert('mensajes');
+    }
 	public function input_local($depar,$ciudad,$localidad)
     {
         $data = array(

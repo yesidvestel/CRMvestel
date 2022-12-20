@@ -88,7 +88,9 @@ class Customers extends CI_Controller
         $this->load->view('customers/firma_digital', $data);
         //$this->load->view('fixed/footer');
     }
-      public function save_firma(){
+      public function save_firma()
+	  {
+		$this->load->model('templates_model', 'templates');
         //print_r($_POST);
         $img = $_POST['base64'];
         $this->load->library('CellVozApi');
@@ -108,16 +110,24 @@ class Customers extends CI_Controller
             file_put_contents($fileName, $fileData);
             if($this->db->update("customers",array("firma_digital"=>"1"),array("id"=>$_POST['customer_id']))){
 			$user=$this->db->get_where("customers",array("id"=>$_POST['customer_id']))->row();
-			$name_campaign="Bien".$user->abonado;
-			$mensajes_a_enviar.='{
-                                  "codeCountry": "57",
-                                  "number": "'.$user->celular.'",
-                                  "message": "Gracias por preferirnos, VESTEL te da la BIENVENIDA.  Sabemos que tu experiencia con nosotros será extraordinaria",
-                                  "type": 1
-                                }';
-			$api->envio_sms_masivos_por_curl($retorno['token'],$mensajes_a_enviar,$name_campaign);
+			$mensaje=$this->db->get_where("mensajes",array("iduser"=>$user->id))->row();
+				if(empty($mensaje)){
+					$emp=$this->aauth->get_user()->id;
+					$name_campaign="Bien".$user->abonado;
+					$mensaje="Gracias por preferirnos, VESTEL te da la BIENVENIDA.  Sabemos que tu experiencia con nosotros será extraordinaria";
+					$mensajes_a_enviar.='{
+										  "codeCountry": "57",
+										  "number": "'.$user->celular.'",
+										  "message": "'.$mensaje.'",
+										  "type": 1
+										}';
+					if($api->envio_sms_masivos_por_curl($retorno['token'],$mensajes_a_enviar,$name_campaign)){
+						$this->templates->insert_mensaje($name_campaign, $emp, $user->id, $mensaje);
+					}
+				}
 			}
             redirect(base_url()."customers/view?id=".$_POST['customer_id']);
+			
         }
         
     }
