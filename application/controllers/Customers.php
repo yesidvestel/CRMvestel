@@ -109,22 +109,22 @@ class Customers extends CI_Controller
 			
             file_put_contents($fileName, $fileData);
             if($this->db->update("customers",array("firma_digital"=>"1"),array("id"=>$_POST['customer_id']))){
-			$user=$this->db->get_where("customers",array("id"=>$_POST['customer_id']))->row();
-			$mensajes=$this->db->get_where("mensajes",array("iduser"=>$user->id))->row();
-				if(empty($mensajes)){
-					$emp=$this->aauth->get_user()->id;
-					$name_campaign="Bien".$user->abonado;
-					$mensaje="Gracias por preferirnos, VESTEL te da la BIENVENIDA.  Sabemos que tu experiencia con nosotros será extraordinaria";
-					$mensajes_a_enviar.='{
-										  "codeCountry": "57",
-										  "number": "'.$user->celular.'",
-										  "message": "'.$mensaje.'",
-										  "type": 1
-										}';
-					if($api->envio_sms_masivos_por_curl($retorno['token'],$mensajes_a_enviar,$name_campaign)){
-						$this->templates->insert_mensaje($name_campaign, $emp, $user->id, $mensaje);
+				$user=$this->db->get_where("customers",array("id"=>$_POST['customer_id']))->row();
+				$mensajes=$this->db->get_where("mensajes",array("iduser"=>$user->id))->row();
+					if(empty($mensajes)){
+						$emp=$this->aauth->get_user()->id;
+						$name_campaign="Bien".$user->abonado;
+						$mensaje="Gracias por preferirnos, VESTEL te da la BIENVENIDA.  Sabemos que tu experiencia con nosotros será extraordinaria";
+						$mensajes_a_enviar.='{
+											  "codeCountry": "57",
+											  "number": "'.$user->celular.'",
+											  "message": "'.$mensaje.'",
+											  "type": 1
+											}';
+						if($api->envio_sms_masivos_por_curl($retorno['token'],$mensajes_a_enviar,$name_campaign)){
+							$this->templates->insert_mensaje($name_campaign, $emp, $user->id, $mensaje);
+						}
 					}
-				}
 			}
             redirect(base_url()."customers/view?id=".$_POST['customer_id']);
 			
@@ -1847,5 +1847,39 @@ if($data['servicios']['estado']=="Inactivo"){
 
         }
     }
+	public function pazysalvo()
+    {
+
+        $tid = intval($this->input->get('id'));
+        $deuda = $this->input->get('deuda');
+		$this->load->model('invoices_model', 'invocies');
+		if($deuda!=0){
+			 echo json_encode(array('status' => 'Error', 'message' => 'Tiene un saldo de $'.$deuda));
+		}else{
+		
+			$data['id'] = $tid;
+			$data['title'] = "Paz y salvo $tid";
+			$data['usuario'] = $this->customers->details($tid);
+			$data['ciudad'] = $this->customers->group_ciudad($data['usuario']['ciudad']);
+			$data['dto'] = $this->customers->group_departamentos($data['usuario']['departamento']);
+			$data['barrio'] = $this->customers->group_barrio($data['usuario']['barrio']);
+			//if ($data['invoice']) $data['products'] = $this->invocies->invoice_products($tid);
+			$data['empleado']= $this->invocies->employee(8);
+			ini_set('memory_limit', '128M');
+			$html = $this->load->view('invoices/pazysalvo', $data, true);
+			//PDF Rendering
+			$this->load->library('pdf');
+			$pdf = $this->pdf->load();
+			$pdf->SetHTMLFooter('<div style="text-align: right;font-family: serif; font-size: 8pt; color: #5C5C5C; font-style: italic;margin-top:-6pt;">{PAGENO}/{nbpg} #'.$tid.'</div>');
+			$pdf->WriteHTML($html);
+			if ($this->input->get('d')) {
+				$pdf->Output('Pazysalvo_#' . $tid . '.pdf', 'D');
+			} else {
+				$pdf->Output('Pazysalvo_#' . $tid . '.pdf', 'I');
+			}
+		}
+
+    }
+	
 
 }

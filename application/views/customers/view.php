@@ -51,6 +51,9 @@
 {
  background-color:darkgoldenrod;
 }
+<?php 
+ $deuda=$due['total']-$due['pamnt'];
+?>
 </style>
 <div class="app-content content container-fluid">
     <div class="content-wrapper">
@@ -545,6 +548,13 @@
                                     <a  href="<?php echo base_url('customers/estados?id=' . $details['id']) ?>"
                                        class="btn btn-success btn-lg" style="width: 250px"><i
                                                 class="icon-calendar"></i>Historial estados</a>
+
+                                </div>
+								<div class="col-md-4" style="margin-top: 5px;">
+
+                                    <a  href="<?php echo base_url('customers/pazysalvo?id=' . $details['id'].'&deuda='.$deuda) ?>"
+                                       class="btn btn-success btn-lg" style="width: 250px"><i
+                                                class="icon-calendar"></i>Paz y Salvo</a>
 
                                 </div>
 								<?php } ?>
