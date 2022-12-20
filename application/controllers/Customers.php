@@ -110,8 +110,8 @@ class Customers extends CI_Controller
             file_put_contents($fileName, $fileData);
             if($this->db->update("customers",array("firma_digital"=>"1"),array("id"=>$_POST['customer_id']))){
 			$user=$this->db->get_where("customers",array("id"=>$_POST['customer_id']))->row();
-			$mensaje=$this->db->get_where("mensajes",array("iduser"=>$user->id))->row();
-				if(empty($mensaje)){
+			$mensajes=$this->db->get_where("mensajes",array("iduser"=>$user->id))->row();
+				if(empty($mensajes)){
 					$emp=$this->aauth->get_user()->id;
 					$name_campaign="Bien".$user->abonado;
 					$mensaje="Gracias por preferirnos, VESTEL te da la BIENVENIDA.  Sabemos que tu experiencia con nosotros será extraordinaria";
