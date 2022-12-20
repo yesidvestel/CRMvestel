@@ -552,7 +552,7 @@
                                 </div>
 								<div class="col-md-4" style="margin-top: 5px;">
 
-                                    <a  href="<?php echo base_url('customers/pazysalvo?id=' . $details['id'].'&deuda='.$deuda) ?>"
+                                    <a id="link_paz_y_salvo" data-idc="<?=$details['id']  ?>" data-deuda="<?=$deuda ?>" href="#" data-url1="<?php echo base_url('customers/pazysalvo?id=' . $details['id'].'&deuda='.$deuda) ?>"
                                        class="btn btn-success btn-lg" style="width: 250px"><i
                                                 class="icon-calendar"></i>Paz y Salvo</a>
 
@@ -919,13 +919,43 @@
         </div>
     </div>
 </div>
-
+<div id="modal_informativo_pz" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Usuario debe</h4>
+            </div>          
+            <div class="modal-body">
+                <p id="texto_pz">debe</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" onclick='$("#modal_informativo_pz").modal("hide");'>Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <script src="<?php echo base_url('assets/myjs/jquery.ui.widget.js') ?>"></script>
 <!-- The basic File Upload plugin -->
 <script src="<?php echo base_url('assets/myjs/jquery.fileupload.js') ?>"></script>
 <script>
+    $(document).on("click","#link_paz_y_salvo",function(ev){
+        
+        var deuda_pz=$(this).data("deuda");
+        var idc=$(this).data("idc");
+        var url1=$(this).data("url1");
+        if (deuda_pz>0) {
+            ev.preventDefault();    
+            $("#texto_pz").text('Tiene un saldo de $'+deuda_pz);            
+            $("#modal_informativo_pz").modal("show");
+            
+        }else{
+            window.location.replace(url1);
+        }
+    });
+
     <?= (!$validar_firma) ? '$("#modal_informativo").modal("show");':'' ?>
     
 
