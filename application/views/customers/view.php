@@ -53,6 +53,8 @@
 }
 <?php 
  $deuda=$due['total']-$due['pamnt'];
+ $equipo=$details['macequipo'];
+	
 ?>
 </style>
 <div class="app-content content container-fluid">
@@ -552,7 +554,7 @@
                                 </div>
 								<div class="col-md-4" style="margin-top: 5px;">
 
-                                    <a id="link_paz_y_salvo" data-idc="<?=$details['id']  ?>" data-deuda="<?=$deuda ?>" href="#" data-url1="<?php echo base_url('customers/pazysalvo?id=' . $details['id'].'&deuda='.$deuda) ?>"
+                                    <a id="link_paz_y_salvo" data-idc="<?=$details['id']  ?>" data-deuda="<?=$deuda ?>" data-equipo="<?=$equipo ?>" href="#" data-url1="<?php echo base_url('customers/pazysalvo?id=' . $details['id'].'&deuda='.$deuda) ?>"
                                        class="btn btn-success btn-lg" style="width: 250px"><i
                                                 class="icon-calendar"></i>Paz y Salvo</a>
 
@@ -924,10 +926,11 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Usuario debe</h4>
+                <h4 class="modal-title">Advertencia</h4>
             </div>          
             <div class="modal-body">
                 <p id="texto_pz">debe</p>
+                <p id="equipo_pz">equipo</p>
             </div>
             <div class="modal-footer">
                 <button class="btn btn-primary" onclick='$("#modal_informativo_pz").modal("hide");'>Aceptar</button>
@@ -944,12 +947,23 @@
     $(document).on("click","#link_paz_y_salvo",function(ev){
         
         var deuda_pz=$(this).data("deuda");
+        var equipo_pz=$(this).data("equipo");
         var idc=$(this).data("idc");
         var url1=$(this).data("url1");
-        if (deuda_pz>0) {
-            ev.preventDefault();    
-            $("#texto_pz").text('Tiene un saldo de $'+deuda_pz);            
-            $("#modal_informativo_pz").modal("show");
+        if (deuda_pz>0 || (equipo_pz!=="" || equipo_pz!=="sin asignar" || equipo_pz!=="0")) {
+            ev.preventDefault();
+			$("#modal_informativo_pz").modal("show");
+				if(deuda_pz>0){
+					$("#texto_pz").text('Tiene un saldo de $'+deuda_pz); 	
+				}else{
+					$("#texto_pz").text('');
+				}
+					if(equipo_pz!=="" || equipo_pz!=="sin asignar" || equipo_pz!=="0"){
+						$("#equipo_pz").text('Aun tiene el equipo MAC '+equipo_pz);
+					}else{
+						$("#equipo_pz").text('');
+
+					}
             
         }else{
             window.location.replace(url1);
