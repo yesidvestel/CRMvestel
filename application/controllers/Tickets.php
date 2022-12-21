@@ -1228,7 +1228,7 @@ $x=0;
                         $paquete = $ticket->section;
                     }
                     //insertar internet si no hay en el invoice       
-                    $name=strtolower(str_replace(" ", "",$paquete ));
+     /*               $name=strtolower(str_replace(" ", "",$paquete ));
                     $producto = $this->db->query('SELECT * FROM products WHERE REPLACE(lower(product_name)," ","") LIKE "'.$name.'" ')->result_array();                    
                     $inv_item=$this->db->query('SELECT * from invoice_items WHERE REPLACE(lower(product)," ","") LIKE "%'.$name.'%" and tid="'. $datay['tid'].'"')->result_array();
                             if(count($inv_item)==0 && count($producto)!=0 && $insertar_internet==true){
@@ -1260,7 +1260,7 @@ $x=0;
                                 $this->db->update("invoices",$d_inv,array("tid"=>$datay['tid'])); //descomentar el lunes
                                 
                             }                      
-                            
+                            */
                 //termina reconexion combo o tv
                 
                 //completar el proceso aqui para cada uno de los casos insertar y actualizar valores monetarios
