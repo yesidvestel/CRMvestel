@@ -950,16 +950,18 @@
         var equipo_pz=$(this).data("equipo");
         var idc=$(this).data("idc");
         var url1=$(this).data("url1");
-        if (deuda_pz>0 || (equipo_pz!=="" || equipo_pz!=="sin asignar" || equipo_pz!=="0")) {
+        if (deuda_pz>0 || (equipo_pz!=="" && equipo_pz!=="sin asignar" && equipo_pz!=="0")) {
             ev.preventDefault();
-			$("#modal_informativo_pz").modal("show");
+			
 				if(deuda_pz>0){
 					$("#texto_pz").text('Tiene un saldo de $'+deuda_pz); 	
+                    $("#modal_informativo_pz").modal("show");
 				}else{
 					$("#texto_pz").text('');
 				}
-					if(equipo_pz!=="" || equipo_pz!=="sin asignar" || equipo_pz!=="0"){
+					if(equipo_pz!=="" && equipo_pz!=="sin asignar" && equipo_pz!=="0"){
 						$("#equipo_pz").text('Aun tiene el equipo MAC '+equipo_pz);
+                        $("#modal_informativo_pz").modal("show");
 					}else{
 						$("#equipo_pz").text('');
 
