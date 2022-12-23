@@ -550,8 +550,8 @@ setlocale(LC_TIME, "spanish");
         //$array=array();//array("servicios_tv"=>array(),"servicios_internet"=>array());
         $lista_sedes=$this->db->get_where("customers_group")->result_array();
         foreach($lista_sedes as $key=> $value){
-            $lista_sedes[$key]['servicios_tv']=$this->db->get_where("products",array("pcat"=>"4","warehouse"=>"7","valores!="=>null,"pertence_a_tv_o_net"=>"Tv"))->result_array();
-            $lista_sedes[$key]['servicios_internet']=$this->db->get_where("products",array("pcat"=>4,"warehouse"=>7,"valores!="=>null,"pertence_a_tv_o_net"=>"Internet"))->result_array();
+            $lista_sedes[$key]['servicios_tv']=$this->db->get_where("products",array("pcat"=>"4","warehouse"=>"7","sede"=>$value['id'],"valores!="=>null,"pertence_a_tv_o_net"=>"Tv"))->result_array();
+            $lista_sedes[$key]['servicios_internet']=$this->db->get_where("products",array("pcat"=>"4","warehouse"=>"7","sede"=>$value['id'],"valores!="=>null,"pertence_a_tv_o_net"=>"Internet"))->result_array();
             foreach ($lista_sedes[$key]['servicios_tv'] as $key2 => $value2) {
                 
                 $x1=explode("-", $value2['valores']);
