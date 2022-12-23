@@ -15,15 +15,25 @@
             text-align:center;
         }
 
-        #tabla_contenido{
-            border: 3px solid #00016a;
+        .tabla_contenido{
+            border: 0.5px solid #00016a;
             width: 100%;
             vertical-align: text-top;
             height: 487px;
-            border-radius: 10%;
+            border-radius: 1%;
             padding-left: 50px;
             padding-right: 50px;
+			/*background-image: url("<?=base_url()."userfiles/company/".$company->logo ?>");
+			background-position: center;
+			background-repeat: no-repeat;
+			background-size: 0 50%;
+			opacity: 0.5;*/
+			
+		
         }
+		.tabla_contenido::before {
+			
+		}
 
         small{
             font-size: 9px;
@@ -35,7 +45,7 @@
         }
         #saludo{
             border: 1px solid #000; 
-            border-radius: 10%;
+            border-radius: 1%;
             width: 73%;
             float: left;
             padding-left: 25px;
@@ -80,6 +90,7 @@
             line-height: 3pt;
             padding: 3pt;
             font-size: 9px;
+			 
         }
 
         .subtotal tr td {          
@@ -158,7 +169,7 @@
         <tbody>
             <tr>
                 
-                <td><img  src="<?=base_url()."userfiles/company/165334292264357072.png"  ?>"></td>
+                <td><img  src="<?=base_url()."userfiles/company/logosaves.png"  ?>"></td>
             </tr>
             <tr>
                 <td><h1 >Facturas  </h1>
@@ -204,7 +215,7 @@
 $barrio =$this->db->get_where("barrio",array("idBarrio"=>$custmr->barrio))->row();
 ?>
     
-<div id="tabla_contenido" >
+<div class="tabla_contenido" >
     
                 
 <!-- Inicio Factura-->

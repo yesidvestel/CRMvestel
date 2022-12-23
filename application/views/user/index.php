@@ -13,8 +13,8 @@
                         <div class="card-header no-border">
                             <div class="card-title text-xs-center">
                                 <div class="p-1"><img width="100%"
-                                            src="<?php echo base_url('userfiles/company/') . $this->config->item('logo'); ?>"
-                                            alt="Logo"></div>
+                                            src="<?php echo base_url('userfiles/company/logosaves.png') ?>"
+                                           ></div>
                             </div>
                             <h6 class="card-subtitle line-on-side text-muted text-xs-center font-small-3 pt-2">
                                 <span><?php echo $this->lang->line('employee_login_panel') ?></span>
