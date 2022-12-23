@@ -283,7 +283,7 @@ class Facturas_electronicas_model extends CI_Model
 
             }*/
             if(isset($datos_facturar['puntos']) && $datos_facturar['puntos']!="no"){
-                    $dataApiTV->items[1]->description="Puntos de tv adicionales ".$datos_facturar['puntos'];
+                    /*$dataApiTV->items[1]->description="Puntos de tv adicionales ".$datos_facturar['puntos'];
                     $lista_de_productos=$this->db->from("products")->where("pid","158")->get()->result();
                     $prod=$lista_de_productos[0];
 
@@ -292,7 +292,20 @@ class Facturas_electronicas_model extends CI_Model
                     $dataApiTV->items[1]->code="001";
 
                             $dataApiTV->items[1]->price=$prod->product_price;
-                            $dataApiTV->payments[0]->value=$dataApiTV->payments[0]->value+$prod->product_price;                            
+                            $dataApiTV->payments[0]->value=$dataApiTV->payments[0]->value+$prod->product_price;
+
+
+*/
+                    $dataApiTV->items[1]->description="Puntos de tv adicionales ".$_POST['puntos'];
+                    $lista_de_productos=$this->db->from("products")->where("pid","158")->get()->result();
+                    $prod=$lista_de_productos[0];
+
+                    $v2=$prod->product_price*intval($_POST['puntos']);
+
+                    $dataApiTV->items[1]->code="001";
+                            $dataApiTV->items[1]->quantity=$_POST['puntos'];
+                            $dataApiTV->items[1]->price=$prod->product_price;
+                            $dataApiTV->payments[0]->value=$dataApiTV->payments[0]->value+$v2;                            
 
             }
 

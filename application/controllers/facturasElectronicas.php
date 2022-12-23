@@ -292,25 +292,37 @@ $this->load->model("customers_model","customers");
        	//falta el manejo de los saldos saldos
         if($dataApiTV!=null){
             $dataApiTV->items[0]->description="Servicio de Televisión por Cable";
-            /*if($tv_product->taxrate!=0){
-                $precios=$this->customers->calculoParaFacturaElectronica($tv_product->product_price);
-                $dataApiTV->items[0]->price=$precios['valor_sin_iva'];
-                $dataApiTV->items[0]->taxes->value=$precios['valor_iva'];
-                $dataApiTV->payments[0]->value=$precios['valortotal'];
-            }else{
+            $array_servicios2=$this->customers->servicios_detail($customer->id);
 
-            }*/
+            $itemPuntoComercial=$this->db->get_where("invoice_items",array("product"=>"PuntoComercial","tid"=>$array_servicios2['tid']))->row();
+            if(!empty($itemPuntoComercial)){
+                $dataApiTV->items[0]->description="Puntos de Tv Comerciales ".$itemPuntoComercial->qty;
+                //$itemPuntoComercial->price=$itemPuntoComercial->price*$itemPuntoComercial->qty;
+                         
+                 $dataApiTV->items[0]->code="001";
+                            //$v1=($itemPuntoComercial->price*19)/100;
+                            $v2=$itemPuntoComercial->price*$itemPuntoComercial->qty;
+                            //$dataApiNET->items[0]->taxes[0]->id=5869;
+                            $dataApiTV->items[0]->quantity=$itemPuntoComercial->qty;
+                            $dataApiTV->items[0]->price=$itemPuntoComercial->price;
+                            //$dataApiTV->items[0]->taxes[0]->value=$v1;
+                            $dataApiTV->payments[0]->value=$v2;
+                             unset($dataApiTV->items[0]->taxes);
+                           
+            }
+
+            
             if(isset($_POST['puntos']) && $_POST['puntos']!="no"){
                     $dataApiTV->items[1]->description="Puntos de tv adicionales ".$_POST['puntos'];
                     $lista_de_productos=$this->db->from("products")->where("pid","158")->get()->result();
                     $prod=$lista_de_productos[0];
 
-                    $prod->product_price=$prod->product_price*intval($_POST['puntos']);
+                    $v2=$prod->product_price*intval($_POST['puntos']);
 
                     $dataApiTV->items[1]->code="001";
-
+                            $dataApiTV->items[1]->quantity=$_POST['puntos'];
                             $dataApiTV->items[1]->price=$prod->product_price;
-                            $dataApiTV->payments[0]->value=$dataApiTV->payments[0]->value+$prod->product_price;                            
+                            $dataApiTV->payments[0]->value=$dataApiTV->payments[0]->value+$v2;                            
 
             }
 
