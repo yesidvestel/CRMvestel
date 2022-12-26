@@ -560,19 +560,25 @@
                 <thead>
                 <tr >
                     <th><input type="checkbox" <?= ($cuenta!=0) ? 'checked':'' ?>  name="" style="cursor: pointer;" onclick="selet_all_customers(this)">&nbspSMS</th>
-                    <th>#</th>
-					<th>Abonado</th>
-					<th>Cedula</th>
-                    <th><?php echo $this->lang->line('Name') ?></th>
-					<th>Celular</th>
-                    <th><?php echo $this->lang->line('Address') ?></th>
-                    <th>Barrio</th>
-                    <th>Serv. Suscritos</th>
-                    <th>Tecnologia</th>
-					<th id="despues_de_thead">Estado</th>
+                    <th class="1_th">#</th>
+					<th class="abonado_th">Abonado</th>
+					<th class="cedula_th">Cedula</th>
+                    <th class="nombre_th"><?php echo $this->lang->line('Name') ?></th>
+					<th class="celular_th">Celular</th>
+                    <th class="direccion_th"><?php echo $this->lang->line('Address') ?></th>
+                    <th class="barrio_th">Barrio</th>
+                    <th class="serv_suscritos_th">Serv. Suscritos</th>
+                    <th class="tecnologia_th">Tecnologia</th>
+					<th class="estado_th" id="despues_de_thead">Estado</th>
+                    <th class='deuda_th'>Deuda</th>
+                    <th class='suscripcion_th'>Suscripcion</th>
+                    <th class='ingresos_th'>Ingreso</th>
+                    <th class='fecha_cambio_th'>Fecha Cambio</th>
+                    <th class='ultimo_estado_th'>Ult. Estado</th>
+                    <th class='fecha_contrato_th'>Fecha Contrato</th>
                     <th class="settings_th"><?php echo $this->lang->line('Settings') ?></th>
 					<?php if ($this->aauth->get_user()->roleid > 4) { ?>
-					<th>Config</th>
+					<th class="config_th">Config</th>
 					<?php } ?>
 
                 </tr>
@@ -583,26 +589,54 @@
                 <tfoot id="tf1">
                 <tr >
                     <th>SMS</th>
-                    <th>#</th>
-					<th>Abonado</th>
-					<th>Cedula</th>
-                    <th><?php echo $this->lang->line('Name') ?></th>
-					<th>Celular</th>
-                    <th><?php echo $this->lang->line('Address') ?></th>
-                    <th>Barrio</th>
-                    <th>Serv. Suscritos</th>
-                    <th>Tecnologia</th>
-					<th id="despues_de_tfoot">Estado</th>
+                    <th class="1_th">#</th>
+                    <th class="abonado_th">Abonado</th>
+                    <th class="cedula_th">Cedula</th>
+                    <th class="nombre_th"><?php echo $this->lang->line('Name') ?></th>
+                    <th class="celular_th">Celular</th>
+                    <th class="direccion_th"><?php echo $this->lang->line('Address') ?></th>
+                    <th class="barrio_th">Barrio</th>
+                    <th class="serv_suscritos_th">Serv. Suscritos</th>
+                    <th class="tecnologia_th">Tecnologia</th>
+                    <th class="estado_th" id="despues_de_thead">Estado</th>
+                    <th class='deuda_th'>Deuda</th>
+                    <th class='suscripcion_th'>Suscripcion</th>
+                    <th class='ingresos_th'>Ingreso</th>
+                    <th class='fecha_cambio_th'>Fecha Cambio</th>
+                    <th class='ultimo_estado_th'>Ult. Estado</th>
+                    <th class='fecha_contrato_th'>Fecha Contrato</th>
                     <th class="settings_th"><?php echo $this->lang->line('Settings') ?></th>
 					<?php if ($this->aauth->get_user()->roleid > 4) { ?>
-					<th>Config</th>
+					<th class="config_th">Config</th>
 					<?php } ?>
                 </tr>
                 </tfoot>
             </table>
             </div>
             </div>
-            
+            <hr>
+            <div class="form-group">
+            <select id="select2_columnas"  class="form-control select-box" multiple="multiple">
+                <option value="1">#</option>
+                <option value="2">Abonado</option>
+                <option value="3">Cedula</option>
+                <option value="4">Nombre</option>
+                <option value="5">Celular</option>
+                <option value="6">Direccion</option>
+                <option value="7">Barrio</option>
+                <option value="8">Serv. Suscritos</option>
+                <option value="9">Tecnologia</option>
+                <option value="10">Estado</option>
+                <option value="11">Deuda</option>
+                <option value="12">Suscripcion</option>
+                <option value="13">Ingreso</option>
+                <option value="15">Fecha Cambio</option>
+                <option value="14">Ult. Estado</option>
+                <option value="16">Fecha Contrato</option>
+                <option value="17">Configuraciones</option>
+                <option value="18">Config</option>
+            </select>
+            </div>
         </div>
         
     </div>
@@ -745,7 +779,37 @@ $("#sel_filtrar_fecha_cambio").on("change",function(){
 
         });
 		
+    $("#select2_columnas").select2();
+    /* configurando columnas por defecto*/
+         $('#select2_columnas').val(['1','2','3','4','5','6','7','8','9','10','17','18']).trigger('change.select2');
+            tb.columns([11,12,13,14,15,16]).visible(false);
+            $('#select2_columnas').on('select2:select', function (e) { 
+                var x1a=$('#fclientstable').width();
+                //var d1=(x1a*9.5)/100;
+                
+                if($('#select2_columnas').val().length=="9"){
+                    if(columnasUlEsAgregadas==true){
+                        x1a+=300;
+                    }
+                        $('.div1').width(x1a+100);
+                    $('.div2').width(x1a+100);
+                }
+                tb.column(e.params.data.id).visible(true);
+            });
+            $('#select2_columnas').on('select2:unselect', function (e) { 
+                var x1a=$('#fclientstable').width();
 
+                if($('#select2_columnas').val().length=="9"){
+                    if(columnasUlEsAgregadas==true){
+                        x1a-=300;
+                    }
+                        $('.div1').width(x1a-100);
+                        $('.div2').width(x1a-100);
+                }
+                
+               tb.column(e.params.data.id).visible(false);
+            });
+    /*end configurando columnas por defecto*/
     });
 </script>
 <div id="delete_model" class="modal fade">
@@ -1104,12 +1168,14 @@ $(window).on('load', function (e) {
               tb.destroy();
                var ultimo_estado_sel=$("#ultimo_estado_sel option:selected").val();
              if(ultimo_estado_sel=="No" || columnasUlEsAgregadas==false){
-               $("#despues_de_thead").after("<th class='cols_adicionadas'>Ingreso</th>");
+               /*$("#despues_de_thead").after("<th class='cols_adicionadas'>Ingreso</th>");
               $("#despues_de_tfoot").after("<th class='cols_adicionadas'>Ingreso</th>");
               $("#despues_de_thead").after("<th class='cols_adicionadas'>Suscripcion</th>");
               $("#despues_de_tfoot").after("<th class='cols_adicionadas'>Suscripcion</th>");
               $("#despues_de_thead").after("<th class='cols_adicionadas'>Deuda</th>");
-              $("#despues_de_tfoot").after("<th class='cols_adicionadas'>Deuda</th>");
+              $("#despues_de_tfoot").after("<th class='cols_adicionadas'>Deuda</th>");*/
+                $('#select2_columnas').val(['1','2','3','4','5','6','7','8','9','10','11','12','13','17','18']).trigger('change.select2');
+
               columnasUlEsAgregadas=true;
               var x1a=$('#fclientstable').width();
                 //var d1=(x1a*9.5)/100;
@@ -1117,10 +1183,11 @@ $(window).on('load', function (e) {
                 $('.div2').width(x1a-500);
             }
             if(ultimo_estado_sel=="Si"){
-                    $("#despues_de_thead").after("<th class='cols_adicionadas'>Ult. Estado</th>");
+                    /*$("#despues_de_thead").after("<th class='cols_adicionadas'>Ult. Estado</th>");
                     $("#despues_de_tfoot").after("<th class='cols_adicionadas'>Ult. Estado</th>");
                     $("#despues_de_thead").after("<th class='cols_adicionadas'>Fecha Cambio</th>");
-                    $("#despues_de_tfoot").after("<th class='cols_adicionadas'>Fecha Cambio</th>");
+                    $("#despues_de_tfoot").after("<th class='cols_adicionadas'>Fecha Cambio</th>");*/
+                
                    var x1a=$('#fclientstable').width();
                     //var d1=(x1a*9.5)/100;
                     $('.div1').width(x1a-500);
@@ -1131,7 +1198,7 @@ $(window).on('load', function (e) {
               
   if(ingreso_select!=""){
     
-                    $(".settings_th").before("<th class='cols_adicionadas_contrato'>Fecha Contrato</th>");
+                    /*$(".settings_th").before("<th class='cols_adicionadas_contrato'>Fecha Contrato</th>");*/
                     $('.div1').width(x1a-500);
                     $('.div2').width(x1a-500);
   }         
@@ -1214,8 +1281,22 @@ $(window).on('load', function (e) {
                 
 
             });
+              if(ultimo_estado_sel=="No" || columnasUlEsAgregadas==false){
+                $('#select2_columnas').val(['1','2','3','4','5','6','7','8','9','10','11','12','13','17','18']).trigger('change.select2');
+                    tb.columns([14,15,16]).visible(false);          
+                    if(ingreso_select!=""){
+                        $('#select2_columnas').val(['1','2','3','4','5','6','7','8','9','10','11','12','13','16','17','18']).trigger('change.select2');
+                            tb.columns([16]).visible(true);               
+                    }
+              }
+
+              if(ultimo_estado_sel=="Si" && ingreso_select==""){
+                $('#select2_columnas').val(['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','17','18']).trigger('change.select2');
+                    tb.columns([16]).visible(false);           
+              }
               columnasAgregadas=true;
       }
+      
     }
 
     $(function () {
@@ -1288,6 +1369,25 @@ $(window).on('load', function (e) {
             //if(morosos!=""){
                 if(columnasAgregadas){
                     tb.ajax.url( baseurl+"clientgroup/load_morosos?id=<?=$_GET['id']?>&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&checked_ind_service="+checked_ind_service+"&check_usuarios_a_facturar="+check_usuarios_a_facturar+"&estados_multiple="+estados_multiple+"&localidad_multiple="+localidad_multiple+"&barrios_multiple="+barrios_multiple+"&deudores_multiple="+deudores_multiple+"&tegnologia_multiple="+tegnologia_multiple+"&ultimo_estado_sel="+ultimo_estado_sel+"&sel_filtrar_fecha_cambio="+sel_filtrar_fecha_cambio+"&sdate3="+sdate3+"&edate2="+edate2+"&check_sin_factura_actual="+check_sin_factura_actual+"&check_equipos_asignados="+check_equipos_asignados).load();               
+                    $('#select2_columnas').val(['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18']).trigger('change.select2');
+                    if(ultimo_estado_sel=="No"){
+                $('#select2_columnas').val(['1','2','3','4','5','6','7','8','9','10','11','12','13','17','18']).trigger('change.select2');
+                    tb.columns([14,15,16]).visible(false);          
+                    if(ingreso_select!=""){
+                        $('#select2_columnas').val(['1','2','3','4','5','6','7','8','9','10','11','12','13','16','17','18']).trigger('change.select2');
+                            tb.columns([16]).visible(true);               
+                    }
+              }else{
+                    if(ingreso_select!=""){
+                        $('#select2_columnas').val(['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18']).trigger('change.select2');
+                            tb.columns([16]).visible(true);               
+                    }
+              }
+
+              if(ultimo_estado_sel=="Si" && ingreso_select==""){
+                $('#select2_columnas').val(['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','17','18']).trigger('change.select2');
+                    tb.columns([16]).visible(false);           
+              }
                 }else{
                     nuevas_columnas();
                     $("option[value=100]").text("Todo");
