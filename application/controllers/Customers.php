@@ -1863,7 +1863,7 @@ if($data['servicios']['estado']=="Inactivo"){
 			$data['dto'] = $this->customers->group_departamentos($data['usuario']['departamento']);
 			$data['barrio'] = $this->customers->group_barrio($data['usuario']['barrio']);
 			//if ($data['invoice']) $data['products'] = $this->invocies->invoice_products($tid);
-			$data['empleado']= $this->invocies->employee(8);
+			$data['empleado']= $this->invocies->employee(54);
 			ini_set('memory_limit', '128M');
 			$html = $this->load->view('invoices/pazysalvo', $data, true);
 			//PDF Rendering
