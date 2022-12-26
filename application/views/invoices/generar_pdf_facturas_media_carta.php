@@ -43,12 +43,22 @@
             width: 100px;
             padding-top: 10px;
         }
+		.head_saludo {
+            background: #515151;
+            color: #FFF;
+            padding: 6pt;
+            text-align: left;
+			width: 75%;
+			float: left;
+
+        }
         #saludo{
-            border: 1px solid #000; 
-            border-radius: 1%;
+            /*border: 1px solid #000; 
+            border-radius: 1%;*/
             width: 73%;
             float: left;
             padding-left: 25px;
+			background-color: #eee;
             
         }
         #logo-div{            
@@ -62,6 +72,7 @@
             padding-top: 10px;
             width: 100%;
         }
+		
         
         /* end parte cabezal */
         /* cuerpo facturas */
@@ -221,7 +232,7 @@ $barrio =$this->db->get_where("barrio",array("idBarrio"=>$custmr->barrio))->row(
 <!-- Inicio Factura-->
     <!-- Encabezado-->
          <div id="td_tid"><small><?= "#".$factura['tid'] ?></small></div>
-     
+		<div class="head_saludo">DATOS USUARIO</div>
         <div id="saludo"  ><h4>Sr(a) <?=$custmr->name." ".$custmr->dosnombre." ".$custmr->unoapellido." ".$custmr->dosapellido ?></h4>
             <h6><?= strtoupper( $custmr->tipo_documento." : ".number_format($custmr->documento,0,",","."))." - Abonado: #".$custmr->abonado ?></h6>
             <h6>Direccion : <?= $custmr->nomenclatura . ' ' . $custmr->numero1 . $custmr->adicionauno.' Nº '.$custmr->numero2.$custmr->adicional2.' - '.$custmr->numero3." - Br:".$barrio->barrio.", ".$sede; ?></h6>
