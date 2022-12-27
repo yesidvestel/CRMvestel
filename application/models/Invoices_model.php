@@ -185,7 +185,9 @@ setlocale(LC_TIME, "spanish");
 
     }
     $total+=$iva;
-    
+    if($total<=0){
+        $total=round($var_factura->total);
+    }
     $fecha_= $var_factura->invoicedate;
     $vrm_aux=$vrm;
     $retorno=array();
