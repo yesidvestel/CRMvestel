@@ -1455,29 +1455,31 @@ $this->load->model('customers_model', 'customers');
 		$tv = $this->input->post('television');
 		$int = $this->input->post('internet');
         $datax=array();
-        if($tv!="por_defecto"){
-			if($tv !='no'){
-		  		$this->db->set('television', $tv);
-				$this->db->set('estado_tv', '');
-                $datax['television']=$tv;
-                $datax['estado_tv']='';
-			}else{
-				$this->db->set('estado_tv', 'Cortado');
+		if($tv ==='Cortado'){
+			$this->db->set('estado_tv', 'Cortado');
+			$datax['estado_tv']='Cortado';
+		}else if($tv ==='Suspendido'){
+			$this->db->set('estado_tv', 'Suspendido');
+			$datax['estado_tv']='Suspendido';
+		}else{
+			$this->db->set('television', $tv);
+			$this->db->set('estado_tv', '');
+			$datax['television']=$tv;
+			$datax['estado_tv']='';
+		}
 
-                $datax['estado_tv']='Cortado';
-			}
-        }
-         if($int!="por_defecto" && $tv!="Television"){
-			 if($int != 'no'){
-                $this->db->set('combo', $int);
-			 	$this->db->set('estado_combo', '');
-                $datax['combo']=$int;
-                $datax['estado_combo']='';
-			 }else{
-				$this->db->set('estado_combo', 'Cortado'); 
-                $datax['estado_combo']='Cortado';
-			 }
-        }
+		if($int==="Cortado"){
+			$this->db->set('estado_combo', 'Cortado'); 
+			$datax['estado_combo']='Cortado';
+		}else if($int==="Suspendido"){
+			$this->db->set('estado_combo', 'Suspendido'); 
+			$datax['estado_combo']='Suspendido';
+		}else{
+			$this->db->set('combo', $int);
+			$this->db->set('estado_combo', '');
+			$datax['combo']=$int;
+			$datax['estado_combo']='';
+		}
         $this->db->set('ron', $status);
         $this->db->where('tid', $tid);
         $datax['ron']=$status;

@@ -841,10 +841,15 @@
 						<div class="col-xs-6 mb-1"><label
                                     for="pmethod">Television</label>
                             <select name="television" class="form-control mb-1">
-                                <option value="por_defecto">-><?php if($invoice['estado_tv']==='Cortado'){
-									$estdo = 'Cortado';
-								}else{ $estdo = ''; } echo $invoice['television'].' '.$estdo ?></option>
-                            	<option value="no">Suspender</option>
+                                <option value="<?=$invoice['television'] ?>">-><?php if($invoice['estado_tv']==='Cortado'){
+										$estdo = 'Cortado';
+									}else if($invoice['estado_tv']==='Suspendido') { 
+										$estdo = 'Suspendido'; 
+									}else{
+										$estdo = '';
+									} echo $invoice['television'].' '.$estdo ?></option>
+                            	<option value="Suspendido">Suspender</option>
+                            	<option value="Cortado">Cortar</option>
 								<?php
 									foreach ($paquete as $row) {
 										$cid = $row['pid'];
@@ -857,10 +862,15 @@
 						<div class="col-xs-6 mb-1"><label
                                     for="pmethod">Internet</label>
                             <select name="internet" class="form-control mb-1">
-                                <option value="por_defecto">-><?php if($invoice['estado_combo']==='Cortado'){
+                                <option value="<?=$invoice['combo'] ?>">-><?php if($invoice['estado_combo']==='Cortado'){
 									$estint = 'Cortado';
-								}else{ $estint = ''; } echo $invoice['combo'].' '.$estint ?></option>
-								<option value="no">No</option>
+								}else if($invoice['estado_combo']==='Suspendido'){
+									$estint = 'Suspendido';
+								}else{ 
+									$estint = ''; 
+								} echo $invoice['combo'].' '.$estint ?></option>
+								<option value="Cortado">Cortar</option>
+								<option value="Suspendido">Suspender</option>
 								<?php
 									foreach ($paqueteinter as $row) {
 										$cid = $row['pid'];
