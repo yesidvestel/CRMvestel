@@ -272,7 +272,7 @@ $this->load->model('customers_model', 'customers');
                     if($value2->puntos!=null && $value2->puntos!=0 && $value2->puntos!=''  && $value2->puntos!='no'){
                                 $puntos=$value2->puntos;
                         }
-                    
+                    $serv_solo_tv=null;
                     $lista_items=$this->db->get_where("invoice_items", array('tid' => $value2->tid))->result_array();
                     foreach ($lista_items as $key => $item_invoic) {
                         if(strpos(strtolower($item_invoic['product']), "reconexi")!==false){
@@ -280,8 +280,12 @@ $this->load->model('customers_model', 'customers');
                         }else if(strpos(strtolower($item_invoic['product']), "afiliaci")!==false){
                             
                         }else{
-                            if(strpos(strtolower($item_invoic['product']), "tele")!==false){
-                                //$_tiene_television=true;
+                            if(strpos(strtolower($item_invoic['product']), "solotelevision")!==false){
+                                $_tiene_television=true;
+                                $_tiene_internet=false;
+                                $value2->television="SoloTelevision";
+                                $value2->combo="no";
+                                $serv_solo_tv=$item_invoic;
                             }else{
                                 if($item_invoic['product']=="Punto Adicional"){
                                     //$puntos=$item_invoic['qty'];
@@ -305,7 +309,23 @@ $this->load->model('customers_model', 'customers');
                             $factura_data['total']=0;
                             $factura_data['subtotal']=0;
                             if($_tiene_television==true && ($value2->estado_tv==null || $value2->estado_tv=='null')){
-                                if(strpos(strtolower($caja1->holder), strtolower("mocoa"))!==false){
+                                if($value2->television=="SoloTelevision"){
+                                    $tv_product= $this->db->get_where("products", array('pid' => $serv_solo_tv['pid']))->row();
+                                    $iva1=round(($tv_product->product_price*$tv_product->taxrate)/100);
+                                    $x1=$iva1+$tv_product->product_price;
+                                    $television_data['pid']=$tv_product->pid;
+                                    $television_data['price']=$tv_product->product_price;
+                                    $television_data['subtotal']=$x1;
+                                    $television_data['totaltax']=$iva1;
+                                    $television_data['tax']=$tv_product->taxrate;
+                                    $factura_data['tax']=$iva1;
+                                    $factura_data['subtotal']=$tv_product->product_price;
+                                    $factura_data['total']=$x1;
+
+                                    
+                                        $television_data['product']=$tv_product->product_name;
+                                    
+                                }else if(strpos(strtolower($caja1->holder), strtolower("mocoa"))!==false){
                                     $tv_product= $this->db->get_where("products", array('pid' => "159"))->row();
                                     $television_data['pid']=$tv_product->pid;
                                     $television_data['price']=$tv_product->product_price;
@@ -457,6 +477,10 @@ $list_servs=$this->invocies->servicios_adicionales_recurrentes($value2->tid);
                                 $factura_data['tipo_factura']="Recurrente";
                                 if($_tiene_television==true){
                                     $factura_data['television']="Television";
+                                    if($value2->television=="SoloTelevision"){
+                                        $factura_data['television']="SoloTelevision";
+                                    }
+                                    
                                 }else{
                                     $factura_data['television']="no";
                                 }
