@@ -353,6 +353,9 @@ include (APPPATH."libraries\RouterosAPI.php");
                             }
                             if($producto!=null){$var_excluir=false;
                                 $suscripcion_str="Tv";
+                                if(strtolower($invoice->television)!="television"){
+                                    $suscripcion_str=$invoice->television;
+                                }
                             }
                             
                         }
@@ -870,6 +873,9 @@ if(isset($_GET['ingreso_select']) && $_GET['ingreso_select']!="" && $_GET['ingre
             $servicios_str="";
             if($servicios_detail['television']!="" && $servicios_detail['television']!="no" && $servicios_detail['television']!="-"){
                 $servicios_str="Tv";
+                if(strtolower($servicios_detail['television'])!="television"){
+                    $servicios_str=$servicios_detail['television'];
+                }
             }
 //esto es para los estados
             
@@ -1224,6 +1230,9 @@ if(isset($_GET['ingreso_select']) && $_GET['ingreso_select']!="" && $_GET['ingre
                             }
                             if($producto!=null){$var_excluir=false;
                                 $suscripcion_str="Tv";
+                                if(strtolower($invoice->television)!="television"){
+                                    $suscripcion_str=$invoice->television;
+                                }
                             }
                             
                         }
