@@ -349,7 +349,16 @@ include (APPPATH."libraries\RouterosAPI.php");
                                 $suma+=$producto->product_price;
                             }else{
                                 $producto=$this->db->get_where('products', array("pid"=>"27"))->row();
-                                $suma+=$producto->product_price+3992;
+                                if(strtolower($invoice->television)!="television"){
+                                    $producto=$this->db->get_where('products', array("product_name"=>$invoice->television))->row();
+                                    $iva2=0;
+                                    if(isset($producto) && $producto->taxrate!="0"){
+                                        $iva2=round(($producto->product_price*$producto->taxrate)/100);
+                                    }
+                                    $suma+=$producto->product_price+$iva2;    
+                                }else{
+                                    $suma+=$producto->product_price+3992;    
+                                }
                             }
                             if($producto!=null){$var_excluir=false;
                                 $suscripcion_str="Tv";
@@ -1226,7 +1235,17 @@ if(isset($_GET['ingreso_select']) && $_GET['ingreso_select']!="" && $_GET['ingre
                                 $suma+=$producto->product_price;
                             }else{
                                 $producto=$this->db->get_where('products', array("pid"=>"27"))->row();
-                                $suma+=$producto->product_price+3992;
+                                if(strtolower($invoice->television)!="television"){
+                                    $producto=$this->db->get_where('products', array("product_name"=>$invoice->television))->row();
+                                    $iva2=0;
+                                    if(isset($producto) && $producto->taxrate!="0"){
+                                        $iva2=round(($producto->product_price*$producto->taxrate)/100);
+                                    }
+                                    $suma+=$producto->product_price+$iva2;    
+                                }else{
+                                    $suma+=$producto->product_price+3992;    
+                                }
+                                
                             }
                             if($producto!=null){$var_excluir=false;
                                 $suscripcion_str="Tv";
@@ -1745,6 +1764,9 @@ if(isset($_GET['ingreso_select']) && $_GET['ingreso_select']!="" && $_GET['ingre
                             if($_GET['ultimo_estado_sel']=="Si"){
                                 $row[] = $datos_cuentas->fecha_ultimo_estado;
                                 $row[] = '<span class="st-'.$datos_cuentas->ultimo_estado. '">' .$datos_cuentas->ultimo_estado. '</span>';
+                            }else{
+                                $row[]="";
+                                $row[]="";
                             }
                             /*if(isset($_GET['ingreso_select']) && $_GET['ingreso_select']!="" && $_GET['ingreso_select']!="fecha_ingreso" && $_GET['ingreso_select']!=null){
                                     $row[] = $customers->f_contrato;
