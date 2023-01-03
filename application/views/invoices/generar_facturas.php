@@ -26,7 +26,7 @@
                                             $cid = $row['id'];
                                             $acn = $row['acn'];
                                             $holder = $row['holder'];
-                                            if($cid<6 || $cid==9){
+                                            if($cid<6 || $cid==9 || $cid==19){
                                                 echo "<option value='$cid'>$acn - $holder</option>";
                                             }
                                         }
