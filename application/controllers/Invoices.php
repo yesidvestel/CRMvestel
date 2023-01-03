@@ -321,7 +321,11 @@ $this->load->model('customers_model', 'customers');
                                  
                                 if(!empty($paquete_tv_diff)){
                                     $tv_product= $paquete_tv_diff;
-                                    $iva1=round(($tv_product->product_price*$tv_product->taxrate)/100);
+                                    $iva1=0;
+                                    if($tv_product->taxrate!="0"){
+                                        $iva1=round(($tv_product->product_price*$tv_product->taxrate)/100);
+                                    }
+                                    
                                     $x1=$iva1+$tv_product->product_price;
                                     $television_data['pid']=$tv_product->pid;
                                     $television_data['price']=$tv_product->product_price;
