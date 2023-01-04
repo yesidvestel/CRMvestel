@@ -309,6 +309,29 @@ $this->load->model("customers_model","customers");
                             $dataApiTV->payments[0]->value=$v2;
                              unset($dataApiTV->items[0]->taxes);
                            
+            }else if(strtolower($array_servicios2['television'])!="television" && $array_servicios2['television']!="no" && $array_servicios2['television']!="" && $array_servicios2['television']!="-"){
+                    $paquete_tv_diff=$this->db->get_where("products", array('product_name' => $array_servicios2['television']))->row();
+                    if(isset($paquete_tv_diff)){
+                        $dataApiTV->items[0]->description="Television ".$paquete_tv_diff->product_name;
+                        
+                            $v2=$paquete_tv_diff->product_price;
+                            $dataApiTV->items[0]->price=$paquete_tv_diff->product_price;
+                            $dataApiTV->payments[0]->value=$v2;
+                            if($paquete_tv_diff->taxrate!=0){
+                                $v1=($paquete_tv_diff->product_price*19)/100;
+                                $v2=$paquete_tv_diff->product_price+$v1;
+                                
+                                $dataApiTV->items[0]->price=$paquete_tv_diff->product_price;
+                                $dataApiTV->items[0]->taxes[0]->value=$v1;
+                                $dataApiTV->payments[0]->value=$v2;
+                                
+                             
+                            }else{
+                                 $dataApiTV->items[0]->code="001";
+                                unset($dataApiTV->items[0]->taxes);
+                            }
+
+                    }
             }
 
             
@@ -655,6 +678,8 @@ set_time_limit(150);
                 }
                 $datos['sdate']=$sdate;
                 $datos['id']=$id_customer;
+                $datos['serv_tv_real']=$servicios['television'];
+                $datos['tid_ult_fact']=$servicios['tid'];
                 if($datos['servicios']!=null){
                     
                    

@@ -274,14 +274,46 @@ class Facturas_electronicas_model extends CI_Model
 
         if($dataApiTV!=null){
             $dataApiTV->items[0]->description="Servicio de Televisión por Cable";
-            /*if($tv_product->taxrate!=0){
-                $precios=$this->customers->calculoParaFacturaElectronica($tv_product->product_price);
-                $dataApiTV->items[0]->price=$precios['valor_sin_iva'];
-                $dataApiTV->items[0]->taxes->value=$precios['valor_iva'];
-                $dataApiTV->payments[0]->value=$precios['valortotal'];
-            }else{
+            
 
-            }*/
+            $itemPuntoComercial=$this->db->get_where("invoice_items",array("product"=>"PuntoComercial","tid"=>$datos_facturar['tid_ult_fact']))->row();
+            if(!empty($itemPuntoComercial)){
+                $dataApiTV->items[0]->description="Puntos de Tv Comerciales ".$itemPuntoComercial->qty;
+                //$itemPuntoComercial->price=$itemPuntoComercial->price*$itemPuntoComercial->qty;
+                         
+                 $dataApiTV->items[0]->code="001";
+                            //$v1=($itemPuntoComercial->price*19)/100;
+                            $v2=$itemPuntoComercial->price*$itemPuntoComercial->qty;
+                            //$dataApiNET->items[0]->taxes[0]->id=5869;
+                            $dataApiTV->items[0]->quantity=$itemPuntoComercial->qty;
+                            $dataApiTV->items[0]->price=$itemPuntoComercial->price;
+                            //$dataApiTV->items[0]->taxes[0]->value=$v1;
+                            $dataApiTV->payments[0]->value=$v2;
+                             unset($dataApiTV->items[0]->taxes);
+                           
+            }else if(strtolower($datos_facturar['serv_tv_real'])!="television" && $datos_facturar['serv_tv_real']!="no" && $datos_facturar['serv_tv_real']!="" && $datos_facturar['serv_tv_real']!="-"){
+                    $paquete_tv_diff=$this->db->get_where("products", array('product_name' => $datos_facturar['serv_tv_real']))->row();
+                    if(isset($paquete_tv_diff)){
+                        $dataApiTV->items[0]->description="Television ".$paquete_tv_diff->product_name;
+                        
+                            $v2=$paquete_tv_diff->product_price;
+                            $dataApiTV->items[0]->price=$paquete_tv_diff->product_price;
+                            $dataApiTV->payments[0]->value=$v2;
+                            if($paquete_tv_diff->taxrate!=0){
+                                $v1=($paquete_tv_diff->product_price*19)/100;
+                                $v2=$paquete_tv_diff->product_price+$v1;
+                                $dataApiTV->items[0]->price=$paquete_tv_diff->product_price;
+                                $dataApiTV->items[0]->taxes[0]->value=$v1;
+                                $dataApiTV->payments[0]->value=$v2;
+                                
+                             
+                            }else{
+                                 $dataApiTV->items[0]->code="001";
+                                unset($dataApiTV->items[0]->taxes);
+                            }
+
+                    }
+            }
             if(isset($datos_facturar['puntos']) && $datos_facturar['puntos']!="no"){
                     /*$dataApiTV->items[1]->description="Puntos de tv adicionales ".$datos_facturar['puntos'];
                     $lista_de_productos=$this->db->from("products")->where("pid","158")->get()->result();
