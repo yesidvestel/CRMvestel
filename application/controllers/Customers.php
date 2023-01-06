@@ -64,7 +64,28 @@ class Customers extends CI_Controller
         $this->load->view('customers/clist',$data);
         $this->load->view('fixed/footer');
     }
-
+    public function edit_campos(){
+        $data=array($_POST['campo']=>$_POST['value']);
+        if($_POST['value']==$_POST['dato_anterior']){
+            echo 0;
+            exit();
+        }
+        $resultado =$this->db->update("customers",$data,array("id"=>$_POST['id']));
+        if($resultado){
+            $data[$_POST['campo']."_anterior"]=$_POST['dato_anterior'];
+                            $data_h=array();
+                            $data_h['modulo']="Customers";
+                            $data_h['accion']="Actualizar campo ".$_POST['campo']." {update}";
+                            $data_h['id_usuario']=$this->aauth->get_user()->id;
+                            $data_h['fecha']=date("Y-m-d H:i:s");
+                            $data_h['descripcion']=json_encode($data);
+                            $data_h['id_fila']=$_POST['id'];
+                            $data_h['tabla']="customers";
+                            $data_h['nombre_columna']="id";
+                            $this->db->insert("historial_crm",$data_h);
+        }
+        echo $resultado;
+    }
     public function create()
     {
 

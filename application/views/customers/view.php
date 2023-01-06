@@ -64,6 +64,7 @@
 
             <div class="message"></div>
         </div>
+        <div id="alerta_update_camps"></div>
 
         <div class="content-body">
             <section>
@@ -330,7 +331,7 @@
                                     <strong><?php echo $this->lang->line('') ?>Celular:</strong>
                                 </div>
                                 <div class="col-md-10">
-                                    <?php echo $details['celular'] ?>
+                                    <span id="text_celular"><?php echo $details['celular'] ?></span><input id="input_celular" type="text" class="col-md-6 campo_edicion">&nbsp;<a href="#" data-dato="<?= $details['celular'] ?>"  data-type="celular" style="border-radius: 20px;" id="open_update_celular" class="open_update btn btn-success btn-sm"><span class="icon-pencil"></span></a>&nbsp;<a href="#"  data-type="celular" style="border-radius: 20px;" id="cancel_celular" class="cancel_update btn btn-danger btn-sm"><span class="icon-remove"></span></a>
                                 </div>
 
                             </div>
@@ -340,7 +341,7 @@
                                     <strong><?php echo $this->lang->line('') ?>Celular ADI:</strong>
                                 </div>
                                 <div class="col-md-10">
-                                    <?php echo $details['celular2'] ?>
+                                    <span id="text_celular2"><?php echo $details['celular2'] ?></span><input id="input_celular2" type="text" class="col-md-6 campo_edicion">&nbsp;<a href="#" data-dato="<?= $details['celular2'] ?>" data-type="celular2" style="border-radius: 20px;" id="open_update_celular2" class="open_update btn btn-success btn-sm"><span class="icon-pencil"></span></a>&nbsp;<a href="#"  data-type="celular2" style="border-radius: 20px;" id="cancel_celular2" class="cancel_update btn btn-danger btn-sm"><span class="icon-remove"></span></a>
                                 </div>
 
                             </div>
@@ -350,7 +351,7 @@
                                     <strong><?php echo $this->lang->line('') ?>Correo:</strong>
                                 </div>
                                 <div class="col-md-10">
-                                    <?php echo $details['email'] ?>
+                                    <span id="text_email"><?php echo $details['email'] ?></span><input id="input_email" type="email" class="col-md-6 campo_edicion">&nbsp;<a href="#" data-dato="<?= $details['email'] ?>"  data-type="email" style="border-radius: 20px;" id="open_update_email" class="open_update btn btn-success btn-sm"><span class="icon-pencil"></span></a>&nbsp;<a href="#"  data-type="email" style="border-radius: 20px;" id="cancel_email" class=" cancel_update btn btn-danger btn-sm"><span class="icon-remove"></span></a>
                                 </div>
 
                             </div>
@@ -944,6 +945,75 @@
 <!-- The basic File Upload plugin -->
 <script src="<?php echo base_url('assets/myjs/jquery.fileupload.js') ?>"></script>
 <script>
+
+
+    //edicion de campos
+
+
+
+    $(".cancel_update").hide();
+    $(".campo_edicion").hide();
+    $(".cancel_update").attr("title","Cancelar");
+    $(".open_update").attr("title","Editar");
+    var id_customer_update="<?php echo $details['id'] ?>";
+    var campos={'celular':false,'celular2':false,'email':false};
+    $(document).on("click",'.open_update',function(e){
+        e.preventDefault();
+        var elementox=this;
+        var tipo=$(this).data("type");
+        var dato=$(this).data("dato");
+        var span =$("#open_update_"+tipo).children()[0];
+        $(span).removeClass("icon-pencil");
+        $(span).addClass("icon-save");
+        $("#text_"+tipo).hide();
+        $("#cancel_"+tipo).show();
+        $("#input_"+tipo).show();
+
+
+        var actualizar=false;
+
+
+        if(campos[tipo]){
+            actualizar=true;
+        }else{
+            actualizar=false;
+            campos[tipo]=true;
+        }
+        if(actualizar){
+            console.log("guardar");
+            var valor_env=$("#input_"+tipo).val();
+            $.post(baseurl+"customers/edit_campos",{'id':id_customer_update,'campo':tipo,'value':valor_env,'dato_anterior':dato},function(data){
+                    $("#text_"+tipo).text(valor_env);
+                    $(elementox).data("dato",valor_env);
+                    mostrar_alerta1("alerta_update_camps","success","<b>Success: </b>Campo <b>"+tipo+"</b> actualizado");
+                    cerrar_campo(tipo);
+            });    
+        }else{
+            console.log("primer");
+            $("#input_"+tipo).val(dato);    
+        }
+        
+        
+    });
+
+    $(document).on("click",'.cancel_update',function(e){
+        e.preventDefault();
+        
+        var tipo=$(this).data("type");
+        cerrar_campo(tipo);
+        
+    });
+    function cerrar_campo(campox){
+    var span =$("#open_update_"+campox).children()[0];
+        $(span).removeClass("icon-save");
+        $(span).addClass("icon-pencil");
+        $("#text_"+campox).show();
+        $("#cancel_"+campox).hide();
+        $("#input_"+campox).hide();
+
+        campos[campox]=false;
+    }
+    //end edicion de campos
     $(document).on("click","#link_paz_y_salvo",function(ev){
         
         var deuda_pz=$(this).data("deuda");
