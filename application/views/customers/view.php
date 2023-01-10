@@ -560,7 +560,7 @@
                                                 class="icon-calendar"></i>Paz y Salvo</a>
 
                                 </div>
-								<?php } ?>
+								<?php } if ($this->aauth->get_user()->roleid == 5) { ?>
 								<div class="col-md-4" style="margin-top: 5px;">
 
                                     <a href="#pop_model3" data-toggle="modal" onclick="funcion_status();"
@@ -568,6 +568,7 @@
                                                 class="icon-calendar"></i> Compromiso</a>
 
                                 </div>
+								<?php } ?>
                             </div>
                             <hr>
                             <h5 class="text-xs-center col-md-10">OBSERVACIONES</h5>
