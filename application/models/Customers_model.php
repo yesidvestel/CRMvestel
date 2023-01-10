@@ -794,6 +794,8 @@ public function calculo_ultimo_estado ($array_add,$customers){
             return $_SESSION['variables_MikroTik']->ip_Monterrey;//190.14.248.42:8728
         }else if($id_sede==6){//Monterrey
             return $_SESSION['variables_MikroTik']->ip_Aguazul;//190.14.248.42:8728
+        }else if($id_sede==7){//Monterrey
+            return $_SESSION['variables_MikroTik']->ip_tauramena;//190.14.248.42:8728
         }else{//default
             return $_SESSION['variables_MikroTik']->ip_Yopal;//190.14.233.186:8728
         }
@@ -1815,7 +1817,7 @@ public function calculo_ultimo_estado ($array_add,$customers){
 
     
     public function devolver_ips_proximas(){
-        $ips_remotas = array('yopal' =>'10.0.0.2', 'yopal_gpon' =>'10.100.0.2', 'aguazul' =>'10.100.0.2',"monterrey"=>'10.1.100.2','villanueva'=>"80.0.0.2",'villanueva_gpon'=>"10.20.0.2" );    
+        $ips_remotas = array('yopal' =>'10.0.0.2', 'yopal_gpon' =>'10.100.0.2', 'aguazul' =>'10.100.0.2', 'tauramena'=>'10.100.0.2',"monterrey"=>'10.1.100.2','villanueva'=>"80.0.0.2",'villanueva_gpon'=>"10.20.0.2" );    
         /*$customers_yopal=$this->db->query("select count(*) as c_usuarios from customers where gid='2' and Ipremota is not null and Ipremota!='' and Ipremota!='0'")->result_array();
         $customers_yopal_gpon=$this->db->query("select count(*) as c_usuarios from customers where gid='2' and Ipremota is not null and Ipremota!='' and Ipremota!='0' and tegnologia_instalacion='GPON'")->result_array();
         $customers_monterrey=$this->db->query("select count(*) as c_usuarios from customers where gid='4' and Ipremota is not null and Ipremota!='' and Ipremota!='0'")->result_array();
@@ -1826,6 +1828,7 @@ public function calculo_ultimo_estado ($array_add,$customers){
         $customers_yopal_gpon=$this->db->query("select INET_NTOA(max(INET_ATON(Ipremota))) as c_usuarios from customers where gid='2' and Ipremota is not null and Ipremota!='' and Ipremota!='0' and tegnologia_instalacion='GPON'")->result_array();
         $customers_monterrey=$this->db->query("select INET_NTOA(max(INET_ATON(Ipremota))) as c_usuarios from customers where gid='4' and Ipremota is not null and Ipremota!='' and Ipremota!='0'")->result_array();
 		$customers_aguazul=$this->db->query("select INET_NTOA(max(INET_ATON(Ipremota))) as c_usuarios from customers where gid='6' and Ipremota is not null and Ipremota!='' and Ipremota!='0'")->result_array();
+		$customers_tauramena=$this->db->query("select INET_NTOA(max(INET_ATON(Ipremota))) as c_usuarios from customers where gid='7' and Ipremota is not null and Ipremota!='' and Ipremota!='0'")->result_array();
         $customers_villanueva=$this->db->query("select INET_NTOA(max(INET_ATON(Ipremota))) as c_usuarios from customers where gid='3' and Ipremota is not null and Ipremota!='' and (tegnologia_instalacion!='GPON' or tegnologia_instalacion is null)")->result_array();
         $customers_villanueva_gpon=$this->db->query("select INET_NTOA(max(INET_ATON(Ipremota))) as c_usuarios from customers where gid='3' and Ipremota is not null and Ipremota!='' and tegnologia_instalacion='GPON'")->result_array();
         
@@ -1920,6 +1923,28 @@ public function calculo_ultimo_estado ($array_add,$customers){
             }
         }            
        // end ips monterrey
+		// ips tauramena
+        $ciclo=true;
+        $ip=ip2long($customers_tauramena[0]['c_usuarios'])+1;//+intval($customers_monterrey[0]['c_usuarios']) estas lineas hay que agregarlas si el sistema se pone lento al completar todas las casillas ips posibles
+        
+        while($ciclo){
+            
+            $bcast = $ip;
+            $smask = ip2long("255.255.255.255");
+            $nmask = $bcast & $smask;
+            
+            $comprovar=$this->db->get_where("customers",array("Ipremota"=>long2ip($nmask),"gid"=>"7"))->row();
+            if(empty($comprovar)){
+                //no existe
+                $ips_remotas['tauramena']=long2ip($nmask);//aqui como la ip es correcta y no existe se deja como la ip a retornar
+                $ciclo=false;
+            }else{                
+                //existe
+                $ciclo=true;
+                $ip=$ip+1;
+            }
+        }            
+       // end ips tauramena
 
         // ips villanueva
         $ciclo=true;
