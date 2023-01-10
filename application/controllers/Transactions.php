@@ -556,6 +556,12 @@ class Transactions extends CI_Controller
         }if ($tipo==='Reconexion Internet'){
             $tv = 'no';
         }
+        $n12=count($array_facturas2);
+        $fac_caso_execpcional=$array_facturas2[$n12-1];
+        $fac_caso_execpcional = $this->db->get_where('invoices',array('tid'=>$fac_caso_execpcional))->row();
+        if($fac_caso_execpcional->rec=="1"){
+                $mes1 = date("Y-m",strtotime($fac_caso_execpcional->invoicedate));
+        }
         //generar reconexion
 		$username = $this->aauth->get_user()->username;
         $tidactualmasuno= $this->db->select('max(codigo)+1 as tid')->from('tickets')->get()->result();
@@ -623,6 +629,9 @@ class Transactions extends CI_Controller
                 $data2['section']=$factura_asociada->combo;
                 $data2['id_factura']='';
                 $data2['par']=$parmasuno[0]->par;
+                if(isset($fac_caso_execpcional) && $fac_caso_execpcional->tid != $factura_asociada->tid){
+                    $data2['id_factura']=$factura_asociada->tid;
+                }
                 $this->db->insert('tickets',$data2);
 				//tv
 				$data3['codigo']=$tidactualmasdos[0]->tid;
@@ -634,6 +643,9 @@ class Transactions extends CI_Controller
                 $data3['status']='Pendiente';
                 $data3['section']='Television';
                 $data3['id_factura']='';
+                 if(isset($fac_caso_execpcional) && $fac_caso_execpcional->tid != $factura_asociada->tid){
+                    $data3['id_factura']=$factura_asociada->tid;
+                }
                 $data3['par']=$parmasuno[0]->par;
                 $this->db->insert('tickets',$data3);
 			}else{
@@ -646,6 +658,9 @@ class Transactions extends CI_Controller
                 $data2['status']='Pendiente';
                 $data2['section']=$factura_asociada->combo;
                 $data2['id_factura']='';
+                if(isset($fac_caso_execpcional) && $fac_caso_execpcional->tid != $factura_asociada->tid){
+                    $data2['id_factura']=$factura_asociada->tid;
+                }
                 $this->db->insert('tickets',$data2);
 			}
                 
