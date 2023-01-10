@@ -58,6 +58,8 @@
                                                 $color=$color_monterrey;
                                             }else if($key=="ip_Aguazul"){
                                                 $color=$color_aguazul;
+                                            }else if($key=="ip_tauramena"){
+                                                $color=$color_tauramena;
                                             }
                                             if(isset($color)){
                                     ?>
