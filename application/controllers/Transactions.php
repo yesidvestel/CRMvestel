@@ -559,7 +559,7 @@ class Transactions extends CI_Controller
         $n12=count($array_facturas2);
         $fac_caso_execpcional=$array_facturas2[$n12-1];
         $fac_caso_execpcional = $this->db->get_where('invoices',array('tid'=>$fac_caso_execpcional))->row();
-        if($fac_caso_execpcional->rec=="1"){
+        if($fac_caso_execpcional->rec=="1" || $fac_caso_execpcional->estado_tv=="Cortado" || $fac_caso_execpcional->estado_combo=="Cortado"){
                 $mes1 = date("Y-m",strtotime($fac_caso_execpcional->invoicedate));
         }
         //generar reconexion
