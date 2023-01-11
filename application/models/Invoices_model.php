@@ -154,6 +154,10 @@ setlocale(LC_TIME, "spanish");
                 }else{
                         $television=27;
                 }
+                $prod_add_tv=$this->db->get_where("products",array("product_name"=>$ultima_factura['television']))->row();
+                if(isset($prod_add_tv) && strtolower($ultima_factura['television'])!="television"){
+                    $television=$prod_add_tv->pid;
+                }
                 $puntos=intval($ultima_factura['puntos']);
     }
     if($television!=0){
