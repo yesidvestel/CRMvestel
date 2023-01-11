@@ -556,12 +556,21 @@ class Transactions extends CI_Controller
         }if ($tipo==='Reconexion Internet'){
             $tv = 'no';
         }
-        $n12=count($array_facturas2);
-        $fac_caso_execpcional=$array_facturas2[$n12-1];
-        $fac_caso_execpcional = $this->db->get_where('invoices',array('tid'=>$fac_caso_execpcional))->row();
-        if($fac_caso_execpcional->rec=="1" || $fac_caso_execpcional->estado_tv=="Cortado" || $fac_caso_execpcional->estado_combo=="Cortado"){
-                $mes1 = date("Y-m",strtotime($fac_caso_execpcional->invoicedate));
+        /* codigo caso excepcional*/
+        
+        $fecha_actual = date("d-m-Y");
+
+        $mes_pasado= date("d-m-Y",strtotime($fecha_actual."- 1 month")); 
+        $dtime=new DateTime($mes_pasado);
+        $dia_inicial_mes_anterior=$dtime->format("Y-m")."-01";
+        $mes_pasado_fin= date("Y-m-t", strtotime($dia_inicial_mes_anterior));
+        $fac_caso_execpcional=false;
+        $tiquet1 =$this->db->query("select * from tickets where detalle like '%corte%' and (fecha_final>=".$dia_inicial_mes_anterior." and fecha_final<=".$mes_pasado_fin.")")->result();
+        if(count($tiquet1)>0){
+                $mes1 = $dtime->format("Y-m");
+                $fac_caso_execpcional=true;
         }
+        /* end codigo caso excepcional*/
         //generar reconexion
 		$username = $this->aauth->get_user()->username;
         $tidactualmasuno= $this->db->select('max(codigo)+1 as tid')->from('tickets')->get()->result();
@@ -629,7 +638,7 @@ class Transactions extends CI_Controller
                 $data2['section']=$factura_asociada->combo;
                 $data2['id_factura']='';
                 $data2['par']=$parmasuno[0]->par;
-                if(isset($fac_caso_execpcional) && $fac_caso_execpcional->tid != $factura_asociada->tid){
+                if($fac_caso_execpcional){
                     $data2['id_factura']=$factura_asociada->tid;
                 }
                 $this->db->insert('tickets',$data2);
@@ -643,7 +652,7 @@ class Transactions extends CI_Controller
                 $data3['status']='Pendiente';
                 $data3['section']='Television';
                 $data3['id_factura']='';
-                 if(isset($fac_caso_execpcional) && $fac_caso_execpcional->tid != $factura_asociada->tid){
+                 if($fac_caso_execpcional){
                     $data3['id_factura']=$factura_asociada->tid;
                 }
                 $data3['par']=$parmasuno[0]->par;
@@ -658,7 +667,7 @@ class Transactions extends CI_Controller
                 $data2['status']='Pendiente';
                 $data2['section']=$factura_asociada->combo;
                 $data2['id_factura']='';
-                if(isset($fac_caso_execpcional) && $fac_caso_execpcional->tid != $factura_asociada->tid){
+                if($fac_caso_execpcional){
                     $data2['id_factura']=$factura_asociada->tid;
                 }
                 $this->db->insert('tickets',$data2);
