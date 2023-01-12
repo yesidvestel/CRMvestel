@@ -5,22 +5,14 @@
 	width: 140px;
 	background: white;
 }
-
+.staticdos {
+  	position: sticky;
+  	top: 0;
+}
 	th .static{
 		background-color:#719FD0;
 	}
-thead tr th { 
-            position: sticky;
-            top: 0;
-            z-index: 10;
-            background-color: #ffffff;
-        }
-    
-        .table-responsive { 
-            height:100%;
-            overflow:scroll;
-        }
-
+	
 /*.first-col {
   padding-left: 35px!important;
 }*/
@@ -37,12 +29,7 @@ table {
 	tr:nth-child(2n) .static{
 		background-color:aliceblue;
 	}
-	thead {
-  	position: sticky;
-  	top: 0;
-	height: 140px;
-	background: white;
-}
+
 
 
 </style>
@@ -190,19 +177,19 @@ table {
 <a style="color: white;" class="btn-flotante2"><</a>
 <a href="#detalles_totales" style="display:none" id="link1"></a>
 
-                            <!--<div class="table-responsive">-->
-                                <table class="table table-responsive" id="x2">
+                            <div class="table-responsive">
+                                <table class="table mb-1" id="x2">
                                     <thead>
-										<tr >
-										<th rowspan="2" width="140px" >Tipor de orden</th>
-										<th colspan="<?=$tipos['cuantos_dias_a_imprimir'] ?>" style="text-align: center" >Dia</th>
+										<tr>
+										<th rowspan="2" width="140px" class="static">Tipor de orden</th>
+										<th colspan="<?=$tipos['cuantos_dias_a_imprimir'] ?>" style="text-align: center">Dia</th>
 										</tr>
 									
                                     <tr>
                                         
                                         <?php for ($i=1;$i<=$tipos['cuantos_dias_a_imprimir'];$i++){
-													echo '<th style="text-align: center;background-color: cornflowerblue">'.$i.'</th>';}?>
-                                        <th rowspan="2" style="text-align: center;background-color: cornflowerblue" >TOTAL</th>
+													echo '<th style="text-align: center;">'.$i.'</th>';}?>
+                                        <th rowspan="2" style="text-align: center;" >TOTAL</th>
                                     </tr>
 										
                                     </thead>
@@ -1367,7 +1354,7 @@ table {
 
 
 																$x=$lista_datos_cuentas_tipos_por_tecnico['instalaciones_Revision_tv_e_internet'][$key];
-																$total+=$x['puntuacion'];
+																$total+=$x['puntuacion']+$x['puntuacion'];
 																	$puntuacion_revision_tv=$x;
 																    $puntuacion_revision_internet=$x;
 
@@ -1407,14 +1394,14 @@ table {
 																				data-instalaciones-reconexion='".$puntuacion_reconexion['cantidad'].",".$puntuacion_reconexion['puntuacion']."' 
 																				data-instalaciones-desconexion='".$puntuacion_desconexion['cantidad'].",".$puntuacion_desconexion['puntuacion']."' 
 																				data-instalaciones-suspencion='".$puntuacion_suspencion['cantidad'].",".$puntuacion_suspencion['puntuacion']."' 
-																				data-instalaciones-veeduria='".$puntuacion_recuperacion['cantidad'].",".$puntuacion_recuperacion['puntuacion']."'
+																				data-instalaciones-veeduria='".$puntuacion_veeduria['cantidad'].",".$puntuacion_veeduria['puntuacion']."'
 																				data-instalaciones-activacion='".$puntuacion_activacion['cantidad'].",".$puntuacion_activacion['puntuacion']."' 
 																				data-instalaciones-cambio-de-equipo='".$puntuacion_cambio_de_equipo['cantidad'].",".$puntuacion_cambio_de_equipo['puntuacion']."' 
 																				data-instalaciones-equipo-adicional='".$puntuacion_equipo_adicional['cantidad'].",".$puntuacion_equipo_adicional['puntuacion']."' 
 																				data-instalaciones-reinstalacion='".$puntuacion_reinstalacion['cantidad'].",".$puntuacion_reinstalacion['puntuacion']."' 
 																				data-instalaciones-retiro-voluntario='".$puntuacion_retiro_voluntario['cantidad'].",".$puntuacion_retiro_voluntario['puntuacion']."' 
 																				data-instalaciones-toma-adicional='".$puntuacion_toma_adicional['cantidad'].",".$puntuacion_toma_adicional['puntuacion']."' 
-																				data-instalaciones-recuperacion='".$puntuacion_veeduria['cantidad'].",".$puntuacion_veeduria['puntuacion']."' 
+																				data-instalaciones-recuperacion='".$puntuacion_recuperacion['cantidad'].",".$puntuacion_recuperacion['puntuacion']."' 
 																				data-tareas='".$puntuacion_tareas['cantidad'].",".$puntuacion_tareas['puntuacion']."' "; 
 
 																echo "<tr class='instalaciones_total_".$key."' ><td style='width: 200px;cursor:pointer;' class='td_totalizador' data-username='".$key."' ".$puntuaciones." ><strong>".($total)."</strong> pts </td></tr>";																
