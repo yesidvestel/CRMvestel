@@ -566,7 +566,13 @@ class Transactions extends CI_Controller
         $mes_pasado_fin= date("Y-m-t", strtotime($dia_inicial_mes_anterior));
         $fac_caso_execpcional=false;
         $tiquet1 =$this->db->query("select * from tickets where detalle like '%corte%' and (fecha_final>=".$dia_inicial_mes_anterior." and fecha_final<=".$mes_pasado_fin.")")->result();
-        if(count($tiquet1)>0){
+/*borrar esto si no funciona */
+        $this->load->model('customers_model', 'customers');
+
+        $servicios_detail=$this->customers->servicios_detail($factura_asociada->csd);
+        $tiene_ya_internet=$this->db->query("select * from invoice_items where product like '%mega%' and tid=".$servicios_detail['tid'])->result();
+/*end borrar esto si no funciona */
+        if(count($tiquet1)>0 && count($tiene_ya_internet)==0){ // aqui quitar si no funciona && count($tiene_ya_internet)==0
                 $mes1 = $dtime->format("Y-m");
                 $fac_caso_execpcional=true;
         }
