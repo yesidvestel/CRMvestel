@@ -97,7 +97,7 @@
 									<a href="#cancel-bill" class="btn btn-danger mb-1" id="cancel-bill"><i
                                             class="icon-minus-circle"> </i> <?php echo $this->lang->line('') ?>Anular
                                 </a>
-								<?php } if ($this->aauth->get_user()->usadm != null || $this->aauth->get_user()->roleid > 3) { ?>
+								<?php } if ($this->aauth->get_user()->id == 20 || $this->aauth->get_user()->roleid == 5) { ?>
                                 <a href="#pop_model2" data-toggle="modal" data-remote="false"
                                    class="btn btn-large btn-orange mb-1" title="Change Status"
                                 ><span class="icon-tab"></span> <?php echo $invoice['ron'] ?> </a>
