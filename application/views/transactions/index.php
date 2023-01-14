@@ -294,7 +294,12 @@
         $("#estado_"+o_data).text("Anulada");
         $("#anula"+o_data).data("detalle",anulacion);
         if(data.id_inv!=0){
-            window.location.replace(baseurl+"invoices/view?id="+data.id_inv);
+            if(data.ext==1 &&(data.cat=="Purchase" || data.cat=="Compras")){
+                window.location.replace(baseurl+"purchase/view?id="+data.id_inv);
+            }else{
+                window.location.replace(baseurl+"invoices/view?id="+data.id_inv);    
+            }
+            
         }
     },'json');
 

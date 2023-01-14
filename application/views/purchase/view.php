@@ -280,25 +280,25 @@
                                 <th><?php echo $this->lang->line('Method') ?></th>
                                 <th><?php echo $this->lang->line('Amount') ?></th>
                                 <th><?php echo $this->lang->line('Note') ?></th>
-                                <th><?php echo $this->lang->line('') ?>Estado</th>
+                                
 
 
                             </tr>
                             </thead>
                             <tbody id="activity">
                             <?php foreach ($activity as $row) {
-									if($row['estado']=='Anulada'){
-										$color = 'class="anulado"';
-									}else{
-										$color = '';
-									}
+									if($row['estado']=="Anulada" ){
+                                    $row['note']="<span style='color:red;'>Transaccion Anulada</span>";
+                                }else if($this->aauth->get_user()->roleid>=4){
+                                    $row['note'].=", <a style='color:blue;' href='".base_url()."transactions/index?id_tr=".$row['id']."'>Ir a Anular<a/>";
+                                }
                                 echo '<tr>
-                            <td '.$color.'>' . $row['id'] . '</td>
-                            <td '.$color.'>' . $row['date'] . '</td>
-                            <td '.$color.'>' .  $this->lang->line($row['method']) . '</td>
-                            <td '.$color.'>' . amountFormat($row['debit']) . '</td>
-                            <td '.$color.'>' . $row['note'] . '</td>
-                            <td '.$color.'>' . $row['estado'] . '</td>
+                            <td>' . $row['id'] . '</td>
+                            <td>' . $row['date'] . '</td>
+                            <td>' .  $this->lang->line($row['method']) . '</td>
+                            <td>' . amountFormat($row['debit']) . '</td>
+                            <td>' . $row['note'] . '</td>
+                            
                         </tr>';
                             } ?>
 

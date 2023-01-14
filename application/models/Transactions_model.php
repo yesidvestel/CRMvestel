@@ -326,7 +326,7 @@ $RESULT_TR=$this->db->insert('transactions', $data);
         $this->db->update('accounts');
 		//echo $transaction_var['tid'];
 		if($transaction_var['tid']>0) {
-            if($transaction_var['debit']>0 && $transaction_var['cat']!="Purchase"){
+            if($transaction_var['debit']>0 && $transaction_var['cat']!="Purchase" && $transaction_var['cat']!="Compras"){
                 $this->db->set('pamnt', "pamnt+$amt", FALSE);
                 $this->db->where('tid', $transaction_var['tid']);
                 $this->db->update('invoices');
@@ -341,9 +341,11 @@ $RESULT_TR=$this->db->insert('transactions', $data);
                     break;
 
                 case 1 :
-                    /*$this->db->set('pamnt', "pamnt-$amt", FALSE);
-                    $this->db->where('tid', $transaction_var['tid']);
-                    $this->db->update('purchase');*/
+                    if($transaction_var['cat']=="Compras" || $transaction_var['cat']=="Purchase"){
+                        $this->db->set('pamnt', "pamnt-$amt", FALSE);
+                        $this->db->where('tid', $transaction_var['tid']);
+                        $this->db->update('purchase');
+                    }
                     break;        
             }
     	
@@ -400,7 +402,7 @@ $RESULT_TR=$this->db->insert('transactions', $data);
         $this->load->model('customers_model', 'customers');
         $this->customers->actualizar_debit_y_credit($transaction_var['payerid']);
         //$this->db->delete('transactions', array('id' => $id));
-        return array('status' => 'Success', 'message' => "Transferencia Anulada","id_inv"=>$var1);
+        return array('status' => 'Success', 'message' => "Transferencia Anulada","id_inv"=>$var1,"cat"=>$transaction_var['cat'],"ext"=>$transaction_var['ext']);
 
 
     }
