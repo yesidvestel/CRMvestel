@@ -553,6 +553,7 @@
                                                 class="icon-calendar"></i>Historial estados</a>
 
                                 </div>
+								<?php } if ($this->aauth->get_user()->roleid > 2) { ?>
 								<div class="col-md-4" style="margin-top: 5px;">
 
                                     <a id="link_paz_y_salvo" data-idc="<?=$details['id']  ?>" data-deuda="<?=$deuda ?>" data-equipo="<?=$equipo ?>" href="#" data-url1="<?php echo base_url('customers/pazysalvo?id=' . $details['id'].'&deuda='.$deuda) ?>"
