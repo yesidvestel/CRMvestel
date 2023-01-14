@@ -52,7 +52,7 @@ $lista_permisos1=$this->db->query("SELECT permisos_usuario.id,permisos_usuario.i
           href="<?php echo base_url('assets/' . LTR . '/core/menu/menu-types/vertical-overlay-menu.css'); ?>">
     <link rel="stylesheet" type="text/css"
           href="<?php echo base_url('assets/' . LTR . '/core/colors/palette-gradient.css'); ?>">
-    <link rel="stylesheet" href="<?php echo base_url('assets/custom/datepicker.min.css') . APPVER ?>">
+    <link id="datepicker_js" rel="stylesheet" href="<?php echo base_url('assets/custom/datepicker.min.css') . APPVER ?>">
     <link rel="stylesheet" href="<?php echo base_url('assets/custom/jquery.dataTables.css') . APPVER ?>">
     <link rel="stylesheet" href="<?php echo base_url('assets/custom/summernote-bs4.css') . APPVER; ?>">
     <link rel="stylesheet" href="<?php echo base_url('assets/custom/select2.min.css') . APPVER; ?>">
@@ -78,7 +78,7 @@ $lista_permisos1=$this->db->query("SELECT permisos_usuario.id,permisos_usuario.i
     <script src="<?php echo base_url(); ?>assets/portjs/morris.min.js" type="text/javascript"></script>
 
 
-    <script src="<?php echo base_url('assets/myjs/datepicker.min.js') . APPVER; ?>"></script>
+    <script id="datepicker_js" src="<?php echo base_url('assets/myjs/datepicker.min.js') . APPVER; ?>"></script>
     <script src="<?php echo base_url('assets/myjs/summernote-bs4.min.js') . APPVER; ?>"></script>
     <script src="<?php echo base_url('assets/myjs/select2.min.js') . APPVER; ?>"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
@@ -676,7 +676,10 @@ $lista_permisos1=$this->db->query("SELECT permisos_usuario.id,permisos_usuario.i
 
                 <li><a href="<?php echo base_url(); ?>events"><i class="icon-calendar2"></i><span
                                 class="menu-title"> <?php echo $this->lang->line('Calendar') ?></span></a></li>
-			
+			 
+                <li><a href="<?php echo base_url(); ?>events/newCalendar"><i class="icon-calendar2"></i><span
+                                class="menu-title"> Nuevo Calendario</span></a></li>
+             
                 <li><a href="<?php echo base_url(); ?>tools/documents"><i class="icon-android-download"></i><span
                                 class="menu-title"><?php echo $this->lang->line('Documents') ?></span></a></li>
 
@@ -1409,6 +1412,10 @@ $lista_permisos1=$this->db->query("SELECT permisos_usuario.id,permisos_usuario.i
                 <li><a href="<?php echo base_url(); ?>tools/documents"><i class="icon-android-download"></i><span
                                 class="menu-title"><?php echo $this->lang->line('Documents') ?></span></a></li>
 				<?php } ?>
+                 <?php if ($lista_permisos_us['cal'] != null) { ?>
+                <li><a href="<?php echo base_url(); ?>events/newCalendar"><i class="icon-calendar2"></i><span
+                                class="menu-title"> Nuevo Calendario</span></a></li>
+                <?php } ?>
 			<!--- menu configuraciones------->
 			
 				<?php if ($lista_permisos_us['conf'] != null) { ?>

@@ -68,7 +68,30 @@ class Events extends CI_Controller
     }
 
     /*Get all Events */
+public function newCalendar(){
+    $_POST['fecha']=date("d-m-Y");
+    //$_POST['fecha']="30-12-2022";
+    //$_POST['tecnico']="OscarTec";
+    $this->load->model("Ticket_model","ticket");
+    $this->load->model("Moviles_model","moviles");
 
+        $data = $this->events_model->getEventsNewCalendar();
+        if($this->aauth->get_user()->roleid>=3){
+            $data['tecnicoslista'] = $this->ticket->tecnico_list();
+            $data['moviles'] = $this->moviles->get_datatables1();    
+        }        
+        $this->load->view('fixed/header',$head);
+        $this->load->view('events/new',$data);
+        $this->load->view('fixed/footer');
+}
+public function get_events_new_calendar(){
+    if($this->aauth->get_user()->roleid<3){
+        $_POST['tecnico']=$this->aauth->get_user()->username;
+        
+    }
+        $data = $this->events_model->getEventsNewCalendar();
+        echo json_encode($data); 
+}
     public function getEvents()
     {
         $start = $this->input->get('start');

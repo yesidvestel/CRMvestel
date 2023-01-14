@@ -48,7 +48,30 @@ class Events_model extends CI_Model
         return $this->db->query($sql, array($start, $end))->result();
 		
     }
+public function getEventsNewCalendar(){
+    
+        $fecha=new DateTime($_POST['fecha']);
+        $fecha_s=$fecha->format("Y-m-d");
+        $data=array();
+        $start=$fecha_s."T00:00:00-05:00";
+        $end=$fecha_s."T23:59:59:59";
+        $eventos = $this->getEvents($start, $end);
+        $lista_ordenada=array(); 
 
+        foreach ($eventos as $key => $event) {
+            $date=new DateTime($event->start);
+            $hora=$date->format("H");
+            $hora=intval($hora);
+            $lista_ordenada[$hora][]=$event;
+            
+        }
+        setlocale(LC_TIME, "spanish");
+        
+        
+        $data['fecha_titulo']=ucwords(utf8_encode(strftime("%A,".$fecha->format("d")." de %B del ".$fecha->format("Y"), strtotime($fecha->format("Y-m-d")))));
+        $data['lista_eventos']=$lista_ordenada;
+        return $data;
+}
     /*Create new events */
 
     public function addEvent($idorden, $title, $start, $end, $description, $color, $rol)
