@@ -80,6 +80,7 @@ public function newCalendar(){
             $data['tecnicoslista'] = $this->ticket->tecnico_list();
             $data['moviles'] = $this->moviles->get_datatables1();    
         }        
+        $head['title']="Nuevo Calendario";
         $this->load->view('fixed/header',$head);
         $this->load->view('events/new',$data);
         $this->load->view('fixed/footer');
