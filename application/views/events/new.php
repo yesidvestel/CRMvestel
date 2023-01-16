@@ -87,7 +87,7 @@
                                 <?php if(isset($lista_eventos[$hora])){
                                     foreach ($lista_eventos[$hora] as $key => $event) { ?>
 
-                                        <a title="<?=$event->description ?>" href="#" style="background-color:<?=$event->color ?>" data-info="<?=$event->start ?>" data-idorden="<?=$event->idt ?>" data-idtarea="<?=$event->id_tarea ?>" data-titulo="<?= $event->title?>" class="btn btn-success event_class">Servicio #<?=$event->idorden."<br>".$event->title ?><a>
+                                        <a title="<?=$event->description ?>" href="#" style="background-color:<?=$event->color ?>" data-info="<?=$event->start ?>" data-idorden="<?=$event->idt ?>" data-idtarea="<?=$event->id_tarea ?>" data-titulo="<?= $event->title?>" class="btn btn-success event_class">Servicio #<?=$event->idt."<br>".$event->title ?><a>
 
                                    <?php }
                                 } ?>
@@ -187,7 +187,7 @@ $('#sdate4').datepicker().on("change", function(e) {
     });
 
     function devolver_evento(event_dta){
-        return '<a href="#" style="background-color:'+event_dta.color+'" data-idtarea="'+event_dta.id_tarea+'" data-idorden="'+event_dta.idt+'" data-info="'+event_dta.start+'" data-titulo="'+event_dta.title+'"" class="btn btn-success event_class">Servicio #'+event_dta.idorden+"<br>"+event_dta.title+'<a>';
+        return '<a href="#" style="background-color:'+event_dta.color+'" data-idtarea="'+event_dta.id_tarea+'" data-idorden="'+event_dta.idt+'" data-info="'+event_dta.start+'" data-titulo="'+event_dta.title+'"" class="btn btn-success event_class">Servicio #'+event_dta.idt+"<br>"+event_dta.title+'<a>';
     }
         //https://bootstrap-datepicker.readthedocs.io/en/latest/markup.html
         //https://github.com/uxsolutions/bootstrap-datepicker
