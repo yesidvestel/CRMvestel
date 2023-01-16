@@ -85,11 +85,24 @@ $_SESSION['permisos']=null;
             $this->load->view('products/products');
             $this->load->view('fixed/footer');
         } else if ($this->aauth->get_user()->roleid <= 4){
-            $head['title'] = "Manage Invoices";
-            $head['usernm'] = $this->aauth->get_user()->username;
-            $this->load->view('fixed/header', $head);
-            $this->load->view('events/cal2');
+             $_POST['fecha']=date("d-m-Y");
+            //$_POST['fecha']="30-12-2022";
+            //$_POST['tecnico']="OscarTec";
+            $this->load->model("Ticket_model","ticket");
+            $this->load->model("Moviles_model","moviles");
+            $this->load->model('events_model');
+            
+            $data = $this->events_model->getEventsNewCalendar();
+            if($this->aauth->get_user()->roleid>=3){
+                $data['tecnicoslista'] = $this->ticket->tecnico_list();
+                $data['moviles'] = $this->moviles->get_datatables1();    
+            }        
+            $head['title']="Nuevo Calendario";
+            $this->load->view('fixed/header',$head);
+            $this->load->view('events/new',$data);
             $this->load->view('fixed/footer');
+
+
         }else {
             $head['title'] = "Manage Invoices";
             $head['usernm'] = $this->aauth->get_user()->username;

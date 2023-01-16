@@ -1412,7 +1412,7 @@ $lista_permisos1=$this->db->query("SELECT permisos_usuario.id,permisos_usuario.i
                 <li><a href="<?php echo base_url(); ?>tools/documents"><i class="icon-android-download"></i><span
                                 class="menu-title"><?php echo $this->lang->line('Documents') ?></span></a></li>
 				<?php } ?>
-                 <?php if ($lista_permisos_us['cal'] != null) { ?>
+                 <?php if ($lista_permisos_us['calnew'] != null) { ?>
                 <li><a href="<?php echo base_url(); ?>events/newCalendar"><i class="icon-calendar2"></i><span
                                 class="menu-title"> Nuevo Calendario</span></a></li>
                 <?php } ?>
