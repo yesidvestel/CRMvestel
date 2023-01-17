@@ -385,7 +385,16 @@ FROM products ");
 
     }
     public function transfer($from_warehouse,$products_l,$to_warehouse)
-    {   
+    {   $nueva_acta_transferencia=array();
+        $items_acta_transferencia=array();
+        if(isset($_POST['observaciones_acta'])){
+            $nueva_acta_transferencia['fecha']=date("Y-m-d H:i:s");
+            $nueva_acta_transferencia['almacen_origen']=$from_warehouse;
+            $nueva_acta_transferencia['almacen_destino']=$to_warehouse;
+            $nueva_acta_transferencia['observaciones']=$_POST['observaciones_acta'];
+            $nueva_acta_transferencia['id_usuario_que_transfiere']=$this->aauth->get_user()->id;
+        }
+
         foreach ($products_l as $key => $value) {
             $producto = $this->db->get_where('products',array("pid"=>$value['pid']))->row();
             if($value['qty']>0){
@@ -407,7 +416,10 @@ FROM products ");
                 $transferido_a=$producto_b->pid;
                 $datay['qty']=$qty_nuevo_pt+intval($producto_b->qty);
                 $this->db->update('products',$datay,array("pid"=>$id_a_transferir));
-
+                    if(isset($_POST['observaciones_acta'])){
+                           $items_id_transferencia[$key]['id_acta_transferencia']=$transferencia_creada->id_transferencia;
+                           $items_id_transferencia[$key]['cantidad']=$qty_nuevo_pt;
+                    }
                     $data_h=array();
                     $data_h['modulo']="Inventarios";
                     $data_h['accion']="Transferencia de acciones {update}";
@@ -468,7 +480,10 @@ FROM products ");
                     $transferido_a=$data_transfer['producto_b'];
 
                     $this->db->insert('transferencias',$data_transfer);
-
+                    if(isset($_POST['observaciones_acta'])){
+                           $items_id_transferencia[$key]['id_transferencia']=$this->db->insert_id();
+                           $items_id_transferencia[$key]['cantidad']=$qty_nuevo_pt;
+                    }
                             $data_h=array();
                             $data_h['modulo']="Inventarios";
                             $data_h['accion']="Transferencia de acciones {insert}";
@@ -496,8 +511,20 @@ FROM products ");
                 $this->db->insert("historial_crm",$data_h);
 
             }
+             
         }
-        echo json_encode(array('status'=>"success",'transferido_a'=>$transferido_a));
+        if(isset($_POST['observaciones_acta'])){
+            $this->db->insert("acta_transferencias",$nueva_acta_transferencia);
+            $id_acta_transferencia=$this->db->insert_id();
+            foreach ($items_id_transferencia as $key_t => $item_t) {
+                    $item_t['id_acta_transferencia']=$id_acta_transferencia;
+                    $this->db->insert("items_acta_transferencias",$item_t);
+            }
+            echo json_encode(array('status'=>"success",'id_acta'=>$id_acta_transferencia));    
+        }else{
+            echo json_encode(array('status'=>"success",'transferido_a'=>$transferido_a));    
+        }
+        
     }
 
 }

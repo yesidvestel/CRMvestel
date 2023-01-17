@@ -6,6 +6,7 @@
 
             <div class="message"></div>
         </div>
+<div id="mensaje1"></div>
         <form method="post"  class="form-horizontal" onsubmit="al_enviar_form(event);">
             <div class="grid_3 grid_4">
                 <h5><?php echo $this->lang->line('Stock Transfer') ?></h5>
@@ -94,7 +95,15 @@
                     </div>
                 </div>
                 <br>
-                
+                <div class="form-group row">
+
+                  
+
+                    <div class="col-sm-12">
+                        <textarea id="observaciones" class="summernote" placeholder=" Message" autocomplete="false" rows="10" name="observaciones_acta"></textarea>
+                </div>
+                   
+            </div>
 				
 
                 <div class="form-group row">
@@ -114,6 +123,20 @@
 </article>
 
 <script type="text/javascript">
+    $('.summernote').summernote({
+            height: 250,
+            toolbar: [
+                // [groupName, [list of button]]
+                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['font', ['strikethrough', 'superscript', 'subscript']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['height', ['height']],
+                ['fullscreen', ['fullscreen']],
+                ['codeview', ['codeview']]
+            ]
+        });
     var dataglobal;
     var listaProductos=[];
     $("#products_l").select2();
@@ -209,11 +232,15 @@
     }
     function al_enviar_form(event){
         event.preventDefault();
-        $.post(baseurl+'products/stock_transfer',{lista:listaProductos,from_warehouse:$("#wfrom").val(),to_warehouse:$("#sel2").val()},function(data){
+        var observaciones=$("#observaciones").val();
+        $.post(baseurl+'products/stock_transfer',{lista:listaProductos,from_warehouse:$("#wfrom").val(),to_warehouse:$("#sel2").val(),'observaciones_acta':observaciones},function(data){
                 if(data.status=="success"){
                     
-                    alert("Productos Transferidos a PID = "+data.transferido_a);
-                    window.location.reload();   
+                    mostrar_alerta1("mensaje1",1,"<b>Success</b> : Acta de transferencia creada con satisfaccion, sera dirijido a ella...");
+                    setTimeout(function (e) {
+                            window.location.href = baseurl+"actas/view?id="+data.id_acta;
+                    },1000);
+
                 }else{
                     alert("A ocurrido un error");
                 }
