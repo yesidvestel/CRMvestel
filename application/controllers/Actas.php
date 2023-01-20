@@ -56,4 +56,45 @@ class Actas extends CI_Controller
         $this->load->view('actas/view',$data);
         $this->load->view('fixed/footer');
     }
+    public function index(){
+        $head=array("title"=>"Administrar Actas de Transferencias");
+        $this->load->view('fixed/header',$head);
+
+        $this->load->view('actas/index',$data);
+        $this->load->view('fixed/footer');
+    }
+
+    public function actas_list(){
+        
+        $list = $this->actas->get_datatables();
+        $data = array();
+        $no = $this->input->post('start');
+        //setlocale(LC_TIME, "spanish");
+
+        foreach ($list as $key => $value) {            
+                $no++;  
+                $row = array();
+                $row[]="Acta#".$value->id;
+               // $x=new DateTime($value->fecha);
+               // $row[]= utf8_encode(strftime("%A,".$x->format("d")." de %B del ".$x->format("Y"), strtotime($value->fecha)))."-<u>".$x->format("g").":".$x->format("i")." ".$x->format("a")."</u>";
+                $row[]=$value->fecha;
+                $row[]=$value->almacen_origen;
+                $row[]=$value->almacen_destino;
+                
+                
+                $row[]=$value->username;
+                $row[]="<a href='".base_url()."actas/view?id=".$value->id."' class='btn btn-info'><i <i class='icon-eye'></i></a>";
+                $data[]=$row;
+
+        }
+            $output = array(
+                "draw" => $_POST['draw'],
+                "recordsTotal" => $this->actas->count_all(),
+                "recordsFiltered" => $this->actas->count_filtered(),
+                "data" => $data,
+            );
+            //output to json format
+            echo json_encode($output);
+
+    }
 }

@@ -21,14 +21,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Actas_model extends CI_Model
 {
     var $table="acta_transferencias";
-    var $column_order = array("id","fecha","modulo","accion",null,"id_usuario");
-    var $column_search = array("id","fecha","modulo","descripcion","accion","tabla","id_fila");
+    var $column_order = array("id","fecha","almacen_origen","almacen_destino","username");
+    var $column_search = array("tr1.id","tr1.fecha","alm_o.title","alm_d.title","emp1.username");
     
     private function _get_datatables_query()
     {
-
-        $this->db->from($this->table);
+        $this->db->select("tr1.id as id,tr1.fecha as fecha,alm_o.title as almacen_origen,alm_d.title as almacen_destino,emp1.username as username");
+        $this->db->from($this->table." as tr1");
         $i=0;
+        $this->db->join("aauth_users as emp1","emp1.id=tr1.id_usuario_que_transfiere");
+        $this->db->join("product_warehouse as alm_o","alm_o.id=tr1.almacen_origen");
+        $this->db->join("product_warehouse as alm_d","alm_d.id=tr1.almacen_destino");
         foreach ($this->column_search as $item) // loop column
         {
             $search = $this->input->post('search');
