@@ -1035,6 +1035,10 @@ $lista_permisos1=$this->db->query("SELECT permisos_usuario.id,permisos_usuario.i
                         <li>
                             <a href="<?php echo base_url(); ?>products/stock_transfer"><?php echo $this->lang->line('') ?>Traspasos</a>
                         </li>
+                        <?php }  if ($lista_permisos_us['invadminstrar_actas'] != null) {  ?>
+                         <li>
+                            <a href="<?php echo base_url(); ?>actas/index"><?php echo $this->lang->line('') ?>Admin. Actas Transferencias</a>
+                        </li>
 						<?php } if ($lista_permisos_us['inhis'] != null) { ?>
 						<li>
                             <a href="<?php echo base_url(); ?>products/historial_inv"><?php echo $this->lang->line('') ?>Historial</a>

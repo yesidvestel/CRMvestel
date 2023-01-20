@@ -1,4 +1,15 @@
-﻿---------------------------------------------------------------------------
+﻿--------------------------------------------------sql ACTAS DE TRANSFERENCIAS de MATERIAl---------------------
+INSERT INTO `modulos` (`id_modulo`, `rol`, `nombre`, `id_padre`, `codigo`, `orden`, `icono`) VALUES (NULL, 'Hijo', 'Administrar Actas de Transferencias', '14', 'invadminstrar_actas', '0', NULL);
+
+
+CREATE TABLE `crm`.`acta_transferencias` (`id` INT NOT NULL AUTO_INCREMENT , `fecha` DATETIME NOT NULL , `almacen_origen` INT NOT NULL , `almacen_destino` INT NOT NULL , `observaciones` VARCHAR(700)  NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+
+ALTER TABLE `acta_transferencias` ADD `id_usuario_que_transfiere` INT NOT NULL AFTER `observaciones`;
+
+
+CREATE TABLE `crm`.`items_acta_transferencias` (`id` INT NOT NULL AUTO_INCREMENT , `id_transferencia` INT NOT NULL , `cantidad` INT NOT NULL , `id_acta_transferencia` INT NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+
+---------------------------------------------------------------------------
 Nuevo Calendario
 
 INSERT INTO `modulos` (`id_modulo`, `rol`, `nombre`, `id_padre`, `codigo`, `orden`, `icono`) VALUES (NULL, 'Padre', 'Nuevo Calendario', NULL, 'calnew', '19', 'icon-calendar2');
