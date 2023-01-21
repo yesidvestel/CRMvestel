@@ -314,7 +314,7 @@ $RESULT_TR=$this->db->insert('transactions', $data);
 
     public function delt($id)
     {
-        $this->db->select('acid,credit,debit,tid,ext,cat,payerid');
+        $this->db->select('acid,credit,debit,tid,ext,cat,payerid,type');
         $this->db->from('transactions');
         $this->db->where('id', $id);
         $query = $this->db->get();
@@ -325,38 +325,12 @@ $RESULT_TR=$this->db->insert('transactions', $data);
         $this->db->where('id', $transaction_var['acid']);
         $this->db->update('accounts');
 		//echo $transaction_var['tid'];
-		if($transaction_var['tid']>0) {
-            if($transaction_var['debit']>0 && $transaction_var['cat']!="Purchase" && $transaction_var['cat']!="Compras"){
-                $this->db->set('pamnt', "pamnt+$amt", FALSE);
-                $this->db->where('tid', $transaction_var['tid']);
-                $this->db->update('invoices');
-                
-            }else{
-                switch ($transaction_var['ext']) {
-                case 0 :
-
-                    /*$this->db->set('pamnt', "pamnt-$crt", FALSE);
-                    $this->db->where('tid', $transaction_var['tid']);
-                    $this->db->update('invoices');*/
-                    break;
-
-                case 1 :
-                    if($transaction_var['cat']=="Compras" || $transaction_var['cat']=="Purchase"){
-                        $this->db->set('pamnt', "pamnt-$amt", FALSE);
-                        $this->db->where('tid', $transaction_var['tid']);
-                        $this->db->update('purchase');
-                    }
-                    break;        
-            }
-    	
-
-    }
-}       
+		    
 
 
     //validando que sea un transaccion en la que se pague una factura
     if($transaction_var['tid']!=null && $transaction_var['tid']!='' && $transaction_var['tid']!=0){
-        if($transaction_var['cat']=="Sales"){
+        if($transaction_var['cat']=="Sales" && $transaction_var['type']!="Expense"){
             $invoice = $this->db->get_where("invoices",array('tid' => $transaction_var['tid']))->row();
             $data_invoice['pamnt']=$invoice->pamnt-$transaction_var['credit'];
             if($data_invoice['pamnt']<=0){
@@ -367,7 +341,7 @@ $RESULT_TR=$this->db->insert('transactions', $data);
             }
 
             $this->db->update("invoices",$data_invoice,array('tid' =>$invoice->tid));
-        }else if($transaction_var['cat']=="Purchase"){
+        }else if($transaction_var['type']=="Expense"){
                 $purchase = $this->db->get_where("purchase",array('tid' => $transaction_var['tid']))->row();
                 $data_purchase['pamnt']=$purchase->pamnt-$transaction_var['debit'];
                 if($data_purchase['pamnt']<=0){
@@ -377,6 +351,7 @@ $RESULT_TR=$this->db->insert('transactions', $data);
                     $data_purchase['status']="partial";
                 }
                 $this->db->update("purchase",$data_purchase,array('tid' =>$purchase->tid));
+                $transaction_var['ext']=1;
         }
 
     }
@@ -402,7 +377,7 @@ $RESULT_TR=$this->db->insert('transactions', $data);
         $this->load->model('customers_model', 'customers');
         $this->customers->actualizar_debit_y_credit($transaction_var['payerid']);
         //$this->db->delete('transactions', array('id' => $id));
-        return array('status' => 'Success', 'message' => "Transferencia Anulada","id_inv"=>$var1,"cat"=>$transaction_var['cat'],"ext"=>$transaction_var['ext']);
+        return array('status' => 'Success', 'message' => "Transferencia Anulada","id_inv"=>$var1,"cat"=>$transaction_var['cat'],"type"=>$transaction_var['type']);
 
 
     }

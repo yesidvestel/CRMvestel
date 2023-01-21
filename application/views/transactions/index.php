@@ -294,7 +294,7 @@
         $("#estado_"+o_data).text("Anulada");
         $("#anula"+o_data).data("detalle",anulacion);
         if(data.id_inv!=0){
-            if(data.ext==1 &&(data.cat=="Purchase" || data.cat=="Compras")){
+            if(data.type=="Expense"){
                 window.location.replace(baseurl+"purchase/view?id="+data.id_inv);
             }else{
                 window.location.replace(baseurl+"invoices/view?id="+data.id_inv);    
