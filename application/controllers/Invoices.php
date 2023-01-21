@@ -1103,10 +1103,17 @@ $writer->writeSheetHeader($nombrey, $headers,$col_options);
                 $this->lang->line('Please add a new client')));
             exit;
         }
+        $pid = $this->input->post('pid');
+        
+        if ($pid[0] == "0") {
+            echo json_encode(array('status' => 'Error', 'message' =>
+                "Por favor agrega items para poder crear la factura"));
+            exit;
+        }
         $this->db->trans_start();
         //products
 
-        $pid = $this->input->post('pid');
+        
         $productlist = array();
         $prodindex = 0;
         $itc = 0;

@@ -886,6 +886,7 @@
     </div>
 </div>
 <script type="text/javascript">
+    $(".prc").attr("readonly","true");
     cambia();
     var sede_actual=$("#refer option:selected").val();
     function cambia(){
