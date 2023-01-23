@@ -34,13 +34,13 @@
                                     </button>
                                     <div class="dropdown-menu">
                                         <a class="dropdown-item"
-                                           href="<?php echo 'printinvoice?id=' . $invoice['tid']; ?>"><?php echo $this->lang->line('Print') ?></a>
+                                           href="<?php echo 'printacta?id=' . $id_acta; ?>"><?php echo $this->lang->line('Print') ?></a>
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item"
-                                           href="<?php echo 'printinvoice?id=' . $invoice['tid']; ?>&d=1"><?php echo $this->lang->line('PDF Download') ?></a>
+                                           href="<?php echo 'printacta?id=' . $id_acta; ?>&d=1"><?php echo $this->lang->line('PDF Download') ?></a>
 										<div class="dropdown-divider"></div>
                                         <a class="dropdown-item"
-                                           href="<?php echo 'recibido?id=' . $invoice['tid']; ?>"><?php echo $this->lang->line('') ?>Recibidos</a>
+                                           href="<?php echo 'recibido?id=' . $id_acta; ?>"><?php echo $this->lang->line('') ?>Recibidos</a>
                                     </div>
                                 </div>
 									

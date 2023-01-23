@@ -46,8 +46,8 @@ class Actas extends CI_Controller
             $data['almacen_destino']->id_tecnico=$this->db->get_where("employee_profile",array("username"=>$data['almacen_destino']->id_tecnico))->row();
         }
         $data['lista_productos']=$this->db->query("select pr_b.product_name as nombre_producto,pr_a.pid as pid_origen,pr_b.pid as pid_destino, item_tr.cantidad as cantidad_transferida, pr_b.qty as cantidad_total from items_acta_transferencias as item_tr inner join transferencias as tr1 on tr1.id_transferencia=item_tr.id_transferencia inner join products as pr_a on pr_a.pid=tr1.producto_a inner join products as pr_b on pr_b.pid=tr1.producto_b where item_tr.id_acta_transferencia=".$_GET['id'])->result();
-        $data['employee']=$this->db->get_where("employee_profile",array("id"=>$this->aauth->get_user()->id))->row();
-        $data['employee_aauth_users']=$this->db->get_where("aauth_users",array("id"=>$this->aauth->get_user()->id))->row();
+        $data['employee']=$this->db->get_where("employee_profile",array("id"=>$data['acta']->id_usuario_que_transfiere))->row();
+        $data['employee_aauth_users']=$this->db->get_where("aauth_users",array("id"=>$data['acta']->id_usuario_que_transfiere))->row();
 
         //var_dump($data['tecnicoslista']);
         $head['title']="Acta De Transferencia de Material #".$_GET['id'];
@@ -105,10 +105,11 @@ class Actas extends CI_Controller
         $data['almacen_destino']=$this->db->get_where("product_warehouse",array("id"=>$data['acta']->almacen_destino))->row();
         if($data['almacen_destino']->id_tecnico!=null){
             $data['almacen_destino']->id_tecnico=$this->db->get_where("employee_profile",array("username"=>$data['almacen_destino']->id_tecnico))->row();
+            $data['almacen_destino']->aauth_users=$this->db->get_where("aauth_users",array("id"=>$data['almacen_destino']->id_tecnico->id))->row();
         }
         $data['lista_productos']=$this->db->query("select pr_b.product_name as nombre_producto,pr_a.pid as pid_origen,pr_b.pid as pid_destino, item_tr.cantidad as cantidad_transferida, pr_b.qty as cantidad_total from items_acta_transferencias as item_tr inner join transferencias as tr1 on tr1.id_transferencia=item_tr.id_transferencia inner join products as pr_a on pr_a.pid=tr1.producto_a inner join products as pr_b on pr_b.pid=tr1.producto_b where item_tr.id_acta_transferencia=".$_GET['id'])->result();
-        $data['employee']=$this->db->get_where("employee_profile",array("id"=>$this->aauth->get_user()->id))->row();
-        $data['employee_aauth_users']=$this->db->get_where("aauth_users",array("id"=>$this->aauth->get_user()->id))->row();
+        $data['employee']=$this->db->get_where("employee_profile",array("id"=>$data['acta']->id_usuario_que_transfiere))->row();
+        $data['employee_aauth_users']=$this->db->get_where("aauth_users",array("id"=>$data['acta']->id_usuario_que_transfiere))->row();
 
         //var_dump($data['tecnicoslista']);
         $head['title']="Acta De Transferencia de Material #".$_GET['id'];

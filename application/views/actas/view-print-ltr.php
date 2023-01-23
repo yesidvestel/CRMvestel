@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Print Purchase Order #<?php echo $invoice['tid'] ?></title>
+    <title>Acta de Transferencia de Material #<?php echo $id_acta ?></title>
     <style>	
         body {
             color: #2B2000;
@@ -182,25 +182,15 @@
             <td class="myw">
 			<table class="top_sum">
                 <tr>
-                       <td colspan="1" class="t_center"><h2 ><?php echo $this->lang->line('Purchase Order') ?></h2><br><br></td>
+                       <td colspan="1" class="t_center"><h2 ><?php echo "Acta de Transferencia de Material" ?></h2><br><br></td>
                     </tr>
 			<tr>
-            <td><?php echo $this->lang->line('Order') ?></td><td><?php  echo  prefix(2). $invoice['tid'] ?></td>
+            <td>Acta </td><td><?php  echo  "#".$id_acta ?></td>
 			</tr>
 			<tr>
-            <td><?php echo $this->lang->line('Order Date') ?></td><td><?php echo $invoice['invoicedate'] ?></td>
+            <td>Fecha Elaboracion</td><td><?php echo (new DateTime($acta->fecha))->format("d-m-Y H:i:s"); ?></td>
 			</tr>
-			<tr>
-            <td><?php echo $this->lang->line('Due Date') ?></td><td><?php echo $invoice['invoiceduedate'] ?></td>
-			</tr>
-			<?php if($invoice['refer']) { ?>
-			<tr>
-            <td><?php echo $this->lang->line('') ?>Sede</td><td><?php echo $invoice['refer'] ?></td>
-			</tr>
-			<tr>
-            <td><?php echo $this->lang->line('') ?>Categoria</td><td><?php echo $invoice['idcat'] ?></td>
-			</tr>
-			<?php } ?>
+			
 			</table>
 			
 	
@@ -213,26 +203,37 @@
     <table class="party">
         <thead>
         <tr class="heading">
-            <td> <?php echo $this->lang->line('Our Info') ?>:</td>
+            <td> Almacen Origen :</td>
 
-            <td><?php echo $this->lang->line('Supplier') ?>:</td>
+            <td>Almacen Destino :</td>
         </tr>
         </thead>
         <tbody>
         <tr>
-            <td><strong><?php echo $this->config->item('ctitle'); ?></strong><br>
-                <?php echo
-                    $this->config->item('address') . '<br>' . $this->config->item('city') . ', ' . $this->config->item('region') .'<br>'. $this->config->item('country') . $this->config->item('') . '<br>'.$this->lang->line('Phone').': ' . $this->config->item('phone') . '<br> '.$this->lang->line('Email').': ' . $this->config->item('email');
-                if ($this->config->item('postbox')) echo '<br>' . $this->lang->line('') . ' NIT: ' . $this->config->item('postbox');
-                ?>
-            </td>
-
             <td>
-                <?php echo '<strong>'.$invoice['name'] . '</strong><br>';
-                if ($invoice['company']) echo $invoice['company'] . '<br>';
-               echo $invoice['address'] . '<br>' . $invoice['city'] . ', ' . $invoice['region'] . '<br>' . 'Nº Cuenta: ' . $invoice['cuenta'] . '-' . $invoice['typo'] . '<br>'.'Banco'.': ' . $invoice['banco'] . '<br>' . $this->lang->line('Email') . ' : ' . $invoice['email'];
-                if ($invoice['taxid']) echo '<br>' . $this->lang->line('Tax') . ' ID: ' . $invoice['taxid'];
-                ?>
+                <strong><?=$almacen_origen->title ?></strong><br>
+                <?=$almacen_origen->extra ?>
+            </td>
+            <td>
+            <?php if($almacen_destino->id_tecnico!=null) { ?>
+                    
+                       <strong><?=$almacen_destino->id_tecnico->name ?></strong><br>
+                    
+                    
+                        <?=$almacen_destino->id_tecnico->city ?><br>
+                    
+                    
+                        CC: <?=$almacen_destino->id_tecnico->dto ?><br>
+                    
+                    
+                        Telefono: <?=$almacen_destino->id_tecnico->phone ?><br>
+                    
+                    
+                        Dir: <?=$almacen_destino->id_tecnico->address ?>
+                    
+                <?php }else{ ?>
+                    <strong><?=$almacen_destino->title ?></strong>
+                <?php } ?>
             </td>
         </tr>
         </tbody>
@@ -242,57 +243,61 @@
 
 
         <tr class="heading">
-            <td width="50%">
-                <?php echo $this->lang->line('Description') ?>
+            <td >
+                #
+            </td>
+            <td >
+                Nombre
+            </td>
+                
+            <td >
+                PID Origen
+            </td>
+            <td >
+                PID Destino
+            </td>
+            <td >
+                Cantidad Transferida
+            </td>
+            <td >
+                Cantidad Total Prod. Destino
             </td>
 
-            <td width="10%">
-                <?php echo $this->lang->line('Price') ?>
-            </td>
-            <td width="10%">
-                <?php echo $this->lang->line('Qty') ?>
-            </td>
-
-            <?php if ($invoice['tax'] > 0) echo '<td width="10%">' . $this->lang->line('Tax') . '</td>';
-
-            if ($invoice['discount'] > 0) echo '<td width="10%">' . $this->lang->line('Discount') . '</td>'; ?>
-            <td width="20%" class="t_center">
-                <?php echo $this->lang->line('SubTotal') ?>
-            </td>
         </tr>
 
         <?php
         $fill = true;
         $sub_t=0;
-        foreach ($products as $row) {
+        $cols = 1;
+        $c_m=0;
+        foreach ($lista_productos as $row) {
 
-            $cols = 3;
+            
 			
             if ($fill == true) {
                 $flag = ' mfill';				
             } else {
                 $flag = '';
             }
-            $sub_t+=$row['price']*$row['qty'];
+            
 			
 
-            echo '<tr class="item' . $flag . '"> 
-                            <td>' . $row['product'] . '</td>
-							<td style="width:12%;">' . amountExchange($row['price'],$invoice['multi']) . '</td>
-                            <td style="width:6%;" >' . $row['qty'] . '</td>   ';
-            if ($invoice['tax'] > 0)  { $cols++; echo '<td style="width:16%;">' . amountExchange($row['totaltax'], $invoice['multi']) . ' <span class="tax">(' . amountFormat_s($row['tax']) . '%)</span></td>'; }
-            if ($invoice['discount'] > 0) {   $cols++; echo ' <td style="width:16%;">' . amountExchange($row['totaldiscount'], $invoice['multi']) . '</td>'; }
-            echo '<td class="t_center">' . amountExchange($row['subtotal'], $invoice['multi']) . '</td>
-                        </tr>';
-           //if($row['product_des'])  { $cc=$cols+1; echo '<tr class="item' . $flag . ' descr"> 
-//                            <td colspan="'.$cc.'">' . $row['product_des'] . '<br>&nbsp;</td>
-//							
-//                        </tr>'; }
+            echo '<tr class="item' . $flag . '">'; 
+            echo '<td>' . $cols . '</td>';
+                       echo '<td>' . $row->nombre_producto . '</td>
+                           
+                            <td>' .$row->pid_origen. '</td>
+                             <td>' . $row->pid_destino . '</td>
+                            <td>' . $row->cantidad_transferida . '</td>
+                            <td>' . $row->cantidad_total. '</td>';
+            echo '</tr>';
+
             $fill = !$fill;
-          
+        $cols++;        
+         $c_m+=$row->cantidad_transferida;
         }
 
-  if ($invoice['shipping'] > 0) { $cols++;}
+  
 
         ?>
 
@@ -303,97 +308,51 @@
 
        
         <tr>
-            <td class="myco2" rowspan="<?php echo $cols ?>"><br><br><br>
-                <p><?php echo '<strong>' . $this->lang->line('Status') . ': ' . $this->lang->line(ucwords($invoice['status'])).'</strong></p><br><p>' . $this->lang->line('Total Amount') . ': ' . amountExchange($invoice['total'], $invoice['multi']) . '</p><br><p>' . $this->lang->line('Paid Amount') . ': ' . amountExchange($invoice['pamnt'], $invoice['multi']); ?></p>
+            <td class="myco2" rowspan="<?php echo "6" ?>">
+                <p><?php echo '<strong>' . "Descripcion" . ': ' .'</strong>';?></p><br>
+                <p><?=$acta->observaciones ?></p>
             </td>
-            <td><strong><?php echo $this->lang->line('Summary') ?>:</strong></td>
-            <td></td>
+           
 
 
         </tr>
         <tr class="f_summary">
 
 
-            <td><?php echo $this->lang->line('SubTotal') ?>:</td>
+            <td>Cantidad de Materiales Transferidos:</td>
 
-            <td><?php echo amountExchange($sub_t, $invoice['multi']); ?></td>
+            <td><?=$c_m ?> Und.</td>
         </tr>
-        <?php if ($invoice['tax'] > 0) {
-            echo '<tr>        
-
-            <td> ' . $this->lang->line('Total Tax') . ' :</td>
-
-            <td>' . amountExchange($invoice['tax'], $invoice['multi']) . '</td>
-        </tr>';
-        }
-        if ($invoice['discount'] > 0) {
-            echo '<tr>
-
-
-            <td>' . $this->lang->line('Total Discount') . ':</td>
-
-            <td>' . amountExchange($invoice['discount'], $invoice['multi']) . '</td>
-        </tr>';
-
-        }
-		    if ($invoice['shipping'] > 0) {
-            echo '<tr>
-
-
-            <td>' . $this->lang->line('Shipping') . ':</td>
-
-            <td>' . amountExchange($invoice['shipping'], $invoice['multi']) . '</td>
-        </tr>';
-
-        }
-        ?>
+      
         <tr>
 
 
-            <td><?php echo $this->lang->line('Balance Due') ?>:</td>
+            <td>Cantidad de Items :</td>
+            <td><strong><?= count($lista_productos) ?> Und.</strong></td>
+        </tr>
+            </table>
+            <br>
+            <table>
+                <tr>
+                    <td align="left">Generado Por:<br>
+                       <?php echo '<img src="' . FCPATH . 'userfiles/employee_sign/' . $employee->sign . '" alt="signature" class="height-100"/>
+                                    <h6>(' . $employee->name . ')</h6>
+                                    <p class="text-muted">' . user_role($employee_aauth_users->roleid) . '</p>'; ?>
+                    </td>
+                    <td align="right">Entregado a:<br>
+                        <?php if($almacen_destino->id_tecnico!=null) { ?><br>
+                            ___________________________________________<br>
+                                <img alt="signature" class="height-100" src="<?=  FCPATH . 'userfiles/employee_sign/' . $almacen_destino->id_tecnico->sign ?>">
+                                <h6><?=$almacen_destino->id_tecnico->name ?></h6>
+                                <p class="text-muted"><?=user_role($almacen_destino->aauth_users->roleid) ?></p>
+                        <?php }else{ ?><br>
+                            ___________________________________________
+                        <?php } ?>
+                    </td>
+                </tr>
+            </table>
 
-            <td><strong><?php $rming = $invoice['total'] - $invoice['pamnt'];
-    if ($rming < 0) {
-        $rming = 0;
-
-    }
-    echo amountExchange($rming, $invoice['multi']);
-    echo '</strong></td>
-		</tr>
-		</table>
-		<br>
-		<table>
-		<tr>
-		<td width="30%">
-			<div class="sign">
-				Generado por</div>
-			<div class="sign1">
-				<img src="' . FCPATH . 'userfiles/employee_sign/' . $employee['sign'] . '" width="160" height="50" border="0" alt="">
-			</div>
-			<div class="sign2">
-				' . $employee['name'] . '
-			</div>
-		</td>
-		<td width="30%">
-			<div class="sign">
-			Autorizado por</div>
-			<div class="sign1">
-				<img src="' . FCPATH . 'userfiles/employee_sign/' . $employeeaut['sign'] . '" width="160" height="50" border="0" alt="">
-			</div>
-			<div class="sign2">
-				' . $employeeaut['name'] . '
-			</div>
-		</td>
-		</tr>
-		</table>
-		
-		<div class="terms">
-			' . $invoice['notes'] . '
-		<hr>
-		<strong>' . $this->lang->line('Terms') . ':</strong><br>';
-
-    echo '<strong>' . $invoice['termtit'] . '</strong><br>' . $invoice['terms'];
-    ?></div>
+    
 </div>
 </body>
 </html>
