@@ -820,7 +820,7 @@
                                     for="pmethod"><?php echo $this->lang->line('Mark As') ?></label>
                             <select name="status" class="form-control mb-1">
 								<option value="<?php echo $invoice['ron'] ?>">>><?php echo $invoice['ron'] ?></option>
-								<?php if ($this->aauth->get_user()->id == 20) { ?>
+								<?php if ($this->aauth->get_user()->id == 20 || $this->aauth->get_user()->roleid == 5) { ?>
                                 <option value="Activo"><?php echo $this->lang->line('') ?>Activo</option>
                                 <option value="Instalar"><?php echo $this->lang->line('') ?>Instalar</option>
                                 <option value="Cortado"><?php echo $this->lang->line('') ?>Cortado</option>
@@ -831,7 +831,7 @@
 								<?php } ?>
                                 <option value="Cartera"><?php echo $this->lang->line('') ?>Cartera</option>
 								<option value="Reportado"><?php echo $this->lang->line('') ?>Reportado</option>
-								<?php if ($this->aauth->get_user()->id == 20) { ?>
+								<?php if ($this->aauth->get_user()->id == 20 || $this->aauth->get_user()->roleid == 5) { ?>
 								<option value="Depurado"><?php echo $this->lang->line('') ?>Depurado</option>
 								<?php } ?>
                             </select>
