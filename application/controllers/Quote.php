@@ -150,6 +150,7 @@ class Quote extends CI_Controller
 		$bainter = $this->input->post('bainter');
 		$suinter = $this->input->post('suinter');
 		$punto = $this->input->post('punto');
+		$pago = $this->input->post('pago');
         $bapaquete = $this->input->post('bapaquete');
         $supaquete = $this->input->post('supaquete');
         $detalle=str_replace("_"," ",$detalle);
@@ -170,7 +171,7 @@ class Quote extends CI_Controller
        }
         
         if ($customer_id) {
-        	$this->quote->addticket($customer_id, $gen, $nticket, $subject, $detalle, $created, $problema, $bapaquete, $supaquete, $section, $factura,$agendar,$fagenda, $tec, $hora,$hora2,$nomen,$nuno,$auno,$ndos,$ados,$ntres,$local,$barrio,$recider, $refer, $tv,$inter,$bainter, $suinter, $punto,$movil);
+        	$this->quote->addticket($customer_id, $gen, $nticket, $subject, $detalle, $created, $problema, $bapaquete, $supaquete, $section, $factura,$agendar,$fagenda, $tec, $hora,$hora2,$nomen,$nuno,$auno,$ndos,$ados,$ntres,$local,$barrio,$recider, $refer, $tv,$inter,$bainter, $suinter, $punto,$pago,$movil);
 			
 		}
 

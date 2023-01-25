@@ -494,3 +494,8 @@ EMPLEADOS AREA 1 G
 --------------------------------------
 ALTER TABLE `employee_profile` 
 ADD `area` int(10) NOT NULL AFTER `country`;
+----------------------------------------------------------------------------------------------------------
+ACTUALIZACION DE CONTRATO 1 G
+--------------------------------------
+ALTER TABLE `temporales` 
+ADD `pago` varchar(10) NULL DEFAULT NULL AFTER `puntos`;

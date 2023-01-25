@@ -1285,6 +1285,12 @@ $x=0;
         	$this->db->update('invoices');
 
             $this->db->set('perfil', $ptos);
+            $this->db->set('f_contrato', date("Y-m-d"));
+            $this->db->where('id', $ticket->cid);
+            $this->db->update('customers');
+		}
+		if($ticket->detalle=="Migracion"){
+			$this->db->set('f_contrato', date("Y-m-d"));
             $this->db->where('id', $ticket->cid);
             $this->db->update('customers');
 		}
@@ -1554,6 +1560,9 @@ $x=0;
 				'residencia' => $traslados->residencia,
 				'referencia' => $traslados->referencia,
 			);
+			if($traslados->pago=='no'){
+				$datat['f_contrato']=date("Y-m-d");
+			}
 			//actualizar estado usuario				
         		$this->db->where('id', $ticket->cid);
         		$this->db->update('customers', $datat);

@@ -180,7 +180,7 @@ class Quote_model extends CI_Model
         $query = $this->db->get();
         return $query->row_array();
     }
-	public function addticket($customer_id, $gen, $nticket, $subject, $detalle, $created, $problema, $bapaquete, $supaquete, $section, $factura, $agendar, $fagenda, $tec, $hora,$hora2,$nomen,$nuno,$auno,$ndos,$ados,$ntres,$local,$barrio,$recider, $refer,$tv,$inter,$bainter, $suinter,$punto,$movil)
+	public function addticket($customer_id, $gen, $nticket, $subject, $detalle, $created, $problema, $bapaquete, $supaquete, $section, $factura, $agendar, $fagenda, $tec, $hora,$hora2,$nomen,$nuno,$auno,$ndos,$ados,$ntres,$local,$barrio,$recider, $refer,$tv,$inter,$bainter, $suinter,$punto,$pago,$movil)
     {
 		$bill_llegada = datefordatabase($created);
 		if ($tv=='no' || $tv==''){
@@ -316,10 +316,44 @@ class Quote_model extends CI_Model
 				'localidad' => $local,
 				'barrio' => $barrio,
 				'residencia' => $recider,
-				'referencia' => $refer
+				'referencia' => $refer,
+				'pago' => $pago,
 			);		
 			$this->db->insert('temporales', $data3);
+				//factura traslado
+				if($pago=='si'){
+					//traer factura
+					$invoice = $this->db->get_where('invoices',array('tid'=>$factura))->result_array();
+					foreach ($invoice[0] as $key => $value) {
+						if($key!='id' && $key!='pmethod' && $key!='status' && $key!='pamnt' && $key!='resivos_guardados'){
+						 $dataf[$key]=$value;
+							}
+						}
+
+					$tidactualmasuno= $this->db->select('max(tid)+1 as tid')->from('invoices')->get()->result();
+					//generar factura
+					$dataf['tid']=$tidactualmasuno[0]->tid;
+						//items factura
+						$producto = $this->db->get_where('products',array('product_name'=>'Traslado'))->row();
+						$datay['tid']=$dataf['tid'];
+						$datay['pid']=$producto->pid;
+						$datay['product']=$producto->product_name;
+						$datay['qty']=1;
+						$datay['tax']=0;
+						$datay['totaltax']='';
+						$datay['price']=$producto->product_price;
+						$datay['subtotal']=$producto->product_price;
+						$this->db->insert('invoice_items',$datay);
+						//--
+					$dataf['status']='due';
+					$dataf['ron']='Activo';
+					$dataf['tipo_factura']='Fija';
+					$dataf['tax']=$datay['tax'];
+					$dataf['total']=$producto->product_price;
+					$this->db->insert('invoices',$dataf);
+				}
 			}
+			
 			//servicio instalacion
 			if ($detalle=='Instalacion' || $detalle=='Activacion'){
 				$data4 = array(

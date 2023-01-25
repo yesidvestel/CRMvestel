@@ -1198,7 +1198,9 @@ if($data['servicios']['estado']=="Inactivo"){
 			'email' => $email,
 			'tipo_cliente' => $tipo_cliente,
 			'tipo_documento' => $tipo_documento,
-			'documento' => $doc2);
+			'documento' => $doc2,
+			'f_contrato' => date("Y-m-d"),
+		);
         $this->db->where('id', $id);
         $this->db->update('customers', $data2);
 		//tarea de revision

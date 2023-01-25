@@ -396,6 +396,15 @@
 												<input type="text" class="form-control margin-bottom" name="referencia">
                                 		</div>
 								</div>
+								<div class="col-sm-6">
+									<label for="invociedate" class="caption">Realiza pago</label>
+                                        <div class="input-group">
+												<select class="form-control" name="pago">
+													<option value="si">Si</option>
+                                                	<option value="no">no</option>
+                                            </select>
+                                		</div>
+								</div>
 								</div>
 								<div class="form-group row" id="Instalacion">	
                                     <div class="col-sm-12">
