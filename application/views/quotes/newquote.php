@@ -396,15 +396,6 @@
 												<input type="text" class="form-control margin-bottom" name="referencia">
                                 		</div>
 								</div>
-								<div class="col-sm-6">
-									<label for="invociedate" class="caption">Realiza pago</label>
-                                        <div class="input-group">
-												<select class="form-control" name="pago">
-													<option value="si">Si</option>
-                                                	<option value="no">no</option>
-                                            </select>
-                                		</div>
-								</div>
 								</div>
 								<div class="form-group row" id="Instalacion">	
                                     <div class="col-sm-12">
@@ -588,7 +579,7 @@
 									<div class="col-sm-4">
 									<label for="invociedate" class="caption">Internet</label>
 										<div class="input-group">									
-											<select name="interB" class="form-control mb-1">
+											<select name="interB" class="form-control mb-1" id="interB">
 												<option value="no">No</option>
 												<?php
 													foreach ($paqueteinter as $row) {
@@ -703,6 +694,26 @@ function validacion_instalacion (){
         $(".instalacion").css("border-color","red");
         $("#submit-data").attr("disabled","disabled");
     }
+    //console.log(tele_instalacion);
+    //console.log(internet_instalacion);
+}
+$(document).on('change',"#interB",function(e){
+    validacion_agregar_internet();
+    
+});	
+function validacion_agregar_internet (){
+    var paquete01=$("#interB option:selected").val();
+    var detalle01=$("#detalle option:selected").val();
+    if(detalle01=="AgregarInternet"){
+    		if(paquete01!="no"){
+		        $("#interB").css("border-color","");
+		        $("#submit-data").removeAttr("disabled");
+		    }else{
+		        $("#interB").css("border-color","red");
+		        $("#submit-data").attr("disabled","disabled");
+		    }	
+    }
+    
     //console.log(tele_instalacion);
     //console.log(internet_instalacion);
 }
@@ -890,6 +901,8 @@ $(document).on('click','.btn-mas-internet',function(e){
                 validacion_instalacion();
                 $("#factura").val("null");
                 $("#factura").attr("disabled","disabled");
+            }else if($("#detalle option:selected").val()=="AgregarInternet"){
+            	validacion_agregar_internet();
             }else{
                 $("#submit-data").removeAttr("disabled");
                 $("#factura").removeAttr("disabled");
