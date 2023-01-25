@@ -386,7 +386,7 @@ FROM products ");
     }
     public function transfer($from_warehouse,$products_l,$to_warehouse)
     {   $nueva_acta_transferencia=array();
-        $items_acta_transferencia=array();
+        $items_id_transferencia=array();
         if(isset($_POST['observaciones_acta'])){
             $nueva_acta_transferencia['fecha']=date("Y-m-d H:i:s");
             $nueva_acta_transferencia['almacen_origen']=$from_warehouse;
@@ -417,7 +417,7 @@ FROM products ");
                 $datay['qty']=$qty_nuevo_pt+intval($producto_b->qty);
                 $this->db->update('products',$datay,array("pid"=>$id_a_transferir));
                     if(isset($_POST['observaciones_acta'])){
-                           $items_id_transferencia[$key]['id_acta_transferencia']=$transferencia_creada->id_transferencia;
+                           $items_id_transferencia[$key]['id_transferencia']=$transferencia_creada[0]->id_transferencia;
                            $items_id_transferencia[$key]['cantidad']=$qty_nuevo_pt;
                     }
                     $data_h=array();
