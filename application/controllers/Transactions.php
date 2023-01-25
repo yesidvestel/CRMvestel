@@ -644,9 +644,9 @@ class Transactions extends CI_Controller
                 $data2['section']=$factura_asociada->combo;
                 $data2['id_factura']='';
                 $data2['par']=$parmasuno[0]->par;
-                if($fac_caso_execpcional){
+                /*if($fac_caso_execpcional){
                     $data2['id_factura']=$factura_asociada->tid;
-                }
+                }*/
                 $this->db->insert('tickets',$data2);
 				//tv
 				$data3['codigo']=$tidactualmasdos[0]->tid;
@@ -658,9 +658,9 @@ class Transactions extends CI_Controller
                 $data3['status']='Pendiente';
                 $data3['section']='Television';
                 $data3['id_factura']='';
-                 if($fac_caso_execpcional){
+                /* if($fac_caso_execpcional){
                     $data3['id_factura']=$factura_asociada->tid;
-                }
+                }*/
                 $data3['par']=$parmasuno[0]->par;
                 $this->db->insert('tickets',$data3);
 			}else{
@@ -673,9 +673,9 @@ class Transactions extends CI_Controller
                 $data2['status']='Pendiente';
                 $data2['section']=$factura_asociada->combo;
                 $data2['id_factura']='';
-                if($fac_caso_execpcional){
+               /* if($fac_caso_execpcional){
                     $data2['id_factura']=$factura_asociada->tid;
-                }
+                }*/
                 $this->db->insert('tickets',$data2);
 			}
                 
