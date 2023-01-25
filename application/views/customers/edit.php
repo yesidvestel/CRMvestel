@@ -445,6 +445,7 @@
     var remote_ip_villanueva_gpon="<?=$ips_remotas['villanueva_gpon']?>";
     var remote_ip_aguazul="<?=$ips_remotas['aguazul']?>";
     var remote_ip_tauramena="<?=$ips_remotas['tauramena']?>";
+    var remote_ip_villavo="<?=$ips_remotas['villavo']?>";
     function selecciona_para_agregar(){
         var elemento=document.getElementById("copy_address<?=$edit?>");
         //console.log($("#discountFormatServicio").val());
@@ -511,6 +512,7 @@ alert(selected);
 	var perfil_4 = new Array ("Seleccine...","3Megas","5Megas","5MegasD","10Megas","10MegasSt","10MegasD","15Megas","15MegasD","20Megas","20MegasSt","20MegasD","30Megas","30MegasSt","30MegasD","40Megas","40MegasSt","40MegasD","50Megas","50MegasSt","50MegasD","60Megas","60MegasSt","60MegasD","70Megas","70MegasSt","70MegasD","80Megas","80MegasSt","80MegasD","90Megas","90MegasSt","90MegasD","100Megas","100MegasSt","100MegasD","Cortados");
 	var perfil_6 = new Array ("Seleccine...","3Megas","5Megas","5MegasD","10Megas","10MegasSt","10MegasD","15Megas","15MegasD","20Megas","20MegasSt","20MegasD","30Megas","30MegasSt","30MegasD","40Megas","40MegasSt","40MegasD","50Megas","50MegasSt","50MegasD","60Megas","60MegasSt","60MegasD","70Megas","70MegasSt","70MegasD","80Megas","80MegasSt","80MegasD","90Megas","90MegasSt","90MegasD","100Megas","100MegasSt","100MegasD","Cortados");
 	var perfil_7 = new Array ("Seleccine...","3Megas","5Megas","5MegasD","10Megas","10MegasSt","10MegasD","15Megas","15MegasD","20Megas","20MegasSt","20MegasD","30Megas","30MegasSt","30MegasD","40Megas","40MegasSt","40MegasD","50Megas","50MegasSt","50MegasD","60Megas","60MegasSt","60MegasD","70Megas","70MegasSt","70MegasD","80Megas","80MegasSt","80MegasD","90Megas","90MegasSt","90MegasD","100Megas","100MegasSt","100MegasD","Cortados");
+	var perfil_8 = new Array ("Seleccine...","100MegasR","200MegasR","300MegasR","Cortados");
 							//crear funcion que ejecute el cambio
 							function cambia(){
 								var customergroup;
@@ -578,6 +580,10 @@ alert(selected);
                                         $("#Ipremota").val(remote_ip_tauramena);
                                        // $("#Ipremota2").val(remote_ip_monterrey);
                                     }
+									else if(customergroup=="8"){
+                                        $("#Ipremota").val(remote_ip_villavo);
+                                       // $("#Ipremota2").val(remote_ip_monterrey);
+                                    }
                                 }
                                 selecciona_para_agregar();   
 							}
@@ -607,6 +613,7 @@ alert(selected);
 	var Iplocal_2gpon = new Array ("10.100.0.1");
 	var Iplocal_6 = new Array ("10.100.0.1");
 	var Iplocal_7 = new Array ("10.100.0.1");
+	var Iplocal_8 = new Array ("10.0.0.1");
 	var Iplocal_3 = new Array ("80.0.0.1");
 	var Iplocal_4 = new Array ("10.1.100.1");
 	var Iplocal_3gpon = new Array ("10.20.0.1");

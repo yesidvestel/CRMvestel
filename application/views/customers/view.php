@@ -53,7 +53,7 @@
 }
 <?php 
  $deuda=$due['total']-$due['pamnt'];
- $equipo=$details['macequipo'];
+ $equipos=$details['macequipo'];
 	
 ?>
 </style>
@@ -556,7 +556,7 @@
 								<?php } if ($this->aauth->get_user()->roleid > 2) { ?>
 								<div class="col-md-4" style="margin-top: 5px;">
 
-                                    <a id="link_paz_y_salvo" data-idc="<?=$details['id']  ?>" data-deuda="<?=$deuda ?>" data-equipo="<?=$equipo ?>" href="#" data-url1="<?php echo base_url('customers/pazysalvo?id=' . $details['id'].'&deuda='.$deuda) ?>"
+                                    <a id="link_paz_y_salvo" data-idc="<?=$details['id']  ?>" data-deuda="<?=$deuda ?>" data-equipo="<?=$equipos ?>" href="#" data-url1="<?php echo base_url('customers/pazysalvo?id=' . $details['id'].'&deuda='.$deuda) ?>"
                                        class="btn btn-success btn-lg" style="width: 250px"><i
                                                 class="icon-calendar"></i>Paz y Salvo</a>
 

@@ -60,6 +60,8 @@
                                                 $color=$color_aguazul;
                                             }else if($key=="ip_tauramena"){
                                                 $color=$color_tauramena;
+                                            }else if($key=="ip_villavo"){
+                                                $color=$color_villavo;
                                             }
                                             if(isset($color)){
                                     ?>

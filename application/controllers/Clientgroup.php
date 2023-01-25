@@ -67,12 +67,14 @@ include (APPPATH."libraries\RouterosAPI.php");
         //$cs=$this->db->get_where("customers",array("usu_estado"=>"Activo","gid"=>4,"tegnologia_instalacion"=>"GPON"))->row();
         $data['estado_monterrey']=$this->customers->get_estado_mikrotik2(4,"GPON",$API); $data['estado_aguazul']=$this->customers->get_estado_mikrotik2(6,"GPON",$API);
 		$data['estado_tauramena']=$this->customers->get_estado_mikrotik2(7,"GPON",$API);
+		$data['estado_villavo']=$this->customers->get_estado_mikrotik2(8,"GPON",$API);
         $data['color_yopal']="#5ccb5f";
         $data['color_villanueva_gpon']="#5ccb5f";
         $data['color_villanueva_epon']="#5ccb5f";
         $data['color_monterrey']="#5ccb5f";
         $data['color_aguazul']="#5ccb5f";
         $data['color_tauramena']="#5ccb5f";
+        $data['color_villavo']="#5ccb5f";
 
         if(empty($data['estado_yopal']) ){
             $data['color_yopal']="red";
@@ -91,6 +93,9 @@ include (APPPATH."libraries\RouterosAPI.php");
         }
 		if(empty($data['estado_tauramena'])){
             $data['color_tauramena']="red";
+        }
+		if(empty($data['estado_villavo'])){
+            $data['color_villavo']="red";
         }
         $this->load->view('fixed/header', $head);
         $this->load->view('groups/configuraciones',$data);
