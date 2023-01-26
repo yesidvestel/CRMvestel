@@ -478,7 +478,21 @@
 										</div>
                                    </div>
 								</div>
-								
+								<div class="form-group row" id="Toma_Adicional">	
+                                    <div class="col-sm-12">
+										<h3 class="title">Puntos</h3>
+                                    </div>
+									<div class="col-sm-4">
+									<label for="invociedate" class="caption">Puntos adicionales</label>
+										<div class="input-group">									
+											<select id="toma" name="toma" class="form-control mb-1 toma-adicional">
+												<option value="0">no</option>
+													<?php for ($i=1;$i<=20;$i++){
+													echo '<option value="'.$i.'">'.$i.'</option>';}?>
+											</select>
+										</div>
+                                   </div>
+								</div>
 								<div class="form-group row" id="Subir_megas">	
                                     <div class="col-sm-12">
 										<h3 class="title">Subir megas</h3>
@@ -717,10 +731,31 @@ function validacion_agregar_internet (){
     //console.log(tele_instalacion);
     //console.log(internet_instalacion);
 }
+	
+$(document).on('change',".toma-adicional",function(e){
+   validacion_toma_adicional();    
+});
+	
+function validacion_toma_adicional(){
+	var toma=$("#toma option:selected").val();
+	var habilitar=true;
+	if(toma=="0"){
+		$("#toma").css("border-color","red");
+		$("#submit-data").attr("disabled","disabled");
+		habilitar=false;
+	}else{
+		$("#toma").css("border-color","");
+	}
+	if(habilitar){
+        $("#submit-data").removeAttr("disabled");
+    }
+}
+	
 $(document).on('change',".subir-megas",function(e){
     validacion_subir_megas();
     
 }); 
+	
 function validacion_subir_megas (){
     var suinter=$("#suinter option:selected").val();
     var supaquete=$("#supaquete option:selected").val();
@@ -846,11 +881,11 @@ $(document).on('click','.btn-mas-internet',function(e){
 	// selecion de orden
 	<?php  if ($this->aauth->get_user()->roleid == 5 || $this->aauth->get_user()->tiknue != null) { ?>
 	
-	var perfil_servicio = new Array ("...","Reconexion Combo","Reinstalación","Activacion","Reconexion Television","Retiro voluntario","Cambio de clave","Recuperación cable modem","Veeduria","Reconexion Internet","AgregarInternet","AgregarTelevision","Migracion","Bajar_megas","Cambio de equipo","Corte Combo","Corte Internet","Corte Television","Equipo adicional","Instalacion","Punto nuevo","Subir_megas","Suspension Combo","Suspension Internet","Suspension Television","Traslado","Toma Adicional");
+	var perfil_servicio = new Array ("...","Reconexion Combo","Reinstalación","Activacion","Reconexion Television","Retiro voluntario","Cambio de clave","Recuperación cable modem","Veeduria","Reconexion Internet","AgregarInternet","AgregarTelevision","Migracion","Bajar_megas","Cambio de equipo","Corte Combo","Corte Internet","Corte Television","Equipo adicional","Instalacion","Punto nuevo","Subir_megas","Suspension Combo","Suspension Internet","Suspension Television","Traslado","Toma_Adicional");
 	<?php } else if ($this->aauth->get_user()->roleid == 4 || $this->aauth->get_user()->usadm != null) { ?>
-	var perfil_servicio = new Array ("...","AgregarInternet","AgregarTelevision","Activacion","Cambio de clave","Reinstalación","Retiro voluntario","Recuperación cable modem","Migracion","Veeduria","Bajar_megas","Cambio de equipo","Corte Combo","Corte Internet","Corte Television","Equipo adicional","Instalacion","Punto nuevo","Subir_megas","Suspension Combo","Suspension Internet","Suspension Television","Traslado","Toma Adicional");
+	var perfil_servicio = new Array ("...","AgregarInternet","AgregarTelevision","Activacion","Cambio de clave","Reinstalación","Retiro voluntario","Recuperación cable modem","Migracion","Veeduria","Bajar_megas","Cambio de equipo","Corte Combo","Corte Internet","Corte Television","Equipo adicional","Instalacion","Punto nuevo","Subir_megas","Suspension Combo","Suspension Internet","Suspension Television","Traslado","Toma_Adicional");
 	<?php } else { ?>
-	var perfil_servicio = new Array ("...","AgregarInternet","AgregarTelevision","Activacion","Cambio de clave","Reinstalación","Recuperación cable modem","Migracion","Veeduria","Bajar_megas","Cambio de equipo","Corte Combo","Corte Internet","Corte Television","Equipo adicional","Instalacion","Punto nuevo","Subir_megas","Traslado","Toma Adicional");
+	var perfil_servicio = new Array ("...","AgregarInternet","AgregarTelevision","Activacion","Cambio de clave","Reinstalación","Recuperación cable modem","Migracion","Veeduria","Bajar_megas","Cambio de equipo","Corte Combo","Corte Internet","Corte Television","Equipo adicional","Instalacion","Punto nuevo","Subir_megas","Traslado","Toma_Adicional");
 	<?php }; ?>
 	var perfil_reclamo = new Array ("...","Revision_de_Internet","Revision_de_television","Revision tv e internet");	
 							//crear funcion que ejecute el cambio
@@ -915,6 +950,9 @@ $(document).on('click','.btn-mas-internet',function(e){
                     
                 }else if($("#detalle option:selected").val()=="Bajar_megas"){
                     validacion_bajar_megas();
+                    
+                }else if($("#detalle option:selected").val()=="Toma_Adicional"){
+                   validacion_toma_adicional();
                     
                 }
             }

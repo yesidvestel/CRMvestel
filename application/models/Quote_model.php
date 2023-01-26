@@ -180,7 +180,7 @@ class Quote_model extends CI_Model
         $query = $this->db->get();
         return $query->row_array();
     }
-	public function addticket($customer_id, $gen, $nticket, $subject, $detalle, $created, $problema, $bapaquete, $supaquete, $section, $factura, $agendar, $fagenda, $tec, $hora,$hora2,$nomen,$nuno,$auno,$ndos,$ados,$ntres,$local,$barrio,$recider, $refer,$tv,$inter,$bainter, $suinter,$punto,$pago,$movil)
+	public function addticket($customer_id, $gen, $nticket, $subject, $detalle, $created, $problema, $bapaquete, $supaquete, $section, $factura, $agendar, $fagenda, $tec, $hora,$hora2,$nomen,$nuno,$auno,$ndos,$ados,$ntres,$local,$barrio,$recider, $refer,$tv,$inter,$bainter, $suinter,$punto,$pago,$toma,$movil)
     {
 		$bill_llegada = datefordatabase($created);
 		if ($tv=='no' || $tv==''){
@@ -213,6 +213,8 @@ class Quote_model extends CI_Model
 			$obs = $suinter.' '.$section;
 		}else if($detalle=='Bajar megas'){
 			$obs = $bainter.' '.$section;
+		}else if($detalle=='Toma Adicional'){
+			$obs = 'Agregar '.$toma.' Puntos/'.$section;
 		}else{
 			$obs = $section;
 		}
@@ -394,6 +396,13 @@ class Quote_model extends CI_Model
 				'corden' => $nticket,
 				'tv' => $tv,
 				'puntos' => $punto
+			);		
+			$this->db->insert('temporales', $data4);
+			}
+			if ($detalle=='Toma Adicional'){
+				$data4 = array(
+					'corden' => $nticket,
+					'puntos' => $toma
 			);		
 			$this->db->insert('temporales', $data4);
 			}

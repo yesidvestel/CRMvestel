@@ -151,6 +151,7 @@ class Quote extends CI_Controller
 		$suinter = $this->input->post('suinter');
 		$punto = $this->input->post('punto');
 		$pago = $this->input->post('pago');
+		$toma = $this->input->post('toma');
         $bapaquete = $this->input->post('bapaquete');
         $supaquete = $this->input->post('supaquete');
         $detalle=str_replace("_"," ",$detalle);
@@ -171,7 +172,7 @@ class Quote extends CI_Controller
        }
         
         if ($customer_id) {
-        	$this->quote->addticket($customer_id, $gen, $nticket, $subject, $detalle, $created, $problema, $bapaquete, $supaquete, $section, $factura,$agendar,$fagenda, $tec, $hora,$hora2,$nomen,$nuno,$auno,$ndos,$ados,$ntres,$local,$barrio,$recider, $refer, $tv,$inter,$bainter, $suinter, $punto,$pago,$movil);
+        	$this->quote->addticket($customer_id, $gen, $nticket, $subject, $detalle, $created, $problema, $bapaquete, $supaquete, $section, $factura,$agendar,$fagenda, $tec, $hora,$hora2,$nomen,$nuno,$auno,$ndos,$ados,$ntres,$local,$barrio,$recider, $refer, $tv,$inter,$bainter, $suinter, $punto,$pago,$toma,$movil);
 			
 		}
 
@@ -318,6 +319,7 @@ class Quote extends CI_Controller
 		$bainter = $this->input->post('bainter');
 		$suinter = $this->input->post('suinter');
 		$punto = $this->input->post('punto');
+		$toma = $this->input->post('toma');
         $bill_date = datefordatabase($created);
 		$supaquete = $this->input->post('supaquete');
 		$bapaquete = $this->input->post('bapaquete');
@@ -440,6 +442,17 @@ class Quote extends CI_Controller
         			$this->db->where('idt', $customer_id);
 					$this->db->update('tickets');
 				}
+		}
+		if ($detalle=='Toma Adicional'){
+				$data4 = array(
+					'puntos' => $toma,
+			);
+			$this->db->where('corden', $nticket);
+			if($this->db->update('temporales', $data4)){
+				$this->db->set('section','Agregar '.$toma.' Puntos/');
+        		$this->db->where('idt', $customer_id);
+				$this->db->update('tickets');
+			}
 		}
 		$start = date("Y-m-d",strtotime($fagenda));
 			//agenda

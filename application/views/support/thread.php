@@ -497,20 +497,7 @@
 						
                     </div>
 					<?php }*/ ?>-->
-					<?php if ($thread_info['detalle']=='Toma Adicional') {?>
-					<div class="row">
-                        <div class="col-xs-12 mb-1"><label
-                                    for="pmethod">Puntos</label>
-                            <select name="puntos" class="form-control mb-1" onchange="funcion_status();">
-								<option value="">no</option>
-								<?php for ($i=1;$i<=15;$i++){
-								echo '<option value="'.$i.'">'.$i.'</option>';}?>
-                            </select>
-
-                        </div>
-						
-                    </div>
-					<?php } ?>
+					
                     <?php if ($this->aauth->get_user()->roleid >= 5) { ?>
                     <div class="row" id="fecha_final_div">
                         <div class="col-xs-12 mb-1" ><label>Fecha Final</label>

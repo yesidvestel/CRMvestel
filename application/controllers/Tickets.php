@@ -757,30 +757,30 @@ class Tickets Extends CI_Controller
                 $txt_error.="<li>Ya tiene una orden abierta <a href='".base_url()."tickets/thread?id=".$q[0]->idt."'><strong>".$q[0]->codigo."</strong></a></li>";  
             }
 			if(!$es_valido){
-            echo json_encode(array('status' => 'Error', 'message' =>
+            	echo json_encode(array('status' => 'Error', 'message' =>
                 "<br>".$txt_error, 'pstatus' => "error"));                
-        }else{
-			//cambio cuando se esta realizando
-            $this->db->set('status', $status);
-           // $this->db->set('inicio', date("Y-m-d h:i"));
-            $this->db->where('idt', $tid);
-            if ($this->db->update('tickets')){
-				//cambio color realizando
-				$this->db->set('color', '#2DC548');
-				$this->db->set('start', date("Y-m-d H:i:s"));
-                $this->db->set('end', date("Y-m-d H:i:s"));
-				$this->db->where('idorden', $ticket->codigo);
-				$this->db->update('events');
-                $data_h['modulo']="tickets";
-                $data_h['accion']="Editando evento ticket linea 703";
-                $data_h['id_usuario']=$this->aauth->get_user()->id;
-                $data_h['fecha']=date("Y-m-d H:i:s");
-                $data_h['descripcion']=$fecha_final;
-                $data_h['id_fila']=$ticket->codigo;
-                $data_h['tabla']="events";
-                $data_h['nombre_columna']="idorden";
-                $this->db->insert("historial_crm",$data_h);
-        };
+				}else{
+					//cambio cuando se esta realizando
+					$this->db->set('status', $status);
+				   // $this->db->set('inicio', date("Y-m-d h:i"));
+					$this->db->where('idt', $tid);
+					if ($this->db->update('tickets')){
+						//cambio color realizando
+						$this->db->set('color', '#2DC548');
+						$this->db->set('start', date("Y-m-d H:i:s"));
+						$this->db->set('end', date("Y-m-d H:i:s"));
+						$this->db->where('idorden', $ticket->codigo);
+						$this->db->update('events');
+						$data_h['modulo']="tickets";
+						$data_h['accion']="Editando evento ticket linea 703";
+						$data_h['id_usuario']=$this->aauth->get_user()->id;
+						$data_h['fecha']=date("Y-m-d H:i:s");
+						$data_h['descripcion']=$fecha_final;
+						$data_h['id_fila']=$ticket->codigo;
+						$data_h['tabla']="events";
+						$data_h['nombre_columna']="idorden";
+						$this->db->insert("historial_crm",$data_h);
+				};
 			
         echo json_encode(array('msg1'=>"Realizando",'tid'=>0,'status' => 'Success', 'message' =>
             $this->lang->line('UPDATED'), 'pstatus' => $status));}
@@ -1883,8 +1883,8 @@ $x=0;
 			
 		}
 		if($ticket->detalle=="Toma Adicional"){
-			$punto = $this->input->post('puntos');
-			$producto2 = $this->db->get_where('products',array('pid'=>69))->row();
+			$punto = $temporal->puntos;
+			$producto2 = $this->db->get_where('products',array('product_name'=>'Punto Adicional'))->row();
 				$data2['tid']=$idfactura;
 				$data2['pid']=$producto2->pid;
                 $data2['product']=$producto2->product_name;
@@ -1900,7 +1900,7 @@ $x=0;
 				$this->db->set('subtotal', $factura->subtotal+$valorit);
 				$this->db->set('total', $factura->total+$valorit);
 				$this->db->set('items', $factura->items+1);
-				$this->db->set('puntos', $punto);							
+				$this->db->set('puntos', $factura->puntos+$punto);							
         		$this->db->where('tid', $idfactura);
         		$this->db->update('invoices');			
 		}
