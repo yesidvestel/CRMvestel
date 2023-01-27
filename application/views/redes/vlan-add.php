@@ -155,7 +155,7 @@ $(document).ready(function(){
 			var optionArray = ["Hub local"];
 		}else if (almacen.value == "2"){
 			var optionArray = ["Hub local"];
-		}else if (almacen.value == "9"){
+		}else if (almacen.value == "10"){
 			var optionArray = ["Hub local"];
 		};
 	for(option = 0;option < optionArray.length; option++){
