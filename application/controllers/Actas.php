@@ -146,4 +146,13 @@ class Actas extends CI_Controller
 
 
     }
+    function recibir_material(){
+
+        $data=array();
+        $data['estado']="Recibida";
+        $data['id_usuario_recibe']=$this->aauth->get_user()->id;
+        $data['fecha_recepcion']=date("Y-m-d H:i:s");
+        $this->db->update("acta_transferencias",$data,array("id"=>$_POST['id']));
+
+    }
 }

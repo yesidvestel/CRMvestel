@@ -32,6 +32,9 @@ class Actas_model extends CI_Model
         $this->db->join("aauth_users as emp1","emp1.id=tr1.id_usuario_que_transfiere");
         $this->db->join("product_warehouse as alm_o","alm_o.id=tr1.almacen_origen");
         $this->db->join("product_warehouse as alm_d","alm_d.id=tr1.almacen_destino");
+        if($this->aauth->get_user()->roleid<=2){
+            $this->db->where("alm_d.id_tecnico='".$this->aauth->get_user()->username."'");
+        }
         foreach ($this->column_search as $item) // loop column
         {
             $search = $this->input->post('search');

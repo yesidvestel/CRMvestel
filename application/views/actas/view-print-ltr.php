@@ -335,14 +335,18 @@
             <table>
                 <tr>
                     <td align="left">Generado Por:<br>
-                       <?php echo '<img src="' . FCPATH . 'userfiles/employee_sign/' . $employee->sign . '" alt="signature" class="height-100"/>
+                       <?php echo '<img src="' . FCPATH . 'userfiles/employee_sign/' . $employee->sign . '" alt="signature" class="height-50" width="30%"/>
                                     <h6>(' . $employee->name . ')</h6>
                                     <p class="text-muted">' . user_role($employee_aauth_users->roleid) . '</p>'; ?>
                     </td>
                     <td align="right">Entregado a:<br>
-                        <?php if($almacen_destino->id_tecnico!=null) { ?><br>
-                            ___________________________________________<br>
-                                <img alt="signature" class="height-100" src="<?=  FCPATH . 'userfiles/employee_sign/' . $almacen_destino->id_tecnico->sign ?>">
+                        <?php if($almacen_destino->id_tecnico!=null) { ?>
+                         
+                            
+                            <?php  if($acta->estado=="Recibida") {?>
+                                <img width="30%" alt="signature" class="height-50" src="<?=  FCPATH . 'userfiles/employee_sign/' . $almacen_destino->id_tecnico->sign ?>"><br>
+                                <small>Fecha Recibida: <?=$acta->fecha_recepcion ?></small>
+                                <?php }else {echo "<br><br>___________________________________________";} ?>
                                 <h6><?=$almacen_destino->id_tecnico->name ?></h6>
                                 <p class="text-muted"><?=user_role($almacen_destino->aauth_users->roleid) ?></p>
                         <?php }else{ ?><br>

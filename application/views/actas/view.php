@@ -16,6 +16,9 @@
 
             <div class="message"></div>
         </div>
+        <div id="alertax">
+            
+        </div>
 		
 		<!-------- MENU PARA MOSTRAR ----->
 
@@ -39,10 +42,14 @@
                                         <a class="dropdown-item"
                                            href="<?php echo 'printacta?id=' . $id_acta; ?>&d=1"><?php echo $this->lang->line('PDF Download') ?></a>
 										<div class="dropdown-divider"></div>
-                                        <a class="dropdown-item"
-                                           href="<?php echo 'recibido?id=' . $id_acta; ?>"><?php echo $this->lang->line('') ?>Recibidos</a>
+                                       
                                     </div>
                                 </div>
+                                <?php if($almacen_destino->id_tecnico->id==$this->aauth->get_user()->id && $acta->estado==null){ ?>
+                                        <a href="#" class="btn btn-primary" id="recibir_material"><i
+                                                    class="icon-earth"></i> Recibir Material
+                                        </a>
+                                <?php } ?>
 									
                                 						  
                            
@@ -213,4 +220,39 @@
         </div>
     </div>
 </div>
-
+<div id="modal_recibir" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Recibir</h4>
+            </div>
+            
+            <div class="modal-body" id="emailbody" style="display: none;">
+               <p>¿Estas seguro de realizar esta accion?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal"><?php echo $this->lang->line('Close') ?></button>
+                <button type="button" class="btn btn-primary"
+                        id="sendM" onclick="recibir_metod()">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var id_acta_var="<?=$id_acta ?>";
+    $(document).on("click","#recibir_material",function(evt){
+        evt.preventDefault();
+        $("#modal_recibir").modal("show");
+    });
+    function recibir_metod(){
+        $.post(baseurl+"actas/recibir_material",{'id':id_acta_var},function(data){
+            $("#modal_recibir").modal("hide");
+            mostrar_alerta1("alertax",1,"Material Recibido...");
+            setTimeout(function (e) {
+                            $("#recibir_material").hide();
+                    },1000);
+        });
+    }
+</script>
