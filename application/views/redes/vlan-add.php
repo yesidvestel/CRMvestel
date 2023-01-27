@@ -155,6 +155,8 @@ $(document).ready(function(){
 			var optionArray = ["Hub local"];
 		}else if (almacen.value == "2"){
 			var optionArray = ["Hub local"];
+		}else if (almacen.value == "8"){
+			var optionArray = ["Hub local"];
 		};
 	for(option = 0;option < optionArray.length; option++){
     var pair = optionArray[option].split("|");
