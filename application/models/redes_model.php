@@ -78,12 +78,33 @@ class Redes_model extends CI_Model
         );
 
         $this->db->set($data);
+        $id_nap=null;
 		if ($id!=""){
 			$this->db->where('idn', $id);
 			$in=$this->db->update('naps');
+            $id_nap=$id;
 		}else{
 			$in=$this->db->insert('naps');
+            $id_nap=$this->db->insert_id();
 		}
+        $var_i=intval($puertos);
+        $data_consulta=array(
+            'sede' => $almacen,
+            'idvlan' => $vlan,
+            'idnap' => $id_nap);
+
+        for ($i=1; $i <= $var_i; $i++) { 
+            $data_consulta['puerto']=$i;
+
+            $puerto_x=$this->db->get_where("puertos",$data_consulta)->row();
+            if(empty($puerto_x)){
+                $data_x2=$data_consulta;
+                $data_x2['estado']="Disponible";
+                $data_x2['detalle']="Puerto ".$i;
+                
+                $this->db->insert('puertos',$data_x2);
+            }
+        }
         if ($in) {
             echo json_encode(array('status' => 'Success', 'message' =>
                 $this->lang->line('UPDATED')));
