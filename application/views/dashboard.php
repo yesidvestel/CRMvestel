@@ -52,9 +52,17 @@
 					<a href="<?php echo base_url('dashboard/index?sede=Villanueva')?>">
 						<input type="text" class="btn btn-primary btn-md" value="VILLANUEVA"></a>
 				</div>
-				<div class="col-md-9 mb-1">
+				<div class="col-md-3 mb-1">
 					<a href="<?php echo base_url('dashboard/index?sede=Aguazul')?>">
 						<input type="text" class="btn btn-primary btn-md" value="AGUAZUL"></a>
+				</div>
+				<div class="col-md-3 mb-1">
+					<a href="<?php echo base_url('dashboard/index?sede=Tauramena')?>">
+						<input type="text" class="btn btn-primary btn-md" value="TAURAMENA"></a>
+				</div>
+				<div class="col-md-3 mb-1">
+					<a href="<?php echo base_url('dashboard/index?sede=Villavicencio')?>">
+						<input type="text" class="btn btn-primary btn-md" value="VILLAVICENCIO"></a>
 				</div>
                 <div class="col-xl-3 col-md-6 col-xs-12">										
                     <div class="card">
