@@ -560,19 +560,19 @@ class Transactions extends CI_Controller
         
         $fecha_actual = date("d-m-Y");
 
-        $mes_pasado= date("d-m-Y",strtotime($fecha_actual."- 1 month")); 
+       /* $mes_pasado= date("d-m-Y",strtotime($fecha_actual."- 1 month")); 
         $dtime=new DateTime($mes_pasado);
         $dia_inicial_mes_anterior=$dtime->format("Y-m")."-01";
         $mes_pasado_fin= date("Y-m-t", strtotime($dia_inicial_mes_anterior));
         $fac_caso_execpcional=false;
         $tiquet1 =$this->db->query("select * from tickets where detalle like '%corte%' and (fecha_final>=".$dia_inicial_mes_anterior." and fecha_final<=".$mes_pasado_fin.")")->result();
 /*borrar esto si no funciona */
-        $this->load->model('customers_model', 'customers');
+       /* $this->load->model('customers_model', 'customers');
 
         $servicios_detail=$this->customers->servicios_detail($factura_asociada->csd);
         $tiene_ya_internet=$this->db->query("select * from invoice_items where product like '%mega%' and tid=".$servicios_detail['tid'])->result();
 /*end borrar esto si no funciona */
-        if(count($tiquet1)>0 && count($tiene_ya_internet)==0){ // aqui quitar si no funciona && count($tiene_ya_internet)==0
+       /* if(count($tiquet1)>0 && count($tiene_ya_internet)==0){ // aqui quitar si no funciona && count($tiene_ya_internet)==0
                 $mes1 = $dtime->format("Y-m");
                 $fac_caso_execpcional=true;
         }
@@ -630,8 +630,8 @@ class Transactions extends CI_Controller
                             $data_h['tabla']="tickets";
                             $data_h['nombre_columna']="idt";
                             $this->db->insert("historial_crm",$data_h);
-                $reconexion_gen="si";
-        }if ($reconexion==si && $mes2>$mes1){
+                //$reconexion_gen="si";
+        }else if ($reconexion==si && $mes2>$mes1){
 			if ($tipo=='Reconexion Combo'){
 				//internet
 				$data2['codigo']=$tidactualmasuno[0]->tid;
@@ -679,22 +679,22 @@ class Transactions extends CI_Controller
                 $this->db->insert('tickets',$data2);
 			}
                 
-                            $data_h=array();
-                            $data_h['modulo']="Usuarios";
-                            $data_h['accion']="Administrar Usuarios > Ver Usuario > Ver Facturas > Hacer el Pago (pago multiple) {insert}";
-                            $data_h['id_usuario']=$this->aauth->get_user()->id;
-                            $data_h['fecha']=date("Y-m-d H:i:s");
-                            $data_h['descripcion']=json_encode($data2);
-                            $data_h['id_fila']=$this->db->insert_id();
-                            $data_h['tabla']="tickets";
-                            $data_h['nombre_columna']="idt";
-                            $this->db->insert("historial_crm",$data_h);
+				$data_h=array();
+				$data_h['modulo']="Usuarios";
+				$data_h['accion']="Administrar Usuarios > Ver Usuario > Ver Facturas > Hacer el Pago (pago multiple) {insert}";
+				$data_h['id_usuario']=$this->aauth->get_user()->id;
+				$data_h['fecha']=date("Y-m-d H:i:s");
+				$data_h['descripcion']=json_encode($data2);
+				$data_h['id_fila']=$this->db->insert_id();
+				$data_h['tabla']="tickets";
+				$data_h['nombre_columna']="idt";
+				$this->db->insert("historial_crm",$data_h);
                 $data4 = array(
                 'corden' => $data2['codigo'],
                 'tv' => $tv,
                 'internet' => $factura_asociada->combo,             
             );      
-                $reconexion_gen="si";
+                //$reconexion_gen="si";
             $this->db->insert('temporales', $data4);
                             $data_h=array();
                             $data_h['modulo']="Usuarios";
