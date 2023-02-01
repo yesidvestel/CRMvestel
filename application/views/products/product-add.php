@@ -70,8 +70,8 @@
 					<div class="col-sm-6">
 						<select name="sede" class="form-control" id="sede">
 							<option value="">-</option>
-							<option value="1">Television</option>
-							<option value="2">Internet</option>
+							<option value="-1">Television</option>
+							<option value="-2">Internet</option>
 						</select>
 					</div>
 				</div>
