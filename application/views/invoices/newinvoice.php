@@ -893,6 +893,7 @@
         var sede_sel=$("#refer option:selected").val();
         $(".serv_sedes").css("display","none");
         $(".servs_sede_"+sede_sel).css("display","");
+        $(".servs_sede_").css("display","");
         if(sede_actual!=sede_sel){
             $(".select_sede_"+sede_actual).val("0");
         }

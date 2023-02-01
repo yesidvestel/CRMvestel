@@ -555,6 +555,7 @@ setlocale(LC_TIME, "spanish");
     public function get_servicios(){
         //$array=array();//array("servicios_tv"=>array(),"servicios_internet"=>array());
         $lista_sedes=$this->db->get_where("customers_group")->result_array();
+        $lista_sedes[]['id']="7";
         foreach($lista_sedes as $key=> $value){
             $lista_sedes[$key]['servicios_tv']=$this->db->get_where("products",array("pcat"=>"4","warehouse"=>"7","sede"=>$value['id'],"valores!="=>null,"pertence_a_tv_o_net"=>"Tv"))->result_array();
             $lista_sedes[$key]['servicios_internet']=$this->db->get_where("products",array("pcat"=>"4","warehouse"=>"7","sede"=>$value['id'],"valores!="=>null,"pertence_a_tv_o_net"=>"Internet"))->result_array();
