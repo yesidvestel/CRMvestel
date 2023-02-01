@@ -36,6 +36,7 @@
                                         <option value='3'><?php echo $this->lang->line('') ?>Villanueva</option>
                                         <option value='3'><?php echo $this->lang->line('') ?>Aguazul</option>
 										<option value='3'><?php echo $this->lang->line('') ?>Mocoa</option>
+										<option value='3'><?php echo $this->lang->line('') ?>Tauramena</option>
                                     </select>
 
 
