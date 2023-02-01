@@ -831,9 +831,7 @@
 								<?php } ?>
                                 <option value="Cartera"><?php echo $this->lang->line('') ?>Cartera</option>
 								<option value="Reportado"><?php echo $this->lang->line('') ?>Reportado</option>
-								<?php if ($this->aauth->get_user()->id == 20 || $this->aauth->get_user()->roleid == 5) { ?>
 								<option value="Depurado"><?php echo $this->lang->line('') ?>Depurado</option>
-								<?php } ?>
                             </select>
 
                         </div>
