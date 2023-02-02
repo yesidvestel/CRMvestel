@@ -860,7 +860,7 @@ if($status=="Resuelto" && file_exists($nombre_archiv)==false && strpos(strtolowe
 }else if($hiso_devolucion_de_equipo==false){
         echo json_encode(array('status' => 'Error', 'message' =>"Por favor realice la devolucion del equipo antes de cerrar la orden ", 'pstatus' => "error"));
 }else{$y=0;
-    $tv =null;
+    	$tv =null;
         $inter = null;
         $ptos = null;
     if(isset($temporal)){
@@ -1790,7 +1790,7 @@ $x=0;
 			//agregar servicio nuevo
         $y=0;
                 if($data['combo']!==no){
-                    $producto = $this->db->get_where('products',array('product_name'=>$inter))->row();
+                    $producto = $this->db->get_where('products',array('product_name'=>$factura->combo))->row();
 					$datay['pid']=$producto->pid;
                     $x=intval($producto->product_price);
                     $x=($x/31)*$diferencia->days;

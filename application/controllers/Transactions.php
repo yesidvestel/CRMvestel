@@ -581,6 +581,11 @@ class Transactions extends CI_Controller
 		$username = $this->aauth->get_user()->username;
         $tidactualmasuno= $this->db->select('max(codigo)+1 as tid')->from('tickets')->get()->result();
         $tidactualmasdos= $this->db->select('max(codigo)+2 as tid')->from('tickets')->get()->result();
+		$corte = $this->db->query("select * from tickets where cid='".$cid."' AND detalle like '%corte%' order by idt  desc limit 1")->result_array();
+		 if(isset($corte[0])){
+			 $mescorte = date("Y-m",strtotime($corte[0]['fecha_final']));
+		 }
+		
 		$parmasuno= $this->db->select('max(par)+1 as par')->from('tickets')->get()->result();
         if ($reconexion==si && $mes2===$mes1){
 			if ($tipo=='Reconexion Combo'){
@@ -607,9 +612,14 @@ class Transactions extends CI_Controller
                 $data3['id_factura']=$factura_asociada->tid;
                 $this->db->insert('tickets',$data3);
 			}else{
+				if($mescorte===$mes1){
+					$detcorte=$tipo;
+				}else{
+					$detcorte=$tipo.'2';
+				}
 				$data2['codigo']=$tidactualmasuno[0]->tid;
                 $data2['subject']='servicio';
-                $data2['detalle']=$tipo;
+                $data2['detalle']=$detcorte;
                 $data2['created']=$paydate;
                 $data2['cid']=$cid;
 				$data2['col']=$username;
@@ -664,6 +674,7 @@ class Transactions extends CI_Controller
                 $data3['par']=$parmasuno[0]->par;
                 $this->db->insert('tickets',$data3);
 			}else{
+				
 				$data2['codigo']=$tidactualmasuno[0]->tid;
                 $data2['subject']='servicio';
                 $data2['detalle']=$tipo.'2';
