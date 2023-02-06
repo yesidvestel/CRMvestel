@@ -5,14 +5,21 @@
 	width: 140px;
 	background: white;
 }
-.staticdos {
-  	position: sticky;
-  	top: 0;
-}
+
 	th .static{
 		background-color:#719FD0;
 	}
-	
+	#ccs_add tr th { 
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background-color: #ffffff;
+        }
+    
+        .table-responsive { 
+            height:100%;
+            overflow:scroll;
+        }
 /*.first-col {
   padding-left: 35px!important;
 }*/
@@ -29,6 +36,12 @@ table {
 	tr:nth-child(2n) .static{
 		background-color:aliceblue;
 	}
+		#ccs_add {
+  	position: sticky;
+  	top: 0;
+	height: 140px;
+	background: white;
+}
 
 
 
@@ -177,19 +190,19 @@ table {
 <a style="color: white;" class="btn-flotante2"><</a>
 <a href="#detalles_totales" style="display:none" id="link1"></a>
 
-                            <div class="table-responsive">
-                                <table class="table mb-1" id="x2">
-                                    <thead>
+                            <div>
+                                <table class="table table-responsive" id="x2">
+                                    <thead id="ccs_add">
 										<tr>
-										<th rowspan="2" width="140px" class="static">Tipor de orden</th>
+										<th rowspan="2" width="140px" >Tipor de orden</th>
 										<th colspan="<?=$tipos['cuantos_dias_a_imprimir'] ?>" style="text-align: center">Dia</th>
 										</tr>
 									
                                     <tr>
                                         
                                         <?php for ($i=1;$i<=$tipos['cuantos_dias_a_imprimir'];$i++){
-													echo '<th style="text-align: center;">'.$i.'</th>';}?>
-                                        <th rowspan="2" style="text-align: center;" >TOTAL</th>
+													echo '<th style="text-align: center;background-color: cornflowerblue;">'.$i.'</th>';}?>
+                                        <th rowspan="2" style="text-align: center;background-color: cornflowerblue;" >TOTAL</th>
                                     </tr>
 										
                                     </thead>
