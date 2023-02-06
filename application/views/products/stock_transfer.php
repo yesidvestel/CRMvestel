@@ -1,4 +1,8 @@
-
+<style type="text/css">
+    #wfrom,#sel2{
+        width: 100%;
+    }
+</style>
 <article class="content">
     <div class="card card-block">
         <div id="notify" class="alert alert-success" style="display:none;">
@@ -140,6 +144,9 @@
     var dataglobal;
     var listaProductos=[];
     $("#products_l").select2();
+    $("#wfrom").select2();
+    $("#sel2").select2();
+    
 
     $("#wfrom").on('change', function(){
     var tips=$('#wfrom').val();

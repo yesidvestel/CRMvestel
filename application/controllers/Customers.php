@@ -386,7 +386,7 @@ class Customers extends CI_Controller
 		$data['facturalist'] = $this->ticket->factura_list($custid);
 		$data['attach'] = $this->customers->attach($custid,6);
         $data['validar_firma']=$this->customers->validar_firma($custid);
-        $data['estado_mikrotik']=$this->customers->get_estado_mikrotik($data['details']['name_s'],$data['details']['gid'],$data['details']['tegnologia_instalacion']);        
+        //$data['estado_mikrotik']=$this->customers->get_estado_mikrotik($data['details']['name_s'],$data['details']['gid'],$data['details']['tegnologia_instalacion']);        
         $data['color']="#5ccb5f";
         if(empty($data['estado_mikrotik'])){
             $data['color']="red";
@@ -1198,9 +1198,7 @@ if($data['servicios']['estado']=="Inactivo"){
 			'email' => $email,
 			'tipo_cliente' => $tipo_cliente,
 			'tipo_documento' => $tipo_documento,
-			'documento' => $doc2,
-			'f_contrato' => date("Y-m-d"),
-		);
+			'documento' => $doc2);
         $this->db->where('id', $id);
         $this->db->update('customers', $data2);
 		//tarea de revision

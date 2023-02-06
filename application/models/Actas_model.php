@@ -34,6 +34,11 @@ class Actas_model extends CI_Model
         $this->db->join("product_warehouse as alm_d","alm_d.id=tr1.almacen_destino");
         if($this->aauth->get_user()->roleid<=2){
             $this->db->where("alm_d.id_tecnico='".$this->aauth->get_user()->username."'");
+        }else if(isset($_GET['tecnico'])){
+
+            $this->db->where("tr1.fecha>='".(new DateTime ($_GET['sdate']))->format("Y-m-d 00:00:01")."'");
+            $this->db->where("tr1.fecha<='".(new DateTime ($_GET['edate']))->format("Y-m-d 23:59:59")."'");
+            $this->db->where("alm_d.id_tecnico='".$_GET['tecnico']."'");
         }
         foreach ($this->column_search as $item) // loop column
         {
@@ -86,5 +91,12 @@ class Actas_model extends CI_Model
 		
         $query = $this->db->get();
         return $query->num_rows();
+    }
+    public function get_items_report(){
+        $fecha_inicial=(new DateTime($_POST['sdate']))->format("Y-m-d 00:00:01");
+        $fecha_final=(new DateTime($_POST['edate']))->format("Y-m-d 23:59:59");
+        $tecnico=$_POST['tecnico'];
+        return $this->db->query('SELECT sum(items.cantidad) as cant_transferida,(select sum(tpo.cantidad) as c1 from transferencia_products_orden as tpo where tpo.products_pid=tr1.producto_b and tpo.fecha >="'.$fecha_inicial.'" and tpo.fecha <="'.$fecha_final.'")as cantidad_gastada, tr1.producto_b as pid,pr1.product_name as name FROM `items_acta_transferencias` as items inner join acta_transferencias as act1 on items.id_acta_transferencia=act1.id inner join transferencias as tr1 on tr1.id_transferencia=items.id_transferencia inner join products as pr1 on pr1.pid=tr1.producto_b inner join product_warehouse as alm_d on alm_d.id=act1.almacen_destino where alm_d.id_tecnico="'.$tecnico.'" and act1.fecha>="'.$fecha_inicial.'" and act1.fecha<="'.$fecha_final.'"  GROUP by tr1.producto_b;')->result_array();
+
     }
 }

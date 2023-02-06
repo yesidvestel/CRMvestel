@@ -88,6 +88,7 @@ class Projects Extends CI_Controller
                     $dats['products_pid']=$producto['pid'];
                     $dats['proy_id']=$_POST['id_orden_n'];
                     $dats['cantidad']=$producto['qty'];
+                    $dats['fecha']=date("Y-m-d H:i:s");
                     //proceso de descontar cantidades del almacen
                     $producto_padre=$this->db->get_where('products',array('pid'=>$producto['pid']))->row();
                     $x1=intval($producto_padre->qty);

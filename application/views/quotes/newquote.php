@@ -1,4 +1,8 @@
-
+<style type="text/css">
+	#internet_instalacion,#interB,#tecnico{
+		width: 100%;
+	}
+</style>
 <div class="app-content content container-fluid">
     <div class="content-wrapper">
         <div class="content-header row">
@@ -432,7 +436,7 @@
 													}
 												?>
 											</select>
-											<a href="" style="margin-top: -15px;" class="btn-small btn-primary btn-mas-internet">Mas Internet</a>        
+											<a href="" style="margin-top: 7px;" class="btn-small btn-primary btn-mas-internet">Mas Internet</a>        
 										</div>
                                    </div>
                                    
@@ -603,7 +607,7 @@
 													}
 												?>
 											</select>
-											<a href="" style="margin-top: -15px;" class="btn-small btn-primary btn-mas-internet">Mas Internet</a>        
+											<a href="" style="margin-top: 7px;" class="btn-small btn-primary btn-mas-internet">Mas Internet</a>        
 										</div>
                                    </div>
 								</div>
@@ -689,6 +693,10 @@
     </div>
 </div>
 <script type="text/javascript">
+	$("#tecnico").select2();
+	$("#internet_instalacion").select2();
+	$("#interB").select2();
+
 	/* codigo servicios*/
 	var sede_sel="<?=$sede_actual->title  ?>";
  $(".serv_sedes").css("display","none");
@@ -704,9 +712,11 @@ function validacion_instalacion (){
     var internet_instalacion=$("#internet_instalacion option:selected").val();
     if(tele_instalacion!="no"|| internet_instalacion!="no"){
         $(".instalacion").css("border-color","");
+        $("#internet_instalacion").parent().css("background-color","");
         $("#submit-data").removeAttr("disabled");
     }else{
         $(".instalacion").css("border-color","red");
+        $("#internet_instalacion").parent().css("background-color","red");
         $("#submit-data").attr("disabled","disabled");
     }
     //console.log(tele_instalacion);
@@ -721,10 +731,10 @@ function validacion_agregar_internet (){
     var detalle01=$("#detalle option:selected").val();
     if(detalle01=="AgregarInternet"){
     		if(paquete01!="no"){
-		        $("#interB").css("border-color","");
+		        $("#interB").parent().css("background-color","");
 		        $("#submit-data").removeAttr("disabled");
 		    }else{
-		        $("#interB").css("border-color","red");
+		        $("#interB").parent().css("background-color","red");
 		        $("#submit-data").attr("disabled","disabled");
 		    }	
     }

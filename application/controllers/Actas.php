@@ -59,11 +59,54 @@ class Actas extends CI_Controller
     public function index(){
         $head=array("title"=>"Administrar Actas de Transferencias");
         $this->load->view('fixed/header',$head);
+        $data['lista_tecnicos']=$this->db->get_where("employee_profile")->result_array();
 
         $this->load->view('actas/index2',$data);
         $this->load->view('fixed/footer');
     }
 
+    public function actas_list_filtro(){
+        $lista_de_items_pr=$this->actas->get_items_report();
+        $var_return='<table id="filtro_tb" class="table-striped table-hover" cellspacing="0" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>PID</th>
+                                                <th>Nombre</th>
+                                                <th>Total Traspasado</th>
+                                                <th>Total Gastado</th>
+                                                <th>Total En Almacen</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>';
+        
+        foreach ($lista_de_items_pr as $key => $pr) {
+            if(empty($pr['cantidad_gastada'])){
+                $pr['cantidad_gastada']=0;
+            }
+            $var_return.="<tr>";
+                        $var_return.="<td>".$key."</td>";
+                        $var_return.="<td>".$pr['pid']."</td>";
+                        $var_return.="<td>".$pr['name']."</td>";
+                        $var_return.="<td>".$pr['cant_transferida']."</td>";
+                        $var_return.="<td>".$pr['cantidad_gastada']."</td>";
+                        $var_return.="<td>".($pr['cant_transferida']-$pr['cantidad_gastada'])."</td>";
+            $var_return.="</tr>";
+        }
+        $var_return.='</tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>PID</th>
+                                                <th>Nombre</th>
+                                                <th>Total Traspasado</th>
+                                                <th>Total Gastado</th>
+                                                <th>Total En Almacen</th>
+                                        </tr>
+                                        </tfoot>
+                                    </table>';
+        echo $var_return;
+    }
     public function actas_list(){
         
         $list = $this->actas->get_datatables();

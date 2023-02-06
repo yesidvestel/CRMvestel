@@ -1,4 +1,6 @@
-﻿----------------------ACTAS--------------------------------------------------------------------
+﻿---------------------- FILTROS ACTAS --------------------------------------------------------------------
+ALTER TABLE `transferencia_products_orden` ADD `fecha` DATETIME NULL AFTER `cantidad`;
+----------------------ACTAS--------------------------------------------------------------------
 ALTER TABLE `acta_transferencias` ADD `estado` ENUM('Recibida') NULL AFTER `id_usuario_que_transfiere`, ADD `id_usuario_recibe` INT NULL AFTER `estado`, ADD `fecha_recepcion` DATETIME NULL AFTER `id_usuario_recibe`;
 
 --------------------------------------------------sql ACTAS DE TRANSFERENCIAS de MATERIAl---------------------

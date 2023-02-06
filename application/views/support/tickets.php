@@ -352,7 +352,7 @@
 				</div>
 				<div class="col-xs-3 mb-1">
                     <label>Tecnicos</label>
-					<select name="asignado" id="tecnicos" class="form-control mb-1">
+					<select name="asignado" style="width:100%" id="tecnicos" class="form-control mb-1">
 					<option value="">-</option>
 				<?php
 					foreach ($tecnicoslista as $row) {
@@ -594,6 +594,7 @@ $(window).on('load', function (e) {
     }
     $("#detalle-sl").select2();
     $("#tecnicos2").select2();
+    $("#tecnicos").select2();
     $("#estados").select2();
     $("#sede_sel").select2();
     
