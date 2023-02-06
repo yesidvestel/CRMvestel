@@ -1867,7 +1867,7 @@ $x=0;
 				$this->db->set('subtotal', $factura->subtotal+$total);
 				$this->db->set('tax', ($factura->tax+$y));
 				$this->db->set('total', $factura->total+($total+$y));
-				$this->db->set('combo', $inter);
+				$this->db->set('combo', $factura->combo);
                 $this->db->set('estado_combo', null);
         		$this->db->where('tid', $idfactura);
         		if ($this->db->update('invoices')&&$ticket->detalle!="Reconexion Internet2"){
