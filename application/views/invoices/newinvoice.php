@@ -385,7 +385,7 @@
 
                                     </select></td>
 								<td colspan="2">Internet 
-								<select name="combo" class="selectpicker form-control">
+								<select style="width: 100%;" name="combo" id="combox1" class="selectpicker form-control">
 										<option value="no">No</option>
 										<?php
 											foreach ($paqueteinter as $row) {
@@ -1013,6 +1013,6 @@ alert(selected);
 				}
 			});
 			
-			
+			$("#combox1").select2();
 		
 		</script>
