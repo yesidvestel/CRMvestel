@@ -84,19 +84,19 @@ class Reports_model extends CI_Model
 			 if($gasto->cat=='Proveedores internet'){
 				 $gas_internet+=$gasto->debit;
 			 } 
-			 if($gasto->cat=='programadora'){
+			 if($gasto->cat=='Programadora'){
 				 $gas_programadora+=$gasto->debit;
 			 }
-			 if($gasto->cat=='impuestos'){
+			 if($gasto->cat=='Impuestos'){
 				 $gas_impuestos+=$gasto->debit;
 			 }
-			 if($gasto->cat=='publicos'){
+			 if($gasto->cat=='Publicos'){
 				 $gas_publicos+=$gasto->debit;
 			 }
-			 if($gasto->cat=='comisiones'){
+			 if($gasto->cat=='Comisiones'){
 				 $gas_comisiones+=$gasto->debit;
 			 }
-			 if($gasto->cat=='celulares'){
+			 if($gasto->cat=='Celulares'){
 				 $gas_celulares+=$gasto->debit;
 			 }
 		 }
