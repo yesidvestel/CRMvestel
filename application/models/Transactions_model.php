@@ -295,7 +295,8 @@ $RESULT_TR=$this->db->insert('transactions', $data);
             
             if ($files != '') {
 
-                $this->meta_insert($this->db->insert_id(), 77, $files, "Pago",$id_transferencia2);
+                $this->meta_insert($this->db->insert_id(), 77, $files, "Pago","");
+                $this->meta_insert($id_transferencia2, 77, $files, "Pago","");
             }
             return $RESULT_TR;
         }

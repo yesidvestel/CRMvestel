@@ -1841,8 +1841,10 @@ $this->load->model('customers_model', 'customers');
             
             if ($files != '') {
 
-                $this->purchase->meta_insert($id, $cod, $files, "Pago", $duo);
+                $this->purchase->meta_insert($id, 77, $files, "Pago", "");
+				$this->purchase->meta_insert($duo, 77, $files, "Pago", "");
             }
+			echo json_encode(array('status' => 'Success', 'message' => "Archivo Subido Con Exito"));
     }
 	public function anullist()
     {

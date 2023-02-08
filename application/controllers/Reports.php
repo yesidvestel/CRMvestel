@@ -1056,7 +1056,7 @@ class Reports extends CI_Controller
                 }else{
                     $file_is=$this->db->get_where("meta_data",array("type"=>"77","rid"=>$row['id']))->row();    
                     if(empty($file_is)){
-                        $file_is=$this->db->get_where("meta_data",array("type"=>"77","col3"=>$row['id']))->row();    
+                        //$file_is=$this->db->get_where("meta_data",array("type"=>"77","col3"=>$row['id']))->row();    
                     }
                 }
                 
