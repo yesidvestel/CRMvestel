@@ -39,6 +39,10 @@
 {
  background-color: #EB8D25;
 }
+.st-Evento
+{
+ background-color: #46882B;
+}
 .st-Reportado
 {
  background-color: #2C60A7;
