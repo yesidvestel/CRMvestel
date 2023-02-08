@@ -1051,7 +1051,7 @@ class Reports extends CI_Controller
                 }
                 $img="";
                 $file_is=null;
-                if($row['type']=="Expense" && $row['cat']=="Purchase"){
+                if($row['type']=="Expense" && ($row['cat']=="Purchase" ||$row['cat']=="Compras" )){
                     $file_is=$this->db->get_where("meta_data",array("type"=>"4","rid"=>$row['tid'],"col2"=>"Pago"))->row();
                 }else{
                     $file_is=$this->db->get_where("meta_data",array("type"=>"77","rid"=>$row['id']))->row();    
