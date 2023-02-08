@@ -828,6 +828,7 @@
                                 <option value="Exonerado"><?php echo $this->lang->line('') ?>Exonerado</option>
                                 <option value="Retirado"><?php echo $this->lang->line('') ?>Retirado</option>
                                 <option value="Compromiso"><?php echo $this->lang->line('') ?>Compromiso</option>
+								<option value="Evento"><?php echo $this->lang->line('') ?>Evento</option>
 								<?php } ?>
                                 <option value="Cartera"><?php echo $this->lang->line('') ?>Cartera</option>
 								<option value="Reportado"><?php echo $this->lang->line('') ?>Reportado</option>
