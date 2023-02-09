@@ -69,6 +69,7 @@
                                         </div>
                                     </div>
                                     <a href="#" class="btn btn-success" id="btn_filtrar">Filtrar</a>
+                                    <a href="#" class="btn btn-danger" id="btn_pdf">Descargar en PDF</a>
                                     <div id="replace_div">
                                     <table id="filtro_tb" class="table-striped table-hover" cellspacing="0" width="100%">
                                         <thead>
@@ -102,6 +103,14 @@
 </article>
 
 <script type="text/javascript">
+    $(document).on("click","#btn_pdf",function (ev){
+        ev.preventDefault();
+        var tec=$("#sel_tecnicos option:selected").val();
+        var sdate=$("#sdate").val();
+        var edate=$("#edate").val();
+        var x1a=baseurl+"actas/actas_list_filtro_pdf?tecnico="+tec+"&sdate="+sdate+"&edate="+edate+"&d=1";
+        $(location).attr('href',x1a);
+    });
     $("#div_filtro_x").hide();
     $("#btn_interaccion_2").hide();
     $("#sel_tecnicos").select2();

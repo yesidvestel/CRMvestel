@@ -107,6 +107,50 @@ class Actas extends CI_Controller
                                     </table>';
         echo $var_return;
     }
+    public function actas_list_filtro_pdf()
+    {
+         $data=array("id_acta"=>$_GET['id']);
+setlocale(LC_TIME, "spanish");
+            $data['tecnico_var']->id_tecnico=$this->db->get_where("employee_profile",array("username"=>$_GET['tecnico']))->row();
+            $data['tecnico_var']->aauth_users=$this->db->get_where("aauth_users",array("id"=>$data['almacen_destino']->id_tecnico->id))->row();
+            $x=new DateTime($_GET['sdate']);
+            $data['fecha_inicial'] = utf8_encode(strftime("%A,".$x->format("d")." de %B del ".$x->format("Y"), strtotime($_GET['sdate'])));
+            $x=new DateTime($_GET['edate']);
+            $data['fecha_final'] = utf8_encode(strftime("%A,".$x->format("d")." de %B del ".$x->format("Y"), strtotime($_GET['edate'])));
+            
+           $data['employee']=$this->db->get_where("employee_profile",array("id"=>$this->aauth->get_user()->id))->row();
+        $data['employee_aauth_users']=$this->db->get_where("aauth_users",array("id"=>$this->aauth->get_user()->id))->row();
+        $_POST['sdate']=$_GET['sdate'];
+        $_POST['edate']=$_GET['edate'];
+        $_POST['tecnico']=$_GET['tecnico'];
+        $data['lista_productos']=$this->actas->get_items_report();
+        
+
+        $data['title']="Reporte Transferencia Material ".$_GET['sdate']." a ".$_GET['edate']." de ".$_GET['tecnico'];
+
+
+        ini_set('memory_limit', '128M');
+
+        $html = $this->load->view('actas/view-print-resumen-'.LTR, $data, true);
+
+        //PDF Rendering
+        $this->load->library('pdf');
+
+        $pdf = $this->pdf->load();
+
+        $pdf->SetHTMLFooter('<table width="100%" style="vertical-align: bottom; font-family: serif; font-size: 8pt; color: #959595; font-weight: bold; font-style: italic;"><tr><td width="33%"><span style="font-weight: bold; font-style: italic;">{DATE j-m-Y}</span></td><td width="33%" align="center" style="font-weight: bold; font-style: italic;">{PAGENO}/{nbpg}</td><td width="33%" style="text-align: right; ">#' . $tid . '</td></tr></table>');
+
+        $pdf->WriteHTML($html);
+
+        if ($this->input->get('d')) {
+
+            $pdf->Output($data['title'] . '.pdf', 'D');
+        } else {
+            $pdf->Output($data['title']. '.pdf', 'I');
+        }
+
+
+    }
     public function actas_list(){
         
         $list = $this->actas->get_datatables();
