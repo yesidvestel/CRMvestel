@@ -198,7 +198,7 @@
                                 </div>
                                 <div class="text-xs-center  col-sm-6">
                                     <p><?php echo $this->lang->line('') ?>Generado por</p>
-                                    <?php echo '<img src="' . FCPATH . 'userfiles/employee_sign/' . $employee->sign . '" alt="signature" class="height-100"/>
+                                    <?php echo '<img src="'.base_url().'userfiles/employee_sign/' . $employee->sign . '" alt="signature" class="height-100"/>
                                     <h6>(' . $employee->name . ')</h6>
                                     <p class="text-muted">' . user_role($employee_aauth_users->roleid) . '</p>'; ?>
                                 </div>
