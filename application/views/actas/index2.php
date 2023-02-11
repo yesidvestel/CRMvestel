@@ -18,7 +18,7 @@
                         <th>Almacen Origen</th>
                         <th>Almacen Destino</th>
                         <th>Realizado Por</th>
-                        
+                        <th>Estado</th>
                         <th>Opciones</th>
 
                     </tr>
@@ -30,9 +30,10 @@
                     <tr>
                         <th>ID</th>
                         <th>Fecha</th>
-                        <th>Modulo</th>
-                        <th>Accion</th>
-                        <th>Descripcion</th>
+                        <th>Almacen Origen</th>
+                        <th>Almacen Destino</th>
+                        <th>Realizado Por</th>
+                        <th>Estado</th>
                         <th>Opciones</th>
                     </tr>
                 </tfoot>

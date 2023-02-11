@@ -170,6 +170,10 @@ setlocale(LC_TIME, "spanish");
                 
                 
                 $row[]=$value->username;
+                if($value->estado==null){
+                    $value->estado="Emitida";
+                }
+                $row[]=$value->estado;
                 $row[]="<a href='".base_url()."actas/view?id=".$value->id."' class='btn btn-info'><i <i class='icon-eye'></i></a>";
                 $data[]=$row;
 
