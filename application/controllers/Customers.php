@@ -386,7 +386,8 @@ class Customers extends CI_Controller
 		$data['facturalist'] = $this->ticket->factura_list($custid);
 		$data['attach'] = $this->customers->attach($custid,6);
         $data['validar_firma']=$this->customers->validar_firma($custid);
-        //$data['estado_mikrotik']=$this->customers->get_estado_mikrotik($data['details']['name_s'],$data['details']['gid'],$data['details']['tegnologia_instalacion']);        
+        //$data['config_campos_faltantes_customer']=$this->customers->get_config_campos_faltantes_customer($custid);
+        $data['estado_mikrotik']=$this->customers->get_estado_mikrotik($data['details']['name_s'],$data['details']['gid'],$data['details']['tegnologia_instalacion']);        
         $data['color']="#5ccb5f";
         if(empty($data['estado_mikrotik'])){
             $data['color']="red";
@@ -1902,6 +1903,23 @@ if($data['servicios']['estado']=="Inactivo"){
 		}
 
     }
-	
+	public function config_camps_faltantes_save(){
+        $data_g=array();        
+        $data_g['ck_celular1']=$this->customers->convert_string_bool_to_int($_POST['ck_celular1']);        
+        $data_g['ck_celular2']=$this->customers->convert_string_bool_to_int($_POST['ck_celular2']);        
+        $data_g['ck_correo']=$this->customers->convert_string_bool_to_int($_POST['ck_correo']);        
+        $data_g['description']=$_POST['ck_texto_modal_data_conf'];        
+        $data_g['estado']="Activo";        
+        $data_g['id_customer']=$_POST['id_c']; 
+        $c=$this->db->get_where("config_campos_faltantes_customer",array("id_customer"=>$_POST['id_c']))->row();
+        if(isset($c)){
+            
+            echo $this->db->update("config_campos_faltantes_customer",$data_g,array("id_customer"=>$_POST['id_c']));    
+        }else{
+            echo $this->db->insert("config_campos_faltantes_customer",$data_g);    
+        }
+        
+
+    }
 
 }
