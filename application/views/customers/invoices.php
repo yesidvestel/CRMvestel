@@ -434,6 +434,55 @@
         </div>
     </div>
 </div>
+<div id="modal_actualizar_campos" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!--button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button-->
+                <h4 class="modal-title">Actualizar Usuario</h4>
+            </div>  
+            <div id="alerta_divx1"> </div>    
+            <form id="form_actx" method="post">    
+            <div class="modal-body">
+
+                    <?php if(isset($con_camp_f)){ ?>
+                        <p><?=$con_camp_f->description ?></p>
+                        <?php if($con_camp_f->ck_correo==1) {?>
+                    <div  class="form-group row">
+                        <label for="toBizName" class="caption col-sm-2 col-form-label">Correo</label>
+                        <div class="col-sm-6">
+                            <input type="email" value="<?= $details['email'] ?>" class="form-control" name="act2_email" placeholder="Correo electronico en minusculas" required />
+                        </div>
+                    </div>
+                        <?php } ?>
+                        <?php if($con_camp_f->ck_celular1==1) {?>
+                    <div  class="form-group row">
+                        <label for="toBizName" class="caption col-sm-2 col-form-label">Celular</label>
+                        <div class="col-sm-6">
+                            <input type="number" value="<?= $details['celular'] ?>" class="form-control" name="act2_celular" placeholder="Numero celular" required/>
+                        </div>
+                    </div>
+                        <?php } ?>
+                        <?php if($con_camp_f->ck_celular2==1){ ?>
+                    <div class="form-group row">
+                        <label for="toBizName" class="caption col-sm-2 col-form-label">Celular 2</label>
+                        <div class="col-sm-6">
+                            <input type="number" value="<?= $details['celular2'] ?>" class="form-control" name="act2_celular2" placeholder="Numero adicional" required/>
+                        </div>
+                    </div>
+                <?php }} ?>
+
+                    
+            </div>
+            <div class="modal-footer">
+                <input type="hidden" name="id" value="<?= $details['id']?>">
+                <!--button class="btn btn-default"  onclick="$('#modal_actualizar_campos').modal('hide')">Cancelar</button-->
+                <button class="btn btn-primary" >Guardar</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
 <?php /*
     $lista_invoices=$this->db->order_by('status','DESC')->get_where('invoices')->result_array();
     foreach ($lista_invoices as $key => $value) {
@@ -444,6 +493,27 @@
     //quito esto porque esta generando error y no se porque esta no le veo la logica
 ?>
 <script type="text/javascript">
+     $(document).on("submit","#form_actx",function(ev){
+        ev.preventDefault();
+        //$("#form_actx").validate();
+        var datos =$("#form_actx").serialize();
+        $.post(baseurl+"customers/save_actx",datos,function(data){
+            if(data.status=="Error"){
+                mostrar_alerta1("alerta_divx1",3,data.msg);    
+            }else{
+                mostrar_alerta1("alerta_divx1",1,data.msg);    
+                setTimeout(function(){
+                    $(location).attr('href',baseurl+"customers/invoices?id="+id_customer);
+                },1000);
+            }
+            
+        },'json');
+    });
+     <?php if(isset($con_camp_f) && $con_camp_f->estado=="Activo"){ ?>
+            $("#modal_actualizar_campos").modal({backdrop: 'static', keyboard: false});
+   
+    <?php } ?>
+
     var tid_invoice_trabajado=0;
     function eliminiar_resivos_de_pago(tid_invoice){
         $("#titulo_modal").text("Recibos de la factura #"+tid_invoice+" para eliminar");

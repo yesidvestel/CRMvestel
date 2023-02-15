@@ -1,4 +1,7 @@
-﻿---------------------- FILTROS ACTAS --------------------------------------------------------------------
+﻿----------------------NOTIFICACION DE CAMPOS FALTANTES CUSTOMER---------------
+CREATE TABLE `crm3`.`config_campos_faltantes_customer` (`id` INT NOT NULL AUTO_INCREMENT , `ck_celular1` TINYINT NOT NULL , `ck_celular2` TINYINT NOT NULL , `ck_correo` TINYINT NOT NULL , `description` VARCHAR(1000) NOT NULL , `estado` ENUM('Activo','Inactivo') NOT NULL , `id_customer` INT NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+
+---------------------- FILTROS ACTAS --------------------------------------------------------------------
 ALTER TABLE `transferencia_products_orden` ADD `fecha` DATETIME NULL AFTER `cantidad`;
 ----------------------ACTAS--------------------------------------------------------------------
 ALTER TABLE `acta_transferencias` ADD `estado` ENUM('Recibida') NULL AFTER `id_usuario_que_transfiere`, ADD `id_usuario_recibe` INT NULL AFTER `estado`, ADD `fecha_recepcion` DATETIME NULL AFTER `id_usuario_recibe`;

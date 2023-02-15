@@ -3072,4 +3072,14 @@ public function tiene_afiliacion($id){
         }
         
     }
+    public function convert_string_bool_to_int($str){
+        if($str=="true"){
+            return 1;
+        }else{
+            return 0;
+        }
+    }
+    public function get_config_campos_faltantes_customer($id_c){
+        return $this->db->get_where("config_campos_faltantes_customer",array("id_customer"=>$id_c))->row();
+    }
 }
