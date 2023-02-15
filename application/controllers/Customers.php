@@ -386,7 +386,12 @@ class Customers extends CI_Controller
 		$data['facturalist'] = $this->ticket->factura_list($custid);
 		$data['attach'] = $this->customers->attach($custid,6);
         $data['validar_firma']=$this->customers->validar_firma($custid);
-        //$data['config_campos_faltantes_customer']=$this->customers->get_config_campos_faltantes_customer($custid);
+        $data['con_camp_f']=$this->customers->get_config_campos_faltantes_customer($custid);
+        $data['con_camp_f_btn_estado']="Activar";
+        if(isset($data['con_camp_f']) && $data['con_camp_f']->estado=="Activo"){
+            $data['con_camp_f_btn_estado']="Desactivar";
+        }
+
         $data['estado_mikrotik']=$this->customers->get_estado_mikrotik($data['details']['name_s'],$data['details']['gid'],$data['details']['tegnologia_instalacion']);        
         $data['color']="#5ccb5f";
         if(empty($data['estado_mikrotik'])){
@@ -1625,6 +1630,7 @@ if($data['servicios']['estado']=="Inactivo"){
 		$data['due'] = $this->customers->due_details($custid);
 		$this->load->model('accounts_model');
 		$data['acclist'] = $this->accounts_model->accountslist();
+        $data['con_camp_f']=$this->customers->get_config_campos_faltantes_customer($custid);
     if(isset($_GET['fac_pag'])){
             $x=$this->db->query("select transactions.id as id,recibos_de_pago.file_name from transactions inner join transactions_ids_recibos_de_pago on transactions_ids_recibos_de_pago.id_transaccion=transactions.id inner join recibos_de_pago on recibos_de_pago.id=transactions_ids_recibos_de_pago.id_recibo_de_pago where transactions.payerid=".$data['invoice']['csd']." order by id desc")->result_array();
             
@@ -1911,6 +1917,9 @@ if($data['servicios']['estado']=="Inactivo"){
         $data_g['description']=$_POST['ck_texto_modal_data_conf'];        
         $data_g['estado']="Activo";        
         $data_g['id_customer']=$_POST['id_c']; 
+        if($_POST['accion']=="Desactivar"){
+            $data_g['estado']="Inactivo";        
+        }
         $c=$this->db->get_where("config_campos_faltantes_customer",array("id_customer"=>$_POST['id_c']))->row();
         if(isset($c)){
             
@@ -1919,6 +1928,39 @@ if($data['servicios']['estado']=="Inactivo"){
             echo $this->db->insert("config_campos_faltantes_customer",$data_g);    
         }
         
+
+    }
+    public function save_actx(){
+        
+       $cs= $this->db->get_where("customers",array("id"=>$_POST['id']))->row();
+       $msg="<ul>";
+       if(isset($_POST['act2_celular']) && $cs->celular==$_POST['act2_celular']){
+            $msg.="<li>Campo de celular1 no puede ser igual a como se encuentra debe de ser diferente</li>";
+       }
+       if(isset($_POST['act2_celular2']) && $cs->celular2==$_POST['act2_celular2']){
+            $msg.="<li>Campo de celular2 no puede ser igual a como se encuentra debe de ser diferente</li>";
+       }
+       if(isset($_POST['act2_email']) && $cs->email==$_POST['act2_email']){
+            $msg.="<li>Campo de email no puede ser igual a como se encuentra debe de ser diferente</li>";
+       }
+       if($msg!="<ul>"){
+            $msg.="</ul>";
+            echo json_encode(array("status"=>"Error","msg"=>$msg));
+       }else{
+        $datax=array();
+            foreach ($_POST as $key => $value) {
+                if($key!="id"){
+                    $key2=str_replace("act2_", "",$key);
+                    $datax[$key2]=$value;
+                }
+            }
+            $this->db->update("customers",$datax,array("id"=>$_POST['id']));
+            $this->db->update("config_campos_faltantes_customer",array("estado"=>"Inactivo"),array("id_customer"=>$_POST['id']));
+            echo json_encode(array("status"=>"Success","msg"=>"Datos Actualizados con exito !!"));
+       }
+    
+
+
 
     }
 
