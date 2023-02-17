@@ -1,4 +1,13 @@
 <style>
+    .checks_conf{
+        cursor: pointer;
+        transform: scale(3);
+    }
+    #tb_checks_conf tr td{
+        text-align: center;
+        /*border: 1px solid black;*/
+        padding-top: 10px;
+    }
 .st-Activo, .st-Instalar , .st-Cortado, .st-Suspendido, .st-Exonerado
 {
 	text-transform: uppercase;
@@ -574,6 +583,14 @@
 
                                 </div>
 								<?php } ?>
+                                <div class="col-md-4" style="margin-top: 5px;">
+
+                                    <a title="Este boton es para que, si el usuario necesita de actualizacion en telefono o correo, aparesca un modal requiriendo esta informacion al visitar el perfil y al ver las facturas de este usuario, da click para configurar esta accion..." 
+                                    href="#modal_conf_requerimientos" data-toggle="modal" 
+                                       class="btn btn-primary btn-lg" style="width: 250px"><i
+                                                class="icon-calendar"></i> Adm. Campos</a>
+
+                                </div>
                             </div>
                             <hr>
                             <h5 class="text-xs-center col-md-10">OBSERVACIONES</h5>
@@ -945,14 +962,161 @@
         </div>
     </div>
 </div>
+<div id="modal_conf_requerimientos" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Configuracion de campos, requeridos para actualizar</h4>
+            </div>          
+            <div class="modal-body">
+                <table align="center" id="tb_checks_conf">
+                    <tr>
+                        <td>
+                             <input type="checkbox" name="ck_celular1" class="checks_conf" <?=(isset($con_camp_f) && $con_camp_f->ck_celular1=="1")? 'checked':'' ?>>
+                        </td>
+                        <td>
+                            <input type="checkbox" name="ck_celular2" class="checks_conf" <?=(isset($con_camp_f) && $con_camp_f->ck_celular2=="1")? 'checked':'' ?>>
+                        </td>
+                        <td>
+                            <input type="checkbox" name="ck_correo" class="checks_conf" <?=(isset($con_camp_f) && $con_camp_f->ck_correo=="1")? 'checked':'' ?>>
+                        </td>
+                    </tr>
+                    <tr>
+                         <td>
+                            &nbsp;&nbsp;Celular 1&nbsp;&nbsp;
+                        </td>
+                        <td>
+                            &nbsp;&nbsp;Celular ADI&nbsp;&nbsp;
+                        </td>
+                        <td>
+                            &nbsp;&nbsp;Correo&nbsp;&nbsp;
+                        </td>
+                    </tr>
 
+                </table>
+                <div class="form-group row">
+
+                  
+
+                    <div class="col-sm-12">
+                        <textarea id="texto_modal_data_conf" class="summernote" placeholder=" Message" autocomplete="false" rows="10" name="texto_modal_data_conf"><?=(isset($con_camp_f)) ? $con_camp_f->description:'Por favor, actualiza los campos que se te solicitan en esta alerta' ?></textarea>
+
+                </div>
+                   
+            </div>
+            <div align="center"> 
+                <a href="#" class="btn btn-success cl_guardar_conf" id="btnx1" data-function="<?=$con_camp_f_btn_estado ?>"><?=$con_camp_f_btn_estado ?></a>
+            </div>
+            <small>Activa o Desactiva la funcionalidad que permite mostrar una alerta en el perfil del usuario y al pagar para que sea necesario editar los campos que selecciones</small>
+                
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default" onclick='$("#modal_conf_requerimientos").modal("hide");'>Cancelar</button>
+                <button class="btn btn-primary cl_guardar_conf" data-function="guardar" >Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modal_actualizar_campos" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!--button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button-->
+                <h4 class="modal-title">Actualizar Usuario</h4>
+            </div>  
+            <div id="alerta_divx1"> </div>    
+            <form id="form_actx" method="post">    
+            <div class="modal-body">
+
+                    <?php if(isset($con_camp_f)){ ?>
+                        <p><?=$con_camp_f->description ?></p>
+                        <?php if($con_camp_f->ck_correo==1) {?>
+                    <div  class="form-group row">
+                        <label for="toBizName" class="caption col-sm-2 col-form-label">Correo</label>
+                        <div class="col-sm-6">
+                            <input type="email" value="<?= $details['email'] ?>" class="form-control" name="act2_email" placeholder="Correo electronico en minusculas" required />
+                        </div>
+                    </div>
+                        <?php } ?>
+                        <?php if($con_camp_f->ck_celular1==1) {?>
+                    <div  class="form-group row">
+                        <label for="toBizName" class="caption col-sm-2 col-form-label">Celular</label>
+                        <div class="col-sm-6">
+                            <input type="number" value="<?= $details['celular'] ?>" class="form-control" name="act2_celular" placeholder="Numero celular" required/>
+                        </div>
+                    </div>
+                        <?php } ?>
+                        <?php if($con_camp_f->ck_celular2==1){ ?>
+                    <div class="form-group row">
+                        <label for="toBizName" class="caption col-sm-2 col-form-label">Celular 2</label>
+                        <div class="col-sm-6">
+                            <input type="number" value="<?= $details['celular2'] ?>" class="form-control" name="act2_celular2" placeholder="Numero adicional" required/>
+                        </div>
+                    </div>
+                <?php }} ?>
+
+                    
+            </div>
+            <div class="modal-footer">
+                <input type="hidden" name="id" value="<?= $details['id']?>">
+                <!--button class="btn btn-default"  onclick="$('#modal_actualizar_campos').modal('hide')">Cancelar</button-->
+                <button class="btn btn-primary" >Guardar</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 <script src="<?php echo base_url('assets/myjs/jquery.ui.widget.js') ?>"></script>
 <!-- The basic File Upload plugin -->
 <script src="<?php echo base_url('assets/myjs/jquery.fileupload.js') ?>"></script>
 <script>
 
-
+    $(document).on("submit","#form_actx",function(ev){
+        ev.preventDefault();
+        //$("#form_actx").validate();
+        var datos =$("#form_actx").serialize();
+        $.post(baseurl+"customers/save_actx",datos,function(data){
+            if(data.status=="Error"){
+                mostrar_alerta1("alerta_divx1",3,data.msg);    
+            }else{
+                mostrar_alerta1("alerta_divx1",1,data.msg);    
+                setTimeout(function(){
+                    $(location).attr('href',baseurl+"customers/view?id="+id_customer_update);
+                },1000);
+            }
+            
+        },'json');
+    });
+     <?php if(isset($con_camp_f) && $con_camp_f->estado=="Activo"){ ?>
+            $("#modal_actualizar_campos").modal({backdrop: 'static', keyboard: false});
+   
+    <?php } ?>
+    
+    $(document).on("click",".cl_guardar_conf",function(ev){
+        //ev.preventDefault();
+        console.log("que pasa");
+        var datos_env={};
+         datos_env["ck_celular1"]=$('[name=ck_celular1]').prop('checked');
+         datos_env['ck_celular2']=$('[name=ck_celular2]').prop('checked');
+         datos_env['ck_correo']=$('[name=ck_correo]').prop('checked');
+         datos_env['ck_texto_modal_data_conf']=$('#texto_modal_data_conf').val();
+         datos_env['accion']=$(this).data("function");
+         datos_env['id_c']=id_customer_update;
+        $.post(baseurl+"customers/config_camps_faltantes_save",datos_env,function(data){
+            
+                $("#modal_conf_requerimientos").modal("hide");
+                mostrar_alerta1("alerta_update_camps","success","<b>Success: informacion actualizada");
+                if(datos_env['accion']=="Activar"){
+                    $("#btnx1").text("Desactivar");
+                    $("#btnx1").data("function","Desactivar");
+                }else{
+                    $("#btnx1").text("Activar");
+                    $("#btnx1").data("function","Activar");
+                }
+        });
+    });
     //edicion de campos
 
 
