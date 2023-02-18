@@ -174,6 +174,7 @@
                         <select name="estado" class="form-control">
 							<option value="Bueno">Bueno</option>
 							<option value="Malo">Malo</option>						
+							<option value="Depurado">Depurado</option>						
 						</select>
                     </div>
 										
