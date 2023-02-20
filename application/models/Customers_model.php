@@ -1171,7 +1171,7 @@ public function calculo_ultimo_estado ($array_add,$customers){
         $this->db->from('ciudad');
         $this->db->where('idDepartamento', $id);
         $query = $this->db->get();
-        return $query->result(); 
+        return $query->result_array(); 
     }
 	public function group_ciudad($id)
     {
@@ -1205,7 +1205,7 @@ public function calculo_ultimo_estado ($array_add,$customers){
         $this->db->from('barrio');
         $this->db->where('idLocalidad', $id);
         $query = $this->db->get();
-        return $query->result(); 
+        return $query->result_array(); 
     }
 	public function group_barrio($id)
     {

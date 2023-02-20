@@ -93,8 +93,8 @@ class Customers extends CI_Controller
         $head['usernm'] = $this->aauth->get_user()->username;
 		$data['codigo'] = $this->customers->codigouser();
         $head['title'] = 'Create Customer';		 
-		$data['departamentos'] = $this->customers->departamentos_list();
-        
+		$depar = $this->customers->departamentos_list();
+		$data['departamentos'] = $this->customers->array_sort($depar, 'departamento', SORT_ASC);
         $data['ips_remotas']=$this->customers->devolver_ips_proximas();
         $this->load->view('fixed/header', $head);
         $this->load->view('customers/create', $data);
@@ -309,11 +309,12 @@ class Customers extends CI_Controller
 	public function ciudades_list()
 	{ 
 		$id = $this->input->post('idDepartamento');
-		$ciudades = $this->customers->ciudades_list($id);
+		$ciudades2 = $this->customers->ciudades_list($id);
+		$ciudades=$this->customers->array_sort($ciudades2, 'ciudad', SORT_ASC);
 		//echo '<select  id="cmbCiudades"  class="selectpicker form-control"><option>Seleccionar</option>';
 		$lista_opciones="<option value=''>Seleccionar</option>";
 		foreach ($ciudades as $row) {
-			$lista_opciones.= '<option value="' . $row->idCiudad . '">' . $row->ciudad . '</option>';
+			$lista_opciones.= '<option value="' . $row['idCiudad'] . '">' . $row['ciudad'] . '</option>';
 		}
 		
 		echo $lista_opciones; 
@@ -335,10 +336,11 @@ class Customers extends CI_Controller
 	public function barrios_list()
 	{ 
 		$id = $this->input->post('idLocalidad');
-		$ciudades = $this->customers->barrios_list($id);
+		$ciudades2 = $this->customers->barrios_list($id);
+		$ciudades=$this->customers->array_sort($ciudades2, 'barrio', SORT_ASC);
 		$lista_opciones3="<option value=''>Seleccionar</option>";
 		foreach ($ciudades as $row) {
-			$lista_opciones3.= '<option value="' . $row->idBarrio . '">' . $row->barrio . '</option>';
+			$lista_opciones3.= '<option value="' . $row['idBarrio'] . '">' . $row['barrio'] . '</option>';
 		}
 		
 		echo $lista_opciones3; 
