@@ -89,12 +89,12 @@ class Customers extends CI_Controller
     public function create()
     {
 
-        $data['customergrouplist'] = $this->customers->group_list();				
+        $data['customergrouplist'] = $this->customers->group_list();                
         $head['usernm'] = $this->aauth->get_user()->username;
-		$data['codigo'] = $this->customers->codigouser();
-        $head['title'] = 'Create Customer';		 
-		$depar = $this->customers->departamentos_list();
-		$data['departamentos'] = $this->customers->array_sort($depar, 'departamento', SORT_ASC);
+        $data['codigo'] = $this->customers->codigouser();
+        $head['title'] = 'Create Customer';      
+        $depar = $this->customers->departamentos_list();
+        $data['departamentos'] = $this->customers->array_sort($depar, 'departamento', SORT_ASC);
         $data['ips_remotas']=$this->customers->devolver_ips_proximas();
         $this->load->view('fixed/header', $head);
         $this->load->view('customers/create', $data);
@@ -110,8 +110,8 @@ class Customers extends CI_Controller
         //$this->load->view('fixed/footer');
     }
       public function save_firma()
-	  {
-		$this->load->model('templates_model', 'templates');
+      {
+        $this->load->model('templates_model', 'templates');
         //print_r($_POST);
         $img = $_POST['base64'];
         $img = str_replace('data:image/png;base64,', '', $img);
@@ -123,33 +123,33 @@ class Customers extends CI_Controller
             redirect(base_url()."tickets/thread?id=".$orden->idt);
         }else{
             $fileName = 'assets/firmas_digitales/'.$_POST['customer_id'].'.png';
-			
+            
             file_put_contents($fileName, $fileData);
             if($this->db->update("customers",array("firma_digital"=>"1"),array("id"=>$_POST['customer_id']))){
-				$user=$this->db->get_where("customers",array("id"=>$_POST['customer_id']))->row();
-				$mensajes=$this->db->get_where("mensajes",array("iduser"=>$user->id))->row();
-					if(empty($mensajes)){
-						set_time_limit(6000);
-						$this->load->library('CellVozApi');
-						$api = new CellVozApi();
-						$retorno=$api->getToken(); 
-						$valido=false;
-						$emp=$this->aauth->get_user()->id;
-						$name_campaign="Bien".$user->abonado;
-						$mensaje="Gracias por preferirnos, VESTEL te da la BIENVENIDA.  Sabemos que tu experiencia con nosotros será extraordinaria";
-						$mensajes_a_enviar.='{
-											  "codeCountry": "57",
-											  "number": "'.$user->celular.'",
-											  "message": "'.$mensaje.'",
-											  "type": 1
-											}';
-						if($api->envio_sms_masivos_por_curl($retorno['token'],$mensajes_a_enviar,$name_campaign)){
-							$this->templates->insert_mensaje($name_campaign, $emp, $user->id, $mensaje);
-						}
-					}
-			}
+                $user=$this->db->get_where("customers",array("id"=>$_POST['customer_id']))->row();
+                $mensajes=$this->db->get_where("mensajes",array("iduser"=>$user->id))->row();
+                    if(empty($mensajes)){
+                        set_time_limit(6000);
+                        $this->load->library('CellVozApi');
+                        $api = new CellVozApi();
+                        $retorno=$api->getToken(); 
+                        $valido=false;
+                        $emp=$this->aauth->get_user()->id;
+                        $name_campaign="Bien".$user->abonado;
+                        $mensaje="Gracias por preferirnos, VESTEL te da la BIENVENIDA.  Sabemos que tu experiencia con nosotros será extraordinaria";
+                        $mensajes_a_enviar.='{
+                                              "codeCountry": "57",
+                                              "number": "'.$user->celular.'",
+                                              "message": "'.$mensaje.'",
+                                              "type": 1
+                                            }';
+                        if($api->envio_sms_masivos_por_curl($retorno['token'],$mensajes_a_enviar,$name_campaign)){
+                            $this->templates->insert_mensaje($name_campaign, $emp, $user->id, $mensaje);
+                        }
+                    }
+            }
             redirect(base_url()."customers/view?id=".$_POST['customer_id']);
-			
+            
         }
         
     }
@@ -281,7 +281,7 @@ class Customers extends CI_Controller
         }
 
     }
-	public function file_handling()
+    public function file_handling()
     {ini_set('memory_limit', '500M');
 
         if($this->input->get('op')) {
@@ -306,45 +306,45 @@ class Customers extends CI_Controller
 
 
     }
-	public function ciudades_list()
-	{ 
-		$id = $this->input->post('idDepartamento');
-		$ciudades2 = $this->customers->ciudades_list($id);
-		$ciudades=$this->customers->array_sort($ciudades2, 'ciudad', SORT_ASC);
-		//echo '<select  id="cmbCiudades"  class="selectpicker form-control"><option>Seleccionar</option>';
-		$lista_opciones="<option value=''>Seleccionar</option>";
-		foreach ($ciudades as $row) {
-			$lista_opciones.= '<option value="' . $row['idCiudad'] . '">' . $row['ciudad'] . '</option>';
-		}
-		
-		echo $lista_opciones; 
-	}
-	
-	public function localidades_list()
-	{ 
-		$id = $this->input->post('idCiudad');
-		$ciudades = $this->customers->localidades_list($id);
-		//echo '<select class="selectpicker form-control"><option>Seleccionar</option>';
-		$lista_opciones2="<option value=''>Seleccionar</option>";
-		foreach ($ciudades as $row) {
-			$lista_opciones2.= '<option value="' . $row->idLocalidad . '">' . $row->localidad . '</option>';
-		}
-		
-		echo $lista_opciones2; 
-	}
-	
-	public function barrios_list()
-	{ 
-		$id = $this->input->post('idLocalidad');
-		$ciudades2 = $this->customers->barrios_list($id);
-		$ciudades=$this->customers->array_sort($ciudades2, 'barrio', SORT_ASC);
-		$lista_opciones3="<option value=''>Seleccionar</option>";
-		foreach ($ciudades as $row) {
-			$lista_opciones3.= '<option value="' . $row['idBarrio'] . '">' . $row['barrio'] . '</option>';
-		}
-		
-		echo $lista_opciones3; 
-	}
+    public function ciudades_list()
+    { 
+        $id = $this->input->post('idDepartamento');
+        $ciudades2 = $this->customers->ciudades_list($id);
+        $ciudades=$this->customers->array_sort($ciudades2, 'ciudad', SORT_ASC);
+        //echo '<select  id="cmbCiudades"  class="selectpicker form-control"><option>Seleccionar</option>';
+        $lista_opciones="<option value=''>Seleccionar</option>";
+        foreach ($ciudades as $row) {
+            $lista_opciones.= '<option value="' . $row['idCiudad'] . '">' . $row['ciudad'] . '</option>';
+        }
+        
+        echo $lista_opciones; 
+    }
+    
+    public function localidades_list()
+    { 
+        $id = $this->input->post('idCiudad');
+        $ciudades = $this->customers->localidades_list($id);
+        //echo '<select class="selectpicker form-control"><option>Seleccionar</option>';
+        $lista_opciones2="<option value=''>Seleccionar</option>";
+        foreach ($ciudades as $row) {
+            $lista_opciones2.= '<option value="' . $row->idLocalidad . '">' . $row->localidad . '</option>';
+        }
+        
+        echo $lista_opciones2; 
+    }
+    
+    public function barrios_list()
+    { 
+        $id = $this->input->post('idLocalidad');
+        $ciudades2 = $this->customers->barrios_list($id);
+        $ciudades=$this->customers->array_sort($ciudades2, 'barrio', SORT_ASC);
+        $lista_opciones3="<option value=''>Seleccionar</option>";
+        foreach ($ciudades as $row) {
+            $lista_opciones3.= '<option value="' . $row['idBarrio'] . '">' . $row['barrio'] . '</option>';
+        }
+        
+        echo $lista_opciones3; 
+    }
     public function actualizar_debit_y_credit(){
         set_time_limit(10000);
         $customers_lst=$this->db->get_where("customers")->result_array();
@@ -370,23 +370,23 @@ class Customers extends CI_Controller
     }
     public function view()
     {
-		
-        $custid = $this->input->get('id');	
-		$this->load->model('ticket_model', 'ticket');
+        
+        $custid = $this->input->get('id');  
+        $this->load->model('ticket_model', 'ticket');
         $data['details'] = $this->customers->details($custid);
         $data['customergroup'] = $this->customers->group_info($data['details']['gid']);
         $data['money'] = $this->customers->money_details($custid);
-		$data['departamento'] = $this->customers->group_departamentos($data['details']['departamento']);
-		$data['ciudad'] = $this->customers->group_ciudad($data['details']['ciudad']);
-		$data['localidad'] = $this->customers->group_localidad($data['details']['localidad']);
-		$data['barrio'] = $this->customers->group_barrio($data['details']['barrio']);
-		$data['equipo'] = $this->customers->equipo_details($custid);
+        $data['departamento'] = $this->customers->group_departamentos($data['details']['departamento']);
+        $data['ciudad'] = $this->customers->group_ciudad($data['details']['ciudad']);
+        $data['localidad'] = $this->customers->group_localidad($data['details']['localidad']);
+        $data['barrio'] = $this->customers->group_barrio($data['details']['barrio']);
+        $data['equipo'] = $this->customers->equipo_details($custid);
         $data['due'] = $this->customers->due_details($custid);
         $data['servicios'] = $this->customers->servicios_detail($custid);
         $head['usernm'] = $this->aauth->get_user()->username;
         $data['activity']=$this->customers->activity($custid);
-		$data['facturalist'] = $this->ticket->factura_list($custid);
-		$data['attach'] = $this->customers->attach($custid,6);
+        $data['facturalist'] = $this->ticket->factura_list($custid);
+        $data['attach'] = $this->customers->attach($custid,6);
         $data['validar_firma']=$this->customers->validar_firma($custid);
         $data['con_camp_f']=$this->customers->get_config_campos_faltantes_customer($custid);
         $data['con_camp_f_btn_estado']="Activar";
@@ -433,12 +433,12 @@ if($data['servicios']['estado']=="Inactivo"){
 
             $row = array();
             $row[] = $no;
-			$row[] = $customers->abonado;
+            $row[] = $customers->abonado;
             $row[] = '<a href="customers/view?id=' . $customers->id . '">' . $customers->name ." ". $customers->unoapellido. '</a>';
-			$row[] = $customers->celular;
-			$row[] = $customers->documento;
+            $row[] = $customers->celular;
+            $row[] = $customers->documento;
             $row[] = $customers->nomenclatura . ' ' . $customers->numero1 . $customers->adicionauno.' Nº '.$customers->numero2.$customers->adicional2.' - '.$customers->numero3;
-			$row[] = '<span class="st-'.$customers->usu_estado. '">' .$customers->usu_estado. '</span>';
+            $row[] = '<span class="st-'.$customers->usu_estado. '">' .$customers->usu_estado. '</span>';
             $row[] = '<a href="customers/view?id=' . $customers->id . '" class="btn btn-info btn-sm"><span class="icon-eye"></span>  '.$this->lang->line('View').'</a> <a href="customers/edit?id=' . $customers->id . '" class="btn btn-primary btn-sm"><span class="icon-pencil"></span>  '.$this->lang->line('Edit').'</a> <a href="#" data-object-id="' . $customers->id . '" class="btn btn-danger btn-sm delete-object"><span class="icon-bin"></span></a>';
             $data[] = $row;
         }
@@ -822,16 +822,16 @@ if($data['servicios']['estado']=="Inactivo"){
         $pid = $this->input->get('id');
         $data['customer'] = $this->customers->details($pid);
         $data['customergroup'] = $this->customers->group_info($data['customer']['gid']);
-		$data['departamentos'] = $this->customers->departamentos_list();		
-		$data['departamento'] = $this->customers->group_departamentos($data['customer']['departamento']);
-		$data['ciudad'] = $this->customers->group_ciudad($data['customer']['ciudad']);
-		$data['localidad'] = $this->customers->group_localidad($data['customer']['localidad']);
-		$data['barrio'] = $this->customers->group_barrio($data['customer']['barrio']);
-		$data['equipo'] = $this->customers->equipo_details($custid);
+        $data['departamentos'] = $this->customers->departamentos_list();        
+        $data['departamento'] = $this->customers->group_departamentos($data['customer']['departamento']);
+        $data['ciudad'] = $this->customers->group_ciudad($data['customer']['ciudad']);
+        $data['localidad'] = $this->customers->group_localidad($data['customer']['localidad']);
+        $data['barrio'] = $this->customers->group_barrio($data['customer']['barrio']);
+        $data['equipo'] = $this->customers->equipo_details($custid);
         $data['customergrouplist'] = $this->customers->group_list();
         $head['usernm'] = $this->aauth->get_user()->username;
-        $head['title'] = 'Edit Customer';	
-		$data['departamentoslist'] = $this->customers->departamentos_list();		
+        $head['title'] = 'Edit Customer';   
+        $data['departamentoslist'] = $this->customers->departamentos_list();        
         $data['ips_remotas']=$this->customers->devolver_ips_proximas();
         $this->load->view('fixed/header', $head);
         $this->load->view('customers/edit', $data);
@@ -845,12 +845,12 @@ if($data['servicios']['estado']=="Inactivo"){
 
     public function addcustomer()
     {
-		$bill_due_date = datefordatabase($this->input->post('nacimiento'));
+        $bill_due_date = datefordatabase($this->input->post('nacimiento'));
         $abonado = $this->customers->codigouser()+1;
-		$name = $this->input->post('name');
-		$dosnombre = $this->input->post('dosnombre');
+        $name = $this->input->post('name');
+        $dosnombre = $this->input->post('dosnombre');
         $unoapellido = $this->input->post('unoapellido');
-		$dosapellido = $this->input->post('dosapellido');
+        $dosapellido = $this->input->post('dosapellido');
         $company = $this->input->post('company');
         $celular = $this->input->post('celular');
         $celular2 = $this->input->post('celular2');
@@ -859,8 +859,8 @@ if($data['servicios']['estado']=="Inactivo"){
         $tipo_cliente = $this->input->post('tipo_cliente');
         $tipo_documento = $this->input->post('tipo_documento');
         $documento = $this->input->post('documento');
-		$fcontrato = date("Y-m-d");
-		$estrato = $this->input->post('estrato');
+        $fcontrato = date("Y-m-d");
+        $estrato = $this->input->post('estrato');
         $departamento = $this->input->post('departamento');
         $ciudad = $this->input->post('ciudad');
         $localidad = $this->input->post('localidad');
@@ -870,17 +870,17 @@ if($data['servicios']['estado']=="Inactivo"){
         $adicionauno = $this->input->post('adicionauno');
         $numero2 = $this->input->post('numero2');
         $adicional2 = $this->input->post('adicional2');
-		$numero3 = $this->input->post('numero3');
-		$residencia = $this->input->post('residencia');
-		$referencia = $this->input->post('referencia');
-		$customergroup = $this->input->post('customergroup');
-		$name_s = $this->input->post('name_s');
-		$contra = $this->input->post('contra');
-		$servicio = $this->input->post('servicio');
-		$perfil = $this->input->post('perfil');
-		$Iplocal = $this->input->post('Iplocal');
-		$Ipremota = $this->input->post('Ipremota2');
-		$comentario = $this->input->post('comentario');
+        $numero3 = $this->input->post('numero3');
+        $residencia = $this->input->post('residencia');
+        $referencia = $this->input->post('referencia');
+        $customergroup = $this->input->post('customergroup');
+        $name_s = $this->input->post('name_s');
+        $contra = $this->input->post('contra');
+        $servicio = $this->input->post('servicio');
+        $perfil = $this->input->post('perfil');
+        $Iplocal = $this->input->post('Iplocal');
+        $Ipremota = $this->input->post('Ipremota2');
+        $comentario = $this->input->post('comentario');
         $tegnologia_instalacion = $this->input->post('tegnologia_instalacion');
         $this->customers->add($abonado, $name, $dosnombre, $unoapellido, $dosapellido, $company, $celular, $celular2, $email, $nacimiento, $tipo_cliente, $tipo_documento, $documento, $fcontrato, $estrato, $departamento, $ciudad, $localidad, $barrio, $nomenclatura, $numero1, $adicionauno, $numero2, $adicional2, $numero3, $residencia, $referencia, $customergroup, $name_s, $contra, $servicio, $perfil, $Iplocal, $Ipremota, $comentario,$tegnologia_instalacion);
 
@@ -888,13 +888,13 @@ if($data['servicios']['estado']=="Inactivo"){
 
     public function editcustomer()
     {
-		$bill_due_date = datefordatabase($this->input->post('nacimiento'));
+        $bill_due_date = datefordatabase($this->input->post('nacimiento'));
         $id = $this->input->post('id');
-		$abonado = $this->input->post('abonado');
+        $abonado = $this->input->post('abonado');
         $name = $this->input->post('name');
-		$dosnombre = $this->input->post('dosnombre');
+        $dosnombre = $this->input->post('dosnombre');
         $unoapellido = $this->input->post('unoapellido');
-		$dosapellido = $this->input->post('dosapellido');
+        $dosapellido = $this->input->post('dosapellido');
         $company = $this->input->post('company');
         $celular = $this->input->post('celular');
         $celular2 = $this->input->post('celular2');
@@ -903,8 +903,8 @@ if($data['servicios']['estado']=="Inactivo"){
         $tipo_cliente = $this->input->post('tipo_cliente');
         $tipo_documento = $this->input->post('tipo_documento');
         $documento = $this->input->post('documento');
-		$fcontrato = $this->input->post('fcontrato');
-		$estrato = $this->input->post('estrato');
+        $fcontrato = $this->input->post('fcontrato');
+        $estrato = $this->input->post('estrato');
         $departamento = $this->input->post('departamento');
         $ciudad = $this->input->post('ciudad');
         $localidad = $this->input->post('localidad');
@@ -914,17 +914,17 @@ if($data['servicios']['estado']=="Inactivo"){
         $adicionauno = $this->input->post('adicionauno');
         $numero2 = $this->input->post('numero2');
         $adicional2 = $this->input->post('adicional2');
-		$numero3 = $this->input->post('numero3');
-		$residencia = $this->input->post('residencia');
-		$referencia = $this->input->post('referencia');
-		$customergroup = $this->input->post('customergroup');
-		$name_s = $this->input->post('name_s');
-		$contra = $this->input->post('contra');
-		$servicio = $this->input->post('servicio');
-		$perfil = $this->input->post('perfil');
-		$Iplocal = $this->input->post('Iplocal');
-		$Ipremota = $this->input->post('Ipremota');
-		$comentario = $this->input->post('comentario');
+        $numero3 = $this->input->post('numero3');
+        $residencia = $this->input->post('residencia');
+        $referencia = $this->input->post('referencia');
+        $customergroup = $this->input->post('customergroup');
+        $name_s = $this->input->post('name_s');
+        $contra = $this->input->post('contra');
+        $servicio = $this->input->post('servicio');
+        $perfil = $this->input->post('perfil');
+        $Iplocal = $this->input->post('Iplocal');
+        $Ipremota = $this->input->post('Ipremota');
+        $comentario = $this->input->post('comentario');
         $tegnologia_instalacion = $this->input->post('tegnologia_instalacion');
         if ($id) {
             $this->customers->edit($id, $abonado, $name, $dosnombre, $unoapellido, $dosapellido, $company, $celular, $celular2, $email, $nacimiento, $tipo_cliente, $tipo_documento, $documento, $fcontrato, $estrato, $departamento, $ciudad, $localidad, $barrio, $nomenclatura, $numero1, $adicionauno, $numero2, $adicional2, $numero3, $residencia, $referencia, $customergroup, $name_s, $contra, $servicio, $perfil, $Iplocal, $Ipremota, $comentario,$tegnologia_instalacion);
@@ -969,7 +969,7 @@ if($data['servicios']['estado']=="Inactivo"){
             echo json_encode(array('status' => 'Error', 'message' => 'Error!'));
         }
     }
-	public function delete_obs()
+    public function delete_obs()
     {  
         $id = $this->input->post('deleteid');
 
@@ -983,7 +983,7 @@ if($data['servicios']['estado']=="Inactivo"){
     public function displaypic()
     {
 
-		$id = $this->input->get('id');
+        $id = $this->input->get('id');
         $this->load->library("uploadhandler", array(
             'accept_file_types' => '/\.(gif|jpe?g|png)$/i', 'upload_dir' => FCPATH . 'userfiles/customers/'
         ));
@@ -999,7 +999,7 @@ if($data['servicios']['estado']=="Inactivo"){
     public function translist()
     {
 
-		$cid = $this->input->post('cid');
+        $cid = $this->input->post('cid');
         $list = $this->customers->trans_table($cid);
         $data = array();
         // $no = $_POST['start'];
@@ -1014,7 +1014,7 @@ if($data['servicios']['estado']=="Inactivo"){
             $row[] = amountFormat($prd->credit);
             $row[] = $prd->account;
             $row[] = $prd->payer;
-			$row[] = $prd->estado;
+            $row[] = $prd->estado;
             $row[] = $this->lang->line($prd->method);
 
             $row[] = '<a href="' . base_url() . 'transactions/view?id=' . $pid . '" class="btn btn-primary btn-xs"><span class="icon-eye"></span>  '.$this->lang->line('View').'</a>';
@@ -1031,10 +1031,10 @@ if($data['servicios']['estado']=="Inactivo"){
         //output to json format
         echo json_encode($output);
     }
-	public function suporlist()
+    public function suporlist()
     {
 
-		$cid = $this->input->post('cid');
+        $cid = $this->input->post('cid');
         $list = $this->customers->supor_table($cid);
         $data = array();
         // $no = $_POST['start'];
@@ -1042,13 +1042,13 @@ if($data['servicios']['estado']=="Inactivo"){
 
         foreach ($list as $ticket) {
             $row = array();
-            $no++;			
-            $row[] = $no;			
-			$row[] = $ticket->codigo;
+            $no++;          
+            $row[] = $no;           
+            $row[] = $ticket->codigo;
             $row[] = $ticket->subject;
-			$row[] = $ticket->detalle;
+            $row[] = $ticket->detalle;
             $row[] = $ticket->created;          
-			$row[] = $ticket->fecha_final;			
+            $row[] = $ticket->fecha_final;          
           if($ticket->id_factura !=null){
                 $row[]='<a href="'.base_url("invoices/view?id=".$ticket->id_factura).'">'.$ticket->id_factura.'</a>';
             }else{
@@ -1061,13 +1061,13 @@ if($data['servicios']['estado']=="Inactivo"){
             }else{
                 $row[] = "--";    
             }
-			
-			$row[] = '<span class="st-' . $ticket->status . '">' . $ticket->status . '</span>';
+            
+            $row[] = '<span class="st-' . $ticket->status . '">' . $ticket->status . '</span>';
             $row[] = '<a href="' . base_url('tickets/thread/?id=' . $ticket->idt) . '" class="btn btn-success btn-xs"><i class="icon-file-text"></i></a> ';
-			if ($this->aauth->get_user()->roleid >= 3) {
-			$row[] ='<a href="' . base_url('quote/edit/?id=' . $ticket->idt) . '" class="btn btn-primary btn-xs"><i class="icon-pencil"></i> </a>';}
-			if ($this->aauth->get_user()->roleid == 5) {
-			$row[] =	'<a class="btn btn-danger btn-xs" onclick="eliminar_ticket('.$ticket->idt.')" > <i class="icon-trash-o"></i> </a>';}
+            if ($this->aauth->get_user()->roleid >= 3) {
+            $row[] ='<a href="' . base_url('quote/edit/?id=' . $ticket->idt) . '" class="btn btn-primary btn-xs"><i class="icon-pencil"></i> </a>';}
+            if ($this->aauth->get_user()->roleid == 5) {
+            $row[] =    '<a class="btn btn-danger btn-xs" onclick="eliminar_ticket('.$ticket->idt.')" > <i class="icon-trash-o"></i> </a>';}
             
 
             $data[] = $row;
@@ -1090,36 +1090,36 @@ if($data['servicios']['estado']=="Inactivo"){
             echo "true";
         }
     }
-	public function equipolist()
+    public function equipolist()
     {
 
-		$cid = $this->input->post('cid');
+        $cid = $this->input->post('cid');
         $list = $this->customers->equipo_table($cid);
         $data = array();
         // $no = $_POST['start'];
         $no = $this->input->post('start');
 
         foreach ($list as $prd) {
-			
-			$nap = $this->db->get_where('naps', array('idn' => $prd->nat))->row();
-			$vlan = $this->db->get_where('vlans', array('idv' => $nap->vlan))->row();
+            
+            $nap = $this->db->get_where('naps', array('idn' => $prd->nat))->row();
+            $vlan = $this->db->get_where('vlans', array('idv' => $nap->vlan))->row();
             $no++;
             $row = array();
             $row[] = $no;
-           	$pid = $prd->id;
-			$row[] = $prd->codigo;
+            $pid = $prd->id;
+            $row[] = $prd->codigo;
             $row[] = $prd->mac;
             $row[] = $prd->serial;
-			$row[] = $prd->estado;			
-			$row[] = $prd->marca;
-			$row[] = $prd->t_instalacion;
-			if ($prd->vlan!=='0'){
-			$row[] = $vlan->vlan;
-			}else{$row[]= 'N/A';}
-			$row[] = $nap->nap;
-			if ($prd->puerto!=='0'){
-			$row[] = $prd->puerto;
-			}else{$row[]= 'N/A';}
+            $row[] = $prd->estado;          
+            $row[] = $prd->marca;
+            $row[] = $prd->t_instalacion;
+            if ($prd->vlan!=='0'){
+            $row[] = $vlan->vlan;
+            }else{$row[]= 'N/A';}
+            $row[] = $nap->nap;
+            if ($prd->puerto!=='0'){
+            $row[] = $prd->puerto;
+            }else{$row[]= 'N/A';}
             $data[] = $row;
         }
 
@@ -1132,111 +1132,111 @@ if($data['servicios']['estado']=="Inactivo"){
         //output to json format
         echo json_encode($output);
     }
-	public function dev_equipo()
+    public function dev_equipo()
     {
         $id = $this->input->post('iduser');
-		$user = $this->aauth->get_user()->username;
+        $user = $this->aauth->get_user()->username;
         $nota = $this->input->post('nota');
-		$estado = $this->input->post('estado');
-		$codigo = $this->input->post('codigo');
-		$this->db->set('macequipo', 'sin asignar');		
+        $estado = $this->input->post('estado');
+        $codigo = $this->input->post('codigo');
+        $this->db->set('macequipo', 'sin asignar');     
         $this->db->where('id', $id);
         $this->db->update('customers');
-		//guardar historial
-		$data1 = array(				
-			'id_user' => $id,
-			'tipos' => 'Devolucion Equipo',			
-			'fecha' => date("Y-m-d"),
-			'observacion' => 'Codigo: '.$codigo.' Motivo '.$nota,
-			'colaborador' => $user);		
+        //guardar historial
+        $data1 = array(             
+            'id_user' => $id,
+            'tipos' => 'Devolucion Equipo',         
+            'fecha' => date("Y-m-d"),
+            'observacion' => 'Codigo: '.$codigo.' Motivo '.$nota,
+            'colaborador' => $user);        
        $this->db->insert('historiales', $data1);
-		//actualizar equipo
-		$datae = array(
-				't_instalacion' => null,
-				'puerto' => null,
-			  	'vlan' => null,
-				'nat' => null,
-				'asignado' => null,
-				'estado' => $estado,
-				'observacion' => $nota
-			);
+        //actualizar equipo
+        $datae = array(
+                't_instalacion' => null,
+                'puerto' => null,
+                'vlan' => null,
+                'nat' => null,
+                'asignado' => null,
+                'estado' => $estado,
+                'observacion' => $nota
+            );
         $this->db->where('codigo', $codigo);
         if($this->db->update('equipos', $datae)){
-			$datap = array(
+            $datap = array(
                     'estado' => 'Disponible',
                     'asignado' => 0,          
                 );
-				$this->db->where('asignado', $id);
-				$this->db->update('puertos', $datap);
-		}
+                $this->db->where('asignado', $id);
+                $this->db->update('puertos', $datap);
+        }
 
         echo json_encode(array('status' => 'Success', 'message' =>
             $this->lang->line('UPDATED'), 'pstatus' => $status));
     }
-	public function act_titular()
+    public function act_titular()
     {
-		$this->load->model('tools_model', 'tools');
+        $this->load->model('tools_model', 'tools');
         $id = $this->input->post('iduser');
         $nombres = $this->input->post('dtosantes2');
-		$doc_anterior = $this->input->post('doc12');
-		$tcliente = $this->input->post('tcliente');
-		$tdocumento = $this->input->post('tdocumento');
-		$bill_due_date = datefordatabase($this->input->post('fecha'));
-		$fecha = $bill_due_date;
-		$observacion = $this->input->post('observ');
-		$nom1 = $this->input->post('nom1');
+        $doc_anterior = $this->input->post('doc12');
+        $tcliente = $this->input->post('tcliente');
+        $tdocumento = $this->input->post('tdocumento');
+        $bill_due_date = datefordatabase($this->input->post('fecha'));
+        $fecha = $bill_due_date;
+        $observacion = $this->input->post('observ');
+        $nom1 = $this->input->post('nom1');
         $nom2 = $this->input->post('nom2');
-		$ape1 = $this->input->post('ape1');
-		$ape2 = $this->input->post('ape2');
-		$email = $this->input->post('email');
-		$cel = $this->input->post('cel');
-		$cel2 = $this->input->post('cel2');
-		$tipo_cliente = $this->input->post('tipo_cliente');
-		$tipo_documento = $this->input->post('tipo_documento');
-		$doc2 = $this->input->post('doc2');
-		
-		
-		$data2 = array(			
-			'name' => $nom1,
-			'dosnombre' => $nom2,
-			'unoapellido' => $ape1,
-			'dosapellido' => $ape2,
-			'celular' => $cel,
-			'celular2' => $cel2,
-			'email' => $email,
-			'tipo_cliente' => $tipo_cliente,
-			'tipo_documento' => $tipo_documento,
-			'documento' => $doc2);
+        $ape1 = $this->input->post('ape1');
+        $ape2 = $this->input->post('ape2');
+        $email = $this->input->post('email');
+        $cel = $this->input->post('cel');
+        $cel2 = $this->input->post('cel2');
+        $tipo_cliente = $this->input->post('tipo_cliente');
+        $tipo_documento = $this->input->post('tipo_documento');
+        $doc2 = $this->input->post('doc2');
+        
+        
+        $data2 = array(         
+            'name' => $nom1,
+            'dosnombre' => $nom2,
+            'unoapellido' => $ape1,
+            'dosapellido' => $ape2,
+            'celular' => $cel,
+            'celular2' => $cel2,
+            'email' => $email,
+            'tipo_cliente' => $tipo_cliente,
+            'tipo_documento' => $tipo_documento,
+            'documento' => $doc2);
         $this->db->where('id', $id);
         $this->db->update('customers', $data2);
-		//tarea de revision
-		$name = 'Revisar cambio de titular #'.$doc2;
-		$estado = 'Due';
-		$priority = 'Low';
-		$stdate = date("Y-m-d");
-		$tdate = '';
-		$asignacion = $this->db->get_where('asignaciones', array('detalle' => 'titular'))->row();
-		$employee = $asignacion->colaborador;
-		$assign = $this->aauth->get_user()->id;
-		$content = 'Revisar cambio de titular #'.$doc2;
-		$ordenn = $doc2;
-		$this->tools->addtask($name, $estado, $priority, $stdate, $tdate, $employee, $assign, $content, $ordenn);
-		//---
-		$dt1=new DateTime($fecha);
+        //tarea de revision
+        $name = 'Revisar cambio de titular #'.$doc2;
+        $estado = 'Due';
+        $priority = 'Low';
+        $stdate = date("Y-m-d");
+        $tdate = '';
+        $asignacion = $this->db->get_where('asignaciones', array('detalle' => 'titular'))->row();
+        $employee = $asignacion->colaborador;
+        $assign = $this->aauth->get_user()->id;
+        $content = 'Revisar cambio de titular #'.$doc2;
+        $ordenn = $doc2;
+        $this->tools->addtask($name, $estado, $priority, $stdate, $tdate, $employee, $assign, $content, $ordenn);
+        //---
+        $dt1=new DateTime($fecha);
         $fecha=$dt1->format("Y-m-d");
-		$user = $this->aauth->get_user()->username;
-		$data1 = array(				
-			'id_user' => $id,
-			'tipos' => 'Cambio Titular',
-			'nombres' => $nombres,
-			'tcliente' => $tcliente,
-			'tdocumento' => $tdocumento,
-			'documento2' => $doc_anterior,
-			'fecha' => $fecha,
-			'observacion' => $observacion,
-			'colaborador' => $user);		
+        $user = $this->aauth->get_user()->username;
+        $data1 = array(             
+            'id_user' => $id,
+            'tipos' => 'Cambio Titular',
+            'nombres' => $nombres,
+            'tcliente' => $tcliente,
+            'tdocumento' => $tdocumento,
+            'documento2' => $doc_anterior,
+            'fecha' => $fecha,
+            'observacion' => $observacion,
+            'colaborador' => $user);        
        $this->db->insert('historiales', $data1);
-		
+        
         $data_h=array();
             $data_h['modulo']="Customers";
             $data_h['accion']="Cambio de titular {update}";
@@ -1247,84 +1247,84 @@ if($data['servicios']['estado']=="Inactivo"){
             $data_h['tabla']="customers";
             $data_h['nombre_columna']="id";
             $this->db->insert("historial_crm",$data_h);
-		
+        
 
         echo json_encode(array('status' => 'Success', 'message' =>
             $this->lang->line('UPDATED'), 'pstatus' => $status));
     }
-	public function obser()
+    public function obser()
     {
         $id = $this->input->post('iduser2');
-		$user = $this->aauth->get_user()->username;
+        $user = $this->aauth->get_user()->username;
         $tipo = $this->input->post('tipo');
-		$detalle = $this->input->post('detalle2');
-		$fcha = $this->input->post('fecha2');
-		$dt1=new DateTime($fcha);
+        $detalle = $this->input->post('detalle2');
+        $fcha = $this->input->post('fecha2');
+        $dt1=new DateTime($fcha);
         $fecha=$dt1->format("Y-m-d");
-		$datos = array(				
-			'id_user' => $id,
-			'tipos' => $tipo,
-			'nombres' => '',
-			'tcliente' => '',
-			'tdocumento' => '',
-			'documento2' => '',
-			'fecha' => $fecha,
-			'observacion' => $detalle,
-			'colaborador' => $user);		
+        $datos = array(             
+            'id_user' => $id,
+            'tipos' => $tipo,
+            'nombres' => '',
+            'tcliente' => '',
+            'tdocumento' => '',
+            'documento2' => '',
+            'fecha' => $fecha,
+            'observacion' => $detalle,
+            'colaborador' => $user);        
        $this->db->insert('historiales', $datos);
-		
-		
+        
+        
 
         echo json_encode(array('status' => 'Success', 'message' =>
             $this->lang->line('UPDATED'), 'pstatus' => $status));
     }
-	public function compromiso()
+    public function compromiso()
     {
         $id = $this->input->post('iduser2');
-		$user = $this->aauth->get_user()->username;
+        $user = $this->aauth->get_user()->username;
         $fechalimite = $this->input->post('fechalimite');
-		$detalle = $this->input->post('razon');
-		$factura = $this->input->post('factura');
-		$fcha = $this->input->post('fecha2');
-		$dt1=new DateTime($fcha);
+        $detalle = $this->input->post('razon');
+        $factura = $this->input->post('factura');
+        $fcha = $this->input->post('fecha2');
+        $dt1=new DateTime($fcha);
         $fecha=$dt1->format("Y-m-d");
-		$datos = array(				
-			'id_user' => $id,
-			'tipos' => 'Compromiso',
-			'nombres' => '',
-			'tcliente' => '',
-			'tdocumento' => '',
-			'documento2' => '',
-			'fecha' => $fecha,
-			'observacion' => $fechalimite.'/'.$detalle,
-			'colaborador' => $user);		
+        $datos = array(             
+            'id_user' => $id,
+            'tipos' => 'Compromiso',
+            'nombres' => '',
+            'tcliente' => '',
+            'tdocumento' => '',
+            'documento2' => '',
+            'fecha' => $fecha,
+            'observacion' => $fechalimite.'/'.$detalle,
+            'colaborador' => $user);        
        if($this->db->insert('historiales', $datos)){
-		   //actualizar estado factura
-		   	$this->db->set('ron', 'Compromiso');
-        	$this->db->where('tid', $factura);
-        	$this->db->update('invoices');
-		   //actualizar estado usuario
+           //actualizar estado factura
+            $this->db->set('ron', 'Compromiso');
+            $this->db->where('tid', $factura);
+            $this->db->update('invoices');
+           //actualizar estado usuario
             $customer=$this->db->get_where("customers",array('id' =>$id))->row();  
             $this->db->set("ultimo_estado",$customer->usu_estado);
                 $this->db->set("fecha_cambio",date("Y-m-d H:i:s"));
-		   	$this->db->set('usu_estado', 'Compromiso');
-        	$this->db->where('id', $id);
-        	$this->db->update('customers');
-	   
-		
-		
+            $this->db->set('usu_estado', 'Compromiso');
+            $this->db->where('id', $id);
+            $this->db->update('customers');
+       
+        
+        
 
         echo json_encode(array('status' => 'Success', 'message' =>
             $this->lang->line('UPDATED'), 'pstatus' => $status));
-	   }
+       }
     }
-	public function printpdf()
+    public function printpdf()
     {
 
         $custid = $this->input->get('id');
-		$tid = $custid;
-		$data['details'] = $this->customers->details($custid);
-		$data['due'] = $this->customers->due_details($custid);
+        $tid = $custid;
+        $data['details'] = $this->customers->details($custid);
+        $data['due'] = $this->customers->due_details($custid);
         $data['servicios'] = $this->customers->servicios_detail($custid);
         if($data['servicios']['estado_combo']!=null){
             $data['servicios']['combo']=$data['servicios']['paquete'];
@@ -1363,7 +1363,7 @@ if($data['servicios']['estado']=="Inactivo"){
     public function inv_list()
     {
 
-		$cid = $this->input->post('cid');
+        $cid = $this->input->post('cid');
         if(empty($cid)){
             $cid=$_GET['cid'];
         }
@@ -1400,12 +1400,12 @@ if($data['servicios']['estado']=="Inactivo"){
                 }
                 $row[] = '<input type="checkbox" name="x" class="facturas_para_pagar" data-id-ultima-factura="'.$ultima_factura['tid'].'" data-total=" '.$total_factura.'" data-idfacturas="'.$invoices->tid.'" data-status="'.$invoices->status.'" data-ron="no" data-rec="'.$invoices->rec.'" data-refer="" style="cursor:pointer; margin-left: 9px;" onclick="agregar_factura(this)" ></input>';    
             }
-			$row[0]=utf8_encode($row[0]);
+            $row[0]=utf8_encode($row[0]);
             $row[] = $no;
             $row[] = $invoices->tid;
             $row[] = $invoices->tipo_factura;
             $row[] = $invoices->invoicedate;
-			$row[] = '<span class="st-' . $invoices->ron . '">' . $invoices->ron . '</span>';
+            $row[] = '<span class="st-' . $invoices->ron . '">' . $invoices->ron . '</span>';
             $row[] = amountFormat($invoices->total);
             $row[] = '<span class="st-' . $invoices->status . '">' . $this->lang->line(ucwords($invoices->status)) . '</span>';
 
@@ -1446,13 +1446,13 @@ if($data['servicios']['estado']=="Inactivo"){
                 $resivos_var='';
             }
             $row[] = '<a  href="' . base_url("invoices/view?id=$invoices->tid") . '" class="btn btn-success btn-xs" title="Ver"><i class="icon-file-text"></i></a> &nbsp; '.$resivos_var.'&nbsp;&nbsp;<a href="#pop_model" data-object-id2="' . $invoices->tid . '" data-object-cat="' . $prd->cat . '" class="btn btn-xs btn-orange" onclick="abrir_modal2(this);" title="Promociones"><i class="icon-gift"></i></a>';
-			if ($this->aauth->get_user()->roleid == 5) {
-			$row[] = '<a href="#" data-object-id="' . $invoices->tid . '" class="btn btn-danger btn-xs delete-object"><span class="icon-trash"></span></a>';
-			
-			}
+            if ($this->aauth->get_user()->roleid == 5) {
+            $row[] = '<a href="#" data-object-id="' . $invoices->tid . '" class="btn btn-danger btn-xs delete-object"><span class="icon-trash"></span></a>';
+            
+            }
             $data[] = $row;
         }
-		
+        
 
         $output = array(
             "draw" => $_POST['draw'],
@@ -1464,8 +1464,8 @@ if($data['servicios']['estado']=="Inactivo"){
         echo json_encode($output);
 
     }
-	
- 	public function validar_n_documento(){
+    
+    public function validar_n_documento(){
         $lista=$this->db->get_where("customers",array("documento"=>$_POST['documento']))->result_array();
         echo json_encode(array("conteo"=>count($lista)));
     }
@@ -1557,10 +1557,10 @@ if($data['servicios']['estado']=="Inactivo"){
 
 
     }
-	public function estados()
+    public function estados()
     {
 
-		$custid = $this->input->get('id');
+        $custid = $this->input->get('id');
         $data['details'] = $this->customers->details($custid);
         $data['estado'] = $this->customers->estado_list($custid);
         $head['usernm'] = $this->aauth->get_user()->username;
@@ -1572,7 +1572,7 @@ if($data['servicios']['estado']=="Inactivo"){
     public function transactions()
     {
 
-		$custid = $this->input->get('id');
+        $custid = $this->input->get('id');
         $data['details'] = $this->customers->details($custid);
         $data['money'] = $this->customers->money_details($custid);
         $head['usernm'] = $this->aauth->get_user()->username;
@@ -1581,10 +1581,10 @@ if($data['servicios']['estado']=="Inactivo"){
         $this->load->view('customers/transactions', $data);
         $this->load->view('fixed/footer');
     }
-	public function hiscuenta()
+    public function hiscuenta()
     {
 
-		$custid = $this->input->get('id');
+        $custid = $this->input->get('id');
         $data['facturas'] = $this->customers->invoice_list($custid);
         $data['details'] = $this->customers->details($custid);
         $head['usernm'] = $this->aauth->get_user()->username;
@@ -1593,10 +1593,10 @@ if($data['servicios']['estado']=="Inactivo"){
         $this->load->view('customers/his_cuenta', $data);
         $this->load->view('fixed/footer');
     }
-	public function soporte()
+    public function soporte()
     {
 
-		$custid = $this->input->get('id');
+        $custid = $this->input->get('id');
         $data['details'] = $this->customers->details($custid);        
         $head['usernm'] = $this->aauth->get_user()->username;
         $head['title'] = 'View Customer Transactions';
@@ -1604,11 +1604,11 @@ if($data['servicios']['estado']=="Inactivo"){
         $this->load->view('customers/tickets', $data);
         $this->load->view('fixed/footer');
     }
-	public function equipos()
+    public function equipos()
     {
-		$this->load->model('redes_model', 'redes');
-		$custid = $this->input->get('id');
-		$data['naps'] = $this->redes->nap_todas();
+        $this->load->model('redes_model', 'redes');
+        $custid = $this->input->get('id');
+        $data['naps'] = $this->redes->nap_todas();
         $data['details'] = $this->customers->details($custid);        
         $head['usernm'] = $this->aauth->get_user()->username;
         $head['title'] = 'View Customer Transactions';
@@ -1620,18 +1620,18 @@ if($data['servicios']['estado']=="Inactivo"){
     public function invoices()
     {
 
-		$custid = $this->input->get('id');
-		$this->load->model('invoices_model', 'invocies');
+        $custid = $this->input->get('id');
+        $this->load->model('invoices_model', 'invocies');
         $data['details'] = $this->customers->details($custid);
         $data['money'] = $this->customers->money_details($custid);
         $data['promos'] = $this->customers->list_promos();
-		$data['paquete'] = $this->invocies->paquetes('tv');
+        $data['paquete'] = $this->invocies->paquetes('tv');
         $head['usernm'] = $this->aauth->get_user()->username;
-		$data['invoice'] = $this->customers->invoice_details($custid, $this->limited);
+        $data['invoice'] = $this->customers->invoice_details($custid, $this->limited);
         $head['title'] = 'View Customer Invoices';
-		$data['due'] = $this->customers->due_details($custid);
-		$this->load->model('accounts_model');
-		$data['acclist'] = $this->accounts_model->accountslist();
+        $data['due'] = $this->customers->due_details($custid);
+        $this->load->model('accounts_model');
+        $data['acclist'] = $this->accounts_model->accountslist();
         $data['con_camp_f']=$this->customers->get_config_campos_faltantes_customer($custid);
     if(isset($_GET['fac_pag'])){
             $x=$this->db->query("select transactions.id as id,recibos_de_pago.file_name from transactions inner join transactions_ids_recibos_de_pago on transactions_ids_recibos_de_pago.id_transaccion=transactions.id inner join recibos_de_pago on recibos_de_pago.id=transactions_ids_recibos_de_pago.id_recibo_de_pago where transactions.payerid=".$data['invoice']['csd']." order by id desc")->result_array();
@@ -1643,26 +1643,26 @@ if($data['servicios']['estado']=="Inactivo"){
         $this->load->view('customers/invoices', $data);
         $this->load->view('fixed/footer');
     }
-	public function add_promo()
+    public function add_promo()
     {
         $id = $this->input->post('id');
-		$user = $this->aauth->get_user()->username;
+        $user = $this->aauth->get_user()->username;
         $promo = $this->input->post('promo');
-		$factura=$this->db->get_where("invoices",array('tid' =>$id))->row();
-		$promocion=$this->db->get_where("promos",array('idprom' =>$promo))->row();
-		$descuento=$factura->total*$promocion->porcentaje;
-		$total = $descuento/100;
-		$datos = array(				
-			'discount' => $total,
-			'total' => $factura->total-$total,
-			'notes' => 'Descuento '.$promocion->pro_nombre,
-		);
-        	$this->db->where('id', $factura->id);
-        	$this->db->update('invoices', $datos);
-		
+        $factura=$this->db->get_where("invoices",array('tid' =>$id))->row();
+        $promocion=$this->db->get_where("promos",array('idprom' =>$promo))->row();
+        $descuento=$factura->total*$promocion->porcentaje;
+        $total = $descuento/100;
+        $datos = array(             
+            'discount' => $total,
+            'total' => $factura->total-$total,
+            'notes' => 'Descuento '.$promocion->pro_nombre,
+        );
+            $this->db->where('id', $factura->id);
+            $this->db->update('invoices', $datos);
+        
         echo json_encode(array('status' => 'Success', 'message' =>
             $this->lang->line('UPDATED'), 'pstatus' => $status));
-	   
+       
     }
     public function balance()
     {
@@ -1878,40 +1878,40 @@ if($data['servicios']['estado']=="Inactivo"){
 
         }
     }
-	public function pazysalvo()
+    public function pazysalvo()
     {
 
         $tid = intval($this->input->get('id'));
         $deuda = $this->input->get('deuda');
-		$this->load->model('invoices_model', 'invocies');
-		if($deuda!=0){
-			 echo json_encode(array('status' => 'Error', 'message' => 'Tiene un saldo de $'.$deuda));
-		}else{
-		
-			$data['id'] = $tid;
-			$data['title'] = "Paz y salvo $tid";
-			$data['usuario'] = $this->customers->details($tid);
-			$data['ciudad'] = $this->customers->group_ciudad($data['usuario']['ciudad']);
-			$data['dto'] = $this->customers->group_departamentos($data['usuario']['departamento']);
-			$data['barrio'] = $this->customers->group_barrio($data['usuario']['barrio']);
-			//if ($data['invoice']) $data['products'] = $this->invocies->invoice_products($tid);
-			$data['empleado']= $this->invocies->employee(54);
-			ini_set('memory_limit', '128M');
-			$html = $this->load->view('invoices/pazysalvo', $data, true);
-			//PDF Rendering
-			$this->load->library('pdf');
-			$pdf = $this->pdf->load();
-			$pdf->SetHTMLFooter('<div style="text-align: right;font-family: serif; font-size: 8pt; color: #5C5C5C; font-style: italic;margin-top:-6pt;">{PAGENO}/{nbpg} #'.$tid.'</div>');
-			$pdf->WriteHTML($html);
-			if ($this->input->get('d')) {
-				$pdf->Output('Pazysalvo_#' . $tid . '.pdf', 'D');
-			} else {
-				$pdf->Output('Pazysalvo_#' . $tid . '.pdf', 'I');
-			}
-		}
+        $this->load->model('invoices_model', 'invocies');
+        if($deuda!=0){
+             echo json_encode(array('status' => 'Error', 'message' => 'Tiene un saldo de $'.$deuda));
+        }else{
+        
+            $data['id'] = $tid;
+            $data['title'] = "Paz y salvo $tid";
+            $data['usuario'] = $this->customers->details($tid);
+            $data['ciudad'] = $this->customers->group_ciudad($data['usuario']['ciudad']);
+            $data['dto'] = $this->customers->group_departamentos($data['usuario']['departamento']);
+            $data['barrio'] = $this->customers->group_barrio($data['usuario']['barrio']);
+            //if ($data['invoice']) $data['products'] = $this->invocies->invoice_products($tid);
+            $data['empleado']= $this->invocies->employee(54);
+            ini_set('memory_limit', '128M');
+            $html = $this->load->view('invoices/pazysalvo', $data, true);
+            //PDF Rendering
+            $this->load->library('pdf');
+            $pdf = $this->pdf->load();
+            $pdf->SetHTMLFooter('<div style="text-align: right;font-family: serif; font-size: 8pt; color: #5C5C5C; font-style: italic;margin-top:-6pt;">{PAGENO}/{nbpg} #'.$tid.'</div>');
+            $pdf->WriteHTML($html);
+            if ($this->input->get('d')) {
+                $pdf->Output('Pazysalvo_#' . $tid . '.pdf', 'D');
+            } else {
+                $pdf->Output('Pazysalvo_#' . $tid . '.pdf', 'I');
+            }
+        }
 
     }
-	public function config_camps_faltantes_save(){
+    public function config_camps_faltantes_save(){
         $data_g=array();        
         $data_g['ck_celular1']=$this->customers->convert_string_bool_to_int($_POST['ck_celular1']);        
         $data_g['ck_celular2']=$this->customers->convert_string_bool_to_int($_POST['ck_celular2']);        
@@ -1936,22 +1936,43 @@ if($data['servicios']['estado']=="Inactivo"){
         
        $cs= $this->db->get_where("customers",array("id"=>$_POST['id']))->row();
        $msg="<ul>";
-       if(isset($_POST['act2_celular']) && $cs->celular==$_POST['act2_celular']){
-            $msg.="<li>Campo de celular1 no puede ser igual a como se encuentra debe de ser diferente</li>";
+       if(isset($_POST['act2_celular']) ){
+            if($cs->celular2==$_POST['act2_celular']){
+                $msg.="<li>Campo de celular no puede ser igual a como se encuentra debe de ser diferente</li>";    
+            }
+            if(strlen($_POST['act2_celular'])<10){
+                $msg.="<li>Campo de celular no puede contener menos de 10 caracteres</li>";    
+            }
+
        }
-       if(isset($_POST['act2_celular2']) && $cs->celular2==$_POST['act2_celular2']){
-            $msg.="<li>Campo de celular2 no puede ser igual a como se encuentra debe de ser diferente</li>";
+       if(isset($_POST['act2_celular2'])){
+            if($cs->celular2==$_POST['act2_celular2']){
+                $msg.="<li>Campo de celular2 no puede ser igual a como se encuentra debe de ser diferente</li>";    
+            }
+            if(strlen($_POST['act2_celular2'])<10){
+                $msg.="<li>Campo de celular2 no puede contener menos de 10 caracteres</li>";    
+            }
+            
        }
        if(isset($_POST['act2_email']) && $cs->email==$_POST['act2_email']){
             $msg.="<li>Campo de email no puede ser igual a como se encuentra debe de ser diferente</li>";
        }
+       if($msg=="<ul>"){
+            include (APPPATH."libraries\VerifyEmail.php");
+        
+         $API = new VerifyEmail();
+         if(isset($_POST['act2_email']) && $_POST['es_correcto']=="0" && !$API->validate($_POST['act2_email'])){
+            $msg.="<li>El email que has ingresado no existe, verificalo por favor.<a href='#' id='el_correo_es_correcto' class='btn btn-primary'>Estoy Seguro que es Correcto</a></li>";
+         }    
+       }
+        
        if($msg!="<ul>"){
             $msg.="</ul>";
             echo json_encode(array("status"=>"Error","msg"=>$msg));
        }else{
         $datax=array();
             foreach ($_POST as $key => $value) {
-                if($key!="id"){
+                if($key!="id" && $key!="es_correcto"){
                     $key2=str_replace("act2_", "",$key);
                     $datax[$key2]=$value;
                 }

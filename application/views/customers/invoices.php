@@ -476,6 +476,7 @@
             </div>
             <div class="modal-footer">
                 <input type="hidden" name="id" value="<?= $details['id']?>">
+                <input type="hidden" name="es_correcto" value="0">
                 <!--button class="btn btn-default"  onclick="$('#modal_actualizar_campos').modal('hide')">Cancelar</button-->
                 <button class="btn btn-primary" >Guardar</button>
             </div>
@@ -493,10 +494,21 @@
     //quito esto porque esta generando error y no se porque esta no le veo la logica
 ?>
 <script type="text/javascript">
-     $(document).on("submit","#form_actx",function(ev){
+   $(document).on("click","#el_correo_es_correcto",function(ev){
+    ev.preventDefault();
+    $("[name='es_correcto']").val("1");
+    $(this).removeClass("btn-primary");
+    $(this).addClass("btn-success");
+    guardar_datosx_f();
+});
+    $(document).on("submit","#form_actx",function(ev){
         ev.preventDefault();
         //$("#form_actx").validate();
+        guardar_datosx_f();
+    });
+    function guardar_datosx_f(){
         var datos =$("#form_actx").serialize();
+        mostrar_alerta1("alerta_divx1",2,"Cargando...");    
         $.post(baseurl+"customers/save_actx",datos,function(data){
             if(data.status=="Error"){
                 mostrar_alerta1("alerta_divx1",3,data.msg);    
@@ -508,12 +520,11 @@
             }
             
         },'json');
-    });
+    }
      <?php if(isset($con_camp_f) && $con_camp_f->estado=="Activo"){ ?>
             $("#modal_actualizar_campos").modal({backdrop: 'static', keyboard: false});
    
     <?php } ?>
-
     var tid_invoice_trabajado=0;
     function eliminiar_resivos_de_pago(tid_invoice){
         $("#titulo_modal").text("Recibos de la factura #"+tid_invoice+" para eliminar");
