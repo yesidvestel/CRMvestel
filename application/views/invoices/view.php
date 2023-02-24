@@ -829,8 +829,9 @@
                                 <option value="Retirado"><?php echo $this->lang->line('') ?>Retirado</option>
                                 <option value="Compromiso"><?php echo $this->lang->line('') ?>Compromiso</option>
 								<option value="Evento"><?php echo $this->lang->line('') ?>Evento</option>
-								<?php } ?>
+								<?php } if ($this->aauth->get_user()->id == 89 || $this->aauth->get_user()->roleid == 5) { ?>
                                 <option value="Cartera"><?php echo $this->lang->line('') ?>Cartera</option>
+								<?php } ?>
 								<option value="Reportado"><?php echo $this->lang->line('') ?>Reportado</option>
 								<option value="Depurado"><?php echo $this->lang->line('') ?>Depurado</option>
                             </select>
