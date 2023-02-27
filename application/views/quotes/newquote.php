@@ -949,6 +949,9 @@ $(document).on('click','.btn-mas-internet',function(e){
                 $("#factura").attr("disabled","disabled");
             }else if($("#detalle option:selected").val()=="AgregarInternet"){
             	validacion_agregar_internet();
+            	var facx=$("#factura").children();
+                facx=$("#factura").children()[facx.length-1];
+                $("#factura").val($(facx).val());
             }else{
                 $("#submit-data").removeAttr("disabled");
                 $("#factura").removeAttr("disabled");
