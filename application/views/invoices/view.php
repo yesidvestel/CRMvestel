@@ -29,9 +29,9 @@
                             $link = base_url('billing/view?id=' . $invoice['tid'] . '&token=' . $validtoken);
                             if ($invoice['status'] != 'canceled') { ?>
                                 <div class="title-action">
-								<?php if ($this->aauth->get_user()->roleid > 3) { ?>
+								<?php if ($this->aauth->get_user()->roleid == 5) { ?>
                                 <a href="<?php echo 'edit?id=' . $invoice['tid']; ?>" class="btn btn-warning mb-1"><i
-                                            class="icon-pencil"></i> <?php echo $this->lang->line('Edit Invoice') ?></a><?php } ?>
+                                            class="icon-pencil"></i> <?php echo $this->lang->line('Edit Invoice') ?></a>
 
                                 <a href="#part_payment" data-toggle="modal" data-remote="false" data-type="reminder"
                                    class="btn btn-large btn-success mb-1" title="Partial Payment"
@@ -66,7 +66,7 @@
                                     </div>
 
                                 </div>
-
+								
                                 <!-- SMS -->
 
                                 <a href="#" id="open_modal_sms" 
@@ -90,7 +90,7 @@
                                 <a href="<?php echo $link; ?>" class="btn btn-brown mb-1"><i
                                             class="icon-earth"></i> <?php echo $this->lang->line('Preview') ?>
                                 </a>
-								<?php if ($this->aauth->get_user()->roleid > 3) { ?>
+								<?php //} if ($this->aauth->get_user()->roleid > 3) { ?>
                                 <a href="#pop_model" data-toggle="modal" data-remote="false"
                                    class="btn btn-large btn-cyan mb-1" title="Change Status"
                                 ><span class="icon-tab"></span> <?php echo $this->lang->line('Change Status') ?></a>
@@ -829,10 +829,12 @@
                                 <option value="Retirado"><?php echo $this->lang->line('') ?>Retirado</option>
                                 <option value="Compromiso"><?php echo $this->lang->line('') ?>Compromiso</option>
 								<option value="Evento"><?php echo $this->lang->line('') ?>Evento</option>
-								<?php } ?>
+								<?php } if ($this->aauth->get_user()->id == 89 || $this->aauth->get_user()->roleid == 5) { ?>
                                 <option value="Cartera"><?php echo $this->lang->line('') ?>Cartera</option>
+								<?php } if ($this->aauth->get_user()->id == 96 || $this->aauth->get_user()->roleid == 5) { ?>
 								<option value="Reportado"><?php echo $this->lang->line('') ?>Reportado</option>
 								<option value="Depurado"><?php echo $this->lang->line('') ?>Depurado</option>
+								<?php } ?>
                             </select>
 
                         </div>
