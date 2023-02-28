@@ -133,7 +133,7 @@ function contruccion_calendar(propiedades){
                         label: 'Actualizar'
                     }
                 };
-            if(parseInt(rolid_user)<4){
+            if(parseInt(rolid_user)<3 ){
                 btns_config={
                     update: {
                         id: 'update-event',
