@@ -1,4 +1,7 @@
-﻿------------------------- cambios servicios especiales net -----------------------
+﻿-------------update ever error ---------------
+UPDATE `product_warehouse` SET `id_tecnico` = 'EverMorenoTEC' WHERE `product_warehouse`.`id` = 36;
+
+------------------------- cambios servicios especiales net -----------------------
 ALTER TABLE `invoices` CHANGE `combo` `combo` VARCHAR(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
 UPDATE `invoices` SET `combo` = 'Hilo Oscuro Medelink' WHERE `invoices`.`id` = 209159;
 
