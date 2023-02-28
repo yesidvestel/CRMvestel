@@ -1,4 +1,8 @@
-﻿----------------------NOTIFICACION DE CAMPOS FALTANTES CUSTOMER---------------
+﻿------------------------- cambios servicios especiales net -----------------------
+ALTER TABLE `invoices` CHANGE `combo` `combo` VARCHAR(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+UPDATE `invoices` SET `combo` = 'Hilo Oscuro Medelink' WHERE `invoices`.`id` = 209159;
+
+----------------------NOTIFICACION DE CAMPOS FALTANTES CUSTOMER---------------
 CREATE TABLE `crm3`.`config_campos_faltantes_customer` (`id` INT NOT NULL AUTO_INCREMENT , `ck_celular1` TINYINT NOT NULL , `ck_celular2` TINYINT NOT NULL , `ck_correo` TINYINT NOT NULL , `description` VARCHAR(1000) NOT NULL , `estado` ENUM('Activo','Inactivo') NOT NULL , `id_customer` INT NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
 
 ---------------------- FILTROS ACTAS --------------------------------------------------------------------

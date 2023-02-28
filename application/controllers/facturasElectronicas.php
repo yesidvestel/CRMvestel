@@ -356,7 +356,7 @@ $this->load->model("customers_model","customers");
             $array_servicios=$this->customers->servicios_detail($customer->id);
             if($array_servicios['combo']!="no"){
                 $dataApiNET->items[0]->description="Servicio de Internet ".$array_servicios['combo'];
-                $lista_de_productos=$this->db->from("products")->like("product_name","mega","both")->get()->result();
+                $lista_de_productos=$this->db->from("products")->where_in("pcat",array("4","10","15"))->get()->result();
                 $array_servicios['combo']=strtolower(str_replace(" ", "",$array_servicios['combo'] ));
                 foreach ($lista_de_productos as $key => $prod) {
                     $prod->product_name=strtolower(str_replace(" ", "",$prod->product_name ));
