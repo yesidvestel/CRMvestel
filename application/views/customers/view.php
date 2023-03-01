@@ -591,6 +591,14 @@
                                                 class="icon-calendar"></i> Adm. Campos</a>
 
                                 </div>
+                                <div class="col-md-4" style="margin-top: 5px;">
+
+                                    <a  
+                                    href="<?=base_url()."customers/graficas_c?id=".$details['id'] ?>" 
+                                       class="btn btn-primary btn-lg" style="width: 250px"><i
+                                                class="icon-calendar"></i> Datos Navegacion</a>
+
+                                </div>
                             </div>
                             <hr>
                             <h5 class="text-xs-center col-md-10">OBSERVACIONES</h5>

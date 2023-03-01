@@ -1542,7 +1542,78 @@ public function calculo_ultimo_estado ($array_add,$customers){
         }
 
     }
+public function get_datos_trafico($user_name,$id_sede,$tegnologia_instalacion){
+    include (APPPATH."libraries\RouterosAPI.php");
+        set_time_limit(3000);
+         $API = new RouterosAPI();
+            $rows = array(); $rows2 = array();  $rows3 = array();  
+        $API->debug = false;
+        $interface = "<pppoe-".$user_name.">"; 
+        $datos_consulta_ip=array("id_sede"=>$id_sede,"tegnologia"=>$tegnologia_instalacion);
+        if ($API->connect($this->get_ip_coneccion_microtik_por_sede($datos_consulta_ip), $_SESSION['variables_MikroTik']->username, $_SESSION['variables_MikroTik']->password)) {
+           /* //$user_name="user_prueba_duber_disabled";
+           /* $arrID=$API->comm("/ppp/secret/getall", 
+                  array(
+                  "?name" => $user_name,
+                  ));
+                  $arrID=$API->comm("/tool/graphing/interface/print");*/
+                  /*$API->write("/interface/monitor-traffic",false);
+           $API->write("=interface=".$interface,false);  
+           $API->write("=once=",true);
+           $READ = $API->read(false);*/
+          //$arrID=$API->comm("/interface/monitor-traffic",array("?interface"=>"pppoe-ANDERSONGIOVANNIWILCHESLAVERDEasdasd"));
+           $API->write("/interface/monitor-traffic",false);
+           $API->write("=interface=".$interface,false);
+            $API->write("=once=",true);
+            $READ = $API->read(false);
+             //$READ=$API->comm("/interface/pppoe-server/getall",array("?name"=>"<pppoe-ALBALUCEROARISTIZABALRIVERA>"));
+            $ARRAY = $API->parse_response($READ);
+            
+                $rx = number_format($ARRAY[0]["rx-bits-per-second"]/1024,1);
+                $tx = number_format($ARRAY[0]["tx-bits-per-second"]/1024,1);
+                $rows['name'] = 'Tx';
+                $rows['data'][] = $tx;
+                $rows2['name'] = 'Rx';
+                $rows2['data'][] = $rx;
+                //$rows3=$ARRAY[0];
+         $API->disconnect();
 
+       /* foreach ($arrID as $key => $value) {
+            var_dump($value);
+        }*/
+        $result = array();
+    array_push($result,$rows);
+    array_push($result,$rows2);
+    //array_push($result,$rows3);
+    print json_encode($result, JSON_NUMERIC_CHECK);
+
+        }else{
+            
+        }
+}
+public function get_datos_trafico2($user_name,$id_sede,$tegnologia_instalacion){
+    include (APPPATH."libraries\RouterosAPI.php");
+        set_time_limit(3000);
+         $API = new RouterosAPI();
+            $rows = array(); $rows2 = array();  $rows3 = array();  
+        $API->debug = false;
+        $interface = "<pppoe-".$user_name.">"; 
+        $datos_consulta_ip=array("id_sede"=>$id_sede,"tegnologia"=>$tegnologia_instalacion);
+        if ($API->connect($this->get_ip_coneccion_microtik_por_sede($datos_consulta_ip), $_SESSION['variables_MikroTik']->username, $_SESSION['variables_MikroTik']->password)) {
+           
+             $READ=$API->comm("/interface/ethernet/getall",array("?name"=>"<pppoe-EVAVERONICARUIZGUTIERREZ>"));
+            
+            var_dump($READ);    
+         $API->disconnect();
+
+       /* foreach ($arrID as $key => $value) {
+            var_dump($value);
+        }*/
+       
+        }else{
+            
+        }
+}
     public function get_estado_mikrotik($user_name,$id_sede,$tegnologia_instalacion){
         include (APPPATH."libraries\RouterosAPI.php");
         set_time_limit(3000);

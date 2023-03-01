@@ -422,7 +422,23 @@ if($data['servicios']['estado']=="Inactivo"){
         $this->load->view('customers/view', $data);
         $this->load->view('fixed/footer');
     }
+public function graficas_c(){
+    $head['title'] = 'View Customer';
+        $this->load->view('fixed/header', $head);
+        
+        $this->load->view('customers/tr_graficas', $data);
+        $this->load->view('fixed/footer');
+}
+public function ajax_graficas(){
+    $customer=$this->db->get_where("customers",array("id"=>$_GET['id']))->row();
+        $data['datos']=$this->customers->get_datos_trafico($customer->name_s,$customer->gid,$customer->tegnologia_instalacion);        
 
+}
+public function ajax_graficas2(){
+    $customer=$this->db->get_where("customers",array("id"=>$_GET['id']))->row();
+        $data['datos']=$this->customers->get_datos_trafico2($customer->name_s,$customer->gid,$customer->tegnologia_instalacion);        
+        
+}
     public function load_list()
     {
         $list = $this->customers->get_datatables();

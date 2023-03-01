@@ -94,7 +94,7 @@ class RouterosAPI
      * @return boolean                If we are connected or not
      */
     public function connect($ip, $login, $password)
-    {
+    {//var_dump($ip. " ". $login." ".$password);
     /* Este cambio es para editar el puerto */
     $varx=explode(":", $ip);
     $this->port=$varx[1];
@@ -429,7 +429,46 @@ class RouterosAPI
 
         return $this->read();
     }
-
+/**
+     * Parse response from Router OS
+     *
+     * @param array       $response   Response data
+     *
+     * @return array                  Array with parsed data
+     */
+    function parse_response($response)
+    {
+        if (is_array($response)) {
+            $PARSED      = array();
+            $CURRENT     = null;
+            $singlevalue = null;
+            $count       = 0;
+            foreach ($response as $x) {
+                if (in_array($x, array(
+                    '!fatal',
+                    '!re',
+                    '!trap'
+                ))) {
+                    if ($x == '!re') {
+                        $CURRENT =& $PARSED[];
+                    } else
+                        $CURRENT =& $PARSED[$x][];
+                } else if ($x != '!done') {
+                    if (preg_match_all('/[^=]+/i', $x, $MATCHES)) {
+                        if ($MATCHES[0][0] == 'ret') {
+                            $singlevalue = $MATCHES[0][1];
+                        }
+                        $CURRENT[$MATCHES[0][0]] = (isset($MATCHES[0][1]) ? $MATCHES[0][1] : '');
+                    }
+                }
+            }
+            if (empty($PARSED) && !is_null($singlevalue)) {
+                $PARSED = $singlevalue;
+            }
+            return $PARSED;
+        } else
+            return array();
+    }
     /**
      * Standard destructor
      *
