@@ -1650,7 +1650,7 @@ public function get_gasto_datos($user_name,$id_sede,$tegnologia_instalacion){
             $datos['descarga']="Descarga ".$descarga." Mb";
         }
         
-        $datos['subida']="Subida ".$subida." Mb";
+        $datos['subida']="Carga ".$subida." Mb";
                  $API->disconnect();
 
        /* foreach ($arrID as $key => $value) {

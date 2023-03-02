@@ -1,3 +1,8 @@
+<style type="text/css">
+    .yellow12{
+        background-color: yellow;
+    }
+</style>
 <article class="content">
 
     <div class="card card-block">
@@ -35,7 +40,7 @@
                     shift=chart.series[0].data.length > 19;
                     chart.series[0].addPoint([x, TX], true, shift);
                     chart.series[1].addPoint([x, RX], true, shift);
-                    document.getElementById("trafico").innerHTML=TX + " kb / " + RX+" kb";
+                    document.getElementById("trafico").innerHTML=TX + " kb <i class='icon-cloud-download yellow12'></i> / " + RX+" kb <i class='icon-cloud-upload blue'></i>";
                 }else{
                     document.getElementById("trafico").innerHTML="- / -";
                 }
