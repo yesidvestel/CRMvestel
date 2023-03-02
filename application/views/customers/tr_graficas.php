@@ -11,6 +11,10 @@
     <div id="container" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
    
     <div id="trafico"></div>
+    <p>GASTO TOTAL <br>
+    <?=$datos_gasto['descarga'] ?><br>
+    <?=$datos_gasto['subida'] ?>
+</p>
     </div>
 
         
@@ -80,10 +84,10 @@
                 }
          },
             series: [{
-                name: 'Subida',
+                name: 'Descarga',
                 data: []
             }, {
-                name: 'Descarga',
+                name: 'Carga',
                 data: []
             }]
       });

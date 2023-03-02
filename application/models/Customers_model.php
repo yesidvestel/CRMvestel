@@ -1601,10 +1601,19 @@ public function get_datos_trafico2($user_name,$id_sede,$tegnologia_instalacion){
         $datos_consulta_ip=array("id_sede"=>$id_sede,"tegnologia"=>$tegnologia_instalacion);
         if ($API->connect($this->get_ip_coneccion_microtik_por_sede($datos_consulta_ip), $_SESSION['variables_MikroTik']->username, $_SESSION['variables_MikroTik']->password)) {
            
-             $READ=$API->comm("/interface/ethernet/getall",array("?name"=>"<pppoe-EVAVERONICARUIZGUTIERREZ>"));
+             $READ=$API->comm("/queue/simple/print",array("?name"=>$interface));
             
-            var_dump($READ);    
-         $API->disconnect();
+            var_dump();    
+        $datos=explode("/", $READ[0]['bytes']);
+        $descarga=0;
+        $subida=0;
+        $descarga=intval((intval($datos[1])/1024)/1024);
+        $subida=intval((intval($datos[0])/1024)/1024);
+        ob_clean();
+        var_dump("Descarga ".$descarga." MG");
+        echo "<br>";
+        var_dump("Carga ".$subida." MG");
+                 $API->disconnect();
 
        /* foreach ($arrID as $key => $value) {
             var_dump($value);
@@ -1613,6 +1622,45 @@ public function get_datos_trafico2($user_name,$id_sede,$tegnologia_instalacion){
         }else{
             
         }
+}
+public function get_gasto_datos($user_name,$id_sede,$tegnologia_instalacion){
+    include (APPPATH."libraries\RouterosAPI.php");
+    $datos=array("descarga"=>"","subida"=>"");
+        set_time_limit(3000);
+         $API = new RouterosAPI();
+            $rows = array(); $rows2 = array();  $rows3 = array();  
+        $API->debug = false;
+        $interface = "<pppoe-".$user_name.">"; 
+        $datos_consulta_ip=array("id_sede"=>$id_sede,"tegnologia"=>$tegnologia_instalacion);
+        if ($API->connect($this->get_ip_coneccion_microtik_por_sede($datos_consulta_ip), $_SESSION['variables_MikroTik']->username, $_SESSION['variables_MikroTik']->password)) {
+           //$READ=$API->comm("/queue/simple/print");
+             $READ=$API->comm("/queue/simple/print",array("?name"=>$interface));
+            
+            
+            //var_dump($READ)  ;
+        $datos2=explode("/", $READ[0]['bytes']);
+        $descarga=0;
+        $subida=0;
+        $descarga=intval((intval($datos2[1])/1024)/1024);
+        $subida=intval((intval($datos2[0])/1024)/1024);
+        if($descarga>1024){
+            $descarga=$descarga/1024;
+            $datos['descarga']="Descarga ".$descarga." Gb";
+        }else{
+            $datos['descarga']="Descarga ".$descarga." Mb";
+        }
+        
+        $datos['subida']="Subida ".$subida." Mb";
+                 $API->disconnect();
+
+       /* foreach ($arrID as $key => $value) {
+            var_dump($value);
+        }*/
+       
+        }else{
+            
+        }
+        return $datos;
 }
     public function get_estado_mikrotik($user_name,$id_sede,$tegnologia_instalacion){
         include (APPPATH."libraries\RouterosAPI.php");
