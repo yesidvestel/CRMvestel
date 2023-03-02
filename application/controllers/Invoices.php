@@ -1785,7 +1785,7 @@ function eliminar_resivos_de_pago(){
 
     public function printinvoice()
     {
-
+ set_time_limit(300000);
         $tid = $this->input->get('id');
         $is_multiple = false;
         if(!empty($this->input->get('multiple'))){
