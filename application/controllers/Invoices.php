@@ -499,7 +499,13 @@ $list_servs=$this->invocies->servicios_adicionales_recurrentes($value2->tid);
                                     $factura_data['television']="no";
                                 }
                                 if($_tiene_internet==true){
-                                    $factura_data['combo']=str_replace(" ","",$internet);
+                                    if(strpos(strtolower($internet), "mega")!==false){
+                                        $factura_data['combo']=str_replace(" ","",$internet);
+                                    }else{
+                                        $factura_data['combo']=$internet;
+                                         
+                                    }
+                                    
                                 }else{
                                     $factura_data['combo']="no";
                                 }
