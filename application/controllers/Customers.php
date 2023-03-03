@@ -425,7 +425,8 @@ if($data['servicios']['estado']=="Inactivo"){
 public function graficas_c(){
     $head['title'] = 'View Customer';
         $this->load->view('fixed/header', $head);
-        
+        $customer=$this->db->get_where("customers",array("id"=>$_GET['id']))->row();
+        $data['datos_gasto']=$this->customers->get_gasto_datos($customer->name_s,$customer->gid,$customer->tegnologia_instalacion);        
         $this->load->view('customers/tr_graficas', $data);
         $this->load->view('fixed/footer');
 }
