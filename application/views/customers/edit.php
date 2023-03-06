@@ -276,6 +276,8 @@
 									<option value="Edificio">Edificio</option>
 									<option value="Oficina">Oficina</option>
 									<option value="Vereda">Vereda</option>
+									 <option value="Bloque">Bloque</option>
+                                        <option value="Torre">Torre</option>
 							</select>
 							</div>
 						</div>
