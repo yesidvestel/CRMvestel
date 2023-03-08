@@ -448,6 +448,7 @@ class Transactions extends CI_Controller
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
 
         }
+        set_time_limit(300000);
         $ids_transacciones=array();
         $ids_facturas =$this->input->post('facturas_seleccionadas');
             $x="";
