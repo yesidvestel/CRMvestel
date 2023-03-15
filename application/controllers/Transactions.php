@@ -1830,7 +1830,14 @@ $this->load->model('customers_model', 'customers');
 				$cod = 77;
 			}
 			if($cat=='transfer'){
-				$duo=$id+1;
+                $tr_actual=$this->db->get_where("transactions",array("id"=>$id))->row();
+                $tr_plus=$this->db->get_where("transactions",array("id"=>$id+1))->row();
+                if(($tr_actual->debit>0 && $tr_actual->debit ==$tr_plus->credit) || ($tr_actual->credit>0 && $tr_actual->credit ==$tr_plus->debit) ){
+                    $duo=$id+1;
+                }else{
+                    $duo=$id-1;
+                }
+				
 			}else{
 				$duo='';
 			}
