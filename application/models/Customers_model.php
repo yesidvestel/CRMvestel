@@ -570,6 +570,7 @@ $var_excluir=false;
             
 
         }
+        //var_dump($servicios);
         return $servicios;
         
     }
@@ -776,7 +777,24 @@ public function calculo_ultimo_estado ($array_add,$customers){
         //$this->load->library("Aauth");
         //$id_sede=$this->aauth->get_user()->sede_accede;
         $id_sede=$datos['id_sede'];
-        if($id_sede==2){//yopal
+        $resultado_mkts=$this->db->get_where("mikrotiks",array("sede"=>$id_sede))->result_array();
+        $dat_return=null;
+        $defecto=null;
+        
+        foreach ($resultado_mkts as $k => $mk) {
+            if($dat_return==null && $mk['tegnologia']==$datos['tegnologia']){
+                $dat_return=array("ip_mikrotik"=>$mk['ip'].":".$mk['puerto'],"usuario"=>$mk['usuario'],"password"=>$mk['password'],"var"=>$mk);
+            }
+            if($mk["defecto"]=="1"){
+                $defecto=$k;
+            }
+        }
+        if(empty($dat_return)){
+            $mk=$resultado_mkts[$defecto];
+            $dat_return=array("ip_mikrotik"=>$mk['ip'].":".$mk['puerto'],"usuario"=>$mk['usuario'],"password"=>$mk['password'],"var"=>$mk);
+        }
+        return $dat_return;
+       /* if($id_sede==2){//yopal
             return $_SESSION['variables_MikroTik']->ip_Yopal;//190.14.233.186:8728
         }else if($id_sede==3){//Villanueva
             if($datos['tegnologia']=="GPON"){
@@ -800,7 +818,7 @@ public function calculo_ultimo_estado ($array_add,$customers){
             return $_SESSION['variables_MikroTik']->ip_villavo;//190.14.248.42:8728
         }else{//default
             return $_SESSION['variables_MikroTik']->ip_Yopal;//190.14.233.186:8728
-        }
+        }*/
     }
 
     public function add($abonado, $name, $dosnombre, $unoapellido, $dosapellido, $company, $celular, $celular2, $email, $nacimiento, $tipo_cliente, $tipo_documento, $documento, $fcontrato, $estrato, $departamento, $ciudad, $localidad, $barrio, $nomenclatura, $numero1, $adicionauno, $numero2, $adicional2, $numero3, $residencia, $referencia, $customergroup, $name_s, $contra, $servicio, $perfil, $Iplocal, $Ipremota, $comentario,$tegnologia_instalacion)
@@ -876,7 +894,8 @@ public function calculo_ultimo_estado ($array_add,$customers){
                 $API->debug = false;
                 //192.168.201.1:8728 ip jefe
                 $datos_consulta_ip=array("id_sede"=>$customergroup,"tegnologia"=>$tegnologia_instalacion);
-                if ($API->connect($this->get_ip_coneccion_microtik_por_sede($datos_consulta_ip), $_SESSION['variables_MikroTik']->username, $_SESSION['variables_MikroTik']->password)) {
+                $datos_mkt=$this->get_ip_coneccion_microtik_por_sede($datos_consulta_ip);
+                if ($API->connect($datos_mkt['ip_mikrotik'], $datos_mkt['usuario'], $datos_mkt['password'])) {
                         $obj_barrio=$this->db->get_where("barrio",array("idBarrio"=>$barrio))->row();
                         if(isset($obj_barrio)){
                             
@@ -985,7 +1004,8 @@ public function calculo_ultimo_estado ($array_add,$customers){
                 $API = new RouterosAPI();
                 $API->debug = false;
                 $datos_consulta_ip=array("id_sede"=>$customergroup,"tegnologia"=>$tegnologia_instalacion);
-                if ($API->connect($this->get_ip_coneccion_microtik_por_sede($datos_consulta_ip), $_SESSION['variables_MikroTik']->username, $_SESSION['variables_MikroTik']->password)) {
+                $datos_mkt=$this->get_ip_coneccion_microtik_por_sede($datos_consulta_ip);
+                if ($API->connect($datos_mkt['ip_mikrotik'], $datos_mkt['usuario'], $datos_mkt['password'])) {
 
                     $arrID=$API->comm("/ppp/secret/getall", 
                           array(
@@ -1045,7 +1065,8 @@ public function calculo_ultimo_estado ($array_add,$customers){
                 $API = new RouterosAPI();
                 $API->debug = false;
                 $datos_consulta_ip=array("id_sede"=>$id_sede,"tegnologia"=>$tegnologia_instalacion);
-        if ($API->connect($this->get_ip_coneccion_microtik_por_sede($datos_consulta_ip), $_SESSION['variables_MikroTik']->username, $_SESSION['variables_MikroTik']->password)) {
+                $datos_mkt=$this->get_ip_coneccion_microtik_por_sede($datos_consulta_ip);
+                if ($API->connect($datos_mkt['ip_mikrotik'], $datos_mkt['usuario'], $datos_mkt['password'])) {
                 $arrID=$API->comm("/ppp/secret/getall", 
                           array(
                           ".proplist"=> ".id",
@@ -1075,7 +1096,8 @@ public function calculo_ultimo_estado ($array_add,$customers){
         $API = new RouterosAPI();
         $API->debug = false;
         $datos_consulta_ip=array("id_sede"=>$customergroup,"tegnologia"=>$tegnologia_instalacion);
-        if ($API->connect($this->get_ip_coneccion_microtik_por_sede($datos_consulta_ip), $_SESSION['variables_MikroTik']->username, $_SESSION['variables_MikroTik']->password)) {
+        $datos_mkt=$this->get_ip_coneccion_microtik_por_sede($datos_consulta_ip);
+                if ($API->connect($datos_mkt['ip_mikrotik'], $datos_mkt['usuario'], $datos_mkt['password'])) {
             //$user_name="user_prueba_duber_disabled";
             $arrID=$API->comm("/ppp/secret/getall", 
                   array(
@@ -1550,7 +1572,8 @@ public function get_datos_trafico($user_name,$id_sede,$tegnologia_instalacion){
         $API->debug = false;
         $interface = "<pppoe-".$user_name.">"; 
         $datos_consulta_ip=array("id_sede"=>$id_sede,"tegnologia"=>$tegnologia_instalacion);
-        if ($API->connect($this->get_ip_coneccion_microtik_por_sede($datos_consulta_ip), $_SESSION['variables_MikroTik']->username, $_SESSION['variables_MikroTik']->password)) {
+$datos_mkt=$this->get_ip_coneccion_microtik_por_sede($datos_consulta_ip);
+                if ($API->connect($datos_mkt['ip_mikrotik'], $datos_mkt['usuario'], $datos_mkt['password'])) {
            /* //$user_name="user_prueba_duber_disabled";
            /* $arrID=$API->comm("/ppp/secret/getall", 
                   array(
@@ -1599,7 +1622,8 @@ public function get_datos_trafico2($user_name,$id_sede,$tegnologia_instalacion){
         $API->debug = false;
         $interface = "<pppoe-".$user_name.">"; 
         $datos_consulta_ip=array("id_sede"=>$id_sede,"tegnologia"=>$tegnologia_instalacion);
-        if ($API->connect($this->get_ip_coneccion_microtik_por_sede($datos_consulta_ip), $_SESSION['variables_MikroTik']->username, $_SESSION['variables_MikroTik']->password)) {
+       var_dump( $this->get_ip_coneccion_microtik_por_sede($datos_consulta_ip));
+        /*if ($API->connect($this->get_ip_coneccion_microtik_por_sede($datos_consulta_ip), $_SESSION['variables_MikroTik']->username, $_SESSION['variables_MikroTik']->password)) {
            
              $READ=$API->comm("/queue/simple/print",array("?name"=>$interface));
             
@@ -1617,11 +1641,11 @@ public function get_datos_trafico2($user_name,$id_sede,$tegnologia_instalacion){
 
        /* foreach ($arrID as $key => $value) {
             var_dump($value);
-        }*/
+        }
        
         }else{
             
-        }
+        }*/
 }
 public function get_gasto_datos($user_name,$id_sede,$tegnologia_instalacion){
     include (APPPATH."libraries\RouterosAPI.php");
@@ -1632,7 +1656,8 @@ public function get_gasto_datos($user_name,$id_sede,$tegnologia_instalacion){
         $API->debug = false;
         $interface = "<pppoe-".$user_name.">"; 
         $datos_consulta_ip=array("id_sede"=>$id_sede,"tegnologia"=>$tegnologia_instalacion);
-        if ($API->connect($this->get_ip_coneccion_microtik_por_sede($datos_consulta_ip), $_SESSION['variables_MikroTik']->username, $_SESSION['variables_MikroTik']->password)) {
+        $datos_mkt=$this->get_ip_coneccion_microtik_por_sede($datos_consulta_ip);
+        if ($API->connect($datos_mkt['ip_mikrotik'], $datos_mkt['usuario'], $datos_mkt['password'])) {
            //$READ=$API->comm("/queue/simple/print");
              $READ=$API->comm("/queue/simple/print",array("?name"=>$interface));
             
@@ -1668,7 +1693,8 @@ public function get_gasto_datos($user_name,$id_sede,$tegnologia_instalacion){
          $API = new RouterosAPI();
         $API->debug = false;
         $datos_consulta_ip=array("id_sede"=>$id_sede,"tegnologia"=>$tegnologia_instalacion);
-        if ($API->connect($this->get_ip_coneccion_microtik_por_sede($datos_consulta_ip), $_SESSION['variables_MikroTik']->username, $_SESSION['variables_MikroTik']->password)) {
+        $datos_mkt=$this->get_ip_coneccion_microtik_por_sede($datos_consulta_ip);
+        if ($API->connect($datos_mkt['ip_mikrotik'], $datos_mkt['usuario'], $datos_mkt['password'])) {
             //$user_name="user_prueba_duber_disabled";
             $arrID=$API->comm("/ppp/secret/getall", 
                   array(
@@ -1687,7 +1713,8 @@ public function get_gasto_datos($user_name,$id_sede,$tegnologia_instalacion){
         set_time_limit(3000);
         
         $datos_consulta_ip=array("id_sede"=>$id_sede,"tegnologia"=>$tegnologia_instalacion);
-        if ($API->connect($this->get_ip_coneccion_microtik_por_sede($datos_consulta_ip), $_SESSION['variables_MikroTik']->username, $_SESSION['variables_MikroTik']->password)) {
+        $datos_mkt=$this->get_ip_coneccion_microtik_por_sede($datos_consulta_ip);
+        if ($API->connect($datos_mkt['ip_mikrotik'], $datos_mkt['usuario'], $datos_mkt['password'])) {
             //$user_name="user_prueba_duber_disabled";
             $arrID=$API->comm("/ppp/secret/getall");
          $API->disconnect();
@@ -1707,7 +1734,8 @@ public function get_gasto_datos($user_name,$id_sede,$tegnologia_instalacion){
          $API = new RouterosAPI();
         $API->debug = false;
         $datos_consulta_ip=array("id_sede"=>$id_sede,"tegnologia"=>$tegnologia_instalacion);
-        if ($API->connect($this->get_ip_coneccion_microtik_por_sede($datos_consulta_ip), $_SESSION['variables_MikroTik']->username, $_SESSION['variables_MikroTik']->password)) {
+        $datos_mkt=$this->get_ip_coneccion_microtik_por_sede($datos_consulta_ip);
+        if ($API->connect($datos_mkt['ip_mikrotik'], $datos_mkt['usuario'], $datos_mkt['password'])) {
             //$user_name="user_prueba_duber_disabled";
             $arrID=$API->comm("/ppp/secret/getall", 
                   array(
@@ -1728,7 +1756,8 @@ public function get_gasto_datos($user_name,$id_sede,$tegnologia_instalacion){
          $API = new RouterosAPI();
         $API->debug = false;
         $datos_consulta_ip=array("id_sede"=>$id_sede,"tegnologia"=>$tegnologia_instalacion);
-        if ($API->connect($this->get_ip_coneccion_microtik_por_sede($datos_consulta_ip), $_SESSION['variables_MikroTik']->username, $_SESSION['variables_MikroTik']->password)) {
+        $datos_mkt=$this->get_ip_coneccion_microtik_por_sede($datos_consulta_ip);
+        if ($API->connect($datos_mkt['ip_mikrotik'], $datos_mkt['usuario'], $datos_mkt['password'])) {
             //$user_name="user_prueba_duber_disabled";
             $arrID=$API->comm("/ppp/secret/getall", 
                   array(
@@ -1772,7 +1801,8 @@ public function get_gasto_datos($user_name,$id_sede,$tegnologia_instalacion){
          $API = new RouterosAPI();
         $API->debug = false;
         $datos_consulta_ip=array("id_sede"=>$id_sede,"tegnologia"=>$tegnologia_instalacion);
-        if ($API->connect($this->get_ip_coneccion_microtik_por_sede($datos_consulta_ip), $_SESSION['variables_MikroTik']->username, $_SESSION['variables_MikroTik']->password)) {
+        $datos_mkt=$this->get_ip_coneccion_microtik_por_sede($datos_consulta_ip);
+        if ($API->connect($datos_mkt['ip_mikrotik'], $datos_mkt['usuario'], $datos_mkt['password'])) {
             //$user_name="user_prueba_duber_disabled";
             $arrID=$API->comm("/ppp/secret/getall", 
                   array(
@@ -1826,7 +1856,8 @@ public function get_gasto_datos($user_name,$id_sede,$tegnologia_instalacion){
          $API = new RouterosAPI();
         $API->debug = false;
         $datos_consulta_ip=array("id_sede"=>$id_sede,"tegnologia"=>$tegnologia_instalacion);
-        if ($API->connect($this->get_ip_coneccion_microtik_por_sede($datos_consulta_ip), $_SESSION['variables_MikroTik']->username, $_SESSION['variables_MikroTik']->password)) {
+        $datos_mkt=$this->get_ip_coneccion_microtik_por_sede($datos_consulta_ip);
+        if ($API->connect($datos_mkt['ip_mikrotik'], $datos_mkt['usuario'], $datos_mkt['password'])) {
             //$user_name="user_prueba_duber_disabled";
             $arrID=$API->comm("/ppp/secret/getall", 
                   array(
@@ -1854,7 +1885,8 @@ public function get_gasto_datos($user_name,$id_sede,$tegnologia_instalacion){
          $API = new RouterosAPI();
         $API->debug = false;
         $datos_consulta_ip=array("id_sede"=>$id_sede,"tegnologia"=>$tegnologia_instalacion);
-        if ($API->connect($this->get_ip_coneccion_microtik_por_sede($datos_consulta_ip), $_SESSION['variables_MikroTik']->username, $_SESSION['variables_MikroTik']->password)) {
+        $datos_mkt=$this->get_ip_coneccion_microtik_por_sede($datos_consulta_ip);
+                if ($API->connect($datos_mkt['ip_mikrotik'], $datos_mkt['usuario'], $datos_mkt['password'])) {
             //$user_name="user_prueba_duber_disabled";
             $arrID=$API->comm("/ppp/secret/getall", 
                   array(
@@ -1898,7 +1930,8 @@ public function get_gasto_datos($user_name,$id_sede,$tegnologia_instalacion){
          //$API = new RouterosAPI();
         //$API->debug = false;
         $datos_consulta_ip=array("id_sede"=>$id_sede,"tegnologia"=>$tegnologia_instalacion);
-        if ($API->connect($this->get_ip_coneccion_microtik_por_sede($datos_consulta_ip), $_SESSION['variables_MikroTik']->username, $_SESSION['variables_MikroTik']->password)) {
+$datos_mkt=$this->get_ip_coneccion_microtik_por_sede($datos_consulta_ip);
+                if ($API->connect($datos_mkt['ip_mikrotik'], $datos_mkt['usuario'], $datos_mkt['password'])) {
             //$user_name="user_prueba_duber_disabled";
             $arrID=$API->comm("/ppp/secret/getall", 
                   array(

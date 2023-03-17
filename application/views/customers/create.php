@@ -322,8 +322,6 @@
 										<option value="Edificio">Edificio</option>
 										<option value="Oficina">Oficina</option>
 										<option value="Vereda">Vereda</option>
-                                        <option value="Bloque">Bloque</option>
-                                        <option value="Torre">Torre</option>
 								</select>
 							</div>
                             <a href="#" style="margin-top:2px;" class="btn btn-info" title="Validar Direccion" id="a_validar_direccion"><i class="icon-refresh"></i></a>
