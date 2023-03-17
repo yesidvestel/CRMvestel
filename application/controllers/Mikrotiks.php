@@ -41,7 +41,7 @@ class Mikrotiks extends CI_Controller
     $head['title'] = 'Mikrotiks';
     $data['lista_sedes']=$this->db->get_where("customers_group")->result_array();
             $this->load->view('fixed/header', $head);
-            $this->load->view('mikrotiks/index',$data);
+            $this->load->view('mikrotiks/index2',$data);
             $this->load->view('fixed/footer');
    }
    public function set_default(){
