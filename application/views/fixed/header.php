@@ -549,7 +549,7 @@ $lista_permisos1=$this->db->query("SELECT permisos_usuario.id,permisos_usuario.i
                                 class="menu-title"> <?php echo $this->lang->line('') ?>Listado de Tareas</span></a></li>
 			
                 <!---------------- end project ----------------->
-                <li class="navigation-header"><span><?php echo $this->lang->line('Balance') ?></span><i
+                <li class="navigation-header"><span><?php echo $this->lang->line('') ?>CONTABILIDAD</span><i
                             data-toggle="tooltip" data-placement="right"
                             data-original-title="Balance"
                             class="icon-ellipsis icon-ellipsis"></i>
@@ -1264,7 +1264,7 @@ $lista_permisos1=$this->db->query("SELECT permisos_usuario.id,permisos_usuario.i
 				<?php } ?>
                 <!---------------- end project ----------------->
 				<?php if ($lista_permisos_us['cuen'] != null) { ?>
-                <li class="navigation-header"><span><?php echo $this->lang->line('Balance') ?></span><i
+                <li class="navigation-header"><span><?php echo $this->lang->line('') ?>CONTABILIDAD</span><i
                             data-toggle="tooltip" data-placement="right"
                             data-original-title="Balance"
                             class="icon-ellipsis icon-ellipsis"></i>
