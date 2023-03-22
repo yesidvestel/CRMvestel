@@ -282,6 +282,10 @@ class Ticket_model extends CI_Model
             $order = $this->order;
             $this->db->order_by(key($order), $order[key($order)]);
         }
+        if(empty($_GET['todas_las_ordenes'])){
+            $this->db->where('tickets.idt>'. $_SESSION['number_tk_min']);
+            $this->db->order_by("tickets.idt","desc");    
+        }
     }
 
     function ticket_count_filtered($filt)

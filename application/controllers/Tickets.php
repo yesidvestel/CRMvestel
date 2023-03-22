@@ -43,8 +43,12 @@ class Tickets Extends CI_Controller
 
     public function index()
     {
+        $calculo =$this->db->query("select idt as id from tickets order by id desc limit 1")->result_array();
+        
+        $_SESSION['number_tk_min']=$calculo[0]['id']-10000;
 		$this->load->model("customers_model","customers");
         $this->load->model('Moviles_model', 'moviles');
+        $_GET['todas_las_ordenes']="si";
         $head['usernm'] = $this->aauth->get_user()->username;
         $head['title'] = 'Support Tickets';
 		$data['tecnicoslista'] = $this->ticket->tecnico_list();
