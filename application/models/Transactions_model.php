@@ -42,6 +42,7 @@ class Transactions_model extends CI_Model
             }
             
         }
+          
 
         if($filt2['cuentas']!=""){
             $this->db->where('account', $filt2['cuentas']);       
@@ -109,6 +110,11 @@ class Transactions_model extends CI_Model
             $order = $this->order;
             $this->db->order_by(key($order), $order[key($order)]);
         }
+        if(empty($_GET['todas_las_tr'])){
+            $this->db->where('id>'. $_SESSION['number_tr_min']);
+            $this->db->order_by("id","desc");    
+        }
+        
     }
 
     function get_datatables($opt = 'all',$filt2)
