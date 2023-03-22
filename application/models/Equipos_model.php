@@ -23,7 +23,7 @@ class Equipos_model extends CI_Model
 
     var $table = 'equipos';	
     var $column_order = array(null, 'codigo','mac', 'serial', 'estado', 'asignado', 'marca','t_instalacion', null); //set column field database for datatable orderable
-    var $column_search = array('codigo','mac', 'serial', 'estado', 'asignado', 'marca','t_instalacion'); //Establecer base de datos de campo de columna para la tabla de datos
+    var $column_search = array('codigo','mac', 'serial','marca','t_instalacion'); //Establecer base de datos de campo de columna para la tabla de datos
     var $order = array('id' => 'desc'); // default order
 	
     public function __construct()
@@ -36,8 +36,11 @@ class Equipos_model extends CI_Model
     {
          
 			$this->db->from($this->table);
-		 	$this->db->join('naps', 'naps.idn = equipos.nat','left');
+		 	$this->db->join('puertos', 'puertos.idp = equipos.puerto','left');
+		 	$this->db->join('naps', 'naps.idn = puertos.idnap','left');
 		 	$this->db->join('vlans', 'vlans.idv = naps.idvlan','left');
+		 	
+			
 		 if ($id > 0) {
 			 $this->db->where("almacen = $id");
 		 }        

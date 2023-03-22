@@ -1131,7 +1131,7 @@ public function ajax_graficas2(){
             $row[] = $prd->marca;
             $row[] = $prd->t_instalacion;
             if ($prd->vlan!=='0'){
-            $row[] = $vlan->vlan;
+            $row[] = $prd->vlan;
             }else{$row[]= 'N/A';}
             $row[] = $nap->nap;
             if ($prd->puerto!=='0'){

@@ -225,7 +225,10 @@ class Customers_model extends CI_Model
 
         $this->db->select('*');
         $this->db->from('equipos');
-        $this->db->where('asignado', $custid);
+		$this->db->join('naps', 'naps.idn = equipos.nat','left');
+		$this->db->join('vlans', 'vlans.idv = naps.idvlan','left');
+		$this->db->join('puertos', 'puertos.idnap = naps.idn','left');
+        $this->db->where('equipos.asignado', $custid);
         $query = $this->db->get();
         return $query->row_array();
     }
@@ -1439,6 +1442,9 @@ public function calculo_ultimo_estado ($array_add,$customers){
         $this->db->from('equipos');
         $this->db->where('equipos.asignado', $id);
         $this->db->join('customers', 'equipos.asignado=customers.id', 'left');
+		$this->db->join('naps', 'naps.idn = equipos.nat','left');
+		$this->db->join('vlans', 'vlans.idv = naps.idvlan','left');
+		$this->db->join('puertos', 'puertos.asignado = equipos.asignado','left');
 
         $i = 0;
 

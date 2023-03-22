@@ -252,7 +252,7 @@
 									<?php }if ($equipo['t_instalacion']=='FTTH'){ ?>
 									<div class="col-md-7">
 									<strong>Vlan:</strong> <?php echo $equipo['vlan'] ?>
-									<strong>Nat:</strong> <?php echo $equipo['nat'] ?>
+									<strong>Nat:</strong> <?php echo $equipo['nap'] ?>
 									<strong>P/to:</strong> <?php echo $equipo['puerto'] ?>
 									</div>
 									<?php } ?>
