@@ -1,4 +1,5 @@
 function mostrar_alerta1(nombre_div,tipo,mensaje){
+     $("#"+nombre_div).css("display","");
      $("#"+nombre_div).append('<div id="notify_'+nombre_div+'" class="alert alert-warning" style="display:none;"><a href="#" class="close" data-dismiss="alert">&times;</a><div class="message_'+nombre_div+'"></div></div>');        
     $("#notify_"+nombre_div+" .message_"+nombre_div).html(mensaje);
     var tipo123="success";

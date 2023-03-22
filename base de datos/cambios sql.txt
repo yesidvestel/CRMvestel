@@ -1,4 +1,8 @@
-﻿
+﻿-----------mas cambios mikrotiks--------------------------------------------
+ALTER TABLE `mikrotiks` ADD `estado_coneccion` TINYINT NULL AFTER `defecto`;
+DELETE FROM `variables_de_entorno` WHERE `variables_de_entorno`.`id` = 3
+
+-----------------------------------------------------------------------------
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";

@@ -40,6 +40,13 @@ class Mikrotiks extends CI_Controller
    public function index(){
     $head['title'] = 'Mikrotiks';
     $data['lista_sedes']=$this->db->get_where("customers_group")->result_array();
+    $this->db->update("mikrotiks",array("estado_coneccion"=>null));
+    $lista_mikrotiks=$this->db->get_where("mikrotiks")->result_array();
+    $str_json=array();
+    foreach ($lista_mikrotiks as $k => $mk) {
+        $str_json[]=$mk['id'];
+    }
+    $data['lista_mks']=json_encode($str_json);
             $this->load->view('fixed/header', $head);
             $this->load->view('mikrotiks/index2',$data);
             $this->load->view('fixed/footer');
@@ -84,8 +91,16 @@ class Mikrotiks extends CI_Controller
                 for ($i=0; $i < strlen($value->password) ; $i++) { 
                     $str1.="*";
                 }               
-                $row[]=$str1;
-                $row[]="<a href='#' data-datos='".json_encode($value)."' class='btn btn-info update_mk'><i <i class='icon-eye'></i></a>";                
+                $row[]=$str1;   
+                if($value->estado=="1"){
+                    $row[]='<span class="st-Activo">Activa</span>';    
+                }else if($value->estado=="0"){
+                    $row[]='<span class="st-Inactivo">Inactiva</span>';    
+                }else{
+                    $row[]='--';    
+                }
+                
+                $row[]="<a href='#' data-datos='".json_encode($value)."' class='btn btn-info update_mk'><i class='icon-eye'></i></a>&nbsp<a href='#' title='Validar Estado de Conexión' data-id='".$value->id."' class='btn btn-orange cl_calcula_estado'><i class='icon-bolt'></i></a>";                
                 $data[]=$row;
 
         }
@@ -97,6 +112,18 @@ class Mikrotiks extends CI_Controller
             );
             //output to json format
             echo json_encode($output);
+
+    }
+    public function estado_mikrotik(){
+        include (APPPATH."libraries\RouterosAPI.php");
+        $API = new RouterosAPI();
+        $API->debug = false;
+        $res=$this->mikrotiks->get_estado_mikrotik($_POST['id'],$API);
+        if(empty($res)) {
+            $this->db->update("mikrotiks",array("estado_coneccion"=>0),array("id"=>$_POST['id']));
+        } else{
+            $this->db->update("mikrotiks",array("estado_coneccion"=>1),array("id"=>$_POST['id']));
+        }
 
     }
     public function save_ajax(){

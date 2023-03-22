@@ -1,4 +1,22 @@
+<style type="text/css">
+    .st-Activo, .st-Inactivo
+{
+    text-transform: uppercase;
+    color: #fff;
+    padding: 4px;
+    border-radius: 11px;
+    font-size: 15px;
+}
+.st-Activo
+{
+ background-color: #4EAA28;
+}
+.st-Inactivo
+{
+ background-color: #A4282A;
+}
 
+</style>
 <article class="content">
 
     <div class="card card-block">
@@ -8,6 +26,7 @@
 
         <h4>Mikrotiks </h4>
 <a href="#" id="open_modal" class="btn-small btn-primary">Agregar Nueva Mikrotik</a>
+<a href="#" id="validar_todas_mk" class="btn-small btn-warning">Validar Conexion de Todas las Mikrotiks</a>
         <hr>
         <div class="grid_3 grid_4">
             <table id="tabla-historial" class="table-striped table-hover" cellspacing="0" width="100%">
@@ -21,6 +40,7 @@
                         <th>Sede</th>
                         <th>Usuario</th>
                         <th>Password</th>
+                        <th>Estado</th>
                         <th>Acciones</th>
                         
 
@@ -39,6 +59,7 @@
                         <th>Sede</th>
                         <th>Usuario</th>
                         <th>Password</th>
+                        <th>Estado</th>
                         <th>Acciones</th>
                     </tr>
                 </tfoot>
@@ -128,6 +149,35 @@
 </div>
 <script type="text/javascript">
     var view_p=true;
+    var lista_mks=<?=$lista_mks ?>;
+    var numer_iteration=0;
+    $(document).on("click",".cl_calcula_estado",function(ev){
+            ev.preventDefault();
+            var id_mk=$(this).data("id");
+        mostrar_alerta1("notify",2,"Esperando Respuesta ...");
+            $.post(baseurl+"/mikrotiks/estado_mikrotik",{'id':id_mk},function(data){
+                mostrar_alerta1("notify",1,"Confirmado ");
+                $("#notify").css("display","none");
+                 tb.ajax.url( baseurl+"mikrotiks/mk_list").load();
+            });
+    });
+    $(document).on("click","#validar_todas_mk",function(ev){
+        ev.preventDefault();
+        consultar_estado(numer_iteration);
+    });
+    function consultar_estado (id){
+
+            mostrar_alerta1("notify",2,"Esperando Respuesta ... "+(id+1));
+            $.post(baseurl+"/mikrotiks/estado_mikrotik",{'id':lista_mks[id]},function(data){
+                mostrar_alerta1("notify",1,"Confirmado ");
+                $("#notify").css("display","none");
+                 tb.ajax.url( baseurl+"mikrotiks/mk_list").load();
+                 numer_iteration++;
+                 if(numer_iteration<lista_mks.length){
+                    consultar_estado(numer_iteration);
+                 }
+            });
+    }
     $(document).on("click",".set_default",function(ev){
         var datosx=$(this).data("datos");
         

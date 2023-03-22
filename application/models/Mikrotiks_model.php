@@ -26,7 +26,7 @@ class Mikrotiks_model extends CI_Model
     
     private function _get_datatables_query()
     {
-        $this->db->select("mk1.id as id ,mk1.nombre as nombre,mk1.ip as ip,mk1.puerto as puerto,mk1.tegnologia as tegnologia,mk1.sede as sede,mk1.usuario as usuario,mk1.password as password,cg.title as title, mk1.defecto as defecto");
+        $this->db->select("mk1.id as id ,mk1.nombre as nombre,mk1.ip as ip,mk1.puerto as puerto,mk1.tegnologia as tegnologia,mk1.sede as sede,mk1.usuario as usuario,mk1.password as password,cg.title as title, mk1.defecto as defecto,mk1.estado_coneccion as estado");
         $this->db->from($this->table." as mk1");
         
         $this->db->join("customers_group as cg","cg.id=mk1.sede");
@@ -85,6 +85,25 @@ class Mikrotiks_model extends CI_Model
 		
         $query = $this->db->get();
         return $query->num_rows();
+    }
+      public function get_estado_mikrotik($id_mk,$API){
+        
+        set_time_limit(500);
+        
+        
+        $datos_mkt=$this->db->get_where("mikrotiks",array("id"=>$id_mk))->row();
+        if ($API->connect($datos_mkt->ip.":".$datos_mkt->puerto, $datos_mkt->usuario, $datos_mkt->password)) {
+            //$user_name="user_prueba_duber_disabled";
+            $arrID=$API->comm("/ppp/secret/getall");
+         $API->disconnect();
+         
+            return $arrID[0]['disabled'];    
+         
+         
+
+        }else{
+            
+        }
     }
     
 }
