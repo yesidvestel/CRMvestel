@@ -2153,6 +2153,8 @@ $result=array();
         }
         $head['title'] = "Transferencias";
         $head['usernm'] = $this->aauth->get_user()->username;
+        $calculo =$this->db->query("select id as id from transactions order by id desc limit 1")->result_array();
+        $_SESSION['number_tr_min']=$calculo[0]['id']-30000;
         $this->load->view('fixed/header', $head);
         $this->load->view('transactions/transferencia');
         $this->load->view('fixed/footer');
