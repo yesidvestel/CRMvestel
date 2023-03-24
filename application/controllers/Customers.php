@@ -422,6 +422,35 @@ if($data['servicios']['estado']=="Inactivo"){
         $this->load->view('customers/view', $data);
         $this->load->view('fixed/footer');
     }
+    public function generar_x(){
+        $customer =$this->db->get_where("customers",array("id"=>$_GET['id']))->row();
+        $vars=json_decode($customer->dats_last_report);
+        
+#x
+$lista= explode(",",$vars->id_fact_pagadas);
+        $tid=$lista[0];
+        $resivox = $this->db->get_where("recibos_de_pago",array("tid"=>$tid))->row();
+        $tr_val = $this->db->get_where("transactions",array("id"=>$vars->ids[0],"estado"=>null))->row();
+        if(empty($resivox) && !empty($tr_val)){
+                    $pa=$vars->pa;
+                if($pa=="si"){
+                    $pa="&pa=si";
+                }else{
+                    $pa="";
+                }
+                $this->db->update("customers",array("ids_transacciones_rp"=>json_encode($vars->ids)),array("id"=>$_GET['id']));
+                $url=base_url()."invoices/printinvoice?multiple=si&id=".$vars->id_fact_pagadas."&vrm=".$vars->valor_restante_monto.$pa;
+                //var_dump($url);
+                header("Location: ".$url);
+
+        }else{
+            $url=base_url()."customers/invoices?id=".$_GET['id'];
+                header("Location: ".$url);
+        }
+        #x
+
+            
+    }
 public function graficas_c(){
     $head['title'] = 'View Customer';
         $this->load->view('fixed/header', $head);
@@ -1655,7 +1684,18 @@ public function ajax_graficas2(){
             
             $data['ultimo_resivo']=$x[0]['file_name'];
     }
-        
+/*generacion de ultimo resivo */
+        $cust= $this->db->get_where("customers",array("id"=>$custid))->row();
+        $vars= json_decode($cust->dats_last_report);
+        $lista= explode(",",$vars->id_fact_pagadas);
+        $tid=$lista[0];
+        $resivox = $this->db->get_where("recibos_de_pago",array("tid"=>$tid))->row();
+        $tr_val = $this->db->get_where("transactions",array("id"=>$vars->ids[0],"estado"=>null))->row();
+        $data['btn_generar_resivo']="";
+        if(empty($resivox) && !empty($tr_val)){
+            $data['btn_generar_resivo']="<a class='btn-small btn-danger' href='".base_url()."customers/generar_x?id=".$custid."'>Generar Ultimo Recibo de pago</a>";
+        }
+/*end generacion de ultimo resivo */
         $this->load->view('fixed/header', $head);
         $this->load->view('customers/invoices', $data);
         $this->load->view('fixed/footer');
