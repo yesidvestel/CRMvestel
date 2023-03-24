@@ -84,7 +84,7 @@
 			<a href="<?=base_url().'invoices/ver_estado_de_cuenta_user?id='.$_GET['id'] ?>" class="btn btn-primary">Estado de cuenta</a>
 			
             <hr>
-
+<?=$btn_generar_resivo ?>
             <table id="invoices" class="table-striped" cellspacing="0" width="100%">
                 <thead>
                 <tr>

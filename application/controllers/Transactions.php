@@ -949,18 +949,20 @@ class Transactions extends CI_Controller
         }
         $this->load->model('customers_model', 'customers');
         $this->customers->actualizar_debit_y_credit($cid);
+        $x_datos_last=json_encode(array('status'=>"Success",'message' =>$this->lang->line('Transaction has been added '),"id_fact_pagadas"=>$id_fact_pagadas,"valor_restante_monto"=>$valor_restante_monto,"pa"=>$pa,"ids"=>$ids_transacciones));
         if(count($ids_transacciones)!=0){
             
-            $data_ids=array("ids_transacciones_rp"=>json_encode($ids_transacciones));
+            $data_ids=array("ids_transacciones_rp"=>json_encode($ids_transacciones),"dats_last_report"=>$x_datos_last);
             $this->db->update("customers",$data_ids,array("id"=>$cid));
             
         }else{
-            $data_ids=array("ids_transacciones_rp"=>json_encode($ids_transacciones));
+            $data_ids=array("ids_transacciones_rp"=>json_encode($ids_transacciones),"dats_last_report"=>$x_datos_last);
             $this->db->update("customers",$data_ids,array("id"=>$cid));
             
         }
         
         $link ="<a href='".base_url()."invoices/printinvoice?id=".$id_fact_pagadas."' class='btn btn-info btn-lg'><span class='icon-file-text2' aria-hidden='true'></span>Ver PDF Facturas Pagadas</a>";
+
         echo json_encode(array('status'=>"Success",'message' =>$this->lang->line('Transaction has been added ').$link,"id_fact_pagadas"=>$id_fact_pagadas,"valor_restante_monto"=>$valor_restante_monto,"pa"=>$pa));
     }
     public function payinvoice()

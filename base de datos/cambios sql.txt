@@ -1,4 +1,5 @@
-﻿-----------mas cambios mikrotiks--------------------------------------------
+﻿ALTER TABLE `customers` ADD `dats_last_report` VARCHAR(2000) NULL AFTER `ids_transacciones_rp`;
+-----------mas cambios mikrotiks--------------------------------------------
 ALTER TABLE `mikrotiks` ADD `estado_coneccion` TINYINT NULL AFTER `defecto`;
 DELETE FROM `variables_de_entorno` WHERE `variables_de_entorno`.`id` = 3
 
