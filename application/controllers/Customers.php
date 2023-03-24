@@ -431,7 +431,7 @@ $lista= explode(",",$vars->id_fact_pagadas);
         $tid=$lista[0];
         $resivox = $this->db->get_where("recibos_de_pago",array("tid"=>$tid))->row();
         $tr_val = $this->db->get_where("transactions",array("id"=>$vars->ids[0],"estado"=>null))->row();
-        if(empty($resivox) && !empty($tr_val)){
+        if(empty($resivox) && !empty($tr_val) && $this->aauth->get_user()->roleid > 4){
                     $pa=$vars->pa;
                 if($pa=="si"){
                     $pa="&pa=si";
