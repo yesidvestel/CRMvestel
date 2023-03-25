@@ -143,6 +143,7 @@ class Products extends CI_Controller
 		
         foreach ($list as $prd) {
 			$usuario = $this->db->get_where('customers', array('id' => $prd->asignado))->row();
+			$puerto = $this->db->get_where('puertos', array('idp' => $prd->puerto))->row();
             $no++;
             $row = array();
             $row[] = $no;
@@ -162,7 +163,7 @@ class Products extends CI_Controller
 			$row[] = $prd->nap;
 			}else{$row[]= 'N/A';}
 			if ($prd->puerto!=='0'){
-			$row[] = $prd->puerto;
+			$row[] = $puerto->puerto;
 			}else{$row[]= 'N/A';}
 			if(empty($prd->imagen)){
                 $row[]="Sin Img.";
