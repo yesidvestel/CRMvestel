@@ -486,7 +486,7 @@ class Employee_model extends CI_Model
 
     public function add_employee(
 		$id, $username, $name,$dto,$ingreso,$rh,
-		$eps,$pensiones, $roleid, $phone, 
+		$eps,$pensiones, $roleid, $sede, $phone, 
 		$address, $city, $region, $country,$area,
 		$data_perms)
     {
@@ -510,6 +510,7 @@ class Employee_model extends CI_Model
 
         if ($this->db->insert('employee_profile', $data)) {
             $data1 = array(
+                'sede_accede' => $sede,
                 'roleid' => $roleid,
 				
             );

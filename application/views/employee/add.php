@@ -75,6 +75,30 @@
                                     <div class="form-group row">
 
                                         <label class="col-sm-2 col-form-label"
+                                               for="name"><?php echo $this->lang->line('') ?>Asignar sede</label>
+
+                                        <div class="col-sm-5">
+                                            <select name="sede_accede" class="form-control" id="sede_accede">
+												<option value="0">Todas</option>
+												<?php
+													foreach ($customergrouplist as $row) {
+														$cid = $row['id'];
+														$title = $row['title'];
+														$selected="";
+														if($sede_accede==$cid){
+															$selected="selected='true'";
+														}
+														if($cid!="1"){
+															echo "<option ".$selected." value='$cid'>$title</option>";
+														}
+													}
+													?>
+											</select>
+                                        </div>
+                                    </div>
+								<div class="form-group row">
+
+                                        <label class="col-sm-2 col-form-label"
                                                for="name"><?php echo $this->lang->line('UserRole') ?></label>
 
                                         <div class="col-sm-5">
