@@ -7,6 +7,7 @@
 				<h3 align="center">BIENVENIDO</h3>
                 <h4 class="modal-title" align="center">Vestel trabaja con lógica, ética y estética</h4>
             </div>
+			<?php if ($this->aauth->get_user()->roleid == 5) { ?>
             <div class="modal-body">
                 <p>¿Desde que sede estas accediendo? </p>
                 <div class="col-sm-9">
@@ -31,6 +32,7 @@
                     
                 </div>
             </div>
+			<?php } ?>
             <div class="modal-footer">
                 
                 

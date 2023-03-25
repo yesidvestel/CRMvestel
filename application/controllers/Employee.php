@@ -466,6 +466,7 @@ public function codigo_generar_inserts_permisos(){
 
         $id = $this->input->get('id');
         $this->load->model('employee_model', 'employee');
+        $this->load->model('customers_model', 'customers');
 
         if ($this->input->post()) {
             $eid = $this->input->post('eid');
@@ -483,112 +484,7 @@ public function codigo_generar_inserts_permisos(){
             $country = $this->input->post('country');
             $area = $this->input->post('area');
 			$roleid = $this->input->post('roleid');
-			/*$co = $this->input->post('co');
-			$coape = $this->input->post('coape');
-			$conue = $this->input->post('conue');
-			$coadm = $this->input->post('coadm');
-			$cocie = $this->input->post('cocie');
-			$cofa = $this->input->post('cofa');
-			$cofae = $this->input->post('cofae');
-			$us = $this->input->post('us');
-			$usnue = $this->input->post('usnue');
-			$usadm = $this->input->post('usadm');
-			$usgru = $this->input->post('usgru');
-			$tik = $this->input->post('tik');
-			$tiknue = $this->input->post('tiknue');
-			$tikadm = $this->input->post('tikadm');
-			$mo = $this->input->post('mo');
-			$monue = $this->input->post('monue');
-			$moadm = $this->input->post('moadm');
-			$pro = $this->input->post('pro');
-			$pronue = $this->input->post('pronue');
-			$proadm = $this->input->post('proadm');
-			$enc = $this->input->post('enc');
-			$encllam = $this->input->post('encllam');
-			$encnue = $this->input->post('encnue');
-			$encenc = $this->input->post('encenc');
-			$encats = $this->input->post('encats');
-			$encatslis = $this->input->post('encatslis');
-			$proy = $this->input->post('proy');
-			$proynue = $this->input->post('proynue');
-			$proyadm = $this->input->post('proyadm');
-			$cuen = $this->input->post('cuen');
-			$cuenadm = $this->input->post('cuenadm');
-			$cuennue = $this->input->post('cuennue');
-			$cuenbal = $this->input->post('cuenbal');
-			$cuendec = $this->input->post('cuendec');
-			$red = $this->input->post('red');
-			$reding = $this->input->post('reding');
-			$redadm = $this->input->post('redadm');
-			$redbod = $this->input->post('redbod');
-			$com = $this->input->post('com');
-			$comnue = $this->input->post('comnue');
-			$comadm = $this->input->post('comadm');
-			$tes = $this->input->post('tes');
-			$testran = $this->input->post('testran');
-			$tesanu = $this->input->post('tesanu');
-			$tesnuetransac = $this->input->post('tesnuetransac');
-			$tesnuetransfer = $this->input->post('tesnuetransfer');
-			$tesing = $this->input->post('tesing');
-			$tesgas = $this->input->post('tesgas');
-			$testransfer = $this->input->post('testransfer');
-			$dat = $this->input->post('dat');
-			$datest = $this->input->post('datest');
-			$datdec = $this->input->post('datdec');
-			$datrep = $this->input->post('datrep');
-			$datusu = $this->input->post('datusu');
-			$datpro = $this->input->post('datpro');
-			$dating = $this->input->post('dating');
-			$datgas = $this->input->post('datgas');
-			$dattrans = $this->input->post('dattrans');
-			$datimp = $this->input->post('datimp');
-			$not = $this->input->post('not');
-			$cal = $this->input->post('cal');
-			$doct = $this->input->post('doct');
-			$pag = $this->input->post('pag');
-			$pagconf = $this->input->post('pagconf');
-			$pagvia = $this->input->post('pagvia');
-			$pagmon = $this->input->post('pagmon');
-			$pagcam = $this->input->post('pagcam');
-			$pagban = $this->input->post('pagban');
-			$inv = $this->input->post('inv');
-			$inving = $this->input->post('inving');
-			$invadm = $this->input->post('invadm');
-			$invcat = $this->input->post('invcat');
-			$invalm = $this->input->post('invalm');
-			$invtrs = $this->input->post('invtrs');
-			$emp = $this->input->post('emp');
-			$comp = $this->input->post('comp');
-			$comprec = $this->input->post('comprec');
-			$compurl = $this->input->post('compurl');
-			$comptwi = $this->input->post('comptwi');
-			$compcurr = $this->input->post('compcurr');
-			$pla = $this->input->post('pla');
-			$placor = $this->input->post('placor');
-			$plamen = $this->input->post('plamen');
-			$platem = $this->input->post('platem');
-			$conf = $this->input->post('conf');
-			$confemp = $this->input->post('confemp');
-			$conffa = $this->input->post('conffa');
-			$confmon = $this->input->post('confmon');
-			$conffec = $this->input->post('conffec');
-			$confcat = $this->input->post('confcat');
-			$confmet = $this->input->post('confmet');
-			$confrest = $this->input->post('confrest');
-			$confcorr = $this->input->post('confcorr');
-			$confterm = $this->input->post('confterm');
-			$confaut = $this->input->post('confaut');
-			$confseg = $this->input->post('confseg');
-			$conftem = $this->input->post('conftem');
-			$confsop = $this->input->post('confsop');
-			$conface = $this->input->post('conface');
-			$confupt = $this->input->post('confupt');
-			$confapi = $this->input->post('confapi');
-            $dathistorial = $this->input->post('dathistorial');
-            $datservicios = $this->input->post('datservicios');
-            $conotas = $this->input->post('conotas');
-			$tar = $this->input->post('tar');
-			$redcon = $this->input->post('redcon');*/
+			$sedeadd = $this->input->post('sede_accede');
             $data_perms=array();
             $lista_permisos=$this->employee->get_modulos_cliente2($eid);
             foreach ($lista_permisos as $key => $per) {
@@ -597,7 +493,7 @@ public function codigo_generar_inserts_permisos(){
             $this->employee->update_employee(
 				$eid, $name,$dto,$ingreso,$rh,$eps,$pensiones, 
 				$phone, $phonealt, $address, $city, $region, $country,$area,
-				$roleid,$data_perms);
+				$roleid, $sedeadd, $data_perms);
 
         } else {
             $head['usernm'] = $this->aauth->get_user($id)->username;
@@ -605,8 +501,10 @@ public function codigo_generar_inserts_permisos(){
 			
 
             $data['user'] = $this->employee->employee_details($id);
+			$data['customergrouplist'] = $this->customers->group_list();
             $data['area'] = $this->employee->employee_arealist($data['user']['area']);
             $data['get_area'] = $this->employee->employee_area($data['user']['area']);
+            $data['sede'] = $this->employee->group_detail($data['user']['sede_accede']);
             $data['eid'] = intval($id);
             $data['modulos_padre']=$this->employee->get_modulos_padres();
             $data['modulos_usuario']=$this->employee->get_modulos_cliente($id);

@@ -145,11 +145,20 @@ class Employee_model extends CI_Model
         $query = $this->db->get();
         return $query->row_array();
     }
+	public function group_detail($id)
+    {
+        $this->db->select('*');
+        $this->db->from('customers_group');
+        $this->db->where('id', $id);
+        //$this->db->join('areas', 'employee_profile.area = areas.ida', 'left');
+        $query = $this->db->get();
+        return $query->row_array();
+    }
 
     public function update_employee(
 		$id, $name,$dto,$ingreso,$rh,$eps,$pensiones, 
 		$phone, $phonealt, $address, $city, $region, $country,$area,
-		$roleid,$data_perms)
+		$roleid, $sedeadd, $data_perms)
     {
         $data = array(
             'name' => $name,
@@ -180,7 +189,10 @@ class Employee_model extends CI_Model
 					$roleid2 = $roleid;
 				}
 
-                $data1=array("roleid"=>$roleid2);
+                $data1=array(
+					"sede_accede"=>$sedeadd,
+					"roleid"=>$roleid2,
+				);
 
 
             $this->db->set($data1);
