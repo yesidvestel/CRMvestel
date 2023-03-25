@@ -606,7 +606,7 @@
                     <th class='ultimo_estado_th'>Ult. Estado</th>
                     <th class='fecha_contrato_th'>Fecha Contrato</th>
                     <th class="settings_th"><?php echo $this->lang->line('Settings') ?></th>
-					<?php if ($this->aauth->get_user()->roleid > 4) { ?>
+					<?php if ($this->aauth->get_user()->roleid == 5) { ?>
 					<th class="config_th">Config</th>
 					<?php } ?>
                 </tr>

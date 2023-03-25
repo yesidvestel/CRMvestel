@@ -920,7 +920,7 @@ if(isset($_GET['ingreso_select']) && $_GET['ingreso_select']!="" && $_GET['ingre
             $row[]="";
             $row[] = $customers->f_contrato;
             $row[] = '<a href="' . base_url() . 'llamadas/index?id=' . $customers->id . '" class="btn btn-primary btn-sm"><span class=" icon-mobile-phone"></span> Llamar</a>';
-			if ($this->aauth->get_user()->roleid > 4) {
+			if ($this->aauth->get_user()->roleid == 5) {
 			$row[] = '<a href="' . $base . 'edit?id=' . $customers->id . '" class="btn btn-success btn-sm"><span class="icon-pencil"></span> '.$this->lang->line('Edit').'</a>
 						<a href="#" data-object-id="' . $customers->id . '" class="btn btn-danger btn-sm delete-object"><span class="icon-bin"></span></a>';}
 
@@ -1609,7 +1609,7 @@ if(isset($_GET['ingreso_select']) && $_GET['ingreso_select']!="" && $_GET['ingre
                             $row[] = $customers->f_contrato;
                             $row[] = '&nbsp<a href="' . base_url() . 'llamadas/index?id=' . $customers->id . '" class="btn btn-primary btn-sm"><span class=" icon-mobile-phone"></span> Llamar</a>
 							&nbsp<a style="margin-top:1px;" target="_blanck" class="btn btn-info btn-sm"  href="'.base_url().'customers/invoices?id='.$customers->id.'"><span class="icon-eye"></span>&nbsp;Facturas</a>';
-                            if ($this->aauth->get_user()->roleid > 4) {
+                            if ($this->aauth->get_user()->roleid == 5) {
                             $row[] = '<a href="' . base_url() . 'customers/edit?id=' . $customers->id . '" class="btn btn-success btn-sm"><span class="icon-pencil"></span> '.$this->lang->line('Edit').'</a>
 							<a href="#" data-object-id="' . $customers->id . '" class="btn btn-danger btn-sm delete-object"><span class="icon-bin"></span></a>';
                             }
