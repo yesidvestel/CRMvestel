@@ -323,6 +323,8 @@ class Quote extends CI_Controller
         $bill_date = datefordatabase($created);
 		$supaquete = $this->input->post('supaquete');
 		$bapaquete = $this->input->post('bapaquete');
+
+
 		$detalle=str_replace("_"," ",$detalle);
         if($detalle=="AgregarInternet"){
             $inter = $this->input->post('interB');
@@ -347,6 +349,9 @@ class Quote extends CI_Controller
 			}else{
 				$pto2 = ' + '.$punto.' Puntos';
 			}    
+        if($movil==0){
+            $movil=null;
+        }
         $data = array(
 			'codigo' => $nticket, 
 			'subject' => $subject, 
