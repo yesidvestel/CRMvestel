@@ -46,11 +46,13 @@
 <script type="text/javascript">
     $("#modal_sede").modal("show");
     function guardar_sede_actual(){
+        <?php if($this->aauth->get_user()->roleid == 5){ ?>
         var sede=$("#sede_accede option:selected").val();
 
         $.post(baseurl+"dashboard/guardar_sede_user_se_conecta",{sede:sede},function(data){
 
         });
+    <?php } ?>
         $("#modal_sede").modal("toggle");
     }
 </script>
