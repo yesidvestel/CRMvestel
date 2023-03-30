@@ -232,7 +232,7 @@
             $cantidad_total=0;
             $lista_a_excluir=array();
 			setlocale(LC_TIME, "spanish");
-			$f1 = date(" F ",strtotime($invoice['invoicedate']));
+			$f1 = $invoice['invoicedate'];
             if(count($lista_invoices)>0 || $is_multiple){
                 $lista_a_excluir[$invoice['tid']]=true;
                 //$cantidad_total+=$invoice['total'];
@@ -390,7 +390,7 @@
 
                         $valor+=$cantidad_total;
                         //end 
-                $f1 = date(" F ",strtotime($factura['invoicedate']));
+                $f1 = $factura['invoicedate'];
             echo '<tr class="item' . $flag . '"> <td>' . strftime("%B", strtotime($f1)). ' CTA:'. $factura['tid'].'</td>';
             echo '<td class="t_center">' . amountExchange( $valor) .'</td></tr>';
             $cantidad_total_a_restar-=$cantidad_total;
@@ -416,7 +416,7 @@ if($vrm>0){
                     $saldo_a_pagar=$factura['total']-$factura['pamnt'];
                     $cantidad_total+=$saldo_a_pagar;
                     if(empty($lista_a_excluir[$factura['tid']])){
-                    $f1 = date(" F ",strtotime($factura['invoicedate']));
+                    $f1 = $factura['invoicedate'];
                     echo '<tr class="item' . $flag . '"> <td><b><em>' . strftime("%B", strtotime($f1)). ' CTA:'. $factura['tid'].'</em></b></td>';
                     echo '<td class="t_center"><b><em>' . amountExchange( $saldo_a_pagar) . '</em></b></td></tr>';
                     }
