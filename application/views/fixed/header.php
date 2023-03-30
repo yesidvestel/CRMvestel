@@ -759,6 +759,9 @@ $lista_permisos1=$this->db->query("SELECT permisos_usuario.id,permisos_usuario.i
                          <li>
                             <a href="<?php echo base_url(); ?>mikrotiks/index">Mikrotiks</a>
                         </li>
+                        <li>
+                            <a href="<?php echo base_url(); ?>mikrotiks/lista_vista_ips">Ips Users</a>
+                        </li>
                         <!--slbs-->
 
 
@@ -1506,13 +1509,16 @@ $lista_permisos1=$this->db->query("SELECT permisos_usuario.id,permisos_usuario.i
                             <a href="<?php echo base_url(); ?>clientgroup/apis_vars_edit">Editar Variables Apis</a>
                         </li>
                         <!--slbs-->
-						<?php } if ($lista_permisos_us['confapi'] != null) { ?>
+						<?php } if ($lista_permisos_us['confmks'] != null) { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>mikrotiks/index">Mikrotiks</a>
                         </li>
                         <!--slbs-->
-                        <?php } ?>
-
+                        <?php }if ($lista_permisos_us['conf_ips_users'] != null) { ?>
+                        <li>
+                            <a href="<?php echo base_url(); ?>mikrotiks/lista_vista_ips">Ips Users</a>
+                        </li>
+                    <?php } ?>
                     </ul>
                 </li>
 				<?php } ?>

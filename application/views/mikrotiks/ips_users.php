@@ -24,9 +24,9 @@
             
         </div>
 
-        <h4>Mikrotiks </h4>
-<a href="#" id="open_modal" class="btn-small btn-primary">Agregar Nueva Mikrotik</a>
-<a href="#" id="validar_todas_mk" class="btn-small btn-warning">Validar Conexion de Todas las Mikrotiks</a>
+        <h4>Configuracion de Ips por defecto de usuarios </h4>
+<a href="#" id="open_modal" class="btn-small btn-primary">Agregar Nueva Configuracion</a>
+
         <hr>
         <div class="grid_3 grid_4">
             <table id="tabla-historial" class="table-striped table-hover" cellspacing="0" width="100%">
@@ -34,13 +34,10 @@
                     <tr>
                         <th>ID</th>
                         <th>Nombre</th>
-                        <th>Ip</th>
-                        <th>Puerto</th>
+                        <th>Ip Local</th>
+                        <th>Ip Remota</th>
                         <th>Tegnologia</th>
                         <th>Sede</th>
-                        <th>Usuario</th>
-                        <th>Password</th>
-                        <th>Estado</th>
                         <th>Acciones</th>
                         
 
@@ -51,15 +48,12 @@
                 </tbody>
                 <tfoot>
                     <tr>
-                        <th>ID</th>
+                      <th>ID</th>
                         <th>Nombre</th>
-                        <th>Ip</th>
-                        <th>Puerto</th>
+                        <th>Ip Local</th>
+                        <th>Ip Remota</th>
                         <th>Tegnologia</th>
                         <th>Sede</th>
-                        <th>Usuario</th>
-                        <th>Password</th>
-                        <th>Estado</th>
                         <th>Acciones</th>
                     </tr>
                 </tfoot>
@@ -82,19 +76,32 @@
                 <table width="100%">
                     <tr>
                         <td>
-                            <label>Ip</label>
-                                    <input required placeholder="IP" type="text" name="ip" minlength="7" maxlength="15" size="15" pattern="^((\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$" class="form-control">             
+                            <label>Ip Local</label>
+                                    <input required placeholder="Ip Local" type="text" name="ip_local" minlength="7" maxlength="15" size="15" pattern="^((\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$" class="form-control">             
                         </td>
                         <td>
-                               <label>Puerto</label>
-                                    <input required type="number" placeholder="Puerto" name="puerto" class="form-control">                
+                            <label>Ip Remota</label>
+                                    <input required placeholder="Ip Remota" type="text" name="ip_remota" minlength="7" maxlength="15" size="15" pattern="^((\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$" class="form-control">             
                         </td>
+                        
                 </tr>                        
                 <tr>
-                        <td>
-                            <label>Nombre</label>
-                                 <input type="text" name="nombre" class="form-control" placeholder="Nombre">            
+                    <td>
+                                <label>Nombre</label>
+                                 <input type="text" name="nombre" class="form-control" placeholder="Nombre">             
                         </td>
+                        <td>
+                            <label>Tegnologia</label>
+                               <select class="form-control" name="tegnologia" id="tegnologia">
+                                        <option value=""> Sin Tegnologia</option>
+                                       <option value="GPON">GPON</option>
+                                       <option value="EPON">EPON</option>
+                                       <option value="EOC">EOC</option>
+                               </select>         
+                        </td>
+                        
+                    </tr>
+                    <tr>
                         <td>
                             <label>Sede</label>
                                <select class="form-control" name="sede" id="sede">
@@ -104,29 +111,10 @@
                                    
                                </select>
                         </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label>Tegnologia</label>
-                               <select class="form-control" name="tegnologia" id="tegnologia">
-                                        <option value=""> Sin Tegnologia</option>
-                                       <option value="GPON">GPON</option>
-                                       <option value="EPON">EPON</option>
-                                       <option value="EOC">EOC</option>
-                               </select>
-                        </td>
-                        <td>
-                            <label>Usuario</label>
-                            <input required placeholder="Usuario" name="usuario" type="text"  class="form-control">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label>Password</label>
-                   <a href="#" id="ver_password" class="btn-small btn-success"><i class="icon-eye"></i></a> <input required type="password" placeholder="password" name="password" id="password" class="form-control">
-                        </td>
                         <td></td>
                     </tr>
+                    
+                  
                 </table>
                 
                
@@ -137,7 +125,7 @@
                
             </div>
             <div class="modal-footer">
-                <input type="hidden" name="id_mikrotik" value="0">
+                <input type="hidden" name="id_configuracion" value="0">
                 <button type="button" class="btn btn-default"
                         data-dismiss="modal"><?php echo $this->lang->line('Close') ?></button>
                 <button type="submit" class="btn btn-primary tipo"
@@ -149,7 +137,7 @@
 </div>
 <script type="text/javascript">
     var view_p=true;
-    var lista_mks=<?=$lista_mks ?>;
+ 
     var numer_iteration=0;
     $(document).on("click",".cl_calcula_estado",function(ev){
             ev.preventDefault();
@@ -158,7 +146,7 @@
             $.post(baseurl+"/mikrotiks/estado_mikrotik",{'id':id_mk},function(data){
                 mostrar_alerta1("notify",1,"Confirmado ");
                 $("#notify").css("display","none");
-                 tb.ajax.url( baseurl+"mikrotiks/mk_list").load();
+                 tb.ajax.url( baseurl+"mikrotiks/list_json_ips_users").load();
             });
     });
     $(document).on("click","#validar_todas_mk",function(ev){
@@ -171,7 +159,7 @@
             $.post(baseurl+"/mikrotiks/estado_mikrotik",{'id':lista_mks[id]},function(data){
                 mostrar_alerta1("notify",1,"Confirmado ");
                 $("#notify").css("display","none");
-                 tb.ajax.url( baseurl+"mikrotiks/mk_list").load();
+                 tb.ajax.url( baseurl+"mikrotiks/list_json_ips_users").load();
                  numer_iteration++;
                  if(numer_iteration<lista_mks.length){
                     consultar_estado(numer_iteration);
@@ -182,22 +170,11 @@
         var datosx=$(this).data("datos");
         
         $.post(baseurl+"mikrotiks/set_default",datosx,function(dt){
-            tb.ajax.url( baseurl+"mikrotiks/mk_list").load();    
+            tb.ajax.url( baseurl+"mikrotiks/list_json_ips_users").load();    
         });
 
     });
-    $(document).on("click","#ver_password",function (ev){
-        ev.preventDefault();
-        if(view_p){
-            $('#password').get(0).type = 'text';
-            view_p=false;
-        }else{
-            $('#password').get(0).type = 'password';
-            view_p=true;
-        }
-        
 
-    });
    $(document).on("click","#open_modal",function (ev){
         ev.preventDefault();
         document.getElementById("form_guardar").reset();
@@ -207,15 +184,15 @@
    $(document).on("submit","#form_guardar",function (e){
     e.preventDefault();
         var form=$(this).serialize();
-        $.post(baseurl+"mikrotiks/save_ajax",form,function(data){
-            tb.ajax.url( baseurl+"mikrotiks/mk_list").load();    
+        $.post(baseurl+"mikrotiks/save_ajax_ips_users",form,function(data){
+            tb.ajax.url( baseurl+"mikrotiks/list_json_ips_users").load();    
             document.getElementById("form_guardar").reset(); 
             $("#modal_agregar").modal("hide");
 
-            if($("input [name=id_mikrotik]").val()=="0"){
-                mostrar_alerta1("notify",1,"Mikrotik Agregada ...");    
+            if($("input [name=id_configuracion]").val()=="0"){
+                mostrar_alerta1("notify",1,"Datos Agregados ...");    
             }else{
-                mostrar_alerta1("notify",1,"Mikrotik Actualizada ...");
+                mostrar_alerta1("notify",1,"Datos Actualizados ...");
             }
             
 
@@ -227,10 +204,11 @@
         document.getElementById("form_guardar").reset();
         var datos=$(this).data("datos");
         var id=datos.id;
-        id=id.replace('MK#', '');
-        $("input[name=id_mikrotik]").val(id);
+        //id=id.replace('#', '');
+        $("input[name=id_configuracion]").val(id);
         $("input[name=nombre]").val(datos.nombre);
-        $("input[name=ip]").val(datos.ip);
+        $("input[name=ip_local]").val(datos.ip_local);
+        $("input[name=ip_remota]").val(datos.ip_remota);
         $("input[name=puerto]").val(datos.puerto);
         
         var sede="''";
@@ -243,12 +221,18 @@
         }
         $("#tegnologia option[value="+tegnologia+"]").prop("selected",true);
         $("#sede option[value="+sede+"]").prop("selected",true);
-        $("input[name=usuario]").val(datos.usuario);
-        $("input[name=password]").val(datos.password);
         $(".tipo").text("Actualizar");
         $("#modal_agregar").modal("show");
         
    });
+       $(document).on("click",".set_default",function(ev){
+        var datosx=$(this).data("datos");
+        
+        $.post(baseurl+"mikrotiks/set_default_ips_user",datosx,function(dt){
+            tb.ajax.url( baseurl+"mikrotiks/list_json_ips_users").load();    
+        });
+
+    });
     $(document).ready(function(){
         
             
@@ -260,7 +244,7 @@
 
             // Load data for the table's content from an Ajax source
             "ajax": {
-                "url": "<?php echo site_url('mikrotiks/mk_list')?>",
+                "url": "<?php echo site_url('mikrotiks/list_json_ips_users')?>",
                 "type": "POST"
             },
 

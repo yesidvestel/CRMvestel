@@ -1,4 +1,51 @@
-﻿ALTER TABLE `customers` ADD `dats_last_report` VARCHAR(2000) NULL AFTER `ids_transacciones_rp`;
+﻿---------cambios ips- -----------------------------------------------------------------------
+
+CREATE TABLE `ips_users_mk` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(100) NOT NULL,
+  `ip_local` varchar(100) NOT NULL,
+  `ip_remota` varchar(100) NOT NULL,
+  `tegnologia` varchar(40) NOT NULL,
+  `sede` int(11) NOT NULL,
+  `defecto` tinyint(4) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `ips_users_mk`
+--
+
+INSERT INTO `ips_users_mk` (`id`, `nombre`, `ip_local`, `ip_remota`, `tegnologia`, `sede`, `defecto`) VALUES
+(1, 'Yopal', '10.0.0.1', '10.0.0.2', '', 2, 1),
+(2, 'Yopal GPON', '10.100.0.1', '10.100.0.2', 'GPON', 2, NULL),
+(3, 'aguazul', '10.100.0.1', '10.100.0.2', '', 6, NULL),
+(4, 'tauramena', '10.100.0.1', '10.100.0.2', '', 7, NULL),
+(5, 'villavo', '10.0.0.1', '10.0.0.2', '', 8, NULL),
+(6, 'monterrey', '10.1.100.1', '10.1.100.2', '', 4, NULL),
+(7, 'villanueva', '80.0.0.1', '80.0.0.2', '', 3, 1),
+(8, 'villanueva gpon', '10.20.0.1', '10.20.0.2', 'GPON', 3, NULL);
+
+--
+-- Índices para tablas volcadas
+--
+
+--
+-- Indices de la tabla `ips_users_mk`
+--
+ALTER TABLE `ips_users_mk`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `ips_users_mk`
+--
+ALTER TABLE `ips_users_mk`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+COMMIT;
+---------------------------------------------------------------------------------
+ALTER TABLE `customers` ADD `dats_last_report` VARCHAR(2000) NULL AFTER `ids_transacciones_rp`;
 -----------mas cambios mikrotiks--------------------------------------------
 ALTER TABLE `mikrotiks` ADD `estado_coneccion` TINYINT NULL AFTER `defecto`;
 DELETE FROM `variables_de_entorno` WHERE `variables_de_entorno`.`id` = 3

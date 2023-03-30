@@ -1975,7 +1975,18 @@ $datos_mkt=$this->get_ip_coneccion_microtik_por_sede($datos_consulta_ip);
         }
     }
 
-    
+    public function dev_ips_dinamic(){
+        $ips_remotas = array();    
+        $lista_x=$this->db->query("select ipk.id as id,ipk.ip as ip,ipk.tegnologia as tegnologia,ipk.sede as sede, cs.title as title  from ips_users_mk as ipk inner join customers_group as cs on cs.id=ipk.sede order by ipk.sede");
+
+        foreach ($lista_x as $k => $vl) {
+            $nombre_row=$vl->title;
+            if($vl->tegnologia!=""){
+                    $nombre_row.="_".$vl->tegnologia;
+            }
+            $ips_remotas[$nombre_row];
+        }
+    }
     public function devolver_ips_proximas(){
         $ips_remotas = array('yopal' =>'10.0.0.2', 'yopal_gpon' =>'10.100.0.2', 'aguazul' =>'10.100.0.2', 'tauramena'=>'10.100.0.2','villavo'=>'10.0.0.2',"monterrey"=>'10.1.100.2','villanueva'=>"80.0.0.2",'villanueva_gpon'=>"10.20.0.2" );    
         /*$customers_yopal=$this->db->query("select count(*) as c_usuarios from customers where gid='2' and Ipremota is not null and Ipremota!='' and Ipremota!='0'")->result_array();
