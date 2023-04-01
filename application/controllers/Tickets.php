@@ -1553,7 +1553,16 @@ $x=0;
 		if($ticket->detalle=="Traslado"){
 			$codigo = $ticket->codigo;
 			$traslados=$this->db->get_where('temporales',array('corden'=>$codigo))->row();
-			$datat = array(
+			$cushis=$this->db->get_where('customers',array('id'=>$ticket->cid))->row();
+			$dataH = array(
+				'id_user' => $ticket->cid,
+				'tipos' => 'Traslado',
+			  	'fecha' => date("Y-m-d"),
+				'observacion' => 'Direccion anterio: '.$cushis->nomenclatura.' '.$cushis->numero1.$cushis->adicionauno.' # '.$cushis->numero2.$cushis->adicional2.' - '.$cushis->numero3.'/'.$cushis->residencia.' '.$cushis->referencia,
+				'colaborador' => $this->aauth->get_user()->username,
+			);
+			 if($this->db->insert("historiales",$dataH)){
+				 $datat = array(
 				'localidad' => $traslados->localidad,
 				'barrio' => $traslados->barrio,
 			  	'nomenclatura' => $traslados->nomenclatura,
@@ -1564,13 +1573,15 @@ $x=0;
 				'numero3' => $traslados->ntres,
 				'residencia' => $traslados->residencia,
 				'referencia' => $traslados->referencia,
-			);
-			if($traslados->pago=='no'){
-				$datat['f_contrato']=date("Y-m-d");
-			}
-			//actualizar estado usuario				
-        		$this->db->where('id', $ticket->cid);
-        		$this->db->update('customers', $datat);
+				);
+				if($traslados->pago=='no'){
+					$datat['f_contrato']=date("Y-m-d");
+				}
+				//actualizar estado usuario				
+					$this->db->where('id', $ticket->cid);
+					$this->db->update('customers', $datat);
+				}
+			
 		}
 		if($ticket->detalle=="Suspension Combo"){			
 			$this->db->set('ron', 'Suspendido');
