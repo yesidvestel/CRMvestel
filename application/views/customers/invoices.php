@@ -198,13 +198,13 @@
                             <label for="account"><?php echo $this->lang->line('Account') ?></label>
 
                             <select name="account" class="form-control">
-                                <?php  if ($this->aauth->get_user()->id == 52) {
+                                <?php /* if ($this->aauth->get_user()->id == 52) {
 									echo '<option value="13">Monterrey2 / 008</option>';
-								}else{
+								}else{*/
 									foreach ($acclist as $row) {
 										echo '<option value="' . $row['id'] . '">' . $row['holder'] . ' / ' . $row['acn'] . '</option>';
 									}
-								}
+								//}
 								
                                 ?>
 								
