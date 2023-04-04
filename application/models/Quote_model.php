@@ -529,7 +529,21 @@ class Quote_model extends CI_Model
             return $this->db->delete('meta_data', array('rid' => $id, 'type' => $type, 'col1' => $name));
         }
     }
+    public function comprobar_codigo($codigo){
+        $igual=false;
+        do {
+        $valorx=$this->db->get_where("tickets",array("codigo"=>$codigo))->row();
+            if(isset($valorx)) {
+                $igual=true;
+                $codigo++;
+            }else{
+                $igual=false;
+            }
+        } while ($igual);
+        return $codigo;
+        
 
+    }
 
 
 }

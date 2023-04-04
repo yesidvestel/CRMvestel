@@ -2680,6 +2680,7 @@ if ($valido) {
                                     'id_factura' => $factura['tid'],          
                                 );   
                                 if($tiket_en_pendiente=="true" || $tiket_en_pendiente==true){
+                                    $data['codigo']=$this->quote->comprobar_codigo($nticket);
                                     $this->db->insert('tickets', $data);
                                 }                 
                                 //$this->db->insert('tickets', $data);
@@ -2703,7 +2704,7 @@ if ($valido) {
                                 $data2['subtotal']=$producto2->product_price;*/
                                 //SELECT * FROM `invoice_items` where product like "%Reconexión Internet%"
                                 
-                                
+                                    $data['codigo']=$this->quote->comprobar_codigo($nticket);
                                     $this->db->insert('tickets', $data);
                                     //$this->db->insert('invoice_items',$data2);    
                                     //actualizar factura
@@ -2755,7 +2756,7 @@ if ($valido) {
 
                                 
                                 
-                                
+                                $data['codigo']=$this->quote->comprobar_codigo($nticket);
                                     $this->db->insert('tickets', $data);
                                     //$this->db->insert('invoice_items',$data2);
 
@@ -2784,7 +2785,7 @@ if ($valido) {
                                 $data2['subtotal']=$producto2->product_price;*/
 
                                 
-                                
+                                $data['codigo']=$this->quote->comprobar_codigo($nticket);
                                     $this->db->insert('tickets', $data);
                                     //$this->db->insert('invoice_items',$data2);
 
