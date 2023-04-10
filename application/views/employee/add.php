@@ -78,17 +78,14 @@
                                                for="name"><?php echo $this->lang->line('') ?>Asignar sede</label>
 
                                         <div class="col-sm-5">
-                                            <select name="sede_accede" class="form-control" id="sede_accede">
-												<option value="0">Todas</option>
+                                            <select name="sede_accede[]" class="form-control select-box" multiple="multiple" id="sede_accede">
+												<option value="-0-">Todas</option>
 												<?php
 													foreach ($customergrouplist as $row) {
-														$cid = $row['id'];
+														$cid = "-".$row['id']."-";
 														$title = $row['title'];
-														$selected="";
-														if($sede_accede==$cid){
-															$selected="selected='true'";
-														}
-														if($cid!="1"){
+														
+														if($cid!="-1-"){
 															echo "<option ".$selected." value='$cid'>$title</option>";
 														}
 													}
@@ -344,6 +341,7 @@
 </script>
 
 <script>
+    $("#sede_accede").select2();
 	select_checkbox_segun_rol();//para hacer la seleccion al principio
 $("#sl-roleid").on("change",function(ev){
 	select_checkbox_segun_rol();//al cambiar de rol

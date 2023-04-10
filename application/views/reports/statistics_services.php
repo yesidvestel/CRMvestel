@@ -242,7 +242,8 @@ $('#invoices-products-chart').empty();
 
 var datos={
         element: 'invoices-products-chart',
-		 <?php if ($this->aauth->get_user()->sede_accede == 0) { ?>
+		 <?php $sdx=str_replace("-", "", $this->aauth->get_user()->sede_accede); $sede_a=explode(",", $sdx) ;
+		 if (in_array(0, $sede_a)) { ?>
         data: [
             <?php foreach ($lista_estadisticas as $key => $row) {
             $datex = new DateTime($row['fecha']);
@@ -253,7 +254,7 @@ var datos={
 
         ],
 	//YOPAL
-		<?php } if ($this->aauth->get_user()->sede_accede == 2) { ?>
+		<?php } if (in_array(2, $sede_a)) { ?>
         data: [
             <?php foreach ($lista_estadisticas as $key => $row) {
             $datex = new DateTime($row['fecha']);
@@ -264,7 +265,7 @@ var datos={
 
         ],
 	//MONTERREY
-		<?php } if ($this->aauth->get_user()->sede_accede == 4) { ?>
+		<?php } if (in_array(4, $sede_a)) { ?>
         data: [
             <?php foreach ($lista_estadisticas as $key => $row) {
             $datex = new DateTime($row['fecha']);
@@ -275,7 +276,7 @@ var datos={
 
         ],
 	//VILLANUEVA
-		<?php } if ($this->aauth->get_user()->sede_accede == 3) { ?>
+		<?php } if (in_array(3, $sede_a)) { ?>
         data: [
             <?php foreach ($lista_estadisticas as $key => $row) {
             $datex = new DateTime($row['fecha']);

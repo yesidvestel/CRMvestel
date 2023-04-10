@@ -1,4 +1,76 @@
-﻿---------cambios ips- -----------------------------------------------------------------------
+﻿--- cambios para sede accede multiple --------------------------------------------
+Update aauth_users set sede_accede='-0-' where id=8
+Update aauth_users set sede_accede='-0-' where id=13
+Update aauth_users set sede_accede='-0-' where id=17
+Update aauth_users set sede_accede='-0-' where id=18
+Update aauth_users set sede_accede='-0-' where id=20
+Update aauth_users set sede_accede='-0-' where id=22
+Update aauth_users set sede_accede='-0-' where id=24
+Update aauth_users set sede_accede='-5-' where id=25
+Update aauth_users set sede_accede='-0-' where id=27
+Update aauth_users set sede_accede='-2-' where id=28
+Update aauth_users set sede_accede='-2-' where id=29
+Update aauth_users set sede_accede='-2-' where id=31
+Update aauth_users set sede_accede='-0-' where id=32
+Update aauth_users set sede_accede='-4-' where id=33
+Update aauth_users set sede_accede='-4-' where id=34
+Update aauth_users set sede_accede='-4-' where id=35
+Update aauth_users set sede_accede='-4-' where id=36
+Update aauth_users set sede_accede='-3-' where id=37
+Update aauth_users set sede_accede='-0-' where id=38
+Update aauth_users set sede_accede='-7-' where id=41
+Update aauth_users set sede_accede='-2-' where id=43
+Update aauth_users set sede_accede='-0-' where id=44
+Update aauth_users set sede_accede='-0-' where id=45
+Update aauth_users set sede_accede='-3-' where id=48
+Update aauth_users set sede_accede='-3-' where id=51
+Update aauth_users set sede_accede='-3-' where id=52
+Update aauth_users set sede_accede='-3-' where id=53
+Update aauth_users set sede_accede='-0-' where id=55
+Update aauth_users set sede_accede='-7-' where id=56
+Update aauth_users set sede_accede='-0-' where id=57
+Update aauth_users set sede_accede='-2-' where id=62
+Update aauth_users set sede_accede='-2-' where id=63
+Update aauth_users set sede_accede='-2-' where id=64
+Update aauth_users set sede_accede='-3-' where id=68
+Update aauth_users set sede_accede='-3-' where id=70
+Update aauth_users set sede_accede='-2-' where id=71
+Update aauth_users set sede_accede='-3-' where id=74
+Update aauth_users set sede_accede='-2-' where id=76
+Update aauth_users set sede_accede='-0-' where id=82
+Update aauth_users set sede_accede='-2-' where id=83
+Update aauth_users set sede_accede='-2-' where id=86
+Update aauth_users set sede_accede='-2-' where id=87
+Update aauth_users set sede_accede='-0-' where id=89
+Update aauth_users set sede_accede='-2-' where id=90
+Update aauth_users set sede_accede='-0-' where id=91
+Update aauth_users set sede_accede='-2-' where id=93
+Update aauth_users set sede_accede='-0-' where id=94
+Update aauth_users set sede_accede='-0-' where id=95
+Update aauth_users set sede_accede='-0-' where id=96
+Update aauth_users set sede_accede='-0-' where id=98
+Update aauth_users set sede_accede='-4-' where id=99
+Update aauth_users set sede_accede='-2-' where id=101
+Update aauth_users set sede_accede='-3-' where id=102
+Update aauth_users set sede_accede='-0-' where id=103
+Update aauth_users set sede_accede='-3-' where id=105
+Update aauth_users set sede_accede='-3-' where id=106
+Update aauth_users set sede_accede='-2-' where id=108
+Update aauth_users set sede_accede='-4-' where id=109
+Update aauth_users set sede_accede='-2-' where id=110
+Update aauth_users set sede_accede='-3-' where id=111
+Update aauth_users set sede_accede='-6-' where id=112
+Update aauth_users set sede_accede='-6-' where id=113
+Update aauth_users set sede_accede='-2-' where id=114
+Update aauth_users set sede_accede='-3-' where id=115
+Update aauth_users set sede_accede='-3-' where id=116
+Update aauth_users set sede_accede='-0-' where id=117
+Update aauth_users set sede_accede='-0-' where id=119
+Update aauth_users set sede_accede='-3-' where id=120
+Update aauth_users set sede_accede='-0-' where id=121
+Update aauth_users set sede_accede='-3-' where id=124
+
+---------cambios ips- -----------------------------------------------------------------------
 
 CREATE TABLE `ips_users_mk` (
   `id` int(11) NOT NULL,

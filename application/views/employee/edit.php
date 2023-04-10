@@ -222,26 +222,18 @@
                                                for="name"><?php echo $this->lang->line('') ?>Sede accede</label>
 
                                         <div class="col-sm-5">
-                                            <select name="sede_accede" class="form-control" id="sede_accede">
-												<option value="<?php
-												if ($sede['id']==''){
-													$ids = 0;
-													$sde = 'Todas';
-												}else{
-													$ids = $sede['id'];
-													$sde = $sede['title'];
-												}
-												echo $ids ?>">=><?php echo $sde ?></option>
-												<option value="0">Todas</option>
+                                            <select name="sede_accede[]"  multiple="multiple" class="form-control select-box" id="sede_accede">
+												
+												<option value="-0-">Todas</option>
 												<?php
 													foreach ($customergrouplist as $row) {
-														$cid = $row['id'];
+														$cid = "-".$row['id']."-";
 														$title = $row['title'];
 														$selected="";
 														if($sede_accede==$cid){
 															$selected="selected='true'";
 														}
-														if($cid!="1"){
+														if($cid!="-1-"){
 															echo "<option ".$selected." value='$cid'>$title</option>";
 														}
 													}
@@ -768,6 +760,9 @@
 <!-- The basic File Upload plugin -->
 <script src="<?php echo base_url('assets/myjs/jquery.fileupload.js') ?>"></script>
 <script>
+    $("#sede_accede").select2();
+    $('#sede_accede').val([<?=$str1 ?>]);
+    $('#sede_accede').trigger('change'); 
     /*jslint unparam: true */
     /*global window, $ */
     $(function () {

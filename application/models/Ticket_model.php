@@ -121,9 +121,13 @@ class Ticket_model extends CI_Model
         //$this->db->where('roleid', '2');
 		$areas = array(2,4,3);//areas a la que pertenecen
 		$this->db->where_in('area', $areas);
-		if ($sedeacc != '0'){
-			$this->db->where('sede_accede', $sedeacc);
-			$this->db->or_where('sede_accede', '0');
+		if ($sedeacc != '0' && $sedeacc != '-0-'){
+            $listax1=explode(",",$sedeacc);
+            foreach ($listax1 as $key => $v1) {
+                $this->db->or_like('sede_accede', $v1);    
+            }
+			
+			$this->db->or_where('sede_accede', '-0-');
 			
 		}
         $this->db->order_by("username");

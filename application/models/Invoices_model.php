@@ -321,8 +321,9 @@ setlocale(LC_TIME, "spanish");
 		$sedeacc = $this->aauth->get_user()->sede_accede;
 		$this->db->select('*');
         $this->db->from('customers_group');
+        $sedeacc = str_replace("-","", $sedeacc);
 		if ($sedeacc != '0'){
-		$this->db->where('id', $sedeacc);
+		$this->db->where_in('id', explode(",", $sedeacc));
 		}
         $query = $this->db->get();
         return $query->result_array();

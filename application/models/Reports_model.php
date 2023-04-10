@@ -309,7 +309,7 @@ $lista_datos=array();
             if($sede=="all"){
                 $sede="";
             }else{
-                $sede="and sede_accede=".$sede;    
+                $sede="and sede_accede like'%-".$sede."-%' ";    
             }
             
 

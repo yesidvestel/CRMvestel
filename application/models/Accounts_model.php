@@ -35,6 +35,7 @@ class Accounts_model extends CI_Model
 		$asignacion = $this->db->get_where('asignaciones', array('detalle' => 'caja','colaborador'=>$user))->row();		
         $this->db->select('*');
         $this->db->from($this->table);
+        $sedeacc = str_replace("-","", $sedeacc);
 		if ($sedeacc != '0'){
 			$this->db->where('id', $asignacion->tipo);
 			$this->db->or_where('sede', '0');

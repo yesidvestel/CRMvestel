@@ -188,7 +188,7 @@ class Employee_model extends CI_Model
 				}else{
 					$roleid2 = $roleid;
 				}
-
+                $sedeadd= implode(",",$sedeadd);
                 $data1=array(
 					"sede_accede"=>$sedeadd,
 					"roleid"=>$roleid2,
@@ -509,6 +509,7 @@ class Employee_model extends CI_Model
 
 
         if ($this->db->insert('employee_profile', $data)) {
+            $sede=implode(",",$sede);
             $data1 = array(
                 'sede_accede' => $sede,
                 'roleid' => $roleid,

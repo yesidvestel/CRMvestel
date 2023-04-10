@@ -404,7 +404,13 @@ public function codigo_generar_inserts_permisos(){
             $data['eid'] = intval($id);
             $data['modulos_padre']=$this->employee->get_modulos_padres();
             $data['modulos_usuario']=$this->employee->get_modulos_cliente($id);
-            
+            $tdx=$data['user']['sede_accede'];
+            $tdx=explode(",", $tdx);
+            $str1="";
+            foreach ($tdx as $k1 => $vl1) {
+                $str1.="'".$vl1."',";
+            }
+            $data['str1']=$str1;
             $this->load->view('fixed/header', $head);
             $this->load->view('employee/edit', $data);
             $this->load->view('fixed/footer');
