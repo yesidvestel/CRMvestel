@@ -1173,7 +1173,12 @@ public function calculo_ultimo_estado ($array_add,$customers){
     {
 		$sede = $this->aauth->get_user()->sede_accede;
         $sede =str_replace("-", "",$sede);
-        $query = $this->db->query("SELECT c.*,p.pc FROM customers_group AS c LEFT JOIN ( SELECT gid,COUNT(gid) AS pc FROM customers GROUP BY gid) AS p ON p.gid=c.id WHERE c.id IN('$sede') ");
+        $str_condition="";
+        if($this->aauth->get_user()->roleid<5){
+            $str_condition="WHERE c.id IN(".$sede.")";    
+        }
+        
+        $query = $this->db->query("SELECT c.*,p.pc FROM customers_group AS c LEFT JOIN ( SELECT gid,COUNT(gid) AS pc FROM customers GROUP BY gid) AS p ON p.gid=c.id ".$str_condition);
         return $query->result_array();
     }
 	public function group_list()
