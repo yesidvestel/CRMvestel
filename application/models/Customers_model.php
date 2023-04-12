@@ -1169,11 +1169,21 @@ public function calculo_ultimo_estado ($array_add,$customers){
 
     }
 
-    public function group_list()
+    public function group_sedes()
     {
+		$sede = $this->aauth->get_user()->sede_accede;
+        $sede =str_replace("-", "",$sede);
+        $query = $this->db->query("SELECT c.*,p.pc FROM customers_group AS c LEFT JOIN ( SELECT gid,COUNT(gid) AS pc FROM customers GROUP BY gid) AS p ON p.gid=c.id WHERE c.id IN('$sede') ");
+        return $query->result_array();
+    }
+	public function group_list()
+    {
+		$sede = $this->aauth->get_user()->sede_accede;
+        $sede =str_replace("-", "",$sede);
         $query = $this->db->query("SELECT c.*,p.pc FROM customers_group AS c LEFT JOIN ( SELECT gid,COUNT(gid) AS pc FROM customers GROUP BY gid) AS p ON p.gid=c.id");
         return $query->result_array();
     }
+	
 	
 	public function departamentos_list()
     {

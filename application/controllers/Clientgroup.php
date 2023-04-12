@@ -41,7 +41,7 @@ class Clientgroup extends CI_Controller
     //groups
     public function index()
     {
-        $data['group'] = $this->customers->group_list();
+        $data['group'] = $this->customers->group_sedes();
         $head['usernm'] = $this->aauth->get_user()->username;
         $head['title'] = 'Client Groups';
         $this->load->view('fixed/header', $head);
