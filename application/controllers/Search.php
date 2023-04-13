@@ -98,7 +98,7 @@ class Search extends CI_Controller
 
                 }else{
 
-                    $query = $this->db->query("SELECT * FROM customers INNER JOIN barrio ON barrio.idBarrio=customers.barrio INNER JOIN ciudad ON ciudad.idCiudad=customers.ciudad WHERE gid in(".$sede.") and ( UPPER(name)  LIKE '" . strtoupper($name) . "%' OR UPPER(unoapellido) LIKE  '" . strtoupper($name) . "%') OR UPPER(documento) LIKE  '" . strtoupper($name) . "%' OR UPPER(abonado) LIKE  '" . strtoupper($name). "%' OR UPPER(celular) LIKE  '" . strtoupper($name). "%' LIMIT 6");
+                    $query = $this->db->query("SELECT * FROM customers INNER JOIN barrio ON barrio.idBarrio=customers.barrio INNER JOIN ciudad ON ciudad.idCiudad=customers.ciudad WHERE gid in(".$sede.") and ( UPPER(name)  LIKE '" . strtoupper($name) . "%' OR UPPER(unoapellido) LIKE  '" . strtoupper($name) . "%' OR UPPER(documento) LIKE  '" . strtoupper($name) . "%' OR UPPER(abonado) LIKE  '" . strtoupper($name). "%' OR UPPER(celular) LIKE  '" . strtoupper($name). "%') LIMIT 6");
                 }
             }else{
                 if(count($x)==2){
