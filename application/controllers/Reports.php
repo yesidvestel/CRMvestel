@@ -1040,14 +1040,14 @@ class Reports extends CI_Controller
 					$pertenece = $row['account'];
 				}
 				
-                $balance += $row['credit'] - $row['debit'];
+                $balance += intval($row['credit'] - $row['debit']);
                 if($row['method']=="Cash" || $row['method']=="cash"){
-                    $balance2 += $row['credit'] - $row['debit'];
+                    $balance2 += intval($row['credit'] - $row['debit']);
                     $valor_efectivo_caja_acid=$row['acid'];
                     $account_ef=$row['account'];
                 }
                 if($row['type']=="Transfer"){
-                    $balance2 += $row['credit'] - $row['debit'];
+                    $balance2 += intval($row['credit'] - $row['debit']);
                 }
                 $img="";
                 $file_is=null;
@@ -1076,8 +1076,8 @@ class Reports extends CI_Controller
             echo '<tr><td>'.$img.$row['id'].' - '. $row['date'] . '</td><td>' . $pertenece . '</td><td>' . $row['note'] . '</td><td>' . amountFormat($row['debit']) . '</td><td>' . amountFormat($row['credit']) . '</td><td>' . amountFormat($balance) . ' </td></tr>';
             }
         }
-        echo '<script type="text/javascript">valida_cierre('.$balance2.');$("#efectivo-caja").text("Efectivo Caja: '.amountFormat($balance2).'")</script>';
-        $_SESSION['valor_efectivo_caja']=$balance2; 
+        echo '<script type="text/javascript">valida_cierre('.intval($balance2).');$("#efectivo-caja").text("Efectivo Caja: '.amountFormat($balance2).'")</script>';
+        $_SESSION['valor_efectivo_caja']=intval($balance2); 
         $_SESSION['valor_efectivo_caja_acid']=$valor_efectivo_caja_acid;
         $_SESSION['valor_efectivo_account']=$account_ef;
     }
