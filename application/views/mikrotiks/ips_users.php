@@ -69,7 +69,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title"><span class="tipo">Agregar</span> Mikrotik</h4>
+                <h4 class="modal-title"><span class="tipo">Agregar</span> Configuracion</h4>
             </div>
             <form action="#" method="post" id="form_guardar" >
             <div class="modal-body" id="emailbody">
