@@ -113,6 +113,13 @@
                         </td>
                         <td></td>
                     </tr>
+                    <tr>
+                        <td colspan="2">
+                            <label>Perfiles</label>
+                            <textarea rows="10" id="perfiles" name="perfiles" class="form-control"></textarea>
+                        </td>
+                        
+                    </tr>
                     
                   
                 </table>
@@ -210,6 +217,7 @@
         $("input[name=ip_local]").val(datos.ip_local);
         $("input[name=ip_remota]").val(datos.ip_remota);
         $("input[name=puerto]").val(datos.puerto);
+        $("#perfiles").val(datos.perfiles);
         
         var sede="''";
         var tegnologia="''";

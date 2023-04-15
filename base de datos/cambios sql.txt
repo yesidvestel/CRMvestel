@@ -1,4 +1,36 @@
-﻿--- cambios para sede accede multiple --------------------------------------------
+﻿-------------cambios ips users ips_users_mk---------------
+DROP TABLE ips_users_mk;
+
+
+CREATE TABLE `ips_users_mk` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(100) NOT NULL,
+  `ip_local` varchar(100) NOT NULL,
+  `ip_remota` varchar(100) NOT NULL,
+  `tegnologia` varchar(40) NOT NULL,
+  `sede` int(11) NOT NULL,
+  `defecto` tinyint(4) DEFAULT NULL,
+  `perfiles` varchar(5000) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `ips_users_mk`
+--
+
+INSERT INTO `ips_users_mk` (`id`, `nombre`, `ip_local`, `ip_remota`, `tegnologia`, `sede`, `defecto`, `perfiles`) VALUES
+(1, 'Yopal', '10.0.0.1', '10.0.0.2', '', 2, 1, '3Megas,5Megas,5MegasD,10Megas,10MegasSt,10MegasD,15Megas,15MegasD,20Megas,20MegasSt,20MegasD,30Megas,30MegasSt,30MegasD,40Megas,40MegasSt,40MegasD,50Megas,50MegasSt,50MegasD,60Megas,60MegasSt,60MegasD,70Megas,70MegasSt,70MegasD,80Megas,80MegasSt,80MegasD,90Megas,90MegasSt,90MegasD,100Megas,100MegasSt,100MegasD,Cortados'),
+(2, 'Yopal GPON', '10.100.0.1', '10.100.0.2', 'GPON', 2, NULL, ''),
+(3, 'aguazul', '10.100.0.1', '10.100.0.2', '', 6, NULL, '3Megas,5Megas,5MegasD,10Megas,10MegasSt,10MegasD,15Megas,15MegasD,20Megas,20MegasSt,20MegasD,30Megas,30MegasSt,30MegasD,40Megas,40MegasSt,40MegasD,50Megas,50MegasSt,50MegasD,60Megas,60MegasSt,60MegasD,70Megas,70MegasSt,70MegasD,80Megas,80MegasSt,80MegasD,90Megas,90MegasSt,90MegasD,100Megas,100MegasSt,100MegasD,Cortados'),
+(4, 'tauramena', '10.100.0.1', '10.100.0.2', '', 7, NULL, '3Megas,5Megas,5MegasD,10Megas,10MegasSt,10MegasD,15Megas,15MegasD,20Megas,20MegasSt,20MegasD,30Megas,30MegasSt,30MegasD,40Megas,40MegasSt,40MegasD,50Megas,50MegasSt,50MegasD,60Megas,60MegasSt,60MegasD,70Megas,70MegasSt,70MegasD,80Megas,80MegasSt,80MegasD,90Megas,90MegasSt,90MegasD,100Megas,100MegasSt,100MegasD,Cortados'),
+(5, 'villavo', '10.0.0.1', '10.0.0.2', '', 8, NULL, '100MegasR,200MegasR,300MegasR,Cortados'),
+(6, 'monterrey', '10.1.100.1', '10.1.100.2', '', 4, NULL, '3Megas,5Megas,5MegasD,10Megas,10MegasSt,10MegasD,15Megas,15MegasD,20Megas,20MegasSt,20MegasD,30Megas,30MegasSt,30MegasD,40Megas,40MegasSt,40MegasD,50Megas,50MegasSt,50MegasD,60Megas,60MegasSt,60MegasD,70Megas,70MegasSt,70MegasD,80Megas,80MegasSt,80MegasD,90Megas,90MegasSt,90MegasD,100Megas,100MegasSt,100MegasD,Cortados'),
+(7, 'villanueva', '80.0.0.1', '80.0.0.2', '', 3, 1, '3Megas,5Megas,5MegasD,10Megas,10MegasSt,10MegasD,15Megas,15MegasD,20Megas,20MegasSt,20MegasD,30Megas,30MegasSt,30MegasD,40Megas,40MegasSt,40MegasD,50Megas,50MegasSt,50MegasD,60Megas,60MegasSt,60MegasD,70Megas,70MegasSt,70MegasD,80Megas,80MegasSt,80MegasD,90Megas,90MegasSt,90MegasD,100Megas,100MegasSt,100MegasD,Cortados'),
+(8, 'villanueva gpon', '10.20.0.1', '10.20.0.2', 'GPON', 3, NULL, '');
+COMMIT;
+
+------------------------------------------------------------
+
+--- cambios para sede accede multiple --------------------------------------------
 Update aauth_users set sede_accede='-0-' where id=8
 Update aauth_users set sede_accede='-0-' where id=13
 Update aauth_users set sede_accede='-0-' where id=17

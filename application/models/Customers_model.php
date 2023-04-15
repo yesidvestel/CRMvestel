@@ -1992,15 +1992,67 @@ $datos_mkt=$this->get_ip_coneccion_microtik_por_sede($datos_consulta_ip);
 
     public function dev_ips_dinamic(){
         $ips_remotas = array();    
-        $lista_x=$this->db->query("select ipk.id as id,ipk.ip as ip,ipk.tegnologia as tegnologia,ipk.sede as sede, cs.title as title  from ips_users_mk as ipk inner join customers_group as cs on cs.id=ipk.sede order by ipk.sede");
+        $lista_x=$this->db->query("select ipk.id as id,ipk.ip_local as ip_local,ipk.ip_remota as ip_remota,ipk.tegnologia as tegnologia,ipk.sede as sede, cs.title as title, ipk.perfiles as perfil  from ips_users_mk as ipk inner join customers_group as cs on cs.id=ipk.sede order by ipk.sede")->result();
 
         foreach ($lista_x as $k => $vl) {
-            $nombre_row=$vl->title;
+            
+            $nombre_row="ips_".$vl->sede;
+            $aditional_condition="";
+            
             if($vl->tegnologia!=""){
                     $nombre_row.="_".$vl->tegnologia;
+                    $aditional_condition.=" and tegnologia_instalacion='".$vl->tegnologia."'";
+            }else{
+                $validacion=$this->db->query("select * from ips_users_mk where tegnologia!='' and sede=".$vl->sede)->result();
+                if(count($validacion)>0){
+                    //para saber como hacer el 2do select;
+                    $aditional_condition=" and ((";
+                    
+                    foreach ($validacion as $k2 => $vl2) {
+                        if($k2==0){
+                            $aditional_condition.=" tegnologia_instalacion!='".$vl2->tegnologia."' ";
+                            
+                        }else if($k2 <(count($validacion)-1) ){
+                            $aditional_condition.=" and ";
+                            
+                        }
+                    }
+                    $aditional_condition.=") or tegnologia_instalacion is null) ";
+                    
+                }                
             }
-            $ips_remotas[$nombre_row];
+            $vl->perfil="Seleccione...,".$vl->perfil;
+            $vl->perfil=explode(",", $vl->perfil);
+            $ips_remotas[$nombre_row]=$vl;
+            $str_query="select INET_NTOA(max(INET_ATON(Ipremota))) as c_usuarios from customers where gid='".$vl->sede."' and Ipremota is not null and Ipremota!='' and Ipremota!='0' ".$aditional_condition;
+            $customers_x=$this->db->query($str_query)->result_array();
+           // var_dump($aditional_condition);echo $nombre_row." aa<br>";
+        // ips yopal
+        $ciclo=true;
+        $ip=ip2long($customers_x[0]['c_usuarios'])+1;//+intval($customers_yopal[0]['c_usuarios']) estas lineas hay que agregarlas si el sistema se pone lento al completar todas las casillas ips posibles
+        
+        while($ciclo){
+            
+            $bcast = $ip;
+            $smask = ip2long("255.255.255.255");
+            $nmask = $bcast & $smask;
+            
+            //$comprovar=$this->db->get_where("customers",array("Ipremota"=>long2ip($nmask),"gid"=>"2"))->row();
+            $comprovar=$this->db->query("select * from customers where gid='".$vl->sede."' and Ipremota='".long2ip($nmask)."' ".$aditional_condition)->result_array();
+            if(count($comprovar)==0){
+                //no existe
+                $ips_remotas[$nombre_row]->ip_remota=long2ip($nmask);//aqui como la ip es correcta y no existe se deja como la ip a retornar
+                $ciclo=false;
+            }else{                
+                //existe
+                $ciclo=true;
+                $ip=$ip+1;
+            }
+        } 
+
         }
+        //todas las sedes estan bien excepto villavicencio revisar
+        return $ips_remotas;
     }
     public function devolver_ips_proximas(){
         $ips_remotas = array('yopal' =>'10.0.0.2', 'yopal_gpon' =>'10.100.0.2', 'aguazul' =>'10.100.0.2', 'tauramena'=>'10.100.0.2','villavo'=>'10.0.0.2',"monterrey"=>'10.1.100.2','villanueva'=>"80.0.0.2",'villanueva_gpon'=>"10.20.0.2" );    
@@ -2018,7 +2070,7 @@ $datos_mkt=$this->get_ip_coneccion_microtik_por_sede($datos_consulta_ip);
 		$customers_villavo=$this->db->query("select INET_NTOA(max(INET_ATON(Ipremota))) as c_usuarios from customers where gid='8' and Ipremota is not null and Ipremota!='' and Ipremota!='0'")->result_array();
         $customers_villanueva=$this->db->query("select INET_NTOA(max(INET_ATON(Ipremota))) as c_usuarios from customers where gid='3' and Ipremota is not null and Ipremota!='' and (tegnologia_instalacion!='GPON' or tegnologia_instalacion is null)")->result_array();
         $customers_villanueva_gpon=$this->db->query("select INET_NTOA(max(INET_ATON(Ipremota))) as c_usuarios from customers where gid='3' and Ipremota is not null and Ipremota!='' and tegnologia_instalacion='GPON'")->result_array();
-        
+        //var_dump($customers_villavo);echo " ee<br>";
         // ips yopal
         $ciclo=true;
         $ip=ip2long($customers_yopal[0]['c_usuarios'])+1;//+intval($customers_yopal[0]['c_usuarios']) estas lineas hay que agregarlas si el sistema se pone lento al completar todas las casillas ips posibles
@@ -2134,7 +2186,7 @@ $datos_mkt=$this->get_ip_coneccion_microtik_por_sede($datos_consulta_ip);
        // end ips tauramena
 		// ips villavo
         $ciclo=true;
-        $ip=ip2long($customers_tauramena[0]['c_usuarios'])+1;//+intval($customers_monterrey[0]['c_usuarios']) estas lineas hay que agregarlas si el sistema se pone lento al completar todas las casillas ips posibles
+        $ip=ip2long($customers_villavo[0]['c_usuarios'])+1;//+intval($customers_monterrey[0]['c_usuarios']) estas lineas hay que agregarlas si el sistema se pone lento al completar todas las casillas ips posibles
         
         while($ciclo){
             

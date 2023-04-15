@@ -95,7 +95,14 @@ class Customers extends CI_Controller
         $head['title'] = 'Create Customer';      
         $depar = $this->customers->departamentos_list();
         $data['departamentos'] = $this->customers->array_sort($depar, 'departamento', SORT_ASC);
-        $data['ips_remotas']=$this->customers->devolver_ips_proximas();
+        //$data['ips_remotas']=$this->customers->devolver_ips_proximas();
+        $data['ips_remotas2']=$this->customers->dev_ips_dinamic();
+        /*var_dump($data['ips_remotas']);
+        echo "<br>";
+        foreach ($data['ips_remotas2'] as $key => $value) {
+            var_dump($value->title." | ".$key."  |  ".$value->ip_remota);
+        }
+        var_dump(json_encode($data['ips_remotas2']));*/
         $this->load->view('fixed/header', $head);
         $this->load->view('customers/create', $data);
         $this->load->view('fixed/footer');

@@ -215,6 +215,7 @@ class Mikrotiks extends CI_Controller
         $data['ip_remota']=$_POST['ip_remota'];
         $data['tegnologia']=$_POST['tegnologia'];
         $data['sede']=$_POST['sede'];
+        $data['perfiles']=$_POST['perfiles'];
         
         if($_POST['id_configuracion']=="0"){
             

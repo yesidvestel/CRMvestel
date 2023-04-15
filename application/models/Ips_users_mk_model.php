@@ -26,7 +26,7 @@ class Ips_users_mk_model extends CI_Model
     
     private function _get_datatables_query()
     {
-        $this->db->select("mk1.id as id ,mk1.nombre as nombre,mk1.ip_local as ip_local,mk1.ip_remota as ip_remota,mk1.tegnologia as tegnologia,mk1.sede as sede,cg.title as title, mk1.defecto as defecto");
+        $this->db->select("mk1.id as id ,mk1.nombre as nombre,mk1.ip_local as ip_local,mk1.ip_remota as ip_remota,mk1.tegnologia as tegnologia,mk1.sede as sede,cg.title as title, mk1.defecto as defecto, mk1.perfiles as perfiles");
         $this->db->from($this->table." as mk1");
         
         $this->db->join("customers_group as cg","cg.id=mk1.sede");
