@@ -435,17 +435,7 @@
 	}
 
 
-     var remote_ip_yopal="<?=$ips_remotas['yopal']?>";
-     var remote_ip_yopal_gpon="<?=$ips_remotas['yopal_gpon']?>";
-    var remote_ip_villanueva="<?=$ips_remotas['villanueva']?>";
-    var remote_ip_monterrey="<?=$ips_remotas['monterrey']?>";
-    var sede_default="<?=$customergroup['id']?>";
-    var ip_default="<?=$customer['Ipremota']?>";
-    var user_name_default="<?=$customer['name_s']?>";
-    var remote_ip_villanueva_gpon="<?=$ips_remotas['villanueva_gpon']?>";
-    var remote_ip_aguazul="<?=$ips_remotas['aguazul']?>";
-    var remote_ip_tauramena="<?=$ips_remotas['tauramena']?>";
-    var remote_ip_villavo="<?=$ips_remotas['villavo']?>";
+    
     function selecciona_para_agregar(){
         var elemento=document.getElementById("copy_address<?=$edit?>");
         //console.log($("#discountFormatServicio").val());
@@ -507,19 +497,15 @@ alert(selected);
 }
 </script>
 <script type="text/javascript">	
-	var perfil_2 = new Array ("Seleccine...","3Megas","5Megas","5MegasD","10Megas","10MegasSt","10MegasD","15Megas","15MegasD","20Megas","20MegasSt","20MegasD","30Megas","30MegasSt","30MegasD","40Megas","40MegasSt","40MegasD","50Megas","50MegasSt","50MegasD","60Megas","60MegasSt","60MegasD","70Megas","70MegasSt","70MegasD","80Megas","80MegasSt","80MegasD","90Megas","90MegasSt","90MegasD","100Megas","100MegasSt","100MegasD","Cortados");
-	var perfil_3 = new Array ("Seleccine...","3Megas","5Megas","5MegasD","10Megas","10MegasSt","10MegasD","15Megas","15MegasD","20Megas","20MegasSt","20MegasD","30Megas","30MegasSt","30MegasD","40Megas","40MegasSt","40MegasD","50Megas","50MegasSt","50MegasD","60Megas","60MegasSt","60MegasD","70Megas","70MegasSt","70MegasD","80Megas","80MegasSt","80MegasD","90Megas","90MegasSt","90MegasD","100Megas","100MegasSt","100MegasD","Cortados");
-	var perfil_4 = new Array ("Seleccine...","3Megas","5Megas","5MegasD","10Megas","10MegasSt","10MegasD","15Megas","15MegasD","20Megas","20MegasSt","20MegasD","30Megas","30MegasSt","30MegasD","40Megas","40MegasSt","40MegasD","50Megas","50MegasSt","50MegasD","60Megas","60MegasSt","60MegasD","70Megas","70MegasSt","70MegasD","80Megas","80MegasSt","80MegasD","90Megas","90MegasSt","90MegasD","100Megas","100MegasSt","100MegasD","Cortados");
-	var perfil_6 = new Array ("Seleccine...","3Megas","5Megas","5MegasD","10Megas","10MegasSt","10MegasD","15Megas","15MegasD","20Megas","20MegasSt","20MegasD","30Megas","30MegasSt","30MegasD","40Megas","40MegasSt","40MegasD","50Megas","50MegasSt","50MegasD","60Megas","60MegasSt","60MegasD","70Megas","70MegasSt","70MegasD","80Megas","80MegasSt","80MegasD","90Megas","90MegasSt","90MegasD","100Megas","100MegasSt","100MegasD","Cortados");
-	var perfil_7 = new Array ("Seleccine...","3Megas","5Megas","5MegasD","10Megas","10MegasSt","10MegasD","15Megas","15MegasD","20Megas","20MegasSt","20MegasD","30Megas","30MegasSt","30MegasD","40Megas","40MegasSt","40MegasD","50Megas","50MegasSt","50MegasD","60Megas","60MegasSt","60MegasD","70Megas","70MegasSt","70MegasD","80Megas","80MegasSt","80MegasD","90Megas","90MegasSt","90MegasD","100Megas","100MegasSt","100MegasD","Cortados");
-	var perfil_8 = new Array ("Seleccine...","100MegasR","200MegasR","300MegasR","Cortados");
+	
+	var datos_perfiles_ips_r_l=<?=json_encode($ips_remotas2) ?>;
 							//crear funcion que ejecute el cambio
 							function cambia(){
 								var customergroup;
 								customergroup = document.formulario1.customergroup[document.formulario1.customergroup.selectedIndex].value;
 								//se verifica la seleccion dada
 								if(customergroup!=0){
-									mis_opts=eval("perfil_"+customergroup);
+									mis_opts=datos_perfiles_ips_r_l['ips_'+customergroup].perfil;
 									//definimos cuantas obciones hay
 									num_opts=mis_opts.length;
 									//marcamos obciones en el selector
@@ -529,7 +515,7 @@ alert(selected);
 										document.formulario1.perfil.options[i].value=mis_opts[i];
 										document.formulario1.perfil.options[i].text=mis_opts[i];
 									}
-										}else{
+								}else{
 											//resultado si no hay obciones
 											document.formulario1.perfil.length = 1;
 											document.formulario1.perfil.options[0].value="-"
@@ -541,50 +527,40 @@ alert(selected);
                                     
                                     $("#Ipremota").val(ip_default);
                                     //$("#Ipremota2").val(ip_default);
-                                    if(customergroup=="3"){
-                                        
-                                        //$("#Ipremota2").val(remote_ip_villanueva);
-                                        if(tegnologia_instalacion1=="GPON"){
-	                                        $("#Ipremota").val(remote_ip_villanueva_gpon);
-	                                       
-                                   		 }
+                                    var val_ip_remot=datos_perfiles_ips_r_l['ips_'+customergroup+"_"+tegnologia_instalacion1];
+                                    if(val_ip_remot!=undefined){
+										val_ip_remot=datos_perfiles_ips_r_l['ips_'+customergroup+"_"+tegnologia_instalacion1].ip_remota;
+                                    	$("#Ipremota").val(val_ip_remot);
                                     }
-                                    if(customergroup=="2" || customergroup=="6"){
+                                    
+                                    /*if(customergroup=="6"){
                                         
                                         
                                         if(tegnologia_instalacion1=="GPON"){
-	                                        $("#Ipremota").val(remote_ip_yopal_gpon);
+	                                        $("#Ipremota").val(datos_perfiles_ips_r_l['ips_2_GPON'].ip_remota;
 	                                       
                                    		 }
-                                    }
+                                    }*/
                                 }else{
-                                    if(customergroup=="2"){
-                                        $("#Ipremota").val(remote_ip_yopal);
-                                       // $("#Ipremota2").val(remote_ip_yopal);
-                                       	 if(tegnologia_instalacion1=="GPON"){
-	                                        $("#Ipremota").val(remote_ip_yopal_gpon);
-	                                       
-                                   		 }
-                                    }else if(customergroup=="3"){
-                                        $("#Ipremota").val(remote_ip_villanueva);
-                                        //$("#Ipremota2").val(remote_ip_villanueva);
-                                        if(tegnologia_instalacion1=="GPON"){
-	                                        $("#Ipremota").val(remote_ip_villanueva_gpon);
-	                                       
-                                   		 }
-                                    }else if(customergroup=="4"){
-                                        $("#Ipremota").val(remote_ip_monterrey);
-                                       // $("#Ipremota2").val(remote_ip_monterrey);
-                                    }
-									else if(customergroup=="7"){
-                                        $("#Ipremota").val(remote_ip_tauramena);
-                                       // $("#Ipremota2").val(remote_ip_monterrey);
-                                    }
-									else if(customergroup=="8"){
-                                        $("#Ipremota").val(remote_ip_villavo);
-                                       // $("#Ipremota2").val(remote_ip_monterrey);
-                                    }
-                                }
+                                    var val_ip_remote="";
+	                                if(tegnologia_instalacion1!=""){
+	                                    
+	                                    val_ip_remote=datos_perfiles_ips_r_l['ips_'+customergroup+"_"+tegnologia_instalacion1];
+	                                    console.log(val_ip_remote+" a");    
+	                                    if(val_ip_remote==undefined){
+	                                        val_ip_remote=datos_perfiles_ips_r_l['ips_'+customergroup].ip_remota;    
+	                                    }else{
+	                                        
+	                                        val_ip_remote=datos_perfiles_ips_r_l['ips_'+customergroup+"_"+tegnologia_instalacion1].ip_remota;
+	                                    }
+	                                    console.log(val_ip_remote+" x");    
+	                                }else{
+	                                    val_ip_remote=datos_perfiles_ips_r_l['ips_'+customergroup].ip_remota;
+	                                    console.log(val_ip_remote+" y");    
+	                                }
+	                               $("#Ipremota").val(val_ip_remote);
+	                                //$("#Ipremota2").val(val_ip_remote);
+								}
                                 selecciona_para_agregar();   
 							}
 
@@ -609,14 +585,7 @@ alert(selected);
                                 cambia2();
                                 
                             });		
-	var Iplocal_2 = new Array ("10.0.0.1");
-	var Iplocal_2gpon = new Array ("10.100.0.1");
-	var Iplocal_6 = new Array ("10.100.0.1");
-	var Iplocal_7 = new Array ("10.100.0.1");
-	var Iplocal_8 = new Array ("10.0.0.1");
-	var Iplocal_3 = new Array ("80.0.0.1");
-	var Iplocal_4 = new Array ("10.1.100.1");
-	var Iplocal_3gpon = new Array ("10.20.0.1");
+	
 							//crear funcion que ejecute el cambio
 							function cambia2(){
 								var customergroup;
@@ -624,13 +593,23 @@ alert(selected);
 								//se verifica la seleccion dada
 								if(customergroup!=0){
 									var tegnologia_instalacion1=$("#tegnologia option:selected").val();
-                                    if(customergroup==3 && tegnologia_instalacion1=="GPON"){
-                                        customergroup="3gpon";
+                                    var text_key="";
+                                if(tegnologia_instalacion1!=""){
+                                    
+                                    text_key=datos_perfiles_ips_r_l['ips_'+customergroup+"_"+tegnologia_instalacion1];
+                                    if(text_key==undefined){
+                                        text_key='ips_'+customergroup;    
+                                    }else{                                        
+                                        text_key='ips_'+customergroup+"_"+tegnologia_instalacion1;
                                     }
-                                    if(customergroup==2 && tegnologia_instalacion1=="GPON"){
-                                        customergroup="2gpon";
-                                    }
-									mis_opts=eval("Iplocal_"+customergroup);
+                                    
+                                }else{
+                                    text_key='ips_'+customergroup;
+                                }
+
+                                    
+                                    var arrayx=new Array(datos_perfiles_ips_r_l[text_key].ip_local);
+                                    mis_opts=arrayx;
 									//definimos cuantas obciones hay
 									num_opts=mis_opts.length;
 									//marcamos obciones en el selector
