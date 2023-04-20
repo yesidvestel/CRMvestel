@@ -1381,7 +1381,7 @@ public function ajax_graficas2(){
     }
     public function printpdf()
     {
-
+set_time_limit(13000);
         $custid = $this->input->get('id');
         $tid = $custid;
         $data['details'] = $this->customers->details($custid);
@@ -1398,7 +1398,7 @@ public function ajax_graficas2(){
         
         $data['invoice']['multi'] = 0;
 
-        ini_set('memory_limit', '128M');
+        ini_set('memory_limit', '500M');
 
         $html = $this->load->view('customers/view-print-'.RTL, $data, true);
 
