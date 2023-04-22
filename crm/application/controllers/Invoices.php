@@ -36,10 +36,10 @@ class Invoices extends CI_Controller
     public function index()
     {
         $head['title'] = "Manage Invoices";
-        //$_SESSION['url_web_service']="http://localhost/CRMvestel/Servicio";//pruebas_locales
+        //$_SESSION['url_web_service']="http://localhost/crm_consultas/Servicio";//pruebas_locales
         $cid=$this->session->userdata('user_details')[0]->cid;
         $this->load->model('Payments_model', 'payments');
-       $data['list_banks']= $this->payments->get_list_banks_pse();
+       //$data['list_banks']= $this->payments->get_list_banks_pse();
         $cuerpo='"cid": '.$cid.",";
         
         $data['dt']=$this->communication->obtener($cuerpo,"get_due_customer");

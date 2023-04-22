@@ -55,8 +55,8 @@
                     <div class="col-md-10" id="total_text">
                     
                     <?php 
-                            setlocale(LC_MONETARY,"es_CO");
-                            echo money_format("%.0n", ($due->total-$due->pamnt));
+                           // setlocale(LC_MONETARY,"es_CO");
+                           // echo money_format("%.0n", ($due->total-$due->pamnt));
                     ?>
                     </div>
                 </div>
@@ -144,7 +144,7 @@
         <div class="modal-content" >
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title"> PSE, Pagas : <?= money_format("%.0n", ($due->total-$due->pamnt)); ?> </h4>
+                <h4 class="modal-title"> PSE, Pagas : <?php // amountFormat("%.0n", ($due->total-$due->pamnt)); ?> </h4>
             </div>
 
             <div class="modal-body" >
