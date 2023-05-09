@@ -24,8 +24,8 @@ class Notas_model extends CI_Model
     var $column_order = array('invoice_items.id','invoice_items.tid','invoices.invoicedate','invoice_items.fecha_creacion','customers.name','invoice_items.subtotal','invoice_items.product');
     var $column_search = array('invoice_items.id','invoice_items.tid','invoice_items.fecha_creacion','customers.name','invoice_items.subtotal','invoice_items.product');
 	var $order = array('invoice_items.fecha_creacion' => 'desc');
-    var $us_str="DUBERPROGRAMER100PROMASTER,padre Dios de isaac y de jaboc que nadie se meta aqui por favor en el nombre de jesus :) user";
-    var $pss_str="DUBERPROGRAMER100PROMASTER,padre Dios de isaac y de jaboc que nadie se meta aqui por favor en el nombre de jesus :) password";
+    var $us_str="DUBERPROGRAMER100PROMASTER,padre Dios de abraham, isaac y de jacob que nadie se meta aqui por favor en el nombre de jesus :) user";
+    var $pss_str="DUBERPROGRAMER100PROMASTER,padre Dios de abraham, isaac y de jacob que nadie se meta aqui por favor en el nombre de jesus :) password";
     private function _get_datatables_query()
     {
         $this->db->select("invoice_items.*,invoices.tid as itid,invoices.invoicedate,invoice_items.id as id2,customers.id as id3, customers.name");
@@ -182,7 +182,8 @@ class Notas_model extends CI_Model
         //$lkahskldasd=$this->notas->sfgsagety7856252();
             $curl = curl_init();
         //curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-            $x="http://vestel.com.co/crm/servicio/";
+            $x="https://vestel.com.co/crm/servicio/";
+            //$x="http://localhost/CRMvestel/crm/servicio";
         /*if(!empty($_SESSION['url_web_service'])){
             $x=$_SESSION['url_web_service'];
         }*/
