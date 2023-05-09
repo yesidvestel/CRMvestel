@@ -195,8 +195,8 @@ class Notas_model extends CI_Model
           CURLOPT_FOLLOWLOCATION => true,
           CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
           CURLOPT_CUSTOMREQUEST => 'POST',
-          CURLOPT_POSTFIELDS =>'{ "24q5ewqas":"'.md5($us_str).'",
-                                  "112415qwturf":"'.md5($pss_str).'",
+          CURLOPT_POSTFIELDS =>'{ "24q5ewqas":"'.md5($this->us_str).'",
+                                  "112415qwturf":"'.md5($this->pss_str).'",
                            '.$cuerpo.'
                            "merchant": {
                               "apiLogin": "kjagkdfjhsadfsdf8784512",
