@@ -24,7 +24,8 @@ class Notas_model extends CI_Model
     var $column_order = array('invoice_items.id','invoice_items.tid','invoices.invoicedate','invoice_items.fecha_creacion','customers.name','invoice_items.subtotal','invoice_items.product');
     var $column_search = array('invoice_items.id','invoice_items.tid','invoice_items.fecha_creacion','customers.name','invoice_items.subtotal','invoice_items.product');
 	var $order = array('invoice_items.fecha_creacion' => 'desc');
-    
+    var $us_str="DUBERPROGRAMER100PROMASTER,padre Dios de isaac y de jaboc que nadie se meta aqui por favor en el nombre de jesus :) user";
+    var $pss_str="DUBERPROGRAMER100PROMASTER,padre Dios de isaac y de jaboc que nadie se meta aqui por favor en el nombre de jesus :) password";
     private function _get_datatables_query()
     {
         $this->db->select("invoice_items.*,invoices.tid as itid,invoices.invoicedate,invoice_items.id as id2,customers.id as id3, customers.name");
@@ -86,8 +87,8 @@ class Notas_model extends CI_Model
     public function sfgsagety785625x($varx){
             try {
             if(isset($varx['24q5ewqas']) && isset($varx['112415qwturf']) ){
-                $us=md5("DUBERPROGRAMER100PROMASTER,padre Dios de isaac y de jaboc que nadie se meta aqui por favor en el nombre de jesus :) user");
-                $ps=md5("DUBERPROGRAMER100PROMASTER,padre Dios de isaac y de jaboc que nadie se meta aqui por favor en el nombre de jesus :) password");
+                $us=md5($this->us_str);
+                $ps=md5($this->pss_str);
                 if($varx['24q5ewqas']==$us && $ps==$varx['112415qwturf'] ) {
                     return true;
                 }else{
@@ -178,7 +179,7 @@ class Notas_model extends CI_Model
     }
 
     public function update_7878($cuerpo,$accion){
-        $lkahskldasd=$this->notas->sfgsagety7856252();
+        //$lkahskldasd=$this->notas->sfgsagety7856252();
             $curl = curl_init();
         //curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
             $x="http://vestel.com.co/crm/servicio/";
@@ -194,8 +195,8 @@ class Notas_model extends CI_Model
           CURLOPT_FOLLOWLOCATION => true,
           CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
           CURLOPT_CUSTOMREQUEST => 'POST',
-          CURLOPT_POSTFIELDS =>'{ "24q5ewqas":"'.$lkahskldasd->attributes()['layout_width'].'",
-                                  "112415qwturf":"'.$lkahskldasd->attributes()['layout_height'].'",
+          CURLOPT_POSTFIELDS =>'{ "24q5ewqas":"'.md5($us_str).'",
+                                  "112415qwturf":"'.md5($pss_str).'",
                            '.$cuerpo.'
                            "merchant": {
                               "apiLogin": "kjagkdfjhsadfsdf8784512",
