@@ -34,8 +34,10 @@ class Payments extends CI_Controller
     public function index()
     {
         $head['title'] = "Payments";
-
-        
+        $cid=$this->session->userdata('user_details')[0]->cid;
+        $fecha_actual=date("Y-m-d");
+        $this->db->query("DELETE FROM wompi_data_orden WHERE estado='inicial' and cid_user=".$cid." and fecha<'".$fecha_actual."'");
+        //var_dump("DELETE FROM wompi_data_orden WHERE estado='inicial' and cid_user=".$cid." and fecha<'".$fecha_actual."'");
         
         $this->load->view('includes/header');
         $this->load->view('payments/payments');
@@ -581,21 +583,14 @@ class Payments extends CI_Controller
             $no++;
             $row = array();
             $row[] = $invoices->fecha;
-            $row[] = $invoices->monto;
+            $row[] = $invoices->debe;
             $row[] = $invoices->metodo_pago;
-            if($invoices->estado=="Pagado"){
+            if($invoices->estado=="Finalizada con Exito"){
                 $row[] = "<div class='cl-pagado'>".$invoices->estado."</div>";    
             }else{
                 $row[] = $invoices->estado;
             }
-            
-            $x=json_decode($invoices->data);
-            if($invoices->metodo_pago=="PSE"){
-                $row[] = "<a href='".$x->transactionResponse->extraParameters->BANK_URL."' >Ver Link</a>";
-            }else{
-                $row[] = "<a href='".$x->transactionResponse->extraParameters->URL_PAYMENT_RECEIPT_HTML."' >Ver Link</a>";    
-            }
-            
+            $row[] = $invoices->reference;
             
             
             //$row[] = $invoices->data;

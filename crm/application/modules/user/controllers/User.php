@@ -11,6 +11,17 @@ class User extends CI_Controller
 		$this->load->model('general_model','general');
         $_SESSION['url_web_service']="http://www.saves-vestel.com/Servicio";
         //$_SESSION['url_web_service']="http://localhost/CRMvestel/Servicio";
+
+        $_SESSION['wompi']['public_key']="pub_prod_YDEGM72YP1NG7VTLfLTXis1N9S22Ykkj";
+        $_SESSION['wompi']['private_key']="prv_prod_HFaQ3kh3uxJee6CeoBJZnj5OcgjagXnz";
+        $_SESSION['wompi']['integridad_key']="prod_integrity_qaaPLH0FonmVUnNvyMROm6OHGvOYleGx";
+        $modo_wompi="prod";
+        if($modo_wompi=="pruebas"){
+            $_SESSION['wompi']['public_key']="pub_test_TSNkpXBw0Y68p3ZsB24N2eFrhUd2URSl";
+            $_SESSION['wompi']['private_key']="prv_test_wRYXrdDyqA5K7khBavOtd8QoSTX3FKCD";
+            $_SESSION['wompi']['integridad_key']="test_integrity_G3MUTEFlbTSRcv4iHcpDyFcjACFMBQVm";
+        }
+        
 		$this->captcha = $this->general->public_key()->captcha;
         $this->user_id = isset($this->session->get_userdata()['user_details'][0]->id) ? $this->session->get_userdata()['user_details'][0]->users_id : '1';
 
@@ -114,6 +125,7 @@ if($this->captcha){
             } else {
                 $this->session->set_userdata('user_details', $return);
             }
+            $this->session->set_flashdata('messagePr',null);
             redirect(base_url() . 'invoices', 'refresh');
         }
     }

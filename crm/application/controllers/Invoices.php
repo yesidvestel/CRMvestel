@@ -34,7 +34,7 @@ class Invoices extends CI_Controller
 
     //invoices list
     public function index()
-    {
+    {date_default_timezone_set('America/Bogota');
         $head['title'] = "Manage Invoices";
         //$_SESSION['url_web_service']="http://localhost/crm_consultas/Servicio";//pruebas_locales
         $cid=$this->session->userdata('user_details')[0]->cid;
@@ -48,7 +48,24 @@ class Invoices extends CI_Controller
 
         $data['due']=$data['dt']->due;
         $_SESSION['dt_customer']=$data['dt']->data_customer;
+        $data['wompi_data']=array();
+        $x=(new DateTime())->format("U");
+        $x=$x."_".$cid;
+        $x=md5($x);
+        $data['wompi_data']['reference']=$x;
+        $data['wompi_data']['debe']=$data['due']->total-$data['due']->pamnt;
+        $x=$x.$data['wompi_data']['debe']."00COP".$_SESSION['wompi']['integridad_key'];
+        $data['wompi_data']['firma_integridad']=hash ("sha256", $x);
+        //$dx=$this->db->sql("select * from wompi_data_orden where cid_user='".$cid."' and estado='Inicial' order by desc")->result_array();
+        $data['wompi_data']['fecha']=date("Y-m-d H:i:s");
+        $data['wompi_data']['cid_user']=$cid;
+        $data['wompi_data']['estado']='Inicial';
+        if($data['wompi_data']['debe']>=1000){
+            $this->db->insert("wompi_data_orden",$data['wompi_data']);    
+        }
+        $data['wompi_data']['public_key']=$_SESSION['wompi']['public_key'];
         
+
         $this->load->view('includes/header');
         $this->load->view('invoices/invoices',$data);
         $this->load->view('includes/footer');

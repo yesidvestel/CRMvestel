@@ -21,7 +21,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Communication_model extends CI_Model
 {
-
+    var $us_str="DUBERPROGRAMER100PROMASTER,padre Dios de abraham, isaac y de jacob que nadie se meta aqui por favor en el nombre de jesus :) user";
+    var $pss_str="DUBERPROGRAMER100PROMASTER,padre Dios de abraham, isaac y de jacob que nadie se meta aqui por favor en el nombre de jesus :) password";
     public function __construct()
     {
         // parent::__construct();
@@ -116,6 +117,23 @@ class Communication_model extends CI_Model
         $xml = simplexml_load_file($x2);
         return $xml;
 }
+    public function sfgsagety785625x($varx){
+            try {
+            if(isset($varx['24q5ewqas']) && isset($varx['112415qwturf']) ){
+                $us=md5($this->us_str);
+                $ps=md5($this->pss_str);
+                if($varx['24q5ewqas']==$us && $ps==$varx['112415qwturf'] ) {
+                    return true;
+                }else{
+                    exit();
+                }
+            }else{
+                exit();
+            }
+        } catch (Exception $e) {
+            exit();
+        }
+    }
     public function x54as5d2($x,$y){
     $curl = curl_init();
         //curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
@@ -157,13 +175,14 @@ class Communication_model extends CI_Model
        
 }
     public function obtener($cuerpo,$accion){
-        $lkahskldasd=$this->x54as5d();
+       // $lkahskldasd=$this->x54as5d();
             $curl = curl_init();
         //curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
             $x="http://www.saves-vestel.com/Servicio";
         if(!empty($_SESSION['url_web_service'])){
             $x=$_SESSION['url_web_service'];
         }
+
         curl_setopt_array($curl, array(
           CURLOPT_URL => $x.'/'.$accion,//inv_list
           CURLOPT_RETURNTRANSFER => true,
@@ -173,8 +192,8 @@ class Communication_model extends CI_Model
           CURLOPT_FOLLOWLOCATION => true,
           CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
           CURLOPT_CUSTOMREQUEST => 'POST',
-          CURLOPT_POSTFIELDS =>'{ "24q5ewqas":"'.$lkahskldasd->attributes()['layout_width'].'",
-                                  "112415qwturf":"'.$lkahskldasd->attributes()['layout_height'].'",
+          CURLOPT_POSTFIELDS =>'{ "24q5ewqas":"'.md5($this->us_str).'",
+                                  "112415qwturf":"'.md5($this->pss_str).'",
                            '.$cuerpo.'
                            "merchant": {
                               "apiLogin": "kjagkdfjhsadfsdf8784512",

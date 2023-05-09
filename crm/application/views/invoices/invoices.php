@@ -57,12 +57,13 @@
                     <?php 
                            // setlocale(LC_MONETARY,"es_CO");
                            // echo money_format("%.0n", ($due->total-$due->pamnt));
+                            echo ($due->total-$due->pamnt);
                     ?>
                     </div>
                 </div>
             </div>
             <div class="card card-block" id="div_pag_efect">
-                
+                 <?php /* ?>
                 <div align="center">
                 <table>
                     <tr >
@@ -74,6 +75,28 @@
                         </td>
                     </tr>
                 </table>
+                </div>
+                <?php  */ ?>
+                <div align="center">
+                    <?php if($wompi_data['debe']>=1000){ ?>
+   <h3 >Para hacer el pago de tus facturas solo debes de dar click en el boton abajo el cual te permitira pagar por cualquier metodo de pago que elijas</h3>
+
+<?php //esta es la forma de boton, falta validar que si no hay nada de deuda que esto no aparesca ?>
+                <form>
+                  <script
+                    src="https://checkout.wompi.co/widget.js"
+                    data-render="button"
+                    data-public-key="<?=$wompi_data['public_key'] ?>"
+                    data-currency="COP"
+                    data-amount-in-cents="<?=$wompi_data['debe'].'00' ?>"
+                    data-reference="<?= $wompi_data['reference'] ?>"
+                    data-signature:integrity="<?= $wompi_data['firma_integridad']?>"
+                    >
+                  </script>
+                </form>
+            <?php }else{ ?>
+                <h3>Felicitaciones, estas al dia con nosotros ...</h3>
+            <?php } ?>
                 </div>
                 <!--<button data-tbtn="2" class="btn btn-info pg"> <img width="150px" src="<?=base_url()  ?>userfiles/logo_baloto.png"></button>-->
                  
@@ -144,7 +167,7 @@
         <div class="modal-content" >
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title"> PSE, Pagas : <?php // amountFormat("%.0n", ($due->total-$due->pamnt)); ?> </h4>
+                <h4 class="modal-title"> PSE, Pagas : <?php echo ($due->total-$due->pamnt); // amountFormat("%.0n", ($due->total-$due->pamnt)); ?> </h4>
             </div>
 
             <div class="modal-body" >
@@ -253,6 +276,37 @@
         </div>
     </div>
 </div>
+<script type="text/javascript" src="https://checkout.wompi.co/widget.js"></script>
+<script type="text/javascript">
+    
+
+    var checkout = new WidgetCheckout({
+  currency: 'COP',
+  amountInCents: <?=$wompi_data['debe']."00" ?>,
+  reference: '<?= $wompi_data['reference'] ?>',
+  publicKey: '<?=$wompi_data['public_key'] ?>',
+  redirectUrl: 'https://vestel.com.co/crm/invoices/',
+  signature:{integrity:'<?=$wompi_data['firma_integridad'] ?>'},
+  /*taxInCents: { 
+    vat: 1900,
+    consumption: 800
+  },*/
+  customerData: { 
+    email:'<?=$dt->data_customer->email ?>',
+    fullName: '<?=$dt->data_customer->name." ".$dt->data_customer->unoapellido ?>',
+    phoneNumber: '<?=$dt->data_customer->celular?>',
+    phoneNumberPrefix: '+57',
+    legalId: '<?=$dt->data_customer->documento ?>',
+    legalIdType: 'CC'
+  }
+});
+    //esta es la forma personalizada que en el proceso echo queda al iniciar sesion o abrir facturas 
+    checkout.open(function ( result ) {
+  var transaction = result.transaction
+  console.log('Transaction ID: ', transaction.id)
+  console.log('Transaction object: ', transaction)
+});
+</script>
 <script type="text/javascript">
     //alert("La resolución de tu pantalla es: " + window.innerWidth + " x " + window.innerHeight) 
     if(window.innerWidth<701){

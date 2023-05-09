@@ -27,7 +27,7 @@ class Servicio extends CI_Controller
         $request=file_get_contents("php://input",true);
         $body_post=json_decode($request,true);    
         $this->load->model('Communication_model', 'communication');
-        $bool=$this->communication->x54as5d2($body_post['24q5ewqas'],$body_post['112415qwturf']);
+        $bool=$this->communication->sfgsagety785625x($body_post);
     }
     public function update_user(){
         $body_post=json_decode(file_get_contents("php://input",true));//obteniendo datos post

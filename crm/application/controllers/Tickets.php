@@ -162,7 +162,35 @@ if($results['response_message_pol']=="APPROVED"){
 }*/
 
 }
+public function data_reception_wompi(){
+    $this->load->model('Communication_model', 'communication');  
+    $data=array();
+        $data['data']=file_get_contents("php://input",true);
+        date_default_timezone_set('America/Bogota');
+        $data['fecha']=date("Y-m-d H:i:s");
+        $this->db->insert("data_reception",$data);
 
+        $r=$data['data'];
+        $r=json_decode($r);
+        $datos=array();
+        if(isset($r->data->transaction->payment_method_type) && $r->data->transaction->payment_method_type!="" && $r->data->transaction->payment_method_type!=null){
+            $datos['metodo_pago']=$r->data->transaction->payment_method_type;
+        }
+        if($r->data->transaction->status=="APPROVED"){
+            $datos['estado']="Finalizada con Exito";
+            $this->db->update("wompi_data_orden",$datos,array("reference"=>$r->data->transaction->reference));
+            $ordenx=$this->db->get_where("wompi_data_orden",array("reference"=>$r->data->transaction->reference))->row();
+
+            $this->communication->pagar_mydic($ordenx->cid_user,$ordenx->debe,$ordenx->reference);
+        }else{
+            $datos['estado']="Finalizada sin Exito";
+            $this->db->update("wompi_data_orden",$datos,array("reference"=>$r->data->transaction->reference));
+        }
+        
+        //var_dump($r->data->transaction->reference);
+        //var_dump($r->data->transaction->payment_method_type);
+        //var_dump($r->data->transaction->status);
+}
 public function data_reception2(){  
 $this->load->model('Communication_model', 'communication');  
 
