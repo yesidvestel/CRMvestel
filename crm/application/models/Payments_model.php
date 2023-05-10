@@ -22,7 +22,7 @@ class Payments_model extends CI_Model
 {
     var $table = 'wompi_data_orden';
     var $column_order = array(null, 'fecha', 'debe', 'metodo_pago', "estado","reference");
-    var $column_search = array('fecha', 'debe', 'metodo_pago', "estado","reference");
+    var $column_search = array('fecha', 'debe', 'metodo_pago', "estado","reference","id_wompi");
     var $order = array('id' => 'desc');
 
     public function __construct()
@@ -75,7 +75,11 @@ class Payments_model extends CI_Model
         $this->db->where('wompi_data_orden.cid_user', $this->session->userdata('user_details')[0]->cid);
 
         $i = 0;
-
+            if ($_POST['search']['value'] && strlen($_POST['search']['value'])>20) 
+            {
+                $_POST['search']['value']=str_replace(" ", "", $_POST['search']['value']);
+                $_POST['search']['value']=str_replace("-", "", $_POST['search']['value']);
+            }
         foreach ($this->column_search as $item) // loop column
         {
             if ($_POST['search']['value']) // if datatable send POST for search

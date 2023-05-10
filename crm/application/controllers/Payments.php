@@ -591,6 +591,7 @@ class Payments extends CI_Controller
                 $row[] = $invoices->estado;
             }
             $row[] = $invoices->reference;
+            $row[] = $invoices->id_wompi;
             
             
             //$row[] = $invoices->data;

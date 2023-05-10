@@ -176,6 +176,11 @@ public function data_reception_wompi(){
         if(isset($r->data->transaction->payment_method_type) && $r->data->transaction->payment_method_type!="" && $r->data->transaction->payment_method_type!=null){
             $datos['metodo_pago']=$r->data->transaction->payment_method_type;
         }
+        if(isset($r->data->transaction->id) && $r->data->transaction->id!="" && $r->data->transaction->id!=null){
+            $datos['id_wompi']=$r->data->transaction->id;
+             $datos['id_wompi']=str_replace(" ", "", $datos['id_wompi']);
+            $datos['id_wompi']=str_replace("-", "", $datos['id_wompi']);
+        }
         if($r->data->transaction->status=="APPROVED"){
             $datos['estado']="Finalizada con Exito";
             $this->db->update("wompi_data_orden",$datos,array("reference"=>$r->data->transaction->reference));

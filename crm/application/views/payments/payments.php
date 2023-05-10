@@ -29,6 +29,7 @@
                             <th>Metodo Pago </th>
                              <th>Estado</th>
                              <th>Referencia</th>
+                             <th>ID</th>
                              <!--th>Link</th-->
                             <!--th>Data</th-->
                             
@@ -46,6 +47,7 @@
                             <th>Metodo Pago </th>
                              <th>Estado</th>
                              <th>Referencia</th>
+                             <th>ID</th>
                              <!--th>Link</th-->
                             <!--th>Data</th-->
 
