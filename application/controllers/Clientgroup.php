@@ -690,7 +690,7 @@ class Clientgroup extends CI_Controller
         $this->load->library('Excel');
     
     //define column headers
-    $headers = array('Abonado' => 'string','Cedula' => 'string', 'Nombre' => 'string', 'Celular' => 'string', 'Direccion' => 'string','Barrio' => 'string','Serv. Suscritos' => 'string', 'Tegnologia' => 'string','Estado' => 'string','Deuda' => 'integer','Suscripcion' => 'integer','Ingreso' => 'integer');
+    $headers = array('Abonado' => 'string','Cedula' => 'string', 'Nombre' => 'string', 'Celular' => 'string', 'Correo' => 'string' ,'Direccion' => 'string','Barrio' => 'string','Serv. Suscritos' => 'string', 'Tegnologia' => 'string','Estado' => 'string','Deuda' => 'integer','Suscripcion' => 'integer','Ingreso' => 'integer');
     if($_GET['ultimo_estado_sel']=="Si"){
         $headers['UltimoEstado']="string";
         $headers['FechaCambio']="string";
@@ -735,6 +735,7 @@ if(isset($_GET['ingreso_select']) && $_GET['ingreso_select']!="" && $_GET['ingre
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 );
      if($_GET['ultimo_estado_sel']=="Si"){
         $col_options[]=array('font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center');
@@ -763,9 +764,9 @@ if(isset($_GET['ingreso_select']) && $_GET['ingreso_select']!="" && $_GET['ingre
                             }
                             $array_excel=array();
                             if($_GET['ultimo_estado_sel']=="Si"){
-                                $array_excel=array($customer->abonado,$customer->documento ,$customer->name.' '.$customer->unoapellido, $customer->celular, $direccion,$str_barrio ,$customer->suscripcion_str,$customer->tegnologia,$customer->usu_estado,$customer->deuda,$customer->suscripcion,$customer->money,$customer->ultimo_estado,$customer->fecha_ultimo_estado);
+                                $array_excel=array($customer->abonado,$customer->documento ,$customer->name.' '.$customer->unoapellido, $customer->celular, $customer->email,$direccion,$str_barrio ,$customer->suscripcion_str,$customer->tegnologia,$customer->usu_estado,$customer->deuda,$customer->suscripcion,$customer->money,$customer->ultimo_estado,$customer->fecha_ultimo_estado);
                             }else{
-                                $array_excel=array($customer->abonado,$customer->documento ,$customer->name.' '.$customer->unoapellido, $customer->celular, $direccion,$str_barrio ,$customer->suscripcion_str,$customer->tegnologia,$customer->usu_estado,$customer->deuda,$customer->suscripcion,$customer->money);
+                                $array_excel=array($customer->abonado,$customer->documento ,$customer->name.' '.$customer->unoapellido, $customer->celular,$customer->email, $direccion,$str_barrio ,$customer->suscripcion_str,$customer->tegnologia,$customer->usu_estado,$customer->deuda,$customer->suscripcion,$customer->money);
                             }
 
                             if($_GET['check_agregar_ultima_transaccion']=="true"){
@@ -890,6 +891,7 @@ if(isset($_GET['ingreso_select']) && $_GET['ingreso_select']!="" && $_GET['ingre
 			$row[] = $customers->documento;
             $row[] = '<a href="' . $base . 'view?id=' . $customers->id . '">' . $customers->name .' '.$customers->unoapellido. ' </a>';
 			$row[] = $customers->celular;			
+            $row[] = $customers->email;           
             $row[] = $customers->nomenclatura . ' ' . $customers->numero1 . $customers->adicionauno.' Nº '.$customers->numero2.$customers->adicional2.' - '.$customers->numero3;
             $obj_barrio=$this->db->get_where("barrio",array("idBarrio"=>$customers->barrio))->row();
                             if(isset($obj_barrio)){
@@ -955,6 +957,7 @@ if(isset($_GET['ingreso_select']) && $_GET['ingreso_select']!="" && $_GET['ingre
 
     public function load_morosos(){ 
         set_time_limit(10000);
+        //var_dump($_POST['order'][0]['column']);
         if($this->input->post('start')!="0"){
             
             $this->list_data_precargada();
@@ -1561,7 +1564,8 @@ if(isset($_GET['ingreso_select']) && $_GET['ingreso_select']!="" && $_GET['ingre
                             $row[] = $customers->abonado;
                             $row[] = $customers->documento;
                             $row[] = '<a href="'.base_url().'customers/view?id=' . $customers->id . '">' . $customers->name .' '.$customers->unoapellido. ' </a>';
-                            $row[] = $customers->celular;           
+                            $row[] = $customers->celular;   
+                            $row[] = $customers->email;           
                             $row[] = $customers->nomenclatura . ' ' . $customers->numero1 . $customers->adicionauno.' Nº '.$customers->numero2.$customers->adicional2.' - '.$customers->numero3;
                             $obj_barrio=$this->db->get_where("barrio",array("idBarrio"=>$customers->barrio))->row();
                             if(isset($obj_barrio)){
@@ -1699,7 +1703,8 @@ if(isset($_GET['ingreso_select']) && $_GET['ingreso_select']!="" && $_GET['ingre
                             $row[] = $customers->abonado;
                             $row[] = $customers->documento;
                             $row[] = '<a href="'.base_url().'customers/view?id=' . $customers->id . '">' . $customers->name . ' </a>';
-                            $row[] = $customers->celular;           
+                            $row[] = $customers->celular; 
+                            $row[] = $customers->email;           
                             $row[] = $customers->nomenclatura . ' ' . $customers->numero1 . $customers->adicionauno.' Nº '.$customers->numero2.$customers->adicional2.' - '.$customers->numero3;
                             $obj_barrio=$this->db->get_where("barrio",array("idBarrio"=>$customers->barrio))->row();
                             if(isset($obj_barrio)){

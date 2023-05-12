@@ -565,6 +565,7 @@
 					<th class="cedula_th">Cedula</th>
                     <th class="nombre_th"><?php echo $this->lang->line('Name') ?></th>
 					<th class="celular_th">Celular</th>
+                    <th class="Email_th">Correo</th>
                     <th class="direccion_th"><?php echo $this->lang->line('Address') ?></th>
                     <th class="barrio_th">Barrio</th>
                     <th class="serv_suscritos_th">Serv. Suscritos</th>
@@ -594,6 +595,7 @@
                     <th class="cedula_th">Cedula</th>
                     <th class="nombre_th"><?php echo $this->lang->line('Name') ?></th>
                     <th class="celular_th">Celular</th>
+                    <th class="Email_th">Correo</th>
                     <th class="direccion_th"><?php echo $this->lang->line('Address') ?></th>
                     <th class="barrio_th">Barrio</th>
                     <th class="serv_suscritos_th">Serv. Suscritos</th>
@@ -622,19 +624,20 @@
                 <option value="3">Cedula</option>
                 <option value="4">Nombre</option>
                 <option value="5">Celular</option>
-                <option value="6">Direccion</option>
-                <option value="7">Barrio</option>
-                <option value="8">Serv. Suscritos</option>
-                <option value="9">Tecnologia</option>
-                <option value="10">Estado</option>
-                <option value="11">Deuda</option>
-                <option value="12">Suscripcion</option>
-                <option value="13">Ingreso</option>
+                <option value="6">Email</option>
+                <option value="7">Direccion</option>
+                <option value="8">Barrio</option>
+                <option value="9">Serv. Suscritos</option>
+                <option value="10">Tecnologia</option>
+                <option value="11">Estado</option>
+                <option value="12">Deuda</option>
+                <option value="13">Suscripcion</option>
+                <option value="14">Ingreso</option>
                 <option value="15">Fecha Cambio</option>
-                <option value="14">Ult. Estado</option>
-                <option value="16">Fecha Contrato</option>
-                <option value="17">Configuraciones</option>
-                <option value="18">Config</option>
+                <option value="16">Ult. Estado</option>
+                <option value="17">Fecha Contrato</option>
+                <option value="18">Configuraciones</option>
+                <option value="19">Config</option>
             </select>
             </div>
         </div>
@@ -781,8 +784,8 @@ $("#sel_filtrar_fecha_cambio").on("change",function(){
 		
     $("#select2_columnas").select2();
     /* configurando columnas por defecto*/
-         $('#select2_columnas').val(['1','2','3','4','5','6','7','8','9','10','17','18']).trigger('change.select2');
-            tb.columns([11,12,13,14,15,16]).visible(false);
+         $('#select2_columnas').val(['1','2','3','4','5','6','7','8','9','10','11','18','19']).trigger('change.select2');
+            tb.columns([12,13,14,15,16,17]).visible(false);
             $('#select2_columnas').on('select2:select', function (e) { 
                 var x1a=$('#fclientstable').width();
                 //var d1=(x1a*9.5)/100;
@@ -1116,7 +1119,7 @@ $("#sel_filtrar_fecha_cambio").on("change",function(){
         $('.wrapper1').scrollLeft($('.wrapper2').scrollLeft());
     });
 });
-    var aumento=170;
+    var aumento=250;
 $(window).on('load', function (e) {
      var x1a=$('#fclientstable').width();
     //var d1=(x1a*9.5)/100;
@@ -1174,7 +1177,7 @@ $(window).on('load', function (e) {
               $("#despues_de_tfoot").after("<th class='cols_adicionadas'>Suscripcion</th>");
               $("#despues_de_thead").after("<th class='cols_adicionadas'>Deuda</th>");
               $("#despues_de_tfoot").after("<th class='cols_adicionadas'>Deuda</th>");*/
-                $('#select2_columnas').val(['1','2','3','4','5','6','7','8','9','10','11','12','13','17','18']).trigger('change.select2');
+                $('#select2_columnas').val(['1','2','3','4','5','6','7','8','9','10','11','12','13','14','18','19']).trigger('change.select2');
 
               columnasUlEsAgregadas=true;
               var x1a=$('#fclientstable').width();
@@ -1282,17 +1285,17 @@ $(window).on('load', function (e) {
 
             });
               if(ultimo_estado_sel=="No" || columnasUlEsAgregadas==false){
-                $('#select2_columnas').val(['1','2','3','4','5','6','7','8','9','10','11','12','13','17','18']).trigger('change.select2');
-                    tb.columns([14,15,16]).visible(false);          
+                $('#select2_columnas').val(['1','2','3','4','5','6','7','8','9','10','11','12','13','14','18','19']).trigger('change.select2');
+                    tb.columns([15,16,17]).visible(false);          
                     if(ingreso_select!=""){
-                        $('#select2_columnas').val(['1','2','3','4','5','6','7','8','9','10','11','12','13','16','17','18']).trigger('change.select2');
-                            tb.columns([16]).visible(true);               
+                        $('#select2_columnas').val(['1','2','3','4','5','6','7','8','9','10','11','12','13','14','17','18','19']).trigger('change.select2');
+                            tb.columns([17]).visible(true);               
                     }
               }
 
               if(ultimo_estado_sel=="Si" && ingreso_select==""){
-                $('#select2_columnas').val(['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','17','18']).trigger('change.select2');
-                    tb.columns([16]).visible(false);           
+                $('#select2_columnas').val(['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','18','19']).trigger('change.select2');
+                    tb.columns([17]).visible(false);           
               }
               columnasAgregadas=true;
       }
@@ -1327,7 +1330,7 @@ $(window).on('load', function (e) {
     var pagination_end="";
      
 	function filtrar(){
-        
+       // tb.columns([12]).sortable(false);
             
            
       
@@ -1369,24 +1372,24 @@ $(window).on('load', function (e) {
             //if(morosos!=""){
                 if(columnasAgregadas){
                     tb.ajax.url( baseurl+"clientgroup/load_morosos?id=<?=$_GET['id']?>&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&checked_ind_service="+checked_ind_service+"&check_usuarios_a_facturar="+check_usuarios_a_facturar+"&estados_multiple="+estados_multiple+"&localidad_multiple="+localidad_multiple+"&barrios_multiple="+barrios_multiple+"&deudores_multiple="+deudores_multiple+"&tegnologia_multiple="+tegnologia_multiple+"&ultimo_estado_sel="+ultimo_estado_sel+"&sel_filtrar_fecha_cambio="+sel_filtrar_fecha_cambio+"&sdate3="+sdate3+"&edate2="+edate2+"&check_sin_factura_actual="+check_sin_factura_actual+"&check_equipos_asignados="+check_equipos_asignados).load();               
-                    $('#select2_columnas').val(['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18']).trigger('change.select2');
+                    $('#select2_columnas').val(['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19']).trigger('change.select2');
                     if(ultimo_estado_sel=="No"){
-                $('#select2_columnas').val(['1','2','3','4','5','6','7','8','9','10','11','12','13','17','18']).trigger('change.select2');
-                    tb.columns([14,15,16]).visible(false);          
+                $('#select2_columnas').val(['1','2','3','4','5','6','7','8','9','10','11','12','13','14','18','19']).trigger('change.select2');
+                    tb.columns([15,16,17]).visible(false);          
                     if(ingreso_select!=""){
-                        $('#select2_columnas').val(['1','2','3','4','5','6','7','8','9','10','11','12','13','16','17','18']).trigger('change.select2');
+                        $('#select2_columnas').val(['1','2','3','4','5','6','7','8','9','10','11','12','13','14','17','18','19']).trigger('change.select2');
                             tb.columns([16]).visible(true);               
                     }
               }else{
                     if(ingreso_select!=""){
-                        $('#select2_columnas').val(['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18']).trigger('change.select2');
-                            tb.columns([16]).visible(true);               
+                        $('#select2_columnas').val(['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19']).trigger('change.select2');
+                            tb.columns([17]).visible(true);               
                     }
               }
 
               if(ultimo_estado_sel=="Si" && ingreso_select==""){
-                $('#select2_columnas').val(['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','17','18']).trigger('change.select2');
-                    tb.columns([16]).visible(false);           
+                $('#select2_columnas').val(['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','18','19']).trigger('change.select2');
+                    tb.columns([17]).visible(false);           
               }
                 }else{
                     nuevas_columnas();
