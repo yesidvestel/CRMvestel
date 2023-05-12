@@ -700,10 +700,10 @@ class Clientgroup extends CI_Controller
         $headers['ValorUltimaTransaccion']="string";   
     }
 
-if(isset($_GET['ingreso_select']) && $_GET['ingreso_select']!="" && $_GET['ingreso_select']!="fecha_ingreso" && $_GET['ingreso_select']!=null){
+//if(isset($_GET['ingreso_select']) && $_GET['ingreso_select']!="" && $_GET['ingreso_select']!="fecha_ingreso" && $_GET['ingreso_select']!=null){
         $headers['fecha_contrato']="string";
          
-    }
+  //  }
     //fetch data from database
     //$salesinfo = $this->product_model->get_salesinfo();
     
@@ -773,10 +773,10 @@ if(isset($_GET['ingreso_select']) && $_GET['ingreso_select']!="" && $_GET['ingre
                                 $array_excel[]=$customer->fechaUltimaTransaccion;
                                 $array_excel[]=$customer->ValorUltimaTransaccion; 
                             }
-                            if(isset($_GET['ingreso_select']) && $_GET['ingreso_select']!="" && $_GET['ingreso_select']!="fecha_ingreso" && $_GET['ingreso_select']!=null){
+                           // if(isset($_GET['ingreso_select']) && $_GET['ingreso_select']!="" && $_GET['ingreso_select']!="fecha_ingreso" && $_GET['ingreso_select']!=null){
                                     $array_excel[]=$customer->f_contrato; 
          
-                            }
+                            //}
                             $writer->writeSheetRow('Customers '.$cust_group->title,$array_excel);
             
     }
@@ -957,9 +957,9 @@ if(isset($_GET['ingreso_select']) && $_GET['ingreso_select']!="" && $_GET['ingre
 
     public function load_morosos(){ 
         set_time_limit(10000);
-        //var_dump($_POST['order'][0]['column']);
-        if($this->input->post('start')!="0"){
-            
+        
+        if($this->input->post('start')!="0" ){
+                        
             $this->list_data_precargada();
             
         }else{
@@ -1231,6 +1231,7 @@ if(isset($_GET['ingreso_select']) && $_GET['ingreso_select']!="" && $_GET['ingre
                             $punto_adicional=$this->db->get_where("products", array('product_name' =>"Punto Adicional"))->row();
                             $suma+=$punto_adicional->product_price*$invoice->puntos;
                        }
+}
 //esto es para los estados
             if($_var_tiene_tv && $invoice->estado_tv=="Cortado"){
                 
