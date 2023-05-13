@@ -535,7 +535,7 @@
                                                 class="icon-tasks"></i> Ver Equipos</a>
 
                                 </div>
-								<?php if ($this->aauth->get_user()->roleid > 3) { ?>
+								<?php if ($this->aauth->get_user()->roleid > 2) { ?>
 								<div class="col-md-4" style="margin-top: 5px;">
 
                                     <a href="#pop_model2" data-toggle="modal" onclick="funcion_status();" data-remote="false" 
@@ -574,7 +574,7 @@
                                                 class="icon-calendar"></i>Paz y Salvo</a>
 
                                 </div>
-								<?php } if ($this->aauth->get_user()->roleid == 5) { ?>
+								<?php } if ($this->aauth->get_user()->roleid > 2) { ?>
 								<div class="col-md-4" style="margin-top: 5px;">
 
                                     <a href="#pop_model3" data-toggle="modal" onclick="funcion_status();"
