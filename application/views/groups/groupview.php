@@ -1331,7 +1331,8 @@ $(window).on('load', function (e) {
      
 	function filtrar(){
        // tb.columns([12]).sortable(false);
-            
+
+           
            
       
             //var localidad= $("#cmbLocalidades option:selected").val();
@@ -1370,7 +1371,7 @@ $(window).on('load', function (e) {
 
              
             //if(morosos!=""){
-                if(columnasAgregadas){
+                if(columnasAgregadas){ tb.order([]);
                     tb.ajax.url( baseurl+"clientgroup/load_morosos?id=<?=$_GET['id']?>&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&checked_ind_service="+checked_ind_service+"&check_usuarios_a_facturar="+check_usuarios_a_facturar+"&estados_multiple="+estados_multiple+"&localidad_multiple="+localidad_multiple+"&barrios_multiple="+barrios_multiple+"&deudores_multiple="+deudores_multiple+"&tegnologia_multiple="+tegnologia_multiple+"&ultimo_estado_sel="+ultimo_estado_sel+"&sel_filtrar_fecha_cambio="+sel_filtrar_fecha_cambio+"&sdate3="+sdate3+"&edate2="+edate2+"&check_sin_factura_actual="+check_sin_factura_actual+"&check_equipos_asignados="+check_equipos_asignados).load();               
                     $('#select2_columnas').val(['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19']).trigger('change.select2');
                     if(ultimo_estado_sel=="No"){

@@ -958,8 +958,10 @@ class Clientgroup extends CI_Controller
     public function load_morosos(){ 
         set_time_limit(10000);
         
-        if($this->input->post('start')!="0" ){
-                        
+        if($this->input->post('start')!="0"  || (isset($_POST['order'][0]['column']) && $_POST['order'][0]['column']=="12") ){
+            if(isset($_POST['order'][0]['column']) && $_POST['order'][0]['column']=="12" && $this->input->post('start')=="0" ){
+                $this->ordenar_clientes_por_deuda();
+            }
             $this->list_data_precargada();
             
         }else{
@@ -1168,7 +1170,7 @@ class Clientgroup extends CI_Controller
             $valor_ultima_factura=0;
             $_var_tiene_internet=false;
             $_var_tiene_tv=false;
-            $suscripcion_str="";
+            $suscripcion_str='';
             if($debe_customer==0){
                 $customer_moroso=false;
             }
@@ -1176,7 +1178,7 @@ class Clientgroup extends CI_Controller
                 $filtros_deuda_customers=0;
                 foreach ($lista_invoices as $key => $invoice) {
                     $suma=0;
-                    $suscripcion_str="";
+                    $suscripcion_str='';
                     if($invoice->combo!="no" && $invoice->combo!="" && $invoice->combo!="-"){
                         $fact_valida=true;
                         $_var_tiene_internet=true;
@@ -1217,7 +1219,7 @@ class Clientgroup extends CI_Controller
                                 
                             }
                             if($producto!=null){$var_excluir=false;
-                                $suscripcion_str="Tv";
+                                $suscripcion_str='Tv';
                                 if(strtolower($invoice->television)!="television"){
                                     $suscripcion_str=$invoice->television;
                                 }
@@ -1225,8 +1227,8 @@ class Clientgroup extends CI_Controller
                             
                         }
                        if($invoice->puntos!="" && $invoice->puntos!="0" && $invoice->puntos!=null && $invoice->puntos!="no"){
-                            $puntosvar="+".$invoice->puntos." Pts";
-                            $suscripcion_str.="+".$invoice->puntos." Pts";
+                            $puntosvar='+'.$invoice->puntos." Pts";
+                            $suscripcion_str.='+'.$invoice->puntos.' Pts';
 
                             $punto_adicional=$this->db->get_where("products", array('product_name' =>"Punto Adicional"))->row();
                             $suma+=$punto_adicional->product_price*$invoice->puntos;
@@ -1240,9 +1242,9 @@ class Clientgroup extends CI_Controller
                 if(strpos($_GET['estados_multiple'], "Cortado")!==false ){
                     $var_excluir=false;                    
                 }$var_excluir=false;
-                $suscripcion_str="<b><i class='sts-Cortado'>Tv".$puntosvar."</i></b>";   
+                $suscripcion_str='<b><i class="sts-Cortado">Tv'.$puntosvar.'</i></b>';   
             }else if($_var_tiene_tv && $invoice->estado_tv=="Suspendido"){                
-                $suscripcion_str="<b><i class='sts-Suspendido'>Tv".$puntosvar."</i></b>";   
+                $suscripcion_str='<b><i class="sts-Suspendido">Tv'.$puntosvar.'</i></b>';   
                 if($_GET['sel_servicios']=="TV" || $_GET['sel_servicios']=="Combo"){
                   //  $var_excluir=true;    
                 }$var_excluir=false;
@@ -1272,7 +1274,7 @@ class Clientgroup extends CI_Controller
                                             $var_excluir=false;                    
                                         }
                                         $var_excluir=false;
-                                        $suscripcion_str.="+"."<b><i class='sts-Cortado'>".$var_e."</i></b>";   
+                                        $suscripcion_str.='+'.'<b><i class="sts-Cortado">'.$var_e.'</i></b>';   
                                     }else if($invoice->estado_combo=="Suspendido"){
                                         if($_GET['sel_servicios']=="Internet" || $_GET['sel_servicios']=="Combo"){
                                             //$var_excluir=true;    
@@ -1280,9 +1282,9 @@ class Clientgroup extends CI_Controller
                                         if(strpos($_GET['estados_multiple'], "Suspendido")!==false){
                                             $var_excluir=false;                    
                                         }$var_excluir=false;
-                                        $suscripcion_str.="+"."<b><i class='sts-Suspendido'>".$var_e."</i></b>";   
+                                        $suscripcion_str.='+'.'<b><i class="sts-Suspendido">'.$var_e.'</i></b>';   
                                     }else{
-                                        $suscripcion_str.="+".$var_e;    
+                                        $suscripcion_str.='+'.$var_e;    
                                     }
                                     
                                 }else{
@@ -1293,7 +1295,7 @@ class Clientgroup extends CI_Controller
                                         if(strpos($_GET['estados_multiple'], "Cortado")!==false){
                                             $var_excluir=false;                    
                                         }  $var_excluir=false;             
-                                        $suscripcion_str="<b><i class='sts-Cortado'>".$var_e."</i></b>";   
+                                        $suscripcion_str='<b><i class="sts-Cortado">'.$var_e.'</i></b>';   
                                     }else if($invoice->estado_combo=="Suspendido"){
                                         if($_GET['sel_servicios']=="Internet" || $_GET['sel_servicios']=="Combo"){
                                             //$var_excluir=true;    
@@ -1301,7 +1303,7 @@ class Clientgroup extends CI_Controller
                                         if(strpos($_GET['estados_multiple'], "Suspendido")!==false){
                                             $var_excluir=false;                    
                                         }$var_excluir=false;
-                                        $suscripcion_str="<b><i class='sts-Suspendido'>".$var_e."</i></b>";   
+                                        $suscripcion_str='<b><i class="sts-Suspendido">'.$var_e.'</i></b>';   
                                     }else{
                                         $suscripcion_str=$var_e;    
                                     }
@@ -1543,7 +1545,7 @@ class Clientgroup extends CI_Controller
                 }
             if($customer_moroso){
                 
-
+$suscripcion_str2=$suscripcion_str;
                 if(($x>=$minimo && $x<$maximo) || $_POST['length']=="100"){
                     $no++;                
                     
@@ -1577,12 +1579,12 @@ class Clientgroup extends CI_Controller
                             
 
                             if($suscripcion_str!=""){
-                                $suscripcion_str="<a class='cl-servicios' style='cursor:pointer;' data-id='".$customers->id."' onclick='facturas_electronicas_ev(this);'>".$suscripcion_str."</a>";
+                                $suscripcion_str='<a class="cl-servicios" style="cursor:pointer;" data-id="'.$customers->id.'" onclick="facturas_electronicas_ev(this);">'.$suscripcion_str.'</a>';
                                 $str_checked="";
                                 if($customers->facturar_electronicamente==1){
-                                    $str_checked="checked";
+                                    $str_checked='checked';
                                 }
-                                $suscripcion_str="<input ".$str_checked." onclick='ck_facturas_electronicas(this)' data-id='".$customers->id."' class='cl-ck-f-electronicas' style='cursor:pointer;' title='activar o desactivar este usuario de la facturacion electronica' type='checkbox'/>&nbsp".$suscripcion_str;
+                                $suscripcion_str='<input '.$str_checked.' onclick="ck_facturas_electronicas(this)" data-id="'.$customers->id.'" class="cl-ck-f-electronicas" style="cursor:pointer;" title="activar o desactivar este usuario de la facturacion electronica" type="checkbox"/>&nbsp'.$suscripcion_str;
                             }
                             $row[] = $suscripcion_str;
 
@@ -1628,7 +1630,7 @@ class Clientgroup extends CI_Controller
                 $x++;
                 $array_add['debe_customer']=$debe_customer;
                 $array_add['valor_ultima_factura']=$valor_ultima_factura;
-                $array_add['suscripcion_str']=utf8_encode($suscripcion_str);
+                $array_add['suscripcion_str']=$suscripcion_str2;
                 $array_add['tegnologia']=$tegnologia;
                 //$customers->ingreso=$money['credit']-$money['debit'];
                 $listax[]=$array_add;
@@ -1658,6 +1660,23 @@ class Clientgroup extends CI_Controller
         //output to json format
         echo json_encode($output);
     }
+    }
+    public function ordenar_clientes_por_deuda(){
+            
+            $lista=$this->db->get_where("filtros_historial",array('id' =>$this->aauth->get_user()->id))->row();
+            //var_dump($lista->datos);
+            $lista2=json_decode($lista->datos);
+            //var_dump($lista);
+            $orden=SORT_DESC;
+            if($_POST['order'][0]['dir'] == "asc"){
+                $orden=SORT_ASC;
+            }
+            $lista_ordenada=$this->customers->array_sortOBJECT($lista2,"debe_customer",$orden);
+            $lista_ordenada=json_encode($lista_ordenada);
+            //var_dump($lista_ordenada);
+            $this->db->update("filtros_historial",array("datos"=>$lista_ordenada),array('id' =>$this->aauth->get_user()->id));
+            
+
     }
     public function list_data_precargada(){
         $no = $this->input->post('start');
