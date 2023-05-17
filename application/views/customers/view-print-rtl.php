@@ -1,10 +1,10 @@
 <!doctype html>
 <?php 
-if ($servicios['television']!==no){
+if ($servicios['television']!=="no"){
 		$producto = $this->db->get_where('products',array('pid'=>27))->row();
 		$totaltv = $producto->product_price+3992;
 	
-}if ($servicios['combo']!==no){
+}if ($servicios['combo']!=="no"){
 	
 					$producto2 = $this->db->get_where('products',array('product_name'=>$servicios['combo']))->row();
                     $x1=strtolower($servicios['combo']);
@@ -253,7 +253,7 @@ $fcontrato = $details['f_contrato'];
       <td colspan="2" style="text-align: justify">
 		  <h4>EL SERVICIO</h4>
 			Con este contrato nos comprometemos a prestarle los servicios que usted elija*:
-			Internet fijo Televisión Servicios adicionales <span style="border-bottom: 1px solid;"><?php if ($servicios['television']!==no){ echo $servicios['television'];} if ($servicios['combo']!==no){ echo ' + '.$servicios['combo'];}if ($servicios['puntos']!=='0'){ echo ' + '.$servicios['puntos'].' Puntos';} ?></span>
+			Internet fijo Televisión Servicios adicionales <span style="border-bottom: 1px solid;"><?php if ($servicios['television']!=="no"){ echo $servicios['television'];} if ($servicios['combo']!=="no"){ echo ' + '.$servicios['combo'];}if ($servicios['puntos']!=='0'){ echo ' + '.$servicios['puntos'].' Puntos';} ?></span>
 			
 			Usted se compromete a pagar oportunamente el precio acordado. El servicio se activará a
 			más tardar el día <span style="border-bottom: 1px solid;"><?php echo date("d/m/Y",strtotime($fcontrato."+ 15 days")) ?></span>			
