@@ -1399,8 +1399,8 @@ set_time_limit(13000);
         $data['invoice']['multi'] = 0;
 
         ini_set('memory_limit', '500M');
-        $data['url_firma']="assets/firmas_digitales/".$custid.".png";
-        $data['url_huella']="assets/huellas_digitales/Huella_CUS_".$custid.".png";
+        $data['url_firma']=FCPATH."assets/firmas_digitales/".$custid.".png";
+        $data['url_huella']=FCPATH."assets/huellas_digitales/Huella_CUS_".$custid.".png";
         $html = $this->load->view('customers/view-print-'.RTL, $data, true);
 
         //PDF Rendering

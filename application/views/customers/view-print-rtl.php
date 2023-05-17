@@ -200,7 +200,7 @@ $fcontrato = $details['f_contrato'];
 	<table width="100%">
   <tbody>
     <tr>
-      <td style="width: 24%"><img src="<?php echo FCPATH . 'userfiles/company/' . $this->config->item('logo') ?>" style="max-width:20%;"></td>
+      <td style="width: 24%"><img src="<?php echo FCPATH . '/userfiles/company/' . $this->config->item('logo') ?>" style="max-width:20%;"></td>
       <td class="end1" style="width: 25%"><h2>CONTRATO ÚNICO DE <br>SERVICIOS FIJOS </h2>No. <span style="border-bottom: 1px solid;"><?php echo $details['documento'] ?></span></td>
 		<td rowspan="8" style="width: 2%"></td>
       <td colspan="2" rowspan="3" style="width: 48%; text-align: justify;">
@@ -231,7 +231,7 @@ $fcontrato = $details['f_contrato'];
     </tr>
     <tr>
 		
-      <td style="width: 15%"><img src="<?php echo FCPATH . 'userfiles/company/qr_vestel.png'?>" style="float: left"></img></td>
+      <td style="width: 15%"><img src="<?php echo FCPATH . '/userfiles/company/qr_vestel.png'?>" style="float: left"></img></td>
       <td align="left" style="width: 30%"><br><br><br><br><h1>VESTEL S.A.S</h1></td>
       
     </tr>
