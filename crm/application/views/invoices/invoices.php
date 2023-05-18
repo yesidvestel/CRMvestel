@@ -79,7 +79,7 @@
                 <?php  */ ?>
                 <div align="center">
                     <?php if($wompi_data['debe']>=1000){ ?>
-   <h3 >Para hacer el pago de sus facturas solo debe dar click en “Paga con Wompi”, Donde podrá seleccionar el método de pago de pago de su preferencia.</h3>
+   <h3 >Para hacer el pago de tus facturas solo debes dar click en “Paga con Wompi”, Donde podrás seleccionar el método de pago de tu preferencia.</h3>
 
 <?php //esta es la forma de boton, falta validar que si no hay nada de deuda que esto no aparesca ?>
                 <form>
