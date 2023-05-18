@@ -79,7 +79,7 @@
                 <?php  */ ?>
                 <div align="center">
                     <?php if($wompi_data['debe']>=1000){ ?>
-   <h3 >Para hacer el pago de tus facturas solo debes de dar click en el boton abajo el cual te permitira pagar por cualquier metodo de pago que elijas</h3>
+   <h3 >Para hacer el pago de sus facturas solo debe dar click en “Paga con Wompi”, Donde podrá seleccionar el método de pago de pago de su preferencia.</h3>
 
 <?php //esta es la forma de boton, falta validar que si no hay nada de deuda que esto no aparesca ?>
                 <form>
@@ -95,7 +95,7 @@
                   </script>
                 </form>
             <?php }else{ ?>
-                <h3>Felicitaciones, estas al dia con nosotros ...</h3>
+                <h3>Felicitaciones, estas al día con nosotros ...</h3>
             <?php } ?>
                 </div>
                 <!--<button data-tbtn="2" class="btn btn-info pg"> <img width="150px" src="<?=base_url()  ?>userfiles/logo_baloto.png"></button>-->
