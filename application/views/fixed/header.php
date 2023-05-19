@@ -606,6 +606,9 @@ $lista_permisos1=$this->db->query("SELECT permisos_usuario.id,permisos_usuario.i
 						<li>
                             <a href="<?php echo base_url(); ?>transactions/transferencia">Transferencias</a>
                         </li>
+                        <li>
+                            <a href="<?php echo base_url(); ?>transactions/cargar_desde_excel">Cargar Excel</a>
+                        </li>
 
                     </ul>
                 </li>

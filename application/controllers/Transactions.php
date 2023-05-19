@@ -35,6 +35,118 @@ class Transactions extends CI_Controller
 
         }
     }
+    public function cargar_desde_excel(){
+         $head['title'] = "Cargar desde Excel";
+        $this->load->view('fixed/header',$head);
+        $data=array();
+        $this->load->view('transactions/cargar_excel',$data);
+        $this->load->view('fixed/footer');
+    }
+    public function list_files_up(){
+          $this->load->model('Files_carga_transaccional_model', 'files_carga');
+             $list = $this->files_carga->get_datatables();
+        $data = array();
+        $no = $this->input->post('start');
+        //setlocale(LC_TIME, "spanish");
+
+        foreach ($list as $key => $value) {            
+                $no++;  
+                $row = array();
+                $row[]="#".$value->id;
+                $row[]="<a href='".base_url()."userfiles/attach/".$value->nombre_real_file."' >".$value->nombre."</a>";
+                $row[]=$value->fecha;
+                $row[]=$value->username;
+                $row[]=$value->estado;
+                $row[]="<a title='Iniciar Proceso de lectura y generacion de transacciones de este archivo' href='#' class='btn btn-success cl-play-process' data-id-file='".$value->id."'><i class='icon-play'></i></a>&nbsp<a href='#' class='btn btn-danger btn-xs delete-object'><i class='icon-trash-o'></i></a>";
+              
+                
+                
+              //  $row[]="<a href='#' data-datos='".json_encode($value)."' class='btn btn-info update_mk'><i class='icon-eye'></i></a>";                
+                $data[]=$row;
+
+        }
+            $output = array(
+                "draw" => $_POST['draw'],
+                "recordsTotal" => $this->files_carga->count_all(),
+                "recordsFiltered" => $this->files_carga->count_filtered(),
+                "data" => $data,
+            );
+            //output to json format
+            echo json_encode($output);
+    }
+    public function cargue_xlxs()
+    
+    {
+            $this->load->model('Files_carga_transaccional_model', 'files_carga');
+             $this->load->library("Uploadhandler_generic", array(
+                'accept_file_types' => '/\.(xlsx)$/i', 'upload_dir' => FCPATH . 'userfiles/attach/', 'upload_url' => base_url() . 'userfiles/attach/'
+            ));
+            ob_clean();
+            $files = (string)$this->uploadhandler_generic->filenaam();//el nombre
+           // var_dump($_FILES['files']['name']);
+            $ruta_archivo="userfiles/attach/".$files;
+            if(file_exists($ruta_archivo)) {
+                $data=array();
+                $data['nombre']=$_FILES['files']['name'];
+                $data['fecha']=date("Y-m-d H:i:s");
+                $data['id_usuario']=$this->aauth->get_user()->id;
+                $data['estado']='Archivo Cargado';
+                $data['nombre_real_file']=$files;
+                $this->db->insert("files_carga_transaccional",$data);
+                $id_archivo=$this->db->insert_id();
+                //$this->files_carga->recorrer_archivo_y_guardar_datos_inicial($id_archivo,$ruta_archivo);
+                echo json_encode(array('status' => 'Success', 'message' => "Archivo Subido Con Exito"));    
+            }else{
+                echo json_encode(array('status' => 'Error', 'message' => "Archivo con extencion no permitida"));    
+            }
+            
+    }
+    public function obtener_lista_usuarios_a_facturar(){
+        $customers_t=$this->db->query("select * from customers where id>=0 and  id<=40")->result_array();
+        $numero_total=count($customers_t);
+        $array_return =array("total_usuarios"=>$numero_total,"lista_usuarios_a_facturar"=>$customers_t);
+
+        echo json_encode($array_return);
+    }
+    public function leer_excel(){
+        
+    }
+    public function procesar_usuarios_a_facturar(){
+        $this->load->model('Files_carga_transaccional_model', 'files_carga');
+        
+        $se_facturo = array();//$this->db->query("SELECT * FROM facturacion_electronica_siigo WHERE fecha ='".$dateTime->format("Y-m-d")."' and customer_id=".$_POST['id_customer'])->result_array();//and id=8241
+        $retorno=array();
+        if(count($se_facturo)!=0){
+            $retorno["estado"]="procesado 2";
+            echo json_encode($retorno);
+        }else{
+            $ret=$this->files_carga->facturar_customer();
+            $retorno["estado"]="procesado";
+            echo json_encode($retorno);
+        }
+    }
+    public function readx(){
+        $this->load->library('ExcelReaderDuber');
+        $reader= new ExcelReaderDuber();
+        $reader=$reader->get_reader();
+        $reader->setReadDataOnly(true);
+        $spreadsheet=$reader->load("userfiles/attach/x.xlsx");
+        $sheet=$spreadsheet->getActiveSheet(0);
+        echo "<table>";
+        foreach ($sheet->getRowIterator() as $key => $row) {
+                $cellIterator=$row->getCellIterator("d","f");
+                $cellIterator->setIterateOnlyExistingCells(false);
+                echo "<tr><td>".$key."</td>";
+                foreach ($cellIterator as $key2 => $cell) {
+                    if(!is_null($cell)){
+                        $value=$cell->getValue();
+                        echo "<td>".$value."</td>";
+                    }
+                }
+                echo "</tr>";
+        }
+        echo "<table>";
+    }
     public function input_mask(){
         $this->load->view('fixed/header');
         $data=array();

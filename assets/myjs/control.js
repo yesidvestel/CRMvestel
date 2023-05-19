@@ -834,6 +834,12 @@ function addObject_eq(action,action_url) {
                     $("#notify").removeClass("alert-danger").addClass("alert-success").fadeIn();
                     $("html, body").scrollTop($("body").offset().top);
                     $("#data_form").remove();
+                        try {
+                              if(recargar_f_excel != undefined){
+                               window.location.reload();
+                              }
+                      
+                        }catch(e) {}
 
                 } else {
                     $("#notify .message").html("<strong>" + data.status + "</strong>: " + data.message);

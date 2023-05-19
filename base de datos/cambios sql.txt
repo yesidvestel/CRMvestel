@@ -1,4 +1,10 @@
-﻿-------------cambios ips users ips_users_mk---------------
+﻿-------------------cambios para cargue de transacciones mediante achivo excel- -------------------------
+CREATE TABLE `files_carga_transaccional` (`id` INT NOT NULL AUTO_INCREMENT , `nombre` VARCHAR(100) NOT NULL , `fecha` DATETIME NOT NULL , `id_usuario` INT NOT NULL , `estado` ENUM('Archivo Cargado','Transacciones Cargadas') NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+ALTER TABLE `files_carga_transaccional` ADD `nombre_real_file` VARCHAR(150) NOT NULL AFTER `estado`;
+ALTER TABLE `files_carga_transaccional` CHANGE `estado` `estado` ENUM('Archivo Cargado','Procesando','Transacciones Cargadas') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL;
+CREATE TABLE `datos_archivo_excel_cargue` (`id` INT NOT NULL AUTO_INCREMENT , `fecha` DATETIME NOT NULL , `documento` INT NOT NULL , `monto` INT NOT NULL , `estado` ENUM('Inicial','Cargado','Error') NOT NULL , `id_archivo` INT NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+
+-------------cambios ips users ips_users_mk---------------
 DROP TABLE ips_users_mk;
 
 
