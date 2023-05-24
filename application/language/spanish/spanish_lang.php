@@ -208,6 +208,7 @@ $lang['Payment Confirmation'] = "Confirmación de pago";
 $lang['Cash'] = "Efectivo";
 $lang['Card'] = "Tarjeta";
 $lang['PAYU'] = "PAYU";
+$lang['EFECTY'] = "EFECTY";
 $lang['Account'] = "Cuenta";
 $lang['Cancel Invoice'] = "Cancelar factura";
 $lang['You can not revert'] = "¡No puedes revertir esta acción! Estás seguro ?";

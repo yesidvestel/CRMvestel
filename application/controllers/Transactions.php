@@ -74,6 +74,42 @@ class Transactions extends CI_Controller
             //output to json format
             echo json_encode($output);
     }
+    public function list_customers_cargados(){
+          $this->load->model('Datos_archivo_excel_cargue_model', 'data_carga');
+             $list = $this->data_carga->get_datatables();
+        $data = array();
+        $no = $this->input->post('start');
+        //setlocale(LC_TIME, "spanish");
+
+        foreach ($list as $key => $value) {            
+                $no++;  
+                $row = array();
+                $row[]="#".$value->id;
+                $row[]="<a href='".base_url()."customers/invoices?id=".$value->idc."' >".$value->name." ".$value->unoapellido."</a>";
+                $row[]="<a href='".base_url()."customers/view?id=".$value->idc."' >".$value->documento."</a>";
+                $row[]=$value->monto;
+                $row[]=$value->estado;
+                $row[]=$value->ref_efecty;
+              
+                
+                
+              //  $row[]="<a href='#' data-datos='".json_encode($value)."' class='btn btn-info update_mk'><i class='icon-eye'></i></a>";                
+                $data[]=$row;
+
+        }
+            $output = array(
+                "draw" => $_POST['draw'],
+                "recordsTotal" => $this->data_carga->count_all(),
+                "recordsFiltered" => $this->data_carga->count_filtered(),
+                "data" => $data,
+            );
+            //output to json format
+            echo json_encode($output);
+    }
+    public function finalizar_file(){
+        $this->db->update("files_carga_transaccional",array("estado"=>"Transacciones Cargadas"),array("id"=>$_POST['id_file']));
+        
+    }
     public function cargue_xlxs()
     
     {
@@ -94,7 +130,7 @@ class Transactions extends CI_Controller
                 $data['nombre_real_file']=$files;
                 $this->db->insert("files_carga_transaccional",$data);
                 $id_archivo=$this->db->insert_id();
-                //$this->files_carga->recorrer_archivo_y_guardar_datos_inicial($id_archivo,$ruta_archivo);
+                $this->files_carga->recorrer_archivo_y_guardar_datos_inicial($id_archivo,$ruta_archivo);
                 echo json_encode(array('status' => 'Success', 'message' => "Archivo Subido Con Exito"));    
             }else{
                 echo json_encode(array('status' => 'Error', 'message' => "Archivo con extencion no permitida"));    
@@ -102,8 +138,9 @@ class Transactions extends CI_Controller
             
     }
     public function obtener_lista_usuarios_a_facturar(){
-        $customers_t=$this->db->query("select * from customers where id>=0 and  id<=40")->result_array();
+        $customers_t=$this->db->query("select * from datos_archivo_excel_cargue where  id_archivo=".$_POST['id_file'])->result_array();
         $numero_total=count($customers_t);
+        $customers_t=$this->db->query("select * from datos_archivo_excel_cargue where estado='Inicial' and id_archivo=".$_POST['id_file'])->result_array();
         $array_return =array("total_usuarios"=>$numero_total,"lista_usuarios_a_facturar"=>$customers_t);
 
         echo json_encode($array_return);
@@ -113,14 +150,22 @@ class Transactions extends CI_Controller
     }
     public function procesar_usuarios_a_facturar(){
         $this->load->model('Files_carga_transaccional_model', 'files_carga');
-        
-        $se_facturo = array();//$this->db->query("SELECT * FROM facturacion_electronica_siigo WHERE fecha ='".$dateTime->format("Y-m-d")."' and customer_id=".$_POST['id_customer'])->result_array();//and id=8241
+        $varx=$this->db->get_where("datos_archivo_excel_cargue",array("id"=>$_POST['id']))->row();
+        $vary=$this->db->query("select * from datos_archivo_excel_cargue where ref_efecty='".$varx->ref_efecty."' and id!=".$varx->id)->result_array();
         $retorno=array();
-        if(count($se_facturo)!=0){
+        if($varx->estado!="Inicial" || count($vary)!=0){
             $retorno["estado"]="procesado 2";
             echo json_encode($retorno);
         }else{
-            $ret=$this->files_carga->facturar_customer();
+            $cus_existe=$this->db->get_where("customers",array("documento"=>$varx->documento))->row();
+            if(isset($cus_existe)){
+                $ret=$this->files_carga->facturar_customer($varx,$cus_existe);    
+                if($ret){
+                    $this->db->update("datos_archivo_excel_cargue",array("estado"=>"Cargado","id_customer"=>$cus_existe->id),array("id"=>$varx->id));    
+                }
+            }else{
+                $this->db->update("datos_archivo_excel_cargue",array("estado"=>"Usuario No Existe"),array("id"=>$varx->id));
+            }
             $retorno["estado"]="procesado";
             echo json_encode($retorno);
         }

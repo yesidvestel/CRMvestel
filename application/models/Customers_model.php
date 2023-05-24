@@ -2826,7 +2826,9 @@ return $str;
     public function pay_invoices($cid,$monto,$id_orden){
          
         $array_facturas=$this->db->query('SELECT * FROM invoices WHERE csd='.$cid.' and ( status="partial" or status="due") ORDER BY invoices.invoicedate ASC, tid asc')->result();
-        
+        if(count($array_facturas)==0){
+            $array_facturas=$this->db->query('SELECT * FROM invoices WHERE csd='.$cid.' ORDER BY invoices.invoicedate desc, tid desc limit 1')->result();
+        }
         //SELECT * FROM `invoices` WHERE csd=101 and ( status="partial" or status="due") ORDER BY `invoices`.`invoicedate` ASC, tid asc
         $monto=$monto;
         $monto_aux=$monto;
@@ -2835,6 +2837,7 @@ return $str;
         $array_facturas2=array();
         $_id_last_invoice_procesed=0;
         $factura_var=null;
+        $pmethod = "PAYU";
         $pa="no";
             foreach ($array_facturas as $key => $factura_l1) {
                 $id_factura=$factura_l1->tid;
@@ -2892,7 +2895,10 @@ return $str;
         $amount = $montos[$id_factura];
         $paydate = date("Y-m-d");
         
-        $pmethod = "PAYU";
+        
+        if(isset($_POST['EFECTY'])){
+            $pmethod = "EFECTY";
+        }
         $banco = "";
         $acid = $customer->gid;
         $cid = $factura_var->csd;
@@ -2903,8 +2909,8 @@ return $str;
         $this->db->where('sede', $acid);
         $query = $this->db->get();
         $account = $query->row_array();
-        $note = "Pago de la factura #".$id_factura." metodo: PAYU, Sede: ".$account['holder'].", referencia: ".$id_orden;
-        $mt=$this->db->get_where("accounts",array("holder"=>"PAYU"))->row();
+        $note = "Pago de la factura #".$id_factura." metodo: ".$pmethod.", Sede: ".$account['holder'].", referencia: ".$id_orden;
+        $mt=$this->db->get_where("accounts",array("holder"=>$pmethod))->row();
         $acid=$mt->id;
         $reconexion = "no";
         $fu=null;
@@ -3013,7 +3019,7 @@ return $str;
                 $this->db->insert('tickets',$data2);
 
                           $data_h=array();
-                            $data_h['modulo']="Usuarios Servicio PAYU";
+                            $data_h['modulo']="Usuarios Servicio ".$pmethod;
                             $data_h['accion']="Hacer el Pago {update}";
                             $data_h['id_usuario']=$cid;
                             $data_h['fecha']=date("Y-m-d H:i:s");
@@ -3035,7 +3041,7 @@ return $str;
                 $data2['id_factura']='';
                 $this->db->insert('tickets',$data2);
                             $data_h=array();
-                            $data_h['modulo']="Usuarios Servicio PAYU";
+                            $data_h['modulo']="Usuarios Servicio ".$pmethod;
                             $data_h['accion']="Hacer el Pago {update}";
                             $data_h['id_usuario']=$cid;
                             $data_h['fecha']=date("Y-m-d H:i:s");
@@ -3052,7 +3058,7 @@ return $str;
                 $reconexion_gen="si";
             $this->db->insert('temporales', $data4);
                             $data_h=array();
-                            $data_h['modulo']="Usuarios Servicio PAYU";
+                            $data_h['modulo']="Usuarios Servicio ".$pmethod;
                             $data_h['accion']="Hacer el Pago {update}";
                             $data_h['id_usuario']=$cid;
                             $data_h['fecha']=date("Y-m-d H:i:s");
@@ -3069,7 +3075,7 @@ return $str;
         $banco=null;
         
             if ($pmethod=="Cash"){
-        $note="Pago de la factura #".$tid." ".$customer->name." ".$customer->unoapellido." ".$customer->documento." metodo: efectivo PAYU";
+        $note="Pago de la factura #".$tid." ".$customer->name." ".$customer->unoapellido." ".$customer->documento." metodo: efectivo ".$pmethod;
             }
     $data = array(
             'acid' => $acid,
@@ -3094,7 +3100,7 @@ return $str;
         $h_x1=$this->db->insert_id();
 
                             $data_h=array();
-                            $data_h['modulo']="Usuarios Servicio PAYU";
+                            $data_h['modulo']="Usuarios Servicio ".$pmethod;
                             $data_h['accion']="Hacer el Pago {update}";
                             $data_h['id_usuario']=$cid;
                             $data_h['fecha']=date("Y-m-d H:i:s");
@@ -3123,7 +3129,7 @@ return $str;
             $this->db->update('invoices');
 
                         $data_h=array();
-                            $data_h['modulo']="Usuarios Servicio PAYU";
+                            $data_h['modulo']="Usuarios Servicio ".$pmethod;
                             $data_h['accion']="Hacer el Pago {update}";
                             $data_h['id_usuario']=$cid;
                             $data_h['fecha']=date("Y-m-d H:i:s");
@@ -3138,7 +3144,7 @@ return $str;
             $this->db->update('accounts');
 
                     $data_h=array();
-                            $data_h['modulo']="Usuarios Servicio PAYU";
+                            $data_h['modulo']="Usuarios Servicio ".$pmethod;
                             $data_h['accion']="Hacer el Pago {update}";
                             $data_h['id_usuario']=$cid;
                             $data_h['fecha']=date("Y-m-d H:i:s");
@@ -3158,7 +3164,7 @@ return $str;
             $this->db->where('tid', $tid);
             $this->db->update('invoices');
                     $data_h=array();
-                           $data_h['modulo']="Usuarios Servicio PAYU";
+                           $data_h['modulo']="Usuarios Servicio ".$pmethod;
                             $data_h['accion']="Hacer el Pago {update}";
                             $data_h['id_usuario']=$cid;
                             $data_h['fecha']=date("Y-m-d H:i:s");
@@ -3172,7 +3178,7 @@ return $str;
             $this->db->where('id', $acid);
             $this->db->update('accounts');
                         $data_h=array();
-                            $data_h['modulo']="Usuarios Servicio PAYU";
+                            $data_h['modulo']="Usuarios Servicio ".$pmethod;
                             $data_h['accion']="Hacer el Pago {update}";
                             $data_h['id_usuario']=$cid;
                             $data_h['fecha']=date("Y-m-d H:i:s");
@@ -3293,8 +3299,12 @@ foreach ($lista as $key => $value) {
          }
 
     }
-    $this->communication->send_email($customer->email,"Comprobante de pago VESTEL","Comprobante de pago VESTEL",$cuerpo);
-$this->communication->send_email("pescafelipe@gmail.com","Comprobante de pago VESTEL","Comprobante de pago VESTEL",$cuerpo);
+    if(empty($_POST['no_email'])){
+    $this->communication->send_email($customer->email,"Comprobante de pago VESTEL","Comprobante de pago VESTEL",$cuerpo);    
+    $this->communication->send_email("pescafelipe@gmail.com","Comprobante de pago VESTEL","Comprobante de pago VESTEL",$cuerpo);
+    }
+    
+
 
 
 }

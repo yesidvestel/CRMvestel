@@ -82,12 +82,16 @@ class Files_carga_transaccional_model extends CI_Model
         $query = $this->db->get();
         return $query->num_rows();
     }
-    public function facturar_customer(){
+    public function facturar_customer($data,$cs){
         set_time_limit(150);
         ini_set ( 'max_execution_time', 150);
-        ini_set ( 'max_execution_time', 150);
-        //$creo=$this->facturas_electronicas->generar_factura_customer_para_multiple($datos,$_SESSION['api_siigo']);
-                        $creo=array("status"=>true);
+        
+        $this->load->model('customers_model', 'customers');
+$_POST['no_email']=true;
+$_POST['EFECTY']=true;
+        $creo=$this->customers->pay_invoices($cs->id,$data->monto,$data->ref_efecty);
+
+        $creo=array("status"=>true);
                         //sleep(7);
         if($creo['status']==true){
                 return  true;                        
@@ -103,24 +107,57 @@ class Files_carga_transaccional_model extends CI_Model
             $reader->setReadDataOnly(true);
             $spreadsheet=$reader->load($ruta);
             $sheet=$spreadsheet->getActiveSheet(0);
-            echo "<table>";
+            //echo "<table>";
             $string_inserts="";
+$fecha_actual=date("Y-m-d H:i:s");
             foreach ($sheet->getRowIterator() as $key => $row) {
                     $cellIterator=$row->getCellIterator("d","f");
                     $cellIterator->setIterateOnlyExistingCells(false);
-                    echo "<tr><td>".$key."</td>";
+                   // echo "<tr><td>".$key."</td>";
                     if($key>1){
-                        $valido=true;
+                        //$valido=true;
+                        $in="";
+                            $montox=0;
+                            $documentox=0;
+                            $ref_efecty=0;
                         foreach ($cellIterator as $key2 => $cell) {
                             if(!is_null($cell)){
                                 $value=$cell->getValue();
-                                echo "<td>".$value."</td>";
+                                if($key2=="D"){
+                                    $montox=str_replace("$", "", $value);
+                                    $montox=str_replace(".", "", $montox);
+                                    $montox=intval($montox);
+
+                                    //echo "<td>".$key2." - ".intval($montox)."</td>";
+                                    //echo "<td>".$key2." - ".$value."</td>";
+                                }else if($key2=="E"){
+                                    $ref_efecty=$value;
+                                    //echo "<td>".$key2." - ".$value."</td>";
+                                }else {
+                                    $documentox=$value;
+                                }
                             }
+                        }//fin iteracion celdas
+                        if($montox>0 && intval($documentox)>0){
+                            if($string_inserts!=""){
+                                $in=",";
+                            }
+                            $in.="('".$fecha_actual."', '".$documentox."', '".$montox."', 'Inicial', '".$id_file."','".$ref_efecty."')";
+                            $string_inserts.=$in;
                         }
-                    }
-                    echo "</tr>";
+                        
+
+                    }//fin validacion >1
+                    //echo "</tr>";
+            }//fin iteracion filas
+            if($string_inserts!=""){
+                //echo $string_inserts;
+                $x1="INSERT INTO datos_archivo_excel_cargue ( fecha, documento, monto, estado, id_archivo,ref_efecty) VALUES ";
+                $string_inserts=$x1.$string_inserts.";";
+                //echo $string_inserts;
+                $this->db->query($string_inserts);
             }
-            echo "<table>";
+            //echo "<table>";
 
     }
     

@@ -83,6 +83,33 @@
                         <div id="progressfg" class="progressfg" data-init="true"></div>
                         </div>
                  <hr>
+                 <div class="grid_3 grid_4">
+            <table id="tabla-cs" class="table-striped table-hover" cellspacing="0" width="100%">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Documento</th>
+                        <th>Monto</th>
+                        <th>Estado</th>
+                        <th>REF. EFECTY</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Documento</th>
+                        <th>Monto</th>
+                        <th>Estado</th>
+                        <th>REF. EFECTY</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default"
@@ -94,7 +121,8 @@
     </div>
 </div>
 <script type="text/javascript">
-    
+    var tb;
+    var tb_cs;
      $(document).ready(function(){
         
             
@@ -107,6 +135,31 @@
             // Load data for the table's content from an Ajax source
             "ajax": {
                 "url": "<?php echo site_url('transactions/list_files_up')?>",
+                "type": "POST"
+            },
+
+            //Set column definition initialisation properties.
+            "columnDefs": [
+                {
+                    //"targets": [0], //first column / numbering column
+                    "orderable": false, //set not orderable
+                },
+                
+            ],  
+            "language":spanish
+            
+
+        });
+
+        tb_cs=$('#tabla-cs').DataTable({
+
+            "processing": true, //Feature control the processing indicator.
+            "serverSide": true, //Feature control DataTables' server-side processing mode.
+            "order": [], //Initial no order.
+
+            // Load data for the table's content from an Ajax source
+            "ajax": {
+                "url": "<?php echo site_url('transactions/list_customers_cargados?id=0')?>",
                 "type": "POST"
             },
 
@@ -160,6 +213,7 @@ $(document).on("submit","#form_model2",function (e){
 
      
     var action_url= $('#action-url2').val();
+    $("#submit_model2-tr-nw").attr('disabled','disabled');
     addObject_eq(form_data,action_url);
 });
 $('#progress').LineProgressbar({
@@ -190,27 +244,27 @@ $('#progress').LineProgressbar({
     var total=0;
     var total_a_facturar=0;
     var va_en=0;
-
+var proceso_iniciado=false;
     $(document).on("click",'.cl-play-process',function(ev){
         ev.preventDefault();
-        ev.preventDefault();
+        
         $(this).attr("disabled","true");
         $("#modal_process").modal("show");
-        var id_file=$(this).data("id-file");
-        
-         progress_one(40);
-        $.post(baseurl+"transactions/obtener_lista_usuarios_a_facturar",{'id_file':id_file},function(data){
-            progress_one(90);
-            datos_recorrer=data.lista_usuarios_a_facturar;
-            total=datos_recorrer.length;
-            total_a_facturar= parseInt( data.total_usuarios);
-           va_en =parseInt(total_a_facturar-datos_recorrer.length);
-            $("#span_progress1").text(va_en+"/"+total_a_facturar);
+         id_file=$(this).data("id-file");
+        if(!proceso_iniciado){proceso_iniciado =true;
+             progress_one(40);
+            $.post(baseurl+"transactions/obtener_lista_usuarios_a_facturar",{'id_file':id_file},function(data){
+                progress_one(90);
+                datos_recorrer=data.lista_usuarios_a_facturar;
+                total=datos_recorrer.length;
+                total_a_facturar= parseInt( data.total_usuarios);
+               va_en =parseInt(total_a_facturar-datos_recorrer.length);
+                $("#span_progress1").text(va_en+"/"+total_a_facturar);
 
-            iniciar_facturacion();
-            
-        },'json');
-        
+                iniciar_facturacion();
+                
+            },'json');
+        }
 
     });
     
@@ -236,7 +290,7 @@ function iniciar_facturacion(){
                 
                     $("#span_progress1").text(va_en+"/"+total_a_facturar);
                     progress_one(40);
-            $.post(baseurl+"transactions/procesar_usuarios_a_facturar",{'id_file':id_file,'id_customer':id_customer},function(data){
+            $.post(baseurl+"transactions/procesar_usuarios_a_facturar",{'id_file':id_file,'id':id_customer},function(data){
 
 
                     if(data.estado=="procesado" || data.estado=="procesado 2"){
@@ -244,6 +298,7 @@ function iniciar_facturacion(){
                         i++;
                         progress_one(100);
                         iniciar_facturacion();
+                        recargar_tb_results();
                     }
 
                     
@@ -259,6 +314,8 @@ function iniciar_facturacion(){
                 iniciar_facturacion();
             });
         }else{
+recargar_tb_results();
+finalizar_registro_file();
             alert("Proceso Finalizado");
             
             $('.progressfg').remove();
@@ -267,5 +324,14 @@ function iniciar_facturacion(){
              progress_one(100);
             //window.location.href = baseurl+"facturasElectronicas/visualizar_resumen_ejecucion?fecha="+sdate+"&sede="+pay_acc;
         }
+}
+function finalizar_registro_file(){
+    $.post(baseurl+"transactions/finalizar_file",{'id_file':id_file},function(data){
+
+        tb.ajax.url( baseurl+"transactions/list_files_up").load();                
+            });
+}
+function recargar_tb_results(){
+    tb_cs.ajax.url( baseurl+"transactions/list_customers_cargados?id="+id_file).load();
 }
 </script>

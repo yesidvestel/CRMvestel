@@ -845,7 +845,9 @@ function addObject_eq(action,action_url) {
                     $("#notify .message").html("<strong>" + data.status + "</strong>: " + data.message);
                     $("#notify").removeClass("alert-success").addClass("alert-danger").fadeIn();
                     $("html, body").scrollTop($("body").offset().top);
-
+                            if(recargar_f_excel != undefined){
+                                    $("#submit_model2-tr-nw").removeAttr('disabled');
+                              }
                 }
 
             },

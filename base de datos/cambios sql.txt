@@ -1,8 +1,65 @@
 ﻿-------------------cambios para cargue de transacciones mediante achivo excel- -------------------------
-CREATE TABLE `files_carga_transaccional` (`id` INT NOT NULL AUTO_INCREMENT , `nombre` VARCHAR(100) NOT NULL , `fecha` DATETIME NOT NULL , `id_usuario` INT NOT NULL , `estado` ENUM('Archivo Cargado','Transacciones Cargadas') NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
-ALTER TABLE `files_carga_transaccional` ADD `nombre_real_file` VARCHAR(150) NOT NULL AFTER `estado`;
-ALTER TABLE `files_carga_transaccional` CHANGE `estado` `estado` ENUM('Archivo Cargado','Procesando','Transacciones Cargadas') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL;
-CREATE TABLE `datos_archivo_excel_cargue` (`id` INT NOT NULL AUTO_INCREMENT , `fecha` DATETIME NOT NULL , `documento` INT NOT NULL , `monto` INT NOT NULL , `estado` ENUM('Inicial','Cargado','Error') NOT NULL , `id_archivo` INT NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+CREATE TABLE `files_carga_transaccional` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(100) NOT NULL,
+  `fecha` datetime NOT NULL,
+  `id_usuario` int(11) NOT NULL,
+  `estado` enum('Archivo Cargado','Procesando','Transacciones Cargadas') NOT NULL,
+  `nombre_real_file` varchar(150) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Índices para tablas volcadas
+--
+
+--
+-- Indices de la tabla `files_carga_transaccional`
+--
+ALTER TABLE `files_carga_transaccional`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `files_carga_transaccional`
+--
+ALTER TABLE `files_carga_transaccional`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+CREATE TABLE `datos_archivo_excel_cargue` (
+  `id` int(11) NOT NULL,
+  `fecha` datetime NOT NULL,
+  `documento` varchar(30) NOT NULL,
+  `monto` int(11) NOT NULL,
+  `estado` enum('Inicial','Cargado','Error','Usuario No Existe') NOT NULL,
+  `id_archivo` int(11) NOT NULL,
+  `ref_efecty` varchar(50) NOT NULL,
+  `id_customer` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Índices para tablas volcadas
+--
+
+--
+-- Indices de la tabla `datos_archivo_excel_cargue`
+--
+ALTER TABLE `datos_archivo_excel_cargue`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `datos_archivo_excel_cargue`
+--
+ALTER TABLE `datos_archivo_excel_cargue`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+INSERT INTO `accounts` ( `acn`, `holder`, `sede`, `adate`, `lastbal`, `code`, `direccion`, `telefono`, `departamento`) VALUES
+('8301319931', 'EFECTY', 0, '0000-00-00 00:00:00', '3796461.00', 'Cuenta EFECTY', '', NULL, '');
 
 -------------cambios ips users ips_users_mk---------------
 DROP TABLE ips_users_mk;
