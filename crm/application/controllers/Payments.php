@@ -36,7 +36,7 @@ class Payments extends CI_Controller
         $head['title'] = "Payments";
         $cid=$this->session->userdata('user_details')[0]->cid;
         $fecha_actual=date("Y-m-d");
-        $this->db->query("DELETE FROM wompi_data_orden WHERE estado='inicial' and cid_user=".$cid." and fecha<'".$fecha_actual."'");
+        $this->db->query("DELETE FROM wompi_data_orden WHERE estado='Inicial' and cid_user=".$cid." and fecha<'".$fecha_actual."'");
         //var_dump("DELETE FROM wompi_data_orden WHERE estado='inicial' and cid_user=".$cid." and fecha<'".$fecha_actual."'");
         
         $this->load->view('includes/header');

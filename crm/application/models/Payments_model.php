@@ -73,6 +73,7 @@ class Payments_model extends CI_Model
 
         $this->db->from($this->table);
         $this->db->where('wompi_data_orden.cid_user', $this->session->userdata('user_details')[0]->cid);
+        $this->db->where('wompi_data_orden.estado !=', "Inicial");
 
         $i = 0;
             if ($_POST['search']['value'] && strlen($_POST['search']['value'])>20) 
@@ -111,7 +112,7 @@ class Payments_model extends CI_Model
     function get_datatables()
     {
         $this->_get_datatables_query();
-        $this->db->where('wompi_data_orden.cid_user', $this->session->userdata('user_details')[0]->cid);
+        //$this->db->where('wompi_data_orden.cid_user', $this->session->userdata('user_details')[0]->cid);
         if ($_POST['length'] != -1)
             $this->db->limit($_POST['length'], $_POST['start']);
         $query = $this->db->get();
