@@ -2837,7 +2837,7 @@ return $str;
         $array_facturas2=array();
         $_id_last_invoice_procesed=0;
         $factura_var=null;
-        $pmethod = "PAYU";
+        $pmethod = "WOMPI";
         $pa="no";
             foreach ($array_facturas as $key => $factura_l1) {
                 $id_factura=$factura_l1->tid;

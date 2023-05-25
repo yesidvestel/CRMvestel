@@ -1,4 +1,9 @@
-﻿-------------------cambios para cargue de transacciones mediante achivo excel- -------------------------
+﻿-------------------AGREGANDO CAMBIO DE PAYU A WOMPI -----------------------------------------------------------
+
+INSERT INTO `accounts` ( `acn`, `holder`, `sede`, `adate`, `lastbal`, `code`, `direccion`, `telefono`, `departamento`) VALUES
+('9874561235', 'WOMPI', 0, '0000-00-00 00:00:00', '100796461.00', 'Cuenta WOMPI', '', NULL, '');
+
+-------------------cambios para cargue de transacciones mediante achivo excel- -------------------------
 CREATE TABLE `files_carga_transaccional` (
   `id` int(11) NOT NULL,
   `nombre` varchar(100) NOT NULL,
