@@ -143,7 +143,7 @@
                         <div class="col-md-6 col-sm-12 text-xs-center text-md-right">
                             <h2 ><?php echo $this->lang->line('') ?>Estado de Cuenta</h2>
                             <ul class="pb-1"> <?php echo $this->config->item('prefix') . ' #' . $invoice['tid'] . '</p>
-                            <ul class="pb-1">'.Sede .': ' . $invoice['refer'] . '</p>'; ?>
+                            <ul class="pb-1">Sede: ' . $invoice['refer'] . '</p>'; ?>
                             <ul class="px-0 list-unstyled">
                                 <li><?php echo $this->lang->line('Gross Amount') ?></li>
                                 <li class="lead text-bold-800"><?php echo amountFormat($invoice['total']) ?></li>
@@ -163,7 +163,7 @@
 
                                 <li class="text-bold-800"><a
                                             href="<?php echo base_url('customers/view?id=' . $invoice['cid']) ?>"><strong
-                                                class="invoice_a"><?php echo ucwords($invoice['name']) .' '.ucwords($invoice['unoapellido']).'</strong></a></li><li>' .$invoice['tipo_documento'].': '. $invoice['documento'] .  '</li><li>'.Celular .': ' . $invoice['celular'] . '</li><li>'.$this->lang->line('Email') .': ' . $invoice['email'];
+                                                class="invoice_a"><?php echo ucwords($invoice['name']) .' '.ucwords($invoice['unoapellido']).'</strong></a></li><li>' .$invoice['tipo_documento'].': '. $invoice['documento'] .  '</li><li>Celular: ' . $invoice['celular'] . '</li><li>'.$this->lang->line('Email') .': ' . $invoice['email'];
                                     if ($invoice['taxid']) echo '</li><li>' . $this->lang->line('Tax') . ' ID: ' . $invoice['taxid']
                                                 ?>
                                 </li>
@@ -242,7 +242,7 @@
                                         <p class="lead mt-1"><br>Servicios Asignados:</p>
                                         <code>
                                             <?php $servs_eco=""; 
-												if ($invoice['television'] == no ){
+												if ($invoice['television'] == 'no' ){
 													$servs_eco.= '';
 												} else{
                                                         if($invoice['estado_tv'] == "Cortado"){
@@ -253,7 +253,7 @@
                                                             $servs_eco.= $invoice['television'];    
                                                         }
 													}
-											if ($invoice['combo'] == no ){
+											if ($invoice['combo'] == 'no' ){
 													$servs_eco.= '';
 												} else{
 
