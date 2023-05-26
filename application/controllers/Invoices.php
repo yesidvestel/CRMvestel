@@ -213,7 +213,7 @@ $this->load->model("Notas_model","notas");
         $this->load->model('customers_model', 'customers');
         $this->load->model('transactions_model');
         $head['title'] = "Generar Facturas";        
-        $data['accounts'] = $this->transactions_model->acc_list();
+        $data['groups_list'] = $this->transactions_model->groups_list();
         $head['usernm'] = $this->aauth->get_user()->username;
         $this->load->view('fixed/header', $head);
         $this->load->view('invoices/generar_facturas', $data);
@@ -222,9 +222,10 @@ $this->load->model("Notas_model","notas");
     public function generar_facturas_action(){
         set_time_limit(20000);
         
-        $caja1=$this->db->get_where('accounts',array('id' =>$_POST['pay_acc']))->row();
+        //$caja1=$this->db->get_where('accounts',array('id' =>$_POST['pay_acc']))->row();
+        $caja2=$this->db->get_where('customers_group',array('id' =>$_POST['pay_acc']))->row();
         //$customers = $this->db->get_where("customers", array("usu_estado"=>'Activo',"ciudad"=>$caja1->holder))->result_array();
-        $customers_list = $this->db->query("select * from customers where (usu_estado='Activo' or usu_estado='Compromiso') and gid ='".$caja1->sede."'")->result_array();
+        $customers_list = $this->db->query("select * from customers where (usu_estado='Activo' or usu_estado='Compromiso') and gid ='".$caja2->id."'")->result_array();
         $ciudades= array();
         $sdate=$this->input->post("sdate");
         $date1= new DateTime($sdate);
@@ -339,7 +340,7 @@ $this->load->model('customers_model', 'customers');
                                     
                                         $television_data['product']=$tv_product->product_name;
                                     
-                                }else if(strpos(strtolower($caja1->holder), strtolower("mocoa"))!==false){
+                                }else if(strpos(strtolower($caja2->title), strtolower("mocoa"))!==false){
                                     $tv_product= $this->db->get_where("products", array('pid' => "159"))->row();
                                     $television_data['pid']=$tv_product->pid;
                                     $television_data['price']=$tv_product->product_price;
@@ -822,7 +823,7 @@ var_dump("aqui2");*/
             $data_h['accion']="Generar Facturas Mensuales {insert}";
             $data_h['id_usuario']=$this->aauth->get_user()->id;
             $data_h['fecha']=date("Y-m-d H:i:s");
-            $data_h['descripcion']="Generacion de facturacion mensual, junto con la acomodacion de pagos adelantados en sede ".$caja1->holder." fecha seleccionada ".$sdate;
+            $data_h['descripcion']="Generacion de facturacion mensual, junto con la acomodacion de pagos adelantados en sede ".$caja2->title." fecha seleccionada ".$sdate;
             $data_h['id_fila']="0";
             $data_h['tabla']="invoices";
             $data_h['nombre_columna']="";
@@ -833,7 +834,7 @@ var_dump("aqui2");*/
         $head['title'] = "Generar Facturas";        
         $data['customers_afectados'] = $customers_afectados;
         $data['fecha'] = $sdate1;
-        $data['pay_acc'] = $caja1->holder;
+        $data['pay_acc'] = $caja2->title;
         $head['usernm'] = $this->aauth->get_user()->username;
         $this->load->view('fixed/header', $head);
         $this->load->view('invoices/facturas_generadas', $data);

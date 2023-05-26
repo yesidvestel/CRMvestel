@@ -22,11 +22,11 @@
                                 <div class="col-sm-9">
                                     <select name="pay_acc" class="form-control" id="cuentas_">
                                         <?php
-                                        foreach ($accounts as $row) {
+                                        foreach ($groups_list as $row) {
                                             $cid = $row['id'];
-                                            $acn = $row['acn'];
-                                            $holder = $row['holder'];
-											echo "<option value='$cid'>$acn - $holder</option>";
+                                            //$acn = $row['acn'];
+                                            $holder = $row['title'];
+											echo "<option value='$cid'>$holder</option>";
                                             /*if($cid<6 || $cid==9 || $cid==19){
                                                 
                                             }*/
