@@ -18,7 +18,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class llamadas_model extends CI_Model
+class Llamadas_model extends CI_Model
 {
 
     var $table = 'llamadas';

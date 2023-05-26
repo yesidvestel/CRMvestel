@@ -18,7 +18,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class llamadas extends CI_Controller
+class Llamadas extends CI_Controller
 {
 
     public function __construct()
