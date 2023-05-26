@@ -1709,7 +1709,7 @@ public function get_gasto_datos($user_name,$id_sede,$tegnologia_instalacion){
         return $datos;
 }
     public function get_estado_mikrotik($user_name,$id_sede,$tegnologia_instalacion){
-        include (APPPATH."libraries\RouterosAPI.php");
+        include (APPPATH."libraries/RouterosAPI.php");
         set_time_limit(3000);
          $API = new RouterosAPI();
         $API->debug = false;
