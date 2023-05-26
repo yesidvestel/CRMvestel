@@ -122,7 +122,7 @@
 											Estado Servicio
                                         </li>
 										<li class="list-group-item">
-											<span class="tag tag-default tag-pill bg-primary float-xs-right"><?php if ($servicios['television']!==no){ echo $servicios['television'];} if ($servicios['combo']!==no){ echo ' + '.$servicios['combo'];}if ($due['puntos']!=='0'){ echo ' + '.$due['puntos'].' Puntos';}?></span>
+											<span class="tag tag-default tag-pill bg-primary float-xs-right"><?php if ($servicios['television']!=="no"){ echo $servicios['television'];} if ($servicios['combo']!=="no"){ echo ' + '.$servicios['combo'];}if ($due['puntos']!=='0'){ echo ' + '.$due['puntos'].' Puntos';}?></span>
 											Servicios
                                         </li>
                                         <li class="list-group-item">
