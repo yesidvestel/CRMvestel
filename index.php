@@ -76,7 +76,7 @@ if(!isset($_SESSION[$variable_datos_pin])){
 	$datos_default=array("base_url"=>"http://localhost/CRMvestel/","username"=>"root","password"=>"","db_name"=>"crm");
 	try {
 		
-			$conx = mysqli_connect('localhost','admin','Canales1957.*');
+			$conx = mysqli_connect('localhost','admin_sitios_web','1b0a6e90bc2fc1a1d638592bd51f3253');
 			mysqli_select_db($conx,'db_general_params');
 			$queryx = "select * from sitios_web where url like'%". $_SERVER["HTTP_HOST"]."%'";
 				
