@@ -18,7 +18,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class encuesta_model extends CI_Model
+class Encuesta_model extends CI_Model
 {
 
     var $table = 'encuestas';
