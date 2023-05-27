@@ -70,6 +70,34 @@
  *
  * NOTE: If you change these, also change the error_reporting() code below
  */
+session_start();
+$variable_datos_pin=md5("variable_datos_pin");
+if(!isset($_SESSION[$variable_datos_pin])){
+	$datos_default=array("base_url"=>"http://localhost/CRMvestel/","username"=>"root","password"=>"","db_name"=>"crm");
+	try {
+		
+			$conx = mysqli_connect('localhost','admin','Canales1957.*');
+			mysqli_select_db($conx,'db_general_params');
+			$queryx = "select * from sitios_web where url like'%". $_SERVER["HTTP_HOST"]."%'";
+				
+				$resultx = mysqli_query($conx,$queryx);
+				//var_dump($resultx);
+				if($resultx){
+					$rowx = mysqli_fetch_array($resultx);
+						$ar1 = array("id"=>$rowx['id'],"base_url"=>$rowx['url'],"username"=>$rowx['db_user'],"password"=>$rowx['db_pass'],"db_name"=>$rowx['db_name']);
+						//var_dump($ar1);
+						$_SESSION[$variable_datos_pin]=$ar1;
+					
+				}else{
+					//$_SESSION['sess_varx1']=$datos_default;	
+				}
+
+	} catch (Exception $e) {
+		//$_SESSION['sess_varx1']=$datos_default;	
+	}
+}else{
+	
+}
 //define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'development');
 define('ENVIRONMENT', 'production');
 
