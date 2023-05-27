@@ -590,7 +590,8 @@ public function obtener_notificaciones(){
             }
 
             $name = '<a href="'.base_url().'manager/historial?id='.$value['id_tarea'].'" data-id="' . $value['id_tarea'] . '" class="view_task2">' . $value['name'] . '</a>';
-            $retorno['str_retorno'].= "<li>Tarea #".$value['id_tarea']." <i class='class_resuelta'><b>resuelta</b></i>, ".$name;//&nbsp<a href="#" data-id="' . $value['id_tarea'] . '" class="view_task2 btn-sm btn-indigo"> <i class="icon-eye"></i> </a>
+            $btn1 = '&nbsp<a href="'.base_url().'manager/historial?id='.$value['id_tarea'].'" data-id="' . $value['id_tarea'] . '" class="view_task2 btn-sm btn-indigo"><i class="icon-eye"></i>Historial</a>';
+            $retorno['str_retorno'].= "<li>Tarea #".$value['id_tarea']." <i class='class_resuelta'><b>resuelta</b></i>, ".$name.$btn1;//&nbsp<a href="#" data-id="' . $value['id_tarea'] . '" class="view_task2 btn-sm btn-indigo"> <i class="icon-eye"></i> </a>
             $retorno['str_retorno'].= "<br><b class='fecha_hora_small'>".$value['fecha']."</b>"."</li><hr>";
         }
         
