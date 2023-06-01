@@ -1374,7 +1374,7 @@ $writer->writeSheetHeader($nombrey, $headers,$col_options);
                             }
 
 				$username = $this->aauth->get_user()->username;
-				if (($television !== no) || $combo !== no){
+				if ( ( ($television !== no) || $combo !== no) && $_POST['crear_ticket']!="no" ){
 				$data2['codigo']=$tidactualmasuno[0]->codigo;	
                 $data2['subject']='servicio';
 				$data2['detalle']='Instalacion';	

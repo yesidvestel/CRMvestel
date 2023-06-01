@@ -610,6 +610,61 @@ setlocale(LC_TIME, "spanish");
         //var_dump($this->db->get_where("products",array("pcat"=>"4","warehouse"=>"7","sede"=>"2","pertence_a_tv_o_net"=>"Tv"))->result_array());
         return $lista_sedes;
     }
+    public function validacion_generar_orden_instalacion($cid){
+        $ultima_factura=$this->db->query('SELECT * from invoices  where csd="'.$cid.'" order by tid desc limit 1')->result_array();
+
+        
+        if($ultima_factura[0]['status']=='paid' ){
+                $es_afili=$this->db->query('SELECT * FROM invoice_items WHERE tid ="'.$ultima_factura[0]['tid'].'" and product like "%afiliacion%" ')->result_array();    
+                $no_orden=$this->db->query('SELECT * FROM tickets WHERE id_invoice ="'.$ultima_factura[0]['tid'].'" and detalle="Instalacion" ')->result_array();    
+                if(count($es_afili)>0 && count($no_orden)==0){
+                    $tidactualmasuno1= $this->db->select('max(codigo)+1 as codigo')->from('tickets')->get()->result();
+                    $username = $this->aauth->get_user()->username;
+                    $tv="";
+                    if ($ultima_factura[0]['television']=='no'){
+                        $tv = '';
+                    }else{
+                        $tv = $ultima_factura[0]['television'];
+                    }
+                    $int = '';
+                    if ($ultima_factura[0]['combo']=='no'){
+                        $int = '';
+                    }else{
+                        $int = ' + '.$ultima_factura[0]['combo'];
+                    }
+                    $pto = '';
+                    if ($ultima_factura[0]['puntos']=='0'){
+                        $pto = '';
+                    }else{
+                        $pto = ' + '.$ultima_factura[0]['puntos'].' Puntos';
+                    }
+                    $servicios_adicionales=$this->servicios_adicionales_tr_auto($ultima_factura[0]['tid']);
+                    $datax2['codigo']=$tidactualmasuno1[0]->codigo;   
+                    $datax2['subject']='servicio';
+                    $datax2['detalle']='Instalacion';    
+                    $datax2['created']=date("Y-m-d");
+                    $datax2['cid']=$cid;
+                    $datax2['col']=$username;
+                    $datax2['status']='Pendiente';
+                    $datax2['section']=$tv.$int.$pto.$servicios_adicionales; 
+                    //Tipo de instalacion
+                        
+                    $datax2['id_invoice']=$ultima_factura[0]['tid'];
+                    $datax2['id_factura']=null;
+                    
+                    $this->db->insert('tickets',$datax2);
+                }
+        }
+    }
+    public function servicios_adicionales_tr_auto($tid){
+        $lista_servs=$this->db->get_where("servicios_adicionales",array("tid_invoice"=>$tid))->result_array();
+        $text="";
+        foreach ($lista_servs as $key => $value) {
+            $producto=$this->db->get_where("products",array("pid"=>$value['pid']))->row();
+            $text.=" + ".$value['valor']." ".$producto->product_name;
+        }
+        return $text;        
+    }
     public function servicios_adicionales($tid,$return_text){
         $lista_servs=$this->db->get_where("servicios_adicionales",array("tid_invoice"=>$tid))->result_array();
         $text="";

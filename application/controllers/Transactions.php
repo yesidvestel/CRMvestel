@@ -24,7 +24,7 @@ class Transactions extends CI_Controller
     {
         parent::__construct();
         $this->load->library("Aauth");
-        $this->load->model('invoices_model');
+        $this->load->model('invoices_model','invoices_model');
         $this->load->model('transactions_model', 'transactions');
         if (!$this->aauth->is_loggedin()) {
             redirect('/user/', 'refresh');
@@ -1117,7 +1117,7 @@ class Transactions extends CI_Controller
             $this->db->update("customers",$data_ids,array("id"=>$cid));
             
         }
-        
+        $this->invoices_model->validacion_generar_orden_instalacion($cid);
         $link ="<a href='".base_url()."invoices/printinvoice?id=".$id_fact_pagadas."' class='btn btn-info btn-lg'><span class='icon-file-text2' aria-hidden='true'></span>Ver PDF Facturas Pagadas</a>";
 
         echo json_encode(array('status'=>"Success",'message' =>$this->lang->line('Transaction has been added ').$link,"id_fact_pagadas"=>$id_fact_pagadas,"valor_restante_monto"=>$valor_restante_monto,"pa"=>$pa));
@@ -1433,6 +1433,7 @@ $this->load->helper('cookie');
             $this->db->update("customers",$data_ids,array("id"=>$cid));
             
         }
+        $this->invoices_model->validacion_generar_orden_instalacion($cid);
         echo json_encode(array('status' => 'Success', 'message' =>
             $this->lang->line('Transaction has been added'), 'pstatus' => $this->lang->line($status), 'activity' => $activitym, 'amt' => $totalrm, 'ttlpaid' => $paid_amount,"tid"=>$tid));
     } 

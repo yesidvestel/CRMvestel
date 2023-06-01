@@ -1101,7 +1101,7 @@ if($status=="Resuelto" && file_exists($nombre_archiv)==false && strpos(strtolowe
            // if(isset($ticket->id_invoice) && $ticket->id_invoice!=0 && $ticket->id_invoice!="0" ){
                 
                 $list_servs=$this->invoices->servicios_adicionales($ticket->id_invoice,false);
-                $list_servs=$this->invoices->servicios_adicionales_idt($ticket->idt,$lista_servs);
+                $list_servs=$this->invoices->servicios_adicionales_idt($ticket->idt,$list_servs);
                 //var_dump($ticket->id_invoice);
                 //var_dump($list_servs);
                 foreach ($list_servs as $key_s => $serv_val) {
@@ -1737,7 +1737,7 @@ $x=0;
                     //var_dump($total);
                     /*serv ads*/  
                     $list_servs=$this->invoices->servicios_adicionales($idfactura,false);
-                $list_servs=$this->invoices->servicios_adicionales_idt($ticket->idt,$lista_servs);
+                $list_servs=$this->invoices->servicios_adicionales_idt($ticket->idt,$list_servs);
                 //var_dump($ticket->id_invoice);
                 //var_dump($list_servs);
                 foreach ($list_servs as $key_s => $serv_val) {
@@ -1847,7 +1847,7 @@ $x=0;
                 }
              /*serv ads*/  
                     $list_servs=$this->invoices->servicios_adicionales($idfactura,false);
-                $list_servs=$this->invoices->servicios_adicionales_idt($ticket->idt,$lista_servs);
+                $list_servs=$this->invoices->servicios_adicionales_idt($ticket->idt,$list_servs);
                 //var_dump($ticket->id_invoice);
                 //var_dump($list_servs);
                 foreach ($list_servs as $key_s => $serv_val) {

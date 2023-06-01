@@ -302,7 +302,7 @@
 
                                     </select><?php } ?></td>
 									<td colspan="2">Television</small>
-                                    <select name="television" class="selectpicker form-control">
+                                    <select name="television" id="tvx1" class="selectpicker form-control vl-btn-vl-orden">
                                         <option value="no">No</option>
                                         <?php
 											foreach ($paquete as $row) {
@@ -385,7 +385,7 @@
 
                                     </select></td>
 								<td colspan="2">Internet 
-								<select style="width: 100%;" name="combo" id="combox1" class="selectpicker form-control">
+								<select style="width: 100%;" name="combo" id="combox1" class="selectpicker form-control vl-btn-vl-orden">
 										<option value="no">No</option>
 										<?php
 											foreach ($paqueteinter as $row) {
@@ -435,8 +435,13 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                <!--inicio modal elementos internet-->
-
+                                                <div id="crear_ticket_div"> 
+                                                    <br><br><label>Generar Ticket</label>                                
+                                                    <select name="crear_ticket" id="crear_ticket" class="selectpicker form-control" >
+                                                        <option value="no">No</option>
+                                                        <option value="si" selected>Si</option>
+                                                    </select>
+                                      </div>
                                 </td>
 
 								
@@ -886,6 +891,15 @@
     </div>
 </div>
 <script type="text/javascript">
+    $("#crear_ticket_div").hide();
+    $(document).on("change",".vl-btn-vl-orden",function(e){
+        if($("#tvx1 option:selected").val() !="no" || $("#combox1 option:selected").val() !="no"){
+                $("#crear_ticket_div").show();
+        }else{
+            $("#crear_ticket").val("si");
+            $("#crear_ticket_div").hide();
+        }
+    });
     $(".prc").attr("readonly","true");
     cambia();
     var sede_actual=$("#refer option:selected").val();
