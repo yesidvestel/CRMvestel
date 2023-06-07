@@ -2657,7 +2657,7 @@ if ($valido) {
         var_dump($api->envio_sms_masivos_por_curl_2($retorno->getToken(),"",""));
     }
     public function cortar_usuarios_multiple(){
-        include (APPPATH."libraries\RouterosAPI.php");
+        include (APPPATH."libraries/RouterosAPI.php");
         $API = new RouterosAPI();
         $API->debug = false;
         $tipo_corte=$this->input->post("tipo_corte");

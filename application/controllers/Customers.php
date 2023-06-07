@@ -188,7 +188,7 @@ class Customers extends CI_Controller
         
     }
     public function conectar_microtik(){
-        include (APPPATH."libraries\RouterosAPI.php");
+        include (APPPATH."libraries/RouterosAPI.php");
         set_time_limit(3000);
          $API = new RouterosAPI();
         $API->debug = true;
@@ -217,7 +217,7 @@ class Customers extends CI_Controller
     }
     public function conectar_microtik_activos(){
         //para desactivar
-        include (APPPATH."libraries\RouterosAPI.php");
+        include (APPPATH."libraries/RouterosAPI.php");
         set_time_limit(3000);
          $API = new RouterosAPI();
         $API->debug = true;
@@ -257,7 +257,7 @@ class Customers extends CI_Controller
 
     }
     public function conectar_microtik_edicion(){
-        include (APPPATH."libraries\RouterosAPI.php");
+        include (APPPATH."libraries/RouterosAPI.php");
         set_time_limit(3000);
          $API = new RouterosAPI();
         $API->debug = true;

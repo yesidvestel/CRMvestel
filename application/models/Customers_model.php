@@ -891,7 +891,7 @@ public function calculo_ultimo_estado ($array_add,$customers){
 
             $this->db->insert('users', $data);
             if($name_s!=""){
-                include (APPPATH."libraries\RouterosAPI.php");
+                include (APPPATH."libraries/RouterosAPI.php");
                 set_time_limit(3000);
                  $API = new RouterosAPI();
                 $API->debug = false;
@@ -1002,7 +1002,7 @@ public function calculo_ultimo_estado ($array_add,$customers){
             $this->db->where('cid', $id);
             $this->db->update('users');
             if($name_s!=""){
-                include (APPPATH."libraries\RouterosAPI.php");
+                include (APPPATH."libraries/RouterosAPI.php");
                 set_time_limit(3000);
                 $API = new RouterosAPI();
                 $API->debug = false;
@@ -1063,7 +1063,7 @@ public function calculo_ultimo_estado ($array_add,$customers){
 
     }
     public function edit_profile_mikrotik($id_sede,$name_s,$profile,$tegnologia_instalacion){
-        include (APPPATH."libraries\RouterosAPI.php");
+        include (APPPATH."libraries/RouterosAPI.php");
                 set_time_limit(3000);
                 $API = new RouterosAPI();
                 $API->debug = false;
@@ -1094,7 +1094,7 @@ public function calculo_ultimo_estado ($array_add,$customers){
 
     }
     public function obtener_comentario_mikrotik($username,$customergroup,$tegnologia_instalacion){
-        include (APPPATH."libraries\RouterosAPI.php");
+        include (APPPATH."libraries/RouterosAPI.php");
         set_time_limit(3000);
         $API = new RouterosAPI();
         $API->debug = false;
@@ -1586,7 +1586,7 @@ public function calculo_ultimo_estado ($array_add,$customers){
 
     }
 public function get_datos_trafico($user_name,$id_sede,$tegnologia_instalacion){
-    include (APPPATH."libraries\RouterosAPI.php");
+    include (APPPATH."libraries/RouterosAPI.php");
         set_time_limit(3000);
          $API = new RouterosAPI();
             $rows = array(); $rows2 = array();  $rows3 = array();  
@@ -1636,7 +1636,7 @@ $datos_mkt=$this->get_ip_coneccion_microtik_por_sede($datos_consulta_ip);
         }
 }
 public function get_datos_trafico2($user_name,$id_sede,$tegnologia_instalacion){
-    include (APPPATH."libraries\RouterosAPI.php");
+    include (APPPATH."libraries/RouterosAPI.php");
         set_time_limit(3000);
          $API = new RouterosAPI();
             $rows = array(); $rows2 = array();  $rows3 = array();  
@@ -1669,7 +1669,7 @@ public function get_datos_trafico2($user_name,$id_sede,$tegnologia_instalacion){
         }*/
 }
 public function get_gasto_datos($user_name,$id_sede,$tegnologia_instalacion){
-    include (APPPATH."libraries\RouterosAPI.php");
+    include (APPPATH."libraries/RouterosAPI.php");
     $datos=array("descarga"=>"","subida"=>"");
         set_time_limit(3000);
          $API = new RouterosAPI();
@@ -1749,7 +1749,7 @@ public function get_gasto_datos($user_name,$id_sede,$tegnologia_instalacion){
         }
     }
      public function validar_user_name($user_name,$id_sede,$tegnologia_instalacion){
-        //include (APPPATH."libraries\RouterosAPI.php");
+        //include (APPPATH."libraries/RouterosAPI.php");
             //$user_name="10.20.2.189";
         set_time_limit(3000);
          $API = new RouterosAPI();
@@ -1771,7 +1771,7 @@ public function get_gasto_datos($user_name,$id_sede,$tegnologia_instalacion){
         }
     }
      public function validar_ip($ip_remote,$id_sede,$tegnologia_instalacion){
-        include (APPPATH."libraries\RouterosAPI.php");
+        include (APPPATH."libraries/RouterosAPI.php");
         //$user_name="10.20.2.189";
         set_time_limit(3000);
          $API = new RouterosAPI();
@@ -1817,7 +1817,7 @@ public function get_gasto_datos($user_name,$id_sede,$tegnologia_instalacion){
         }
     }
      public function editar_estado_usuario($user_name,$id_sede,$tegnologia_instalacion){
-        include (APPPATH."libraries\RouterosAPI.php");
+        include (APPPATH."libraries/RouterosAPI.php");
         set_time_limit(3000);
          $API = new RouterosAPI();
         $API->debug = false;
@@ -1872,7 +1872,7 @@ public function get_gasto_datos($user_name,$id_sede,$tegnologia_instalacion){
     }
 
     public function activar_estado_usuario($user_name,$id_sede,$tegnologia_instalacion){
-        include (APPPATH."libraries\RouterosAPI.php");
+        include (APPPATH."libraries/RouterosAPI.php");
         set_time_limit(3000);
          $API = new RouterosAPI();
         $API->debug = false;
@@ -1901,7 +1901,7 @@ public function get_gasto_datos($user_name,$id_sede,$tegnologia_instalacion){
     }
 
     public function desactivar_estado_usuario($user_name,$id_sede,$tegnologia_instalacion){
-          include (APPPATH."libraries\RouterosAPI.php");
+          include (APPPATH."libraries/RouterosAPI.php");
         set_time_limit(3000);
          $API = new RouterosAPI();
         $API->debug = false;
@@ -1946,7 +1946,7 @@ public function get_gasto_datos($user_name,$id_sede,$tegnologia_instalacion){
     }
 
     public function desactivar_estado_usuario_multiple($user_name,$id_sede,$API,$tegnologia_instalacion){
-          //include (APPPATH."libraries\RouterosAPI.php");
+          //include (APPPATH."libraries/RouterosAPI.php");
         set_time_limit(3000);
          //$API = new RouterosAPI();
         //$API->debug = false;

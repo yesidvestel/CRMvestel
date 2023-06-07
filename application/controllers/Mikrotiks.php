@@ -119,7 +119,7 @@ class Mikrotiks extends CI_Controller
 
     }
     public function estado_mikrotik(){
-        include (APPPATH."libraries\RouterosAPI.php");
+        include (APPPATH."libraries/RouterosAPI.php");
         $API = new RouterosAPI();
         $API->debug = false;
         $res=$this->mikrotiks->get_estado_mikrotik($_POST['id'],$API);
