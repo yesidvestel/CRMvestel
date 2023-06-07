@@ -1,4 +1,6 @@
-﻿-------------------AGREGANDO CAMBIO DE PAYU A WOMPI -----------------------------------------------------------
+﻿------------------------- TRASLADO -------------------------------------------
+ALTER TABLE `temporales` ADD `tid_traslado` INT NULL AFTER `pago`;
+-------------------AGREGANDO CAMBIO DE PAYU A WOMPI -----------------------------------------------------------
 
 INSERT INTO `accounts` ( `acn`, `holder`, `sede`, `adate`, `lastbal`, `code`, `direccion`, `telefono`, `departamento`) VALUES
 ('9874561235', 'WOMPI', 0, '0000-00-00 00:00:00', '100796461.00', 'Cuenta WOMPI', '', NULL, '');

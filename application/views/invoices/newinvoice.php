@@ -459,6 +459,139 @@
 
                             </tbody>
                         </table>
+                        <div id="div_traslados">   
+                            <h3 class="title">Nueva Direccion</h3>
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                           
+                                        
+                                                <div class="input-group">
+                                                <select name="nomenclatura_tr" class="form-control ">
+                                                        <option value=""></option>
+                                                        <option value="Calle">Calle</option>
+                                                        <option value="Carrera">Carrera</option>
+                                                        <option value="Diagonal">Diagonal</option>
+                                                        <option value="Transversal">Transversal</option>
+                                                        <option value="Manzana">Manzana</option>
+                                                        <option value="Modulo">Modulo</option>
+                                                    </select>
+                                                </div>
+                                            
+                                        </td>
+                                        <td>
+                                            <div class="input-group">
+                                                <input type="text" name="numero1_tr" placeholder="Numero"class="form-control" >
+                                            </div>
+                                        </td>
+                                        <td>
+                                             <div class="input-group">
+                                                 <select class="form-control" name="adicional1_tr">
+                                                        <option value=""></option>
+                                                        <option value="bis">bis</option>
+                                                        <option value="sur">sur</option>
+                                                        <option value="a">a</option>
+                                                        <option value="a">a sur</option>
+                                                        <option value="b">b</option>
+                                                        <option value="a">b sur</option>
+                                                        <option value="c">c</option>
+                                                        <option value="d">d</option>
+                                                        <option value="e">e</option>
+                                                        <option value="f">f</option>
+                                                        <option value="g">g</option>
+                                                        <option value="h">h</option>
+                                                        <option value="a bis">a bis</option>
+                                                        <option value="b bis">b bis</option>
+                                                        <option value="c bis">c bis</option>
+                                                        <option value="d bis">d bis</option>
+                                                </select>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="input-group">
+                                                <label class="col-form-label" for="Nº">Nº</label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="input-group">
+                                                <input type="text" name="numero2_tr" placeholder="Numero"class="form-control" >
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="input-group">
+                                                 <select class="form-control" name="adicional2_tr">
+                                                        <option value=""></option>
+                                                        <option value="bis">bis</option>
+                                                        <option value="sur">sur</option>
+                                                        <option value="a">a</option>
+                                                        <option value="a">a sur</option>
+                                                        <option value="b">b</option>
+                                                        <option value="a">b sur</option>
+                                                        <option value="c">c</option>
+                                                        <option value="d">d</option>
+                                                        <option value="e">e</option>
+                                                        <option value="f">f</option>
+                                                        <option value="g">g</option>
+                                                        <option value="h">h</option>
+                                                        <option value="a bis">a bis</option>
+                                                        <option value="b bis">b bis</option>
+                                                        <option value="c bis">c bis</option>
+                                                        <option value="d bis">d bis</option>
+                                                </select>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="input-group">
+                                                <input type="text" placeholder="Numero"class="form-control " name="numero3_tr">
+                                        </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">
+                                            <label for="invociedate" class="caption">Localidad</label>
+                                            <div class="input-group">
+                                                <select name="localidad_tr"  id="cmbLocalidades_tr"  class="form-control">
+                                                    <option value="">-</option>
+                                                  
+                                                </select>
+                                                
+                                            </div>
+                                        </td>
+                                        <td>
+                                        </td>
+                                        <td colspan="3">
+                                            <label for="invociedate" >Barrio</label>
+                                            <div class="input-group">                                   
+                                                <select id="cmbBarrios_tr" class="form-control" name="barrio_tr">
+                                                    <option value="0">-</option>
+                                                </select>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">
+                                            <label for="invociedate" >Recidencia</label>
+                                            <div class="input-group">                                   
+                                                <select class="form-control" name="residencia_tr">
+                                                        <option value="Casa">Casa</option>
+                                                        <option value="Apartamento">Apartamento</option>
+                                                        <option value="Edificio">Edificio</option>
+                                                        <option value="Oficina">Oficina</option>
+                                                </select>
+                                            </div>
+                                        </td>
+                                        <td></td>
+                                        <td colspan="3">
+                                            <label for="invociedate">Referencia</label>
+                                            <div class="input-group">
+                                                    <input type="text" class="form-control" name="referencia_tr">
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
 
                     <input type="hidden" value="invoices/action" id="action-url">
@@ -891,6 +1024,27 @@
     </div>
 </div>
 <script type="text/javascript">
+    $(document).ready(function(){
+    $("#cmbLocalidades_tr").change(function(){
+        $("#cmbLocalidades_tr option:selected").each(function(){
+            idLocalidad = $(this).val();
+            //console.log(idDepartamento);
+            $.post(baseurl+"customers/barrios_list",{'idLocalidad': idLocalidad
+                },function(data){
+                //console.log(data);
+                    $("#cmbBarrios_tr").html(data);
+            })
+        })
+    });
+});
+    $("#div_traslados").hide();
+    cargar_localidades_tr();
+    function cargar_localidades_tr(){
+        var dato_ref=$("#refer option:selected").val();
+        $.post(baseurl+"customers/localidades_list2",{'ciudad':dato_ref},function(data){
+            $("#cmbLocalidades_tr").html(data);
+        });
+    }
     $("#crear_ticket_div").hide();
     $(document).on("change",".vl-btn-vl-orden",function(e){
         if($("#tvx1 option:selected").val() !="no" || $("#combox1 option:selected").val() !="no"){
@@ -912,7 +1066,7 @@
             $(".select_sede_"+sede_actual).val("0");
         }
         sede_actual=$("#refer option:selected").val();
-
+        cargar_localidades_tr();
 
     }
 function ShowSelected()

@@ -444,6 +444,12 @@ $('#productname-0').autocomplete({
         $('#vat-0').val(ui.item.data[3]);
         $('#discount-0').val(ui.item.data[4]);
         $('#dpid-0').val(ui.item.data[5]);
+        
+        if(ui.item.data[0].toLowerCase()=="traslado"){
+           $("#div_traslados").show();
+        }else{
+            $("#div_traslados").hide();
+        }
         rowTotal(0);
         billUpyog();
     }

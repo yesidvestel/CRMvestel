@@ -204,6 +204,7 @@ $this->load->model("Notas_model","notas");
 		$data['departamentos'] = $this->customers->departamentos_list();
         $data['servicios_por_sedes']=$this->invocies->get_servicios();
         $head['usernm'] = $this->aauth->get_user()->username;
+        //$data['localidades'] =$this->customers->localidades_list($data['details']['ciudad']);
         $this->load->view('fixed/header', $head);
         $this->load->view('invoices/newinvoice', $data);
         $this->load->view('fixed/footer');
@@ -1099,6 +1100,7 @@ $writer->writeSheetHeader($nombrey, $headers,$col_options);
         $pterms = $this->input->post('pterms');
         $currency = $this->input->post('mcurrency');
         $i = 0;
+        $traslado=false;
         if ($discountFormat == '0') {
             $discstatus = 0;
         } else {
@@ -1141,7 +1143,9 @@ $writer->writeSheetHeader($nombrey, $headers,$col_options);
                 $ptotal_disc = $this->input->post('disca');
                 $product_des = $this->input->post('product_description');
                 $total_discount += $ptotal_disc[$key];
-                
+                if(mb_strtolower($product_name1[$key]) == "traslado"){
+                    $traslado=true;
+                }
 
                 if($tipo_factura=="Nota Credito"){
                         $var1=$product_price[$key]*2;
@@ -1207,6 +1211,10 @@ $writer->writeSheetHeader($nombrey, $headers,$col_options);
                 $ptotal_disc = $this->input->post('disca');
                 $product_des = $this->input->post('product_description');
                 $total_discount += $ptotal_disc[$key];
+
+                if(mb_strtolower($product_name1[$key]) == "traslado"){
+                    $traslado=true;
+                }
 
                  if($tipo_factura=="Nota Credito"){
                         $var1=$product_price[$key]*2;
@@ -1340,6 +1348,25 @@ $writer->writeSheetHeader($nombrey, $headers,$col_options);
 				$pto = ' + '.$puntos.' Puntos';
 			}
             if ($this->db->insert('invoices', $data)) {
+                if($traslado){
+                    $data_traslado=array();
+                    $data_traslado['nomenclatura'] = $this->input->post('nomenclatura_tr');
+                    $data_traslado['nuno'] = $this->input->post('numero1_tr');
+                    $data_traslado['auno'] = $this->input->post('adicional1_tr');
+                    $data_traslado['ndos'] = $this->input->post('numero2_tr');
+                    $data_traslado['ados'] = $this->input->post('adicional2_tr');
+                    $data_traslado['ntres'] = $this->input->post('numero3_tr');
+                    $data_traslado['localidad'] = $this->input->post('localidad_tr');
+                    $data_traslado['barrio'] = $this->input->post('barrio_tr');
+                    $data_traslado['residencia'] = $this->input->post('residencia_tr');
+                    $data_traslado['referencia'] = $this->input->post('referencia_tr');
+                    
+                    $data_traslado['tid_traslado']=$invocieno;
+                    $data_traslado['corden']=0;
+                    $this->db->insert("temporales",$data_traslado);
+                }
+                
+
                             $data_h=array();
                             $data_h['modulo']="Ventas";
                             $data_h['accion']="Nueva Factura {insert}";

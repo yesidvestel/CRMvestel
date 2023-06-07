@@ -339,6 +339,19 @@ class Customers extends CI_Controller
         
         echo $lista_opciones2; 
     }
+     public function localidades_list2()
+    { 
+        $c1 = $this->input->post('ciudad');
+        $city=$this->db->get_where("ciudad",array("ciudad"=>$c1))->row();
+        $ciudades = $this->customers->localidades_list($city->idCiudad);
+        //echo '<select class="selectpicker form-control"><option>Seleccionar</option>';
+        $lista_opciones2="<option value=''>Seleccionar</option>";
+        foreach ($ciudades as $row) {
+            $lista_opciones2.= '<option value="' . $row->idLocalidad . '">' . $row->localidad . '</option>';
+        }
+        
+        echo $lista_opciones2; 
+    }
     
     public function barrios_list()
     { 

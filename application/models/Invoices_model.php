@@ -610,6 +610,36 @@ setlocale(LC_TIME, "spanish");
         //var_dump($this->db->get_where("products",array("pcat"=>"4","warehouse"=>"7","sede"=>"2","pertence_a_tv_o_net"=>"Tv"))->result_array());
         return $lista_sedes;
     }
+     public function validacion_generar_orden_traslado($cid){
+        $ultima_factura_tr=$this->db->query('SELECT * FROM invoices as inv  inner join invoice_items  as inv_it on inv_it.tid=inv.tid where inv.csd ="'.$cid.'" and inv_it.product like "%traslado%" and inv.status="paid" order by inv.tid desc limit 1')->result_array();
+        if(count($ultima_factura_tr)>0){
+            $temporal =$this->db->get_where("temporales",array("tid_traslado"=>$ultima_factura_tr[0]['tid']))->row();
+            if($temporal->corden==0){
+                $tidactualmasuno1= $this->db->select('max(codigo)+1 as codigo')->from('tickets')->get()->result();
+                $ultima_factura=$this->db->query('SELECT * from invoices  where csd="'.$cid.'" and tipo_factura="Recurrente"  order by tid desc limit 1')->result_array();
+                 $username = $this->aauth->get_user()->username;
+                    $datax2['codigo']=$tidactualmasuno1[0]->codigo;   
+                    $datax2['subject']='servicio';
+                    $datax2['detalle']='Traslado';    
+                    $datax2['created']=date("Y-m-d");
+                    $datax2['cid']=$cid;
+                    $datax2['col']=$username;
+                    $datax2['status']='Pendiente';
+                    $datax2['section']=""; 
+                    //Tipo de instalacion
+                        
+                    $datax2['id_invoice']=null;
+                    $datax2['id_factura']=$ultima_factura[0]['tid'];
+                    
+                    $this->db->insert('tickets',$datax2);
+                    $data_tem=array();
+                    $data_tem['corden']=$datax2['codigo'];
+                    $this->db->update("temporales",$data_tem,array("tid_traslado"=>$ultima_factura_tr[0]['tid']));
+            }
+        }
+
+        //$ultima_factura=$this->db->query('SELECT * from invoices  where csd="'.$cid.'" and tipo_factura="Recurrente"  order by tid desc limit 1')->result_array();
+     }
     public function validacion_generar_orden_instalacion($cid){
         $ultima_factura=$this->db->query('SELECT * from invoices  where csd="'.$cid.'" order by tid desc limit 1')->result_array();
 
@@ -653,6 +683,13 @@ setlocale(LC_TIME, "spanish");
                     $datax2['id_factura']=null;
                     
                     $this->db->insert('tickets',$datax2);
+                    $customerx1=$this->db->get_where("customers",array('id' =>$cid))->row();  
+                    $this->db->set("ultimo_estado",$customerx1->usu_estado);
+                    $this->db->set("fecha_cambio",date("Y-m-d H:i:s"));
+
+                    $this->db->set('usu_estado', 'Instalar');
+                    $this->db->where('id', $cid);
+                    $this->db->update('customers');
                 }
         }
     }
