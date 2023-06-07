@@ -967,9 +967,9 @@ class Transactions extends CI_Controller
 
             }
         }
-			if ($pmethod==Cash){
+			if ($pmethod=="Cash"){
         $note="Pago de la factura #".$tid." ".$customer->name." ".$customer->unoapellido." ".$customer->documento." metodo: efectivo";
-			}if ($pmethod==Bank){
+			}if ($pmethod=="Bank"){
 			$note="Pago de la factura #".$tid." ".$customer->name." ".$customer->unoapellido." ".$customer->documento." metodo: Consignacion";	
 			}
     $data = array(
