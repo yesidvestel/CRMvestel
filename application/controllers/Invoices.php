@@ -1623,7 +1623,7 @@ $this->load->model('customers_model', 'customers');
 
     public function ajax_list()
     {
-
+ini_set('memory_limit', '500M');
         $list = $this->invocies->get_datatables($this->limited);
 
         $data = array();
