@@ -56,7 +56,7 @@ class Dashboard_model extends CI_Model
 		
         $query;
         if ($sede != '') {
-            $query=$this->db->query("SELECT SUM(debit) as debit,SUM(credit) as credit FROM transactions where DATE(date) ='$today' and account='$sede' and type!='Transfer' and estado is null and tid!=-1")->result();
+            $query=$this->db->query("SELECT SUM(debit) as debit,SUM(credit) as credit FROM transactions where DATE(date) ='$today' and account='$sede'  and estado is null and tid!=-1")->result();
         }else{
             $query=$this->db->query("SELECT SUM(debit) as debit,SUM(credit) as credit FROM transactions where DATE(date) ='$today' and type!='Transfer' and estado is null and tid!=-1")->result();
         }
@@ -116,7 +116,7 @@ class Dashboard_model extends CI_Model
         $query = $this->db->query("SELECT SUM(credit) AS total,date FROM transactions WHERE ((DATE(date) BETWEEN DATE('$year-$month-01') AND DATE('$year-$month-31')  AND CURDATE()) AND type!='Transfer')and estado is null and tid!=-1 GROUP BY date DESC");
         return $query->result_array();
 		}else{
-            $query = $this->db->query("SELECT SUM(credit) AS total,date FROM transactions WHERE ((DATE(date) BETWEEN DATE('$year-$month-01') AND CURDATE()) AND type!='Transfer' and account='$sede') and estado is null and tid!=-1 GROUP BY date DESC");    
+            $query = $this->db->query("SELECT SUM(credit) AS total,date FROM transactions WHERE ((DATE(date) BETWEEN DATE('$year-$month-01') AND CURDATE()) and account='$sede') and estado is null and tid!=-1 GROUP BY date DESC");    
         return $query->result_array();
         }
 		
@@ -129,7 +129,7 @@ class Dashboard_model extends CI_Model
         $query = $this->db->query("SELECT SUM(debit) AS total,date FROM transactions WHERE ((DATE(date) BETWEEN DATE('$year-$month-01') AND CURDATE()) and type!='Transfer' ) and estado is null and tid!=-1 GROUP BY date DESC");
 		return $query->result_array();
 		}else{
-        $query = $this->db->query("SELECT SUM(debit) AS total,date FROM transactions WHERE ((DATE(date) BETWEEN DATE('$year-$month-01') AND CURDATE()) AND  type!='Transfer' AND account='$sede') and estado is null and tid!=-1 GROUP BY date DESC");
+        $query = $this->db->query("SELECT SUM(debit) AS total,date FROM transactions WHERE ((DATE(date) BETWEEN DATE('$year-$month-01') AND CURDATE())  AND account='$sede') and estado is null and tid!=-1 GROUP BY date DESC");
         return $query->result_array();            
         }
 
