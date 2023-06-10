@@ -614,7 +614,7 @@ $list_servs=$this->invocies->servicios_adicionales_recurrentes($value2->tid);
 
             
 
-            if(count($lista_para_pagos_faltantes!=0) && $saldo_dispo_total!=0){//&& $value['id']==5605
+            if(count($lista_para_pagos_faltantes) !=0 && $saldo_dispo_total!=0){//&& $value['id']==5605
 
                 foreach ($lista_para_pagos_adelantados as $key => $valuey) {
                     foreach ($lista_para_pagos_faltantes as $key2 => $pag) { 
