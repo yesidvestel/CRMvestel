@@ -109,7 +109,7 @@
                         <div class="col-md-6 col-sm-12 text-xs-center text-md-right">
                             <h2><?php echo $this->lang->line('Purchase Order') ?></h2>
                             <p class="pb-1"> <?php echo  prefix(2). $invoice['tid'] . '</p>
-                            <p class="pb-1">'.$Sede.': ' . $invoice['refer'].'</p>'; ?>
+                            <p class="pb-1">Sede : ' . $invoice['refer'].'</p>'; ?>
                             <ul class="px-0 list-unstyled">
                                 <li><?php echo $this->lang->line('Gross Amount') ?></li>
                                 <li class="lead text-bold-800"><?php echo amountFormat($invoice['total']) ?></li>
@@ -129,7 +129,7 @@
 
                                 <li class="text-bold-800"><a
                                             href="<?php echo base_url('supplier/view?id=' . $invoice['cid']) ?>"><strong
-                                                class="invoice_a"><?php echo $invoice['name'] . '</strong></a></li><li>' . $invoice['address'] . '</li><li>' . $invoice['city'] . ',' .'</li><li>'.NIT .': '. $invoice['nit'] . '</li><li>'.$this->lang->line('Phone').': ' . $invoice['phone'] . '</li><li>'.$this->lang->line('Email').': ' . $invoice['email']; ?>
+                                                class="invoice_a"><?php echo $invoice['name'] . '</strong></a></li><li>' . $invoice['address'] . '</li><li>' . $invoice['city'] . ',' .'</li><li>NIT : '. $invoice['nit'] . '</li><li>'.$this->lang->line('Phone').': ' . $invoice['phone'] . '</li><li>'.$this->lang->line('Email').': ' . $invoice['email']; ?>
                                 </li>
                             </ul>
 
