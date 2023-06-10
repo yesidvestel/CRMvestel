@@ -182,7 +182,7 @@ class Quote extends CI_Controller
 
     public function ajax_list()
     {
-
+ini_set('memory_limit', '500M');
         $list = $this->quote->get_datatables();
         $data = array();
 
