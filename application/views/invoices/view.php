@@ -928,7 +928,8 @@
                             <option value="">-</option>
                             
                             <?php foreach ($plantillas as $key => $value) {
-                                echo "<option value='".$value['id']."' data-texto='".rtrim($value['other'],"\n")."'>".$value['name']."</option>";
+                                    $x1=rtrim($value['other'], "\r\n");
+                                echo "<option value='".$value['id']."' data-texto='".$x1."'>".$value['name']."</option>";
                             } ?>
                         </select>
                         </div>
