@@ -748,7 +748,7 @@ class Transactions extends CI_Controller
 		 }
 		
 		$parmasuno= $this->db->select('max(par)+1 as par')->from('tickets')->get()->result();
-        if ($reconexion==si && $mes2===$mes1){
+        if ($reconexion=="si" && $mes2===$mes1){
 			if ($tipo=='Reconexion Combo'){
 				//internet
 				$data2['codigo']=$tidactualmasuno[0]->tid;
@@ -802,7 +802,7 @@ class Transactions extends CI_Controller
                             $data_h['nombre_columna']="idt";
                             $this->db->insert("historial_crm",$data_h);
                 $reconexion_gen="si";
-        }else if ($reconexion==si && $mes2>$mes1){
+        }else if ($reconexion=="si" && $mes2>$mes1){
 			if ($tipo=='Reconexion Combo'){
 				//internet
 				$data2['codigo']=$tidactualmasuno[0]->tid;
@@ -1190,7 +1190,7 @@ $this->load->helper('cookie');
                             $data_h['tabla']="tickets";
                             $data_h['nombre_columna']="idt";
                             $this->db->insert("historial_crm",$data_h);
-		}if ($reconexion==si && $mes2>$mes1){
+		}if ($reconexion=="si" && $mes2>$mes1){
 				$data2['codigo']=$tidactualmasuno[0]->tid;
 				$data2['subject']='servicio';
 				$data2['detalle']=$tipo.'2';
