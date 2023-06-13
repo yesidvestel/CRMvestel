@@ -67,7 +67,7 @@ ALTER TABLE `datos_archivo_excel_cargue`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 INSERT INTO `accounts` ( `acn`, `holder`, `sede`, `adate`, `lastbal`, `code`, `direccion`, `telefono`, `departamento`) VALUES
 ('8301319931', 'EFECTY', 0, '0000-00-00 00:00:00', '3796461.00', 'Cuenta EFECTY', '', NULL, '');
-
+//desde aca para arriba no a ejecutado cambios en el servidor
 -------------cambios ips users ips_users_mk---------------
 DROP TABLE ips_users_mk;
 

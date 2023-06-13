@@ -2026,7 +2026,7 @@ $this->load->model('customers_model', 'customers');
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
 
         }
-        $this->load->model('anulaciones_model', 'anulaciones');
+        $this->load->model('Anulaciones_model', 'anulaciones');
         $ttype = $this->input->get('type');
         $list = $this->anulaciones->get_datatables($ttype);
         $data = array();
