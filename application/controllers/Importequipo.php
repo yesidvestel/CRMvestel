@@ -397,9 +397,9 @@ fclose ($fp);*/
                             //echo "ss";
                             $this->db->insert('customers',$datax);
                         }else{
-                            $countx=$this->db->query("SELECT max(abonado)+1 as abonado FROM customers ")->result_array();
-                            $datax['abonado']=$countx[0]['abonado'];
-                            $this->db->insert('customers',$datax);
+                            //$countx=$this->db->query("SELECT max(abonado)+1 as abonado FROM customers ")->result_array();
+                            //$datax['abonado']=$countx[0]['abonado'];
+                            //$this->db->insert('customers',$datax);
                         }
                     //}
 
