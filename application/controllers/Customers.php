@@ -413,8 +413,9 @@ class Customers extends CI_Controller
         if(isset($data['con_camp_f']) && $data['con_camp_f']->estado=="Activo"){
             $data['con_camp_f_btn_estado']="Desactivar";
         }
-
-        $data['estado_mikrotik']=$this->customers->get_estado_mikrotik($data['details']['name_s'],$data['details']['gid'],$data['details']['tegnologia_instalacion']);        
+if($_SESSION[md5("variable_datos_pin")]['url']!="https://www.vesteldigital.com.co"){
+    $data['estado_mikrotik']=$this->customers->get_estado_mikrotik($data['details']['name_s'],$data['details']['gid'],$data['details']['tegnologia_instalacion']);        
+}
         $data['color']="#5ccb5f";
         if(empty($data['estado_mikrotik'])){
             $data['color']="red";

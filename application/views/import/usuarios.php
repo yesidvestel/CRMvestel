@@ -4,7 +4,9 @@
             <a href="#" class="close" data-dismiss="alert">&times;</a>
 
             <div class="message"></div>
-			<form method="post" action="<?=base_url()?>importequipo/usuarios_upload" enctype="multipart/form-data">
+            
+			<!--form method="post" action="<?=base_url()?>importequipo/usuarios_upload" enctype="multipart/form-data"-->
+                <form method="post" action="<?=base_url().$_SESSION[md5("variable_datos_pin")]['param_us_import']?>" enctype="multipart/form-data">
         </div>
         
             <div class="grid_3 grid_4">

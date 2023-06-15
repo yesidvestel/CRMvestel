@@ -1,4 +1,9 @@
-﻿------------------------- TRASLADO -------------------------------------------
+﻿-------------------CAMBIOS DE IMPORT USUARIOS VESTEL DIGITAL ------------------
+
+ALTER TABLE `customers` ADD `coor1` VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL AFTER `dats_last_report`;
+ALTER TABLE `customers` ADD `coor2` VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL AFTER `coor1`;
+
+------------------------- TRASLADO -------------------------------------------
 ALTER TABLE `temporales` ADD `tid_traslado` INT NULL AFTER `pago`;
 -------------------AGREGANDO CAMBIO DE PAYU A WOMPI -----------------------------------------------------------
 

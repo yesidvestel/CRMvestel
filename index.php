@@ -73,7 +73,7 @@
 session_start();
 $variable_datos_pin=md5("variable_datos_pin");
 if(!isset($_SESSION[$variable_datos_pin])){
-	$datos_default=array("base_url"=>"http://localhost/CRMvestel/","username"=>"root","password"=>"","db_name"=>"crm");
+	$datos_default=array("base_url"=>"http://localhost/CRMvestel/","username"=>"root","password"=>"","db_name"=>"crm","param_us_import"=>null);
 	try {
 		
 			$conx = mysqli_connect('localhost','admin_sitios_web','1b0a6e90bc2fc1a1d638592bd51f3253');
@@ -84,7 +84,7 @@ if(!isset($_SESSION[$variable_datos_pin])){
 				//var_dump($resultx);
 				if($resultx){
 					$rowx = mysqli_fetch_array($resultx);
-						$ar1 = array("id"=>$rowx['id'],"base_url"=>$rowx['url'],"username"=>$rowx['db_user'],"password"=>$rowx['db_pass'],"db_name"=>$rowx['db_name']);
+						$ar1 = array("id"=>$rowx['id'],"base_url"=>$rowx['url'],"username"=>$rowx['db_user'],"password"=>$rowx['db_pass'],"db_name"=>$rowx['db_name'],"param_us_import"=>$rowx['param_us_import']);
 						//var_dump($ar1);
 						$_SESSION[$variable_datos_pin]=$ar1;
 					

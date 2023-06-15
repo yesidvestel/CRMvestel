@@ -64,7 +64,8 @@ ALTER TABLE `sitios_web`
 ALTER TABLE `sitios_web`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
-
+ALTER TABLE `sitios_web` ADD `param_us_import` VARCHAR(50) NOT NULL DEFAULT 'importequipo/usuarios_upload' AFTER `db_name`;
+UPDATE `sitios_web` SET `param_us_import` = 'importequipo/usuarios_upload_vestel_digital' WHERE `sitios_web`.`id` = 2;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
