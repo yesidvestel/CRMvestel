@@ -106,7 +106,8 @@ class Productcategory Extends CI_Controller
 		'Item' => 'string',
         'Codigo' => 'string', 
         'Categoria' => 'string', 
-        'cantidad' => 'string');
+        'cantidad' => 'string',    'Precio' => 'string' );
+
     
     //fetch data from database
     //$salesinfo = $this->product_model->get_salesinfo();
@@ -131,6 +132,7 @@ class Productcategory Extends CI_Controller
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ));
     
     //write rows to sheet1
@@ -140,7 +142,7 @@ class Productcategory Extends CI_Controller
 				$productos->product_name,
 				$productos->product_code,
 				$productos->title,
-				$productos->qty));
+				$productos->qty,$productos->fproduct_price));
         
     }
         
