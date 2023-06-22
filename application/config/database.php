@@ -5,8 +5,8 @@ $active_group = 'default';
 $query_builder = TRUE;
 $hostname ='localhost';
 $variable_datos_pin=md5("variable_datos_pin");
-$username =$_SESSION[$variable_datos_pin]['username'];
-$password =$_SESSION[$variable_datos_pin]['password'];
+$username =$_SESSION[$variable_datos_pin]['db_user'];
+$password =$_SESSION[$variable_datos_pin]['db_pass'];
 $database =$_SESSION[$variable_datos_pin]['db_name'];    	
 
 $db['default'] = array(

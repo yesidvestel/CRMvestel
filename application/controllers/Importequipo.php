@@ -579,7 +579,7 @@ fclose ($fp);*/
 						$datay['qty']=1;						
 						$datay['discount']=0;						
 						$datay['totaldiscount']=0;
-							if($datax['combo']!==no){
+							if($datax['combo']!=="no"){
 								if($datax['combo']==='3Megas'){
 									$datay['pid']=24;
 								}else if($datax['combo']==='3MegasV'){
@@ -618,7 +618,7 @@ fclose ($fp);*/
 								$this->db->insert('invoice_items',$datay);    
 							}
 
-							if($datax['television']!==no){                
+							if($datax['television']!=="no"){                
 								$producto = $this->db->get_where('products',array('pid'=>27))->row();
 								$datay['pid']=$producto->pid;
 								$datay['product']=$producto->product_name;

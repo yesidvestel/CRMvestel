@@ -413,7 +413,7 @@ class Customers extends CI_Controller
         if(isset($data['con_camp_f']) && $data['con_camp_f']->estado=="Activo"){
             $data['con_camp_f_btn_estado']="Desactivar";
         }
-if($_SESSION[md5("variable_datos_pin")]['base_url']!="https://www.vesteldigital.com.co" && $_SESSION[md5("variable_datos_pin")]['base_url']!="https://www.saves-casanet.com/"){
+if($_SESSION[md5("variable_datos_pin")]['sitio_integra_mikrotik'] == "SI"){
     $data['estado_mikrotik']=$this->customers->get_estado_mikrotik($data['details']['name_s'],$data['details']['gid'],$data['details']['tegnologia_instalacion']);        
 }
         $data['color']="#5ccb5f";
@@ -900,7 +900,9 @@ public function ajax_graficas2(){
         $head['title'] = 'Edit Customer';   
         $data['departamentoslist'] = $this->customers->departamentos_list();        
         //$data['ips_remotas']=$this->customers->devolver_ips_proximas();
-        $data['ips_remotas2']=$this->customers->dev_ips_dinamic();
+        if($_SESSION[md5("variable_datos_pin")]['sitio_integra_mikrotik'] == "SI"){
+            $data['ips_remotas2']=$this->customers->dev_ips_dinamic();
+        }
         /*var_dump($data['ips_remotas']);
         echo "<br>";
         foreach ($data['ips_remotas2'] as $key => $value) {

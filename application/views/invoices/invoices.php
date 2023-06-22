@@ -49,7 +49,7 @@ text-transform: lowercase;
             <h5><?php echo $this->lang->line('Invoices') ?></h5>
 
             <hr>
-            
+            <a href="<?=base_url()."invoices/exportar_a_excel_inv" ?>" class="btn btn-success">Exportar a Excel .XLSX</a>
             <table id="invoices" class="table-striped" cellspacing="0" width="100%">
                 <thead>
                 <tr>

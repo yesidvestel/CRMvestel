@@ -24,7 +24,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 $variable_datos_pin=md5("variable_datos_pin");
-$config['base_url'] = $_SESSION[$variable_datos_pin]['base_url'];
+$config['base_url'] = $_SESSION[$variable_datos_pin]['url'];
 
 /*
 |--------------------------------------------------------------------------
