@@ -31,6 +31,7 @@
 
                     <div class="col-sm-6">
                         <select name="product_cat" id="product_cat" class="form-control servs">
+							<option value=''>Seleccione..</option>
                             <?php
                             foreach ($cat as $row) {
                                 $cid = $row['id'];
@@ -51,6 +52,7 @@
 
                     <div class="col-sm-6">
                         <select name="product_warehouse" id="product_warehouse" class="form-control servs">
+							<option value=''>Seleccione..</option>
                             <?php
                             foreach ($warehouse as $row) {
                                 $cid = $row['id'];
