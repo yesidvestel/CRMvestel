@@ -48,6 +48,104 @@ public function notas(){
         $this->load->view('fixed/footer');
 
 }
+public function exportar_a_excel_inv(){
+    ini_set('memory_limit', '50000000000M');
+    set_time_limit(500000000);
+     $this->db->select("invoices.* ,customers.name as name, customers.unoapellido as unoapellido,customers.abonado as abonado");
+        $this->db->from("invoices");
+        //$this->db->where_in("invoice_items.product",array("Nota Credito","Nota Debito"));
+        //$this->db->join("invoices","invoice_items.tid=invoices.tid", 'left');
+        $this->db->join("customers","invoices.csd=customers.id", 'left');
+        $this->db->order_by("tid","DESC");
+        $lista_invoices=$this->db->get()->result();
+        $this->load->library('Excel');
+        
+        
+    
+    //define column headers
+    $headers = array(
+        'TID' => 'integer', 
+        'Cliente' => 'string', 
+        'Abonado' => 'string', 
+        'Fecha creada' => 'date',
+        'Fecha vence' => 'date',
+        'Estado' => 'string',
+        'Total' => 'integer',
+        'Sede' => 'string',
+        'Pago' => 'string',
+    );
+    
+    //fetch data from database
+    //$salesinfo = $this->product_model->get_salesinfo();
+    
+    //create writer object
+    $writer = new Excel();
+    
+        //meta data info
+    $keywords = array('xlsx','CUSTOMERS','VESTEL');
+    $writer->setTitle('Reporte Facturas ');
+    $writer->setSubject('');
+    $writer->setAuthor('VESTEL');
+    $writer->setCompany('VESTEL');
+    $writer->setKeywords($keywords);
+    $writer->setDescription('Reporte Facturas ');
+    $writer->setTempDir(sys_get_temp_dir());
+    
+    //write headers el primer campo que es nombre de la hoja de excel deve de coincidir en writeSheetHeader y writeSheetRow para tener en cuenta si se piensan agregar otras hojas o algo por el estilo
+    $writer->writeSheetHeader('Reporte Facturas ',$headers,$col_options = array(
+
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+));
+    
+    //write rows to sheet1
+    
+    foreach ($lista_invoices as $key => $invoices) {
+        //$fecha = date("d/m/Y",strtotime($debito->fecha_creacion));
+         
+         $ar=array($invoices->tid,$invoices->name ." ". $invoices->unoapellido,$invoices->abonado,$invoices->invoicedate,$invoices->invoiceduedate,$invoices->ron,$invoices->total,$invoices->refer,$this->lang->line(ucwords($invoices->status)));
+            $writer->writeSheetRow('Reporte Facturas ',$ar);
+        
+    }
+        
+        
+    
+    $fecha_actual= date("d-m-Y");
+    $dia= date("N");
+    $this->load->model('reports_model', 'reports');
+    $fecha_actual=$this->reports->obtener_dia($dia)." ".$fecha_actual;
+    $fileLocation = 'Facturas '.$fecha_actual.'.xlsx';
+    
+    //write to xlsx file
+    $writer->writeToFile($fileLocation);
+    //echo $writer->writeToString();
+    
+    //force download
+    header('Content-Description: File Transfer');
+    header("Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+    header("Content-Disposition: attachment; filename=".basename($fileLocation));
+    header("Content-Transfer-Encoding: binary");
+    header("Expires: 0");
+    header("Pragma: public");
+    header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+    header('Content-Length: ' . filesize($fileLocation)); //Remove
+
+    ob_clean();
+    flush();
+
+    readfile($fileLocation);
+    unlink($fileLocation);
+    exit(0);
+       
+
+}
 public function explortar_a_excel_notas(){
         
         $this->db->select("invoice_items.*,invoices.tid as itid,invoices.invoicedate,invoice_items.id as id2,customers.id as id3, customers.name");
