@@ -197,6 +197,7 @@ class Customers_model extends CI_Model
     {
         $this->db->select('abonado');
         $this->db->from($this->table);
+        $this->db->where("abonado!=","OS724");
         $this->db->order_by('abonado', 'DESC');
         $this->db->limit(1);
         $query = $this->db->get();
