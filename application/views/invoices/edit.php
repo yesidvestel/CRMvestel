@@ -1,3 +1,6 @@
+<script type="text/javascript">
+    var valida_tarifa_read_only="<?=$_SESSION[md5("variable_datos_pin")]['valida_tarifa_new_edit_invoice_read_only'] ?>";
+</script>
 <article class="content">
     <div class="card card-block">
         <div id="notify" class="alert alert-success" style="display:none;">

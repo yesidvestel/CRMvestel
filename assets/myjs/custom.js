@@ -70,7 +70,9 @@ $('#addproduct').on('click', function () {
     var sideh2=document.getElementById('rough').scrollHeight;
     var opx3=sideh2+50;
     document.getElementById('rough').style.height=opx3+"px";
-    $(".prc").attr("readonly","true");
+    if(valida_tarifa_read_only=="SI"){
+        $(".prc").attr("readonly","true");    
+    }
 });
 
 //caculations

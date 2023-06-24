@@ -1,3 +1,6 @@
+<script type="text/javascript">
+    var valida_tarifa_read_only="<?=$_SESSION[md5("variable_datos_pin")]['valida_tarifa_new_edit_invoice_read_only'] ?>";
+</script>
 <div class="app-content content container-fluid">
     <div class="content-wrapper">
         <div class="content-header row">
