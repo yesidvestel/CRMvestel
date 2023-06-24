@@ -559,8 +559,8 @@ setlocale(LC_TIME, "spanish");
         $lista_sedes[]['id']="-1";
         $lista_sedes[]['id']="-2";
         foreach($lista_sedes as $key=> $value){
-            $lista_sedes[$key]['servicios_tv']=$this->db->get_where("products",array("pcat"=>"4","warehouse"=>"7","sede"=>$value['id'],"valores!="=>null,"pertence_a_tv_o_net"=>"Tv"))->result_array();
-            $lista_sedes[$key]['servicios_internet']=$this->db->get_where("products",array("pcat"=>"4","warehouse"=>"7","sede"=>$value['id'],"valores!="=>null,"pertence_a_tv_o_net"=>"Internet"))->result_array();
+            $lista_sedes[$key]['servicios_tv']=$this->db->get_where("products",array("pcat"=>"1","warehouse"=>"1","sede"=>$value['id'],"valores!="=>null,"pertence_a_tv_o_net"=>"Tv"))->result_array();
+            $lista_sedes[$key]['servicios_internet']=$this->db->get_where("products",array("pcat"=>"1","warehouse"=>"1","sede"=>$value['id'],"valores!="=>null,"pertence_a_tv_o_net"=>"Internet"))->result_array();
             foreach ($lista_sedes[$key]['servicios_tv'] as $key2 => $value2) {
                 
                 $x1=explode("-", $value2['valores']);
