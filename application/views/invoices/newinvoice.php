@@ -1054,7 +1054,9 @@
             $("#crear_ticket_div").hide();
         }
     });
-    $(".prc").attr("readonly","true");
+    <?php if($_SESSION[md5("variable_datos_pin")]['valida_tarifa_new_edit_invoice_read_only'] == "SI"){ ?>
+        $(".prc").attr("readonly","true");
+    <?php } ?>
     cambia();
     var sede_actual=$("#refer option:selected").val();
     function cambia(){

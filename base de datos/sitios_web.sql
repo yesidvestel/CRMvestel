@@ -70,6 +70,8 @@ INSERT INTO `sitios_web` (`id`, `url`, `db_user`, `db_pass`, `db_name`, `param_u
 ALTER TABLE `sitios_web` ADD `sitio_integra_mikrotik` VARCHAR(10) NOT NULL DEFAULT 'SI' AFTER `param_us_import`;
 UPDATE `sitios_web` SET `sitio_integra_mikrotik` = 'NO' WHERE `sitios_web`.`id` = 2;
 UPDATE `sitios_web` SET `sitio_integra_mikrotik` = 'NO' WHERE `sitios_web`.`id` = 4;
+ALTER TABLE `sitios_web` ADD `valida_tarifa_new_edit_invoice_read_only` VARCHAR(10) NOT NULL DEFAULT 'SI' AFTER `sitio_integra_mikrotik`;
+UPDATE `sitios_web` SET `valida_tarifa_new_edit_invoice_read_only` = 'NO' WHERE `sitios_web`.`id` = 2;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
