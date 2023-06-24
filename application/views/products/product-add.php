@@ -239,7 +239,7 @@
 </article>
 <script type="text/javascript">
     $(document).on("change",'.servs',function(e){
-        if($("#product_cat").val()=="4" && $("#product_warehouse").val()=="7"){
+        if($("#product_cat").val()=="1" && $("#product_warehouse").val()=="1"){
             $("#tipo_servicio").addClass("required");
             //$("#valores_servicio").addClass("required");
             //$("#servicio_pertenece_a").addClass("required");
