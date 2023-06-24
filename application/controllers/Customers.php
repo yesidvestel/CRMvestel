@@ -96,7 +96,9 @@ class Customers extends CI_Controller
         $depar = $this->customers->departamentos_list();
         $data['departamentos'] = $this->customers->array_sort($depar, 'departamento', SORT_ASC);
         //$data['ips_remotas']=$this->customers->devolver_ips_proximas();
-        $data['ips_remotas2']=$this->customers->dev_ips_dinamic();
+        if($_SESSION[md5("variable_datos_pin")]['sitio_integra_mikrotik'] == "SI"){
+           $data['ips_remotas2']=$this->customers->dev_ips_dinamic();
+        }
         /*var_dump($data['ips_remotas']);
         echo "<br>";
         foreach ($data['ips_remotas2'] as $key => $value) {
