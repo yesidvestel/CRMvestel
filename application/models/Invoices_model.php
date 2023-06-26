@@ -297,7 +297,8 @@ setlocale(LC_TIME, "spanish");
         return $str_retorn;
     }
 	public function paquetes($opts)
-    {
+    {//https://www.jose-aguilar.com/blog/multidimensional-array-sort/
+        //como ordenar un array multidimencional
 		$this->opt = $opts;
 		$sede = $this->aauth->get_user()->sede_accede;
 		$this->db->select('*');
@@ -314,7 +315,13 @@ setlocale(LC_TIME, "spanish");
 			
         }
         $query = $this->db->get();
-        return $query->result_array();
+        $vr_ar=$query->result_array();
+        $aux=array();
+        foreach ($vr_ar as $key => $value) {
+            preg_match('/^(\d+)/', $vr_ar[$key]['product_name'], $aux[$key]);
+        }
+        array_multisort($aux,SORT_ASC,$vr_ar);
+        return $vr_ar;
     }
 	public function sede()
     {
