@@ -939,7 +939,7 @@ class Uploadhandler
         if (!empty($options["strip"])) {
             $image_strip = $options["strip"];
         }
-        if (!$image_oriented && ($max_width >= $img_width) && ($max_height >= $img_height) && !image_strip && empty($options["jpeg_quality"])) {
+        if (!$image_oriented && ($max_width >= $img_width) && ($max_height >= $img_height) && ! $image_strip && empty($options["jpeg_quality"])) {
             if ($file_path !== $new_file_path) {
                 return copy($file_path, $new_file_path);
             }
