@@ -50,6 +50,7 @@ $_SESSION['permisos']=null;
         $this->load->model('employee_model', 'employee');        
         if ($this->aauth->get_user()->roleid > 4 || $this->employee->get_client_specific_permission($this->aauth->get_user()->id,"testran") != null) {
             $data['todayin'] = $this->dashboard_model->todayInvoice($today, $sede);
+            $data['grupos'] = $this->dashboard_model->grupo();
             $data['todayitems'] = $this->dashboard_model->todayItems($today,$sede);
             $data['incomechart'] = $this->dashboard_model->incomeChart($today, $month, $year, $sede);
             $data['expensechart'] = $this->dashboard_model->expenseChart($today, $month, $year, $sede);

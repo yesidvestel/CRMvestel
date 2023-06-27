@@ -141,6 +141,14 @@ class Dashboard_model extends CI_Model
         $query = $this->db->query("SELECT COUNT(id) AS ttlid,SUM(total) AS total,DATE(invoicedate) as date FROM invoices WHERE (DATE(invoicedate) BETWEEN CURDATE() - INTERVAL 30 DAY AND CURDATE()) and tipo_factura!='Nota Credito' GROUP BY date DESC");
         return $query->result_array();
     }
+	public function grupo()
+    {
+        $this->db->select('*');
+        $this->db->from('customers_group');
+        $query = $this->db->get();
+        return $query->result_array();
+
+    }
 
 
     public function monthlyInvoice($month, $year, $sede)
