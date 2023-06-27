@@ -41,7 +41,10 @@
 					<a href="<?php echo base_url('dashboard/index?sede='.$row['title'])?>">
 						<input type="text" class="btn btn-primary btn-md" value="<?php echo $row['title'] ?>"></a>
 					</div>
-				 <?php $i++; } ?>				
+				 <?php $i++; } ?>
+				<div class="col-md-12 mb-1">
+					
+					</div>
                 <div class="col-xl-3 col-md-6 col-xs-12">										
                     <div class="card">
                         <div class="card-body">
