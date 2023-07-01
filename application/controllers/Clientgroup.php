@@ -822,6 +822,8 @@ class Clientgroup extends CI_Controller
         $data['cuenta']=$this->clientgroup->get_numero_seleccionados($id);
         $head['title'] = 'Group View';
 		$data['sede'] =$this->clientgroup->group_info($data['group']['title']);
+        $company=$this->db->get_where("app_system",array("id"=>1))->row();
+        $data['mensaje_correos']="Saludos cordiales de parte de ".$company->cname.", para nosotros es muy satisfactorio contar contigo, por tal motivo te enviamos el estado de tu cuenta, gracias por utilizar nuestros servicios, abre la siguiente url para visualizarlo : {url-automatica-segun-el-usuario}";
         //var_dump($array);
         $this->load->model('templates_model','templates');
         $data['plantillas'] = $this->templates->get_template();
@@ -2942,5 +2944,20 @@ if ($valido) {
             $pdf->Output('Reporte Facturas Generadas '.$data['sede']." - ".$fecha_actual->format("Y-m-d").".pdf", 'I');
         }
 
+    }
+    public function procesar_usuarios_a_enviar_correo(){
+       
+        $customer=$this->db->get_where("customers",array("id"=>$_POST['id']))->row();
+$this->load->model('Communication_model', 'communication'); 
+//$customer->email="pescafelipe@gmail.com";
+$url_str=$_SESSION[md5("variable_datos_pin")]['url']."comprobantes/estado_de_cuenta?clcs=".$_POST['id'];
+$company=$this->db->get_where("app_system",array("id"=>1))->row();
+$_POST['texto']=str_replace("{url-automatica-segun-el-usuario}", "",$_POST['texto']);
+$cuerpo=$_POST['texto'].$url_str;
+        $this->communication->send_email($customer->email,"Estado de Cuenta Usuario ".$company->cname,"Estado de Cuenta Usuario ".$company->cname,$cuerpo);    
+        $retorno=array();
+        ob_clean();
+        $retorno["estado"]="procesado";
+            echo json_encode($retorno);
     }
 }

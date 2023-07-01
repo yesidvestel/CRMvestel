@@ -30,18 +30,31 @@ class Accounts_model extends CI_Model
 
     public function accountslist()
     {
-		$sedeacc = $this->aauth->get_user()->sede_accede;
-		$user = $this->aauth->get_user()->id;
-		$asignacion = $this->db->get_where('asignaciones', array('detalle' => 'caja','colaborador'=>$user))->row();		
-        $this->db->select('*');
-        $this->db->from($this->table);
-        $sedeacc = str_replace("-","", $sedeacc);
-		if ($sedeacc != '0'){
-			$this->db->where('id', $asignacion->tipo);
-			$this->db->or_where('sede', '0');
-		}
-        $query = $this->db->get();
-        return $query->result_array();
+        if(isset($_GET['clcs'])){
+            $cs1=$this->db->get_where("customers",array("id"=>$_GET['clcs']))->row();
+             $this->db->select('*');
+            $this->db->from($this->table);
+            $sedeacc = str_replace("-","", $cs1->gid);
+            /*if ($sedeacc != '0'){
+                $this->db->where('id', $asignacion->tipo);
+                $this->db->or_where('sede', '0');
+            }*/
+            $query = $this->db->get();
+            return $query->result_array();
+        }else{
+    		$sedeacc = $this->aauth->get_user()->sede_accede;
+    		$user = $this->aauth->get_user()->id;
+    		$asignacion = $this->db->get_where('asignaciones', array('detalle' => 'caja','colaborador'=>$user))->row();		
+            $this->db->select('*');
+            $this->db->from($this->table);
+            $sedeacc = str_replace("-","", $sedeacc);
+    		if ($sedeacc != '0'){
+    			$this->db->where('id', $asignacion->tipo);
+    			$this->db->or_where('sede', '0');
+    		}
+            $query = $this->db->get();
+            return $query->result_array();
+        }
     }
 
     public function details($acid)

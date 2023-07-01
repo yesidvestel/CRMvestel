@@ -127,7 +127,8 @@
 
 </style>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
-
+<link rel="stylesheet" href="<?=base_url()?>assets/css/jquery.lineProgressbar.css">
+<script type="text/javascript" src="<?=base_url()?>assets/js/jquery.lineProgressbar.js"></script>
 <article class="content content items-list-page">
     <div class="card card-block">
         <div id="notify" class="alert alert-success" style="display:none;">
@@ -550,6 +551,8 @@
 <a href=""  class="btn btn-danger btn-md" onclick="abrir_modal_corte_usuarios(event)"><i
                         class="fa fa-envelope"></i>Cortar Usuarios</a>
                         &nbsp;<a class="btn btn-danger" href="<?=base_url().'clientgroup/descargar_pdf_falctura_usuarios_media_carta?gid='.$_GET['id'] ?>">Exportar a PDF <img width="20px" src="<?=base_url()?>assets/images/icons/pdf.png"></a>
+                        <a href=""  class="btn btn-primary btn-md" onclick="abrir_modal_envio_email(event)"><i
+                        class="fa fa-envelope"></i>Enviar Correo</a>
             <hr>
 <div class="wrapper1">
     <div class="div1"></div>
@@ -1110,6 +1113,43 @@ $("#sel_filtrar_fecha_cambio").on("change",function(){
         </div>
     </div>
 </div>
+<div id="modal_process_emails" class="modal fade">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Progreso del Proceso</h4>
+            </div>
+            
+            <div class="modal-body" >
+                 <p>Progreso recorrido usuarios</p>
+                        <div id="progress" data-init="true"></div>
+                        <div style="margin-top: -25px;"><span id="span_progress1">0/0</span></div>
+                        <br>
+                        <div id="pro2">
+                        <p class="progressfg">Progreso proceso en ejecucion</p>
+                        <div id="progressfg" class="progressfg" data-init="true"></div>
+                        </div>
+                 <hr>
+                <label
+                                    for="number">Customers</label>
+                            <input type="text" class="form-control" readonly="true" 
+                                   name="ids_customers_email" id="ids_customers_email" >
+                <label
+                                    for="number">Mensaje</label>
+                            <textarea class="form-control" id="mensaje_email" name="mensaje_email"><?=$mensaje_correos ?></textarea>                   
+                        
+                 
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal"><?php echo $this->lang->line('Close') ?></button>
+                
+            </div>
+            
+        </div>
+    </div>
+</div>
 <script type="text/javascript">
     $(function () {
     $('.wrapper1').on('scroll', function (e) {
@@ -1461,6 +1501,162 @@ $(window).on('load', function (e) {
             $("#div_direccion_personalizada").show();
         }
     }
+
+
+
+
+
+    /* codigo envio de email*/
+    function abrir_modal_envio_email(e){
+        e.preventDefault();
+        var lista_cadena="";
+        reestablecer_seleciones();
+        $.post(baseurl+"clientgroup/get_seleccionados_sms_y_cortar?id=<?=$_GET['id']?>",{},function(data){
+
+            $(data).each(function(index,value){
+                console.log(value);
+                var data1srt='{"id":'+(value.id)+',"celular":"'+(value.celular)+'"}';
+                        lista_customers_sms.push(data1srt);
+
+                if(lista_cadena!=""){
+                    lista_cadena=lista_cadena+","+value.id;    
+                }else{
+                    lista_cadena=value.id;    
+                }
+
+             });
+datos_recorrer=data;
+            
+
+    
+        $("#ids_customers_email").val(lista_cadena);
+        //$("#div_notify5").html("");
+
+organiza_datos_para_iniciar();
+            //$("#modal_process_emails").modal("show");
+
+        },'json');
+    }
+   
+    $('#progress').LineProgressbar({
+        percentage: 0,
+        animation: true,
+        fillBackgroundColor: '#1abc9c',
+        height: '25px',
+        radius: '10px'
+    });
+    $('#progressfg').LineProgressbar({
+        percentage: 0,
+        animation: true
+    });
+
+    //codigo de interaccion progress
+    function progress_one(valorx){
+             $('#progressfg').LineProgressbar({
+                        percentage: valorx,
+                        animation: true
+                    });
+    }
+    
+    
+    var id_file;
+    var xhr;
+    var datos_recorrer;
+    var i=0;
+    var totalem=0;
+    var total_a_facturar=0;
+    var va_en=0;
+var proceso_iniciado=false;
+function organiza_datos_para_iniciar(){
+    //$(document).on("click",'.cl-play-process',function(ev){
+        //ev.preventDefault();
+        
+        //$(this).attr("disabled","true");
+        $("#modal_process_emails").modal("show");
+         //id_file=$(this).data("id-file");
+        if(!proceso_iniciado){proceso_iniciado =true;
+
+             progress_one(40);
+            //$.post(baseurl+"transactions/obtener_lista_usuarios_a_facturar",{'id_file':id_file},function(data){
+                progress_one(90);
+                //datos_recorrer=lista_customers_sms;
+                totalem=datos_recorrer.length;
+                total_a_facturar= parseInt( totalem);
+               va_en =parseInt(total_a_facturar-datos_recorrer.length);
+                $("#span_progress1").text(va_en+"/"+total_a_facturar);
+
+                iniciar_facturacion();
+                
+            //},'json');
+        }
+
+    //});
+    }
+    
+    var errores=0;
+    var texto_msj_correo="<?=$mensaje_correos ?>";
+function iniciar_facturacion(){
+        var pay_acc="x";
+        var sdate="y";
+        progress_one(10);
+        if(i<parseInt(totalem)){
+            var id_customer=datos_recorrer[i].id;
+
+             //var num1=va_en+1;
+             va_en++;
+                var porcentaje=parseInt((va_en*100)/parseInt(total_a_facturar));
+                //console.log(va_en+"-"+va_en+"-"+total+"-"+porcentaje);
+                $('#progress').LineProgressbar({
+                    percentage: porcentaje,
+                    animation: false,
+                    fillBackgroundColor: '#1abc9c',
+                    height: '25px',
+                    radius: '10px'
+                });  
+                
+                    $("#span_progress1").text(va_en+"/"+total_a_facturar);
+                    progress_one(40);
+            $.post(baseurl+"clientgroup/procesar_usuarios_a_enviar_correo",{'id':id_customer,'texto':texto_msj_correo},function(data){
+
+
+                    //if(data.estado=="procesado" || data.estado=="procesado 2"){
+                        console.log(data.estado);
+                        i++;
+                        progress_one(100);
+                        iniciar_facturacion();
+                        //recargar_tb_results();
+                    //}
+
+                    
+            },'json').fail(function(xhr, status, error) {
+                if(errores>5){
+                    i++;
+                    errores=0;
+                }else{
+                    va_en--;    
+                }
+                
+                console.log("ubo un error");
+                iniciar_facturacion();
+            });
+        }else{
+//recargar_tb_results();
+//finalizar_registro_file();
+            alert("Proceso Finalizado");
+            
+            $('.progressfg').remove();
+            $("#pro2").append(' <p class="progressfg">Progreso proceso en ejecucion</p><div id="progressfg" class="progressfg" data-init="true"></div>');
+            $("#pro2").hide();
+             progress_one(100);
+            
+        }
+}
+    //end para envio email
+
+
+
+
+
     function abrir_modal_corte_usuarios(e){
         e.preventDefault();
         var lista_cadena="";
