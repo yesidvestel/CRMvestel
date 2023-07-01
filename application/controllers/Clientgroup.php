@@ -2950,7 +2950,7 @@ if ($valido) {
         $customer=$this->db->get_where("customers",array("id"=>$_POST['id']))->row();
 $this->load->model('Communication_model', 'communication'); 
 //$customer->email="pescafelipe@gmail.com";
-$url_str=$_SESSION[md5("variable_datos_pin")]['url']."comprobantes/estado_de_cuenta?clcs=".$_POST['id'];
+$url_str=$_SESSION[md5("variable_datos_pin")]['url']."/comprobantes/estado_de_cuenta?clcs=".$_POST['id'];
 $company=$this->db->get_where("app_system",array("id"=>1))->row();
 $_POST['texto']=str_replace("{url-automatica-segun-el-usuario}", "",$_POST['texto']);
 $cuerpo=$_POST['texto'].$url_str;
