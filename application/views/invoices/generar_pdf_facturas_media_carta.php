@@ -239,7 +239,7 @@ $barrio =$this->db->get_where("barrio",array("idBarrio"=>$custmr->barrio))->row(
             <h6>Telefono : <?= $phoneNumber.$phoneNumber2 ?></h6>
             <h6 style="line-height:10px;font-size: 8px;padding-top: -23px;padding-right: 3px;">Reciba un cordial saludo de parte de <?=$company->cname ?>, a continuación, presentamos el documento de cobro de sus servicios hogar.</h6>
         </div>
-        <?php if($_SESSION[md5("variable_datos_pin")]['url'] =="https://www.vesteldigital.com.co"){ ?>
+        <?php if($_SESSION[md5("variable_datos_pin")]['url'] =="https://www.saves-ottis.com/"){ ?>
         <div id="logo-div"> <img id="logo" src="<?=FCPATH."userfiles/company/".$company->logo  ?>"></div>
     <?php }else{ ?>
         <div id="logo-div"> <img id="logo" src="<?=base_url()."userfiles/company/".$company->logo  ?>"></div>
