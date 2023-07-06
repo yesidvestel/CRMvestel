@@ -110,6 +110,10 @@ $_POST['EFECTY']=true;
             //echo "<table>";
             $string_inserts="";
 $fecha_actual=date("Y-m-d H:i:s");
+if($_POST['cambiar_fecha']=="si"){
+    $f1=new DateTime($_POST['sdate']);
+    $fecha_actual=$f1->format("Y-m-d");
+}
             foreach ($sheet->getRowIterator() as $key => $row) {
                     $cellIterator=$row->getCellIterator("d","f");
                     $cellIterator->setIterateOnlyExistingCells(false);

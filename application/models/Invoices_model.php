@@ -103,6 +103,8 @@ class Invoices_model extends CI_Model
         return $informacion;
     }
     public function calculo_de_facturas_adelantadas($vrm,$csd){
+        ini_set('memory_limit', '1000000000000M');
+
         $due=$this->customers->due_details($csd);
        $x1= $due['total']-$due['pamnt'];
        if($x1<0){

@@ -12,13 +12,31 @@
 <h4>Selecciona el archivo y subelo ...</h4>
 <hr>
         <form id="form_model2" enctype="multipart/form-data">
+             
+
+                               
+                                <div class="col-sm-4">
+                                    <select class="form-control" id="cambiar_fecha" name="cambiar_fecha">
+                                        <option value="si">Cambiar Fecha</option>
+                                        <option value="no">No Cambiar fecha</option>
+                                    </select>
+                                </div>
+                                <br><br>
+                                <div  class="col-sm-4" id="div_fecha1">
+                                     
+                                    <input type="text" class="form-control required"
+                                           placeholder="Start Date" name="sdate" id="sdate2"
+                                            autocomplete="false" >
+                                </div><br><br>
+                            
                  <div class="col-sm-4">
                             <input id="fileupload" type="file" name="files[]" required accept=".xlsx,.xls">
                         </span>
                         <br>
                         
                     </div>
-                <div>
+                    <br><br>
+                <div class="col-sm-4">
                 
                   
                 <input type="hidden" id="action-url2" value="transactions/cargue_xlxs">
@@ -26,6 +44,7 @@
                         id="submit_model2-tr-nw">Subir</button>
                 </div>
                 </form>
+                <br>
 <hr>
         <h4>Lista de archivos cargados</h4>
 
@@ -121,6 +140,14 @@
     </div>
 </div>
 <script type="text/javascript">
+    $(document).on("change","#cambiar_fecha",function(ev){
+        var cambia_f=$("#cambiar_fecha option:selected").val();
+        if(cambia_f=="no"){
+            $("#div_fecha1").hide();
+        }else{
+            $("#div_fecha1").show();
+        }
+    });
     var tb;
     var tb_cs;
      $(document).ready(function(){
