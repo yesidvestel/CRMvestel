@@ -440,10 +440,12 @@
                                                 </div>
                                                 <div id="crear_ticket_div"> 
                                                     <br><br><label>Generar Ticket</label>                                
-                                                    <select name="crear_ticket" id="crear_ticket" class="selectpicker form-control" >
-                                                        <option value="no">No</option>
-                                                        <option value="si" selected>Si</option>
+
+                                                    <select name="crear_ticket" id="crear_ticket" class="selectpicker form-control" <?=($this->aauth->get_user()->roleid<5) ? 'disabled':'' ?> >
+                                                        <option value="no" selected>No</option>
+                                                        <option value="si" >Si</option>
                                                     </select>
+                                                    <small>Al estar seleccionado si, se generara la orden al momento, si esta seleccionado no generara la orden al pagar la factura</small>
                                       </div>
                                 </td>
 
@@ -1053,7 +1055,7 @@
         if($("#tvx1 option:selected").val() !="no" || $("#combox1 option:selected").val() !="no"){
                 $("#crear_ticket_div").show();
         }else{
-            $("#crear_ticket").val("si");
+            $("#crear_ticket").val("no");
             $("#crear_ticket_div").hide();
         }
     });
