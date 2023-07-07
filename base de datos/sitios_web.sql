@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 27-05-2023 a las 20:37:05
--- Versión del servidor: 10.4.24-MariaDB
--- Versión de PHP: 7.4.29
+-- Servidor: localhost:3306
+-- Tiempo de generación: 06-07-2023 a las 20:55:38
+-- Versión del servidor: 10.6.12-MariaDB-0ubuntu0.22.04.1
+-- Versión de PHP: 8.2.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -32,17 +32,22 @@ CREATE TABLE `sitios_web` (
   `url` varchar(100) NOT NULL,
   `db_user` varchar(100) NOT NULL,
   `db_pass` varchar(100) NOT NULL,
-  `db_name` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `db_name` varchar(100) NOT NULL,
+  `param_us_import` varchar(50) NOT NULL DEFAULT 'importequipo/usuarios_upload',
+  `sitio_integra_mikrotik` varchar(10) NOT NULL DEFAULT 'SI',
+  `valida_tarifa_new_edit_invoice_read_only` varchar(10) NOT NULL DEFAULT 'SI'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `sitios_web`
 --
 
-INSERT INTO `sitios_web` (`id`, `url`, `db_user`, `db_pass`, `db_name`) VALUES
-(1, 'http://localhost/CRMvestel/', 'root', '', 'crm_28_04_2023'),
-(2, 'https://www.vesteldigital.com.co', 'admincrm', 'Vestel1957', 'admin_crmvestel'),
-(3, 'https://www.mydic-vestel.com', 'crmdemo', 'democrm1957', 'admin_crm');
+INSERT INTO `sitios_web` (`id`, `url`, `db_user`, `db_pass`, `db_name`, `param_us_import`, `sitio_integra_mikrotik`, `valida_tarifa_new_edit_invoice_read_only`) VALUES
+(1, 'http://localhost/CRMvestel/', 'root', '', 'crm_28_04_2023', 'importequipo/usuarios_upload', 'SI', 'SI'),
+(2, 'https://www.saves-ottis.com/', 'admincrm', 'Vestel1957', 'admin_crmvestel', 'importequipo/usuarios_upload_vestel_digital', 'NO', 'NO'),
+(3, 'https://www.mydic-vestel.com', 'crmdemo', 'democrm1957', 'admin_crm', 'importequipo/usuarios_upload', 'SI', 'SI'),
+(4, 'https://www.saves-casanet.com/', 'Casanet', 'adminCasanet', 'admin_casanet', 'importequipo/usuarios_upload', 'NO', 'SI'),
+(5, 'http://www.saves-vestel.com/', 'root', 'tVsur@2019*', 'crm', 'importequipo/usuarios_upload', 'SI', 'SI');
 
 --
 -- Índices para tablas volcadas
@@ -62,16 +67,12 @@ ALTER TABLE `sitios_web`
 -- AUTO_INCREMENT de la tabla `sitios_web`
 --
 ALTER TABLE `sitios_web`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
-ALTER TABLE `sitios_web` ADD `param_us_import` VARCHAR(50) NOT NULL DEFAULT 'importequipo/usuarios_upload' AFTER `db_name`;
-UPDATE `sitios_web` SET `param_us_import` = 'importequipo/usuarios_upload_vestel_digital' WHERE `sitios_web`.`id` = 2;
-INSERT INTO `sitios_web` (`id`, `url`, `db_user`, `db_pass`, `db_name`, `param_us_import`) VALUES (4, 'https://www.saves-casanet.com/', 'Casanet', 'adminCasanet', 'admin_casanet', 'importequipo/usuarios_upload');
-ALTER TABLE `sitios_web` ADD `sitio_integra_mikrotik` VARCHAR(10) NOT NULL DEFAULT 'SI' AFTER `param_us_import`;
-UPDATE `sitios_web` SET `sitio_integra_mikrotik` = 'NO' WHERE `sitios_web`.`id` = 2;
-UPDATE `sitios_web` SET `sitio_integra_mikrotik` = 'NO' WHERE `sitios_web`.`id` = 4;
-ALTER TABLE `sitios_web` ADD `valida_tarifa_new_edit_invoice_read_only` VARCHAR(10) NOT NULL DEFAULT 'SI' AFTER `sitio_integra_mikrotik`;
-UPDATE `sitios_web` SET `valida_tarifa_new_edit_invoice_read_only` = 'NO' WHERE `sitios_web`.`id` = 2;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+CREATE USER 'admin_sitios_web'@'localhost' IDENTIFIED BY '1b0a6e90bc2fc1a1d638592bd51f3253';
+GRANT ALL PRIVILEGES ON *.* TO 'admin_sitios_web'@'localhost';
+FLUSH PRIVILEGES;

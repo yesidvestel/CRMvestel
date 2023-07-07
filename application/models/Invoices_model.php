@@ -623,7 +623,9 @@ setlocale(LC_TIME, "spanish");
         $ultima_factura_tr=$this->db->query('SELECT * FROM invoices as inv  inner join invoice_items  as inv_it on inv_it.tid=inv.tid where inv.csd ="'.$cid.'" and inv_it.product like "%traslado%" and inv.status="paid" order by inv.tid desc limit 1')->result_array();
         if(count($ultima_factura_tr)>0){
             $temporal =$this->db->get_where("temporales",array("tid_traslado"=>$ultima_factura_tr[0]['tid']))->row();
-            if($temporal->corden==0){
+            
+            if(isset($temporal)&& $temporal->corden==0){
+                
                 $tidactualmasuno1= $this->db->select('max(codigo)+1 as codigo')->from('tickets')->get()->result();
                 $ultima_factura=$this->db->query('SELECT * from invoices  where csd="'.$cid.'" and tipo_factura="Recurrente"  order by tid desc limit 1')->result_array();
                  $username = $this->aauth->get_user()->username;
