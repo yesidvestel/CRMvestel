@@ -159,6 +159,7 @@ class Transactions extends CI_Controller
         }else{
             $cus_existe=$this->db->get_where("customers",array("documento"=>$varx->documento))->row();
             if(isset($cus_existe)){
+                $_POST['fecha_x']=$varx->fecha;
                 $ret=$this->files_carga->facturar_customer($varx,$cus_existe);    
                 if($ret){
                     $this->db->update("datos_archivo_excel_cargue",array("estado"=>"Cargado","id_customer"=>$cus_existe->id),array("id"=>$varx->id));    

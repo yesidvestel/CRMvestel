@@ -2899,6 +2899,7 @@ return $str;
         
         if(isset($_POST['EFECTY'])){
             $pmethod = "EFECTY";
+            $paydate = (new DateTime($_POST['fecha_x']))->format("Y-m-d");
         }
         $banco = "";
         $acid = $customer->gid;
