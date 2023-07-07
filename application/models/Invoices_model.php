@@ -308,11 +308,11 @@ setlocale(LC_TIME, "spanish");
 		switch ($this->opt) {
             case 'tv':
                 $this->db->where('sede', 1);
-                $this->db->where('warehouse', 1);
+                //$this->db->where('warehouse', 1);
                 break;
             case 'inter':
                 $this->db->where('sede', 2);
-                $this->db->where('warehouse', 1);
+                //$this->db->where('warehouse', 1);
                 break;
 			
         }
