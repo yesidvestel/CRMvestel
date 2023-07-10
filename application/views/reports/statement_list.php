@@ -466,7 +466,7 @@
 		<input type="hidden" name="caja" value="<?=$filter[5]?>">
 		<input type="hidden" name="is_multiple" value="<?=$is_multiple?>">
 
-		<button id="btn-cierre" disabled class="btn btn-primary" style="margin-left: 3px;" onclick="enviar_a_apertura()">Cierre de Caja</button>
+		<button id="btn-cierre" class="btn btn-primary" <?= (true)? '':'disabled'  ?> style="margin-left: 3px;" onclick="enviar_a_apertura()">Cierre de Caja</button>
 	
 	</form>
     <div class="card card-block">
