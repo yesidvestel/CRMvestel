@@ -1077,7 +1077,7 @@ class Reports extends CI_Controller
             }
         }
         //echo '<script type="text/javascript">valida_cierre('.intval($balance2).');$("#efectivo-caja").text("Efectivo Caja: '.amountFormat($balance2).'")</script>'; // para volver a validar que la caja sea mayor de 0 borrar la linea de ababo y descomentar esta
-        echo '$("#efectivo-caja").text("Efectivo Caja: '.amountFormat($balance2).'")</script>';
+        echo '<script type="text/javascript">$("#efectivo-caja").text("Efectivo Caja: '.amountFormat($balance2).'")</script>';
         $_SESSION['valor_efectivo_caja']=intval($balance2); 
         $_SESSION['valor_efectivo_caja_acid']=$valor_efectivo_caja_acid;
         $_SESSION['valor_efectivo_account']=$account_ef;
