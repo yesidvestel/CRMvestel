@@ -22,7 +22,7 @@ class Invoices_model extends CI_Model
 {
     var $table = 'invoices';
     var $column_order = array(null, 'tid', 'name', 'invoicedate', 'total', 'status', null);
-    var $column_search = array('tid', 'name', 'abonado', 'invoicedate', 'total','refer');
+    var $column_search = array('tid', 'name', 'abonado', 'invoicedate', 'total','refer','customers.documento','customers.name','customers.dosnombre','customers.unoapellido','customers.dosapellido');
     var $order = array('tid' => 'desc');
 	var $opt = '';
 
@@ -448,7 +448,7 @@ setlocale(LC_TIME, "spanish");
 
     private function _get_datatables_query($opt = '')
     {
-		$this->db->select('invoices.*,customers.name,customers.unoapellido,customers.abonado');
+		$this->db->select('invoices.*,customers.name,customers.dosnombre,customers.unoapellido,customers.dosapellido,customers.abonado,customers.documento');
         $this->db->from($this->table);
         if ($opt) {
             $this->db->where('invoices.eid', $opt);
