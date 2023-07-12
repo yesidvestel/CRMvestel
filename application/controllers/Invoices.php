@@ -2522,7 +2522,7 @@ if($total_tax>0){
                             $data_h['id_fila']=$this->db->insert_id();
                             $this->db->insert("historial_crm",$data_h);
                 $this->load->model('customers_model', 'customers');
-                $servicios_detail=$this->customers->servicios_detail($customer_id);            
+                /*$servicios_detail=$this->customers->servicios_detail($customer_id);            
                 if($servicios_detail['tid']!=0 && $servicios_detail['tid']!=null && $servicios_detail['tid']!=''){
                     
                     $due=$this->customers->due_details($customer_id);
@@ -2531,7 +2531,7 @@ if($total_tax>0){
 
                     if($datox==0){
                             //due
-                        $this->db->update("invoices",array("status"=>"paid"),array("tid"=>$servicios_detail['tid']));
+                        $this->db->update("invoices",array("status"=>"paid"),array("tid"=>$invocieno));
                                 $data_h=array();
                                 $data_h['modulo']="Ventas";
                                 $data_h['accion']="Editar Factura {update}";
@@ -2544,7 +2544,7 @@ if($total_tax>0){
                                 $this->db->insert("historial_crm",$data_h);
                     }else if($datox>0){
                             //partial
-                        $this->db->update("invoices",array("status"=>"partial"),array("tid"=>$servicios_detail['tid']));
+                        $this->db->update("invoices",array("status"=>"partial"),array("tid"=>$invocieno));
                                     $data_h=array();
                                     $data_h['modulo']="Ventas";
                                     $data_h['accion']="Editar Factura {update}";
@@ -2556,7 +2556,7 @@ if($total_tax>0){
                                     $data_h['id_fila']=$servicios_detail['tid'];
                                     $this->db->insert("historial_crm",$data_h);
                     }
-                }
+                }*/
                 echo json_encode(array('status' => 'Success', 'message' => $this->lang->line('Invoice has  been updated') . " <a href='view?id=$invocieno' class='btn btn-info btn-lg'><span class='icon-file-text2' aria-hidden='true'></span> " . $this->lang->line('View') . " </a> "));
             } else {
                 echo json_encode(array('status' => 'Error', 'message' =>
