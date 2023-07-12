@@ -324,7 +324,7 @@
 										<option value="Vereda">Vereda</option>
 								</select>
 							</div>
-                            <a href="#" style="margin-top:2px;" class="btn btn-info" title="Validar Direccion" id="a_validar_direccion"><i class="icon-refresh"></i></a>
+                            
 						</div>
                         <div class="col-sm-6">
                             <h6><label class="col-form-label"
@@ -332,6 +332,23 @@
 							<div>
                             <input id="referencia" type="text" placeholder="detalles de residencia"
                                    class="form-control margin-bottom" name="referencia">
+                        	</div>
+							<a href="#" style="margin-top:2px;" class="btn btn-info" title="Validar Direccion" id="a_validar_direccion"><i class="icon-refresh"></i></a>
+                        </div>
+						<div class="col-sm-6">
+                            <h6><label class="col-form-label"
+                               for="postbox"><?php echo $this->lang->line('') ?>Coordenada 1</label></h6>
+							<div>
+                            <input id="referencia" type="text" placeholder=""
+                                   class="form-control margin-bottom" name="coor1">
+                        	</div>
+                        </div>
+						<div class="col-sm-6">
+                            <h6><label class="col-form-label"
+                               for="postbox"><?php echo $this->lang->line('') ?>Coordenada 2</label></h6>
+							<div>
+                            <input id="referencia" type="text" placeholder=""
+                                   class="form-control margin-bottom" name="coor2">
                         	</div>
                         </div>
 					</div>

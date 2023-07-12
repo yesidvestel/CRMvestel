@@ -825,7 +825,7 @@ public function calculo_ultimo_estado ($array_add,$customers){
         }*/
     }
 
-    public function add($abonado, $name, $dosnombre, $unoapellido, $dosapellido, $company, $celular, $celular2, $email, $nacimiento, $tipo_cliente, $tipo_documento, $documento, $fcontrato, $estrato, $departamento, $ciudad, $localidad, $barrio, $nomenclatura, $numero1, $adicionauno, $numero2, $adicional2, $numero3, $residencia, $referencia, $customergroup, $name_s, $contra, $servicio, $perfil, $Iplocal, $Ipremota, $comentario,$tegnologia_instalacion)
+    public function add($abonado, $name, $dosnombre, $unoapellido, $dosapellido, $company, $celular, $celular2, $email, $nacimiento, $tipo_cliente, $tipo_documento, $documento, $fcontrato, $estrato, $departamento, $ciudad, $localidad, $barrio, $nomenclatura, $numero1, $adicionauno, $numero2, $adicional2, $numero3, $residencia, $referencia, $coor1, $coor2, $customergroup, $name_s, $contra, $servicio, $perfil, $Iplocal, $Ipremota, $comentario,$tegnologia_instalacion)
     {
         if($tegnologia_instalacion==""){
             $tegnologia_instalacion=null;
@@ -866,7 +866,9 @@ public function calculo_ultimo_estado ($array_add,$customers){
 			'Iplocal' => $Iplocal,
 			'Ipremota' => $Ipremota,
 			'comentario' => $comentario,
-			'tegnologia_instalacion'=>$tegnologia_instalacion
+			'tegnologia_instalacion'=>$tegnologia_instalacion,
+			'coor1'=> $coor1,
+			'coor2'=> $coor2,
 			
         );
 
@@ -933,7 +935,7 @@ public function calculo_ultimo_estado ($array_add,$customers){
     }
 
 
-    public function edit($id, $abonado, $name, $dosnombre, $unoapellido, $dosapellido, $company, $celular, $celular2, $email, $nacimiento, $tipo_cliente, $tipo_documento, $documento, $fcontrato, $estrato, $departamento, $ciudad, $localidad, $barrio, $nomenclatura, $numero1, $adicionauno, $numero2, $adicional2, $numero3, $residencia, $referencia, $customergroup, $name_s, $contra, $servicio, $perfil, $Iplocal, $Ipremota, $comentario,$tegnologia_instalacion)
+    public function edit($id, $abonado, $name, $dosnombre, $unoapellido, $dosapellido, $company, $celular, $celular2, $email, $nacimiento, $tipo_cliente, $tipo_documento, $documento, $fcontrato, $estrato, $departamento, $ciudad, $localidad, $barrio, $nomenclatura, $numero1, $adicionauno, $numero2, $adicional2, $numero3, $residencia, $referencia, $coor1, $coor2, $customergroup, $name_s, $contra, $servicio, $perfil, $Iplocal, $Ipremota, $comentario,$tegnologia_instalacion)
     {
         if($tegnologia_instalacion==""){
             $tegnologia_instalacion=null;
@@ -974,7 +976,9 @@ public function calculo_ultimo_estado ($array_add,$customers){
 			'Iplocal' => $Iplocal,
 			'Ipremota' => $Ipremota,
 			'comentario' => $comentario,
-            'tegnologia_instalacion'=>$tegnologia_instalacion
+            'tegnologia_instalacion'=>$tegnologia_instalacion,
+            'coor1'=>$coor1,
+            'coor2'=>$coor2,
         );
 
         if($data['name_s']=="" || $data['name_s']==null){

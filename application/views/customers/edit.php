@@ -287,6 +287,22 @@
                                    class="form-control margin-bottom" name="referencia" value="<?php echo $customer['referencia'] ?>">
                         	</div>
                         </div>
+						<div class="col-sm-6">
+                            <h6><label class="col-form-label"
+                               for="postbox"><?php echo $this->lang->line('') ?>Coordenada 1</label></h6>
+							<div>
+                            <input id="referencia" type="text" value="<?php echo $customer['coor1'] ?>"
+                                   class="form-control margin-bottom" name="coor1">
+                        	</div>
+                        </div>
+						<div class="col-sm-6">
+                            <h6><label class="col-form-label"
+                               for="postbox"><?php echo $this->lang->line('') ?>Coordenada 2</label></h6>
+							<div>
+                            <input id="referencia" type="text" value="<?php echo $customer['coor2'] ?>"
+                                   class="form-control margin-bottom" name="coor2">
+                        	</div>
+                        </div>
                     </div>
                     <div class="form-group row">
                         <h6><label class="col-sm-10 col-form-label"

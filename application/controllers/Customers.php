@@ -952,6 +952,8 @@ public function ajax_graficas2(){
         $numero3 = $this->input->post('numero3');
         $residencia = $this->input->post('residencia');
         $referencia = $this->input->post('referencia');
+        $coor1 = $this->input->post('coor1');
+        $coor2 = $this->input->post('coor2');
         $customergroup = $this->input->post('customergroup');
         $name_s = $this->input->post('name_s');
         $contra = $this->input->post('contra');
@@ -961,7 +963,7 @@ public function ajax_graficas2(){
         $Ipremota = $this->input->post('Ipremota2');
         $comentario = $this->input->post('comentario');
         $tegnologia_instalacion = $this->input->post('tegnologia_instalacion');
-        $this->customers->add($abonado, $name, $dosnombre, $unoapellido, $dosapellido, $company, $celular, $celular2, $email, $nacimiento, $tipo_cliente, $tipo_documento, $documento, $fcontrato, $estrato, $departamento, $ciudad, $localidad, $barrio, $nomenclatura, $numero1, $adicionauno, $numero2, $adicional2, $numero3, $residencia, $referencia, $customergroup, $name_s, $contra, $servicio, $perfil, $Iplocal, $Ipremota, $comentario,$tegnologia_instalacion);
+        $this->customers->add($abonado, $name, $dosnombre, $unoapellido, $dosapellido, $company, $celular, $celular2, $email, $nacimiento, $tipo_cliente, $tipo_documento, $documento, $fcontrato, $estrato, $departamento, $ciudad, $localidad, $barrio, $nomenclatura, $numero1, $adicionauno, $numero2, $adicional2, $numero3, $residencia, $referencia, $coor1, $coor2, $customergroup, $name_s, $contra, $servicio, $perfil, $Iplocal, $Ipremota, $comentario,$tegnologia_instalacion);
 
     }
 
@@ -996,6 +998,8 @@ public function ajax_graficas2(){
         $numero3 = $this->input->post('numero3');
         $residencia = $this->input->post('residencia');
         $referencia = $this->input->post('referencia');
+        $coor1 = $this->input->post('coor1');
+        $coor2 = $this->input->post('coor2');
         $customergroup = $this->input->post('customergroup');
         $name_s = $this->input->post('name_s');
         $contra = $this->input->post('contra');
@@ -1006,7 +1010,7 @@ public function ajax_graficas2(){
         $comentario = $this->input->post('comentario');
         $tegnologia_instalacion = $this->input->post('tegnologia_instalacion');
         if ($id) {
-            $this->customers->edit($id, $abonado, $name, $dosnombre, $unoapellido, $dosapellido, $company, $celular, $celular2, $email, $nacimiento, $tipo_cliente, $tipo_documento, $documento, $fcontrato, $estrato, $departamento, $ciudad, $localidad, $barrio, $nomenclatura, $numero1, $adicionauno, $numero2, $adicional2, $numero3, $residencia, $referencia, $customergroup, $name_s, $contra, $servicio, $perfil, $Iplocal, $Ipremota, $comentario,$tegnologia_instalacion);
+            $this->customers->edit($id, $abonado, $name, $dosnombre, $unoapellido, $dosapellido, $company, $celular, $celular2, $email, $nacimiento, $tipo_cliente, $tipo_documento, $documento, $fcontrato, $estrato, $departamento, $ciudad, $localidad, $barrio, $nomenclatura, $numero1, $adicionauno, $numero2, $adicional2, $numero3, $residencia, $referencia, $coor1, $coor2, $customergroup, $name_s, $contra, $servicio, $perfil, $Iplocal, $Ipremota, $comentario,$tegnologia_instalacion);
         }
    
     }
