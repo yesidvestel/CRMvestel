@@ -527,7 +527,7 @@ class Transactions extends CI_Controller
             $data['id_tr']=$_GET['id_tr'];
         }
 		$this->load->model('accounts_model', 'accounts');
-		$data['cta'] = $this->accounts->accountslist();
+		$data['cta'] = $this->accounts->accountslist('');
 		$data['cat'] = $this->transactions->categories();
         $calculo =$this->db->query("select id as id from transactions order by id desc limit 1")->result_array();
         $_SESSION['number_tr_min']=$calculo[0]['id']-30000;
