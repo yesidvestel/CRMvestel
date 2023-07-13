@@ -1862,7 +1862,7 @@ function eliminar_resivos_de_pago(){
     public function view()
     {
         $this->load->model('accounts_model');
-        $data['acclist'] = $this->accounts_model->accountslist();
+        $data['acclist'] = $this->accounts_model->accountslist('');
         $tid = intval($this->input->get('id'));
         $data['id'] = $tid;
         $head['title'] = "View Invoice $tid";

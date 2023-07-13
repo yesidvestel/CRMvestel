@@ -1715,7 +1715,8 @@ set_time_limit(13000);
         $head['title'] = 'View Customer Invoices';
         $data['due'] = $this->customers->due_details($custid);
         $this->load->model('accounts_model');
-        $data['acclist'] = $this->accounts_model->accountslist();
+        $data['acclistasignada'] = $this->accounts_model->accountslist('asig');
+        $data['acclistbanco'] = $this->accounts_model->accountslist('banco');
         $data['con_camp_f']=$this->customers->get_config_campos_faltantes_customer($custid);
     if(isset($_GET['fac_pag'])){
             $x=$this->db->query("select transactions.id as id,recibos_de_pago.file_name from transactions inner join transactions_ids_recibos_de_pago on transactions_ids_recibos_de_pago.id_transaccion=transactions.id inner join recibos_de_pago on recibos_de_pago.id=transactions_ids_recibos_de_pago.id_recibo_de_pago where transactions.payerid=".$data['invoice']['csd']." order by id desc")->result_array();

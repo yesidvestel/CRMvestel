@@ -22,14 +22,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Accounts_model extends CI_Model
 {
     var $table = 'accounts';
+	var $opt = '';
 
     public function __construct()
     {
         parent::__construct();
     }
 
-    public function accountslist()
+    public function accountslist($opts)
     {
+		$this->opt = $opts;
         if(isset($_GET['clcs'])){
             $cs1=$this->db->get_where("customers",array("id"=>$_GET['clcs']))->row();
              $this->db->select('*');
@@ -48,10 +50,21 @@ class Accounts_model extends CI_Model
             $this->db->select('*');
             $this->db->from($this->table);
             $sedeacc = str_replace("-","", $sedeacc);
-    		if ($sedeacc != '0'){
+			switch ($this->opt) {
+            case 'asig':
+                //if ($sedeacc != '0'){
     			$this->db->where('id', $asignacion->tipo);
-    			$this->db->or_where('sede', '0');
-    		}
+    			//$this->db->or_where('sede', '0');
+    			//}
+                //$this->db->where('warehouse', 1);
+                break;
+            case 'banco':
+                $this->db->where('sede', '0');
+                //$this->db->where('warehouse', 1);
+                break;
+			
+        }
+    		
             $query = $this->db->get();
             return $query->result_array();
         }
