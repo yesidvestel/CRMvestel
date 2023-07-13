@@ -1,4 +1,6 @@
-﻿-------------------CAMBIOS DE IMPORT USUARIOS VESTEL DIGITAL ------------------
+﻿-----------------------subir excel --------------------------------------------
+ALTER TABLE `datos_archivo_excel_cargue` CHANGE `ref_efecty` `ref_efecty` VARCHAR(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL;
+-------------------CAMBIOS DE IMPORT USUARIOS VESTEL DIGITAL ------------------
 
 ALTER TABLE `customers` ADD `coor1` VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL AFTER `dats_last_report`;
 ALTER TABLE `customers` ADD `coor2` VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL AFTER `coor1`;

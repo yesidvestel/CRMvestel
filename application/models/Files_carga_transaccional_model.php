@@ -115,7 +115,7 @@ if($_POST['cambiar_fecha']=="si"){
     $fecha_actual=$f1->format("Y-m-d");
 }
             foreach ($sheet->getRowIterator() as $key => $row) {
-                    $cellIterator=$row->getCellIterator("d","f");
+                    $cellIterator=$row->getCellIterator("a","e");
                     $cellIterator->setIterateOnlyExistingCells(false);
                    // echo "<tr><td>".$key."</td>";
                     if($key>1){
@@ -124,10 +124,11 @@ if($_POST['cambiar_fecha']=="si"){
                             $montox=0;
                             $documentox=0;
                             $ref_efecty=0;
+                            $medio_pago="EFECTY";
                         foreach ($cellIterator as $key2 => $cell) {
                             if(!is_null($cell)){
                                 $value=$cell->getValue();
-                                if($key2=="D"){
+                                if($key2=="C"){
                                     $montox=str_replace("$", "", $value);
                                     $montox=str_replace(".", "", $montox);
                                     $montox=intval($montox);
@@ -137,8 +138,10 @@ if($_POST['cambiar_fecha']=="si"){
                                 }else if($key2=="E"){
                                     $ref_efecty=$value;
                                     //echo "<td>".$key2." - ".$value."</td>";
-                                }else {
+                                }else if($key2=="B") {
                                     $documentox=$value;
+                                }else if($key2=="D") {
+                                    $medio_pago=$value;
                                 }
                             }
                         }//fin iteracion celdas

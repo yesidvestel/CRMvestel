@@ -151,12 +151,13 @@ class Transactions extends CI_Controller
     public function procesar_usuarios_a_facturar(){
         $this->load->model('Files_carga_transaccional_model', 'files_carga');
         $varx=$this->db->get_where("datos_archivo_excel_cargue",array("id"=>$_POST['id']))->row();
-        $vary=$this->db->query("select * from datos_archivo_excel_cargue where ref_efecty='".$varx->ref_efecty."' and id!=".$varx->id)->result_array();
+        $retorno=array();
+        /*$vary=$this->db->query("select * from datos_archivo_excel_cargue where ref_efecty='".$varx->ref_efecty."' and id!=".$varx->id)->result_array();
         $retorno=array();
         if($varx->estado!="Inicial" || count($vary)!=0){
             $retorno["estado"]="procesado 2";
             echo json_encode($retorno);
-        }else{
+        }else{*/
             $cus_existe=$this->db->get_where("customers",array("documento"=>$varx->documento))->row();
             if(isset($cus_existe)){
                 $_POST['fecha_x']=$varx->fecha;
@@ -169,7 +170,7 @@ class Transactions extends CI_Controller
             }
             $retorno["estado"]="procesado";
             echo json_encode($retorno);
-        }
+       // }
     }
     public function readx(){
         $this->load->library('ExcelReaderDuber');
