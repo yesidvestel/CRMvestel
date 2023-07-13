@@ -2117,7 +2117,7 @@ foreach ($lista as $key => $value) {
 //cambios nuevos
          $this->load->model('accounts_model');
         $this->load->model('customers_model',"customers");
-        $data['acclist'] = $this->accounts_model->accountslist();
+        $data['acclist'] = $this->accounts_model->accountslist('');
         $csd = intval($this->input->get('id'));
         $data['customer'] = $this->db->get_where("customers",array("id"=>$csd))->row();
         
