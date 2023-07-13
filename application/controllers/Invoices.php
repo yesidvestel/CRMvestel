@@ -1890,7 +1890,7 @@ function eliminar_resivos_de_pago(){
     public function ver_estado_de_cuenta_user(){
         $this->load->model('accounts_model');
         $this->load->model('customers_model',"customers");
-        $data['acclist'] = $this->accounts_model->accountslist();
+        $data['acclist'] = $this->accounts_model->accountslist('');
         $csd = intval($this->input->get('id'));
         $data['id'] = $csd;
         $head['title'] = "Estado Cuenta Usuario $csd";
