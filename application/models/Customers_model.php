@@ -3203,11 +3203,13 @@ return $str;
         }
         
         $this->actualizar_debit_y_credit($cid);
-        if(count($ids_transacciones)!=0){
+
+        if(is_array($ids_transacciones) && count($ids_transacciones)!=0){
             $this->generar_pdf_tirilla_de_pago($id_fact_pagadas,"si",$valor_restante_monto,$pa,$ids_transacciones,$factura_var->csd);
             //$this->input->set_cookie("ids_transacciones",json_encode($ids_transacciones),3600,null);
-            
+            return true;
         }else{
+            return false;
             //$this->input->set_cookie("ids_transacciones",null,3600,null);
             
         }

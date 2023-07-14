@@ -90,15 +90,7 @@ class Files_carga_transaccional_model extends CI_Model
 $_POST['no_email']=true;
 $_POST['EFECTY']=true;
         $creo=$this->customers->pay_invoices($cs->id,$data->monto,$data->ref_efecty);
-
-        $creo=array("status"=>true);
-                        //sleep(7);
-        if($creo['status']==true){
-                return  true;                        
-        }else{
-            $_SESSION['errores'][]=array("id"=>$value['id'],"error"=>$creo['respuesta']);                            
-            return false;
-        }
+        return $creo;
     }
     public function recorrer_archivo_y_guardar_datos_inicial($id_file,$ruta){
             $this->load->library('ExcelReaderDuber');
