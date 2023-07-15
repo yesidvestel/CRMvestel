@@ -43,10 +43,12 @@ class Search_products extends CI_Controller
         $out = array();
         $row_num = $this->input->post('row_num', true);
         $name = $this->input->post('name_startsWith', true);
+		$alm_servicio = $this->db->get_where("product_warehouse", array('title' =>'Servicios'))->row();
         $wid = $this->input->post('wid', true);
+		$alm = $alm_servicio->id;
         $qw = '';
         if ($wid > 0) {
-            $qw = "warehouse='$wid' AND ";
+            $qw = "warehouse='$alm' AND ";
         }
 
 
