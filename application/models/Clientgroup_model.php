@@ -94,7 +94,7 @@ class Clientgroup_model extends CI_Model
     }
        public function get_datos_customer_pdf($csd){
         $data=array();
-        $data['acclist'] = $this->accounts_model->accountslist();
+        $data['acclist'] = $this->accounts_model->accountslist('');
 
         $csd = intval($csd);
         $data['customer'] = $this->db->get_where("customers",array("id"=>$csd))->row();
