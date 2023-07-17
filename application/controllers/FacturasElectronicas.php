@@ -569,7 +569,7 @@ public function borrar_facturas_v(){
         $api = new SiigoAPI();
         $api->getAuth(1);
         $api->getAuth2(2);
-        $_SESSION['api_siigo']=$api;
+        //$_SESSION['api_siigo']=$api;
         $_SESSION['errores']=array();
 
         $customers_t = $this->db->query("select id from customers where (usu_estado='Activo' or usu_estado='Compromiso') and (gid ='".$caja1->sede."' and facturar_electronicamente='1')")->result_array();//and id=8241
@@ -644,12 +644,28 @@ public function borrar_facturas_v(){
 set_time_limit(150);
         ini_set ( 'max_execution_time', 150);
         ini_set ( 'max_execution_time', 150);
+        //var_dump($_SESSION['api_siigo']);
+        $api = new SiigoAPI();
+       // $api->getAuth(1);
+        //$api->getAuth2(2);
+        $_SESSION['api_siigo']=$api;
             $servicios=$this->customers->servicios_detail($id_customer);
                 $puntos = $this->customers->due_details($id_customer);
                 //guardare en un array la variable servicios = combo o tv o internet y la variable puntos con no o el numero de puntos
                 // el orden es prima los servicios que tiene actualmente como hay seleccion por el admin si el servicio existe se toma la seleccion si no se omite,
                 //°° IMPORTANTE °°  por otro lado si agrega servicios y estan seteadas las opciones con un solo servicio ejemplo, el admin debe de setear las opciones de facturacion electronica porque generara segun este seteado
                 $customer_data=$this->db->get_where("customers",array("id"=>$id_customer))->row();
+               /*  cambios de abajo se comentan son para facturar cortados*/
+                /*
+                if($servicios['estado']=="Cortado"){
+                    if($servicios['estado_tv']=="Cortado"){
+                            $servicios['television']="si";
+                    }
+                    if($servicios['estado_combo']=="Cortado"){
+                            $servicios['combo']=$servicios['paquete'];
+                    }
+                }*/
+
 
                 $datos=array();
                 if($puntos['puntos']=="0"){

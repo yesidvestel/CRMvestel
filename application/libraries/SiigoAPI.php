@@ -67,7 +67,7 @@ class SiigoAPI
         }
 
         $decodedResp = json_decode($resp, true);
-        $this->token = $decodedResp['access_token'];
+        $_SESSION['siigo_token'] = $decodedResp['access_token'];
 
        // _log("Obtención de autorización terminada"); //descomentar para depurar
 
@@ -106,7 +106,7 @@ class SiigoAPI
         }
 
         $decodedResp = json_decode($resp, true);
-        $this->token2 = $decodedResp['access_token'];
+        $_SESSION['siigo_token2'] = $decodedResp['access_token'];
 
         //_log("Obtención de autorización terminada"); //descomentar para depurar
 
@@ -137,7 +137,7 @@ curl_setopt_array($curl, array(
   CURLOPT_CUSTOMREQUEST => 'GET',
   CURLOPT_HTTPHEADER => array(
     'Content-Type: application/json',
-    'Authorization: Bearer '.$this->token2
+    'Authorization: Bearer '.$_SESSION['siigo_token2']
   ),
 ));
 
@@ -162,7 +162,7 @@ curl_setopt_array($curl, array(
   CURLOPT_CUSTOMREQUEST => 'DELETE',
   CURLOPT_HTTPHEADER => array(
     'Content-Type: application/json',
-    'Authorization: Bearer '.$this->token2
+    'Authorization: Bearer '.$_SESSION['siigo_token2']
   ),
 ));
 
@@ -183,9 +183,9 @@ echo $response;
     public function getCustomer($document,$cuenta)
     {
     if($cuenta==1){
-        $tokenx=$this->token;
+        $tokenx=$_SESSION['siigo_token'];
     }else{
-        $tokenx=$this->token2;
+        $tokenx=$_SESSION['siigo_token2'];
     }
         //_log("Consultando facturas");
         //$this->getAuth($cuenta);
@@ -221,9 +221,9 @@ echo $response;
     public function saveCustomer($invoiceData,$cuenta) {
 
         if($cuenta==1){
-        $tokenx=$this->token;
+        $tokenx=$_SESSION['siigo_token'];
     }else{
-        $tokenx=$this->token2;
+        $tokenx=$_SESSION['siigo_token2'];
     }
         //_log("Enviando factura"); //descomentar para depurar
         $url = "{$this->urlBase}/customers";
@@ -252,9 +252,9 @@ echo $response;
 
     public function updateCustomer($invoiceData,$id,$cuenta) {
         if($cuenta==1){
-            $tokenx=$this->token;
+            $tokenx=$_SESSION['siigo_token'];
         }else{
-            $tokenx=$this->token2;
+            $tokenx=$_SESSION['siigo_token2'];
         }
        $ch = curl_init();
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
@@ -277,9 +277,9 @@ echo $response;
 
     public function saveInvoice($invoiceData,$cuenta) {
         if($cuenta==1){
-        $tokenx=$this->token;
+        $tokenx=$_SESSION['siigo_token'];
     }else{
-        $tokenx=$this->token2;
+        $tokenx=$_SESSION['siigo_token2'];
     }
         //_log("Enviando factura"); //descomentar para depurar
         $url = "{$this->urlBase}/invoices";

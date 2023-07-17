@@ -346,6 +346,16 @@ class Facturas_electronicas_model extends CI_Model
         $producto_existe=false;
          if($dataApiNET!=null){
             $array_servicios=$this->customers->servicios_detail($customer->id);
+            /*  cambios de abajo se comentan son para facturar cortados*/
+            /*
+            if($array_servicios['estado']=="Cortado"){
+                    if($array_servicios['estado_tv']=="Cortado"){
+                            $array_servicios['television']="si";
+                    }
+                    if($array_servicios['estado_combo']=="Cortado"){
+                            $array_servicios['combo']=$array_servicios['paquete'];
+                    }
+                }*/
             if($array_servicios['combo']!="no"){
                 $dataApiNET->items[0]->description="Servicio de Internet ".$array_servicios['combo'];
                 $lista_de_productos=$this->db->from("products")->like("product_name","mega","both")->get()->result();
