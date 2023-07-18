@@ -823,7 +823,7 @@ class Clientgroup extends CI_Controller
         $head['title'] = 'Group View';
 		$data['sede'] =$this->clientgroup->group_info($data['group']['title']);
         $company=$this->db->get_where("app_system",array("id"=>1))->row();
-        $data['mensaje_correos']="Cordial saludo.
+        $data['mensaje_correos']="Cordial saludo
 
 				Para OTTIS COMUNICACIONES es muy valiosa la confianza que ha depositado en nuestra compañía y esperamos poder satisfacer sus requerimientos y necesidades tecnológicas.
 				gracias por utilizar nuestros servicios, abre la siguiente url para visualizarlo: {url-automatica-segun-el-usuario} Contamos con dos métodos de pago: 
