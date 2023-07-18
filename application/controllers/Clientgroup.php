@@ -823,7 +823,14 @@ class Clientgroup extends CI_Controller
         $head['title'] = 'Group View';
 		$data['sede'] =$this->clientgroup->group_info($data['group']['title']);
         $company=$this->db->get_where("app_system",array("id"=>1))->row();
-        $data['mensaje_correos']="Saludos cordiales de parte de ".$company->cname.", para nosotros es muy satisfactorio contar contigo, por tal motivo te enviamos el estado de tu cuenta, gracias por utilizar nuestros servicios, abre la siguiente url para visualizarlo : {url-automatica-segun-el-usuario}";
+        $data['mensaje_correos']="Cordial saludo.
+
+				Para OTTIS COMUNICACIONES es muy valiosa la confianza que ha depositado en nuestra compañía y esperamos poder satisfacer sus requerimientos y necesidades tecnológicas.
+				gracias por utilizar nuestros servicios, abre la siguiente url para visualizarlo: {url-automatica-segun-el-usuario} Contamos con dos métodos de pago: 
+
+				1.Convenio EFECTY N° 112389 
+				2. Botón de Pagos MI PAGO AMIGO ubicado en la página web de la
+				empresa www.ottis.com.co" ;
         //var_dump($array);
         $this->load->model('templates_model','templates');
         $data['plantillas'] = $this->templates->get_template();
