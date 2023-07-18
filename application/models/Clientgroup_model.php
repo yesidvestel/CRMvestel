@@ -132,4 +132,7 @@ class Clientgroup_model extends CI_Model
         }
             return $data;
     }
+    public function get_citys(){
+        return $this->db->query("SELECT ciudad.idCiudad as id, ciudad.ciudad as name, departamentos.departamento as departamentName FROM `ciudad` inner join departamentos on departamentos.idDepartamento=ciudad.idDepartamento")->result_array();
+    }
 }

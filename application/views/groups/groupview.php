@@ -272,7 +272,13 @@
                                                 <div id="ciudades">
                                                     <select id="cmbCiudades"  class="selectpicker form-control" name="ciudad" > 
                                                             <option value="">-</option>
+                                                            <?php if($_SESSION[md5("variable_datos_pin")]['db_name'] == "admin_crmvestel"){ ?>
+                                                                <?php foreach ($ciudades_filtro as $keyx => $ciudadx) {?>
+                                                                    <option value="<?=$ciudadx['id'] ?>"><?=$ciudadx['name']." ( ".$ciudadx['departamentName']." )" ?></option>
+                                                                <?php } ?>
+                                                            <?php }else{ ?>
                                                             <option selected value="<?php echo $sede['idCiudad'] ?>"><?php echo $sede['ciudad'] ?></option>
+                                                            <?php } ?>
                                                         
                                                     </select>
                                                 </div>
@@ -674,7 +680,7 @@ $("#sel_filtrar_fecha_cambio").on("change",function(){
            
       
             //var localidad= $("#cmbLocalidades option:selected").val();
-            
+            var ciudad_ottis= $("#cmbCiudades option:selected").val();
             var nomenclatura= $("#nomenclatura option:selected").val();
             var numero1= $("#numero1").val();
             
@@ -706,7 +712,7 @@ $("#sel_filtrar_fecha_cambio").on("change",function(){
             //14-09-2022
             var check_equipos_asignados=$("#filtro_equipo_asignado").prop('checked');//este cheq es para filtrar los usuarios con equipos asignados
 
-            var url =baseurl+"clientgroup/get_filtrados_para_checked?id=<?=$_GET['id']?>&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&checked_ind_service="+checked_ind_service+"&estados_multiple="+estados_multiple+"&localidad_multiple="+localidad_multiple+"&barrios_multiple="+barrios_multiple+"&deudores_multiple="+deudores_multiple+"&tegnologia_multiple="+tegnologia_multiple+"&ultimo_estado_sel="+ultimo_estado_sel+"&sel_filtrar_fecha_cambio="+sel_filtrar_fecha_cambio+"&sdate3="+sdate3+"&edate2="+edate2+"&check_usuarios_a_facturar="+check_usuarios_a_facturar+"&check_sin_factura_actual="+check_sin_factura_actual+"&check_equipos_asignados="+check_equipos_asignados;
+            var url =baseurl+"clientgroup/get_filtrados_para_checked?id=<?=$_GET['id']?>&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&checked_ind_service="+checked_ind_service+"&estados_multiple="+estados_multiple+"&localidad_multiple="+localidad_multiple+"&barrios_multiple="+barrios_multiple+"&deudores_multiple="+deudores_multiple+"&tegnologia_multiple="+tegnologia_multiple+"&ultimo_estado_sel="+ultimo_estado_sel+"&sel_filtrar_fecha_cambio="+sel_filtrar_fecha_cambio+"&sdate3="+sdate3+"&edate2="+edate2+"&check_usuarios_a_facturar="+check_usuarios_a_facturar+"&check_sin_factura_actual="+check_sin_factura_actual+"&check_equipos_asignados="+check_equipos_asignados+"&ciudad_ottis="+ciudad_ottis;
              if(elemento.checked==true){
                 $("#div_notify3").html('<div id="notify3" class="alert alert-success" style="display:none;"><a href="#" class="close" data-dismiss="alert">&times;</a><div class="message3">></div></div>');
                     $("#notify3 .message3").html("<strong> Cargando</strong>: <img src='<?=base_url()?>/assets/img/iconocargando.gif'>");
@@ -1247,7 +1253,7 @@ $(window).on('load', function (e) {
   }         
       
                 //var localidad= $("#cmbLocalidades option:selected").val();
-                
+                var ciudad_ottis= $("#cmbCiudades option:selected").val();
                 var nomenclatura= $("#nomenclatura option:selected").val();
                 var numero1= $("#numero1").val();
                 
@@ -1286,7 +1292,7 @@ $(window).on('load', function (e) {
 
                 // Load data for the table's content from an Ajax source
                 "ajax": {
-                    "url": "<?php echo site_url('clientgroup/load_morosos') . '?id=' . $group['id']; ?>&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&pagination_start="+pagination_start+"&pagination_end="+pagination_end+"&checked_ind_service="+checked_ind_service+"&check_usuarios_a_facturar="+check_usuarios_a_facturar+"&estados_multiple="+estados_multiple+"&localidad_multiple="+localidad_multiple+"&barrios_multiple="+barrios_multiple+"&deudores_multiple="+deudores_multiple+"&tegnologia_multiple="+tegnologia_multiple+"&ultimo_estado_sel="+ultimo_estado_sel+"&sel_filtrar_fecha_cambio="+sel_filtrar_fecha_cambio+"&sdate3="+sdate3+"&edate2="+edate2+"&check_sin_factura_actual="+check_sin_factura_actual+"&check_equipos_asignados="+check_equipos_asignados,
+                    "url": "<?php echo site_url('clientgroup/load_morosos') . '?id=' . $group['id']; ?>&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&pagination_start="+pagination_start+"&pagination_end="+pagination_end+"&checked_ind_service="+checked_ind_service+"&check_usuarios_a_facturar="+check_usuarios_a_facturar+"&estados_multiple="+estados_multiple+"&localidad_multiple="+localidad_multiple+"&barrios_multiple="+barrios_multiple+"&deudores_multiple="+deudores_multiple+"&tegnologia_multiple="+tegnologia_multiple+"&ultimo_estado_sel="+ultimo_estado_sel+"&sel_filtrar_fecha_cambio="+sel_filtrar_fecha_cambio+"&sdate3="+sdate3+"&edate2="+edate2+"&check_sin_factura_actual="+check_sin_factura_actual+"&check_equipos_asignados="+check_equipos_asignados+"&ciudad_ottis="+ciudad_ottis,
                     "type": "POST",
                     error: function (xhr, error, code)
                     {
@@ -1376,7 +1382,7 @@ $(window).on('load', function (e) {
            
       
             //var localidad= $("#cmbLocalidades option:selected").val();
-            
+            var ciudad_ottis= $("#cmbCiudades option:selected").val();
             var nomenclatura= $("#nomenclatura option:selected").val();
             var numero1= $("#numero1").val();
             
@@ -1412,7 +1418,7 @@ $(window).on('load', function (e) {
              
             //if(morosos!=""){
                 if(columnasAgregadas){ tb.order([]);
-                    tb.ajax.url( baseurl+"clientgroup/load_morosos?id=<?=$_GET['id']?>&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&checked_ind_service="+checked_ind_service+"&check_usuarios_a_facturar="+check_usuarios_a_facturar+"&estados_multiple="+estados_multiple+"&localidad_multiple="+localidad_multiple+"&barrios_multiple="+barrios_multiple+"&deudores_multiple="+deudores_multiple+"&tegnologia_multiple="+tegnologia_multiple+"&ultimo_estado_sel="+ultimo_estado_sel+"&sel_filtrar_fecha_cambio="+sel_filtrar_fecha_cambio+"&sdate3="+sdate3+"&edate2="+edate2+"&check_sin_factura_actual="+check_sin_factura_actual+"&check_equipos_asignados="+check_equipos_asignados).load();               
+                    tb.ajax.url( baseurl+"clientgroup/load_morosos?id=<?=$_GET['id']?>&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&checked_ind_service="+checked_ind_service+"&check_usuarios_a_facturar="+check_usuarios_a_facturar+"&estados_multiple="+estados_multiple+"&localidad_multiple="+localidad_multiple+"&barrios_multiple="+barrios_multiple+"&deudores_multiple="+deudores_multiple+"&tegnologia_multiple="+tegnologia_multiple+"&ultimo_estado_sel="+ultimo_estado_sel+"&sel_filtrar_fecha_cambio="+sel_filtrar_fecha_cambio+"&sdate3="+sdate3+"&edate2="+edate2+"&check_sin_factura_actual="+check_sin_factura_actual+"&check_equipos_asignados="+check_equipos_asignados+"&ciudad_ottis="+ciudad_ottis).load();               
                     $('#select2_columnas').val(['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19']).trigger('change.select2');
                     if(ultimo_estado_sel=="No"){
                 $('#select2_columnas').val(['1','2','3','4','5','6','7','8','9','10','11','12','13','14','18','19']).trigger('change.select2');
@@ -1455,7 +1461,7 @@ $(window).on('load', function (e) {
            
       
             //var localidad= $("#cmbLocalidades option:selected").val();
-            
+            var ciudad_ottis= $("#cmbCiudades option:selected").val();
             var nomenclatura= $("#nomenclatura option:selected").val();
             var numero1= $("#numero1").val();
             
@@ -1488,7 +1494,7 @@ $(window).on('load', function (e) {
 
             var check_equipos_asignados=$("#filtro_equipo_asignado").prop('checked');//este cheq es para filtrar los usuarios con equipos asignados
 
-            var url_redirect=baseurl+"clientgroup/explortar_a_excel?id=<?=$_GET['id']?>&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&checked_ind_service="+checked_ind_service+"&check_usuarios_a_facturar="+check_usuarios_a_facturar+"&estados_multiple="+estados_multiple+"&localidad_multiple="+localidad_multiple+"&barrios_multiple="+barrios_multiple+"&deudores_multiple="+deudores_multiple+"&tegnologia_multiple="+tegnologia_multiple+"&ultimo_estado_sel="+ultimo_estado_sel+"&sel_filtrar_fecha_cambio="+sel_filtrar_fecha_cambio+"&sdate3="+sdate3+"&edate2="+edate2+"&check_sin_factura_actual="+check_sin_factura_actual+"&check_agregar_ultima_transaccion="+check_agregar_ultima_transaccion+"&check_equipos_asignados="+check_equipos_asignados;
+            var url_redirect=baseurl+"clientgroup/explortar_a_excel?id=<?=$_GET['id']?>&nomenclatura="+nomenclatura+"&numero1="+numero1+"&adicionauno="+adicionauno+"&numero2="+numero2+"&adicional2="+adicional2+"&numero3="+numero3+"&direccion="+direccion+"&sel_servicios="+sel_servicios+"&ingreso_select="+ingreso_select+"&sdate="+sdate+"&edate="+edate+"&checked_ind_service="+checked_ind_service+"&check_usuarios_a_facturar="+check_usuarios_a_facturar+"&estados_multiple="+estados_multiple+"&localidad_multiple="+localidad_multiple+"&barrios_multiple="+barrios_multiple+"&deudores_multiple="+deudores_multiple+"&tegnologia_multiple="+tegnologia_multiple+"&ultimo_estado_sel="+ultimo_estado_sel+"&sel_filtrar_fecha_cambio="+sel_filtrar_fecha_cambio+"&sdate3="+sdate3+"&edate2="+edate2+"&check_sin_factura_actual="+check_sin_factura_actual+"&check_agregar_ultima_transaccion="+check_agregar_ultima_transaccion+"&check_equipos_asignados="+check_equipos_asignados+"&ciudad_ottis="+ciudad_ottis;
             window.location.replace(url_redirect);
 
     }
