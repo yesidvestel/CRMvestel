@@ -205,6 +205,12 @@ class Clientgroup extends CI_Controller
                         }
                         $condicionales.="  numero3 ='".$_GET['numero3']."' ";
             }
+            if ($_SESSION[md5("variable_datos_pin")]['db_name'] == "admin_crmvestel" && $_GET['ciudad_ottis'] != '' && $_GET['ciudad_ottis'] != '-') {
+                        if($condicionales!=""){
+                            $condicionales.=" and " ;   
+                        }
+                        $condicionales.="  ciudad ='".$_GET['ciudad_ottis']."' ";
+            }
         }
         if($this->input->post('search')['value']!=""){
 
@@ -827,6 +833,9 @@ class Clientgroup extends CI_Controller
         //var_dump($array);
         $this->load->model('templates_model','templates');
         $data['plantillas'] = $this->templates->get_template();
+        if($_SESSION[md5("variable_datos_pin")]['db_name'] == "admin_crmvestel"){
+            $data['ciudades_filtro']=$this->clientgroup->get_citys();
+        }
         //var_dump($data['plantillas']);
         $this->load->view('fixed/header', $head);
         $this->load->view('groups/groupview', $data);
@@ -1098,6 +1107,12 @@ class Clientgroup extends CI_Controller
                             $condicionales.=" and " ;   
                         }
                         $condicionales.="  numero3 ='".$_GET['numero3']."' ";
+            }
+            if ($_SESSION[md5("variable_datos_pin")]['db_name'] == "admin_crmvestel" && $_GET['ciudad_ottis'] != '' && $_GET['ciudad_ottis'] != '-') {
+                        if($condicionales!=""){
+                            $condicionales.=" and " ;   
+                        }
+                        $condicionales.="  ciudad ='".$_GET['ciudad_ottis']."' ";
             }
         }
         if($this->input->post('search')['value']!=""){
@@ -1921,6 +1936,12 @@ $suscripcion_str2=$suscripcion_str;
                             $condicionales.=" and " ;   
                         }
                         $condicionales.="  numero3 ='".$_GET['numero3']."' ";
+            }
+            if ($_SESSION[md5("variable_datos_pin")]['db_name'] == "admin_crmvestel" && $_GET['ciudad_ottis'] != '' && $_GET['ciudad_ottis'] != '-') {
+                        if($condicionales!=""){
+                            $condicionales.=" and " ;   
+                        }
+                        $condicionales.="  ciudad ='".$_GET['ciudad_ottis']."' ";
             }
         }
         if($this->input->post('search')['value']!=""){
