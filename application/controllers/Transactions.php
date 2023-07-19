@@ -207,7 +207,7 @@ class Transactions extends CI_Controller
         $this->db->select("*");
         $this->db->from("transactions");
 		//$this->db->join('customers', 'tickets.cid=customers.id', 'left');
-		$this->db->where('type', 'Expense');
+		$this->db->where('type', 'transfer');
 		$this->db->where('tid !=', -1);
 		$this->db->where('estado');
 		if ($_GET['cuentas'] != '' && $_GET['cuentas'] != '-' && $_GET['cuentas'] != '0') {
@@ -236,12 +236,11 @@ class Transactions extends CI_Controller
     
     //define column headers
     $headers = array(
+        'Codigo' => 'integer', 
         'Fecha' => 'date', 
         'Cuenta' => 'string',
-		'Valor' => 'integer',
-		'Motivo' => 'string',
-		'Categoria' => 'string',
-		'Orden N' => 'string',
+		'Debito' => 'integer',
+		'Credito' => 'integer',
 		'Detalle' => 'string',
 		'Metodo' => 'string');
     
@@ -278,7 +277,7 @@ class Transactions extends CI_Controller
 	
     foreach ($lista_debito as $key => $debito) {
 		$fecha = date("d/m/Y",strtotime($debito->date));
-            $writer->writeSheetRow('Debito ',array($debito->date,$debito->account,$debito->debit,$debito->playerid,$debito->cat,$debito->tid,$debito->note,$debito->method));
+            $writer->writeSheetRow('Debito ',array($debito->id,$debito->date,$debito->account,$debito->debit,$debito->credit,$debito->note,$debito->method));
         
     }
         
