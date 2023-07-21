@@ -193,7 +193,7 @@ var tb;
         var sdate =$("#sdate").val();
         var edate =$("#edate").val();
 		var opcion_seleccionada=$("#fechas option:selected").val();
-        var url_redirect=baseurl+'transactions/explortar_a_excel?sdate='+sdate+"&edate="+edate+"&opcselect="+opcion_seleccionada+"&cuentas="+cuentas+"&categorias="+categorias;
+        var url_redirect=baseurl+'transactions/explortar_a_excel4?sdate='+sdate+"&edate="+edate+"&opcselect="+opcion_seleccionada+"&cuentas="+cuentas+"&categorias="+categorias;
             window.location.replace(url_redirect);
 
     }
