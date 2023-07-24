@@ -1,4 +1,45 @@
-﻿-----------------------subir excel --------------------------------------------
+﻿----------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE TABLE `config_facturacion_electronica` (
+  `id` int(11) NOT NULL,
+  `nombre` enum('Tv','Internet','Todo') NOT NULL,
+  `numero` int(11) NOT NULL,
+  `username` varchar(100) NOT NULL,
+  `access_key` varchar(1000) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `config_facturacion_electronica`
+--
+
+INSERT INTO `config_facturacion_electronica` (`id`, `nombre`, `numero`, `username`, `access_key`) VALUES
+(1, 'Todo', 1, 'prof.ottis01@gmail.com', 'NWUxMjEzZTYtZGFjOS00MGEzLTk3NDMtMTY1NmNmNjQxZjEwOkUqYiooRDUxdU4=');
+
+--
+-- Índices para tablas volcadas
+--
+
+--
+-- Indices de la tabla `config_facturacion_electronica`
+--
+ALTER TABLE `config_facturacion_electronica`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `config_facturacion_electronica`
+--
+ALTER TABLE `config_facturacion_electronica`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+COMMIT;
+
+
+INSERT INTO `accounts` (`id`, `acn`, `holder`, `sede`, `adate`, `lastbal`, `code`, `direccion`, `telefono`, `departamento`) VALUES (NULL, '8301319932', 'Ottis', '1', '0000-00-00 00:00:00', '161383529.00', 'Cuenta Ottis', '', NULL, '')
+
+-----------------------subir excel --------------------------------------------
 ALTER TABLE `datos_archivo_excel_cargue` CHANGE `ref_efecty` `ref_efecty` VARCHAR(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL;
 -------------------CAMBIOS DE IMPORT USUARIOS VESTEL DIGITAL ------------------
 

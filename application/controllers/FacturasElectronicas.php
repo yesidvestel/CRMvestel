@@ -546,6 +546,7 @@ public function borrar_facturas_v(){
         $head['title'] = "Generar Facturas Electronicas";
         $head['usernm'] = $this->aauth->get_user()->username;
         $data['accounts'] = $this->transactions_model->acc_list();
+        $this->facturas_electronicas->cargar_configuraciones_para_facturar();
         $this->load->view('fixed/header', $head);
         $this->load->view('facturas_electronicas/configuraciones',$data);
         $this->load->view('fixed/footer');       
@@ -568,7 +569,9 @@ public function borrar_facturas_v(){
         
         $api = new SiigoAPI();
         $api->getAuth(1);
-        $api->getAuth2(2);
+        if(count($_SESSION['array_accesos_siigo'])==2){
+            $api->getAuth2(2);
+        }
         //$_SESSION['api_siigo']=$api;
         $_SESSION['errores']=array();
 
@@ -699,8 +702,11 @@ set_time_limit(150);
                 if($datos['servicios']!=null){
                     
                    
-            
-                        $creo=$this->facturas_electronicas->generar_factura_customer_para_multiple($datos,$_SESSION['api_siigo']);
+                        if(count($_SESSION['array_accesos_siigo'])==2){
+                            $creo=$this->facturas_electronicas->generar_factura_customer_para_multiple($datos,$_SESSION['api_siigo']);    
+                        }else{
+                            $creo=$this->facturas_electronicas->generar_factura_customer_para_multiple_ottis($datos,$_SESSION['api_siigo']);    
+                        }
                         //$creo=array("status"=>true);
                         //sleep(7);
                         if($creo['status']==true){
@@ -716,6 +722,9 @@ set_time_limit(150);
                     // y validar que si ya se creo la factura en esta fecha no volverla a crear
 
                 }
+    }
+    public function x(){
+        var_dump($_SESSION['errores']);
     }
     public function borrar_factura($id_invoice,$sdate){
 set_time_limit(150);

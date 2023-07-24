@@ -2745,6 +2745,10 @@ return $str;
     "branch_office": 0
   },
   "cost_center": 1074,
+  "currency":{
+      "code":"USD",
+      "exchange_rate":3825.03
+   },
   "seller": 1011,
   "observations": "Observaciones",
   "items": [
@@ -2767,6 +2771,75 @@ return $str;
   "payments": [
     {
       "id": 2863,
+      "value": 25000,
+      "due_date": "2021-12-31"
+    }
+  ],
+  "additional_fields": {}
+  
+}';
+return $str;
+    }
+
+    public function getFacturaElectronicaOttis($n_productos=null){
+        
+    $otro_producto=',{
+              "code": "12SOPIVA1",
+              "description": "DESCRIPCION",
+              "quantity": 1,
+              "price": 21008,
+              "discount": 0.0,
+              "taxes": [
+                {"id": 4189,
+                 "name": "IVA 19% sev",
+                 "type": "IVA",
+                 "percentage": 19,
+                 "value": 3991.6
+                }
+              ]            
+            }';
+            $total_prods="";
+            for ($i=1; $i <=$n_productos ; $i++) { 
+                $total_prods.=$otro_producto;
+            }
+            if($n_productos==null){
+                $otro_producto="";
+            }else{
+                $otro_producto=$total_prods;
+            }
+
+        $str='{
+  "document": {
+    "id": 27183
+  },
+  "date": "2021-12-31",
+  "customer": {
+    "identification": "13832081",
+    "branch_office": 0
+  },
+  "cost_center": 347,
+  "seller": 201,
+  "observations": "Observaciones",
+  "items": [
+    {
+      "code": "12SOPIVA1",
+      "description": "DESCRIPCION",
+      "quantity": 1,
+      "price": 21008.4,
+      "discount": 0.0,
+      "taxes": [
+        {"id": 4189,
+         "name": "IVA 19% sev",
+         "type": "IVA",
+         "percentage": 19,
+         "value": 3991.6
+        }
+      ]
+    }'.$otro_producto.'
+  ],
+  "payments": [
+    {
+      "id": 6941,
       "value": 25000,
       "due_date": "2021-12-31"
     }

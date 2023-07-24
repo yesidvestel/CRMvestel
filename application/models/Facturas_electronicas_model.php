@@ -450,5 +450,297 @@ class Facturas_electronicas_model extends CI_Model
             return $retor;
         }
     }
+    public function cargar_configuraciones_para_facturar(){
+        $list=$this->db->get_where("config_facturacion_electronica")->result_array();
+        $data_ses=array();
+        if($list[0]['nombre']=="Todo"){
+            $data_ses[0]=array("username"=>$list[0]['username'],"access_key"=>$list[0]['access_key']);
+        }else{
+            $data_ses[0]=array("username"=>$list[0]['username'],"access_key"=>$list[0]['access_key'],"nombre"=>$list[0]['nombre']);
+            $data_ses[1]=$data2=array("username"=>$list[1]['username'],"access_key"=>$list[1]['access_key'],"nombre"=>$list[1]['nombre']);
+
+        }
+        $_SESSION['array_accesos_siigo']=$data_ses;
+    }
+     public function generar_factura_customer_para_multiple_ottis($datos_facturar,$api){
+        
+         /*$this->load->library('SiigoAPI');
+        $api = new SiigoAPI();*/
+        $this->load->model("customers_model","customers");
+        $dataApiNET=null;
+        //var_dump($datos_facturar['servicios']);
+        if($datos_facturar['servicios']=="Combo"){
+            if(isset($datos_facturar['puntos']) && $datos_facturar['puntos']!="no"){
+               // $dataApiNET= $this->customers->getFacturaElectronicaOttis(2);//verificar este caso
+            }else{
+                $dataApiNET= $this->customers->getFacturaElectronicaOttis(1);    
+            }
+        }else if($datos_facturar['servicios']=="Internet"){
+            $dataApiNET= $this->customers->getFacturaElectronicaOttis(null);
+        }else if($datos_facturar['servicios']=="Television"){
+            if(isset($datos_facturar['puntos']) && $datos_facturar['puntos']!="no"){
+                //$dataApiNET= $this->customers->getFacturaElectronicaOttis(1);    //y este caso
+            }else{
+                $dataApiNET= $this->customers->getFacturaElectronicaOttis(null);    
+            }            
+        }
+         //var_dump($datos_facturar['servicios']);
+        $centro_de_costo_codeNET="347";
+    
+        $customer = $this->db->get_where("customers",array('id' =>$datos_facturar['id']))->row();
+        //cuadrando customer para crear o actualizar en siigo
+        
+        $json_customer=json_decode($this->customers->getCustomerJson());
+
+        $json_customer->identification=$customer->documento;
+        $firs_name=strtoupper(str_replace("?", "Ñ",$customer->name));
+        $second_name=strtoupper(str_replace("?", "Ñ",$customer->dosnombre));
+        $first_last_name=strtoupper(str_replace("?", "Ñ",$customer->unoapellido));
+        $second_last_name=strtoupper(str_replace("?", "Ñ",$customer->dosapellido));
+        $json_customer->name[0]=$firs_name." ".$second_name;
+        $json_customer->name[1]=$first_last_name." ".$second_last_name;
+        /*validaciones por tipo documento*/
+            if($customer->tipo_documento=="NIT"){
+                $json_customer->id_type="31";
+                $json_customer->person_type="Company";
+                $json_customer->name[0].=" ".$first_last_name." ".$second_last_name;
+                unset($json_customer->name[1]);
+            }
+        /*end validaciones por tipo documento*/
+        $json_customer->address->address=$customer->nomenclatura . ' ' . $customer->numero1 . $customer->adicionauno.' Nº '.$customer->numero2.$customer->adicional2.' - '.$customer->numero3;
+        //$tv_product= $this->db->get_where("products", array('pid' => "27"))->row();
+            
+            $json_customer->address->city->city_code="15759";
+             $json_customer->address->city->state_code="15";   
+                        
+
+            //var_dump(preg_match_all("/[^0-9]/",$customer->celular));
+            
+            if(strlen($customer->celular)>10 || preg_match_all("/[^0-9]/",$customer->celular)!=0){
+                $customer->celular="0";
+            }
+            if(strlen($customer->celular2)>10 || preg_match_all("/[^0-9]/",$customer->celular2)!=0){
+                $customer->celular2="0";
+            }
+            //falta validar que si no tiene celular al crear elimine el array de contactos para que no quede en cero y luego al actualizar cliente cree un contacto aparte y quede ese en 0
+                   
+            $json_customer->phones[0]->number=$customer->celular;
+            $json_customer->contacts[0]->first_name=$firs_name." ".$second_name;
+            $json_customer->contacts[0]->last_name=$first_last_name." ".$second_last_name;
+            $json_customer->contacts[0]->email="prof.ottis01@gmail.com";
+            /* contacto 2 para configurar email del usuario 
+                $json_customer->contacts[1]->first_name=$firs_name." ".$second_name;
+                $json_customer->contacts[1]->last_name=$first_last_name." ".$second_last_name;
+                $regex = "/^([a-zA-Z0-9\.]+@+[a-zA-Z]+(\.)+[a-zA-Z]{2,3})$/";
+
+               // if(preg_match($regex, $customer->email)){
+                    $json_customer->contacts[1]->email=$customer->email;    
+                //}
+                
+             end */
+
+            $json_customer->contacts[0]->phone->number=$customer->celular;
+            $json_customer->comments="Estrato : ".$customer->estrato;
+    //llenando los datos para crear o actualizar segun sea el caso
+           // var_dump($json_customer);
+            
+            $json_customer=json_encode($json_customer);
+
+
+           
+            
+        
+        // end cuadrando customer para crear o actualizar en siigo
+        //data siigo api
+        $dateTime=new DateTime($datos_facturar['sdate']);
+            
+        //cambio de fecha de vencimiento sumandole 20 dias a la fecha seleccionada
+            $fecha_actual = date($dateTime->format("Y-m-d"));
+            $date=date("d-m-Y",strtotime($fecha_actual."+ 20 days")); 
+            $dateTimeVencimiento=new DateTime($date);
+        //end fecha vencimiento
+        
+      
+        
+        if($dataApiNET!=null){
+            $dataApiNET=json_decode($dataApiNET);
+            $dataApiNET->document->id="27183";
+            $dataApiNET->customer->identification=$customer->documento;
+            $dataApiNET->cost_center=$centro_de_costo_codeNET;
+            $dataApiNET->seller="201";
+            $dataApiNET->date=$dateTime->format("Y-m-d");
+            $dataApiNET->payments[0]->due_date=$dateTimeVencimiento->format("Y-m-d");
+            $dataApiNET->observations="Estrato : ".$customer->estrato;
+            $dataApiNET->payments[0]->id="6941";
+
+            $consulta_siigo1=$api->getCustomer($customer->documento,1);
+          
+            
+            if($consulta_siigo1['pagination']['total_results']==0){
+                    $json_customer=json_decode($json_customer);
+                    $json_customer->related_users->seller_id=201;
+                    $json_customer->related_users->collector_id=201;
+                    $json_customer->contacts[0]->email="vestelsas@gmail.com";
+                    $json_customer=json_encode($json_customer);
+                    //$json_customer=str_replace("321", "282", subject)
+                    $api->saveCustomer($json_customer,1);//para crear cliente en siigo si no existe
+            }else{
+                    /*$json_customer=json_decode($json_customer);
+                    $json_customer->related_users->seller_id=282;
+                    $json_customer->related_users->collector_id=282;
+                    $json_customer->contacts[0]->email="vestelsas@gmail.com";
+                    $json_customer=json_encode($json_customer);
+
+                    $api->updateCustomer($json_customer,$consulta_siigo1['results'][0]['id'],2);//para acturalizar cliente en siigo */
+            }
+        }
+        
+        
+        //var_dump($dataApiNET);
+        //falta el manejo de los saldos saldos
+        
+
+      
+        $producto_existe=false;
+         if($dataApiNET!=null){
+            $array_servicios=$this->customers->servicios_detail($customer->id);
+            /*  cambios de abajo se comentan son para facturar cortados*/
+            /*
+            if($array_servicios['estado']=="Cortado"){
+                    if($array_servicios['estado_tv']=="Cortado"){
+                            $array_servicios['television']="si";
+                    }
+                    if($array_servicios['estado_combo']=="Cortado"){
+                            $array_servicios['combo']=$array_servicios['paquete'];
+                    }
+                }*/
+            $count=0;
+            if($array_servicios['combo']!="no" && ($datos_facturar['servicios']=="Combo" || $datos_facturar['servicios']=="Internet")){
+                $dataApiNET->items[0]->description="Servicio de Internet ".$array_servicios['combo'];
+                $lista_de_productos=$this->db->from("products")->where("pcat","1")->get()->result();
+                $array_servicios['combo']=strtolower(str_replace(" ", "",$array_servicios['combo'] ));
+                foreach ($lista_de_productos as $key => $prod) {
+                    $prod->product_name=strtolower(str_replace(" ", "",$prod->product_name ));
+                    if($prod->product_name==$array_servicios['combo']){
+                        $producto_existe=true;
+                        //var_dump($prod->product_name);
+                        $dataApiNET->items[0]->code="12SOPIVA1";
+
+                        if($prod->taxrate!=0){
+
+                            //$precios=$this->customers->calculoParaFacturaElectronica($prod->product_price);
+                            $v1=($prod->product_price*19)/100;
+                            $v2=$v1+$prod->product_price;
+                            $dataApiNET->items[0]->taxes[0]->id=4189;
+                            $dataApiNET->items[0]->price=$prod->product_price;
+                            $dataApiNET->items[0]->taxes[0]->value=$v1;
+                            $dataApiNET->payments[0]->value=$v2;
+
+                        }else{
+                            unset($dataApiNET->items[0]->taxes);
+                            $dataApiNET->items[0]->price=$prod->product_price;                            
+                            $dataApiNET->payments[0]->value=$prod->product_price;
+
+                        }
+                        
+                        
+                        break;
+                    }
+                }
+                $count++;
+            }
+            if($datos_facturar['servicios']=="Combo" || $datos_facturar['servicios']=="Television"){
+                $dataApiNET->items[$count]->description="Servicio de Televisión - ".$array_servicios['television'];
+                $lista_de_productos=$this->db->from("products")->where("pcat","1")->get()->result();
+                $array_servicios['television']=strtolower(str_replace(" ", "",$array_servicios['television'] ));
+                foreach ($lista_de_productos as $key => $prod) {
+                    $prod->product_name=strtolower(str_replace(" ", "",$prod->product_name ));
+                    if($prod->product_name==$array_servicios['television']){
+                        $producto_existe=true;
+                        //var_dump($prod->product_name);
+                        $dataApiNET->items[$count]->code="12SOPIVA1";
+
+                        if($prod->taxrate!=0){
+
+                            //$precios=$this->customers->calculoParaFacturaElectronica($prod->product_price);
+                            $v1=($prod->product_price*19)/100;
+                            $v2=$v1+$prod->product_price;
+                            $dataApiNET->items[$count]->taxes[$count]->id=4189;
+                            $dataApiNET->items[$count]->price=$prod->product_price;
+                            $dataApiNET->items[$count]->taxes[$count]->value=$v1;
+                            $dataApiNET->payments[$count]->value=$v2;
+
+                        }else{
+                            unset($dataApiNET->items[$count]->taxes);
+                            $dataApiNET->items[$count]->price=$prod->product_price;                            
+                            $dataApiNET->payments[$count]->value=$prod->product_price;
+
+                        }
+                        
+                        
+                        break;
+                    }
+                }
+                $count++;
+                //para puntos crear similar codigo de este if 
+            }
+            //falta esta parte identificar el paquete de internet del usuario y agregar sus valores
+        }
+
+
+//var_dump($dataApiNET);
+     
+
+        /*var_dump($dateTime->format("Ymd"));
+        var_dump($dataApiTV->Payments[0]->DueDate);
+        var_dump($dataApiTV->Header->Number);
+        var_dump($dataApiTV->Header->Account->Phone->Number);*/
+        //facturacion_electronica_siigo table insert        
+        $dataInsert=array();
+        $dataInsert['consecutivo_siigo']=0;
+        $dataInsert['fecha']=$dateTime->format("Y-m-d");
+        $dataInsert['customer_id']=$datos_facturar['id'];
+        $dataInsert['servicios_facturados']=$datos_facturar['servicios'];
+        $dataInsert['creado_con_multiple']=1;
+        // end customer data facturacion_electronica_siigo table insert
+        //var_dump($dataApiNET);
+        //$dataApiTV=json_encode($dataApiTV);
+
+        $dataApiNET=json_encode($dataApiNET); 
+        //var_dump($dataApiNET);
+        $retorno=array("mensaje"=>"No");
+
+        if($dataApiNET!=null && $dataApiNET!="null"){
+            $retorno = $api->accionar($api,$dataApiNET,1);     
+        }
+        
+
+        if($retorno['mensaje']=="Factura Guardada"){
+            $this->db->insert("facturacion_electronica_siigo",$dataInsert);
+            $retor=array("status"=>true);
+            return $retor;
+        }else{
+            /*$error_era_consecutivo=false;
+            for ($i=1; $i < 10 ; $i++) { 
+                $dataApiTV=json_decode($dataApiTV);
+                $dataApiTV->Header->Number= intval($dataApiTV->Header->Number)+$i;
+                $dataInsert['consecutivo_siigo']=$dataApiTV->Header->Number;
+                $dataApiTV=json_encode($dataApiTV);
+                $retorno2 = $api->accionar($api,$dataApiTV);              
+                if($retorno2['mensaje']=="Factura Guardada"){
+                    $this->db->insert("facturacion_electronica_siigo",$dataInsert);
+                    $error_era_consecutivo=true;
+                    $i=11;
+                    redirect("facturasElectronicas?id=".$customer->id);
+                    break;
+                }
+            }*/
+            //if($error_era_consecutivo==false){
+                //var_dump($retorno['respuesta']);
+            //}
+            $retor=array("status"=>false,'respuesta'=>$retorno['respuesta']);
+            return $retor;
+        }
+    }
 
 }

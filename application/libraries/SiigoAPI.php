@@ -40,10 +40,16 @@ class SiigoAPI
         $cuentaVESGATV=array("username"=>"contabilidad@vestel.com.co","access_key"=>"MDc2YzZlMzAtZGI2Yy00OGFkLWFjZjktZTNlNGUxNDZkODk5Ok9SUDkhOXowQ0E=");
         $cuentaVESGATELECOMUNICACIONES=array("username"=>"contabilidad@vestel.com.co","access_key"=>"YjMzZWY4MzYtMDMxMC00MjBlLTg0NzItZTAzYzFjMDcwMTc2OjQpcTh0Rk8hNkI=");
         $cuentaData=array();
-        if($cuenta==1){
-            $cuentaData=$cuentaVESGATV;
+       if(count($_SESSION['array_accesos_siigo'])==2){
+            if($cuenta==1){
+                //$cuentaData=$_SESSION['array_accesos_siigo'][0];//tv
+                 $cuentaData=$cuentaVESGATV;
+            }else{
+                $cuentaData=$_SESSION['array_accesos_siigo'][0];//internet
+                 $cuentaData=$cuentaVESGATELECOMUNICACIONES;
+            }    
         }else{
-            $cuentaData=$cuentaVESGATELECOMUNICACIONES;
+                $cuentaData=$_SESSION['array_accesos_siigo'][0];//todo
         }
        // _log("Obteniendo autorización token"); //descomentar para depurar
         $postFields = [
@@ -79,10 +85,17 @@ class SiigoAPI
         $cuentaVESGATV=array("username"=>"contabilidad@vestel.com.co","access_key"=>"MDc2YzZlMzAtZGI2Yy00OGFkLWFjZjktZTNlNGUxNDZkODk5Ok9SUDkhOXowQ0E=");
         $cuentaVESGATELECOMUNICACIONES=array("username"=>"contabilidad@vestel.com.co","access_key"=>"YjMzZWY4MzYtMDMxMC00MjBlLTg0NzItZTAzYzFjMDcwMTc2OjQpcTh0Rk8hNkI=");
         $cuentaData=array();
-        if($cuenta==1){
-            $cuentaData=$cuentaVESGATV;
+        
+        if(count($_SESSION['array_accesos_siigo'])==2){
+            if($cuenta==1){
+                //$cuentaData=$_SESSION['array_accesos_siigo'][0];//tv
+                 $cuentaData=$cuentaVESGATV;
+            }else{
+                $cuentaData=$_SESSION['array_accesos_siigo'][0];//internet
+                 $cuentaData=$cuentaVESGATELECOMUNICACIONES;
+            }    
         }else{
-            $cuentaData=$cuentaVESGATELECOMUNICACIONES;
+                $cuentaData=$_SESSION['array_accesos_siigo'][0];//todo
         }
         //_log("Obteniendo autorización token"); //descomentar para depurar
         $postFields = [
@@ -316,6 +329,7 @@ echo $response;
         echo "<br>";
         
         var_dump($respuesta['httpCode']);*/
+        //var_dump($respuesta);
         try {
             if($respuesta['httpCode']==200 ||$respuesta['httpCode']==100 || $respuesta['httpCode']==0 || $respuesta['httpCode']==201){//100            
                 return array('respuesta' =>$respuesta['respuesta'],"mensaje" =>"Factura Guardada");
