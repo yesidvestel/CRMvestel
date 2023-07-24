@@ -2584,13 +2584,14 @@ if ($valido) {
                         //$customers->money=$money['credit']-$money['debit'];
                         $debe_customer=($due['total']-$due['pamnt']);//se agrego el campo de money debit por el item de gastos que se mencino en fechas anteriores
                         //$msg_customer="Señor(a) ".$customer->name." ".$customer->unoapellido." su saldo es ".amountFormat($debe_customer)." ".$message;
-
+                        $url_str=$_SESSION[md5("variable_datos_pin")]['url']."/co/es?clcs=".$customer->id;
                         $msg_customer=str_replace("{primer_nombre}",$customer->name,$msg_customer);
                         $msg_customer=str_replace("{segundo_nombre}",$customer->dosnombre,$msg_customer);
                         $msg_customer=str_replace("{primer_apellido}",$customer->unoapellido,$msg_customer);
                         $msg_customer=str_replace("{segundo_apellido}",$customer->dosapellido,$msg_customer);
                         $msg_customer=str_replace("{monto_debe}",amountFormat($debe_customer),$msg_customer);
                         $msg_customer=str_replace("{documento}",$customer->documento,$msg_customer);
+                        $msg_customer=str_replace("{url-automatica-segun-el-usuario}",$url_str,$msg_customer);
                         $msg_customer=str_replace("{mes_actual}",$this->reports->devolver_nombre_mes(date("m")),$msg_customer);
                         if(strlen($msg_customer)>=160){
                             $caracteres_pasados.=$msg_customer.","; 
