@@ -2745,10 +2745,6 @@ return $str;
     "branch_office": 0
   },
   "cost_center": 1074,
-  "currency":{
-      "code":"USD",
-      "exchange_rate":3825.03
-   },
   "seller": 1011,
   "observations": "Observaciones",
   "items": [
