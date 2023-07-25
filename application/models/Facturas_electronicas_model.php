@@ -624,7 +624,7 @@ class Facturas_electronicas_model extends CI_Model
                     if($prod->product_name==$array_servicios['combo']){
                         $producto_existe=true;
                         //var_dump($prod->product_name);
-                        $dataApiNET->items[0]->code="12SOPIVA1";
+                        $dataApiNET->items[0]->code=$prod->product_code;
 
                         if($prod->taxrate!=0){
 
@@ -658,7 +658,7 @@ class Facturas_electronicas_model extends CI_Model
                     if($prod->product_name==$array_servicios['television']){
                         $producto_existe=true;
                         //var_dump($prod->product_name);
-                        $dataApiNET->items[$count]->code="12SOPIVA1";
+                        $dataApiNET->items[$count]->code=$prod->product_code;
 
                         if($prod->taxrate!=0){
 
