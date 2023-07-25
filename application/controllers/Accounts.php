@@ -38,7 +38,7 @@ class Accounts Extends CI_Controller
 
     public function index()
     {
-        $data['accounts'] = $this->accounts->accountslist();
+        $data['accounts'] = $this->accounts->accountslist('');
         $head['usernm'] = $this->aauth->get_user()->username;
         $head['title'] = 'Accounts';
         $this->load->view('fixed/header', $head);
