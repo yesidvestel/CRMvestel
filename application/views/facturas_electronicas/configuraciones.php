@@ -24,16 +24,24 @@
 
                                 <div class="col-sm-9">
                                     <select name="pay_acc" class="form-control" id="cuentas_">
-                                        <?php
-                                        foreach ($accounts as $row) {
-                                            $cid = $row['id'];
-                                            $acn = $row['acn'];
-                                            $holder = $row['holder'];
-                                            if($cid<6 || $cid==9){
-                                                echo "<option value='$cid'>$acn - $holder</option>";
-                                            }
-                                        }
-                                        ?>
+                                        <?php if($_SESSION[md5("variable_datos_pin")]['db_name'] == "admin_crmvestel"){ ?>
+                                                            <?php foreach ($ciudades_filtro as $keyx => $ciudadx) {?>
+                                                                <option value="<?=$ciudadx['id'] ?>"><?=$ciudadx['name']." ( ".$ciudadx['departamentName']." )" ?></option>
+                                                            <?php } ?>
+                                                <?php }else{ 
+                                                        foreach ($accounts as $row) {
+                                                            $cid = $row['id'];
+                                                            $acn = $row['acn'];
+                                                            $holder = $row['holder'];
+                                                            if($cid<6 || $cid==9){
+                                                                echo "<option value='$cid'>$acn - $holder</option>";
+                                                            }
+                                                        }
+
+                                                } ?>
+                                                            
+                                                         
+                                        
                                     </select>
 
 
