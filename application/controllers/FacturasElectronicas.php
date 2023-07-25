@@ -542,11 +542,14 @@ public function borrar_facturas_v(){
     }
     public function generar_facturas_electronicas_multiples(){
         $this->load->model('customers_model', 'customers');
+        $this->load->model('clientgroup_model', 'clientgroup');
         $this->load->model('transactions_model');
         $head['title'] = "Generar Facturas Electronicas";
         $head['usernm'] = $this->aauth->get_user()->username;
         $data['accounts'] = $this->transactions_model->acc_list();
         $this->facturas_electronicas->cargar_configuraciones_para_facturar();
+        //var_dump($_SESSION['siigo_token']);
+        $data['ciudades_filtro']=$this->clientgroup->get_citys();
         $this->load->view('fixed/header', $head);
         $this->load->view('facturas_electronicas/configuraciones',$data);
         $this->load->view('fixed/footer');       
@@ -574,10 +577,22 @@ public function borrar_facturas_v(){
         }
         //$_SESSION['api_siigo']=$api;
         $_SESSION['errores']=array();
+        $customers_t=array();
+if($_SESSION[md5("variable_datos_pin")]['db_name'] == "admin_crmvestel"){
+    $customers_t = $this->db->query("select id from customers where (usu_estado='Activo' or usu_estado='Compromiso') and (ciudad ='".$_POST['pay_acc']."' and facturar_electronicamente='1')")->result_array();//and id=8241
 
-        $customers_t = $this->db->query("select id from customers where (usu_estado='Activo' or usu_estado='Compromiso') and (gid ='".$caja1->sede."' and facturar_electronicamente='1')")->result_array();//and id=8241
+}else{
+    $customers_t = $this->db->query("select id from customers where (usu_estado='Activo' or usu_estado='Compromiso') and (gid ='".$caja1->sede."' and facturar_electronicamente='1')")->result_array();//and id=8241
+}
+    
         $numero_total=count($customers_t);
-        $usuarios_restantes_lista = $this->db->query("select customers.id from customers LEFT join facturacion_electronica_siigo on customers.id=facturacion_electronica_siigo.customer_id and fecha='".$dateTime->format("Y-m-d")."' where (customers.usu_estado='Activo' or customers.usu_estado='Compromiso') and (customers.gid ='".$caja1->sede."' and customers.facturar_electronicamente='1') and facturacion_electronica_siigo.id is null")->result_array();//and id=8241
+        $usuarios_restantes_lista=array();
+        if($_SESSION[md5("variable_datos_pin")]['db_name'] == "admin_crmvestel"){
+            $usuarios_restantes_lista = $this->db->query("select customers.id from customers LEFT join facturacion_electronica_siigo on customers.id=facturacion_electronica_siigo.customer_id and fecha='".$dateTime->format("Y-m-d")."' where (customers.usu_estado='Activo' or customers.usu_estado='Compromiso') and (customers.ciudad ='".$_POST['pay_acc']."' and customers.facturar_electronicamente='1') and facturacion_electronica_siigo.id is null")->result_array();//and id=8241
+        }else{
+            $usuarios_restantes_lista = $this->db->query("select customers.id from customers LEFT join facturacion_electronica_siigo on customers.id=facturacion_electronica_siigo.customer_id and fecha='".$dateTime->format("Y-m-d")."' where (customers.usu_estado='Activo' or customers.usu_estado='Compromiso') and (customers.gid ='".$caja1->sede."' and customers.facturar_electronicamente='1') and facturacion_electronica_siigo.id is null")->result_array();//and id=8241    
+        }
+        
         $array_return =array("total_usuarios"=>$numero_total,"lista_usuarios_a_facturar"=>$usuarios_restantes_lista);
         echo json_encode($array_return);
     }

@@ -2791,6 +2791,12 @@ return $str;
                  "type": "IVA",
                  "percentage": 19,
                  "value": 3991.6
+                },{
+                    "id": 16985,
+                    "name": "RETEFUENTE Servicios no declarante",
+                    "type": "Retefuente",
+                    "percentage": 6.0,
+                    "value": 4800.0
                 }
               ]            
             }';
@@ -2829,7 +2835,13 @@ return $str;
          "type": "IVA",
          "percentage": 19,
          "value": 3991.6
-        }
+        },{
+                    "id": 16985,
+                    "name": "RETEFUENTE Servicios no declarante",
+                    "type": "Retefuente",
+                    "percentage": 6.0,
+                    "value": 4800.0
+                }
       ]
     }'.$otro_producto.'
   ],
