@@ -485,7 +485,7 @@ class Facturas_electronicas_model extends CI_Model
             }            
         }
          //var_dump($datos_facturar['servicios']);
-        $centro_de_costo_codeNET="347";
+        $centro_de_costo_codeNET="341";
     
         $customer = $this->db->get_where("customers",array('id' =>$datos_facturar['id']))->row();
         //cuadrando customer para crear o actualizar en siigo

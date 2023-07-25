@@ -2813,7 +2813,7 @@ return $str;
     "identification": "13832081",
     "branch_office": 0
   },
-  "cost_center": 347,
+  "cost_center": 341,
   "seller": 201,
   "observations": "Observaciones",
   "items": [
