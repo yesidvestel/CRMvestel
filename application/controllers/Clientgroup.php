@@ -696,7 +696,7 @@ class Clientgroup extends CI_Controller
         $this->load->library('Excel');
     
     //define column headers
-    $headers = array('Abonado' => 'string','Cedula' => 'string', 'Nombre' => 'string', 'Celular' => 'string', 'Correo' => 'string' ,'Direccion' => 'string','Barrio' => 'string','Serv. Suscritos' => 'string', 'Tegnologia' => 'string','Estado' => 'string','Deuda' => 'integer','Suscripcion' => 'integer','Ingreso' => 'integer');
+    $headers = array('ID' => 'integer','Abonado' => 'string','Cedula' => 'string', 'Nombre' => 'string', 'Celular' => 'string', 'Correo' => 'string' ,'Direccion' => 'string','Barrio' => 'string','Serv. Suscritos' => 'string', 'Tegnologia' => 'string','Estado' => 'string','Deuda' => 'integer','Suscripcion' => 'integer','Ingreso' => 'integer');
     if($_GET['ultimo_estado_sel']=="Si"){
         $headers['UltimoEstado']="string";
         $headers['FechaCambio']="string";
@@ -742,6 +742,7 @@ class Clientgroup extends CI_Controller
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 );
      if($_GET['ultimo_estado_sel']=="Si"){
         $col_options[]=array('font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center');
@@ -770,9 +771,9 @@ class Clientgroup extends CI_Controller
                             }
                             $array_excel=array();
                             if($_GET['ultimo_estado_sel']=="Si"){
-                                $array_excel=array($customer->abonado,$customer->documento ,$customer->name.' '.$customer->unoapellido, $customer->celular, $customer->email,$direccion,$str_barrio ,$customer->suscripcion_str,$customer->tegnologia,$customer->usu_estado,$customer->deuda,$customer->suscripcion,$customer->money,$customer->ultimo_estado,$customer->fecha_ultimo_estado);
+                                $array_excel=array($customer->id,$customer->abonado,$customer->documento ,$customer->name.' '.$customer->unoapellido, $customer->celular, $customer->email,$direccion,$str_barrio ,$customer->suscripcion_str,$customer->tegnologia,$customer->usu_estado,$customer->deuda,$customer->suscripcion,$customer->money,$customer->ultimo_estado,$customer->fecha_ultimo_estado);
                             }else{
-                                $array_excel=array($customer->abonado,$customer->documento ,$customer->name.' '.$customer->unoapellido, $customer->celular,$customer->email, $direccion,$str_barrio ,$customer->suscripcion_str,$customer->tegnologia,$customer->usu_estado,$customer->deuda,$customer->suscripcion,$customer->money);
+                                $array_excel=array($customer->id,$customer->abonado,$customer->documento ,$customer->name.' '.$customer->unoapellido, $customer->celular,$customer->email, $direccion,$str_barrio ,$customer->suscripcion_str,$customer->tegnologia,$customer->usu_estado,$customer->deuda,$customer->suscripcion,$customer->money);
                             }
 
                             if($_GET['check_agregar_ultima_transaccion']=="true"){
