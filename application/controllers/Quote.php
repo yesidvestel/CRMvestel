@@ -483,7 +483,7 @@ ini_set('memory_limit', '500M');
                 $data_h['tabla']="events";
                 $data_h['nombre_columna']="idorden";
                 $this->db->insert("historial_crm",$data_h);
-			}else if ($agendar==si){
+			}else if ($agendar=='si'){
 			$boleta = $this->db->get_where('tickets', array('codigo' => $nticket))->row();
 			$abonado = $this->db->get_where('customers', array('id' => $boleta->cid))->row();
 			
