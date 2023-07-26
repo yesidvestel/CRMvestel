@@ -21,14 +21,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Transactions_model extends CI_Model
 {
     var $table = 'transactions';
-    var $column_order = array('id', 'date', 'account', 'debit', 'credit', 'payer', 'tid','note',  'method','cat','estado');
-    var $column_search = array('id', 'date', 'account', 'debit', 'credit', 'payer', 'tid','note',  'method','cat','estado');
+    var $column_order = array( 'date', 'account', 'debit', 'credit', 'payer', 'customers.documento', 'tid','note',  'method','cat','estado');
+    var $column_search = array('transactions.id', 'date', 'account', 'transactions.debit', 'transactions.credit', 'payer', 'customers.documento', 'tid','note',  'method','cat','estado');
     var $order = array('date' => 'desc');
     var $opt = '';
 
     private function _get_datatables_query($filt2)
     {
-		$this->db->select("*");
+		$this->db->select('transactions.*,customers.documento, customers.id AS iduser');
         $this->db->from($this->table);
 		if($filt2['opcselect']!=''){
 
@@ -75,13 +75,13 @@ class Transactions_model extends CI_Model
         }
 		
         if($_GET['id_tr']){
-            $this->db->where("id",$_GET['id_tr']);
+            $this->db->where("transactions.id",$_GET['id_tr']);
             $this->db->where("estado",null);
         }else{
             //$this->db->where("estado!=","Anulada");
         $this->db->where("estado IS NULL",NULL);    
         }
-
+		$this->db->join('customers', 'transactions.payerid=customers.id', 'left');
         
         $i = 0;
         foreach ($this->column_search as $item) // loop column
@@ -111,8 +111,8 @@ class Transactions_model extends CI_Model
             $this->db->order_by(key($order), $order[key($order)]);
         }
         if(empty($_GET['todas_las_tr'])){
-            $this->db->where('id>'. $_SESSION['number_tr_min']);
-            $this->db->order_by("id","desc");    
+            $this->db->where('transactions.id>'. $_SESSION['number_tr_min']);
+            $this->db->order_by("transactions.id","desc");    
         }
         
     }

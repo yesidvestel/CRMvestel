@@ -349,9 +349,10 @@ class Transactions extends CI_Controller
         'Fecha' => 'string', 
         'Cuenta' => 'string',
 		'Valor' => 'integer',
-		'Motivo' => 'string',
+		'Usuario' => 'string',
+		'Documento' => 'integer',
 		'Categoria' => 'string',
-		'Cuenta N' => 'string',
+		'Cuenta N' => 'integer',
 		'Detalle' => 'string',
 		'Metodo' => 'string');
     
@@ -388,7 +389,8 @@ class Transactions extends CI_Controller
 	
     foreach ($lista_creditos as $key => $creditos) {
 		$fecha = date("d/m/Y",strtotime($creditos->date));
-            $writer->writeSheetRow('Creditos ',array($fecha,$creditos->account,$creditos->credit,$creditos->payer,$creditos->cat,$creditos->tid,$creditos->note,$creditos->method));
+		$datauser=$this->db->get_where("customers",array("id"=>$creditos->payerid))->row();
+            $writer->writeSheetRow('Creditos ',array($fecha,$creditos->account,$creditos->credit,$creditos->payer,$datauser->documento, $creditos->cat,$creditos->tid,$creditos->note,$creditos->method));
         
     }
         
@@ -2041,9 +2043,11 @@ $this->load->model('customers_model', 'customers');
         $ttype = $this->input->get('type');
         $list = $this->transactions->get_datatables($ttype,$_GET);
         $data = array();
+		
         // $no = $_POST['start'];
         $no = $this->input->post('start');
         foreach ($list as $prd) {
+			//$datauser=$this->db->get_where("customers",array("id"=>$prd->payerid))->row();
             $no++;
             $row = array();
             $pid = $prd->id;
@@ -2052,7 +2056,7 @@ $this->load->model('customers_model', 'customers');
             $row[] = $prd->account;
             $row[] = amountFormat($prd->debit);
             $row[] = amountFormat($prd->credit);
-            $row[] = $prd->payer;
+            $row[] = $prd->payer.' '.$prd->documento;
 			$row[] = $prd->tid.' '.$prd->note;
             $row[] = $this->lang->line($prd->method);
 			if ($ttype!='transferencia'){
