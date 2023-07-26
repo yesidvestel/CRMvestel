@@ -463,7 +463,7 @@ ini_set('memory_limit', '500M');
 			//agenda
 		$boleta = $this->db->get_where('tickets', array('codigo' => $nticket))->row();
 		$abonado = $this->db->get_where('customers', array('id' => $boleta->cid))->row();
-			if ($agendar==actualizar){
+			if ($agendar=='actualizar'){
 				
 				$data2 = array(					
 					'title' => 'Usuario #'.$abonado->abonado.' '.$detalle.' '.$hora2,
