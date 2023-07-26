@@ -2917,7 +2917,7 @@ if ($valido) {
          $this->load->model('accounts_model');
          $this->load->model('invoices_model', 'invocies');
         
-        $data['acclist'] = $this->accounts_model->accountslist();
+        $data['acclist'] = $this->accounts_model->accountslist('');
         $csd = intval($this->input->get('id'));
         $data['customer'] = $this->db->get_where("customers",array("id"=>$csd))->row();
         
@@ -2944,7 +2944,7 @@ if ($valido) {
 
         $data['id'] = $tid;
         $data['title'] = "Estado Usuario $tid";
-        $data['customer']->ciudad=$this->db->get_where("ciudad",array("idCiudad"=>$data['customer']->ciudad))->row()->ciudad;               
+        //$data['customer']->ciudad=$this->db->get_where("ciudad",array("idCiudad"=>$data['customer']->ciudad))->row()->ciudad;               
         //$data['invoice'] = $this->invocies->invoice_details($tid, $this->limited);
         //if ($data['invoice']) $data['products'] = $this->invocies->invoice_products($tid);
         if(isset($data['products'][0]['eid'])){

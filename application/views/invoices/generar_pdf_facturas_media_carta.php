@@ -233,11 +233,24 @@ $barrio =$this->db->get_where("barrio",array("idBarrio"=>$custmr->barrio))->row(
     <!-- Encabezado-->
          <div id="td_tid"><small><?= "#".$factura['tid'] ?></small></div>
 		<div class="head_saludo">DATOS USUARIO</div>
-        <div id="saludo"  ><h4>Sr(a) <?=$custmr->name." ".$custmr->dosnombre." ".$custmr->unoapellido." ".$custmr->dosapellido ?></h4>
-            <h6><?= strtoupper( $custmr->tipo_documento." : ".number_format($custmr->documento,0,",","."))." - Abonado: #".$custmr->abonado ?></h6>
-            <h6>Direccion : <?= $custmr->nomenclatura . ' ' . $custmr->numero1 . $custmr->adicionauno.' Nº '.$custmr->numero2.$custmr->adicional2.' - '.$custmr->numero3." - Br:".$barrio->barrio.", ".$sede; ?></h6>
-            <h6>Telefono : <?= $phoneNumber.$phoneNumber2 ?></h6>
-            <h6 style="line-height:10px;font-size: 8px;padding-top: -23px;padding-right: 3px;">Reciba un cordial saludo de parte de <?=$company->cname ?>, a continuación, presentamos el documento de cobro de sus servicios hogar.</h6>
+        <div id="saludo"  >
+			<table width="95%">
+			<tr>
+				<td style="border: 2px solid #ddd;" width="75%">
+					<h4>Sr(a) <?=$custmr->name." ".$custmr->dosnombre." ".$custmr->unoapellido." ".$custmr->dosapellido ?></h4>
+					<span style="font-weight: bold"><?= strtoupper( $custmr->tipo_documento." :</span> ".number_format($custmr->documento,0,",","."))." - Abonado: #".$custmr->abonado ?><br>
+					<span style="font-weight: bold">Direccion :</span> <?= $custmr->nomenclatura . ' ' . $custmr->numero1 . $custmr->adicionauno.' Nº '.$custmr->numero2.$custmr->adicional2.' - '.$custmr->numero3." - Br:".$barrio->barrio.", ".$sede; ?><br>
+					<span style="font-weight: bold">Telefono :</span> <?= $phoneNumber.$phoneNumber2 ?>
+				</td>
+				<td style="border: 2px solid #ddd;" width="30%">
+				 	<h6>Fecha generado <br></h6>
+					25/07/2023 <br>
+					<h6>Fecha límite<br></h6> 
+					03/08/2023				
+				</td>				
+			</tr>			
+			</table><br>		
+            <h5 style="line-height:10px;font-size: 8px;padding-top: -23px;padding-right: 3px;">Reciba un cordial saludo de parte de <?=$company->cname ?>, a continuación, presentamos el documento de cobro de sus servicios hogar.</h5>
         </div>
         <?php if($_SESSION[md5("variable_datos_pin")]['url'] =="https://www.saves-ottis.com/"){ ?>
         <div id="logo-div"> <img id="logo" src="<?=FCPATH."userfiles/company/".$company->logo  ?>"></div>
