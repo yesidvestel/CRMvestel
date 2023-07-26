@@ -61,7 +61,7 @@
                         <div class="col-md-6 col-sm-12 text-xs-center text-md-right">
                             <h2 ><?php echo $this->lang->line('') ?>Estado de Cuenta</h2>
                             <ul class="pb-1"> <?php echo 'Usuario #' . $customer->id . '</p>
-                            <ul class="pb-1">'.Sede .': ' . $customer->ciudad . '</p>'; ?>
+                            <ul class="pb-1">Sede: ' . $customer->ciudad . '</p>'; ?>
                             <ul class="px-0 list-unstyled">
                                 <li><?php echo $this->lang->line('Gross Amount') ?></li>
                                 <li class="lead text-bold-800" id="total1"><?php echo amountFormat(0) ?></li>
@@ -81,7 +81,7 @@
 
                                 <li class="text-bold-800"><a
                                             href="<?php echo base_url('customers/view?id=' . $customer->id) ?>"><strong
-                                                class="invoice_a"><?php echo ucwords($customer->name) .' '.ucwords($customer->unoapellido).'</strong></a></li><li>' .$customer->tipo_documento.': '. $customer->documento .  '</li><li>'.Celular .': ' . $customer->celular . '</li><li>'.$this->lang->line('Email') .': ' . $customer->email;
+                                                class="invoice_a"><?php echo ucwords($customer->name) .' '.ucwords($customer->unoapellido).'</strong></a></li><li>' .$customer->tipo_documento.': '. $customer->documento .  '</li><li>Celular: ' . $customer->celular . '</li><li>'.$this->lang->line('Email') .': ' . $customer->email;
                                     
                                                 ?>
                                 </li>
