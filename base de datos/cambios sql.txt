@@ -1,4 +1,6 @@
-﻿----------------------------------------------------------------------------------------------------------------------------------------
+﻿ALTER TABLE `invoice_items` ADD `tipo_retencion` ENUM('Retefuente Servicios','Compras','Personas no declarantes','Reteiva') NULL AFTER `fecha_creacion`;
+ALTER TABLE `invoices` ADD `tipo_retencion` ENUM('Retefuente Servicios','Compras','Personas no declarantes','Reteiva') NULL AFTER `resivos_guardados`;
+----------------------------------------------------------------------------------------------------------------------------------------
 
 CREATE TABLE `config_facturacion_electronica` (
   `id` int(11) NOT NULL,

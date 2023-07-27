@@ -2872,6 +2872,11 @@ if($total_tax>0){
                         }
                     }
                 }
+                $data_invoice_item['tipo_retencion']=$_POST['retencion_seleccionada'];
+                if($data_invoice_item['tipo_retencion']==""){
+                    $data_invoice_item['tipo_retencion']=null;
+                }
+                $data_invoice['tipo_retencion']=$data_invoice_item['tipo_retencion'];
                     $data_invoice_item['subtotal']=$data_invoice_item['price'];
                     $data_invoice_item['id_usuario_crea']=$this->aauth->get_user()->id;
                     $data_invoice_item['fecha_creacion']=date("Y-m-d H:i:s");

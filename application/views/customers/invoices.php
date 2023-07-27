@@ -367,6 +367,18 @@
                         
                 </div>
                 <p><small id="info">Nota credito se utiliza para realizar descuentos a las facturas</small></p>
+                <div class="row">
+                        <div class="col-xs-12"><label
+                                    for="shortnote">Tiene Retencion? que tipo ?</label>
+                             <select name="tipo_retencion" id="tipo_retencion" class="form-control">
+                                <option value="">- Seleccionar -</option>
+                                <option value="Retefuente Servicios">Retefuente Servicios</option>
+                                <option value="Compras">Compras</option>
+                                <option value="Personas no declarantes">Personas no declarantes</option>
+                                <option value="Reteiva">Reteiva</option>
+                            </select></div>
+                        
+                </div>
                  <div class="row">
                         <div class="col-xs-12"><label
                                     for="shortnote">Razón</label>
@@ -803,6 +815,7 @@ validar_monto_notas();
         }
     }
     function guardar_notas(){
+        var retencion_seleccionada=$("#tipo_retencion option:selected").val();
         var nota_seleccionada=$("#tipo_nota option:selected").val();
         var valor_nota=parseInt($("#monto_notas").val());
         var des_nota=$("#descripcion_nota").val();
@@ -810,7 +823,7 @@ validar_monto_notas();
                 valor_nota=Math.abs(valor_nota);
         }
         $("#id_guardar_notas").attr("disabled",true);
-        $.post(baseurl+"invoices/crear_nota_debito_credito",{nota_seleccionada:nota_seleccionada,valor_nota:valor_nota,des_nota:des_nota,'lista':lista_facturas,id_customer:id_customer},function(data){
+        $.post(baseurl+"invoices/crear_nota_debito_credito",{nota_seleccionada:nota_seleccionada,valor_nota:valor_nota,des_nota:des_nota,'lista':lista_facturas,id_customer:id_customer,'retencion_seleccionada':retencion_seleccionada},function(data){
             console.log(data);
             if(data.status=="realizado"){
                  $("#notify .message").html("<strong>Success : </strong>: Cambios realizados");

@@ -468,26 +468,28 @@ class Facturas_electronicas_model extends CI_Model
         $api = new SiigoAPI();*/
         $this->load->model("customers_model","customers");
         $dataApiNET=null;
+        $customer = $this->db->get_where("customers",array('id' =>$datos_facturar['id']))->row();
+         $array_servicios=$this->customers->servicios_detail($customer->id);
         //var_dump($datos_facturar['servicios']);
         if($datos_facturar['servicios']=="Combo"){
             if(isset($datos_facturar['puntos']) && $datos_facturar['puntos']!="no"){
                // $dataApiNET= $this->customers->getFacturaElectronicaOttis(2);//verificar este caso
             }else{
-                $dataApiNET= $this->customers->getFacturaElectronicaOttis(1);    
+                $dataApiNET= $this->customers->getFacturaElectronicaOttis(1,$array_servicios['tipo_retencion']);    
             }
         }else if($datos_facturar['servicios']=="Internet"){
-            $dataApiNET= $this->customers->getFacturaElectronicaOttis(null);
+            $dataApiNET= $this->customers->getFacturaElectronicaOttis(null,$array_servicios['tipo_retencion']);
         }else if($datos_facturar['servicios']=="Television"){
             if(isset($datos_facturar['puntos']) && $datos_facturar['puntos']!="no"){
                 //$dataApiNET= $this->customers->getFacturaElectronicaOttis(1);    //y este caso
             }else{
-                $dataApiNET= $this->customers->getFacturaElectronicaOttis(null);    
+                $dataApiNET= $this->customers->getFacturaElectronicaOttis(null,$array_servicios['tipo_retencion']);    
             }            
-        }
+        }        
          //var_dump($datos_facturar['servicios']);
         $centro_de_costo_codeNET="341";
     
-        $customer = $this->db->get_where("customers",array('id' =>$datos_facturar['id']))->row();
+        
         //cuadrando customer para crear o actualizar en siigo
         
         $json_customer=json_decode($this->customers->getCustomerJson());
@@ -603,7 +605,7 @@ class Facturas_electronicas_model extends CI_Model
       
         $producto_existe=false;
          if($dataApiNET!=null){
-            $array_servicios=$this->customers->servicios_detail($customer->id);
+           
             /*  cambios de abajo se comentan son para facturar cortados*/
             /*
             if($array_servicios['estado']=="Cortado"){
@@ -615,6 +617,10 @@ class Facturas_electronicas_model extends CI_Model
                     }
                 }*/
             $count=0;
+            $retencion_aplicada=false;
+            $porcentaje_retefuente_servicios=4;
+            $porcentaje_compras=2.5;
+            $porcentaje_personas_no_declarantes=3.5;
             if($array_servicios['combo']!="no" && ($datos_facturar['servicios']=="Combo" || $datos_facturar['servicios']=="Internet")){
                 $dataApiNET->items[0]->description="Servicio de Internet ".$array_servicios['combo'];
                 $lista_de_productos=$this->db->from("products")->where("pcat","1")->get()->result();
@@ -635,12 +641,49 @@ class Facturas_electronicas_model extends CI_Model
                             $dataApiNET->items[0]->price=$prod->product_price;
                             $dataApiNET->items[0]->taxes[0]->value=$v1;
                             $dataApiNET->payments[0]->value=$v2;
+                            if($array_servicios['tipo_retencion']=="Reteiva"){
+                                $total_reteiva=($v1*15)/100;
+                                $dataApiNET->retentions[0]->value=$total_reteiva;
+                                $dataApiNET->payments[0]->value-=$total_reteiva;
+                            }
 
                         }else{
-                            unset($dataApiNET->items[0]->taxes);
+                            unset($dataApiNET->items[0]->taxes[0]);   
+
+                            $dataApiNET->items[0]->taxes = array_values($dataApiNET->items[0]->taxes);
                             $dataApiNET->items[0]->price=$prod->product_price;                            
                             $dataApiNET->payments[0]->value=$prod->product_price;
+//var_dump(json_encode($dataApiNET));
+                        }
 
+                            
+                        if($array_servicios['tipo_retencion']!=null && $array_servicios['tipo_retencion']!="Reteiva"){
+                                $porcentaje_a_aplicar=4;
+                                if($array_servicios['tipo_retencion']=="Retefuente Servicios"){
+                                    $porcentaje_a_aplicar=$porcentaje_retefuente_servicios;
+                                }else if($array_servicios['tipo_retencion']=="Compras"){
+                                    $porcentaje_a_aplicar=$porcentaje_compras;
+                                }else if($array_servicios['tipo_retencion']=="Personas no declarantes"){
+                                    $porcentaje_a_aplicar=$porcentaje_personas_no_declarantes;
+                                }
+                                $v1=($prod->product_price*$porcentaje_a_aplicar)/100;
+                                //$v2=$v1-$prod->product_price;
+                                //$dataApiNET->items[0]->taxes[0]->id=4189;
+                                //$dataApiNET->items[0]->price=$prod->product_price;
+                                if($prod->taxrate!=0){
+                                    $dataApiNET->items[0]->taxes[1]->value=$v1;
+                                }else{
+                                    $dataApiNET->items[0]->taxes[0]->value=$v1;
+                                }                                
+                                $dataApiNET->payments[0]->value-=$v1;                            
+                        }else{
+                            if($prod->taxrate!=0){
+                                unset($dataApiNET->items[0]->taxes[1]);    
+                                $dataApiNET->items[0]->taxes = array_values($dataApiNET->items[0]->taxes);
+                            }else{
+                                unset($dataApiNET->items[0]->taxes);
+                            }
+                            
                         }
                         
                         
@@ -668,12 +711,14 @@ class Facturas_electronicas_model extends CI_Model
                             $dataApiNET->items[$count]->taxes[$count]->id=4189;
                             $dataApiNET->items[$count]->price=$prod->product_price;
                             $dataApiNET->items[$count]->taxes[$count]->value=$v1;
-                            $dataApiNET->payments[$count]->value=$v2;
+                            $dataApiNET->payments[0]->value+=$v2;
 
                         }else{
-                            unset($dataApiNET->items[$count]->taxes);
+                            if($array_servicios['tipo_retencion']==null){
+                                unset($dataApiNET->items[$count]->taxes);    
+                            }
                             $dataApiNET->items[$count]->price=$prod->product_price;                            
-                            $dataApiNET->payments[$count]->value=$prod->product_price;
+                            $dataApiNET->payments[0]->value+=$prod->product_price;
 
                         }
                         
@@ -707,7 +752,6 @@ class Facturas_electronicas_model extends CI_Model
         //$dataApiTV=json_encode($dataApiTV);
 
         $dataApiNET=json_encode($dataApiNET); 
-        //var_dump($dataApiNET);
         $retorno=array("mensaje"=>"No");
 
         if($dataApiNET!=null && $dataApiNET!="null"){

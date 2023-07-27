@@ -509,7 +509,7 @@ $var_excluir=false;
         $_var_tiene_internet=false;
         $_var_tiene_tv=false;
 
-        $servicios= array('television' =>"no",'combo' =>"no","puntos"=>"no","estado"=>"Inactivo","estado_combo"=>null,"estado_tv"=>null,"paquete"=>"");
+        $servicios= array('television' =>"no",'combo' =>"no","puntos"=>"no","estado"=>"Inactivo","estado_combo"=>null,"estado_tv"=>null,"paquete"=>"","tipo_retencion"=>null);
         foreach ($lista_invoices as $key => $invoice) {
             if($invoice->combo!="no" && $invoice->combo!="" && $invoice->combo!="-" && $invoice->tipo_factura!="Fija"){
                 if($invoice->estado_combo=="null" || $invoice->estado_combo==null){
@@ -551,6 +551,7 @@ $var_excluir=false;
                     $servicios['subtotal']=$invoice->subtotal;
                     $servicios['total']=$invoice->total;
                     $servicios['items']=$invoice->items;
+                    $servicios['tipo_retencion']=$invoice->tipo_retencion;
                     //var_dump($invoice->ron);
                     $servicios['estado']=$invoice->ron;
                     if($invoice->ron=="Suspendido"){
@@ -2777,8 +2778,53 @@ return $str;
 return $str;
     }
 
-    public function getFacturaElectronicaOttis($n_productos=null){
+    public function getFacturaElectronicaOttis($n_productos=null,$t_retencion=null){
         
+    $row_retencion="";
+    $rete_iva="";
+    if($t_retencion!=null){
+        
+        if($t_retencion=="Retefuente Servicios"){
+            $row_retencion=',
+                 {
+                    "id": 16984,
+                    "name": "RETEFUENTE Servicios declarante",
+                    "type": "Retefuente",
+                    "percentage": 4.0,
+                    "value": 4800.0
+                }';
+        }else if($t_retencion=="Compras"){
+            $row_retencion=',
+                  {
+                    "id": 16991,
+                    "name": "RETEFUENTE Compras declarante",
+                    "type": "Retefuente",
+                    "percentage": 2.5,
+                    "value": 3000.0
+                }';
+        }else if($t_retencion=="Personas no declarantes"){
+            $row_retencion=',
+                 {
+                    "id": 16992,
+                    "name": "RETEFUENTE Compras no declarantes",
+                    "type": "Retefuente",
+                    "percentage": 3.5,
+                    "value": 4200.0
+                }';
+        }else{
+            $rete_iva='"retentions": [
+                {
+                    "id": 17085,
+                    "name": "RETEIVA 15% del IVA",
+                    "type": "ReteIVA",
+                    "percentage": 15.0,
+                    "value": 3420.0
+                }
+            ],';
+        }
+        
+    }    
+
     $otro_producto=',{
               "code": "12SOPIVA1",
               "description": "DESCRIPCION",
@@ -2814,7 +2860,7 @@ return $str;
     "branch_office": 0
   },
   "cost_center": 341,
-  "seller": 201,
+  "seller": 201,'.$rete_iva.'
   "observations": "Observaciones",
   "items": [
     {
@@ -2829,7 +2875,7 @@ return $str;
          "type": "IVA",
          "percentage": 19,
          "value": 3991.6
-        }
+        }'.$row_retencion.'
       ]
     }'.$otro_producto.'
   ],
