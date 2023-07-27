@@ -568,7 +568,7 @@ public function borrar_facturas_v(){
         $numero_total;
         $caja1=$this->db->get_where('accounts',array('id' =>$_POST['pay_acc']))->row();
         $dateTime=new DateTime($_POST['sdate']);
-        
+        $estcaja=$_POST['estcuenta'];
         
         $api = new SiigoAPI();
         $api->getAuth(1);
@@ -637,7 +637,7 @@ if($_SESSION[md5("variable_datos_pin")]['db_name'] == "admin_crmvestel"){
             $retorno["estado"]="procesado 2";
             echo json_encode($retorno);
         }else{
-            $ret=$this->facturar_customer($_POST['id_customer'],$_POST['sdate']);
+            $ret=$this->facturar_customer($_POST['id_customer'],$_POST['sdate'],$_POST['estcuenta']);
             $retorno["estado"]="procesado";
             echo json_encode($retorno);
         }
@@ -658,7 +658,7 @@ if($_SESSION[md5("variable_datos_pin")]['db_name'] == "admin_crmvestel"){
         }
         echo "TOTAL : ".$num;
     }
-    public function facturar_customer($id_customer,$sdate){
+    public function facturar_customer($id_customer,$sdate,$estcuenta){
 set_time_limit(150);
         ini_set ( 'max_execution_time', 150);
         ini_set ( 'max_execution_time', 150);
@@ -712,6 +712,7 @@ set_time_limit(150);
                 }
                 $datos['sdate']=$sdate;
                 $datos['id']=$id_customer;
+                $datos['estcuenta']=$estcuenta;
                 $datos['serv_tv_real']=$servicios['television'];
                 $datos['tid_ult_fact']=$servicios['tid'];
                 if($datos['servicios']!=null){
@@ -845,6 +846,7 @@ set_time_limit(150);
                       $datos['servicios']="Internet";                    
                 }
                 $datos['sdate']=$_POST['sdate'];
+                $datos['estcuenta']=$_POST['estcuenta'];
                 $datos['id']=$value['id'];
                 if($datos['servicios']!=null){
                     

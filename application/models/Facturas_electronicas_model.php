@@ -573,7 +573,7 @@ class Facturas_electronicas_model extends CI_Model
             $dataApiNET->date=$dateTime->format("Y-m-d");
             $dataApiNET->payments[0]->due_date=$dateTimeVencimiento->format("Y-m-d");
             $dataApiNET->observations="Estrato : ".$customer->estrato;
-            $dataApiNET->payments[0]->id="6941";
+            $dataApiNET->payments[0]->id=$datos_facturar['estcuenta'];//efectivo 6960 credito 6941
 
             $consulta_siigo1=$api->getCustomer($customer->documento,1);
           

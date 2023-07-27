@@ -16,7 +16,6 @@
             <div class="row sameheight-container">
                 <div class="col-md-6">
                     <div class="card card-block sameheight-item">
-
                         <form id="formulario_fac_electronicas" action="<?php echo base_url() ?>facturasElectronicas/generar_facturas_action" method="post" role="form">
                             <div class="form-group row">
                                 <label class="col-sm-3 col-form-label"
@@ -39,12 +38,17 @@
                                                         }
 
                                                 } ?>
-                                                            
-                                                         
-                                        
                                     </select>
-
-
+                                </div>
+                            </div> 
+							<div class="form-group row">
+                                <label class="col-sm-3 col-form-label"
+                                       for="pay_cat"><?php echo $this->lang->line('') ?>Estado inicial</label>
+								<div class="col-sm-9">
+                                    <select name="estcuenta" class="form-control" id="estcuenta">
+										<option value="6960">Efectivo</option>
+										<option value="6941">Credito</option>
+                                    </select>
                                 </div>
 
                             </div>
@@ -140,6 +144,7 @@
 function iniciar_facturacion(){
         var pay_acc=$("#cuentas_ option:selected").val();
         var sdate=$("#sdate2").val();
+		var estcuenta=$("#estcuenta").val();
         progress_one(10);
         if(i<parseInt(total)){
             var id_customer=datos_recorrer[i].id;
@@ -157,7 +162,7 @@ function iniciar_facturacion(){
                 
                     $("#span_progress1").text(va_en+"/"+total_a_facturar);
                     progress_one(40);
-            $.post(baseurl+"facturasElectronicas/procesar_usuarios_a_facturar",{'pay_acc':pay_acc,'sdate':sdate,'id_customer':id_customer},function(data){
+            $.post(baseurl+"facturasElectronicas/procesar_usuarios_a_facturar",{'pay_acc':pay_acc,'sdate':sdate,'id_customer':id_customer,'estcuenta':estcuenta},function(data){
 
 
                     if(data.estado=="procesado" || data.estado=="procesado 2"){
