@@ -267,7 +267,7 @@
     
     echo '
 		</tr>
-		</table><br><div class="sign">Realizado por:</div><div class="sign1"><img src="' . FCPATH . 'userfiles/employee_sign/' . $employee['sign'] . '" width="160" height="50" border="0" alt=""></div><div class="sign2">' . $employee['name'] . '</div><div class="sign3">' . user_role($employee['']) . '</div> <div class="terms">' . $invoice['notes'] . '<hr>';
+		</table><br><div class="sign">Generado por:</div><div class="sign1"><img src="' . FCPATH . 'userfiles/employee_sign/' . $employee['sign'] . '" width="160" height="50" border="0" alt=""></div><div class="sign2">' . $employee['name'] . '</div><div class="sign3">' . user_role($employee['']) . '</div> <div class="terms">' . $invoice['notes'] . '<hr>';
     ?></div>
 </div>
 </body>
