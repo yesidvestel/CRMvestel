@@ -173,25 +173,25 @@
 			<?php if ($thread_info['status'] == 'Pendiente' || $thread_info['status'] == 'Realizando' || $this->aauth->get_user()->roleid == 5 || $this->aauth->get_user()->id == 20) { ?>
             <div class="form-group row">
 				<div class="col-sm-2">
-					<a href="#pop_model" data-toggle="modal" onclick="funcion_status();" data-remote="false" class="btn btn- btn-red mb-1" title="Change Status"><span class="icon-tab"></span> CAMBIAR ESTADO</a>
+					<a href="#pop_model" data-toggle="modal" onclick="funcion_status();" data-remote="false" class="btn btn-red  mb-1" title="Change Status" style="width: 200px"><span class="icon-tab" ></span> CAMBIAR ESTADO</a>
 				</div>
 				<?php if ($thread_info['status'] == 'Realizando' || $this->aauth->get_user()->roleid == 5) { ?>
-                <label class="col-sm-1 col-form-label"></label>
-
                 <div class="col-sm-2">
-                    <input type="submit" id="document_add" class="btn btn- btn-blue mb-1"
-                           value="DOCUMENTAR" data-loading-text="Updating...">
+                    <input type="submit" id="document_add" class="btn btn-blue mb-1"
+                           value="DOCUMENTAR" data-loading-text="Updating..." style="width: 200px">
                 </div>
 				<div class="col-sm-2">			
-		 			<a href="#pop_model2" id="btn-asignar" class="btn btn- btn-green mb-1" title="Change Status"
+		 			<a href="#pop_model2" id="btn-asignar" class="btn btn-green mb-1" title="Change Status" style="width: 200px"
                 	> ASIGNAR EQUIPO</a>
 				</div>
 				<div class="col-sm-2">
-					<a href="#pop_model3" data-toggle="modal" onclick="funcion_status();" data-remote="false" class="btn btn- btn-orange mb-1" title="Change Status">ASIGNAR MATERIAL</a>
+					<a href="#pop_model3" data-toggle="modal" onclick="funcion_status();" data-remote="false" class="btn btn-orange mb-1" title="Change Status" style="width: 200px">ASIGNAR MATERIAL</a>
 				</div>
-				
 				<div class="col-sm-2">
-					<a href="#pop_model4" data-toggle="modal" onclick="funcion_status();" data-remote="false" class="btn btn- btn-black mb-1" title="Change Status"><span></span> DIVIDIR ORDEN</a>
+					<a href="#pop_model4" data-toggle="modal" onclick="funcion_status();" data-remote="false" class="btn btn- btn-black mb-1" title="Change Status" style="width: 200px"><span></span> DIVIDIR ORDEN</a>
+				</div>
+				<div class="col-sm-2">
+					<a class=" btn btn- btn-red mb-1" href="<?php echo 'pdfticket?id=' . $thread_info['idt']; ?>" style="width: 200px"><span></span> DESCARGAR</a>
 				</div>
                 <?php if($orden->detalle=="Suspension Internet" || $orden->detalle=="Suspension Combo"){ ?>
                 <div class="col-sm-2" style="margin-left: 8%;">          

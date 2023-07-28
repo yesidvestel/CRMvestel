@@ -127,6 +127,15 @@ class Employee_model extends CI_Model
         $query = $this->db->get();
         return $query->row_array();
     }
+	public function employee_genera($id)
+    {
+        $this->db->select('employee_profile.*,aauth_users.*');
+        $this->db->from('employee_profile');
+        $this->db->where('employee_profile.username', $id);
+        $this->db->join('aauth_users', 'employee_profile.id = aauth_users.id', 'left');
+        $query = $this->db->get();
+        return $query->row_array();
+    }
 	public function employee_arealist($id)
     {
         $this->db->select('*');

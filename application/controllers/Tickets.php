@@ -171,7 +171,7 @@ class Tickets Extends CI_Controller
 			}
 			$row[] = '<span class="st-' . $ticket->status . '">' . $ticket->status . '</span>';
 			if ($this->aauth->get_user()->roleid >= 2) {
-            $row[] = '<a href="' . base_url('tickets/thread/?id=' . $ticket->idt) . '" class="btn btn-success btn-xs"><i class="icon-file-text"></i></a>';
+            $row[] = '<a href="' . base_url('tickets/thread?id=' . $ticket->idt) . '" class="btn btn-success btn-xs"><i class="icon-file-text"></i></a>';
 			} if ($this->aauth->get_user()->roleid >= 3) {
 			$row[] ='<a href="' . base_url('quote/edit/?id=' . $ticket->idt) . '" class="btn btn-primary btn-xs"><i class="icon-pencil"></i> </a>';}
 			if ($this->aauth->get_user()->roleid == 5) {
@@ -2019,7 +2019,52 @@ $x=0;
 
     }
 
+	public function pdfticket()
+    {
 
+        $tid = $this->input->get('id');
+
+        $data['id'] = $tid;
+        $data['title'] = "Purchase $tid";
+		$this->load->model('redes_model', 'redes');
+		$this->load->model('invoices_model', 'invocies');
+		$this->load->model('customers_model', 'customers');
+		$this->load->model('employee_model', 'employee');
+		$data['naps'] = $this->redes->nap_todas();
+		$data['thread_info'] = $this->ticket->thread_info($tid);
+		$data['thread_list'] = $this->ticket->thread_list($thread_id);
+		$data['employee'] = $this->employee->employee_genera($data['thread_info']['col']);
+		$data['local'] = $this->customers->group_localidad($data['temporal']['localidad']);
+		$data['barrio'] = $this->customers->group_barrio($data['temporal']['barrio']);
+		$data['barrio2'] = $this->customers->group_barrio($data['thread_info']['barrio']);
+		$data['paquete'] = $this->invocies->paquetes('tv');
+        //$data['invoice'] = $this->purchase->purchase_details($tid);
+        //$data['products'] = $this->purchase->purchase_products($tid);
+        //$data['employee'] = $this->purchase->employee($data['invoice']['eid']);
+        //$data['invoice']['multi'] = 0;
+
+        ini_set('memory_limit', '128M');
+
+        $html = $this->load->view('support/view-ticket-'.'RTL', $data, true);
+
+        //PDF Rendering
+        $this->load->library('pdf');
+
+        $pdf = $this->pdf->load();
+
+        $pdf->SetHTMLFooter('<table width="100%" style="vertical-align: bottom; font-family: serif; font-size: 8pt; color: #959595; font-weight: bold; font-style: italic;"><tr><td width="33%"><span style="font-weight: bold; font-style: italic;">{DATE j-m-Y}</span></td><td width="33%" align="center" style="font-weight: bold; font-style: italic;">{PAGENO}/{nbpg}</td><td width="33%" style="text-align: right; ">#' . $tid . '</td></tr></table>');
+
+        $pdf->WriteHTML($html);
+
+        if ($this->input->get('d')) {
+
+            $pdf->Output('Purchase_#' . $tid . '.pdf', 'D');
+        } else {
+            $pdf->Output('Purchase_#' . $tid . '.pdf', 'I');
+        }
+
+
+    }
     
 
 

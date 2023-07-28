@@ -445,7 +445,7 @@ class Purchase extends CI_Controller
 
         ini_set('memory_limit', '128M');
 
-        $html = $this->load->view('purchase/view-print-'.RTL, $data, true);
+        $html = $this->load->view('purchase/view-print-'.'RTL', $data, true);
 
         //PDF Rendering
         $this->load->library('pdf');
