@@ -2025,7 +2025,7 @@ $x=0;
         $tid = $this->input->get('id');
 
         $data['id'] = $tid;
-        $data['title'] = "Purchase $tid";
+        $data['title'] = "Servicio Nº $tid";
 		$this->load->model('redes_model', 'redes');
 		$this->load->model('invoices_model', 'invocies');
 		$this->load->model('customers_model', 'customers');
@@ -2058,9 +2058,9 @@ $x=0;
 
         if ($this->input->get('d')) {
 
-            $pdf->Output('Purchase_#' . $tid . '.pdf', 'D');
+            $pdf->Output('Servicio_#' . $tid . '.pdf', 'D');
         } else {
-            $pdf->Output('Purchase_#' . $tid . '.pdf', 'I');
+            $pdf->Output('Servicio_#' . $tid . '.pdf', 'I');
         }
 
 

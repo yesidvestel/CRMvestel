@@ -253,7 +253,7 @@
 		<tr class="item">
 			<td> 
 				<?php echo '<strong>'.$thread_info['detalle'].'</strong><br>'.
-				strip_tags($thread_info['section']);?>
+				strip_tags($thread_info['section'].' '.$thread_info['problema']);?>
 			
 			</td>
 		</tr>
