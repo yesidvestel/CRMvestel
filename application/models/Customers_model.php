@@ -2860,7 +2860,7 @@ return $str;
     "branch_office": 0
   },
   "cost_center": 341,
-  "seller": 201,'.$rete_iva.'
+  "seller": 738,'.$rete_iva.'
   "observations": "Observaciones",
   "items": [
     {
