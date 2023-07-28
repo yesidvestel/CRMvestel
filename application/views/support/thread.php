@@ -54,6 +54,9 @@
 				echo '<br><strong>Direccion:</strong> ' . $thread_info['nomenclatura'].' '. $thread_info['numero1']. $thread_info['adicionauno'].' N°'. $thread_info['numero2']. $thread_info['adicional2'].' - '. $thread_info['numero3'];
 				echo '<br><strong>Referencia:</strong> ' . $thread_info['residencia'].'/'. $thread_info['referencia'];
 				echo '<br><strong>Barrio:</strong> ' . $barrio2['barrio'];
+				if($thread_info['coor1']!=''){
+					echo '<br><strong>Coordenadas:</strong> ' . $thread_info['coor1'].' '.$thread_info['coor2'];	
+				}
                 echo '<br><strong>Estado:</strong> <span id="pstatus">' . $thread_info['status'];
 				echo '<br><strong>Servicios Contratados:</strong> <span id="pstatus">' . $tv.' '.$inter;
 				echo '<br><strong>Equipo Asignado:</strong> <span id="pstatus">' . $thread_info['macequipo'].'<strong>'.$equipo->t_instalacion.'</strong><strong> V:</strong>'.$equipo->vlan.'<strong> N:</strong>'.$equipo->nat.'<strong> PN:</strong>'.$equipo->puerto;
