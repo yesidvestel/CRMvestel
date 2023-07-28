@@ -62,7 +62,7 @@ class Ticket_model extends CI_Model
 
     public function thread_info($id)
     {
-        $this->db->select('tickets.*, customers.id,customers.abonado,customers.name,customers.dosnombre,customers.dosapellido,customers.email,customers.ciudad,customers.nomenclatura,customers.numero1,customers.adicionauno,customers.numero2,customers.adicional2,customers.numero3,customers.documento,customers.barrio,customers.celular,customers.referencia,customers.residencia,customers.unoapellido,customers.macequipo');
+        $this->db->select('tickets.*, customers.id,customers.abonado,customers.name,customers.dosnombre,customers.dosapellido,customers.email,customers.ciudad,customers.nomenclatura,customers.numero1,customers.adicionauno,customers.numero2,customers.adicional2,customers.numero3,customers.documento,customers.barrio,customers.celular,customers.referencia,customers.residencia,customers.unoapellido,customers.macequipo,customers.coor1,customers.coor2');
         $this->db->from('tickets');
         $this->db->join('customers', 'tickets.cid=customers.id', 'left');
         $this->db->where('tickets.idt', $id);
