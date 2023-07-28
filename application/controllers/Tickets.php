@@ -2045,7 +2045,7 @@ $x=0;
 
         ini_set('memory_limit', '128M');
 
-        $html = $this->load->view('support/view-ticket-'.'RTL', $data, true);
+        $html = $this->load->view('support/view-ticket-rtl', $data, true);
 
         //PDF Rendering
         $this->load->library('pdf');
