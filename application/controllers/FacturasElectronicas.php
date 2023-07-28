@@ -45,6 +45,7 @@ $this->load->model("customers_model","customers");
         $data['servicios'] = $this->customers->servicios_detail($_GET['id']);
         $data['due'] = $this->customers->due_details($_GET['id']);
         $data['afiliacion'] = $this->customers->tiene_afiliacion($_GET['id']);
+        $this->facturas_electronicas->cargar_configuraciones_para_facturar();
         $this->load->view('fixed/header', $head);
         $this->load->view('customers/facturas_electronicas',$data);
         $this->load->view('fixed/footer');

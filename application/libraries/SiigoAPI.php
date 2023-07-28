@@ -88,11 +88,11 @@ class SiigoAPI
         
         if(count($_SESSION['array_accesos_siigo'])==2){
             if($cuenta==1){
-                //$cuentaData=$_SESSION['array_accesos_siigo'][0];//tv
-                 $cuentaData=$cuentaVESGATV;
+                $cuentaData=$_SESSION['array_accesos_siigo'][0];//tv
+                 //$cuentaData=$cuentaVESGATV;
             }else{
-                $cuentaData=$_SESSION['array_accesos_siigo'][0];//internet
-                 $cuentaData=$cuentaVESGATELECOMUNICACIONES;
+                $cuentaData=$_SESSION['array_accesos_siigo'][1];//internet
+                 //$cuentaData=$cuentaVESGATELECOMUNICACIONES;
             }    
         }else{
                 $cuentaData=$_SESSION['array_accesos_siigo'][0];//todo
