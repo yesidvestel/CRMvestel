@@ -174,7 +174,7 @@
     <table>
         <tr>
             <td class="myco">
-                <img src="<?php echo FCPATH . '../purchase/userfiles/company' . $this->config->item('logo') ?>" style="max-width:260px;">
+                <img src="<?php echo FCPATH . 'userfiles/company/' . $this->config->item('logo') ?>" style="max-width:260px;">
             </td>
             <td>
 
