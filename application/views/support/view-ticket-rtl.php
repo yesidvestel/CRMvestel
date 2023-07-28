@@ -217,7 +217,20 @@
         </thead>
         <tbody>
         <tr>
-            <td><strong><?php echo $thread_info['name'].' '.$thread_info['dosnombre'].' '.$thread_info['unoapellido'].' '.$thread_info['dosapellido'] ?></strong><br>
+            <td><strong><?php
+				$factura=$this->db->get_where('invoices',array('tid'=>(($thread_info['id_invoice']==0 || $thread_info['id_invoice']==null || $thread_info['id_invoice']=="")? $thread_info['id_factura'] : "")))->row();
+				$equipo=$this->db->get_where('equipos',array('mac'=>$thread_info['macequipo']))->row();
+				if ($factura->television!=='no'){
+					$tv = $factura->television;
+				}else{
+					$tv = '';
+				}
+				if ($factura->combo!=='no'){
+					$inter = $factura->combo;
+				}else{
+					$inter = '';
+				}
+				echo $thread_info['name'].' '.$thread_info['dosnombre'].' '.$thread_info['unoapellido'].' '.$thread_info['dosapellido'] ?></strong><br>
                 <?php echo
                     '<strong>Documento:</strong> ' . $thread_info['documento'] . 
 					'<br> <strong>Abonado: </strong>' . $thread_info['abonado']. 
