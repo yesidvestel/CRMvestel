@@ -233,9 +233,9 @@
 														if($sede_accede==$cid){
 															$selected="selected='true'";
 														}
-														if($cid!="-1-"){
+														/*if($cid!="-1-"){*/
 															echo "<option ".$selected." value='$cid'>$title</option>";
-														}
+														/*}*/
 													}
 													?>
 											</select>
