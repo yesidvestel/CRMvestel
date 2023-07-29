@@ -41,7 +41,9 @@ class Purchase extends CI_Controller
     {
         $this->load->model('customers_model', 'customers');
 		$this->load->model('transactions_model', 'transactions');
+		$this->load->model('invoices_model', 'invocies');
 		$data['cat'] = $this->transactions->categories();
+		$data['sede'] = $this->invocies->sede();
         $data['customergrouplist'] = $this->customers->group_list();
         $data['lastinvoice'] = $this->purchase->lastpurchase();
         $data['terms'] = $this->purchase->billingterms();
