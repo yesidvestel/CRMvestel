@@ -162,6 +162,9 @@ if($_POST['cambiar_fecha']=="si"){
                                     $documentox=$value;
                                 }else if($key2=="D") {
                                     $medio_pago=$value;
+                                    if($medio_pago=="" || $medio_pago==null){
+                                        $medio_pago="EFECTY";
+                                    }
                                 }else if($key2=="A" && $_POST['cambiar_fecha']!="si") {
                                     //$medio_pago=$value;
                                     
