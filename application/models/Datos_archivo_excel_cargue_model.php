@@ -26,11 +26,20 @@ class Datos_archivo_excel_cargue_model extends CI_Model
     
     private function _get_datatables_query()
     {
-        $this->db->select("fl1.id as id,cs.id as idc,cs.documento as documento, fl1.monto as monto, fl1.estado as estado,fl1.ref_efecty as ref_efecty,cs.name as name,cs.unoapellido as unoapellido");
-        $this->db->from($this->table." as fl1");
-        $this->db->join("customers as cs","cs.id=fl1.id_customer");
+       
+        
+        
+        if(isset($_GET['tipo_consulta']) && $_GET['tipo_consulta']=="Errores"){
+            $this->db->select("*");
+             $this->db->from($this->table);
+            $this->db->where('estado!=','Cargado' );
+        }else{
+             $this->db->select("fl1.id as id,cs.id as idc,cs.documento as documento, fl1.monto as monto, fl1.estado as estado,fl1.ref_efecty as ref_efecty,cs.name as name,cs.unoapellido as unoapellido");
+            $this->db->from($this->table." as fl1");
+            $this->db->join("customers as cs","cs.id=fl1.id_customer");
+            $this->db->where('estado','Cargado' );    
+        }
         $this->db->where('id_archivo',$_GET['id'] );
-        $this->db->where('estado','Cargado' );
         foreach ($this->column_search as $item) // loop column
         {
             $search = $this->input->post('search');

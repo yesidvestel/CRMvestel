@@ -89,7 +89,35 @@ class Files_carga_transaccional_model extends CI_Model
         $this->load->model('customers_model', 'customers');
 $_POST['no_email']=true;
 $_POST['EFECTY']=true;
-        $creo=$this->customers->pay_invoices($cs->id,$data->monto,$data->ref_efecty);
+//traer lista de todos los customers con ese documento, hacer la resta entre la deuda de cada cuenta y el monto a pagar, luego ejecutar pago de esa cuenta hasta terminar el saldo de $data->monto;
+//$cuentas_del_usuario=$this->db->query("select * from customers where documento='".$cs->documento."'")->result_array();
+//SELECT * FROM `invoices` inner join customers on invoices.csd=customers.id where customers.documento=1037570816 GROUP by invoices.csd;
+$cuentas_del_usuario=$this->db->query("SELECT * FROM invoices inner join customers on invoices.csd=customers.id where customers.documento='".$cs->documento."' GROUP by invoices.csd;")->result_array();
+$creo=false;
+if(count($cuentas_del_usuario)>1){
+    foreach ($cuentas_del_usuario as $key => $value) {
+        $due=$this->customers->due_details($value['id']);
+        $deuda=$due['total']-$due['pamnt'];
+        $monto_pagar=$data->monto;
+        if($deuda>0){
+            if($data->monto>=$deuda && $key<(count($cuentas_del_usuario)-1) ){
+                $monto_pagar=$deuda;
+                $data->monto=$data->monto-$deuda;
+            }else{
+                $data->monto=0;
+            }
+            $creo=$this->customers->pay_invoices($value['id'],$monto_pagar,$data->ref_efecty);
+        }
+        
+    } 
+    if($data->monto>0){
+            $creo=$this->customers->pay_invoices($cuentas_del_usuario[0]['id'],$data->monto,$data->ref_efecty);
+    }   
+}else{
+    $creo=$this->customers->pay_invoices($cs->id,$data->monto,$data->ref_efecty);
+}
+
+        
         return $creo;
     }
     public function recorrer_archivo_y_guardar_datos_inicial($id_file,$ruta){
@@ -134,6 +162,14 @@ if($_POST['cambiar_fecha']=="si"){
                                     $documentox=$value;
                                 }else if($key2=="D") {
                                     $medio_pago=$value;
+                                }else if($key2=="A" && $_POST['cambiar_fecha']!="si") {
+                                    //$medio_pago=$value;
+                                    
+                                    $excelDateValue=$value;
+                                    $unixTimestamp = ($excelDateValue - 25568) * 86400;
+                                    // Convertir a formato de fecha legible
+                                    $formattedDate = date('Y-m-d', $unixTimestamp);                                    
+                                    $fecha_actual=$formattedDate;
                                 }
                             }
                         }//fin iteracion celdas
@@ -141,7 +177,7 @@ if($_POST['cambiar_fecha']=="si"){
                             if($string_inserts!=""){
                                 $in=",";
                             }
-                            $in.="('".$fecha_actual."', '".$documentox."', '".$montox."', 'Inicial', '".$id_file."','".$ref_efecty."')";
+                            $in.="('".$fecha_actual."', '".$documentox."', '".$montox."', 'Inicial', '".$id_file."','".$ref_efecty."','".$medio_pago."')";
                             $string_inserts.=$in;
                         }
                         
@@ -151,7 +187,7 @@ if($_POST['cambiar_fecha']=="si"){
             }//fin iteracion filas
             if($string_inserts!=""){
                 //echo $string_inserts;
-                $x1="INSERT INTO datos_archivo_excel_cargue ( fecha, documento, monto, estado, id_archivo,ref_efecty) VALUES ";
+                $x1="INSERT INTO datos_archivo_excel_cargue ( fecha, documento, monto, estado, id_archivo,ref_efecty,metodo_pago) VALUES ";
                 $string_inserts=$x1.$string_inserts.";";
                 //echo $string_inserts;
                 $this->db->query($string_inserts);

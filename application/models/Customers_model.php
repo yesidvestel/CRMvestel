@@ -3017,7 +3017,7 @@ return $str;
         
         
         if(isset($_POST['EFECTY'])){
-            $pmethod = "EFECTY";
+            $pmethod =  $_POST['metodo_pago'];
             $paydate = (new DateTime($_POST['fecha_x']))->format("Y-m-d");
         }
         $banco = "";

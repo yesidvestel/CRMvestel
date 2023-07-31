@@ -106,6 +106,38 @@ class Transactions extends CI_Controller
             //output to json format
             echo json_encode($output);
     }
+     public function list_customers_cargador_errores(){
+          $this->load->model('Datos_archivo_excel_cargue_model', 'data_carga');
+             $list = $this->data_carga->get_datatables();
+        $data = array();
+        $no = $this->input->post('start');
+        //setlocale(LC_TIME, "spanish");
+
+        foreach ($list as $key => $value) {            
+                $no++;  
+                $row = array();
+                $row[]="#".$value->id;
+                $row[]=$value->documento;
+                $row[]=$value->monto;
+                $row[]=$value->estado;
+                $row[]=$value->ref_efecty;
+                $row[]=$value->metodo_pago;
+              
+                
+                
+              //  $row[]="<a href='#' data-datos='".json_encode($value)."' class='btn btn-info update_mk'><i class='icon-eye'></i></a>";                
+                $data[]=$row;
+
+        }
+            $output = array(
+                "draw" => $_POST['draw'],
+                "recordsTotal" => $this->data_carga->count_all(),
+                "recordsFiltered" => $this->data_carga->count_filtered(),
+                "data" => $data,
+            );
+            //output to json format
+            echo json_encode($output);
+    }
     public function finalizar_file(){
         $this->db->update("files_carga_transaccional",array("estado"=>"Transacciones Cargadas"),array("id"=>$_POST['id_file']));
         
@@ -161,6 +193,8 @@ class Transactions extends CI_Controller
             $cus_existe=$this->db->get_where("customers",array("documento"=>$varx->documento))->row();
             if(isset($cus_existe)){
                 $_POST['fecha_x']=$varx->fecha;
+                $_POST['metodo_pago']=$varx->metodo_pago;
+                
                 $ret=$this->files_carga->facturar_customer($varx,$cus_existe);    
                 if($ret){
                     $this->db->update("datos_archivo_excel_cargue",array("estado"=>"Cargado","id_customer"=>$cus_existe->id),array("id"=>$varx->id));    

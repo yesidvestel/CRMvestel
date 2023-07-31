@@ -1,4 +1,7 @@
-﻿ALTER TABLE `invoice_items` ADD `tipo_retencion` ENUM('Retefuente Servicios','Compras','Personas no declarantes','Reteiva') NULL AFTER `fecha_creacion`;
+﻿--------------------------------------- cambios sql cargue ---------------------------------------------------------------------------
+ALTER TABLE `datos_archivo_excel_cargue` ADD `metodo_pago` VARCHAR(50) NOT NULL AFTER `id_customer`;
+---------------------------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `invoice_items` ADD `tipo_retencion` ENUM('Retefuente Servicios','Compras','Personas no declarantes','Reteiva') NULL AFTER `fecha_creacion`;
 ALTER TABLE `invoices` ADD `tipo_retencion` ENUM('Retefuente Servicios','Compras','Personas no declarantes','Reteiva') NULL AFTER `resivos_guardados`;
 ----------------------------------------------------------------------------------------------------------------------------------------
 

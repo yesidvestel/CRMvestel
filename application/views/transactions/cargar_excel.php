@@ -129,6 +129,35 @@
                 </tfoot>
             </table>
         </div>
+        <hr>
+        <h3>Transacciones no creadas abajo</h3>
+        <div class="grid_3 grid_4">
+            <table id="tabla-cs-errores" class="table-striped table-hover" cellspacing="0" width="100%">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Documento</th>
+                        <th>Monto</th>
+                        <th>Estado</th>
+                        <th>Nota</th>
+                        <th>Metodo Pago</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                </tbody>
+                <tfoot>
+                    <tr>
+                          <th>ID</th>
+                        <th>Documento</th>
+                        <th>Monto</th>
+                        <th>Estado</th>
+                        <th>Nota</th>
+                        <th>Metodo Pago</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default"
@@ -150,6 +179,7 @@
     });
     var tb;
     var tb_cs;
+    var tb_cs_errores;
      $(document).ready(function(){
         
             
@@ -187,6 +217,30 @@
             // Load data for the table's content from an Ajax source
             "ajax": {
                 "url": "<?php echo site_url('transactions/list_customers_cargados?id=0')?>",
+                "type": "POST"
+            },
+
+            //Set column definition initialisation properties.
+            "columnDefs": [
+                {
+                    //"targets": [0], //first column / numbering column
+                    "orderable": false, //set not orderable
+                },
+                
+            ],  
+            "language":spanish
+            
+
+        });
+         tb_cs_errores=$('#tabla-cs-errores').DataTable({
+
+            "processing": true, //Feature control the processing indicator.
+            "serverSide": true, //Feature control DataTables' server-side processing mode.
+            "order": [], //Initial no order.
+
+            // Load data for the table's content from an Ajax source
+            "ajax": {
+                "url": "<?php echo site_url('transactions/list_customers_cargados?id=0&tipo_consulta=Errores')?>",
                 "type": "POST"
             },
 
@@ -360,5 +414,6 @@ function finalizar_registro_file(){
 }
 function recargar_tb_results(){
     tb_cs.ajax.url( baseurl+"transactions/list_customers_cargados?id="+id_file).load();
+    tb_cs_errores.ajax.url( baseurl+"transactions/list_customers_cargador_errores?id="+id_file+"&tipo_consulta=Errores").load();
 }
 </script>
