@@ -3200,13 +3200,13 @@ return $str;
             }
     $data = array(
             'acid' => $acid,
-            'account' => $mt->id,
+            'account' => $mt->holder,
             'type' => 'Income',
             'cat' => 'Sales',
             'credit' => $amount,
             'payer' => $cname,
             'payerid' => $cid,
-            'method' => $pmethod,
+            'method' => "Bank",
             'date' => $paydate,
             'eid' => 0,
             'tid' => $tid,
