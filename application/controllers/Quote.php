@@ -48,6 +48,8 @@ class Quote extends CI_Controller
         $data['exchange'] = $this->plugins->universal_api(5);
 		$data['paquete'] = $this->invocies->paquetes('tv');
 		$data['paqueteinter'] = $this->invocies->paquetes('inter');
+		$data['adint'] = $this->invocies->paquetes('adint');
+		$data['adtv'] = $this->invocies->paquetes('adtv');
 		$data['tecnicoslista'] = $this->ticket->tecnico_list();
 		$data['localidades'] =$this->customers->localidades_list($data['details']['ciudad']);
 		$data['facturalist'] = $this->ticket->factura_list($custid);
@@ -147,6 +149,8 @@ class Quote extends CI_Controller
 		$hora2 = date("H:i",strtotime($this->input->post('hora')));
 		$tv = $this->input->post('tele');
 		$inter = $this->input->post('inter');
+		$adinter = $this->input->post('adinter');
+		$adtv = $this->input->post('adtv');
 		$bainter = $this->input->post('bainter');
 		$suinter = $this->input->post('suinter');
 		$punto = $this->input->post('punto');
@@ -172,7 +176,7 @@ class Quote extends CI_Controller
        }
         
         if ($customer_id) {
-        	$this->quote->addticket($customer_id, $gen, $nticket, $subject, $detalle, $created, $problema, $bapaquete, $supaquete, $section, $factura,$agendar,$fagenda, $tec, $hora,$hora2,$nomen,$nuno,$auno,$ndos,$ados,$ntres,$local,$barrio,$recider, $refer, $tv,$inter,$bainter, $suinter, $punto,$pago,$toma,$movil);
+        	$this->quote->addticket($customer_id, $gen, $nticket, $subject, $detalle, $created, $problema, $bapaquete, $supaquete, $section, $factura,$agendar,$fagenda, $tec, $adtv, $adinter, $hora,$hora2,$nomen,$nuno,$auno,$ndos,$ados,$ntres,$local,$barrio,$recider, $refer, $tv,$inter,$bainter, $suinter, $punto,$pago,$toma,$movil);
 			
 		}
 

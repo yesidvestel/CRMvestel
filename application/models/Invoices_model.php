@@ -314,6 +314,14 @@ setlocale(LC_TIME, "spanish");
                 $this->db->where('sede', 2);
                 //$this->db->where('warehouse', 1);
                 break;
+			case 'adint':
+                $this->db->where('pertence_a_tv_o_net', 'Internet');
+                //$this->db->where('warehouse', 1);
+                break;
+			case 'adtv':
+                $this->db->where('pertence_a_tv_o_net', 'Tv');
+                //$this->db->where('warehouse', 1);
+                break;
 			
         }
         $query = $this->db->get();
