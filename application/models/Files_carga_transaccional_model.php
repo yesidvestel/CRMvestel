@@ -108,6 +108,9 @@ if(count($cuentas_del_usuario)>1){
             }
             $creo=$this->customers->pay_invoices($value['id'],$monto_pagar,$data->ref_efecty);
         }
+        if($data->monto<=0){
+            break;
+        }
         
     } 
     if($data->monto>0){
