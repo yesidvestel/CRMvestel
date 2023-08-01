@@ -371,7 +371,13 @@ class Clientgroup extends CI_Controller
 //esto es para los estados
 
                         if($_var_tiene_internet){
-                            $lista_de_productos=$this->db->from("products")->like("product_name","mega","both")->get()->result();
+                            $lista_de_productos=array();
+                            if($_SESSION[md5("variable_datos_pin")]['db_name'] == "admin_crmvestel"){
+                                $lista_de_productos=$this->db->from("products")->get()->result();    
+                            }else{
+                                $lista_de_productos=$this->db->from("products")->like("product_name","mega","both")->get()->result();
+                            }
+                            
                             $var_e=strtolower(str_replace(" ", "",$invoice->combo));
                             foreach ($lista_de_productos as $key => $prod) {
                                 $prod->product_name=strtolower(str_replace(" ", "",$prod->product_name ));
@@ -1273,7 +1279,12 @@ class Clientgroup extends CI_Controller
 
 //esto es para los estados 
                         if($_var_tiene_internet){$var_excluir=false;
-                            $lista_de_productos=$this->db->from("products")->like("product_name","mega","both")->get()->result();
+                            $lista_de_productos=array();
+                            if($_SESSION[md5("variable_datos_pin")]['db_name'] == "admin_crmvestel"){
+                                $lista_de_productos=$this->db->from("products")->get()->result();    
+                            }else{
+                                $lista_de_productos=$this->db->from("products")->like("product_name","mega","both")->get()->result();
+                            }
                             $var_e=strtolower(str_replace(" ", "",$invoice->combo));
                             foreach ($lista_de_productos as $key => $prod) {
                                 $prod->product_name=strtolower(str_replace(" ", "",$prod->product_name ));
@@ -2087,7 +2098,12 @@ $suscripcion_str2=$suscripcion_str;
 				//esto es para los estados 
 
                         if($_var_tiene_internet){
-                            $lista_de_productos=$this->db->from("products")->like("product_name","mega","both")->get()->result();
+                            $lista_de_productos=array();
+                            if($_SESSION[md5("variable_datos_pin")]['db_name'] == "admin_crmvestel"){
+                                $lista_de_productos=$this->db->from("products")->get()->result();    
+                            }else{
+                                $lista_de_productos=$this->db->from("products")->like("product_name","mega","both")->get()->result();
+                            }
                             $var_e=strtolower(str_replace(" ", "",$invoice->combo));
                             foreach ($lista_de_productos as $key => $prod) {
                                 $prod->product_name=strtolower(str_replace(" ", "",$prod->product_name ));
