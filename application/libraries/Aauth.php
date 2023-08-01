@@ -156,7 +156,7 @@ class Aauth
         $cookie = array(
             'name' => 'user',
             'value' => '',
-            'expire' => -7200,
+            'expire' => -900000,
             'path' => '/',
         );
         $this->CI->input->set_cookie($cookie);
