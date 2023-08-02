@@ -1698,6 +1698,38 @@ $x=0;
                 $customerx=$this->db->get_where("customers",array('id' =>$ticket->cid ))->row();
                 $this->customers->desactivar_estado_usuario($customerx->name_s,$customerx->gid,$customerx->tegnologia_instalacion);
 		}
+		if($ticket->detalle=="Retiro y Desinstalacion por Cartera"){
+			$factura = $this->db->get_where('invoices',array('tid'=>$idfactura))->row();
+			/*if ($factura->television===no){
+				$status2 = 'Cartera';
+			}else{
+				$status2 = 'Activo';
+			}*/
+			$this->db->set('ron', 'Cartera');
+			//$this->db->set('combo', 'no');		            
+            $this->db->set('estado_tv', 'Cortado');	
+            $this->db->set('estado_combo', 'Cortado');	
+        	$this->db->where('tid', $idfactura);
+        	$this->db->update('invoices');
+			//actualizar estado usuario
+            $this->db->set("ultimo_estado",$customer->usu_estado);
+                $this->db->set("fecha_cambio",date("Y-m-d H:i:s"));
+				$this->db->set('usu_estado', 'Cartera');
+        		$this->db->where('id', $ticket->cid);
+        		//historial estado
+        		if($this->db->update('customers')){
+				 $dataes = array(
+					'cid' => $ticket->cid,
+					'fecha' => date("Y-m-d H:i:s"),
+					'estado' => 'Cartera',
+					'col' => $ticket->codigo,
+					);
+					 $this->db->insert("estados",$dataes);
+				}
+                 //mikrotik
+                $customerx=$this->db->get_where("customers",array('id' =>$ticket->cid ))->row();
+                $this->customers->desactivar_estado_usuario($customerx->name_s,$customerx->gid,$customerx->tegnologia_instalacion);
+		}
 		if($ticket->detalle=="AgregarTelevision" || ($ticket->detalle=="Reconexion Television2" && ($ticket->id_factura!=0 || $ticket->id_factura!=null))){			
 			$producto = $this->db->get_where('products',array('product_name'=>'Television'))->row();
             $total=0;
