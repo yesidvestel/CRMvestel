@@ -186,6 +186,27 @@ class Transactions_model extends CI_Model
         $query = $this->db->get();
         return $query->result_array();
     }
+	public function edit($id, $deb, $cred, $fcha, $nte)
+    {
+        $data = array(
+			'debit' => $deb,
+            'credit' => $cred,
+			'date' => $fcha,
+            'note' => $nte,
+
+        );
+        $this->db->set($data);
+        $this->db->where('id', $id);
+
+        if ($this->db->update('transactions')) {
+            echo json_encode(array('status' => 'Success', 'message' =>
+                $this->lang->line('UPDATED')));
+        } else {
+            echo json_encode(array('status' => 'Error', 'message' =>
+                $this->lang->line('ERROR')));
+        }
+
+    }
 
     public function addcat($name)
     {
@@ -431,6 +452,7 @@ $RESULT_TR=$this->db->insert('transactions', $data);
         $this->db->from('customers');
 		}
         $this->db->where('id', $id);
+		$this->db->join('ciudad', 'customers.ciudad=ciudad.idCiudad', 'left');
         $query = $this->db->get();
         return $query->row_array();
 

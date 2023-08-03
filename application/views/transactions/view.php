@@ -10,19 +10,19 @@
             <div class="well col-xs-12">
                 <div class="row">
                     <div class="text-center">
-                        <h5><?php echo $this->lang->line('Transaction Details') ?> </h5><?php echo'<a href="' . base_url() . 'transactions/print_t?id=' . $trans['id'] . '" class="btn btn-info btn-xs"  title="Print"><span class="icon-print"></span></a>'; ?>
+                        <h5><?php echo $this->lang->line('Transaction Details') ?> </h5><?php echo'<a href="' . base_url() . 'transactions/print_t?id=' . $trans['id'] . '" class="btn btn-info btn-xs"  title="Print"><span class="icon-print"></span></a>&nbsp<a href="' . base_url() . 'transactions/edit?id=' . $trans['id'] . '" class="btn btn-info btn-xs"  title="Editar"><span class="icon-pencil"></span></a>'; ?>
                     </div>
                     <hr>
                     <div class="col-xs-6 col-sm-6 col-md-6">
                         <address>
                             <?php echo '<strong>' . $this->config->item('ctitle') . '</strong><br>' .
-                                $this->config->item('address') . '<br>' . $this->config->item('address2') . '<br> '.$this->lang->line('Phone').': ' . $this->config->item('phone') . '<br>  '.$this->lang->line('Email').': ' . $this->config->item('email'); ?>
+                                $this->config->item('address') . '<br>' . $this->config->item('postbox') . '<br> '.$this->lang->line('Phone').': ' . $this->config->item('phone') . '<br>  '.$this->lang->line('Email').': ' . $this->config->item('email'); ?>
                         </address>
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-6 text-right">
                         <address>
-                            <?php echo '<strong>' . $trans['payer'] . '</strong><br>' .
-                                $cdata['address'] . '<br>' . $cdata['city'] . '<br>' . $this->lang->line('Phone') . ': ' . $cdata['phone'] . '<br>  '.$this->lang->line('Email').': ' . $cdata['email']; ?>
+                            <?php echo '<strong>' . $trans['payer'].' '. $cdata['unoapellido'] . '</strong><br>' .
+                                $cdata['nomenclatura'] .' '.$cdata['numero1'].$cdata['adicionaluno'].' # '.$cdata['numero2'].$cdata['adicional2'].' - '.$cdata['numero3'] . '<br>' . $cdata['ciudad'] . '<br>' . $this->lang->line('Phone') . ': ' . $cdata['celular'] . '<br>  '.$this->lang->line('Email').': ' . $cdata['email']; ?>
                         </address>
                     </div>
 
