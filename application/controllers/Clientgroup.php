@@ -382,7 +382,11 @@ class Clientgroup extends CI_Controller
                             foreach ($lista_de_productos as $key => $prod) {
                                 $prod->product_name=strtolower(str_replace(" ", "",$prod->product_name ));
                                 if($prod->product_name==$var_e){
-                                    $suma+=$prod->product_price;                                    
+                                    $iva2=0;
+                                    if(isset($prod) && $prod->taxrate!="0"){
+                                        $iva2=round(($prod->product_price*$prod->taxrate)/100);
+                                    }
+                                    $suma+=$prod->product_price+$iva2;                                        
                                     break;
                                 }
                             }
@@ -1289,7 +1293,11 @@ class Clientgroup extends CI_Controller
                             foreach ($lista_de_productos as $key => $prod) {
                                 $prod->product_name=strtolower(str_replace(" ", "",$prod->product_name ));
                                 if($prod->product_name==$var_e){
-                                    $suma+=$prod->product_price;                                    
+                                    $iva2=0;
+                                    if(isset($prod) && $prod->taxrate!="0"){
+                                        $iva2=round(($prod->product_price*$prod->taxrate)/100);
+                                    }
+                                    $suma+=$prod->product_price+$iva2;                                    
                                     break;
                                 }
                             }
@@ -2108,7 +2116,11 @@ $suscripcion_str2=$suscripcion_str;
                             foreach ($lista_de_productos as $key => $prod) {
                                 $prod->product_name=strtolower(str_replace(" ", "",$prod->product_name ));
                                 if($prod->product_name==$var_e){
-                                    $suma+=$prod->product_price;                                    
+                                    $iva2=0;
+                                    if(isset($prod) && $prod->taxrate!="0"){
+                                        $iva2=round(($prod->product_price*$prod->taxrate)/100);
+                                    }
+                                    $suma+=$prod->product_price+$iva2;                                        
                                     break;
                                 }
                             }
