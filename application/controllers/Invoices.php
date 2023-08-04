@@ -51,7 +51,7 @@ public function notas(){
 public function exportar_a_excel_inv(){
     ini_set('memory_limit', '50000000000M');
     set_time_limit(500000000);
-     $this->db->select("invoices.* ,customers.name as name, customers.unoapellido as unoapellido,customers.abonado as abonado, customers.documento as documento,customers.tipo_documento as tipo_documento");
+     $this->db->select("invoices.* ,customers.*");
         $this->db->from("invoices");
         //$this->db->where_in("invoice_items.product",array("Nota Credito","Nota Debito"));
         //$this->db->join("invoices","invoice_items.tid=invoices.tid", 'left');
@@ -72,7 +72,12 @@ public function exportar_a_excel_inv(){
         'Fecha creada' => 'date',
         'Fecha vence' => 'date',
         'Estado' => 'string',
+        'Subtotal' => 'integer',
+        'Iva' => 'integer',
+        'Descuento' => 'integer',
         'Total' => 'integer',
+        'Total Pago' => 'integer',
+        'Deuda' => 'integer',
         'Sede' => 'string',
         'Pago' => 'string',
     );
@@ -107,14 +112,19 @@ public function exportar_a_excel_inv(){
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ));
     
     //write rows to sheet1
     
     foreach ($lista_invoices as $key => $invoices) {
         //$fecha = date("d/m/Y",strtotime($debito->fecha_creacion));
-         
-         $ar=array($invoices->tid,$invoices->name ." ". $invoices->unoapellido,$invoices->abonado,$invoices->tipo_documento,$invoices->documento,$invoices->invoicedate,$invoices->invoiceduedate,$invoices->ron,$invoices->total,$invoices->refer,$this->lang->line(ucwords($invoices->status)));
+         $deuda=$invoices->total-$invoices->pamnt;
+         $ar=array($invoices->tid,$invoices->name ." ".$invoices->dosnombre ." ". $invoices->unoapellido." ". $invoices->dosapellido,$invoices->abonado,$invoices->tipo_documento,$invoices->documento,$invoices->invoicedate,$invoices->invoiceduedate,$invoices->ron,$invoices->subtotal,$invoices->tax,$invoices->discount,$invoices->total,$invoices->pamnt,$deuda,$invoices->refer,$this->lang->line(ucwords($invoices->status)));
             $writer->writeSheetRow('Reporte Facturas ',$ar);
         
     }
