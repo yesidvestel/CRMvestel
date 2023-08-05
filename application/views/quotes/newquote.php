@@ -1,5 +1,5 @@
 <style type="text/css">
-	#internet_instalacion,#interB,#tecnico{
+	#internet_instalacion,#interB,#adinter,#adtv,#tecnico{
 		width: 100%;
 	}
 </style>
@@ -568,7 +568,7 @@
                                     </div>
 									<div class="col-sm-4">
 										<label for="invociedate" class="caption">De Internet</label>
-											<select name="adinter" id="bainter" class="form-control mb-1 bajar-megas">
+											<select name="adinter" id="adinter" class="form-control mb-1">
 												<option value="no">No</option>
 												<?php
 													foreach ($adint as $row) {
@@ -582,8 +582,8 @@
 									<div class="col-sm-4">
 									<label for="invociedate" class="caption">De Television</label>
 										<div class="input-group">									
-											<select name="adtv" id="bapaquete" class="form-control mb-1 bajar-megas">
-												<option value="0">no</option>
+											<select name="adtv" id="adtv" class="form-control mb-1">
+												<option value="no">No</option>
 													<?php
 													foreach ($adtv as $row) {
 														$cid = $row['pid'];
@@ -754,6 +754,8 @@
 	$("#tecnico").select2();
 	$("#internet_instalacion").select2();
 	$("#interB").select2();
+	$("#adinter").select2();
+	$("#adtv").select2();
 
 	/* codigo servicios*/
 	var sede_sel="<?=$sede_actual->title  ?>";
@@ -793,6 +795,33 @@ function validacion_agregar_internet (){
 		        $("#submit-data").removeAttr("disabled");
 		    }else{
 		        $("#interB").parent().css("background-color","red");
+		        $("#submit-data").attr("disabled","disabled");
+		    }	
+    }
+    
+    //console.log(tele_instalacion);
+    //console.log(internet_instalacion);
+}
+$(document).on('change',"#adinter",function(e){
+    validacion_servicio_adicional();
+    
+});
+$(document).on('change',"#adtv",function(e){
+    validacion_servicio_adicional();
+    
+});	
+function validacion_servicio_adicional (){
+    var adinter01=$("#adinter option:selected").val();
+    var adtv01=$("#adtv option:selected").val();
+    var detalle01=$("#detalle option:selected").val();
+    if(detalle01=="Servicio_Adicional"){
+    		if(adinter01!="no" || adtv01!="no"){
+		        $("#adinter").parent().css("background-color","");
+		        $("#adtv").parent().css("background-color","");
+		        $("#submit-data").removeAttr("disabled");
+		    }else{
+		        $("#adinter").parent().css("background-color","red");
+		        $("#adtv").parent().css("background-color","red");
 		        $("#submit-data").attr("disabled","disabled");
 		    }	
     }
@@ -1026,6 +1055,9 @@ $(document).on('click','.btn-mas-internet',function(e){
                     
                 }else if($("#detalle option:selected").val()=="Toma_Adicional"){
                    validacion_toma_adicional();
+                    
+                }else if($("#detalle option:selected").val()=="Servicio_Adicional"){
+                   validacion_servicio_adicional();
                     
                 }
             }

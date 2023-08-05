@@ -215,6 +215,13 @@ class Quote_model extends CI_Model
 			$obs = $bainter.' '.$section;
 		}else if($detalle=='Toma Adicional'){
 			$obs = 'Agregar '.$toma.' Puntos/'.$section;
+		}else if($detalle=='Servicio Adicional'){
+			if($adtv=='no'){
+				$adtv='';
+			}if($adinter=='no'){
+				$adinter='';
+			}
+			$obs = $adtv.' '.$adinter.'/'.$section;
 		}else{
 			$obs = $section;
 		}

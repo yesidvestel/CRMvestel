@@ -93,6 +93,8 @@ class Quote extends CI_Controller
 		$data['localidades'] =$this->customers->localidades_list($data['thread_info']['ciudad']);
 		$data['paquete'] = $this->invocies->paquetes('tv');
 		$data['paqueteinter'] = $this->invocies->paquetes('inter');
+		$data['adint'] = $this->invocies->paquetes('adint');
+		$data['adtv'] = $this->invocies->paquetes('adtv');
 		$data['tecnicoslista'] = $this->ticket->tecnico_list();
 		$data['moviles'] = $this->moviles->get_datatables1();
         $data['thread_list'] = $this->ticket->thread_list($thread_id);
@@ -320,6 +322,8 @@ ini_set('memory_limit', '500M');
 		$refer = $this->input->post('referencia');
 		$tv = $this->input->post('tele');
 		$inter = $this->input->post('inter');
+		$adinter = $this->input->post('adinter');
+		$adtv = $this->input->post('adtv');
 		$bainter = $this->input->post('bainter');
 		$suinter = $this->input->post('suinter');
 		$punto = $this->input->post('punto');
@@ -452,6 +456,15 @@ ini_set('memory_limit', '500M');
 					$this->db->update('tickets');
 				}
 		}
+		//servicios adicionales
+			if ($detalle=='Servicio Adicional'){
+				$data4 = array(
+				'corden' => $nticket,
+				'tv' => $adtv,
+				'internet' => $adinter,
+			);		
+			$this->db->insert('temporales', $data4);
+			}
 		if ($detalle=='Toma Adicional'){
 				$data4 = array(
 					'puntos' => $toma,
