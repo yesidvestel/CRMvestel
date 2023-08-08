@@ -570,7 +570,7 @@ class Facturas_electronicas_model extends CI_Model
             $dataApiNET->document->id="27183";
             $dataApiNET->customer->identification=$customer->documento;
             $dataApiNET->cost_center=$centro_de_costo_codeNET;
-            $dataApiNET->seller="201";
+            $dataApiNET->seller="738";
             $dataApiNET->date=$dateTime->format("Y-m-d");
             $dataApiNET->payments[0]->due_date="2023-08-03";//$dateTimeVencimiento->format("Y-m-d");
             $dataApiNET->observations="Estrato : ".$customer->estrato;
@@ -581,8 +581,8 @@ class Facturas_electronicas_model extends CI_Model
             
             if($consulta_siigo1['pagination']['total_results']==0){
                     $json_customer=json_decode($json_customer);
-                    $json_customer->related_users->seller_id=201;
-                    $json_customer->related_users->collector_id=201;
+                    $json_customer->related_users->seller_id=738;
+                    $json_customer->related_users->collector_id=738;
                     $json_customer->contacts[0]->email="vestelsas@gmail.com";
                     $json_customer=json_encode($json_customer);
                     //$json_customer=str_replace("321", "282", subject)
