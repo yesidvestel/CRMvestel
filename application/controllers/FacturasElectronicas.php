@@ -555,6 +555,54 @@ public function borrar_facturas_v(){
         $this->load->view('facturas_electronicas/configuraciones',$data);
         $this->load->view('fixed/footer');       
     }
+    public function x1(){
+        var_dump($_SESSION['errores']);
+    }
+    public function pr1(){
+        ob_clean();
+        $otro='{
+              "code": "12SOPIVA1",
+              "description": "DESCRIPCION",
+              "quantity": 1,
+              "price": 21008,
+              "discount": 0.0,
+              "taxes": [
+                {"id": 4189,
+                 "name": "IVA 19% sev",
+                 "type": "IVA",
+                 "percentage": 19,
+                 "value": 3991.6
+                }
+              ]            
+            }';
+        $this->load->model('customers_model', 'customers');
+        $dataApiNET= $this->customers->getFacturaElectronicaOttis(1,null);  
+       $dataApiNET =json_decode($dataApiNET);
+        echo"<pre>";
+        var_dump($dataApiNET);  
+
+        echo"</pre>";
+        echo "<br>";
+                echo"<pre>";
+             $otro=   json_decode($otro);
+        var_dump($otro);  
+
+        echo"</pre>";
+        echo "<br> nuevo";
+        $dataApiNET->items[]=$otro;
+        echo"<pre>";
+        var_dump($dataApiNET);  
+
+        echo"</pre>";
+        echo "<br> json :";
+        echo"<pre>";
+        var_dump(json_encode($dataApiNET));  
+
+        echo"</pre>";
+        echo "<br>";
+
+
+    }
     public function visualizar_resumen_ejecucion(){
         $head['title'] = "Facturas electronicas generadas ";        
         
