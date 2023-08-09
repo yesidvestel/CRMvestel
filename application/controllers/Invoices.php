@@ -2259,6 +2259,7 @@ foreach ($lista as $key => $value) {
 		$puntos = $this->input->post('puntos');
         $total = $this->input->post('total');
         $tipo_factura = $this->input->post('tipo_factura');
+        $promo = $this->input->post('promo');
         $total_tax = 0;
         $total_discount = 0;
         $discountFormat = $this->input->post('discountFormat');
@@ -2460,9 +2461,14 @@ foreach ($lista as $key => $value) {
                     $total=$total-$var1;
                     
                 }
-if($total_tax>0){
+		if($total_tax>0){
             $subtotal=$total-$total_tax;
         }
+		if($promo!=0){
+			$npromo=' '.$promo.' meses gratis';
+		}else{
+			$npromo='';
+		}
         $data = array(
 			'invoicedate' => $bill_date,
 			'invoiceduedate' => $bill_due_date,
@@ -2471,7 +2477,7 @@ if($total_tax>0){
 			'discount' => $total_discount,
 			'tax' => $total_tax,
 			'total' => $total,
-			'notes' => $notes,
+			'notes' => $notes.$npromo,
 			'csd' => $customer_id,
 			'items' => $itc,
 			'taxstatus' => $taxstatus,
@@ -2483,7 +2489,8 @@ if($total_tax>0){
 			'puntos' => $puntos,
 			'term' => $pterms,
 			'multi' => $currency,
-            'tipo_factura'=>$tipo_factura
+            'tipo_factura'=>$tipo_factura,
+            'promo'=>$promo
         );
         $this->db->set($data);
         $this->db->where('tid', $invocieno);
