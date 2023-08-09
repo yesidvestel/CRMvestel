@@ -1411,6 +1411,11 @@ $writer->writeSheetHeader($nombrey, $headers,$col_options);
 		if($total_tax>0){
             $subtotal=$total-$total_tax;
         }
+		if($promo!=0){
+			$npromo=' '.$promo.' meses gratis';
+		}else{
+			$npromo='';
+		}
         $data = array(
 			'tid' => $invocieno, 
 			'invoicedate' => $bill_date, 
@@ -1420,7 +1425,7 @@ $writer->writeSheetHeader($nombrey, $headers,$col_options);
 			'discount' => $total_discount, 
 			'tax' => $total_tax, 
 			'total' => $total, 
-			'notes' => $notes, 
+			'notes' => $notes.$npromo, 
 			'status' => $status,
 			'csd' => $customer_id, 
 			'eid' => $this->aauth->get_user()->id, 
