@@ -1213,6 +1213,7 @@ $writer->writeSheetHeader($nombrey, $headers,$col_options);
         $total = $this->input->post('total');
         $project = $this->input->post('prjid');
         $tipo_factura = $this->input->post('tipo_factura');
+        $promo = $this->input->post('promo');
         $total_tax = 0;
         $total_discount = 0;
         $discountFormat = $this->input->post('discountFormat');
@@ -1434,7 +1435,8 @@ $writer->writeSheetHeader($nombrey, $headers,$col_options);
 			'combo' => $combo,
 			'puntos' => $puntos,
 			'ron' => $estado,
-            'tipo_factura'=>$tipo_factura
+            'tipo_factura'=>$tipo_factura,
+            'promo'=>$promo
         );
 
         if ($flag == true) {

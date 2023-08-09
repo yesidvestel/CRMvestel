@@ -826,3 +826,8 @@ ACTUALIZACION DE CONTRATO 1 G
 --------------------------------------
 ALTER TABLE `temporales` 
 ADD `pago` varchar(10) NULL DEFAULT NULL AFTER `puntos`;
+----------------------------------------------------------------------------------------------------------
+PROMOCION EN FACTURAS
+---------------------------------------------------------
+ALTER TABLE `invoices` 
+ADD `promo` int(10) NOT NULL DEFAULT 0 AFTER `tipo_factura`;

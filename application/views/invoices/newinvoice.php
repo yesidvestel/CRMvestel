@@ -189,6 +189,17 @@
                                             </select>
                                         </div>
                                     </div>
+									<div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="discountFormat"
+                                                   class="caption">Promocion</label>
+                                            <select class="form-control" name="promo">                                             <option value="0">Sin Promocion</option>
+													<?php for ($i=1;$i<=5;$i++){
+													echo '<option value="'.$i.'">'.$i.' meses</option>';
+													}?>
+                                            </select>
+                                        </div>
+                                    </div>
 									
                                 </div>
                                 <div class="form-group row">
