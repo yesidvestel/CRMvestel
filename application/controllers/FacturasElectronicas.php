@@ -89,6 +89,7 @@ $this->load->model("customers_model","customers");
 
     }
     public function guardar(){
+        $this->facturas_electronicas->cargar_configuraciones_para_facturar();
     	$this->load->library('SiigoAPI');
         $api = new SiigoAPI();
         $api->getAuth(1);
@@ -680,7 +681,12 @@ if($_SESSION[md5("variable_datos_pin")]['db_name'] == "admin_crmvestel"){
     public function procesar_usuarios_a_facturar(){
         $dateTime=new DateTime($_POST['sdate']);
         $caja1=$this->db->get_where('accounts',array('id' =>$_POST['pay_acc']))->row();
-        $se_facturo = $this->db->query("SELECT * FROM facturacion_electronica_siigo WHERE fecha ='".$dateTime->format("Y-m-d")."' and customer_id=".$_POST['id_customer'])->result_array();//and id=8241
+        $se_facturo=array();
+        if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
+            $se_facturo = $this->db->query("SELECT * FROM facturacion_electronica_siigo WHERE MONTH(fecha) ='".$dateTime->format("m")."' and YEAR(fecha) = '".$dateTime->format("Y")."' and customer_id=".$_POST['id_customer'])->result_array();//and id=8241
+        }else{
+            $se_facturo = $this->db->query("SELECT * FROM facturacion_electronica_siigo WHERE fecha ='".$dateTime->format("Y-m-d")."' and customer_id=".$_POST['id_customer'])->result_array();//and id=8241    
+        }
         $retorno=array();
         if(count($se_facturo)!=0){
             $retorno["estado"]="procesado 2";
