@@ -1,4 +1,8 @@
-
+<style type="text/css">
+	#internet_instalacion,#interB,#adinter,#adtv,#tecnico{
+		width: 100%;
+	}
+</style>
 <div class="app-content content container-fluid">
     <div class="content-wrapper">
         <div class="content-header row">
@@ -454,6 +458,39 @@
 										</div>
                                    </div>
 								</div>
+								<div class="form-group row" id="Servicio_Adicional">	
+                                    <div class="col-sm-12">
+										<h3 class="title">Servicio Adicional</h3>
+                                    </div>
+									<div class="col-sm-4">
+										<label for="invociedate" class="caption">De Internet</label>
+											<select name="adinter" id="adinter" class="form-control mb-1">
+												<option value="no">No</option>
+												<?php
+													foreach ($adint as $row) {
+														$cid = $row['pid'];
+														$title = $row['product_name'];
+														echo "<option value='$title'>$title</option>";
+													}
+												?>
+											</select>
+									</div>
+									<div class="col-sm-4">
+									<label for="invociedate" class="caption">De Television</label>
+										<div class="input-group">									
+											<select name="adtv" id="adtv" class="form-control mb-1">
+												<option value="no">No</option>
+													<?php
+													foreach ($adtv as $row) {
+														$cid = $row['pid'];
+														$title = $row['product_name'];
+														echo "<option value='$title'>$title</option>";
+													}
+												?>
+											</select>
+										</div>
+                                   </div>
+								</div>
 								<div class="form-group row" id="AgregarTelevision">	
                                     <div class="col-sm-12">
 										<h3 class="title">Asignar servicio</h3>
@@ -497,9 +534,34 @@
 									<option value="No prende Cablemoden">No prende Cablemoden</option>
 									<option value="Fibra Rota">Fibra Rota</option>
 									<option value="Cable Caido">Cable Caido</option>
+									<option value="ONU alarmada">ONU alarmada</option>
 									<option value="Desconfigurado Cablemoden">Desconfigurado Cablemoden</option>
 									<option value="Cambio de Tecnologia">Cambio de Tecnologia</option>
 									<option value="No hay Internet">No hay Internet</option>
+									<option value="Fallo Causado por Proveedor de Servicio">Fallo Causado por Proveedor de Servicio</option>
+									<option value="Fallo en centro de datos principal">Fallo en centro de datos principal</option>
+									<option value="Baja cobertura wifi interna">Baja cobertura wifi interna</option>
+									<option value="Cambio de conectores mecánicos">Cambio de conectores mecánicos</option>
+									<option value="Cambio de equipo por daño">Cambio de equipo por daño</option>
+									<option value="Cambio de Patch Cord de fibra">Cambio de Patch Cord de fibra</option>
+									<option value="Cambio de tendido de fibra óptica">Cambio de tendido de fibra óptica</option>
+									<option value="Condiciones de equipo final fuera de parámetros de operación">Condiciones de equipo final fuera de parámetros de operación</option>
+									<option value="Condiciones de equipo final fuera de parámetros de operación">Condiciones de equipo final fuera de parámetros de operación</option>
+									<option value="Configuración de red lan del cliente">Configuración de red lan del cliente</option>
+									<option value="Entrega de servicio a satisfacción">Entrega de servicio a satisfacción</option>
+									<option value="Equipo de cliente final por defecto">Equipo de cliente final por defecto</option>
+									<option value="Habilitación de servicio de internet">Habilitación de servicio de internet</option>
+									<option value="Habilitación de servicio de televisión">Habilitación de servicio de televisión</option>
+									<option value="Mantenimiento Correctivo de red">Mantenimiento Correctivo de red</option>
+									<option value="Mejoramiento de infraestructura de red">Mejoramiento de infraestructura de red</option>
+									<option value="Migración de Tecnología">Migración de Tecnología</option>
+									<option value="Retiro de equipos de comunicaciones">Retiro de equipos de comunicaciones</option>
+									<option value="Revisión de red interna del cliente">Revisión de red interna del cliente</option>
+									<option value="Suministro de equipos o material">Suministro de equipos o material</option>
+									<option value="Traslado de equipos por cambio de vivienda">Traslado de equipos por cambio de vivienda</option>
+									<option value="Traslado interno de equipos de red en cliente final">Traslado interno de equipos de red en cliente final</option>
+									<option value="Viabilidad y/o levantamiento técnico">Viabilidad y/o levantamiento técnico</option>
+									<option value="Punto de distribución de red intermitente o in-operativo">Punto de distribución de red intermitente o in-operativo</option>
 								</select>
 						</div>
                     </div>
@@ -591,11 +653,11 @@
     });
 	// selecion de orden
 	<?php if ($this->aauth->get_user()->roleid == 5 || $this->aauth->get_user()->tiknue != null) { ?>
-	var perfil_servicio = new Array ("...","Reconexion Combo","Reinstalación","Activacion","Reconexion Television","Retiro voluntario","Recuperación cable modem","Cambio de clave","Veeduria","Reconexion Internet","AgregarInternet","AgregarTelevision","Migracion","Bajar_megas","Cambio de equipo","Corte Combo","Corte Internet","Corte Television","Equipo adicional","Instalacion","Punto nuevo","Subir_megas","Suspension Combo","Suspension Internet","Suspension Television","Traslado","Toma_Adicional");
+	var perfil_servicio = new Array ("...","Reconexion Combo","Reinstalación","Activacion","Reconexion Television","Retiro voluntario","Cambio de clave","Recuperación cable modem","Veeduria","Reconexion Internet","AgregarInternet","AgregarTelevision","Migracion","Bajar_megas","Cambio de equipo","Corte Combo","Corte Internet","Corte Television","Equipo adicional","Instalacion","Punto nuevo","Instalación y/o Mantenimiento de Equipos Activos de Red","Habilitación de equipos en red interna de cliente final","Subir_megas","Suministro De Dispositivo O Material","Suministro de equipos – OTTIS Hardware / Software","Traslado interno De Equipos Red en cliente final","Suspension Combo","Suspension Internet","Suspension Television","Servicio_Adicional","Traslado","Revisión y/o Configuración De Equipos De Red Lan De cliente final","Soporte técnico – OTTIS Hardware  / Software","Mejoramiento y/o Mantenimiento Red Fibra Óptica","Viabilidad y/o levantamiento técnico","Toma_Adicional","Retiro y Desinstalacion por Cartera","Entrega De Servicio A Satisfacción");
 	<?php } else if ($this->aauth->get_user()->roleid == 4 || $this->aauth->get_user()->usadm != null) { ?>
-	var perfil_servicio = new Array ("...","AgregarInternet","Reinstalación","Activacion","AgregarTelevision","Retiro voluntario","Recuperación cable modem","Cambio de clave","Migracion","Veeduria","Bajar_megas","Cambio de equipo","Corte Combo","Corte Internet","Corte Television","Equipo adicional","Instalacion","Punto nuevo","Subir_megas","Suspension Combo","Suspension Internet","Suspension Television","Traslado","Toma_Adicional");
+	var perfil_servicio = new Array ("...","AgregarInternet","AgregarTelevision","Activacion","Cambio de clave","Reinstalación","Retiro voluntario","Recuperación cable modem","Migracion","Veeduria","Bajar_megas","Cambio de equipo","Corte Combo","Corte Internet","Corte Television","Habilitación de equipos en red interna de cliente final","Equipo adicional","Instalacion","Punto nuevo","Subir_megas","Instalación y/o Mantenimiento de Equipos Activos de Red","Suspension Combo","Suspension Internet","Servicio_Adicional","Soporte técnico – OTTIS Hardware  / Software","Suministro de equipos – OTTIS Hardware / Software","Suspension Television","Traslado interno De Equipos Red en cliente final","Revisión y/o Configuración De Equipos De Red Lan De cliente final","Suministro De Dispositivo O Material","Mejoramiento y/o Mantenimiento Red Fibra Óptica","Traslado","Viabilidad y/o levantamiento técnico","Toma_Adicional","Retiro y Desinstalacion por Cartera","Entrega De Servicio A Satisfacción");
 	<?php } else { ?>
-	var perfil_servicio = new Array ("...","AgregarInternet","Reinstalación","Activacion","AgregarTelevision","Recuperación cable modem","Migracion","Veeduria","Bajar_megas","Cambio de equipo","Cambio de clave","Corte Combo","Corte Internet","Corte Television","Equipo adicional","Instalacion","Punto nuevo","Subir_megas","Traslado","Toma_Adicional");
+	var perfil_servicio = new Array ("...","AgregarInternet","AgregarTelevision","Activacion","Cambio de clave","Reinstalación","Recuperación cable modem","Migracion","Veeduria","Bajar_megas","Cambio de equipo","Corte Combo","Corte Internet","Corte Television","Equipo adicional","Habilitación de equipos en red interna de cliente final","Instalación y/o Mantenimiento de Equipos Activos de Red","Instalacion","Punto nuevo","Subir_megas","Suministro de equipos – OTTIS Hardware / Software","Traslado interno De Equipos Red en cliente final","Servicio_Adicional","Mejoramiento y/o Mantenimiento Red Fibra Óptica","Soporte técnico – OTTIS Hardware  / Software","Suministro De Dispositivo O Material","Traslado","Viabilidad y/o levantamiento técnico","Revisión y/o Configuración De Equipos De Red Lan De cliente final","Toma_Adicional","Retiro y Desinstalacion por Cartera","Entrega De Servicio A Satisfacción");
 	<?php }; ?>
 	var perfil_reclamo = new Array ("...","Revision_de_Internet","Revision_de_television","Revision tv e internet");	
 							//crear funcion que ejecute el cambio

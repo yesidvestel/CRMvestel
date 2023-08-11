@@ -26,6 +26,7 @@ class Clientgroup extends CI_Controller
         parent::__construct();
         $this->load->model('clientgroup_model', 'clientgroup');
         $this->load->model('customers_model', 'customers');
+        $this->load->model('invoices_model', 'invocies');
                
         $this->load->library("Aauth");
         if (!$this->aauth->is_loggedin()) {
@@ -369,7 +370,20 @@ class Clientgroup extends CI_Controller
             }
 
 //esto es para los estados
-
+            //add  services adicionales
+            $list_servs=$this->invocies->servicios_adicionales_recurrentes($invoice->tid);
+            //var_dump($list_servs);
+            if(isset($list_servs) && count($list_servs)>0){
+                foreach ($list_servs as $keysv => $sv) {
+                    $pr_sr=$this->db->get_where("products",array("pid"=>$sv['pid']))->row();
+                    if(isset($pr_sr) && $pr_sr->taxrate!="0"){
+                        $iva2=round(($pr_sr->product_price*$pr_sr->taxrate)/100);
+                        $sv['total']+=$iva2;   
+                    }
+                    $suma+=($sv['total']*$sv['valor']);
+                }
+            }
+            //end add  services adicionales
                         if($_var_tiene_internet){
                             $lista_de_productos=array();
                             if($_SESSION[md5("variable_datos_pin")]['db_name'] == "admin_crmvestel"){
@@ -382,7 +396,11 @@ class Clientgroup extends CI_Controller
                             foreach ($lista_de_productos as $key => $prod) {
                                 $prod->product_name=strtolower(str_replace(" ", "",$prod->product_name ));
                                 if($prod->product_name==$var_e){
-                                    $suma+=$prod->product_price;                                    
+                                    $iva2=0;
+                                    if(isset($prod) && $prod->taxrate!="0"){
+                                        $iva2=round(($prod->product_price*$prod->taxrate)/100);
+                                    }
+                                    $suma+=$prod->product_price+$iva2;                                        
                                     break;
                                 }
                             }
@@ -1278,6 +1296,20 @@ class Clientgroup extends CI_Controller
             }
 
 //esto es para los estados 
+            //add  services adicionales
+            $list_servs=$this->invocies->servicios_adicionales_recurrentes($invoice->tid);
+            //var_dump($list_servs);
+            if(isset($list_servs) && count($list_servs)>0){
+                foreach ($list_servs as $keysv => $sv) {
+                    $pr_sr=$this->db->get_where("products",array("pid"=>$sv['pid']))->row();
+                    if(isset($pr_sr) && $pr_sr->taxrate!="0"){
+                        $iva2=round(($pr_sr->product_price*$pr_sr->taxrate)/100);
+                        $sv['total']+=$iva2;   
+                    }
+                    $suma+=($sv['total']*$sv['valor']);
+                }
+            }
+            //end add  services adicionales
                         if($_var_tiene_internet){$var_excluir=false;
                             $lista_de_productos=array();
                             if($_SESSION[md5("variable_datos_pin")]['db_name'] == "admin_crmvestel"){
@@ -1289,7 +1321,11 @@ class Clientgroup extends CI_Controller
                             foreach ($lista_de_productos as $key => $prod) {
                                 $prod->product_name=strtolower(str_replace(" ", "",$prod->product_name ));
                                 if($prod->product_name==$var_e){
-                                    $suma+=$prod->product_price;                                    
+                                    $iva2=0;
+                                    if(isset($prod) && $prod->taxrate!="0"){
+                                        $iva2=round(($prod->product_price*$prod->taxrate)/100);
+                                    }
+                                    $suma+=$prod->product_price+$iva2;                                    
                                     break;
                                 }
                             }
@@ -2096,7 +2132,20 @@ $suscripcion_str2=$suscripcion_str;
 							}
 
 				//esto es para los estados 
-
+            //add  services adicionales
+            $list_servs=$this->invocies->servicios_adicionales_recurrentes($invoice->tid);
+            //var_dump($list_servs);
+            if(isset($list_servs) && count($list_servs)>0){
+                foreach ($list_servs as $keysv => $sv) {
+                    $pr_sr=$this->db->get_where("products",array("pid"=>$sv['pid']))->row();
+                    if(isset($pr_sr) && $pr_sr->taxrate!="0"){
+                        $iva2=round(($pr_sr->product_price*$pr_sr->taxrate)/100);
+                        $sv['total']+=$iva2;   
+                    }
+                    $suma+=($sv['total']*$sv['valor']);
+                }
+            }
+            //end add  services adicionales
                         if($_var_tiene_internet){
                             $lista_de_productos=array();
                             if($_SESSION[md5("variable_datos_pin")]['db_name'] == "admin_crmvestel"){
@@ -2108,7 +2157,11 @@ $suscripcion_str2=$suscripcion_str;
                             foreach ($lista_de_productos as $key => $prod) {
                                 $prod->product_name=strtolower(str_replace(" ", "",$prod->product_name ));
                                 if($prod->product_name==$var_e){
-                                    $suma+=$prod->product_price;                                    
+                                    $iva2=0;
+                                    if(isset($prod) && $prod->taxrate!="0"){
+                                        $iva2=round(($prod->product_price*$prod->taxrate)/100);
+                                    }
+                                    $suma+=$prod->product_price+$iva2;                                        
                                     break;
                                 }
                             }
@@ -2931,7 +2984,7 @@ if ($valido) {
         //var_dump($lista[0]['abonado']);
         /*datos nuevos*/
          $this->load->model('accounts_model');
-         $this->load->model('invoices_model', 'invocies');
+         //$this->load->model('invoices_model', 'invocies');
         
         $data['acclist'] = $this->accounts_model->accountslist('');
         $csd = intval($this->input->get('id'));

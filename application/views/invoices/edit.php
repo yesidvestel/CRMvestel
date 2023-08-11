@@ -197,6 +197,23 @@
                                             </select>
                                         </div>
                                     </div>
+									<div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="discountFormat"
+                                                   class="caption">Promocion</label>
+											<select class="form-control" name="promo">                                             		<option value="<?php echo $invoice['promo'] ?>">
+														<?php if($invoice['promo']!=0){
+																	echo $invoice['promo']. ' meses';
+																}else{
+																	echo 'Sin promocion';
+																}  ?></option>
+												<option value="0">No aplicar</option>
+														<?php for ($i=1;$i<=5;$i++){
+														echo '<option value="'.$i.'">'.$i.' meses</option>';
+														}?>
+                                            </select>
+                                        </div>
+                                    </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-sm-12">

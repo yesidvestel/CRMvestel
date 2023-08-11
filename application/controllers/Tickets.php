@@ -1952,6 +1952,27 @@ $x=0;
         		$this->db->where('tid', $idfactura);
         		$this->db->update('invoices');			
 		}
+		if($ticket->detalle=="Servicio Adicional"){
+			$adnint=$this->db->get_where('products',array('product_name'=>$temporal->internet))->row();
+			$adntv=$this->db->get_where('products',array('product_name'=>$temporal->tv))->row();
+			if($temporal->internet!='no'){
+					$data_serv['tid_invoice']=$idfactura;
+                    $data_serv['pid']=$adnint->pid;
+                    $data_serv['valor']=1;
+                    $data_serv['subtotal']=$adnint->product_price;
+                    $data_serv['total']=$adnint->product_price;
+                    $this->db->insert("servicios_adicionales",$data_serv);
+			}
+			if($temporal->tv!='no'){
+					$data_serv['tid_invoice']=$idfactura;
+                    $data_serv['pid']=$adntv->pid;
+                    $data_serv['valor']=1;
+                    $data_serv['subtotal']=$adntv->product_price;
+                    $data_serv['total']=$adntv->product_price;
+                    $this->db->insert("servicios_adicionales",$data_serv);
+			}
+                    
+		}
 		}//abre en line 963
 		
         $dataz['status']=$status;

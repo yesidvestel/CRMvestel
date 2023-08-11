@@ -467,6 +467,7 @@ class Facturas_electronicas_model extends CI_Model
          /*$this->load->library('SiigoAPI');
         $api = new SiigoAPI();*/
         $this->load->model("customers_model","customers");
+        $this->load->model("invoices_model","invocies");
         $dataApiNET=null;
         $customer = $this->db->get_where("customers",array('id' =>$datos_facturar['id']))->row();
          $array_servicios=$this->customers->servicios_detail($customer->id);
@@ -708,9 +709,9 @@ class Facturas_electronicas_model extends CI_Model
                             //$precios=$this->customers->calculoParaFacturaElectronica($prod->product_price);
                             $v1=($prod->product_price*19)/100;
                             $v2=$v1+$prod->product_price;
-                            $dataApiNET->items[$count]->taxes[$count]->id=4189;
+                            $dataApiNET->items[$count]->taxes[0]->id=4189;
                             $dataApiNET->items[$count]->price=$prod->product_price;
-                            $dataApiNET->items[$count]->taxes[$count]->value=$v1;
+                            $dataApiNET->items[$count]->taxes[0]->value=$v1;
                             $dataApiNET->payments[0]->value+=$v2;
 
                         }else{
@@ -730,6 +731,56 @@ class Facturas_electronicas_model extends CI_Model
                 //para puntos crear similar codigo de este if 
             }
             //falta esta parte identificar el paquete de internet del usuario y agregar sus valores
+            $list_servs=$this->invocies->servicios_adicionales_recurrentes($array_servicios['tid']);
+            //$list_servs=array();
+            if(isset($list_servs) && count($list_servs)>0){
+                $otro_pr='{
+                  "code": "12SOPIVA1",
+                  "description": "DESCRIPCION",
+                  "quantity": 1,
+                  "price": 21008,
+                  "discount": 0.0,
+                  "taxes": [
+                    {"id": 4189,
+                     "name": "IVA 19% sev",
+                     "type": "IVA",
+                     "percentage": 19,
+                     "value": 3991.6
+                    }
+                  ]            
+                }';
+              
+                foreach ($list_servs as $keysv => $sv) {
+                    //$dataApiNET->items[]=$prod_add;
+                      $prod_add=json_decode($otro_pr);
+                    array_push($dataApiNET->items, $prod_add);
+                    $pr_sr=$this->db->get_where("products",array("pid"=>$sv['pid']))->row();
+                    
+                    $dataApiNET->items[$count]->description="Servicio Adicional ".$pr_sr->product_name;
+                    $dataApiNET->items[$count]->code=$pr_sr->product_code;
+                    if(isset($pr_sr) && $pr_sr->taxrate!="0"){
+                        $iva2=round(($pr_sr->product_price*$pr_sr->taxrate)/100);
+                        $sv['total']+=$iva2;   
+
+                            //$v1=($prod->product_price*19)/100;
+                            //$v2=$v1+$prod->product_price;
+                            $dataApiNET->items[$count]->quantity=$sv['valor'];
+                            $dataApiNET->items[$count]->taxes[0]->id=4189;
+                            $dataApiNET->items[$count]->price=($pr_sr->product_price);
+                            $dataApiNET->items[$count]->taxes[0]->value=($iva2*$sv['valor']);
+                            
+
+                    }else{
+                         unset($dataApiNET->items[$count]->taxes);    
+                         $dataApiNET->items[$count]->quantity=$sv['valor'];
+                         $dataApiNET->items[$count]->price=$pr_sr->product_price;
+                    }
+                    $suma=($sv['total']*$sv['valor']);
+                    $dataApiNET->payments[0]->value+=$suma;
+                    $count++;
+                }
+            }
+
         }
 
 
@@ -753,7 +804,9 @@ class Facturas_electronicas_model extends CI_Model
 
         $dataApiNET=json_encode($dataApiNET); 
         $retorno=array("mensaje"=>"No");
-
+        //var_dump($datos_facturar['servicios']);
+//var_dump($dataApiNET);
+//exit();
         if($dataApiNET!=null && $dataApiNET!="null"){
             $retorno = $api->accionar($api,$dataApiNET,1);     
         }
@@ -785,6 +838,9 @@ class Facturas_electronicas_model extends CI_Model
             $retor=array("status"=>false,'respuesta'=>$retorno['respuesta']);
             return $retor;
         }
+    }
+    public function get_ultima_factura_electronica($doc){
+        
     }
 
 }

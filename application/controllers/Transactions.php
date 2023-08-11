@@ -2515,6 +2515,39 @@ $result=array();
         $this->load->view('fixed/footer');
 
     }
+	public function edit()
+    {
+        if ($this->aauth->get_user()->roleid < 2) {
+
+            exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
+
+        }
+        $head['title'] = "View Transaction";
+        $head['usernm'] = $this->aauth->get_user()->username;
+        $id = $this->input->get('id');
+        $data['trans'] = $this->transactions->view($id);
+        if ($data['trans']['payerid'] > 0) {
+            $data['cdata'] = $this->transactions->cview($data['trans']['payerid'],$data['trans']['ext']);
+        } else {
+            $data['cdata'] = array('address' => 'Not Registered', 'city' => '', 'phone' => '', 'email' => '');
+        }
+        $this->load->view('fixed/header', $head);
+        $this->load->view('transactions/edit', $data);
+        $this->load->view('fixed/footer');
+
+    }
+	public function edittrans()
+    {
+        $id = $this->input->post('id');
+		$deb = $this->input->post('debito');
+		$cred = $this->input->post('credito');
+		$fcha = $this->input->post('fecha');
+		$nte = $this->input->post('nota');
+
+        if ($id) {
+            $this->transactions->edit($id, $deb, $cred, $fcha, $nte);
+        }
+    }
 
 
     public function print_t()

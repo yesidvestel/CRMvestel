@@ -89,6 +89,7 @@ $this->load->model("customers_model","customers");
 
     }
     public function guardar(){
+        $this->facturas_electronicas->cargar_configuraciones_para_facturar();
     	$this->load->library('SiigoAPI');
         $api = new SiigoAPI();
         $api->getAuth(1);
@@ -555,6 +556,54 @@ public function borrar_facturas_v(){
         $this->load->view('facturas_electronicas/configuraciones',$data);
         $this->load->view('fixed/footer');       
     }
+    public function x1(){
+        var_dump($_SESSION['errores']);
+    }
+    public function pr1(){
+        ob_clean();
+        $otro='{
+              "code": "12SOPIVA1",
+              "description": "DESCRIPCION",
+              "quantity": 1,
+              "price": 21008,
+              "discount": 0.0,
+              "taxes": [
+                {"id": 4189,
+                 "name": "IVA 19% sev",
+                 "type": "IVA",
+                 "percentage": 19,
+                 "value": 3991.6
+                }
+              ]            
+            }';
+        $this->load->model('customers_model', 'customers');
+        $dataApiNET= $this->customers->getFacturaElectronicaOttis(1,null);  
+       $dataApiNET =json_decode($dataApiNET);
+        echo"<pre>";
+        var_dump($dataApiNET);  
+
+        echo"</pre>";
+        echo "<br>";
+                echo"<pre>";
+             $otro=   json_decode($otro);
+        var_dump($otro);  
+
+        echo"</pre>";
+        echo "<br> nuevo";
+        $dataApiNET->items[]=$otro;
+        echo"<pre>";
+        var_dump($dataApiNET);  
+
+        echo"</pre>";
+        echo "<br> json :";
+        echo"<pre>";
+        var_dump(json_encode($dataApiNET));  
+
+        echo"</pre>";
+        echo "<br>";
+
+
+    }
     public function visualizar_resumen_ejecucion(){
         $head['title'] = "Facturas electronicas generadas ";        
         
@@ -632,7 +681,12 @@ if($_SESSION[md5("variable_datos_pin")]['db_name'] == "admin_crmvestel"){
     public function procesar_usuarios_a_facturar(){
         $dateTime=new DateTime($_POST['sdate']);
         $caja1=$this->db->get_where('accounts',array('id' =>$_POST['pay_acc']))->row();
-        $se_facturo = $this->db->query("SELECT * FROM facturacion_electronica_siigo WHERE fecha ='".$dateTime->format("Y-m-d")."' and customer_id=".$_POST['id_customer'])->result_array();//and id=8241
+        $se_facturo=array();
+        if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
+            $se_facturo = $this->db->query("SELECT * FROM facturacion_electronica_siigo WHERE MONTH(fecha) ='".$dateTime->format("m")."' and YEAR(fecha) = '".$dateTime->format("Y")."' and customer_id=".$_POST['id_customer'])->result_array();//and id=8241
+        }else{
+            $se_facturo = $this->db->query("SELECT * FROM facturacion_electronica_siigo WHERE fecha ='".$dateTime->format("Y-m-d")."' and customer_id=".$_POST['id_customer'])->result_array();//and id=8241    
+        }
         $retorno=array();
         if(count($se_facturo)!=0){
             $retorno["estado"]="procesado 2";
