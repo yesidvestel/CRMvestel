@@ -214,7 +214,7 @@ var tb;
         if(cuentas=="" && categorias=="" && opcion_seleccionada==""){
             tb.ajax.url( baseurl+'transactions/translist?type=expense').load();     
         }else{
-            tb.ajax.url( baseurl+"transactions/translist?sdate="+sdate+"&edate="+edate+"&opcselect="+opcion_seleccionada+"&cuentas="+cuentas+"&categorias="+categorias+"&type=expense" ).load();     
+            tb.ajax.url( baseurl+"transactions/translist?sdate="+sdate+"&edate="+edate+"&opcselect="+opcion_seleccionada+"&cuentas="+cuentas+"&categorias="+categorias+"&type=Expense" ).load();     
         }
        
 
