@@ -202,7 +202,7 @@ $fcontrato = $details['f_contrato'];
 	<table width="100%">
   <tbody>
     <tr>
-      <td style="width: 24%"><img src="<?php echo FCPATH . '/userfiles/company/' . $this->config->item('logo') ?>" style="max-width:20%;"></td>
+      <td style="width: 24%"><img src="<?=base_url()."userfiles/company/".$company->logo  ?>" style="max-width:20%;"></td>
       <td class="end1" style="width: 25%"><h2>CONTRATO ÚNICO DE <br>SERVICIOS FIJOS </h2>No. <span style="border-bottom: 1px solid;"><?php echo $details['documento'] ?></span></td>
 		<td rowspan="8" style="width: 2%"></td>
       <td colspan="2" rowspan="3" style="width: 48%; text-align: justify;">
@@ -625,7 +625,7 @@ $fcontrato = $details['f_contrato'];
 			</table>
 			<table>
 				<tr>
-					<td><img src="<?php echo FCPATH . '/userfiles/company/qr_vestel.png'?>"></img></td>
+					<td><img id="logo" src="<?=FCPATH."userfiles/company/".$company->logo  ?>"></img></td>
 					<td align="left" valign="middle"><br><br><br><h1>OTTIS COMUNICACIONES</h1></td>
 				</tr>
 			</table>
@@ -658,9 +658,9 @@ $fcontrato = $details['f_contrato'];
 					  Identificación: <span style="border-bottom: 1px solid;"><?php echo $details['tipo_documento'].' '.$details['documento'] ?></span><br><br>
 					Correo electrónico: <span style="border-bottom: 1px solid;"><?php echo $details['email'] ?></span><br><br>
 					Teléfono de contacto: <span style="border-bottom: 1px solid;"><?php echo $details['celular'] ?></span><br><br>
-					Dirección de servicio: <span style="border-bottom: 1px solid;"><?php echo $details['barrio'] ?></span> Estrato: <span style="border-bottom: 1px solid;"><?php echo $details['estrato'] ?></span><br><br>
+					Dirección de servicio: <span style="border-bottom: 1px solid;"><?php echo $details['nomenclatura'].' '.$details['numero1'].$details['adicionauno'].' # '.$details['numero2'].$details['adicional2'].' - '.$details['numero3'] ?></span><span style="border-bottom: 1px solid;"><?php echo $details['barrio'] ?></span> Estrato: <span style="border-bottom: 1px solid;"><?php echo $details['estrato'] ?></span><br><br>
 					Departamento: <span style="border-bottom: 1px solid;"><?php echo $details['departamento'] ?></span> Municipio: <span style="border-bottom: 1px solid;"><?php echo $details['ciudad'] ?></span><br><br>
-					Dirección suscriptor: <span style="border-bottom: 1px solid;"><?php echo $details['nomenclatura'].' '.$details['numero1'].$details['adicionauno'].' # '.$details['numero2'].$details['adicional2'].' - '.$details['numero3'] ?></span>
+					Dirección suscriptor: 
 					</td>
 				</tr>
 			</table>
