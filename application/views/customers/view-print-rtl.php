@@ -196,8 +196,9 @@ $fcontrato = $details['f_contrato'];
 
 <body>
 
-<div class="invoice-box">
+
 	<?php if($this->config->item('ctitle')=='VESTEL S.A.S'){ ?>
+	<div class="invoice-box">
 	<table width="100%">
   <tbody>
     <tr>
@@ -610,9 +611,10 @@ $fcontrato = $details['f_contrato'];
     		</tr>
   		</tbody>
 	</table>
-
+</div>
 	<!-- --------------------------------CONTRATO OTTIS ------------------------------------- -->
 	<?php } else if($this->config->item('ctitle')=='FUTURE SOLUTIONS DEVELOPMENT SAS'){ ?>
+<div class="invoice-box">
 	<table>
 	<tr>
 		<td width="50%"> <!--COLUMNA IZQUIERDA-->
@@ -624,7 +626,7 @@ $fcontrato = $details['f_contrato'];
 			<table>
 				<tr>
 					<td><img src="<?php echo FCPATH . '/userfiles/company/qr_vestel.png'?>"></img></td>
-					<td align="left" valign="middle"><br><br><br><h1>OTTIS COMUNICACIONES<?php echo $this->config->item('ctitle') ?></h1></td>
+					<td align="left" valign="middle"><br><br><br><h1>OTTIS COMUNICACIONES</h1></td>
 				</tr>
 			</table>
 			<table border="1">
@@ -1029,7 +1031,8 @@ $fcontrato = $details['f_contrato'];
 	</table>
 	 </tbody>
 	</table> 
+	</div>
 	<?php } ?>
-   </div>
+   
   </body>
 </html>
