@@ -761,7 +761,159 @@
         </tr>
         </tbody>
     </table>
-    <br>
+	<table border="1">
+        <tr>
+            <td class="centeral" rowspan="6">
+                <h4>SISTEMA INTEGRADO DE GESTION</h4>
+				<h4>FUTURE SOLUTIONS DEVELOPMENT SAS</h4><br>
+				<h5>ANEXO N. 1 AL CONTRATO UNICO DE SERVICIOS FIJOS Y ACUERDOS DE NIVEL DE
+				PRESTACION DE SERVICIO PARA EL ACCESO A INTERNET</h5>
+            </td>
+			<tr>
+				   <td style="padding: 1"> <img src="<?php echo FCPATH . '../invoices/userfiles/company' . $this->config->item('logo') ?>" style="max-width:80px;"></td>
+			</tr>
+			<tr>
+            	<td style="padding: 1;font-size: 11px">CÓDIGO: FSD-FRM-OPS-004</td>
+			</tr>
+			<tr>
+            	<td style="padding: 1;font-size: 11px">VERSIÓN: 006</td>
+			</tr>
+			<tr>
+            	<td style="padding: 1;font-size: 11px">FECHA: 04/04/2022</td>
+			</tr>
+			<tr>
+            	<td style="padding: 1;font-size: 11px">PÁGINA: 4 DE 4</td>
+			</tr>
+        </tr>
+		<tr style="border: 0">
+			<td style="border: 0"></td>
+			<td style="border: 0">Contrato N:___________</td>
+		</tr>
+    </table>
+
+    <table border="1">
+        <tbody>
+		
+					<tr>
+					<td style="font-size: 7px;line-height: inherit;text-align: justify" >
+			programa que permitan su desactivación o efectividad total o parcial.
+			<h4>10.5. CORREO Y POLÍTICA ANTISPAM.</h4>
+			Es un deber de los usuarios de FSD S.A.S. utilizar el servicio de correo electrónico de manera adecuada y responsable. El Spamming es una actividad ilegal que no es permitida
+			ni tolerada por FSD S.A.S. Para determinar si un Usuario de FSD S.A.S. está enviando correo SPAM, se apoyará en los reportes enviados por entidades internacionales o
+			terceros, así como de los reportes generados por la herramienta antispam con la que cuenta FSD S.A.S. Los usuarios que tienen listas con direcciones de correo electrónico, las
+			cuales han sido previamente inscritas y autorizadas por sus responsables para enviarles correos electrónicos, deberán informara los destinatarios el derecho que tienen a
+			solicitar su retiro de la lista (opción “unsubscribe”) y deberán adoptar las medidas necesarias para evitar que sigan enviando este tipo de correos una vez el Usuario lo haya
+			solicitado. La opción de retiro de la lista de correo, no exime al generador de su responsabilidad, ya que si el correo ha sido enviado a una dirección que no lo ha solicitado será
+			catalogado como SPAMMER. Los Usuarios de FSD S.A.S. son los únicos responsables de los mensajes y del contenido que anuncian, distribuyen o de otro modo facilitan
+			utilizando las conexiones y servicios que ofrece FSD S.A.S. Es responsabilidad del Usuario asegurar y configurar de forma adecuada los equipos y servicios que va a conectar a
+			Internet. FSD S.A.S. no se responsabiliza por equipos del Usuario. En este orden de ideas, los Usuarios deben abstenerse de realizar, entre otras, las siguientes prácticas:
+			<table style="font-size: 8px;line-height: inherit;text-align: justify;">
+				<tr>
+					<td style="padding-top: 0"></td>
+					<td style="padding: 0">* Hacer Spamming de cualquier naturaleza que no haya sido autorizados por el(los) destinatario(s) o que pudieran originar cualquier clase de incomodidad o queja por parte del mismo.</td>
+				</tr>
+				<tr>
+					<td style="padding-top: 0"></td>
+					<td style="padding: 0">* Continuar enviando correo a destinatarios que le hayan solicitado que no desean continuar recibiendo esta clase de correos.</td>
+				</tr>
+				<tr>
+					<td style="padding-top: 0"></td>
+					<td style="padding: 0">* Utilizar cualquier servicio prestado por FSD S.A.S. para la composición, almacenamiento, distribución, colección o envío masivo de correo electrónico. Se incluye
+											 cualquier forma de correo que no hayan sido solicitados, así como transmitir correos a terceras personas sin su consentimiento que fueran obscenos, molestos,
+											 injuriosos, difamatorios, abusivos, amenazantes o que pongan en peligro la estabilidad de la red de FSD S.A.S. o de cualquier otra red.</td>
+				</tr>
+				<tr>
+					<td style="padding-top: 0"></td>
+					<td style="padding: 0">* Brindar la posibilidad de manera directa o indirecta la proliferación de correo spam, incluyendo las casillas de correo, software para realizar spam, hosting de sitios Web para realizar spam o que realicen spam.</td>
+				</tr>
+				<tr>
+					<td style="padding-top: 0"></td>
+					<td style="padding: 0">* Utilizar un servidor de correo para retransmitir correo sin el permiso expreso del sitio (Relaying). Entiéndase Relaying como la acción de utilizar un servidor como medio
+											 de difusión de correo electrónico en el cual, el remitente o el destinatario no son usuarios de dicho servidor.</td>
+				</tr>	
+			</table>
+			<h4>10.6. ALCANCES Y RESPONSABILIDAD LEGAL EN LA PRESTACION DEL SERVICIO DE INTERNET.</h4>
+				Es obligación de FSD S.A.S. como Proveedores del servicio de internet informar la existencia y los alcances de la Ley 679 de 2001 y su decreto reglamentario 1524 de 2002 por
+				medio de los cuales se expidió el estatuto para prevenir y contrarrestar la explotación, la pornografía y el turismo sexual con menores en desarrollo del Artículo 44 de la
+				Constitución Política de Colombia. Nos permitimos relacionar los artículos 7°, 8° y 10° de la Ley 679 de 2001 así como los Deberes y Prohibiciones del decreto 1524 de 2002.
+				“ARTÍCULO 7o. PROHIBICIONES. Los proveedores o servidores, administradores y usuarios de redes globales de información no podrán:.
+				En caso de que la política de facturación sea modificada la misma será publicada en la página web www.ottis.com.co.<br>
+				1. Alojar en su propio sitio imágenes, textos, documentos o archivos audiovisuales que impliquen directa o indirectamente actividades sexuales con menores de edad.<br>
+				2. Alojar en su propio sitio material pornográfico, en especial en modo de imágenes o videos, cuando existan indicios de que las personas fotografiadas o filmadas son menores de edad.<br>
+				3. Alojar en su propio sitio vínculos o links, sobre sitios telemáticos que contengan o distribuyan material pornográfico relativo a menores de edad.
+				ARTÍCULO 8o. DEBERES. Sin perjuicio de la obligación de denuncia consagrada en la ley para todos los residentes en Colombia, los proveedores, administradores y usuarios
+				de redes globales de información deberán:<br>
+				1. Denunciar ante las autoridades competentes cualquier acto criminal contra menores de edad de que tengan conocimiento, incluso de la difusión de material pornográfico asociado a menores.<br>
+				2. Combatir con todos los medios técnicos a su alcance la difusión de material pornográfico con menores de edad.<br>
+				3. Abstenerse de usar las redes globales de información para divulgación de material ilegal con menores de edad.<br>
+				4. Establecer mecanismos técnicos de bloqueo por medio de los cuales los usuarios se puedan proteger a sí mismos o a sus hijos de material ilegal, ofensivo o indeseable en
+				relación con menores de edad.<br>
+				ARTÍCULO 10. SANCIONES ADMINISTRATIVAS. El Ministerio de Comunicaciones tomará medidas a partir de las denuncias formuladas, y sancionará a los proveedores o
+				servidores, administradores y usuarios responsables que operen desde territorio colombiano, sucesivamente de la siguiente manera:<br>
+				1. Multas hasta de 100 salarios mínimos legales vigentes.<br>
+				2. Cancelación o suspensión de la correspondiente página electrónica.<br>
+				Para la imposición de estas sanciones se aplicará el procedimiento establecido en el Código Contencioso Administrativo con observancia del debido proceso y criterios de
+				adecuación, proporcionalidad y reincidencia”<br>
+				IMPORTANTE:<br>
+				FSD S.A.S. podrá monitorear los contenidos que circulen por la red y eliminar los que a su juicio se constituyan en usos prohibidos o ilegales, especialmente aquellos que
+				tengan material pornográfico con menores de edad.
+			<h4>11. AUTORIZACIONES DEL USUARIO.</h4>
+				11.1. Consulta y reporte a centrales de riesgo. Doy mi consentimiento expreso e irrevocable a FSD S.A.S., o al tercero que sea acreedor de las obligaciones a mi cargo, en virtud
+				de las negociaciones de cartera que FSD S.A.S. llegare a realizar para: (i) Consultar a centrales de riesgo la información que permita conocer mi desempeño como deudor y
+				demás; (ii) Reportar a las centrales de riesgo, datos sobre cumplimiento o incumplimiento de mis obligaciones por concepto de la prestación de los servicios o por cualquier otra
+				obligación que haya adquirido con FSD S.A.S.. En caso de reporte de datos por incumplimiento, se me deberá informar previamente, con al menos 20 días calendario de
+				antelación, indicándome la obligación en mora, el monto y el fundamento de la misma.<br>
+				11.2. Recibir información a través de mensajes de datos o texto. Cuando se trate de correo electrónico la información deberá ser entregada a la dirección registrada en el
+				presente documento. Además autoriza expresamente a FSD S.A.S. con la firma del presente documento a remitirle la FACTURA utilizando cualquier otro medio alternativo
+				dispuesto por ésta, diferentes de la remisión física, en los términos autorizados por la regulación vigente. Igualmente, autoriza a efectuar el cobro y se compromete a hacer el
+				pago por dichos medios alternativos, de acuerdo con las condiciones que para tal efecto señale la Empresa.<br>
+				11.3. Autorización notificaciones. Autorizo que cualquier notificación dentro de los trámites de PQRs se realicen a través de mecanismos alternos ya sea, mensajería expresa, en
+				línea: a través de internet o a través de correo electrónico. El mecanismo alterno de notificación de servicio de mensajería expresa deberá realizarse conforme lo establece el
+				numeral 2.3 del artículo 3 de la ley 1369 de 2009 y la resolución 3095 de 2011 de la CRC, la Resolución de la CRC 3066 de 2011 y demás normas vigentes.<br>
+				11.4. Otras Autorizaciones
+				<table style="font-size: 8px;line-height: inherit;text-align: justify;">
+				<tr>
+					<td style="padding-top: 0"></td>
+					<td style="padding: 0">* El Usuario autoriza a FSD S.A.S. de no garantizar la prestación del SERVICIO, cuando se presenten las siguientes situaciones técnicas, las cuales son ajenas a FSD
+											 S.A.S.: (i) Cuando por influencia de potencia y/o ruido generado por fuentes externas a FSD S.A.S. se degrade o impida la prestación del SERVICIO; (ii) cuando la
+											 relación entre la señal y el ruido, externo a FSD S.A.S., interfieran en la transmisión de datos; (iv) por daño de la red interna del Usuario; (v) cuando ocurran daños en el
+											 medio de transmisión en donde no es posible realizar reparaciones para establecer el SERVICIO. Cuando se presenten algunas de las circunstancias antes descritas,
+											 FSD S.A.S. realizará las gestiones técnicas pertinentes para tratar de establecer el SERVICIO a las condiciones inicialmente ofrecidas. En caso de no ser posible la
+											 reparación, el Usuario autoriza a FSD S.A.S. para dar por terminado sin necesidad de declaración judicial, el presente CONTRATO, sin lugar a pago o reconocimiento de
+											 indemnización alguna.</td>
+				</tr>
+				<tr>
+					<td style="padding-top: 0"></td>
+					<td style="padding: 0">* El Usuario autoriza a FSD S.A.S. a no responder por los daños o perjuicios que pueda ocasionarle al Usuario, por la falta de continuidad o interrupción del SERVICIO;
+											 si el Usuario insistiere que se le suministre el SERVICIO a pesar de los inconvenientes técnicos o de los mayores costos que por virtud de los mismos se generen, éste
+											 autorizará con la firma del presente documento a FSD S.A.S. para que cobre los mayores valores que se causen para poder prestarle el SERVICIO en tales condiciones.
+											 El Usuario conoce y acepta que por tales razones la Empresa no puede garantizar el suministro y calidad del SERVICIO.</td>
+				</tr>
+			</table>
+			
+			
+				</tr>	
+			</table>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+	<br>
+	<td colspan="2">
+	 <table width="100%" border="1">
+      <tbody >
+       <tr >
+        <td align="center"><?php if(file_exists($url_firma)){ ?><img height="130px" src="<?=$url_firma?>"></img><?php } if(file_exists($url_huella)){ ?><img height="130px" src="<?=$url_huella?>"></img><?php } ?><br>Con esta firma acepta recibir la factura solo por medios electrónicos</td>
+       </tr>
+  	  </tbody>
+	 </table><br>
+	 <h6 align="center">CC/CE ____________________FECHA ____/______/20____</h6>
+	 <h6 align="center">Consulte el régimen de protección de usuarios en www.crcom.gov.co</h6>
+	</td>
+
+
+
+    <!--<br>
     <table class="subtotal">
         <tr>
             <td rowspan="<?php echo $cols ?>">
@@ -792,7 +944,7 @@
 				VESTEL S.A.S
 			</td>
 		</tr>
-	</table>
+	</table>-->
 </div>
 </body>
 </html>
