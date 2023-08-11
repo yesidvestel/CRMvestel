@@ -197,6 +197,7 @@ $fcontrato = $details['f_contrato'];
 <body>
 
 <div class="invoice-box">
+	<?php if($this->config->item('ctitle')=='VESTEL S.A.S'){ ?>
 	<table width="100%">
   <tbody>
     <tr>
@@ -611,136 +612,57 @@ $fcontrato = $details['f_contrato'];
 	</table>
 
 	<!-- --------------------------------CONTRATO OTTIS ------------------------------------- -->
-	<table border="1">
-	<tbody>
-    <tr>
-      <td style="width: 24%"><img src="<?php echo FCPATH . '/userfiles/company/' . $this->config->item('logo') ?>" style="max-width:20%;"></td>
-      <td class="end1" style="width: 25%"><h2>CONTRATO ÚNICO DE <br>SERVICIOS FIJOS </h2>No. <span style="border-bottom: 1px solid;"><?php echo $details['documento'] ?></span></td>
-		<td rowspan="8" style="width: 2%"></td>
-      <td colspan="2" rowspan="3" style="width: 48%; text-align: justify;">
-		  
-	  		<h4>PRINCIPALES OBLIGACIONES DEL USUARIO</h4>
-						1) 	Pagar oportunamente los servicios prestados,
-							incluyendo los intereses de mora cuando haya
-							incumplimiento;<br>
-						2)  Suministrar información verdadera;<br>
-						3)  Hacer uso adecuado de los equipos y los servicios;<br>
-						4)  No divulgar ni acceder a pornografía infantil (Consultar anexo N. 1)<br>
-						5)  Avisar a las autoridades cualquier evento de robo o
-							hurto de elementos de la red, como el cable;<br>
-						6)  No cometer o ser participe de actividades de fraude.
-			<h4>CALIDAD Y COMPENSACIÓN</h4>
-							Cuando se presente indisponibilidad del servicio superior
-							al ANS contratado o el servicio se suspenda a pesar de
-							su pago oportuno, lo compensaremos en su próxima
-							factura. Debemos cumplir con las condiciones de calidad
-							definidas por la CRC. Consúltelas en la página:
-							www.ottis.com.co
-			<h4>CESIÓN</h4>
-							Si desea ceder este contrato a otra persona, debe
-							presentar una solicitud por escrito a través de nuestros
-							Medios de Atención, acompañada de la aceptación por
-							escrito de la persona a la que se hará la cesión. Dentro
-							de los 15 días hábiles siguientes, analizaremos su
-							solicitud y le daremos una respuesta. Si se acepta la
-							cesión queda liberado de cualquier responsabilidad con
-							nosotros.
-			<h4>MODIFICACIÓN</h4>
-							Nosotros no podemos modificar el contrato sin su
-							autorización. Esto incluye que no podemos cobrarle
-							servicios que no haya aceptado expresamente. Si esto
-							ocurre tiene derecho a terminar el contrato, incluso
-							estando vigente la cláusula de permanencia mínima, sin
-							la obligación de pagar suma alguna por este concepto.
-							No obstante, usted puede en cualquier momento
-							modificar los servicios contratados. Dicha modificación
-							se hará efectiva en el período de facturación siguiente,
-							para lo cual deberá presentar la solicitud de
-							modificación por lo menos con 3 días hábiles de
-							anterioridad al corte de facturación.			
-			</td>
-      
-    </tr>
-    <tr>
-		
-      <td style="width: 15%"><img src="<?php echo FCPATH . '/userfiles/company/qr_vestel.png'?>" style="float: left"></img></td>
-      <td align="left" style="width: 30%"><br><br><br><br><h1>OTTIS COMUNICACIONES</h1></td>
-      
-    </tr>
-    <tr>
-      <td colspan="2" style="background-color: black;color: white; font-size: x-large;text-align: justify">
-	  		Este contrato explica las condiciones para la prestación de los servicios entre usted y Future
-		  Solutions Development SAS nit 830.502.580-6, con Registro TIC RTIC96000418 por el que pagará mínimo
-		  mensualmente <span style="border-bottom: 1px solid;border-bottom-color: white"><?php echo amountFormat($totaltv+$inter) ?></span>. Este contrato
-		  tendrá vigencia de <span style="border-bottom: 1px solid;border-bottom-color: white">12</span> meses, contados a partir
-		  del <span style="border-bottom: 1px solid;border-bottom-color: white"><?php echo date("d/m/Y",strtotime($fcontrato)) ?></span>. El plazo máximo de instalación
-		  es de 15 días hábiles. Acepto que mi contrato se
-		  renueve sucesivamente y automáticamente por un plazo
-		  igual a la inicial.
-		</td>  
-    </tr>
-    <tr>
-      <td colspan="2" style="text-align: justify">
-	  <h4>EL SERVICIO</h4>
+	<?php } else if($this->config->item('ctitle')=='FUTURE SOLUTIONS DEVELOPMENT SAS'){ ?>
+	<table>
+	<tr>
+		<td width="50%"> <!--COLUMNA IZQUIERDA-->
+			<table>
+				<tr>
+					<td style="text-align: right"><h2>CONTRATO ÚNICO DE <br>SERVICIOS FIJOS </h2>No. <span style="border-bottom: 1px solid;"><?php echo $details['documento'] ?></span></td>
+				</tr>
+			</table>
+			<table>
+				<tr>
+					<td><img src="<?php echo FCPATH . '/userfiles/company/qr_vestel.png'?>"></img></td>
+					<td align="left" valign="middle"><br><br><br><h1>OTTIS COMUNICACIONES<?php echo $this->config->item('ctitle') ?></h1></td>
+				</tr>
+			</table>
+			<table border="1">
+				<tr>
+					<td colspan="2" style="background-color: black;color: white; font-size: x-large;text-align: justify">
+						Este contrato explica las condiciones para la prestación de los servicios entre usted y Future
+					  Solutions Development SAS nit 830.502.580-6, con Registro TIC RTIC96000418 por el que pagará mínimo
+					  mensualmente <span style="border-bottom: 1px solid;border-bottom-color: white"><?php echo amountFormat($totaltv+$inter) ?></span>. Este contrato
+					  tendrá vigencia de <span style="border-bottom: 1px solid;border-bottom-color: white">12</span> meses, contados a partir
+					  del <span style="border-bottom: 1px solid;border-bottom-color: white"><?php echo date("d/m/Y",strtotime($fcontrato)) ?></span>. El plazo máximo de instalación
+					  es de 15 días hábiles. Acepto que mi contrato se
+					  renueve sucesivamente y automáticamente por un plazo
+					  igual a la inicial.
+					</td> 
+				</tr>
+			</table>
+			<h4>EL SERVICIO</h4>
 			Con este contrato nos comprometemos a prestarle los servicios que usted elija*:
 			Telefonía Fija Internet fijo Televisión Servicios adicionales <span style="border-bottom: 1px solid;"><?php if ($servicios['television']!=="no"){ echo $servicios['television'];} if ($servicios['combo']!=="no"){ echo ' + '.$servicios['combo'];}if ($servicios['puntos']!=='0'){ echo ' + '.$servicios['puntos'].' Puntos';} ?></span>
 			
 			Usted se compromete a pagar oportunamente el precio acordado. El servicio se activará a
-			más tardar el día <span style="border-bottom: 1px solid;"><?php echo date("d/m/Y",strtotime($fcontrato."+ 15 days")) ?></span>			
-			
-		</td>
-      
-      <td colspan="2">
-				<h4>SUSPENSIÓN</h4>
-							Usted tiene derecho a solicitar la suspensión del servicio
-							por un máximo de 2 meses durante la vigencia del
-							contrato. Para esto debe presentar la solicitud antes del
-							inicio del ciclo de facturación que desea suspender. Si
-							existe una cláusula de permanencia mínima, su vigencia
-							se prorrogará por el tiempo que dure la suspensión.	
-	  			<h4>TERMINACIÓN</h4>
-							Usted puede terminar el contrato en cualquier
-							momento sin penalidades siempre y cuando no cuente
-							aún con cláusula de permanencia. Para esto debe
-							realizar una solicitud a través de correo electrónico al
-							buzón comercial@ottis.com.co o radicando la solicitud
-							en la oficina física mínimo 3 días hábiles antes del corte
-							de facturación (su corte de facturación es el día 30 de
-							cada mes). Si presenta la solicitud con una anticipación
-							menor, la terminación del servicio se dará en el
-							siguiente periodo de facturación.
-							Así mismo, usted puede cancelar cualquiera de los
-							servicios contratados, para lo que le informaremos las
-							condiciones en las que serán prestados los servicios no
-							cancelados y actualizaremos el contrato. Así mismo, si
-							el operador no inicia la prestación del servicio en el
-							plazo acordado, usted puede pedir la restitución de su
-							dinero y la terminación del contrato.
-						</td>
-    					</tr>
-    				<tr>
-      	<td colspan="2">
-		<table width="100%" border="1">
-		<tbody>
-			<tr style="border-radius: 20px">
-			<td style="font-size: x-large">
-		<h4>INFORMACIÓN DEL SUSCRIPTOR</h4><br>
-		Contrato No.: <span style="border-bottom: 1px solid;"><?php echo $details['documento'] ?></span><br><br>
-		Nombre/Razón Social: <span style="border-bottom: 1px solid;"> <?php echo $details['name'].' '.$details['dosnombre'].' '.$details['unoapellido'].' '.$details['dosapellido'] ?></span><br><br>
-		  Identificación: <span style="border-bottom: 1px solid;"><?php echo $details['tipo_documento'].' '.$details['documento'] ?></span><br><br>
-		Correo electrónico: <span style="border-bottom: 1px solid;"><?php echo $details['email'] ?></span><br><br>
-		Teléfono de contacto: <span style="border-bottom: 1px solid;"><?php echo $details['celular'] ?></span><br><br>
-		Dirección de servicio: <span style="border-bottom: 1px solid;"><?php echo $details['barrio'] ?></span> Estrato: <span style="border-bottom: 1px solid;"><?php echo $details['estrato'] ?></span><br><br>
-		Departamento: <span style="border-bottom: 1px solid;"><?php echo $details['departamento'] ?></span> Municipio: <span style="border-bottom: 1px solid;"><?php echo $details['ciudad'] ?></span><br><br>
-		Dirección suscriptor: <span style="border-bottom: 1px solid;"><?php echo $details['nomenclatura'].' '.$details['numero1'].$details['adicionauno'].' # '.$details['numero2'].$details['adicional2'].' - '.$details['numero3'] ?></span>
-		</td>
-		</tr>
-		<tr>
-		<td style="border: 0,0,0,0"></td>
-		</tr>
-		</tbody>
-		</table>
-	<table width="100%" border="1">
+			más tardar el día <span style="border-bottom: 1px solid;"><?php echo date("d/m/Y",strtotime($fcontrato."+ 15 days")) ?></span>
+			<table border="1">
+				<tr>
+					<td style="font-size: x-large">
+					<h4>INFORMACIÓN DEL SUSCRIPTOR</h4><br>
+					Contrato No.: <span style="border-bottom: 1px solid;"><?php echo $details['documento'] ?></span><br><br>
+					Nombre/Razón Social: <span style="border-bottom: 1px solid;"> <?php echo $details['name'].' '.$details['dosnombre'].' '.$details['unoapellido'].' '.$details['dosapellido'] ?></span><br><br>
+					  Identificación: <span style="border-bottom: 1px solid;"><?php echo $details['tipo_documento'].' '.$details['documento'] ?></span><br><br>
+					Correo electrónico: <span style="border-bottom: 1px solid;"><?php echo $details['email'] ?></span><br><br>
+					Teléfono de contacto: <span style="border-bottom: 1px solid;"><?php echo $details['celular'] ?></span><br><br>
+					Dirección de servicio: <span style="border-bottom: 1px solid;"><?php echo $details['barrio'] ?></span> Estrato: <span style="border-bottom: 1px solid;"><?php echo $details['estrato'] ?></span><br><br>
+					Departamento: <span style="border-bottom: 1px solid;"><?php echo $details['departamento'] ?></span> Municipio: <span style="border-bottom: 1px solid;"><?php echo $details['ciudad'] ?></span><br><br>
+					Dirección suscriptor: <span style="border-bottom: 1px solid;"><?php echo $details['nomenclatura'].' '.$details['numero1'].$details['adicionauno'].' # '.$details['numero2'].$details['adicional2'].' - '.$details['numero3'] ?></span>
+					</td>
+				</tr>
+			</table>
+			<table border="1">
   		<tbody>
     		<tr style="border-radius: 20px">
       		<td style="font-size: x-large">
@@ -783,19 +705,86 @@ $fcontrato = $details['f_contrato'];
     		</tr>
   		</tbody>
  	</table>
-	<tr>
-       </tr>
-  	 </tbody>
-</table>
-	<table  border="1">
-		<tbody>
+			
+		</td>
+		<td><!--CENTRO-->
+		</td>
+		<td style="font-size: 23px;line-height: normal;text-align: justify"><!--COLUMNA DERECHO-->
+			<h4>PRINCIPALES OBLIGACIONES DEL USUARIO</h4>
+						1) 	Pagar oportunamente los servicios prestados,
+							incluyendo los intereses de mora cuando haya
+							incumplimiento;<br>
+						2)  Suministrar información verdadera;<br>
+						3)  Hacer uso adecuado de los equipos y los servicios;<br>
+						4)  No divulgar ni acceder a pornografía infantil (Consultar anexo N. 1)<br>
+						5)  Avisar a las autoridades cualquier evento de robo o
+							hurto de elementos de la red, como el cable;<br>
+						6)  No cometer o ser participe de actividades de fraude.
+			<h4>CALIDAD Y COMPENSACIÓN</h4>
+							Cuando se presente indisponibilidad del servicio superior
+							al ANS contratado o el servicio se suspenda a pesar de
+							su pago oportuno, lo compensaremos en su próxima
+							factura. Debemos cumplir con las condiciones de calidad
+							definidas por la CRC. Consúltelas en la página:
+							www.ottis.com.co
+			<h4>CESIÓN</h4>
+							Si desea ceder este contrato a otra persona, debe
+							presentar una solicitud por escrito a través de nuestros
+							Medios de Atención, acompañada de la aceptación por
+							escrito de la persona a la que se hará la cesión. Dentro
+							de los 15 días hábiles siguientes, analizaremos su
+							solicitud y le daremos una respuesta. Si se acepta la
+							cesión queda liberado de cualquier responsabilidad con
+							nosotros.
+			<h4>MODIFICACIÓN</h4>
+							Nosotros no podemos modificar el contrato sin su
+							autorización. Esto incluye que no podemos cobrarle
+							servicios que no haya aceptado expresamente. Si esto
+							ocurre tiene derecho a terminar el contrato, incluso
+							estando vigente la cláusula de permanencia mínima, sin
+							la obligación de pagar suma alguna por este concepto.
+							No obstante, usted puede en cualquier momento
+							modificar los servicios contratados. Dicha modificación
+							se hará efectiva en el período de facturación siguiente,
+							para lo cual deberá presentar la solicitud de
+							modificación por lo menos con 3 días hábiles de
+							anterioridad al corte de facturación.
+			<h4>SUSPENSIÓN</h4>
+							Usted tiene derecho a solicitar la suspensión del servicio
+							por un máximo de 2 meses durante la vigencia del
+							contrato. Para esto debe presentar la solicitud antes del
+							inicio del ciclo de facturación que desea suspender. Si
+							existe una cláusula de permanencia mínima, su vigencia
+							se prorrogará por el tiempo que dure la suspensión.	
+	  			<h4>TERMINACIÓN</h4>
+							Usted puede terminar el contrato en cualquier
+							momento sin penalidades siempre y cuando no cuente
+							aún con cláusula de permanencia. Para esto debe
+							realizar una solicitud a través de correo electrónico al
+							buzón comercial@ottis.com.co o radicando la solicitud
+							en la oficina física mínimo 3 días hábiles antes del corte
+							de facturación (su corte de facturación es el día 30 de
+							cada mes). Si presenta la solicitud con una anticipación
+							menor, la terminación del servicio se dará en el
+							siguiente periodo de facturación.
+							Así mismo, usted puede cancelar cualquiera de los
+							servicios contratados, para lo que le informaremos las
+							condiciones en las que serán prestados los servicios no
+							cancelados y actualizaremos el contrato. Así mismo, si
+							el operador no inicia la prestación del servicio en el
+							plazo acordado, usted puede pedir la restitución de su
+							dinero y la terminación del contrato.
+		</td>
+	</tr>
+	</table>
+	<table><!--hoja 2-->
 		<tr>
-			<td rowspan="8" style="width: 2%"></td>
-			<td colspan="2" rowspan="3" style="width: 48%; text-align: justify;">
-			<H4>PAGO Y FACTURACIÓN</H4>
+			<td width="49%" style="font-size: 20px;line-height: normal;text-align: justify"><!--COLUMNA IZQUIERDA-->
+				<H4>PAGO Y FACTURACIÓN</H4>
 				La factura le debe llegar como mínimo 5 días hábiles
 				antes de la fecha de pago. Si no llega, puede solicitarla a
-				través de nuestros Medios de Atención y debe pagarla
+				través de nuestro
+				s Medios de Atención y debe pagarla
 				oportunamente.
 				Si no paga a tiempo, previo aviso, suspenderemos su
 				servicio hasta que pague sus saldos pendientes.
@@ -820,105 +809,142 @@ $fcontrato = $details['f_contrato'];
 				</table>
 				<br>
 				<h4>COMO COMUNICARSE CON NOSOTROS (MEDIOS DE ATENCIÓN)</h4>
-				1. Nuestros medios de atención son:
-					a. Oficinas físicas Carrera 16A n. 13A - 19 Sogamoso
-					b. Página web www.ottis.com.co
-					c. Redes sociales @ottiscomunica
-					d. Líneas telefónicas fija (PBX): (601) 9172166
-					(601) 7943254
-					e. WhatsApp: 3212893978 - 3114916907 - 3226093107<br>
-				2. Presente cualquier queja, petición / reclamo o recurso
-					a través de estos medios y le responderemos en
-					máximo 15 días hábiles.<br>
-				3. Si no respondemos es porque aceptamos su petición o reclamo.
-					Esto se llama silencio administrativo positivo y aplica para
-					internet y telefonía.<br>
-				
-	 			<h6>Si no está de acuerdo con nuestra respuesta</h6>
-				4. Cuando su queja o petición sea por los servicios de
-				telefonía y/o internet, y esté relacionada con actos de
-				negativa del contrato, suspensión del servicio,
-				terminación del contrato, corte y facturación; usted
-				puede insistir en su solicitud ante nosotros, dentro de los
-				10 días hábiles siguientes a la respuesta, y pedir que
-				si no llegamos a una solución satisfactoria para usted,
-				enviemos su reclamo directamente a la SIC
-				(Superintendencia de Industria y Comercio) quien
-				resolverá de manera definitiva su solicitud. Esto se
-				llama recurso de reposición y en subsidio apelación.
-				Cuando su queja o petición sea por el servicio de
-				televisión, puede enviar la misma a la Autoridad
-				Nacional de Televisión, para que esta Entidad resuelva
-				su solicitud.<br>
+				<br>
+				<table border="1">
+					<tr>
+						<td>
+							1
+						</td>
+						<td>
+							Nuestros medios de atención son:
+							a. Oficinas físicas Carrera 16A n. 13A - 19 Sogamoso<br>
+							b. Página web www.ottis.com.co<br>
+							c. Redes sociales @ottiscomunica<br>
+							d. Líneas telefónicas fija (PBX): (601) 9172166
+							(601) 7943254<br>
+							e. WhatsApp: 3212893978 - 3114916907 - 3226093107
+						</td>
+					</tr>
+					<tr>
+						<td>
+							2
+						</td>
+						<td>
+							Presente cualquier queja, petición / reclamo o recurso
+							a través de estos medios y le responderemos en
+							máximo 15 días hábiles.
+						</td>
+					</tr>
+					<tr>
+						<td>
+							3
+						</td>
+						<td>
+							Si no respondemos es porque aceptamos su petición o reclamo.
+							Esto se llama silencio administrativo positivo y aplica para
+							internet y telefonía.
+						</td>
+					</tr>
+				</table>
+				<br>
+	 			<h4>Si no está de acuerdo con nuestra respuesta</h4>
+				<br>
+				<table border="1">
+					<tr>
+						<td>
+							4
+						</td>
+						<td>
+							Cuando su queja o petición sea por los servicios de
+							telefonía y/o internet, y esté relacionada con actos de
+							negativa del contrato, suspensión del servicio,
+							terminación del contrato, corte y facturación; usted
+							puede insistir en su solicitud ante nosotros, dentro de los
+							10 días hábiles siguientes a la respuesta, y pedir que
+							si no llegamos a una solución satisfactoria para usted,
+							enviemos su reclamo directamente a la SIC
+							(Superintendencia de Industria y Comercio) quien
+							resolverá de manera definitiva su solicitud. Esto se
+							llama recurso de reposición y en subsidio apelación.
+							Cuando su queja o petición sea por el servicio de
+							televisión, puede enviar la misma a la Autoridad
+							Nacional de Televisión, para que esta Entidad resuelva
+							su solicitud.
+						</td>
+					</tr>
+				</table>
+				<br>
 				<h4>ACEPTO CLAUSULA DE PERMANENCIA MÍNIMA</h4>
 				En consideración a que le estamos otorgando un descuento
 				respecto del valor del cargo por conexión, o le diferimos el
 				pago del mismo, se incluye la presente cláusula de
 				permanencia mínima. En la factura encontrará el valor a pagar
-				si decide terminar el contrato anticipadamente.<br>
-
-	  <table width="100%" border="1">
-  	   <tbody>
-    	<tr>
-			<td colspan="6" class="cla">
-				<h4>COSTO INSTALACIÓN</h4>
+				si decide terminar el contrato anticipadamente.
+				<br>
+				<table width="100%" border="1">
+				   <tbody>
+					<tr>
+						<td colspan="6" class="cla">
+							<h4>COSTO INSTALACIÓN</h4>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="4">VALOR TOTAL DEL CARGO POR CONEXIÓN</td>
+						<td colspan="2"><?php echo amountFormat(306000)?></td>
+					</tr>
+					<tr>
+						<td colspan="4">Suma que le fue diferida del valor total del cargo por conexión</td>
+						<td colspan="2"><?php echo amountFormat(70000)?></td>
+					</tr>
+					<tr>
+						<td colspan="4">Fecha inicio permanencia mínima</td>
+						<td colspan="2"><?php echo date("d/m/Y",strtotime($fcontrato)) ?></td>
+					</tr>
+					<tr>
+						<td colspan="4">Fecha de finalización de la permanencia mínima</td>
+						<td colspan="2"><?php echo date("d/m/Y",strtotime($fcontrato."+ 1 year")) ?></td>
+					</tr>
+					<tr>
+						<td colspan="6" style="text-align: center;font-weight: bold">Valor a pagar si termina el contrato anticipadamente según el mes</td>
+					</tr>
+					<tr>
+						<td class="cla">Mes 1</td>
+						<td class="cla">Mes 2</td>
+						<td class="cla">Mes 3</td>
+						<td class="cla">Mes 4</td>
+						<td class="cla">Mes 5</td>
+						<td class="cla">Mes 6</td>
+					</tr>
+					<tr>
+						<td class="cla"><?php echo amountFormat(256000)?></td>
+						<td class="cla"><?php echo amountFormat(234667)?></td>
+						<td class="cla"><?php echo amountFormat(213334)?></td>
+						<td class="cla"><?php echo amountFormat(192001)?></td>
+						<td class="cla"><?php echo amountFormat(170668)?></td>
+						<td class="cla"><?php echo amountFormat(149335)?></td>
+					</tr>
+					<tr>
+						<td class="cla">Mes 7</td>
+						<td class="cla">Mes 8</td>
+						<td class="cla">Mes 9</td>
+						<td class="cla">Mes 10</td>
+						<td class="cla">Mes 11</td>
+						<td class="cla">Mes 12</td>
+					</tr>
+					<tr>
+						<td class="cla"><?php echo amountFormat(128002)?></td>
+						<td class="cla"><?php echo amountFormat(106669)?></td>
+						<td class="cla"><?php echo amountFormat(85336)?></td>
+						<td class="cla"><?php echo amountFormat(64003)?></td>
+						<td class="cla"><?php echo amountFormat(42670)?></td>
+						<td class="cla"><?php echo amountFormat(21337)?></td>
+					</tr>
+				</tbody>
+			   </table>
 			</td>
-    	</tr>
-    	<tr>
-			<td colspan="4">VALOR TOTAL DEL CARGO POR CONEXIÓN</td>
-			<td colspan="2"><?php echo amountFormat(306000)?></td>
-    	</tr>
-    	<tr>
-			<td colspan="4">Suma que le fue diferida del valor total del cargo por conexión</td>
-			<td colspan="2"><?php echo amountFormat(70000)?></td>
-    	</tr>
-    	<tr>
-			<td colspan="4">Fecha inicio permanencia mínima</td>
-			<td colspan="2"><?php echo date("d/m/Y",strtotime($fcontrato)) ?></td>
-    	</tr>
-    	<tr>
-			<td colspan="4">Fecha de finalización de la permanencia mínima</td>
-			<td colspan="2"><?php echo date("d/m/Y",strtotime($fcontrato."+ 1 year")) ?></td>
-    	</tr>
-    	<tr>
-      		<td colspan="6" style="text-align: center;font-weight: bold">Valor a pagar si termina el contrato anticipadamente según el mes</td>
-    	</tr>
-		<tr>
-			<td class="cla">Mes 1</td>
-			<td class="cla">Mes 2</td>
-			<td class="cla">Mes 3</td>
-			<td class="cla">Mes 4</td>
-			<td class="cla">Mes 5</td>
-			<td class="cla">Mes 6</td>
-		</tr>
-		<tr>
-			<td class="cla"><?php echo amountFormat(256000)?></td>
-			<td class="cla"><?php echo amountFormat(234667)?></td>
-			<td class="cla"><?php echo amountFormat(213334)?></td>
-			<td class="cla"><?php echo amountFormat(192001)?></td>
-			<td class="cla"><?php echo amountFormat(170668)?></td>
-			<td class="cla"><?php echo amountFormat(149335)?></td>
-		</tr>
-		<tr>
-			<td class="cla">Mes 7</td>
-			<td class="cla">Mes 8</td>
-			<td class="cla">Mes 9</td>
-			<td class="cla">Mes 10</td>
-			<td class="cla">Mes 11</td>
-			<td class="cla">Mes 12</td>
-		</tr>
-		<tr>
-			<td class="cla"><?php echo amountFormat(128002)?></td>
-			<td class="cla"><?php echo amountFormat(106669)?></td>
-			<td class="cla"><?php echo amountFormat(85336)?></td>
-			<td class="cla"><?php echo amountFormat(64003)?></td>
-			<td class="cla"><?php echo amountFormat(42670)?></td>
-			<td class="cla"><?php echo amountFormat(21337)?></td>
-		</tr>
-  	</tbody>
-   </table>
-   </td>
-		<td colspan="2" style="text-align: justify">
+			<td><!--CENTRO-->
+			</td>
+			<td style="font-size: 27px;line-height: normal;text-align: justify"><!--COLUMNA DERECHO-->
 				<h6>CAMBIO DE DOMICILIO</h6>
 				Usted puede cambiar de domicilio y continuar con
 				el servicio siempre que sea técnicamente posible.
@@ -940,9 +966,10 @@ $fcontrato = $details['f_contrato'];
 				empaquetados procede máximo un cobro de reconexión
 				por cada tipo de conexión empleado en la prestación de
 				los servicios. <span style="border-bottom: 1px solid;"><?php echo amountFormat(12000)?></span>
-		  </td>
-		  </tr>
-			<tr>
+			</td>
+		</tr>
+		<table border="1">
+		<tr>
 				<td colspan="2" style="background-color: black; color: white; font-size: x-large; text-align: justify">
 					El usuario es el ÚNICO responsable por el contenido y la información
 					que se curse a través de la red y del uso que se haga de los equipos o de
@@ -968,42 +995,41 @@ $fcontrato = $details['f_contrato'];
 				<td style="font-size: x-large">
 					<h6>TECNOLOGIA INSTALADA:</h6><br>
 						Radio ___ Fibra ___<br><br>
-						Coordenadas: <span style="border-bottom: 1px solid;"><?php echo $details['documento'] ?></span><br><br>
-						Equipo CPE Marca: <span style="border-bottom: 1px solid;"> <?php echo $details['name'].' '.$details['dosnombre'].' '.$details['unoapellido'].' '.$details['dosapellido'] ?></span><br><br>
-						Referencia o Modelo: <span style="border-bottom: 1px solid;"><?php echo $details['tipo_documento'].' '.$details['documento'] ?></span><br><br>
-						Dirección MAC o serial: <span style="border-bottom: 1px solid;"><?php echo $details['email'] ?></span><br><br>
-						Adaptador de Corriente: <span style="border-bottom: 1px solid;"><?php echo $details['celular'] ?></span><br><br>
-						Cable UTP o Fibra: <span style="border-bottom: 1px solid;"><?php echo $details['barrio'] ?></span> Estrato: <span style="border-bottom: 1px solid;"><?php echo $details['estrato'] ?></span>metros<br><br>
-						Accesorios Adicionales: <span style="border-bottom: 1px solid;"><?php echo $details['departamento'] ?></span> Municipio: <span style="border-bottom: 1px solid;"><?php echo $details['ciudad'] ?></span><br><br>
+						Coordenadas: <span style="border-bottom: 1px solid;">____________</span><br><br>
+						Equipo CPE Marca: <span style="border-bottom: 1px solid;">_______________</span><br><br>
+						Referencia o Modelo: <span style="border-bottom: 1px solid;">_______________</span><br><br>
+						Dirección MAC o serial: <span style="border-bottom: 1px solid;">______________</span><br><br>
+						Adaptador de Corriente: <span style="border-bottom: 1px solid;">_____________</span><br><br>
+						Cable UTP o Fibra: <span style="border-bottom: 1px solid;">__________</span> Metros: <span style="border-bottom: 1px solid;">___________</span>metros<br><br>
+						Accesorios Adicionales: <span style="border-bottom: 1px solid;">_____________</span> Municipio: <span style="border-bottom: 1px solid;">_____________</span><br><br>
 				</td>
 				</tr>
 			<tr style="border-radius: 20px">
 				<td style="border: 0,0,0,0"></td>
 			</tr>
-			</td>
-			</tr>
-				<table width="100%" border="1">
+			</table>
+		</table>
+			<table width="100%" border="1">
 					<tbody>
 						<tr>
 							<td align="center"><?php if(file_exists($url_firma)){ ?><img height="130px" src="<?=$url_firma?>"></img><?php } if(file_exists($url_huella)){ ?><img height="130px" src="<?=$url_huella?>"></img><?php } ?>____________________________________________________________<br>Aceptación contrato mediante firma o cualquier otro medio válido</td>
 						</tr>
 					</tbody>
 				</table>
-				<tr>
-					<td colspan="2">
+				<table border="1">
+					<tr>
+					<td width="50%">
 						<h4>CC/CE</h4>
 					</td>
 					<td >
 						<h4>FECHA</h4>
 					</td>
-				</tr>
-				<tr>
-				<td><h4>Consulte el régimen de protección de usuarios en www.crcom.gov.co</h4></td>
-				</tr>
-			</tbody>
-		</table>
+				</table>
+				<h4>Consulte el régimen de protección de usuarios en www.crcom.gov.co</h4>
+	</table>
 	 </tbody>
-	</table>  
+	</table> 
+	<?php } ?>
    </div>
   </body>
 </html>
