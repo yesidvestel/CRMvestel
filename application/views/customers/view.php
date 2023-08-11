@@ -480,13 +480,10 @@
                                     Realizado el <?php echo $details['f_contrato'] ?>
                                 </div>
                                 <div class="col-md-10">
-                                   <a class="btn btn-primary btn-lg"
-                                           href="<?php echo 'printpdf?id=' . $details['id']; ?>"><?php echo $this->lang->line('Print') ?></a>
-                                            <a class="btn btn-success btn-lg"
-                                           href="<?php echo 'firmadigital?id=' . $details['id']; ?>">Firma Digital</a>
-
-                                            <a class="btn btn-primary btn-lg"
-                                           href="<?php echo 'subir_huella?id=' . $details['id']; ?>">Subir PNG Huella</a>
+                                   <a class="btn btn-primary btn-lg" href="<?php echo 'printpdf?id=' . $details['id']; ?>"><?php echo $this->lang->line('Print') ?></a>
+                                   <a class="btn btn-primary btn-lg" href="<?php echo 'printanx?id=' . $details['id']; ?>">Anexos</a>
+                                   <a class="btn btn-success btn-lg" href="<?php echo 'firmadigital?id=' . $details['id']; ?>">Firma Digital</a>
+                                  	<a class="btn btn-primary btn-lg" href="<?php echo 'subir_huella?id=' . $details['id']; ?>">Subir PNG Huella</a>
                                 </div>
                                 
 
