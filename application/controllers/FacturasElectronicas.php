@@ -235,7 +235,7 @@ $this->load->model("customers_model","customers");
             if($consulta_siigo1['pagination']['total_results']==0){
                     $api->saveCustomer($json_customer,1);//para crear cliente en siigo si no existe
             }else{
-                    $api->updateCustomer($json_customer,$consulta_siigo1['results'][0]['id'],1);//para acturalizar cliente en siigo 
+                    //$api->updateCustomer($json_customer,$consulta_siigo1['results'][0]['id'],1);//para acturalizar cliente en siigo 
             }
         }
         if($dataApiNET!=null){
@@ -267,7 +267,7 @@ $this->load->model("customers_model","customers");
                     $json_customer->related_users->collector_id=282;
                     $json_customer->contacts[0]->email="vestelsas@gmail.com";
                     $json_customer=json_encode($json_customer);
-                    $api->updateCustomer($json_customer,$consulta_siigo1['results'][0]['id'],2);//para acturalizar cliente en siigo 
+                    //$api->updateCustomer($json_customer,$consulta_siigo1['results'][0]['id'],2);//para acturalizar cliente en siigo 
             }
         }
         
