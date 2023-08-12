@@ -187,7 +187,7 @@
 				PRESTACION DE SERVICIO PARA EL ACCESO A INTERNET</h5>
             </td>
 			<tr>
-				   <td style="padding: 1"> <img src="<?php echo FCPATH . '../invoices/userfiles/company' . $this->config->item('logo') ?>" style="max-width:80px;"></td>
+				   <td style="padding: 1"> <img src="<?php echo FCPATH . 'userfiles/company/' . $this->config->item('logo') ?>" style="max-width:80px;"></td>
 			</tr>
 			<tr>
             	<td style="padding: 1;font-size: 11px">CÓDIGO: FSD-FRM-OPS-004</td>
@@ -323,7 +323,7 @@
 				PRESTACION DE SERVICIO PARA EL ACCESO A INTERNET</h5>
             </td>
 			<tr>
-				   <td style="padding: 1"> <img src="<?php echo FCPATH . '../invoices/userfiles/company' . $this->config->item('logo') ?>" style="max-width:80px;"></td>
+				   <td style="padding: 1"> <img src="<?php echo FCPATH . 'userfiles/company/' . $this->config->item('logo') ?>" style="max-width:80px;"></td>
 			</tr>
 			<tr>
             	<td style="padding: 1;font-size: 11px">CÓDIGO: FSD-FRM-OPS-004</td>
@@ -536,7 +536,7 @@
 				PRESTACION DE SERVICIO PARA EL ACCESO A INTERNET</h5>
             </td>
 			<tr>
-				   <td style="padding: 1"> <img src="<?php echo FCPATH . '../invoices/userfiles/company' . $this->config->item('logo') ?>" style="max-width:80px;"></td>
+				   <td style="padding: 1"> <img src="<?php echo FCPATH . 'userfiles/company/' . $this->config->item('logo') ?>" style="max-width:80px;"></td>
 			</tr>
 			<tr>
             	<td style="padding: 1;font-size: 11px">CÓDIGO: FSD-FRM-OPS-004</td>
@@ -770,7 +770,7 @@
 				PRESTACION DE SERVICIO PARA EL ACCESO A INTERNET</h5>
             </td>
 			<tr>
-				   <td style="padding: 1"> <img src="<?php echo FCPATH . '../invoices/userfiles/company' . $this->config->item('logo') ?>" style="max-width:80px;"></td>
+				   <td style="padding: 1"> <img src="<?php echo FCPATH . 'userfiles/company/' . $this->config->item('logo') ?>" style="max-width:80px;"></td>
 			</tr>
 			<tr>
             	<td style="padding: 1;font-size: 11px">CÓDIGO: FSD-FRM-OPS-004</td>
