@@ -890,8 +890,6 @@
 											 El Usuario conoce y acepta que por tales razones la Empresa no puede garantizar el suministro y calidad del SERVICIO.</td>
 				</tr>
 			</table>
-			
-			
 				</tr>	
 			</table>
             </td>
@@ -911,40 +909,164 @@
 	 <h6 align="center">Consulte el régimen de protección de usuarios en www.crcom.gov.co</h6>
 	</td>
 
-
-
-    <!--<br>
-    <table class="subtotal">
-        <tr>
-            <td rowspan="<?php echo $cols ?>">
-                Cordial saludo,
-				<br>
-				<br>
-				<p>Atendiendo su solicitud nos permitimos informarle que se encuentra a <strong>PAZ Y SALVO </strong>de sus obligaciones con la empresa de telecomunicaciones VESTEL S.A.S. con el número de abonado <?php echo '<strong>'. $usuario['documento'].'</strong>, ubicado en el barrio ' . $barrio['barrio'] . ' en la direccion ' . $usuario['nomenclatura'].' '. $usuario['numero1'].$usuario['adicionauno'].' # '.$usuario['numero2'].$usuario['adicional2'].' - '.$usuario['numero3'].'.'; ?></p>
-				<br>
-				<br>
-					Cualquier información adicional con gusto la atenderemos en nuestras líneas de Atención al Usuario marcando al 3102549725 a través de llamadas o WhatsApp.
-				<br>
-				<br>
-				<br>
-					Cordialmente, 
-				
+	<table border="1">
+	<tr>
+            <td class="centeral" rowspan="6">
+                <h4>SISTEMA DE GESTION DE SERVICIOS</h4><br>
+				<h4>FUTURE SOLUTIONS DEVELOPMENT SAS</h4><br>
+				<h5>AUTORIZACION PARA EL TRATAMIENTO DE DATOS PERSONALES</h5>
             </td>
-
-
+			<tr>
+				   <td style="padding: 1"> <img src="<?php echo FCPATH . 'userfiles/company/' . $this->config->item('logo') ?>" style="max-width:80px;"></td>
+			</tr>
+			<tr>
+            	<td style="padding: 1;font-size: 11px">CÓDIGO: FSD-FRM-OPS-004</td>
+			</tr>
+			<tr>
+            	<td style="padding: 1;font-size: 11px">VERSIÓN: 001</td>
+			</tr>
+			<tr>
+            	<td style="padding: 1;font-size: 11px">FECHA: 05/09/2016</td>
+			</tr>
+			<tr>
+            	<td style="padding: 1;font-size: 11px">PÁGINA: 1 DE 2</td>
+			</tr>
         </tr>
-		</table><br><br><br><br><br>
-	<table style="width: 300px;">
-		<tr>
-			<td style="border-bottom-color: aqua">
-				<img src="<?php echo FCPATH . '../invoices/userfiles/employee_sign' . $empleado['sign']  ?>" alt="signature" style="height: 60px"/>
-				<hr>
-				<strong><?php echo $empleado['name'] ?></strong><br>
-				COORDINADOR DE CARTERA<br>
-				VESTEL S.A.S
-			</td>
+		
+	</table>
+	<table width="100%" >
+    <tbody>
+		<tr style="border: 0;"><br>
+			<td style="border: 0;">Fecha:____________________.</td>
 		</tr>
-	</table>-->
+		<tr style="border: 0;">
+			<td style="border: 0;">Nombre e identificación del Titular de la Información____________________________________.</td>
+		</tr>
+		
+		
+					<tr>
+					<td style="font-size: 11px;line-height: inherit;text-align: justify" >
+			
+			
+			De conformidad con lo dispuesto en la Ley Estatutaria 1581 de 2012, el Decreto 1377 de 2013 o las normas que la modifiquen,
+			los datos personales que se obtengan por parte del Titular de la Información a través de los vínculos contractuales celebrados
+			entre Future Solutions Development S.A.S. y el Titular de la Información, serán compilados, almacenados, consultados, usados,
+			compartidos, intercambiados, transmitidos, transferidos y objeto de tratamiento en bases de datos, las cuales estarán destinadas
+			a las siguientes finalidades:
+			<table style="font-size: 11px;line-height: inherit;text-align: justify;">
+				<tr>
+					<td style="padding-top: 0"></td>
+					<td style="padding: 0">⚫ Mantener una eficiente comunicación de la información relacionada con nuestros sistemas de gestión implementados,
+											   trámites administrativos y misionales, y actividades relacionadas con el objeto social propio de Future Solutions
+											   Development S.A.S.</td>
+				</tr>
+				<tr>
+					<td style="padding-top: 0"></td>
+					<td style="padding: 0">⚫ Adelantar estudios y análisis estadísticos.</td>
+				</tr>
+				<tr>
+					<td style="padding-top: 0"></td>
+					<td style="padding: 0">⚫ Elaborar y presentar informes financieros a entidades de control.</td>
+				</tr>
+				<tr>
+					<td style="padding-top: 0"></td>
+					<td style="padding: 0">⚫ Dar cumplimiento de las obligaciones contraídas por FSD S.A.S. con los Titulares de la Información, con relación a
+											 temas contractuales.</td>
+				</tr>
+				<tr>
+					<td style="padding-top: 0"></td>
+					<td style="padding: 0">⚫ Caracterizar grupos de interés y adelantar estrategias de mejoramiento en la prestación del servicio.</td>
+				</tr>
+				<tr>
+					<td style="padding-top: 0"></td>
+					<td style="padding: 0">⚫ Dar respuesta a las peticiones, quejas, reclamos, denuncias, sugerencias y/o felicitaciones presentadas a la empresa.</td>
+				</tr>
+				<tr>
+					<td style="padding-top: 0"></td>
+					<td style="padding: 0">⚫ Alimentar los sistemas de información.</td>
+				</tr>
+				<tr>
+					<td style="padding-top: 0"></td>
+					<td style="padding: 0">⚫ Conocer y consultar la información del titular del dato que repose en bases de datos de entidades públicas y privadas.</td>
+				</tr>
+				<tr>
+					<td style="padding-top: 0"></td>
+					<td style="padding: 0">⚫ Adelantar encuestas de satisfacción por grupos de interés.</td>
+				</tr>
+				<tr>
+					<td style="padding-top: 0"></td>
+					<td style="padding: 0">⚫ Enviar información de interés general.</td>
+				</tr>
+				<tr>
+					<td style="padding-top: 0"></td>
+					<td style="padding: 0">⚫ Intercambiar la información personal con autoridades gubernamentales, fiscales, judiciales o administrativas y
+											 organismos de control para cumplir con requerimientos que éstas soliciten.</td>
+				</tr><br><br>	
+			</table>
+			Datos sensibles. El Titular de la Información o representante legal en el caso de información de hijos (as) de menores de edad
+			manifiesta que conoce, acepta y autoriza de manera libre y espontánea que el tratamiento de la información relativa a
+			pertenencia a sindicatos, organizaciones sociales, a la salud, a la vida sexual y datos biométricos, que sea necesaria para el
+			cumplimiento de la finalidades anteriormente descritas basado en lo establecido en la presente autorización y el Manual de
+			protección de datos personales de la Empresa.<br><br>
+			De conformidad con lo dispuesto en la Ley Estatutaria 1581 de 2012, el Decreto 1377 de 2013 o las normas que la modifiquen,
+			los datos personales que obtengan FSD S.A.S. por parte del Titular de la Información o representante legal en el caso de
+			información de hijos(as) de menores de edad, serán recogidos y almacenados y objeto de tratamiento en bases de datos hasta la
+			terminación del vínculo contractual entre el Titular de la Información y FSD S.A.S. y durante veinte (20) años más. Esta base de
+			datos cuenta con las medidas de seguridad necesarias para la conservación adecuada de los datos personales.<br>
+			Con la aceptación de la presente autorización, se permite el tratamiento de sus datos personales para las finalidades
+			mencionadas y reconoce que los datos suministrados a FSD S.A.S. son ciertos, dejando por sentado que no se ha omitido o
+			adulterado ninguna información.<br><br>
+			Se deja constancia que usted tiene el derecho de acceder en cualquier momento a los datos suministrados, a solicitar su
+			corrección, actualización o supresión en los términos establecidos en la Ley Estatutaria 1581 de 2012, el Decreto 1377 de 2013 o
+			las normas que la modifiquen, mediante escrito dirigido a FSD S.A.S. indicando las razones por las cuales solicita alguno de los
+			tramites anteriormente mencionados, con el fin que FSD S.A.S. pueda revisarlas y pronunciarse sobre las mismas.<br><br>
+			En señal de conocimiento, aceptación y autorización,<br><br>
+	</table>
+	<h6 align="center">____________________________________</h6>
+	<h6 align="center">Titular de la Información</h6>
+	<h6 align="center">C.C___________________ y Dirección de notificación:____________________</h6>
+
+	<br><br><br><br><br><br><br><br><br><br>
+	<table width="100%" >
+    <tbody>
+		
+		<tr>
+		<td style="text-align: center;">
+		<strong >AUTORIZACION PARA LA CONSULTA, REPORTE Y PROCESAMIENTO DE DATOS FINANCIEROS A CENTRALES DE RIESGO</strong>
+		</td>
+		</tr><br><br>
+		<tr>
+		<td style="font-size: 12px;line-height: inherit;text-align: justify" >
+		
+				Autorizo de manera expresa e irrevocable a FUTURE SOLUTIONS DEVELOPMENT SAS o a quien
+				represente sus derechos u ostente en el futuro a cualquier título la calidad de acreedor, a consultar, solicitar,
+				suministrar, reportar, procesar y divulgar toda la información que se refiere a mi comportamiento crediticio,
+				financiero y comercial a las Centrales de Riesgo que administra la Asociación Bancaria y de Entidades
+				Financieras de Colombia o a quien represente sus derechos.<br><br>
+				Lo anterior implica que mi comportamiento presente y pasado frente a mis obligaciones permanecerá
+				reflejado de manera completa en las mencionadas bases de datos con el objeto de suministrar información
+				suficiente y adecuada al mercado sobre el estado de mis obligaciones financieras, comerciales y crediticias.
+				Por lo tanto, conocerán mi información quienes se encuentren afiliados a dichas centrales y/o que tengan
+				acceso a está, de conformidad con la legislación aplicable.<br><br>
+				La permanencia de mi infamación en las bases de datos será determinada por el ordenamiento jurídico
+				aplicable, en especial por las normas legales y la jurisprudencia, los cuales contienen mis derechos y
+				obligaciones, que, por ser públicos, conozco plenamente.<br><br>
+				En caso de que en el futuro, el autorizado en este documento efectúe una venta de cartera o una cesión a
+				cualquier título de las obligaciones a mi cargo a favor de un tercero, los efectos de la presente autorización
+				se extenderán a éste, en los mismos términos y condiciones.<br><br>
+				El beneplácito otorgado por el usuario y/o suscriptor para el tratamiento de información crediticia y la
+				responsabilidad a cargo de la Future Solutions Development SAS para el manejo de dichos datos, se
+				encuentran enmarcadas dentro de los postulados de orden superior establecidos en los artículos 15 y 20 de
+				la Constitución Política y desarrollados por la Ley Estatutaria 1581 de 2012, reglamentada parcialmente por
+				el Decreto 1377 de 2013.<br><br>
+				Para los efectos correspondientes se firma en ________________ el día _____ de ______________ del _________.<br><br><br><br>
+				Igualmente autorizo para que cualquier comunicación que sea necesaria sea remitida a:<br><br><br>
+				Nombre: __________________________________________________________ (LETRA LEGIBLE)<br><br>
+				Cédula: ____________________________________________________ (LETRA LEGIBLE)<br><br><br><br>
+				Firma: _____________________________________________________<br><br>
+				Dirección: _________________________________________________________ (LETRA LEGIBLE)<br><br>
+				E-mail: ____________________________________________________ (LETRA LEGIBLE)<br><br>
+	</table>
 </div>
 </body>
 </html>
