@@ -288,7 +288,7 @@ $fcontrato = $details['f_contrato'];
 		Correo electrónico: <span style="border-bottom: 1px solid;"><?php echo $details['email'] ?></span><br><br>
 		Teléfono de contacto: <span style="border-bottom: 1px solid;"><?php echo $details['celular'] ?></span><br><br>
 		Dirección de servicio: <span style="border-bottom: 1px solid;"><?php echo $details['barrio'] ?></span> Estrato: <span style="border-bottom: 1px solid;"><?php echo $details['estrato'] ?></span><br><br>
-		Departamento: <span style="border-bottom: 1px solid;"><?php echo $details['departamento'] ?></span> Municipio: <span style="border-bottom: 1px solid;"><?php echo $details['ciudad'] ?></span><br><br>
+		Departamento: <span style="border-bottom: 1px solid;"><?php echo $departamento['departamento'] ?></span> Municipio: <span style="border-bottom: 1px solid;"><?php echo $ciudad['ciudad'] ?></span><br><br>
 		Dirección suscriptor: <span style="border-bottom: 1px solid;"><?php echo $details['nomenclatura'].' '.$details['numero1'].$details['adicionauno'].' # '.$details['numero2'].$details['adicional2'].' - '.$details['numero3'] ?></span>
 		</td>
     </tr>
@@ -620,8 +620,8 @@ $fcontrato = $details['f_contrato'];
 		<td width="50%"> <!--COLUMNA IZQUIERDA-->
 			<table>
 				<tr>
-					<td style="width: 24%"><img src="<?=FCPATH."userfiles/company/".$company->logo  ?>" style="max-width:20%;"></td>
-					<td style="text-align: right"><h2>CONTRATO ÚNICO DE <br>SERVICIOS FIJOS </h2>No. <span style="border-bottom: 1px solid;"><?php echo $details['documento'] ?></span></td>
+					<td style="width: 24%"><img src="<?php echo FCPATH . 'userfiles/company/' . $this->config->item('logo') ?>" style="max-width:20%;"></td>
+					<td style="text-align: right"><h2>CONTRATO ÚNICO DE <br>SERVICIOS FIJOS </h2>No. <span style="border-bottom: 1px solid;"><?php echo $details['abonado'] ?></span></td>
 				</tr>
 			</table>
 			<table>
@@ -659,8 +659,10 @@ $fcontrato = $details['f_contrato'];
 					  Identificación: <span style="border-bottom: 1px solid;"><?php echo $details['tipo_documento'].' '.$details['documento'] ?></span><br><br>
 					Correo electrónico: <span style="border-bottom: 1px solid;"><?php echo $details['email'] ?></span><br><br>
 					Teléfono de contacto: <span style="border-bottom: 1px solid;"><?php echo $details['celular'] ?></span><br><br>
-					Dirección de servicio: <span style="border-bottom: 1px solid;"><?php echo $details['nomenclatura'].' '.$details['numero1'].$details['adicionauno'].' # '.$details['numero2'].$details['adicional2'].' - '.$details['numero3'] ?></span><span style="border-bottom: 1px solid;"><?php echo $details['barrio'] ?></span> Estrato: <span style="border-bottom: 1px solid;"><?php echo $details['estrato'] ?></span><br><br>
-					Departamento: <span style="border-bottom: 1px solid;"><?php echo $details['departamento'] ?></span> Municipio: <span style="border-bottom: 1px solid;"><?php echo $details['ciudad'] ?></span><br><br>
+					Dirección de servicio: <span style="border-bottom: 1px solid;"><?php echo $details['nomenclatura'].' '.$details['numero1'].$details['adicionauno'].' # '.$details['numero2'].$details['adicional2'].' - '.$details['numero3'] ?></span><span style="border-bottom: 1px solid;"><?php echo $details['barrio'] ?></span><br><br>
+					Coordenadas:<span style="border-bottom: 1px solid;"><?php echo $details['coor1'].' '.$details['coor2'] ?></span><br><br>
+					Estrato: <span style="border-bottom: 1px solid;"><?php echo $details['estrato'] ?></span><br><br>
+					Departamento: <span style="border-bottom: 1px solid;"><?php echo $departamento['departamento'] ?></span> Municipio: <span style="border-bottom: 1px solid;"><?php echo $ciudad['ciudad'] ?></span><br><br>
 					Dirección suscriptor: 
 					</td>
 				</tr>
@@ -670,7 +672,7 @@ $fcontrato = $details['f_contrato'];
     		<tr style="border-radius: 20px">
       		<td style="font-size: x-large">
 				<h4>CONDICIONES COMERCIALES CARACTERÍSTICAS DEL PLAN</h4><br>
-				Contrato No.: <span style="border-bottom: 1px solid;"><?php echo $details['documento'] ?></span><br><br>
+				Contrato No.: <span style="border-bottom: 1px solid;"><?php echo $details['abonado'] ?></span><br><br>
 				Nombre/Razón Social: <span style="border-bottom: 1px solid;"> <?php echo $details['name'].' '.$details['dosnombre'].' '.$details['unoapellido'].' '.$details['dosapellido'] ?></span><br><br>
 				Tipo de Servicio: Residencial ___ Corporativo ___ Dedicado ___<br><br>
 				Tecnologia: Radioenlace ___ Fibra óptica ___<br><br>
