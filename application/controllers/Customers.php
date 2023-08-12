@@ -1407,6 +1407,10 @@ public function ajax_graficas2(){
         $custid = $this->input->get('id');
         $tid = $custid;
         $data['details'] = $this->customers->details($custid);
+		$data['departamento'] = $this->customers->group_departamentos($data['details']['departamento']);
+        $data['ciudad'] = $this->customers->group_ciudad($data['details']['ciudad']);
+        $data['localidad'] = $this->customers->group_localidad($data['details']['localidad']);
+        $data['barrio'] = $this->customers->group_barrio($data['details']['barrio']);
         $data['due'] = $this->customers->due_details($custid);
         $data['servicios'] = $this->customers->servicios_detail($custid);
         if($data['servicios']['estado_combo']!=null){
