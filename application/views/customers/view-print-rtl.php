@@ -895,11 +895,11 @@ $fcontrato = $details['f_contrato'];
 					</tr>
 					<tr>
 						<td colspan="4">VALOR TOTAL DEL CARGO POR CONEXIÓN</td>
-						<td colspan="2"><?php echo amountFormat(306000)?></td>
+						<td colspan="2"><?php /* echo amountFormat(306000) */?></td>
 					</tr>
 					<tr>
 						<td colspan="4">Suma que le fue diferida del valor total del cargo por conexión</td>
-						<td colspan="2"><?php echo amountFormat(70000)?></td>
+						<td colspan="2"><?php /* echo amountFormat(70000) */?></td>
 					</tr>
 					<tr>
 						<td colspan="4">Fecha inicio permanencia mínima</td>
@@ -921,12 +921,12 @@ $fcontrato = $details['f_contrato'];
 						<td class="cla">Mes 6</td>
 					</tr>
 					<tr>
-						<td class="cla"><?php echo amountFormat(256000)?></td>
-						<td class="cla"><?php echo amountFormat(234667)?></td>
-						<td class="cla"><?php echo amountFormat(213334)?></td>
-						<td class="cla"><?php echo amountFormat(192001)?></td>
-						<td class="cla"><?php echo amountFormat(170668)?></td>
-						<td class="cla"><?php echo amountFormat(149335)?></td>
+						<td class="cla"><?php /* echo amountFormat(256000) */?></td>
+						<td class="cla"><?php /* echo amountFormat(234667) */?></td>
+						<td class="cla"><?php /* echo amountFormat(213334) */?></td>
+						<td class="cla"><?php /* echo amountFormat(192001) */?></td>
+						<td class="cla"><?php /* echo amountFormat(170668) */?></td>
+						<td class="cla"><?php /* echo amountFormat(149335) */?></td>
 					</tr>
 					<tr>
 						<td class="cla">Mes 7</td>
@@ -937,12 +937,12 @@ $fcontrato = $details['f_contrato'];
 						<td class="cla">Mes 12</td>
 					</tr>
 					<tr>
-						<td class="cla"><?php echo amountFormat(128002)?></td>
-						<td class="cla"><?php echo amountFormat(106669)?></td>
-						<td class="cla"><?php echo amountFormat(85336)?></td>
-						<td class="cla"><?php echo amountFormat(64003)?></td>
-						<td class="cla"><?php echo amountFormat(42670)?></td>
-						<td class="cla"><?php echo amountFormat(21337)?></td>
+						<td class="cla"><?php /* echo amountFormat(128002)*/?></td>
+						<td class="cla"><?php /* echo amountFormat(106669) */?></td>
+						<td class="cla"><?php /* echo amountFormat(85336)*/?></td>
+						<td class="cla"><?php /* echo amountFormat(64003)*/?></td>
+						<td class="cla"><?php /* echo amountFormat(42670)*/?></td>
+						<td class="cla"><?php /* echo amountFormat(21337)*/?></td>
 					</tr>
 				</tbody>
 			   </table>
