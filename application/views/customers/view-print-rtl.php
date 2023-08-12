@@ -613,14 +613,14 @@ $fcontrato = $details['f_contrato'];
 	</table>
 </div>
 	<!-- --------------------------------CONTRATO OTTIS ------------------------------------- -->
-	<?php  } else if($this->config->item('ctitle')=='FUTURE SOLUTIONS DEVELOPMENT SAS'){ ?>
+	<?php /* } else if($this->config->item('ctitle')=='FUTURE SOLUTIONS DEVELOPMENT SAS'){ */?>
 <div class="invoice-box">
 	<table>
 	<tr>
 		<td width="50%"> <!--COLUMNA IZQUIERDA-->
 			<table>
 				<tr>
-					<td style="width: 24%"><img src="<?php echo FCPATH . 'userfiles/company/' . $this->config->item('logo') ?>" style="max-width:20%;"></td>
+					<td style="width: 30%"><img src="<?php echo FCPATH . 'userfiles/company/' . $this->config->item('logo') ?>" style="max-width:20%;"></td>
 					<td style="text-align: right"><h2>CONTRATO ÚNICO DE <br>SERVICIOS FIJOS </h2>No. <span style="border-bottom: 1px solid;"><?php echo $details['abonado'] ?></span></td>
 				</tr>
 			</table>
