@@ -3052,4 +3052,79 @@ $cuerpo=$_POST['texto'].$url_str;
         $retorno["estado"]="procesado";
             echo json_encode($retorno);
     }
+	public function update_siigo()
+    {
+        $proceso = $this->input->post('proceso');
+		if($proceso==1){
+			$this->db->set('facturar_electronicamente', 0);
+        	$this->db->where('facturar_electronicamente', 1);
+        	$this->db->update('customers');
+		}else if($proceso==2){
+        $sql = "UPDATE customers
+					SET facturar_electronicamente = 1
+					WHERE usu_estado='Activo' AND id IN (
+						SELECT f.csd
+						FROM invoices f
+						INNER JOIN (
+							SELECT csd, MAX(invoicedate) AS max_fecha
+							FROM invoices
+							GROUP BY csd
+						) ultimas ON f.csd = ultimas.csd AND f.invoicedate = ultimas.max_fecha
+						WHERE f.status = 'due' AND tax!='0'
+					)";
+
+			$result = $this->db->query($sql);
+		}else if($proceso==3){
+			  $sql = "UPDATE customers
+					SET facturar_electronicamente = 1
+					WHERE usu_estado='Activo' AND id IN (
+						SELECT f.csd
+						FROM invoices f
+						INNER JOIN (
+							SELECT csd, MAX(invoicedate) AS max_fecha
+							FROM invoices
+							GROUP BY csd
+						) ultimas ON f.csd = ultimas.csd AND f.invoicedate = ultimas.max_fecha
+						WHERE f.status = 'paid' AND tax!='0'
+					)";
+
+			$result = $this->db->query($sql);
+		}else if($proceso==4){
+			  $sql = "UPDATE customers
+					SET facturar_electronicamente = 1
+					WHERE usu_estado='Activo' AND id IN (
+						SELECT f.csd
+						FROM invoices f
+						INNER JOIN (
+							SELECT csd, MAX(invoicedate) AS max_fecha
+							FROM invoices
+							GROUP BY csd
+						) ultimas ON f.csd = ultimas.csd AND f.invoicedate = ultimas.max_fecha
+						WHERE f.status = 'paid' AND tax='0'
+					)";
+
+			$result = $this->db->query($sql);
+		}else if($proceso==5){
+			  $sql = "UPDATE customers
+					SET facturar_electronicamente = 1
+					WHERE usu_estado='Activo' AND id IN (
+						SELECT f.csd
+						FROM invoices f
+						INNER JOIN (
+							SELECT csd, MAX(invoicedate) AS max_fecha
+							FROM invoices
+							GROUP BY csd
+						) ultimas ON f.csd = ultimas.csd AND f.invoicedate = ultimas.max_fecha
+						WHERE f.status = 'due' AND tax='0'
+					)";
+
+			$result = $this->db->query($sql);
+		}
+        /*$this->db->set('status', $status);
+        $this->db->where('tid', $tid);
+        $this->db->update('invoices');*/
+             
+        echo json_encode(array('status' => 'Success', 'message' =>
+            $this->lang->line('UPDATED'), 'pstatus' => $status));
+    }
 }

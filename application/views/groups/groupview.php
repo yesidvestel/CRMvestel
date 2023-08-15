@@ -549,16 +549,12 @@
                     
         <div class="grid_3 grid_4">
             <h5><?php echo $this->lang->line('Client Group') . '- ' . $group['title'] ?></h5> 
-			
-                        <a href=""  class="btn btn-primary btn-md" onclick="abrir_modal_sms(event)"><i
-                        class="fa fa-envelope"></i>Enviar mensajes de Grupo</a>
-
+			<a href=""  class="btn btn-primary btn-md" onclick="abrir_modal_sms(event)"><i class="fa fa-envelope"></i>Enviar mensajes de Grupo</a>
 			<a href="#" onclick="redirect_to_export()" class="btn btn-success btn-md">Exportar a Excel .XLSX</a>
-<a href=""  class="btn btn-danger btn-md" onclick="abrir_modal_corte_usuarios(event)"><i
-                        class="fa fa-envelope"></i>Cortar Usuarios</a>
-                        &nbsp;<a class="btn btn-danger" href="<?=base_url().'clientgroup/descargar_pdf_falctura_usuarios_media_carta?gid='.$_GET['id'] ?>">Exportar a PDF <img width="20px" src="<?=base_url()?>assets/images/icons/pdf.png"></a>
-                        <a href=""  class="btn btn-primary btn-md" onclick="abrir_modal_envio_email(event)"><i
-                        class="fa fa-envelope"></i>Enviar Correo</a>
+			<a href=""  class="btn btn-danger btn-md" onclick="abrir_modal_corte_usuarios(event)"><i class="fa fa-envelope"></i>Cortar Usuarios</a>&nbsp;
+			<a class="btn btn-danger" href="<?=base_url().'clientgroup/descargar_pdf_falctura_usuarios_media_carta?gid='.$_GET['id'] ?>">Exportar a PDF <img width="20px" src="<?=base_url()?>assets/images/icons/pdf.png"></a>
+            <a href=""  class="btn btn-primary btn-md" onclick="abrir_modal_envio_email(event)"><iclass="fa fa-envelope"></i>Enviar Correo</a>
+			<a href="#pop_model" data-toggle="modal" data-remote="false" class="btn btn-primary btn-md" title="Change Status">SIIGO</a>
             <hr>
 <div class="wrapper1">
     <div class="div1"></div>
@@ -846,7 +842,47 @@ $("#sel_filtrar_fecha_cambio").on("change",function(){
         </div>
     </div>
 </div>
+<div id="pop_model" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Selector SIIGO</h4>
+            </div>
 
+            <div class="modal-body">
+                <form id="form_model">
+
+
+                    <div class="row">
+                        <div class="col-xs-12 mb-1"><label
+                                    for="pmethod">Opciones de generacion</label>
+                            <select name="proceso" class="form-control mb-1">
+                                <option value="0">Seleccionar</option>
+                                <option value="1">Limpiar seleccion</option>
+                                <option value="2">Con impuesto y con Deuda</option>
+                                <option value="3">Con impuesto y sin Deuda</option>
+                                <option value="4">Sin impuesto y sin Deuda</option>
+                                <option value="5">Sin impuesto y con Deuda</option>
+                            </select>
+
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <input type="hidden" class="form-control"
+                               name="tid" id="invoiceid" value="<?php echo $invoice['tid'] ?>">
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal"><?php echo $this->lang->line('Close'); ?></button>
+                        <input type="hidden" id="action-url" value="clientgroup/update_siigo">
+                        <button type="button" class="btn btn-primary"
+                                id="submit_model">Realizar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 <div id="sendMail" class="modal fade">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
