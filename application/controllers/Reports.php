@@ -78,6 +78,7 @@ class Reports extends CI_Controller
 	}
 	public function historial_list(){
 		$this->load->model("Historial_model","historial");
+        ini_set('memory_limit', '1024M');
 		$list = $this->historial->get_datatables("");
 		$data = array();
 		$no = $this->input->post('start');

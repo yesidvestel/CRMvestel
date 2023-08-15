@@ -1940,7 +1940,7 @@ function eliminar_resivos_de_pago(){
 
         $data['employee'] = $this->invocies->employee($data['invoice']['eid']);
         $data['servicios_adicionales'] = $this->invocies->servicios_adicionales($tid,true);
-
+        $data['retenciones'] = $this->invocies->get_retenciones($tid);
         $head['usernm'] = $this->aauth->get_user()->username;
         $this->load->view('fixed/header', $head);
         if ($data['invoice']) $this->load->view('invoices/view', $data);

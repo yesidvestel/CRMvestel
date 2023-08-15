@@ -198,6 +198,9 @@
                                     $sub_t = 0;
                                     foreach ($products as $row) {
                                         $sub_t += $row['price'] * $row['qty'];
+                                        if($row['tipo_retencion']!=null){
+                                            $row['product'].=" - ".$row['tipo_retencion'];             
+                                        }
                                         echo '<tr>
 <th scope="row">' . $c . '</th>
                             <td>' . $row['product'] . '</td>
@@ -283,6 +286,9 @@
                                 <div class="table-responsive">
                                     <table class="table">
                                         <tbody>
+                                            <?php if(isset($retenciones['total']) && $retenciones['total']>0){
+                                                    $sub_t+=$retenciones['total'];
+                                            } ?>
                                         <tr>
                                             <td><?php echo $this->lang->line('Sub Total') ?></td>
                                             <td class="text-xs-right"> <?php echo amountFormat($sub_t) ?></td>
@@ -295,6 +301,14 @@
                                             <td><?php echo $this->lang->line('') ?>Descuento</td>
                                             <td class="text-xs-right"><?php echo amountFormat($invoice['discount']) ?></td>
                                         </tr>
+                                        <?php foreach ($retenciones['retenciones'] as $key => $value) { ?>
+                                              
+                                            <tr>
+                                                <td><?php echo $this->lang->line('') ?><?=$value['tipo_retencion'] ?></td>
+                                                <td class="text-xs-right"><?php echo amountFormat($value['price']) ?></td>
+                                            </tr>
+
+                                        <?php } ?>
                                         <tr>
                                             <td><?php echo $this->lang->line('Shipping') ?></td>
                                             <td class="text-xs-right"><?php echo amountFormat($invoice['shipping']) ?></td>

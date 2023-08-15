@@ -736,6 +736,15 @@ setlocale(LC_TIME, "spanish");
         
 
     }
+    public function get_retenciones($tid){
+        $retornar=array("retenciones"=>array(),"total"=>0);
+        $x=$this->db->query("SELECT * FROM invoice_items where tid=".$tid." and tipo_retencion is not null")->result_array();
+        foreach ($x as $key => $value) {
+            $retornar['total']+=abs($value['price']);
+        }
+        $retornar['retenciones']=$x;
+        return $retornar;
+    }
     public function servicios_adicionales_idt($idt_ticket,$listax){
         $lista_servs=$this->db->get_where("servicios_adicionales",array("idt_ticket"=>$idt_ticket))->result_array();
         foreach ($lista_servs as $key => $value) {
