@@ -467,7 +467,18 @@
                                     <strong><?php echo $this->lang->line('') ?>Referencia:</strong>
                                 </div>
                                 <div class="col-md-10">
-                                    <?php echo $details['residencia'].", ".$details['referencia'] ?>
+                                    <?php
+									if($details['divnum1']==0){
+										$trr='';
+									}else{
+										$trr=$details['divnum1'];
+									}
+									if($details['divnum2']==0){
+										$apt='';
+									}else{
+										$apt=$details['divnum2'];
+									}
+									echo $details['residencia'].", ".$details['referencia'].' '.$details['divicion'].' '.$trr.' '.$details['divicion2'].' '.$apt ?>
                                 </div>
 
                             </div>

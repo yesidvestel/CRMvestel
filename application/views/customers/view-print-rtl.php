@@ -661,10 +661,31 @@ $fcontrato = $details['f_contrato'];
 					Teléfono de contacto: <span style="border-bottom: 1px solid;"><?php echo $details['celular'] ?></span><br><br>
 					Dirección de servicio: <span style="border-bottom: 1px solid;"><?php
 					if($details['numero1']!='' || $details['numero1']!=0){
-						echo $details['residencia'].' '.$details['referencia'];
+						if($details['divnum1']==0){
+										$trr='';
+									}else{
+										$trr=$details['divnum1'];
+									}
+									if($details['divnum2']==0){
+										$apt='';
+									}else{
+										$apt=$details['divnum2'];
+									}
+						echo $details['nomenclatura'].' '.$details['numero1'].$details['adicionauno'].' # '.$details['numero2'].$details['adicional2'].' - '.$details['numero3'].'/'.$details['residencia'].", ".$details['referencia'].' '.$details['divicion'].' '.$trr.' '.$details['divicion2'].' '.$apt;
+						
 						
 					}else{
-						echo $details['nomenclatura'].' '.$details['numero1'].$details['adicionauno'].' # '.$details['numero2'].$details['adicional2'].' - '.$details['numero3'];
+						if($details['divnum1']==0){
+										$trr='';
+									}else{
+										$trr=$details['divnum1'];
+									}
+									if($details['divnum2']==0){
+										$apt='';
+									}else{
+										$apt=$details['divnum2'];
+									}
+						echo $details['residencia'].", ".$details['referencia'].' '.$details['divicion'].' '.$trr.' '.$details['divicion2'].' '.$apt;
 					} ?></span><br><br>
 					Coordenadas:<span style="border-bottom: 1px solid;"><?php echo $details['coor1'].' '.$details['coor2'] ?></span><br><br>
 					Estrato: <span style="border-bottom: 1px solid;"><?php echo $details['estrato'] ?></span><br><br>
