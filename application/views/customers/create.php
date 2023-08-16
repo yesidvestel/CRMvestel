@@ -349,7 +349,7 @@
                         </div>
 						<div class="col-sm-3">
                             <h6><label class="col-form-label"
-                               for="postbox"><?php echo $this->lang->line('') ?>Divicion 1</label></h6>
+                               for="postbox"><?php echo $this->lang->line('') ?>División 1</label></h6>
 							<div>
                             <select class="form-control"  id="divicion1" name="divicion">
 										<option value="">Seleccionar...</option>
@@ -368,11 +368,11 @@
                         </div>
 						<div class="col-sm-3">
                             <h6><label class="col-form-label"
-                               for="postbox"><?php echo $this->lang->line('') ?>Divicion 2</label></h6>
+                               for="postbox"><?php echo $this->lang->line('') ?>División 2</label></h6>
 							<div>
                             <select class="form-control" name="divicion2">
 										<option value="">Seleccionar...</option>
-										<option value="Apatamento">Apatamento</option>
+										<option value="Apartamento">Apartamento</option>
 										<option value="Casa">Casa</option>
 								</select>
                         	</div>
