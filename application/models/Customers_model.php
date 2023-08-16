@@ -3531,4 +3531,24 @@ public function array_sortOBJECT($array, $on, $order=SORT_ASC)
 
     return $new_array;
 }
+public function get_nombre_completo($name,$dosnombre,$unoapellido,$dosapellido){
+    $name=str_replace(" ", "", $name);
+    $dosnombre=str_replace(" ", "", $dosnombre);
+    $unoapellido=str_replace(" ", "", $unoapellido);
+    $dosapellido=str_replace(" ", "", $dosapellido);
+    $nombre="";
+    if($name!=null){
+        $nombre.=$name." ";
+    }
+    if($dosnombre!=null){
+        $nombre.=$dosnombre." ";
+    }
+    if($unoapellido!=null){
+        $nombre.=$unoapellido." ";
+    }
+    if($dosapellido!=null){
+        $nombre.=$dosapellido;
+    }
+    return $nombre;
+}
 }

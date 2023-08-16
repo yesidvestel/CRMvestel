@@ -794,10 +794,11 @@ class Clientgroup extends CI_Controller
                                 $str_barrio= $obj_barrio->barrio;    
                             }
                             $array_excel=array();
+                             $nombre_completo=$this->customers->get_nombre_completo($customer->name,$customer->dosnombre,$customer->unoapellido,$customer->dosapellido);
                             if($_GET['ultimo_estado_sel']=="Si"){
-                                $array_excel=array($customer->id,$customer->abonado,$customer->documento ,$customer->name.' '.$customer->unoapellido, $customer->celular, $customer->email,$direccion,$str_barrio ,$customer->suscripcion_str,$customer->tegnologia,$customer->usu_estado,$customer->deuda,$customer->suscripcion,$customer->money,$customer->ultimo_estado,$customer->fecha_ultimo_estado);
+                                $array_excel=array($customer->id,$customer->abonado,$customer->documento ,$nombre_completo, $customer->celular, $customer->email,$direccion,$str_barrio ,$customer->suscripcion_str,$customer->tegnologia,$customer->usu_estado,$customer->deuda,$customer->suscripcion,$customer->money,$customer->ultimo_estado,$customer->fecha_ultimo_estado);
                             }else{
-                                $array_excel=array($customer->id,$customer->abonado,$customer->documento ,$customer->name.' '.$customer->unoapellido, $customer->celular,$customer->email, $direccion,$str_barrio ,$customer->suscripcion_str,$customer->tegnologia,$customer->usu_estado,$customer->deuda,$customer->suscripcion,$customer->money);
+                                $array_excel=array($customer->id,$customer->abonado,$customer->documento ,$nombre_completo, $customer->celular,$customer->email, $direccion,$str_barrio ,$customer->suscripcion_str,$customer->tegnologia,$customer->usu_estado,$customer->deuda,$customer->suscripcion,$customer->money);
                             }
 
                             if($_GET['check_agregar_ultima_transaccion']=="true"){
@@ -925,7 +926,8 @@ class Clientgroup extends CI_Controller
             $row[] = $no;
 			$row[] = $customers->abonado;
 			$row[] = $customers->documento;
-            $row[] = '<a href="' . $base . 'view?id=' . $customers->id . '">' . $customers->name .' '.$customers->unoapellido. ' </a>';
+             $nombre_completo=$this->customers->get_nombre_completo($customers->name,$customers->dosnombre,$customers->unoapellido,$customers->dosapellido);
+            $row[] = '<a href="' . $base . 'view?id=' . $customers->id . '">' . $nombre_completo. ' </a>';
 			$row[] = $customers->celular;			
             $row[] = $customers->email;           
             $row[] = $customers->nomenclatura . ' ' . $customers->numero1 . $customers->adicionauno.' Nº '.$customers->numero2.$customers->adicional2.' - '.$customers->numero3;
@@ -1630,7 +1632,8 @@ $suscripcion_str2=$suscripcion_str;
                             $row[] = $no;
                             $row[] = $customers->abonado;
                             $row[] = $customers->documento;
-                            $row[] = '<a href="'.base_url().'customers/view?id=' . $customers->id . '">' . $customers->name .' '.$customers->unoapellido. ' </a>';
+                            $nombre_completo=$this->customers->get_nombre_completo($customers->name,$customers->dosnombre,$customers->unoapellido,$customers->dosapellido);
+                            $row[] = '<a href="'.base_url().'customers/view?id=' . $customers->id . '">' . $nombre_completo. ' </a>';
                             $row[] = $customers->celular;   
                             $row[] = $customers->email;           
                             $row[] = $customers->nomenclatura . ' ' . $customers->numero1 . $customers->adicionauno.' Nº '.$customers->numero2.$customers->adicional2.' - '.$customers->numero3;
@@ -1786,7 +1789,8 @@ $suscripcion_str2=$suscripcion_str;
                             $row[] = $no;
                             $row[] = $customers->abonado;
                             $row[] = $customers->documento;
-                            $row[] = '<a href="'.base_url().'customers/view?id=' . $customers->id . '">' . $customers->name . ' </a>';
+                            $nombre_completo=$this->customers->get_nombre_completo($customers->name,$customers->dosnombre,$customers->unoapellido,$customers->dosapellido);
+                            $row[] = '<a href="'.base_url().'customers/view?id=' . $customers->id . '">' . $nombre_completo . ' </a>';
                             $row[] = $customers->celular; 
                             $row[] = $customers->email;           
                             $row[] = $customers->nomenclatura . ' ' . $customers->numero1 . $customers->adicionauno.' Nº '.$customers->numero2.$customers->adicional2.' - '.$customers->numero3;
