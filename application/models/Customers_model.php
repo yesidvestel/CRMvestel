@@ -826,7 +826,7 @@ public function calculo_ultimo_estado ($array_add,$customers){
         }*/
     }
 
-    public function add($abonado, $name, $dosnombre, $unoapellido, $dosapellido, $company, $celular, $celular2, $email, $nacimiento, $tipo_cliente, $tipo_documento, $documento, $fcontrato, $estrato, $suscripcion, $departamento, $ciudad, $localidad, $barrio, $nomenclatura, $numero1, $adicionauno, $numero2, $adicional2, $numero3, $residencia, $referencia, $divicion, $divnum1, $divicion2, $divnum2, $coor1, $coor2, $dirsuscriptor, $customergroup, $name_s, $contra, $servicio, $perfil, $Iplocal, $Ipremota, $comentario,$tegnologia_instalacion)
+    public function add($abonado, $name, $dosnombre, $unoapellido, $dosapellido, $company, $celular, $celular2, $email, $nacimiento, $tipo_cliente, $tipo_documento, $documento, $fcontrato, $estrato, $suscripcion, $departamento, $ciudad, $localidad, $barrio, $nomenclatura, $numero1, $adicionauno, $numero2, $adicional2, $numero3, $residencia, $referencia, $divicion, $divnum1, $divicion2, $divnum2, $coor1, $coor2, $dirsuscriptor, $clausula, $customergroup, $name_s, $contra, $servicio, $perfil, $Iplocal, $Ipremota, $comentario,$tegnologia_instalacion)
     {
         if($tegnologia_instalacion==""){
             $tegnologia_instalacion=null;
@@ -865,6 +865,7 @@ public function calculo_ultimo_estado ($array_add,$customers){
 			'divicion2' => $divicion2,
 			'divnum2' => $divnum2,
 			'dirsuscriptor' => $dirsuscriptor,
+			'clausula' => $clausula,
 			'gid' => $customergroup,
 			'name_s' => $name_s,
 			'contra' => $contra,
@@ -1231,6 +1232,13 @@ public function calculo_ultimo_estado ($array_add,$customers){
         $query = $this->db->get();
         return $query->result_array(); 
     }
+	public function clausulas_list()
+    { 
+		$this->db->select('*');
+        $this->db->from('clausula');
+        $query = $this->db->get();
+        return $query->result_array(); 
+    }
 	public function group_ciudad($id)
     {
 
@@ -1270,6 +1278,14 @@ public function calculo_ultimo_estado ($array_add,$customers){
 
         $this->db->from('barrio');
         $this->db->where('idBarrio', $id);
+        $query = $this->db->get();
+        return $query->row_array();
+    }
+	public function group_clausula($id)
+    {
+
+        $this->db->from('clausula');
+        $this->db->where('idcla', $id);
         $query = $this->db->get();
         return $query->row_array();
     }

@@ -841,7 +841,7 @@ $fcontrato = $details['f_contrato'];
 	</table>
 	<table><!--hoja 2-->
 		<tr>
-			<td width="49%" style="font-size: 20px;line-height: normal;text-align: justify"><!--COLUMNA IZQUIERDA-->
+			<td width="49%" style="font-size: 24px;line-height: normal;text-align: justify"><!--COLUMNA IZQUIERDA-->
 				<H4>PAGO Y FACTURACIÓN</H4>
 				La factura le debe llegar como mínimo 5 días hábiles
 				antes de la fecha de pago. Si no llega, puede solicitarla a
@@ -952,11 +952,7 @@ $fcontrato = $details['f_contrato'];
 					</tr>
 					<tr>
 						<td colspan="4">VALOR TOTAL DEL CARGO POR CONEXIÓN</td>
-						<td colspan="2"><?php /* echo amountFormat(306000) */?></td>
-					</tr>
-					<tr>
-						<td colspan="4">Suma que le fue diferida del valor total del cargo por conexión</td>
-						<td colspan="2"><?php /* echo amountFormat(70000) */?></td>
+						<td colspan="2"><?php  echo amountFormat($clausula['v_total']) ?></td>
 					</tr>
 					<tr>
 						<td colspan="4">Fecha inicio permanencia mínima</td>
@@ -978,12 +974,12 @@ $fcontrato = $details['f_contrato'];
 						<td class="cla">Mes 6</td>
 					</tr>
 					<tr>
-						<td class="cla"><?php /* echo amountFormat(256000) */?></td>
-						<td class="cla"><?php /* echo amountFormat(234667) */?></td>
-						<td class="cla"><?php /* echo amountFormat(213334) */?></td>
-						<td class="cla"><?php /* echo amountFormat(192001) */?></td>
-						<td class="cla"><?php /* echo amountFormat(170668) */?></td>
-						<td class="cla"><?php /* echo amountFormat(149335) */?></td>
+						<td class="cla"><?php echo amountFormat($clausula['mes1']) ?></td>
+						<td class="cla"><?php echo amountFormat($clausula['mes2']) ?></td>
+						<td class="cla"><?php echo amountFormat($clausula['mes3']) ?></td>
+						<td class="cla"><?php echo amountFormat($clausula['mes4']) ?></td>
+						<td class="cla"><?php echo amountFormat($clausula['mes5']) ?></td>
+						<td class="cla"><?php echo amountFormat($clausula['mes6']) ?></td>
 					</tr>
 					<tr>
 						<td class="cla">Mes 7</td>
@@ -994,12 +990,12 @@ $fcontrato = $details['f_contrato'];
 						<td class="cla">Mes 12</td>
 					</tr>
 					<tr>
-						<td class="cla"><?php /* echo amountFormat(128002)*/?></td>
-						<td class="cla"><?php /* echo amountFormat(106669) */?></td>
-						<td class="cla"><?php /* echo amountFormat(85336)*/?></td>
-						<td class="cla"><?php /* echo amountFormat(64003)*/?></td>
-						<td class="cla"><?php /* echo amountFormat(42670)*/?></td>
-						<td class="cla"><?php /* echo amountFormat(21337)*/?></td>
+						<td class="cla"><?php echo amountFormat($clausula['mes7'])?></td>
+						<td class="cla"><?php echo amountFormat($clausula['mes8'])?></td>
+						<td class="cla"><?php echo amountFormat($clausula['mes9'])?></td>
+						<td class="cla"><?php echo amountFormat($clausula['mes10'])?></td>
+						<td class="cla"><?php echo amountFormat($clausula['mes11'])?></td>
+						<td class="cla"><?php echo amountFormat($clausula['mes12'])?></td>
 					</tr>
 				</tbody>
 			   </table>

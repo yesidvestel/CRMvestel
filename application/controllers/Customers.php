@@ -90,6 +90,7 @@ class Customers extends CI_Controller
     {
 
         $data['customergrouplist'] = $this->customers->group_list();                
+        $data['clausulas'] = $this->customers->clausulas_list();                
         $head['usernm'] = $this->aauth->get_user()->username;
         $data['codigo'] = $this->customers->codigouser();
         $head['title'] = 'Create Customer';      
@@ -960,6 +961,7 @@ public function ajax_graficas2(){
         $coor1 = $this->input->post('coor1');
         $coor2 = $this->input->post('coor2');
         $dirsuscriptor = $this->input->post('dirsuscriptor');
+        $clausula = $this->input->post('clausula');
         $customergroup = $this->input->post('customergroup');
         $name_s = $this->input->post('name_s');
         $contra = $this->input->post('contra');
@@ -969,7 +971,7 @@ public function ajax_graficas2(){
         $Ipremota = $this->input->post('Ipremota2');
         $comentario = $this->input->post('comentario');
         $tegnologia_instalacion = $this->input->post('tegnologia_instalacion');
-        $this->customers->add($abonado, $name, $dosnombre, $unoapellido, $dosapellido, $company, $celular, $celular2, $email, $nacimiento, $tipo_cliente, $tipo_documento, $documento, $fcontrato, $estrato, $suscripcion, $departamento, $ciudad, $localidad, $barrio, $nomenclatura, $numero1, $adicionauno, $numero2, $adicional2, $numero3, $residencia, $referencia, $divicion, $divnum1, $divicion2, $divnum2, $coor1, $coor2, $dirsuscriptor, $customergroup, $name_s, $contra, $servicio, $perfil, $Iplocal, $Ipremota, $comentario,$tegnologia_instalacion);
+        $this->customers->add($abonado, $name, $dosnombre, $unoapellido, $dosapellido, $company, $celular, $celular2, $email, $nacimiento, $tipo_cliente, $tipo_documento, $documento, $fcontrato, $estrato, $suscripcion, $departamento, $ciudad, $localidad, $barrio, $nomenclatura, $numero1, $adicionauno, $numero2, $adicional2, $numero3, $residencia, $referencia, $divicion, $divnum1, $divicion2, $divnum2, $coor1, $coor2, $dirsuscriptor, $clausula, $customergroup, $name_s, $contra, $servicio, $perfil, $Iplocal, $Ipremota, $comentario,$tegnologia_instalacion);
 
     }
 
@@ -1423,6 +1425,7 @@ public function ajax_graficas2(){
         $data['ciudad'] = $this->customers->group_ciudad($data['details']['ciudad']);
         $data['localidad'] = $this->customers->group_localidad($data['details']['localidad']);
         $data['barrio'] = $this->customers->group_barrio($data['details']['barrio']);
+        $data['clausula'] = $this->customers->group_clausula($data['details']['clausula']);
         $data['due'] = $this->customers->due_details($custid);
         $data['servicios'] = $this->customers->servicios_detail($custid);
         if($data['servicios']['estado_combo']!=null){
