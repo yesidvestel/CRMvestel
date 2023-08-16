@@ -830,4 +830,13 @@ ADD `pago` varchar(10) NULL DEFAULT NULL AFTER `puntos`;
 PROMOCION EN FACTURAS
 ---------------------------------------------------------
 ALTER TABLE `invoices` 
-ADD `promo` int(10) NOT NULL DEFAULT 0 AFTER `tipo_factura`;
+__________________________________________________________________________________________________________
+NUEVOS CAMPOS AGREGAR USUARIO
+----------------------------------------------------------------------------------------------------------
+ALTER TABLE `customers`
+ADD `suscripcion` VARCHAR(15) NOT NULL AFTER `estrato`,
+ADD `divicion` VARCHAR(15) NOT NULL AFTER `referencia`,
+ADD `divnum1` INT NOT NULL AFTER `divicion`,
+ADD `divicion2` VARCHAR(15) NOT NULL AFTER `divnum1`,
+ADD `divnum2` INT NOT NULL AFTER `divicion2`,
+ADD `dirsuscriptor` VARCHAR(100) NOT NULL AFTER `divnum2`;

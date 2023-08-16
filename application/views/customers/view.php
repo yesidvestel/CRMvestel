@@ -474,6 +474,16 @@
                             <hr>
 							<div class="row m-t-lg">
                                 <div class="col-md-2">
+                                    <strong><?php echo $this->lang->line('') ?>Coordenadas:</strong>
+                                </div>
+                                <div class="col-md-10">
+                                    <?php echo $details['coor1'].", ".$details['coor2'] ?>
+                                </div>
+
+                            </div>
+                            <hr>
+							<div class="row m-t-lg">
+                                <div class="col-md-2">
                                     <strong>Contrato:</strong>
                                 </div>
 								<div class="col-md-10">

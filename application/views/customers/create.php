@@ -179,7 +179,7 @@
                         	</div>
                         </div>
                     
-						<div class="col-sm-4">
+						<div class="col-sm-6">
 						<h6><label class="col-form-label"><?php echo $this->lang->line('') ?>Estrato</label></h6>
 					
 						<div>
@@ -192,6 +192,17 @@
 								<option value="Estrato 6">Estrato 6</option>
 								<option value="Estrato 7">Estrato 7</option>
 								<option value="Estrato 8">Estrato 8</option>
+							</select>
+                        </div>
+					</div>
+						<div class="col-sm-6">
+						<h6><label class="col-form-label"><?php echo $this->lang->line('') ?>Suscripción</label></h6>
+					
+						<div>
+                            <select name="suscripcion" class="form-control" >
+								<option value="Residencial">Residencial</option>
+								<option value="Corporativo">Corporativo</option>
+								<option value="Dedicado">Dedicado</option>
 							</select>
                         </div>
 					</div>
@@ -311,7 +322,7 @@
                             <input type="text" placeholder="Numero"
                                    class="form-control margin-bottom" name="numero3" id="numero3">
                         </div>
-                    
+                    	
 						<div class="col-sm-6">
                         <h6><label class="col-form-label"
                                for="postbox"><?php echo $this->lang->line('') ?>Residencia</label></h6>
@@ -322,6 +333,7 @@
 										<option value="Edificio">Edificio</option>
 										<option value="Oficina">Oficina</option>
 										<option value="Vereda">Vereda</option>
+										<option value="Conjunto">Conjunto</option>
 								</select>
 							</div>
                             
@@ -334,6 +346,42 @@
                                    class="form-control margin-bottom" name="referencia">
                         	</div>
 							<a href="#" style="margin-top:2px;" class="btn btn-info" title="Validar Direccion" id="a_validar_direccion"><i class="icon-refresh"></i></a>
+                        </div>
+						<div class="col-sm-3">
+                            <h6><label class="col-form-label"
+                               for="postbox"><?php echo $this->lang->line('') ?>Divicion 1</label></h6>
+							<div>
+                            <select class="form-control"  id="divicion1" name="divicion">
+										<option value="">Seleccionar...</option>
+										<option value="Torre">Torre</option>
+										<option value="Interior">Interior</option>
+										<option value="Manzana">Manzana</option>
+										<option value="Bloque">Bloque</option>
+								</select>
+                        	</div>
+                        </div>
+						<div class="col-sm-3">
+							<h6><label class="col-form-label"
+                               for="postbox"><?php echo $this->lang->line('') ?>Numero</label></h6>
+                            <input type="text" placeholder="Numero"
+                                   class="form-control margin-bottom" name="divnum1">
+                        </div>
+						<div class="col-sm-3">
+                            <h6><label class="col-form-label"
+                               for="postbox"><?php echo $this->lang->line('') ?>Divicion 2</label></h6>
+							<div>
+                            <select class="form-control" name="divicion2">
+										<option value="">Seleccionar...</option>
+										<option value="Apatamento">Apatamento</option>
+										<option value="Casa">Casa</option>
+								</select>
+                        	</div>
+                        </div>
+						<div class="col-sm-3">
+							<h6><label class="col-form-label"
+                               for="postbox"><?php echo $this->lang->line('') ?>Numero</label></h6>
+                            <input type="text" placeholder="Numero"
+                                   class="form-control margin-bottom" name="divnum2">
                         </div>
 						<div class="col-sm-6">
                             <h6><label class="col-form-label"
@@ -349,6 +397,13 @@
 							<div>
                             <input id="referencia" type="text" placeholder=""
                                    class="form-control margin-bottom" name="coor2">
+                        	</div>
+                        </div>
+						<div class="col-sm-12">
+                            <h6><label class="col-form-label"
+                               for="postbox"><?php echo $this->lang->line('') ?>Direccion Suscriptor</label></h6>
+							<div>
+                            	<input type="text" placeholder="Direccion si es comercial" class="form-control margin-bottom" name="dirsuscriptor">
                         	</div>
                         </div>
 					</div>
@@ -402,6 +457,8 @@
                                            <option value="GPON">GPON</option>
                                            <option value="EPON">EPON</option>
                                            <option value="EOC">EOC</option>
+                                           <option value="RADIO">RADIO</option>
+                                           <option value="FIBRA">FIBRA</option>
                                        </select>                     
                                        
                             </div>

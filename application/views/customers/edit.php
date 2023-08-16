@@ -130,7 +130,7 @@
 							<h6><label class="col-form-label"><?php echo $this->lang->line('') ?>Estrato</label></h6>
 							<div>
                             <select name="estrato" class="form-control" >
-								<option value="<?php echo $customer['estrato'] ?>"><?php echo $customer['estrato'] ?></option>
+								<option value="<?php echo $customer['estrato'] ?>">>><?php echo $customer['estrato'] ?></option>
 								<option value="Estrato 1">Estrato 1</option>
 								<option value="Estrato 2">Estrato 2</option>
 								<option value="Estrato 3">Estrato 3</option>
@@ -147,6 +147,18 @@
 							<div>
                             <input type="text"class="form-control margin-bottom" name="fcontrato" value="<?php echo $customer['f_contrato'] ?>">
                         	</div>
+						</div>
+						<div class="col-sm-6">
+							<h6><label class="col-form-label"><?php echo $this->lang->line('') ?>Suscripción</label></h6>
+
+							<div>
+								<select name="suscripcion" class="form-control" >
+									<option value="<?php echo $customer['suscripcion'] ?>">>><?php echo $customer['suscripcion'] ?></option>
+									<option value="Residencial">Residencial</option>
+									<option value="Corporativo">Corporativo</option>
+									<option value="Dedicado">Dedicado</option>
+								</select>
+							</div>
 						</div>
 					</div>
                     <hr>
@@ -287,6 +299,44 @@
                                    class="form-control margin-bottom" name="referencia" value="<?php echo $customer['referencia'] ?>">
                         	</div>
                         </div>
+						<div class="col-sm-3">
+                            <h6><label class="col-form-label"
+                               for="postbox"><?php echo $this->lang->line('') ?>Divicion 1</label></h6>
+							<div>
+                            <select class="form-control"  id="divicion1" name="divicion">
+										<option value="<?php echo $customer['divicion'] ?>">>><?php echo $customer['divicion'] ?></option>
+										<option value="">Seleccionar...</option>
+										<option value="Torre">Torre</option>
+										<option value="Interior">Interior</option>
+										<option value="Manzana">Manzana</option>
+										<option value="Bloque">Bloque</option>
+								</select>
+                        	</div>
+                        </div>
+						<div class="col-sm-3">
+							<h6><label class="col-form-label"
+                               for="postbox"><?php echo $this->lang->line('') ?>Numero</label></h6>
+                            <input type="text" placeholder="Numero"
+                                   class="form-control margin-bottom" name="divnum1" value="<?php echo $customer['divnum1'] ?>">
+                        </div>
+						<div class="col-sm-3">
+                            <h6><label class="col-form-label"
+                               for="postbox"><?php echo $this->lang->line('') ?>Divicion 2</label></h6>
+							<div>
+                            <select class="form-control" name="divicion2">
+										<option value="<?php echo $customer['divicion2'] ?>">>><?php echo $customer['divicion2'] ?></option>
+										<option value="">Seleccionar...</option>
+										<option value="Apatamento">Apatamento</option>
+										<option value="Casa">Casa</option>
+								</select>
+                        	</div>
+                        </div>
+						<div class="col-sm-3">
+							<h6><label class="col-form-label"
+                               for="postbox"><?php echo $this->lang->line('') ?>Numero</label></h6>
+                            <input type="text" placeholder="Numero"
+                                   class="form-control margin-bottom" name="divnum2" value="<?php echo $customer['divnum2'] ?>">
+                        </div>
 						<div class="col-sm-6">
                             <h6><label class="col-form-label"
                                for="postbox"><?php echo $this->lang->line('') ?>Coordenada 1</label></h6>
@@ -301,6 +351,13 @@
 							<div>
                             <input id="referencia" type="text" value="<?php echo $customer['coor2'] ?>"
                                    class="form-control margin-bottom" name="coor2">
+                        	</div>
+                        </div>
+						<div class="col-sm-12">
+                            <h6><label class="col-form-label"
+                               for="postbox"><?php echo $this->lang->line('') ?>Direccion Suscriptor</label></h6>
+							<div>
+                            	<input type="text" placeholder="Direccion si es comercial" class="form-control margin-bottom" name="dirsuscriptor" value="<?php echo $customer['dirsuscriptor'] ?>">
                         	</div>
                         </div>
                     </div>
@@ -357,6 +414,8 @@
                                            <option value="GPON" <?= ($customer['tegnologia_instalacion']=="GPON") ? 'selected=""' :'' ?> >GPON</option>
                                            <option value="EPON" <?= ($customer['tegnologia_instalacion']=="EPON") ? 'selected=""' :'' ?> >EPON</option>
                                            <option value="EOC" <?= ($customer['tegnologia_instalacion']=="EOC") ? 'selected=""' :'' ?> >EOC</option>
+                                           <option value="FIBRA" <?= ($customer['tegnologia_instalacion']=="FIBRA") ? 'selected=""' :'' ?> >FIBRA</option>
+                                           <option value="RADIO" <?= ($customer['tegnologia_instalacion']=="RADIO") ? 'selected=""' :'' ?> >RADIO</option>
                                        </select>                     
                                        
                             </div>

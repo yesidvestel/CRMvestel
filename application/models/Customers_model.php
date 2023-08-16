@@ -826,7 +826,7 @@ public function calculo_ultimo_estado ($array_add,$customers){
         }*/
     }
 
-    public function add($abonado, $name, $dosnombre, $unoapellido, $dosapellido, $company, $celular, $celular2, $email, $nacimiento, $tipo_cliente, $tipo_documento, $documento, $fcontrato, $estrato, $departamento, $ciudad, $localidad, $barrio, $nomenclatura, $numero1, $adicionauno, $numero2, $adicional2, $numero3, $residencia, $referencia, $coor1, $coor2, $customergroup, $name_s, $contra, $servicio, $perfil, $Iplocal, $Ipremota, $comentario,$tegnologia_instalacion)
+    public function add($abonado, $name, $dosnombre, $unoapellido, $dosapellido, $company, $celular, $celular2, $email, $nacimiento, $tipo_cliente, $tipo_documento, $documento, $fcontrato, $estrato, $suscripcion, $departamento, $ciudad, $localidad, $barrio, $nomenclatura, $numero1, $adicionauno, $numero2, $adicional2, $numero3, $residencia, $referencia, $divicion, $divnum1, $divicion2, $divnum2, $coor1, $coor2, $dirsuscriptor, $customergroup, $name_s, $contra, $servicio, $perfil, $Iplocal, $Ipremota, $comentario,$tegnologia_instalacion)
     {
         if($tegnologia_instalacion==""){
             $tegnologia_instalacion=null;
@@ -847,6 +847,7 @@ public function calculo_ultimo_estado ($array_add,$customers){
             'documento' => $documento,
 			'f_contrato' => $fcontrato,
 			'estrato' => $estrato,
+			'suscripcion' => $suscripcion,
             'departamento' => $departamento,
             'ciudad' => $ciudad,
             'localidad' => $localidad,
@@ -859,6 +860,11 @@ public function calculo_ultimo_estado ($array_add,$customers){
 			'numero3' => $numero3,
 			'residencia' => $residencia,
 			'referencia' => $referencia,
+			'divicion' => $divicion,
+			'divnum1' => $divnum1,
+			'divicion2' => $divicion2,
+			'divnum2' => $divnum2,
+			'dirsuscriptor' => $dirsuscriptor,
 			'gid' => $customergroup,
 			'name_s' => $name_s,
 			'contra' => $contra,
@@ -936,7 +942,7 @@ public function calculo_ultimo_estado ($array_add,$customers){
     }
 
 
-    public function edit($id, $abonado, $name, $dosnombre, $unoapellido, $dosapellido, $company, $celular, $celular2, $email, $nacimiento, $tipo_cliente, $tipo_documento, $documento, $fcontrato, $estrato, $departamento, $ciudad, $localidad, $barrio, $nomenclatura, $numero1, $adicionauno, $numero2, $adicional2, $numero3, $residencia, $referencia, $coor1, $coor2, $customergroup, $name_s, $contra, $servicio, $perfil, $Iplocal, $Ipremota, $comentario,$tegnologia_instalacion)
+    public function edit($id, $abonado, $name, $dosnombre, $unoapellido, $dosapellido, $company, $celular, $celular2, $email, $nacimiento, $tipo_cliente, $tipo_documento, $documento, $fcontrato, $estrato, $suscripcion, $departamento, $ciudad, $localidad, $barrio, $nomenclatura, $numero1, $adicionauno, $numero2, $adicional2, $numero3, $residencia, $referencia, $divicion, $divnum1, $divicion2, $divnum2, $dirsuscriptor, $coor1, $coor2, $customergroup, $name_s, $contra, $servicio, $perfil, $Iplocal, $Ipremota, $comentario,$tegnologia_instalacion)
     {
         if($tegnologia_instalacion==""){
             $tegnologia_instalacion=null;
@@ -957,6 +963,7 @@ public function calculo_ultimo_estado ($array_add,$customers){
             'documento' => $documento,
 			'f_contrato' => $fcontrato,
 			'estrato'	=> $estrato,
+			'suscripcion'	=> $suscripcion,
             'departamento' => $departamento,
             'ciudad' => $ciudad,
             'localidad' => $localidad,
@@ -969,6 +976,11 @@ public function calculo_ultimo_estado ($array_add,$customers){
 			'numero3' => $numero3,
 			'residencia' => $residencia,
 			'referencia' => $referencia,
+			'divicion' => $divicion,
+			'divnum1' => $divnum1,
+			'divicion2' => $divicion2,
+			'divnum2' => $divnum2,
+			'dirsuscriptor' => $dirsuscriptor,
 			'gid' => $customergroup,
 			'name_s' => $name_s,
 			'contra' => $contra,

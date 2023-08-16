@@ -940,6 +940,7 @@ public function ajax_graficas2(){
         $documento = $this->input->post('documento');
         $fcontrato = date("Y-m-d");
         $estrato = $this->input->post('estrato');
+        $suscripcion = $this->input->post('suscripcion');
         $departamento = $this->input->post('departamento');
         $ciudad = $this->input->post('ciudad');
         $localidad = $this->input->post('localidad');
@@ -952,8 +953,13 @@ public function ajax_graficas2(){
         $numero3 = $this->input->post('numero3');
         $residencia = $this->input->post('residencia');
         $referencia = $this->input->post('referencia');
+        $divicion = $this->input->post('divicion');
+        $divnum1 = $this->input->post('divnum1');
+        $divicion2 = $this->input->post('divicion2');
+        $divnum2 = $this->input->post('divnum2');
         $coor1 = $this->input->post('coor1');
         $coor2 = $this->input->post('coor2');
+        $dirsuscriptor = $this->input->post('dirsuscriptor');
         $customergroup = $this->input->post('customergroup');
         $name_s = $this->input->post('name_s');
         $contra = $this->input->post('contra');
@@ -963,7 +969,7 @@ public function ajax_graficas2(){
         $Ipremota = $this->input->post('Ipremota2');
         $comentario = $this->input->post('comentario');
         $tegnologia_instalacion = $this->input->post('tegnologia_instalacion');
-        $this->customers->add($abonado, $name, $dosnombre, $unoapellido, $dosapellido, $company, $celular, $celular2, $email, $nacimiento, $tipo_cliente, $tipo_documento, $documento, $fcontrato, $estrato, $departamento, $ciudad, $localidad, $barrio, $nomenclatura, $numero1, $adicionauno, $numero2, $adicional2, $numero3, $residencia, $referencia, $coor1, $coor2, $customergroup, $name_s, $contra, $servicio, $perfil, $Iplocal, $Ipremota, $comentario,$tegnologia_instalacion);
+        $this->customers->add($abonado, $name, $dosnombre, $unoapellido, $dosapellido, $company, $celular, $celular2, $email, $nacimiento, $tipo_cliente, $tipo_documento, $documento, $fcontrato, $estrato, $suscripcion, $departamento, $ciudad, $localidad, $barrio, $nomenclatura, $numero1, $adicionauno, $numero2, $adicional2, $numero3, $residencia, $referencia, $divicion, $divnum1, $divicion2, $divnum2, $coor1, $coor2, $dirsuscriptor, $customergroup, $name_s, $contra, $servicio, $perfil, $Iplocal, $Ipremota, $comentario,$tegnologia_instalacion);
 
     }
 
@@ -986,6 +992,7 @@ public function ajax_graficas2(){
         $documento = $this->input->post('documento');
         $fcontrato = $this->input->post('fcontrato');
         $estrato = $this->input->post('estrato');
+        $suscripcion = $this->input->post('suscripcion');
         $departamento = $this->input->post('departamento');
         $ciudad = $this->input->post('ciudad');
         $localidad = $this->input->post('localidad');
@@ -998,8 +1005,13 @@ public function ajax_graficas2(){
         $numero3 = $this->input->post('numero3');
         $residencia = $this->input->post('residencia');
         $referencia = $this->input->post('referencia');
+        $divicion = $this->input->post('divicion');
+        $divnum1 = $this->input->post('divnum1');
+        $divicion2 = $this->input->post('divicion2');
+        $divnum2 = $this->input->post('divnum2');
         $coor1 = $this->input->post('coor1');
         $coor2 = $this->input->post('coor2');
+        $dirsuscriptor = $this->input->post('dirsuscriptor');
         $customergroup = $this->input->post('customergroup');
         $name_s = $this->input->post('name_s');
         $contra = $this->input->post('contra');
@@ -1010,7 +1022,7 @@ public function ajax_graficas2(){
         $comentario = $this->input->post('comentario');
         $tegnologia_instalacion = $this->input->post('tegnologia_instalacion');
         if ($id) {
-            $this->customers->edit($id, $abonado, $name, $dosnombre, $unoapellido, $dosapellido, $company, $celular, $celular2, $email, $nacimiento, $tipo_cliente, $tipo_documento, $documento, $fcontrato, $estrato, $departamento, $ciudad, $localidad, $barrio, $nomenclatura, $numero1, $adicionauno, $numero2, $adicional2, $numero3, $residencia, $referencia, $coor1, $coor2, $customergroup, $name_s, $contra, $servicio, $perfil, $Iplocal, $Ipremota, $comentario,$tegnologia_instalacion);
+            $this->customers->edit($id, $abonado, $name, $dosnombre, $unoapellido, $dosapellido, $company, $celular, $celular2, $email, $nacimiento, $tipo_cliente, $tipo_documento, $documento, $fcontrato, $estrato, $suscripcion, $departamento, $ciudad, $localidad, $barrio, $nomenclatura, $numero1, $adicionauno, $numero2, $adicional2, $numero3, $residencia, $referencia, $divicion, $divnum1, $divicion2, $divnum2, $dirsuscriptor, $coor1, $coor2, $customergroup, $name_s, $contra, $servicio, $perfil, $Iplocal, $Ipremota, $comentario,$tegnologia_instalacion);
         }
    
     }

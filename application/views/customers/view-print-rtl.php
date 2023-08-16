@@ -654,16 +654,22 @@ $fcontrato = $details['f_contrato'];
 				<tr>
 					<td style="font-size: x-large">
 					<h4>INFORMACIÓN DEL SUSCRIPTOR</h4><br>
-					Contrato No.: <span style="border-bottom: 1px solid;"><?php echo $details['documento'] ?></span><br><br>
+					Contrato No.: <span style="border-bottom: 1px solid;"><?php echo $details['abonado'] ?></span><br><br>
 					Nombre/Razón Social: <span style="border-bottom: 1px solid;"> <?php echo $details['name'].' '.$details['dosnombre'].' '.$details['unoapellido'].' '.$details['dosapellido'] ?></span><br><br>
 					  Identificación: <span style="border-bottom: 1px solid;"><?php echo $details['tipo_documento'].' '.$details['documento'] ?></span><br><br>
 					Correo electrónico: <span style="border-bottom: 1px solid;"><?php echo $details['email'] ?></span><br><br>
 					Teléfono de contacto: <span style="border-bottom: 1px solid;"><?php echo $details['celular'] ?></span><br><br>
-					Dirección de servicio: <span style="border-bottom: 1px solid;"><?php echo $details['nomenclatura'].' '.$details['numero1'].$details['adicionauno'].' # '.$details['numero2'].$details['adicional2'].' - '.$details['numero3'] ?></span><span style="border-bottom: 1px solid;"><?php echo $details['barrio'] ?></span><br><br>
+					Dirección de servicio: <span style="border-bottom: 1px solid;"><?php
+					if($details['numero1']!='' || $details['numero1']!=0){
+						echo $details['residencia'].' '.$details['referencia'];
+						
+					}else{
+						echo $details['nomenclatura'].' '.$details['numero1'].$details['adicionauno'].' # '.$details['numero2'].$details['adicional2'].' - '.$details['numero3'];
+					} ?></span><br><br>
 					Coordenadas:<span style="border-bottom: 1px solid;"><?php echo $details['coor1'].' '.$details['coor2'] ?></span><br><br>
 					Estrato: <span style="border-bottom: 1px solid;"><?php echo $details['estrato'] ?></span><br><br>
 					Departamento: <span style="border-bottom: 1px solid;"><?php echo $departamento['departamento'] ?></span> Municipio: <span style="border-bottom: 1px solid;"><?php echo $ciudad['ciudad'] ?></span><br><br>
-					Dirección suscriptor: 
+					Dirección suscriptor: <span style="border-bottom: 1px solid;"><?php echo $details['dirsuscriptor'] ?></span>
 					</td>
 				</tr>
 			</table>
@@ -674,8 +680,38 @@ $fcontrato = $details['f_contrato'];
 				<h4>CONDICIONES COMERCIALES CARACTERÍSTICAS DEL PLAN</h4><br>
 				Contrato No.: <span style="border-bottom: 1px solid;"><?php echo $details['abonado'] ?></span><br><br>
 				Nombre/Razón Social: <span style="border-bottom: 1px solid;"> <?php echo $details['name'].' '.$details['dosnombre'].' '.$details['unoapellido'].' '.$details['dosapellido'] ?></span><br><br>
-				Tipo de Servicio: Residencial ___ Corporativo ___ Dedicado ___<br><br>
-				Tecnologia: Radioenlace ___ Fibra óptica ___<br><br>
+				Tipo de Servicio: 
+				Residencial <span style="border-bottom: 1px solid;"><?php 
+						if($details['suscripcion']=='Residencial'){
+							echo 'X';
+						}else{
+							echo '__';
+						} ?></span> 
+				Corporativo <span style="border-bottom: 1px solid;"><?php 
+						if($details['suscripcion']=='Corporativo'){
+							echo 'X';
+						}else{
+							echo '__';
+						} ?></span> 
+				Dedicado <span style="border-bottom: 1px solid;"><?php 
+						if($details['suscripcion']=='Dedicado'){
+							echo 'X';
+						}else{
+							echo '__';
+						} ?></span><br><br>
+				Tecnologia: 
+				Radioenlace <span style="border-bottom: 1px solid;"><?php 
+						if($details['tegnologia_instalacion']=='RADIO'){
+							echo 'X';
+						}else{
+							echo '__';
+						} ?></span> 
+				Fibra óptica <span style="border-bottom: 1px solid;"><?php 
+						if($details['tegnologia_instalacion']=='FIBRA'){
+							echo 'X';
+						}else{
+							echo '__';
+						} ?></span><br><br>
 				a. El servicio prestado por OTTIS Comunicaciones es continuo
 				y permanente 30 días al mes 24 horas diarias.<br>
 				b. Los planes del servicio prestado consisten en entregar una
@@ -700,7 +736,7 @@ $fcontrato = $details['f_contrato'];
 			</td>
 			<tr>
 			<td>
-			<h4>Valor Total $</h4>
+			<h2>Valor Total <?php echo amountFormat($totaltv+$inter) ?></h2>
 			Este valor incluye todas las mensualidades y el valor pagado por habilitación
 			</td>
 			</tr>
@@ -999,14 +1035,25 @@ $fcontrato = $details['f_contrato'];
 				<tr style="border-radius: 20px">
 				<td style="font-size: x-large">
 					<h6>TECNOLOGIA INSTALADA:</h6><br>
-						Radio ___ Fibra ___<br><br>
-						Coordenadas: <span style="border-bottom: 1px solid;">____________</span><br><br>
+						Radio <span style="border-bottom: 1px solid;"><?php 
+						if($details['tegnologia_instalacion']=='RADIO'){
+							echo 'X';
+						}else{
+							echo '__';
+						} ?></span> 
+						Fibra <span style="border-bottom: 1px solid;"><?php 
+						if($details['tegnologia_instalacion']=='FIBRA'){
+							echo 'X';
+						}else{
+							echo '__';
+						} ?></span><br><br>
+						Coordenadas: <span style="border-bottom: 1px solid;"><?php echo $details['coor1'].' '.$details['coor2'] ?></span><br><br>
 						Equipo CPE Marca: <span style="border-bottom: 1px solid;">_______________</span><br><br>
 						Referencia o Modelo: <span style="border-bottom: 1px solid;">_______________</span><br><br>
 						Dirección MAC o serial: <span style="border-bottom: 1px solid;">______________</span><br><br>
 						Adaptador de Corriente: <span style="border-bottom: 1px solid;">_____________</span><br><br>
 						Cable UTP o Fibra: <span style="border-bottom: 1px solid;">__________</span> Metros: <span style="border-bottom: 1px solid;">___________</span>metros<br><br>
-						Accesorios Adicionales: <span style="border-bottom: 1px solid;">_____________</span> Municipio: <span style="border-bottom: 1px solid;">_____________</span><br><br>
+						Accesorios Adicionales: <span style="border-bottom: 1px solid;">_____________</span> Municipio: <span style="border-bottom: 1px solid;"><?php echo $ciudad['ciudad'] ?></span><br><br>
 				</td>
 				</tr>
 			<tr style="border-radius: 20px">
@@ -1014,7 +1061,7 @@ $fcontrato = $details['f_contrato'];
 			</tr>
 			</table>
 		</table>
-			<table width="100%" border="1">
+			<table border="1">
 					<tbody>
 						<tr>
 							<td align="center"><?php if(file_exists($url_firma)){ ?><img height="130px" src="<?=$url_firma?>"></img><?php } if(file_exists($url_huella)){ ?><img height="130px" src="<?=$url_huella?>"></img><?php } ?>____________________________________________________________<br>Aceptación contrato mediante firma o cualquier otro medio válido</td>
@@ -1024,10 +1071,10 @@ $fcontrato = $details['f_contrato'];
 				<table border="1">
 					<tr>
 					<td width="50%">
-						<h4>CC/CE</h4>
+						<h2><?php echo $details['tipo_documento'].' '.$details['documento'] ?></h2>
 					</td>
 					<td >
-						<h4>FECHA</h4>
+						<h2>FECHA <?php echo date("d/m/Y",strtotime($fcontrato)) ?></h2>
 					</td>
 				</table>
 				<h4>Consulte el régimen de protección de usuarios en www.crcom.gov.co</h4>
