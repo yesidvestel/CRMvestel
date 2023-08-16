@@ -353,11 +353,28 @@
                                    class="form-control margin-bottom" name="coor2">
                         	</div>
                         </div>
-						<div class="col-sm-12">
+						<div class="col-sm-6">
                             <h6><label class="col-form-label"
                                for="postbox"><?php echo $this->lang->line('') ?>Direccion Suscriptor</label></h6>
 							<div>
                             	<input type="text" placeholder="Direccion si es comercial" class="form-control margin-bottom" name="dirsuscriptor" value="<?php echo $customer['dirsuscriptor'] ?>">
+                        	</div>
+                        </div>
+						<div class="col-sm-6">
+                            <h6><label class="col-form-label"
+                               for="postbox"><?php echo $this->lang->line('') ?>Cláusula</label></h6>
+							<div>
+                            	<select name="clausula" class="form-control">
+									<option value="<?php echo $clausula['idcla'] ?>">>><?php echo $clausula['nombre'] ?></option>
+									<option value="">Sin Clausula</option>
+									<?php
+									foreach ($clausulas as $row) {
+										$cid = $row['idcla'];
+										$title = $row['nombre'];
+										echo "<option value='$cid'>$title</option>";
+									}
+									?>
+                            </select>
                         	</div>
                         </div>
                     </div>

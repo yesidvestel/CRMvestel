@@ -410,7 +410,7 @@
                             <h6><label class="col-form-label"
                                for="postbox"><?php echo $this->lang->line('') ?>Cláusula</label></h6>
 							<div>
-                            	<select id="id_sede" name="clausula" class="form-control"  onchange="cambia()">
+                            	<select name="clausula" class="form-control">
 									<option value="">Seleccionar..</option>
 									<?php
 									foreach ($clausulas as $row) {

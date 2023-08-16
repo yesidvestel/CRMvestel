@@ -892,11 +892,13 @@ public function ajax_graficas2(){
         $pid = $this->input->get('id');
         $data['customer'] = $this->customers->details($pid);
         $data['customergroup'] = $this->customers->group_info($data['customer']['gid']);
-        $data['departamentos'] = $this->customers->departamentos_list();        
+        $data['departamentos'] = $this->customers->departamentos_list();
+		$data['clausulas'] = $this->customers->clausulas_list();
         $data['departamento'] = $this->customers->group_departamentos($data['customer']['departamento']);
         $data['ciudad'] = $this->customers->group_ciudad($data['customer']['ciudad']);
         $data['localidad'] = $this->customers->group_localidad($data['customer']['localidad']);
         $data['barrio'] = $this->customers->group_barrio($data['customer']['barrio']);
+		$data['clausula'] = $this->customers->group_clausula($data['customer']['clausula']);
         $data['equipo'] = $this->customers->equipo_details($custid);
         $data['customergrouplist'] = $this->customers->group_list();
         $head['usernm'] = $this->aauth->get_user()->username;
@@ -1014,6 +1016,7 @@ public function ajax_graficas2(){
         $coor1 = $this->input->post('coor1');
         $coor2 = $this->input->post('coor2');
         $dirsuscriptor = $this->input->post('dirsuscriptor');
+        $clausula = $this->input->post('clausula');
         $customergroup = $this->input->post('customergroup');
         $name_s = $this->input->post('name_s');
         $contra = $this->input->post('contra');
@@ -1024,7 +1027,7 @@ public function ajax_graficas2(){
         $comentario = $this->input->post('comentario');
         $tegnologia_instalacion = $this->input->post('tegnologia_instalacion');
         if ($id) {
-            $this->customers->edit($id, $abonado, $name, $dosnombre, $unoapellido, $dosapellido, $company, $celular, $celular2, $email, $nacimiento, $tipo_cliente, $tipo_documento, $documento, $fcontrato, $estrato, $suscripcion, $departamento, $ciudad, $localidad, $barrio, $nomenclatura, $numero1, $adicionauno, $numero2, $adicional2, $numero3, $residencia, $referencia, $divicion, $divnum1, $divicion2, $divnum2, $dirsuscriptor, $coor1, $coor2, $customergroup, $name_s, $contra, $servicio, $perfil, $Iplocal, $Ipremota, $comentario,$tegnologia_instalacion);
+            $this->customers->edit($id, $abonado, $name, $dosnombre, $unoapellido, $dosapellido, $company, $celular, $celular2, $email, $nacimiento, $tipo_cliente, $tipo_documento, $documento, $fcontrato, $estrato, $suscripcion, $departamento, $ciudad, $localidad, $barrio, $nomenclatura, $numero1, $adicionauno, $numero2, $adicional2, $numero3, $residencia, $referencia, $divicion, $divnum1, $divicion2, $divnum2, $dirsuscriptor, $clausula, $coor1, $coor2, $customergroup, $name_s, $contra, $servicio, $perfil, $Iplocal, $Ipremota, $comentario,$tegnologia_instalacion);
         }
    
     }
