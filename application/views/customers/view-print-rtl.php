@@ -840,9 +840,9 @@ $fcontrato = $details['f_contrato'];
 		</td>
 	</tr>
 	</table>
-	<table><!--hoja 2-->
+	<table width="100%"><!--hoja 2-->
 		<tr>
-			<td width="49%" style="font-size: 24px;line-height: normal;text-align: justify"><!--COLUMNA IZQUIERDA-->
+			<td width="100%" style="font-size: 24px;line-height: normal;text-align: justify"><!--COLUMNA IZQUIERDA-->
 				<H4>PAGO Y FACTURACIÓN</H4>
 				La factura le debe llegar como mínimo 5 días hábiles
 				antes de la fecha de pago. Si no llega, puede solicitarla a
@@ -866,7 +866,16 @@ $fcontrato = $details['f_contrato'];
 				<table width="100%" border="1">
 				<tbody>
 					<tr>
-					<td align="center"><?php if(file_exists($url_firma)){ ?><img height="130px" src="<?=$url_firma?>"></img><?php } if(file_exists($url_huella)){ ?><img height="130px" src="<?=$url_huella?>"></img><?php } ?>____________________________________________________________<br>Con esta firma acepta recibir la factura solo por medios electrónicos</td>
+					<td align="center"><?php if(file_exists($url_firma)){
+								?><span style="border-bottom: 1px solid;"><img height="130px" src="<?=$url_firma?>"></img></span><?php 
+								}else{
+									echo '____________________';
+								} 
+								if(file_exists($url_huella)){
+								?><span style="border-bottom: 1px solid;"><img height="130px" src="<?=$url_huella?>"></img></span><?php 
+								}else{
+									echo '____________________';
+								} ?><br>Con esta firma acepta recibir la factura solo por medios electrónicos</td>
 					</tr>
 				</tbody>
 				</table>
@@ -1003,7 +1012,7 @@ $fcontrato = $details['f_contrato'];
 			</td>
 			<td><!--CENTRO-->
 			</td>
-			<td style="font-size: 27px;line-height: normal;text-align: justify"><!--COLUMNA DERECHO-->
+			<td width="100%" style="font-size: 24px;line-height: normal;text-align: justify"><!--COLUMNA DERECHO-->
 				<h6>CAMBIO DE DOMICILIO</h6>
 				Usted puede cambiar de domicilio y continuar con
 				el servicio siempre que sea técnicamente posible.
@@ -1082,7 +1091,17 @@ $fcontrato = $details['f_contrato'];
 			<table border="1">
 					<tbody>
 						<tr>
-							<td align="center"><?php if(file_exists($url_firma)){ ?><img height="130px" src="<?=$url_firma?>"></img><?php } if(file_exists($url_huella)){ ?><img height="130px" src="<?=$url_huella?>"></img><?php } ?>____________________________________________________________<br>Aceptación contrato mediante firma o cualquier otro medio válido</td>
+							<td align="center">
+								<?php if(file_exists($url_firma)){
+								?><span style="border-bottom: 1px solid;"><img height="130px" src="<?=$url_firma?>"></img></span><?php 
+								}else{
+									echo '____________________';
+								} 
+								if(file_exists($url_huella)){
+								?><span style="border-bottom: 1px solid;"><img height="130px" src="<?=$url_huella?>"></img></span><?php 
+								}else{
+									echo '____________________';
+								} ?><br>Aceptación contrato mediante firma o cualquier otro medio válido</td>
 						</tr>
 					</tbody>
 				</table>
