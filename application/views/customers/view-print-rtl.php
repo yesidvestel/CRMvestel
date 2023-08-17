@@ -630,7 +630,7 @@ $fcontrato = $details['f_contrato'];
 					<td align="left" valign="middle"><br><br><br><h1>OTTIS COMUNICACIONES</h1></td>
 				</tr>
 			</table>
-			<table border="1">
+			<table border="1" >
 				<tr>
 					<td colspan="2" style="background-color: black;color: white; font-size: x-large;text-align: justify">
 						Este contrato explica las condiciones para la prestación de los servicios entre usted y Future
@@ -650,9 +650,9 @@ $fcontrato = $details['f_contrato'];
 			
 			Usted se compromete a pagar oportunamente el precio acordado. El servicio se activará a
 			más tardar el día <span style="border-bottom: 1px solid;"><?php echo date("d/m/Y",strtotime($fcontrato."+ 15 days")) ?></span>
-			<table border="1">
+			<table border="1" width="100%">
 				<tr>
-					<td style="font-size: 19px">
+					<td style="font-size: 17px">
 					<h4>INFORMACIÓN DEL SUSCRIPTOR</h4><br>
 					Contrato No.: <span style="border-bottom: 1px solid;"><?php echo $details['abonado'] ?></span><br><br>
 					Nombre/Razón Social: <span style="border-bottom: 1px solid;"> <?php echo $details['name'].' '.$details['dosnombre'].' '.$details['unoapellido'].' '.$details['dosapellido'] ?></span><br><br>
@@ -695,10 +695,10 @@ $fcontrato = $details['f_contrato'];
 					</td>
 				</tr>
 			</table>
-			<table border="1">
+			<table border="1" width="100%">
   		<tbody>
     		<tr style="border-radius: 20px">
-      		<td style="font-size: 19px">
+      		<td style="font-size: 17px">
 				<h4>CONDICIONES COMERCIALES CARACTERÍSTICAS DEL PLAN</h4><br>
 				Contrato No.: <span style="border-bottom: 1px solid;"><?php echo $details['abonado'] ?></span><br><br>
 				Nombre/Razón Social: <span style="border-bottom: 1px solid;"> <?php echo $details['name'].' '.$details['dosnombre'].' '.$details['unoapellido'].' '.$details['dosapellido'] ?></span><br><br>
