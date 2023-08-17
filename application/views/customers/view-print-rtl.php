@@ -660,7 +660,7 @@ $fcontrato = $details['f_contrato'];
 					Correo electrónico: <span style="border-bottom: 1px solid;"><?php echo $details['email'] ?></span><br><br>
 					Teléfono de contacto: <span style="border-bottom: 1px solid;"><?php echo $details['celular'].' '.$details['celular2'] ?></span><br><br>
 					Dirección de servicio: <span style="border-bottom: 1px solid;"><?php
-					if(($details['numero1']!='' || $details['numero1']!=0) && ($details['numero2']!='' || $details['numero2']!=0)){
+					if($details['numero1']==='' || $details['numero1']===0 || $details['numero2']===0){
 						if($details['divnum1']==0){
 										$trr='';
 									}else{
@@ -671,8 +671,8 @@ $fcontrato = $details['f_contrato'];
 									}else{
 										$apt=$details['divnum2'];
 									}
-						echo $details['nomenclatura'].' '.$details['numero1'].$details['adicionauno'].' # '.$details['numero2'].$details['adicional2'].' - '.$details['numero3'].'/'.$details['residencia'].", ".$details['referencia'].' '.$details['divicion'].' '.$trr.' '.$details['divicion2'].' '.$apt;
 						
+						echo $details['residencia'].", ".$details['referencia'].' '.$details['divicion'].' '.$trr.' '.$details['divicion2'].' '.$apt;
 						
 					}else{
 						if($details['divnum1']==0){
@@ -685,7 +685,8 @@ $fcontrato = $details['f_contrato'];
 									}else{
 										$apt=$details['divnum2'];
 									}
-						echo $details['residencia'].", ".$details['referencia'].' '.$details['divicion'].' '.$trr.' '.$details['divicion2'].' '.$apt;
+						echo $details['nomenclatura'].' '.$details['numero1'].$details['adicionauno'].' # '.$details['numero2'].$details['adicional2'].' - '.$details['numero3'].'/'.$details['residencia'].", ".$details['referencia'].' '.$details['divicion'].' '.$trr.' '.$details['divicion2'].' '.$apt;
+						
 					} ?></span><br><br>
 					Coordenadas:<span style="border-bottom: 1px solid;"><?php echo $details['coor1'].' '.$details['coor2'] ?></span><br><br>
 					Estrato: <span style="border-bottom: 1px solid;"><?php echo $details['estrato'] ?></span><br><br>
