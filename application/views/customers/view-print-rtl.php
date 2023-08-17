@@ -615,9 +615,9 @@ $fcontrato = $details['f_contrato'];
 	<!-- --------------------------------CONTRATO OTTIS ------------------------------------- -->
 	<?php  } else if($this->config->item('ctitle')=='FUTURE SOLUTIONS DEVELOPMENT SAS'){ ?>
 <div class="invoice-box">
-	<table>
+	<table width="100%">
 	<tr>
-		<td width="50%"> <!--COLUMNA IZQUIERDA-->
+		<td width="48%" > <!--COLUMNA IZQUIERDA-->
 			<table>
 				<tr>
 					<td ><img src="<?php echo FCPATH . 'userfiles/company/' . $this->config->item('logo') ?>" style="max-width:50%;"></td>
@@ -652,7 +652,7 @@ $fcontrato = $details['f_contrato'];
 			más tardar el día <span style="border-bottom: 1px solid;"><?php echo date("d/m/Y",strtotime($fcontrato."+ 15 days")) ?></span>
 			<table border="1">
 				<tr>
-					<td style="font-size: x-large">
+					<td style="font-size: 20px">
 					<h4>INFORMACIÓN DEL SUSCRIPTOR</h4><br>
 					Contrato No.: <span style="border-bottom: 1px solid;"><?php echo $details['abonado'] ?></span><br><br>
 					Nombre/Razón Social: <span style="border-bottom: 1px solid;"> <?php echo $details['name'].' '.$details['dosnombre'].' '.$details['unoapellido'].' '.$details['dosapellido'] ?></span><br><br>
@@ -698,7 +698,7 @@ $fcontrato = $details['f_contrato'];
 			<table border="1">
   		<tbody>
     		<tr style="border-radius: 20px">
-      		<td style="font-size: x-large">
+      		<td style="font-size: 20px">
 				<h4>CONDICIONES COMERCIALES CARACTERÍSTICAS DEL PLAN</h4><br>
 				Contrato No.: <span style="border-bottom: 1px solid;"><?php echo $details['abonado'] ?></span><br><br>
 				Nombre/Razón Social: <span style="border-bottom: 1px solid;"> <?php echo $details['name'].' '.$details['dosnombre'].' '.$details['unoapellido'].' '.$details['dosapellido'] ?></span><br><br>
