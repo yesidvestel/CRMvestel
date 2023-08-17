@@ -283,6 +283,7 @@
 							<div>
                         	<select class="form-control"  id="discountFormat" name="residencia">
 									<option value="<?php echo $customer['residencia'] ?>"><?php echo $customer['residencia'] ?></option>
+									<option value="">Sin seleccion</option>
 									<option value="Casa">Casa</option>
 									<option value="Apartamento">Apartamento</option>
 									<option value="Edificio">Edificio</option>

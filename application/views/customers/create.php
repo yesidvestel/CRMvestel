@@ -328,6 +328,7 @@
                                for="postbox"><?php echo $this->lang->line('') ?>Residencia</label></h6>
 							<div>
                         	<select class="form-control"  id="residencia" name="residencia">
+										<option value="">Sin seleccion...</option>
 										<option value="Casa">Casa</option>
 										<option value="Apartamento">Apartamento</option>
 										<option value="Edificio">Edificio</option>

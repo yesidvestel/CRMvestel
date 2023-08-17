@@ -658,9 +658,9 @@ $fcontrato = $details['f_contrato'];
 					Nombre/Razón Social: <span style="border-bottom: 1px solid;"> <?php echo $details['name'].' '.$details['dosnombre'].' '.$details['unoapellido'].' '.$details['dosapellido'] ?></span><br><br>
 					  Identificación: <span style="border-bottom: 1px solid;"><?php echo $details['tipo_documento'].' '.$details['documento'] ?></span><br><br>
 					Correo electrónico: <span style="border-bottom: 1px solid;"><?php echo $details['email'] ?></span><br><br>
-					Teléfono de contacto: <span style="border-bottom: 1px solid;"><?php echo $details['celular'] ?></span><br><br>
+					Teléfono de contacto: <span style="border-bottom: 1px solid;"><?php echo $details['celular'].' '.$details['celular2'] ?></span><br><br>
 					Dirección de servicio: <span style="border-bottom: 1px solid;"><?php
-					if($details['numero1']!='' || $details['numero1']!=0){
+					if(($details['numero1']!='' || $details['numero1']!=0) && ($details['numero2']!='' || $details['numero2']!=0)){
 						if($details['divnum1']==0){
 										$trr='';
 									}else{
