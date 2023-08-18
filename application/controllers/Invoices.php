@@ -379,6 +379,10 @@ $this->load->model('customers_model', 'customers');
                     $value->promo--;
                     $this->db->update("invoices",array("promo"=>$value->promo),array("tid"=>$value2->tid));
                     $_customer_factura_creada=true;
+                }else if(isset($value->promo2) && $value->promo2==1){
+                    
+                    $this->db->update("invoices",array("promo2"=>0),array("tid"=>$value2->tid));
+                    $_customer_factura_creada=true;
                 }else{ 
                                                                                  
                     $internet="";
@@ -678,7 +682,9 @@ $list_servs=$this->invocies->servicios_adicionales_recurrentes($value2->tid);
                                 
                                 $factura_data['multi']=$value2->multi;
                                 
-                                    
+                                if(isset($value->promo2) && $value->promo2>1){
+                                    $factura_data['promo2']=$value->promo2-1;
+                                }
 
 
                                     $this->db->insert("invoices",$factura_data);
