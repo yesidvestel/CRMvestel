@@ -193,12 +193,14 @@
                                         <div class="form-group">
                                             <label for="discountFormat"
                                                    class="caption">Promocion</label>
-                                            <select class="form-control" name="promo">                                             		<option value="0">Sin Promocion</option>
-													<?php for ($i=1;$i<=5;$i++){
-													echo '<option value="'.$i.'">'.$i.' meses</option>';
+                                            <select class="form-control" name="promo">                                             			<option value="0">Sin Promocion</option>                                            	 <option value="1">1 mes gratis</option>
+													<?php for ($i=2;$i<=5;$i++){
+													echo '<option value="'.$i.'">'.$i.' meses gratis</option>';
 													}?>
-												<option value="6p">6º mes gratis</option>
-												<option value="12p">12º mes gratis</option>
+													<?php for ($i=1;$i<=12;$i++){
+													echo '<option value="'.$i.'p">'.$i.'º mes gratis</option>';
+													}?>
+												<option value="6p">6º y 12º meses gratis</option>
                                             </select>
                                         </div>
                                     </div>

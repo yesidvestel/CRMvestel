@@ -215,13 +215,16 @@
 																	echo 'Sin promocion';
 																}  
 												
-												?></option>
-												<option value="0">No aplicar</option>
-														<?php for ($i=1;$i<=5;$i++){
+													?></option>
+													<option value="0">No aplicar</option>
+													<option value="1">1 mes gratis</option>
+														<?php for ($i=2;$i<=5;$i++){
 														echo '<option value="'.$i.'">'.$i.' meses</option>';
 														}?>
-												<option value="6p">6º mes gratis</option>
-												<option value="12p">12º mes gratis</option>
+														<?php for ($i=1;$i<=12;$i++){
+														echo '<option value="'.$i.'p">'.$i.'º mes gratis</option>';
+														}?>
+												<option value="6p">6º y 12º meses gratis</option>
                                             </select>
                                         </div>
                                     </div>
