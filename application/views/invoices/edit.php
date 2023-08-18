@@ -201,16 +201,27 @@
                                         <div class="form-group">
                                             <label for="discountFormat"
                                                    class="caption">Promocion</label>
-											<select class="form-control" name="promo">                                             		<option value="<?php echo $invoice['promo'] ?>">
+											<select class="form-control" name="promo">                                             		<option value="<?php 
+																if($invoice['promo']!=0){
+																	echo $invoice['promo'];
+																}else if($invoice['promo2']!=0){
+																	echo $invoice['promo2'].'p';
+																} ?>">
 														<?php if($invoice['promo']!=0){
 																	echo $invoice['promo']. ' meses';
+																}else if($invoice['promo2']!=0){
+																	echo 'Mes '.$invoice['promo2']. ' gratis';
 																}else{
 																	echo 'Sin promocion';
-																}  ?></option>
+																}  
+												
+												?></option>
 												<option value="0">No aplicar</option>
 														<?php for ($i=1;$i<=5;$i++){
 														echo '<option value="'.$i.'">'.$i.' meses</option>';
 														}?>
+												<option value="6p">6º mes gratis</option>
+												<option value="12p">12º mes gratis</option>
                                             </select>
                                         </div>
                                     </div>

@@ -1447,11 +1447,23 @@ $writer->writeSheetHeader($nombrey, $headers,$col_options);
 		if($total_tax>0){
             $subtotal=$total-$total_tax;
         }
-		if($promo!=0){
-			$npromo=' '.$promo.' meses gratis';
+		if(strpos($promo, "p") !== false){
+			$pm=str_replace("p", "", $promo);
+			if($pm!=0){
+				$npromo='Mes '.$pm.' gratis';
+			}else{
+				$npromo='';
+			}
+			$promo='';
 		}else{
-			$npromo='';
+			if($promo!=0){
+				$npromo=' '.$promo.' meses gratis';
+			}else{
+				$npromo='';
+			}
+			$pm=0;
 		}
+		
         $data = array(
 			'tid' => $invocieno, 
 			'invoicedate' => $bill_date, 
@@ -1477,7 +1489,8 @@ $writer->writeSheetHeader($nombrey, $headers,$col_options);
 			'puntos' => $puntos,
 			'ron' => $estado,
             'tipo_factura'=>$tipo_factura,
-            'promo'=>$promo
+            'promo'=>$promo,
+            'promo2'=>$pm
         );
 
         if ($flag == true) {
@@ -2500,10 +2513,21 @@ foreach ($lista as $key => $value) {
 		if($total_tax>0){
             $subtotal=$total-$total_tax;
         }
-		if($promo!=0){
-			$npromo=' '.$promo.' meses gratis';
+		if(strpos($promo, "p") !== false){
+			$pm=str_replace("p", "", $promo);
+			if($pm!=0){
+				$npromo='Mes '.$pm.' gratis';
+			}else{
+				$npromo='';
+			}
+			$promo='';
 		}else{
-			$npromo='';
+			if($promo!=0){
+				$npromo=' '.$promo.' meses gratis';
+			}else{
+				$npromo='';
+			}
+			$pm=0;
 		}
         $data = array(
 			'invoicedate' => $bill_date,
@@ -2526,7 +2550,8 @@ foreach ($lista as $key => $value) {
 			'term' => $pterms,
 			'multi' => $currency,
             'tipo_factura'=>$tipo_factura,
-            'promo'=>$promo
+            'promo'=>$promo,
+            'promo2'=>$pm
         );
         $this->db->set($data);
         $this->db->where('tid', $invocieno);

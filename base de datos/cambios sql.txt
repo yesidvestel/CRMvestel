@@ -840,3 +840,7 @@ ADD `divnum1` INT NOT NULL AFTER `divicion`,
 ADD `divicion2` VARCHAR(15) NOT NULL AFTER `divnum1`,
 ADD `divnum2` INT NOT NULL AFTER `divicion2`,
 ADD `dirsuscriptor` VARCHAR(100) NOT NULL AFTER `divnum2`;
+__________________________________________________________________________________________________________
+PROMOCIONES 2
+----------------------------------------------------------------------------------------------------------
+ALTER TABLE `invoices` ADD `promo2` INT NOT NULL DEFAULT '0' AFTER `promo`;
