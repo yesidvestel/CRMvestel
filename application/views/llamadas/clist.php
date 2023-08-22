@@ -294,11 +294,11 @@
 			}else if (respuesta.value == "Recuperacion Contestada"){
 				var optionArray = ["","Acuerdo de Pago","Numero equivocado","Cliente inconforme","Informado","No va a pagar","Va a pagar"];
 			}else if (respuesta.value == "Contestada"){
-				var optionArray = ["","Acuerdo de pago","Cliente inconforme","Informado","No va a pagar","Va a pagar"];
+				var optionArray = ["","Acuerdo de pago","Cliente inconforme","Informado","No va a pagar","Va a pagar","Solicitud de descuento"];
 			}else if (respuesta.value == "sin Contestar"){
 				var optionArray = ["","Correo de Voz","Numero no esta en uso","Timbra pero no contestan"];
 			}else if (respuesta.value == "Reclamo"){
-				var optionArray = ["","Mal servicio","Mala atencion","Otros"];
+				var optionArray = ["","Mal servicio","Mala atencion","Solicitud de descuento","Otros"];
 			}else if (respuesta.value == "Estado de cuenta"){
 				var optionArray = ["","Valor Incorrecto","No aparece pago","Otros"];
 			}else if (respuesta.value == "Actualizar Datos"){

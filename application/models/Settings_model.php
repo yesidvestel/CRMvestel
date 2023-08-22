@@ -130,12 +130,12 @@ class Settings_model extends CI_Model
         }
 
     }
-	public function add_asig($dtalle,$cja,$sdes,$col)
+	public function add_asig($dtalle,$cja,$sdes,$sdes2,$col)
     {
 		//var_dump($_POST);
 		//$asignacion = $this->db->get_where('asignaciones', array('tipo'=> $cja))->row();
 		
-		$x1=$sdes;
+		$x1=$sdes.$sdes2;
 		if($_POST['detalle']=="caja"){
 			$x1=$_POST['caja'];
 		}
@@ -149,6 +149,12 @@ class Settings_model extends CI_Model
         $data = array(
             'detalle' => $dtalle,
             'tipo' => $sdes,
+            'colaborador' => $col
+        );
+		}else if($dtalle=='descuentos'){
+        $data = array(
+            'detalle' => $dtalle,
+            'tipo' => $sdes2,
             'colaborador' => $col
         );
 		}else if($dtalle=='caja'){

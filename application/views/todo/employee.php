@@ -79,7 +79,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="task_title"><?php echo $this->lang->line('Details'); ?></h4>
+                <<h4 class="modal-title" id="task_title"><?php echo $this->lang->line('Details'); ?></h4>
             </div>
 
             <div class="modal-body">
@@ -195,7 +195,15 @@
                     $('#employee').html(data.employee);
                     $('#assign').html(data.assign);
                     $('#priority').html(data.priority);
-                    $("#link_id_encuesta").attr("href",baseurl+"encuesta/create?id="+data.idorden);
+                    var enlace = document.getElementById("link_id_encuesta");
+					if (data.description.includes("Solicitud de DESCUENTO")) {
+						$("#link_id_encuesta").attr("href",baseurl+"customers/view?id="+data.idorden);
+						enlace.textContent = "Ver usuario";
+					}else{
+						$("#link_id_encuesta").attr("href",baseurl+"encuesta/create?id="+data.idorden);
+						enlace.textContent = "Realizar encuesta";
+					}
+                    
 					var x =data.archivo;
 					var objetos="";
 					$(x).each(function(ind,dat){

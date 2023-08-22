@@ -26,6 +26,7 @@
                                         <option value="encuesta">Encuesta</option>
                                         <option value="caja">Caja</option>
                                         <option value="titular">Titular</option>
+                                        <option value="descuentos">Descuentos</option>
                                     </select>
 
 
@@ -54,12 +55,33 @@
                                 </div>
 
                             </div>
-							<div class="form-group row" id="encuesta">
+							<div class="form-group row" id="encuesta"><!--id="encuesta"-->
                                 <label class="col-sm-3 col-form-label"
                                        for="pay_cat"><?php echo $this->lang->line('') ?>Sede</label>
 
                                 <div class="col-sm-9">
                                     <select name="sedes" class="form-control" id="sede">
+										<option value="">-</option>
+                                         <?php
+						
+										foreach ($customergrouplist as $row) {
+											$cid = $row['id'];
+											$title = $row['title'];
+											echo "<option value='$title'>$title</option>";
+										}
+										?>
+                                    </select>
+
+
+                                </div>
+
+                            </div>
+							<div class="form-group row" id="descuentos"><!--id="encuesta"-->
+                                <label class="col-sm-3 col-form-label"
+                                       for="pay_cat"><?php echo $this->lang->line('') ?>Sede</label>
+
+                                <div class="col-sm-9">
+                                    <select name="sedes2" class="form-control" id="sede">
 										<option value="">-</option>
                                          <?php
 						

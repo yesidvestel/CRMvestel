@@ -129,11 +129,13 @@ class Llamadas extends CI_Controller
 
     public function addllamada()
     {
+		$this->load->model('tools_model', 'tools');
         $iduser = $this->input->post('iduser');
 		$tllamada = $this->input->post('tllamada');
         $trespuesta = $this->input->post('trespuesta');
         $drespuesta = $this->input->post('drespuesta');
         $responsable = $this->input->post('responsable');
+		$usuario = $this->db->get_where('customers', array('id' => $iduser))->row();
         $fcha = $this->input->post('fcha');
         $fchavence = $this->input->post('fchavence');
 		$fecha = datefordatabase($fcha);
@@ -145,6 +147,21 @@ class Llamadas extends CI_Controller
         $hra = date("H:i",strtotime($this->input->post('hra')));
         $notes = $this->input->post('notes');        
         $this->llamadas->add($iduser, $tllamada, $trespuesta, $drespuesta, $responsable, $fecha, $hra, $fechavence, $notes);
+		if($drespuesta=='Solicitud de descuento'){
+			//tarea de revision
+			$name = 'Solicitud de DESCUENTO #'.$usuario->documento;
+			$estado = 'Due';
+			$priority = 'Low';
+			$stdate = date("Y-m-d");
+			$tdate = '';
+			$asignacion = 8;//$this->db->get_where('asignaciones', array('detalle' => 'descuentos'))->row();
+			$employee = 8;//$asignacion->colaborador;
+			$assign = $this->aauth->get_user()->id;
+			$content = 'Solicitud de DESCUENTO #'.$usuario->documento;
+			$ordenn = $iduser;
+			$this->tools->addtask($name, $estado, $priority, $stdate, $tdate, $employee, $assign, $content, $ordenn);
+		}
+			
         echo json_encode(array('status' => 'Success', 'message' => "Agregado Exitoso"));
 
     }

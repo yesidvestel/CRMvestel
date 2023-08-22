@@ -137,7 +137,8 @@ class Llamadas_model extends CI_Model
 			'fecha_vence' => $fechavence,
             'notes' => $notes
         );
-			$this->db->insert('llamadas', $data);
+		$this->db->insert('llamadas', $data);
+		
 
 	}
 

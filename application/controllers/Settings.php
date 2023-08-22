@@ -242,8 +242,9 @@ contraseña de aplicacion para crm : okqttqhqjmtaolbw
             $dtalle = $this->input->post('detalle');
             $cja = $this->input->post('caja');
             $sdes = $this->input->post('sedes');
+            $sdes2 = $this->input->post('sedes2');
             $col = $this->input->post('colaborador');
-            $this->settings->add_asig($dtalle,$cja,$sdes,$col);
+            $this->settings->add_asig($dtalle,$cja,$sdes,$sdes2,$col);
 
        
     }
