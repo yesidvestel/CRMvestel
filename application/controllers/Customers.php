@@ -454,6 +454,13 @@ if($data['servicios']['estado']=="Inactivo"){
 $lista= explode(",",$vars->id_fact_pagadas);
         $tid=$lista[0];
         $resivox = $this->db->get_where("recibos_de_pago",array("tid"=>$tid))->row();
+        foreach ($lista as $keyx => $valuex) {
+            $resivox = $this->db->get_where("recibos_de_pago",array("tid"=>$valuex))->row();
+            if(empty($resivox)){
+                $tid=$valuex;
+                break;
+            }
+        }
         $tr_val = $this->db->get_where("transactions",array("id"=>$vars->ids[0],"estado"=>null))->row();
         if(empty($resivox) && !empty($tr_val) && $this->aauth->get_user()->roleid >= 3){
                     $pa=$vars->pa;
@@ -923,6 +930,66 @@ public function ajax_graficas2(){
     public function get_comentario_mikrotik(){
         $username=$this->customers->obtener_comentario_mikrotik($this->input->post("username"),$this->input->post("customergroup"),$this->input->post("tegnologia_instalacion"));
         echo json_encode(array("comentario"=>$username));
+    }
+    public function get_x(){
+        include (APPPATH."libraries/RouterosAPI.php");
+        set_time_limit(3000);
+        $API = new RouterosAPI();
+
+        $API->debug = false;
+        $datos_consulta_ip=array("id_sede"=>7,"tegnologia"=>"");
+        $datos_mkt=$this->customers->get_ip_coneccion_microtik_por_sede($datos_consulta_ip);
+       
+                if ($API->connect($datos_mkt['ip_mikrotik'], $datos_mkt['usuario'], $datos_mkt['password'])) {
+            //$user_name="user_prueba_duber_disabled";
+            $arrID=$API->comm("/ip/firewall/address-list/print", 
+                  array(
+                  
+                  ));
+       
+
+           foreach ($arrID as $address) {
+            //var_dump($address);
+        echo "Name LIST: " . $address['list'] . "<br>";
+        echo "Address: " . $address['address'] . "<br>";
+        echo "Comment: " . $address['comment'] . "<br>";
+        echo "Creation Time: " . $address['creation-time'] . "<br>";
+        echo "--------------------------<br>";
+        }
+
+  $API->disconnect();
+        }else{
+            
+        }
+        
+    }
+     public function add_x(){
+        include (APPPATH."libraries/RouterosAPI.php");
+        set_time_limit(3000);
+        $API = new RouterosAPI();
+
+        $API->debug = true;
+        $datos_consulta_ip=array("id_sede"=>7,"tegnologia"=>"");
+        $datos_mkt=$this->customers->get_ip_coneccion_microtik_por_sede($datos_consulta_ip);
+       
+                if ($API->connect($datos_mkt['ip_mikrotik'], $datos_mkt['usuario'], $datos_mkt['password'])) {
+            //$user_name="user_prueba_duber_disabled";
+            $arrID=$API->comm("/ip/firewall/address-list/add", 
+                array(
+      "list" => "clientes_fsd",
+      
+      "address" => "186.15.175.51",//solo es cambiar un poco la ip e insertara
+      "comment" => "DUBERPESCA"
+    ));
+       
+
+           
+
+  $API->disconnect();
+        }else{
+            
+        }
+        
     }
 
     public function addcustomer()
@@ -1792,8 +1859,16 @@ public function ajax_graficas2(){
         $lista= explode(",",$vars->id_fact_pagadas);
         $tid=$lista[0];
         $resivox = $this->db->get_where("recibos_de_pago",array("tid"=>$tid))->row();
+        foreach ($lista as $keyx => $valuex) {
+            $resivox = $this->db->get_where("recibos_de_pago",array("tid"=>$valuex))->row();
+            if(empty($resivox)){
+                $tid=$valuex;
+                break;
+            }
+        }
         $tr_val = $this->db->get_where("transactions",array("id"=>$vars->ids[0],"estado"=>null))->row();
         $data['btn_generar_resivo']="";
+
         if(empty($resivox) && !empty($tr_val)){
             $data['btn_generar_resivo']="<a class='btn-small btn-danger' href='".base_url()."customers/generar_x?id=".$custid."'>Generar Ultimo Recibo de pago</a>";
         }

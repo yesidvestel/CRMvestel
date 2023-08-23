@@ -910,21 +910,42 @@ public function calculo_ultimo_estado ($array_add,$customers){
                 $datos_consulta_ip=array("id_sede"=>$customergroup,"tegnologia"=>$tegnologia_instalacion);
                 $datos_mkt=$this->get_ip_coneccion_microtik_por_sede($datos_consulta_ip);
                 if ($API->connect($datos_mkt['ip_mikrotik'], $datos_mkt['usuario'], $datos_mkt['password'])) {
+                    if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
+                        $comentariox=$tegnologia_instalacion;
+                        if($tegnologia_instalacion=="RADIO"){
+                            $comentariox="CPE";
+                        }else if($tegnologia_instalacion=="FIBRA"){
+                            $comentariox="ONT";
+                        }
+
+                        $comentariox.=" ".$tipo_documento." ".$documento;
+                        $nombre_completox=$this->get_nombre_completo($name,$dosnombre,$unoapellido,$dosapellido);
+                        $comentariox.=" ".$nombre_completox;
+
+                            $API->comm("/ip/firewall/address-list/add", array(
+                              "list" => "clientes_fsd",
+                              
+                              "address" => $Ipremota,
+                              "comment" => $comentariox
+                            ));
+                    }else{
                         $obj_barrio=$this->db->get_where("barrio",array("idBarrio"=>$barrio))->row();
                         if(isset($obj_barrio)){
                             
                             $barrio = $obj_barrio->barrio;    
                         }
 
-                 $API->comm("/ppp/secret/add", array(
-                      "name"     => str_replace(' ', '', $name_s),
-                      "password" => $contra,
-                      "remote-address" => $Ipremota,
-                      "local-address" => $Iplocal,
-                      "profile" => $perfil,
-                      "comment"  => $barrio." ".$abonado,
-                      "service"  => $servicio,
-                   ));
+                         $API->comm("/ppp/secret/add", array(
+                              "name"     => str_replace(' ', '', $name_s),
+                              "password" => $contra,
+                              "remote-address" => $Ipremota,
+                              "local-address" => $Iplocal,
+                              "profile" => $perfil,
+                              "comment"  => $barrio." ".$abonado,
+                              "service"  => $servicio,
+                           ));
+                    }
+                        
         
 
                 $API->disconnect();
