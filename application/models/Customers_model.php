@@ -2015,7 +2015,7 @@ $datos_mkt=$this->get_ip_coneccion_microtik_por_sede($datos_consulta_ip);
                   "?name" => $user_name,
                   ));
           
-            
+            if (!empty($arrID)) {
             //desactivate
                $secret_id=$arrID[0][".id"];
                $arrID=$API->comm("/ppp/active/getall", 
@@ -2037,7 +2037,7 @@ $datos_mkt=$this->get_ip_coneccion_microtik_por_sede($datos_consulta_ip);
                   );  
                 //var_dump($secret_id);
                 //var_dump($arrID[0][".id"]);                            
-
+}
          $API->disconnect();
          
 
