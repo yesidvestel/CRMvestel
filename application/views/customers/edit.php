@@ -232,13 +232,12 @@
                             <select class="form-control" name="adicionauno">
 									<option value="<?php echo $customer['adicionauno'] ?>"><?php echo $customer['adicionauno'] ?></option>
 									<option value=""></option>
-									<option value=""></option>
 									<option value="bis">bis</option>
 									<option value="sur">sur</option>
 									<option value="a">a</option>
 									<option value="a sur">a sur</option>
 									<option value="b">b</option>
-									<option value="a sur">b sur</option>
+									<option value="b sur">b sur</option>
 									<option value="c">c</option>
 									<option value="d">d</option>
 									<option value="e">e</option>

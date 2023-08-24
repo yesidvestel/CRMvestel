@@ -279,7 +279,7 @@
                                                 	<option value="a">a</option>
 													<option value="a sur">a sur</option>
                                                   	<option value="b">b</option>
-													<option value="a sur">b sur</option>
+													<option value="b sur">b sur</option>
                                                 	<option value="c">c</option>
                                                     <option value="d">d</option>
                                                     <option value="e">e</option>
