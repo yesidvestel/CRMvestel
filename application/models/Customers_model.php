@@ -2003,7 +2003,7 @@ public function get_gasto_datos($user_name,$id_sede,$tegnologia_instalacion){
 
     public function desactivar_estado_usuario_multiple($user_name,$id_sede,$API,$tegnologia_instalacion){
           //include (APPPATH."libraries/RouterosAPI.php");
-        set_time_limit(3000);
+        set_time_limit(150);//3000
          //$API = new RouterosAPI();
         //$API->debug = false;
         $datos_consulta_ip=array("id_sede"=>$id_sede,"tegnologia"=>$tegnologia_instalacion);
