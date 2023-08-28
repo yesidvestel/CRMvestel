@@ -219,7 +219,7 @@
 		}else if (tipo.value == "Para Recuperacion"){
 			var optionArray = ["","Recuperacion Contestada","sin Contestar","Mensaje"];
 		}else if (tipo.value == "Recibida"){
-			var optionArray = ["","Contestada","sin Contestar"];
+			var optionArray = ["","Contestada","sin Contestar","Reclamo","Estado de cuenta", "Actualizar Datos","Otros"];
 		}else if (tipo.value == "Suspensión y Retiro"){
 			var optionArray = ["","Suspensión Temporal","Retiro Voluntario"];
 		};
