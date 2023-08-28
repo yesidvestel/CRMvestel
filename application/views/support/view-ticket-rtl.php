@@ -318,7 +318,7 @@ $lista_productos_orden=$this->db->get_where('transferencia_products_orden',array
 
                             echo $row['message'] . '';
                             if ($row['attach']) echo '<strong><br>Documentacion: </strong><a href="' . base_url('userfiles/support/' . $row['attach']) . '"><br><br>';?>
-							<img width="20%" src="<?php if ($row['attach']) echo  base_url('userfiles/support/' . $row['attach']);?>"/></a><br><br>   
+							<img width="20%" src="<?php if ($row['attach']) echo  FCPATH . 'userfiles/support/' . $row['attach'];?>"/></a><br><br>   
 						</div>
 							
                     </div>
