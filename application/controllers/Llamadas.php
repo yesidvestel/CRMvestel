@@ -570,6 +570,8 @@ class Llamadas extends CI_Controller
     $headers = array(
         'Fecha' => 'date', 
         'Hora' => 'string',
+        'Usuario' => 'string',
+        'Documento' => 'integer',
         'Responsable' => 'string',
 		'Tipo de llamada' => 'string',
 		'Respuesta' => 'string',
@@ -602,15 +604,20 @@ class Llamadas extends CI_Controller
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ));
     
     //write rows to sheet1
 	
     foreach ($lista_creditos as $key => $creditos) {
 		//$fecha = date("d/m/Y",strtotime($creditos->date));
+			$user=$this->db->get_where("customers",array("id"=>$creditos->iduser))->row();
             $writer->writeSheetRow('Llamadas ',array(
 				$creditos->fcha,
 				$creditos->hra,
+				$user->name.' '.$user->name.' '.$user->dosnombre.' '.$user->unoapellido.' '.$user->dosapellido,
+				$user->documento,
 				$creditos->responsable,
 				$creditos->tllamada,
 				$creditos->trespuesta,
