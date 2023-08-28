@@ -132,7 +132,7 @@
             <hr>
 			<div class="form-group row">
 				<div class="col-sm-12">
-				<select name="solucion" class="form-control">
+				<select name="solucion" id="solucion" class="form-control">
 					<option value="">-</option>
 					<option value="Cablemoden desconfigurado">Cablemoden desconfigurado</option>
 					<option value="Mantenimiento a la Red">Mantenimiento a la Red</option>
@@ -147,6 +147,39 @@
 					<option value="Daño General">Daño General</option>
 					<option value="Sin energia el Sector">Sin energia el Sector</option>
 					<option value="Elementos Quemados">Elementos Quemados</option>
+					<option value="Internet lento">Internet lento</option>
+					<option value="No aparece la Red">No aparece la Red</option>
+					<option value="No prende Cablemoden">No prende Cablemoden</option>
+					<option value="Fibra Rota">Fibra Rota</option>
+					<option value="Cable Caido">Cable Caido</option>
+					<option value="ONU alarmada">ONU alarmada</option>
+					<option value="Desconfigurado Cablemoden">Desconfigurado Cablemoden</option>
+					<option value="Cambio de Tecnologia">Cambio de Tecnologia</option>
+					<option value="No hay Internet">No hay Internet</option>
+					<option value="Fallo Causado por Proveedor de Servicio">Fallo Causado por Proveedor de Servicio</option>
+					<option value="Fallo en centro de datos principal">Fallo en centro de datos principal</option>
+					<option value="Baja cobertura wifi interna">Baja cobertura wifi interna</option>
+					<option value="Cambio de conectores mecánicos">Cambio de conectores mecánicos</option>
+					<option value="Cambio de equipo por daño">Cambio de equipo por daño</option>
+					<option value="Cambio de Patch Cord de fibra">Cambio de Patch Cord de fibra</option>
+					<option value="Cambio de tendido de fibra óptica">Cambio de tendido de fibra óptica</option>
+					<option value="Condiciones de equipo final fuera de parámetros de operación">Condiciones de equipo final fuera de parámetros de operación</option>
+					<option value="Condiciones de equipo final fuera de parámetros de operación">Condiciones de equipo final fuera de parámetros de operación</option>
+					<option value="Configuración de red lan del cliente">Configuración de red lan del cliente</option>
+					<option value="Entrega de servicio a satisfacción">Entrega de servicio a satisfacción</option>
+					<option value="Equipo de cliente final por defecto">Equipo de cliente final por defecto</option>
+					<option value="Habilitación de servicio de internet">Habilitación de servicio de internet</option>
+					<option value="Habilitación de servicio de televisión">Habilitación de servicio de televisión</option>
+					<option value="Mantenimiento Correctivo de red">Mantenimiento Correctivo de red</option>
+					<option value="Mejoramiento de infraestructura de red">Mejoramiento de infraestructura de red</option>
+					<option value="Migración de Tecnología">Migración de Tecnología</option>
+					<option value="Retiro de equipos de comunicaciones">Retiro de equipos de comunicaciones</option>
+					<option value="Revisión de red interna del cliente">Revisión de red interna del cliente</option>
+					<option value="Suministro de equipos o material">Suministro de equipos o material</option>
+					<option value="Traslado de equipos por cambio de vivienda">Traslado de equipos por cambio de vivienda</option>
+					<option value="Traslado interno de equipos de red en cliente final">Traslado interno de equipos de red en cliente final</option>
+					<option value="Viabilidad y/o levantamiento técnico">Viabilidad y/o levantamiento técnico</option>
+					<option value="Punto de distribución de red intermitente o in-operativo">Punto de distribución de red intermitente o in-operativo</option>
 				</select>
 				</div>
 			</div>
@@ -450,6 +483,28 @@
 			validar_estado();
 			//validacion_reconexion();
     }
+	 // Obtén el elemento select
+  var select = document.getElementById("solucion");
+
+  // Obtén las opciones y conviértelas en un array
+  var options = Array.from(select.options);
+
+  // Ordena las opciones alfabéticamente
+  options.sort(function(a, b) {
+    var textA = a.text.toUpperCase();
+    var textB = b.text.toUpperCase();
+    return (textA > textB) ? -1 : (textA < textB) ? 1 : 0;
+  });
+
+  // Elimina todas las opciones actuales del select
+  while (select.firstChild) {
+    select.removeChild(select.firstChild);
+  }
+
+  // Agrega las opciones ordenadas de nuevo al select
+  options.forEach(function(option) {
+    select.appendChild(option);
+  });
 </script>
 
 <div id="pop_model" class="modal fade">
