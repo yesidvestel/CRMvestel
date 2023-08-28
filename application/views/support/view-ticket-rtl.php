@@ -1,5 +1,8 @@
 <!doctype html>
 <html>
+<?php 
+$lista_productos_orden=$this->db->get_where('transferencia_products_orden',array('tickets_id'=>$thread_info['idt']))->result_array();	
+?>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Print Purchase Order #<?php echo $invoice['tid'] ?></title>
@@ -254,8 +257,8 @@
         </tr>
         </tbody>
     </table>
-    <br/>
-    <table class="plist" cellpadding="0" cellspacing="0">
+	<br>
+	<table class="plist" cellpadding="0" cellspacing="0">
 
 
         <tr class="heading">
@@ -272,6 +275,57 @@
 		</tr>
     </table>
     <br>
+	<table  class="plist" width="80%">
+				
+
+            <thead>
+                <tr class="heading">
+					<td colspan="3">
+                    Material usado en la Orden
+					</td>
+                </tr>
+                <tr class="heading">
+                    <td style="text-align: center;" width="10%">PID</td>
+                    <td style="text-align: center;" width="40%">Nombre</td>
+                    <td style="text-align: center;" width="30%">Cantidad Tot.</td>
+                </tr>
+            </thead>
+            <tbody>
+
+                <?php foreach ($lista_productos_orden as $key => $prod) { $prod_padre=$this->db->get_where('products',array('pid'=>$prod['products_pid']))->row(); ?>        
+                    <tr class="item">
+                        <td style="text-align: center;" width="10%"><?=$prod_padre->pid?></td>
+                        <td style="text-align: center;" width="30%"><?=$prod_padre->product_name?></td>
+                        <td style="text-align: center;" width="20%"><?=$prod['cantidad']?></td>
+                    </tr>
+                <?php } ?>
+            </tbody>
+        </table>
+		<hr>	
+    <br/>
+	<hr>		
+            <?php foreach ($thread_list as $row) { ?>
+
+
+                <div class="form-group row">
+
+
+                    <div class="col-sm-10">
+                        <div class="card card-block"><?php
+                            if ($row['custo']) echo 'Customer <strong>' . $row['custo'] . '</strong> Replied a las' . $row['cdate'] .'<br><br>';
+
+                            if ($row['emp']) echo 'Tecnico <strong>' . $row['emp'] . '</strong> Respondio el ' . $row['cdate'] .'<br><br>';
+
+                            echo $row['message'] . '';
+                            if ($row['attach']) echo '<strong><br>Documentacion: </strong><a href="' . base_url('userfiles/support/' . $row['attach']) . '"><br><br>';?>
+							<img width="20%" src="<?php if ($row['attach']) echo  base_url('userfiles/support/' . $row['attach']);?>"/></a><br><br>   
+						</div>
+							
+                    </div>
+                </div>
+				<hr>
+            <?php } ?>
+    
             <?php ;
     if ($rming < 0) {
         $rming = 0;

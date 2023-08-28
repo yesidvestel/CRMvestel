@@ -2085,7 +2085,7 @@ $x=0;
 		$this->load->model('employee_model', 'employee');
 		$data['naps'] = $this->redes->nap_todas();
 		$data['thread_info'] = $this->ticket->thread_info($tid);
-		$data['thread_list'] = $this->ticket->thread_list($thread_id);
+		$data['thread_list'] = $this->ticket->thread_list($tid);
 		$data['employee'] = $this->employee->employee_genera($data['thread_info']['col']);
 		$data['local'] = $this->customers->group_localidad($data['temporal']['localidad']);
 		$data['barrio'] = $this->customers->group_barrio($data['temporal']['barrio']);
