@@ -157,6 +157,8 @@ $(document).ready(function(){
 			var optionArray = ["Hub local"];
 		}else if (almacen.value == "10"){
 			var optionArray = ["Hub local"];
+		}else if (almacen.value == "1"){
+			var optionArray = ["Duitama","Sogamoso","Tibasosa","Cacique1","Cacique2","Pesca"];
 		};
 	for(option = 0;option < optionArray.length; option++){
     var pair = optionArray[option].split("|");
