@@ -56,7 +56,7 @@
                     <div class="col-sm-2">
                         <select name="bandeja" class="form-control">
                              <?php
-							for ($i=0;$i<=7;$i++){
+							for ($i=0;$i<=20;$i++){
 							echo '<option value="'.$i.'">'.$i.'</option>';}?>
                         </select>
                     </div>
