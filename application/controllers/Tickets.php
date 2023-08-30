@@ -1282,7 +1282,9 @@ $x=0;
         //$customer=$this->db->get_where("customers",array('id' =>$ticket->cid))->row();
        
 		if($ticket->detalle=="Subir megas" || $ticket->detalle=="Bajar megas"){
-            $this->customers->edit_profile_mikrotik($customer->gid,$customer->name_s,$ptos,$customer->tegnologia_instalacion);
+			if($customer->name_s!=''||$customer->name_s!=null||$customer->name_s!=0){
+				$this->customers->edit_profile_mikrotik($customer->gid,$customer->name_s,$ptos,$customer->tegnologia_instalacion);
+			}            
             $this->db->set('combo', $inter);
 
             $this->db->set('estado_combo', null);
