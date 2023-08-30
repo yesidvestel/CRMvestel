@@ -963,6 +963,32 @@ public function ajax_graficas2(){
         }
         
     }
+    public function edit_x(){
+         include (APPPATH."libraries/RouterosAPI.php");
+        set_time_limit(3000);
+        $API = new RouterosAPI();
+        $API->debug = false;
+        $datos_consulta_ip=array("id_sede"=>7,"tegnologia"=>"");
+        $datos_mkt=$this->customers->get_ip_coneccion_microtik_por_sede($datos_consulta_ip);
+        if ($API->connect($datos_mkt['ip_mikrotik'], $datos_mkt['usuario'], $datos_mkt['password'])) {
+            $addres="186.154.175.51";
+            $nuevoComentario="FELIPELOMBANA";
+        $arrID=$API->comm("/ip/firewall/address-list/getall", 
+                          array(
+                          ".proplist"=> ".id",
+                          "?address" => $addres,
+                          ));
+        if($arrID[0][".id"]!=null){
+                $API->comm("/ip/firewall/address-list/set", array(
+                        ".id" => $arrID[0][".id"],
+                        "comment" => $nuevoComentario,
+                    ));
+
+                }
+                             $API->disconnect();
+        }
+        var_dump($arrID);
+    }
      public function add_x(){
         include (APPPATH."libraries/RouterosAPI.php");
         set_time_limit(3000);
