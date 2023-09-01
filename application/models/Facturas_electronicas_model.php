@@ -573,7 +573,7 @@ class Facturas_electronicas_model extends CI_Model
             $dataApiNET->seller="738";
             $dataApiNET->date=$dateTime->format("Y-m-d");
             $dataApiNET->payments[0]->due_date="2023-08-03";//$dateTimeVencimiento->format("Y-m-d");
-            $dataApiNET->observations="Estrato : ".$customer->estrato;
+            $accoun_tr="";
             $dataApiNET->payments[0]->id=$datos_facturar['estcuenta'];//efectivo 6960 credito 6941
             if($datos_facturar['estcuenta']=="6960"){
                 $ult_tr=$this->db->query("select * from transactions where (estado !='Anulada' or estado is null) and tid=".$array_servicios['tid']." order by id desc")->result_array();
@@ -581,10 +581,19 @@ class Facturas_electronicas_model extends CI_Model
                     $accoun_tr=$this->db->get_where("accounts",array("id"=>$ult_tr[0]['acid']))->row();
                     if(isset($accoun_tr) && $accoun_tr->cuenta_siigo!=null){
                         $dataApiNET->payments[0]->id=$accoun_tr->cuenta_siigo;
+                        $accoun_tr=$accoun_tr->holder;
+                    }else{
+                        if(isset($accoun_tr)){
+                            $accoun_tr=$accoun_tr->holder;
+                        }else{
+                            $accoun_tr="";    
+                        }
+                        
                     }
                 }    
             }
-            
+
+            $dataApiNET->observations="TID : ".$array_servicios['tid'].", metodo pago: ".$accoun_tr;
             $consulta_siigo1=$api->getCustomer($customer->documento,1);
           
             
