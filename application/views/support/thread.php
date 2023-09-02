@@ -117,7 +117,9 @@
 
                             echo $row['message'] . '';
                             if ($row['attach']) echo '<strong><br>Documentacion: </strong><a href="' . base_url('userfiles/support/' . $row['attach']) . '"><br><br>';?>
-							<img width="20%" src="<?php if ($row['attach']) echo  base_url('userfiles/support/' . $row['attach']);?>"/></a><br><br>
+							<img width="20%" src="<?php if ($row['attach']!=''){
+								echo  base_url('userfiles/support/' . $row['attach']);
+							} ?>"/></a><br><br>
 							<?php if ($this->aauth->get_user()->roleid >= 3) { ?>
 							<a class="btn btn-danger" onclick="eliminar_documento(<?php echo $row['id']?>)" > <i class="icon-trash-o "></i> Eliminar</a>
                         	<?php } ?>    
@@ -203,7 +205,7 @@
                 </div>
             </div>
 
-			<?php if ($thread_info['status'] == 'Pendiente' || $thread_info['status'] == 'Realizando' || $this->aauth->get_user()->roleid == 5 || $this->aauth->get_user()->id == 20) { ?>
+			<?php if ($thread_info['status'] == 'Pendiente' || $thread_info['status'] == 'Realizando' || $this->aauth->get_user()->roleid == 5 || $this->aauth->get_user()->id == 20 || $this->aauth->get_user()->id == 125) { ?>
             <div class="form-group row">
 				<div class="col-sm-2">
 					<a href="#pop_model" data-toggle="modal" onclick="funcion_status();" data-remote="false" class="btn btn-red  mb-1" title="Change Status" style="width: 200px"><span class="icon-tab" ></span> CAMBIAR ESTADO</a>
