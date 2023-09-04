@@ -1,4 +1,6 @@
-﻿--------------------------------------- cambios sql cargue ---------------------------------------------------------------------------
+﻿ALTER TABLE `customers` ADD `fecha_genera_estado_user` DATE NULL AFTER `usu_estado`;
+
+--------------------------------------- cambios sql cargue ---------------------------------------------------------------------------
 ALTER TABLE `datos_archivo_excel_cargue` ADD `metodo_pago` VARCHAR(50) NOT NULL AFTER `id_customer`;
 ---------------------------------------------------------------------------------------------------------------------------------------
 ALTER TABLE `invoice_items` ADD `tipo_retencion` ENUM('Retefuente Servicios','Compras','Personas no declarantes','Reteiva') NULL AFTER `fecha_creacion`;

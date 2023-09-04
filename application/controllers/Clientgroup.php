@@ -2642,7 +2642,11 @@ if ($valido) {
             if(is_array($numeros)){
                 $mensajes_a_enviar="";
                 $this->load->model('Reports_model', 'reports');
-
+                $estado_usuario=false;
+                $f_hoy=date("Y-m-d");
+                if(strpos(strtolower($message), "{url-automatica-segun-el-usuario}")!==false){
+                    $estado_usuario=true;
+                }
 
                 foreach ($numeros as $key => $numer) {
                     
@@ -2680,6 +2684,10 @@ if ($valido) {
                                 }';
 
                         $mensajes_a_enviar.=$msg_customer.","; 
+                        }
+
+                        if($estado_usuario){
+                            $this->db->update("customers",array("fecha_genera_estado_user"=>$f_hoy),array("id"=>$datosy[0]));
                         }
                     }else{
                         /*$msg_customer='               {
@@ -3053,6 +3061,8 @@ $cuerpo=$_POST['texto'].$url_str;
         $this->communication->send_email($customer->email,"Estado de Cuenta Usuario ".$company->cname,"Estado de Cuenta Usuario ".$company->cname,$cuerpo);    
         $retorno=array();
         ob_clean();
+        $f_hoy=date("Y-m-d");
+         $this->db->update("customers",array("fecha_genera_estado_user"=>$f_hoy),array("id"=>$_POST['id']));
         $retorno["estado"]="procesado";
             echo json_encode($retorno);
     }
