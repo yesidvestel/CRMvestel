@@ -3123,6 +3123,21 @@ $cuerpo=$_POST['texto'].$url_str;
 					)";
 
 			$result = $this->db->query($sql);
+		}else if($proceso==6){
+			  $sql = "UPDATE customers
+					SET facturar_electronicamente = 1
+					WHERE usu_estado='Activo' AND id IN (
+						SELECT f.csd
+						FROM invoices f
+						INNER JOIN (
+							SELECT csd, MAX(invoicedate) AS max_fecha
+							FROM invoices
+							GROUP BY csd
+						) ultimas ON f.csd = ultimas.csd AND f.invoicedate = ultimas.max_fecha
+						WHERE f.status = 'paid' AND tax='0' AND pamnt>total
+					)";
+
+			$result = $this->db->query($sql);
 		}
         /*$this->db->set('status', $status);
         $this->db->where('tid', $tid);

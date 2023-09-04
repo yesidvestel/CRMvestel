@@ -864,6 +864,7 @@ $("#sel_filtrar_fecha_cambio").on("change",function(){
                                 <option value="3">Con impuesto y sin Deuda</option>
                                 <option value="4">Sin impuesto y sin Deuda</option>
                                 <option value="5">Sin impuesto y con Deuda</option>
+                                <option value="6">Sin impuesto y con saldo a favor</option>
                             </select>
 
                         </div>
