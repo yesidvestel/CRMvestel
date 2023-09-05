@@ -243,20 +243,10 @@ $barrio =$this->db->get_where("barrio",array("idBarrio"=>$custmr->barrio))->row(
 					<span style="font-weight: bold">Telefono :</span> <?= $phoneNumber.$phoneNumber2 ?>
 				</td>
 				<td style="border: 2px solid #ddd;" width="30%">
-				 	<h6>Fecha generado <br></h6>
-					<?= (isset($custmr->fecha_genera_estado_user) && $custmr->fecha_genera_estado_user!=null ) ? (new DateTime($custmr->fecha_genera_estado_user))->format('d/m/Y') : '25/08/2023'  ?><br>
+				 	<h6>Fecha generado <br></h6><?php $fc=$this->db->get_where("invoices",array("tid"=>$factura['tid']))->row(); ?>
+					<?= $fc->invoicedate  ?><br>
 					<h6>Fecha límite<br></h6> 
-                    <?php if(isset($custmr->fecha_genera_estado_user) && $custmr->fecha_genera_estado_user!=null ){
-                            $fechax1=new DateTime($custmr->fecha_genera_estado_user);
-                            if(intval($fechax1->format("d")) >3){
-                                $mes_siguiente = $fechax1->modify('next month');
-                                echo "03/".$mes_siguiente->format("m/Y");
-                            }else{
-                                echo "03/".$fechax1->format("m/Y");
-                            }
-                    }else{
-                        echo "03/09/2023";
-                    } ?>
+                    <?= $fc->invoiceduedate  ?>
 								
 				</td>				
 			</tr>			
