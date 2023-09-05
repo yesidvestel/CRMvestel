@@ -682,8 +682,17 @@ if($_SESSION[md5("variable_datos_pin")]['db_name'] == "admin_crmvestel"){
         $dateTime=new DateTime($_POST['sdate']);
         $caja1=$this->db->get_where('accounts',array('id' =>$_POST['pay_acc']))->row();
         $se_facturo=array();
+        $val_factura_mes=true;
         if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
             $se_facturo = $this->db->query("SELECT * FROM facturacion_electronica_siigo WHERE MONTH(fecha) ='".$dateTime->format("m")."' and YEAR(fecha) = '".$dateTime->format("Y")."' and customer_id=".$_POST['id_customer'])->result_array();//and id=8241
+            $f_ini=$dateTime;
+            $facs=$this->db->query("select * from invoices where csd= ".$_POST['id_customer']." and invoicedate>='".$f_ini->format('Y-m')."-01' and invoicedate<='".$f_ini->format("Y-m-t")."' order by id desc limit 1")->result_array();            
+
+            if(count($facs)!=0){
+                $val_factura_mes=true;
+            }else{
+                $val_factura_mes=false;
+            }
         }else{
             $se_facturo = $this->db->query("SELECT * FROM facturacion_electronica_siigo WHERE fecha ='".$dateTime->format("Y-m-d")."' and customer_id=".$_POST['id_customer'])->result_array();//and id=8241    
         }
@@ -691,9 +700,12 @@ if($_SESSION[md5("variable_datos_pin")]['db_name'] == "admin_crmvestel"){
         if(count($se_facturo)!=0){
             $retorno["estado"]="procesado 2";
             echo json_encode($retorno);
-        }else{
+        }else if($val_factura_mes){
             $ret=$this->facturar_customer($_POST['id_customer'],$_POST['sdate'],$_POST['estcuenta']);
             $retorno["estado"]="procesado";
+            echo json_encode($retorno);
+        }else{
+            $retorno["estado"]="procesado 2";
             echo json_encode($retorno);
         }
         
