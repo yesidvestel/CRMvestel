@@ -179,8 +179,11 @@
     <table id="t-titulo" width="100%"  align="center" >
         <tbody>
             <tr>
-                
-                <td><img  src="<?=base_url()."userfiles/company/logosaves.png"  ?>"></td>
+                <?php if($_SESSION[md5("variable_datos_pin")]['db_name'] == "admin_crmvestel"){ ?>
+                    <td><img  src="<?=FCPATH."userfiles/company/logosaves.png"  ?>"></td>
+                <?php }else{ ?>
+                    <td><img  src="<?=base_url()."userfiles/company/logosaves.png"  ?>"></td>
+                <?php } ?>
             </tr>
             <tr>
                 <td><h1 >Facturas  </h1>
