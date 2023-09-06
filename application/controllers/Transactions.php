@@ -2543,9 +2543,10 @@ $result=array();
 		$cred = $this->input->post('credito');
 		$fcha = $this->input->post('fecha');
 		$nte = $this->input->post('nota');
+		$tid = $this->input->post('tid');
 
         if ($id) {
-            $this->transactions->edit($id, $deb, $cred, $fcha, $nte);
+            $this->transactions->edit($id, $deb, $cred, $fcha, $nte,$tid);
         }
     }
 

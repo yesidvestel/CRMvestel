@@ -186,7 +186,7 @@ class Transactions_model extends CI_Model
         $query = $this->db->get();
         return $query->result_array();
     }
-	public function edit($id, $deb, $cred, $fcha, $nte)
+	public function edit($id, $deb, $cred, $fcha, $nte,$tid)
     {
         $data = array(
 			'debit' => $deb,
@@ -199,6 +199,13 @@ class Transactions_model extends CI_Model
         $this->db->where('id', $id);
 
         if ($this->db->update('transactions')) {
+			$factura = $this->db->get_where('invoices', array('tid' => $tid))->row();
+				$data2 = array(
+					'pamnt' => $cred,
+				);
+			$this->db->set($data2);
+        	$this->db->where('tid', $tid);
+			$this->db->update('invoices');
             echo json_encode(array('status' => 'Success', 'message' =>
                 $this->lang->line('UPDATED')));
         } else {

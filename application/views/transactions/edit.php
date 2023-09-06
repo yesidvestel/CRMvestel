@@ -84,6 +84,7 @@
 				<div class="form-group row">
 
                     <div class="col-sm-10">
+						<input type="hidden"  class="form-control margin-bottom" name="tid" value="<?php echo $trans['tid'] ?>"></input>
                         <input type="submit" id="submit-data" class="btn btn-success margin-bottom"
                                value="<?php echo $this->lang->line('Update') ?>" data-loading-text="Updating...">
                         <input type="hidden" value="transactions/edittrans" id="action-url">
