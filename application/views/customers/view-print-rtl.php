@@ -363,11 +363,7 @@ $fcontrato = $details['f_contrato'];
     </tr>
     <tr>
       <td colspan="4">VALOR TOTAL DEL CARGO POR CONEXIÓN</td>
-      <td colspan="2"><?php echo amountFormat(306000)?></td>
-    </tr>
-    <tr>
-      <td colspan="4">Suma que le fue diferida del valor total del cargo por conexión</td>
-      <td colspan="2"><?php echo amountFormat(70000)?></td>
+      <td colspan="2"><?php echo amountFormat($clausula['v_total'])?></td>
     </tr>
     <tr>
       <td colspan="4">Fecha inicio permanencia mínima</td>
@@ -381,37 +377,37 @@ $fcontrato = $details['f_contrato'];
       <td colspan="6" style="text-align: center;font-weight: bold">Valor a pagar si termina el contrato anticipadamente según el mes</td>
     </tr>
     <tr>
-      <td class="cla">Mes 1</td>
-      <td class="cla">Mes 2</td>
-      <td class="cla">Mes 3</td>
-      <td class="cla">Mes 4</td>
-      <td class="cla">Mes 5</td>
-      <td class="cla">Mes 6</td>
-    </tr>
-    <tr>
-      <td class="cla"><?php echo amountFormat(256000)?></td>
-      <td class="cla"><?php echo amountFormat(234667)?></td>
-      <td class="cla"><?php echo amountFormat(213334)?></td>
-      <td class="cla"><?php echo amountFormat(192001)?></td>
-      <td class="cla"><?php echo amountFormat(170668)?></td>
-      <td class="cla"><?php echo amountFormat(149335)?></td>
-    </tr>
-    <tr>
-      <td class="cla">Mes 7</td>
-      <td class="cla">Mes 8</td>
-      <td class="cla">Mes 9</td>
-      <td class="cla">Mes 10</td>
-      <td class="cla">Mes 11</td>
-      <td class="cla">Mes 12</td>
-    </tr>
-	 <tr>
-      <td class="cla"><?php echo amountFormat(128002)?></td>
-      <td class="cla"><?php echo amountFormat(106669)?></td>
-      <td class="cla"><?php echo amountFormat(85336)?></td>
-      <td class="cla"><?php echo amountFormat(64003)?></td>
-      <td class="cla"><?php echo amountFormat(42670)?></td>
-      <td class="cla"><?php echo amountFormat(21337)?></td>
-    </tr>
+		<td class="cla">Mes 1</td>
+		<td class="cla">Mes 2</td>
+		<td class="cla">Mes 3</td>
+		<td class="cla">Mes 4</td>
+		<td class="cla">Mes 5</td>
+		<td class="cla">Mes 6</td>
+	</tr>
+	<tr>
+		<td class="cla"><?php echo amountFormat($clausula['mes1']) ?></td>
+		<td class="cla"><?php echo amountFormat($clausula['mes2']) ?></td>
+		<td class="cla"><?php echo amountFormat($clausula['mes3']) ?></td>
+		<td class="cla"><?php echo amountFormat($clausula['mes4']) ?></td>
+		<td class="cla"><?php echo amountFormat($clausula['mes5']) ?></td>
+		<td class="cla"><?php echo amountFormat($clausula['mes6']) ?></td>
+	</tr>
+	<tr>
+		<td class="cla">Mes 7</td>
+		<td class="cla">Mes 8</td>
+		<td class="cla">Mes 9</td>
+		<td class="cla">Mes 10</td>
+		<td class="cla">Mes 11</td>
+		<td class="cla">Mes 12</td>
+	</tr>
+	<tr>
+		<td class="cla"><?php echo amountFormat($clausula['mes7'])?></td>
+		<td class="cla"><?php echo amountFormat($clausula['mes8'])?></td>
+		<td class="cla"><?php echo amountFormat($clausula['mes9'])?></td>
+		<td class="cla"><?php echo amountFormat($clausula['mes10'])?></td>
+		<td class="cla"><?php echo amountFormat($clausula['mes11'])?></td>
+		<td class="cla"><?php echo amountFormat($clausula['mes12'])?></td>
+	</tr>
   </tbody>
 </table>
 
