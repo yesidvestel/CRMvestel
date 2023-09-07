@@ -710,6 +710,9 @@ $list_servs=$this->invocies->servicios_adicionales_recurrentes($value2->tid);
             }
             //var_dump($value['name']);
             //codigo para pagar con saldo ya existente
+             if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
+                $este_usuario_sele_creo_ahora=true;
+             }
             if($este_usuario_sele_creo_ahora==false){
                 $invoices=array();
             }else{
@@ -720,8 +723,15 @@ $list_servs=$this->invocies->servicios_adicionales_recurrentes($value2->tid);
             $lista_para_pagos_faltantes=array();
             $saldo_dispo_total=0;
             foreach ($invoices as $key => $inv) {
-               
-                if($inv->tipo_factura=="Fija" || $inv->tipo_factura=="Nota Credito" || $inv->tipo_factura=="Nota Debito"){
+                
+                $validacion_fija=false;
+                if($inv->tipo_factura=="Nota Credito" || $inv->tipo_factura=="Nota Debito"){
+                        $validacion_fija=true;
+                }else if($inv->tipo_factura=="Fija" && $_SESSION[md5("variable_datos_pin")]['db_name']!="admin_crmvestel"){
+                    $validacion_fija=true;
+                }
+
+                if($validacion_fija){ //if($inv->tipo_factura=="Fija" || $inv->tipo_factura=="Nota Credito" || $inv->tipo_factura=="Nota Debito"){
                         //para que se salte este tipo de facturas
                 }else{
                      if($inv->pamnt<0 || $inv->total<0){
