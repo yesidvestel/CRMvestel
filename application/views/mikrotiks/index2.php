@@ -37,7 +37,7 @@
                         <th>Ip</th>
                         <th>Puerto</th>
                         <th>Tegnologia</th>
-                        <th>Sede</th>
+                        <th><?=$title_1  ?></th>
                         <th>Usuario</th>
                         <th>Password</th>
                         <th>Estado</th>
@@ -56,7 +56,7 @@
                         <th>Ip</th>
                         <th>Puerto</th>
                         <th>Tegnologia</th>
-                        <th>Sede</th>
+                        <th><?=$title_1  ?></th>
                         <th>Usuario</th>
                         <th>Password</th>
                         <th>Estado</th>
@@ -96,7 +96,7 @@
                                  <input type="text" name="nombre" class="form-control" placeholder="Nombre">            
                         </td>
                         <td>
-                            <label>Sede</label>
+                            <label><?=$title_1  ?></label>
                                <select class="form-control" name="sede" id="sede">
                                 <?php foreach ($lista_sedes as $key => $sd): ?>
                                         <option value="<?=$sd['id'] ?>"><?=$sd['title'] ?></option>
@@ -202,6 +202,7 @@
         ev.preventDefault();
         document.getElementById("form_guardar").reset();
         $(".tipo").text("Agregar");
+        $("input[name=id_mikrotik]").val(0);
         $("#modal_agregar").modal("show");
    });
    $(document).on("submit","#form_guardar",function (e){

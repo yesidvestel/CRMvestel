@@ -39,7 +39,15 @@ class Mikrotiks extends CI_Controller
 
    public function index(){
     $head['title'] = 'Mikrotiks';
-    $data['lista_sedes']=$this->db->get_where("customers_group")->result_array();
+        $data=array();
+        $data['title_1']="Sede";
+     if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
+        $data['lista_sedes']=$this->db->query("select ciudad.idCiudad as id,ciudad.ciudad as title  from ciudad")->result_array();
+        $data['title_1']="Ciudad";
+     }else{
+        $data['lista_sedes']=$this->db->get_where("customers_group")->result_array();
+     }
+    
     $this->db->update("mikrotiks",array("estado_coneccion"=>null));
     $lista_mikrotiks=$this->db->get_where("mikrotiks")->result_array();
     $str_json=array();
