@@ -191,10 +191,10 @@
                                 <option value="Balance"><?php echo $this->lang->line('Client Balance') ?></option>
                                 <option value="Bank"><?php echo $this->lang->line('Bank') ?></option>
                             </select>
-                            <div id="seleccion_banco" style="text-align: center;">
+                           <!-- <div id="seleccion_banco" style="text-align: center;">
                                 <input type="radio" name="banco" value="Bancolombia" style="cursor: pointer;" checked>&nbspBancolombia
                                 <input type="radio" name="banco" value="BBVA colombia" style="cursor: pointer;">&nbspBBVA colombia
-                            </div>
+                            </div> -->
                             <label for="account"><?php echo $this->lang->line('Account') ?></label>
 
                             <select name="account" class="form-control">
@@ -715,14 +715,14 @@ function visualizar_div_asociadas(){
     }
 
 
-$("#seleccion_banco").hide();
+/*$("#seleccion_banco").hide();
     function metodo_de_pago_select(){
         if($("#select_metodo_de_pago option:selected").val()=="Bank"){
             $("#seleccion_banco").show();
         }else{
             $("#seleccion_banco").hide();
         }
-    }
+    }*/
 
 let lista_facturas=[];
  function agregar_factura(elemento){

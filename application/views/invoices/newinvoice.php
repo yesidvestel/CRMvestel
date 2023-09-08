@@ -470,13 +470,14 @@
                                 </td>
 								
                             </tr>
+							<?php if($this->config->item('ctitle')=='VESTEL S.A.S'){ ?>
 							<tr>
 								<th>Significado Letras Pequetes</th>
 							</tr>
 							<tr>
 							<td>V: Villanueva &nbsp S: Solo &nbsp D: Dedicado &nbsp C: Comercial &nbsp &nbsp &nbsp I: Institucional</td>
 							</tr>
-
+							<?php } ?>
                             </tbody>
                         </table>
                         <div id="div_traslados">   
