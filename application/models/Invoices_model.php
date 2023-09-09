@@ -774,5 +774,280 @@ setlocale(LC_TIME, "spanish");
         
 
     }
+    public function procesar_pagos_adelantados($id_customer){
+        //codigo para pagar con saldo ya existente
+             $this->load->model('customers_model', 'customers');
+             $invoices = $this->db->select("*")->from("invoices")->where('csd='.$id_customer)->order_by('invoicedate',"ASC")->get()->result();//$invoices = $this->db->select("*")->from("invoices")->where('csd='.$value['id'])->order_by('invoicedate',"ASC")->get()->result();
+            
+            
+            $lista_para_pagos_adelantados=array();
+            $lista_para_pagos_faltantes=array();
+            $saldo_dispo_total=0;
+            foreach ($invoices as $key => $inv) {
+                
+                $validacion_fija=false;
+                if($inv->tipo_factura=="Nota Credito" || $inv->tipo_factura=="Nota Debito"){
+                        $validacion_fija=true;
+                }else if($inv->tipo_factura=="Fija" && $_SESSION[md5("variable_datos_pin")]['db_name']!="admin_crmvestel"){
+                    $validacion_fija=true;
+                }
+
+                if($validacion_fija){ //if($inv->tipo_factura=="Fija" || $inv->tipo_factura=="Nota Credito" || $inv->tipo_factura=="Nota Debito"){
+                        //para que se salte este tipo de facturas
+                }else{
+                     if($inv->pamnt<0 || $inv->total<0){
+                                            break;
+                                    }
+                    
+                if($inv->status=="paid" && $inv->pamnt==0){
+                    $this->db->update("invoices",array('status' =>"due"),array("id"=>$inv->id));
+                    $inv->status="due";
+                }
+
+                if(($inv->status=="due" || $inv->status=="partial") && $inv->pamnt==$inv->total){
+                    $this->db->update("invoices",array('status' =>"paid"),array("id"=>$inv->id));
+                    $inv->status="paid";   
+                }
+                
+                if($inv->pamnt>$inv->total){
+                    
+                    /*if($inv->total==$tr_verificacion[0]['calculo']){
+                        $this->db->update("invoices",array("pamnt"=>$inv->total),array("tid"=>$inv->tid));
+                    }else{*/
+                        $saldo_dispo=$inv->pamnt-$inv->total;
+                        $saldo_dispo_total+=$saldo_dispo;
+                        $lista_para_pagos_adelantados[]= array("tid"=>$inv->tid,"saldo_disponible"=>$saldo_dispo,"pamnt"=>$inv->pamnt);    
+                    //}
+                    
+                }else if($inv->status=="due" || $inv->status=="partial"){
+                    $total_a_cubrir=$inv->total;
+                    if($inv->status=="partial"){
+                        $total_a_cubrir=$total_a_cubrir-$inv->pamnt;
+                    }
+                    $lista_para_pagos_faltantes[]=array("tid"=>$inv->tid,"status"=>$inv->status,"pamnt"=>$inv->pamnt,"total_a_cubrir"=>$total_a_cubrir,"total"=>$inv->total,"factura_totalizada"=>false);
+                }else if($inv->status=="paid" && $inv->pamnt<$inv->total && $inv->pamnt!=0){ 
+                        $total_a_cubrir=$inv->total;                       
+                        $total_a_cubrir=$total_a_cubrir-$inv->pamnt;
+                        $status="partial";
+                        $lista_para_pagos_faltantes[]=array("tid"=>$inv->tid,"status"=>$status,"pamnt"=>$inv->pamnt,"total_a_cubrir"=>$total_a_cubrir,"total"=>$inv->total,"factura_totalizada"=>false);
+                        $this->db->update("invoices",array('status' =>$status),array("id"=>$inv->id));
+                }
+                }
+            }
+
+            /* datos para probar en local
+                  delete from invoice_items where tid=37503;
+                    delete from invoices where tid=37503;
+                    update invoices set pamnt=64000 where tid=26261;
+                    update invoices set pamnt=50000, status="partial" where tid=7549;
+                    update transactions set credit="64000.00" where id=24870;*/
+
+
+
+            
+
+            if(count($lista_para_pagos_faltantes) !=0 && $saldo_dispo_total!=0){//&& $value['id']==5605
+
+                foreach ($lista_para_pagos_adelantados as $key => $valuey) {
+                    foreach ($lista_para_pagos_faltantes as $key2 => $pag) { 
+                   // var_dump("saldo_disponible =".$valuey['saldo_disponible']." total_a_cubrir=".$pag['total_a_cubrir']." , pag['pamnt']=".$pag['pamnt']);                       
+                        if($valuey['saldo_disponible']>=$pag['total_a_cubrir'] && $pag['factura_totalizada']==false){//parte en la que sea mayor el saldo diponible completada parcialmente falta hacer lo de dividir transacciones
+/*var_dump($value2->csd);
+                            var_dump($valuey);
+                            var_dump($pag);
+var_dump("aqui2");*/
+                            $camino1=true;
+                            $camino3=false;
+                            //$valor_debitados=0;
+                            $tr = $this->db->get_where("transactions", array("tid"=>$valuey['tid'],"credit"=>$valuey['pamnt'],"estado"=>null,"cat!="=>"Purchase"))->row();
+                            if($tr==null){
+                                $camino1=false;
+                                $tr = $this->db->get_where("transactions", array("tid"=>$valuey['tid'],"credit"=>$valuey['saldo_disponible'],"estado"=>null,"cat!="=>"Purchase"))->row();
+                                if($tr==null){
+                                    $camino3=true;
+                                    $tr_verificacion = $this->db->query("select * from transactions where estado is null and cat!='Purchase' and tid=".$valuey['tid']." order by credit desc")->result_array();
+                                    
+                                    $tr = $this->db->get_where("transactions", array("id"=>$tr_verificacion[0]['id']))->row();
+                                   //se debe de buscar la transaccion que se acomode a lo necesario si se cumple el tope de la factura y sobra saldo de las transacciones
+                                }
+                                
+                            }
+                            //actualizando datos de la factura a pagar
+                            $data= array();
+                            $data['pamnt']=$pag['total_a_cubrir']+$pag['pamnt'];
+                            $data['status']="paid";
+                            $lista_para_pagos_adelantados[$key]['saldo_disponible']-=$pag['total_a_cubrir'];
+                            $valuey['saldo_disponible']=$lista_para_pagos_adelantados[$key]['saldo_disponible'];
+                             $data['pmethod']="Cash";
+                            $this->db->update("invoices",$data,array('tid' =>$pag['tid']));
+                            //actualizando datos del invoice que contiene el pago adelantado
+                            $data= array();
+                            $data['pamnt']=$valuey['pamnt']-$pag['total_a_cubrir'];
+                            $lista_para_pagos_adelantados[$key]['pamnt']=$data['pamnt'];
+                            if($camino1){
+                                $valuey['pamnt']=$data['pamnt'];                                                            
+                            }else{
+
+                                $valuey['pamnt']=$tr->credit-$pag['total_a_cubrir'];
+                                /*if($camino3){
+                                    $valuey['pamnt']=$valuey['pamnt']-$valor_debitados;
+                                    //y aqui aplicarle logica para ver si cambia o no por el cambio de arriba
+                                }*/
+                                //y aqui restarle los debitados
+                            }                             
+                            $this->db->update("invoices",$data,array('tid' =>$valuey['tid']));                            
+                            //editando transaccion que contiene el pago adelantado
+                            $data_transaccion=array();                            
+                            $data_transaccion['credit']=$valuey['pamnt'];
+
+                            if(strpos(strtolower($tr->note), strtolower("credito_inicial"))!==false){
+                                
+                            }else{
+                                $data_transaccion['note']=$tr->note." #credito_inicial=".$tr->credit;    
+                            }                        
+
+                            $this->db->update("transactions",$data_transaccion,array('id' =>$tr->id));
+                            
+                            //creando transaccion
+                            $data_transaccion['acid']=$tr->acid;
+                            
+                            $data_transaccion['account']=$tr->account;
+                            $data_transaccion['type']=$tr->type;
+                            $data_transaccion['cat']=$tr->cat;
+                            $data_transaccion['debit']=$tr->debit;
+                            $data_transaccion['credit']=$pag['total_a_cubrir'];
+                            $data_transaccion['payer']=$tr->payer;
+                            $data_transaccion['payerid']=$tr->payerid;
+                            $data_transaccion['method']=$tr->method;
+                            $data_transaccion['date']=$tr->date;
+                            $data_transaccion['tid']=$pag['tid'];
+
+                           // var_dump($tr);
+
+                            $data_transaccion['eid']=$tr->eid;
+                            $note=str_replace("credito_inicial", "credito_tr_padre", $tr->note);
+                            $data_transaccion['note']=$note;
+                            $data_transaccion['note'] = str_replace("".$tr->tid."", $pag['tid'], $data_transaccion['note']);
+                            $data_transaccion['note']=$data_transaccion['note']." #adelantado_de_tr_id=".$tr->id;
+                            //var_dump(" note ".$data_transaccion['note']);
+
+                            $data_transaccion['ext']=$tr->ext;
+                            $data_transaccion['nombre_banco']=$tr->nombre_banco;
+                            $data_transaccion['id_banco']=$tr->id_banco;
+                            $data_transaccion['estado']=$tr->estado;
+
+
+                            $this->db->insert("transactions",$data_transaccion);
+
+                            //desactivar row para que no sea mas iterada si ya se cubrio la deuda
+                            $data_transaccion['factura_totalizada']=true;
+                            $pag['factura_totalizada']=true;
+                            $lista_para_pagos_faltantes[$key2]['factura_totalizada']=true;
+
+                        }else if($valuey['saldo_disponible']>50 && $pag['factura_totalizada']==false){//parte en la que sea menor el saldo diponible completada es decir pago parcial 
+                            /*var_dump("aqui");
+                            var_dump($value2->csd);
+                            var_dump($valuey);
+                            var_dump($pag);//http://localhost/CRMvestel/customers/invoices?id=14944
+                           */
+                            $camino1=true;
+                            $camino3=false;
+                            $tr = $this->db->get_where("transactions", array("tid"=>$valuey['tid'],"credit"=>$valuey['pamnt'],"estado"=>null,"cat!="=>"Purchase"))->row();
+                            if($tr==null){
+                                $camino1=false;
+                                $tr = $this->db->get_where("transactions", array("tid"=>$valuey['tid'],"credit"=>$valuey['saldo_disponible'],"estado"=>null,"cat!="=>"Purchase"))->row();
+                                if($tr==null){
+                                    $camino3=true;
+                                    $tr_verificacion = $this->db->query("select * from transactions where estado is null and cat!='Purchase' and tid=".$valuey['tid']." order by credit desc")->result_array();
+                                    
+                                    $tr = $this->db->get_where("transactions", array("id"=>$tr_verificacion[0]['id']))->row();
+                                   //se debe de buscar la transaccion que se acomode a lo necesario si se cumple el tope de la factura y sobra saldo de las transacciones
+                                }
+                            }
+                            //actualizando datos de la factura a pagar
+                            $data= array();
+                            $data['pamnt']=$valuey['saldo_disponible']+$pag['pamnt'];
+                            $data['status']="partial";
+                          
+                             $data['pmethod']="Cash";
+                             $lista_para_pagos_faltantes[$key2]['total_a_cubrir']=$pag['total']-$data['pamnt'];//paso necesario para cuando se pretenda pagar con dos saldos adelantados y no alcance el primero a totalizar la deuda
+                             $pag['total_a_cubrir']=$lista_para_pagos_faltantes[$key2]['total_a_cubrir'];
+                             $pag['pamnt']=$data['pamnt'];
+                             $lista_para_pagos_faltantes[$key2]['pamnt']=$data['pamnt'];
+                            $this->db->update("invoices",$data,array('tid' =>$pag['tid']));
+                            //actualizando datos del invoice que contiene el pago adelantado
+                            $data= array();
+                            $data['pamnt']=$valuey['pamnt']-$valuey['saldo_disponible'];
+                            $lista_para_pagos_adelantados[$key]['pamnt']=$data['pamnt'];
+                            if($camino1){
+                                $valuey['pamnt']=$data['pamnt'];                            
+                                
+                            }else{
+                                $valuey['pamnt']=$tr->credit-$valuey['saldo_disponible'];
+                            }                            
+                            $this->db->update("invoices",$data,array('tid' =>$valuey['tid']));                            
+                            //editando transaccion que contiene el pago adelantado
+                            $data_transaccion=array();  
+
+                            $data_transaccion['credit']=$valuey['pamnt'];
+
+                            if(strpos(strtolower($tr->note), strtolower("credito_inicial"))!==false){
+                                
+                            }else{
+                                $data_transaccion['note']=$tr->note." #credito_inicial=".$tr->credit;    
+                            }  
+
+                            $this->db->update("transactions",$data_transaccion,array('id' =>$tr->id));
+                            
+                            //creando transaccion
+                            $data_transaccion['acid']=$tr->acid;
+                            
+                            $data_transaccion['account']=$tr->account;
+                            $data_transaccion['type']=$tr->type;
+                            $data_transaccion['cat']=$tr->cat;
+                            $data_transaccion['debit']=$tr->debit;
+                            $data_transaccion['credit']=$valuey['saldo_disponible'];
+                            $data_transaccion['payer']=$tr->payer;
+                            $data_transaccion['payerid']=$tr->payerid;
+                            $data_transaccion['method']=$tr->method;
+                            $data_transaccion['date']=$tr->date;
+                            $data_transaccion['tid']=$pag['tid'];
+
+                           // var_dump($tr);
+
+                            $data_transaccion['eid']=$tr->eid;
+                            $note=str_replace("credito_inicial", "credito_tr_padre", $tr->note);
+                            $data_transaccion['note']=$note;
+                            $data_transaccion['note'] = str_replace("".$tr->tid."", $pag['tid'], $data_transaccion['note']);
+                            $data_transaccion['note']=$data_transaccion['note']." #adelantado_de_tr_id=".$tr->id;
+                            //var_dump(" note ".$data_transaccion['note']);
+
+                            $data_transaccion['ext']=$tr->ext;
+                            $data_transaccion['nombre_banco']=$tr->nombre_banco;
+                            $data_transaccion['id_banco']=$tr->id_banco;
+                            $data_transaccion['estado']=$tr->estado;
+
+
+                            $this->db->insert("transactions",$data_transaccion);
+
+                            $lista_para_pagos_adelantados[$key]['saldo_disponible']=0;
+                            $valuey['saldo_disponible']=0;
+
+                            
+
+                        }
+                        if($valuey['saldo_disponible']<=0){
+                            break;
+                        }
+
+
+                    }
+                }
+                $this->customers->actualizar_debit_y_credit($value['id']);
+            }
+
+            //end codigo para pagar con saldo ya existente
+            
+    }
 
 }

@@ -1714,6 +1714,7 @@ $this->load->model('customers_model', 'customers');
         } else {
             $this->db->trans_rollback();
         }
+        $this->invocies->procesar_pagos_adelantados($customer_id);
 
 
     }
