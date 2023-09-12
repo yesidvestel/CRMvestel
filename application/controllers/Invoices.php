@@ -3039,5 +3039,30 @@ foreach ($lista as $key => $value) {
                 echo "Realizado";
         }
     }
+	public function depuracionusuarios()
+    {
+        // Actualiza el campo "estado" de la tabla "usuarios" a "depurado" si su estado actual es "cartera"
+		$this->db->set('usu_estado', 'Depurado');
+		$this->db->where('usu_estado', 'Cartera');
+		$this->db->where('f_contrato <', '2022-12-31');
+		$this->db->update('customers');
+
+		// Actualiza el campo "estado_usuario" de la última factura de cada usuario
+		// cuyo estado actual sea "cartera" y cuya fecha (en la tabla "usuarios") sea menor a "2022-12-31" a "depurado"
+		$subquery = $this->db->select('MAX(invoices.id)')
+			->from('invoices')
+			->join('customers', 'invoices.csd = customers.id')
+			->where('invoices.tipo_factura', 'Recurrente')
+			->where('customers.f_contrato <', '2022-12-31')
+			->group_by('invoices.csd')
+			->get_compiled_select();
+
+		$this->db->set('invoices.ron', 'Depurado');
+		$this->db->where('invoices.id IN (' . $subquery . ')', null, false);
+		$this->db->where('invoices.ron', 'cartera');
+		$this->db->update('invoices');
+
+
+    }
 
 }
