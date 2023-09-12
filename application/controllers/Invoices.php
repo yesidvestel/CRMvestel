@@ -3063,7 +3063,7 @@ foreach ($lista as $key => $value) {
 		$this->db->update('invoices');*/
 		//----
 		$this->db->select('csd, MAX(invoicedate) as ultima_fecha');
-        $this->db->where('ron', 'Cartera');
+        $this->db->where('ron', 'Cortado');
         $this->db->where('invoicedate <', '2022-12-05');
         $this->db->group_by('csd');
         $usuarios_con_facturas_a_actualizar = $this->db->get('invoices')->result();
