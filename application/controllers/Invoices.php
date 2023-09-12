@@ -3042,7 +3042,7 @@ foreach ($lista as $key => $value) {
 	public function depuracionusuarios()
     {
         // Actualiza el campo "estado" de la tabla "usuarios" a "depurado" si su estado actual es "cartera"
-		$this->db->set('usu_estado', 'Depurado');
+		/*$this->db->set('usu_estado', 'Depurado');
 		$this->db->where('usu_estado', 'Cortado');
 		$this->db->where('f_contrato <', '2022-12-31');
 		$this->db->update('customers');
@@ -3060,8 +3060,26 @@ foreach ($lista as $key => $value) {
 		$this->db->set('invoices.ron', 'Depurado');
 		$this->db->where('invoices.id IN (' . $subquery . ')', null, false);
 		$this->db->where('invoices.ron', 'Cortado');
-		$this->db->update('invoices');
+		$this->db->update('invoices');*/
+		//----
+		$this->db->select('csd, MAX(invoicedate) as ultima_fecha');
+        $this->db->where('ron', 'Cartera');
+        $this->db->where('invoicedate <', '2022-12-05');
+        $this->db->group_by('csd');
+        $usuarios_con_facturas_a_actualizar = $this->db->get('invoices')->result();
 
+        foreach ($usuarios_con_facturas_a_actualizar as $usuario) {
+            $this->db->set('ron', 'Depurado');
+            $this->db->where('csd', $usuario->csd);
+            $this->db->where('invoicedate', $usuario->ultima_fecha);
+            if ($this->db->update('invoices')){
+				// Paso 2: Actualizar el campo "estado" en la tabla de usuarios.
+				$this->db->set('usu_estado', 'Depurado');
+				$this->db->where('id',$usuario->csd);
+				$this->db->update('customers');
+			}
+        }
+		
 
     }
 
