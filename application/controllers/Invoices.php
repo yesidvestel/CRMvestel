@@ -3043,7 +3043,7 @@ foreach ($lista as $key => $value) {
     {
         // Actualiza el campo "estado" de la tabla "usuarios" a "depurado" si su estado actual es "cartera"
 		$this->db->set('usu_estado', 'Depurado');
-		$this->db->where('usu_estado', 'Cartera');
+		$this->db->where('usu_estado', 'Cortado');
 		$this->db->where('f_contrato <', '2022-12-31');
 		$this->db->update('customers');
 
@@ -3059,7 +3059,7 @@ foreach ($lista as $key => $value) {
 
 		$this->db->set('invoices.ron', 'Depurado');
 		$this->db->where('invoices.id IN (' . $subquery . ')', null, false);
-		$this->db->where('invoices.ron', 'cartera');
+		$this->db->where('invoices.ron', 'Cortado');
 		$this->db->update('invoices');
 
 
