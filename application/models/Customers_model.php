@@ -198,7 +198,7 @@ class Customers_model extends CI_Model
         $this->db->select('abonado');
         $this->db->from($this->table);
         $this->db->where("abonado!=","OS724");
-        $this->db->order_by('abonado', 'DESC');
+        $this->db->order_by('CAST(abonado AS SIGNED)', 'DESC');
         $this->db->limit(1);
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
@@ -907,7 +907,11 @@ public function calculo_ultimo_estado ($array_add,$customers){
                  $API = new RouterosAPI();
                 $API->debug = false;
                 //192.168.201.1:8728 ip jefe
-                $datos_consulta_ip=array("id_sede"=>$customergroup,"tegnologia"=>$tegnologia_instalacion);
+                $id_sede_mk=$customergroup;
+                if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
+                    $id_sede_mk=$ciudad;
+                }
+                $datos_consulta_ip=array("id_sede"=>$id_sede_mk,"tegnologia"=>$tegnologia_instalacion);
                 $datos_mkt=$this->get_ip_coneccion_microtik_por_sede($datos_consulta_ip);
                 if ($API->connect($datos_mkt['ip_mikrotik'], $datos_mkt['usuario'], $datos_mkt['password'])) {
                     if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
@@ -1047,7 +1051,16 @@ public function calculo_ultimo_estado ($array_add,$customers){
                 set_time_limit(3000);
                 $API = new RouterosAPI();
                 $API->debug = false;
-                $datos_consulta_ip=array("id_sede"=>$customergroup,"tegnologia"=>$tegnologia_instalacion);
+
+
+                $id_sede_mk=$customergroup;
+                if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
+                    $id_sede_mk=$ciudad;
+                }
+                $datos_consulta_ip=array("id_sede"=>$id_sede_mk,"tegnologia"=>$tegnologia_instalacion);
+
+
+                
                 $datos_mkt=$this->get_ip_coneccion_microtik_por_sede($datos_consulta_ip);
                 if ($API->connect($datos_mkt['ip_mikrotik'], $datos_mkt['usuario'], $datos_mkt['password'])) {
 if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
