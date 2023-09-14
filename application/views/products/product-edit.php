@@ -248,7 +248,11 @@
 </article>
 <script type="text/javascript">
     $(document).on("change",'.servs',function(e){
-        if($("#product_cat").val()=="1" && $("#product_warehouse").val()=="1"){
+        <?php if ($this->config->item('ctitle')=='VESTEL S.A.S'){ ?>
+        	if($("#product_cat").val()=="4" && $("#product_warehouse").val()=="7"){
+			<?php }else{ ?>
+			if($("#product_cat").val()=="1" && $("#product_warehouse").val()=="1"){
+			<?php } ?>
             $("#tipo_servicio").addClass("required");
             //$("#valores_servicio").addClass("required");
             //$("#servicio_pertenece_a").addClass("required");
