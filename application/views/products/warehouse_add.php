@@ -44,7 +44,7 @@
                                 if(empty($almacen)){//esta validacion es para saber si el tecnico ya esta asignado a un almacen, si esta vacia la busqueda significa que esta disponible el tecnico y lo deja visualizar
                                 ?>
 
-                                <option value="<?=$tecnico['username']?>" <?= $texto1?>  ><?=$tecnico['username']?></option>
+                                <option value="<?=$tecnico['username']?>"><?=$tecnico['username']?></option>
                             <?php }} ?>
                         </select>
                 </div>

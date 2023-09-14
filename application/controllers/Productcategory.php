@@ -220,7 +220,7 @@ class Productcategory Extends CI_Controller
         } else {
 
             $data['cat'] = $this->products_cat->category_list();
-            $data['lista_de_tecnicos']=$this->db->get_where('aauth_users',array("roleid"<5))->result_array();
+            $data['lista_de_tecnicos']=$this->db->get_where('aauth_users',array('roleid'<5))->result_array();
 
             $head['title'] = "Add Product Warehouse";
             $head['usernm'] = $this->aauth->get_user()->username;
