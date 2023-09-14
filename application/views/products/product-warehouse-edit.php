@@ -47,7 +47,7 @@
                             <option value="">Ninguno</option>
                             <?php $varx=false; foreach ($lista_de_tecnicos as $key => $tecnico) {
                                 $texto1="";
-                                if($warehouse['id_tecnico']===$tecnico['id']){
+                                if($warehouse['id_tecnico']===$tecnico['username']){
                                     $texto1='selected="true"';
                                     $varx=true;
                                 }
@@ -55,9 +55,9 @@
                                 if(empty($almacen)  ){//esta validacion es para saber si el tecnico ya esta asignado a un almacen, si esta vacia la busqueda significa que esta disponible el tecnico y lo deja visualizar
                                 ?>
 
-                                <option value="<?=$tecnico['id']?>" <?= $texto1?>  ><?=$tecnico['username']?></option>
+                                <option value="<?=$tecnico['username']?>" <?= $texto1?>  ><?=$tecnico['username']?></option>
                             <?php }else if($texto1!=""){ //aqui es para visualizar cuando el tecnico esta asignado al almacen el cual se esta editando;  ?>
-                                    <option value="<?=$tecnico['id']?>" <?= $texto1?>  ><?=$tecnico['username']?></option>
+                                    <option value="<?=$tecnico['username']?>" <?= $texto1?>  ><?=$tecnico['username']?></option>
                         <?php }}//falta replicar esto al añadir almacen ?>
                         </select>
                 </div>

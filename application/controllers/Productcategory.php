@@ -387,7 +387,7 @@ class Productcategory Extends CI_Controller
             $head['title'] = "Edit Product Warehouse";
             $head['usernm'] = $this->aauth->get_user()->username;
             
-            $data['lista_de_tecnicos']=$this->db->get_where('aauth_users',array("roleid"=>3))->result_array();
+            $data['lista_de_tecnicos']=$this->db->get_where('aauth_users',array('roleid'<5))->result_array();
             $this->load->view('fixed/header', $head);
             $this->load->view('products/product-warehouse-edit', $data);
             $this->load->view('fixed/footer');
