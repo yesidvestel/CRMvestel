@@ -346,7 +346,7 @@ class Products extends CI_Controller
 			$equipo=$this->db->get_where("equipos",array('id' =>$id))->row();
 			$almacen=$this->db->get_where("product_warehouse",array('id_tecnico' =>$tecnico))->row();	
             $data2 = array(					
-				'pcat' => 3,
+				'pcat' => 9,
 				'warehouse' => $almacen->id,
 				'product_name' => $equipo->mac,
 				'product_code' => $equipo->codigo,
