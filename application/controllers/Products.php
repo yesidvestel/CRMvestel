@@ -49,10 +49,12 @@ class Products extends CI_Controller
     }
 	public function equipos()
     {
+		$this->load->model('ticket_model', 'ticket');
+		$data['tecnicoslista'] = $this->ticket->tecnico_list();
         $head['title'] = "Equipos";
-        $head['usernm'] = $this->aauth->get_user()->username;
+        $head['usernm'] = $this->aauth->get_user()->username;		
         $this->load->view('fixed/header', $head);
-        $this->load->view('products/equipos');
+        $this->load->view('products/equipos', $data);
         $this->load->view('fixed/footer');
 
     }
