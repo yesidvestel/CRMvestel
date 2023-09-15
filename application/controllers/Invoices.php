@@ -633,11 +633,20 @@ $list_servs=$this->invocies->servicios_adicionales_recurrentes($value2->tid);
                                     }
                                 }
                             if($factura_data['total']!=0){
-                                $dia_final_de_mes=date("Y-m-t 23:00:00", $time_sdate1);
-                                $date_fecha_corte=new DateTime($dia_final_de_mes);
-                                
+                               
+                                if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
+                                        $x1 = date($sdate1);
+                                        $mes_siguiente = strtotime("+1 month", strtotime($x1));
+                                        $fecha_siguiente = date("Y-m-03", $mes_siguiente);
+                                        $factura_data['invoiceduedate']=$fecha_siguiente;
+
+                                }else{
+                                     $dia_final_de_mes=date("Y-m-t 23:00:00", $time_sdate1);
+                                     $date_fecha_corte=new DateTime($dia_final_de_mes);
+                                    $factura_data['invoiceduedate']=$date_fecha_corte->format("Y-m-d");    
+                                }
                                 $factura_data['invoicedate']=$sdate1;
-                                $factura_data['invoiceduedate']=$date_fecha_corte->format("Y-m-d");
+                                
                                 $factura_data['discount']=0;
                                 $factura_data['notes']=".";
                                 $factura_data['status']="due";
