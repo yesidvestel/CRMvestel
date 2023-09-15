@@ -3082,5 +3082,31 @@ foreach ($lista as $key => $value) {
 		
 
     }
+	public function eliminarfacturas()
+    {
+		
+		// Paso 1: Obtén los IDs de las facturas que cumplen con las condiciones
+		$this->db->select('tid');
+		$this->db->from('invoices');
+		$this->db->where('notes', '.');
+		$this->db->where('invoicedate', '2023-09-15');
+		//$this->db->where('tid', 211204);
+		$query = $this->db->get();
+		$factura_ids = $query->result_array();
+
+		// Paso 2: Elimina los productos relacionados con las facturas obtenidas en el Paso 1
+		if (!empty($factura_ids)) {
+			$factura_ids = array_column($factura_ids, 'tid');
+			$this->db->where_in('tid', $factura_ids);
+			if ($this->db->delete('invoice_items')){
+				$this->db->where('invoicedate', '2023-09-15');
+				$this->db->where('notes', '.');
+				$this->db->delete('invoices');
+			} 			
+			
+		}
+				
+        
+    }
 
 }
