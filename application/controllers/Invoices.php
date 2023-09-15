@@ -345,7 +345,7 @@ $this->load->model("Notas_model","notas");
         //$caja1=$this->db->get_where('accounts',array('id' =>$_POST['pay_acc']))->row();
         $caja2=$this->db->get_where('customers_group',array('id' =>$_POST['pay_acc']))->row();
         //$customers = $this->db->get_where("customers", array("usu_estado"=>'Activo',"ciudad"=>$caja1->holder))->result_array();
-        $customers_list = $this->db->query("select * from customers where (usu_estado='Activo' or usu_estado='Compromiso') and gid ='".$caja2->id."'")->result_array();
+        $customers_list = $this->db->query("select * from customers where (usu_estado='Activo' or usu_estado='Compromiso') and gid ='".$caja2->id."' and id=4147")->result_array();
         $ciudades= array();
         $sdate=$this->input->post("sdate");
         $date1= new DateTime($sdate);
@@ -375,11 +375,11 @@ $this->load->model('customers_model', 'customers');
                 }else if($date1->format("Y-m")==$dtime2->format("Y-m")){
                     $_customer_factura_creada=true;
                    // echo "Ya tiene factura 2 ".$sdate1." | ".$value2->invoicedate;
-                }else if(isset($value->promo) && $value->promo>0){
-                    $value->promo--;
-                    $this->db->update("invoices",array("promo"=>$value->promo),array("tid"=>$value2->tid));
+                }else if(isset($value2->promo) && $value2->promo>0){
+                    $value2->promo--;
+                    $this->db->update("invoices",array("promo"=>$value2->promo),array("tid"=>$value2->tid));
                     $_customer_factura_creada=true;
-                }else if(isset($value->promo2) && $value->promo2==1){
+                }else if(isset($value2->promo2) && $value2->promo2==1){
                     
                     $this->db->update("invoices",array("promo2"=>0),array("tid"=>$value2->tid));
                     $_customer_factura_creada=true;
@@ -691,8 +691,8 @@ $list_servs=$this->invocies->servicios_adicionales_recurrentes($value2->tid);
                                 
                                 $factura_data['multi']=$value2->multi;
                                 
-                                if(isset($value->promo2) && $value->promo2>1){
-                                    $factura_data['promo2']=$value->promo2-1;
+                                if(isset($value2->promo2) && $value2->promo2>1){
+                                    $factura_data['promo2']=$value2->promo2-1;
                                 }
 
 
