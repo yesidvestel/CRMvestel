@@ -345,7 +345,7 @@ $this->load->model("Notas_model","notas");
         //$caja1=$this->db->get_where('accounts',array('id' =>$_POST['pay_acc']))->row();
         $caja2=$this->db->get_where('customers_group',array('id' =>$_POST['pay_acc']))->row();
         //$customers = $this->db->get_where("customers", array("usu_estado"=>'Activo',"ciudad"=>$caja1->holder))->result_array();
-        $customers_list = $this->db->query("select * from customers where (usu_estado='Activo' or usu_estado='Compromiso') and gid ='".$caja2->id."' and id=4147")->result_array();
+        $customers_list = $this->db->query("select * from customers where (usu_estado='Activo' or usu_estado='Compromiso') and gid ='".$caja2->id."'")->result_array();
         $ciudades= array();
         $sdate=$this->input->post("sdate");
         $date1= new DateTime($sdate);
