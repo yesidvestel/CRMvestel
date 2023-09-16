@@ -417,7 +417,13 @@ class Customers extends CI_Controller
             $data['con_camp_f_btn_estado']="Desactivar";
         }
 if($_SESSION[md5("variable_datos_pin")]['sitio_integra_mikrotik'] == "SI"){
-    $data['estado_mikrotik']=$this->customers->get_estado_mikrotik($data['details']['name_s'],$data['details']['gid'],$data['details']['tegnologia_instalacion']);        
+
+    $id_sede_mk=$data['details']['gid'];
+    if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
+                    $id_sede_mk=$data['details']['ciudad'];
+    }
+
+    $data['estado_mikrotik']=$this->customers->get_estado_mikrotik($data['details']['name_s'],$id_sede_mk,$data['details']['tegnologia_instalacion']);        
 }
         $data['color']="#5ccb5f";
         if(empty($data['estado_mikrotik'])){
@@ -486,18 +492,30 @@ public function graficas_c(){
     $head['title'] = 'View Customer';
         $this->load->view('fixed/header', $head);
         $customer=$this->db->get_where("customers",array("id"=>$_GET['id']))->row();
-        $data['datos_gasto']=$this->customers->get_gasto_datos($customer->name_s,$customer->gid,$customer->tegnologia_instalacion);        
+         $id_sede_mk=$customer->gid;
+                if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
+                    $id_sede_mk=$customer->ciudad;
+                }
+        $data['datos_gasto']=$this->customers->get_gasto_datos($customer->name_s,$id_sede_mk,$customer->tegnologia_instalacion);        
         $this->load->view('customers/tr_graficas', $data);
         $this->load->view('fixed/footer');
 }
 public function ajax_graficas(){
     $customer=$this->db->get_where("customers",array("id"=>$_GET['id']))->row();
-        $data['datos']=$this->customers->get_datos_trafico($customer->name_s,$customer->gid,$customer->tegnologia_instalacion);        
+    $id_sede_mk=$customer->gid;
+                if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
+                    $id_sede_mk=$customer->ciudad;
+                }
+        $data['datos']=$this->customers->get_datos_trafico($customer->name_s,$id_sede_mk,$customer->tegnologia_instalacion);        
 
 }
 public function ajax_graficas2(){
     $customer=$this->db->get_where("customers",array("id"=>$_GET['id']))->row();
-        $data['datos']=$this->customers->get_datos_trafico2($customer->name_s,$customer->gid,$customer->tegnologia_instalacion);        
+     $id_sede_mk=$customer->gid;
+                if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
+                    $id_sede_mk=$customer->ciudad;
+                }
+        $data['datos']=$this->customers->get_datos_trafico2($customer->name_s,$id_sede_mk,$customer->tegnologia_instalacion);        
         
 }
     public function load_list()
@@ -879,12 +897,24 @@ public function ajax_graficas2(){
     }
     public function edita_estado_usuario(){
         $customer1=$this->db->get_where("customers",array("id"=>$_GET['id_cm']))->row();
-        $this->customers->editar_estado_usuario($_GET['username'],$_GET['id_sede'],$customer1->tegnologia_instalacion);
+
+         $id_sede_mk=$customer1->gid;
+        if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
+            $id_sede_mk=$customer1->ciudad;
+        }
+
+        $this->customers->editar_estado_usuario($_GET['username'],$id_sede_mk,$customer1->tegnologia_instalacion);
         redirect(base_url()."customers/view?id=".$_GET['id_cm']);
     }
 
     public function validar_user_name(){
-        $resultado =$this->customers->validar_user_name($_POST['username'],$_POST['sede'],$_POST['tegnologia_instalacion']);
+
+         $id_sede_mk=$_POST['sede'];
+                if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
+                    $id_sede_mk=$_POST['ciudad'];
+                }
+
+        $resultado =$this->customers->validar_user_name($_POST['username'],$id_sede_mk,$_POST['tegnologia_instalacion']);
         if($resultado==null){
             echo "disponible";
         }else{
@@ -928,7 +958,13 @@ public function ajax_graficas2(){
 
     }
     public function get_comentario_mikrotik(){
-        $username=$this->customers->obtener_comentario_mikrotik($this->input->post("username"),$this->input->post("customergroup"),$this->input->post("tegnologia_instalacion"));
+                $id_sede_mk=$this->input->post("customergroup");
+                if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
+                    $id_sede_mk=$this->input->post("ciudad");
+                }
+                
+
+        $username=$this->customers->obtener_comentario_mikrotik($this->input->post("username"),$id_sede_mk,$this->input->post("tegnologia_instalacion"));
         echo json_encode(array("comentario"=>$username));
     }
     public function get_x(){
@@ -953,6 +989,7 @@ public function ajax_graficas2(){
         echo "Name LIST: " . $address['list'] . "<br>";
         echo "Address: " . $address['address'] . "<br>";
         echo "Comment: " . $address['comment'] . "<br>";
+        echo "Comment: " . $address['disabled'] . "<br>";
         echo "Creation Time: " . $address['creation-time'] . "<br>";
         echo "--------------------------<br>";
         }
@@ -972,7 +1009,7 @@ public function ajax_graficas2(){
         $datos_mkt=$this->customers->get_ip_coneccion_microtik_por_sede($datos_consulta_ip);
         if ($API->connect($datos_mkt['ip_mikrotik'], $datos_mkt['usuario'], $datos_mkt['password'])) {
             $addres="186.154.175.51";
-            $nuevoComentario="FELIPELOMBANA";
+            $nuevoComentario="FELIPELOMBANA 1";
         $arrID=$API->comm("/ip/firewall/address-list/getall", 
                           array(
                           ".proplist"=> ".id",
@@ -982,6 +1019,7 @@ public function ajax_graficas2(){
                 $API->comm("/ip/firewall/address-list/set", array(
                         ".id" => $arrID[0][".id"],
                         "comment" => $nuevoComentario,
+                        "disabled" => "no",
                     ));
 
                 }

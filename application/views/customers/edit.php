@@ -527,8 +527,9 @@
 <script type="text/javascript">
 	function traer_comentario_mikrotik(username){
 		var customergroup= $("#customergroup option:selected").val();
+		var ciudad =$("#cmbCiudades option:selected").val() ;
 		var tegnologia_instalacion= $("#tegnologia option:selected").val();
-		$.post(baseurl+"customers/get_comentario_mikrotik",{'username':username,'customergroup':customergroup,'tegnologia_instalacion':tegnologia_instalacion},function(data){
+		$.post(baseurl+"customers/get_comentario_mikrotik",{'username':username,'customergroup':customergroup,'tegnologia_instalacion':tegnologia_instalacion,'ciudad':ciudad},function(data){
 			$("#mcustomer_comentario_s").val(data.comentario);
 		},'json');
 	}
@@ -561,8 +562,9 @@
      var username=$("#mcustomer_name_s").val();
      var sede=$("#id_sede").val();
      var tegnologia_instalacion= $("#tegnologia option:selected").val();
+     var ciudad =$("#cmbCiudades option:selected").val() ;
         if(username!="" && user_name_default!=username){
-            $.post(baseurl+"customers/validar_user_name",{username:username,sede:sede,tegnologia_instalacion:tegnologia_instalacion},function(data){
+            $.post(baseurl+"customers/validar_user_name",{username:username,sede:sede,tegnologia_instalacion:tegnologia_instalacion,ciudad:ciudad},function(data){
                 if(data=="disponible"){
                     $("#msg_error_username").css("visibility","hidden");
                     if($("#mcustomer_name_s").val()=="" || $("#mcustomer_documento_s").val()=="" || $("#discountFormatPerfil").val()=="-" || $("#discountFormatPerfil").val()=="Seleccine..." || $("#discountFormatIpLocal").val()=="-" || $("#Ipremota").val()=="" || $("#mcustomer_comentario_s").val()==""){

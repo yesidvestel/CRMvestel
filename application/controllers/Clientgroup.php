@@ -2859,7 +2859,13 @@ if ($valido) {
                                                                 
                             
                             //microtik
-                            $this->customers->desactivar_estado_usuario_multiple($customer->name_s,$customer->gid,$API,$customer->tegnologia_instalacion);
+                            //$this->customers->desactivar_estado_usuario_multiple($customer->name_s,$customer->gid,$API,$customer->tegnologia_instalacion);
+
+                            $id_sede_mk=$customer->gid;
+                            if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
+                                $id_sede_mk=$customer->ciudad;
+                            }
+                            $this->customers->desactivar_estado_usuario_multiple($customer->name_s,$id_sede_mk,$API,$customer->tegnologia_instalacion);
                             
                         }else if($tipo_corte=="Corte Internet"){
                             //$factura = $this->db->get_where('invoices',array('tid'=>$idfactura))->row();
@@ -2904,7 +2910,12 @@ if ($valido) {
                                 
                            
 
-                            $this->customers->desactivar_estado_usuario_multiple($customer->name_s,$customer->gid,$API,$customer->tegnologia_instalacion);
+                            //$this->customers->desactivar_estado_usuario_multiple($customer->name_s,$customer->gid,$API,$customer->tegnologia_instalacion);
+                            $id_sede_mk=$customer->gid;
+                            if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
+                                $id_sede_mk=$customer->ciudad;
+                            }
+                            $this->customers->desactivar_estado_usuario_multiple($customer->name_s,$id_sede_mk,$API,$customer->tegnologia_instalacion);
                         }else{
                                 /*$producto2 = $this->db->get_where('products',array('product_name'=>'Reconexión Television'))->row();
                                 $data2['tid']=$factura['tid'];

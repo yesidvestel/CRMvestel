@@ -641,8 +641,9 @@ function validar_user_name(){
      var username=$("#mcustomer_name_s").val();
      var sede=$("#id_sede").val();
     var tegnologia_instalacion= $("#tegnologia option:selected").val();
+    var ciudad =$("#cmbCiudades option:selected").val() ;
         if(username!=""){
-            $.post(baseurl+"customers/validar_user_name",{username:username,sede:sede,tegnologia_instalacion:tegnologia_instalacion},function(data){
+            $.post(baseurl+"customers/validar_user_name",{username:username,sede:sede,tegnologia_instalacion:tegnologia_instalacion,ciudad:ciudad},function(data){
                 if(data=="disponible"){
                     $("#msg_error_username").css("visibility","hidden");
                     console.log($("#tegnologia").val());
