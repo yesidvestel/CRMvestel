@@ -1,15 +1,29 @@
+# BEGIN WordPress
+# Las directivas (líneas) entre «BEGIN WordPress» y «END WordPress» son
+# generadas dinámicamente y solo deberían ser modificadas mediante filtros de WordPress.
+# Cualquier cambio en las directivas que hay entre esos marcadores serán sobrescritas.
+<IfModule mod_rewrite.c>
 RewriteEngine On
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+RewriteBase /
+RewriteRule ^index\.php$ - [L]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ index.php?/$1 [L]
+RewriteRule . /index.php [L]
+</IfModule>
 
-#<filesMatch "\.(html|htm|js|css|php)$">
-#FileETag None
-#Header unset ETag
-#Header set Cache-Control "max-age=0, no-cache, no-store, must-revalidate"
-#Header set Pragma "no-cache"
-#Header set Expires "Wed, 11 Jan 1984 05:00:00 GMT"
-#</filesMatch>
+# END WordPress
 
-php_value upload_max_filesize 50M
-php_value post_max_size 50M
+# Backup Migration START
+  <IfModule mod_rewrite.c>
+
+    RewriteEngine On
+    RewriteRule .* - [E=noconntimeout:1,E=noabort:1]
+
+  </IfModule>
+  <IfModule mod_env>
+
+    SetEnv noabort 1
+
+  </IfModule>
+# Backup Migration END
