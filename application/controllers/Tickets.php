@@ -1643,7 +1643,7 @@ $x=0;
 		}
 		if($ticket->detalle=="Suspension Television"){
 			$factura = $this->db->get_where('invoices',array('tid'=>$idfactura))->row();
-			if ($factura->combo===no){
+			if ($factura->combo==='no'){
 				$status2 = 'Suspendido';
 			}else{
 				$status2 = 'Activo';
@@ -1671,7 +1671,7 @@ $x=0;
 		}
 		if($ticket->detalle=="Suspension Internet"){
 			$factura = $this->db->get_where('invoices',array('tid'=>$idfactura))->row();
-			if ($factura->television===no){
+			if ($factura->television==='no'){
 				$status2 = 'Suspendido';
 			}else{
 				$status2 = 'Activo';
