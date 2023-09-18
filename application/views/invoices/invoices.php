@@ -44,12 +44,122 @@ text-transform: lowercase;
             <a href="#" class="close" data-dismiss="alert">&times;</a>
 
             <div class="message"></div>
+			
         </div>
+		 <!-- paneles -->
+            <div class="card">
+                    <div class="card-body">
+                        <div class="card-block">
+                            <label class="col-sm-12 col-form-label"
+                                       for="pay_cat"><h5>FILTRAR </h5> </label> 
+
+                            <ul class="nav nav-tabs nav-justified">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="active-tab" data-toggle="tab" href="#thread"
+                                       aria-controls="thread"
+                                       aria-expanded="true">Fecha</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="link-tab" data-toggle="tab" href="#cuenta"
+                                       aria-controls="cuenta"
+                                       aria-expanded="false">Estado</a>
+                                </li>
+								<li class="nav-item">
+                                    <a class="nav-link" id="detalle-tab" data-toggle="tab" href="#link"
+                                       aria-controls="link"
+                                       aria-expanded="false">Sede</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content px-1 pt-1">
+								<!--thread-->
+                                <div class="tab-pane fade active in" id="thread" role="tabpanel" aria-labelledby="thread-tab" aria-expanded="false">
+
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label"
+                                               for="pay_cat">Fechas</label>
+
+                                        <div class="col-sm-6">
+                                            <select name="trans_type" class="form-control " id="fechas" onchange="filtrado_fechas()">
+                                                <option value=''>Todas</option>
+                                                <option value='fcreada'>Fecha Creada</option>
+                                            </select>
+                                        </div>                              
+                                    </div>
+                                    <div class="form-group row" id="div_fechas" style="display: none">
+                                        <label class="col-sm-2 col-form-label"
+                                               for="pay_cat" id="label_fechas">Fecha Creada</label>
+
+                                        <div class="col-sm-2">
+                                            <input type="text" class="form-control required"
+                                                   placeholder="Start Date" name="sdate" id="sdate"
+                                                    autocomplete="false">
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <input type="text" class="form-control required"
+                                                   placeholder="End Date" name="edate" id="edate"
+                                                   data-toggle="datepicker" autocomplete="false">
+                                        </div>
+                                    </div>
+                                   
+
+                                </div>
+                                <!--thread-->
+                                <div role="tabpanel" class="tab-pane fade " id="cuenta" aria-labelledby="active-tab" aria-expanded="true">
+                                    <div class="form-group row">
+                                        
+                                        <label class="col-sm-2 col-form-label"
+                                               for="pay_cat">Estado factura</label>
+
+                                        <div class="col-sm-6">
+                                            <select name="tec" class="form-control" id="estado">
+                                                <option value=''>Todos</option>
+                                                <option value='due'>Debido</option>
+                                                <option value='Paid'>Cancelado</option>
+                                                <option value='partial'>Abonado</option>
+                                                <option value='canceled'>Anulado</option>
+                                                
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="tab-pane fade" id="link" role="tabpanel" aria-labelledby="link-tab" aria-expanded="false">
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 col-form-label"
+                                                   for="pay_cat">Sede</label>
+
+                                            <div class="col-sm-6">
+                                                <select name="trans_type" class="form-control" id="sede">
+                                                    <option value=''>Todas</option>
+                                                     <?php
+														foreach ($groups_list as $row) {
+															$cid = $row['id'];
+															$holder = $row['title'];
+															echo "<option value='$holder'>$holder</option>";
+														}
+														?>
+                                                </select>
+                                            </div>                              
+                                        </div>    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                                <label class="col-sm-3 col-form-label" for="pay_cat"></label>
+
+                                <div class="col-sm-4">
+                                    <input type="button" class="btn btn-primary btn-md" value="VER" onclick="filtrar()">
+
+
+                                </div>
+                            </div>
+                </div>
         <div class="grid_3 grid_4 animated fadeInRight table-responsive">
             <h5><?php echo $this->lang->line('Invoices') ?></h5>
 
             <hr>
-            <a href="<?=base_url()."invoices/exportar_a_excel_inv" ?>" class="btn btn-success">Exportar a Excel .XLSX</a>
+            <a href="#" onclick="redirect_to_export()" class="btn btn-success">Exportar a Excel .XLSX</a>
             <table id="invoices" class="table-striped" cellspacing="0" width="100%">
                 <thead>
                 <tr>
@@ -120,7 +230,7 @@ text-transform: lowercase;
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
-       $('#invoices').DataTable({
+       tb=$('#invoices').DataTable({
             'processing': true,
             'serverSide': true,
             'stateSave': true,
@@ -156,4 +266,36 @@ text-transform: lowercase;
                 }
         });
     });
+	function  filtrado_fechas(){
+        var opcion_seleccionada=$("#fechas option:selected").val();
+        if(opcion_seleccionada=="fcreada"){
+            $("#div_fechas").show();
+            $("#label_fechas").text("Fecha Creada");
+        }
+    }
+	function filtrar(){
+        var estado=$("#estado option:selected").val();
+        var sede =$("#sede option:selected").val();
+        var sdate =$("#sdate").val();
+        var edate =$("#edate").val();
+        var opcion_seleccionada=$("#fechas option:selected").val();
+        var sede_filtrar=$("#sede_sel option:selected").val();
+        if(estado=="" && sede=="" && opcion_seleccionada==""){
+            tb.ajax.url( baseurl+'invoices/ajax_list').load();     
+        }else{
+            tb.ajax.url( baseurl+"invoices/ajax_list?sdate="+sdate+"&edate="+edate+"&opcselect="+opcion_seleccionada+"&estado="+estado+"&sede="+sede).load();     
+        }
+       
+
+    }
+	function redirect_to_export(){
+        var estado =$("#estado option:selected").val();
+		var sede =$("#sede option:selected").val();
+        var sdate =$("#sdate").val();
+        var edate =$("#edate").val();
+		var opcion_seleccionada=$("#fechas option:selected").val();
+        var url_redirect=baseurl+'invoices/exportar_a_excel_inv?sdate='+sdate+"&edate="+edate+"&opcselect="+opcion_seleccionada+"&estado="+estado+"&sede="+sede;
+            window.location.replace(url_redirect);
+
+    }
 </script>

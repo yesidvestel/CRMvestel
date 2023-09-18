@@ -53,6 +53,24 @@ public function exportar_a_excel_inv(){
     set_time_limit(500000000);
      $this->db->select("invoices.* ,customers.*");
         $this->db->from("invoices");
+		if ($_GET['estado'] != '' && $_GET['estado'] != '-' && $_GET['estado'] != '0') {
+                $this->db->where('status=', $_GET['estado']);
+            }
+		if ($_GET['sede'] != '' && $_GET['sede'] != '-' && $_GET['sede'] != '0') {
+                $this->db->where('refer=', $_GET['sede']);
+           }
+		if($_GET['opcselect']!=''){
+
+            $dateTime= new DateTime($_GET['sdate']);
+            $sdate=$dateTime->format("Y-m-d");
+            $dateTime= new DateTime($_GET['edate']);
+            $edate=$dateTime->format("Y-m-d");
+            if($_GET['opcselect']=="fcreada"){
+                $this->db->where('invoicedate>=', $sdate);   
+                $this->db->where('invoicedate<=', $edate);       
+            }
+            
+        }
         //$this->db->where_in("invoice_items.product",array("Nota Credito","Nota Debito"));
         //$this->db->join("invoices","invoice_items.tid=invoices.tid", 'left');
         $this->db->join("customers","invoices.csd=customers.id", 'left');
@@ -1232,9 +1250,11 @@ $writer->writeSheetHeader($nombrey, $headers,$col_options);
     public function index()
     {
         $head['title'] = "Manage Invoices";
+		$this->load->model('transactions_model');
         $head['usernm'] = $this->aauth->get_user()->username;
+		$data['groups_list'] = $this->transactions_model->groups_list();
         $this->load->view('fixed/header', $head);
-        $this->load->view('invoices/invoices');
+        $this->load->view('invoices/invoices',$data);
         $this->load->view('fixed/footer');
     }
 	public function apertura()
@@ -1825,7 +1845,7 @@ $this->load->model('customers_model', 'customers');
     public function ajax_list()
     {
 ini_set('memory_limit', '500M');
-        $list = $this->invocies->get_datatables($this->limited);
+        $list = $this->invocies->get_datatables($this->limited,$_GET);
 
         $data = array();
 
@@ -1853,8 +1873,8 @@ ini_set('memory_limit', '500M');
 
         $output = array(
             "draw" => $_POST['draw'],
-            "recordsTotal" => $this->invocies->count_all($this->limited),
-            "recordsFiltered" => $this->invocies->count_filtered($this->limited),
+            "recordsTotal" => $this->invocies->count_all($this->limited,$_GET),
+            "recordsFiltered" => $this->invocies->count_filtered($this->limited,$_GET),
             "data" => $data,
         );
 

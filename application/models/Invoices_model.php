@@ -454,10 +454,28 @@ setlocale(LC_TIME, "spanish");
     }
 
 
-    private function _get_datatables_query($opt = '')
+    private function _get_datatables_query($opt = '',$filt2)
     {
 		$this->db->select('invoices.*,customers.name,customers.dosnombre,customers.unoapellido,customers.dosapellido,customers.abonado,customers.documento');
         $this->db->from($this->table);
+		if($filt2['opcselect']!=''){
+
+            $dateTime= new DateTime($filt2['sdate']);
+            $sdate=$dateTime->format("Y-m-d");
+            $dateTime= new DateTime($filt2['edate']);
+            $edate=$dateTime->format("Y-m-d");
+            if($filt2['opcselect']=="fcreada"){
+                $this->db->where('invoicedate>=', $sdate);   
+                $this->db->where('invoicedate<=', $edate);       
+            }
+            
+        }
+		if($filt2['estado']!=""){
+            $this->db->where('status', $filt2['estado']);       
+        }
+		if($filt2['sede']!=""){
+            $this->db->where('refer', $filt2['sede']);       
+        }
         if ($opt) {
             $this->db->where('invoices.eid', $opt);
         }
@@ -493,9 +511,9 @@ setlocale(LC_TIME, "spanish");
         }
     }
 
-    function get_datatables($opt = '')
+    function get_datatables($opt = '',$filt2)
     {
-        $this->_get_datatables_query($opt);
+        $this->_get_datatables_query($opt,$filt2);
         if ($_POST['length'] != -1)
             $this->db->limit($_POST['length'], $_POST['start']);
 
@@ -503,9 +521,9 @@ setlocale(LC_TIME, "spanish");
         return $query->result();
     }
 
-    function count_filtered($opt = '')
+    function count_filtered($opt = '',$filt2)
     {
-        $this->_get_datatables_query($opt);
+        $this->_get_datatables_query($opt,$filt2);
         if ($opt) {
             $this->db->where('eid', $opt);
         }
@@ -513,9 +531,9 @@ setlocale(LC_TIME, "spanish");
         return $query->num_rows();
     }
 
-    public function count_all($opt = '')
+    public function count_all($opt = '',$filt2)
     {
-        $this->db->from($this->table);
+		$this->_get_datatables_query($opt,$filt2);
         if ($opt) {
             $this->db->where('eid', $opt);
         }
