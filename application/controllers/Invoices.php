@@ -2744,6 +2744,7 @@ foreach ($lista as $key => $value) {
         } else {
             $this->db->trans_rollback();
         }
+        $this->db->query("UPDATE `invoices` SET `status` = 'due' WHERE `invoices`.`pamnt` = 0 and total!=0 and status='partial'; ");
     }
 
     public function update_status()
