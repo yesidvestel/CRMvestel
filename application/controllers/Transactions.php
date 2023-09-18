@@ -1908,6 +1908,7 @@ $this->load->model('customers_model', 'customers');
         $this->db->set('pamnt', "0.00", FALSE);
         $this->db->set('total', "0.00", FALSE);
         $this->db->set('items', 0);
+        $this->db->set('tipo_factura', 'Fija');
         $this->db->set('status', 'canceled');
         $this->db->where('tid', $tid);
         $this->db->update('invoices');
