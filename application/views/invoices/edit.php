@@ -435,7 +435,7 @@
                                 </select></td>
                          <tr class="sub_c" style="display: table-row;">
 							 <td colspan="2">Internet
-							 <select name="combo" class="selectpicker form-control">
+							 <select id="paquete-net" name="combo" class="selectpicker form-control">
 										<option value="<?php echo $invoice['combo']; ?>">--<?php echo $invoice['combo']; ?></option>
 								 		<option value="no">No</option>
 								 		<?php
@@ -787,5 +787,7 @@
         e.preventDefault();
         $("#modal_mas_tv").modal("show");
     });
+
+    $('#paquete-net').select2();
 </script>
 <script type="text/javascript"> $('.editdate').datepicker({autoHide: true, format: '<?php echo $this->config->item('dformat2'); ?>'});</script>
