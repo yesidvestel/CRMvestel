@@ -112,7 +112,7 @@
                                     <div class="input-group">
                                         <div class="input-group-addon"><span class="icon-bookmark-o"
                                                                              aria-hidden="true"></span></div>
-										<select id="refer" name="refer" class="form-control" onchange="cambia()">
+										<select id="refer" name="refer" class="form-control" > <?php //onchange="cambia()" ?>
 											<option value="<?php echo $invoice['refer'] ?>">--<?php echo $invoice['refer'] ?>--</option>
 											<?php
 												foreach ($sede as $row) {
@@ -435,7 +435,7 @@
                                 </select></td>
                          <tr class="sub_c" style="display: table-row;">
 							 <td colspan="2">Internet
-							 <select id="paquete-net" name="combo" class="selectpicker form-control">
+							 <select style="width: 100%;" id="paquete-net" name="combo" class="selectpicker form-control ">
 										<option value="<?php echo $invoice['combo']; ?>">--<?php echo $invoice['combo']; ?></option>
 								 		<option value="no">No</option>
 								 		<?php
@@ -765,7 +765,7 @@
     </div>
 </div>
 <script type="text/javascript">
-    cambia();
+    //cambia();
     var sede_actual=$("#refer option:selected").val();
     function cambia(){
         var sede_sel=$("#refer option:selected").val();

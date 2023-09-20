@@ -590,9 +590,9 @@ setlocale(LC_TIME, "spanish");
     }
     public function get_servicios(){
         //$array=array();//array("servicios_tv"=>array(),"servicios_internet"=>array());
-        $lista_sedes=$this->db->get_where("customers_group")->result_array();
-        $lista_sedes[]['id']="-1";
-        $lista_sedes[]['id']="-2";
+        $lista_sedes=$this->db->get_where("customers_group",array("id"=>"2"))->result_array();
+        //$lista_sedes[]['id']="-1";
+        //$lista_sedes[]['id']="-2";
         foreach($lista_sedes as $key=> $value){
             //$lista_sedes[$key]['servicios_tv']=$this->db->get_where("products",array("valores!="=>"","valores!="=>null,"pertence_a_tv_o_net"=>"Tv"))->result_array();
             //$lista_sedes[$key]['servicios_internet']=$this->db->get_where("products",array("valores!="=>"","valores!="=>null,"pertence_a_tv_o_net"=>"Internet"))->result_array();
@@ -642,6 +642,7 @@ setlocale(LC_TIME, "spanish");
                     
                 }
             }
+            
         }
         //var_dump($lista_sedes);
         //var_dump($this->db->get_where("products",array("pcat"=>"4","warehouse"=>"7","sede"=>"2","pertence_a_tv_o_net"=>"Tv"))->result_array());
