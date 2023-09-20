@@ -113,6 +113,8 @@
                                        <option value="GPON">GPON</option>
                                        <option value="EPON">EPON</option>
                                        <option value="EOC">EOC</option>
+                                       <option value="RADIO">RADIO</option>
+                                       <option value="FIBRA">FIBRA</option>
                                </select>
                         </td>
                         <td>
