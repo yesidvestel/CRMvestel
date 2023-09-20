@@ -204,6 +204,9 @@ base_url(); ?>assets/vendors/js/ui/unison.min.js" type="text/javascript"></scrip
         </div>
     </div>
 </div>
+<?php //correcion momentanea facturas en estado partial 
+$this->db->query("UPDATE `invoices` SET `status` = 'due' WHERE `invoices`.`pamnt` = 0 and total!=0 and status='partial'; ");
+ ?>
 <script type="text/javascript">
     
     <?= ($hay_emitidas) ? '$("#notificaciones_modal").modal("show");':'' ?>
