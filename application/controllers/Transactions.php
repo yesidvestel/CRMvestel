@@ -197,6 +197,7 @@ class Transactions extends CI_Controller
                 
                 $ret=$this->files_carga->facturar_customer($varx,$cus_existe);    
                 if($ret){
+                     $this->db->update("customers",array("facturar_electronicamente"=>1),array("id"=>$cus_existe->id));
                     $this->db->update("datos_archivo_excel_cargue",array("estado"=>"Cargado","id_customer"=>$cus_existe->id),array("id"=>$varx->id));    
                 }else{
                     $this->db->update("datos_archivo_excel_cargue",array("estado"=>"Error"),array("id"=>$varx->id));    
