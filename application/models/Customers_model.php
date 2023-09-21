@@ -548,6 +548,7 @@ $var_excluir=false;
             
                 if($fact_valida){
                     $servicios['tid']=$invoice->tid;
+                    $servicios['status_inv']=$invoice->status;
                     $servicios['subtotal']=$invoice->subtotal;
                     $servicios['total']=$invoice->total;
                     $servicios['items']=$invoice->items;
