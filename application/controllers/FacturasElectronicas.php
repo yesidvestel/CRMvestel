@@ -795,7 +795,7 @@ set_time_limit(150);
                         if($creo['status']==true){
                                 return  true;                        
                         }else{
-                            $_SESSION['errores'][]=array("id"=>$value['id'],"error"=>$creo['respuesta']);                            
+                            $_SESSION['errores'][]=array("id"=>$id_customer,"error"=>$creo['respuesta']);                            
                             return false;
                         }
                    
