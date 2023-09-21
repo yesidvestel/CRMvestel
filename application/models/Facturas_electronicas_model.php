@@ -650,7 +650,10 @@ class Facturas_electronicas_model extends CI_Model
                         $producto_existe=true;
                         //var_dump($prod->product_name);
                         $dataApiNET->items[0]->code=$prod->product_code;
-
+                        $prod_item=$this->db->get_where("invoice_items",array("tid"=>$array_servicios['tid'],"pid"=>$prod->pid))->row();
+                        if(isset($prod_item)){
+                            $prod->product_price=$prod_item->price;
+                        }
                         if($prod->taxrate!=0){
 
                             //$precios=$this->customers->calculoParaFacturaElectronica($prod->product_price);
@@ -721,6 +724,11 @@ class Facturas_electronicas_model extends CI_Model
                         $producto_existe=true;
                         //var_dump($prod->product_name);
                         $dataApiNET->items[$count]->code=$prod->product_code;
+
+                        $prod_item=$this->db->get_where("invoice_items",array("tid"=>$array_servicios['tid'],"pid"=>$prod->pid))->row();
+                        if(isset($prod_item)){
+                            $prod->product_price=$prod_item->price;
+                        }
 
                         if($prod->taxrate!=0){
 
