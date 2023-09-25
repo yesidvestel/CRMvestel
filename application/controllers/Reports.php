@@ -826,7 +826,7 @@ class Reports extends CI_Controller
         }
 
 
-           ini_set('memory_limit', '64M');
+           //ini_set('memory_limit', '64M');
                     $data_h=array();
                     $data_h['modulo']="Ventas";
                     $data_h['accion']="Cierre > Ver > Cierre de Caja {view}";
