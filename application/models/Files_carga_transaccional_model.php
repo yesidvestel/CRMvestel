@@ -93,6 +93,9 @@ $_POST['EFECTY']=true;
 //$cuentas_del_usuario=$this->db->query("select * from customers where documento='".$cs->documento."'")->result_array();
 //SELECT * FROM `invoices` inner join customers on invoices.csd=customers.id where customers.documento=1037570816 GROUP by invoices.csd;
 $cuentas_del_usuario=$this->db->query("SELECT * FROM invoices inner join customers on invoices.csd=customers.id where customers.documento='".$cs->documento."' GROUP by invoices.csd;")->result_array();
+if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_vestel"){
+    $cuentas_del_usuario=array();
+}
 $creo=false;
 if(count($cuentas_del_usuario)>1){
     foreach ($cuentas_del_usuario as $key => $value) {
