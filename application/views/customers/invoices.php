@@ -33,6 +33,26 @@
 .facturas_para_pagar:hover{
      transform: scale(3);
 }
+.si-pendiente,.si-Preparado,.si-facturado
+{
+text-transform: lowercase;
+    color:#FFFFFF;
+    padding: 4px;
+    border-radius: 5px;
+    font-size: 10px;
+}
+.si-Pendiente
+{
+ background-color: #BCB72F;
+}
+.si-Preparado
+{
+ background-color: #34BD3B;
+}
+.si-Facturado
+{
+ background-color: #2DBCBA;
+}
 </style>
 <article class="content">
     <div class="card card-block">
@@ -96,6 +116,7 @@
                     <th><?php echo $this->lang->line('') ?>Estado</th>
                     <th><?php echo $this->lang->line('Total') ?></th>
                     <th class="no-sort"><?php echo $this->lang->line('') ?>Pago</th>
+                    <th class="no-sort"><?php echo $this->lang->line('') ?>Siigo</th>
 					<th class="no-sort"><?php echo $this->lang->line('Settings') ?></th>
 					<?php if ($this->aauth->get_user()->roleid == 5) { ?>
                     <th class="no-sort">Admin</th>
@@ -117,6 +138,7 @@
                     <th><?php echo $this->lang->line('') ?>Estado</th>
                     <th><?php echo $this->lang->line('Total') ?></th>
                     <th class="no-sort"><?php echo $this->lang->line('') ?>Pago</th>
+                    <th class="no-sort"><?php echo $this->lang->line('') ?>Siigo</th>
 					<th class="no-sort"><?php echo $this->lang->line('Settings') ?></th>
 					<?php if ($this->aauth->get_user()->roleid == 5) { ?>
                     <th class="no-sort">Admin</th>
@@ -449,7 +471,40 @@
                 </form>
             </div>
         </div>
-    </div>
+	</div>
+</div>
+<div id="pop_model" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Siigo</h4>
+            </div>			
+            <div class="modal-body">
+                <form id="form_model3">
+				 <div class="col-sm-6">
+                             <select name="siigo" class="form-control" id="siigo">
+								<option value=''>Todos</option>
+								<option value='null'>Pendiente</option>
+								<option value='Crear Factura Electronica'>Preparado</option>
+								<option value='Factura Electronica Creada'>Facturado</option>
+							</select>
+                        
+                    </div>
+                </div>
+				<div class="modal-footer">
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">Volver</button>
+                        <input type="hidden" id="object-id3" value="" name="id">
+                        <!--<input type="hidden" id="object-cat" value="" name="cat">-->
+                <input type="hidden" id="action-url3" value="customers/update_siigo">
+                <button type="button" data-dismiss="modal" class="btn btn-primary"
+                        id="submit_model3">Aplicar</button>
+                 </div>
+                </form>
+            </div>
+        </div>
+	</div>
 </div>
 <div id="modal_actualizar_campos" class="modal fade">
     <div class="modal-dialog">
@@ -855,6 +910,25 @@ validar_monto_notas();
 
      
     var action_url= $('#action-url2').val();
+    addObject_eq(form_data,action_url);
+});
+	function abrir_modal(link){
+        $("#pop_model").modal("show");
+        $("#object-id3").val($(link).data("object-id3"));
+        $("#siigo").val($(link).data("siigo"));
+		var object =$(link).data("object-id3");	
+	}
+	$("#submit_model3").on("click", function(e) {
+    e.preventDefault();
+    var o_data =  $("#form_model3").serializeArray();
+     var form_data = new FormData();
+
+    $.map(o_data, function(n, i){console.log(n['name']);
+        form_data.append(n['name'], n['value']);
+    });
+
+     
+    var action_url= $('#action-url3').val();
     addObject_eq(form_data,action_url);
 });
 </script>

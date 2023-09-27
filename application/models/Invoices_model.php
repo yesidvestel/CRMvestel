@@ -476,6 +476,12 @@ setlocale(LC_TIME, "spanish");
 		if($filt2['sede']!=""){
             $this->db->where('refer', $filt2['sede']);       
         }
+		if($filt2['siigo']!=""){
+			if($filt2['siigo']=="null"){
+				$filt2['siigo']=null;
+			}
+            $this->db->where('facturacion_electronica', $filt2['siigo']);       
+        }
         if ($opt) {
             $this->db->where('invoices.eid', $opt);
         }

@@ -1864,6 +1864,14 @@ ini_set('memory_limit', '500M');
 			$row[] = $invoices->ron;
             $row[] = amountFormat($invoices->total);
             $row[] = '<span class="st-' . $invoices->status . '">' . $this->lang->line(ucwords($invoices->status)) . '</span>';
+			if($invoices->facturacion_electronica==null){
+				$siigo='Pendiente';
+			}else if($invoices->facturacion_electronica=='Crear Factura Electronica'){
+				$siigo='Preparado';
+			}else if($invoices->facturacion_electronica=='Factura Electronica Creada'){
+				$siigo='Facturado';
+			}
+            $row[] = '<span class="si-' . $siigo . '">' . $siigo . '</span>';
             $row[] = '<a href="' . base_url("invoices/view?id=$invoices->tid") . '" class="btn btn-success btn-xs"><i class="icon-file-text"></i> ' . $this->lang->line('View') . '</a> &nbsp; <a href="' . base_url("invoices/printinvoice?id=$invoices->tid") . '&d=1" class="btn btn-info btn-xs"  title="Download"><span class="icon-download"></span></a>&nbsp; &nbsp';
 			if ($this->aauth->get_user()->roleid > 3) { 
 			$row[] = '<a href="#" data-object-id="' . $invoices->tid . '" class="btn btn-danger btn-xs delete-object"><span class="icon-trash"></span></a>';}

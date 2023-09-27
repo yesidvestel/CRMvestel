@@ -4,10 +4,29 @@
 text-transform: lowercase;
     color:#000000;
     padding: 4px;
-    border-radius: 11px;
+    border-radius: 5px;
     font-size: 10px;
 }
-
+.si-pendiente,.si-Preparado,.si-facturado
+{
+text-transform: lowercase;
+    color:#FFFFFF;
+    padding: 4px;
+    border-radius: 5px;
+    font-size: 10px;
+}
+.si-Pendiente
+{
+ background-color: #BCB72F;
+}
+.si-Preparado
+{
+ background-color: #34BD3B;
+}
+.si-Facturado
+{
+ background-color: #2DBCBA;
+}
 .st-paid,.st-accepted
 {
  background-color: #5ed45e;
@@ -68,6 +87,11 @@ text-transform: lowercase;
                                     <a class="nav-link" id="detalle-tab" data-toggle="tab" href="#link"
                                        aria-controls="link"
                                        aria-expanded="false">Sede</a>
+                                </li>
+								<li class="nav-item">
+                                    <a class="nav-link" id="detalle-tab" data-toggle="tab" href="#fac"
+                                       aria-controls="fac"
+                                       aria-expanded="false">Facturacion</a>
                                 </li>
                             </ul>
                             <div class="tab-content px-1 pt-1">
@@ -142,6 +166,23 @@ text-transform: lowercase;
                                             </div>                              
                                         </div>    
                                 </div>
+								<div role="tabpanel" class="tab-pane fade " id="fac" aria-labelledby="active-tab" aria-expanded="true">
+                                    <div class="form-group row">
+                                        
+                                        <label class="col-sm-2 col-form-label"
+                                               for="pay_cat">Estado facturacion</label>
+
+                                        <div class="col-sm-6">
+                                            <select name="siigo" class="form-control" id="siigo">
+                                                <option value=''>Todos</option>
+                                                <option value='null'>Pendiente</option>
+                                                <option value='Crear Factura Electronica'>Preparado</option>
+                                                <option value='Factura Electronica Creada'>Facturado</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -172,6 +213,7 @@ text-transform: lowercase;
                     <th><?php echo $this->lang->line('') ?>Estado</th>
                     <th><?php echo $this->lang->line('Total') ?></th>
                     <th class="no-sort"><?php echo $this->lang->line('') ?>Pago</th>
+					<th><?php echo $this->lang->line('') ?>Siigo</th>
                     <th class="no-sort"><?php echo $this->lang->line('Settings') ?></th>
 					<?php if ($this->aauth->get_user()->roleid > 4) { ?>
 					<th><?php echo $this->lang->line('') ?>Eliminar</th>
@@ -193,6 +235,7 @@ text-transform: lowercase;
                     <th><?php echo $this->lang->line('') ?>Estado</th>
                     <th><?php echo $this->lang->line('Total') ?></th>
                     <th class="no-sort"><?php echo $this->lang->line('') ?>Pago</th>
+					<th><?php echo $this->lang->line('') ?>Siigo</th>
                     <th class="no-sort"><?php echo $this->lang->line('Settings') ?></th>
 					<?php if ($this->aauth->get_user()->roleid > 3) { ?>
 					<th><?php echo $this->lang->line('') ?>Eliminar</th>
@@ -276,14 +319,15 @@ text-transform: lowercase;
 	function filtrar(){
         var estado=$("#estado option:selected").val();
         var sede =$("#sede option:selected").val();
+        var siigo =$("#siigo option:selected").val();
         var sdate =$("#sdate").val();
         var edate =$("#edate").val();
         var opcion_seleccionada=$("#fechas option:selected").val();
         var sede_filtrar=$("#sede_sel option:selected").val();
-        if(estado=="" && sede=="" && opcion_seleccionada==""){
+        if(estado=="" && sede=="" && siigo=="" && opcion_seleccionada==""){
             tb.ajax.url( baseurl+'invoices/ajax_list').load();     
         }else{
-            tb.ajax.url( baseurl+"invoices/ajax_list?sdate="+sdate+"&edate="+edate+"&opcselect="+opcion_seleccionada+"&estado="+estado+"&sede="+sede).load();     
+            tb.ajax.url( baseurl+"invoices/ajax_list?sdate="+sdate+"&edate="+edate+"&opcselect="+opcion_seleccionada+"&estado="+estado+"&sede="+sede+"&siigo="+siigo).load();     
         }
        
 

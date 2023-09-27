@@ -1686,6 +1686,14 @@ public function ajax_graficas2(){
             $row[] = '<span class="st-' . $invoices->ron . '">' . $invoices->ron . '</span>';
             $row[] = amountFormat($invoices->total);
             $row[] = '<span class="st-' . $invoices->status . '">' . $this->lang->line(ucwords($invoices->status)) . '</span>';
+            if($invoices->facturacion_electronica==null){
+				$siigo='Pendiente';
+			}else if($invoices->facturacion_electronica=='Crear Factura Electronica'){
+				$siigo='Preparado';
+			}else if($invoices->facturacion_electronica=='Factura Electronica Creada'){
+				$siigo='Facturado';
+			}
+            $row[] = '<span class="si-' . $siigo . '">' . $siigo . '</span>';
 
             $lisa_resivos_agregar_st="";
                                 //$transacciones = $this->db->get_where("transactions",array("tid"=>$invoices->tid,"estado"=>null))->result_array();
@@ -1723,7 +1731,9 @@ public function ajax_graficas2(){
             }else{
                 $resivos_var='';
             }
-            $row[] = '<a  href="' . base_url("invoices/view?id=$invoices->tid") . '" class="btn btn-success btn-xs" title="Ver"><i class="icon-file-text"></i></a> &nbsp; '.$resivos_var.'&nbsp;&nbsp;<a href="#pop_model" data-object-id2="' . $invoices->tid . '" data-object-cat="' . $prd->cat . '" class="btn btn-xs btn-orange" onclick="abrir_modal2(this);" title="Promociones"><i class="icon-gift"></i></a>';
+            $row[] = '<a  href="' . base_url("invoices/view?id=$invoices->tid") . '" class="btn btn-success btn-xs" title="Ver"><i class="icon-file-text"></i></a> &nbsp; '.$resivos_var.'&nbsp;&nbsp;
+			<a href="#pop_model2" data-object-id2="' . $invoices->tid . '" data-object-cat="' . $prd->cat . '" class="btn btn-xs btn-orange" onclick="abrir_modal2(this);" title="Promociones"><i class="icon-gift"></i></a>&nbsp;&nbsp;
+			<a href="#pop_model" data-object-id3="' . $invoices->tid . '" data-object-cat="' . $prd->cat . '" class="btn btn-xs btn-blue" onclick="abrir_modal(this);" title="Siigo"><i class="icon-cloud"></i></a>';
             if ($this->aauth->get_user()->roleid == 5) {
             $row[] = '<a href="#" data-object-id="' . $invoices->tid . '" class="btn btn-danger btn-xs delete-object"><span class="icon-trash"></span></a>';
             
@@ -1954,6 +1964,22 @@ public function ajax_graficas2(){
             'discount' => $total,
             'total' => $factura->total-$total,
             'notes' => 'Descuento '.$promocion->pro_nombre,
+        );
+            $this->db->where('id', $factura->id);
+            $this->db->update('invoices', $datos);
+        
+        echo json_encode(array('status' => 'Success', 'message' =>
+            $this->lang->line('UPDATED'), 'pstatus' => $status));
+       
+    }
+	public function update_siigo()
+    {
+        $id = $this->input->post('id');
+        $user = $this->aauth->get_user()->username;
+        $siigo = $this->input->post('siigo');
+        $factura=$this->db->get_where("invoices",array('tid' =>$id))->row();
+        $datos = array(             
+            'facturacion_electronica' => $siigo,
         );
             $this->db->where('id', $factura->id);
             $this->db->update('invoices', $datos);
