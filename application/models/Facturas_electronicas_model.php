@@ -567,7 +567,7 @@ class Facturas_electronicas_model extends CI_Model
         
         if($dataApiNET!=null){
             $dataApiNET=json_decode($dataApiNET);
-            $dataApiNET->document->id="27183";
+            $dataApiNET->document->id="28186";
             $dataApiNET->customer->identification=$customer->documento;
             $dataApiNET->cost_center=$centro_de_costo_codeNET;
             $dataApiNET->seller="738";
