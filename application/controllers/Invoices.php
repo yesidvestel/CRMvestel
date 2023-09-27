@@ -1017,7 +1017,9 @@ var_dump("aqui2");*/
             
 
         }
+        if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
         $this->db->query("UPDATE `invoices` SET `facturacion_electronica` = 'Crear Factura Electronica' WHERE  total!=0 and status='paid' and facturacion_electronica is null and tipo_factura='Recurrente'; ");    
+    }
          $data_h=array();
             $data_h['modulo']="Ventas";
             $data_h['accion']="Generar Facturas Mensuales {insert}";
