@@ -629,7 +629,8 @@ public function borrar_facturas_v(){
         $_SESSION['errores']=array();
         $customers_t=array();
 if($_SESSION[md5("variable_datos_pin")]['db_name'] == "admin_crmvestel"){
-    $customers_t = $this->db->query("select id from customers where (usu_estado='Activo' or usu_estado='Compromiso') and (ciudad ='".$_POST['pay_acc']."' and facturar_electronicamente='1')")->result_array();//and id=8241
+    //$customers_t = $this->db->query("select id from customers where (usu_estado='Activo' or usu_estado='Compromiso') and (ciudad ='".$_POST['pay_acc']."' and facturar_electronicamente='1')")->result_array();//and id=8241
+    $customers_t = $this->db->query("SELECT invoices.id as id, invoices.facturacion_electronica as fc FROM `invoices` inner join customers as c on c.id=invoices.csd where invoices.facturacion_electronica ='Crear Factura Electronica'  and c.ciudad='".$_POST['pay_acc']."'")->result_array();
 
 }else{
     $customers_t = $this->db->query("select id from customers where (usu_estado='Activo' or usu_estado='Compromiso') and (gid ='".$caja1->sede."' and facturar_electronicamente='1')")->result_array();//and id=8241
@@ -638,7 +639,8 @@ if($_SESSION[md5("variable_datos_pin")]['db_name'] == "admin_crmvestel"){
         $numero_total=count($customers_t);
         $usuarios_restantes_lista=array();
         if($_SESSION[md5("variable_datos_pin")]['db_name'] == "admin_crmvestel"){
-            $usuarios_restantes_lista = $this->db->query("select customers.id from customers LEFT join facturacion_electronica_siigo on customers.id=facturacion_electronica_siigo.customer_id and fecha='".$dateTime->format("Y-m-d")."' where (customers.usu_estado='Activo' or customers.usu_estado='Compromiso') and (customers.ciudad ='".$_POST['pay_acc']."' and customers.facturar_electronicamente='1') and facturacion_electronica_siigo.id is null")->result_array();//and id=8241
+            //$usuarios_restantes_lista = $this->db->query("select customers.id from customers LEFT join facturacion_electronica_siigo on customers.id=facturacion_electronica_siigo.customer_id and fecha='".$dateTime->format("Y-m-d")."' where (customers.usu_estado='Activo' or customers.usu_estado='Compromiso') and (customers.ciudad ='".$_POST['pay_acc']."' and customers.facturar_electronicamente='1') and facturacion_electronica_siigo.id is null")->result_array();//and id=8241
+            $usuarios_restantes_lista = $this->db->query("SELECT invoices.id as id, invoices.facturacion_electronica as fc FROM `invoices` inner join customers as c on c.id=invoices.csd where invoices.facturacion_electronica ='Crear Factura Electronica' and c.ciudad='".$_POST['pay_acc']."' ")->result_array();//and id=8241
         }else{
             $usuarios_restantes_lista = $this->db->query("select customers.id from customers LEFT join facturacion_electronica_siigo on customers.id=facturacion_electronica_siigo.customer_id and fecha='".$dateTime->format("Y-m-d")."' where (customers.usu_estado='Activo' or customers.usu_estado='Compromiso') and (customers.gid ='".$caja1->sede."' and customers.facturar_electronicamente='1') and facturacion_electronica_siigo.id is null")->result_array();//and id=8241    
         }
@@ -684,11 +686,9 @@ if($_SESSION[md5("variable_datos_pin")]['db_name'] == "admin_crmvestel"){
         $se_facturo=array();
         $val_factura_mes=true;
         if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
-            $se_facturo = $this->db->query("SELECT * FROM facturacion_electronica_siigo WHERE MONTH(fecha) ='".$dateTime->format("m")."' and YEAR(fecha) = '".$dateTime->format("Y")."' and customer_id=".$_POST['id_customer'])->result_array();//and id=8241
-            $f_ini=$dateTime;
-            $facs=$this->db->query("select * from invoices where csd= ".$_POST['id_customer']." and invoicedate>='".$f_ini->format('Y-m')."-01' and invoicedate<='".$f_ini->format("Y-m-t")."' order by id desc limit 1")->result_array();            
+            $in=$this->db->get_where("invoices",array("id"=>$_POST['id_customer']))->row();
 
-            if(count($facs)!=0){
+            if($in->facturacion_electronica=="Crear Factura Electronica"){
                 $val_factura_mes=true;
             }else{
                 $val_factura_mes=false;
@@ -740,6 +740,9 @@ set_time_limit(150);
                 // el orden es prima los servicios que tiene actualmente como hay seleccion por el admin si el servicio existe se toma la seleccion si no se omite,
                 //°° IMPORTANTE °°  por otro lado si agrega servicios y estan seteadas las opciones con un solo servicio ejemplo, el admin debe de setear las opciones de facturacion electronica porque generara segun este seteado
                 $customer_data=$this->db->get_where("customers",array("id"=>$id_customer))->row();
+                if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
+                    $customer_data=null;
+                }
                /*  cambios de abajo se comentan son para facturar cortados*/
                 /*
                 if($servicios['estado']=="Cortado"){
@@ -752,13 +755,14 @@ set_time_limit(150);
                 }*/
 
 
-                $datos=array();
+                //$datos=array();
+                $datos=$servicios;
                 if($puntos['puntos']=="0"){
                     $datos['puntos']="no";
                 }else{
                     $datos['puntos']=$puntos['puntos'];
                 }
-                if($customer_data->f_elec_puntos=="0"){
+                if(isset($customer_data) && $customer_data->f_elec_puntos=="0"){
                     $datos['puntos']="no";
                 }
                 $datos['servicios']=null;
@@ -766,9 +770,9 @@ set_time_limit(150);
                     
                     if($servicios['combo']!="no" && $servicios['combo']!="-" && $servicios['combo']!="" && $servicios['combo']!="null" && $servicios['combo']!=null){
                             $datos['servicios']="Combo";
-                            if($customer_data->f_elec_internet=="0"){
+                            if(isset($customer_data) && $customer_data->f_elec_internet=="0"){
                                 $datos['servicios']="Television";
-                            }else if($customer_data->f_elec_tv=="0"){
+                            }else if(isset($customer_data) && $customer_data->f_elec_tv=="0"){
                                 $datos['servicios']="Internet";
                             }
                     }else{
@@ -795,7 +799,7 @@ set_time_limit(150);
                         if($creo['status']==true){
                                 return  true;                        
                         }else{
-                            $_SESSION['errores'][]=array("id"=>$id_customer,"error"=>$creo['respuesta']);                            
+                            $_SESSION['errores'][]=array("id"=>$id_customer,"csd"=>$datos['csd'],"error"=>$creo['respuesta']);                            
                             return false;
                         }
                    
@@ -1023,7 +1027,13 @@ var_dump($response);
     public function lista_facturas_generadas(){
         $dt= new DateTime($_GET['fecha']);
         $caja1=$this->db->get_where('accounts',array('id' =>$_GET['pay_acc']))->row();
-        $lista_invoices=$this->db->query("SELECT *,facturacion_electronica_siigo.id as id_fac_elec FROM facturacion_electronica_siigo inner join customers on customers.id=facturacion_electronica_siigo.customer_id where fecha='".$dt->format("Y-m-d")."' and gid='".$caja1->sede."'")->result_array();
+        $lista_invoices=array();
+        if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
+            $lista_invoices=$this->db->query("SELECT *,facturacion_electronica_siigo.id as id_fac_elec FROM facturacion_electronica_siigo inner join customers on customers.id=facturacion_electronica_siigo.customer_id where fecha='".$dt->format("Y-m-d")."' and ciudad='".$_GET['pay_acc']."'")->result_array();
+        }else{
+            $lista_invoices=$this->db->query("SELECT *,facturacion_electronica_siigo.id as id_fac_elec FROM facturacion_electronica_siigo inner join customers on customers.id=facturacion_electronica_siigo.customer_id where fecha='".$dt->format("Y-m-d")."' and gid='".$caja1->sede."'")->result_array();    
+        }
+        
         $no = $this->input->post('start');
         $data=array();
         $x=0;
@@ -1033,13 +1043,22 @@ var_dump($response);
             
             if($x>=$minimo && $x<$maximo){
                 $no++;
-                $customers = $this->db->get_where("customers", array('id' => $value['customer_id']))->row();
+                $customers=null;
+                $invoicex=null;
+                 if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
+                        $customers = $this->db->get_where("customers", array('id' => $value['customer_id']))->row();
+                        $invoicex = $this->db->get_where("invoices", array('id' => $value['invoice_id']))->row();
+                 }else{
+                    $customers = $this->db->get_where("customers", array('id' => $value['customer_id']))->row();
+                 }
                 $row = array();
                 $row[] = $no;
                 //$row[] = $customers->abonado;
                 $row[] = '<a href="'.base_url().'customers/view?id=' . $customers->id . '">' . $customers->name ." ". $customers->unoapellido. '</a>';
                 $row[] = $customers->celular;
                 $row[] = $customers->documento;
+                $row[] = '<a href="'.base_url().'invoices/view?id=' . $invoicex->tid . '">#' . $invoicex->tid ." - ". $invoicex->invoicedate. '</a>';
+
                 //$row[] = $customers->nomenclatura . ' ' . $customers->numero1 . $customers->adicionauno.' Nº '.$customers->numero2.$customers->adicional2.' - '.$customers->numero3;
                 //$row[] = $customers->usu_estado;
                 
@@ -1078,13 +1097,22 @@ var_dump($response);
             
             if($x>=$minimo && $x<$maximo){
                 $no++;
-                $customers = $this->db->get_where("customers", array('id' => $value['id']))->row();
+                $customers=null;
+                $invoicex=null;
+                 if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
+                        $customers = $this->db->get_where("customers", array('id' => $value['csd']))->row();
+                        $invoicex = $this->db->get_where("invoices", array('id' => $value['id']))->row();
+                 }else{
+                    $customers = $this->db->get_where("customers", array('id' => $value['id']))->row();
+                 }
+                
                 $row = array();
                 $row[] = $no;
                 //$row[] = $customers->abonado;
                 $row[] = '<a href="customers/view?id=' . $customers->id . '">' . $customers->name ." ". $customers->unoapellido. '</a>';
                 $row[] = $customers->celular;
                 $row[] = $customers->documento;
+                $row[] = '<a href="customers/view?id=' . $invoicex->tid . '">#' . $invoicex->tid ." - ". $invoicex->invoicedate. '</a>';
                 //$row[] = $customers->nomenclatura . ' ' . $customers->numero1 . $customers->adicionauno.' Nº '.$customers->numero2.$customers->adicional2.' - '.$customers->numero3;
                 //$row[] = $customers->usu_estado;
                 $row[] = $value['error'];

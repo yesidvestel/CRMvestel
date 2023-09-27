@@ -463,14 +463,14 @@ class Facturas_electronicas_model extends CI_Model
         $_SESSION['array_accesos_siigo']=$data_ses;
     }
      public function generar_factura_customer_para_multiple_ottis($datos_facturar,$api){
-        
+        $this->load->model("Reports_model","reports");
          /*$this->load->library('SiigoAPI');
         $api = new SiigoAPI();*/
         $this->load->model("customers_model","customers");
         $this->load->model("invoices_model","invocies");
         $dataApiNET=null;
-        $customer = $this->db->get_where("customers",array('id' =>$datos_facturar['id']))->row();
-         $array_servicios=$this->customers->servicios_detail($customer->id);
+        $customer = $this->db->get_where("customers",array('id' =>$datos_facturar['csd']))->row();
+         $array_servicios=$datos_facturar;
         //var_dump($datos_facturar['servicios']);
         if($datos_facturar['servicios']=="Combo"){
             if(isset($datos_facturar['puntos']) && $datos_facturar['puntos']!="no"){
@@ -576,7 +576,7 @@ class Facturas_electronicas_model extends CI_Model
             $accoun_tr="";
             $dataApiNET->payments[0]->id=$datos_facturar['estcuenta'];//efectivo 6960 credito 6941
             if($datos_facturar['estcuenta']=="6960"){
-                $ult_tr=$this->db->query("select * from transactions where (estado !='Anulada' or estado is null) and payerid=".$customer->id." order by id desc")->result_array();
+                $ult_tr=$this->db->query("select * from transactions where (estado !='Anulada' or estado is null) and id=".$datos_facturar['id']." order by id desc")->result_array();
                 if(count($ult_tr)>0){
                     $accoun_tr=$this->db->get_where("accounts",array("id"=>$ult_tr[0]['acid']))->row();
                     if(isset($accoun_tr) && $accoun_tr->cuenta_siigo!=null){
@@ -592,8 +592,9 @@ class Facturas_electronicas_model extends CI_Model
                     }
                 }    
             }
-
-            $dataApiNET->observations="TID : ".$array_servicios['tid'].", metodo pago: ".$accoun_tr;
+            $dt_ob=new DateTime($array_servicios['invoicedate']);
+            $str_obs=$this->reports->devolver_nombre_mes($dt_ob->format("m"))." - ".$dt_ob->format("Y");
+            $dataApiNET->observations="TID : ".$array_servicios['tid_ult_fact'].", Factura : ".$str_obs." ,metodo pago: ".$accoun_tr;
             $consulta_siigo1=$api->getCustomer($customer->documento,1);
           
             
@@ -821,7 +822,8 @@ class Facturas_electronicas_model extends CI_Model
         $dataInsert=array();
         $dataInsert['consecutivo_siigo']=0;
         $dataInsert['fecha']=$dateTime->format("Y-m-d");
-        $dataInsert['customer_id']=$datos_facturar['id'];
+        $dataInsert['customer_id']=$datos_facturar['csd'];
+        $dataInsert['invoice_id']=$datos_facturar['id'];
         $dataInsert['servicios_facturados']=$datos_facturar['servicios'];
         $dataInsert['creado_con_multiple']=1;
         // end customer data facturacion_electronica_siigo table insert
@@ -836,10 +838,16 @@ class Facturas_electronicas_model extends CI_Model
         if($dataApiNET!=null && $dataApiNET!="null"){
             $retorno = $api->accionar($api,$dataApiNET,1);     
         }
-        
+        //$retorno['mensaje']="Factura Guardada";
 
         if($retorno['mensaje']=="Factura Guardada"){
+            //$dataInsert["json"]=$dataApiNET;
             $this->db->insert("facturacion_electronica_siigo",$dataInsert);
+            $dt_in=array();
+            $dt_in['facturacion_electronica']="Factura Electronica Creada";
+            $dt_in['fecha_f_electronica_generada']=$dataInsert['fecha'];
+            $dt_in['servicios_facturados_electronicamente']=$dataInsert['servicios_facturados'];
+            $this->db->update("invoices",$dt_in,array("id"=>$datos_facturar['id']));
             $retor=array("status"=>true);
             return $retor;
         }else{

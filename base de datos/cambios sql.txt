@@ -852,3 +852,9 @@ ________________________________________________________________________________
 CLAUSULA
 ----------------------------------------------------------------------------------------------------------
 ALTER TABLE `customers` ADD `clausula` INT NOT NULL DEFAULT '0' AFTER `dirsuscriptor`;
+-----------------------------------------------------------------------------------------------------------
+cambios en facturacion electronica
+
+ALTER TABLE `invoices` ADD `facturacion_electronica` ENUM('Crear Factura Electronica','Factura Electronica Creada') NULL AFTER `tipo_retencion`;
+ALTER TABLE `invoices` ADD `fecha_f_electronica_generada` DATE NULL AFTER `facturacion_electronica`;
+ALTER TABLE `invoices` ADD `servicios_facturados_electronicamente` VARCHAR(50) NULL AFTER `fecha_f_electronica_generada`;

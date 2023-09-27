@@ -178,7 +178,19 @@ class Transactions extends CI_Controller
         echo json_encode($array_return);
     }
     public function leer_excel(){
-        
+         ini_set('memory_limit', '10G');
+    set_time_limit(500000000000);
+    $sql="";
+        $lista_invoices=$this->db->query("select * from invoices where status='paid' and total!=0  and tipo_factura='Recurrente'")->result_array();
+        foreach ($lista_invoices as $key => $invoice) {
+            $trs=$this->db->query("select * from transactions where tid='".$invoice['tid']."' and date<'2023-09-01'")->result_array();
+            foreach ($trs as $key => $value) {
+                $sql.="<br> UPDATE `invoices` SET `facturacion_electronica` = 'Factura Electronica Creada' WHERE `tid` = '".$invoice['tid']."';";
+                
+            }
+        }
+        ob_clean();
+        echo $sql;
     }
     public function procesar_usuarios_a_facturar(){
         $this->load->model('Files_carga_transaccional_model', 'files_carga');
@@ -199,10 +211,11 @@ class Transactions extends CI_Controller
                 if($ret){
                     $this->load->model('customers_model', 'customers');
                     if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
-                        $servicios=$this->customers->servicios_detail($cus_existe->id);
+                        /*$servicios=$this->customers->servicios_detail($cus_existe->id);
                         if(isset($servicios['status_inv']) && $servicios['status_inv']=="paid"){
                             $this->db->update("customers",array("facturar_electronicamente"=>1),array("id"=>$cus_existe->id));   
-                        }
+                        }*/
+                        $this->customers->organiza_para_facturacion_electronica_ottis($cus_existe->id);
                     }
                     $this->db->update("datos_archivo_excel_cargue",array("estado"=>"Cargado","id_customer"=>$cus_existe->id),array("id"=>$varx->id));    
                 }else{

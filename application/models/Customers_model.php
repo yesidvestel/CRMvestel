@@ -503,7 +503,13 @@ $var_excluir=false;
     }
          public function servicios_detail($custid)
     {
-        $lista_invoices = $this->db->from("invoices")->where("csd",$custid)->order_by('invoicedate,tid',"DESC")->get()->result();
+        $lista_invoices=array();
+        if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
+            $lista_invoices = $this->db->from("invoices")->where("id",$custid)->order_by('invoicedate,tid',"DESC")->get()->result();
+        }else{
+            $lista_invoices = $this->db->from("invoices")->where("csd",$custid)->order_by('invoicedate,tid',"DESC")->get()->result();    
+        }
+        
         $customer_moroso=false;
         $valor_ultima_factura=0;
         $_var_tiene_internet=false;
@@ -553,6 +559,8 @@ $var_excluir=false;
                     $servicios['total']=$invoice->total;
                     $servicios['items']=$invoice->items;
                     $servicios['tipo_retencion']=$invoice->tipo_retencion;
+                    $servicios['csd']=$invoice->csd;
+                    $servicios['invoicedate']=$invoice->invoicedate;
                     //var_dump($invoice->ron);
                     $servicios['estado']=$invoice->ron;
                     if($invoice->ron=="Suspendido"){
@@ -3638,4 +3646,11 @@ public function get_nombre_completo($name,$dosnombre,$unoapellido,$dosapellido){
     }
     return $nombre;
 }
+
+public function organiza_para_facturacion_electronica_ottis($id_cs){
+
+    $this->db->query("UPDATE `invoices` SET `facturacion_electronica` = 'Crear Factura Electronica' WHERE csd='".$id_cs."' and  total!=0 and status='paid' and facturacion_electronica is null and tipo_factura='Recurrente'; ");    
+    //$this->db->query("UPDATE `invoices` SET `facturacion_electronica` = 'Crear Factura Electronica' WHERE  total!=0 and status='paid' and facturacion_electronica is null and tipo_factura='Recurrente'; ");    
+}
+
 }

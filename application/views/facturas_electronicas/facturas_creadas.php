@@ -18,7 +18,7 @@
                         <th><?php echo $this->lang->line('Name') ?></th>
                         <th>Celular</th>
                         <th>Cedula</th>
-                        
+                        <th>Factura</th>
                         <th><?php echo $this->lang->line('Settings') ?></th>
 
 
@@ -35,7 +35,7 @@
                         <th><?php echo $this->lang->line('Name') ?></th>
                         <th>Celular</th>
                         <th>Cedula</th>
-                       
+                       <th>Factura</th>
                         <th><?php echo $this->lang->line('Settings') ?></th>
 
 
@@ -68,7 +68,7 @@
                         <th><?php echo $this->lang->line('Name') ?></th>
                         <th>Celular</th>
                         <th>Cedula</th>
-                        
+                        <th>Factura</th>
                         <th><?php echo $this->lang->line('Settings') ?></th>
 
 
@@ -85,7 +85,8 @@
                         <th><?php echo $this->lang->line('Name') ?></th>
                         <th>Celular</th>
                         <th>Cedula</th>
-                       
+                        <th>Factura</th>
+
                         <th><?php echo $this->lang->line('Settings') ?></th>
 
 
