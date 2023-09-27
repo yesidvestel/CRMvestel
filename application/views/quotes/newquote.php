@@ -759,9 +759,9 @@
 
 	/* codigo servicios*/
 	var sede_sel="<?=$sede_actual->title  ?>";
- $(".serv_sedes").css("display","none");
- $(".servs_sede_"+sede_sel).css("display","");
- $(".servs_sede_").css("display","");
+ //$(".serv_sedes").css("display","none");
+ //$(".servs_sede_"+sede_sel).css("display","");
+ //$(".servs_sede_").css("display","");
 
 $(document).on('change',".instalacion",function(e){
     validacion_instalacion();

@@ -749,19 +749,22 @@ setlocale(LC_TIME, "spanish");
         return $text;        
     }
     public function servicios_adicionales($tid,$return_text){
-        $lista_servs=$this->db->get_where("servicios_adicionales",array("tid_invoice"=>$tid))->result_array();
-        $text="";
-        foreach ($lista_servs as $key => $value) {
-            $producto=$this->db->get_where("products",array("pid"=>$value['pid']))->row();
-            $text.=" mas ".$value['valor']." ".$producto->product_name;
-        }
-        if($return_text){
-            return $text;    
+        if($tid==0 || $tid=="0" || $tid==null || $tid=="null"){
+            return array();
         }else{
-            return $lista_servs;
-        }
+            $lista_servs=$this->db->get_where("servicios_adicionales",array("tid_invoice"=>$tid))->result_array();
+            $text="";
+            foreach ($lista_servs as $key => $value) {
+                $producto=$this->db->get_where("products",array("pid"=>$value['pid']))->row();
+                $text.=" mas ".$value['valor']." ".$producto->product_name;
+            }
+            if($return_text){
+                return $text;    
+            }else{
+                return $lista_servs;
+            }
         
-
+    }
     }
     public function get_retenciones($tid){
         $retornar=array("retenciones"=>array(),"total"=>0);

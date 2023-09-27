@@ -740,7 +740,8 @@ class Tickets Extends CI_Controller
     }
 
     public function update_status()
-    {
+    {   set_time_limit(500000);
+
         $this->load->model('tools_model', 'tools');
         $this->load->model('customers_model', 'customers');
 		$tid = $this->input->post('tid');		
@@ -1178,7 +1179,13 @@ $x=0;
                 }
                 //mikrotik
                 
-                $this->customers->activar_estado_usuario($customerx->name_s,$customerx->gid,$customerx->tegnologia_instalacion);
+                //$this->customers->activar_estado_usuario($customerx->name_s,$customerx->gid,$customerx->tegnologia_instalacion);
+
+                 $id_sede_mk=$customerx->gid;
+                if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
+                    $id_sede_mk=$customerx->ciudad;
+                }
+                $this->customers->activar_estado_usuario($customerx->name_s,$id_sede_mk,$customerx->tegnologia_instalacion);
         }else{
             $msg1="no redirect";        
 		}
@@ -1283,7 +1290,14 @@ $x=0;
        
 		if($ticket->detalle=="Subir megas" || $ticket->detalle=="Bajar megas"){
 			if($customer->name_s!=''||$customer->name_s!=null||$customer->name_s!=0){
-				$this->customers->edit_profile_mikrotik($customer->gid,$customer->name_s,$ptos,$customer->tegnologia_instalacion);
+				//$this->customers->edit_profile_mikrotik($customer->gid,$customer->name_s,$ptos,$customer->tegnologia_instalacion);
+
+                  $id_sede_mk=$customer->gid;
+                if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
+                    $id_sede_mk=$customer->ciudad;
+                }
+                //$this->customers->activar_estado_usuario($customerx->name_s,$id_sede_mk,$customerx->tegnologia_instalacion);
+                $this->customers->edit_profile_mikrotik($id_sede_mk,$customer->name_s,$ptos,$customer->tegnologia_instalacion);
 			}            
             $this->db->set('combo', $inter);
 
@@ -1330,7 +1344,13 @@ $x=0;
 				}
              //mikrotik
                 $customerx=$this->db->get_where("customers",array('id' =>$ticket->cid ))->row();
-                $this->customers->activar_estado_usuario($customerx->name_s,$customerx->gid,$customerx->tegnologia_instalacion);
+                //$this->customers->activar_estado_usuario($customerx->name_s,$customerx->gid,$customerx->tegnologia_instalacion);
+
+                $id_sede_mk=$customerx->gid;
+                if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
+                    $id_sede_mk=$customerx->ciudad;
+                }
+                $this->customers->activar_estado_usuario($customerx->name_s,$id_sede_mk,$customerx->tegnologia_instalacion);
 		}		
 		if($ticket->detalle=="Reconexion Internet"){
 			/*$paquete = $this->input->post('paquete');
@@ -1359,7 +1379,13 @@ $x=0;
 				}
                  //mikrotik
                 $customerx=$this->db->get_where("customers",array('id' =>$ticket->cid ))->row();
-                $this->customers->activar_estado_usuario($customerx->name_s,$customerx->gid,$customerx->tegnologia_instalacion);
+                //$this->customers->activar_estado_usuario($customerx->name_s,$customerx->gid,$customerx->tegnologia_instalacion);
+
+                $id_sede_mk=$customerx->gid;
+                if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
+                    $id_sede_mk=$customerx->ciudad;
+                }
+                $this->customers->activar_estado_usuario($customerx->name_s,$id_sede_mk,$customerx->tegnologia_instalacion);
 		}
 		if($ticket->detalle=="Reconexion Television"){
 			$paquete = $this->input->post('paquete');
@@ -1433,7 +1459,13 @@ $x=0;
 
                  //mikrotik
                 $customerx=$this->db->get_where("customers",array('id' =>$ticket->cid ))->row();
-                $this->customers->desactivar_estado_usuario($customerx->name_s,$customerx->gid,$customerx->tegnologia_instalacion);
+                //$this->customers->desactivar_estado_usuario($customerx->name_s,$customerx->gid,$customerx->tegnologia_instalacion);
+
+                $id_sede_mk=$customerx->gid;
+                if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
+                    $id_sede_mk=$customerx->ciudad;
+                }
+                $this->customers->desactivar_estado_usuario($customerx->name_s,$id_sede_mk,$customerx->tegnologia_instalacion);
 		}
 		if($ticket->detalle=="Corte Internet"){
 			$factura = $this->db->get_where('invoices',array('tid'=>$idfactura))->row();
@@ -1481,7 +1513,13 @@ $x=0;
 			
              //mikrotik
                 $customerx=$this->db->get_where("customers",array('id' =>$ticket->cid ))->row();
-                $this->customers->desactivar_estado_usuario($customerx->name_s,$customerx->gid,$customerx->tegnologia_instalacion);
+                //$this->customers->desactivar_estado_usuario($customerx->name_s,$customerx->gid,$customerx->tegnologia_instalacion);
+
+                $id_sede_mk=$customerx->gid;
+                if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
+                    $id_sede_mk=$customerx->ciudad;
+                }
+                $this->customers->desactivar_estado_usuario($customerx->name_s,$id_sede_mk,$customerx->tegnologia_instalacion);
 				}
 			}
 		}
@@ -1611,7 +1649,13 @@ $x=0;
 				}
                  //mikrotik
                 $customerx=$this->db->get_where("customers",array('id' =>$ticket->cid ))->row();
-                $this->customers->desactivar_estado_usuario($customerx->name_s,$customerx->gid,$customerx->tegnologia_instalacion);
+                //$this->customers->desactivar_estado_usuario($customerx->name_s,$customerx->gid,$customerx->tegnologia_instalacion);
+
+                $id_sede_mk=$customerx->gid;
+                if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
+                    $id_sede_mk=$customerx->ciudad;
+                }
+                $this->customers->desactivar_estado_usuario($customerx->name_s,$id_sede_mk,$customerx->tegnologia_instalacion);
 		}
 		if($ticket->detalle=="Retiro voluntario"){			
 			$this->db->set('ron', 'Retirado');
@@ -1639,7 +1683,13 @@ $x=0;
 				}
                  //mikrotik
                 $customerx=$this->db->get_where("customers",array('id' =>$ticket->cid ))->row();
-                $this->customers->desactivar_estado_usuario($customerx->name_s,$customerx->gid,$customerx->tegnologia_instalacion);
+                //$this->customers->desactivar_estado_usuario($customerx->name_s,$customerx->gid,$customerx->tegnologia_instalacion);
+
+                $id_sede_mk=$customerx->gid;
+                if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
+                    $id_sede_mk=$customerx->ciudad;
+                }
+                $this->customers->desactivar_estado_usuario($customerx->name_s,$id_sede_mk,$customerx->tegnologia_instalacion);
 		}
 		if($ticket->detalle=="Suspension Television"){
 			$factura = $this->db->get_where('invoices',array('tid'=>$idfactura))->row();
@@ -1698,7 +1748,13 @@ $x=0;
 				}
                  //mikrotik
                 $customerx=$this->db->get_where("customers",array('id' =>$ticket->cid ))->row();
-                $this->customers->desactivar_estado_usuario($customerx->name_s,$customerx->gid,$customerx->tegnologia_instalacion);
+                //$this->customers->desactivar_estado_usuario($customerx->name_s,$customerx->gid,$customerx->tegnologia_instalacion);
+
+                $id_sede_mk=$customerx->gid;
+                if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
+                    $id_sede_mk=$customerx->ciudad;
+                }
+                $this->customers->desactivar_estado_usuario($customerx->name_s,$id_sede_mk,$customerx->tegnologia_instalacion);
 		}
 		if($ticket->detalle=="Retiro y Desinstalacion por Cartera"){
 			$factura = $this->db->get_where('invoices',array('tid'=>$idfactura))->row();
@@ -1730,7 +1786,13 @@ $x=0;
 				}
                  //mikrotik
                 $customerx=$this->db->get_where("customers",array('id' =>$ticket->cid ))->row();
-                $this->customers->desactivar_estado_usuario($customerx->name_s,$customerx->gid,$customerx->tegnologia_instalacion);
+                //$this->customers->desactivar_estado_usuario($customerx->name_s,$customerx->gid,$customerx->tegnologia_instalacion);
+
+                $id_sede_mk=$customerx->gid;
+                if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
+                    $id_sede_mk=$customerx->ciudad;
+                }
+                $this->customers->desactivar_estado_usuario($customerx->name_s,$id_sede_mk,$customerx->tegnologia_instalacion);
 		}
 		if($ticket->detalle=="AgregarTelevision" || ($ticket->detalle=="Reconexion Television2" && ($ticket->id_factura!=0 || $ticket->id_factura!=null))){			
 			$producto = $this->db->get_where('products',array('product_name'=>'Television'))->row();
@@ -1929,7 +1991,13 @@ $x=0;
 
                   //mikrotik
                 $customerx=$this->db->get_where("customers",array('id' =>$ticket->cid ))->row();
-                $this->customers->activar_estado_usuario($customerx->name_s,$customerx->gid,$customerx->tegnologia_instalacion);
+                //$this->customers->activar_estado_usuario($customerx->name_s,$customerx->gid,$customerx->tegnologia_instalacion);
+
+                $id_sede_mk=$customerx->gid;
+                if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
+                    $id_sede_mk=$customerx->ciudad;
+                }
+                $this->customers->activar_estado_usuario($customerx->name_s,$id_sede_mk,$customerx->tegnologia_instalacion);
 			
 		}
 		if($ticket->detalle=="Toma Adicional"){
