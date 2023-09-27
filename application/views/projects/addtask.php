@@ -43,10 +43,10 @@
 
                     <div class="col-sm-4">
                         <select name="priority" class="form-control">
-                            <option value='Low'><?php echo $this->lang->line(Low)?></option>
-                            <option value='Medium'><?php echo $this->lang->line(Medium)?></option>
-                            <option value='High'><?php echo $this->lang->line(High)?></option>
-                            <option value='Urgent'><?php echo $this->lang->line(Urgent)?></option>
+                            <option value='Low'><?php echo $this->lang->line('Low')?></option>
+                            <option value='Medium'><?php echo $this->lang->line('Medium')?></option>
+                            <option value='High'><?php echo $this->lang->line('High')?></option>
+                            <option value='Urgent'><?php echo $this->lang->line('Urgent')?></option>
                         </select>
 
 
