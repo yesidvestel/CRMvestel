@@ -178,7 +178,7 @@ class Communication_model extends CI_Model
        // $lkahskldasd=$this->x54as5d();
             $curl = curl_init();
         //curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-            $x="http://www.saves-vestel.com/Servicio";
+            $x="https://www.saves-vestel.com/Servicio";
         if(!empty($_SESSION['url_web_service'])){
             $x=$_SESSION['url_web_service'];
         }
@@ -233,7 +233,7 @@ class Communication_model extends CI_Model
     public function obtener2($cuerpo,$accion,$id_orden){
         $lkahskldasd=$this->x54as5d();
         
-        $x="http://www.saves-vestel.com/Servicio/";
+        $x="https://www.saves-vestel.com/Servicio/";
         if(!empty($_SESSION['url_web_service'])){
             $x=$_SESSION['url_web_service'];
         }

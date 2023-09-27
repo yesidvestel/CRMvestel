@@ -9,7 +9,7 @@ class User extends CI_Controller
         parent::__construct();
         $this->load->model('User_model');
 		$this->load->model('general_model','general');
-        $_SESSION['url_web_service']="http://www.saves-vestel.com/Servicio";
+        $_SESSION['url_web_service']="https://www.saves-vestel.com/Servicio";
         //$_SESSION['url_web_service']="http://localhost/CRMvestel/Servicio";
 
         $_SESSION['wompi']['public_key']="pub_prod_YDEGM72YP1NG7VTLfLTXis1N9S22Ykkj";
