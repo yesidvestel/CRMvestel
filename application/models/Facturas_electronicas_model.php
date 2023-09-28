@@ -782,10 +782,13 @@ class Facturas_electronicas_model extends CI_Model
               
                 foreach ($list_servs as $keysv => $sv) {
                     //$dataApiNET->items[]=$prod_add;
+
+                    $itm=$this->db->get_where("invoice_items",array("tid"=>$array_servicios['tid'],"pid"=>$sv['pid']))->row();
+                    if(isset($itm)){
                       $prod_add=json_decode($otro_pr);
                     array_push($dataApiNET->items, $prod_add);
                     $pr_sr=$this->db->get_where("products",array("pid"=>$sv['pid']))->row();
-                    
+                    $pr_sr->product_price=$itm->price;
                     $dataApiNET->items[$count]->description="Servicio Adicional ".$pr_sr->product_name;
                     $dataApiNET->items[$count]->code=$pr_sr->product_code;
                     if(isset($pr_sr) && $pr_sr->taxrate!="0"){
@@ -808,6 +811,7 @@ class Facturas_electronicas_model extends CI_Model
                     $suma=($sv['total']*$sv['valor']);
                     $dataApiNET->payments[0]->value+=$suma;
                     $count++;
+                }
                 }
             }
 
