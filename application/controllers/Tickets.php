@@ -1901,7 +1901,7 @@ $x=0;
         $datay['totaldiscount']=0;
 			//agregar servicio nuevo
         $y=0;
-                if($data['combo']!==no){
+                if($data['combo']!=='no'){
                     $producto = $this->db->get_where('products',array('product_name'=>$factura->combo))->row();
 					$datay['pid']=$producto->pid;
                     $x=intval($producto->product_price);
