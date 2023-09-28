@@ -602,7 +602,10 @@ class Facturas_electronicas_model extends CI_Model
                     $json_customer=json_decode($json_customer);
                     $json_customer->related_users->seller_id=738;
                     $json_customer->related_users->collector_id=738;
-                    $json_customer->contacts[0]->email="vestelsas@gmail.com";
+                    $json_customer->contacts[0]->email="prof.ottis01@gmail.com";
+                    if($customer->email!="" && $customer->email!=null && filter_var($customer->email, FILTER_VALIDATE_EMAIL) ) {
+                        $json_customer->contacts[0]->email=$customer->email;
+                    }
                     $json_customer=json_encode($json_customer);
                     //$json_customer=str_replace("321", "282", subject)
                     $api->saveCustomer($json_customer,1);//para crear cliente en siigo si no existe
