@@ -734,6 +734,7 @@ set_time_limit(150);
        // $api->getAuth(1);
         //$api->getAuth2(2);
         $_SESSION['api_siigo']=$api;
+        $_POST['xyz']="si";
             $servicios=$this->customers->servicios_detail($id_customer);
                 $puntos = $this->customers->due_details($id_customer);
                 //guardare en un array la variable servicios = combo o tv o internet y la variable puntos con no o el numero de puntos

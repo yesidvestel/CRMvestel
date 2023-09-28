@@ -504,7 +504,7 @@ $var_excluir=false;
          public function servicios_detail($custid)
     {
         $lista_invoices=array();
-        if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
+        if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel" && isset($_POST) && isset($_POST['xyz']) ){
             $lista_invoices = $this->db->from("invoices")->where("id",$custid)->order_by('invoicedate,tid',"DESC")->get()->result();
         }else{
             $lista_invoices = $this->db->from("invoices")->where("csd",$custid)->order_by('invoicedate,tid',"DESC")->get()->result();    
