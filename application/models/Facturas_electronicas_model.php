@@ -255,7 +255,7 @@ class Facturas_electronicas_model extends CI_Model
                     $json_customer->contacts[0]->email="vestelsas@gmail.com";
                     $json_customer=json_encode($json_customer);
                     //$json_customer=str_replace("321", "282", subject)
-                    //$api->saveCustomer($json_customer,2);//para crear cliente en siigo si no existe
+                    $api->saveCustomer($json_customer,2);//para crear cliente en siigo si no existe
             }else{
                     /*$json_customer=json_decode($json_customer);
                     $json_customer->related_users->seller_id=282;
@@ -608,7 +608,7 @@ class Facturas_electronicas_model extends CI_Model
                     }
                     $json_customer=json_encode($json_customer);
                     //$json_customer=str_replace("321", "282", subject)
-                    $api->saveCustomer($json_customer,1);//para crear cliente en siigo si no existe
+                    //$api->saveCustomer($json_customer,1);//para crear cliente en siigo si no existe
             }else{
                     /*$json_customer=json_decode($json_customer);
                     $json_customer->related_users->seller_id=282;
