@@ -622,7 +622,7 @@ $fcontrato = $details['f_contrato'];
 			</table>
 			<table>
 				<tr>
-					<td><img src="<?php echo FCPATH . '/userfiles/company/qrottis.jpeg'?>" style="max-width:50%;"></img></td>
+					<td><img src="<?php echo FCPATH . '/userfiles/company/qrottis.jpeg'?>" style="max-width:20%;"></img></td>
 					<td align="left" valign="middle"><br><br><br><h1>OTTIS COMUNICACIONES</h1></td>
 				</tr>
 			</table>
