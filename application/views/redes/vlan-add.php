@@ -150,14 +150,18 @@ $(document).ready(function(){
 		respuesta.value = "";
 		respuesta.innerHTML ="";
 		if(almacen.value == "4"){			
-			var optionArray = ["Hub local","Hub casimena"];
+			var optionArray = ["Duitama","Sogamoso","Tibasosa","Cacique1","Cacique2","Pesca"];
 		}else if (almacen.value == "5"){
-			var optionArray = ["Hub local"];
+			var optionArray = ["Duitama","Sogamoso","Tibasosa","Cacique1","Cacique2","Pesca"];
 		}else if (almacen.value == "2"){
-			var optionArray = ["Hub local"];
+			var optionArray = ["Duitama","Sogamoso","Tibasosa","Cacique1","Cacique2","Pesca"];
 		}else if (almacen.value == "10"){
 			var optionArray = ["Hub local"];
 		}else if (almacen.value == "1"){
+			var optionArray = ["Duitama","Sogamoso","Tibasosa","Cacique1","Cacique2","Pesca"];
+		}else if (almacen.value == "3"){
+			var optionArray = ["Duitama","Sogamoso","Tibasosa","Cacique1","Cacique2","Pesca"];
+		}else if (almacen.value == "6"){
 			var optionArray = ["Duitama","Sogamoso","Tibasosa","Cacique1","Cacique2","Pesca"];
 		};
 	for(option = 0;option < optionArray.length; option++){
