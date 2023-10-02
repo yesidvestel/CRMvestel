@@ -797,6 +797,7 @@ public function calculo_ultimo_estado ($array_add,$customers){
         
         foreach ($resultado_mkts as $k => $mk) {
             if($dat_return==null && $mk['tegnologia']==$datos['tegnologia']){
+                $_POST['conectar']=$mk['estado_coneccion'];
                 $dat_return=array("ip_mikrotik"=>$mk['ip'].":".$mk['puerto'],"usuario"=>$mk['usuario'],"password"=>$mk['password'],"var"=>$mk);
             }
             if($mk["defecto"]=="1"){
@@ -805,6 +806,7 @@ public function calculo_ultimo_estado ($array_add,$customers){
         }
         if(empty($dat_return)){
             $mk=$resultado_mkts[$defecto];
+            $_POST['conectar']=$mk['estado_coneccion'];
             $dat_return=array("ip_mikrotik"=>$mk['ip'].":".$mk['puerto'],"usuario"=>$mk['usuario'],"password"=>$mk['password'],"var"=>$mk);
         }
         return $dat_return;

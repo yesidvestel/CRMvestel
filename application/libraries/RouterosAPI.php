@@ -95,6 +95,10 @@ class RouterosAPI
      */
     public function connect($ip, $login, $password)
     {//var_dump($ip. " ". $login." ".$password);
+    if(isset($_POST) && isset($_POST['conectar']) && $_POST['conectar']==0){
+        return false;    
+    }
+    
     /* Este cambio es para editar el puerto */
     $varx=explode(":", $ip);
     $this->port=$varx[1];
