@@ -1747,7 +1747,7 @@ $this->load->model('customers_model', 'customers');
             $this->db->trans_rollback();
         }
         $this->invocies->procesar_pagos_adelantados($customer_id);
-
+        $this->customers->organiza_para_facturacion_electronica_ottis($customer_id);
 
     }
 	 public function rec_status()
