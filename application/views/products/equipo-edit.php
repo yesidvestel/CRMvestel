@@ -126,6 +126,18 @@
 								<option value="Wifi">Wifi</option>
 								<option value="Cisco">Cisco</option>
 								<option value="Mikrotik">Mikrotik</option>
+								<option value="Tp-link">Tp-link</option>
+								<option value="Ubiquiti">Ubiquiti</option>
+								<option value="Datocom">Datocom</option>
+								<option value="Trendnet">Trendnet</option>
+								<option value="F.s">F.s</option>
+								<option value="Grandstream">Grandstream</option>
+								<option value="Tenda">Tenda</option>
+								<option value="Mercusys">Mercusys</option>
+								<option value="Anfit">Anfit</option>
+								<option value="Qp-com">Qp-com</option>
+								<option value="Optictimes">Optictimes</option>
+								<option value="Powest">Powest</option>
 							</select>
                         </div>
                     </div>
