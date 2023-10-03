@@ -384,27 +384,35 @@ class Clientgroup extends CI_Controller
                 }
             }
             //end add  services adicionales
-                        if($_var_tiene_internet){
+                        if($_var_tiene_internet){$var_excluir=false;
                             $lista_de_productos=array();
-                            if($_SESSION[md5("variable_datos_pin")]['db_name'] == "admin_crmvestel"){
+                            $var_e=strtolower(str_replace(" ", "",$invoice->combo));
+                            /*if($_SESSION[md5("variable_datos_pin")]['db_name'] == "admin_crmvestel"){
                                 $lista_de_productos=$this->db->from("products")->get()->result();    
                             }else{
-                                $lista_de_productos=$this->db->from("products")->like("product_name","mega","both")->get()->result();
-                            }
-                            
-                            $var_e=strtolower(str_replace(" ", "",$invoice->combo));
-                            foreach ($lista_de_productos as $key => $prod) {
+                                
+                                //
+                            }*/
+                            $lista_de_productos=$this->db->query("select * from products where LOWER(REPLACE(product_name, ' ', '')) ='".$var_e."'")->result_array();
+                             $iva2=0;
+                             if(isset($lista_de_productos) && count($lista_de_productos)>0){
+                                  if($lista_de_productos[0]['taxrate']!="0"){
+                                    $iva2=round(($lista_de_productos[0]['product_price']*$lista_de_productos[0]['taxrate'])/100);
+                                  }
+                                  $suma+=$lista_de_productos[0]['product_price']+$iva2;                                      
+                             }
+                              
+                            /*foreach ($lista_de_productos as $key => $prod) {
                                 $prod->product_name=strtolower(str_replace(" ", "",$prod->product_name ));
                                 if($prod->product_name==$var_e){
                                     $iva2=0;
                                     if(isset($prod) && $prod->taxrate!="0"){
                                         $iva2=round(($prod->product_price*$prod->taxrate)/100);
                                     }
-                                    $suma+=$prod->product_price+$iva2;                                        
+                                    $suma+=$prod->product_price+$iva2;                                    
                                     break;
                                 }
-                            }
-
+                            }*/
                             if(!empty($var_e)){$var_excluir=false;
                                 if($suscripcion_str!=""){
                                     if($invoice->estado_combo=="Cortado"){
@@ -1314,13 +1322,23 @@ class Clientgroup extends CI_Controller
             //end add  services adicionales
                         if($_var_tiene_internet){$var_excluir=false;
                             $lista_de_productos=array();
-                            if($_SESSION[md5("variable_datos_pin")]['db_name'] == "admin_crmvestel"){
+                            $var_e=strtolower(str_replace(" ", "",$invoice->combo));
+                            /*if($_SESSION[md5("variable_datos_pin")]['db_name'] == "admin_crmvestel"){
                                 $lista_de_productos=$this->db->from("products")->get()->result();    
                             }else{
-                                $lista_de_productos=$this->db->from("products")->like("product_name","mega","both")->get()->result();
-                            }
-                            $var_e=strtolower(str_replace(" ", "",$invoice->combo));
-                            foreach ($lista_de_productos as $key => $prod) {
+                                
+                                //
+                            }*/
+                            $lista_de_productos=$this->db->query("select * from products where LOWER(REPLACE(product_name, ' ', '')) ='".$var_e."'")->result_array();
+                             $iva2=0;
+                             if(isset($lista_de_productos) && count($lista_de_productos)>0){
+                                  if($lista_de_productos[0]['taxrate']!="0"){
+                                    $iva2=round(($lista_de_productos[0]['product_price']*$lista_de_productos[0]['taxrate'])/100);
+                                  }
+                                  $suma+=$lista_de_productos[0]['product_price']+$iva2;                                      
+                             }
+                              
+                            /*foreach ($lista_de_productos as $key => $prod) {
                                 $prod->product_name=strtolower(str_replace(" ", "",$prod->product_name ));
                                 if($prod->product_name==$var_e){
                                     $iva2=0;
@@ -1330,7 +1348,7 @@ class Clientgroup extends CI_Controller
                                     $suma+=$prod->product_price+$iva2;                                    
                                     break;
                                 }
-                            }
+                            }*/
                             if(!empty($var_e)){
                                 if($suscripcion_str!=""){
                                     if($invoice->estado_combo=="Cortado"){
@@ -1710,11 +1728,15 @@ $suscripcion_str2=$suscripcion_str;
         }
         //var_dump($c);
         $datax['datos']=json_encode($listax);//cuanto esto falle por ser muchos customers y toque buscar una solucion seria guardarlo en dos campos mitad y mitad es decir el count /2 serian los items a guardar en datoa y en dato b el resto de igual forma en el proceso de lectura se leen los dos y de unifican en una sola variable
-        $this->db->update("filtros_historial",$datax, array("id"=>$this->aauth->get_user()->id));                
-        if($this->db->affected_rows()==0){
+        $d_exist=$this->db->query("select id as id from filtros_historial where id=".$this->aauth->get_user()->id)->result_array();
+        if(count($d_exist)>0){
+            $this->db->update("filtros_historial",$datax, array("id"=>$this->aauth->get_user()->id));                    
+        }else{
             $datax['id']=$this->aauth->get_user()->id;
             $this->db->insert("filtros_historial",$datax);
         }
+        
+        
         $var_recordsFiltered=count($lista_customers)-$descontar;
         if($_POST['length']=="100"){
             $var_recordsFiltered=0;
@@ -2150,25 +2172,35 @@ $suscripcion_str2=$suscripcion_str;
                 }
             }
             //end add  services adicionales
-                        if($_var_tiene_internet){
+                        if($_var_tiene_internet){$var_excluir=false;
                             $lista_de_productos=array();
-                            if($_SESSION[md5("variable_datos_pin")]['db_name'] == "admin_crmvestel"){
+                            $var_e=strtolower(str_replace(" ", "",$invoice->combo));
+                            /*if($_SESSION[md5("variable_datos_pin")]['db_name'] == "admin_crmvestel"){
                                 $lista_de_productos=$this->db->from("products")->get()->result();    
                             }else{
-                                $lista_de_productos=$this->db->from("products")->like("product_name","mega","both")->get()->result();
-                            }
-                            $var_e=strtolower(str_replace(" ", "",$invoice->combo));
-                            foreach ($lista_de_productos as $key => $prod) {
+                                
+                                //
+                            }*/
+                            $lista_de_productos=$this->db->query("select * from products where LOWER(REPLACE(product_name, ' ', '')) ='".$var_e."'")->result_array();
+                             $iva2=0;
+                             if(isset($lista_de_productos) && count($lista_de_productos)>0){
+                                  if($lista_de_productos[0]['taxrate']!="0"){
+                                    $iva2=round(($lista_de_productos[0]['product_price']*$lista_de_productos[0]['taxrate'])/100);
+                                  }
+                                  $suma+=$lista_de_productos[0]['product_price']+$iva2;                                      
+                             }
+                              
+                            /*foreach ($lista_de_productos as $key => $prod) {
                                 $prod->product_name=strtolower(str_replace(" ", "",$prod->product_name ));
                                 if($prod->product_name==$var_e){
                                     $iva2=0;
                                     if(isset($prod) && $prod->taxrate!="0"){
                                         $iva2=round(($prod->product_price*$prod->taxrate)/100);
                                     }
-                                    $suma+=$prod->product_price+$iva2;                                        
+                                    $suma+=$prod->product_price+$iva2;                                    
                                     break;
                                 }
-                            }
+                            }*/
                             if(!empty($var_e)){$var_excluir=false;
                                 if($suscripcion_str!=""){
                                     if($invoice->estado_combo=="Cortado"){
