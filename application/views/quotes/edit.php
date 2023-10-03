@@ -416,10 +416,10 @@
 										<div class="input-group">									
 											<select name="supaquete" class="form-control mb-1">
 												<option value="0">no</option>
-													<?php for ($i=1;$i<=10;$i++){
-													echo '	<option value="'.$i*'10'.'Megas">'.$i*'10'.'Megas</option>
-															<option value="'.$i*'10'.'MegasSt">'.$i*'10'.'MegasSt</option>
-															<option value="'.$i*'10'.'MegasD">'.$i*'10'.'MegasD</option>'
+													<?php for ($i=1;$i<=6;$i++){
+													echo '	<option value="'.$i*'50'.'Megas">'.$i*'50'.'Megas</option>
+															<option value="'.$i*'50'.'MegasSt">'.$i*'50'.'MegasSt</option>
+															<option value="'.$i*'50'.'MegasD">'.$i*'50'.'MegasD</option>'
 														
 														;}?>
 											</select>
@@ -448,10 +448,10 @@
 										<div class="input-group">									
 											<select name="bapaquete" class="form-control mb-1">
 												<option value="0">no</option>
-													<?php for ($i=1;$i<=10;$i++){
-													echo '	<option value="'.$i*'10'.'Megas">'.$i*'10'.'Megas</option>
-															<option value="'.$i*'10'.'MegasSt">'.$i*'10'.'MegasSt</option>
-															<option value="'.$i*'10'.'MegasD">'.$i*'10'.'MegasD</option>'
+													<?php for ($i=1;$i<=6;$i++){
+													echo '	<option value="'.$i*'50'.'Megas">'.$i*'50'.'Megas</option>
+															<option value="'.$i*'50'.'MegasSt">'.$i*'50'.'MegasSt</option>
+															<option value="'.$i*'50'.'MegasD">'.$i*'50'.'MegasD</option>'
 														
 														;}?>
 											</select>
