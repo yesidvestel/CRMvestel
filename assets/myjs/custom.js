@@ -77,7 +77,12 @@ $('#addproduct').on('click', function () {
 
 //caculations
 var precentCalc = function (total, percentageVal) {
-    return (total / 100) * percentageVal;
+    if(percentageVal>100){
+        return (percentageVal);    
+    }else{
+        return (total / 100) * percentageVal;
+    }
+    
 };
 //format
 var deciFormat = function (minput) {

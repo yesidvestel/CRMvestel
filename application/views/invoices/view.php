@@ -208,7 +208,7 @@
                             <td>' . amountFormat($row['price']) . '</td>
                              <td>' . $row['qty'] . '</td>
                             <td>' . amountFormat($row['totaltax']) . ' (' . amountFormat_s($row['tax']) . '%)</td>
-                            <td>' . amountFormat($row['totaldiscount']) . ' (' .amountFormat_s($row['discount']).$this->lang->line($invoice['format_discount']).')</td>
+                            <td>' . amountFormat($row['totaldiscount']) . ' </td>
                             <td>' . amountFormat($row['subtotal']) . '</td>
                         </tr>';
                         $str_1="";
