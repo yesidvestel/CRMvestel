@@ -3162,5 +3162,13 @@ foreach ($lista as $key => $value) {
 				
         
     }
+	public function historial_inv(){
+
+        $head['title'] = "Historial cobranza";
+        $head['usernm'] = $this->aauth->get_user()->username;
+        $this->load->view('fixed/header', $head);
+        $this->load->view('invoices/historial_inv');
+        $this->load->view('fixed/footer');
+	}
 
 }

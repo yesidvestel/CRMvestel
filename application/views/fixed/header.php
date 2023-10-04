@@ -281,6 +281,9 @@ $lista_permisos1=$this->db->query("SELECT permisos_usuario.id,permisos_usuario.i
                         <li>
                             <a href="<?php echo base_url(); ?>invoices/notas">Notas Credito/Debito</a>
                         </li>
+						<li>
+                            <a href="<?php echo base_url(); ?>invoices/historial_inv"><?php echo $this->lang->line('') ?>Historial</a>
+                        </li>
                     </ul>
                 </li>
                 <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "rec_invoices") {
@@ -965,6 +968,9 @@ $lista_permisos1=$this->db->query("SELECT permisos_usuario.id,permisos_usuario.i
                         <?php } if ($lista_permisos_us['conotas'] != null) { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>invoices/notas">Notas Credito/Debito</a>
+                        </li>
+						<li>
+                            <a href="<?php echo base_url(); ?>invoices/historial_inv"><?php echo $this->lang->line('') ?>Historial</a>
                         </li>
                         <?php } ?>
                     </ul>
