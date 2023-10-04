@@ -1283,7 +1283,8 @@ $writer->writeSheetHeader($nombrey, $headers,$col_options);
     {
         
         $customer_id = $this->input->post('customer_id');
-        $invocieno = $this->input->post('invocieno');
+        $invocieno1 = $this->invocies->lastinvoice();
+        $invocieno = $invocieno1+1;
         $invoicedate = $this->input->post('invoicedate');
         $invocieduedate = $this->input->post('invocieduedate');
         $notes = $this->input->post('notes');
