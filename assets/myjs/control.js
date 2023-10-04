@@ -419,9 +419,10 @@ function sendBill(message) {
 
 $(document).on('click', "#cancel-bill", function (e) {
     e.preventDefault();
-
+	
     $('#cancel_bill').modal({backdrop: 'static', keyboard: false}).one('click', '#send', function () {
-        var acturl='transactions/cancelinvoice';
+		var motivo =$("#motivo").val();
+        var acturl='transactions/cancelinvoice?motivo='+motivo;
         cancelBill(acturl);
 
 

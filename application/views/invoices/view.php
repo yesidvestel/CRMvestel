@@ -616,6 +616,11 @@
             </div>
             <div class="modal-body">
                 <form class="cancelbill">
+					<div class="row">
+                        <div class="col-xs-12 mb-1"><label
+                                    for="shortnote">Motivo</label>
+                            <input type="text" class="form-control" name="motivo" id="motivo"></div>
+                    </div>
                     <div class="row">
                         <div class="col-xs-12">
                             <?php echo $this->lang->line('You can not revert'); ?>
