@@ -259,7 +259,13 @@ class Products_model extends CI_Model
 
     public function edit($pid, $catid, $warehouse, $sede, $product_name, $product_code,  $product_price, $factoryprice, $taxrate, $disrate, $product_qty,$product_qty_alert,$product_desc,$valores_servicio,$tipo_servicio,$servicio_pertenece_a)
     {
-        $data = array(
+		//actualizar producto en facturas que esten relacionadas
+		$antproducto=$this->db->get_where('products',array('pid'=>$pid))->row();		
+        $this->db->where('combo', $antproducto->product_name);
+		$this->db->set('combo', $product_name);
+		$this->db->update('invoices');
+		
+		$data = array(
             'pcat' => $catid,
             'warehouse' => $warehouse,
 			'sede' => $sede,
@@ -282,7 +288,6 @@ class Products_model extends CI_Model
         $this->db->where('pid', $pid);
 
         if ($this->db->update('products')) {
-
             $data_h=array();
             $data_h['modulo']="Inventarios";
             $data_h['accion']="Editar producto {update}";
