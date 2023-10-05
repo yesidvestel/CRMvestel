@@ -206,6 +206,8 @@
 																	echo $invoice['promo'];
 																}else if($invoice['promo2']!=0){
 																	echo $invoice['promo2'].'p';
+																}else{
+																	echo 0;
 																} ?>">
 														<?php if($invoice['promo']!=0){
 																	echo $invoice['promo']. ' meses';
