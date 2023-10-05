@@ -1749,7 +1749,7 @@ $this->load->model('customers_model', 'customers');
         }
         $this->invocies->procesar_pagos_adelantados($customer_id);
         $this->customers->organiza_para_facturacion_electronica_ottis($customer_id);
-
+        $this->db->query("UPDATE `invoices` SET `status` = 'due' WHERE `invoices`.`pamnt` = 0 and total!=0 and status='partial'; ");
     }
 	 public function rec_status()
     {
