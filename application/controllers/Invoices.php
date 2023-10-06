@@ -382,6 +382,16 @@ $this->load->model('customers_model', 'customers');
             foreach ($invoices as $key => $value2) {
                 $time_dateinv=strtotime($value2->invoicedate);
                 $dtime2=new DateTime($value2->invoicedate);
+                $df1=new DateTime("1999-01-01");
+                if(isset($value2->fecha_modifica_promo)){
+                    $df1=new DateTime($value2->fecha_modifica_promo);    
+                }
+
+                $df2=new DateTime("1999-01-01");
+                if(isset($value2->fecha_modifica_promo2)){
+                    $df2=new DateTime($value2->fecha_modifica_promo2);    
+                }
+                
                 //para omitir los traslados y afiliaciones
                  $afiliacion_traslado_omitir=$this->db->query('SELECT * FROM `invoice_items` where (product like "%afiliacion%" or product like "%traslado%") and tid="'.$invoice->tid.'"')->result_array();
                  if($value2->tipo_factura=="Fija" || $value2->tipo_factura=="Nota Credito" || $value2->tipo_factura=="Nota Debito"){
@@ -394,14 +404,19 @@ $this->load->model('customers_model', 'customers');
                 }else if($date1->format("Y-m")==$dtime2->format("Y-m")){
                     $_customer_factura_creada=true;
                    // echo "Ya tiene factura 2 ".$sdate1." | ".$value2->invoicedate;
-                }else if(isset($value2->promo) && $value2->promo>0){
-                    $value2->promo--;
-                    $this->db->update("invoices",array("promo"=>$value2->promo),array("tid"=>$value2->tid));
+                }else if($value2->promo!=null && ( $value2->promo>0 ||  $date1->format("Y-m")==$df1->format("Y-m")  )  ) {
+
                     $_customer_factura_creada=true;
-                }else if(isset($value2->promo2) && $value2->promo2==1){
+                    if($date1->format("Y-m")!=$df1->format("Y-m")){
+                        $value2->promo--;
+                        $this->db->update("invoices",array("promo"=>$value2->promo,"fecha_modifica_promo"=>$date1->format("Y-m-d")),array("tid"=>$value2->tid));
+                    }
                     
-                    $this->db->update("invoices",array("promo2"=>0),array("tid"=>$value2->tid));
-                    $_customer_factura_creada=true;
+                }else if($value2->promo2!=null && ($value2->promo2==1 || $date1->format("Y-m")==$df2->format("Y-m") )) {
+                      $_customer_factura_creada=true;
+                      if($date1->format("Y-m")!=$df2->format("Y-m")){
+                          $this->db->update("invoices",array("promo2"=>0,"fecha_modifica_promo2"=>$date1->format("Y-m-d") ),array("tid"=>$value2->tid));
+                      }
                 }else{ 
                                                                                  
                     $internet="";
@@ -712,6 +727,9 @@ $list_servs=$this->invocies->servicios_adicionales_recurrentes($value2->tid);
                                 
                                 if(isset($value2->promo2) && $value2->promo2>1){
                                     $factura_data['promo2']=$value2->promo2-1;
+                                }
+                                if(isset($value2->promo) && $value2->promo==0){
+                                    $factura_data['promo']=null;
                                 }
 
 

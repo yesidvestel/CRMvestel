@@ -858,3 +858,9 @@ cambios en facturacion electronica
 ALTER TABLE `invoices` ADD `facturacion_electronica` ENUM('Crear Factura Electronica','Factura Electronica Creada') NULL AFTER `tipo_retencion`;
 ALTER TABLE `invoices` ADD `fecha_f_electronica_generada` DATE NULL AFTER `facturacion_electronica`;
 ALTER TABLE `invoices` ADD `servicios_facturados_electronicamente` VARCHAR(50) NULL AFTER `fecha_f_electronica_generada`;
+ALTER TABLE `invoices` ADD `fecha_modifica_promo` DATE NULL AFTER `promo2`;
+ALTER TABLE `invoices` CHANGE `promo` `promo` INT(10) NULL DEFAULT NULL; 
+UPDATE `invoices` SET `promo` = NULL WHERE `invoices`.`promo` = 0; 
+ALTER TABLE `invoices` ADD `fecha_modifica_promo2` DATE NULL AFTER `promo2`;
+ALTER TABLE `invoices` CHANGE `promo2` `promo2` INT(10) NULL DEFAULT NULL; 
+UPDATE `invoices` SET `promo2` = NULL WHERE `invoices`.`promo2` = 0; 
