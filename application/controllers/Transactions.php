@@ -204,7 +204,7 @@ class Transactions extends CI_Controller
         }else{*/
             $cus_existe=$this->db->get_where("customers",array("documento"=>$varx->documento))->row();
             if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_vestel"){
-                $cus_existe=$this->db->get_where("customers",array("id"=>$varx->id_customer))->row();
+                $cus_existe=$this->db->get_where("customers",array("id"=>$varx->documento))->row();
             }
             if(isset($cus_existe)){
                 $_POST['fecha_x']=$varx->fecha;
