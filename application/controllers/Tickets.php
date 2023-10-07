@@ -758,7 +758,7 @@ class Tickets Extends CI_Controller
 		if($status=="Realizando"){
 			$q=$this->db->query("select * from tickets where asignado='".$ticket->asignado."' and status='Realizando'")->result();
 			$es_valido=true;
-            if(count($q)>0){
+            if(count($q)>0 && $ticket->asignado!=null  && $ticket->asignado!=""){
                 $es_valido=false;
                 $txt_error.="<li>Ya tiene una orden abierta <a href='".base_url()."tickets/thread?id=".$q[0]->idt."'><strong>".$q[0]->codigo."</strong></a></li>";  
             }
