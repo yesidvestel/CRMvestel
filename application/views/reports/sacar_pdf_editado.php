@@ -575,8 +575,13 @@ $array_afiliaciones=array();
 						if($sumatoria_items<$val1['credit'] ){
 							$diference=$val1['credit']-$sumatoria_items;
 							if($diference>1){
-								$conteo=count($items_tocados);					
-								$valores_por_cada_uno=$diference/$conteo;
+								$conteo=count($items_tocados);	
+								$valores_por_cada_uno=$diference;
+								if($conteo>0){
+									$valores_por_cada_uno=$diference/$conteo;					
+								}
+									
+								
 								foreach ($items_tocados as $key1 => $value2) {
 									if($key1=="Internet"){
 										$valores_mes_anterior['Internet']['monto']+=$valores_por_cada_uno;
@@ -595,7 +600,10 @@ $array_afiliaciones=array();
 							$diference=$sumatoria_items-$val1['credit'];
 							if($diference>1){
 								$conteo=count($items_tocados);
-								$valores_por_cada_uno=$diference/$conteo;
+								$valores_por_cada_uno=$diference;
+								if($conteo>0){
+									$valores_por_cada_uno=$diference/$conteo;					
+								}
 								foreach ($items_tocados as $key1 => $value2) {
 									if($key1=="Internet"){
 										$valores_mes_anterior['Internet']['monto']-=$valores_por_cada_uno;
