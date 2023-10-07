@@ -138,6 +138,11 @@
 								<option value="Qp-com">Qp-com</option>
 								<option value="Optictimes">Optictimes</option>
 								<option value="Powest">Powest</option>
+								<option value="ZTE">ZTE</option>
+								<option value="Grandstream">Grandstream</option>
+								<option value="Click">Click</option>
+								<option value="Titanium">Titanium</option>
+								<option value="Targett">Targett</option>
 							</select>
                         </div>
                     </div>
