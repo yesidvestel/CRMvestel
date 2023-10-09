@@ -563,8 +563,10 @@ $this->load->model('customers_model', 'customers');
 
                             if($_tiene_internet==true && ($value2->estado_combo==null || $value2->estado_combo=='null')){
                                 
-                                $str1=str_replace(" ", "", strtolower($internet));
-                                $producto_internet=$this->db->query('SELECT * FROM products WHERE lower(REPLACE(product_name," ","")) = "'.$str1.'"')->result_array();
+                                //$str1=str_replace(" ", "", strtolower($internet));
+                                $str1=$internet;
+                                //$producto_internet=$this->db->query('SELECT * FROM products WHERE lower(REPLACE(product_name," ","")) = "'.$str1.'"')->result_array();
+                                $producto_internet=$this->db->query('SELECT * FROM products WHERE product_name = "'.$str1.'"')->result_array();
                                 $producto_internet=$producto_internet[0];
                                 $internet_data['tid']=$factura_data['tid'];
                                 $internet_data['pid']=$producto_internet['pid'];
