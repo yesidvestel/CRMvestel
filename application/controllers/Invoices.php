@@ -1645,7 +1645,7 @@ $writer->writeSheetHeader($nombrey, $headers,$col_options);
                             }
 
 				$username = $this->aauth->get_user()->username;
-				if ( ( ($television !== "no") || $combo !== "no") && $_POST['crear_ticket']!="no" ){
+				if ( ( $television !== "no" || $combo !== "no") && $_POST['crear_ticket']==="si" ){
 				$data2['codigo']=$tidactualmasuno[0]->codigo;	
                 $data2['subject']='servicio';
 				$data2['detalle']='Instalacion';	
@@ -1664,6 +1664,7 @@ $writer->writeSheetHeader($nombrey, $headers,$col_options);
                             $data_h['accion']="Nueva Factura {insert}";
                             $data_h['id_usuario']=$this->aauth->get_user()->id;
                             $data_h['fecha']=date("Y-m-d H:i:s");
+                            $data2['dato_crear_ticket']=$_POST['crear_ticket'];
                             $data_h['descripcion']=json_encode($data2);
                             $data_h['id_fila']=$this->db->insert_id();
                             $data_h['tabla']="tickets";
