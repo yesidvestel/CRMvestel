@@ -621,7 +621,7 @@ $fcontrato = $details['f_contrato'];
 			</table>
 			<table>
 				<tr>
-					<td ><img src="<?php echo FCPATH . 'userfiles/company/' . $this->config->item('logo') ?>" style="max-width:50%;align-content: center"></td>
+					<td align="center" ><img src="<?php echo FCPATH . 'userfiles/company/' . $this->config->item('logo') ?>" style="max-width:50%;"></td>
 				</tr>
 			</table>
 			<table>
