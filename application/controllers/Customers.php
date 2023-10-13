@@ -2282,7 +2282,7 @@ public function ajax_graficas2(){
             $msg.="<li>Campo de email no puede ser igual a como se encuentra debe de ser diferente</li>";
        }
        if($msg=="<ul>"){
-            include (APPPATH."libraries\VerifyEmail.php");
+            include (APPPATH."libraries/VerifyEmail.php");
         
          $API = new VerifyEmail();
          if(isset($_POST['act2_email']) && $_POST['es_correcto']=="0" && !$API->validate($_POST['act2_email'])){
