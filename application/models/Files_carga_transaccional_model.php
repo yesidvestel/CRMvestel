@@ -98,27 +98,73 @@ if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_vestel"){
 }
 $creo=false;
 if(count($cuentas_del_usuario)>1){
-    foreach ($cuentas_del_usuario as $key => $value) {
-        $due=$this->customers->due_details($value['id']);
-        $deuda=$due['total']-$due['pamnt'];
-        $monto_pagar=$data->monto;
-        if($deuda>0){
-            if($data->monto>=$deuda && $key<(count($cuentas_del_usuario)-1) ){
-                $monto_pagar=$deuda;
-                $data->monto=$data->monto-$deuda;
-            }else{
-                $data->monto=0;
+$array_pago_users=array();
+$monto_equitativo=($data->monto/count($cuentas_del_usuario));
+$data_monto_resp=$data->monto;
+$monto_sobrante=0;
+$deuda_total=0;
+$deuda_totalx=0;
+$salir=true;
+do {
+       foreach ($cuentas_del_usuario as $key => $value) {
+            $due=$this->customers->due_details($value['id']);
+            $deuda=$due['total']-$due['pamnt'];
+            $deuda_total=0;
+            if(isset($array_pago_users[$value['id']]['deuda'])){
+                $deuda=$array_pago_users[$value['id']]['deuda'];
             }
-            $creo=$this->customers->pay_invoices($value['id'],$monto_pagar,$data->ref_efecty);
-        }
-        if($data->monto<=0){
-            break;
+            $monto_pagar=$monto_equitativo;
+            if($deuda>0){
+                //$monto_pagar=$deuda;
+                if($monto_equitativo>$deuda){
+                    $monto_sobrante=$monto_sobrante+($monto_pagar-$deuda);
+                    $monto_pagar=$deuda;
+                    $deuda_total=0;
+                }else if($monto_equitativo<$deuda){
+                    $deuda_total=$deuda-$monto_equitativo;
+                }else{
+                    $deuda_total=0;
+                }
+            }else{
+                $monto_sobrante+=$monto_equitativo;
+                $monto_pagar=0;
+                $deuda_total=0;
+            }
+            $deuda_totalx+=$deuda_total;
+            $array_pago_users[$value['id']]['monto_pagar']+=$monto_pagar;
+            $array_pago_users[$value['id']]['deuda']=$deuda_total;
+           
+            
+    }
+    //var_dump($monto_sobrante);
+    //var_dump($array_pago_users);
+    //var_dump($deuda_totalx);
+    if($monto_sobrante>0){
+        $monto_equitativo=($monto_sobrante/count($cuentas_del_usuario));
+        if($deuda_totalx>0){
+            $deuda_totalx=0;
+            $salir=false;    
+        }else{
+            foreach ($array_pago_users as $key => $value) {
+                $array_pago_users[$key]['monto_pagar']+=$monto_equitativo;
+            }
+            $salir=true;
         }
         
-    } 
-    if($data->monto>0){
-            $creo=$this->customers->pay_invoices($cuentas_del_usuario[0]['id'],$data->monto,$data->ref_efecty);
-    }   
+        
+        
+        
+    }else {
+        $salir=true;
+    }
+} while (!$salir);
+ 
+
+foreach ($array_pago_users as $key => $value) {
+    $creo=$this->customers->pay_invoices($key,$value['monto_pagar'],$data->ref_efecty);
+}
+//nw code end
+   
 }else{
     $creo=$this->customers->pay_invoices($cs->id,$data->monto,$data->ref_efecty);
 }
