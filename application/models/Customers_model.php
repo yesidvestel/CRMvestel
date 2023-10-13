@@ -3229,7 +3229,7 @@ return $str;
         $datos_tarea['status']="Due";
         $datos_tarea['start']=$paydate;
         $datos_tarea['duedate']=$paydate;
-        $datos_tarea['eid']=8;
+        $datos_tarea['eid']=139;
         $datos_tarea['aid']=8;
         $datos_tarea['priority']="Medium";
         $datos_tarea['related']=0;

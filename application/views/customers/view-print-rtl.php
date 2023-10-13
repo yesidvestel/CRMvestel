@@ -613,11 +613,15 @@ $fcontrato = $details['f_contrato'];
 <div class="invoice-box">
 	<table width="100%">
 	<tr>
-		<td width="48%" > <!--COLUMNA IZQUIERDA-->
+		<td width="100%" style="font-size: 24px;line-height: normal;text-align: justify" > <!--COLUMNA IZQUIERDA-->
 			<table>
 				<tr>
-					<td ><img src="<?php echo FCPATH . 'userfiles/company/' . $this->config->item('logo') ?>" style="max-width:50%;"></td>
 					<td style="text-align: right"><h2>CONTRATO ÚNICO DE <br>SERVICIOS FIJOS </h2>No. <span style="border-bottom: 1px solid;"><?php echo $details['abonado'] ?></span></td>
+				</tr>
+			</table>
+			<table>
+				<tr>
+					<td align="center" ><img src="<?php echo FCPATH . 'userfiles/company/' . $this->config->item('logo') ?>" style="max-width:50%;"></td>
 				</tr>
 			</table>
 			<table>
@@ -628,12 +632,12 @@ $fcontrato = $details['f_contrato'];
 			</table>
 			<table border="1" >
 				<tr>
-					<td colspan="2" style="background-color: black;color: white; font-size: x-large;text-align: justify">
+					<td colspan="2" style="background-color: lightskyblue; font-size: x-large;text-align: justify;line-height: inherit">
 						Este contrato explica las condiciones para la prestación de los servicios entre usted y Future
 					  Solutions Development SAS nit 830.502.580-6, con Registro TIC RTIC96000418 por el que pagará mínimo
-					  mensualmente <span style="border-bottom: 1px solid;border-bottom-color: white"><?php echo amountFormat($totaltv+$inter) ?></span>. Este contrato
-					  tendrá vigencia de <span style="border-bottom: 1px solid;border-bottom-color: white">12</span> meses, contados a partir
-					  del <span style="border-bottom: 1px solid;border-bottom-color: white"><?php echo date("d/m/Y",strtotime($fcontrato)) ?></span>. El plazo máximo de instalación
+					  mensualmente <span style="border-bottom: 1px solid;"><?php echo amountFormat($totaltv+$inter) ?></span>. Este contrato
+					  tendrá vigencia de <span style="border-bottom: 1px solid;">12</span> meses, contados a partir
+					  del <span style="border-bottom: 1px solid;"><?php echo date("d/m/Y",strtotime($fcontrato)) ?></span>. El plazo máximo de instalación
 					  es de 15 días hábiles. Acepto que mi contrato se
 					  renueve sucesivamente y automáticamente por un plazo
 					  igual a la inicial.
@@ -642,7 +646,16 @@ $fcontrato = $details['f_contrato'];
 			</table>
 			<h4>EL SERVICIO</h4>
 			Con este contrato nos comprometemos a prestarle los servicios que usted elija*:
-			Telefonía Fija Internet fijo Televisión Servicios adicionales <span style="border-bottom: 1px solid;"><?php if ($servicios['television']!=="no"){ echo $servicios['television'];} if ($servicios['combo']!=="no"){ echo ' + '.$servicios['combo'];}if ($servicios['puntos']!=='0'){ echo ' + '.$servicios['puntos'].' Puntos';} ?></span>
+	<?php if ($servicios['television']!=="no"){ 
+		$marcartv='checked="true"';
+	}else{
+		$marcartv='';
+	} if ($servicios['combo']!=="no"){ 
+		$marcarint='checked="true"';
+	}else{
+		$marcarint='';
+	} ?>
+	Telefonía Fija <input type="checkbox"></input> Internet fijo <input type="checkbox" <?php echo $marcarint ?> ></input> Televisión <input type="checkbox" <?php echo $marcartv ?> ></input> Servicios adicionales<span style="border-bottom: 1px solid;">                     </span>
 			
 			Usted se compromete a pagar oportunamente el precio acordado. El servicio se activará a
 			más tardar el día <span style="border-bottom: 1px solid;"><?php echo date("d/m/Y",strtotime($fcontrato."+ 15 days")) ?></span>
@@ -655,6 +668,7 @@ $fcontrato = $details['f_contrato'];
 					  Identificación: <span style="border-bottom: 1px solid;"><?php echo $details['tipo_documento'].' '.$details['documento'] ?></span><br><br>
 					Correo electrónico: <span style="border-bottom: 1px solid;"><?php echo $details['email'] ?></span><br><br>
 					Teléfono de contacto: <span style="border-bottom: 1px solid;"><?php echo $details['celular'].' '.$details['celular2'] ?></span><br><br>
+					Nombre Beneficiario: <span style="border-bottom: 1px solid;"></span><br><br>
 					Dirección de servicio: <span style="border-bottom: 1px solid;"><?php
 					if($details['numero1']==='' || $details['numero1']===0 || $details['numero2']===0){
 						if($details['divnum1']==0){
@@ -694,10 +708,18 @@ $fcontrato = $details['f_contrato'];
 			<table border="1" width="100%">
   		<tbody>
     		<tr style="border-radius: 20px">
-      		<td style="font-size: 17px">
+      		<td style="font-size: 17px;line-height: inherit">
 				<h4>CONDICIONES COMERCIALES CARACTERÍSTICAS DEL PLAN</h4><br>
-				Contrato No.: <span style="border-bottom: 1px solid;"><?php echo $details['abonado'] ?></span><br><br>
-				Nombre/Razón Social: <span style="border-bottom: 1px solid;"> <?php echo $details['name'].' '.$details['dosnombre'].' '.$details['unoapellido'].' '.$details['dosapellido'] ?></span><br><br>
+				Velocidad contratada: <span style="border-bottom: 1px solid;"><?php if($servicios['television']!='no'){
+						$tv=$servicios['television'];
+					}else{
+						$tv='';
+					}if($servicios['combo']!='no'){
+						$int=$servicios['combo'];
+					}else{
+						$int='';
+					} echo $tv.' '.$int ?></span><br><br>
+				Nombre de plan: <span style="border-bottom: 1px solid;"> <?php echo $tv.' '.$int ?></span><br><br>
 				Tipo de Servicio: 
 				Residencial <span style="border-bottom: 1px solid;"><?php 
 						if($details['suscripcion']=='Residencial'){
@@ -736,12 +758,7 @@ $fcontrato = $details['f_contrato'];
 				velocidad de acceso a internet constante, sin límite de
 				descargas. El servicio se da por velocidad no por cantidad de
 				datos descargados.<br>
-				c. Facturación mes presente. La factura se envía por correo
-				electrónico dentro de los 20 primeros días y la misma tiene
-				fecha de vencimiento el día 03 del mes siguiente y
-				puede realizar el pago mediante EFECTY Convenio 112389 o
-				Botón de Pagos MI PAGO AMIGO en nuestra página web
-				www.ottis.com.co<br>
+				c. Facturación mes presente. La factura se envía por correo electrónico dentro de los 20 primeros días y la misma tiene fecha de vencimiento el día 03 del mes siguiente y puede realizar el pago presencial mediante EFECTY Convenio 112389, Jer Convenio 432 o pago en línea  MI PAGO AMIGO en nuestra página web www.ottis.com.co<br>
 				d. El costo de la instalación en caso de aplicar consiste en la
 				habilitación del servicio y las obras civiles básicas que se
 				requieran (préstamo de equipo de comunicaciones,
@@ -768,7 +785,7 @@ $fcontrato = $details['f_contrato'];
 		</td>
 		<td><!--CENTRO-->
 		</td>
-		<td style="font-size: 24px;line-height: normal;text-align: justify"><!--COLUMNA DERECHO-->
+		<td width="100%" style="font-size: 24px;line-height: normal;text-align: justify"><!--COLUMNA DERECHO-->
 			<h4>PRINCIPALES OBLIGACIONES DEL USUARIO</h4>
 						1) 	Pagar oportunamente los servicios prestados,
 							incluyendo los intereses de mora cuando haya
