@@ -1067,9 +1067,31 @@ foreach ($lista_tareas as $key => $value) {
     {
         $this->db->from('reports');
         // if($limit) $this->db->limit(12);
-        $this->db->order_by('id', 'DESC');
+        //$this->db->order_by('id', 'DESC');
         $query = $this->db->get();
         $result = $query->result_array();
+        return $result;
+    }
+	public function grupos()
+    {
+		$this->db->select('*');
+        $this->db->from('customers_group');
+        // if($limit) $this->db->limit(12);
+		$this->db->where('id >', 5);
+        $this->db->order_by('id', 'ASC');		
+        $query = $this->db->get();
+        $result = $query->result_array();
+        return $result;
+    }
+	public function grupos_list()
+    {
+		$this->db->select('*');
+        $this->db->from('customers_group');
+        // if($limit) $this->db->limit(12);
+		$this->db->where('id >', 5);
+        $this->db->order_by('id', 'ASC');		
+        $query = $this->db->get();
+        $result = $query->row_array();
         return $result;
     }
 	

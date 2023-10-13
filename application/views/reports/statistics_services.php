@@ -82,7 +82,7 @@
 								 <?php foreach ($x1 as $key => $row) { 
 									$datex = new DateTime($row['fecha']);?>	
 				            	<div class="col-md-6 mb-1"><!-- ['y','z','a','b','c','d','e','f','g','h','i','j'] -->
-							 
+							 	
 							<table>
 								<tr>
 								<td><?PHP echo $datex->format("d-m-Y") ?></td>
@@ -219,6 +219,51 @@
 									<td><?php echo $intsolo2+$tvsolo2+$combo2 ?></td>	
 									<td><?php echo amountFormat($row['debido_ret_vill']) ?></td>
 								</tr>
+								<?php foreach ($grupos as $row2) { 
+								$cod=$row2['id']; ?>
+								
+								<tr>
+									<td rowspan="5"><?php echo $row2['title'] ?></td>	
+									<td>Activo</td>	
+									<td><?php echo $intsolo=$row['n_internet_'.$cod]-$row['internet_y_tv_act_'.$cod] ?></td>	
+									<td><?php echo $combo=$row['internet_y_tv_act_'.$cod] ?></td>	
+									<td><?php echo $tvsolo=$row['n_tv_'.$cod]-$row['internet_y_tv_act_'.$cod] ?></td>	
+									<td><?php echo $intsolo+$tvsolo+$combo ?></td>	
+									<td><?php echo amountFormat($row['debido_act_'.$cod]) ?></td>
+								</tr>
+								<tr>	
+									<td>Cortado</td>	
+									<td><?php echo $intsolo2=$row['cor_int_'.$cod]-$row['internet_y_tv_cor_'.$cod] ?></td>	
+									<td><?php echo $combo2=$row['internet_y_tv_cor_'.$cod] ?></td>	
+									<td><?php echo $tvsolo2=$row['cor_tv_'.$cod]-$row['internet_y_tv_cor_'.$cod] ?></td>	
+									<td><?php echo $intsolo2+$tvsolo2+$combo2 ?></td>	
+									<td><?php echo amountFormat($row['debido_cor_'.$cod]) ?></td>	
+								</tr>
+								<tr>	
+									<td>Cartera</td>	
+									<td><?php echo $intsolo2=$row['car_int_'.$cod]-$row['internet_y_tv_car_'.$cod] ?></td>	
+									<td><?php echo $combo2=$row['internet_y_tv_car_'.$cod] ?></td>	
+									<td><?php echo $tvsolo2=$row['car_tv_'.$cod]-$row['internet_y_tv_car_'.$cod] ?></td>	
+									<td><?php echo $intsolo2+$tvsolo2+$combo2 ?></td>	
+									<td><?php echo amountFormat($row['debido_car_'.$cod]) ?></td>	
+								</tr>
+								<tr>	
+									<td>Suspendido</td>	
+									<td><?php echo $intsolo2=$row['sus_int_'.$cod]-$row['internet_y_tv_sus_'.$cod] ?></td>	
+									<td><?php echo $combo2=$row['internet_y_tv_sus_'.$cod] ?></td>	
+									<td><?php echo $tvsolo2=$row['sus_tv_'.$cod]-$row['internet_y_tv_sus_'.$cod] ?></td>	
+									<td><?php echo $intsolo2+$tvsolo2+$combo2 ?></td>	
+									<td><?php echo amountFormat($row['debido_sus_'.$cod]) ?></td>
+								</tr>
+								<tr>	
+									<td>Retirado</td>	
+									<td><?php echo $intsolo2=$row['ret_int_'.$cod]-$row['internet_y_tv_ret_'.$cod] ?></td>	
+									<td><?php echo $combo2=$row['internet_y_tv_ret_'.$cod] ?></td>	
+									<td><?php echo $tvsolo2=$row['ret_tv_'.$cod]-$row['internet_y_tv_ret_'.$cod] ?></td>	
+									<td><?php echo $intsolo2+$tvsolo2+$combo2 ?></td>	
+									<td><?php echo amountFormat($row['debido_ret_'.$cod]) ?></td>
+								</tr>
+								<?php } ?>
 								</table>
 									
 				            	</div>
@@ -246,10 +291,33 @@ var datos={
 		 if (in_array(0, $sede_a)) { ?>
         data: [
             <?php foreach ($lista_estadisticas as $key => $row) {
+			$sedesmas=0;
+			$sedestv=0;
+			$sedescorint=0;
+			$sedescortv=0;
+			$sedescarint=0;
+			$sedescartv=0;
+			$sedessusint=0;
+			$sedessustv=0;
+			$sedesretint=0;
+			$sedesrettv=0;
             $datex = new DateTime($row['fecha']);
+			 foreach ($grupos as $row2) {
+				 $cod=$row2['id'];
+				 $sedesmas+=$row['n_internet_'.$cod];
+				 $sedestv+=$row['n_tv_'.$cod];
+				 $sedescorint+=$row['cor_int_'.$cod];
+				 $sedescortv+=$row['cor_tv_'.$cod];
+				 $sedescarint+=$row['car_int_'.$cod];
+				 $sedescartv+=$row['car_tv_'.$cod];
+				 $sedessusint+=$row['sus_int_'.$cod];
+				 $sedessustv+=$row['sus_tv_'.$cod];
+				 $sedesretint+=$row['ret_int_'.$cod];
+				 $sedesrettv+=$row['ret_tv_'.$cod];
+			 }
             //$num = cal_days_in_month(CAL_GREGORIAN, $row['month'], $row['year']);
-            echo "{ x: '".($datex->format("Y-m-d"))."',z: " . intval($row['n_internet']+$row['n_internet_vill']+$row['n_internet_mon']) . ",a: " . intval($row['n_tv']+$row['n_tv_vill']+$row['n_tv_mon']) .",b: " . intval($row['cor_int']+$row['cor_int_vill']+$row['cor_int_mon']) .",c: " . intval($row['cor_tv']+$row['cor_tv_vill']+$row['cor_tv_mon']) .",d: " . intval($row['car_int']+$row['car_int_vill']+$row['car_int_mon']) .",e: " . intval($row['car_tv']+$row['car_tv_vill']+$row['car_tv_mon']) .",f: " . intval($row['sus_int']+$row['sus_int_vill']+$row['sus_int_mon']) .",g: " . intval($row['sus_tv']+$row['sus_tv_vill']+$row['sus_tv_mon']) .",h: " . intval($row['ret_int']+$row['ret_int_vill']+$row['ret_int_mon']) .",i: " . intval($row['ret_tv']+$row['ret_tv_vill']+$row['ret_tv_mon']) ."},";//,z: " . intval($tipos['instalaciones_tv'][$key]['numero']) . "
-            
+            echo "{ x: '".($datex->format("Y-m-d"))."',z: " . intval($row['n_internet']+$row['n_internet_vill']+$row['n_internet_mon']+$sedesmas) . ",a: " . intval($row['n_tv']+$row['n_tv_vill']+$row['n_tv_mon']+$sedestv) .",b: " . intval($row['cor_int']+$row['cor_int_vill']+$row['cor_int_mon']+$sedescorint) .",c: " . intval($row['cor_tv']+$row['cor_tv_vill']+$row['cor_tv_mon']+$sedescortv) .",d: " . intval($row['car_int']+$row['car_int_vill']+$row['car_int_mon']+$sedescarint) .",e: " . intval($row['car_tv']+$row['car_tv_vill']+$row['car_tv_mon']+$sedescartv) .",f: " . intval($row['sus_int']+$row['sus_int_vill']+$row['sus_int_mon']+$sedessusint) .",g: " . intval($row['sus_tv']+$row['sus_tv_vill']+$row['sus_tv_mon']+$sedessustv) .",h: " . intval($row['ret_int']+$row['ret_int_vill']+$row['ret_int_mon']+$sedesretint) .",i: " . intval($row['ret_tv']+$row['ret_tv_vill']+$row['ret_tv_mon']+$sedesrettv) ."},";//,z: " . intval($tipos['instalaciones_tv'][$key]['numero']) . "
+			 
         } ?>
 
         ],

@@ -1255,6 +1255,7 @@ $lista_customers_activos=$this->db->query("select * from customers where (gid='2
         $datos=array("lista_estadisticas"=>$lista_estadisticas);
 		$this->load->model('dashboard_model');
 		$datos['list_users'] = $this->dashboard_model->lista_usuarios();
+		$datos['grupos'] = $this->reports->grupos();
         $head['title'] = "Por estados";
         $head['usernm'] = $this->aauth->get_user()->username;
         $this->load->view("fixed/header");
@@ -1265,7 +1266,7 @@ $lista_customers_activos=$this->db->query("select * from customers where (gid='2
 public function statistics_services(){
     $extraccion_dia=$this->db->get_where("estadisticas_servicios",array("fecha"=>date("Y-m-d")))->row();
     $data=array();
-    ini_set('memory_limit', '-1');
+    ini_set('memory_limit', '1500000');
     if(empty($extraccion_dia) || (isset($_GET['tipo']) && $_GET['tipo']=="process")){
         $lista_customers_activos=$this->db->query("select * from customers where gid='2' and  (usu_estado='Activo' or usu_estado='Compromiso')")->result();
         $lista_customers_cortados=$this->db->query("select * from customers where gid='2' and usu_estado='Cortado'")->result();
@@ -1299,6 +1300,7 @@ public function statistics_services(){
         $obtenido_suspendidos_mon=$this->customers->conteo($lista_mon_suspendidos);
         $obtenido_retirado_mon=$this->customers->conteo($lista_mon_retirado);
 		
+			
         $data['n_internet']=$obtenido_activos['net']-$obtenido_activos['activo_con_algun_servicio'];
         $data['n_tv']=$obtenido_activos['tv']-$obtenido_activos['int_tvcor'];
         $data['internet_y_tv']=$obtenido_activos['internet_y_tv']-($obtenido_activos['int_tvcor']+$obtenido_activos['activo_con_algun_servicio']);
@@ -1360,7 +1362,44 @@ public function statistics_services(){
         $data['debido_car_mon']=$obtenido_cartera_mon['deuda_todos'];
         $data['debido_sus_mon']=$obtenido_suspendidos_mon['deuda_todos'];
         $data['debido_ret_mon']=$obtenido_retirado_mon['deuda_todos'];
+		$grupos=$this->reports->grupos();
+		foreach ($grupos as $row2) {
+			$adi=$row2['id'];
+			$lista_activos=$this->db->query("select * from customers where gid='".$adi."' and  (usu_estado='Activo' or usu_estado='Compromiso')")->result();
+			$lista_cortados=$this->db->query("select * from customers where gid='".$adi."' and usu_estado='Cortado'")->result();
+			$lista_cartera=$this->db->query("select * from customers where gid='".$adi."' and usu_estado='Cartera'")->result();
+			$lista_suspendidos=$this->db->query("select * from customers where gid='".$adi."' and usu_estado='Suspendido'")->result();
+			$lista_retirado=$this->db->query("select * from customers where gid='".$adi."' and usu_estado='Retirado'")->result();
+			//var_dump($lista_retirado);
+			$obtenido_activos=$this->customers->conteo($lista_activos);
+			$obtenido_cortados=$this->customers->conteo($lista_cortados);
+			$obtenido_cartera=$this->customers->conteo($lista_cartera);
+			$obtenido_suspendidos=$this->customers->conteo($lista_suspendidos);
+			$obtenido_retirado=$this->customers->conteo($lista_retirado);
+			//array
+		$data['n_internet_'.$adi]=$obtenido_activos['net']-$obtenido_activos['activo_con_algun_servicio'];
+        $data['n_tv_'.$adi]=$obtenido_activos['tv']-$obtenido_activos['int_tvcor'];
+        $data['internet_y_tv_act_'.$adi]=$obtenido_activos['internet_y_tv']-($obtenido_activos['activo_con_algun_servicio']+$obtenido_activos['int_tvcor']);
+        $data['cor_int_'.$adi]=$obtenido_cortados['internetcor'];
+        $data['cor_tv_'.$adi]=$obtenido_cortados['tvcor'];
+        $data['internet_y_tv_cor_'.$adi]=$obtenido_cortados['internet_y_tv_cor'];
+        $data['car_int_'.$adi]=$obtenido_cartera['net'];
+        $data['car_tv_'.$adi]=$obtenido_cartera['tv'];
+        $data['internet_y_tv_car_'.$adi]=$obtenido_cartera['internet_y_tv'];
+        $data['sus_int_'.$adi]=$obtenido_suspendidos['internet_sus'];
+        $data['sus_tv_'.$adi]=$obtenido_suspendidos['tv_sus'];
+        $data['internet_y_tv_sus_'.$adi]=$obtenido_suspendidos['internet_y_tv'];
+        $data['ret_int_'.$adi]=$obtenido_retirado['net'];
+        $data['ret_tv_'.$adi]=$obtenido_retirado['tv'];
+        $data['internet_y_tv_ret_'.$adi]=$obtenido_retirado['internet_y_tv'];
+        $data['debido_act_'.$adi]=$obtenido_activos['deuda_todos'];
+        $data['debido_cor_'.$adi]=$obtenido_cortados['deuda_todos'];
+        $data['debido_car_'.$adi]=$obtenido_cartera['deuda_todos'];
+        $data['debido_sus_'.$adi]=$obtenido_suspendidos['deuda_todos'];
+        $data['debido_ret_'.$adi]=$obtenido_retirado['deuda_todos'];
         $data['fecha']=date("Y-m-d");
+		}
+		
         if(empty($extraccion_dia)){
             $this->db->insert("estadisticas_servicios",$data);    
         }else{
