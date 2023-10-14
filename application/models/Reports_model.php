@@ -1077,19 +1077,21 @@ foreach ($lista_tareas as $key => $value) {
 		$this->db->select('*');
         $this->db->from('customers_group');
         // if($limit) $this->db->limit(12);
-		$this->db->where('id >', 5);
+		if($this->config->item('ctitle')==='VESTEL S.A.S'){
+			$this->db->where('id >', 5);
+		}		
         $this->db->order_by('id', 'ASC');		
         $query = $this->db->get();
         $result = $query->result_array();
         return $result;
     }
-	public function grupos_list()
+	public function grupos_list($col)
     {
 		$this->db->select('*');
         $this->db->from('customers_group');
         // if($limit) $this->db->limit(12);
-		$this->db->where('id >', 5);
-        $this->db->order_by('id', 'ASC');		
+		$this->db->where('id', $col);
+        //$this->db->order_by('id', 'ASC');		
         $query = $this->db->get();
         $result = $query->row_array();
         return $result;

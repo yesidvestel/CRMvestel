@@ -96,9 +96,10 @@
 								<th>Total</th>	
 								<th>Cartera</th>	
 								</tr>
+								<?PHP if($this->config->item('ctitle')=='VESTEL S.A.S'){ ?>
 								<tr>
 									<td rowspan="5">Yopal</td>	
-									<td>Activo</td>	
+									<td>Activo<?php echo $sede['id'] ?></td>	
 									<td><?php echo $intsolo=$row['n_internet']-$row['internet_y_tv'] ?></td>	
 									<td><?php echo $combo=$row['internet_y_tv'] ?></td>	
 									<td><?php echo $tvsolo=$row['n_tv']-$row['internet_y_tv'] ?></td>	
@@ -219,7 +220,7 @@
 									<td><?php echo $intsolo2+$tvsolo2+$combo2 ?></td>	
 									<td><?php echo amountFormat($row['debido_ret_vill']) ?></td>
 								</tr>
-								<?php foreach ($grupos as $row2) { 
+								<?php } foreach ($grupos as $row2) { 
 								$cod=$row2['id']; ?>
 								
 								<tr>
@@ -315,8 +316,31 @@ var datos={
 				 $sedesretint+=$row['ret_int_'.$cod];
 				 $sedesrettv+=$row['ret_tv_'.$cod];
 			 }
+			 if($this->config->item('ctitle')=='VESTEL S.A.S'){
+				 $vestel=$row['n_internet']+$row['n_internet_vill']+$row['n_internet_mon'];
+				 $vestel2=$row['n_tv']+$row['n_tv_vill']+$row['n_tv_mon'];
+				 $vestel3=$row['cor_int']+$row['cor_int_vill']+$row['cor_int_mon'];
+				 $vestel4=$row['cor_tv']+$row['cor_tv_vill']+$row['cor_tv_mon'];
+				 $vestel5=$row['car_int']+$row['car_int_vill']+$row['car_int_mon'];
+				 $vestel6=$row['car_tv']+$row['car_tv_vill']+$row['car_tv_mon'];
+				 $vestel7=$row['sus_int']+$row['sus_int_vill']+$row['sus_int_mon'];
+				 $vestel8=$row['sus_tv']+$row['sus_tv_vill']+$row['sus_tv_mon'];
+				 $vestel9=$row['ret_int']+$row['ret_int_vill']+$row['ret_int_mon'];
+				 $vestel10=$row['ret_tv']+$row['ret_tv_vill']+$row['ret_tv_mon'];
+			 }else{
+				 $vestel=0;
+				 $vestel2=0;
+				 $vestel3=0;
+				 $vestel4=0;
+				 $vestel5=0;
+				 $vestel6=0;
+				 $vestel7=0;
+				 $vestel8=0;
+				 $vestel9=0;
+				 $vestel10=0;
+			 }
             //$num = cal_days_in_month(CAL_GREGORIAN, $row['month'], $row['year']);
-            echo "{ x: '".($datex->format("Y-m-d"))."',z: " . intval($row['n_internet']+$row['n_internet_vill']+$row['n_internet_mon']+$sedesmas) . ",a: " . intval($row['n_tv']+$row['n_tv_vill']+$row['n_tv_mon']+$sedestv) .",b: " . intval($row['cor_int']+$row['cor_int_vill']+$row['cor_int_mon']+$sedescorint) .",c: " . intval($row['cor_tv']+$row['cor_tv_vill']+$row['cor_tv_mon']+$sedescortv) .",d: " . intval($row['car_int']+$row['car_int_vill']+$row['car_int_mon']+$sedescarint) .",e: " . intval($row['car_tv']+$row['car_tv_vill']+$row['car_tv_mon']+$sedescartv) .",f: " . intval($row['sus_int']+$row['sus_int_vill']+$row['sus_int_mon']+$sedessusint) .",g: " . intval($row['sus_tv']+$row['sus_tv_vill']+$row['sus_tv_mon']+$sedessustv) .",h: " . intval($row['ret_int']+$row['ret_int_vill']+$row['ret_int_mon']+$sedesretint) .",i: " . intval($row['ret_tv']+$row['ret_tv_vill']+$row['ret_tv_mon']+$sedesrettv) ."},";//,z: " . intval($tipos['instalaciones_tv'][$key]['numero']) . "
+            echo "{ x: '".($datex->format("Y-m-d"))."',z: " . intval($vestel+$sedesmas) . ",a: " . intval($vestel2+$sedestv) .",b: " . intval($vestel3+$sedescorint) .",c: " . intval($vestel4+$sedescortv) .",d: " . intval($vestel5+$sedescarint) .",e: " . intval($vestel6+$sedescartv) .",f: " . intval($vestel7+$sedessusint) .",g: " . intval($vestel8+$sedessustv) .",h: " . intval($vestel9+$sedesretint) .",i: " . intval($vestel10+$sedesrettv) ."},";//,z: " . intval($tipos['instalaciones_tv'][$key]['numero']) . "
 			 
         } ?>
 
@@ -350,6 +374,18 @@ var datos={
             $datex = new DateTime($row['fecha']);
             //$num = cal_days_in_month(CAL_GREGORIAN, $row['month'], $row['year']);
             echo "{ x: '".($datex->format("Y-m-d"))."',z: " . intval($row['n_internet_vill']) . ",a: " . intval($row['n_tv_vill']) .",b: " . intval($row['cor_int_vill']) .",c: " . intval($row['cor_tv_vill']) .",d: " . intval($row['car_int_vill']) .",e: " . intval($row['car_tv_vill']) .",f: " . intval($row['sus_int_vill']) .",g: " . intval($row['sus_tv_vill']) .",h: " . intval($row['ret_int_vill']) .",i: " . intval($row['ret_tv_vill']) ."},";//,z: " . intval($tipos['instalaciones_tv'][$key]['numero']) . "
+            
+        } ?>
+
+        ],
+		//DINAMICO
+		<?php } if ($sede['id']) { ?>
+        data: [
+            <?php foreach ($lista_estadisticas as $key => $row) {
+            $datex = new DateTime($row['fecha']);
+			$cod2=$sede['id'];
+            //$num = cal_days_in_month(CAL_GREGORIAN, $row['month'], $row['year']);
+            echo "{ x: '".($datex->format("Y-m-d"))."',z: " . intval($row['n_internet_'.$cod2]) . ",a: " . intval($row['n_tv_'.$cod2]) .",b: " . intval($row['cor_int_'.$cod2]) .",c: " . intval($row['cor_tv_'.$cod2]) .",d: " . intval($row['car_int_'.$cod2]) .",e: " . intval($row['car_tv_'.$cod2]) .",f: " . intval($row['sus_int_'.$cod2]) .",g: " . intval($row['sus_tv_'.$cod2]) .",h: " . intval($row['ret_int_'.$cod2]) .",i: " . intval($row['ret_tv_'.$cod2]) ."},";//,z: " . intval($tipos['instalaciones_tv'][$key]['numero']) . "
             
         } ?>
 
