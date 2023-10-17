@@ -97,7 +97,7 @@
                                         <div class="input-group">
                                             <div class="input-group-addon"><span class="icon-bookmark-o"
                                                                                  aria-hidden="true"></span></div>
-                                            <select type="text" class="form-control" placeholder="Reference #" name="refer" id="refer" onchange="cambia()">
+                                            <select type="text" class="form-control" placeholder="Reference #" name="refer" id="refer" <?php //echo 'onchange="cambia()"' ?> >
 												<?php
 												foreach ($sede as $row) {
 													$cid = $row['id'];
@@ -1078,7 +1078,8 @@
     <?php if($_SESSION[md5("variable_datos_pin")]['valida_tarifa_new_edit_invoice_read_only'] == "SI"){ ?>
         $(".prc").attr("readonly","true");
     <?php } ?>
-    cambia();
+    //cambia();
+     cargar_localidades_tr();
     var sede_actual=$("#refer option:selected").val();
     function cambia(){
         var sede_sel=$("#refer option:selected").val();
