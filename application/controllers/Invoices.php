@@ -357,6 +357,21 @@ $this->load->model("Notas_model","notas");
         $this->load->view('invoices/generar_facturas', $data);
         $this->load->view('fixed/footer');
     }
+    public function x1x(){
+        $customers_list = $this->db->query("select * from customers where usu_estado='' ")->result_array();
+        $x=0;
+        ob_clean();
+        foreach ($customers_list as $key => $value) {
+            $invoices = $this->db->select("*")->from("invoices")->where('csd='.$value['id'])->order_by('invoicedate',"DESC")->get()->result_array();
+            
+            if(count($invoices)>0 && $invoices[0]['ron']=="Activo"){
+                
+                $this->db->update("customers",array("usu_estado"=>"Activo"),array("id"=>$value['id']));
+                $this->db->update("invoices",array("notes"=>$invoices[0]['notes']."_marca_inv_antes_de_generar"),array("id"=>$invoices[0]['id']));
+            }
+        }
+        
+    }
     public function generar_facturas_action(){
         set_time_limit(20000);
         
