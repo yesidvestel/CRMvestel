@@ -59,6 +59,7 @@ class SiigoAPI
         $cOptions = [
             CURLOPT_HTTPHEADER => [
                 "Content-Type: application/json",
+                "Partner-Id: saves-crm-integration-siigo",
             ],
             CURLOPT_SSL_VERIFYPEER=>false,
         ];
@@ -105,6 +106,7 @@ class SiigoAPI
         $cOptions = [
             CURLOPT_HTTPHEADER => [
                 "Content-Type: application/json",
+                "Partner-Id: saves-crm-integration-siigo",
             ],
             CURLOPT_SSL_VERIFYPEER=>false,
         ];
@@ -150,6 +152,7 @@ curl_setopt_array($curl, array(
   CURLOPT_CUSTOMREQUEST => 'GET',
   CURLOPT_HTTPHEADER => array(
     'Content-Type: application/json',
+    "Partner-Id: saves-crm-integration-siigo",
     'Authorization: Bearer '.$_SESSION['siigo_token2']
   ),
 ));
@@ -175,6 +178,7 @@ curl_setopt_array($curl, array(
   CURLOPT_CUSTOMREQUEST => 'DELETE',
   CURLOPT_HTTPHEADER => array(
     'Content-Type: application/json',
+    "Partner-Id: saves-crm-integration-siigo",
     'Authorization: Bearer '.$_SESSION['siigo_token2']
   ),
 ));
@@ -208,6 +212,7 @@ echo $response;
             $cOptions = [
                 CURLOPT_HTTPHEADER => [
                     "Content-Type: application/json",
+                    "Partner-Id: saves-crm-integration-siigo",
                     "Authorization: Bearer $tokenx",
                 ],
                 CURLOPT_SSL_VERIFYPEER=>false,
@@ -246,6 +251,7 @@ echo $response;
             $cOptions = [
                 CURLOPT_HTTPHEADER => [
                     "Content-Type: application/json",
+                    "Partner-Id: saves-crm-integration-siigo",
                     "Authorization: Bearer $tokenx",
                     
                 ],
@@ -281,6 +287,7 @@ echo $response;
 
         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
           "Content-Type: application/json",
+          "Partner-Id: saves-crm-integration-siigo",
           "Authorization: Bearer $tokenx"
         ));
 
@@ -302,6 +309,7 @@ echo $response;
             $cOptions = [
                 CURLOPT_HTTPHEADER => [
                     "Content-Type: application/json",
+                    "Partner-Id: saves-crm-integration-siigo",
                     "Authorization: Bearer $tokenx",
                     
                 ],
