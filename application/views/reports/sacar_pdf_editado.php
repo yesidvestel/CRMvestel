@@ -486,7 +486,10 @@ $array_afiliaciones=array();
 						if($sumatoria_items<$val1['credit'] ){
 							$diference=$val1['credit']-$sumatoria_items;
 							if($diference>1){
-								$conteo=count($items_tocados);					
+								$conteo=count($items_tocados);	
+								if($conteo==0){
+									$conteo=1;
+								}				
 								$valores_por_cada_uno=$diference/$conteo;
 								foreach ($items_tocados as $key1 => $value2) {
 									if($key1=="Internet"){
@@ -506,6 +509,9 @@ $array_afiliaciones=array();
 							$diference=$sumatoria_items-$val1['credit'];
 							if($diference>1){
 								$conteo=count($items_tocados);
+								if($conteo==0){
+									$conteo=1;
+								}	
 								$valores_por_cada_uno=$diference/$conteo;
 								foreach ($items_tocados as $key1 => $value2) {
 									if($key1=="Internet"){
