@@ -2310,5 +2310,42 @@ public function ajax_graficas2(){
 
 
     }
+	public function paso_cartera()
+    {
+        // Encuentra los usuarios que han tenido un cambio en el campo estado dentro de los últimos 2 meses
+        $fechaLimite = date('Y-m-d', strtotime('-2 months')); // Fecha límite hace 2 meses
+        $usuariosConCambio = $this->db->select('id')
+                                      ->where('DATE(fecha_cambio) <', $fechaLimite)
+                                      ->where('usu_estado', 'Cortado')
+                                      ->get('customers')
+                                      ->result_array();
+		
+        // Para cada usuario con cambio, encuentra su última factura y actualiza el estado_usuario a 'cartera'
+        foreach ($usuariosConCambio as $usuario) {
+            // Encuentra la última factura para el usuario actual
+			$this->db->where('id', $usuario['id']);
+			$this->db->update('customers', array('usu_estado' => 'Cartera'));
+            $subquery = $this->db->select_max('id')
+                                 ->where('csd', $usuario['id'])
+                                 ->where('tipo_factura', 'Recurrente')
+                                 ->get('invoices');
+			
+            // Obtiene el ID de la última factura del usuario actual
+            $ultimaFactura = $subquery->row_array();
+
+            // Actualiza el campo estado_usuario a 'cartera' para la última factura del usuario actual
+            if ($ultimaFactura && isset($ultimaFactura['id'])) {
+                $this->db->where('id', $ultimaFactura['id']);
+                $this->db->update('invoices', array('ron' => 'Cartera'));
+            }
+        }
+
+        // Muestra la consulta SQL ejecutada (útil para depuración)
+         echo $this->db->last_query();
+        
+        echo json_encode(array('status' => 'Success', 'message' =>
+            $this->lang->line('UPDATED'), 'pstatus' => $status));
+       
+    }
 
 }

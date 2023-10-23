@@ -296,6 +296,7 @@
                                 </div>
                             </div>
                 </div>
+			<a href="#pop_model" data-toggle="modal" data-remote="false" class="btn btn-primary btn-md" title="Change Status">CARTERA</a>
                                                     
             <h5><?php echo $this->lang->line('') ?>USUARIOS</h5>
 
@@ -567,6 +568,34 @@
                 <input type="hidden" id="action-url" value="customers/delete_i">
                 <button type="button" data-dismiss="modal" class="btn btn-primary" id="delete-confirm">Delete</button>
                 <button type="button" data-dismiss="modal" class="btn">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="pop_model" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">CARTERA</h4>
+            </div>
+
+            <div class="modal-body">
+                <form id="form_model">
+					 <div class="modal-body">
+						<p>Los usuarios con 2 meses en estado CORTADO pasaran a estado CARTERA. ¿Esta seguro de realizar esta accion? </p>
+					</div>
+
+                    <div class="modal-footer">
+                        <input type="hidden" class="form-control"
+                               name="tid" id="invoiceid" value="<?php echo $invoice['tid'] ?>">
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal"><?php echo $this->lang->line('Close'); ?></button>
+                        <input type="hidden" id="action-url" value="customers/paso_cartera">
+                        <button type="button" class="btn btn-primary"
+                                id="submit_model">Realizar</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
