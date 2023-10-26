@@ -1347,7 +1347,12 @@ $lista_permisos1=$this->db->query("SELECT permisos_usuario.id,permisos_usuario.i
 						<li>
                             <a href="<?php echo base_url(); ?>transactions/transferencia">Transferencias</a>
                         </li>
-						<?php } ?>
+						<?php } if ($lista_permisos_us['tescargarexcel'] != null) { ?>
+                        <li>
+                            <a href="<?php echo base_url(); ?>transactions/cargar_desde_excel">Cargar Excel</a>
+                        </li>
+                        <?php } ?>
+
                     </ul>
                 </li>
 				<?php } ?>

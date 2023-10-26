@@ -928,3 +928,6 @@ ADD `debido_cor_8` int(10) NOT NULL AFTER `debido_act_8`,
 ADD `debido_car_8` int(10) NOT NULL AFTER `debido_cor_8`,
 ADD `debido_sus_8` int(10) NOT NULL AFTER `debido_car_8`,
 ADD `debido_ret_8` int(10) NOT NULL AFTER `debido_sus_8`;
+
+------------------------------------------------------ modulo cargar excel permisos ------------------
+INSERT INTO `modulos` (`id_modulo`, `rol`, `nombre`, `id_padre`, `codigo`, `orden`, `icono`) VALUES (NULL, 'Hijo', 'Cargar Excel', '27', 'tescargarexcel', '0', NULL);
