@@ -3000,6 +3000,33 @@ return $str;
 }';
 return $str;
     }
+    public function getFacturaElectronicaOttis_reaciendo(){
+           $str='{
+          "document": {
+            "id": 27183
+          },
+          "date": "2021-12-31",
+          "customer": {
+            "identification": "13832081",
+            "branch_office": 0
+          },
+          "cost_center": 341,
+          "seller": 738,
+          "observations": "Observaciones",
+          "items": [
+           
+          ],
+          "payments": [
+            {
+              "id": 6960,
+              "value": 25000,
+              "due_date": "2021-12-31"
+            }
+          ],
+          "additional_fields": {}
+          
+        }';
+    }
 
     public function calculoParaFacturaElectronica($valor_sin_iva){
         $iva=19;
@@ -3651,7 +3678,7 @@ public function get_nombre_completo($name,$dosnombre,$unoapellido,$dosapellido){
 
 public function organiza_para_facturacion_electronica_ottis($id_cs){
 
-    $this->db->query("UPDATE `invoices` SET `facturacion_electronica` = 'Crear Factura Electronica' WHERE csd='".$id_cs."' and  total!=0 and status='paid' and facturacion_electronica is null and tipo_factura='Recurrente'; ");    
+    $this->db->query("UPDATE `invoices` SET `facturacion_electronica` = 'Crear Factura Electronica' WHERE csd='".$id_cs."' and  total!=0 and status='paid' and (facturacion_electronica is null or facturacion_electronica=''  ) and tipo_factura='Recurrente'; ");    
     //$this->db->query("UPDATE `invoices` SET `facturacion_electronica` = 'Crear Factura Electronica' WHERE  total!=0 and status='paid' and facturacion_electronica is null and tipo_factura='Recurrente'; ");    
 }
 
