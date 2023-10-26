@@ -92,7 +92,60 @@ $_POST['EFECTY']=true;
 //traer lista de todos los customers con ese documento, hacer la resta entre la deuda de cada cuenta y el monto a pagar, luego ejecutar pago de esa cuenta hasta terminar el saldo de $data->monto;
 //$cuentas_del_usuario=$this->db->query("select * from customers where documento='".$cs->documento."'")->result_array();
 //SELECT * FROM `invoices` inner join customers on invoices.csd=customers.id where customers.documento=1037570816 GROUP by invoices.csd;
-$cuentas_del_usuario=$this->db->query("SELECT * FROM invoices inner join customers on invoices.csd=customers.id where customers.documento='".$cs->documento."' GROUP by invoices.csd;")->result_array();
+$cuentas_del_usuario=$this->db->query("SELECT customers.id as csd_c FROM invoices inner join customers on invoices.csd=customers.id where customers.documento='".$cs->documento."' and invoices.total>0 GROUP by invoices.csd;")->result_array();
+if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_vestel"){
+    $cuentas_del_usuario=array();
+}
+$creo=false;
+if(count($cuentas_del_usuario)>1){
+foreach ($cuentas_del_usuario as $key => $value) {
+        $due=$this->customers->due_details($value['csd_c']);
+        $deuda=$due['total']-$due['pamnt'];
+        $monto_pagar=$data->monto;
+        if($deuda>0){
+            if($data->monto>=$deuda && $key<(count($cuentas_del_usuario)-1) ){
+                $monto_pagar=$deuda;
+                $data->monto=$data->monto-$deuda;
+            }else{
+                $data->monto=0;
+            }
+            
+            $creo=$this->customers->pay_invoices($value['csd_c'],$monto_pagar,$data->ref_efecty);
+        }
+        if($data->monto<=0){
+            break;
+        }
+        
+    } 
+    if($data->monto>0){
+         
+            $creo=$this->customers->pay_invoices($cuentas_del_usuario[0]['csd_c'],$data->monto,$data->ref_efecty);
+    }   
+   
+}else{
+    //$creo=$this->customers->pay_invoices($cs->id,$data->monto,$data->ref_efecty);
+    if(count($cuentas_del_usuario)==0){
+        $creo=false;
+    }else{
+        $creo=$this->customers->pay_invoices($cuentas_del_usuario[0]['csd_c'],$data->monto,$data->ref_efecty);
+    }
+    
+}
+
+        
+        return $creo;
+    }
+    public function facturar_customer_copia_reanudar_para_pagos_equitativos($data,$cs){
+        set_time_limit(150);
+        ini_set ( 'max_execution_time', 150);
+        
+        $this->load->model('customers_model', 'customers');
+$_POST['no_email']=true;
+$_POST['EFECTY']=true;
+//traer lista de todos los customers con ese documento, hacer la resta entre la deuda de cada cuenta y el monto a pagar, luego ejecutar pago de esa cuenta hasta terminar el saldo de $data->monto;
+//$cuentas_del_usuario=$this->db->query("select * from customers where documento='".$cs->documento."'")->result_array();
+//SELECT * FROM `invoices` inner join customers on invoices.csd=customers.id where customers.documento=1037570816 GROUP by invoices.csd;
+$cuentas_del_usuario=$this->db->query("SELECT customers.id as csd_c FROM invoices inner join customers on invoices.csd=customers.id where customers.documento='".$cs->documento."' and invoices.total>0 GROUP by invoices.csd;")->result_array();
 if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_vestel"){
     $cuentas_del_usuario=array();
 }
@@ -105,13 +158,15 @@ $monto_sobrante=0;
 $deuda_total=0;
 $deuda_totalx=0;
 $salir=true;
+var_dump($monto_equitativo);echo "ss -- ";
 do {
        foreach ($cuentas_del_usuario as $key => $value) {
-            $due=$this->customers->due_details($value['id']);
+            $due=$this->customers->due_details($value['csd_c']);
             $deuda=$due['total']-$due['pamnt'];
+
             $deuda_total=0;
-            if(isset($array_pago_users[$value['id']]['deuda'])){
-                $deuda=$array_pago_users[$value['id']]['deuda'];
+            if(isset($array_pago_users[$value['csd_c']]['deuda'])){
+                $deuda=$array_pago_users[$value['csd_c']]['deuda'];
             }
             $monto_pagar=$monto_equitativo;
             if($deuda>0){
@@ -131,14 +186,14 @@ do {
                 $deuda_total=0;
             }
             $deuda_totalx+=$deuda_total;
-            $array_pago_users[$value['id']]['monto_pagar']+=$monto_pagar;
-            $array_pago_users[$value['id']]['deuda']=$deuda_total;
+            $array_pago_users[$value['csd_c']]['monto_pagar']+=$monto_pagar;
+            $array_pago_users[$value['csd_c']]['deuda']=$deuda_total;
            
             
     }
-    //var_dump($monto_sobrante);
-    //var_dump($array_pago_users);
-    //var_dump($deuda_totalx);
+    var_dump($monto_sobrante);
+    var_dump($array_pago_users);
+    var_dump($deuda_totalx);
     if($monto_sobrante>0){
         $monto_equitativo=($monto_sobrante/count($cuentas_del_usuario));
         if($deuda_totalx>0){
@@ -159,14 +214,21 @@ do {
     }
 } while (!$salir);
  
-
+var_dump($array_pago_users);
+exit();
 foreach ($array_pago_users as $key => $value) {
-    $creo=$this->customers->pay_invoices($key,$value['monto_pagar'],$data->ref_efecty);
+    //$creo=$this->customers->pay_invoices($key,$value['monto_pagar'],$data->ref_efecty);
 }
 //nw code end
    
 }else{
-    $creo=$this->customers->pay_invoices($cs->id,$data->monto,$data->ref_efecty);
+    //$creo=$this->customers->pay_invoices($cs->id,$data->monto,$data->ref_efecty);
+    if(count($cuentas_del_usuario)==0){
+        $creo=false;
+    }else{
+        $creo=$this->customers->pay_invoices($cuentas_del_usuario[0]['csd_c'],$data->monto,$data->ref_efecty);
+    }
+    
 }
 
         
