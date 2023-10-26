@@ -403,6 +403,7 @@ class Transactions extends CI_Controller
     
     //define column headers
     $headers = array(
+        'Codigo' => 'integer', 
         'Fecha' => 'string', 
         'Cuenta' => 'string',
 		'Valor' => 'integer',
@@ -440,6 +441,7 @@ class Transactions extends CI_Controller
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ));
     
     //write rows to sheet1
@@ -447,7 +449,7 @@ class Transactions extends CI_Controller
     foreach ($lista_creditos as $key => $creditos) {
 		$fecha = date("d/m/Y",strtotime($creditos->date));
 		$datauser=$this->db->get_where("customers",array("id"=>$creditos->payerid))->row();
-            $writer->writeSheetRow('Creditos ',array($fecha,$creditos->account,$creditos->credit,$creditos->payer,$datauser->documento, $creditos->cat,$creditos->tid,$creditos->note,$creditos->method));
+            $writer->writeSheetRow('Creditos ',array($creditos->id,$fecha,$creditos->account,$creditos->credit,$creditos->payer,$datauser->documento, $creditos->cat,$creditos->tid,$creditos->note,$creditos->method));
         
     }
         
