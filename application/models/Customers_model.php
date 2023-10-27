@@ -3019,13 +3019,14 @@ return $str;
           "payments": [
             {
               "id": 6960,
-              "value": 25000,
+              "value": 0,
               "due_date": "2021-12-31"
             }
           ],
           "additional_fields": {}
           
         }';
+        return $str;
     }
 
     public function calculoParaFacturaElectronica($valor_sin_iva){

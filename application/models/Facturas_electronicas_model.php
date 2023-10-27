@@ -469,24 +469,13 @@ class Facturas_electronicas_model extends CI_Model
         $this->load->model("customers_model","customers");
         $this->load->model("invoices_model","invocies");
         $dataApiNET=null;
-        $customer = $this->db->get_where("customers",array('id' =>$datos_facturar['csd']))->row();
-         $array_servicios=$datos_facturar;
-        //var_dump($datos_facturar['servicios']);
-        if($datos_facturar['servicios']=="Combo"){
-            if(isset($datos_facturar['puntos']) && $datos_facturar['puntos']!="no"){
-               // $dataApiNET= $this->customers->getFacturaElectronicaOttis(2);//verificar este caso
-            }else{
-                $dataApiNET= $this->customers->getFacturaElectronicaOttis(1,$array_servicios['tipo_retencion']);    
-            }
-        }else if($datos_facturar['servicios']=="Internet"){
-            $dataApiNET= $this->customers->getFacturaElectronicaOttis(null,$array_servicios['tipo_retencion']);
-        }else if($datos_facturar['servicios']=="Television"){
-            if(isset($datos_facturar['puntos']) && $datos_facturar['puntos']!="no"){
-                //$dataApiNET= $this->customers->getFacturaElectronicaOttis(1);    //y este caso
-            }else{
-                $dataApiNET= $this->customers->getFacturaElectronicaOttis(null,$array_servicios['tipo_retencion']);    
-            }            
-        }        
+        $items_facturados=array();
+        $invoice_facturar = $this->db->get_where("invoices",array('id' =>$datos_facturar['id_facturar']))->row();
+        $datos_facturar['tid']=$invoice_facturar->tid;
+        $customer = $this->db->get_where("customers",array('id' =>$invoice_facturar->csd))->row();
+
+        $dataApiNET= $this->customers->getFacturaElectronicaOttis_reaciendo();       
+
          //var_dump($datos_facturar['servicios']);
         $centro_de_costo_codeNET="341";
     
@@ -572,11 +561,11 @@ class Facturas_electronicas_model extends CI_Model
             $dataApiNET->cost_center=$centro_de_costo_codeNET;
             $dataApiNET->seller="738";
             $dataApiNET->date=$dateTime->format("Y-m-d");
-            $dataApiNET->payments[0]->due_date="2023-08-03";//$dateTimeVencimiento->format("Y-m-d");
+            $dataApiNET->payments[0]->due_date=$dateTimeVencimiento->format("Y-m-d");
             $accoun_tr="";
             $dataApiNET->payments[0]->id=$datos_facturar['estcuenta'];//efectivo 6960 credito 6941
             if($datos_facturar['estcuenta']=="6960"){
-                $ult_tr=$this->db->query("select * from transactions where (estado !='Anulada' or estado is null) and tid=".$datos_facturar['tid_ult_fact']." order by id desc")->result_array();
+                $ult_tr=$this->db->query("select * from transactions where (estado !='Anulada' or estado is null) and tid=".$datos_facturar['tid']." order by id desc")->result_array();
                 if(count($ult_tr)>0){
                     $accoun_tr=$this->db->get_where("accounts",array("id"=>$ult_tr[0]['acid']))->row();
                     if(isset($accoun_tr) && $accoun_tr->cuenta_siigo!=null){
@@ -592,9 +581,9 @@ class Facturas_electronicas_model extends CI_Model
                     }
                 }    
             }
-            $dt_ob=new DateTime($array_servicios['invoicedate']);
+            $dt_ob=new DateTime($invoice_facturar->invoicedate);
             $str_obs=$this->reports->devolver_nombre_mes($dt_ob->format("m"))." - ".$dt_ob->format("Y");
-            $dataApiNET->observations="TID : ".$array_servicios['tid_ult_fact'].", Factura : ".$str_obs." ,metodo pago: ".$accoun_tr;
+            $dataApiNET->observations="TID : ".$datos_facturar['tid'].", Factura : ".$str_obs." ,metodo pago: ".$accoun_tr;
             $consulta_siigo1=$api->getCustomer($customer->documento,1);
           
             
@@ -628,192 +617,69 @@ class Facturas_electronicas_model extends CI_Model
       
         $producto_existe=false;
          if($dataApiNET!=null){
-           
-            /*  cambios de abajo se comentan son para facturar cortados*/
-            /*
-            if($array_servicios['estado']=="Cortado"){
-                    if($array_servicios['estado_tv']=="Cortado"){
-                            $array_servicios['television']="si";
-                    }
-                    if($array_servicios['estado_combo']=="Cortado"){
-                            $array_servicios['combo']=$array_servicios['paquete'];
-                    }
-                }*/
             $count=0;
             $retencion_aplicada=false;
             $porcentaje_retefuente_servicios=4;
             $porcentaje_compras=2.5;
             $porcentaje_personas_no_declarantes=3.5;
-            if($array_servicios['combo']!="no" && ($datos_facturar['servicios']=="Combo" || $datos_facturar['servicios']=="Internet")){
-                $dataApiNET->items[0]->description="Servicio de Internet ".$array_servicios['combo'];
-                $lista_de_productos=$this->db->from("products")->where("pcat","1")->get()->result();
-                $array_servicios['combo']=strtolower(str_replace(" ", "",$array_servicios['combo'] ));
-                foreach ($lista_de_productos as $key => $prod) {
-                    $prod->product_name=strtolower(str_replace(" ", "",$prod->product_name ));
-                    if($prod->product_name==$array_servicios['combo']){
-                        $producto_existe=true;
-                        //var_dump($prod->product_name);
-                        $dataApiNET->items[0]->code=$prod->product_code;
-                        $prod_item=$this->db->get_where("invoice_items",array("tid"=>$array_servicios['tid'],"pid"=>$prod->pid))->row();
-                        if(isset($prod_item)){
-                            $prod->product_price=$prod_item->price;
-                        }
-                        if($prod->taxrate!=0){
-
-                            //$precios=$this->customers->calculoParaFacturaElectronica($prod->product_price);
-                            $v1=($prod->product_price*19)/100;
-                            $v2=$v1+$prod->product_price;
-                            $dataApiNET->items[0]->taxes[0]->id=4189;
-                            $dataApiNET->items[0]->price=$prod->product_price;
-                            $dataApiNET->items[0]->taxes[0]->value=$v1;
-                            $dataApiNET->payments[0]->value=$v2;
-                            if($array_servicios['tipo_retencion']=="Reteiva"){
-                                $total_reteiva=($v1*15)/100;
-                                $dataApiNET->retentions[0]->value=$total_reteiva;
-                                $dataApiNET->payments[0]->value-=$total_reteiva;
+           
+           
+                $lista_items=$this->db->get_where("invoice_items",array("tid"=>$datos_facturar['tid']))->result_array();
+                if(isset($lista_items) && count($lista_items)>0){
+                        $otro_pr='{
+                          "code": "12SOPIVA1",
+                          "description": "DESCRIPCION",
+                          "quantity": 1,
+                          "price": 21008,
+                          "discount": 0.0,
+                          "taxes": [
+                            {"id": 4189,
+                             "name": "IVA 19% sev",
+                             "type": "IVA",
+                             "percentage": 19,
+                             "value": 3991.6
                             }
-
-                        }else{
-                            unset($dataApiNET->items[0]->taxes[0]);   
-
-                            $dataApiNET->items[0]->taxes = array_values($dataApiNET->items[0]->taxes);
-                            $dataApiNET->items[0]->price=$prod->product_price;                            
-                            $dataApiNET->payments[0]->value=$prod->product_price;
-//var_dump(json_encode($dataApiNET));
-                        }
-
-                            
-                        if($array_servicios['tipo_retencion']!=null && $array_servicios['tipo_retencion']!="Reteiva"){
-                                $porcentaje_a_aplicar=4;
-                                if($array_servicios['tipo_retencion']=="Retefuente Servicios"){
-                                    $porcentaje_a_aplicar=$porcentaje_retefuente_servicios;
-                                }else if($array_servicios['tipo_retencion']=="Compras"){
-                                    $porcentaje_a_aplicar=$porcentaje_compras;
-                                }else if($array_servicios['tipo_retencion']=="Personas no declarantes"){
-                                    $porcentaje_a_aplicar=$porcentaje_personas_no_declarantes;
-                                }
-                                $v1=($prod->product_price*$porcentaje_a_aplicar)/100;
-                                //$v2=$v1-$prod->product_price;
-                                //$dataApiNET->items[0]->taxes[0]->id=4189;
-                                //$dataApiNET->items[0]->price=$prod->product_price;
-                                if($prod->taxrate!=0){
-                                    $dataApiNET->items[0]->taxes[1]->value=$v1;
-                                }else{
-                                    $dataApiNET->items[0]->taxes[0]->value=$v1;
-                                }                                
-                                $dataApiNET->payments[0]->value-=$v1;                            
-                        }else{
-                            if($prod->taxrate!=0){
-                                unset($dataApiNET->items[0]->taxes[1]);    
-                                $dataApiNET->items[0]->taxes = array_values($dataApiNET->items[0]->taxes);
-                            }else{
-                                unset($dataApiNET->items[0]->taxes);
-                            }
-                            
-                        }
-                        
-                        
-                        break;
-                    }
-                }
-                $count++;
-            }
-            if($datos_facturar['servicios']=="Combo" || $datos_facturar['servicios']=="Television"){
-                $dataApiNET->items[$count]->description="Servicio de Televisión - ".$array_servicios['television'];
-                $lista_de_productos=$this->db->from("products")->where("pcat","1")->get()->result();
-                $array_servicios['television']=strtolower(str_replace(" ", "",$array_servicios['television'] ));
-                foreach ($lista_de_productos as $key => $prod) {
-                    $prod->product_name=strtolower(str_replace(" ", "",$prod->product_name ));
-                    if($prod->product_name==$array_servicios['television']){
-                        $producto_existe=true;
-                        //var_dump($prod->product_name);
-                        $dataApiNET->items[$count]->code=$prod->product_code;
-
-                        $prod_item=$this->db->get_where("invoice_items",array("tid"=>$array_servicios['tid'],"pid"=>$prod->pid))->row();
-                        if(isset($prod_item)){
-                            $prod->product_price=$prod_item->price;
-                        }
-
-                        if($prod->taxrate!=0){
-
-                            //$precios=$this->customers->calculoParaFacturaElectronica($prod->product_price);
-                            $v1=($prod->product_price*19)/100;
-                            $v2=$v1+$prod->product_price;
-                            $dataApiNET->items[$count]->taxes[0]->id=4189;
-                            $dataApiNET->items[$count]->price=$prod->product_price;
-                            $dataApiNET->items[$count]->taxes[0]->value=$v1;
-                            $dataApiNET->payments[0]->value+=$v2;
-
-                        }else{
-                            if($array_servicios['tipo_retencion']==null){
-                                unset($dataApiNET->items[$count]->taxes);    
-                            }
-                            $dataApiNET->items[$count]->price=$prod->product_price;                            
-                            $dataApiNET->payments[0]->value+=$prod->product_price;
-
-                        }
-                        
-                        
-                        break;
-                    }
-                }
-                $count++;
-                //para puntos crear similar codigo de este if 
-            }
-            //falta esta parte identificar el paquete de internet del usuario y agregar sus valores
-            $list_servs=$this->invocies->servicios_adicionales_recurrentes($array_servicios['tid']);
-            //$list_servs=array();
-            if(isset($list_servs) && count($list_servs)>0){
-                $otro_pr='{
-                  "code": "12SOPIVA1",
-                  "description": "DESCRIPCION",
-                  "quantity": 1,
-                  "price": 21008,
-                  "discount": 0.0,
-                  "taxes": [
-                    {"id": 4189,
-                     "name": "IVA 19% sev",
-                     "type": "IVA",
-                     "percentage": 19,
-                     "value": 3991.6
-                    }
-                  ]            
-                }';
+                          ]            
+                        }';
               
-                foreach ($list_servs as $keysv => $sv) {
-                    //$dataApiNET->items[]=$prod_add;
+                        foreach ($lista_items as $keysv => $sv) {
+                            if($sv['product']=="Nota Credito"){
 
-                    $itm=$this->db->get_where("invoice_items",array("tid"=>$array_servicios['tid'],"pid"=>$sv['pid']))->row();
-                    if(isset($itm)){
-                      $prod_add=json_decode($otro_pr);
-                    array_push($dataApiNET->items, $prod_add);
-                    $pr_sr=$this->db->get_where("products",array("pid"=>$sv['pid']))->row();
-                    $pr_sr->product_price=$itm->price;
-                    $dataApiNET->items[$count]->description="Servicio Adicional ".$pr_sr->product_name;
-                    $dataApiNET->items[$count]->code=$pr_sr->product_code;
-                    if(isset($pr_sr) && $pr_sr->taxrate!="0"){
-                        $iva2=round(($pr_sr->product_price*$pr_sr->taxrate)/100);
-                        $sv['total']+=$iva2;   
+                            }else{
+                            //$dataApiNET->items[]=$prod_add;
+                                $prod_add=json_decode($otro_pr);
+                                array_push($dataApiNET->items, $prod_add);
+                                $pr_sr=$this->db->get_where("products",array("pid"=>$sv['pid']))->row();
+                                //$pr_sr->product_price=$sv['price'];
+                                $dataApiNET->items[$count]->description="".$sv['product'];
+                                $dataApiNET->items[$count]->code=$pr_sr->product_code;
+                                $sv['total']=0;
+                                if(isset($pr_sr) && $sv['tax']!="0"){
+                                    $iva2=round(($sv['price']*$sv['tax'])/100);
+                                    $sv['total']+=$iva2;   
 
-                            //$v1=($prod->product_price*19)/100;
-                            //$v2=$v1+$prod->product_price;
-                            $dataApiNET->items[$count]->quantity=$sv['valor'];
-                            $dataApiNET->items[$count]->taxes[0]->id=4189;
-                            $dataApiNET->items[$count]->price=($pr_sr->product_price);
-                            $dataApiNET->items[$count]->taxes[0]->value=($iva2*$sv['valor']);
-                            
+                                        //$v1=($prod->product_price*19)/100;
+                                        //$v2=$v1+$prod->product_price;
+                                        $dataApiNET->items[$count]->quantity=$sv['qty'];
+                                        $dataApiNET->items[$count]->taxes[0]->id=4189;
+                                        $dataApiNET->items[$count]->price=($sv['price']);
+                                        $dataApiNET->items[$count]->taxes[0]->value=($iva2*$sv['qty']);
+                                        
 
-                    }else{
-                         unset($dataApiNET->items[$count]->taxes);    
-                         $dataApiNET->items[$count]->quantity=$sv['valor'];
-                         $dataApiNET->items[$count]->price=$pr_sr->product_price;
-                    }
-                    $suma=($sv['total']*$sv['valor']);
-                    $dataApiNET->payments[0]->value+=$suma;
-                    $count++;
+                                }else{
+                                     unset($dataApiNET->items[$count]->taxes);    
+                                     $dataApiNET->items[$count]->quantity=$sv['qty'];
+                                     $dataApiNET->items[$count]->price=$sv['price']*$sv['qty'];
+                                }
+                                $sv['total']+=$sv['price'];
+                                $suma=($sv['total']*$sv['qty']);
+                                $dataApiNET->payments[0]->value+=$suma;
+                                $count++;
+                            }
+                     
+                        }
                 }
-                }
-            }
+            
 
         }
 
@@ -829,9 +695,10 @@ class Facturas_electronicas_model extends CI_Model
         $dataInsert=array();
         $dataInsert['consecutivo_siigo']=0;
         $dataInsert['fecha']=$dateTime->format("Y-m-d");
-        $dataInsert['customer_id']=$datos_facturar['csd'];
-        $dataInsert['invoice_id']=$datos_facturar['id'];
-        $dataInsert['servicios_facturados']=$datos_facturar['servicios'];
+        $dataInsert['customer_id']=$invoice_facturar->csd;
+        $dataInsert['invoice_id']=$datos_facturar['id_facturar'];
+        $dataInsert['tid']=$invoice_facturar->tid;
+        $dataInsert['servicios_facturados']="";
         $dataInsert['creado_con_multiple']=1;
         // end customer data facturacion_electronica_siigo table insert
         //var_dump($dataApiNET);
@@ -843,18 +710,18 @@ class Facturas_electronicas_model extends CI_Model
 //var_dump($dataApiNET);
 //exit();
         if($dataApiNET!=null && $dataApiNET!="null"){
-            $retorno = $api->accionar($api,$dataApiNET,1);     
+            //$retorno = $api->accionar($api,$dataApiNET,1);     
         }
-        //$retorno['mensaje']="Factura Guardada";
+        $retorno['mensaje']="Factura Guardada";
 
         if($retorno['mensaje']=="Factura Guardada"){
-            //$dataInsert["json"]=$dataApiNET;
+            $dataInsert["json"]=$dataApiNET;
             $this->db->insert("facturacion_electronica_siigo",$dataInsert);
             $dt_in=array();
             $dt_in['facturacion_electronica']="Factura Electronica Creada";
             $dt_in['fecha_f_electronica_generada']=$dataInsert['fecha'];
             $dt_in['servicios_facturados_electronicamente']=$dataInsert['servicios_facturados'];
-            $this->db->update("invoices",$dt_in,array("id"=>$datos_facturar['id']));
+            //$this->db->update("invoices",$dt_in,array("id"=>$datos_facturar['id_facturar']));
             $retor=array("status"=>true);
             return $retor;
         }else{
