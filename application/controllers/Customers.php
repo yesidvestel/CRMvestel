@@ -528,6 +528,7 @@ public function ajax_graficas2(){
 
             $row = array();
             $row[] = $no;
+            $row[] = $customers->id;
             $row[] = $customers->abonado;
             $row[] = '<a href="customers/view?id=' . $customers->id . '">' . $customers->name ." ". $customers->unoapellido. '</a>';
             $row[] = $customers->celular;

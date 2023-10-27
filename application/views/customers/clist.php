@@ -306,6 +306,7 @@
                     <thead>
                     <tr>
                         <th>#</th>
+                        <th>ID</th>
 						<th>Abonado</th>
                         <th><?php echo $this->lang->line('Name') ?></th>
 						<th>Celular</th>
@@ -323,6 +324,7 @@
                     <tfoot>
                     <tr>
                         <th>#</th>
+                        <th>ID</th>
 						<th>Abonado</th>
                         <th><?php echo $this->lang->line('Name') ?></th>
 						<th>Celular</th>
