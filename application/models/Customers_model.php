@@ -3001,6 +3001,16 @@ return $str;
 return $str;
     }
     public function getFacturaElectronicaOttis_reaciendo(){
+         $rete_iva='"retentions": [
+                {
+                    "id": 17085,
+                    "name": "RETEIVA 15% del IVA",
+                    "type": "ReteIVA",
+                    "percentage": 15.0,
+                    "value": 0
+                }
+            ],';
+            
            $str='{
           "document": {
             "id": 27183
@@ -3011,7 +3021,7 @@ return $str;
             "branch_office": 0
           },
           "cost_center": 341,
-          "seller": 738,
+          "seller": 738,'.$rete_iva.'
           "observations": "Observaciones",
           "items": [
            

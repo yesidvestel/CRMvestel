@@ -623,7 +623,7 @@ class Facturas_electronicas_model extends CI_Model
             $porcentaje_compras=2.5;
             $porcentaje_personas_no_declarantes=3.5;
            
-           
+           $reteiva_aplicado=false;
                 $lista_items=$this->db->get_where("invoice_items",array("tid"=>$datos_facturar['tid']))->result_array();
                 if(isset($lista_items) && count($lista_items)>0){
                         $otro_pr='{
@@ -633,6 +633,13 @@ class Facturas_electronicas_model extends CI_Model
                           "price": 21008,
                           "discount": 0.0,
                           "taxes": [
+                           {
+                                "id": 16992,
+                                "name": "RETEFUENTE Compras no declarantes",
+                                "type": "Retefuente",
+                                "percentage": 3.5,
+                                "value": 4200.0
+                            },
                             {"id": 4189,
                              "name": "IVA 19% sev",
                              "type": "IVA",
@@ -661,23 +668,91 @@ class Facturas_electronicas_model extends CI_Model
                                         //$v1=($prod->product_price*19)/100;
                                         //$v2=$v1+$prod->product_price;
                                         $dataApiNET->items[$count]->quantity=$sv['qty'];
-                                        $dataApiNET->items[$count]->taxes[0]->id=4189;
+                                        $dataApiNET->items[$count]->taxes[1]->id=4189;
                                         $dataApiNET->items[$count]->price=($sv['price']);
-                                        $dataApiNET->items[$count]->taxes[0]->value=($iva2*$sv['qty']);
+                                        $dataApiNET->items[$count]->taxes[1]->value=($iva2*$sv['qty']);
                                         
 
                                 }else{
-                                     unset($dataApiNET->items[$count]->taxes);    
+                                    unset($dataApiNET->items[$count]->taxes[1]);   
+                                    //$dataApiNET->items[$count]->taxes = array_values($dataApiNET->items[$count]->taxes);
+
                                      $dataApiNET->items[$count]->quantity=$sv['qty'];
                                      $dataApiNET->items[$count]->price=$sv['price']*$sv['qty'];
                                 }
                                 $sv['total']+=$sv['price'];
                                 $suma=($sv['total']*$sv['qty']);
                                 $dataApiNET->payments[0]->value+=$suma;
+                                if($invoice_facturar->tipo_retencion!=null){
+                                    $id_r="16984";
+                                    $name_r='RETEFUENTE Compras no declarantes';
+                                    $percentage_r="4.0";
+                                    $percentage_r_calculo=4;
+                                    $value_r="0";
+                                    if($invoice_facturar->tipo_retencion=="Retefuente Servicios"){
+                                        $percentage_r_calculo=$porcentaje_retefuente_servicios;
+                                        $percentage_r="4.0";
+                                        $id_r="16984";
+                                        $name_r='RETEFUENTE Servicios declarante';
+                                    }else if($invoice_facturar->tipo_retencion=="Compras"){
+                                        $percentage_r_calculo=$porcentaje_compras;
+                                        $percentage_r="2.5";
+                                        $id_r="16991";
+                                        $name_r='RETEFUENTE Compras declarante';
+                                    }else if($invoice_facturar->tipo_retencion=="Personas no declarantes"){
+                                        $percentage_r_calculo=$porcentaje_personas_no_declarantes;
+                                        $percentage_r="3.5";
+                                        $id_r="16992";
+                                        $name_r='RETEFUENTE Compras no declarantes';
+                                    }
+
+                                    if($invoice_facturar->tipo_retencion=="Reteiva"){
+                                        if( $sv['tax']!="0"){
+
+                                            $v1=$dataApiNET->items[$count]->taxes[1]->value;
+                                            $total_reteiva=($v1*15)/100;
+                                            $dataApiNET->payments[0]->value-=$total_reteiva;   
+                                            $dataApiNET->retentions[0]->value+=$total_reteiva;
+                                            $reteiva_aplicado=true;
+                                              unset($dataApiNET->items[$count]->taxes[0]);   
+                                            //$dataApiNET->items[$count]->taxes = array_values($dataApiNET->items[$count]->taxes);
+                                        }
+                                        
+                                    }else{
+                                        $value_r=($sv['total']*$percentage_r_calculo)/100;
+                                        $row_retencion=',
+                                         {
+                                            "id": '.$id_r.',
+                                            "name": "'.$name_r.'",
+                                            "type": "Retefuente",
+                                            "percentage": '.$percentage_r.',
+                                            "value": '.$value_r.'
+                                        }';
+                                         $dataApiNET->items[$count]->taxes[0]->id=$id_r;
+                                         $dataApiNET->items[$count]->taxes[0]->name=$name_r;
+                                         $dataApiNET->items[$count]->taxes[0]->percentage=$percentage_r;
+                                         $dataApiNET->items[$count]->taxes[0]->value=$value_r;
+                                        $dataApiNET->payments[0]->value-=$value_r;   
+                                    }
+                                    
+
+                                }else{
+                                     unset($dataApiNET->items[$count]->taxes[0]);   
+                                    //$dataApiNET->items[$count]->taxes = array_values($dataApiNET->items[$count]->taxes);
+                                }
+								if(count($dataApiNET->items[$count]->taxes)==0){
+									unset($dataApiNET->items[$count]->taxes);
+								}	
+                                
+
+
                                 $count++;
                             }
                      
                         }
+						if(!$reteiva_aplicado){
+							 unset($dataApiNET->retentions);
+						}
                 }
             
 
