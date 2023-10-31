@@ -816,6 +816,9 @@ set_time_limit(150);
 
                 }
     }
+    public function x2(){
+        var_dump($_SESSION['errores']);
+    }
     public function facturar_e_individual(){
         $this->facturas_electronicas->cargar_configuraciones_para_facturar();
         $inv=$this->db->get_where("invoices",array("tid"=>$_POST['tid']) )->row();

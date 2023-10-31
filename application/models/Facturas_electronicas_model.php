@@ -661,8 +661,20 @@ class Facturas_electronicas_model extends CI_Model
                                 $dataApiNET->items[$count]->description="".$sv['product'];
                                 $dataApiNET->items[$count]->code=$pr_sr->product_code;
                                 $sv['total']=0;
+                                $iva_des=0;
+                                if($sv['discount']>0){
+                                    if($sv['discount']>$sv['price']){
+                                        $iva_des=$sv['discount']-$sv['price'];
+                                        $sv['price']=0;
+                                    }else{
+                                        $sv['price']-=$sv['discount'];                                        
+                                    }
+                                }
                                 if(isset($pr_sr) && $sv['tax']!="0"){
                                     $iva2=round(($sv['price']*$sv['tax'])/100);
+                                    if($iva_des>0){
+                                        //$iva2-=$iva_des;
+                                    }
                                     $sv['total']+=$iva2;   
 
                                         //$v1=($prod->product_price*19)/100;
@@ -714,12 +726,13 @@ class Facturas_electronicas_model extends CI_Model
                                             $dataApiNET->payments[0]->value-=$total_reteiva;   
                                             $dataApiNET->retentions[0]->value+=$total_reteiva;
                                             $reteiva_aplicado=true;
-                                              unset($dataApiNET->items[$count]->taxes[0]);   
-                                            //$dataApiNET->items[$count]->taxes = array_values($dataApiNET->items[$count]->taxes);
+                                            unset($dataApiNET->items[$count]->taxes[0]);   
+                                            $dataApiNET->items[$count]->taxes = array_values($dataApiNET->items[$count]->taxes);
+                                            
                                         }
                                         
                                     }else{
-                                        $value_r=($sv['total']*$percentage_r_calculo)/100;
+                                        $value_r=(($sv['price']*$sv['qty'])*$percentage_r_calculo)/100;
                                         $row_retencion=',
                                          {
                                             "id": '.$id_r.',
@@ -737,15 +750,14 @@ class Facturas_electronicas_model extends CI_Model
                                     
 
                                 }else{
-                                     unset($dataApiNET->items[$count]->taxes[0]);   
-                                    //$dataApiNET->items[$count]->taxes = array_values($dataApiNET->items[$count]->taxes);
+                                   unset($dataApiNET->items[$count]->taxes[0]);   
+                                   $dataApiNET->items[$count]->taxes = array_values($dataApiNET->items[$count]->taxes);
+                                   
                                 }
 								if(count($dataApiNET->items[$count]->taxes)==0){
 									unset($dataApiNET->items[$count]->taxes);
 								}	
                                 
-
-
                                 $count++;
                             }
                      
@@ -771,8 +783,7 @@ class Facturas_electronicas_model extends CI_Model
         $dataInsert['consecutivo_siigo']=0;
         $dataInsert['fecha']=$dateTime->format("Y-m-d");
         $dataInsert['customer_id']=$invoice_facturar->csd;
-        $dataInsert['invoice_id']=$datos_facturar['id_facturar'];
-        $dataInsert['tid']=$invoice_facturar->tid;
+        $dataInsert['invoice_id']=$datos_facturar['id_facturar'];        
         $dataInsert['servicios_facturados']="";
         $dataInsert['creado_con_multiple']=1;
         // end customer data facturacion_electronica_siigo table insert
@@ -785,18 +796,19 @@ class Facturas_electronicas_model extends CI_Model
 //var_dump($dataApiNET);
 //exit();
         if($dataApiNET!=null && $dataApiNET!="null"){
-            //$retorno = $api->accionar($api,$dataApiNET,1);     
+            $retorno = $api->accionar($api,$dataApiNET,1);     
         }
-        $retorno['mensaje']="Factura Guardada";
+        //$retorno['mensaje']="Factura Guardada";
 
         if($retorno['mensaje']=="Factura Guardada"){
-            $dataInsert["json"]=$dataApiNET;
+            //$dataInsert['tid']=$invoice_facturar->tid;
+            //$dataInsert["json"]=$dataApiNET;
             $this->db->insert("facturacion_electronica_siigo",$dataInsert);
             $dt_in=array();
             $dt_in['facturacion_electronica']="Factura Electronica Creada";
             $dt_in['fecha_f_electronica_generada']=$dataInsert['fecha'];
             $dt_in['servicios_facturados_electronicamente']=$dataInsert['servicios_facturados'];
-            //$this->db->update("invoices",$dt_in,array("id"=>$datos_facturar['id_facturar']));
+            $this->db->update("invoices",$dt_in,array("id"=>$datos_facturar['id_facturar']));
             $retor=array("status"=>true);
             return $retor;
         }else{
