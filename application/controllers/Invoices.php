@@ -721,7 +721,8 @@ $list_servs=$this->invocies->servicios_adicionales_recurrentes($value2->tid);
                                 }
                                 if($_tiene_internet==true){
                                     if(strpos(strtolower($internet), "mega")!==false){
-                                        $factura_data['combo']=str_replace(" ","",$internet);
+                                        //$factura_data['combo']=str_replace(" ","",$internet);
+                                        $factura_data['combo']=$internet;
                                     }else{
                                         $factura_data['combo']=$internet;
                                          
