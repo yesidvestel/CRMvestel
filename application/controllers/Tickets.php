@@ -1321,7 +1321,7 @@ $x=0;
                         $paquete = $ticket->section;
                     }*/
 			//$this->db->set('combo', $paquete);
-			$this->db->set('television', 'Television');
+			//$this->db->set('television', 'Television');
             $this->db->set('estado_tv', null);
             $this->db->set('estado_combo', null);
 			$this->db->set('ron', 'Activo');
@@ -1389,7 +1389,7 @@ $x=0;
 		}
 		if($ticket->detalle=="Reconexion Television"){
 			$paquete = $this->input->post('paquete');
-			$this->db->set('television', 'Television');	
+			//$this->db->set('television', 'Television');	
             $this->db->set('estado_tv', null);
 			$this->db->set('ron', 'Activo');
         	$this->db->where('tid', $idfactura);
@@ -1795,7 +1795,7 @@ $x=0;
                 $this->customers->desactivar_estado_usuario($customerx->name_s,$id_sede_mk,$customerx->tegnologia_instalacion);
 		}
 		if($ticket->detalle=="AgregarTelevision" || ($ticket->detalle=="Reconexion Television2" && ($ticket->id_factura!=0 || $ticket->id_factura!=null))){			
-			$producto = $this->db->get_where('products',array('product_name'=>'Television'))->row();
+			$producto = $this->db->get_where('products',array('product_name'=>$data['television']))->row();
             $total=0;
             $taxvalue=0;
             
@@ -1878,7 +1878,7 @@ $x=0;
 				$this->db->set('subtotal', $factura->subtotal+$total);
 				$this->db->set('tax', $factura->tax+$taxvalue);
 				$this->db->set('total', $factura->total+$total+$taxvalue);
-				$this->db->set('television', 'Television');
+				$this->db->set('television', $producto->product_name);
                 $this->db->set('estado_tv', null);
 				$this->db->set('puntos', $ptos);
         		$this->db->where('tid', $idfactura);
