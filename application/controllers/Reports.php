@@ -1269,7 +1269,8 @@ $lista_customers_activos=$this->db->query("select * from customers where (gid='2
 public function statistics_services(){
     $extraccion_dia=$this->db->get_where("estadisticas_servicios",array("fecha"=>date("Y-m-d")))->row();
     $data=array();
-    ini_set('memory_limit', '1500000');
+   ini_set('memory_limit', '15000000000');
+    set_time_limit(20000000);
     if(empty($extraccion_dia) || (isset($_GET['tipo']) && $_GET['tipo']=="process")){
 		if($this->config->item('ctitle')=='VESTEL S.A.S'){
         $lista_customers_activos=$this->db->query("select * from customers where gid='2' and  (usu_estado='Activo' or usu_estado='Compromiso')")->result();
