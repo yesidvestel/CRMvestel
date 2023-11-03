@@ -185,7 +185,7 @@ function iniciar_facturacion(){
                 iniciar_facturacion();
             });
         }else{
-           // window.location.href = baseurl+"facturasElectronicas/visualizar_resumen_ejecucion?fecha="+sdate+"&sede="+pay_acc;
+            window.location.href = baseurl+"facturasElectronicas/visualizar_resumen_ejecucion?fecha="+sdate+"&sede="+pay_acc;
         }
 }
    /* function proceso_facturacion(){
