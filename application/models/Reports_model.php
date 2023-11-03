@@ -487,9 +487,9 @@ foreach ($est as $key => $value) {
                 if($x1===false && $x3===false && $x5===false && $x7===false){                    
                     $lista_datos['instalaciones_tv'][$key1]++;   
                     $lista_datos['total_dia'][$key1]++;
-                    $lista_tecnicos_organizada['instalaciones_tv'][$key1][$value['tec_asignado']]++;
+                    //$lista_tecnicos_organizada['instalaciones_tv'][$key1][$value['tec_asignado']]++;
                     //$lista_tecnicos_organizada['total_dia'][$key1][$value['tec_asignado']]++;//al final creo que se puede elimianar este array
-                    $lista_datos_cuentas_tipos_por_tecnico['instalaciones_tv'][$value['tec_asignado']]++;
+                    //$lista_datos_cuentas_tipos_por_tecnico['instalaciones_tv'][$value['tec_asignado']]++;
 
                     $lista_tecnicos_organizada['instalaciones_tv'][$key1][$value['tec_asignado']]['TV']['cantidad']++;
                                     $lista_tecnicos_organizada['instalaciones_tv'][$key1][$value['tec_asignado']]['TV']['puntuacion']+=$puntuacion_instalaciones_EOC;
