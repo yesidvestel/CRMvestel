@@ -92,7 +92,7 @@ $_POST['EFECTY']=true;
 //traer lista de todos los customers con ese documento, hacer la resta entre la deuda de cada cuenta y el monto a pagar, luego ejecutar pago de esa cuenta hasta terminar el saldo de $data->monto;
 //$cuentas_del_usuario=$this->db->query("select * from customers where documento='".$cs->documento."'")->result_array();
 //SELECT * FROM `invoices` inner join customers on invoices.csd=customers.id where customers.documento=1037570816 GROUP by invoices.csd;
-$cuentas_del_usuario=$this->db->query("SELECT customers.id as csd_c FROM invoices inner join customers on invoices.csd=customers.id where customers.documento='".$cs->documento."' and invoices.total>0 GROUP by invoices.csd;")->result_array();
+$cuentas_del_usuario=$this->db->query("SELECT customers.id as csd_c FROM invoices inner join customers on invoices.csd=customers.id where customers.id='".$cs->id."' and invoices.total>0 GROUP by invoices.csd;")->result_array();
 /*if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_vestel"){
     $cuentas_del_usuario=array();
 }*/
