@@ -202,10 +202,11 @@ class Transactions extends CI_Controller
             $retorno["estado"]="procesado 2";
             echo json_encode($retorno);
         }else{*/
-            $cus_existe=$this->db->get_where("customers",array("documento"=>$varx->documento))->row();
+            /*$cus_existe=$this->db->get_where("customers",array("documento"=>$varx->documento))->row();
             if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_vestel"){
-                $cus_existe=$this->db->get_where("customers",array("id"=>$varx->documento))->row();
-            }
+                
+            }*/
+            $cus_existe=$this->db->get_where("customers",array("id"=>$varx->documento))->row();
             if(isset($cus_existe)){
                 $_POST['fecha_x']=$varx->fecha;
                 $_POST['metodo_pago']=$varx->metodo_pago;
