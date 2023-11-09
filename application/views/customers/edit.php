@@ -276,6 +276,7 @@
 									<option value="b bis">b bis</option>
 									<option value="c bis">c bis</option>
 									<option value="d bis">d bis</option>
+									<option value="oeste">oeste</option>
 							</select>
                         </div>
                         <div class="col-sm-2 mb-1">
