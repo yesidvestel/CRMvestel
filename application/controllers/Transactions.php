@@ -1943,6 +1943,7 @@ $this->load->model('customers_model', 'customers');
         $this->db->set('tipo_factura', 'Fija');
         $this->db->set('notes', $_GET['motivo']);
         $this->db->set('status', 'canceled');
+        $this->db->set('facturacion_electronica', null);
         $this->db->where('tid', $tid);
         $this->db->update('invoices');
         //reverse
@@ -2467,6 +2468,11 @@ $result=array();
             $this->db->delete("recibos_de_pago",array("id"=>$value_r['id']));
 
         }
+
+    $inv=$this->db->get_where("invoices",array("tid"=>$tr1->tid))->row();
+    if(isset($inv) && $inv->pamnt<$inv->total && $inv->total>0){
+        $this->db->update("invoices",array("facturacion_electronica"=>null),array("tid"=>$tr1->tid));
+    }
     echo json_encode($result);
 }else{
     echo json_encode($this->transactions->delt($id));//liena importante
