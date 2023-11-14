@@ -822,6 +822,7 @@ set_time_limit(150);
     public function facturar_e_individual(){
         $this->facturas_electronicas->cargar_configuraciones_para_facturar();
         $inv=$this->db->get_where("invoices",array("tid"=>$_POST['tid']) )->row();
+        $this->db->delete("facturacion_electronica_siigo",array("tipo"=>"error","tid"=>$_POST['tid']));
         $api = new SiigoAPI();
         $api->getAuth(1);
         if(count($_SESSION['array_accesos_siigo'])==2){
@@ -834,65 +835,18 @@ set_time_limit(150);
 
 
          $_POST['xyz']="si";
-            $servicios=$this->customers->servicios_detail($inv->id);
-                $puntos = $this->customers->due_details($inv->id);
-                //guardare en un array la variable servicios = combo o tv o internet y la variable puntos con no o el numero de puntos
-                // el orden es prima los servicios que tiene actualmente como hay seleccion por el admin si el servicio existe se toma la seleccion si no se omite,
-                //°° IMPORTANTE °°  por otro lado si agrega servicios y estan seteadas las opciones con un solo servicio ejemplo, el admin debe de setear las opciones de facturacion electronica porque generara segun este seteado
-                $customer_data=$this->db->get_where("customers",array("id"=>$inv->id))->row();
-                if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
-                    $customer_data=null;
-                }
-               /*  cambios de abajo se comentan son para facturar cortados*/
-                /*
-                if($servicios['estado']=="Cortado"){
-                    if($servicios['estado_tv']=="Cortado"){
-                            $servicios['television']="si";
-                    }
-                    if($servicios['estado_combo']=="Cortado"){
-                            $servicios['combo']=$servicios['paquete'];
-                    }
-                }*/
-
-
-                //$datos=array();
-                $datos=$servicios;
-                if($puntos['puntos']=="0"){
-                    $datos['puntos']="no";
-                }else{
-                    $datos['puntos']=$puntos['puntos'];
-                }
-                if(isset($customer_data) && $customer_data->f_elec_puntos=="0"){
-                    $datos['puntos']="no";
-                }
-                $datos['servicios']=null;
-                if($servicios['television']!="no" && $servicios['television']!="-" &&$servicios['television']!="" &&$servicios['television']!="null" && $servicios['television']!=null){
+                 $datos=array();
+                  $datos=array("id_facturar"=>$inv->id);
+                     $datos['sdate']=$_POST['sdate'];
+                     $datos['estcuenta']=$_POST['estcuenta'];
+                
                     
-                    if($servicios['combo']!="no" && $servicios['combo']!="-" && $servicios['combo']!="" && $servicios['combo']!="null" && $servicios['combo']!=null){
-                            $datos['servicios']="Combo";
-                            if(isset($customer_data) && $customer_data->f_elec_internet=="0"){
-                                $datos['servicios']="Television";
-                            }else if(isset($customer_data) && $customer_data->f_elec_tv=="0"){
-                                $datos['servicios']="Internet";
-                            }
-                    }else{
-                        $datos['servicios']="Television";    
-                    }                    
-                }else if($servicios['combo']!="no" && $servicios['combo']!="-" && $servicios['combo']!="" && $servicios['combo']!="null" && $servicios['combo']!=null){
-                      $datos['servicios']="Internet";                    
-                }
-                $datos['sdate']=$sdate;
-                $datos['id']=$inv->id;
-                $datos['estcuenta']=$estcuenta;
-                $datos['serv_tv_real']=$servicios['television'];
-                $datos['tid_ult_fact']=$servicios['tid'];
-                if($datos['servicios']!=null){
-                    
-                   
+
                         if(count($_SESSION['array_accesos_siigo'])==2){
                            // $creo=$this->facturas_electronicas->generar_factura_customer_para_multiple($datos,$_SESSION['api_siigo']);    
                         }else{
                             $_POST['individual']=true;
+
                             $creo=$this->facturas_electronicas->generar_factura_customer_para_multiple_ottis($datos,$_SESSION['api_siigo']);    
                         }
                         //$creo=array("status"=>true);
@@ -900,7 +854,7 @@ set_time_limit(150);
                         if($creo['status']==true){
                                 $respuesta['response']="creada";
                         }else{
-                            $_SESSION['errores'][]=array("id"=>$inv->id,"csd"=>$datos['csd'],"error"=>$creo['respuesta']);                            
+                            //$_SESSION['errores'][$inv->id][]=array("id"=>$inv->id,"error"=>$creo['respuesta']);                            
                             $respuesta['response']="no genero 2";
                         }
                    
@@ -908,8 +862,6 @@ set_time_limit(150);
                     //--falta agregar el centro de costo 
                     //se agrego centro de costo falta validar las demas sedes
                     // y validar que si ya se creo la factura en esta fecha no volverla a crear
-
-                }
                 ob_clean();
                 echo json_encode($respuesta);
     }
@@ -1132,13 +1084,13 @@ var_dump($response);
         $lista_invoices=array();
         if(isset($_GET['id'])){
             $inv=$this->db->get_where("invoices",array("tid"=>$_GET['id']) )->row();
-            $lista_invoices=$this->db->query("SELECT *,facturacion_electronica_siigo.id as id_fac_elec FROM facturacion_electronica_siigo inner join customers on customers.id=facturacion_electronica_siigo.customer_id where invoice_id='".$inv->id."'")->result_array();
+            $lista_invoices=$this->db->query("SELECT *,facturacion_electronica_siigo.id as id_fac_elec FROM facturacion_electronica_siigo inner join customers on customers.id=facturacion_electronica_siigo.customer_id where tid='".$inv->tid."' order by facturacion_electronica_siigo.id desc")->result_array();
         }else{
             $dt= new DateTime($_GET['fecha']);
             $caja1=$this->db->get_where('accounts',array('id' =>$_GET['pay_acc']))->row();
             $lista_invoices=array();
             if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
-                $lista_invoices=$this->db->query("SELECT *,facturacion_electronica_siigo.id as id_fac_elec FROM facturacion_electronica_siigo inner join customers on customers.id=facturacion_electronica_siigo.customer_id where fecha='".$dt->format("Y-m-d")."' and ciudad='".$_GET['pay_acc']."'")->result_array();
+                $lista_invoices=$this->db->query("SELECT *,facturacion_electronica_siigo.id as id_fac_elec FROM facturacion_electronica_siigo inner join customers on customers.id=facturacion_electronica_siigo.customer_id where fecha='".$dt->format("Y-m-d")."' and ciudad='".$_GET['pay_acc']."' and tipo='facturada'")->result_array();
             }else{
                 $lista_invoices=$this->db->query("SELECT *,facturacion_electronica_siigo.id as id_fac_elec,facturacion_electronica_siigo.fecha as fecha_fe FROM facturacion_electronica_siigo inner join customers on customers.id=facturacion_electronica_siigo.customer_id where fecha='".$dt->format("Y-m-d")."' and gid='".$caja1->sede."'")->result_array();    
             }
@@ -1167,7 +1119,12 @@ var_dump($response);
                 $row[] = $customers->celular;
                 $row[] = $customers->documento;
                 if(isset($_GET['id'])){
-                    $row[]= (new DateTime($invoicex->fecha_fe))->format("d-m-Y");
+                    if($value['tipo']=="error"){
+                        $row[1]="<b>ERROR</b>";
+                        $row[2]="<b>CONTACTA A SOPORTE</b>";
+                        $row[3]="<b>POR FAVOR</b>";    
+                    }
+                    $row[]= (new DateTime($value['fecha']))->format("d-m-Y");
                 }else{
                     $row[] = '<a href="'.base_url().'invoices/view?id=' . $invoicex->tid . '">#' . $invoicex->tid ." - ". $invoicex->invoicedate. '</a>';    
                 }

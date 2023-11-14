@@ -8,6 +8,8 @@
  color: #2224A3;
 }
 </style>
+<link rel="stylesheet" href="<?=base_url()?>assets/css/jquery.lineProgressbar.css">
+<script type="text/javascript" src="<?=base_url()?>assets/js/jquery.lineProgressbar.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 <div class="app-content content container-fluid">
     <div class="content-wrapper">
@@ -119,8 +121,11 @@
 
                                     </div>
                                 </div>
-
-
+                                <?php if($invoice['status']=="paid"){ ?>
+                                <a href="#" 
+                                   class="btn btn-large btn-blue mb-1" id="generar_factura_electronica_btn1" title="Generar Factura Siigo"
+                                ><span class="icon-cloud"></span> Generar F.E. Siigo </a>
+                                <?php  }?>
 
 
                                 </div><?php if ($invoice['multi'] > 0) {
@@ -1012,8 +1017,161 @@
         </div>
     </div>
 </div>
+<div id="modal-f-e" class="modal fade">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Generar Factura Electrinca Siigo</h4>
+            </div>
+            <div class="modal-body">
+                
+                    <h3>Lista de Facturas Electronicas Generadas</h3>
+                    <div width="100%" style="text-align: center;"><img width="10%" src="<?=base_url() ?>assets/img/siigo.png" /></div>
+                    <div class="table-responsive">
+                <table id="clientstable11" class="table-striped" cellspacing="0" width="100%">
+                    <thead>
+                    <tr>
+                       <th>#</th>
+                        <th><?php echo $this->lang->line('Name') ?></th>
+                        <th>Celular</th>
+                        <th>Cedula</th>
+                        <th>Fecha F.E</th>
+                       
 
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                      
+                    </tbody>
+
+                    <tfoot>
+                    <tr>
+                       
+                        <th>#</th>
+                        <th><?php echo $this->lang->line('Name') ?></th>
+                        <th>Celular</th>
+                        <th>Cedula</th>
+                       <th>Fecha F.E</th>
+                       
+
+
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+            
+            <hr>
+            <h3> ¿Estas seguro de generar la factura electronica? esta accion no es reversible</h3>
+
+            <br>
+            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label"
+                                       for="pay_cat"><?php echo $this->lang->line('') ?>Estado inicial</label>
+                                <div class="col-sm-9">
+                                    <select name="estcuenta" class="form-control" id="estcuenta">
+                                        <option value="6960">Efectivo</option>
+                                        <option value="6941">Credito</option>
+                                    </select>
+                                </div>
+
+                            </div>
+                             <div class="form-group row">
+
+                                <label class="col-sm-3 control-label"
+                                       for="sdate2">Fecha</label>
+
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control required"
+                                           placeholder="Start Date" name="sdate" id="sdate2"
+                                            autocomplete="false" on onclick="editar_z_index();">
+                                </div>
+                            </div>
+<br><br>
+ <div id="progressfg" data-init="true"></div>
+                    <div class="modal-footer">
+                        <input type="hidden" class="form-control"
+                               name="tid_f_e"  value="<?php echo $invoice['tid'] ?>">
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal"><?php echo $this->lang->line('Close'); ?></button>
+                        <button type="button" class="btn btn-primary"
+                                id="generar_factura_elec_action"><?php echo $this->lang->line(''); ?>Confirmo, Genera la Factura </button>
+                    </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
 <script type="text/javascript">
+    function editar_z_index(){
+        $(".datepicker-container,datepicker-dropdown").css("z-index","5000");
+    }
+    var tb2;
+    var pro=0;
+    var pausa=false;
+    function iterar(){
+        if(pausa==false && pro<90){
+            setTimeout(function(){ pro+=5;progress_one(pro);
+                 iterar();
+             },500);
+           
+        }
+    }
+    $(document).on("click","#generar_factura_elec_action",function(evt){
+        evt.preventDefault();
+        progress_one(30);
+        pro=30;
+        pausa=false;
+        iterar();
+        var sdate=$("#sdate2").val();
+        var estcuenta=$("#estcuenta").val();
+        $.post(baseurl+"facturasElectronicas/facturar_e_individual",{tid:'<?=$invoice['tid'] ?>','sdate':sdate,'estcuenta':estcuenta},function(data){
+            if(data.response=="creada"){
+                 pausa=true;
+                progress_one(100);
+                //pro=100;
+                tb2.ajax.url( baseurl+"facturasElectronicas/lista_facturas_generadas?id=<?=$invoice['tid']?>").load();  
+                setTimeout(function(){progress_one(0); pro=0;},5000);
+                alert("Factura Generada con Exito ! ..");
+            }else{
+                progress_one(0);
+                pro=0;
+                 pausa=true;
+                alert("error al crear la factura");
+            }
+        },'json');
+
+    });
+    function progress_one(valorx){
+         $('#progressfg').LineProgressbar({
+                    percentage: valorx,
+                    animation: true
+                });
+    }
+    progress_one(0);
+        $(document).ready(function () {
+        tb2=$('#clientstable11').DataTable({
+            'processing': true,
+            'serverSide': true,
+            'stateSave': true,
+            'order': [],
+            'ajax': {
+                'url': "<?php echo site_url('facturasElectronicas/lista_facturas_generadas?id='.$invoice['tid'])?>",
+                'type': 'POST'
+            },
+            'columnDefs': [
+                {
+                    'targets': [0],
+                    'orderable': false,
+                },
+            ],
+            
+        });
+    });
+    $(document).on('click',"#generar_factura_electronica_btn1",function(){
+        $("#modal-f-e").modal("show");
+    });
     $(document).on("click","#open_modal_sms",function (e){
         e.preventDefault();
         $("#sendSms").modal("show");

@@ -732,6 +732,7 @@ class Facturas_electronicas_model extends CI_Model
                                         }
                                         
                                     }else{
+                                        //si dicen que el valor no es el que tienen en saves, es porque siigo solo toma en cuenta la retencion sobre el valor sin iva ;
                                         $value_r=(($sv['price']*$sv['qty'])*$percentage_r_calculo)/100;
                                         $row_retencion=',
                                          {
@@ -801,8 +802,9 @@ class Facturas_electronicas_model extends CI_Model
         //$retorno['mensaje']="Factura Guardada";
 
         if($retorno['mensaje']=="Factura Guardada"){
-            //$dataInsert['tid']=$invoice_facturar->tid;
+            $dataInsert['tid']=$invoice_facturar->tid;
             //$dataInsert["json"]=$dataApiNET;
+            $dataInsert['fecha_ejecucion']=date("Y-m-d H:i:s");
             $this->db->insert("facturacion_electronica_siigo",$dataInsert);
             $dt_in=array();
             $dt_in['facturacion_electronica']="Factura Electronica Creada";
@@ -830,6 +832,12 @@ class Facturas_electronicas_model extends CI_Model
             //if($error_era_consecutivo==false){
                 //var_dump($retorno['respuesta']);
             //}
+             $dataInsert['tid']=$invoice_facturar->tid;
+             $dataInsert['tipo']='error';
+             $dataInsert['invoice_id']=$datos_facturar['id_facturar']."-error";        
+            $dataInsert["json"]=$dataApiNET."  errores: ".$retorno['respuesta'];
+            $dataInsert['fecha_ejecucion']=date("Y-m-d H:i:s");
+            $this->db->insert("facturacion_electronica_siigo",$dataInsert);
             $retor=array("status"=>false,'respuesta'=>$retorno['respuesta']);
             return $retor;
         }
