@@ -3259,6 +3259,7 @@ return $str;
         //generar reconexion
         $username = $this->aauth->get_user()->username;
         $tidactualmasuno= $this->db->select('max(codigo)+1 as tid,max(idt)+1 as idt')->from('tickets')->get()->result();
+		$tidactualmasdos= $this->db->select('max(codigo)+2 as tid')->from('tickets')->get()->result();
         $datos_tarea=array();
         $datos_tarea['idorden']=$tidactualmasuno[0]->tid;
         $datos_tarea['tdate']=$paydate;
@@ -3273,11 +3274,44 @@ return $str;
         $datos_tarea['related']=0;
         $datos_tarea['rid']=0;
         $this->db->insert("todolist",$datos_tarea);
-        
+        $corte = $this->db->query("select * from tickets where cid='".$cid."' AND detalle like '%corte%' order by idt  desc limit 1")->result_array();
+		 if(isset($corte[0])){
+			 $mescorte = date("Y-m",strtotime($corte[0]['fecha_final']));
+		 }
+		 $parmasuno= $this->db->select('max(par)+1 as par')->from('tickets')->get()->result();
         if ($reconexion=="si" && $mes2===$mes1){
-            $data2['codigo']=$tidactualmasuno[0]->tid;
+			if ($tipo=='Reconexion Combo'){
+				//internet
+				$data2['codigo']=$tidactualmasuno[0]->tid;
                 $data2['subject']='servicio';
-                $data2['detalle']=$tipo;
+                $data2['detalle']='Reconexion Internet';
+                $data2['created']=$paydate;
+                $data2['cid']=$cid;
+				$data2['col']=$username;
+                $data2['status']='Pendiente';
+                $data2['section']=$factura_asociada->combo;
+                $data2['id_factura']=$factura_asociada->tid;
+                $this->db->insert('tickets',$data2);
+				//tv
+				$data3['codigo']=$tidactualmasdos[0]->tid;
+                $data3['subject']='servicio';
+                $data3['detalle']='Reconexion Television';
+                $data3['created']=$paydate;
+                $data3['cid']=$cid;
+				$data3['col']=$username;
+                $data3['status']='Pendiente';
+                $data3['section']=$factura_asociada->television;
+                $data3['id_factura']=$factura_asociada->tid;
+                $this->db->insert('tickets',$data3);
+			}else{
+				if($mescorte===$mes1){
+					$detcorte=$tipo;
+				}else{
+					$detcorte=$tipo.'2';
+				}
+				$data2['codigo']=$tidactualmasuno[0]->tid;
+                $data2['subject']='servicio';
+                $data2['detalle']=$detcorte;
                 $data2['created']=$paydate;
                 $data2['cid']=$cid;
                 $data2['col']=$username;
@@ -3285,20 +3319,52 @@ return $str;
                 $data2['section']=$paquete;
                 $data2['id_factura']=$factura_asociada->tid;
                 $this->db->insert('tickets',$data2);
-
-                          $data_h=array();
-                            $data_h['modulo']="Usuarios Servicio ".$pmethod;
-                            $data_h['accion']="Hacer el Pago {update}";
-                            $data_h['id_usuario']=$cid;
-                            $data_h['fecha']=date("Y-m-d H:i:s");
-                            $data_h['descripcion']=json_encode($data2);
-                            $data_h['id_fila']=$this->db->insert_id();
-                            $data_h['tabla']="tickets";
-                            $data_h['nombre_columna']="idt";
-                            $this->db->insert("historial_crm",$data_h);
+			}
+            	$data_h=array();
+				$data_h['modulo']="Usuarios Servicio ".$pmethod;
+				$data_h['accion']="Hacer el Pago {update}";
+				$data_h['id_usuario']=$cid;
+				$data_h['fecha']=date("Y-m-d H:i:s");
+				$data_h['descripcion']=json_encode($data2);
+				$data_h['id_fila']=$this->db->insert_id();
+				$data_h['tabla']="tickets";
+				$data_h['nombre_columna']="idt";
+				$this->db->insert("historial_crm",$data_h);
                 $reconexion_gen="si";
         }if ($reconexion=="si" && $mes2>$mes1){
-                $data2['codigo']=$tidactualmasuno[0]->tid;
+			if ($tipo=='Reconexion Combo'){
+				//internet
+				$data2['codigo']=$tidactualmasuno[0]->tid;
+                $data2['subject']='servicio';
+                $data2['detalle']='Reconexion Internet2';
+                $data2['created']=$paydate;
+                $data2['cid']=$cid;
+				$data2['col']=$username;
+                $data2['status']='Pendiente';
+                $data2['section']=$factura_asociada->combo;
+                $data2['id_factura']='';
+                $data2['par']=$parmasuno[0]->par;
+                /*if($fac_caso_execpcional){
+                    $data2['id_factura']=$factura_asociada->tid;
+                }*/
+                $this->db->insert('tickets',$data2);
+				//tv
+				$data3['codigo']=$tidactualmasdos[0]->tid;
+                $data3['subject']='servicio';
+                $data3['detalle']='Reconexion Television2';
+                $data3['created']=$paydate;
+                $data3['cid']=$cid;
+				$data3['col']=$username;
+                $data3['status']='Pendiente';
+                $data3['section']=$factura_asociada->television;
+                $data3['id_factura']='';
+                /* if($fac_caso_execpcional){
+                    $data3['id_factura']=$factura_asociada->tid;
+                }*/
+                $data3['par']=$parmasuno[0]->par;
+                $this->db->insert('tickets',$data3);
+			}else{
+				$data2['codigo']=$tidactualmasuno[0]->tid;
                 $data2['subject']='servicio';
                 $data2['detalle']=$tipo.'2';
                 $data2['created']=$paydate;
@@ -3308,6 +3374,9 @@ return $str;
                 $data2['section']=$paquete;
                 $data2['id_factura']='';
                 $this->db->insert('tickets',$data2);
+				
+			}
+                
                             $data_h=array();
                             $data_h['modulo']="Usuarios Servicio ".$pmethod;
                             $data_h['accion']="Hacer el Pago {update}";
