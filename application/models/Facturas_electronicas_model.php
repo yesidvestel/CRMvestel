@@ -690,7 +690,7 @@ class Facturas_electronicas_model extends CI_Model
                                     //$dataApiNET->items[$count]->taxes = array_values($dataApiNET->items[$count]->taxes);
 
                                      $dataApiNET->items[$count]->quantity=$sv['qty'];
-                                     $dataApiNET->items[$count]->price=$sv['price']*$sv['qty'];
+                                     $dataApiNET->items[$count]->price=$sv['price'];
                                 }
                                 $sv['total']+=$sv['price'];
                                 $suma=($sv['total']*$sv['qty']);
