@@ -1135,6 +1135,7 @@
                 setTimeout(function(){progress_one(0); pro=0;},5000);
                 alert("Factura Generada con Exito ! ..");
             }else{
+                tb2.ajax.url( baseurl+"facturasElectronicas/lista_facturas_generadas?id=<?=$invoice['tid']?>").load();  
                 progress_one(0);
                 pro=0;
                  pausa=true;
