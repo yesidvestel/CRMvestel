@@ -401,6 +401,7 @@
 									<div class="col-sm-4">
 										<label for="invociedate" class="caption">Paquete</label>
 											<select name="suinter" class="form-control mb-1">
+												<option value="<?php echo $temporal['internet'] ?>"><?php echo $temporal['internet'] ?></option>
 												<option value="no">No</option>
 												<?php
 													foreach ($paqueteinter as $row) {
@@ -415,6 +416,7 @@
 									<label for="invociedate" class="caption">Perfil Mikrotik</label>
 										<div class="input-group">									
 											<select name="supaquete" class="form-control mb-1">
+												<option value="<?php echo $temporal['puntos'] ?>"><?php echo $temporal['puntos'] ?></option>
 												<option value="0">no</option>
 													<?php for ($i=1;$i<=6;$i++){
 													echo '	<option value="'.$i*'50'.'Megas">'.$i*'50'.'Megas</option>
