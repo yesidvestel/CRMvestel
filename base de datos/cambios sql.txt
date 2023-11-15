@@ -932,6 +932,6 @@ ADD `debido_ret_8` int(10) NOT NULL AFTER `debido_sus_8`;
 ------------------------------------------------------ modulo cargar excel permisos ------------------
 INSERT INTO `modulos` (`id_modulo`, `rol`, `nombre`, `id_padre`, `codigo`, `orden`, `icono`) VALUES (NULL, 'Hijo', 'Cargar Excel', '27', 'tescargarexcel', '0', NULL);
 ------------------------cambios para pruebas facturacion electronica-----------------------------------------
-ALTER TABLE `facturacion_electronica_siigo` ADD `json` VARCHAR(7000) NULL AFTER `creado_con_multiple`, ADD `tid` INT NULL AFTER `json`;
-ALTER TABLE `facturacion_electronica_siigo` ADD `fecha_ejecucion` DATETIME NULL AFTER `fecha`;
-ALTER TABLE `facturacion_electronica_siigo` ADD `tipo` ENUM('facturada','error') NOT NULL DEFAULT 'facturada' AFTER `tid`;
+  ALTER TABLE `facturacion_electronica_siigo` ADD `json` VARCHAR(7000) NULL AFTER `creado_con_multiple`, ADD `tid` INT NULL AFTER `json`;
+  ALTER TABLE `facturacion_electronica_siigo` ADD `fecha_ejecucion` DATETIME NULL AFTER `fecha`;
+  ALTER TABLE `facturacion_electronica_siigo` ADD `tipo` ENUM('facturada','error') NOT NULL DEFAULT 'facturada' AFTER `tid`;
