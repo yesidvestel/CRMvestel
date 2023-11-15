@@ -37,7 +37,7 @@ class Tools_model extends CI_Model
         }
 	   	$this->db->join('employee_profile', 'employee_profile.id = todolist.eid', 'left');
 	   	//$this->db->where('eid', $colaborador);
-		$this->db->where('aid', $colaborador);	
+		//$this->db->where('aid', $colaborador);	
 		
 		
 
