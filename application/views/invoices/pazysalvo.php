@@ -240,7 +240,7 @@
 				<p>Atendiendo su solicitud nos permitimos informarle que se encuentra a <strong>PAZ Y SALVO </strong>de sus obligaciones con la empresa de telecomunicaciones VESTEL S.A.S. con el número de abonado <?php echo '<strong>'. $usuario['documento'].'</strong>, ubicado en el barrio ' . $barrio['barrio'] . ' en la direccion ' . $usuario['nomenclatura'].' '. $usuario['numero1'].$usuario['adicionauno'].' # '.$usuario['numero2'].$usuario['adicional2'].' - '.$usuario['numero3'].'.'; ?></p>
 				<br>
 				<br>
-					Cualquier información adicional con gusto la atenderemos en nuestras líneas de Atención al Usuario marcando al 3102549725 a través de llamadas o WhatsApp.
+					Cualquier información adicional con gusto la atenderemos en nuestras líneas de Atención al Usuario marcando al <strong>PBX 601 9171700</strong> a través de llamadas o WhatsApp.
 				<br>
 				<br>
 				<br>
