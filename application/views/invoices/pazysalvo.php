@@ -257,7 +257,7 @@
 				<img src="<?php echo FCPATH . 'userfiles/employee_sign/' . $empleado['sign']  ?>" alt="signature" style="height: 60px"/>
 				<hr>
 				<strong><?php echo $empleado['name'] ?></strong><br>
-				COORDINADOR DE CARTERA<br>
+				SUSPENSIONES<br>
 				VESTEL S.A.S
 			</td>
 		</tr>
