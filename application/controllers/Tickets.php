@@ -1795,8 +1795,9 @@ $x=0;
                 }
                 $this->customers->desactivar_estado_usuario($customerx->name_s,$id_sede_mk,$customerx->tegnologia_instalacion);
 		}
-		if($ticket->detalle=="AgregarTelevision" || ($ticket->detalle=="Reconexion Television2" && ($ticket->id_factura!=0 || $ticket->id_factura!=null))){			
-			$producto = $this->db->get_where('products',array('product_name'=>$data['television']))->row();
+		if($ticket->detalle=="AgregarTelevision" || ($ticket->detalle=="Reconexion Television2" && ($ticket->id_factura!=0 || $ticket->id_factura!=null))){
+			$factura = $this->db->get_where('invoices',array('tid'=>$idfactura))->row();
+			$producto = $this->db->get_where('products',array('product_name'=>$factura->television))->row();
             $total=0;
             $taxvalue=0;
             
@@ -1873,7 +1874,7 @@ $x=0;
             //$data['total']=$data['subtotal']+$data['tax'];             
                     /*end serv ads*/
                     $this->db->insert('invoice_items',$datay);
-            $factura = $this->db->get_where('invoices',array('tid'=>$idfactura))->row();
+            
             //var_dump($factura->subtotal);
             //var_dump($total);
 				$this->db->set('subtotal', $factura->subtotal+$total);
