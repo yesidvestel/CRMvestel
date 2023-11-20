@@ -1170,10 +1170,11 @@ $x=0;
 						 $this->db->insert("estados",$dataes);
 					}
 				//id factura si se dividio orden
-				$this->db->set('id_factura', $data['tid']);							
+										
         		
 				//$this->db->where('codigo'!== $ticket->codigo);
                 if($ticket->par!=null){
+                    $this->db->set('id_factura', $data['tid']); 
                     $this->db->where('par', $ticket->par);
         		  $this->db->update('tickets');
                 }
