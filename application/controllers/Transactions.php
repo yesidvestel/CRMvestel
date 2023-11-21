@@ -1085,7 +1085,7 @@ class Transactions extends CI_Controller
                 $data2['subject']='servicio';
                 $data2['detalle']='Reconexion Internet2';
                 $data2['created']=$paydate;
-                $data2['created']=$paydate;
+                $data2['fecha_final']=$paydate;
                 $data2['cid']=$cid;
 				$data2['col']=$username;
                 $data2['status']='Resuelto';

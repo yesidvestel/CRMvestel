@@ -3242,6 +3242,7 @@ return $str;
             $factura_asociada = $ultima_factura['tid']; 
      if($reconexion_gen=="no"){//&& $factura_asociada==$factura_var->tid
         $factura_asociada = $this->db->get_where('invoices',array('tid'=>$factura_asociada))->row();
+		$factura_asociada2 = $this->db->get_where('invoices',array('tid'=>$factura_asociada->tid))->result_array();
         $fcuenta = $factura_asociada->invoicedate;
         $paquete=$var_net_;
         
@@ -3275,6 +3276,9 @@ return $str;
         $datos_tarea['rid']=0;
         $this->db->insert("todolist",$datos_tarea);
         $corte = $this->db->query("select * from tickets where cid='".$cid."' AND detalle like '%corte%' order by idt  desc limit 1")->result_array();
+		 $ultimodiames = date('t');
+		 $fechaActual = date('j');
+		 $diferencia = $ultimodiames-$fechaActual+1;
 		 if(isset($corte[0])){
 			 $mescorte = date("Y-m",strtotime($corte[0]['fecha_final']));
 		 }
@@ -3286,12 +3290,40 @@ return $str;
                 $data2['subject']='servicio';
                 $data2['detalle']='Reconexion Internet';
                 $data2['created']=$paydate;
+                $data2['fecha_final']=$paydate;
                 $data2['cid']=$cid;
 				$data2['col']=$username;
-                $data2['status']='Pendiente';
+                $data2['status']='Resuelto';
                 $data2['section']=$factura_asociada->combo;
                 $data2['id_factura']=$factura_asociada->tid;
-                $this->db->insert('tickets',$data2);
+                if ($this->db->insert('tickets',$data2)){
+					$this->db->set('estado_combo', null);
+					$this->db->set('ron', 'Activo');
+					$this->db->where('tid', $factura_asociada->tid);
+					$this->db->update('invoices');
+					//actualizar estado usuario
+					$this->db->set("ultimo_estado",$factura_asociada->ron);
+					$this->db->set("fecha_cambio",date("Y-m-d H:i:s"));
+					$this->db->set('usu_estado', 'Activo');
+					$this->db->where('id', $cid);
+					//historial estados
+					if($this->db->update('customers')){
+					 $dataes = array(
+						'cid' => $cid,
+						'fecha' => date("Y-m-d H:i:s"),
+						'estado' => 'Activo',
+						'col' => $data2['codigo'],
+						);
+						 $this->db->insert("estados",$dataes);
+					}
+					//mikrotik
+					$customerx=$this->db->get_where("customers",array('id' =>$cid ))->row();
+					$id_sede_mk=$customerx->gid;
+					if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
+						$id_sede_mk=$customerx->ciudad;
+					}
+					$this->customers->activar_estado_usuario($customerx->name_s,$id_sede_mk,$customerx->tegnologia_instalacion);
+				} 
 				//tv
 				$data3['codigo']=$tidactualmasdos[0]->tid;
                 $data3['subject']='servicio';
@@ -3300,7 +3332,7 @@ return $str;
                 $data3['cid']=$cid;
 				$data3['col']=$username;
                 $data3['status']='Pendiente';
-                $data3['section']=$factura_asociada->television;
+                $data3['section']='Television';
                 $data3['id_factura']=$factura_asociada->tid;
                 $this->db->insert('tickets',$data3);
 			}else{
@@ -3309,16 +3341,81 @@ return $str;
 				}else{
 					$detcorte=$tipo.'2';
 				}
+				if(strpos($detcorte, "Reconexion Internet") !== false){
+					$estado='Resuelto';
+					$fechafinal==$paydate;
+					$observacion=$factura_asociada->combo;
+				}else{
+					$estado='Pendiente';
+					$fechafinal='';
+					$observacion=$factura_asociada->television;
+				}
 				$data2['codigo']=$tidactualmasuno[0]->tid;
                 $data2['subject']='servicio';
                 $data2['detalle']=$detcorte;
                 $data2['created']=$paydate;
+                $data2['fecha_final']=$fechafinal;
                 $data2['cid']=$cid;
-                $data2['col']=$username;
-                $data2['status']='Pendiente';
-                $data2['section']=$paquete;
+				$data2['col']=$username;
+                $data2['status']=$estado;
+                $data2['section']=$observacion;
                 $data2['id_factura']=$factura_asociada->tid;
-                $this->db->insert('tickets',$data2);
+				//reconexion automatica internet
+				if ($this->db->insert('tickets',$data2) && strpos($detcorte, "Reconexion Internet") !== false){
+					$this->db->set('estado_combo', null);
+					$this->db->set('ron', 'Activo');
+					$this->db->where('tid', $factura_asociada->tid);
+					$this->db->update('invoices');
+					//actualizar estado usuario
+					$this->db->set("ultimo_estado",$factura_asociada->ron);
+					$this->db->set("fecha_cambio",date("Y-m-d H:i:s"));
+					$this->db->set('usu_estado', 'Activo');
+					$this->db->where('id', $cid);
+					//historial estados
+					if($this->db->update('customers')){
+					 $dataes = array(
+						'cid' => $cid,
+						'fecha' => date("Y-m-d H:i:s"),
+						'estado' => 'Activo',
+						'col' => $data2['codigo'],
+						);
+						 $this->db->insert("estados",$dataes);
+					}
+					//mikrotik
+					$customerx=$this->db->get_where("customers",array('id' =>$cid ))->row();
+					$id_sede_mk=$customerx->gid;
+					if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
+						$id_sede_mk=$customerx->ciudad;
+					}
+					$this->customers->activar_estado_usuario($customerx->name_s,$id_sede_mk,$customerx->tegnologia_instalacion);
+					if($detcorte=="Reconexion Internet2"){
+						//agregar paquete
+						$producto = $this->db->get_where('products',array('product_name'=>$factura_asociada->combo))->row();
+						$datay['tid']=$factura_asociada->tid;
+						$datay['pid']=$producto->pid;
+						$x=intval($producto->product_price);
+						$x=($x/$ultimodiames)*$diferencia;
+						$datay['product']=$producto->product_name;
+						$datay['qty']=1;
+						$datay['tax']=$producto->taxrate;
+						$taxvalue=round(($producto->product_price*$producto->taxrate)/100);
+                        $taxvalue=round(round(($taxvalue/$ultimodiames))*$diferencia);
+						$datay['totaltax']=$taxvalue;
+						$datay['price']=$x;
+                        $datay['subtotal']=($x+$taxvalue);
+						$subtotal+=round($x*$datay['qty']);
+						//actualizacion factura
+						if ($this->db->insert('invoice_items',$datay)){
+							$this->db->set('subtotal', $factura_asociada->subtotal+$subtotal);
+							$this->db->set('tax', ($factura_asociada->tax+$datay['tax']));
+							$this->db->set('total', $factura_asociada->total+($subtotal+$datay['tax']));
+							$this->db->set('combo', $factura_asociada->combo);
+							$this->db->set('estado_combo', null);
+							$this->db->where('tid', $factura_asociada->tid);
+							$this->db->update('invoices');
+						}
+					}
+				} 
 			}
             	$data_h=array();
 				$data_h['modulo']="Usuarios Servicio ".$pmethod;
@@ -3332,48 +3429,185 @@ return $str;
 				$this->db->insert("historial_crm",$data_h);
                 $reconexion_gen="si";
         }if ($reconexion=="si" && $mes2>$mes1){
+			$tidactualmasunoinv= $this->db->select('max(tid)+1 as tid')->from('invoices')->get()->result();
 			if ($tipo=='Reconexion Combo'){
 				//internet
 				$data2['codigo']=$tidactualmasuno[0]->tid;
                 $data2['subject']='servicio';
                 $data2['detalle']='Reconexion Internet2';
                 $data2['created']=$paydate;
+                $data2['fecha_final']=$paydate;
                 $data2['cid']=$cid;
 				$data2['col']=$username;
-                $data2['status']='Pendiente';
+                $data2['status']='Resuelto';
                 $data2['section']=$factura_asociada->combo;
-                $data2['id_factura']='';
+                $data2['id_factura']=$tidactualmasunoinv[0]->tid;
                 $data2['par']=$parmasuno[0]->par;
-                /*if($fac_caso_execpcional){
-                    $data2['id_factura']=$factura_asociada->tid;
-                }*/
-                $this->db->insert('tickets',$data2);
-				//tv
-				$data3['codigo']=$tidactualmasdos[0]->tid;
-                $data3['subject']='servicio';
-                $data3['detalle']='Reconexion Television2';
-                $data3['created']=$paydate;
-                $data3['cid']=$cid;
-				$data3['col']=$username;
-                $data3['status']='Pendiente';
-                $data3['section']=$factura_asociada->television;
-                $data3['id_factura']='';
-                /* if($fac_caso_execpcional){
-                    $data3['id_factura']=$factura_asociada->tid;
-                }*/
-                $data3['par']=$parmasuno[0]->par;
-                $this->db->insert('tickets',$data3);
+				//actualizar estado usuario
+				$this->db->set("ultimo_estado",$factura_asociada->ron);
+				$this->db->set("fecha_cambio",date("Y-m-d H:i:s"));
+				$this->db->set('usu_estado', 'Activo');
+				$this->db->where('id', $cid);
+				//historial estados
+				if($this->db->update('customers')){
+				 $dataes = array(
+					'cid' => $cid,
+					'fecha' => date("Y-m-d H:i:s"),
+					'estado' => 'Activo',
+					'col' => $data2['codigo'],
+					);
+					 $this->db->insert("estados",$dataes);
+				}
+				//mikrotik
+				$customerx=$this->db->get_where("customers",array('id' =>$cid ))->row();
+				$id_sede_mk=$customerx->gid;
+				if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
+					$id_sede_mk=$customerx->ciudad;
+				}
+				$this->customers->activar_estado_usuario($customerx->name_s,$id_sede_mk,$customerx->tegnologia_instalacion);
+				//agregar factura
+                if($this->db->insert('tickets',$data2)){
+					if(isset($factura_asociada2[0])){
+						foreach ($factura_asociada2[0] as $key => $value) {
+							if($key!='id' && $key!='pmethod' && $key!='status' && $key!='pamnt' && $key!='resivos_guardados'){
+								$datainv[$key]=$value;
+							}
+						}
+					}
+					$mesActual = date('m');
+					$anoActual = date('Y');
+					$fechaUltimoDia = date('Y-m-d', strtotime("$anoActual-$mesActual-$ultimodiames"));
+
+					$datainv['tid']=$tidactualmasunoinv[0]->tid;
+					$datainv['status']='due';
+					$datainv['ron']='Activo';
+					$datainv['tipo_factura']='Recurrente';
+					$datainv['estado_combo']='';
+					$datainv['invoicedate']=date("Y-m-d");
+					$datainv['invoiceduedate']=$fechaUltimoDia;
+					//items
+						$producto = $this->db->get_where('products',array('product_name'=>$factura_asociada->combo))->row();
+						$datay['tid']=$tidactualmasunoinv[0]->tid;
+						$datay['pid']=$producto->pid;
+						$x=intval($producto->product_price);
+						$x=($x/$ultimodiames)*$diferencia;
+						$datay['product']=$producto->product_name;
+						$datay['qty']=1;
+						$datay['tax']=$producto->taxrate;
+						$taxvalue=round(($producto->product_price*$producto->taxrate)/100);
+						$taxvalue=round(round(($taxvalue/$ultimodiames))*$diferencia);
+						$datay['totaltax']=$taxvalue;
+						$datay['price']=$x;
+						$datay['subtotal']=($x+$taxvalue);
+						$subtotal+=round($x*$datay['qty']);
+						$this->db->insert('invoice_items',$datay);
+						//Reconexion tv
+						$data3['codigo']=$tidactualmasdos[0]->tid;
+						$data3['subject']='servicio';
+						$data3['detalle']='Reconexion Television2';
+						$data3['created']=$paydate;
+						$data3['cid']=$cid;
+						$data3['col']=$username;
+						$data3['status']='Pendiente';
+						$data3['section']='Television';
+						$data3['id_factura']=$tidactualmasunoinv[0]->tid;
+						$data3['par']=$parmasuno[0]->par;
+						$this->db->insert('tickets',$data3);
+						//---
+					$datainv['subtotal']=$subtotal;
+					$datainv['tax']=$datay['tax'];
+					$datainv['total']=$datainv['subtotal']+$datainv['tax'];
+					$this->db->insert('invoices',$datainv);
+				}
 			}else{
+				if(strpos($tipo, "Reconexion Internet") !== false){
+					$estado='Resuelto';
+					$fechafinal=$paydate;
+					$factura=$tidactualmasunoinv[0]->tid;
+					$observacion=$factura_asociada->combo;
+					$facasociada='';
+				}else{
+					$estado='Pendiente';
+					$fechafinal=null;
+					$factura='';
+					$observacion=$factura_asociada->television;
+					$facasociada=$factura_asociada->tid;
+				}
 				$data2['codigo']=$tidactualmasuno[0]->tid;
                 $data2['subject']='servicio';
                 $data2['detalle']=$tipo.'2';
                 $data2['created']=$paydate;
+				$data2['fecha_final']=$fechafinal;
                 $data2['cid']=$cid;
-                $data2['col']=$username;
-                $data2['status']='Pendiente';
-                $data2['section']=$paquete;
-                $data2['id_factura']='';
-                $this->db->insert('tickets',$data2);
+				$data2['col']=$username;
+                $data2['status']=$estado;
+                $data2['section']=$observacion;
+                $data2['id_factura']=$factura;
+                $data2['id_invoice']=$facasociada;
+				$this->db->insert('tickets',$data2);
+                if ($tipo=='Reconexion Internet'){
+					//actualizar estado usuario
+					$this->db->set("ultimo_estado",$factura_asociada->ron);
+					$this->db->set("fecha_cambio",date("Y-m-d H:i:s"));
+					$this->db->set('usu_estado', 'Activo');
+					$this->db->where('id', $cid);
+					//historial estados
+					if($this->db->update('customers')){
+					 $dataes = array(
+						'cid' => $cid,
+						'fecha' => date("Y-m-d H:i:s"),
+						'estado' => 'Activo',
+						'col' => $data2['codigo'],
+						);
+						 $this->db->insert("estados",$dataes);
+					}
+					//mikrotik
+					$customerx=$this->db->get_where("customers",array('id' =>$cid ))->row();
+					$id_sede_mk=$customerx->gid;
+					if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
+						$id_sede_mk=$customerx->ciudad;
+					}
+					$this->customers->activar_estado_usuario($customerx->name_s,$id_sede_mk,$customerx->tegnologia_instalacion);
+					//agregar factura
+					if(isset($factura_asociada2[0])){
+						foreach ($factura_asociada2[0] as $key => $value) {
+							if($key!='id' && $key!='pmethod' && $key!='status' && $key!='pamnt' && $key!='resivos_guardados'){
+								$datainv[$key]=$value;
+							}
+						}
+					}
+					$mesActual = date('m');
+					$anoActual = date('Y');
+					$fechaUltimoDia = date('Y-m-d', strtotime("$anoActual-$mesActual-$ultimodiames"));
+					$datainv['tid']=$tidactualmasunoinv[0]->tid;
+					$datainv['status']='due';
+					$datainv['ron']='Activo';
+					$datainv['tipo_factura']='Recurrente';
+					$datainv['estado_combo']='';
+					$datainv['invoicedate']=date("Y-m-d");
+					$datainv['invoiceduedate']=$fechaUltimoDia;
+					//items
+						$producto = $this->db->get_where('products',array('product_name'=>$factura_asociada->combo))->row();
+						$datay['tid']=$tidactualmasunoinv[0]->tid;
+						$datay['pid']=$producto->pid;
+						$x=intval($producto->product_price);
+						$x=($x/$ultimodiames)*$diferencia;
+						$datay['product']=$producto->product_name;
+						$datay['qty']=1;
+						$datay['tax']=$producto->taxrate;
+						$taxvalue=round(($producto->product_price*$producto->taxrate)/100);
+						$taxvalue=round(round(($taxvalue/$ultimodiames))*$diferencia);
+						$datay['totaltax']=$taxvalue;
+						$datay['price']=$x;
+						$datay['subtotal']=($x+$taxvalue);
+						$subtotal+=round($x*$datay['qty']);
+						$this->db->insert('invoice_items',$datay);
+						//---
+					$datainv['subtotal']=$subtotal;
+					$datainv['tax']=$datay['tax'];
+					$datainv['total']=$datainv['subtotal']+$datainv['tax'];
+					$this->db->insert('invoices',$datainv);
+				}
 				
 			}
                 
