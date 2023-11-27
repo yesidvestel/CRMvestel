@@ -662,12 +662,12 @@ class Facturas_electronicas_model extends CI_Model
                                 $dataApiNET->items[$count]->code=$pr_sr->product_code;
                                 $sv['total']=0;
                                 $iva_des=0;
-                                if($sv['discount']>0){
-                                    if($sv['discount']>$sv['price']){
-                                        $iva_des=$sv['discount']-$sv['price'];
+                                if($sv['totaldiscount']>0){
+                                    if($sv['totaldiscount']>$sv['price']){
+                                        $iva_des=$sv['totaldiscount']-$sv['price'];
                                         $sv['price']=0;
                                     }else{
-                                        $sv['price']-=$sv['discount'];                                        
+                                        $sv['price']-=$sv['totaldiscount'];                                        
                                     }
                                 }
                                 if(isset($pr_sr) && $sv['tax']!="0"){
@@ -802,11 +802,19 @@ class Facturas_electronicas_model extends CI_Model
         //$retorno['mensaje']="Factura Guardada";
 
         if($retorno['mensaje']=="Factura Guardada"){
+            $dt_in=array();
             $dataInsert['tid']=$invoice_facturar->tid;
             //$dataInsert["json"]=$dataApiNET;
             $dataInsert['fecha_ejecucion']=date("Y-m-d H:i:s");
+            if($datos_facturar['estcuenta']=="6941"){
+                $dt_in['metodo_pago_f_e']="credito";    
+                $dataInsert['metodo_pago']="credito";    
+            }else{
+                $dt_in['metodo_pago_f_e']="efectivo";    
+                $dataInsert['metodo_pago']="efectivo";    
+            }
             $this->db->insert("facturacion_electronica_siigo",$dataInsert);
-            $dt_in=array();
+            
             $dt_in['facturacion_electronica']="Factura Electronica Creada";
             $dt_in['fecha_f_electronica_generada']=$dataInsert['fecha'];
             $dt_in['servicios_facturados_electronicamente']=$dataInsert['servicios_facturados'];
