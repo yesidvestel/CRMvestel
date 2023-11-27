@@ -227,15 +227,17 @@
     Morris.Bar({
         element: 'invoices-sales-chart',
         data: [
-            <?php $i = 0;foreach (array_reverse($stat) as $row) {
+            <?php $i = 0;foreach ($stat as $row) {
             if(intval($row['month'])>intval($mes) &&  intval($row['year']) >= intval($year)){
-                break;
+                //break;
                // var_dump(intval($mes)." ".intval($row['month'])." " .intval($year)." ".intval($row['year']));
+            }else{
+                $num = cal_days_in_month(CAL_GREGORIAN, $row['month'], $row['year']);
+            echo "{ x: '" . $row['year'] . '-' . sprintf("%02d", $row['month']) . "-$num', y: " . intval($row['income']) . ", z: " . intval($row['expense']) . "},";
+            $i++;    
             }
 
-            $num = cal_days_in_month(CAL_GREGORIAN, $row['month'], $row['year']);
-            echo "{ x: '" . $row['year'] . '-' . sprintf("%02d", $row['month']) . "-$num', y: " . intval($row['income']) . ", z: " . intval($row['expense']) . "},";
-            $i++;
+            
         } ?>
 
         ],
@@ -255,12 +257,12 @@
         data: [
             <?php $i = 0;foreach (array_reverse($stat) as $row) {
             if(intval($row['month'])>intval($mes) &&  intval($row['year']) >= intval($year)){
-                break;
+                //break;
                // var_dump(intval($mes)." ".intval($row['month'])." " .intval($year)." ".intval($row['year']));
-            }
+            }else{
             $num = cal_days_in_month(CAL_GREGORIAN, $row['month'], $row['year']);
             echo "{ x: '" . $row['year'] . '-' . sprintf("%02d", $row['month']) . "-$num', y: " . intval($row['items']) . ", z: " . intval($row['invoices']) . "},";
-            $i++;
+            $i++;}
         } ?>
 
         ],
