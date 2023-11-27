@@ -550,7 +550,7 @@ public function borrar_facturas_v(){
         $head['usernm'] = $this->aauth->get_user()->username;
         $data['accounts'] = $this->transactions_model->acc_list();
         $this->facturas_electronicas->cargar_configuraciones_para_facturar();
-        //var_dump($_SESSION['siigo_token']);
+        var_dump($_SESSION['siigo_token']);
         $data['ciudades_filtro']=$this->clientgroup->get_citys();
         $this->load->view('fixed/header', $head);
         $this->load->view('facturas_electronicas/configuraciones',$data);
@@ -798,7 +798,13 @@ set_time_limit(150);
                         if(count($_SESSION['array_accesos_siigo'])==2){
                             $creo=$this->facturas_electronicas->generar_factura_customer_para_multiple($datos,$_SESSION['api_siigo']);    
                         }else{
-                            $creo=$this->facturas_electronicas->generar_factura_customer_para_multiple_ottis($datos,$_SESSION['api_siigo']);    
+                            $inv_validar=$this->db->get_where("invoices",array("id"=>$datos['id_facturar'],"facturacion_electronica"=>"Crear Factura Electronica"))->row();
+                            if(isset($inv_validar)){
+                                $creo=$this->facturas_electronicas->generar_factura_customer_para_multiple_ottis($datos,$_SESSION['api_siigo']);        
+                            }else{
+                                $creo=true;
+                            }
+                            
                         }
                         //$creo=array("status"=>true);
                         //sleep(7);
