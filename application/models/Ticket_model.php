@@ -130,6 +130,7 @@ class Ticket_model extends CI_Model
 			$this->db->or_where('sede_accede', '-0-');
 			
 		}
+		$this->db->or_where('banned', '0');
         $this->db->order_by("username");
         $query = $this->db->get();
         return $query->result_array();		
