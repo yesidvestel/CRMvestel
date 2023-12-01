@@ -121,6 +121,7 @@ class Ticket_model extends CI_Model
         //$this->db->where('roleid', '2');
 		$areas = array(2,4,3);//areas a la que pertenecen
 		$this->db->where_in('area', $areas);
+		$this->db->where('banned', '0');
 		if ($sedeacc != '0' && $sedeacc != '-0-'){
             $listax1=explode(",",$sedeacc);
             foreach ($listax1 as $key => $v1) {
@@ -130,7 +131,7 @@ class Ticket_model extends CI_Model
 			$this->db->or_where('sede_accede', '-0-');
 			
 		}
-		$this->db->or_where('banned', '0');
+		
         $this->db->order_by("username");
         $query = $this->db->get();
         return $query->result_array();		
