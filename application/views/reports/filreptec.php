@@ -23,9 +23,9 @@
 										<option value="all">Todos</option>
                                         <?php
                                         foreach ($tecnicos as $row) {
-                                            $cid = $row['id'];
-                                            $acn = $row['username'];
-                                            echo "<option value='$acn'>$acn</option>";
+                                            $cid = $row['username'];
+                                            $acn = $row['name'];
+                                            echo "<option value='$cid'>$acn</option>";
                                         }
                                         ?>
                                     </select>
