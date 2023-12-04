@@ -39,8 +39,20 @@ class Transactions extends CI_Controller
          $head['title'] = "Cargar desde Excel";
         $this->load->view('fixed/header',$head);
         $data=array();
+        //fe
+                $this->load->model("facturas_electronicas_model","facturas_electronicas");
+                $this->facturas_electronicas->cargar_configuraciones_para_facturar();
+        //end fe
         $this->load->view('transactions/cargar_excel',$data);
         $this->load->view('fixed/footer');
+    }
+    public function prueba_get(){
+        $this->load->library('SiigoAPI');
+        $api = new SiigoAPI();
+        $api->getAuth(1);
+        $_SESSION['api_siigox']=$api;
+        $this->load->model("facturas_electronicas_model","facturas_electronicas");
+        $this->facturas_electronicas->get_invoice_credito("1116040547","2023-12-01");
     }
     public function list_files_up(){
           $this->load->model('Files_carga_transaccional_model', 'files_carga');

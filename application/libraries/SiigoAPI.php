@@ -163,6 +163,61 @@ curl_close($curl);
 return $response;
 
     }
+     public function getInvoicesCreditoOttis($customer_cc,$date_start)
+    {//https://api.siigo.com/v1/invoices?customer_identification=51859748&date_start=2023-11-05
+        $curl = curl_init();
+curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);//linea importante cuando no funciona
+curl_setopt_array($curl, array(
+  CURLOPT_URL => 'https://api.siigo.com/v1/invoices?customer_identification='.$customer_cc.'&date_start='.$date_start,
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 0,
+  CURLOPT_FOLLOWLOCATION => true,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'GET',
+  CURLOPT_HTTPHEADER => array(
+    'Content-Type: application/json',
+    "Partner-Id: savescrmintegrationsiigo",
+    'Authorization: Bearer '.$_SESSION['siigo_token']
+  ),
+));
+
+$response = curl_exec($curl);
+
+curl_close($curl);
+return $response;
+
+    }
+
+     public function updateInvoice($invoiceData,$id,$cuenta) {
+        if($cuenta==1){
+            $tokenx=$_SESSION['siigo_token'];
+        }else{
+            $tokenx=$_SESSION['siigo_token2'];
+        }
+       $ch = curl_init();
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_URL, "$this->urlBase/invoices/".$id);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ch, CURLOPT_HEADER, FALSE);
+
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
+
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $invoiceData);
+
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+          "Content-Type: application/json",
+          "Partner-Id: savescrmintegrationsiigo",
+          "Authorization: Bearer $tokenx"
+        ));
+
+        $response = curl_exec($ch);
+        //var_dump($response);
+        curl_close($ch);
+    }
+
+
     public function deleteInvoice($id)
     {
        $curl = curl_init();
