@@ -131,8 +131,29 @@ foreach ($cuentas_del_usuario as $key => $value) {
     }
     
 }
+//falta condicionar que esto solo sea para ottis
+if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
+        $lista_invoices=$this->db->query("select * from invoices where csd=".$cs->id." and metodo_pago_f_e='credito' and total>0 and pamnt>=total")->result_array();
+    if(count($lista_invoices)>0){
+            $this->load->library('SiigoAPI');
+            $api = new SiigoAPI();
+            $api->getAuth(1);
+            $_SESSION['api_siigox']=$api;
+            $this->load->model("facturas_electronicas_model","facturas_electronicas");
+            
 
-        
+            foreach ($lista_invoices as $key1 => $inv) {
+                //obtener lista, recorrer y actualizar factura
+                //si es apta, 
+                $fecha_actualx=date("Y-m-d");
+                //$datos=array("id_facturar"=>$inv['id'],"sdate"=>$fecha_actualx,"estcuenta"=>"6960");
+                //$this->facturas_electronicas->generar_factura_customer_para_multiple_ottis($datos,$_SESSION['api_siigo']);   
+                $_POST['invoice_actualizacion_fe']=$inv;
+                $fe=$this->facturas_electronicas->get_invoice_credito($cs->documento,$inv['fecha_f_electronica_generada']);
+                
+            }
+    }
+}
         return $creo;
     }
     public function facturar_customer_copia_reanudar_para_pagos_equitativos($data,$cs){

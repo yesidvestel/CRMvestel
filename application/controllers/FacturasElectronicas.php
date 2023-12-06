@@ -550,7 +550,7 @@ public function borrar_facturas_v(){
         $head['usernm'] = $this->aauth->get_user()->username;
         $data['accounts'] = $this->transactions_model->acc_list();
         $this->facturas_electronicas->cargar_configuraciones_para_facturar();
-        var_dump($_SESSION['siigo_token']);
+        //var_dump($_SESSION['siigo_token']);
         $data['ciudades_filtro']=$this->clientgroup->get_citys();
         $this->load->view('fixed/header', $head);
         $this->load->view('facturas_electronicas/configuraciones',$data);

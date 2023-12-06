@@ -853,5 +853,86 @@ class Facturas_electronicas_model extends CI_Model
     public function get_ultima_factura_electronica($doc){
         
     }
+    public function get_m_pago_f_e($varx){
+        $codigo_m_pago=6960;
+        $retorno =array("observaciones"=>"","codigo"=>$codigo_m_pago);
+        $accoun_tr="";
+           // $dataApiNET->payments[0]->id=$datos_facturar['estcuenta'];//efectivo 6960 credito 6941
+           
+                $ult_tr=$this->db->query("select * from transactions where (estado !='Anulada' or estado is null) and tid=".$varx['tid']." order by id desc")->result_array();
+                if(count($ult_tr)>0){
+                    $accoun_tr=$this->db->get_where("accounts",array("id"=>$ult_tr[0]['acid']))->row();
+                    if(isset($accoun_tr) && $accoun_tr->cuenta_siigo!=null){
+                        $retorno['codigo']=$accoun_tr->cuenta_siigo;
+                        $accoun_tr=$accoun_tr->holder;
+                    }else{
+                        if(isset($accoun_tr)){
+                            $accoun_tr=$accoun_tr->holder;
+                        }else{
+                            $accoun_tr="";    
+                        }
+                        
+                    }
+                }    
+            
+
+            $dt_ob=new DateTime($varx['invoicedate']);
+            $str_obs=$this->reports->devolver_nombre_mes($dt_ob->format("m"))." - ".$dt_ob->format("Y");
+            $retorno['observaciones']="TID : ".$varx['tid'].", Factura : ".$str_obs." ,metodo pago: ".$accoun_tr;
+
+            return $retorno;
+    }
+        public function get_invoice_credito($cc,$fecha){
+            $this->load->model("Reports_model","reports");
+        $api=$_SESSION['api_siigox'];
+        //$resultado=$api->getInvoicesCreditoOttis("51859748","2023-11-05");
+        $resultado=$api->getInvoicesCreditoOttis($cc,$fecha);
+        ob_clean();
+        //var_dump($resultado);
+        //echo "<br><br>";
+        $res_obj=json_decode($resultado);
+        //var_dump($res_obj->results);
+        //echo "<br><br><br>";
+        if(isset($res_obj) && isset($res_obj->results)){
+            foreach ($res_obj->results as $key => $factura) {
+                if(strpos($factura->observations,"TID : ".$_POST['invoice_actualizacion_fe']['tid']) !==false && $factura->payments[0]->id=="6941"){//cambiar metodo de pago por 6941
+                    //2863
+                    //var_dump($factura->observations);var_dump($factura->payments[0]->id);var_dump($factura->id);
+                    $id_f=$factura->id;
+                    //echo "<br>";
+                    unset($factura->stamp);
+                    unset($factura->id);
+                    unset($factura->mail);
+                    unset($factura->metadata);
+                    unset($factura->number);
+                    //echo json_encode($factura);
+                    var_dump($_POST['invoice_actualizacion_fe']);
+                    $DATOS_ACTUALIZACION=$this->get_m_pago_f_e($_POST['invoice_actualizacion_fe']);
+                    $factura->observations=$DATOS_ACTUALIZACION['observaciones'];
+                    $factura->payments[0]->id=$DATOS_ACTUALIZACION['codigo'];
+                    $var_actualizada=json_encode($factura);
+                    $api->updateInvoice($var_actualizada,$id_f,1);
+                    $date_now=date("Y-m-d H:i:s");
+                    $data_inv=array("metodo_pago_f_e"=>"efectivo","fecha_actualizacion"=>$date_now);
+                    $this->db->update("invoices",$data_inv,array("tid"=>$_POST['invoice_actualizacion_fe']['tid']));
+                    $data_insert=array();
+                    $data_insert['fecha']=$date_now;
+                    $data_insert['fecha_ejecucion']=$date_now;
+                    $data_insert['customer_id']=$_POST['invoice_actualizacion_fe']['csd'];
+                    $data_insert['invoice_id']=$_POST['invoice_actualizacion_fe']['id'];
+                    $data_insert['tid']=$_POST['invoice_actualizacion_fe']['tid'];
+                    $data_insert['tipo']="actualizada";
+                    $data_insert['metodo_pago']="efectivo";
+                    $this->db->insert("facturacion_electronica_siigo",$data_insert);
+                    //todo esta listo, falta actualizar tabla de facturas_electronicas y tabla de invoices, crear campo fecha de actualizacion, y luego probar en ottis;
+                    return true;
+                }
+                
+            }
+        }
+        return false;
+
+
+    }
 
 }
