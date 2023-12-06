@@ -726,9 +726,9 @@ if($_SESSION[md5("variable_datos_pin")]['db_name'] == "admin_crmvestel"){
         echo "TOTAL : ".$num;
     }
     public function facturar_customer($id_customer,$sdate,$estcuenta){
-set_time_limit(150);
-        ini_set ( 'max_execution_time', 150);
-        ini_set ( 'max_execution_time', 150);
+set_time_limit(5000);
+        ini_set ( 'max_execution_time', 5000);
+        ini_set ( 'max_execution_time', 5000);
         //var_dump($_SESSION['api_siigo']);
         $api = new SiigoAPI();
        // $api->getAuth(1);
