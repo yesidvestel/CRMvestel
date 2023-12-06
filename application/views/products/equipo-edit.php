@@ -185,6 +185,7 @@
 								<option value="<?php echo $equipos['estado'] ?>">>><?php echo $equipos['estado'] ?></option>
 								<option value="Bueno">Bueno</option>
 								<option value="Malo">Malo</option>								
+								<option value="Depurado">Depurado</option>								
 							</select>
                     </div>
                 </div>
