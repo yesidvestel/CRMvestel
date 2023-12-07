@@ -222,7 +222,7 @@ class Facturas_electronicas_model extends CI_Model
             $dataApiTV->observations="Estrato : ".$customer->estrato;
             $dataApiTV->payments[0]->id="2863";
 
-            $consulta_siigo1=$api->getCustomer($customer->documento,1);
+            /*$consulta_siigo1=$api->getCustomer($customer->documento,1);
            
             
             if($consulta_siigo1['pagination']['total_results']==0){
@@ -231,7 +231,7 @@ class Facturas_electronicas_model extends CI_Model
                 //var_dump($json_customer);
 //                var_dump($consulta_siigo1);
                   //  $api->updateCustomer($json_customer,$consulta_siigo1['results'][0]['id'],1);//para acturalizar cliente en siigo 
-            }
+            }*/
         }
         
         if($dataApiNET!=null){
@@ -245,7 +245,7 @@ class Facturas_electronicas_model extends CI_Model
             $dataApiNET->observations="Estrato : ".$customer->estrato;
             $dataApiNET->payments[0]->id="2512";
 
-            $consulta_siigo1=$api->getCustomer($customer->documento,2);
+            /*$consulta_siigo1=$api->getCustomer($customer->documento,2);
           
             
             if($consulta_siigo1['pagination']['total_results']==0){
@@ -256,15 +256,15 @@ class Facturas_electronicas_model extends CI_Model
                     $json_customer=json_encode($json_customer);
                     //$json_customer=str_replace("321", "282", subject)
                     $api->saveCustomer($json_customer,2);//para crear cliente en siigo si no existe
-            }else{
-                    /*$json_customer=json_decode($json_customer);
+            }else{ //esto estaba comentado el update
+                    $json_customer=json_decode($json_customer);
                     $json_customer->related_users->seller_id=282;
                     $json_customer->related_users->collector_id=282;
                     $json_customer->contacts[0]->email="vestelsas@gmail.com";
                     $json_customer=json_encode($json_customer);
 
-                    $api->updateCustomer($json_customer,$consulta_siigo1['results'][0]['id'],2);//para acturalizar cliente en siigo */
-            }
+                    $api->updateCustomer($json_customer,$consulta_siigo1['results'][0]['id'],2);//para acturalizar cliente en siigo 
+            }*/
         }
         
         
