@@ -3091,7 +3091,7 @@ return $str;
         return $this->db->get_where("customers",array("id"=>$cid))->row();
     }
     public function pay_invoices($cid,$monto,$id_orden){
-         
+        $this->load->model('invoices_model','invoices_model');
         $array_facturas=$this->db->query('SELECT * FROM invoices WHERE csd='.$cid.' and ( status="partial" or status="due") ORDER BY invoices.invoicedate ASC, tid asc')->result();
         if(count($array_facturas)==0){
             $array_facturas=$this->db->query('SELECT * FROM invoices WHERE csd='.$cid.' ORDER BY invoices.invoicedate desc, tid desc limit 1')->result();
@@ -3766,7 +3766,8 @@ return $str;
 
         }
         }
-        
+        $this->invoices_model->validacion_generar_orden_instalacion($cid);
+        $this->invoices_model->validacion_generar_orden_traslado($cid);
         $this->actualizar_debit_y_credit($cid);
 
         if(is_array($ids_transacciones) && count($ids_transacciones)!=0){
