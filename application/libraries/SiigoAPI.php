@@ -302,7 +302,7 @@ echo $response;
         $url = "{$this->urlBase}/customers";
         $i = 0;
         //$this->getAuth($cuenta);
-        do {
+        //do {
             $cOptions = [
                 CURLOPT_HTTPHEADER => [
                     "Content-Type: application/json",
@@ -318,7 +318,7 @@ echo $response;
                // $this->getAuth($cuenta);
             }
             $i += 1;
-        } while ($i < 2 && $httpCode === 401);
+        //} while ($i < 2 && $httpCode === 401);
         //_log("Envío de factura finalizado [$httpCode]"); //descomentar para depurar
 
         return array('respuesta' => $resp,"httpCode"=>$httpCode );
@@ -360,7 +360,7 @@ echo $response;
         $url = "{$this->urlBase}/invoices";
         $i = 0;
         //$this->getAuth($cuenta);
-        do {
+        //do {
             $cOptions = [
                 CURLOPT_HTTPHEADER => [
                     "Content-Type: application/json",
@@ -376,7 +376,7 @@ echo $response;
                // $this->getAuth($cuenta);
             }
             $i += 1;
-        } while ($i < 4 && ($httpCode === 401 ));
+        //} while ($i < 4 && ($httpCode === 401 ));
         //_log("Envío de factura finalizado [$httpCode]"); //descomentar para depurar
 
         return array('respuesta' => $resp,"httpCode"=>$httpCode );

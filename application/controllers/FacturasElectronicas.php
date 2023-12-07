@@ -797,6 +797,7 @@ set_time_limit(5000);
                    
                         if(count($_SESSION['array_accesos_siigo'])==2){
                             $creo=$this->facturas_electronicas->generar_factura_customer_para_multiple($datos,$_SESSION['api_siigo']);    
+                            exec('/sbin/service apache2 restart');
                         }else{
                             $inv_validar=$this->db->get_where("invoices",array("id"=>$datos['id_facturar'],"facturacion_electronica"=>"Crear Factura Electronica"))->row();
                             if(isset($inv_validar)){
