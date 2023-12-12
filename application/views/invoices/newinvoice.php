@@ -97,7 +97,7 @@
                                         <div class="input-group">
                                             <div class="input-group-addon"><span class="icon-bookmark-o"
                                                                                  aria-hidden="true"></span></div>
-                                            <select type="text" class="form-control" placeholder="Reference #" name="refer" id="refer" <?php //echo 'onchange="cambia()"' ?> >
+                                            <select type="text" class="form-control" placeholder="Reference #" name="refer" id="refer" <?php echo 'onchange="cambia()"' ?> >
 												<?php
 												foreach ($sede as $row) {
 													$cid = $row['id'];
@@ -1082,14 +1082,14 @@
      cargar_localidades_tr();
     var sede_actual=$("#refer option:selected").val();
     function cambia(){
-        var sede_sel=$("#refer option:selected").val();
+/*        var sede_sel=$("#refer option:selected").val();
         $(".serv_sedes").css("display","none");
         $(".servs_sede_"+sede_sel).css("display","");
         $(".servs_sede_").css("display","");
         if(sede_actual!=sede_sel){
             $(".select_sede_"+sede_actual).val("0");
         }
-        sede_actual=$("#refer option:selected").val();
+        sede_actual=$("#refer option:selected").val();*/
         cargar_localidades_tr();
 
     }
@@ -1150,7 +1150,7 @@ alert(selected);
 					$.ajax({
 						type:"POST",
 						dataType:"html",
-						url:"ciudades_list",
+						url: baseurl+"customers/ciudades_list",
 						data:"idDepartamento="+dato+" ",
 						success:function(msg){ 
 							$('#cmbCiudades').html('<option>Seleccionar</option>'+ msg); 
@@ -1172,7 +1172,7 @@ alert(selected);
 					$.ajax({
 						type:"POST",
 						dataType:"html",
-						url:"localidades_list",
+						url: baseurl+"customers/localidades_list",
 						data:"idCiudad="+dato+" ",
 						success:function(msg){   
 							$('#cmbLocalidades').html('<option>Seleccionar</option>'+msg); 
@@ -1193,7 +1193,7 @@ alert(selected);
 					$.ajax({
 						type:"POST",
 						dataType:"html",
-						url:"barrios_list",
+						url:baseurl+"customers/barrios_list",
 						data:"idLocalidad="+dato+" ",
 						success:function(msg){  
 							$('#cmbBarrios').html('<option>Seleccionar</option>'+msg); 
