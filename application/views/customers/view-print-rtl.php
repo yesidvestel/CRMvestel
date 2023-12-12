@@ -6,11 +6,11 @@ if ($servicios['television']!=="no"){
 	
 }if ($servicios['combo']!=="no"){
 	
-					$producto2 = $this->db->get_where('products',array('product_name'=>$servicios['combo']))->row();
+					$x1 = $this->db->get_where('products',array('product_name'=>$servicios['combo']))->row();
                     $x1=strtolower($servicios['combo']);
-                    $x1=str_replace(" ","", $x1);
+                    //$x1=str_replace(" ","", $x1);
 
-                    $producto2 = $this->db->query("SELECT * FROM products where LOWER(REPLACE(product_name,' ',''))='".$x1."'")->result_array();                    
+                    $producto2 = $this->db->query("SELECT * FROM products where product_name='".$x1."'")->result_array();                    
 					$inter = $producto2[0]['product_price'];
 }
 $equipo = $this->db->get_where('equipos',array('asignado'=>$details['abonado']))->row();
