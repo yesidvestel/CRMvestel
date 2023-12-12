@@ -446,13 +446,13 @@ $this->load->model("customers_model","customers");
     }
         public function recorrer_facturas(){
             ob_end_clean();
-        $fecha="2022-07-01";
+        $fecha="2023-12-02";
         $fecha_filtro="2022-08-15";
         $api = new SiigoAPI();
         $api->getAuth(1);
         $api->getAuth2(2);
         $page_total=22;
-         //$lista_x=json_decode($api->getInvoices(1,$fecha));
+         $lista_x=json_decode($api->getInvoices(1,$fecha));
          //var_dump($lista_x);
         for ($i=1; $i <=$page_total ; $i++) { 
             $lista_x=json_decode($api->getInvoices($i,$fecha));
@@ -460,7 +460,7 @@ $this->load->model("customers_model","customers");
                 $data['id_invoice']=$value->id;
                 $data['nombre']=$value->name;
                 $data['fecha']=$value->date;
-                //$this->db->insert("filas_a_borrar",$data);
+                $this->db->insert("filas_a_borrar",$data);
             }    
         }
         
@@ -879,8 +879,11 @@ set_time_limit(5000);
 set_time_limit(150);
         ini_set ( 'max_execution_time', 150);
         ini_set ( 'max_execution_time', 150);
-        var_dump($id_invoice);
-         $_SESSION['api_siigo']->deleteInvoice($id_invoice);
+       $api = new SiigoAPI();
+        //$api->getAuth(1);
+        //$api->getAuth2(2);
+        //$_SESSION['api_siigo']=$api;
+         $api->deleteInvoice($id_invoice);
                 $this->db->update('filas_a_borrar',array("borrado"=>1),array("id_invoice"=>$id_invoice)); 
             
     }

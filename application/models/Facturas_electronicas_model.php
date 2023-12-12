@@ -462,7 +462,7 @@ class Facturas_electronicas_model extends CI_Model
             $data_ses[0]=array("username"=>$list[0]['username'],"access_key"=>$list[0]['access_key']);
         }else{
             $data_ses[0]=array("username"=>$list[0]['username'],"access_key"=>$list[0]['access_key'],"nombre"=>$list[0]['nombre']);
-            $data_ses[1]=$data2=array("username"=>$list[1]['username'],"access_key"=>$list[1]['access_key'],"nombre"=>$list[1]['nombre']);
+            $data_ses[1]=array("username"=>$list[1]['username'],"access_key"=>$list[1]['access_key'],"nombre"=>$list[1]['nombre']);
 
         }
         $_SESSION['array_accesos_siigo']=$data_ses;

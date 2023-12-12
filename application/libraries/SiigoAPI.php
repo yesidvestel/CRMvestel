@@ -153,7 +153,7 @@ curl_setopt_array($curl, array(
   CURLOPT_HTTPHEADER => array(
     'Content-Type: application/json',
     "Partner-Id: savescrmintegrationsiigo",
-    'Authorization: Bearer '.$_SESSION['siigo_token2']
+    'Authorization: Bearer '.$_SESSION['siigo_token']
   ),
 ));
 
@@ -234,7 +234,7 @@ curl_setopt_array($curl, array(
   CURLOPT_HTTPHEADER => array(
     'Content-Type: application/json',
     "Partner-Id: savescrmintegrationsiigo",
-    'Authorization: Bearer '.$_SESSION['siigo_token2']
+    'Authorization: Bearer '.$_SESSION['siigo_token']
   ),
 ));
 
