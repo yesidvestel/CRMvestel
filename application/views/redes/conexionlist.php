@@ -39,7 +39,8 @@
                     $idnap = $row['idnap'];
                     $nap = $row['nap'];
                     $puerto = $row['puerto'];
-                    $asignado = $row['asignado'];
+                    $asignado = $row['abonado'];
+                    $iduser = $row['id'];
                     $estado = $row['estado'];
                     $detalle = $row['dir_nap'];
                     echo "<tr>
@@ -48,7 +49,7 @@
                     <td>$vlan <a href='" . base_url("redes/vlanedit?id=$idvlan") . "' class='btn btn-cyan btn-xs'><i class='icon-pencil'></i>" . $this->lang->line('') . "</a></td>
                     <td>$nap  <a href='" . base_url("redes/napedit?id=$idnap") . "' class='btn btn-cyan btn-xs'><i class='icon-pencil'></i>" . $this->lang->line('') . "</a></td>
                     <td>$puerto</td>
-                    <td>$asignado</td>
+                    <td><a href='" . base_url("customers/view?id=$iduser") . "'>$asignado</a></td>
                     <td>$estado</td>
                     <td>$detalle</td>
                     
@@ -98,11 +99,55 @@
         </div>
     </div>
 </div>
+<script src="https://kit.fontawesome.com/317775a1b1.js" crossorigin="anonymous"></script>
 <script type="text/javascript">
     $(document).ready(function () {
 
         //datatables
-        $('#catgtable').DataTable({});
-
+        $('#catgtable').DataTable({
+			 order: [[1, 'desc']],
+			language: {
+                "lengthMenu": "Mostrar _MENU_ registros",
+                "zeroRecords": "No se encontraron resultados",
+                "info": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros &nbsp",
+                "infoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                "infoFiltered": "(filtrado de un total de _MAX_ registros)",
+                "sSearch": "Buscar:",
+                "oPaginate": {
+                    "sFirst": "Primero",
+                    "sLast":"Último",
+                    "sNext":"Siguiente",
+                    "sPrevious": "Anterior"
+			     },
+			     "sProcessing":"Procesando...",
+            },
+			
+            dom: 'Bfrtilp',
+			buttons:[ 
+            {
+                extend:    'excelHtml5',
+                text:      '<i class="fa-sharp fa-solid fa-file-excel"></i>',
+                titleAttr: 'Exportar a Excel',
+                className: 'btn btn-success',
+                messageTop :'Historial Cuenta <?php echo $details['name'].' '.$details['unoapellido'] ?>'
+            },
+            {
+                extend:    'pdfHtml5',
+                text:      '<i class="fa-sharp fa-solid fa-file-pdf"></i>',
+                titleAttr: 'Exportar a PDF',
+                className: 'btn btn-danger',
+                messageTop :'Historial Cuenta <?php echo $details['name'].' '.$details['unoapellido'] ?>'
+            },
+            {
+                extend:    'print',
+                text:      '<i class="icon-print"></i> ',
+                titleAttr: 'Imprimir',
+                className: 'btn btn-info'
+            },
+        ]
+		});
+	$(".buttons-pdf").removeClass("dt-button");		
+    $(".buttons-excel").removeClass("dt-button");     
+    $(".buttons-print").removeClass("dt-button");
     });
 </script>
