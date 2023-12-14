@@ -174,7 +174,9 @@
 </head>
 
 <body <?php if(LTR=='rtl') echo'dir="rtl"';
-	  $fecha=date('d/m/Y')
+	  $fecha=date('d/m/Y');
+	$empresa = $this->config->item('ctitle');
+	$telefono = $this->config->item('phone');
 	  ?>>
 
 <div class="invoice-box">
@@ -237,10 +239,10 @@
                 Cordial saludo,
 				<br>
 				<br>
-				<p>Atendiendo su solicitud nos permitimos informarle que se encuentra a <strong>PAZ Y SALVO </strong>de sus obligaciones con la empresa de telecomunicaciones VESTEL S.A.S. con el número de abonado <?php echo '<strong>'. $usuario['documento'].'</strong>, ubicado en el barrio ' . $barrio['barrio'] . ' en la direccion ' . $usuario['nomenclatura'].' '. $usuario['numero1'].$usuario['adicionauno'].' # '.$usuario['numero2'].$usuario['adicional2'].' - '.$usuario['numero3'].'.'; ?></p>
+				<p>Atendiendo su solicitud nos permitimos informarle que se encuentra a <strong>PAZ Y SALVO </strong>de sus obligaciones con la empresa de telecomunicaciones <?php echo $empresa ?> con el número de abonado <?php echo '<strong>'. $usuario['documento'].'</strong>, ubicado en el barrio ' . $barrio['barrio'] . ' en la direccion ' . $usuario['nomenclatura'].' '. $usuario['numero1'].$usuario['adicionauno'].' # '.$usuario['numero2'].$usuario['adicional2'].' - '.$usuario['numero3'].'.'; ?></p>
 				<br>
 				<br>
-					Cualquier información adicional con gusto la atenderemos en nuestras líneas de Atención al Usuario marcando al <strong>PBX 601 9171700</strong> a través de llamadas o WhatsApp.
+					Cualquier información adicional con gusto la atenderemos en nuestras líneas de Atención al Usuario marcando al <strong><?php echo $telefono ?></strong> a través de llamadas o WhatsApp.
 				<br>
 				<br>
 				<br>
@@ -258,7 +260,7 @@
 				<hr>
 				<strong><?php echo $empleado['name'] ?></strong><br>
 				SUSPENSIONES<br>
-				VESTEL S.A.S
+				<?php echo $empresa ?>
 			</td>
 		</tr>
 	</table>
