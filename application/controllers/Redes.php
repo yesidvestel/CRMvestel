@@ -212,7 +212,17 @@ class Redes extends CI_Controller
 	public function conexionlist()
     {
         $head['usernm'] = $this->aauth->get_user()->username;
-        $data['puertos'] = $this->redes->puertos_list();
+        $data['cat'] = $this->redes->almacenquery();
+        $head['title'] = 'Lista conexiones';
+        $this->load->view('fixed/header');
+        $this->load->view('redes/olts',$data);
+        $this->load->view('fixed/footer');
+    }
+	public function conexionview()
+    {
+        $head['usernm'] = $this->aauth->get_user()->username;
+		$sede = $this->input->get('id');
+        $data['puertos'] = $this->redes->puertos_list($sede);
         $head['title'] = 'Lista conexiones';
         $this->load->view('fixed/header');
         $this->load->view('redes/conexionlist',$data);
