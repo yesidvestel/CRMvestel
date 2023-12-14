@@ -233,7 +233,7 @@ class Redes_model extends CI_Model
 		$this->db->join('almacen_equipos', 'almacen_equipos.id = puertos.sede');
 		$this->db->join('naps', 'naps.idn = puertos.idnap');
 		$this->db->join('vlans', 'vlans.idv = puertos.idvlan');
-		$this->db->join('customers', 'customers.id = puertos.asignado');
+		//$this->db->join('customers', 'customers.id = puertos.asignado');
         $query = $this->db->get();
         return $query->result_array();
     }

@@ -31,7 +31,7 @@
                 <tbody>
                 <?php $i = 1;
                 foreach ($puertos as $row) {
-					//$datopuerto = $this->db->get_where('puertos', array('idp' => $row['idp']))->row();
+					$usuario = $this->db->get_where('customers', array('id' => $row['asignado']))->row();
                     $cid = $row['idp'];
                     $sede = $row['almacen'];
                     $idvlan = $row['idvlan'];
@@ -39,8 +39,8 @@
                     $idnap = $row['idnap'];
                     $nap = $row['nap'];
                     $puerto = $row['puerto'];
-                    $asignado = $row['abonado'];
-                    $iduser = $row['id'];
+					$asignado = $usuario->abonado;
+                    $iduser = $usuario->id;
                     $estado = $row['estado'];
                     $detalle = $row['dir_nap'];
                     echo "<tr>
@@ -105,6 +105,7 @@
 
         //datatables
         $('#catgtable').DataTable({
+			select: true,
 			 order: [[1, 'desc']],
 			language: {
                 "lengthMenu": "Mostrar _MENU_ registros",
