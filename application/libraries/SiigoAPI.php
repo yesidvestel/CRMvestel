@@ -61,7 +61,7 @@ class SiigoAPI
                 "Content-Type: application/json",
                 "Partner-Id: savescrmintegrationsiigo",
             ],
-            //CURLOPT_SSL_VERIFYPEER=>false,
+            CURLOPT_SSL_VERIFYPEER=>true,
         ];
 
         list($httpCode, $resp) = $this->cReq->curlPost(
@@ -108,7 +108,7 @@ class SiigoAPI
                 "Content-Type: application/json",
                 "Partner-Id: savescrmintegrationsiigo",
             ],
-            //CURLOPT_SSL_VERIFYPEER=>false,
+            CURLOPT_SSL_VERIFYPEER=>true,
         ];
 
         list($httpCode, $resp) = $this->cReq->curlPost(
@@ -140,7 +140,7 @@ class SiigoAPI
     public function getInvoices($page,$fecha)
     {
         $curl = curl_init();
-//curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);//linea importante cuando no funciona
+curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, true);//linea importante cuando no funciona
 curl_setopt_array($curl, array(
   CURLOPT_URL => 'https://api.siigo.com/v1/invoices?page='.$page.'&created_start='.$fecha,
   CURLOPT_RETURNTRANSFER => true,
@@ -166,7 +166,7 @@ return $response;
      public function getInvoicesCreditoOttis($customer_cc,$date_start)
     {//https://api.siigo.com/v1/invoices?customer_identification=51859748&date_start=2023-11-05
         $curl = curl_init();
-//curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);//linea importante cuando no funciona
+curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, true);//linea importante cuando no funciona
 curl_setopt_array($curl, array(
   CURLOPT_URL => 'https://api.siigo.com/v1/invoices?customer_identification='.$customer_cc.'&date_start='.$date_start,
   CURLOPT_RETURNTRANSFER => true,
@@ -197,7 +197,7 @@ return $response;
             $tokenx=$_SESSION['siigo_token2'];
         }
        $ch = curl_init();
-       // curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
         curl_setopt($ch, CURLOPT_URL, "$this->urlBase/invoices/".$id);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
         curl_setopt($ch, CURLOPT_HEADER, FALSE);
@@ -221,7 +221,7 @@ return $response;
     public function deleteInvoice($id)
     {
        $curl = curl_init();
-//curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);//linea importante cuando no funciona
+curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, true);//linea importante cuando no funciona
 curl_setopt_array($curl, array(
   CURLOPT_URL => 'https://api.siigo.com/v1/invoices/'.$id,
   CURLOPT_RETURNTRANSFER => true,
@@ -270,7 +270,7 @@ echo $response;
                     "Partner-Id: savescrmintegrationsiigo",
                     "Authorization: Bearer $tokenx",
                 ],
-                //CURLOPT_SSL_VERIFYPEER=>false,
+                CURLOPT_SSL_VERIFYPEER=>true,
             ];
             list($httpCode, $resp) = $this->cReq->curlGet($url, [], $cOptions);
             if ($httpCode === 401) {
@@ -310,7 +310,7 @@ echo $response;
                     "Authorization: Bearer $tokenx",
                     
                 ],
-                //CURLOPT_SSL_VERIFYPEER=>false,
+                CURLOPT_SSL_VERIFYPEER=>true,
             ];
 
             list($httpCode, $resp)= $this->cReq->curlPost($url, $invoiceData, $cOptions);
@@ -331,7 +331,7 @@ echo $response;
             $tokenx=$_SESSION['siigo_token2'];
         }
        $ch = curl_init();
-        //curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
         curl_setopt($ch, CURLOPT_URL, "$this->urlBase/customers/".$id);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
         curl_setopt($ch, CURLOPT_HEADER, FALSE);
@@ -368,7 +368,7 @@ echo $response;
                     "Authorization: Bearer $tokenx",
                     
                 ],
-                //CURLOPT_SSL_VERIFYPEER=>false,
+                CURLOPT_SSL_VERIFYPEER=>true,
             ];
 
             list($httpCode, $resp)= $this->cReq->curlPost($url, $invoiceData, $cOptions);
