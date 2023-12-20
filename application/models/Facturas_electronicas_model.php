@@ -676,7 +676,7 @@ class Facturas_electronicas_model extends CI_Model
                                     }
                                 }
                                 if(isset($pr_sr) && $sv['tax']!="0"){
-                                    $iva2=round(($sv['price']*$sv['tax'])/100);
+                                    $iva2=($sv['price']*$sv['tax'])/100;//round(($sv['price']*$sv['tax'])/100);
                                     if($iva_des>0){
                                         //$iva2-=$iva_des;
                                     }
