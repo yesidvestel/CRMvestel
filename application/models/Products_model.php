@@ -35,7 +35,7 @@ class Products_model extends CI_Model
         $this->load->database();
     }
 
-    private function _get_datatables_query($catid)
+    private function _get_datatables_query($catid,$filt2)
     {
 		
         //if ($w) {
@@ -46,10 +46,10 @@ class Products_model extends CI_Model
 			if($catid!=""){
 			$this->db->where("warehouse",$catid);
 			}
-            if ($id > 0) {
-			if($_GET['categoria']!="" && $_GET['categoria']!=null && $_GET['categoria']!="null"){
-            $this->db->where('pcat' , $_GET['categoria']);       
-        	}
+            //if ($id > 0) {
+			if($filt2['categoria']!="" && $filt2['categoria']!=null && $filt2['categoria']!="null"){
+            $this->db->where('pcat' , $filt2['categoria']);       
+        	//}
                 
             }
 			
@@ -92,12 +92,12 @@ class Products_model extends CI_Model
         }
     }
 
-    function get_datatables($catid)
+    function get_datatables($catid,$filt2)
     {
 	 
-		$this->_get_datatables_query($catid);
+		$this->_get_datatables_query($catid,$filt2);
         if ($this->input->post('length') != -1)
-            $this->db->limit($this->input->post('length'), $this->input->post('start'));
+         $this->db->limit($this->input->post('length'), $this->input->post('start'));
         $query = $this->db->get();
         return $query->result();
     }
@@ -166,10 +166,10 @@ class Products_model extends CI_Model
         }
     }
 
-    function count_filtered($catid)
+    function count_filtered($catid,$filt2)
     {
         
-		$this->_get_datatables_query($catid);
+		$this->_get_datatables_query($catid,$filt2);
         $query = $this->db->get();
         return $query->num_rows();
     }

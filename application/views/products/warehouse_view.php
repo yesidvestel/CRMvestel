@@ -122,7 +122,7 @@ var id_warehouse="<?=$_GET['id'] ?>";
 		if(categoria==""){
             table.ajax.url( baseurl+'products/warehouseproduct_list?id='+id_warehouse).load();     
         }else{
-            table.ajax.url( baseurl+"products/warehouseproduct_list?id="+id_warehouse+"&categoria="+categoria ).load();     
+            table.ajax.url( baseurl+"products/warehouseproduct_list?id="+id_warehouse+"&categoria="+categoria).load();     
         }
        
 
