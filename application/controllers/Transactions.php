@@ -622,7 +622,7 @@ class Transactions extends CI_Controller
     
     //define column headers
     $headers = array(
-        'Fecha' => 'string', 
+        'Fecha' => 'date', 
         'Centro de costo' => 'string',
 		'Debito' => 'integer',
 		'Credito' => 'integer',
@@ -665,7 +665,7 @@ class Transactions extends CI_Controller
 	
     foreach ($lista_creditos as $key => $creditos) {
 		$fecha = date("d/m/Y",strtotime($creditos->date));
-            $writer->writeSheetRow('Anulaciones ',array($fecha,$creditos->account,$creditos->debit,$creditos->credit,$creditos->detalle,$creditos->tid,$creditos->razon_anulacion,$creditos->usuario_anula));
+            $writer->writeSheetRow('Anulaciones ',array($creditos->date,$creditos->account,$creditos->debit,$creditos->credit,$creditos->detalle,$creditos->tid,$creditos->razon_anulacion,$creditos->usuario_anula));
         
     }
         
