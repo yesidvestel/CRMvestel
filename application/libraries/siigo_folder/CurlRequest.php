@@ -53,6 +53,7 @@ class CurlRequest
             CURLOPT_HEADER => 0,
             CURLOPT_RETURNTRANSFER => TRUE,
             CURLOPT_TIMEOUT => 0
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_2,
         );
     
         $ch = curl_init();
