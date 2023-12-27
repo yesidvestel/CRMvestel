@@ -101,9 +101,9 @@ class Products extends CI_Controller
         $catid = $this->input->get('id');
 
         if ($catid > 0) {
-            $list = $this->products->get_datatables($catid);
+            $list = $this->products->get_datatables($catid,$_GET);
         } else {
-            $list = $this->products->get_datatables("");
+            $list = $this->products->get_datatables("",$_GET);
         }
         $data = array();
         $no = $this->input->post('start');
@@ -125,8 +125,8 @@ class Products extends CI_Controller
 
         $output = array(
             "draw" => $_POST['draw'],
-            "recordsTotal" => $this->products->count_all($catid),
-            "recordsFiltered" => $this->products->count_filtered($catid),
+            "recordsTotal" => $this->products->count_all($catid,$_GET),
+            "recordsFiltered" => $this->products->count_filtered($catid,$_GET),
             "data" => $data,
         );
         //output to json format
