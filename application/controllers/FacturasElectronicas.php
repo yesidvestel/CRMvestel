@@ -118,7 +118,7 @@ $this->load->model("customers_model","customers");
             $data_afiliacion=array();
             $data_afiliacion=$this->customers->tiene_afiliacion($_POST['id']);
             $data_afiliacion['producto']=$this->db->get_where("products",array("pid"=>$data_afiliacion['pid']))->row();
-            if(strpos($data_afiliacion['producto']->product_name, "Afiliación Internet")!==false){
+            if(strpos($data_afiliacion['producto']->product_name, "Afiliación Internet")!==false || strpos($data_afiliacion['producto']->product_name, "Afiliación familiar")!==false){
                 $data_afiliacion['tipo']="Internet";
                 $data_afiliacion['valor_internet']="50000";
                 $dataApiNET=$this->customers->getFacturaElectronica(null);
