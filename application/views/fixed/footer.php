@@ -242,7 +242,7 @@ if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
                     
             },'json');
             proceso_notificaciones();
-        },70000000000000000000);
+        },70000);
     }
     
     $(document).on('click','#show_notify_1',function(e){
