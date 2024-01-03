@@ -49,10 +49,13 @@ class CurlRequest
     function curlGet($url, $get = NULL, array $options = array())
     {   
         $defaults = array(
-            CURLOPT_URL => $url,
+            CURLOPT_POST => 1,
             CURLOPT_HEADER => 0,
-            CURLOPT_RETURNTRANSFER => TRUE,
-            CURLOPT_TIMEOUT => 0,
+            CURLOPT_URL => $url,
+            CURLOPT_FRESH_CONNECT => 1,
+            CURLOPT_RETURNTRANSFER => 1,
+            CURLOPT_FORBID_REUSE => 1,
+            CURLOPT_TIMEOUT => 7000,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_2,
         );
     

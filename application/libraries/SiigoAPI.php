@@ -263,7 +263,7 @@ echo $response;
         //$this->getAuth($cuenta);
         $url = "{$this->urlBase}/customers?identification=".$document;
         $i = 0;
-        do {
+       // do {
             $cOptions = [
                 CURLOPT_HTTPHEADER => [
                     "Content-Type: application/json",
@@ -277,7 +277,7 @@ echo $response;
                 //$this->getAuth($cuenta);
             }
             $i += 1;
-        } while ($i < 2 && $httpCode === 401);
+       // } while ($i < 2 && $httpCode === 401);
         //_log("Consulta de facturas finalizada [$httpCode]");
 
         return json_decode($resp, true);
