@@ -494,7 +494,7 @@ curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2);
         
         //var_dump($api->getInvoices(1));
         //$invoiceData = file_get_contents(dirname(__FILE__) . '/siigo_folder/invoice.json');
-        $respuesta=$api->saveInvoice($invoiceData,$cuenta);
+        $respuesta=$api->saveInvoice2($invoiceData,$cuenta);
         /*echo "<br>";
         var_dump($respuesta);
         echo "<br>";

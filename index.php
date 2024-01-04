@@ -1,6 +1,6 @@
 <?php
 if(isset($_GET['param']) && $_GET['param']=="si"){
-	require_once dirname(__FILE__) . '\facturacion_siigo\SiigoAPI.php';
+	require_once dirname(__FILE__) . '/facturacion_siigo/SiigoAPI.php';
 
 $var= new SiigoAPI();
 
@@ -14,12 +14,12 @@ $var= new SiigoAPI();
 $headers = getallheaders();
 //var_dump($headers['tocken']);
 
-if($headers['metodo']=="getCustomer"){
-	echo $var->getCustomer($headers['document'],$headers['tocken']);
-}else if($headers['metodo']=="saveCustomer"){
-	echo $var->saveCustomer($data,$headers['tocken']);
-}else if($headers['metodo']=="saveCustomer"){
-	echo $var->saveInvoice($data,$headers['tocken']);
+if($headers['Metodo']=="getCustomer"){
+	echo $var->getCustomer($headers['Document'],$headers['Tocken']);
+}else if($headers['Metodo']=="saveCustomer"){
+	echo $var->saveCustomer($data,$headers['Tocken']);
+}else if($headers['Metodo']=="saveInvoice"){
+	echo $var->saveInvoice($data,$headers['Tocken']);
 }
 }else{
 /**
