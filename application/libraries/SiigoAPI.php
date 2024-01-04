@@ -61,7 +61,7 @@ class SiigoAPI
                 "Content-Type: application/json",
                 "Partner-Id: savescrmintegrationsiigo",
             ],
-            CURLOPT_SSL_VERIFYPEER=>false,
+            //CURLOPT_SSL_VERIFYPEER=>false,
         ];
 
         list($httpCode, $resp) = $this->cReq->curlPost(
@@ -108,7 +108,7 @@ class SiigoAPI
                 "Content-Type: application/json",
                 "Partner-Id: savescrmintegrationsiigo",
             ],
-            CURLOPT_SSL_VERIFYPEER=>false,
+            //CURLOPT_SSL_VERIFYPEER=>false,
         ];
 
         list($httpCode, $resp) = $this->cReq->curlPost(
@@ -148,7 +148,7 @@ curl_setopt_array($curl, array(
   CURLOPT_MAXREDIRS => 10,
   CURLOPT_TIMEOUT => 0,
   CURLOPT_FOLLOWLOCATION => true,
-  //CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_2,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_2,
   CURLOPT_CUSTOMREQUEST => 'GET',
   CURLOPT_HTTPHEADER => array(
     'Content-Type: application/json',
@@ -270,7 +270,7 @@ echo $response;
                     "Partner-Id: savescrmintegrationsiigo",
                     "Authorization: Bearer $tokenx",
                 ],
-                CURLOPT_SSL_VERIFYPEER=>false,
+                //CURLOPT_SSL_VERIFYPEER=>false,
             ];
             list($httpCode, $resp) = $this->cReq->curlGet($url, [], $cOptions);
             if ($httpCode === 401) {
@@ -310,7 +310,7 @@ echo $response;
                     "Authorization: Bearer $tokenx",
                     
                 ],
-                CURLOPT_SSL_VERIFYPEER=>false,
+                //CURLOPT_SSL_VERIFYPEER=>false,
             ];
 
             list($httpCode, $resp)= $this->cReq->curlPost($url, $invoiceData, $cOptions);
@@ -331,11 +331,11 @@ echo $response;
             $tokenx=$_SESSION['siigo_token2'];
         }
        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+       // curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_URL, "$this->urlBase/customers/".$id);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
         curl_setopt($ch, CURLOPT_HEADER, FALSE);
-//curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2);
+curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
 
         curl_setopt($ch, CURLOPT_POSTFIELDS, $invoiceData);
@@ -368,7 +368,7 @@ echo $response;
                     "Authorization: Bearer $tokenx",
                     
                 ],
-                CURLOPT_SSL_VERIFYPEER=>false,
+                //CURLOPT_SSL_VERIFYPEER=>false,
             ];
 
             list($httpCode, $resp)= $this->cReq->curlPost($url, $invoiceData, $cOptions);
