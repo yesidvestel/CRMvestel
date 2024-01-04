@@ -293,7 +293,7 @@ public function getCustomer1($document,$tokenx)
     {
          $ch = curl_init();
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_URL, base_url()."/?param=si");
+        curl_setopt($ch, CURLOPT_URL, "https://saves-ottis.com/?param=si");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
         curl_setopt($ch, CURLOPT_HEADER, FALSE);
 curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2);
@@ -361,7 +361,7 @@ curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2);
     public function saveCustomer1($invoiceData,$tocken) {
  $ch = curl_init();
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_URL, base_url()."/?param=si");
+        curl_setopt($ch, CURLOPT_URL, "https://saves-ottis.com/?param=si");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
         curl_setopt($ch, CURLOPT_HEADER, FALSE);
 curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2);
@@ -446,7 +446,7 @@ curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2);
     public function saveInvoice2($invoiceData,$tokenx) {
        $ch = curl_init();
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_URL, base_url()."/?param=si");
+        curl_setopt($ch, CURLOPT_URL, "https://saves-ottis.com/?param=si");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
         curl_setopt($ch, CURLOPT_HEADER, FALSE);
 curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2);
