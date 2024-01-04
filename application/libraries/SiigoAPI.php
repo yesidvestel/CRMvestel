@@ -297,9 +297,9 @@ public function getCustomer1($document,$tokenx)
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
         curl_setopt($ch, CURLOPT_HEADER, FALSE);
 curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2);
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
 
-        curl_setopt($ch, CURLOPT_POSTFIELDS, "{'aa':aa}");
+        //curl_setopt($ch, CURLOPT_POSTFIELDS, "{'aa':aa}");
 
         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
           "Content-Type: application/json", 
