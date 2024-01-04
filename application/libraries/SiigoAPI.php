@@ -289,6 +289,30 @@ echo $response;
         return json_decode($resp, true);
     }
 
+public function getCustomer1($document,$tokenx)
+    {
+         $ch = curl_init();
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_URL, base_url()."/?param=si");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ch, CURLOPT_HEADER, FALSE);
+curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "{'aa':aa}");
+
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+          "Content-Type: application/json", 
+          "tocken: ". $tokenx,
+          "metodo: getCustomer",
+          "document: ".$document
+        ));
+
+        $response = curl_exec($ch);
+        
+        curl_close($ch);
+        return json_decode($response, true);
+    }
     /**
      * Guarda una factura
      * 
@@ -332,6 +356,29 @@ echo $response;
         //_log("Envío de factura finalizado [$httpCode]"); //descomentar para depurar
 
         return array('respuesta' => $resp,"httpCode"=>$httpCode );
+    }
+
+    public function saveCustomer1($invoiceData,$tocken) {
+ $ch = curl_init();
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_URL, base_url()."/?param=si");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ch, CURLOPT_HEADER, FALSE);
+curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $invoiceData);
+
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+          "Content-Type: application/json", 
+          "tocken: ". $tokenx,
+          "metodo: saveCustomer",
+        ));
+
+        $response = curl_exec($ch);
+        
+        curl_close($ch);
+        return $response;
     }
 
     public function updateCustomer($invoiceData,$id,$cuenta) {
@@ -396,6 +443,28 @@ curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2);
 
         return array('respuesta' => $resp,"httpCode"=>$httpCode );
     }
+    public function saveInvoice2($invoiceData,$tokenx) {
+       $ch = curl_init();
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_URL, base_url()."/?param=si");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ch, CURLOPT_HEADER, FALSE);
+curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $invoiceData);
+
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+          "Content-Type: application/json", 
+          "tocken: ". $tokenx,
+          "metodo: saveInvoice",
+        ));
+
+        $response = curl_exec($ch);
+        
+        curl_close($ch);
+        return $response;
+    }
 
     public function accionar($api,$invoiceData,$cuenta){
     	
@@ -416,6 +485,30 @@ curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2);
             }    
         } catch (Exception $e) {
                return array('respuesta' =>$respuesta['respuesta'],"mensaje" =>"Ubo algun error");//falta imprimir en un alter el error
+        }
+        
+        
+        
+    }
+    public function accionar2($api,$invoiceData,$cuenta){
+        
+        //var_dump($api->getInvoices(1));
+        //$invoiceData = file_get_contents(dirname(__FILE__) . '/siigo_folder/invoice.json');
+        $respuesta=$api->saveInvoice($invoiceData,$cuenta);
+        /*echo "<br>";
+        var_dump($respuesta);
+        echo "<br>";
+        
+        var_dump($respuesta['httpCode']);*/
+        //var_dump($respuesta);
+        try {
+            if($respuesta==200 ||$respuesta==100 || $respuesta==0 || $respuesta==201 || $respuesta==409){//100            
+                return array('respuesta' =>$respuesta,"mensaje" =>"Factura Guardada");
+            }else{
+                return array('respuesta' =>$respuesta,"mensaje" =>"Ubo algun error");//falta imprimir en un alter el error
+            }    
+        } catch (Exception $e) {
+               return array('respuesta' =>$respuesta,"mensaje" =>"Ubo algun error");//falta imprimir en un alter el error
         }
         
         
