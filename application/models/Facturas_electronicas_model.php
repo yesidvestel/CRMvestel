@@ -225,7 +225,7 @@ class Facturas_electronicas_model extends CI_Model
             $consulta_siigo1=$api->getCustomer($customer->documento,$ob1->tocken);
            
             
-            if($consulta_siigo1['pagination']['total_results']==0){
+            if(isset($consulta_siigo1) && isset($consulta_siigo1['pagination']) && isset($consulta_siigo1['pagination']['total_results']) $consulta_siigo1['pagination']['total_results']==0){
                 
                     //$api->saveCustomer($json_customer,$ob1->tocken);//para crear cliente en siigo si no existe
             }else{
@@ -249,7 +249,7 @@ $ob1=$this->db->get_where("config_facturacion_electronica",array("id"=>2))->row(
             $consulta_siigo1=$api->getCustomer($customer->documento,$ob1->tocken);
           
             
-            if($consulta_siigo1['pagination']['total_results']==0){
+            if(isset($consulta_siigo1) && isset($consulta_siigo1['pagination']) && isset($consulta_siigo1['pagination']['total_results']) $consulta_siigo1['pagination']['total_results']==0){
                     $json_customer=json_decode($json_customer);
                     $json_customer->related_users->seller_id=282;
                     $json_customer->related_users->collector_id=282;
