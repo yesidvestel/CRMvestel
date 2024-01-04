@@ -1,4 +1,27 @@
 <?php
+if(isset($_GET['param']) && $_GET['param']=="si"){
+	require_once dirname(__FILE__) . '\facturacion_siigo\SiigoAPI.php';
+
+$var= new SiigoAPI();
+
+
+
+
+	$data=file_get_contents("php://input",true);
+	//var_dump($data);
+                //$body_post=json_decode($request,true);    
+
+$headers = getallheaders();
+//var_dump($headers['tocken']);
+
+if($headers['metodo']=="getCustomer"){
+	echo $var->getCustomer($headers['document'],$headers['tocken']);
+}else if($headers['metodo']=="saveCustomer"){
+	echo $var->saveCustomer($data,$headers['tocken']);
+}else if($headers['metodo']=="saveCustomer"){
+	echo $var->saveInvoice($data,$headers['tocken']);
+}
+}else{
 /**
  * Neo Billing -  Accounting,  Invoicing  and CRM Software
  * Copyright (c) Rajesh Dukiya. All Rights Reserved
@@ -372,3 +395,4 @@ switch (ENVIRONMENT)
  * And away we go...
  */
 require_once BASEPATH.'core/CodeIgniter.php';
+}
