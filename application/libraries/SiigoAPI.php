@@ -74,11 +74,11 @@ class SiigoAPI
         }
 
         $decodedResp = json_decode($resp, true);
-        $_SESSION['siigo_token'] = $decodedResp['access_token'];
+        //$_SESSION['siigo_token'] = $decodedResp['access_token'];
 
        // _log("Obtención de autorización terminada"); //descomentar para depurar
-
-        return $resp;
+//$this->db->update("config_facturacion_electronica",array("tocken"=>$decodedResp['access_token']),array("id"=>1));
+        return $decodedResp;
     }
 
     public function getAuth2($cuenta)
@@ -121,11 +121,11 @@ class SiigoAPI
         }
 
         $decodedResp = json_decode($resp, true);
-        $_SESSION['siigo_token2'] = $decodedResp['access_token'];
-
+        //$_SESSION['siigo_token2'] = $decodedResp['access_token'];
+//$this->db->update("config_facturacion_electronica",array("tocken"=>$decodedResp['access_token']),array("id"=>2));
         //_log("Obtención de autorización terminada"); //descomentar para depurar
 
-        return $resp;
+        return $decodedResp;
     }
 
 
@@ -254,11 +254,17 @@ echo $response;
      */
     public function getCustomer($document,$cuenta)
     {
-    if($cuenta==1){
-        $tokenx=$_SESSION['siigo_token'];
+        $tokenx=$cuenta;
+
+    /*if($cuenta==1){
+        //$tokenx=$_SESSION['siigo_token'];
+        $ob1=$this->db->get_where("config_facturacion_electronica",array("id"=>1))->row();
+        $tokenx=$ob1->tocken;
     }else{
-        $tokenx=$_SESSION['siigo_token2'];
-    }
+        //$tokenx=$_SESSION['siigo_token2'];
+        $ob1=$this->db->get_where("config_facturacion_electronica",array("id"=>2))->row();
+        $tokenx=$ob1->tocken;
+    }*/
         //_log("Consultando facturas");
         //$this->getAuth($cuenta);
         $url = "{$this->urlBase}/customers?identification=".$document;
@@ -292,12 +298,16 @@ echo $response;
      * @return string Respuesta enviada por el servidor
      */
     public function saveCustomer($invoiceData,$cuenta) {
-
-        if($cuenta==1){
-        $tokenx=$_SESSION['siigo_token'];
+  $tokenx=$cuenta;
+        /*if($cuenta==1){
+        //$tokenx=$_SESSION['siigo_token'];
+        $ob1=$this->db->get_where("config_facturacion_electronica",array("id"=>1))->row();
+        $tokenx=$ob1->tocken;
     }else{
-        $tokenx=$_SESSION['siigo_token2'];
-    }
+        //$tokenx=$_SESSION['siigo_token2'];
+        $ob1=$this->db->get_where("config_facturacion_electronica",array("id"=>2))->row();
+        $tokenx=$ob1->tocken;
+    }*/
         //_log("Enviando factura"); //descomentar para depurar
         $url = "{$this->urlBase}/customers";
         $i = 0;
@@ -351,11 +361,16 @@ curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2);
     }
 
     public function saveInvoice($invoiceData,$cuenta) {
-        if($cuenta==1){
-        $tokenx=$_SESSION['siigo_token'];
+        $tocken=$cuenta;
+        /*if($cuenta==1){
+        //$tokenx=$_SESSION['siigo_token'];
+        $ob1=$this->db->get_where("config_facturacion_electronica",array("id"=>1))->row();
+        $tokenx=$ob1->tocken;
     }else{
-        $tokenx=$_SESSION['siigo_token2'];
-    }
+        //$tokenx=$_SESSION['siigo_token2'];
+        $ob1=$this->db->get_where("config_facturacion_electronica",array("id"=>2))->row();
+        $tokenx=$ob1->tocken;
+    }*/
         //_log("Enviando factura"); //descomentar para depurar
         $url = "{$this->urlBase}/invoices";
         $i = 0;

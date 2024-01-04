@@ -621,9 +621,11 @@ public function borrar_facturas_v(){
         $estcaja=$_POST['estcuenta'];
         
         $api = new SiigoAPI();
-        $api->getAuth(1);
+        $v1=$api->getAuth(1);
+        $this->db->update("config_facturacion_electronica",array("tocken"=>$v1['access_token']),array("id"=>1));
         if(count($_SESSION['array_accesos_siigo'])==2){
-            $api->getAuth2(2);
+            $v2=$api->getAuth2(2);
+            $this->db->update("config_facturacion_electronica",array("tocken"=>$v2['access_token']),array("id"=>2));
         }
         //$_SESSION['api_siigo']=$api;
         $_SESSION['errores']=array();
@@ -733,7 +735,7 @@ set_time_limit(5000);
         $api = new SiigoAPI();
        // $api->getAuth(1);
         //$api->getAuth2(2);
-        $_SESSION['api_siigo']=$api;
+        //$_SESSION['api_siigo']=$api;
         $_POST['xyz']="si";
             
                 //guardare en un array la variable servicios = combo o tv o internet y la variable puntos con no o el numero de puntos
@@ -796,7 +798,7 @@ set_time_limit(5000);
                     
                    
                         if(count($_SESSION['array_accesos_siigo'])==2){
-                            $creo=$this->facturas_electronicas->generar_factura_customer_para_multiple($datos,$_SESSION['api_siigo']);    
+                            $creo=$this->facturas_electronicas->generar_factura_customer_para_multiple($datos,$api);    
                            
                         }else{
                             $inv_validar=$this->db->get_where("invoices",array("id"=>$datos['id_facturar'],"facturacion_electronica"=>"Crear Factura Electronica"))->row();
