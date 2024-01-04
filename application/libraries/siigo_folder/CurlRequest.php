@@ -23,7 +23,7 @@ class CurlRequest
             CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_FORBID_REUSE => 1,
             CURLOPT_TIMEOUT => 7000,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_2,
+            //CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_2,
             CURLOPT_POSTFIELDS => $post
         ];
 
@@ -56,7 +56,7 @@ class CurlRequest
             CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_FORBID_REUSE => 1,
             CURLOPT_TIMEOUT => 7000,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_2,
+            //CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_2,
         );
     
         $ch = curl_init();
