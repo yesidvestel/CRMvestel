@@ -291,27 +291,17 @@ echo $response;
 
 public function getCustomer1($document,$tokenx)
     {
-         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_URL, "https://saves-ottis.com/?param=si");
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-        curl_setopt($ch, CURLOPT_HEADER, FALSE);
-curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2);
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
+          $url = "https://api.siigo.com/v1/customers?identification=" . $document;
 
-        //curl_setopt($ch, CURLOPT_POSTFIELDS, "{'aa':aa}");
+    $cmd = 'curl -X GET -H "Content-Type: application/json" ' .
+           '-H "Partner-Id: savescrmintegrationsiigo" ' .
+           '-H "Authorization: Bearer ' . $tokenx . '" ' .
+           '"' . $url . '"';
 
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-          "Content-Type: application/json", 
-          "tocken: ". $tokenx,
-          "metodo: getCustomer",
-          "document: ".$document
-        ));
+    echo $cmd . "<br>";
 
-        $response = curl_exec($ch);
-        
-        curl_close($ch);
-        return json_decode($response, true);
+    $output = exec($cmd);
+    return json_decode($output, true);
     }
     /**
      * Guarda una factura
@@ -359,26 +349,19 @@ curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2);
     }
 
     public function saveCustomer1($invoiceData,$tocken) {
- $ch = curl_init();
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_URL, "https://saves-ottis.com/?param=si");
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-        curl_setopt($ch, CURLOPT_HEADER, FALSE);
-curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2);
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+ $url = "https://api.siigo.com/v1/customers";
+    $payload = json_encode($invoiceData);
 
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $invoiceData);
+    $cmd = 'curl -X POST -H "Content-Type: application/json" ' .
+           '-H "Partner-Id: savescrmintegrationsiigo" ' .
+           '-H "Authorization: Bearer ' . $tokenx . '" ' .
+           '--data \'' . $payload . '\' ' .
+           '"' . $url . '"';
 
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-          "Content-Type: application/json", 
-          "tocken: ". $tokenx,
-          "metodo: saveCustomer",
-        ));
+    
 
-        $response = curl_exec($ch);
-        
-        curl_close($ch);
-        return $response;
+    $output = exec($cmd);
+        return $output;
     }
 
     public function updateCustomer($invoiceData,$id,$cuenta) {
@@ -444,26 +427,19 @@ curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2);
         return array('respuesta' => $resp,"httpCode"=>$httpCode );
     }
     public function saveInvoice2($invoiceData,$tokenx) {
-       $ch = curl_init();
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_URL, "https://saves-ottis.com/?param=si");
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-        curl_setopt($ch, CURLOPT_HEADER, FALSE);
-curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2);
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+       $url = "https://api.siigo.com/v1/invoices";
+    $payload = json_encode($invoiceData);
 
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $invoiceData);
+    $cmd = 'curl -X POST -H "Content-Type: application/json" ' .
+           '-H "Partner-Id: savescrmintegrationsiigo" ' .
+           '-H "Authorization: Bearer ' . $tokenx . '" ' .
+           '--data \'' . $payload . '\' ' .
+           '"' . $url . '"';
 
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-          "Content-Type: application/json", 
-          "tocken: ". $tokenx,
-          "metodo: saveInvoice",
-        ));
+    
 
-        $response = curl_exec($ch);
-        
-        curl_close($ch);
-        return $response;
+    $output = exec($cmd);
+        return $output;
     }
 
     public function accionar($api,$invoiceData,$cuenta){
@@ -495,10 +471,10 @@ curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2);
         //var_dump($api->getInvoices(1));
         //$invoiceData = file_get_contents(dirname(__FILE__) . '/siigo_folder/invoice.json');
         $respuesta=$api->saveInvoice2($invoiceData,$cuenta);
-        /*echo "<br>";
+        echo "<br>";
         var_dump($respuesta);
         echo "<br>";
-        
+        /*
         var_dump($respuesta['httpCode']);*/
         //var_dump($respuesta);
         try {
