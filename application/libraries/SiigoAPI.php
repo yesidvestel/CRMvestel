@@ -350,7 +350,7 @@ public function getCustomer1($document,$tokenx)
 
     public function saveCustomer1($invoiceData,$tocken) {
  $url = "https://api.siigo.com/v1/customers";
-    $payload = json_encode($invoiceData);
+    $payload = $invoiceData;
 
     $cmd = 'curl -X POST -H "Content-Type: application/json" ' .
            '-H "Partner-Id: savescrmintegrationsiigo" ' .
@@ -428,7 +428,7 @@ curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2);
     }
     public function saveInvoice2($invoiceData,$tokenx) {
        $url = "https://api.siigo.com/v1/invoices";
-    $payload = json_encode($invoiceData);
+    $payload = $invoiceData;
 
     $cmd = 'curl -X POST -H "Content-Type: application/json" ' .
            '-H "Partner-Id: savescrmintegrationsiigo" ' .
