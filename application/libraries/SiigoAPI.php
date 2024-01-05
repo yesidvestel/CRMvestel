@@ -298,7 +298,7 @@ public function getCustomer1($document,$tokenx)
            '-H "Authorization: Bearer ' . $tokenx . '" ' .
            '"' . $url . '"';
 
-    echo $cmd . "<br>";
+    //echo $cmd . "<br>";
 
     $output = exec($cmd);
     return json_decode($output, true);
@@ -470,18 +470,18 @@ curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2);
         
         //var_dump($api->getInvoices(1));
         //$invoiceData = file_get_contents(dirname(__FILE__) . '/siigo_folder/invoice.json');
-        $respuesta=$api->saveInvoice2($invoiceData,$cuenta);
-        echo "<br>";
-        var_dump($respuesta);
-        echo "<br>";
+        
+        
         /*
         var_dump($respuesta['httpCode']);*/
         //var_dump($respuesta);
         try {
-            if($respuesta==200 ||$respuesta==100 || $respuesta==0 || $respuesta==201 || $respuesta==409){//100            
-                return array('respuesta' =>$respuesta,"mensaje" =>"Factura Guardada");
-            }else{
+            $respuesta=$api->saveInvoice2($invoiceData,$cuenta);
+            if(strpos(strtolower($respuesta),"error" )!==false){//100            
                 return array('respuesta' =>$respuesta,"mensaje" =>"Ubo algun error");//falta imprimir en un alter el error
+            }else{
+                return array('respuesta' =>$respuesta,"mensaje" =>"Factura Guardada");
+                
             }    
         } catch (Exception $e) {
                return array('respuesta' =>$respuesta,"mensaje" =>"Ubo algun error");//falta imprimir en un alter el error
