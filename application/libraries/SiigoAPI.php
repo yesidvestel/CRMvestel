@@ -354,7 +354,7 @@ public function getCustomer1($document,$tokenx)
 
     $cmd = 'curl -X POST -H "Content-Type: application/json" ' .
            '-H "Partner-Id: savescrmintegrationsiigo" ' .
-           '-H "Authorization: Bearer ' . $tokenx . '" ' .
+           '-H "Authorization: Bearer ' . $tocken . '" ' .
            '--data \'' . $payload . '\' ' .
            '"' . $url . '"';
 
