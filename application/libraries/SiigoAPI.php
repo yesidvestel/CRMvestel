@@ -77,7 +77,7 @@ class SiigoAPI
         //$_SESSION['siigo_token'] = $decodedResp['access_token'];
 
        // _log("Obtención de autorización terminada"); //descomentar para depurar
-$this->db->update("config_facturacion_electronica",array("tocken"=>$decodedResp['access_token']),array("id"=>1));
+//$this->db->update("config_facturacion_electronica",array("tocken"=>$decodedResp['access_token']),array("id"=>1));
         return $decodedResp;
     }
 
@@ -122,7 +122,7 @@ $this->db->update("config_facturacion_electronica",array("tocken"=>$decodedResp[
 
         $decodedResp = json_decode($resp, true);
         //$_SESSION['siigo_token2'] = $decodedResp['access_token'];
-$this->db->update("config_facturacion_electronica",array("tocken"=>$decodedResp['access_token']),array("id"=>2));
+//$this->db->update("config_facturacion_electronica",array("tocken"=>$decodedResp['access_token']),array("id"=>2));
         //_log("Obtención de autorización terminada"); //descomentar para depurar
 
         return $decodedResp;

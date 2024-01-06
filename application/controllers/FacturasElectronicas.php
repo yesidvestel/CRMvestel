@@ -91,9 +91,13 @@ $this->load->model("customers_model","customers");
     public function guardar(){
         $this->facturas_electronicas->cargar_configuraciones_para_facturar();
     	$this->load->library('SiigoAPI');
-        $api = new SiigoAPI();
-        $api->getAuth(1);
-        $api->getAuth2(2);
+       $api = new SiigoAPI();
+        $v1=$api->getAuth(1);
+        $this->db->update("config_facturacion_electronica",array("tocken"=>$v1['access_token']),array("id"=>1));
+        
+            $v2=$api->getAuth2(2);
+            $this->db->update("config_facturacion_electronica",array("tocken"=>$v2['access_token']),array("id"=>2));
+        
         $this->load->model("customers_model","customers");
          $dataApiTV=null;
         $dataApiNET=null;
