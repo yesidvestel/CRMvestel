@@ -234,13 +234,18 @@ $this->load->model("customers_model","customers");
             $dataApiTV->observations="Estrato : ".$customer->estrato;
             $dataApiTV->payments[0]->id="2863";
 
-            $consulta_siigo1=$api->getCustomer($customer->documento,1);
-           //var_dump($consulta_siigo1);
-            if($consulta_siigo1['pagination']['total_results']==0){
-                    $api->saveCustomer($json_customer,1);//para crear cliente en siigo si no existe
+             $ob1=$this->db->get_where("config_facturacion_electronica",array("id"=>1))->row();
+            $consulta_siigo1=$api->getCustomer1($customer->documento,$ob1->tocken);
+           
+            
+            if(isset($consulta_siigo1) && isset($consulta_siigo1['pagination']) && isset($consulta_siigo1['pagination']['total_results']) && $consulta_siigo1['pagination']['total_results']==0){
+                
+                    $api->saveCustomer1($json_customer,$ob1->tocken);//para crear cliente en siigo si no existe
             }else{
-                    //$api->updateCustomer($json_customer,$consulta_siigo1['results'][0]['id'],1);//para acturalizar cliente en siigo 
-            }
+                //var_dump($json_customer);
+//                var_dump($consulta_siigo1);
+                  //  $api->updateCustomer($json_customer,$consulta_siigo1['results'][0]['id'],1);//para acturalizar cliente en siigo 
+            }   
         }
         if($dataApiNET!=null){
             $dataApiNET=json_decode($dataApiNET);
@@ -253,25 +258,27 @@ $this->load->model("customers_model","customers");
             $dataApiNET->observations="Estrato : ".$customer->estrato;
             $dataApiNET->payments[0]->id="2512";
 
-            $consulta_siigo1=$api->getCustomer($customer->documento,2);
-    
+          $ob1=$this->db->get_where("config_facturacion_electronica",array("id"=>2))->row();
+            $consulta_siigo1=$api->getCustomer1($customer->documento,$ob1->tocken);
+          
             
-            if($consulta_siigo1['pagination']['total_results']==0){
+            if(isset($consulta_siigo1) && isset($consulta_siigo1['pagination']) && isset($consulta_siigo1['pagination']['total_results']) && $consulta_siigo1['pagination']['total_results']==0){
                     $json_customer=json_decode($json_customer);
                     $json_customer->related_users->seller_id=282;
                     $json_customer->related_users->collector_id=282;
                     $json_customer->contacts[0]->email="vestelsas@gmail.com";
                     $json_customer=json_encode($json_customer);
                     //$json_customer=str_replace("321", "282", subject)
-                    $api->saveCustomer($json_customer,2);//para crear cliente en siigo si no existe
-                    
-            }else{
-                $json_customer=json_decode($json_customer);
+                    $api->saveCustomer1($json_customer,$ob1->tocken);//para crear cliente en siigo si no existe
+            }else{ /*esto estaba comentado el update
+                    $json_customer=json_decode($json_customer);
                     $json_customer->related_users->seller_id=282;
                     $json_customer->related_users->collector_id=282;
                     $json_customer->contacts[0]->email="vestelsas@gmail.com";
                     $json_customer=json_encode($json_customer);
-                    //$api->updateCustomer($json_customer,$consulta_siigo1['results'][0]['id'],2);//para acturalizar cliente en siigo 
+
+                    $api->updateCustomer($json_customer,$consulta_siigo1['results'][0]['id'],2);//para acturalizar cliente en siigo 
+                    */
             }
         }
         
@@ -414,14 +421,16 @@ $this->load->model("customers_model","customers");
         //var_dump($dataApiTV);
         $retorno=array("mensaje"=>"No");
         if($dataApiTV!=null && $dataApiTV!="null"){
-            $retorno = $api->accionar($api,$dataApiTV,1);     
+            $ob1=$this->db->get_where("config_facturacion_electronica",array("id"=>1))->row();
+            $retorno = $api->accionar2($api,$dataApiTV,$ob1->tocken); 
             
             if($dataApiNET!=null && $dataApiNET!="null"){
-                $retorno = $api->accionar($api,$dataApiNET,2);     
-                //var_dump($retorno);
+                $ob1=$this->db->get_where("config_facturacion_electronica",array("id"=>2))->row();
+                $retorno = $api->accionar2($api,$dataApiNET,$ob1->tocken);  
             }
         }else if($dataApiNET!=null && $dataApiNET!="null"){
-            $retorno = $api->accionar($api,$dataApiNET,2);     
+            $ob1=$this->db->get_where("config_facturacion_electronica",array("id"=>2))->row();
+            $retorno = $api->accionar2($api,$dataApiNET,$ob1->tocken);         
         }
 
         if($retorno['mensaje']=="Factura Guardada"){
