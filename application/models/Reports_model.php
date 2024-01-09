@@ -1066,6 +1066,8 @@ foreach ($lista_tareas as $key => $value) {
     public function statistics($limit = false)
     {
         $this->db->from('reports');
+         $ao_pasado = date('Y') - 1;
+        $this->db->where("year>=",$ao_pasado);
         // if($limit) $this->db->limit(12);
         //$this->db->order_by('id', 'DESC');
         $query = $this->db->get();
