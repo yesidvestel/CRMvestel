@@ -1251,7 +1251,9 @@ $lista_customers_activos=$this->db->query("select * from customers where (gid='2
 	public function statistics_services1()
 
     {
-        $lista_estadisticas=$this->db->order_by("fecha","asc")->get_where("estadisticas_servicios")->result_array();
+        //$lista_estadisticas=$this->db->order_by("fecha","asc")->get_where("estadisticas_servicios")->result_array();
+        $ao_pasado = date('Y') - 1;
+        $lista_estadisticas=$this->db->query("select * from estadisticas_servicios where fecha>='".$ao_pasado."-01-01' order by fecha asc")->result_array();
         $datos=array("lista_estadisticas"=>$lista_estadisticas);
 		$this->load->model('dashboard_model');
 		$col1 = $this->aauth->get_user()->sede_accede;

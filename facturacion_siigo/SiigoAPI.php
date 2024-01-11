@@ -1,5 +1,5 @@
 <?php 
-if(!defined('BASEPATH')) exit('No direct script access allowed');
+//if(!defined('BASEPATH')) exit('No direct script access allowed');
 require_once dirname(__FILE__) . '/siigo_folder/CurlRequest.php';
 $cReq = new CurlRequest();
 function _log($msg) {
@@ -74,11 +74,11 @@ class SiigoAPI
         }
 
         $decodedResp = json_decode($resp, true);
-        //$_SESSION['siigo_token'] = $decodedResp['access_token'];
+        $_SESSION['siigo_token'] = $decodedResp['access_token'];
 
        // _log("Obtención de autorización terminada"); //descomentar para depurar
-//$this->db->update("config_facturacion_electronica",array("tocken"=>$decodedResp['access_token']),array("id"=>1));
-        return $decodedResp;
+
+        return $resp;
     }
 
     public function getAuth2($cuenta)
@@ -121,11 +121,11 @@ class SiigoAPI
         }
 
         $decodedResp = json_decode($resp, true);
-        //$_SESSION['siigo_token2'] = $decodedResp['access_token'];
-//$this->db->update("config_facturacion_electronica",array("tocken"=>$decodedResp['access_token']),array("id"=>2));
+        $_SESSION['siigo_token2'] = $decodedResp['access_token'];
+
         //_log("Obtención de autorización terminada"); //descomentar para depurar
 
-        return $decodedResp;
+        return $resp;
     }
 
 
@@ -252,19 +252,9 @@ echo $response;
      * 
      * @return array Listado de facturas que se encuentran en la página indicada
      */
-    public function getCustomer($document,$cuenta)
+    public function getCustomer($document,$tockenn)
     {
-        $tokenx=$cuenta;
-
-    /*if($cuenta==1){
-        //$tokenx=$_SESSION['siigo_token'];
-        $ob1=$this->db->get_where("config_facturacion_electronica",array("id"=>1))->row();
-        $tokenx=$ob1->tocken;
-    }else{
-        //$tokenx=$_SESSION['siigo_token2'];
-        $ob1=$this->db->get_where("config_facturacion_electronica",array("id"=>2))->row();
-        $tokenx=$ob1->tocken;
-    }*/
+    
         //_log("Consultando facturas");
         //$this->getAuth($cuenta);
         $url = "{$this->urlBase}/customers?identification=".$document;
@@ -274,7 +264,7 @@ echo $response;
                 CURLOPT_HTTPHEADER => [
                     "Content-Type: application/json",
                     "Partner-Id: savescrmintegrationsiigo",
-                    "Authorization: Bearer $tokenx",
+                    "Authorization: Bearer $tockenn",
                 ],
                 //CURLOPT_SSL_VERIFYPEER=>false,
             ];
@@ -286,23 +276,9 @@ echo $response;
        // } while ($i < 2 && $httpCode === 401);
         //_log("Consulta de facturas finalizada [$httpCode]");
 
-        return json_decode($resp, true);
+        return $resp;
     }
 
-public function getCustomer1($document,$tokenx)
-    {
-          $url = "https://api.siigo.com/v1/customers?identification=" . $document;
-
-    $cmd = 'curl -X GET -H "Content-Type: application/json" ' .
-           '-H "Partner-Id: savescrmintegrationsiigo" ' .
-           '-H "Authorization: Bearer ' . $tokenx . '" ' .
-           '"' . $url . '"';
-
-    //echo $cmd . "<br>";
-
-    $output = exec($cmd);
-    return json_decode($output, true);
-    }
     /**
      * Guarda una factura
      * 
@@ -311,17 +287,9 @@ public function getCustomer1($document,$tokenx)
      * 
      * @return string Respuesta enviada por el servidor
      */
-    public function saveCustomer($invoiceData,$cuenta) {
-  $tokenx=$cuenta;
-        /*if($cuenta==1){
-        //$tokenx=$_SESSION['siigo_token'];
-        $ob1=$this->db->get_where("config_facturacion_electronica",array("id"=>1))->row();
-        $tokenx=$ob1->tocken;
-    }else{
-        //$tokenx=$_SESSION['siigo_token2'];
-        $ob1=$this->db->get_where("config_facturacion_electronica",array("id"=>2))->row();
-        $tokenx=$ob1->tocken;
-    }*/
+    public function saveCustomer($invoiceData,$tokenx) {
+
+        
         //_log("Enviando factura"); //descomentar para depurar
         $url = "{$this->urlBase}/customers";
         $i = 0;
@@ -345,23 +313,7 @@ public function getCustomer1($document,$tokenx)
         //} while ($i < 2 && $httpCode === 401);
         //_log("Envío de factura finalizado [$httpCode]"); //descomentar para depurar
 
-        return array('respuesta' => $resp,"httpCode"=>$httpCode );
-    }
-
-    public function saveCustomer1($invoiceData,$tocken) {
- $url = "https://api.siigo.com/v1/customers";
-    $payload = $invoiceData;
-
-    $cmd = 'curl -X POST -H "Content-Type: application/json" ' .
-           '-H "Partner-Id: savescrmintegrationsiigo" ' .
-           '-H "Authorization: Bearer ' . $tocken . '" ' .
-           '--data \'' . $payload . '\' ' .
-           '"' . $url . '"';
-
-    
-
-    $output = exec($cmd);
-        return $output;
+        return $httpCode;
     }
 
     public function updateCustomer($invoiceData,$id,$cuenta) {
@@ -390,17 +342,8 @@ curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2);
         curl_close($ch);
     }
 
-    public function saveInvoice($invoiceData,$cuenta) {
-        $tocken=$cuenta;
-        /*if($cuenta==1){
-        //$tokenx=$_SESSION['siigo_token'];
-        $ob1=$this->db->get_where("config_facturacion_electronica",array("id"=>1))->row();
-        $tokenx=$ob1->tocken;
-    }else{
-        //$tokenx=$_SESSION['siigo_token2'];
-        $ob1=$this->db->get_where("config_facturacion_electronica",array("id"=>2))->row();
-        $tokenx=$ob1->tocken;
-    }*/
+    public function saveInvoice($invoiceData,$tokenx) {
+        
         //_log("Enviando factura"); //descomentar para depurar
         $url = "{$this->urlBase}/invoices";
         $i = 0;
@@ -424,22 +367,7 @@ curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2);
         //} while ($i < 4 && ($httpCode === 401 ));
         //_log("Envío de factura finalizado [$httpCode]"); //descomentar para depurar
 
-        return array('respuesta' => $resp,"httpCode"=>$httpCode );
-    }
-    public function saveInvoice2($invoiceData,$tokenx) {
-       $url = "https://api.siigo.com/v1/invoices";
-    $payload = $invoiceData;
-
-    $cmd = 'curl -X POST -H "Content-Type: application/json" ' .
-           '-H "Partner-Id: savescrmintegrationsiigo" ' .
-           '-H "Authorization: Bearer ' . $tokenx . '" ' .
-           '--data \'' . $payload . '\' ' .
-           '"' . $url . '"';
-
-    
-
-    $output = exec($cmd);
-        return $output;
+        return $httpCode;
     }
 
     public function accionar($api,$invoiceData,$cuenta){
@@ -470,21 +398,21 @@ curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2);
         
         //var_dump($api->getInvoices(1));
         //$invoiceData = file_get_contents(dirname(__FILE__) . '/siigo_folder/invoice.json');
+        $respuesta=$api->saveInvoice($invoiceData,$cuenta);
+        /*echo "<br>";
+        var_dump($respuesta);
+        echo "<br>";
         
-        
-        /*
         var_dump($respuesta['httpCode']);*/
         //var_dump($respuesta);
         try {
-            $respuesta=$api->saveInvoice2($invoiceData,$cuenta);
-            if(strpos(strtolower($respuesta),"error" )!==false){//100            
-                return array('respuesta' =>$respuesta,"mensaje" =>"Ubo algun error");//falta imprimir en un alter el error
+            if($respuesta['httpCode']==200 ||$respuesta['httpCode']==100 || $respuesta['httpCode']==0 || $respuesta['httpCode']==201 || $respuesta['httpCode']==409){//100            
+                return array('respuesta' =>$respuesta['respuesta'],"mensaje" =>"Factura Guardada");
             }else{
-                return array('respuesta' =>$respuesta,"mensaje" =>"Factura Guardada");
-                
+                return array('respuesta' =>$respuesta['respuesta'],"mensaje" =>"Ubo algun error");//falta imprimir en un alter el error
             }    
         } catch (Exception $e) {
-               return array('respuesta' =>$respuesta,"mensaje" =>"Ubo algun error");//falta imprimir en un alter el error
+               return array('respuesta' =>$respuesta['respuesta'],"mensaje" =>"Ubo algun error");//falta imprimir en un alter el error
         }
         
         

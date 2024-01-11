@@ -214,7 +214,7 @@ if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
     
     <?= ($hay_emitidas) ? '$("#notificaciones_modal").modal("show");':'' ?>
     
-    proceso_notificaciones();
+    //proceso_notificaciones();
     function pasar_a_vistas(){
         $.post(baseurl+"tools/vistas_notificaciones",{},function (data){
                $("#notificaciones_modal").modal("hide");
@@ -225,7 +225,7 @@ if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
                $("#notificaciones_modal").modal("hide");
         });
     }
-    function proceso_notificaciones(){
+    /*function proceso_notificaciones(){
         
         setTimeout(function(){
             //aqui hago la consulta y tambien se debe de hacer al 
@@ -242,8 +242,8 @@ if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
                     
             },'json');
             proceso_notificaciones();
-        },60000);
-    }
+        },70000);
+    }*/
     
     $(document).on('click','#show_notify_1',function(e){
         e.preventDefault();
