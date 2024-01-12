@@ -144,12 +144,13 @@ public function exportar_a_excel_inv(){
     foreach ($lista_invoices as $key => $invoices) {
         //$fecha = date("d/m/Y",strtotime($debito->fecha_creacion));
          $deuda=$invoices->total-$invoices->pamnt;
+         $subtotal=$invoices->subtotal+$invoices->discount;
 		if($invoices->pamnt>$invoices->total){
 			$ant=$invoices->pamnt-$invoices->total;
 		}else{
 			$ant=0;
 		}
-         $ar=array($invoices->tid,$invoices->name ." ".$invoices->dosnombre ." ". $invoices->unoapellido." ". $invoices->dosapellido,$invoices->abonado,$invoices->tipo_documento,$invoices->documento,$invoices->invoicedate,$invoices->invoiceduedate,$invoices->ron,$invoices->subtotal,$invoices->tax,$invoices->discount,$invoices->total,$invoices->pamnt,$deuda,$ant,$invoices->refer,$this->lang->line(ucwords($invoices->status)));
+         $ar=array($invoices->tid,$invoices->name ." ".$invoices->dosnombre ." ". $invoices->unoapellido." ". $invoices->dosapellido,$invoices->abonado,$invoices->tipo_documento,$invoices->documento,$invoices->invoicedate,$invoices->invoiceduedate,$invoices->ron,$subtotal,$invoices->tax,$invoices->discount,$invoices->total,$invoices->pamnt,$deuda,$ant,$invoices->refer,$this->lang->line(ucwords($invoices->status)));
             $writer->writeSheetRow('Reporte Facturas ',$ar);
         
     }
