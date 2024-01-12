@@ -92,9 +92,82 @@
         <!--div style="margin-top: -25px;"><span id="span_progressfg">0/0</span></div-->
     </div>
 </article>
+<div id="verificacion_modal" class="modal fade">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                
+                <h3 class="modal-title" align="center">Verificacion Facturas Electronicas</h3>
 
+            </div>
+            <div class="modal-body">
+                
+                <p>Progreso recorrido usuarios</p>
+                <div id="progress_verificacion" data-init="true"></div>
+                
+                <br>
+                
+            </div>
+            <div class="modal-footer">
+                
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
 <?php //se hizo el cambio de fecha en el archivo views/fixed/footer ?>
 <script type="text/javascript">
+    var i_verificacion=1;
+    var total_verificacion=1;
+    function verificar_creacion_fe(){
+        var pay_acc=$("#cuentas_ option:selected").val();
+        var sdate=$("#sdate2").val();
+        console.log(sdate);
+          i_verificacion=1;
+         total_verificacion=1;
+        $.post(baseurl+"facturasElectronicas/obtener_lista_usuarios_fe_verificacion",{'pay_acc':pay_acc,'sdate':sdate},function(data){
+
+
+            $("#verificacion_modal").modal("show");
+            total_verificacion=data.total_groups;
+            progress_verificacion(i_verificacion);
+            recorrer_verificacion();
+        },'json');
+        
+    }
+    function recorrer_verificacion(){
+        var pay_acc=$("#cuentas_ option:selected").val();
+        var sdate=$("#sdate2").val();
+        $.post(baseurl+"facturasElectronicas/verificar_lista",{'pay_acc':pay_acc,'sdate':sdate,'i_verificacion':i_verificacion,'total_verificacion':total_verificacion},function(data){
+            i_verificacion++;
+            if(i_verificacion<=95){
+                progress_verificacion(i_verificacion);
+            }
+            
+            if(i_verificacion<=total_verificacion){
+                if(data=="correcto"){
+                    window.location.href = baseurl+"facturasElectronicas/visualizar_resumen_ejecucion?fecha="+sdate+"&sede="+pay_acc;
+                }else{
+                    recorrer_verificacion();        
+                }
+                
+            }
+            
+        });
+    }
+    $(document).ready(function(){
+        //verificar_creacion_fe();
+    });
+    function progress_verificacion(valorx){
+         $('#progress_verificacion').LineProgressbar({
+                    percentage: valorx,
+                    animation: true
+                });
+    }
     function progress_one(valorx){
          $('#progressfg').LineProgressbar({
                     percentage: valorx,
@@ -184,7 +257,8 @@ function iniciar_facturacion(){
                 console.log("ubo un error");
                 iniciar_facturacion();
             });
-        }else{
+        }else{// aqui abro modal de verificacion de fe.
+        //verificar_creacion_fe();
             window.location.href = baseurl+"facturasElectronicas/visualizar_resumen_ejecucion?fecha="+sdate+"&sede="+pay_acc;
         }
 }
@@ -298,6 +372,13 @@ function iniciar_facturacion(){
     $('#progressfg').LineProgressbar({
         percentage: 0,
         animation: true
+    });
+    $('#progress_verificacion').LineProgressbar({
+        percentage: 0,
+        animation: true,
+        fillBackgroundColor: '#1abc9c',
+        height: '25px',
+        radius: '10px'
     });
    
 </script>

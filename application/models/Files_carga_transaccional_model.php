@@ -137,7 +137,8 @@ if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
     if(count($lista_invoices)>0){
             $this->load->library('SiigoAPI');
             $api = new SiigoAPI();
-            $api->getAuth(1);
+            $v1=$api->getAuth(1);
+            $this->db->update("config_facturacion_electronica",array("tocken"=>$v1['access_token']),array("id"=>1));
             $_SESSION['api_siigox']=$api;
             $this->load->model("facturas_electronicas_model","facturas_electronicas");
             

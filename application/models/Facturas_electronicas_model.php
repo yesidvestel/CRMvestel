@@ -593,10 +593,11 @@ $ob1=$this->db->get_where("config_facturacion_electronica",array("id"=>2))->row(
             $dt_ob=new DateTime($invoice_facturar->invoicedate);
             $str_obs=$this->reports->devolver_nombre_mes($dt_ob->format("m"))." - ".$dt_ob->format("Y");
             $dataApiNET->observations="TID : ".$datos_facturar['tid'].", Factura : ".$str_obs." ,metodo pago: ".$accoun_tr;
-            $consulta_siigo1=$api->getCustomer($customer->documento,1);
+            $ob1=$this->db->get_where("config_facturacion_electronica",array("id"=>1))->row();
+            $consulta_siigo1=$api->getCustomer1($customer->documento,$ob1->tocken);
           
             
-            if($consulta_siigo1['pagination']['total_results']==0){
+            if(isset($consulta_siigo1) && isset($consulta_siigo1['pagination']) && isset($consulta_siigo1['pagination']['total_results']) && $consulta_siigo1['pagination']['total_results']==0){
                     $json_customer=json_decode($json_customer);
                     $json_customer->related_users->seller_id=738;
                     $json_customer->related_users->collector_id=738;
@@ -606,7 +607,7 @@ $ob1=$this->db->get_where("config_facturacion_electronica",array("id"=>2))->row(
                     }
                     $json_customer=json_encode($json_customer);
                     //$json_customer=str_replace("321", "282", subject)
-                    $api->saveCustomer($json_customer,1);//para crear cliente en siigo si no existe
+                     $api->saveCustomer1($json_customer,$ob1->tocken);//para crear cliente en siigo si no existe
             }else{
                     /*$json_customer=json_decode($json_customer);
                     $json_customer->related_users->seller_id=282;
@@ -671,6 +672,13 @@ $ob1=$this->db->get_where("config_facturacion_electronica",array("id"=>2))->row(
                                 $dataApiNET->items[$count]->code=$pr_sr->product_code;
                                 $sv['total']=0;
                                 $iva_des=0;
+                                $itm=$this->db->get_where("invoice_items",array("product"=>"Nota Credito","tipo_retencion"=>null,"tid"=>$datos_facturar['tid']))->row();
+                                if(isset($itm)){
+                                    $conteo=$this->db->query("select * from invoice_items where tid='".$datos_facturar['tid']."' and product!='Nota Credito'")->result_array();
+                                    $cont=count($conteo);
+                                    $vx1=(abs($itm->price)/$cont);
+                                    $sv['totaldiscount']=$sv['totaldiscount']+$vx1;  
+                                }
                                 if($sv['totaldiscount']>0){
                                     if($sv['totaldiscount']>$sv['price']){
                                         $iva_des=$sv['totaldiscount']-$sv['price'];
@@ -806,7 +814,8 @@ $ob1=$this->db->get_where("config_facturacion_electronica",array("id"=>2))->row(
 //var_dump($dataApiNET);
 //exit();
         if($dataApiNET!=null && $dataApiNET!="null"){
-            $retorno = $api->accionar($api,$dataApiNET,1);     
+            $ob1=$this->db->get_where("config_facturacion_electronica",array("id"=>1))->row();
+            $retorno = $api->accionar2($api,$dataApiNET,$ob1->tocken);     
         }
         //$retorno['mensaje']="Factura Guardada";
 
@@ -895,7 +904,8 @@ $ob1=$this->db->get_where("config_facturacion_electronica",array("id"=>2))->row(
             $this->load->model("Reports_model","reports");
         $api=$_SESSION['api_siigox'];
         //$resultado=$api->getInvoicesCreditoOttis("51859748","2023-11-05");
-        $resultado=$api->getInvoicesCreditoOttis($cc,$fecha);
+$ob1=$this->db->get_where("config_facturacion_electronica",array("id"=>1))->row();
+        $resultado=$api->getInvoicesCreditoOttis2($cc,$fecha,$ob1->tocken);
         ob_clean();
         //var_dump($resultado);
         //echo "<br><br>";
@@ -920,7 +930,7 @@ $ob1=$this->db->get_where("config_facturacion_electronica",array("id"=>2))->row(
                     $factura->observations=$DATOS_ACTUALIZACION['observaciones'];
                     $factura->payments[0]->id=$DATOS_ACTUALIZACION['codigo'];
                     $var_actualizada=json_encode($factura);
-                    $api->updateInvoice($var_actualizada,$id_f,1);
+                    $api->updateInvoice2($var_actualizada,$id_f,$ob1->tocken);
                     $date_now=date("Y-m-d H:i:s");
                     $data_inv=array("metodo_pago_f_e"=>"efectivo","fecha_actualizacion"=>$date_now);
                     $this->db->update("invoices",$data_inv,array("tid"=>$_POST['invoice_actualizacion_fe']['tid']));

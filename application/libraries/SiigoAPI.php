@@ -189,6 +189,20 @@ curl_close($curl);
 return $response;
 
     }
+public function getInvoicesCreditoOttis2($customer_cc,$date_start,$tokenx)
+    {
+          $url = 'https://api.siigo.com/v1/invoices?customer_identification='.$customer_cc.'&date_start='.$date_start;
+
+    $cmd = 'curl -X GET -H "Content-Type: application/json" ' .
+           '-H "Partner-Id: savescrmintegrationsiigo" ' .
+           '-H "Authorization: Bearer ' . $tokenx . '" ' .
+           '"' . $url . '"';
+
+    //echo $cmd . "<br>";
+
+    $output = exec($cmd);
+    return $output;
+    }
 
      public function updateInvoice($invoiceData,$id,$cuenta) {
         if($cuenta==1){
@@ -215,6 +229,21 @@ curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2);
         $response = curl_exec($ch);
         //var_dump($response);
         curl_close($ch);
+    }
+        public function updateInvoice2($invoiceData,$id,$tocken) {
+ $url = "$this->urlBase/invoices/".$id;
+    $payload = $invoiceData;
+
+    $cmd = 'curl -X PUT -H "Content-Type: application/json" ' .
+           '-H "Partner-Id: savescrmintegrationsiigo" ' .
+           '-H "Authorization: Bearer ' . $tocken . '" ' .
+           '--data \'' . $payload . '\' ' .
+           '"' . $url . '"';
+
+    
+
+    $output = exec($cmd);
+        return $output;
     }
 
 

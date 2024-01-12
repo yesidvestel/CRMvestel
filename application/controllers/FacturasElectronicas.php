@@ -627,6 +627,62 @@ public function borrar_facturas_v(){
         $this->load->view('facturas_electronicas/facturas_creadas', $data);
         $this->load->view('fixed/footer');
     }
+        public function obtener_lista_usuarios_fe_verificacion(){
+            $fechax=new DateTime($_POST['sdate']);
+             ob_end_clean();
+        $fecha=$fechax->format("Y-m-d");//"2023-12-15";
+        $fecha_filtro="2022-08-15";
+        $api = new SiigoAPI();
+        $api->getAuth(1);
+
+$lista_x=json_decode($api->getInvoices(1,$fecha));
+$total_groups=intval($lista_x->pagination->total_results/25)+3;
+$this->db->query("delete from filas_a_borrar where id >0;");
+            echo json_encode(array("total_groups"=>$total_groups));
+    }
+    public function verificar_lista(){
+        $fechax=new DateTime($_POST['sdate']);
+         $fecha=$fechax->format("Y-m-d");//"2023-12-15";
+        $fecha_filtro="2022-08-15";
+        $api = new SiigoAPI();
+       // $api->getAuth(1);
+        $var_list="";
+        $lista_x=json_decode($api->getInvoices($_POST['i_verificacion'],$fecha));
+        if(isset($lista_x->results)){
+             foreach ($lista_x->results as $key => $fe) {
+                $var_list.="('".$fe->observations."','x','".$fecha."',0),";
+                        
+            }
+        }
+        if($var_list!=""){
+            $var_list = substr($var_list, 0, -1);
+            $var_list.=";";
+            $sql="INSERT INTO `filas_a_borrar` (`id_invoice`, `nombre`, `fecha`, `borrado`) VALUES ".$var_list;
+            $this->db->query($sql);
+        }else{
+            $lista_generada=$this->db->query("select fe.tid as tid from facturacion_electronica_siigo as fe inner join customers as cs on fe.customer_id=cs.id where fe.fecha ='".$fecha."' and (fe.tipo='facturada' or fe.tipo='actualizada') and cs.ciudad='".$_POST['pay_acc']."'")->result_array();
+            //$ids="";
+            foreach ($lista_generada as $key => $value) {
+                    $consulta=$this->db->query("SELECT * FROM `filas_a_borrar` WHERE `id_invoice` LIKE '%".$value['tid']."%'")->result_array();
+
+                    if(count($consulta)==0){
+                            //$ids.=",".$value['tid'];
+                            $this->db->update("invoices",array("facturacion_electronica"=>"Crear Factura Electronica","notes"=>"actulizado x"),array("tid"=>$value['tid']));
+                            $this->db->update("facturacion_electronica_siigo",array("tipo"=>"error"),array("tid"=>$value['tid'],"fecha"=>$fecha));
+                    }
+            }
+            echo "correcto";
+            
+            //var_dump($ids);
+        }    
+    }
+    public function xa1(){
+        $lista_generada=$this->db->query("select * from temporal_actualziaciones")->result_array();
+        ob_clean();
+        foreach ($lista_generada as $key => $value) {
+                echo $value['sql_text'].";<br>";
+        }
+    }
     public function obtener_lista_usuarios_a_facturar(){
         $numero_total;
         $caja1=$this->db->get_where('accounts',array('id' =>$_POST['pay_acc']))->row();
