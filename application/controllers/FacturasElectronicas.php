@@ -902,9 +902,11 @@ set_time_limit(5000);
         $inv=$this->db->get_where("invoices",array("tid"=>$_POST['tid']) )->row();
         $this->db->delete("facturacion_electronica_siigo",array("tipo"=>"error","tid"=>$_POST['tid']));
         $api = new SiigoAPI();
-        $api->getAuth(1);
+       $v1= $api->getAuth(1);
+       $this->db->update("config_facturacion_electronica",array("tocken"=>$v1['access_token']),array("id"=>1));
         if(count($_SESSION['array_accesos_siigo'])==2){
-            $api->getAuth2(2);
+           $v2= $api->getAuth2(2);
+             $this->db->update("config_facturacion_electronica",array("tocken"=>$v2['access_token']),array("id"=>2));
         }
         $respuesta=array("response"=>"no genero");
         $_SESSION['api_siigo']=$api;
