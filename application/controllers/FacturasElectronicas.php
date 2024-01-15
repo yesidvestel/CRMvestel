@@ -872,7 +872,7 @@ set_time_limit(5000);
                         }else{
                             $inv_validar=$this->db->get_where("invoices",array("id"=>$datos['id_facturar'],"facturacion_electronica"=>"Crear Factura Electronica"))->row();
                             if(isset($inv_validar)){
-                                $creo=$this->facturas_electronicas->generar_factura_customer_para_multiple_ottis($datos,$_SESSION['api_siigo']);        
+                                $creo=$this->facturas_electronicas->generar_factura_customer_para_multiple_ottis($datos,$api);        
                             }else{
                                 $creo=true;
                             }
