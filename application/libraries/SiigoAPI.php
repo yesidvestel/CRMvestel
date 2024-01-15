@@ -506,7 +506,7 @@ curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2);
         //var_dump($respuesta);
         try {
             $respuesta=$api->saveInvoice2($invoiceData,$cuenta);
-            if(strpos(strtolower($respuesta),"error" )!==false){//100            
+            if(strpos(strtolower($respuesta),"error" )!==false && strpos(strtolower($respuesta),"duplicated_document" )===false){//100            
                 return array('respuesta' =>$respuesta,"mensaje" =>"Ubo algun error");//falta imprimir en un alter el error
             }else{
                 return array('respuesta' =>$respuesta,"mensaje" =>"Factura Guardada");
