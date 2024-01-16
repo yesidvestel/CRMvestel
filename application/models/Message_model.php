@@ -22,15 +22,19 @@ class Message_model extends CI_Model
 {
 
 
-    public function employee_details($id)
+    public function employee_details($send,$receiber)
     {
 
-        $this->db->select('employee_profile.*');
+        $this->db->select('employee_profile.*,aauth_pms.*');
         $this->db->from('employee_profile');
-        $this->db->where('aauth_pms.id', $id);
+        $this->db->where('aauth_pms.sender_id', $send);
+        $this->db->or_where('aauth_pms.sender_id', $receiber);
+        $this->db->where('aauth_pms.receiver_id', $receiber);
+        $this->db->or_where('aauth_pms.receiver_id', $send);
         $this->db->join('aauth_pms', 'employee_profile.id = aauth_pms.sender_id', 'left');
+		$this->db->order_by("aauth_pms.date_sent","desc");
         $query = $this->db->get();
-        return $query->row_array();
+        return $query->result_array();
     }
 
 

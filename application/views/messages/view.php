@@ -12,21 +12,21 @@
                             data-remote="false" data-type="reminder"
                             class="btn btn-large btn-success"
 
-                    ><span class="icon-mail"></span> <?php echo $this->lang->line('Compose') ?></a> <a href="#deletePM"
+                    ><span class="icon-mail"></span> <?php echo $this->lang->line('') ?>Responder</a> <a href="#deletePM"
                                                                                                        data-toggle="modal"
                                                                                                        data-remote="false"
                                                                                                        data-type="reminder"
                                                                                                        class="btn btn-large btn-danger"
 
                     ><span class="icon-trash"></span> <?php echo $this->lang->line('Delete') ?> </a></h5>
-
+				<?php foreach ($employee as $row) { ?>
                 <section id="description" class="card">
                     <div class="row">
                         <div class="col-md-3">
                             <div class="card-header">
                                 <h4 class="card-title"><?php
                                     //print_r($employee);
-                                    echo $employee['name'];
+                                    echo $row['name'];
                                     ?></h4>
                             </div>
                             <div class="card-body collapse in">
@@ -34,7 +34,7 @@
                                     <div class="card-text">
                                         <p><img alt="image" class="img-circle " src="<?php
 
-                                            echo base_url('userfiles/employee/' . $employee['picture']);
+                                            echo base_url('userfiles/employee/' . $row['picture']);
                                             ?>"></p>
 
                                     </div>
@@ -44,21 +44,22 @@
                         <div class="col-md-9">
                             <?php
                             //print_r($employee);
-                            $pms = $this->aauth->get_pm($pmid, $this->aauth->get_user()->id);
+                            //$pms = $this->aauth->get_pm($pmid, $this->aauth->get_user()->id);
 
                             echo '<div class="card-header">
-                        <h4 class="card-title">' . $pms->title . '</h4>
+                        <h4 class="card-title">' . $row['title'] . '</h4>
                     </div>
-                    <div class="card-body collapse in">' . $pms->date_sent . '
+                    <div class="card-body collapse in">' . $row['date_sent'] . '
                         <div class="card-block">
                             <div class="card-text">
-                                <p>' . $pms->message . '</p>
+                                <p>' . $row['message'] . '</p>
 
                             </div>
                         </div>
                     </div>'; ?></div>
                     </div>
                 </section>
+				<?php } ?>
             </div>
 
 

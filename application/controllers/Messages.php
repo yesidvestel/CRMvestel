@@ -80,8 +80,9 @@ class Messages extends CI_Controller
 
         $data['pmid'] = $this->input->get('id');
         $this->aauth->set_as_read_pm($data['pmid']);
+		$chat=$this->db->get_where("aauth_pms",array("id"=>$data['pmid']))->row();
         $this->load->model('message_model', 'message');
-        $data['employee'] = $this->message->employee_details($data['pmid']);
+        $data['employee'] = $this->message->employee_details($chat->sender_id,$chat->receiver_id);
 
         $this->load->view('fixed/header');
         $this->load->view('messages/view', $data);
