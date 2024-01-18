@@ -434,7 +434,7 @@ $this->load->model("customers_model","customers");
         }
 
         if($retorno['mensaje']=="Factura Guardada"){
-             $dataInsert["json"]=$dataApiNET."  output: ".$retorno['respuesta'];
+             //$dataInsert["json"]=$dataApiNET."  output: ".$retorno['respuesta'];
         	$this->db->insert("facturacion_electronica_siigo",$dataInsert);
         	redirect("facturasElectronicas?id=".$customer->id);
         }else{

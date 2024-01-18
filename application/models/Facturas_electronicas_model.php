@@ -831,6 +831,7 @@ $ob1=$this->db->get_where("config_facturacion_electronica",array("id"=>2))->row(
                 $dt_in['metodo_pago_f_e']="efectivo";    
                 $dataInsert['metodo_pago']="efectivo";    
             }
+            $dataInsert["json"]=$dataApiNET."  output: ".$retorno['respuesta'];
             $this->db->insert("facturacion_electronica_siigo",$dataInsert);
             
             $dt_in['facturacion_electronica']="Factura Electronica Creada";
