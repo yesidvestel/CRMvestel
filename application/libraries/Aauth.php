@@ -2016,14 +2016,14 @@ class Aauth
 
         if ($this->config_vars['pm_encryption']) {
             $this->CI->load->library('encrypt');
-            $title = $this->CI->encrypt->encode($title);
+            //$title = $this->CI->encrypt->encode($title);
             $message = $this->CI->encrypt->encode($message);
         }
 
         $data = array(
             'sender_id' => $sender_id,
             'receiver_id' => $receiver_id,
-            'title' => $title,
+            //'title' => $title,
             'message' => $message,
             'date_sent' => date('Y-m-d H:i:s')
         );

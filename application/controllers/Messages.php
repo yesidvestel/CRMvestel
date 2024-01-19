@@ -60,15 +60,15 @@ class Messages extends CI_Controller
         $message = $this->input->post('text');
         $receiver = $this->input->post('userid');
 
-        if (strlen($subject) < 5 OR $message == '') {
+        if (/*strlen($subject) < 5 OR*/ $message == '') {
             echo json_encode(array('status' => 'Error', 'message' =>
-                "Invalid Message/Subject!"));
+                "Mensaje vacio!"));
         } else {
 
             $this->aauth->send_pm($this->aauth->get_user()->id, $receiver, $subject, $message);
 
             echo json_encode(array('status' => 'Success', 'message' =>
-                "Message Sent!"));
+                "Mensaje enviado!"));
         }
 
 
@@ -83,7 +83,12 @@ class Messages extends CI_Controller
 		$chat=$this->db->get_where("aauth_pms",array("id"=>$data['pmid']))->row();
         $this->load->model('message_model', 'message');
         $data['employee'] = $this->message->employee_details($chat->sender_id,$chat->receiver_id);
-
+		if($this->aauth->get_user()->id==$chat->sender_id){
+			$idcol=$chat->receiver_id;
+		}else{
+			$idcol=$chat->sender_id;
+		}
+        $data['colaborador'] = $this->message->col_details($idcol);
         $this->load->view('fixed/header');
         $this->load->view('messages/view', $data);
         $this->load->view('fixed/footer');
@@ -100,7 +105,7 @@ class Messages extends CI_Controller
 
         if ($this->aauth->delete_pm($pmid)) {
             echo json_encode(array('status' => 'Success', 'message' =>
-                "Message Deleted!"));
+                "Mensaje Eliminado!"));
         } else {
 
 

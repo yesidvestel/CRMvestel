@@ -84,10 +84,7 @@
                             <div class="input-group">
                                 <div class="input-group-addon"><span class="icon-user"
                                                                      aria-hidden="true"></span></div>
-                                <input type="text" class="form-control" placeholder="Username" name="username"
-                                       id="username"
-                                       value="" autocomplete="off"><input type="hidden" id="userid" name="userid"
-                                                                          value="">
+                                <input type="text" class="form-control" placeholder="Username" name="username" id="username" value="<?php echo $colaborador['username'] ?>" autocomplete="off" disabled><input type="hidden" id="userid" name="userid" value="<?php echo $colaborador['id'] ?>">
                             </div>
 
                         </div>
@@ -100,13 +97,13 @@
                     </div>
 
 
-                    <div class="row">
+                    <!--<div class="row">
                         <div class="col-xs-12 mb-1"><label
                                     for="shortnote"><?php echo $this->lang->line('Subject') ?></label>
                             <input type="text" class="form-control"
                                    name="subject" id="subject">
                         </div>
-                    </div>
+                    </div>-->
                     <div class="row">
                         <div class="col-xs-12 mb-1"><label
                                     for="shortnote"><?php echo $this->lang->line('Message') ?></label>

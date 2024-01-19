@@ -67,13 +67,13 @@
                     </div>
 
 
-                    <div class="row">
+                    <!--<div class="row">
                         <div class="col-xs-12 mb-1"><label
                                     for="shortnote"><?php echo $this->lang->line('Subject') ?></label>
                             <input type="text" class="form-control"
                                    name="subject" id="subject">
                         </div>
-                    </div>
+                    </div>-->
                     <div class="row">
                         <div class="col-xs-12 mb-1"><label
                                     for="shortnote"><?php echo $this->lang->line('Message') ?></label>

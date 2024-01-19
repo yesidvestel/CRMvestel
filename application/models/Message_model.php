@@ -40,6 +40,17 @@ class Message_model extends CI_Model
         $query = $this->db->get();
         return $query->result_array();
     }
+	public function col_details($id)
+    {
+
+        $this->db->select('employee_profile.*');
+        $this->db->from('employee_profile');
+		$this->db->where('id', $id);
+        //$this->db->join('aauth_pms', 'employee_profile.id = aauth_pms.sender_id', 'left');
+		//$this->db->order_by("aauth_pms.date_sent","desc");
+        $query = $this->db->get();
+        return $query->row_array();
+    }
 
 
 }
