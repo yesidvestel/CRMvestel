@@ -89,6 +89,7 @@ table {
 					<input type="checkbox" id="reinstalacion" style="cursor:pointer;" onclick="activar_desactivar_meses(null,'u');" class="case"><b style="cursor:pointer;" onclick="activar_desactivar_meses('reinstalacion','u');"><i>&nbsp;Reinstalacion&nbsp;</b></i>
 					<input type="checkbox" id="retiro_voluntario" style="cursor:pointer;" onclick="activar_desactivar_meses(null,'v');" class="case"><b style="cursor:pointer;" onclick="activar_desactivar_meses('retiro_voluntario','v');"><i>&nbsp;Retiro Voluntario&nbsp;</b></i>
 					<input type="checkbox" id="toma_adicional" style="cursor:pointer;" onclick="activar_desactivar_meses(null,'w');" class="case"><b style="cursor:pointer;" onclick="activar_desactivar_meses('toma_adicional','w');"><i>&nbsp;Toma Adicional&nbsp;</b></i>
+					<input type="checkbox" id="autenticacion" style="cursor:pointer;" onclick="activar_desactivar_meses(null,'w');" class="case"><b style="cursor:pointer;" onclick="activar_desactivar_meses('autenticacion','w2');"><i>&nbsp;Autenticacion&nbsp;</b></i>
 				</div>
             </div>
         </div>
@@ -151,6 +152,7 @@ table {
 					<input type="checkbox" id="instalaciones_reinstalacion" style="cursor:pointer;" onclick="activar_desactivar_lines(null,'u');" class="case"><b style="cursor:pointer;" onclick="activar_desactivar_lines('instalaciones_reinstalacion','u');"><i>&nbsp;Reinstalacion&nbsp;</b></i>
 					<input type="checkbox" id="instalaciones_retiro_voluntario" style="cursor:pointer;" onclick="activar_desactivar_lines(null,'v');" class="case"><b style="cursor:pointer;" onclick="activar_desactivar_lines('instalaciones_retiro_voluntario','v');"><i>&nbsp;Retiro Voluntario&nbsp;</b></i>
 					<input type="checkbox" id="instalaciones_toma_adicional" style="cursor:pointer;" onclick="activar_desactivar_lines(null,'w');" class="case"><b style="cursor:pointer;" onclick="activar_desactivar_lines('instalaciones_toma_adicional','w');"><i>&nbsp;Toma Adicional&nbsp;</b></i>
+					<input type="checkbox" id="instalaciones_autenticacion" style="cursor:pointer;" onclick="activar_desactivar_lines(null,'w2');" class="case"><b style="cursor:pointer;" onclick="activar_desactivar_lines('instalaciones_autenticacion','w2');"><i>&nbsp;Autenticacion&nbsp;</b></i>
 								 </div>
 				            </div>
                         </div>
@@ -1126,6 +1128,45 @@ table {
 														</tbody></table> 	
 											</td>
 										</tr>
+
+<tr>
+											<td class="static">
+												<div class="cl-instalaciones_autenticacion" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_autenticacion()"><i><u>Toma Adicional</u></i></div>
+												
+													<table class="tb_tec_info_instalaciones_autenticacion"><tbody>
+														<?php $lista_clases_css117=""; 
+															foreach ($lista_de_tecnicos as $key => $value) {
+																$name_class="instalaciones_autenticacion_".$value['username'];
+																$lista_clases_css117.=",.".$name_class."";
+																echo "<tr class='".$name_class."'><td>".$value['username']."</td></tr>";
+														}  ?>	
+														
+													</tbody></table> 
+											</td>
+											<?php $conteo=0; foreach ($tipos['instalaciones_autenticacion'] as $key1=> $row) {?>												
+												<td class="first-col" style="padding-right: 0px;padding-left: 0px;text-align: center;vertical-align: middle;">
+													<div class="cl-instalaciones_autenticacion" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_autenticacion()"><?php echo $row;$conteo+=$row; ?></div>
+														
+														<table class="tb_tec_info_instalaciones_autenticacion" style='width: 100px;vertical-align: middle;'><tbody>
+															<?php foreach ($lista_por_tecnicos['instalaciones_autenticacion'][$key1] as $key => $value2) {
+																echo "<tr class='instalaciones_autenticacion_".$key."' ><td style='width: 100px;text-align: center;'>".($value2['puntuacion'])."p</td></tr>";																
+															} ?>	
+														</tbody></table> 	
+												</td>
+											<?php } ?>
+
+												
+											
+											<td align="center" style="vertical-align: middle;" >
+												<div   class="cl-instalaciones_autenticacion" style="cursor: pointer;" onclick="desactivar_activar_tabla_instalaciones_autenticacion()"><?php echo $conteo; ?></div>
+														<table class="tb_tec_info_instalaciones_autenticacion" style='width: 200px;text-align: center;vertical-align: middle;'><tbody>
+															<?php foreach ($lista_datos_cuentas_tipos_por_tecnico['instalaciones_autenticacion'] as $key => $value2) {
+																echo "<tr class='instalaciones_autenticacion_".$key."' ><td style='width: 200px;'><strong>".($value2['puntuacion'])."</strong> pts </td></tr>";																
+															} ?>	
+														</tbody></table> 	
+											</td>
+										</tr>
+										
 										<tr>
                                             <td class="static">
                                                 <div class="cl-tareas_en_proyectos" style="cursor: pointer;" onclick="desactivar_activar_tabla_tareas_en_proyectos()"><i><u>Tareas</u></i></div>
@@ -1223,6 +1264,7 @@ table {
 																    $puntuacion_reinstalacion=array("cantidad"=>0,"puntuacion"=>0);
 																    $puntuacion_retiro_voluntario=array("cantidad"=>0,"puntuacion"=>0);
 																    $puntuacion_toma_adicional=array("cantidad"=>0,"puntuacion"=>0);
+																    $puntuacion_autenticacion=array("cantidad"=>0,"puntuacion"=>0);
 
 																$x=$lista_datos_cuentas_tipos_por_tecnico['instalaciones_tv_e_internet'][$key];
 																$total=$x['FTTH']['puntuacion']+$x['EOC']['puntuacion']+$x['puntos_adicionales']['puntuacion']+$x['puntos_adicionales_multiples']['puntuacion'];
@@ -1365,6 +1407,11 @@ table {
 																	$puntuacion_toma_adicional['cantidad']+=$x['cantidad'];
 																	$puntuacion_toma_adicional['puntuacion']+=$x['puntuacion'];
 
+																$x=$lista_datos_cuentas_tipos_por_tecnico['instalaciones_autenticacion'][$key];
+																$total+=$x['puntuacion'];
+																	$puntuacion_autenticacion['cantidad']+=$x['cantidad'];
+																	$puntuacion_autenticacion['puntuacion']+=$x['puntuacion'];
+
 
 																$x=$lista_datos_cuentas_tipos_por_tecnico['instalaciones_Revision_tv_e_internet'][$key];
 																$total+=$x['puntuacion']+$x['puntuacion'];
@@ -1414,6 +1461,7 @@ table {
 																				data-instalaciones-reinstalacion='".$puntuacion_reinstalacion['cantidad'].",".$puntuacion_reinstalacion['puntuacion']."' 
 																				data-instalaciones-retiro-voluntario='".$puntuacion_retiro_voluntario['cantidad'].",".$puntuacion_retiro_voluntario['puntuacion']."' 
 																				data-instalaciones-toma-adicional='".$puntuacion_toma_adicional['cantidad'].",".$puntuacion_toma_adicional['puntuacion']."' 
+																				data-instalaciones-autenticacion='".$puntuacion_autenticacion['cantidad'].",".$puntuacion_autenticacion['puntuacion']."' 
 																				data-instalaciones-recuperacion='".$puntuacion_recuperacion['cantidad'].",".$puntuacion_recuperacion['puntuacion']."' 
 																				data-tareas='".$puntuacion_tareas['cantidad'].",".$puntuacion_tareas['puntuacion']."' "; 
 
@@ -1591,6 +1639,11 @@ table {
                 			<td>Toma Adicional</td>
                 			<td id="modal-instalaciones-toma-adicional-c">0</td>
                 			<td id="modal-instalaciones-toma-adicional-p">0</td>
+                		</tr>
+                		<tr>
+                			<td>Autenticacion</td>
+                			<td id="modal-instalaciones-autenticacion-c">0</td>
+                			<td id="modal-instalaciones-autenticacion-p">0</td>
                 		</tr>
                 		<tr>
                 			<td>Recuperación Cable Modem</td>
@@ -1781,6 +1834,12 @@ table {
 			total_puntuacion+=parseInt(datax[1]);
 			cantidad+=parseInt(datax[0]);
 
+			var datax=$(this).data("instalaciones-autenticacion").split(",");
+			$("#modal-instalaciones-autenticacion-c").text(datax[0]);
+			$("#modal-instalaciones-autenticacion-p").text(datax[1]);
+			total_puntuacion+=parseInt(datax[1]);
+			cantidad+=parseInt(datax[0]);
+
 
 			var datax=$(this).data("instalaciones-recuperacion").split(",");
 			$("#modal-instalaciones-recuperacion-c").text(datax[0]);
@@ -1833,6 +1892,7 @@ table {
 		var lista_clases_css87="<?=$lista_clases_css87 ?>";
 		var lista_clases_css97="<?=$lista_clases_css97 ?>";
 		var lista_clases_css107="<?=$lista_clases_css107 ?>";
+		var lista_clases_css117="<?=$lista_clases_css117 ?>";
 		
 			$(".cl-instalaciones_tv_e_internet"+lista_clases_css1).mouseover(function(){
 				var x1="."+$(this).attr("class");
@@ -2259,6 +2319,22 @@ table {
 				$(x1).css("transform","");*/
 			});
 
+			$(".cl-instalaciones_autenticacion"+lista_clases_css117).mouseover(function(){
+				var x1="."+$(this).attr("class");
+				$(x1).css("background-color","#d2b48c");
+				$(x1).css("box-shadow","1px 1px #53a7ea,2px 2px #53a7ea,3px 3px #53a7ea");
+				/*$(x1).css("-webkit-transform","translateX(-7px)");
+				$(x1).css("transform","translateX(-7px)");*/
+			});
+			
+			$(".cl-instalaciones_autenticacion"+lista_clases_css117).mouseout(function (){
+				var x1="."+$(this).attr("class");
+				$(x1).css("background-color","");
+				$(x1).css("box-shadow","");
+				/*$(x1).css("-webkit-transform","");
+				$(x1).css("transform","");*/
+			});
+
 			$(".cl-tareas_en_proyectos"+lista_clases_css20).mouseover(function(){
 				var x1="."+$(this).attr("class");
 				$(x1).css("background-color","#d2b48c");
@@ -2363,6 +2439,9 @@ function desactivar_activar_tabla_instalaciones_retiro_voluntario(){
 function desactivar_activar_tabla_instalaciones_toma_adicional(){
 		$(".tb_tec_info_instalaciones_toma_adicional").fadeToggle("fast");						
 }
+function desactivar_activar_tabla_instalaciones_autenticacion(){
+		$(".tb_tec_info_instalaciones_autenticacion").fadeToggle("fast");						
+}
 function mostrar_ocultar(){
 	desactivar_activar_tabla_instalaciones_total();
 	desactivar_activar_tabla_instalaciones_Corte_Tv();
@@ -2390,6 +2469,7 @@ function mostrar_ocultar(){
 	desactivar_activar_tabla_instalaciones_reinstalacion();
 	desactivar_activar_tabla_instalaciones_retiro_voluntario();
 	desactivar_activar_tabla_instalaciones_toma_adicional();
+	desactivar_activar_tabla_instalaciones_autenticacion();
 }
 mostrar_ocultar();
 
@@ -2423,7 +2503,7 @@ mostrar_ocultar();
 	});
 
 	var lista_keysdos=[];
-	var lista_labels_totaldos={y:'Instalaciones Tv + Internet',z:"Instalaciones Tv",a:"Instalaciones Internet",b:"Agregar Tv",c:"Agregar Internet",d:"Traslado",e:"Revision Tv+Internet",f:"Reconexion",g:"Suspension Combo",h:"Suspension Internet",i:"Suspension Television",j:"Corte Television",k:"Revision Tv",l:"Revision Internet",m:"Corte Internet",n:"Corte tv e internet",o:"migracion",o2:"punto nuevo",p:"recuperacion cable modem",q:"veeduria",r:"activacion",s:"cambio de equipo",t:"equipo adicional",u:"reinstalacion",v:"retiro voluntario",w:"toma adicional"};
+	var lista_labels_totaldos={y:'Instalaciones Tv + Internet',z:"Instalaciones Tv",a:"Instalaciones Internet",b:"Agregar Tv",c:"Agregar Internet",d:"Traslado",e:"Revision Tv+Internet",f:"Reconexion",g:"Suspension Combo",h:"Suspension Internet",i:"Suspension Television",j:"Corte Television",k:"Revision Tv",l:"Revision Internet",m:"Corte Internet",n:"Corte tv e internet",o:"migracion",o2:"punto nuevo",p:"recuperacion cable modem",q:"veeduria",r:"activacion",s:"cambio de equipo",t:"equipo adicional",u:"reinstalacion",v:"retiro voluntario",w:"toma adicional",w2:"toma adicional"};
     var lista_labels_personalizadados=[];
     $('#invoices-sales-chart').empty();
     var datosdos={
@@ -2432,7 +2512,7 @@ mostrar_ocultar();
             <?php foreach ($stat['instalaciones_tv_e_internet'] as $key => $numero) {
             $datex = new DateTime($key);
             //$num = cal_days_in_month(CAL_GREGORIAN, $row['month'], $row['year']);
-            echo "{ x: '".($datex->format("Y-m-t"))."', y: ". intval($stat['instalaciones_tv_e_internet'][$key]) .",z: " . intval($stat['instalaciones_tv'][$key]) . ",a: " . intval($stat['instalaciones_internet'][$key]) . ",b: " . intval($stat['instalaciones_Agregar_Tv'][$key]) .",c:" . intval($stat['instalaciones_AgregarInternet'][$key]) . ",d: " . intval($stat['instalaciones_Traslado'][$key]) . ",e: " . intval($stat['instalaciones_Revision'][$key]) . ",f: " . intval($stat['instalaciones_Reconexion'][$key]) . ",g: " . intval($stat['instalaciones_Suspension_Combo'][$key]) . ",h: " . intval($stat['instalaciones_Suspension_Internet'][$key]) . ",i: " . intval($stat['instalaciones_Suspension_Television'][$key]) . ",j: " . intval($stat['instalaciones_Corte_Television'][$key]) . ",k: " . intval($stat['instalaciones_Revision_tv'][$key]) .",l: " . intval($stat['instalaciones_Revision_internet'][$key]).",m: " . intval($stat['instalaciones_Corte_Internet'][$key]).",n: " . intval($stat['instalaciones_Corte_tv_e_internet'][$key]).",o: " . intval($stat['instalaciones_migracion'][$key]).",o2: " . intval($stat['instalaciones_punto_nuevo'][$key]).",p: " . intval($stat['instalaciones_recuperacion_cable_modem'][$key]) .",q: " . intval($stat['instalaciones_veeduria'][$key]).",r: " . intval($stat['instalaciones_activacion'][$key]).",s: " . intval($stat['instalaciones_cambio_de_equipo'][$key]).",t: " . intval($stat['instalaciones_equipo_adicional'][$key]).",u: " . intval($stat['instalaciones_reinstalacion'][$key]).",v: " . intval($stat['instalaciones_retiro_voluntario'][$key]).",w: " . intval($stat['instalaciones_toma_adicional'][$key])."},";
+            echo "{ x: '".($datex->format("Y-m-t"))."', y: ". intval($stat['instalaciones_tv_e_internet'][$key]) .",z: " . intval($stat['instalaciones_tv'][$key]) . ",a: " . intval($stat['instalaciones_internet'][$key]) . ",b: " . intval($stat['instalaciones_Agregar_Tv'][$key]) .",c:" . intval($stat['instalaciones_AgregarInternet'][$key]) . ",d: " . intval($stat['instalaciones_Traslado'][$key]) . ",e: " . intval($stat['instalaciones_Revision'][$key]) . ",f: " . intval($stat['instalaciones_Reconexion'][$key]) . ",g: " . intval($stat['instalaciones_Suspension_Combo'][$key]) . ",h: " . intval($stat['instalaciones_Suspension_Internet'][$key]) . ",i: " . intval($stat['instalaciones_Suspension_Television'][$key]) . ",j: " . intval($stat['instalaciones_Corte_Television'][$key]) . ",k: " . intval($stat['instalaciones_Revision_tv'][$key]) .",l: " . intval($stat['instalaciones_Revision_internet'][$key]).",m: " . intval($stat['instalaciones_Corte_Internet'][$key]).",n: " . intval($stat['instalaciones_Corte_tv_e_internet'][$key]).",o: " . intval($stat['instalaciones_migracion'][$key]).",o2: " . intval($stat['instalaciones_punto_nuevo'][$key]).",p: " . intval($stat['instalaciones_recuperacion_cable_modem'][$key]) .",q: " . intval($stat['instalaciones_veeduria'][$key]).",r: " . intval($stat['instalaciones_activacion'][$key]).",s: " . intval($stat['instalaciones_cambio_de_equipo'][$key]).",t: " . intval($stat['instalaciones_equipo_adicional'][$key]).",u: " . intval($stat['instalaciones_reinstalacion'][$key]).",v: " . intval($stat['instalaciones_retiro_voluntario'][$key]).",w: " . intval($stat['instalaciones_toma_adicional'][$key]).",w2: " . intval($stat['instalaciones_autenticacion'][$key])."},";
             
         } ?>
 
@@ -2442,7 +2522,7 @@ mostrar_ocultar();
         labels: [],
         hideHover: 'auto',
         resize: true,
-        barColors: ['#34cea7', '#ff6e40','#9A7D0A','#FFA633', '#FF7933','#FF3333','#33FFB8', '#33D3FF','#338AFF','#8033FF', '#C933FF','#FF33DA'],
+        barColors: ['#34cea7', '#ff6e40','#9A7D0A','#FFA633', '#FF7933','#FF3333','#33FFB8', '#33D3FF','#338AFF','#8033FF', '#C933FF','#FF33DA','#e03814'],
     }
 	Morris.Bar(datosdos);
 	function activar_desactivar_meses(ck2,key){
@@ -2477,7 +2557,7 @@ mostrar_ocultar();
 		
 	}
     var lista_keys=[];
-    var lista_labels_total={y:'Instalaciones Tv + Internet',z:"Instalaciones Tv",a:"Instalaciones Internet",b:"Agregar Tv",c:"Agregar Internet",d:"Traslado",e:"Revision Tv+Internet",f:"Reconexion tv+Internet",f2:"Reconexion tv",f3:"Reconexion Internet",g:"Suspension Combo",h:"Suspension Internet",i:"Suspension Television",j:"Corte Television",k:"Revision Tv",l:"Revision Internet",m:"Corte Internet",n:"Corte tv e internet",o:"migracion",o2:"punto nuevo",p:"recuperacion cable modem",q:"veeduria",r:"activacion",s:"cambio de equipo",t:"equipo adicional",u:"reinstalacion",v:"retiro voluntario",w:"toma adicional"};
+    var lista_labels_total={y:'Instalaciones Tv + Internet',z:"Instalaciones Tv",a:"Instalaciones Internet",b:"Agregar Tv",c:"Agregar Internet",d:"Traslado",e:"Revision Tv+Internet",f:"Reconexion tv+Internet",f2:"Reconexion tv",f3:"Reconexion Internet",g:"Suspension Combo",h:"Suspension Internet",i:"Suspension Television",j:"Corte Television",k:"Revision Tv",l:"Revision Internet",m:"Corte Internet",n:"Corte tv e internet",o:"migracion",o2:"punto nuevo",p:"recuperacion cable modem",q:"veeduria",r:"activacion",s:"cambio de equipo",t:"equipo adicional",u:"reinstalacion",v:"retiro voluntario",w:"toma adicional",w2:"autenticacion"};
     var lista_labels_personalizada=[];
     $('#invoices-products-chart').empty();
 	var datos={
@@ -2486,7 +2566,7 @@ mostrar_ocultar();
             <?php foreach ($tipos['instalaciones_tv_e_internet'] as $key => $row) {
             $datex = new DateTime($key);
             //$num = cal_days_in_month(CAL_GREGORIAN, $row['month'], $row['year']);
-            echo "{ x: '".($datex->format("Y-m-d"))."', y: " . intval($tipos['instalaciones_tv_e_internet'][$key]) . ",z: " . intval($tipos['instalaciones_tv'][$key]) . ",a: " . intval($tipos['instalaciones_internet'][$key]) . ",b: " . intval($tipos['instalaciones_Agregar_Tv'][$key]) . ",c: " . intval($tipos['instalaciones_AgregarInternet'][$key]) . ",d: " . intval($tipos['instalaciones_Traslado'][$key]) . ",e: " . intval($tipos['instalaciones_Revision_tv_e_internet'][$key]) . ",f: " . intval($tipos['instalaciones_Reconexion_tv_e_internet'][$key]) . ",f2: " . intval($tipos['instalaciones_Reconexion_tv'][$key]). ",f3: " . intval($tipos['instalaciones_Reconexion_internet'][$key]) .",g: " . intval($tipos['instalaciones_Suspension_Combo'][$key]) . ",h: " . intval($tipos['instalaciones_Suspension_Internet'][$key]) . ",i: " . intval($tipos['instalaciones_Suspension_Television'][$key]) . ",j: " . intval($tipos['instalaciones_Corte_Television'][$key]) . ",k: " . intval($tipos['instalaciones_Revision_tv'][$key]) . ",l: " . intval($tipos['instalaciones_Revision_internet'][$key]) .",m: " . intval($tipos['instalaciones_Corte_Internet'][$key]).",n: " . intval($tipos['instalaciones_Corte_tv_e_internet'][$key]).",o: " . intval($tipos['instalaciones_migracion'][$key]).",o2: " . intval($tipos['instalaciones_punto_nuevo'][$key]).",p: " . intval($tipos['instalaciones_recuperacion_cable_modem'][$key]) .",q: " . intval($tipos['instalaciones_veeduria'][$key]).",r: " . intval($tipos['instalaciones_activacion'][$key]).",s: " . intval($tipos['instalaciones_cambio_de_equipo'][$key]).",t: " . intval($tipos['instalaciones_equipo_adicional'][$key]).",u: " . intval($tipos['instalaciones_reinstalacion'][$key]).",v: " . intval($tipos['instalaciones_retiro_voluntario'][$key]).",w: " . intval($tipos['instalaciones_toma_adicional'][$key])."},";//,z: " . intval($tipos['instalaciones_tv'][$key]['numero']) . "
+            echo "{ x: '".($datex->format("Y-m-d"))."', y: " . intval($tipos['instalaciones_tv_e_internet'][$key]) . ",z: " . intval($tipos['instalaciones_tv'][$key]) . ",a: " . intval($tipos['instalaciones_internet'][$key]) . ",b: " . intval($tipos['instalaciones_Agregar_Tv'][$key]) . ",c: " . intval($tipos['instalaciones_AgregarInternet'][$key]) . ",d: " . intval($tipos['instalaciones_Traslado'][$key]) . ",e: " . intval($tipos['instalaciones_Revision_tv_e_internet'][$key]) . ",f: " . intval($tipos['instalaciones_Reconexion_tv_e_internet'][$key]) . ",f2: " . intval($tipos['instalaciones_Reconexion_tv'][$key]). ",f3: " . intval($tipos['instalaciones_Reconexion_internet'][$key]) .",g: " . intval($tipos['instalaciones_Suspension_Combo'][$key]) . ",h: " . intval($tipos['instalaciones_Suspension_Internet'][$key]) . ",i: " . intval($tipos['instalaciones_Suspension_Television'][$key]) . ",j: " . intval($tipos['instalaciones_Corte_Television'][$key]) . ",k: " . intval($tipos['instalaciones_Revision_tv'][$key]) . ",l: " . intval($tipos['instalaciones_Revision_internet'][$key]) .",m: " . intval($tipos['instalaciones_Corte_Internet'][$key]).",n: " . intval($tipos['instalaciones_Corte_tv_e_internet'][$key]).",o: " . intval($tipos['instalaciones_migracion'][$key]).",o2: " . intval($tipos['instalaciones_punto_nuevo'][$key]).",p: " . intval($tipos['instalaciones_recuperacion_cable_modem'][$key]) .",q: " . intval($tipos['instalaciones_veeduria'][$key]).",r: " . intval($tipos['instalaciones_activacion'][$key]).",s: " . intval($tipos['instalaciones_cambio_de_equipo'][$key]).",t: " . intval($tipos['instalaciones_equipo_adicional'][$key]).",u: " . intval($tipos['instalaciones_reinstalacion'][$key]).",v: " . intval($tipos['instalaciones_retiro_voluntario'][$key]).",w: " . intval($tipos['instalaciones_toma_adicional'][$key]).",w2: " . intval($tipos['instalaciones_autenticacion'][$key])."},";//,z: " . intval($tipos['instalaciones_tv'][$key]['numero']) . "
             
         } ?>
 
@@ -2496,7 +2576,7 @@ mostrar_ocultar();
         labels: [],
         hideHover: 'auto',
         resize: true,
-        lineColors: ['#34cea7', '#ff6e40','#9A7D0A','#FFA633', '#FF7933','#FF3333','#33FFB8', '#33D3FF','#338AFF','#8033FF', '#C933FF','#FF33DA'],
+        lineColors: ['#34cea7', '#ff6e40','#9A7D0A','#FFA633', '#FF7933','#FF3333','#33FFB8', '#33D3FF','#338AFF','#8033FF', '#C933FF','#FF33DA','#e03814'],
     }
     Morris.Line(datos);
 	function activar_desactivar_lines(ck,key){

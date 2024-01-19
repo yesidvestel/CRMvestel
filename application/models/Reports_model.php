@@ -298,6 +298,7 @@ $lista_datos=array();
         $lista_datos['instalaciones_reinstalacion']=array();
         $lista_datos['instalaciones_retiro_voluntario']=array();
         $lista_datos['instalaciones_toma_adicional']=array();
+        $lista_datos['instalaciones_autenticacion']=array();
         $lista_datos['tareas_en_proyectos']=array();
         $lista_datos['total_dia']=array();
 
@@ -340,7 +341,7 @@ for ($i=1; $i <=intval($fecha->format("t")) ; $i++) {
                     }else if($key=="instalaciones_Revision"){
                                 $lista_tecnicos_organizada[$key][$date1][$value2['username']]=array("Revision_de_Internet"=>array("cantidad"=>0,"puntuacion"=>0),
                                 "Revision_de_television"=>array("cantidad"=>0,"puntuacion"=>0));
-                    }else if($key=="instalaciones_toma_adicional" ||$key=="instalaciones_retiro_voluntario" ||$key=="instalaciones_reinstalacion" ||$key=="instalaciones_equipo_adicional" || $key=="instalaciones_cambio_de_equipo" || $key=="instalaciones_activacion" || $key=="instalaciones_veeduria" ||$key=="instalaciones_recuperacion_cable_modem" ||$key=="instalaciones_Suspension_Television" ||$key=="instalaciones_Suspension_Internet" ||$key=="instalaciones_Suspension_Combo" ||$key=="instalaciones_Corte_Tv" || $key=="instalaciones_Corte_Internet" || $key=="instalaciones_Corte_tv_e_internet" || $key=="instalaciones_Reconexion_tv_e_internet" || $key=="instalaciones_Reconexion_tv" || $key=="instalaciones_Reconexion_internet" || $key=="instalaciones_Revision_tv_e_internet" || $key=="instalaciones_Revision_tv" || $key=="instalaciones_Revision_internet" || $key=="instalaciones_migracion" || $key=="tareas_en_proyectos"){
+                    }else if($key=="instalaciones_autenticacion" || $key=="instalaciones_toma_adicional" ||$key=="instalaciones_retiro_voluntario" ||$key=="instalaciones_reinstalacion" ||$key=="instalaciones_equipo_adicional" || $key=="instalaciones_cambio_de_equipo" || $key=="instalaciones_activacion" || $key=="instalaciones_veeduria" ||$key=="instalaciones_recuperacion_cable_modem" ||$key=="instalaciones_Suspension_Television" ||$key=="instalaciones_Suspension_Internet" ||$key=="instalaciones_Suspension_Combo" ||$key=="instalaciones_Corte_Tv" || $key=="instalaciones_Corte_Internet" || $key=="instalaciones_Corte_tv_e_internet" || $key=="instalaciones_Reconexion_tv_e_internet" || $key=="instalaciones_Reconexion_tv" || $key=="instalaciones_Reconexion_internet" || $key=="instalaciones_Revision_tv_e_internet" || $key=="instalaciones_Revision_tv" || $key=="instalaciones_Revision_internet" || $key=="instalaciones_migracion" || $key=="tareas_en_proyectos"){
                                 $lista_tecnicos_organizada[$key][$date1][$value2['username']]=array("cantidad"=>0,"puntuacion"=>0);
                     }else{
 
@@ -374,6 +375,7 @@ for ($i=1; $i <=intval($fecha->format("t")) ; $i++) {
     $puntuacion_reinstalacion=1;
     $puntuacion_retiro_voluntario=1;
     $puntuacion_toma_adicional=1;
+    $puntuacion_autenticacion=1;
 
 
 
@@ -391,7 +393,7 @@ for ($i=1; $i <=intval($fecha->format("t")) ; $i++) {
                         }else if($key2=="instalaciones_Revision"){
                                 $lista_datos_cuentas_tipos_por_tecnico[$key2][$value['username']]=array("Revision_de_Internet"=>array("cantidad"=>0,"puntuacion"=>0),
                                 "Revision_de_television"=>array("cantidad"=>0,"puntuacion"=>0));
-                        }else if($key2=="instalaciones_toma_adicional" ||$key2=="instalaciones_retiro_voluntario" ||$key2=="instalaciones_reinstalacion" || $key2=="instalaciones_equipo_adicional" || $key2=="instalaciones_cambio_de_equipo" || $key2=="instalaciones_activacion" || $key2=="instalaciones_veeduria" ||$key2=="instalaciones_recuperacion_cable_modem" ||$key2=="instalaciones_Suspension_Television" ||$key2=="instalaciones_Suspension_Internet" ||$key2=="instalaciones_Suspension_Combo" || $key2=="instalaciones_Corte_Tv" || $key2=="instalaciones_Corte_Tv" || $key2=="instalaciones_Corte_Internet" || $key2=="instalaciones_Corte_tv_e_internet" || $key2=="instalaciones_Reconexion_tv_e_internet" || $key2=="instalaciones_Reconexion_tv" || $key2=="instalaciones_Reconexion_internet" || $key2=="instalaciones_Revision_tv_e_internet" || $key2=="instalaciones_Revision_tv" || $key2=="instalaciones_Revision_internet" || $key2=="instalaciones_migracion" || $key2=="tareas_en_proyectos"){
+                        }else if($key2=="instalaciones_autenticacion" || $key2=="instalaciones_toma_adicional" ||$key2=="instalaciones_retiro_voluntario" ||$key2=="instalaciones_reinstalacion" || $key2=="instalaciones_equipo_adicional" || $key2=="instalaciones_cambio_de_equipo" || $key2=="instalaciones_activacion" || $key2=="instalaciones_veeduria" ||$key2=="instalaciones_recuperacion_cable_modem" ||$key2=="instalaciones_Suspension_Television" ||$key2=="instalaciones_Suspension_Internet" ||$key2=="instalaciones_Suspension_Combo" || $key2=="instalaciones_Corte_Tv" || $key2=="instalaciones_Corte_Tv" || $key2=="instalaciones_Corte_Internet" || $key2=="instalaciones_Corte_tv_e_internet" || $key2=="instalaciones_Reconexion_tv_e_internet" || $key2=="instalaciones_Reconexion_tv" || $key2=="instalaciones_Reconexion_internet" || $key2=="instalaciones_Revision_tv_e_internet" || $key2=="instalaciones_Revision_tv" || $key2=="instalaciones_Revision_internet" || $key2=="instalaciones_migracion" || $key2=="tareas_en_proyectos"){
                                 $lista_datos_cuentas_tipos_por_tecnico[$key2][$value['username']]=array("cantidad"=>0,"puntuacion"=>0);
                         }else{
                             $lista_datos_cuentas_tipos_por_tecnico[$key2][$value['username']]=0;
@@ -965,6 +967,16 @@ foreach ($est as $key => $value) {
                     $lista_datos_cuentas_tipos_por_tecnico['instalaciones_toma_adicional'][$value['tec_asignado']]['cantidad']++;
                     $lista_datos_cuentas_tipos_por_tecnico['instalaciones_toma_adicional'][$value['tec_asignado']]['puntuacion']+=$puntuacion_toma_adicional;
                     $lista_tecnicos_organizada['total_dia'][$key1][$value['tec_asignado']]+=$puntuacion_toma_adicional;
+    }else if($value['detalle']=="autenticacion"){
+        
+                $lista_datos['instalaciones_autenticacion'][$key1]++;        
+            $lista_datos['total_dia'][$key1]++;
+            //$lista_tecnicos_organizada['total_dia'][$key1][$value['tec_asignado']]++;
+                    $lista_tecnicos_organizada['instalaciones_autenticacion'][$key1][$value['tec_asignado']]['cantidad']++;
+                    $lista_tecnicos_organizada['instalaciones_autenticacion'][$key1][$value['tec_asignado']]['puntuacion']+=$puntuacion_autenticacion;
+                    $lista_datos_cuentas_tipos_por_tecnico['instalaciones_autenticacion'][$value['tec_asignado']]['cantidad']++;
+                    $lista_datos_cuentas_tipos_por_tecnico['instalaciones_autenticacion'][$value['tec_asignado']]['puntuacion']+=$puntuacion_autenticacion;
+                    $lista_tecnicos_organizada['total_dia'][$key1][$value['tec_asignado']]+=$puntuacion_autenticacion;
     }
  
 }
@@ -1171,6 +1183,7 @@ if($sede!="all"){
         $estadistica['instalaciones_reinstalacion']=array();
         $estadistica['instalaciones_retiro_voluntario']=array();
         $estadistica['instalaciones_toma_adicional']=array();
+        $estadistica['instalaciones_autenticacion']=array();
 
         for ($i=0; $i <=12 ; $i++) { 
             if($i!=0){
@@ -1261,6 +1274,8 @@ foreach ($est as $key => $value) {
         $estadistica['instalaciones_retiro_voluntario'][$key1]++;        
     }else if($value['detalle']=="toma adicional"){
         $estadistica['instalaciones_toma_adicional'][$key1]++;        
+    }else if($value['detalle']=="autenticacion"){
+        $estadistica['instalaciones_autenticacion'][$key1]++;        
     }
 
 }
