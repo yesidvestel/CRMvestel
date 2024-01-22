@@ -3,6 +3,10 @@
 .wrapper1 { height: 20px; }
 .div1 { height: 20px; }
 .div2 { overflow: none; }
+.chf1:hover{
+    transform: scale(3);
+    cursor: pointer;
+}
 </style>
 <article class="content">
     <div class="card card-block">
@@ -100,7 +104,7 @@
                     <div class="card-body">
                         <div class="card-block">
                             <label class="col-sm-12 col-form-label"
-                                       for="pay_cat"><h5>FILTRAR </h5> </label> 
+                                       for="pay_cat"><h5>FILTRAR &nbsp;&nbsp;&nbsp;| &nbsp;&nbsp;&nbsp;<input type="checkbox" class="chf1"><small>&nbsp;Cargar Todo<small>&nbsp;(esta opcion se utiliza para cargar datos antiguos en los filtros, pues por defecto se omiten para mejorrar tiempos de respuesta)</small></small></h5> </label> 
 
                             <ul class="nav nav-tabs nav-justified">
                                 <li class="nav-item">
@@ -569,12 +573,17 @@ $(window).on('load', function (e) {
         var edate =$("#edate").val();
         var opcion_seleccionada=$("#fechas option:selected").val();
         var sede_filtrar=$("#sede_sel").val();
-        
+        var f1=$(".chf1").prop('checked');
+        if(f1==true){
+            f1="todas_las_ordenes=si&";
+        }else{
+            f1="";
+        }
         if(tecnico=="" && estado=="" && opcion_seleccionada=="" && ciudad_filtrar==""){
-            tb.ajax.url( baseurl+'tickets/tickets_load_list?stat=' ).load();     
+            tb.ajax.url( baseurl+'tickets/tickets_load_list?'+f1+'stat=' ).load();     
         }else{
             var id1=$("#tecnicos2 option:selected").data("id");
-            tb.ajax.url( baseurl+"tickets/tickets_load_list?sdate="+sdate+"&edate="+edate+"&opcselect="+opcion_seleccionada+"&tecnico="+tecnico+"&estado="+estado+"&detalle="+detalle+"&tec1="+id1+"&sede_filtrar="+sede_filtrar+"&stat=" ).load();     
+            tb.ajax.url( baseurl+"tickets/tickets_load_list?"+f1+"sdate="+sdate+"&edate="+edate+"&opcselect="+opcion_seleccionada+"&tecnico="+tecnico+"&estado="+estado+"&detalle="+detalle+"&tec1="+id1+"&sede_filtrar="+sede_filtrar+"&stat=" ).load();     
         }
        
 
