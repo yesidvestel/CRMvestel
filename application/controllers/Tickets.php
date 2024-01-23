@@ -1985,11 +1985,13 @@ $x=0;
 				$this->db->set('combo', $factura->combo);
                 $this->db->set('estado_combo', null);
         		$this->db->where('tid', $idfactura);
-        		if ($this->db->update('invoices') && $ticket->detalle!="Reconexion Internet2"){
-					//actualizar contrato usuario
-					$this->db->set("f_contrato",date("Y-m-d"));
-					$this->db->where('id', $ticket->cid);
-					$this->db->update('customers');
+        		if ($this->db->update('invoices') ){
+                        /*if($ticket->detalle!="Reconexion Internet2"){
+        					//actualizar contrato usuario
+        					$this->db->set("f_contrato",date("Y-m-d"));
+        					$this->db->where('id', $ticket->cid);
+        					$this->db->update('customers');
+                        }*/
 					}
 
                   //mikrotik
