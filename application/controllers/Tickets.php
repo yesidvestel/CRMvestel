@@ -1155,9 +1155,9 @@ $x=0;
                 $this->db->set("fecha_cambio",date("Y-m-d H:i:s"));
 				$this->db->set('usu_estado', 'Activo');
 			//cambiar fecha contrato
-			if($ticket->detalle!="Reconexion Combo2" || $ticket->detalle!="Reconexion Television2" || 		$ticket->detalle!="Reconexion Internet2"){
+			/*if($ticket->detalle!="Reconexion Combo2" || $ticket->detalle!="Reconexion Television2" || 		$ticket->detalle!="Reconexion Internet2"){
                 	$this->db->set("f_contrato",date("Y-m-d"));
-				}
+				}*/
         		$this->db->where('id', $ticket->cid);
         		//historial estados
         		if($this->db->update('customers')){
@@ -1307,15 +1307,15 @@ $x=0;
         	$this->db->update('invoices');
 
             $this->db->set('perfil', $ptos);
-            $this->db->set('f_contrato', date("Y-m-d"));
+            //$this->db->set('f_contrato', date("Y-m-d"));
             $this->db->where('id', $ticket->cid);
             $this->db->update('customers');
 		}
-		if($ticket->detalle=="Migracion"){
+		/*if($ticket->detalle=="Migracion"){
 			$this->db->set('f_contrato', date("Y-m-d"));
             $this->db->where('id', $ticket->cid);
             $this->db->update('customers');
-		}
+		}*/
 		if($ticket->detalle=="Reconexion Combo"){
 			/*$paquete = $this->input->post('paquete');
             if($paquete=="null" || $paquete==null || $paquete=="" || $paquete=="-"){
@@ -1884,12 +1884,12 @@ $x=0;
                 $this->db->set('estado_tv', null);
 				$this->db->set('puntos', $ptos);
         		$this->db->where('tid', $idfactura);
-        		if ($this->db->update('invoices') && $ticket->detalle!="Reconexion Television2"){
+        		/*if ($this->db->update('invoices') && $ticket->detalle!="Reconexion Television2"){
 			//actualizar contrato usuario
                 $this->db->set("f_contrato",date("Y-m-d"));
         		$this->db->where('id', $ticket->cid);
         		$this->db->update('customers');
-				}
+				}*/
 			
 		}
 		//nuevo servicio
@@ -1985,12 +1985,12 @@ $x=0;
 				$this->db->set('combo', $factura->combo);
                 $this->db->set('estado_combo', null);
         		$this->db->where('tid', $idfactura);
-        		if ($this->db->update('invoices')&&$ticket->detalle!="Reconexion Internet2"){
+        		/*if ($this->db->update('invoices')&&$ticket->detalle!="Reconexion Internet2"){
 					//actualizar contrato usuario
 					$this->db->set("f_contrato",date("Y-m-d"));
 					$this->db->where('id', $ticket->cid);
 					$this->db->update('customers');
-					}
+					}*/
 
                   //mikrotik
                 $customerx=$this->db->get_where("customers",array('id' =>$ticket->cid ))->row();
