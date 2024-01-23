@@ -1979,19 +1979,18 @@ $x=0;
                         $data_item_serv['subtotal']=round($x*$data_item_serv['qty']);
                         $this->db->insert('invoice_items',$data_item_serv);
                 }
-                $this->db->where('tid', $idfactura);
 				$this->db->set('subtotal', $factura->subtotal+$total);
 				$this->db->set('tax', ($factura->tax+$y));
 				$this->db->set('total', $factura->total+($total+$y));
 				$this->db->set('combo', $factura->combo);
                 $this->db->set('estado_combo', null);
-        		
-        		/*if ($this->db->update('invoices')&&$ticket->detalle!="Reconexion Internet2"){
+        		$this->db->where('tid', $idfactura);
+        		if ($this->db->update('invoices') && $ticket->detalle!="Reconexion Internet2"){
 					//actualizar contrato usuario
 					$this->db->set("f_contrato",date("Y-m-d"));
 					$this->db->where('id', $ticket->cid);
 					$this->db->update('customers');
-					}*/
+					}
 
                   //mikrotik
                 $customerx=$this->db->get_where("customers",array('id' =>$ticket->cid ))->row();
