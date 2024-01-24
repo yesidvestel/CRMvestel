@@ -79,7 +79,7 @@ class Dashboard_model extends CI_Model
     public function stock($sede)
     {
 		if ($sede == ''){
-        $query = $this->db->query("SELECT * FROM products WHERE qty<=alert ORDER BY product_name ASC");
+        $query = $this->db->query("SELECT * FROM products WHERE qty<=alert AND warehouse<'6' ORDER BY product_name ASC");
         return $query->result_array();
 		} if ($sede == 'Yopal'){
 		$query = $this->db->query("SELECT * FROM products WHERE qty<=alert AND warehouse='2' ORDER BY product_name ASC");
