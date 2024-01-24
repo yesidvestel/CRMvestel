@@ -212,7 +212,7 @@ if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
  ?>
 <script type="text/javascript">
     
-    <?= ($hay_emitidas) ? '$("#notificaciones_modal").modal("show");':'' ?>
+    <?= ($hay_emitidas) ? 'proceso_notificaciones(1000);':'' ?>
     
     //proceso_notificaciones();
     function pasar_a_vistas(){
@@ -225,7 +225,7 @@ if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
                $("#notificaciones_modal").modal("hide");
         });
     }
-    /*function proceso_notificaciones(){
+    function proceso_notificaciones(segundos){
         
         setTimeout(function(){
             //aqui hago la consulta y tambien se debe de hacer al 
@@ -236,15 +236,30 @@ if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
                         $("#lista_de_notificaciones").html(data.str_retorno);
                         
                         if($("#notificaciones_modal").css("display")=="none"){
+                            mostrar_notificacion_nav();
                                 $("#notificaciones_modal").modal("show");
+
                         }
                     }
                     
             },'json');
-            proceso_notificaciones();
-        },70000);
-    }*/
-    
+            proceso_notificaciones(70000);
+        },segundos);
+    }
+     function mostrar_notificacion_nav(){
+            Notification.requestPermission().then(perm=>{
+                if (perm=="granted") {
+                        const notification= new Notification("Tienes tareas resueltas",{
+                            body:"Revisa por favor",
+                            //data :{hello:"world"},
+                            icon : baseurl+"assets/images/logo/logo-80x80.png",
+                            vibrate: [200, 100, 200]
+                        });
+                    }
+            });
+
+        
+     }
     $(document).on('click','#show_notify_1',function(e){
         e.preventDefault();
         $("#notificaciones_modal").modal("show");   
