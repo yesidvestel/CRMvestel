@@ -226,7 +226,7 @@ if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
         });
     }
     function proceso_notificaciones(segundos){
-        notificaciones2();
+       // notificaciones2();
         setTimeout(function(){
             //aqui hago la consulta y tambien se debe de hacer al 
             
