@@ -1884,6 +1884,7 @@ $x=0;
                 $this->db->set('estado_tv', null);
 				$this->db->set('puntos', $ptos);
         		$this->db->where('tid', $idfactura);
+				$this->db->update('invoices');
         		/*if ($this->db->update('invoices') && $ticket->detalle!="Reconexion Television2"){
 			//actualizar contrato usuario
                 $this->db->set("f_contrato",date("Y-m-d"));
@@ -1985,14 +1986,15 @@ $x=0;
 				$this->db->set('combo', $factura->combo);
                 $this->db->set('estado_combo', null);
         		$this->db->where('tid', $idfactura);
-        		if ($this->db->update('invoices') ){
-                        /*if($ticket->detalle!="Reconexion Internet2"){
+				$this->db->update('invoices');
+        		/*if ( ){
+                        if($ticket->detalle!="Reconexion Internet2"){
         					//actualizar contrato usuario
         					$this->db->set("f_contrato",date("Y-m-d"));
         					$this->db->where('id', $ticket->cid);
         					$this->db->update('customers');
-                        }*/
-					}
+                        }
+					}*/
 
                   //mikrotik
                 $customerx=$this->db->get_where("customers",array('id' =>$ticket->cid ))->row();
