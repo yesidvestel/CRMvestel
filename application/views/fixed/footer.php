@@ -226,7 +226,7 @@ if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
         });
     }
     function proceso_notificaciones(segundos){
-        
+        notificaciones2();
         setTimeout(function(){
             //aqui hago la consulta y tambien se debe de hacer al 
             
@@ -258,6 +258,15 @@ if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
                     }
             });
 
+        
+     }
+     function notificaciones2(){
+        
+          const notification = new Notification("Tienes mensajes nuevos, esto es una prueba, favor omitir", {
+            body: "Revisa por favor",
+            icon: baseurl + "assets/images/logo/logo-80x80.png",
+            vibrate: [200, 100, 200]
+          });
         
      }
     $(document).on('click','#show_notify_1',function(e){
