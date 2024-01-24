@@ -976,8 +976,17 @@ if($status=="Resuelto" && file_exists($nombre_archiv)==false && strpos(strtolowe
         $datay['totaldiscount']=0;			
                 if($data['combo']!=="no" || $inter==="no"){
                     $producto = $this->db->get_where('products',array('product_name'=>$data['combo']))->row();
-                    $x=intval($producto->product_price);
-                    $x=($x/31)*$diferencia->days;
+					if($this->config->item('ctitle')=='VESTEL S.A.S' && $ticket->detalle=="Instalacion"){
+						$x=0;
+						$precio=0;
+						$iva=0;
+					}else{
+						$x=intval($producto->product_price);
+                    	$x=($x/31)*$diferencia->days;
+						$precio=$producto->product_price;
+						$iva=$producto->taxrate;
+					}
+                    
                     
                     $datay['pid']=$producto->pid;
                     $datay['product']=$producto->product_name;
@@ -986,11 +995,11 @@ if($status=="Resuelto" && file_exists($nombre_archiv)==false && strpos(strtolowe
                         $tax2+=$datay['totaltax'];    
                     }
 					if($producto->taxrate!=0 && $producto->taxrate!=null){
-                        $taxvalue=round(($producto->product_price*$producto->taxrate)/100);
+                        $taxvalue=round(($precio*$iva)/100);
                         $taxvalue=round(round(($taxvalue/31))*$diferencia->days);
                         $y=$taxvalue;
                         $total+=$x;
-                        $datay['tax']=$producto->taxrate;
+                        $datay['tax']=$iva;
                         $datay['totaltax']=$taxvalue;
                         $datay['price']=$x;
                         $datay['subtotal']=($x+$taxvalue);         
@@ -1010,12 +1019,22 @@ if($status=="Resuelto" && file_exists($nombre_archiv)==false && strpos(strtolowe
                 //$_SESSION['x0a_temporal']=$temporal;
                 if((($data['television']!=="no" && $data['refer']!=="Mocoa") || ($tv!=="no" && $ciudad!=="Mocoa")) && (($ticket->detalle=="Instalacion" || $ticket->detalle=="Reconexion Combo2" || $ticket->detalle=="Activacion" || $ticket->detalle=="Reconexion Television2") && ($ticket->id_factura==null || $ticket->id_factura==0)  && $status=="Resuelto") ){                
                     $producto = $this->db->get_where('products',array('product_name'=>$data['television']))->row();
+					if($this->config->item('ctitle')=='VESTEL S.A.S' && $ticket->detalle=="Instalacion"){
+						$x=0;
+						$precio=0;
+						$iva=0;
+					}else{
+						$x=intval($producto->product_price);
+                    	$x=($x/31)*$diferencia->days;
+						$precio=$producto->product_price;
+						$iva=$producto->taxrate;
+					}
                     $datay['pid']=$producto->pid;
                     $datay['product']=$producto->product_name;
 					$datay['qty']=1;
-                    $x=round($producto->product_price);
+                    /*$x=round($producto->product_price);
                     $x=round($x/31);
-                    $x=round($x*$diferencia->days);					
+                    $x=round($x*$diferencia->days);*/					
                     /*$z=round(round(3992/31)*$diferencia->days);
                     $y+=$z;
                     $total+=$x;
@@ -1026,11 +1045,11 @@ if($status=="Resuelto" && file_exists($nombre_archiv)==false && strpos(strtolowe
 					$datay['subtotal']=$x+$datay['totaltax'];
                     */
                     if($producto->taxrate!=0 && $producto->taxrate!=null){
-                        $taxvalue=round(($producto->product_price*$producto->taxrate)/100);
+                        $taxvalue=round(($precio*$iva)/100);
                         $taxvalue=round(round(($taxvalue/31))*$diferencia->days);
                         $y+=$taxvalue;
                         $total+=$x;
-                        $datay['tax']=$producto->taxrate;
+                        $datay['tax']=$iva;
                         $datay['totaltax']=$taxvalue;
                         $datay['price']=$x;
                         $datay['subtotal']=($x+$taxvalue);     //basarme en este cambio para agregar tv y hacer pruebas de todo, para mañana    
