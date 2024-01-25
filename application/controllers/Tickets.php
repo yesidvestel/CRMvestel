@@ -935,7 +935,12 @@ if($status=="Resuelto" && file_exists($nombre_archiv)==false && strpos(strtolowe
         $tidactualmasuno= $this->db->select('max(tid)+1 as tid')->from('invoices')->get()->result();
         //esta data es de la nueva factura para insertar
         $data['tid']=$tidactualmasuno[0]->tid;
-        $data['status']='due';
+	  	if($this->config->item('ctitle')=='VESTEL S.A.S' && $ticket->detalle=="Instalacion"){
+			$data['status']='paid';
+		}else{
+			$data['status']='due';
+		}
+        
         $data['ron']='Activo';
 		$data['refer']=$ciudad;
 		$data['tipo_factura']='Recurrente';
