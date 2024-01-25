@@ -310,7 +310,7 @@
 			}else if (respuesta.value == "Suspensión Temporal"){
 				var optionArray = ["Suspensión por dos meses","Continua con el servicio","Llamada para activar"];
 			}else if (respuesta.value == "Retiro Voluntario"){
-				var optionArray = ["Mal servicio","Cobertura","Cambio Municipio","No lo necesita","Economía","Ya Tiene Otro Servicio","Continua con el servicio","Llamada para activar"];
+				var optionArray = ["Mal servicio","Cobertura","Cambio Municipio","No lo necesita","Economía","Ya Tiene Otro Servicio","Continua con el servicio","Llamada para activar","Motivo personal"];
 			}
 			
 		for(option = 0;option < optionArray.length; option++){
