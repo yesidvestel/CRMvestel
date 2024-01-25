@@ -323,6 +323,9 @@ class Llamadas_model extends CI_Model
 		if($_GET['tipo']!='' && $_GET['tipo']!='0' && $_GET['tipo']!='undefined'){
          $this->db->where('tllamada=', $_GET['tipo']);   
         }
+		if($_GET['rta']!='' && $_GET['rta']!='0' && $_GET['rta']!='undefined'){
+         $this->db->where('trespuesta=', $_GET['rta']);   
+        }
         if($_GET['filtro_fecha']!='' && $_GET['filtro_fecha']!='undefined'){
             
             $fecha_incial= new DateTime($_GET['sdate']);
@@ -501,6 +504,10 @@ class Llamadas_model extends CI_Model
         $query = $this->db->get();
         return $query->row_array();
     }
-
+	public function respuestas()
+    {
+        $query = $this->db->query('SELECT trespuesta FROM llamadas GROUP BY trespuesta');
+        return $query->result_array();
+    }
 
 }

@@ -383,7 +383,7 @@ class Llamadas extends CI_Controller
         $custid = $this->input->get('id');
         $this->load->model('ticket_model', 'ticket');
 		$data['tecnicoslista'] = $this->ticket->tecnico_list();
-        //$data['money'] = $this->supplier->money_details($custid);
+        $data['rta'] = $this->llamadas->respuestas();
         $head['usernm'] = $this->aauth->get_user()->username;
         $head['title'] = 'View Supplier Invoices';
         $this->load->view('fixed/header', $head);
@@ -548,6 +548,9 @@ class Llamadas extends CI_Controller
 		if ($_GET['tipo'] != '' && $_GET['tipo'] != '-' && $_GET['tipo'] != '0') {
                 $this->db->where('tllamada=', $_GET['tipo']);
            }
+		if($_GET['rta']!='' && $_GET['rta']!='0' && $_GET['rta']!='undefined'){
+         $this->db->where('trespuesta=', $_GET['rta']);   
+        }
 		if($_GET['opcselect']!=''){
 
             $dateTime= new DateTime($_GET['sdate']);
@@ -556,7 +559,7 @@ class Llamadas extends CI_Controller
             $edate=$dateTime->format("Y-m-d");
             if($_GET['opcselect']=="fcreada"){
                 $this->db->where('fcha>=', $sdate);   
-                $this->db->where('fcha<=', $edate);       
+                $this->db->where('fcha<=', $edate);  
             }
             
         }
