@@ -115,6 +115,32 @@ class Messages extends CI_Controller
 
 
     }
+    public function obtener_notificaciones(  ){
+        $id_usuario=$this->aauth->get_user()->id;
+        $retorno=array("status"=>"sin mensajes");
+        $resultado=$this->db->query("select * from aauth_pms where receiver_id=".$id_usuario." order by date_sent DESC limit 1")->result_array();
+        if(count($resultado)>0 && $resultado[0]['date_read']==null ){
+
+                $retorno['status']="mensaje nuevo";
+                $retorno['mensaje']=$resultado[0]['message'];
+                $origen=$this->db->get_where("aauth_users",array("id"=>$resultado[0]['sender_id']) )->row();
+                $retorno['titulo']=$origen->username;
+                $retorno['id_msj']=$resultado[0]['id'];
+                
+
+                if($origen->picture!=null){
+                    $retorno['foto']=base_url()."userfiles/employee/".$origen->picture;    
+                }else{
+                    $retorno['foto']=base_url()."assets/images/logo/logo-80x80.png";  
+                }
+
+                
+
+        }else{
+
+        }
+        echo json_encode($retorno);
+    }
 
 
 }

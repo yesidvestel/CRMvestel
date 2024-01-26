@@ -212,8 +212,8 @@ if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
  ?>
 <script type="text/javascript">
     
-    <?= ($hay_emitidas) ? 'proceso_notificaciones(1000);':'' ?>
-    
+    <?php //($hay_emitidas) ? '':'' ?>
+    proceso_notificaciones(1000);
     //proceso_notificaciones();
     function pasar_a_vistas(){
         $.post(baseurl+"tools/vistas_notificaciones",{},function (data){
@@ -227,9 +227,17 @@ if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
     }
     function proceso_notificaciones(segundos){
        // notificaciones2();
+        //para los mensajes aauth_pms campo data read != null significa que el mensaje ya fue leido de lo comtrario solo esta emitido
         setTimeout(function(){
             //aqui hago la consulta y tambien se debe de hacer al 
-            
+            $.post(baseurl+"Messages/obtener_notificaciones",{},function(d2){
+                    if(d2.status=="mensaje nuevo"){
+                        console.log("sss");
+                        notificaciones2(d2);
+
+                    }
+
+            },'json');
             $.post(baseurl+"tools/obtener_notificaciones",{},function(data){
                     if(data.hay_emitidas==true){
                         console.log(data.hay_emitidas);
@@ -243,7 +251,7 @@ if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
                     }
                     
             },'json');
-            proceso_notificaciones(70000);
+            proceso_notificaciones(60000);
         },segundos);
     }
      function mostrar_notificacion_nav(){
@@ -255,18 +263,30 @@ if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
                             icon : baseurl+"assets/images/logo/logo-80x80.png",
                             vibrate: [200, 100, 200]
                         });
+
                     }
+                   
             });
 
         
      }
-     function notificaciones2(){
+     function notificaciones2(datos){
         
-          const notification = new Notification("Tienes mensajes nuevos, esto es una prueba, favor omitir", {
-            body: "Revisa por favor",
-            icon: baseurl + "assets/images/logo/logo-80x80.png",
-            vibrate: [200, 100, 200]
-          });
+          Notification.requestPermission().then(perm=>{
+                if (perm=="granted") {
+                        const notification= new Notification(datos.titulo,{
+                            body:datos.mensaje,
+                            //data :{hello:"world"},
+                            icon : datos.foto,
+                            vibrate: [200, 100, 200]
+                        });
+                         notification.onclick = () => {
+                            // Redireccionamos a la URL deseada
+                            window.location.href = baseurl+"messages/view?id="+datos.id_msj;
+                        };
+                    }
+                   
+            });
         
      }
     $(document).on('click','#show_notify_1',function(e){

@@ -181,6 +181,10 @@ public function data_reception_wompi(){
              $datos['id_wompi']=str_replace(" ", "", $datos['id_wompi']);
             $datos['id_wompi']=str_replace("-", "", $datos['id_wompi']);
         }
+        $procesada_q=$this->db->get_where("wompi_data_orden",array("reference"=>$r->data->transaction->reference) )->row();
+    if(isset($procesada_q) && $procesada_q->estado=="Inicial" ){
+
+
         if($r->data->transaction->status=="APPROVED"){
             $datos['estado']="Finalizada con Exito";
             $this->db->update("wompi_data_orden",$datos,array("reference"=>$r->data->transaction->reference));
@@ -191,6 +195,7 @@ public function data_reception_wompi(){
             $datos['estado']="Finalizada sin Exito";
             $this->db->update("wompi_data_orden",$datos,array("reference"=>$r->data->transaction->reference));
         }
+    }
         
         //var_dump($r->data->transaction->reference);
         //var_dump($r->data->transaction->payment_method_type);
