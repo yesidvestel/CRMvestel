@@ -702,7 +702,7 @@ $this->db->query("delete from filas_a_borrar where id >0;");
         $customers_t=array();
 if($_SESSION[md5("variable_datos_pin")]['db_name'] == "admin_crmvestel"){
     //$customers_t = $this->db->query("select id from customers where (usu_estado='Activo' or usu_estado='Compromiso') and (ciudad ='".$_POST['pay_acc']."' and facturar_electronicamente='1')")->result_array();//and id=8241
-    $customers_t = $this->db->query("SELECT invoices.id as id, invoices.facturacion_electronica as fc FROM `invoices` inner join customers as c on c.id=invoices.csd where invoices.facturacion_electronica ='Crear Factura Electronica'  and c.ciudad='".$_POST['pay_acc']."'")->result_array();
+    $customers_t = $this->db->query("SELECT invoices.id as id, invoices.facturacion_electronica as fc FROM `invoices` inner join customers as c on c.id=invoices.csd where invoices.facturacion_electronica ='Crear Factura Electronica'  and c.ciudad='".$_POST['pay_acc']."' ORDER BY RAND();")->result_array();
 
 }else{
     $customers_t = $this->db->query("select id from customers where (usu_estado='Activo' or usu_estado='Compromiso') and (gid ='".$caja1->sede."' and facturar_electronicamente='1')")->result_array();//and id=8241
@@ -712,7 +712,7 @@ if($_SESSION[md5("variable_datos_pin")]['db_name'] == "admin_crmvestel"){
         $usuarios_restantes_lista=array();
         if($_SESSION[md5("variable_datos_pin")]['db_name'] == "admin_crmvestel"){
             //$usuarios_restantes_lista = $this->db->query("select customers.id from customers LEFT join facturacion_electronica_siigo on customers.id=facturacion_electronica_siigo.customer_id and fecha='".$dateTime->format("Y-m-d")."' where (customers.usu_estado='Activo' or customers.usu_estado='Compromiso') and (customers.ciudad ='".$_POST['pay_acc']."' and customers.facturar_electronicamente='1') and facturacion_electronica_siigo.id is null")->result_array();//and id=8241
-            $usuarios_restantes_lista = $this->db->query("SELECT invoices.id as id, invoices.facturacion_electronica as fc FROM `invoices` inner join customers as c on c.id=invoices.csd where invoices.facturacion_electronica ='Crear Factura Electronica' and c.ciudad='".$_POST['pay_acc']."' ")->result_array();//and id=8241
+            $usuarios_restantes_lista = $this->db->query("SELECT invoices.id as id, invoices.facturacion_electronica as fc FROM `invoices` inner join customers as c on c.id=invoices.csd where invoices.facturacion_electronica ='Crear Factura Electronica' and c.ciudad='".$_POST['pay_acc']."' ORDER BY RAND();")->result_array();//and id=8241
         }else{
             $usuarios_restantes_lista = $this->db->query("select customers.id from customers LEFT join facturacion_electronica_siigo on customers.id=facturacion_electronica_siigo.customer_id and fecha='".$dateTime->format("Y-m-d")."' where (customers.usu_estado='Activo' or customers.usu_estado='Compromiso') and (customers.gid ='".$caja1->sede."' and customers.facturar_electronicamente='1') and facturacion_electronica_siigo.id is null")->result_array();//and id=8241    
         }
