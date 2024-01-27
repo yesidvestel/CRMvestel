@@ -251,7 +251,7 @@ if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
                     }
                     
             },'json');
-            proceso_notificaciones(60000);
+            proceso_notificaciones(30000);
         },segundos);
     }
      function mostrar_notificacion_nav(){
