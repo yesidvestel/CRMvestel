@@ -81,6 +81,18 @@
                         <input type="text" class="form-control" name="mac" id="customer_name">
                     </div>
                 </div>
+				<div class="col-sm-6">
+                    <label class="caption col-form-label">Metros de cable instalacion<span style="color: red;">*</span></label>
+                    <div>
+                        <input type="text" class="form-control" name="metros">
+                    </div>
+                </div>
+				<div class="col-sm-6">
+                    <label class="caption col-form-label">Accesorios<span style="color: red;">*</span></label>
+                    <div>
+                        <input type="text" class="form-control" name="accesorios">
+                    </div>
+                </div>
                 <div class="col-sm-6">
                         <label for="pmethod" class="caption col-form-label">Tipo de instalacion</label>
                         <div>

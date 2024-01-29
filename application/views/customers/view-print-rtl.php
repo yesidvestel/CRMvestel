@@ -13,7 +13,7 @@ if ($servicios['television']!=="no"){
                     $producto2 = $this->db->query("SELECT * FROM products where product_name='".$x1."'")->result_array();                    
 					$inter = $producto2[0]['product_price'];
 }
-$equipo = $this->db->get_where('equipos',array('asignado'=>$details['abonado']))->row();
+$equipo = $this->db->get_where('equipos',array('asignado'=>$details['id']))->row();
 $serial = $equipo->serial;
 $fcontrato = $details['f_contrato'];
 ?>
@@ -771,8 +771,8 @@ $fcontrato = $details['f_contrato'];
 			</td>
 			<tr>
 			<td>
-			<h2>Valor Total <?php echo amountFormat($totaltv+$inter) ?></h2>
-			Este valor incluye todas las mensualidades y el valor pagado por habilitación
+			<h2>Valor Total <?php echo amountFormat(($totaltv+$inter)*$clausula['meses']) ?></h2>
+			Valor anual de acuerdo al monto mensual
 			</td>
 			</tr>
     		</tr>
@@ -1043,10 +1043,8 @@ $fcontrato = $details['f_contrato'];
 				En caso de suspensión del servicio por mora en el pago,
 				podremos cobrarle un valor por reconexión que
 				corresponderá estrictamente a los costos asociados a la
-				operación de reconexión. En caso de servicios
-				empaquetados procede máximo un cobro de reconexión
-				por cada tipo de conexión empleado en la prestación de
-				los servicios. <span style="border-bottom: 1px solid;"><?php echo amountFormat(12000)?></span>
+				operación de reconexión. Los valores de reconexión pueden 
+				variar dependiendo de su estado actual.</span>
 			</td>
 		</tr>
 		<table border="1">
@@ -1088,12 +1086,22 @@ $fcontrato = $details['f_contrato'];
 							echo '__';
 						} ?></span><br><br>
 						Coordenadas: <span style="border-bottom: 1px solid;"><?php echo $details['coor1'].' '.$details['coor2'] ?></span><br><br>
-						Equipo CPE Marca: <span style="border-bottom: 1px solid;">_______________</span><br><br>
-						Referencia o Modelo: <span style="border-bottom: 1px solid;">_______________</span><br><br>
-						Dirección MAC o serial: <span style="border-bottom: 1px solid;">______________</span><br><br>
-						Adaptador de Corriente: <span style="border-bottom: 1px solid;">_____________</span><br><br>
-						Cable UTP o Fibra: <span style="border-bottom: 1px solid;">__________</span> Metros: <span style="border-bottom: 1px solid;">___________</span>metros<br><br>
-						Accesorios Adicionales: <span style="border-bottom: 1px solid;">_____________</span> Municipio: <span style="border-bottom: 1px solid;"><?php echo $ciudad['ciudad'] ?></span><br><br>
+						Equipo CPE Marca: <span style="border-bottom: 1px solid;"><?php echo $equipo->marca ?></span><br><br>
+						Referencia o Modelo: <span style="border-bottom: 1px solid;"><?php echo $equipo->serial ?></span><br><br>
+						Dirección MAC o serial: <span style="border-bottom: 1px solid;"><?php echo $equipo->mac ?></span><br><br>
+						Adaptador de Corriente: <span style="border-bottom: 1px solid;">
+						<?php if($equipo->marca!=''){
+							echo 'Si';
+						}else{
+							echo 'No';
+						}  ?></span><br><br>
+						Cable UTP o Fibra: <span style="border-bottom: 1px solid;"><?php echo $equipo->metros ?></span> metros<br><br> 
+						Accesorios Adicionales: <span style="border-bottom: 1px solid;">
+						<?php if($equipo->accesorios!=''){
+							echo $equipo->accesorios;
+						}else{
+							echo '___________';
+						}  ?></span> Municipio: <span style="border-bottom: 1px solid;"><?php echo $ciudad['ciudad'] ?></span><br><br>
 				</td>
 				</tr>
 			<tr style="border-radius: 20px">

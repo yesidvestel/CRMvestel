@@ -940,3 +940,11 @@ ALTER TABLE `invoices` ADD `metodo_pago_f_e` ENUM('credito','efectivo') NULL AFT
 
 ALTER TABLE `facturacion_electronica_siigo` CHANGE `tipo` `tipo` ENUM('facturada','error','actualizada') CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL DEFAULT 'facturada';
 ALTER TABLE `invoices` ADD `fecha_actualizacion` DATETIME NULL AFTER `metodo_pago_f_e`;
+----------------------------------------------------------------------------------------------------------
+NUEVOS CAMPOS CONTRATO
+--------------------------------------
+ALTER TABLE `equipos`
+ADD `metros` INT(4) NULL AFTER `imagen`,
+ADD `accesorios` VARCHAR(20) NULL AFTER `metros`;
+
+ALTER TABLE clausula ADD meses INT(2) NULL AFTER nombre;

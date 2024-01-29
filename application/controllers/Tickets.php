@@ -422,6 +422,8 @@ class Tickets Extends CI_Controller
 		$nap = $this->input->post('nap');
         $master = $this->input->post('master');
 		$idequipo = $this->input->post('idequipo');
+		$metros = $this->input->post('metros');
+		$accesorios = $this->input->post('accesorios');
 		$es_valido=true;
 		$txt_error="";
         if($mac==""){
@@ -476,7 +478,9 @@ class Tickets Extends CI_Controller
                     'puerto' => $puerto,
                     'nat' => $nap,
                     'master'=>$master,
-                    'asignado' => $id           
+                    'asignado' => $id,          
+                    'metros' => $metros,         
+                    'accesorios' => $accesorios      
                 );  
             $this->db->where('id', $idequipo);
 			//devolver equipo a bodega desde el almacen del tecnico
