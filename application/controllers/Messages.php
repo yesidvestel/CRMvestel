@@ -122,7 +122,7 @@ class Messages extends CI_Controller
         if(count($resultado)>0 && $resultado[0]['date_read']==null ){
 
                 $retorno['status']="mensaje nuevo";
-                $retorno['mensaje']=$resultado[0]['message'];
+                $retorno['mensaje']=strip_tags($resultado[0]['message']);
                 $origen=$this->db->get_where("aauth_users",array("id"=>$resultado[0]['sender_id']) )->row();
                 $retorno['titulo']=$origen->username;
                 $retorno['id_msj']=$resultado[0]['id'];

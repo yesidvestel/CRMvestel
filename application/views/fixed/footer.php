@@ -213,7 +213,8 @@ if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
 <script type="text/javascript">
     
     <?php //($hay_emitidas) ? '':'' ?>
-    proceso_notificaciones(1000);
+     <?= (strpos(strtolower($_SERVER['REQUEST_URI']),"generar_facturas_electronicas_multiples" )==true) ? '':'proceso_notificaciones(1000);' ?>
+   
     //proceso_notificaciones();
     function pasar_a_vistas(){
         $.post(baseurl+"tools/vistas_notificaciones",{},function (data){
@@ -225,6 +226,7 @@ if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
                $("#notificaciones_modal").modal("hide");
         });
     }
+
     function proceso_notificaciones(segundos){
        // notificaciones2();
         //para los mensajes aauth_pms campo data read != null significa que el mensaje ya fue leido de lo comtrario solo esta emitido
@@ -251,7 +253,7 @@ if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
                     }
                     
             },'json');
-            proceso_notificaciones(30000);
+            proceso_notificaciones(1000);
         },segundos);
     }
      function mostrar_notificacion_nav(){
@@ -261,6 +263,7 @@ if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
                             body:"Revisa por favor",
                             //data :{hello:"world"},
                             icon : baseurl+"assets/images/logo/logo-80x80.png",
+                            tag: "Welcome Mensaje",
                             vibrate: [200, 100, 200]
                         });
 
@@ -278,6 +281,7 @@ if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
                             body:datos.mensaje,
                             //data :{hello:"world"},
                             icon : datos.foto,
+                            tag: "Welcome Mensaje"+datos.id_msj,
                             vibrate: [200, 100, 200]
                         });
                          notification.onclick = () => {
