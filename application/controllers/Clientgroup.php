@@ -938,6 +938,7 @@ class Clientgroup extends CI_Controller
             $equipo=$this->db->get_where("equipos",array("asignado"=>$customers->id))->row();
             $row[] = '<input '.$str_checked.' id="input_'.$customers->id.'" type="checkbox" name="x" class="clientes_para_enviar_sms" data-id-customer="'.$customers->id.'"  data-celular="'.$customers->celular.'" style="cursor:pointer; margin-left: 9px;" onclick="agregar_customer_envio_sms(this)" ></input>';    
             $row[] = $no;
+            $row[] = $customers->id;
 			$row[] = $customers->abonado;
 			$row[] = $customers->documento;
              $nombre_completo=$this->customers->get_nombre_completo($customers->name,$customers->dosnombre,$customers->unoapellido,$customers->dosapellido);
@@ -1654,6 +1655,7 @@ $suscripcion_str2=$suscripcion_str;
                     }
                             $row[] = '<input '.$str_checked.' id="input_'.$customers->id.'" type="checkbox" name="x" class="clientes_para_enviar_sms" data-id-customer="'.$customers->id.'"  data-celular="'.$customers->celular.'" style="cursor:pointer; margin-left: 9px;" onclick="agregar_customer_envio_sms(this)" ></input>';    
                             $row[] = $no;
+                            $row[] = $customers->id;
                             $row[] = $customers->abonado;
                             $row[] = $customers->documento;
                             $nombre_completo=$this->customers->get_nombre_completo($customers->name,$customers->dosnombre,$customers->unoapellido,$customers->dosapellido);
@@ -1815,6 +1817,7 @@ $suscripcion_str2=$suscripcion_str;
                     }
                             $row[] = '<input '.$str_checked.' id="input_'.$customers->id.'" type="checkbox" name="x" class="clientes_para_enviar_sms" data-id-customer="'.$customers->id.'"  data-celular="'.$customers->celular.'" style="cursor:pointer; margin-left: 9px;" onclick="agregar_customer_envio_sms(this)" ></input>';    
                             $row[] = $no;
+                            $row[] = $customers->id;
                             $row[] = $customers->abonado;
                             $row[] = $customers->documento;
                             $nombre_completo=$this->customers->get_nombre_completo($customers->name,$customers->dosnombre,$customers->unoapellido,$customers->dosapellido);
