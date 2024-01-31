@@ -214,13 +214,20 @@
         },'json');
     });*/
     var errores=0;
+    var id_anterior=0;
 function iniciar_facturacion(){
         var pay_acc=$("#cuentas_ option:selected").val();
         var sdate=$("#sdate2").val();
 		var estcuenta=$("#estcuenta").val();
+        var segundos_ejecutar=1000;
         progress_one(10);
+        if(id_anterior==datos_recorrer[i].id){
+            segundos_ejecutar=70000;
+        }
+    setTimeout(() => {
         if(i<parseInt(total)){
             var id_customer=datos_recorrer[i].id;
+            id_anterior=datos_recorrer[i].id;
              //var num1=va_en+1;
              va_en++;
                 var porcentaje=parseInt((va_en*100)/parseInt(total_a_facturar));
@@ -261,6 +268,7 @@ function iniciar_facturacion(){
         //verificar_creacion_fe();
             window.location.href = baseurl+"facturasElectronicas/visualizar_resumen_ejecucion?fecha="+sdate+"&sede="+pay_acc;
         }
+    },segundos_ejecutar);
 }
    /* function proceso_facturacion(){
         pay_acc=$("#cuentas_ option:selected").val();
