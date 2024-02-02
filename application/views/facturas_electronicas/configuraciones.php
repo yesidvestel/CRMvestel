@@ -221,13 +221,17 @@ function iniciar_facturacion(){
 		var estcuenta=$("#estcuenta").val();
         var segundos_ejecutar=1000;
         progress_one(10);
-        if(id_anterior==datos_recorrer[i].id){
+        <?php if($_SESSION[md5("variable_datos_pin")]['db_name'] == "admin_crmvestel"){ ?>
+        if(id_anterior==datos_recorrer[i].c_id){
             segundos_ejecutar=70000;
         }
+    <?php } ?>
     setTimeout(() => {
         if(i<parseInt(total)){
             var id_customer=datos_recorrer[i].id;
-            id_anterior=datos_recorrer[i].id;
+            <?php if($_SESSION[md5("variable_datos_pin")]['db_name'] == "admin_crmvestel"){ ?>
+            id_anterior=datos_recorrer[i].c_id;
+        <?php } ?>
              //var num1=va_en+1;
              va_en++;
                 var porcentaje=parseInt((va_en*100)/parseInt(total_a_facturar));
