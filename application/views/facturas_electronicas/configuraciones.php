@@ -199,8 +199,14 @@
             total_a_facturar= parseInt( data.total_usuarios);
            va_en =parseInt(total_a_facturar-datos_recorrer.length);
             $("#span_progress1").text(va_en+"/"+total_a_facturar);
-
-            iniciar_facturacion();
+            if(total_a_facturar==0){
+                alert("No hay facturas a pasar de saves a siigo en esta ciudad, selecciona otra por favor");
+                progress_one(0);
+                $(enviar).removeAttr("disabled");
+            }else{
+                iniciar_facturacion();    
+            }
+            
         },'json');
         //proceso_facturacion();
         
