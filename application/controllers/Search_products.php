@@ -141,8 +141,8 @@ class Search_products extends CI_Controller
             $i = 1;
             foreach ($result as $row) {
 
-
-                echo "<li onClick=\"selectEquipo('" . $row['id'] . "','" . $row['mac'] . " ','" . $row['serial'] . " ','" . $row['estado'] . "','" . $row['asignado'] . "','" . $row['celular'] . "','" . $row['email'] . "')\"><span>$i</span><p>" . $row['serial'] . " &nbsp; &nbsp  " .$row['mac'] . " &nbsp; &nbsp  " . $row['estado'] . "&nbsp; &nbsp  " . $row['asignado'] . "</p></li>";
+                echo '<li onClick=\'selectEquipo("' . $row['id'] . '","' . $row['mac'] . '" ,"' . $row['serial'] . '" ,"' . $row['estado'] . '","' . $row['asignado'] . '","' . $row['celular'] . '","' . $row['email'] . '")\'><span>'.$i.'</span><p> '. $row['serial'] . ' &nbsp; &nbsp  ' .$row['mac'] . ' &nbsp; &nbsp  ' . $row['estado'] . '&nbsp; &nbsp  ' . $row['asignado'] . '</p></li>';
+                //echo "<li onClick=\"selectEquipo('" . $row['id'] . "','" . $row['mac'] . " ','" . $row['serial'] . " ','" . $row['estado'] . "','" . $row['asignado'] . "','" . $row['celular'] . "','" . $row['email'] . "')\"><span>$i</span><p>" . $row['serial'] . " &nbsp; &nbsp  " .$row['mac'] . " &nbsp; &nbsp  " . $row['estado'] . "&nbsp; &nbsp  " . $row['asignado'] . "</p></li>";
                 $i++;
             } 
             echo '</ol>';
