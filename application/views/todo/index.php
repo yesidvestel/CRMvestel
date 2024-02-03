@@ -89,6 +89,7 @@
                 <thead>
                 <tr>
                     <th>#</th>
+                    <th><?php echo $this->lang->line('') ?>Codigo</th>
                     <th><?php echo $this->lang->line('') ?>Detalle</th>
                     <th><?php echo $this->lang->line('') ?>Generada</th>
                     <th><?php echo $this->lang->line('') ?>Realizada</th>

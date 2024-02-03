@@ -17,6 +17,7 @@
                 <thead>
                 <tr>
                     <th>#</th>
+                    <th><?php echo $this->lang->line('') ?>Codigo</th>
                     <th><?php echo $this->lang->line('Task') ?></th>
                     <th><?php echo $this->lang->line('Due Date') ?></th>
                     <th><?php echo $this->lang->line('Start') ?></th>

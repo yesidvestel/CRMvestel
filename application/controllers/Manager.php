@@ -162,6 +162,7 @@ class Manager Extends CI_Controller
             }
             $row = array();
             $row[] = $no;
+            $row[] = $task->id;
             $row[] = '<a href="#" class="btn btn-primary btn-sm rounded set-task" data-id="' . $task->id . '" data-stat="0"> SET </a>' . $name;
             $row[] = $task->duedate;
             $row[] = $task->start;

@@ -20,12 +20,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Manager_model extends CI_Model
 {
-
-    var $column_order = array('status', 'name', 'duedate', 'tdate', null);
-    var $column_search = array('name', 'duedate', 'tdate');
+	var $table = 'todolist';
+    var $column_order = array(null,'id','status', 'name', 'duedate', 'tdate', null);
+    var $column_search = array('id','name', 'duedate', 'tdate');
     var $notecolumn_order = array(null, 'title', 'cdate', null);
     var $notecolumn_search = array('id', 'title', 'cdate');
-    var $order = array('id' => 'asc');
+    var $order = array('id' => 'desc');
 
     private function _task_datatables_query($cday = '')
     {

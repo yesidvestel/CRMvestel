@@ -21,8 +21,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Tools_model extends CI_Model
 {
 
-    var $column_order = array(null,'todolist.name', 'start', 'duedate', 'employee_profile.name','status', null);
-    var $column_search = array('todolist.name','start', 'duedate', 'employee_profile.name', 'status');
+    var $column_order = array(null,'todolist.id','todolist.name', 'start', 'duedate', 'employee_profile.name','status', null);
+    var $column_search = array('todolist.id','todolist.name','start', 'duedate', 'employee_profile.name', 'status');
     var $notecolumn_order = array(null, 'title', 'cdate', null);
     var $notecolumn_search = array('id', 'title', 'cdate');
     var $order = array('start' => 'desd');
