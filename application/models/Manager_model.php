@@ -21,7 +21,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Manager_model extends CI_Model
 {
 	var $table = 'todolist';
-    var $column_order = array(null,'id','status', 'name', 'duedate', 'tdate', null);
+    var $column_order = array(null,'id','name', 'duedate', 'tdate','status', null);
     var $column_search = array('id','name', 'duedate', 'tdate');
     var $notecolumn_order = array(null, 'title', 'cdate', null);
     var $notecolumn_search = array('id', 'title', 'cdate');
