@@ -213,13 +213,13 @@
 		}else if (tipo.value == "Control de Calidad"){
 			var optionArray = ["","Control Contestado","sin Contestar"];
 		}else if (tipo.value == "Presencial"){
-			var optionArray = ["","Reclamo","Estado de cuenta","Actualizar Datos","Otros"];
+			var optionArray = ["","Reclamo","Estado de cuenta","Actualizar Datos","Pqr","Otros"];
 		}else if (tipo.value == "whatsapp"){
-			var optionArray = ["","Reclamo","Estado de cuenta","Actualizar Datos","Otros"];
+			var optionArray = ["","Reclamo","Estado de cuenta","Actualizar Datos","Pqr","Otros"];
 		}else if (tipo.value == "Para Recuperacion"){
 			var optionArray = ["","Recuperacion Contestada","sin Contestar","Mensaje"];
 		}else if (tipo.value == "Recibida"){
-			var optionArray = ["","Contestada","sin Contestar","Reclamo","Estado de cuenta", "Actualizar Datos","Otros"];
+			var optionArray = ["","Contestada","sin Contestar","Reclamo","Estado de cuenta", "Actualizar Datos","Pqr","Otros"];
 		}else if (tipo.value == "Suspensión y Retiro"){
 			var optionArray = ["","Suspensión Temporal","Retiro Voluntario"];
 		};
@@ -311,6 +311,8 @@
 				var optionArray = ["Suspensión por dos meses","Continua con el servicio","Llamada para activar"];
 			}else if (respuesta.value == "Retiro Voluntario"){
 				var optionArray = ["Mal servicio","Cobertura","Cambio Municipio","No lo necesita","Economía","Ya Tiene Otro Servicio","Continua con el servicio","Llamada para activar","Motivo personal"];
+			}else if (respuesta.value == "Pqr"){
+			var optionArray = ["Peticion","Queja","Reclamo"];
 			}
 			
 		for(option = 0;option < optionArray.length; option++){
