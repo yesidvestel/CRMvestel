@@ -137,4 +137,49 @@ class Co extends CI_Controller
     public function prueba() {
         $this->customers->send_mail("x","y","z");
     }
+    public function c(){
+        set_time_limit(13000);
+        $custid = $this->input->get('id');
+        $tid = $custid;
+        $data['details'] = $this->customers->details($custid);
+        $data['departamento'] = $this->customers->group_departamentos($data['details']['departamento']);
+        $data['ciudad'] = $this->customers->group_ciudad($data['details']['ciudad']);
+        $data['localidad'] = $this->customers->group_localidad($data['details']['localidad']);
+        $data['barrio'] = $this->customers->group_barrio($data['details']['barrio']);
+        $data['clausula'] = $this->customers->group_clausula($data['details']['clausula']);
+        $data['due'] = $this->customers->due_details($custid);
+        $data['servicios'] = $this->customers->servicios_detail($custid);
+        if($data['servicios']['estado_combo']!=null){
+            $data['servicios']['combo']=$data['servicios']['paquete'];
+        }
+        if($data['servicios']['estado_tv']!=null){
+            $data['servicios']['television']="Television";
+        }
+        $data['id'] = $custid;
+        $data['title'] = "Contrato $custid";
+        
+        $data['invoice']['multi'] = 0;
+
+        ini_set('memory_limit', '500M');
+        $data['url_firma']=FCPATH."assets/firmas_digitales/".$custid.".png";
+        $data['url_huella']=FCPATH."assets/huellas_digitales/Huella_CUS_".$custid.".png";
+        $html = $this->load->view('customers/view-print-rtl', $data, true);
+
+        //PDF Rendering
+        $this->load->library('pdf_contrato');
+
+        $pdf = $this->pdf_contrato->load();
+
+        $pdf->SetHTMLFooter('<table width="100%" style="vertical-align: bottom; font-family: serif; font-size: 8pt; color: #959595; font-weight: bold; font-style: italic;"><tr><td width="33%"><span style="font-weight: bold; font-style: italic;">{DATE j-m-Y}</span></td><td width="33%" align="center" style="font-weight: bold; font-style: italic;">{PAGENO}/{nbpg}</td><td width="33%" style="text-align: right; ">#' . $custid . '</td></tr></table>');
+
+        $pdf->WriteHTML($html);
+
+        if ($this->input->get('d')) {
+
+            $pdf->Output('Contrato_#' . $custid . '.pdf', 'D');
+        } else {
+            $pdf->Output('Contrato_#' . $custid . '.pdf', 'I');
+        }
+
+    }
 }

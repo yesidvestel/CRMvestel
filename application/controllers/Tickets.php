@@ -25,6 +25,7 @@ class Tickets Extends CI_Controller
         parent::__construct();
         $this->load->model('ticket_model', 'ticket');
         $this->load->model('invoices_model', 'invoices');
+        $this->load->model('Communication_model', 'communication'); 
         $this->load->library("Aauth");
         if (!$this->aauth->is_loggedin()) {
             redirect('/user/', 'refresh');
@@ -818,6 +819,12 @@ class Tickets Extends CI_Controller
    }else{
     $ya_agrego_equipos=true;
     if(($ticket->detalle=="Instalacion" || $ticket->detalle=="Activacion") && $status=="Resuelto"){
+        //enviar correo;
+        $empresa = $this->config->item('ctitle');
+        $cuerpo="Saludos cordiales de parte de ".$empresa.", para nosotros es muy satisfactorio contar contigo, por tal motivo te enviamos copia de tu contrato, gracias por utilizar nuestros servicios, abre la siguiente url para visualizarlo : ".base_url()."co/c?id=".$usuario->id;
+        $this->communication->send_email($usuario->email,"Contrato ".$empresa,"Contrato ".$empresa,$cuerpo);
+        //$this->communication->send_email("pescafelipe@gmail.com","Contrato ".$empresa,"Contrato ".$empresa,$cuerpo);
+        ob_clean();
             if(isset($temporal) && $temporal->internet!="no" && $temporal->internet!=null){
                 $equipo=$this->db->get_where("equipos", array('asignado' => $ticket->cid))->row();
                 if(empty($equipo)){
