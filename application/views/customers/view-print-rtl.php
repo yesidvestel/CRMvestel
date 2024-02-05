@@ -710,16 +710,19 @@ $fcontrato = $details['f_contrato'];
     		<tr style="border-radius: 20px">
       		<td style="font-size: 17px;line-height: inherit">
 				<h4>CONDICIONES COMERCIALES CARACTERÍSTICAS DEL PLAN</h4><br>
-				Velocidad contratada: <span style="border-bottom: 1px solid;"><?php if($servicios['television']!='no'){
+				Velocidad contratada: <span style="border-bottom: 1px solid;"><?php /*if($servicios['television']!='no'){
 						$tv=$servicios['television'];
 					}else{
 						$tv='';
-					}if($servicios['combo']!='no'){
-						$int=$servicios['combo'];
+					}*/if($servicios['combo']!='no'){
+						$patron = '/\d+/';
+						preg_match($patron, $servicios['combo'], $coincidencias);
+						$int=$coincidencias[0].'Mb';
+						$int2=$servicios['combo'];
 					}else{
 						$int='';
-					} echo $tv.' '.$int ?></span><br><br>
-				Nombre de plan: <span style="border-bottom: 1px solid;"> <?php echo $tv.' '.$int ?></span><br><br>
+					} echo $int ?></span><br><br>
+				Nombre de plan: <span style="border-bottom: 1px solid;"> <?php echo $tv.' '.$int2 ?></span><br><br>
 				Tipo de Servicio: 
 				Residencial <span style="border-bottom: 1px solid;"><?php 
 						if($details['suscripcion']=='Residencial'){
