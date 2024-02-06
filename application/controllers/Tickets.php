@@ -151,7 +151,7 @@ class Tickets Extends CI_Controller
             }
 			$row[]=$ticket->col;
             
-            if($ticket->asignacion_movil!=null || $ticket->asignacion_movil!='' && $ticket->asignacion_movil!=0){
+            if($ticket->asignacion_movil!=null && $ticket->asignacion_movil!='' && $ticket->asignacion_movil!="0" && $ticket->asignacion_movil!=0){
                 $movil=$this->db->get_where("moviles",array("id_movil"=>$ticket->asignacion_movil))->row();
                 $row[]="movil#".$movil->id_movil." - ".$movil->nombre;
             }else{
