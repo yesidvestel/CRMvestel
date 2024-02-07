@@ -19,6 +19,7 @@
                                     <select class="form-control" id="cambiar_fecha" name="cambiar_fecha">
                                         <option value="si">Cambiar Fecha</option>
                                         <option value="no">No Cambiar fecha</option>
+                                        <option value="actualizacion_paquete1">Cargar Archivo Para actualizar paquete de ultima factura del usuario</option>
                                     </select>
                                 </div>
                                 <br><br>
@@ -171,7 +172,7 @@
 <script type="text/javascript">
     $(document).on("change","#cambiar_fecha",function(ev){
         var cambia_f=$("#cambiar_fecha option:selected").val();
-        if(cambia_f=="no"){
+        if(cambia_f=="no" || cambia_f=="actualizacion_paquete1"){
             $("#div_fecha1").hide();
         }else{
             $("#div_fecha1").show();

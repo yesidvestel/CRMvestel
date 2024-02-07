@@ -172,9 +172,17 @@ class Transactions extends CI_Controller
                 $data['id_usuario']=$this->aauth->get_user()->id;
                 $data['estado']='Archivo Cargado';
                 $data['nombre_real_file']=$files;
+                if($_POST['cambiar_fecha']=="actualizacion_paquete1"){
+                    $data['nombre']="actualizar_paquete_".$data['nombre'];
+                }
                 $this->db->insert("files_carga_transaccional",$data);
                 $id_archivo=$this->db->insert_id();
-                $this->files_carga->recorrer_archivo_y_guardar_datos_inicial($id_archivo,$ruta_archivo);
+                if($_POST['cambiar_fecha']=="actualizacion_paquete1"){
+                    $this->files_carga->recorrer_archivo_y_guardar_datos_inicial_actualizacion_paquete($id_archivo,$ruta_archivo);
+                }else{
+                    $this->files_carga->recorrer_archivo_y_guardar_datos_inicial($id_archivo,$ruta_archivo);
+                }
+                
                 echo json_encode(array('status' => 'Success', 'message' => "Archivo Subido Con Exito"));    
             }else{
                 echo json_encode(array('status' => 'Error', 'message' => "Archivo con extencion no permitida"));    
@@ -207,6 +215,7 @@ class Transactions extends CI_Controller
     public function procesar_usuarios_a_facturar(){
         $this->load->model('Files_carga_transaccional_model', 'files_carga');
         $varx=$this->db->get_where("datos_archivo_excel_cargue",array("id"=>$_POST['id']))->row();
+        $var_file=$this->db->get_where("files_carga_transaccional",array("id"=>$_POST['id_file']))->row();
         $retorno=array();
         /*$vary=$this->db->query("select * from datos_archivo_excel_cargue where ref_efecty='".$varx->ref_efecty."' and id!=".$varx->id)->result_array();
         $retorno=array();
@@ -218,28 +227,45 @@ class Transactions extends CI_Controller
             if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_vestel"){
                 
             }*/
-            $cus_existe=$this->db->get_where("customers",array("id"=>$varx->documento))->row();
-            if(isset($cus_existe)){
-                $_POST['fecha_x']=$varx->fecha;
-                $_POST['metodo_pago']=$varx->metodo_pago;
-                
-                $ret=$this->files_carga->facturar_customer($varx,$cus_existe);    
-                if($ret){
-                    $this->load->model('customers_model', 'customers');
-                    if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
-                        /*$servicios=$this->customers->servicios_detail($cus_existe->id);
-                        if(isset($servicios['status_inv']) && $servicios['status_inv']=="paid"){
-                            $this->db->update("customers",array("facturar_electronicamente"=>1),array("id"=>$cus_existe->id));   
-                        }*/
-                        $this->customers->organiza_para_facturacion_electronica_ottis($cus_existe->id);
+            if(strpos($var_file->nombre, "actualizar_paquete") !== false){
+                $cus_existe=$this->db->get_where("customers",array("id"=>$varx->id_customer))->row();    
+                if(isset($cus_existe)){
+                    $ret=$this->files_carga->actualizar_plan($varx,$cus_existe);    
+                    
+                    if($ret){
+                        $this->db->update("datos_archivo_excel_cargue",array("estado"=>"Cargado"),array("id"=>$varx->id));    
+                    }else{
+                        $this->db->update("datos_archivo_excel_cargue",array("estado"=>"Error"),array("id"=>$varx->id));    
                     }
-                    $this->db->update("datos_archivo_excel_cargue",array("estado"=>"Cargado","id_customer"=>$cus_existe->id),array("id"=>$varx->id));    
                 }else{
-                    $this->db->update("datos_archivo_excel_cargue",array("estado"=>"Error"),array("id"=>$varx->id));    
-                }
+                    $this->db->update("datos_archivo_excel_cargue",array("estado"=>"Usuario No Existe"),array("id"=>$varx->id));
+                }   
             }else{
-                $this->db->update("datos_archivo_excel_cargue",array("estado"=>"Usuario No Existe"),array("id"=>$varx->id));
+                $cus_existe=$this->db->get_where("customers",array("id"=>$varx->documento))->row(); 
+                if(isset($cus_existe)){
+                    $_POST['fecha_x']=$varx->fecha;
+                    $_POST['metodo_pago']=$varx->metodo_pago;
+                    
+                    $ret=$this->files_carga->facturar_customer($varx,$cus_existe);    
+                    if($ret){
+                        $this->load->model('customers_model', 'customers');
+                        if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
+                            /*$servicios=$this->customers->servicios_detail($cus_existe->id);
+                            if(isset($servicios['status_inv']) && $servicios['status_inv']=="paid"){
+                                $this->db->update("customers",array("facturar_electronicamente"=>1),array("id"=>$cus_existe->id));   
+                            }*/
+                            $this->customers->organiza_para_facturacion_electronica_ottis($cus_existe->id);
+                        }
+                        $this->db->update("datos_archivo_excel_cargue",array("estado"=>"Cargado","id_customer"=>$cus_existe->id),array("id"=>$varx->id));    
+                    }else{
+                        $this->db->update("datos_archivo_excel_cargue",array("estado"=>"Error"),array("id"=>$varx->id));    
+                    }
+                }else{
+                    $this->db->update("datos_archivo_excel_cargue",array("estado"=>"Usuario No Existe"),array("id"=>$varx->id));
+                }   
             }
+            
+           
             $retorno["estado"]="procesado";
             echo json_encode($retorno);
        // }

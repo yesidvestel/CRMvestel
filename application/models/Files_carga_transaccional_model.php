@@ -82,6 +82,36 @@ class Files_carga_transaccional_model extends CI_Model
         $query = $this->db->get();
         return $query->num_rows();
     }
+    public function actualizar_plan($data_cambio,$customer){
+        $invoice =$this->db->query("select * from invoices where csd=".$customer->id." order by id desc limit 1")->result_array();
+        $invoice_item=$this->db->query("select * from invoice_items where product like '%M%' and tid=".$invoice[0]['tid']." limit 1")->result_array();
+        $producto_nuevo=$this->db->get_where("products",array("product_code"=>$data_cambio->ref_efecty))->row();
+        $data_up_item=array();
+        $data_up_item['pid']=$producto_nuevo->pid;
+        $data_up_item['product']=$producto_nuevo->product_name;
+        $data_up_item['price']=$producto_nuevo->product_price;
+        $data_up_item['tax']=$producto_nuevo->taxrate;
+        $data_up_item['discount']=0;
+        $data_up_item['subtotal']=$producto_nuevo->product_price;
+        $data_up_item['totaltax']=0;
+        $data_up_item['totaldiscount']=0;
+
+        $data_up_invoice=array();
+        $data_up_invoice['subtotal']=($invoice[0]['subtotal']-$invoice_item[0]['price'])+$data_up_item['price'];
+        if($invoice[0]['discount']>0){
+            $data_up_invoice['discount']=$invoice[0]['discount']-$invoice_item[0]['totaldiscount'];    
+        }
+        if($invoice[0]['tax']>0){
+            $data_up_invoice['tax']=$invoice[0]['tax']-$invoice_item[0]['totaltax'];    
+        }
+        $data_up_invoice['total']=$data_up_invoice['subtotal']+$data_up_invoice['tax'];
+        $data_up_invoice['combo']=$producto_nuevo->product_name;
+        $this->db->update("invoices",$data_up_invoice,array("id"=>$invoice[0]['id']));
+        $this->db->update("invoice_items",$data_up_item, array("id"=>$invoice_item[0]['id']) );
+        
+        return true;
+
+    }
     public function facturar_customer($data,$cs){
         set_time_limit(150);
         ini_set ( 'max_execution_time', 150);
@@ -327,6 +357,64 @@ if($_POST['cambiar_fecha']=="si"){
             if($string_inserts!=""){
                 //echo $string_inserts;
                 $x1="INSERT INTO datos_archivo_excel_cargue ( fecha, documento, monto, estado, id_archivo,ref_efecty,metodo_pago) VALUES ";
+                $string_inserts=$x1.$string_inserts.";";
+                //echo $string_inserts;
+                $this->db->query($string_inserts);
+            }
+            //echo "<table>";
+
+    }
+    public function recorrer_archivo_y_guardar_datos_inicial_actualizacion_paquete($id_file,$ruta){
+            $this->load->library('ExcelReaderDuber');
+            $reader= new ExcelReaderDuber();
+            $reader=$reader->get_reader();
+            $reader->setReadDataOnly(true);
+            $spreadsheet=$reader->load($ruta);
+            $sheet=$spreadsheet->getActiveSheet(0);
+            //echo "<table>";
+            $string_inserts="";
+$fecha_actual=date("Y-m-d H:i:s");
+
+            foreach ($sheet->getRowIterator() as $key => $row) {
+                    $cellIterator=$row->getCellIterator("a","e");
+                    $cellIterator->setIterateOnlyExistingCells(false);
+                   // echo "<tr><td>".$key."</td>";
+                    if($key>1){
+                        //$valido=true;
+                        $in="";
+                            $montox=0;
+                            $documentox=0;
+                            $ref_efecty=0;
+                            $medio_pago="EFECTY";
+                            $id_customer=0;
+                        foreach ($cellIterator as $key2 => $cell) {
+                            if(!is_null($cell)){
+                                $value=$cell->getValue();
+                                if($key2=="A"){
+                                    $id_customer=$value;
+                                }else if($key2=="B"){
+                                    $documentox=$value;
+                                }else if($key2=="E"){
+                                    $ref_efecty=$value;
+                                }
+
+                            }
+                        }//fin iteracion celdas
+                        
+                            if($string_inserts!=""){
+                                $in=",";
+                            }
+                            $in.="('".$fecha_actual."', '".$documentox."', '".$montox."', 'Inicial', '".$id_file."','".$ref_efecty."','".$id_customer."','".$medio_pago."')";
+                            $string_inserts.=$in;
+                        
+                        
+
+                    }//fin validacion >1
+                    //echo "</tr>";
+            }//fin iteracion filas
+            if($string_inserts!=""){
+                //echo $string_inserts;
+                $x1="INSERT INTO datos_archivo_excel_cargue ( fecha, documento, monto, estado, id_archivo,ref_efecty,id_customer,metodo_pago) VALUES ";
                 $string_inserts=$x1.$string_inserts.";";
                 //echo $string_inserts;
                 $this->db->query($string_inserts);
