@@ -84,6 +84,9 @@ class Files_carga_transaccional_model extends CI_Model
     }
     public function actualizar_plan($data_cambio,$customer){
         $invoice =$this->db->query("select * from invoices where csd=".$customer->id." order by id desc limit 1")->result_array();
+        if(count($invoice)<=0){
+            return false;
+        }
         $invoice_item=$this->db->query("select * from invoice_items where product like '%M%' and tid=".$invoice[0]['tid']." limit 1")->result_array();
         $producto_nuevo=$this->db->get_where("products",array("product_code"=>$data_cambio->ref_efecty))->row();
         $data_up_item=array();
