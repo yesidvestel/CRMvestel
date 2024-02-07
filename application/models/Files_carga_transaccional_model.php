@@ -87,30 +87,10 @@ class Files_carga_transaccional_model extends CI_Model
         if(count($invoice)<=0){
             return false;
         }
-        $invoice_item=$this->db->query("select * from invoice_items where product like '%M%' and tid=".$invoice[0]['tid']." limit 1")->result_array();
         $producto_nuevo=$this->db->get_where("products",array("product_code"=>$data_cambio->ref_efecty))->row();
-        $data_up_item=array();
-        $data_up_item['pid']=$producto_nuevo->pid;
-        $data_up_item['product']=$producto_nuevo->product_name;
-        $data_up_item['price']=$producto_nuevo->product_price;
-        $data_up_item['tax']=$producto_nuevo->taxrate;
-        $data_up_item['discount']=0;
-        $data_up_item['subtotal']=$producto_nuevo->product_price;
-        $data_up_item['totaltax']=0;
-        $data_up_item['totaldiscount']=0;
 
-        $data_up_invoice=array();
-        $data_up_invoice['subtotal']=($invoice[0]['subtotal']-$invoice_item[0]['price'])+$data_up_item['price'];
-        if($invoice[0]['discount']>0){
-            $data_up_invoice['discount']=$invoice[0]['discount']-$invoice_item[0]['totaldiscount'];    
-        }
-        if($invoice[0]['tax']>0){
-            $data_up_invoice['tax']=$invoice[0]['tax']-$invoice_item[0]['totaltax'];    
-        }
-        $data_up_invoice['total']=$data_up_invoice['subtotal']+$data_up_invoice['tax'];
         $data_up_invoice['combo']=$producto_nuevo->product_name;
         $this->db->update("invoices",$data_up_invoice,array("id"=>$invoice[0]['id']));
-        $this->db->update("invoice_items",$data_up_item, array("id"=>$invoice_item[0]['id']) );
         
         return true;
 
