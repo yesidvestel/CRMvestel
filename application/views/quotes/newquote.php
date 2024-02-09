@@ -595,6 +595,22 @@
 										</div>
                                    </div>
 								</div>
+								<div class="form-group row" id="Retiro_voluntario">	
+                                    <div class="col-sm-12">
+										<h3 class="title">Motivo</h3>
+                                    </div>
+									<div class="col-sm-12">
+										<label for="invociedate" class="caption">Razon de Retiro</label>
+											<select name="motretiro" class="form-control mb-1">
+												<option value="mal servicio">mal servicio</option>
+												<option value="Cambio de proveedor">Cambio de proveedor</option>
+												<option value="No necesita el servicio">No necesita el servicio</option>
+												<option value="No tenemos cobertura">No tenemos cobertura</option>
+												<option value="Traslado de municipio">Traslado de municipio</option>
+												<option value="Motivo personal">Motivo personal</option>
+											</select>
+									</div>
+								</div>
 								<div class="form-group row" id="Revision_de_Internet">
                         	<div class="col-sm-12">
                             <label for="toAddInfo" class="caption">Posible Problema</label>
@@ -979,9 +995,9 @@ $(document).on('click','.btn-mas-internet',function(e){
 	// selecion de orden
 	<?php  if ($this->aauth->get_user()->roleid == 5 || $this->aauth->get_user()->tiknue != null) { ?>
 	
-	var perfil_servicio = new Array ("...","Reconexion Combo","Reinstalación","Autenticacion","Reconexion Television","Reconexion Television2","Retiro voluntario","Cambio de clave","Recuperación cable modem","Veeduria","Reconexion Internet","Reconexion Internet2","AgregarInternet","AgregarTelevision","Migracion","Bajar_megas","Cambio de equipo","Corte Combo","Corte Internet","Corte Television","Equipo adicional","Instalacion","Punto nuevo","Instalación y/o Mantenimiento de Equipos Activos de Red","Habilitación de equipos en red interna de cliente final","Subir_megas","Suministro De Dispositivo O Material","Suministro de equipos – OTTIS Hardware / Software","Traslado interno De Equipos Red en cliente final","Suspension Combo","Suspension Internet","Suspension Television","Servicio_Adicional","Traslado","Revisión y/o Configuración De Equipos De Red Lan De cliente final","Soporte técnico – OTTIS Hardware  / Software","Mejoramiento y/o Mantenimiento Red Fibra Óptica","Viabilidad y/o levantamiento técnico","Toma_Adicional","Retiro y Desinstalacion por Cartera","Entrega De Servicio A Satisfacción");
+	var perfil_servicio = new Array ("...","Reconexion Combo","Reinstalación","Autenticacion","Reconexion Television","Reconexion Television2","Retiro_voluntario","Cambio de clave","Recuperación cable modem","Veeduria","Reconexion Internet","Reconexion Internet2","AgregarInternet","AgregarTelevision","Migracion","Bajar_megas","Cambio de equipo","Corte Combo","Corte Internet","Corte Television","Equipo adicional","Instalacion","Punto nuevo","Instalación y/o Mantenimiento de Equipos Activos de Red","Habilitación de equipos en red interna de cliente final","Subir_megas","Suministro De Dispositivo O Material","Suministro de equipos – OTTIS Hardware / Software","Traslado interno De Equipos Red en cliente final","Suspension Combo","Suspension Internet","Suspension Television","Servicio_Adicional","Traslado","Revisión y/o Configuración De Equipos De Red Lan De cliente final","Soporte técnico – OTTIS Hardware  / Software","Mejoramiento y/o Mantenimiento Red Fibra Óptica","Viabilidad y/o levantamiento técnico","Toma_Adicional","Retiro y Desinstalacion por Cartera","Entrega De Servicio A Satisfacción");
 	<?php } else if ($this->aauth->get_user()->roleid == 4 || $this->aauth->get_user()->usadm != null) { ?>
-	var perfil_servicio = new Array ("...","AgregarInternet","AgregarTelevision","Autenticacion","Cambio de clave","Reinstalación","Retiro voluntario","Recuperación cable modem","Migracion","Veeduria","Bajar_megas","Cambio de equipo","Corte Combo","Corte Internet","Corte Television","Habilitación de equipos en red interna de cliente final","Equipo adicional","Instalacion","Punto nuevo","Subir_megas","Instalación y/o Mantenimiento de Equipos Activos de Red","Suspension Combo","Suspension Internet","Servicio_Adicional","Soporte técnico – OTTIS Hardware  / Software","Suministro de equipos – OTTIS Hardware / Software","Suspension Television","Traslado interno De Equipos Red en cliente final","Revisión y/o Configuración De Equipos De Red Lan De cliente final","Suministro De Dispositivo O Material","Mejoramiento y/o Mantenimiento Red Fibra Óptica","Traslado","Viabilidad y/o levantamiento técnico","Toma_Adicional","Retiro y Desinstalacion por Cartera","Entrega De Servicio A Satisfacción");
+	var perfil_servicio = new Array ("...","AgregarInternet","AgregarTelevision","Autenticacion","Cambio de clave","Reinstalación","Retiro_voluntario","Recuperación cable modem","Migracion","Veeduria","Bajar_megas","Cambio de equipo","Corte Combo","Corte Internet","Corte Television","Habilitación de equipos en red interna de cliente final","Equipo adicional","Instalacion","Punto nuevo","Subir_megas","Instalación y/o Mantenimiento de Equipos Activos de Red","Suspension Combo","Suspension Internet","Servicio_Adicional","Soporte técnico – OTTIS Hardware  / Software","Suministro de equipos – OTTIS Hardware / Software","Suspension Television","Traslado interno De Equipos Red en cliente final","Revisión y/o Configuración De Equipos De Red Lan De cliente final","Suministro De Dispositivo O Material","Mejoramiento y/o Mantenimiento Red Fibra Óptica","Traslado","Viabilidad y/o levantamiento técnico","Toma_Adicional","Retiro y Desinstalacion por Cartera","Entrega De Servicio A Satisfacción");
 	<?php } else { ?>
 	var perfil_servicio = new Array ("...","AgregarInternet","AgregarTelevision","Autenticacion","Cambio de clave","Reinstalación","Recuperación cable modem","Migracion","Veeduria","Bajar_megas","Cambio de equipo","Corte Combo","Corte Internet","Corte Television","Equipo adicional","Habilitación de equipos en red interna de cliente final","Instalación y/o Mantenimiento de Equipos Activos de Red","Instalacion","Punto nuevo","Subir_megas","Suministro de equipos – OTTIS Hardware / Software","Traslado interno De Equipos Red en cliente final","Servicio_Adicional","Mejoramiento y/o Mantenimiento Red Fibra Óptica","Soporte técnico – OTTIS Hardware  / Software","Suministro De Dispositivo O Material","Traslado","Viabilidad y/o levantamiento técnico","Revisión y/o Configuración De Equipos De Red Lan De cliente final","Toma_Adicional","Retiro y Desinstalacion por Cartera","Entrega De Servicio A Satisfacción");
 	<?php }; ?>

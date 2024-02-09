@@ -160,6 +160,7 @@ class Quote extends CI_Controller
 		$toma = $this->input->post('toma');
         $bapaquete = $this->input->post('bapaquete');
         $supaquete = $this->input->post('supaquete');
+        $motretiro = $this->input->post('motretiro');
         $detalle=str_replace("_"," ",$detalle);
      if($detalle=="AgregarInternet"){
             $inter = $this->input->post('interB');
@@ -168,17 +169,22 @@ class Quote extends CI_Controller
             $tv = $this->input->post('teleB');
             $inter="no";
             $punto = $this->input->post('puntoB');            
-     }else if($detalle=="Revision_de_Internet"){
-        $problema = $this->input->post('problema_red');
-     }else if($detalle=="Revision_de_television"){
-        $problema = $this->input->post('problema_tv');
      }
+	if($detalle=="Revision de Internet"){
+        $problema = $this->input->post('problema_red');
+     }else if($detalle=="Revision de television"){
+        $problema = $this->input->post('problema_tv');
+     }else if($detalle=="Retiro voluntario"){
+        $problema = $motretiro;
+     }else{
+		$problema = "";
+	}
         if($detalle=="Instalacion"){
             $factura="null";
        }
         
         if ($customer_id) {
-        	$this->quote->addticket($customer_id, $gen, $nticket, $subject, $detalle, $created, $problema, $bapaquete, $supaquete, $section, $factura,$agendar,$fagenda, $tec, $adtv, $adinter, $hora,$hora2,$nomen,$nuno,$auno,$ndos,$ados,$ntres,$local,$barrio,$recider, $refer, $tv,$inter,$bainter, $suinter, $punto,$pago,$toma,$movil);
+        	$this->quote->addticket($customer_id, $gen, $nticket, $subject, $detalle, $created, $problema, $bapaquete, $supaquete, $motretiro, $section, $factura,$agendar,$fagenda, $tec, $adtv, $adinter, $hora,$hora2,$nomen,$nuno,$auno,$ndos,$ados,$ntres,$local,$barrio,$recider, $refer, $tv,$inter,$bainter, $suinter, $punto,$pago,$toma,$movil);
 			
 		}
 

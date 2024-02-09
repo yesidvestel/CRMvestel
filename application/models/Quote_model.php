@@ -180,7 +180,7 @@ class Quote_model extends CI_Model
         $query = $this->db->get();
         return $query->row_array();
     }
-	public function addticket($customer_id, $gen, $nticket, $subject, $detalle, $created, $problema, $bapaquete, $supaquete, $section, $factura, $agendar, $fagenda, $tec, $adtv, $adinter, $hora,$hora2,$nomen,$nuno,$auno,$ndos,$ados,$ntres,$local,$barrio,$recider, $refer,$tv,$inter,$bainter, $suinter,$punto,$pago,$toma,$movil)
+	public function addticket($customer_id, $gen, $nticket, $subject, $detalle, $created, $problema, $bapaquete, $supaquete, $motretiro, $section, $factura, $agendar, $fagenda, $tec, $adtv, $adinter, $hora,$hora2,$nomen,$nuno,$auno,$ndos,$ados,$ntres,$local,$barrio,$recider, $refer,$tv,$inter,$bainter, $suinter,$punto,$pago,$toma,$movil)
     {
 		$bill_llegada = datefordatabase($created);
 		if ($tv=='no' || $tv==''){

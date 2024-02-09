@@ -1340,11 +1340,11 @@ $x=0;
             $this->db->set('estado_combo', null);
         	$this->db->where('tid', $idfactura);
         	$this->db->update('invoices');
-
+			/*
             $this->db->set('perfil', $ptos);
             //$this->db->set('f_contrato', date("Y-m-d"));
             $this->db->where('id', $ticket->cid);
-            $this->db->update('customers');
+            $this->db->update('customers');*/
 		}
 		/*if($ticket->detalle=="Migracion"){
 			$this->db->set('f_contrato', date("Y-m-d"));
