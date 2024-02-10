@@ -716,8 +716,9 @@ function visualizar_div_asociadas(){
         var agregar="";
 
         $(".facturas_para_pagar:checked").each(function(index){            
-            total+=parseInt($(this).data('total'));            
-            if($(this).data("ron")=="cortado" ||$(this).data("rec")=="1"){
+            total+=parseInt($(this).data('total'));  
+            console.log($(this).data("ron")) ;         
+            if($(this).data("ron")=="depurado" || $(this).data("ron")=="cartera"|| $(this).data("ron")=="cortado" ||$(this).data("rec")=="1"){
                 cortados=true;
                 refer=$(this).data("refer");
                 id_ultima_factura=$(this).data("id-ultima-factura");
