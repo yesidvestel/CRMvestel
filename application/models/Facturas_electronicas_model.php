@@ -283,7 +283,7 @@ $ob1=$this->db->get_where("config_facturacion_electronica",array("id"=>2))->row(
                 $dataApiTV->items[0]->description="Puntos de Tv Comerciales ".$itemPuntoComercial->qty;
                 //$itemPuntoComercial->price=$itemPuntoComercial->price*$itemPuntoComercial->qty;
                          
-                 $dataApiTV->items[0]->code="001";
+                 $dataApiTV->items[0]->code="024";
                             //$v1=($itemPuntoComercial->price*19)/100;
                             $v2=$itemPuntoComercial->price*$itemPuntoComercial->qty;
                             //$dataApiNET->items[0]->taxes[0]->id=5869;
