@@ -355,7 +355,7 @@ $this->load->model("customers_model","customers");
 
                     $v2=$prod->product_price*intval($_POST['puntos']);
 
-                    $dataApiTV->items[1]->code="001";
+                    $dataApiTV->items[1]->code="024";
                             $dataApiTV->items[1]->quantity=$_POST['puntos'];
                             $dataApiTV->items[1]->price=$prod->product_price;
                             $dataApiTV->payments[0]->value=$dataApiTV->payments[0]->value+$v2;                            

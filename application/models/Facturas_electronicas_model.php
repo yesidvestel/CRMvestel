@@ -336,7 +336,7 @@ $ob1=$this->db->get_where("config_facturacion_electronica",array("id"=>2))->row(
 
                     $v2=$prod->product_price*intval($datos_facturar['puntos']);
 
-                    $dataApiTV->items[1]->code="001";
+                    $dataApiTV->items[1]->code="024";
                             $dataApiTV->items[1]->quantity=$datos_facturar['puntos'];
                             $dataApiTV->items[1]->price=$prod->product_price;
                             $dataApiTV->payments[0]->value=$dataApiTV->payments[0]->value+$v2;                            
