@@ -36,13 +36,16 @@
                     $qty = $row['qty'];
                     $salessum = amountFormat($row['salessum']);
                     $worthsum = amountFormat($row['worthsum']);
-
+                    $delete="&nbsp;<a href='#' data-object-id='" . $cid . "' class='btn btn-danger btn-xs delete-object' title='Delete'><i class='icon-trash-o'></i></a>";
+                    if($this->aauth->get_user()->roleid < 5){
+                            $delete="";
+                    }
                     echo "<tr>
                     <td>$i</td>
                     <td>$title</td>
                     <td>$total</td>
                     <td>$qty</td>
-                    <td><a href='" . base_url("productcategory/viewwarehouse?id=$cid") . "' class='btn btn-success btn-xs'><i class='icon-file-text'></i> " . $this->lang->line('View') . "</a>&nbsp;<a href='" . base_url("productcategory/editwarehouse?id=$cid") . "' class='btn btn-warning btn-xs'><i class='icon-pencil'></i> " . $this->lang->line('Edit') . "</a>&nbsp;<a href='#' data-object-id='" . $cid . "' class='btn btn-danger btn-xs delete-object' title='Delete'><i class='icon-trash-o'></i></a></td></tr>";
+                    <td><a href='" . base_url("productcategory/viewwarehouse?id=$cid") . "' class='btn btn-success btn-xs'><i class='icon-file-text'></i> " . $this->lang->line('View') . "</a>&nbsp;<a href='" . base_url("productcategory/editwarehouse?id=$cid") . "' class='btn btn-warning btn-xs'><i class='icon-pencil'></i> " . $this->lang->line('Edit') . "</a>".$delete."</td></tr>";
                     $i++;
                 }
                 ?>
