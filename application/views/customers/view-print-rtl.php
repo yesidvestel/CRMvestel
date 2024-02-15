@@ -7,11 +7,13 @@ if ($servicios['television']!=="no"){
 }if ($servicios['combo']!=="no"){
 	
 					$x1 = $this->db->get_where('products',array('product_name'=>$servicios['combo']))->row();
-                    $x1=strtolower($servicios['combo']);
+                    $x1=$servicios['combo'];
                     //$x1=str_replace(" ","", $x1);
-
-                    $producto2 = $this->db->query("SELECT * FROM products where product_name='".$x1."'")->result_array();                    
-					$inter = $producto2[0]['product_price'];
+					
+                    $producto2 = $this->db->query("SELECT * FROM products where product_name='".$x1."'")->result_array(); 
+					$precio=$producto2[0]['product_price'];
+					$iva=($producto2[0]['product_price']*$producto2[0]['taxrate'])/100;
+					$inter =$precio+$iva ;
 }
 $equipo = $this->db->get_where('equipos',array('asignado'=>$details['id']))->row();
 $serial = $equipo->serial;
