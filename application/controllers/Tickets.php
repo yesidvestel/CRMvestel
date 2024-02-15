@@ -1948,6 +1948,9 @@ $x=0;
                     
                     $datay['product']=$producto->product_name;
 					$datay['qty']=1;
+                    if($datay['totaltax']==""){
+                        $datay['totaltax']=0;
+                    }
 					$tax2+=$datay['totaltax'];
 					
                     /*new */
