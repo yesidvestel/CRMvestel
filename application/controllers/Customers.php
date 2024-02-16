@@ -2322,10 +2322,12 @@ public function ajax_graficas2(){
                                       ->result_array();
 		
         // Para cada usuario con cambio, encuentra su última factura y actualiza el estado_usuario a 'cartera'
+        $usuarios_afectados_str="";
         foreach ($usuariosConCambio as $usuario) {
             // Encuentra la última factura para el usuario actual
+            $usuarios_afectados_str.="<a href='".base_url()."customers/view?id=".$usuario['id']."' target='_blank'>".$usuario['id']."</a><hr>";
 			$this->db->where('id', $usuario['id']);
-			$this->db->update('customers', array('usu_estado' => 'Cartera'));
+			$this->db->update('customers', array('usu_estado' => 'Cartera',"fecha_cambio"=>date("Y-m-d"),"ultimo_estado"=>"Cortado"));
             $subquery = $this->db->select_max('id')
                                  ->where('csd', $usuario['id'])
                                  ->where('tipo_factura', 'Recurrente')
@@ -2340,11 +2342,12 @@ public function ajax_graficas2(){
                 $this->db->update('invoices', array('ron' => 'Cartera'));
             }
         }
-
+        $usuarios_afectados_str="# de usuarios afechatos = <b>".count($usuariosConCambio)."</b> los ids de los usuarios son : <br><b>".$usuarios_afectados_str."</b>";
         // Muestra la consulta SQL ejecutada (útil para depuración)
-         echo $this->db->last_query();
-        
-        echo json_encode(array('status' => 'Success', 'message' =>
+          $this->db->last_query();
+        //$this->db->query('update customers set usu_estado="Cortado", fecha_cambio="2023-01-01" where usu_estado="Cartera";
+');
+        echo json_encode(array('status' => 'Success',"msjx1"=>$usuarios_afectados_str, 'message' =>
             $this->lang->line('UPDATED'), 'pstatus' => $status));
        
     }

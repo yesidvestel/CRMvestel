@@ -1155,6 +1155,10 @@ if(action_url=="tools/set_task"){
                     $('#pstatus').html(data.pstatus);
                     if(data.msg1==""){
                         window.location.href =baseurl+"invoices/view?id="+data.tid;
+                    }else if(action_url=="customers/paso_cartera"){
+                        $("#carterax1").html(data.msjx1);
+                        $('#notificaciones_modalx1').modal('show');
+                        //location.reload();
                     }else{
                         location.reload();
                     }

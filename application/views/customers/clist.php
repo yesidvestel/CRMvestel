@@ -350,6 +350,30 @@
             </div>
         </div>
     </div>
+    <div id="notificaciones_modalx1" class="modal fade">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                
+                <h3 class="modal-title" align="center">Mensaje</h3>
+
+            </div>
+            <div class="modal-body">
+                <div id="carterax1" style="text-align: center;">
+               
+               </div>
+                
+            </div>
+            <div class="modal-footer">
+                
+                <button type="button" class="btn btn-primary" onclick="location.reload();">Aceptar</button>
+                
+            </div>
+        </div>
+    </div>
+</div>
 </article>
 
 <script type="text/javascript">
