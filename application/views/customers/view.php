@@ -911,7 +911,7 @@
 							<input type="hidden" name="iduser2" value="<?php echo $details['id'] ?>"></input>
 							<select class="form-control" name="fechalimite">
 									<option value="30 de cada mes">30 de cada mes</option>
-									<option value="05 del siguiente mes">05 del siguiente mes</option>
+									<!--<option value="05 del siguiente mes">05 del siguiente mes</option>-->
 							</select>
                         </div>
                     </div>
