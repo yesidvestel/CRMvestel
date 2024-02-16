@@ -2345,8 +2345,7 @@ public function ajax_graficas2(){
         $usuarios_afectados_str="# de usuarios afechatos = <b>".count($usuariosConCambio)."</b> los ids de los usuarios son : <br><b>".$usuarios_afectados_str."</b>";
         // Muestra la consulta SQL ejecutada (útil para depuración)
           $this->db->last_query();
-        //$this->db->query('update customers set usu_estado="Cortado", fecha_cambio="2023-01-01" where usu_estado="Cartera";
-');
+        //$this->db->query('update customers set usu_estado="Cortado", fecha_cambio="2023-01-01" where usu_estado="Cartera";');
         echo json_encode(array('status' => 'Success',"msjx1"=>$usuarios_afectados_str, 'message' =>
             $this->lang->line('UPDATED'), 'pstatus' => $status));
        
