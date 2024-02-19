@@ -6,6 +6,7 @@ $lista_permisos1=$this->db->query("SELECT permisos_usuario.id,permisos_usuario.i
         }
 //$lista_permisos_us=$this->employee->get_modulos_cliente($this->aauth->get_user()->id);
 //var_dump($lista_permisos_us['comp']);
+        $_SESSION['lista_permisos_us_session']=$lista_permisos_us;
 ?>
 
 

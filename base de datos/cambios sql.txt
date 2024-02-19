@@ -948,3 +948,6 @@ ADD `metros` INT(4) NULL AFTER `imagen`,
 ADD `accesorios` VARCHAR(20) NULL AFTER `metros`;
 
 ALTER TABLE clausula ADD meses INT(2) NULL AFTER nombre;
+
+---------------------------------------permisos eliminar productos ----------------------------
+INSERT INTO `modulos` (`id_modulo`, `rol`, `nombre`, `id_padre`, `codigo`, `orden`, `icono`) VALUES (NULL, 'Hijo', 'Eliminar Productos', '14', 'eliminar_productos', '0', NULL)

@@ -38,7 +38,10 @@
                     $worthsum = amountFormat($row['worthsum']);
                     $delete="&nbsp;<a href='#' data-object-id='" . $cid . "' class='btn btn-danger btn-xs delete-object' title='Delete'><i class='icon-trash-o'></i></a>";
                     if($this->aauth->get_user()->roleid < 5){
-                            $delete="";
+                            if($_SESSION['lista_permisos_us_session']['eliminar_productos'] == null){ 
+                               $delete="";
+                            }
+                
                     }
                     echo "<tr>
                     <td>$i</td>
