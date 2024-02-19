@@ -386,14 +386,14 @@ class Clientgroup extends CI_Controller
             //end add  services adicionales
                         if($_var_tiene_internet){$var_excluir=false;
                             $lista_de_productos=array();
-                            $var_e=strtolower(str_replace(" ", "",$invoice->combo));
+                            $var_e=strtolower($invoice->combo);
                             /*if($_SESSION[md5("variable_datos_pin")]['db_name'] == "admin_crmvestel"){
                                 $lista_de_productos=$this->db->from("products")->get()->result();    
                             }else{
                                 
                                 //
                             }*/
-                            $lista_de_productos=$this->db->query("select * from products where LOWER(REPLACE(product_name, ' ', '')) ='".$var_e."'")->result_array();
+                            $lista_de_productos=$this->db->query("select * from products where LOWER(product_name) ='".$var_e."'")->result_array();
                              $iva2=0;
                              if(isset($lista_de_productos) && count($lista_de_productos)>0){
                                   if($lista_de_productos[0]['taxrate']!="0"){
@@ -1329,14 +1329,14 @@ class Clientgroup extends CI_Controller
             //end add  services adicionales
                         if($_var_tiene_internet){$var_excluir=false;
                             $lista_de_productos=array();
-                            $var_e=strtolower(str_replace(" ", "",$invoice->combo));
+                            $var_e=strtolower($invoice->combo);
                             /*if($_SESSION[md5("variable_datos_pin")]['db_name'] == "admin_crmvestel"){
                                 $lista_de_productos=$this->db->from("products")->get()->result();    
                             }else{
                                 
                                 //
                             }*/
-                            $lista_de_productos=$this->db->query("select * from products where LOWER(REPLACE(product_name, ' ', '')) ='".$var_e."'")->result_array();
+                            $lista_de_productos=$this->db->query("select * from products where LOWER(product_name) ='".$var_e."'")->result_array();
                              $iva2=0;
                              if(isset($lista_de_productos) && count($lista_de_productos)>0){
                                   if($lista_de_productos[0]['taxrate']!="0"){
@@ -2183,14 +2183,14 @@ $suscripcion_str2=$suscripcion_str;
             //end add  services adicionales
                         if($_var_tiene_internet){$var_excluir=false;
                             $lista_de_productos=array();
-                            $var_e=strtolower(str_replace(" ", "",$invoice->combo));
+                            $var_e=strtolower($invoice->combo);
                             /*if($_SESSION[md5("variable_datos_pin")]['db_name'] == "admin_crmvestel"){
                                 $lista_de_productos=$this->db->from("products")->get()->result();    
                             }else{
                                 
                                 //
                             }*/
-                            $lista_de_productos=$this->db->query("select * from products where LOWER(REPLACE(product_name, ' ', '')) ='".$var_e."'")->result_array();
+                            $lista_de_productos=$this->db->query("select * from products where LOWER(product_name) ='".$var_e."'")->result_array();
                              $iva2=0;
                              if(isset($lista_de_productos) && count($lista_de_productos)>0){
                                   if($lista_de_productos[0]['taxrate']!="0"){
