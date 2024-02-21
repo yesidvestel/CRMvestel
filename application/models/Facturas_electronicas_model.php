@@ -316,7 +316,8 @@ $ob1=$this->db->get_where("config_facturacion_electronica",array("id"=>2))->row(
 
                     }
             }
-            if(isset($datos_facturar['puntos']) && $datos_facturar['puntos']!="no"){
+             $pad=$this->db->get_where("invoice_items",array("tid"=>$datos_facturar['tid_ult_fact'],"pid"=>158))->row();
+            if(isset($datos_facturar['puntos']) && $datos_facturar['puntos']!="no" && isset($pad)){
                     /*$dataApiTV->items[1]->description="Puntos de tv adicionales ".$datos_facturar['puntos'];
                     $lista_de_productos=$this->db->from("products")->where("pid","158")->get()->result();
                     $prod=$lista_de_productos[0];
@@ -330,14 +331,14 @@ $ob1=$this->db->get_where("config_facturacion_electronica",array("id"=>2))->row(
 
 
 */
-                    $dataApiTV->items[1]->description="Puntos de tv adicionales ".$datos_facturar['puntos'];
+                    $dataApiTV->items[1]->description="Puntos de tv adicionales ".$pad->qty;
                     $lista_de_productos=$this->db->from("products")->where("pid","158")->get()->result();
                     $prod=$lista_de_productos[0];
 
-                    $v2=$prod->product_price*intval($datos_facturar['puntos']);
+                    $v2=$prod->product_price*intval($pad->qty);
 
                     $dataApiTV->items[1]->code="024";
-                            $dataApiTV->items[1]->quantity=$datos_facturar['puntos'];
+                            $dataApiTV->items[1]->quantity=$pad->qty;
                             $dataApiTV->items[1]->price=$prod->product_price;
                             $dataApiTV->payments[0]->value=$dataApiTV->payments[0]->value+$v2;                            
 
