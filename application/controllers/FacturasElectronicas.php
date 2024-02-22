@@ -526,7 +526,7 @@ public function borrar_facturas_v(){
         $puntos = $this->customers->due_details($id);
         $customer=$this->db->get_where("customers",array("id"=>$id))->row();
 
-        echo json_encode(array("status"=>"success","f_elec_tv"=>$customer->f_elec_tv,"f_elec_internet"=>$customer->f_elec_internet,"f_elec_puntos"=>$customer->f_elec_puntos,"servicios"=>$servicios,"puntos"=>$puntos['puntos']));
+        echo json_encode(array("status"=>"success","f_elec_tv"=>$customer->f_elec_tv,"f_elec_internet"=>$customer->f_elec_internet,"f_elec_puntos"=>$customer->f_elec_puntos,"servicios"=>$servicios,"puntos"=>$servicios['puntos']));
     }
     public function guardar_seleccion_usuario(){
         $id=$this->input->post("id");
