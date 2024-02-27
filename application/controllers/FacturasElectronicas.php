@@ -422,11 +422,11 @@ $this->load->model("customers_model","customers");
         $retorno=array("mensaje"=>"No");
         if($dataApiTV!=null && $dataApiTV!="null"){
             $ob1=$this->db->get_where("config_facturacion_electronica",array("id"=>1))->row();
-            //$retorno = $api->accionar2($api,$dataApiTV,$ob1->tocken); 
+            $retorno = $api->accionar2($api,$dataApiTV,$ob1->tocken); 
             
             if($dataApiNET!=null && $dataApiNET!="null"){
                 $ob1=$this->db->get_where("config_facturacion_electronica",array("id"=>2))->row();
-                //$retorno = $api->accionar2($api,$dataApiNET,$ob1->tocken);  
+                $retorno = $api->accionar2($api,$dataApiNET,$ob1->tocken);  
             }
         }else if($dataApiNET!=null && $dataApiNET!="null"){
             $ob1=$this->db->get_where("config_facturacion_electronica",array("id"=>2))->row();
