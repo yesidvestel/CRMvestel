@@ -2797,6 +2797,7 @@ foreach ($lista as $key => $value) {
             $this->db->trans_rollback();
         }
         $this->db->query("UPDATE `invoices` SET `status` = 'due' WHERE `invoices`.`pamnt` = 0 and total!=0 and status='partial'; ");
+        $this->db->query("UPDATE `invoices` SET `status` = 'partial', facturacion_electronica=null WHERE `invoices`.`pamnt` > 0 and total>0 and total>pamnt and status='paid' and tid=".$invocieno."; ");
     }
 
     public function update_status()
