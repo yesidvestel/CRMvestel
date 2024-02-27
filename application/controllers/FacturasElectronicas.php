@@ -430,9 +430,9 @@ $this->load->model("customers_model","customers");
             }
         }else if($dataApiNET!=null && $dataApiNET!="null"){
             $ob1=$this->db->get_where("config_facturacion_electronica",array("id"=>2))->row();
-            //$retorno = $api->accionar2($api,$dataApiNET,$ob1->tocken);         
+            $retorno = $api->accionar2($api,$dataApiNET,$ob1->tocken);         
         }
-$retorno['mensaje']="Factura Guardada";
+//$retorno['mensaje']="Factura Guardada";
         if($retorno['mensaje']=="Factura Guardada"){
              //$dataInsert["json"]=$dataApiNET."  output: ".$retorno['respuesta'];
         	$this->db->insert("facturacion_electronica_siigo",$dataInsert);
