@@ -225,7 +225,7 @@ function iniciar_facturacion(){
         var pay_acc=$("#cuentas_ option:selected").val();
         var sdate=$("#sdate2").val();
 		var estcuenta=$("#estcuenta").val();
-        var segundos_ejecutar=1000;
+        var segundos_ejecutar=10000;
         progress_one(10);
         <?php if($_SESSION[md5("variable_datos_pin")]['db_name'] == "admin_crmvestel"){ ?>
         if(id_anterior==datos_recorrer[i].c_id){
