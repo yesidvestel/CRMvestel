@@ -557,6 +557,7 @@ class Tickets Extends CI_Controller
 		'Documento' => 'integer',
 		'Celular' => 'integer',			 
         'Estado' => 'string', 
+        'Problema' => 'string', 
         'Observacion' => 'string',
 		'Factura #' => 'integer',			 
 		'Realizada' => 'string',
@@ -605,6 +606,7 @@ class Tickets Extends CI_Controller
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ));
     
     //write rows to sheet1
@@ -631,6 +633,7 @@ class Tickets Extends CI_Controller
 				$tickets->documento,
 				$tickets->celular,
 				$tickets->status,
+				$tickets->problema,
 				$obsv2,
 				$tickets->id_factura,
 				$tickets->col,
