@@ -127,16 +127,18 @@ class Transactions_model extends CI_Model
         return $query->result();
     }
 
-    function count_filtered()
+    function count_filtered($opt = 'all',$filt2)
     {
-        $this->_get_datatables_query($ttype,$_GET);
+        $this->opt = $opt;
+        $this->_get_datatables_query($filt2);
         $query = $this->db->get();
         return $query->num_rows();
     }
 
-    public function count_all()
+    public function count_all($opt = 'all',$filt2)
     {
-       $this->_get_datatables_query($ttype,$_GET);
+        $this->opt = $opt;
+       $this->_get_datatables_query($filt2);
         $query = $this->db->get();
         return $query->num_rows();  
     }
