@@ -167,6 +167,7 @@
 										<option value="CE">CE</option>
 										<option value="NIT">NIT</option>
 										<option value="PAS">PAS</option>
+										<option value="PPT">PPT(Permiso proteccion temporal)</option>
 								</select>
                         	</div>
                        </div>
