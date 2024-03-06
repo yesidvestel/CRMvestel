@@ -281,6 +281,7 @@ class Ticket_model extends CI_Model
             }
             $i++;
         }
+        $this->db->order_by("tickets.status","desc");    
         $search = $this->input->post('order');
         if ($search) {
             $this->db->order_by($this->doccolumn_order[$search['0']['column']], $search['0']['dir']);
@@ -290,7 +291,7 @@ class Ticket_model extends CI_Model
         }
         if(empty($_GET['todas_las_ordenes'])){
             $this->db->where('tickets.idt>'. $_SESSION['number_tk_min']);
-            $this->db->order_by("tickets.idt","desc");    
+            
         }
     }
 
