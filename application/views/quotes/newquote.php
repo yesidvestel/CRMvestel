@@ -608,6 +608,7 @@
 												<option value="No tenemos cobertura">No tenemos cobertura</option>
 												<option value="Traslado de municipio">Traslado de municipio</option>
 												<option value="Motivo personal">Motivo personal</option>
+												<option value="Economico">Economico</option>
 											</select>
 									</div>
 								</div>
