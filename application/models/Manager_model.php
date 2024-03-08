@@ -64,6 +64,8 @@ class Manager_model extends CI_Model
             $order = $this->order;
             $this->db->order_by(key($order), $order[key($order)]);
         }
+        $this->db->order_by("status","asc"); 
+        $this->db->order_by("id","desc"); 
     }
 
     function task_datatables($cday = '')
