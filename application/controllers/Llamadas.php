@@ -154,8 +154,13 @@ class Llamadas extends CI_Controller
 			$priority = 'Low';
 			$stdate = date("Y-m-d");
 			$tdate = '';
-			$asignacion = 8;//$this->db->get_where('asignaciones', array('detalle' => 'descuentos'))->row();
-			$employee = 8;//$asignacion->colaborador;
+			$asignacion = $this->db->get_where('asignaciones', array('detalle' => 'descuentos'))->row();//$this->db->get_where('asignaciones', array('detalle' => 'descuentos'))->row();
+			if($asignacion==0){
+				$asignar=0;
+			}else{
+				$asignar=$asignacion->colaborador;
+			}
+			$employee = $asignar;//$asignacion->colaborador;
 			$assign = $this->aauth->get_user()->id;
 			$content = 'Solicitud de DESCUENTO #'.$usuario->documento;
 			$ordenn = $iduser;
