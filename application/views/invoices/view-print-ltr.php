@@ -278,9 +278,17 @@
 
                         
                         $valor+=$cantidad_total;
+                        $texto_factura="";
+                        if($invoice['tipo_factura']=="Fija"){
+                            $items=$this->db->get_where("invoice_items",array("tid"=>$invoice['tid']))->result_array();
+                            $texto_factura=$items[0]['product'];
+                        }else{
+                            $texto_factura=strftime("%B", strtotime($f1));    
+                        }
+                        
                     if($pa=="no"){
                             echo '<tr class="item' . $flag . '"> 
-                                <td>' . strftime("%B", strtotime($f1)). ' CTA:'. $invoice['tid'].'</td>';
+                                <td>' . $texto_factura. ' CTA:'. $invoice['tid'].'</td>';
                             echo '<td class="t_center">' . amountExchange($valor) . '</td>
                                         </tr>';    
                     }
@@ -391,7 +399,14 @@
                         $valor+=$cantidad_total;
                         //end 
                 $f1 = $factura['invoicedate'];
-            echo '<tr class="item' . $flag . '"> <td>' . strftime("%B", strtotime($f1)). ' CTA:'. $factura['tid'].'</td>';
+                        $texto_factura="";
+                        if($factura['tipo_factura']=="Fija"){
+                            $items=$this->db->get_where("invoice_items",array("tid"=>$factura['tid']))->result_array();
+                            $texto_factura=$items[0]['product'];
+                        }else{
+                            $texto_factura=strftime("%B", strtotime($f1));
+                        }
+            echo '<tr class="item' . $flag . '"> <td>' .$texto_factura. ' CTA:'. $factura['tid'].'</td>';
             echo '<td class="t_center">' . amountExchange( $valor) .'</td></tr>';
             $cantidad_total_a_restar-=$cantidad_total;
             }
