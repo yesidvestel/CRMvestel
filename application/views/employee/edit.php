@@ -257,6 +257,7 @@
                                             </select>
                                         </div>
                                     </div>
+                                    <a href="#" class="btn btn-danger" id="remover_btn">Remover Todos los Permisos</a>
                                     <hr>
 							
                                         <h2 style="text-align: center;">Permisos</h2>
@@ -824,7 +825,7 @@ $("#sl-roleid").on("change",function(ev){
 });
     function select_checkbox_segun_rol(){
     var roleid=$("#sl-roleid option:selected").val();
-        //$(":checkbox").prop("checked",false);
+        $(":checkbox").prop("checked",false);
         if(roleid=="5"){
             //cobranza
             $("input[name=co]").prop("checked",true);
