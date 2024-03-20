@@ -257,7 +257,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <a href="#" class="btn btn-danger" id="remover_btn">Remover Todos los Permisos</a>
+                                    
                                     <hr>
 							
                                         <h2 style="text-align: center;">Permisos</h2>
