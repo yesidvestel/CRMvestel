@@ -2798,6 +2798,8 @@ foreach ($lista as $key => $value) {
         }
         $this->db->query("UPDATE `invoices` SET `status` = 'due' WHERE `invoices`.`pamnt` = 0 and total!=0 and status='partial'; ");
         $this->db->query("UPDATE `invoices` SET `status` = 'partial', facturacion_electronica=null WHERE `invoices`.`pamnt` > 0 and total>0 and total>pamnt and status='paid' and tid=".$invocieno."; ");
+         $this->invocies->procesar_pagos_adelantados($customer_id);
+        $this->customers->organiza_para_facturacion_electronica_ottis($customer_id);
     }
 
     public function update_status()
