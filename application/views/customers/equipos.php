@@ -27,6 +27,7 @@
 					<th>Vlan</th>
 					<th>Nat</th>
 					<th>P/to Nat</th>
+                    <th>GENIEACS</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -44,6 +45,7 @@
 					<th>Vlan</th>
 					<th>Nat</th>
 					<th>P/to Nat</th>
+                    <th>GENIEACS</th>
                 </tr>
                 </tfoot>
             </table>
@@ -202,7 +204,66 @@
         </div>
     </div>
 </div>
+<div id="genieacs-modal" class="modal fade">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                
+                <h3 class="modal-title" align="center">Genieacs Integracion, MAC = <label id="mac-modal">xxx</label></h3>
+
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <label class="col-sm-1 col-form-label">SSID</label>
+                    <div class="col-sm-7">
+                        <input type="text" name="ssid" id="genieacs-ssid" class="form-control">
+                    </div>
+                    <div class="col-sm-1">
+                        <a href="#" class="btn btn-small btn-green" id="actualizar-ssid"><span class="icon-pencil"></span>Cambiar<span class="icon-pencil"></a>    
+                    </div>
+                    
+                </div>
+                
+            </div>
+            <div class="modal-footer">
+                
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+                
+            </div>
+        </div>
+    </div>
+</div>
 <script>
+    var id_equipo_gns=0;
+    var mac_equipo_gns=0;
+    var id_gns=0;
+$(document).on('click',".equipo-gns",function(ev){
+    ev.preventDefault();
+    mac_equipo_gns=$(this).data("mac");
+    id_equipo_gns=$(this).data("id");
+    $.post(baseurl+"customers/get_genieacs_data",{'mac_equipo_gns':mac_equipo_gns,'id_equipo_gns':id_equipo_gns},function(data){
+        $("#genieacs-ssid").val(data.ssid);
+        
+    },'json');
+    $("#mac-modal").text(mac_equipo_gns);
+    $("#genieacs-modal").modal("show");
+});
+$(document).on("click","#actualizar-ssid",function(data){
+
+        if(confirm("¿ Seguro deseas Cambiar el SSID ?, esta accion no es revercible")){
+            $("#actualizar-ssid").hide();
+            var text_actualizar=$("#genieacs-ssid").val();
+                $.post(baseurl+"customers/actualizar_genieacs",{'mac_equipo_gns':mac_equipo_gns,'id_equipo_gns':id_equipo_gns,'text_actualizar':text_actualizar,"campo":"ssid"},function(data){
+                    if(data=="Actualizado"){
+                        alert("SSID Actualizado con exito");
+                    }
+                    
+                });
+        }
+
+});
 //traer puertos			
 $(document).ready(function(){
 	$("#naps_multiple").change(function(){

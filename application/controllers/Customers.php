@@ -35,7 +35,122 @@ class Customers extends CI_Controller
 
         }
     }
+    public function get_genieacs_data(){
+        ob_clean();
+        $mac= strtolower( $_POST['mac_equipo_gns']);
+       
+        $encode= urlencode('{"InternetGatewayDevice.WANDevice.1.WANConnectionDevice.1.WANPPPConnection.1.MACAddress": "'.$mac.'"}');
+       
+        $curl = curl_init();
 
+        curl_setopt_array($curl, array(
+          CURLOPT_URL => 'http://190.14.233.186:7557/devices/?query='.$encode,
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => '',
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 0,
+          CURLOPT_FOLLOWLOCATION => true,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => 'GET',
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+        $retorno=array();
+        if(!empty($response) ) {
+            $x=json_decode($response);
+            $x1="1";
+            //var_dump();
+            $retorno['ssid']=$x[0]->InternetGatewayDevice->LANDevice->$x1->WLANConfiguration->$x1->SSID->_value;
+            $this->db->update("equipos",array("id_genieacs"=>$x[0]->_id),array("codigo"=>$_POST['id_equipo_gns']));
+        }
+        
+        echo  json_encode($retorno);
+    }
+    public function actualizar_genieacs(){
+        $var_equipo=$this->db->get_where("equipos",array("codigo"=>$_POST['id_equipo_gns']))->row();
+        $curl = curl_init();
+        $param="";
+        $id_actualizar= urlencode( $var_equipo->id_genieacs);
+        if($_POST['campo']=="ssid"){
+            $param=' ["InternetGatewayDevice.LANDevice.1.WLANConfiguration.1.SSID", "'.$_POST['text_actualizar'].'", "xsd:string"]';
+        }
+
+        curl_setopt_array($curl, array(
+          CURLOPT_URL => 'http://190.14.233.186:7557/devices/'.$id_actualizar.'/tasks?connection_request=null',
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => '',
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 0,
+          CURLOPT_FOLLOWLOCATION => true,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => 'POST',
+          CURLOPT_POSTFIELDS =>'{
+          "name": "setParameterValues",
+          "parameterValues": [
+            '.$param.'
+          ]
+        }',
+          CURLOPT_HTTPHEADER => array(
+            'Content-Type: application/json'
+          ),
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+          $data_h=array();
+                            $data_h['modulo']="Equipos";
+                            $data_h['accion']="Actualizando equipo desde genieacs {update}";
+                            $data_h['id_usuario']=$this->aauth->get_user()->id;
+                            $data_h['fecha']=date("Y-m-d H:i:s");
+                            $data_h['descripcion']=json_encode(array($_POST['campo']=>$_POST['text_actualizar']));
+                            $data_h['id_fila']=$var_equipo->id;
+                            $data_h['tabla']="products";
+                            $data_h['nombre_columna']="id";
+                            $this->db->insert("historial_crm",$data_h);
+        echo "Actualizado";
+
+    }
+public function h(){
+
+    /* get por la mac del equipo
+$x=urlencode('{"InternetGatewayDevice.WANDevice.1.WANConnectionDevice.1.WANPPPConnection.1.MACAddress": "80:f7:a6:73:77:33"}');
+    var_dump($x);
+   
+    http://190.14.233.186:7557/devices/?query=%7B%22InternetGatewayDevice.WANDevice.1.WANConnectionDevice.1.WANPPPConnection.1.MACAddress%22%3A+%2280%3Af7%3Aa6%3A73%3A77%3A33%22%7D
+esta mac es la mac del equipo que tiene asignado el customer
+    */
+
+    ob_clean();
+    $x=urldecode('80F7A6-BCD%2DFD702GW%2DDX%2DR471-DF3D%2D2309003355');//
+    var_dump($x);
+echo "<br><br>";
+     $x=urlencode('{"_id": "80F7A6-BCD%2DFD702GW%2DDX%2DR471-DF3D%2D2309003355"}');
+     $x=urlencode('{"InternetGatewayDevice.WANDevice.1.WANConnectionDevice.1.WANPPPConnection.1.MACAddress": "80:F7:A6:73:2A:9B"}');
+     //http://190.14.233.186:7557/devices/?query=%7B%22_id%22%3A+%2280F7A6-BCD%252DFD702GW%252DDX%252DR471-DF3D%252D2309003353%22%7D
+    var_dump($x);
+
+echo "<br><br>";
+     $x=urlencode('80F7A6-BCD%2DFD702GW%2DDX%2DR471-DF3D%2D2309003355');
+    var_dump($x);
+$cm='curl -i "http://190.14.233.186:7557/devices/80F7A6-BCD-FD702GW-DX-R471-DF3D-2309003353/tasks?connection_request" \
+-X POST \
+--data \'{"name":"setParameterValues", "parameterValues": [["InternetGatewayDevice.LANDevice.1.WLANConfiguration.1.SSID", "GenieACS", "xsd:string"],["InternetGatewayDevice.LANDevice.1.WLANConfiguration.1.PreSharedKey.1.PreSharedKey", "hello world", "xsd:string"]]}\'';
+$output = exec($cmd);
+var_dump($output);
+}
+
+public function h2(){
+ob_clean();
+    set_time_limit(100000);
+    $cm='curl -i "http://190.14.233.186:7557/devices/00259E-EG8143A5-485754434A585BC4/tasks?connection_request" \
+-X POST \
+--data \'{"name": "refreshObject", "objectName": ""}\'';
+$output = exec($cm);
+var_dump($output);
+}
     public function index()
     {
 
@@ -1352,6 +1467,19 @@ public function ajax_graficas2(){
             if ($prd->puerto!=='0'){
             $row[] = $prd->puerto;
             }else{$row[]= 'N/A';}
+
+            if(isset($prd->asignado) && $prd->asignado!=0 && $prd->asignado!=""){
+                $cs=$this->db->get_where("customers",array("id"=>$prd->asignado))->row();
+                if($cs->gid==2){
+                    $row[] = "<a href='#' class='btn btn-success btn-sm equipo-gns' data-id='".$prd->codigo."' data-mac='".$prd->mac."' ><span class='icon-pencil'></span></a>";        
+                }else{
+                    $row[]="";    
+                }
+                
+            }else{
+                $row[]="";
+            }
+            
             $data[] = $row;
         }
 
@@ -1900,7 +2028,7 @@ public function ajax_graficas2(){
         $data['naps'] = $this->redes->nap_todas();
         $data['details'] = $this->customers->details($custid);        
         $head['usernm'] = $this->aauth->get_user()->username;
-        $head['title'] = 'View Customer Transactions';
+        $head['title'] = 'Equipos del Usuario';
         $this->load->view('fixed/header', $head);
         $this->load->view('customers/equipos', $data);
         $this->load->view('fixed/footer');
@@ -1954,6 +2082,7 @@ public function ajax_graficas2(){
     }
     public function add_promo()
     {
+         $this->load->model('invoices_model', 'invoices');
         $id = $this->input->post('id');
         $user = $this->aauth->get_user()->username;
         $promo = $this->input->post('promo');
@@ -1968,7 +2097,7 @@ public function ajax_graficas2(){
         );
             $this->db->where('id', $factura->id);
             $this->db->update('invoices', $datos);
-        
+        $this->invoices->procesar_pagos_adelantados($factura->csd);
         echo json_encode(array('status' => 'Success', 'message' =>
             $this->lang->line('UPDATED'), 'pstatus' => $status));
        
