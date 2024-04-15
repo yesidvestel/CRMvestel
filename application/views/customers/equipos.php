@@ -221,6 +221,7 @@
                         <input type="text" name="ssid" id="genieacs-ssid" class="form-control">
                     </div>
                     <div class="col-sm-1">
+                        <small id="cargando-cambio-ssid"> ¡¡ CARGANDO !!...</small>
                         <a href="#" class="btn btn-small btn-green" id="actualizar-ssid"><span class="icon-pencil"></span>Cambiar<span class="icon-pencil"></a>    
                     </div>
                     
@@ -239,6 +240,7 @@
     var id_equipo_gns=0;
     var mac_equipo_gns=0;
     var id_gns=0;
+    $("#cargando-cambio-ssid").hide();
 $(document).on('click',".equipo-gns",function(ev){
     ev.preventDefault();
     mac_equipo_gns=$(this).data("mac");
@@ -254,10 +256,13 @@ $(document).on("click","#actualizar-ssid",function(data){
 
         if(confirm("¿ Seguro deseas Cambiar el SSID ?, esta accion no es revercible")){
             $("#actualizar-ssid").hide();
+            $("#cargando-cambio-ssid").show();
             var text_actualizar=$("#genieacs-ssid").val();
                 $.post(baseurl+"customers/actualizar_genieacs",{'mac_equipo_gns':mac_equipo_gns,'id_equipo_gns':id_equipo_gns,'text_actualizar':text_actualizar,"campo":"ssid"},function(data){
                     if(data=="Actualizado"){
                         alert("SSID Actualizado con exito");
+                        $("#cargando-cambio-ssid").hide();
+                        $("#actualizar-ssid").show();
                     }
                     
                 });
