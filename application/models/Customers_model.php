@@ -1568,7 +1568,7 @@ if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
 	//busqueda equipo
 	private function _equi_datatables_query($id)
     {
-
+        $this->db->select('*,equipos.asignado as asignado_equipo');
         $this->db->from('equipos');
         $this->db->where('equipos.asignado', $id);
         $this->db->join('customers', 'equipos.asignado=customers.id', 'left');

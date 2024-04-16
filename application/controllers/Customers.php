@@ -1468,8 +1468,8 @@ public function ajax_graficas2(){
             $row[] = $prd->puerto;
             }else{$row[]= 'N/A';}
 
-            if(isset($prd->asignado) && $prd->asignado!=0 && $prd->asignado!=""){
-                $cs=$this->db->get_where("customers",array("id"=>$prd->asignado))->row();
+            if(isset($prd->asignado_equipo) && $prd->asignado_equipo!=0 && $prd->asignado_equipo!=""){
+                $cs=$this->db->get_where("customers",array("id"=>$prd->asignado_equipo))->row();
                 if($cs->gid==2){
                     $row[] = "<a href='#' class='btn btn-success btn-sm equipo-gns' data-id='".$prd->codigo."' data-mac='".$prd->mac."' ><span class='icon-pencil'></span></a>";        
                 }else{
