@@ -639,6 +639,9 @@ public function ajax_graficas2(){
         $data = array();
         $no = $this->input->post('start');
         foreach ($list as $customers) {
+			$due=$this->customers->due_details2($customers->id);
+			$debe_cliente=($due['total']-$due['pamnt']);
+            //$escuenta['debit']=$customers->debit;
             $no++;
 
             $row = array();
@@ -649,6 +652,7 @@ public function ajax_graficas2(){
             $row[] = $customers->celular;
             $row[] = $customers->documento;
             $row[] = $customers->nomenclatura . ' ' . $customers->numero1 . $customers->adicionauno.' Nº '.$customers->numero2.$customers->adicional2.' - '.$customers->numero3;
+			$row[] = amountFormat($debe_cliente);
             $row[] = '<span class="st-'.$customers->usu_estado. '">' .$customers->usu_estado. '</span>';
             $row[] = '<a href="customers/view?id=' . $customers->id . '" class="btn btn-info btn-sm"><span class="icon-eye"></span>  '.$this->lang->line('View').'</a> <a href="customers/edit?id=' . $customers->id . '" class="btn btn-primary btn-sm"><span class="icon-pencil"></span>  '.$this->lang->line('Edit').'</a> <a href="#" data-object-id="' . $customers->id . '" class="btn btn-danger btn-sm delete-object"><span class="icon-bin"></span></a>';
             $data[] = $row;

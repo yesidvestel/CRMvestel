@@ -312,6 +312,7 @@
 						<th>Celular</th>
 						<th>Cedula</th>
                         <th><?php echo $this->lang->line('Address') ?></th>
+                        <th><?php echo $this->lang->line('') ?>Deuda</th>
 						<th id="despues_de_thead">Estado</th>
                         <th><?php echo $this->lang->line('Settings') ?></th>
 
@@ -330,6 +331,7 @@
 						<th>Celular</th>
 						<th>Cedula</th>
                         <th><?php echo $this->lang->line('Address') ?></th>
+                        <th><?php echo $this->lang->line('') ?>Deuda</th>
 						<th id="despues_de_tfoot">Estado</th>
                         <th><?php echo $this->lang->line('Settings') ?></th>
 
