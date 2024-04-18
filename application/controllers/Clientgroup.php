@@ -974,6 +974,8 @@ class Clientgroup extends CI_Controller
             $row[]="";
             $row[]="";
             $row[] = $customers->f_contrato;
+            $clausula=$this->db->get_where("clausula",array($customers->clausula))->row();
+            $row[] = $clausula->nombre;
             $row[] = '<a href="' . base_url() . 'llamadas/index?id=' . $customers->id . '" class="btn btn-primary btn-sm"><span class=" icon-mobile-phone"></span> Llamar</a>';
 			if ($this->aauth->get_user()->roleid == 5) {
 			$row[] = '<a href="' . $base . 'edit?id=' . $customers->id . '" class="btn btn-success btn-sm"><span class="icon-pencil"></span> '.$this->lang->line('Edit').'</a>
