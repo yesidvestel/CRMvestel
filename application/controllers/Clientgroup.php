@@ -1640,7 +1640,7 @@ class Clientgroup extends CI_Controller
 $suscripcion_str2=$suscripcion_str;
                 if(($x>=$minimo && $x<$maximo) || $_POST['length']=="100"){
                     $no++;                
-                    
+                    $clausula=$this->db->get_where("clausula",array($customers->clausula))->row();
                     $row = array();
                     $money=array();
                     if(isset($_GET['ingreso_select']) && $_GET['ingreso_select']=="fecha_ingreso" && $_GET['ingreso_select']!=null){
@@ -1707,6 +1707,7 @@ $suscripcion_str2=$suscripcion_str;
                                 $row[]="";
                             }*/
                             $row[] = $customers->f_contrato;
+							$row[] = $clausula->nombre;
                             $row[] = '&nbsp<a href="' . base_url() . 'llamadas/index?id=' . $customers->id . '" class="btn btn-primary btn-sm"><span class=" icon-mobile-phone"></span> Llamar</a>
 							&nbsp<a style="margin-top:1px;" target="_blanck" class="btn btn-info btn-sm"  href="'.base_url().'customers/invoices?id='.$customers->id.'"><span class="icon-eye"></span>&nbsp;Facturas</a>';
                             if ($this->aauth->get_user()->roleid == 5) {
