@@ -73,7 +73,7 @@
  */
 session_start();
 $variable_datos_pin=md5("variable_datos_pin");
-//if(!isset($_SESSION[$variable_datos_pin])){
+if(!isset($_SESSION[$variable_datos_pin])){
 	$datos_default=array("base_url"=>"http://localhost/CRMvestel/","username"=>"root","password"=>"","db_name"=>"crm","param_us_import"=>null,"sitio_integra_mikrotik"=>"SI");
 	try {
 		
@@ -95,9 +95,9 @@ $variable_datos_pin=md5("variable_datos_pin");
 	} catch (Exception $e) {
 		//$_SESSION['sess_varx1']=$datos_default;	
 	}
-//}
+}
 //define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'development');
-define('ENVIRONMENT', 'development');
+define('ENVIRONMENT', 'production');
 
 // we don't want to access the main project before installation. redirect to installation page
 if (ENVIRONMENT === 'pre_installation') {

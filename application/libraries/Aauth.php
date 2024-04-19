@@ -288,7 +288,7 @@ class Aauth
         // if email and pass matches and not banned
         $password = ($this->config_vars['use_password_hash'] ? $pass : $this->hash_password($pass, @$row->id));
 
-        if ($query->num_rows() != 0 && true) {
+        if ($query->num_rows() != 0 && $this->verify_password($password, $row->pass)) {
 
             // If email and pass matches
             // create session
