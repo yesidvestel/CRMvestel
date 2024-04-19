@@ -44,7 +44,7 @@ class Customers extends CI_Controller
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-          CURLOPT_URL => 'http://190.14.233.186:7557/devices/?query='.$encode,
+          CURLOPT_URL => 'http://10.110.110.2:7557/devices/?query='.$encode,
           CURLOPT_RETURNTRANSFER => true,
           CURLOPT_ENCODING => '',
           CURLOPT_MAXREDIRS => 10,
@@ -78,7 +78,7 @@ class Customers extends CI_Controller
         }
 
         curl_setopt_array($curl, array(
-          CURLOPT_URL => 'http://190.14.233.186:7557/devices/'.$id_actualizar.'/tasks?connection_request=null',
+          CURLOPT_URL => 'http://10.110.110.2:7557/devices/'.$id_actualizar.'/tasks?connection_request=null',
           CURLOPT_RETURNTRANSFER => true,
           CURLOPT_ENCODING => '',
           CURLOPT_MAXREDIRS => 10,

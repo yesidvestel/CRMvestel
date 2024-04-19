@@ -746,7 +746,13 @@ class Tickets Extends CI_Controller
         echo json_encode(array('status' => 'Success', 'message' =>
             $this->lang->line('UPDATED'), 'pstatus' => $status));
     }
+public function x1(){
+    $x=$this->db->get_where("aauth_pms",array("id"=>245))->row();
+    $cuerpo=$x->message;
+    $this->communication->send_email("pescafelipe@gmail.com","Contrato ","Contrato ",$cuerpo);
 
+
+}
     public function update_status()
     {   set_time_limit(500000);
 

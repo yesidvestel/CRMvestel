@@ -1,3 +1,9 @@
+<style>
+.chf1:hover{
+    transform: scale(3);
+    cursor: pointer;
+}
+</style>
 <article class="content">
     <div class="card card-block">
         <div id="notify" class="alert alert-success" style="display:none;">
@@ -10,7 +16,7 @@
                     <div class="card-body">
                         <div class="card-block">
                             <label class="col-sm-12 col-form-label"
-                                       for="pay_cat"><h5>FILTRAR </h5> </label> 
+                                       for="pay_cat"><h5>FILTRAR &nbsp;&nbsp;&nbsp;| &nbsp;&nbsp;&nbsp;<input type="checkbox" class="chf1"><small>&nbsp;Cargar Todo<small>&nbsp;(esta opcion se utiliza para cargar datos antiguos en los filtros, pues por defecto se omiten para mejorrar tiempos de respuesta)</small></small></h5> </label> 
 
                             <ul class="nav nav-tabs nav-justified">
                                 <li class="nav-item">
@@ -231,10 +237,16 @@
         var edate =$("#edate").val();
         var opcion_seleccionada=$("#fechas option:selected").val();
         var sede_filtrar=$("#sede_sel option:selected").val();
-        if(cuentas=="" && categorias=="" && opcion_seleccionada==""){
-            tb.ajax.url( baseurl+'transactions/translist?type=').load();     
+        var f1=$(".chf1").prop('checked');
+        if(f1==true){
+            f1="todas_las_tr=si&";
         }else{
-            tb.ajax.url( baseurl+"transactions/translist?type="+"&sdate="+sdate+"&edate="+edate+"&opcselect="+opcion_seleccionada+"&cuentas="+cuentas+"&categorias="+categorias ).load();     
+            f1="";
+        }
+        if(cuentas=="" && categorias=="" && opcion_seleccionada==""){
+            tb.ajax.url( baseurl+'transactions/translist?'+f1+'type=').load();     
+        }else{
+            tb.ajax.url( baseurl+"transactions/translist?"+f1+"type="+"&sdate="+sdate+"&edate="+edate+"&opcselect="+opcion_seleccionada+"&cuentas="+cuentas+"&categorias="+categorias ).load();     
         }
        
 
