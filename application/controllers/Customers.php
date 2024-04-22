@@ -37,38 +37,21 @@ class Customers extends CI_Controller
     }
     public function get_genieacs_data(){
         ob_clean();
-        $mac= strtolower( $_POST['mac_equipo_gns']);
-       
-        $encode= urlencode('{"InternetGatewayDevice.WANDevice.1.WANConnectionDevice.1.WANPPPConnection.1.MACAddress": "'.$mac.'"}');
-       
-        $curl = curl_init();
-
-        curl_setopt_array($curl, array(
-          CURLOPT_URL => 'http://10.110.110.2:7557/devices/?query='.$encode,
-          CURLOPT_RETURNTRANSFER => true,
-          CURLOPT_ENCODING => '',
-          CURLOPT_MAXREDIRS => 10,
-          CURLOPT_TIMEOUT => 0,
-          CURLOPT_FOLLOWLOCATION => true,
-          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-          CURLOPT_CUSTOMREQUEST => 'GET',
-        ));
-
-        $response = curl_exec($curl);
-
-        curl_close($curl);
-        $retorno=array();
+       $retorno=array();
+        $response=$this->customers->get_equipo_genieacs_por_mac();
         if(!empty($response) ) {
             $x=json_decode($response);
             $x1="1";
-            //var_dump();
             $retorno['ssid']=$x[0]->InternetGatewayDevice->LANDevice->$x1->WLANConfiguration->$x1->SSID->_value;
             $this->db->update("equipos",array("id_genieacs"=>$x[0]->_id),array("codigo"=>$_POST['id_equipo_gns']));
+        }else{
+            $retorno=array();
         }
         
         echo  json_encode($retorno);
     }
     public function actualizar_genieacs(){
+         ob_clean();
         $var_equipo=$this->db->get_where("equipos",array("codigo"=>$_POST['id_equipo_gns']))->row();
         $curl = curl_init();
         $param="";
@@ -100,17 +83,38 @@ class Customers extends CI_Controller
         $response = curl_exec($curl);
 
         curl_close($curl);
-          $data_h=array();
-                            $data_h['modulo']="Equipos";
-                            $data_h['accion']="Actualizando equipo desde genieacs {update}";
-                            $data_h['id_usuario']=$this->aauth->get_user()->id;
-                            $data_h['fecha']=date("Y-m-d H:i:s");
-                            $data_h['descripcion']=json_encode(array($_POST['campo']=>$_POST['text_actualizar']));
-                            $data_h['id_fila']=$var_equipo->id;
-                            $data_h['tabla']="products";
-                            $data_h['nombre_columna']="id";
-                            $this->db->insert("historial_crm",$data_h);
-        echo "Actualizado";
+
+        $retorno=$this->customers->get_equipo_genieacs_por_mac();
+        if(!empty($retorno) ) {
+            $x=json_decode($retorno);
+            $x1="1";
+            if($_POST['campo']=="ssid"){
+                $ssid=$x[0]->InternetGatewayDevice->LANDevice->$x1->WLANConfiguration->$x1->SSID->_value;
+                    if($ssid==$_POST['text_actualizar']){
+                                $data_h=array();
+                                $data_h['modulo']="Equipos";
+                                $data_h['accion']="Actualizando equipo desde genieacs {update}";
+                                $data_h['id_usuario']=$this->aauth->get_user()->id;
+                                $data_h['fecha']=date("Y-m-d H:i:s");
+                                $data_h['descripcion']=json_encode(array($_POST['campo']=>$_POST['text_actualizar']));
+                                $data_h['id_fila']=$var_equipo->id;
+                                $data_h['tabla']="products";
+                                $data_h['nombre_columna']="id";
+                                $this->db->insert("historial_crm",$data_h);
+                                echo "Actualizado";
+                    }else{
+                            echo "Error";
+                    }
+            }else{
+                echo "Error";
+            }
+                        
+        }else{
+            echo "Error";
+        }
+
+
+         
 
     }
 public function h(){

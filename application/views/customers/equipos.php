@@ -260,11 +260,12 @@ $(document).on("click","#actualizar-ssid",function(data){
             var text_actualizar=$("#genieacs-ssid").val();
                 $.post(baseurl+"customers/actualizar_genieacs",{'mac_equipo_gns':mac_equipo_gns,'id_equipo_gns':id_equipo_gns,'text_actualizar':text_actualizar,"campo":"ssid"},function(data){
                     if(data=="Actualizado"){
-                        alert("SSID Actualizado con exito");
-                        $("#cargando-cambio-ssid").hide();
-                        $("#actualizar-ssid").show();
+                        alert("SSID Actualizado con exito");                     
+                    }else{
+                        alert("Cambio no realizado el equipo se encuentra inactivo");
                     }
-                    
+                       $("#cargando-cambio-ssid").hide();
+                        $("#actualizar-ssid").show();
                 });
         }
 

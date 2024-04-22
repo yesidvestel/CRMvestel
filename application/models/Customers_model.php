@@ -3996,5 +3996,28 @@ public function organiza_para_facturacion_electronica_ottis($id_cs){
     $this->db->query("UPDATE `invoices` SET `facturacion_electronica` = 'Crear Factura Electronica' WHERE csd='".$id_cs."' and  total!=0 and status='paid' and (facturacion_electronica is null or facturacion_electronica=''  ) and tipo_factura='Recurrente'; ");    
     //$this->db->query("UPDATE `invoices` SET `facturacion_electronica` = 'Crear Factura Electronica' WHERE  total!=0 and status='paid' and facturacion_electronica is null and tipo_factura='Recurrente'; ");    
 }
+public function get_equipo_genieacs_por_mac(){
+    $mac= strtolower( $_POST['mac_equipo_gns']);
+       
+        $encode= urlencode('{"InternetGatewayDevice.WANDevice.1.WANConnectionDevice.1.WANPPPConnection.1.MACAddress": "'.$mac.'"}');
+       
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+          CURLOPT_URL => 'http://10.110.110.2:7557/devices/?query='.$encode,
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => '',
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 0,
+          CURLOPT_FOLLOWLOCATION => true,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => 'GET',
+        ));
+
+        $response = curl_exec($curl);
+        curl_close($curl);
+        
+    return $response;
+}
 
 }
