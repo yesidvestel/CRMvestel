@@ -43,9 +43,10 @@ class Customers extends CI_Controller
             $x=json_decode($response);
             $x1="1";
             $retorno['ssid']=$x[0]->InternetGatewayDevice->LANDevice->$x1->WLANConfiguration->$x1->SSID->_value;
+            $retorno['status']="exito";
             $this->db->update("equipos",array("id_genieacs"=>$x[0]->_id),array("codigo"=>$_POST['id_equipo_gns']));
         }else{
-            $retorno=array();
+            $retorno=array("status"=>"error");
         }
         
         echo  json_encode($retorno);

@@ -246,11 +246,14 @@ $(document).on('click',".equipo-gns",function(ev){
     mac_equipo_gns=$(this).data("mac");
     id_equipo_gns=$(this).data("id");
     $.post(baseurl+"customers/get_genieacs_data",{'mac_equipo_gns':mac_equipo_gns,'id_equipo_gns':id_equipo_gns},function(data){
-        $("#genieacs-ssid").val(data.ssid);
-        
-    },'json');
-    $("#mac-modal").text(mac_equipo_gns);
-    $("#genieacs-modal").modal("show");
+        if(data.status=="exito"){
+            $("#genieacs-ssid").val(data.ssid);
+            $("#mac-modal").text(mac_equipo_gns);
+            $("#genieacs-modal").modal("show");
+        }else{
+            alert("Error de Conexion con  Genieacs");
+        }
+    },'json');    
 });
 $(document).on("click","#actualizar-ssid",function(data){
 
