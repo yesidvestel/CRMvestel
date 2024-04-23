@@ -568,6 +568,7 @@
                     <th class="1_th">#</th>
                     <th class="id_th">ID</th>
 					<th class="abonado_th">Abonado</th>
+                    <th class='tdoc_th'>T.Doc</th>
 					<th class="cedula_th">Cedula</th>
                     <th class="nombre_th"><?php echo $this->lang->line('Name') ?></th>
 					<th class="celular_th">Celular</th>
@@ -584,7 +585,6 @@
                     <th class='ultimo_estado_th'>Ult. Estado</th>
                     <th class='fecha_contrato_th'>Fecha Contrato</th>
                     <th class='clausula_th'>Clausula</th>
-                    <th class='tdoc_th'>T.Doc</th>
                     <th class="settings_th"><?php echo $this->lang->line('Settings') ?></th>
 					<?php if ($this->aauth->get_user()->roleid > 4) { ?>
 					<th class="config_th">Config</th>
@@ -601,6 +601,7 @@
                     <th class="1_th">#</th>
                     <th class="id_th">ID</th>
                     <th class="abonado_th">Abonado</th>
+                    <th class='tdoc_th'>T.Doc</th>
                     <th class="cedula_th">Cedula</th>
                     <th class="nombre_th"><?php echo $this->lang->line('Name') ?></th>
                     <th class="celular_th">Celular</th>
@@ -617,7 +618,6 @@
                     <th class='ultimo_estado_th'>Ult. Estado</th>
                     <th class='fecha_contrato_th'>Fecha Contrato</th>
                     <th class='clausula_th'>Clausula</th>
-                    <th class='tdoc_th'>T.Doc</th>
                     <th class="settings_th"><?php echo $this->lang->line('Settings') ?></th>
 					<?php if ($this->aauth->get_user()->roleid == 5) { ?>
 					<th class="config_th">Config</th>
@@ -633,23 +633,23 @@
                 <option value="1">#</option>
                 <option value="2">ID</option>
                 <option value="3">Abonado</option>
-                <option value="4">Cedula</option>
-                <option value="5">Nombre</option>
-                <option value="6">Celular</option>
-                <option value="7">Email</option>
-                <option value="8">Direccion</option>
-                <option value="9">Barrio</option>
-                <option value="10">Serv. Suscritos</option>
-                <option value="11">Tecnologia</option>
-                <option value="12">Estado</option>
-                <option value="13">Deuda</option>
-                <option value="14">Suscripcion</option>
-                <option value="15">Ingreso</option>
-                <option value="16">Fecha Cambio</option>
-                <option value="17">Ult. Estado</option>
-                <option value="18">Fecha Contrato</option>
-                <option value="19">Clausula</option>
-                <option value="20">Tipo Documento</option>
+                <option value="4">Tipo Documento</option>
+                <option value="5">Cedula</option>
+                <option value="6">Nombre</option>
+                <option value="7">Celular</option>
+                <option value="8">Email</option>
+                <option value="9">Direccion</option>
+                <option value="10">Barrio</option>
+                <option value="11">Serv. Suscritos</option>
+                <option value="12">Tecnologia</option>
+                <option value="13">Estado</option>
+                <option value="14">Deuda</option>
+                <option value="15">Suscripcion</option>
+                <option value="16">Ingreso</option>
+                <option value="17">Fecha Cambio</option>
+                <option value="18">Ult. Estado</option>
+                <option value="19">Fecha Contrato</option>
+                <option value="20">Clausula</option>                
                 <option value="21">Configuraciones</option>
                 <option value="22">Config</option>
             </select>

@@ -940,6 +940,7 @@ class Clientgroup extends CI_Controller
             $row[] = $no;
             $row[] = $customers->id;
 			$row[] = $customers->abonado;
+            $row[] =$customers->tipo_documento;
 			$row[] = $customers->documento;
              $nombre_completo=$this->customers->get_nombre_completo($customers->name,$customers->dosnombre,$customers->unoapellido,$customers->dosapellido);
             $row[] = '<a href="' . $base . 'view?id=' . $customers->id . '">' . $nombre_completo. ' </a>';
@@ -976,7 +977,7 @@ class Clientgroup extends CI_Controller
             $row[] = $customers->f_contrato;
             $clausula=$this->db->get_where("clausula",array($customers->clausula))->row();
             $row[] = $clausula->nombre;
-            $row[] =$customers->tipo_documento;
+            
             $row[] = '<a href="' . base_url() . 'llamadas/index?id=' . $customers->id . '" class="btn btn-primary btn-sm"><span class=" icon-mobile-phone"></span> Llamar</a>';
 			if ($this->aauth->get_user()->roleid == 5) {
 			$row[] = '<a href="' . $base . 'edit?id=' . $customers->id . '" class="btn btn-success btn-sm"><span class="icon-pencil"></span> '.$this->lang->line('Edit').'</a>
@@ -1660,6 +1661,7 @@ $suscripcion_str2=$suscripcion_str;
                             $row[] = $no;
                             $row[] = $customers->id;
                             $row[] = $customers->abonado;
+                            $row[] =$customers->tipo_documento;
                             $row[] = $customers->documento;
                             $nombre_completo=$this->customers->get_nombre_completo($customers->name,$customers->dosnombre,$customers->unoapellido,$customers->dosapellido);
                             $row[] = '<a href="'.base_url().'customers/view?id=' . $customers->id . '">' . $nombre_completo. ' </a>';
@@ -1711,7 +1713,7 @@ $suscripcion_str2=$suscripcion_str;
                             }*/
                             $row[] = $customers->f_contrato;
 							$row[] = $clausula->nombre;
-                            $row[] =$customers->tipo_documento;
+                            
                             $row[] = '&nbsp<a href="' . base_url() . 'llamadas/index?id=' . $customers->id . '" class="btn btn-primary btn-sm"><span class=" icon-mobile-phone"></span> Llamar</a>
 							&nbsp<a style="margin-top:1px;" target="_blanck" class="btn btn-info btn-sm"  href="'.base_url().'customers/invoices?id='.$customers->id.'"><span class="icon-eye"></span>&nbsp;Facturas</a>';
                             if ($this->aauth->get_user()->roleid == 5) {
@@ -1824,6 +1826,7 @@ $suscripcion_str2=$suscripcion_str;
                             $row[] = $no;
                             $row[] = $customers->id;
                             $row[] = $customers->abonado;
+                            $row[] =$customers->tipo_documento;
                             $row[] = $customers->documento;
                             $nombre_completo=$this->customers->get_nombre_completo($customers->name,$customers->dosnombre,$customers->unoapellido,$customers->dosapellido);
                             $row[] = '<a href="'.base_url().'customers/view?id=' . $customers->id . '">' . $nombre_completo . ' </a>';
@@ -1869,7 +1872,7 @@ $suscripcion_str2=$suscripcion_str;
                             $row[] = $customers->f_contrato;
                             $clausula=$this->db->get_where("clausula",array($customers->clausula))->row();
                             $row[] = $clausula->nombre;
-                            $row[] =$customers->tipo_documento;
+                            
                             $row[] = '<a href="' . base_url() . 'customers/edit?id=' . $customers->id . '" class="btn btn-success btn-sm"><span class="icon-pencil"></span> '.$this->lang->line('Edit').'</a>&nbsp;<a style="margin-top:1px;" target="_blanck" class="btn btn-info btn-sm"  href="'.base_url().'customers/invoices?id='.$customers->id.'"><span class="icon-eye"></span>&nbsp;Facturas</a>';
                             if ($this->aauth->get_user()->roleid > 4) {
                             $row[] = '<a href="#" data-object-id="' . $customers->id . '" class="btn btn-danger btn-sm delete-object"><span class="icon-bin"></span></a>';
