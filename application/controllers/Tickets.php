@@ -1042,7 +1042,7 @@ if($status=="Resuelto" && file_exists($nombre_archiv)==false && strpos(strtolowe
                 }
                 //$_SESSION['x0a']=$total;
                 //$_SESSION['x0a_temporal']=$temporal;
-                if((($data['television']!=="no" && $data['refer']!=="Mocoa") || ($tv!=="no" && $ciudad!=="Mocoa")) && (($ticket->detalle=="Instalacion" || $ticket->detalle=="Reconexion Combo2" || $ticket->detalle=="Activacion" || $ticket->detalle=="Reconexion Television2") && ($ticket->id_factura==null || $ticket->id_factura==0)  && $status=="Resuelto") ){                
+                if((($data['television']!=="no" && $data['refer']!=="Mocoa") || ($tv!==null && $tv!=="no" && $ciudad!=="Mocoa")) && (($ticket->detalle=="Instalacion" || $ticket->detalle=="Reconexion Combo2" || $ticket->detalle=="Activacion" || $ticket->detalle=="Reconexion Television2") && ($ticket->id_factura==null || $ticket->id_factura==0)  && $status=="Resuelto") ){                
                     $producto = $this->db->get_where('products',array('product_name'=>$data['television']))->row();
 					if($this->config->item('ctitle')=='VESTEL S.A.S' && $ticket->detalle=="Instalacion"){
 						$x=0;
@@ -1086,7 +1086,7 @@ if($status=="Resuelto" && file_exists($nombre_archiv)==false && strpos(strtolowe
                         $datay['subtotal']=$x;         
                     }  
                     if(($ticket->detalle=="Instalacion" || $ticket->detalle=="Reconexion Combo2" || $ticket->detalle=="Activacion" || $ticket->detalle=="Reconexion Television2") && ($ticket->id_factura==null || $ticket->id_factura==0)  && $status=="Resuelto"){
-                        $this->db->insert('invoice_items',$datay);
+                        $this->db->insert('invoice_items',$datay);//aqui
                     }
 				}
                 //$_SESSION['x01a']=$total;
