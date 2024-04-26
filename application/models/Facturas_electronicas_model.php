@@ -207,7 +207,7 @@ class Facturas_electronicas_model extends CI_Model
             
         //cambio de fecha de vencimiento sumandole 20 dias a la fecha seleccionada
             $fecha_actual = date($dateTime->format("Y-m-d"));
-            $date=date("d-m-Y",strtotime($fecha_actual."+ 20 days")); 
+            $date=date("d-m-Y",strtotime($fecha_actual."+ 2 days")); 
             $dateTimeVencimiento=new DateTime($date);
         //end fecha vencimiento
         
