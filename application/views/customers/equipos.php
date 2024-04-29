@@ -216,13 +216,24 @@
             </div>
             <div class="modal-body">
                 <div class="form-group row">
-                    <label class="col-sm-1 col-form-label">SSID</label>
+                    <label class="col-sm-2 col-form-label">SSID</label>
                     <div class="col-sm-7">
                         <input type="text" name="ssid" id="genieacs-ssid" class="form-control">
                     </div>
                     <div class="col-sm-1">
                         <small id="cargando-cambio-ssid"> ¡¡ CARGANDO !!...</small>
-                        <a href="#" class="btn btn-small btn-green" id="actualizar-ssid"><span class="icon-pencil"></span>Cambiar<span class="icon-pencil"></a>    
+                        <a href="#" class="btn btn-small btn-green actualizar-gns-button" data-parameter="ssid" data-texto="el SSID" id="actualizar-ssid"><span class="icon-pencil"></span>Cambiar<span class="icon-pencil"></a>    
+                    </div>
+                    
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Contraseña</label>
+                    <div class="col-sm-7">
+                        <input type="text" name="password" id="genieacs-password" class="form-control">
+                    </div>
+                    <div class="col-sm-1">
+                        <small id="cargando-cambio-password"> ¡¡ CARGANDO !!...</small>
+                        <a href="#" class="btn btn-small btn-green actualizar-gns-button" data-parameter="password" data-texto="la Contraseña" id="actualizar-password"><span class="icon-pencil"></span>Cambiar<span class="icon-pencil"></a>    
                     </div>
                     
                 </div>
@@ -240,7 +251,9 @@
     var id_equipo_gns=0;
     var mac_equipo_gns=0;
     var id_gns=0;
+    var campo_actualizar="";
     $("#cargando-cambio-ssid").hide();
+    $("#cargando-cambio-password").hide();
 $(document).on('click',".equipo-gns",function(ev){
     ev.preventDefault();
     mac_equipo_gns=$(this).data("mac");
@@ -248,6 +261,7 @@ $(document).on('click',".equipo-gns",function(ev){
     $.post(baseurl+"customers/get_genieacs_data",{'mac_equipo_gns':mac_equipo_gns,'id_equipo_gns':id_equipo_gns},function(data){
         if(data.status=="exito"){
             $("#genieacs-ssid").val(data.ssid);
+            $("#genieacs-password").val(data.password);
             $("#mac-modal").text(mac_equipo_gns);
             $("#genieacs-modal").modal("show");
         }else{
@@ -255,23 +269,33 @@ $(document).on('click',".equipo-gns",function(ev){
         }
     },'json');    
 });
-$(document).on("click","#actualizar-ssid",function(data){
+$(document).on("click",".actualizar-gns-button",function(data){
 
-        if(confirm("¿ Seguro deseas Cambiar el SSID ?, esta accion no es revercible")){
-            $("#actualizar-ssid").hide();
-            $("#cargando-cambio-ssid").show();
-            var text_actualizar=$("#genieacs-ssid").val();
-                $.post(baseurl+"customers/actualizar_genieacs",{'mac_equipo_gns':mac_equipo_gns,'id_equipo_gns':id_equipo_gns,'text_actualizar':text_actualizar,"campo":"ssid"},function(data){
+campo_actualizar=$(this).data("parameter");
+var text_actualizar2=$("#genieacs-"+campo_actualizar).val();
+var validacion=true;
+if(campo_actualizar=="password" && (text_actualizar2.length<8 || text_actualizar2.length>13)){
+    validacion=false;
+    alert("la contraseña debe de ser de entre 8 y 13 caracteres");
+}
+if(validacion==true){
+var texto_titulo=$(this).data("texto");
+        if(confirm("¿ Seguro deseas Cambiar "+texto_titulo+"?, esta accion no es revercible")){
+            $("#actualizar-"+campo_actualizar).hide();
+            $("#cargando-cambio-"+campo_actualizar).show();
+            var text_actualizar=$("#genieacs-"+campo_actualizar).val();
+                $.post(baseurl+"customers/actualizar_genieacs",{'mac_equipo_gns':mac_equipo_gns,'id_equipo_gns':id_equipo_gns,'text_actualizar':text_actualizar,"campo":campo_actualizar},function(data){
                     if(data=="Actualizado"){
-                        alert("SSID Actualizado con exito");                     
+                        alert(texto_titulo+" se a Actualizado con exito");                     
                     }else{
                         alert("Cambio no realizado el equipo se encuentra inactivo");
                     }
-                       $("#cargando-cambio-ssid").hide();
-                        $("#actualizar-ssid").show();
+                       $("#cargando-cambio-"+campo_actualizar).hide();
+                        $("#actualizar-"+campo_actualizar).show();
                 });
         }
 
+}
 });
 //traer puertos			
 $(document).ready(function(){
