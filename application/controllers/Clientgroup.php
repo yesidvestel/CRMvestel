@@ -2646,7 +2646,9 @@ $suscripcion_str2=$suscripcion_str;
         $_COOKIE['cancelar_envio_mensajes']="true";
     }
     public function sendGroupSms()
-    { //set_time_limit(1000000);
+    { set_time_limit(1000000000);
+        ini_set('memory_limit', '15000000000M');
+        ini_set("pcre.backtrack_limit", "30000000000");
         /*$id = $this->input->post('gid');
         $subject = $this->input->post('subject');
         $message = $this->input->post('text');
