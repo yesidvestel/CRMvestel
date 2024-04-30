@@ -485,8 +485,10 @@ class Tickets Extends CI_Controller
                 );  
             $this->db->where('id', $idequipo);
 			//devolver equipo a bodega desde el almacen del tecnico
+            
             if ($this->db->update('equipos', $datae)) {
-				$this->db->delete('products', array('product_name' => $mac));
+               // $producto=$this->db->get_where("products",array("product_name"=>$mac))->row();
+                $this->db->update('products', array('product_name' => $mac),array("warehouse"=>89));
 				$datap = array(
                     'estado' => 'Ocupado',
                     'asignado' => $id,          
