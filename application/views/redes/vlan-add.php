@@ -158,7 +158,7 @@ $(document).ready(function(){
 		}else if (almacen.value == "10"){
 			var optionArray = ["Hub local"];
 		}else if (almacen.value == "1"){
-			var optionArray = ["Duitama","Sogamoso","Tibasosa","Cacique1","Cacique2","Pesca"];
+			var optionArray = ["San Rafael","Duitama","Sogamoso","Tibasosa","Cacique1","Cacique2","Pesca"];
 		}else if (almacen.value == "3"){
 			var optionArray = ["Duitama","Sogamoso","Tibasosa","Cacique1","Cacique2","Pesca"];
 		}else if (almacen.value == "6"){
