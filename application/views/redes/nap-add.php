@@ -17,6 +17,7 @@
 
                     <div class="col-sm-6">
                         <select name="almacen" class="form-control" id="almacen">
+							<option value="">Seleccionar...</option>
                             <?php
                             foreach ($almacen as $row) {
                                 $cid = $row['id'];
