@@ -499,8 +499,13 @@ if($vrm>0){
 		<strong>' . $this->lang->line('Status') . ': ' . $this->lang->line(ucwords($invoice['status'])).'</strong>
 		<div class="sign2">(' . $user . ')</div><div class="sign3">' . user_role($perfil) . '</div> <div class="terms"><hr><strong>' . $this->lang->line('Terms') . ':</strong>';
 
-    echo '<strong>' . $invoice['termtit'] . '</strong><br>' . $invoice['terms'];
+    echo '<strong>' . $invoice['termtit'] . '</strong>';
     ?></div>
+	<table>
+		<tr>
+			<td align="justify">Realice su pago a travez de nuestra pagina <strong>www.vestel.com.co</strong>, en el menu <strong>EN LINEA</strong>, con su codigo de usuario Nº <strong><?php echo $invoice['cid'] ?></strong> y en contraseña su numero de documento. A travez de un pad <strong>BANCOLOMBIA</strong> al número  de convenio <strong>93477</strong> con referencia codigo de usuario Nº <strong><?php echo $invoice['cid'] ?></strong></td>
+		</tr>
+	</table>
 </div>
 </body>
 </html>
