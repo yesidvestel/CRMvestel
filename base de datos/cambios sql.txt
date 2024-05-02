@@ -953,3 +953,14 @@ ALTER TABLE clausula ADD meses INT(2) NULL AFTER nombre;
 INSERT INTO `modulos` (`id_modulo`, `rol`, `nombre`, `id_padre`, `codigo`, `orden`, `icono`) VALUES (NULL, 'Hijo', 'Eliminar Productos', '14', 'eliminar_productos', '0', NULL)
 ------------------------------GENIEACS--------------------------------------------------------------
 ALTER TABLE `equipos` ADD `id_genieacs` VARCHAR(500) NULL AFTER `accesorios`;
+----------------------------------------------------------------------------------
+INSERT INTO `product_warehouse` (`id`, `title`, `extra`, `id_tecnico`) VALUES (NULL, 'Almacén Clientes', 'EQUIPOS QUE ESTAN EN EL CLIENTE', NULL);
+
+-----------------erorres yopal
+http://localhost/CRMvestel/invoices/view?id=291579
+UPDATE `invoices` SET `combo` = '10 Megas' WHERE `invoices`.`id` = 297284;
+
+
+http://localhost/CRMvestel/invoices/view?id=297644
+ALTER TABLE `invoices` CHANGE `combo` `combo` VARCHAR(100);
+UPDATE `invoices` SET `combo` = 'Mensualidad 1500 Usuario software SAVE' WHERE `invoices`.`id` = 303350;
