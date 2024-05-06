@@ -73,18 +73,25 @@ text-transform: lowercase;
                         <strong><?php echo $this->lang->line('Name') ?></strong>
                     </div>
                     <div class="col-md-10">
-                        <?php echo $details['name'] ?>
+                        <?php echo $details['name'].' '.$details['dosnombre'].' '.$details['unoapellido'].' '.$details['dosapellido'] ?>
                     </div>
 
                 </div>
                 <div class="row m-t-lg">
                     <div class="col-md-1">
-                        <strong>Email</strong>
+                        <strong>Documento</strong>
                     </div>
                     <div class="col-md-10">
-                        <?php echo $details['email'] ?>
+                        <?php echo $details['tipo_documento'].' '.$details['documento'] ?>
                     </div>
-
+                </div>
+				<div class="row m-t-lg">
+                    <div class="col-md-1">
+                        <strong>ID</strong>
+                    </div>
+                    <div class="col-md-10">
+                        <?php echo $details['id'] ?>
+                    </div>
                 </div>
                 <div class="row m-t-lg">
                 	<div class="col-md-1">
