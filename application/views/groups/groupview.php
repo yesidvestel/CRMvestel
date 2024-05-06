@@ -584,6 +584,7 @@
                     <th class='fecha_cambio_th'>Fecha Cambio</th>
                     <th class='ultimo_estado_th'>Ult. Estado</th>
                     <th class='fecha_contrato_th'>Fecha Contrato</th>
+                    <th class='fecha_ingreso_th'>Fecha Ingreso</th>
                     <th class='clausula_th'>Clausula</th>
                     <th class="settings_th"><?php echo $this->lang->line('Settings') ?></th>
 					<?php if ($this->aauth->get_user()->roleid > 4) { ?>
@@ -617,6 +618,7 @@
                     <th class='fecha_cambio_th'>Fecha Cambio</th>
                     <th class='ultimo_estado_th'>Ult. Estado</th>
                     <th class='fecha_contrato_th'>Fecha Contrato</th>
+                    <th class='fecha_ingreso_th'>Fecha Ingreso</th>
                     <th class='clausula_th'>Clausula</th>
                     <th class="settings_th"><?php echo $this->lang->line('Settings') ?></th>
 					<?php if ($this->aauth->get_user()->roleid == 5) { ?>
@@ -649,9 +651,10 @@
                 <option value="17">Fecha Cambio</option>
                 <option value="18">Ult. Estado</option>
                 <option value="19">Fecha Contrato</option>
-                <option value="20">Clausula</option>                
-                <option value="21">Configuraciones</option>
-                <option value="22">Config</option>
+                <option value="20">Fecha Ingreso</option>
+                <option value="21">Clausula</option>                
+                <option value="22">Configuraciones</option>
+                <option value="23">Config</option>
             </select>
             </div>
         </div>

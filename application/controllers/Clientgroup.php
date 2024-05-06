@@ -38,7 +38,18 @@ class Clientgroup extends CI_Controller
 
         }
     }
-
+public function traspaso(){
+    ob_clean();
+    $lista=$this->db->get_where("customers")->result_array();
+    $texto="";
+    foreach ($lista as $key => $value) {
+        if($value['f_contrato']!=null && $value['f_contrato']!="null" && $value['f_contrato']!="0000-00-00" ){
+            $texto.="UPDATE customers SET f_ingreso = '".$value['f_contrato']."' WHERE customers.id = ".$value['id'].";<br>";    
+        }
+        
+    }
+    echo $texto;
+}
     //groups
     public function index()
     {
@@ -740,6 +751,7 @@ class Clientgroup extends CI_Controller
 
 #if(isset($_GET['ingreso_select']) && $_GET['ingreso_select']!="" && $_GET['ingreso_select']!="fecha_ingreso" && $_GET['ingreso_select']!=null){
         $headers['Fecha Contrato']="string";
+        $headers['Fecha Ingreso']="string";
          
 #}
     //fetch data from database
@@ -761,6 +773,7 @@ class Clientgroup extends CI_Controller
     //write headers el primer campo que es nombre de la hoja de excel deve de coincidir en writeSheetHeader y writeSheetRow para tener en cuenta si se piensan agregar otras hojas o algo por el estilo
     $col_options = array(
 
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
@@ -826,6 +839,7 @@ class Clientgroup extends CI_Controller
                             }
                             #if(isset($_GET['ingreso_select']) && $_GET['ingreso_select']!="" && $_GET['ingreso_select']!="fecha_ingreso" && $_GET['ingreso_select']!=null){
                                     $array_excel[]=$customer->f_contrato; 
+                                    $array_excel[]=$customer->f_ingreso; 
          
                             #}
                             $writer->writeSheetRow('Customers '.$cust_group->title,$array_excel);
@@ -980,6 +994,7 @@ class Clientgroup extends CI_Controller
             $row[]="";
             $row[]="";
             $row[] = $customers->f_contrato;
+            $row[] = $customers->f_ingreso;
             $clausula=$this->db->get_where("clausula",array($customers->clausula))->row();
             $row[] = $clausula->nombre;
             
@@ -1717,6 +1732,7 @@ $suscripcion_str2=$suscripcion_str;
                                 $row[]="";
                             }*/
                             $row[] = $customers->f_contrato;
+                            $row[] = $customers->f_ingreso;
 							$row[] = $clausula->nombre;
                             
                             $row[] = '&nbsp<a href="' . base_url() . 'llamadas/index?id=' . $customers->id . '" class="btn btn-primary btn-sm"><span class=" icon-mobile-phone"></span> Llamar</a>
@@ -1875,6 +1891,7 @@ $suscripcion_str2=$suscripcion_str;
                                     $row[] = $customers->f_contrato;
                             }*/
                             $row[] = $customers->f_contrato;
+                            $row[] = $customers->f_ingreso;
                             $clausula=$this->db->get_where("clausula",array($customers->clausula))->row();
                             $row[] = $clausula->nombre;
                             
