@@ -964,3 +964,8 @@ UPDATE `invoices` SET `combo` = '10 Megas' WHERE `invoices`.`id` = 297284;
 http://localhost/CRMvestel/invoices/view?id=297644
 ALTER TABLE `invoices` CHANGE `combo` `combo` VARCHAR(100);
 UPDATE `invoices` SET `combo` = 'Mensualidad 1500 Usuario software SAVE' WHERE `invoices`.`id` = 303350;
+
+----------------------------------------------------------------------------------------------------------
+FECHA DE INGRESO
+--------------------------------------
+ALTER TABLE `customers` ADD `f_ingreso` DATE NULL AFTER `f_contrato`;
