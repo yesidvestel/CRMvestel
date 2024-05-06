@@ -205,7 +205,7 @@
                 </div>
             </div>
 
-			<?php if ($thread_info['status'] == 'Pendiente' || $thread_info['status'] == 'Realizando' || $this->aauth->get_user()->roleid == 5 || $this->aauth->get_user()->id == 20 || $this->aauth->get_user()->id == 125) { ?>
+			<?php if ($thread_info['status'] == 'Pendiente' || $thread_info['status'] == 'Realizando' || $this->aauth->get_user()->roleid == 5 || $this->aauth->get_user()->id == 20 || $this->aauth->get_user()->id == 125 || $this->aauth->get_user()->id == 27) { ?>
             <div class="form-group row">
 				<div class="col-sm-2">
 					<a href="#pop_model" data-toggle="modal" onclick="funcion_status();" data-remote="false" class="btn btn-red  mb-1" title="Change Status" style="width: 200px"><span class="icon-tab" ></span> CAMBIAR ESTADO</a>
