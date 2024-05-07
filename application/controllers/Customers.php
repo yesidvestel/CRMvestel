@@ -43,10 +43,13 @@ class Customers extends CI_Controller
             $x=json_decode($response);
             $x1="1";
             $retorno['ssid']=$x[0]->InternetGatewayDevice->LANDevice->$x1->WLANConfiguration->$x1->SSID->_value;
-            $retorno['status']="exito";
+            
             //InternetGatewayDevice.LANDevice.1.WLANConfiguration.1.PreSharedKey.1.PreSharedKey
             //InternetGatewayDevice.LANDevice.1.WLANConfiguration.1.KeyPassphrase
             $retorno['password']=$x[0]->InternetGatewayDevice->LANDevice->$x1->WLANConfiguration->$x1->KeyPassphrase->_value;
+            //InternetGatewayDevice.X_RZ_Catv.RF_Enable
+            $retorno['tv']=$x[0]->InternetGatewayDevice->X_RZ_Catv->RF_Enable->_value;
+            $retorno['status']="exito";
             $this->db->update("equipos",array("id_genieacs"=>$x[0]->_id),array("codigo"=>$_POST['id_equipo_gns']));
         }else{
             $retorno=array("status"=>"error");
@@ -60,12 +63,24 @@ class Customers extends CI_Controller
         $curl = curl_init();
         $param="";
         $id_actualizar= urlencode( $var_equipo->id_genieacs);
+        if($_POST['type']=="boolean"){
+            //var_dump($_POST['text_actualizar']);
+            if($_POST['text_actualizar']=="true"){
+                $_POST['text_actualizar']="false";
+            }else {
+                //var_dump("???");
+                $_POST['text_actualizar']="true";
+            }
+
+        }
         if($_POST['campo']=="ssid"){
             $param=' ["InternetGatewayDevice.LANDevice.1.WLANConfiguration.1.SSID", "'.$_POST['text_actualizar'].'", "xsd:string"]';
         }else if($_POST['campo']=="password"){
             $param=' ["InternetGatewayDevice.LANDevice.1.WLANConfiguration.1.KeyPassphrase", "'.$_POST['text_actualizar'].'", "xsd:string"]';
+        }else if($_POST['campo']=="tv"){
+            $param=' ["InternetGatewayDevice.X_RZ_Catv.RF_Enable", '.$_POST['text_actualizar'].', "xsd:'.$_POST['type'].'"]';
         }
-
+        
         curl_setopt_array($curl, array(
           CURLOPT_URL => 'http://190.14.233.186:7557/devices/'.$id_actualizar.'/tasks?connection_request=null',
           CURLOPT_RETURNTRANSFER => true,
@@ -94,10 +109,15 @@ class Customers extends CI_Controller
         if(!empty($retorno) ) {
             $x=json_decode($retorno);
             $x1="1";
-            if($_POST['campo']=="ssid" || $_POST['campo']=="password"){
                 $texto=$x[0]->InternetGatewayDevice->LANDevice->$x1->WLANConfiguration->$x1->SSID->_value;
                 if($_POST['campo']=="password"){
                     $texto=$x[0]->InternetGatewayDevice->LANDevice->$x1->WLANConfiguration->$x1->KeyPassphrase->_value;
+                }else if($_POST['campo']=="tv"){
+                    $texto=$x[0]->InternetGatewayDevice->X_RZ_Catv->RF_Enable->_value;
+                    $texto=$texto ? 'true' : 'false';
+                    $_POST['text_actualizar']=$_POST['text_actualizar'];
+                    //var_dump($texto);
+                    //var_dump($_POST['text_actualizar']);
                 }
                     if($texto==$_POST['text_actualizar']){
                                 $data_h=array();
@@ -113,11 +133,7 @@ class Customers extends CI_Controller
                                 echo "Actualizado";
                     }else{
                             echo "Error";
-                    }
-            }else{
-                echo "Error";
-            }
-                        
+                    }                                  
         }else{
             echo "Error";
         }

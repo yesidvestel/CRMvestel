@@ -237,6 +237,18 @@
                     </div>
                     
                 </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Tv</label>
+                    <div class="col-sm-7">
+                        <a class="btn btn-lg btn-success" href="#"  id="genieacs-tv-on">&nbsp&nbsp&nbsp&nbsp&nbsp<span class="icon-thumbs-up"> Activo <span class="icon-check">&nbsp&nbsp&nbsp</a>
+                        <a class="btn btn-lg btn-danger" href="#"  id="genieacs-tv-off">&nbsp&nbsp&nbsp&nbsp&nbsp<span class="icon-thumbs-down"> Inactivo <span class="icon-thumbs-down">&nbsp&nbsp&nbsp</a>
+                    </div>
+                    <div class="col-sm-1">
+                        <small id="cargando-cambio-tv"> ¡¡ CARGANDO !!...</small>
+                        <a href="#" class="btn btn-small btn-green actualizar-gns-button-boolean" data-valor="true" data-parameter="tv" data-texto="la TV" id="actualizar-tv"><span class="icon-pencil"></span>Cambiar<span class="icon-pencil"></a>    
+                    </div>
+                    
+                </div>
                 
             </div>
             <div class="modal-footer">
@@ -254,21 +266,27 @@
     var campo_actualizar="";
     $("#cargando-cambio-ssid").hide();
     $("#cargando-cambio-password").hide();
+    $("#cargando-cambio-tv").hide();
 $(document).on('click',".equipo-gns",function(ev){
     ev.preventDefault();
     mac_equipo_gns=$(this).data("mac");
     id_equipo_gns=$(this).data("id");
     $.post(baseurl+"customers/get_genieacs_data",{'mac_equipo_gns':mac_equipo_gns,'id_equipo_gns':id_equipo_gns},function(data){
-        if(data.status=="exito"){
+        if( data.status=="exito" ) {
             $("#genieacs-ssid").val(data.ssid);
             $("#genieacs-password").val(data.password);
             $("#mac-modal").text(mac_equipo_gns);
+            interaccion_booleans("tv",data.tv);
             $("#genieacs-modal").modal("show");
         }else{
             alert("Error de Conexion con  Genieacs");
         }
     },'json');    
 });
+
+
+
+//esto es para los campos de solo texto
 $(document).on("click",".actualizar-gns-button",function(data){
 
 campo_actualizar=$(this).data("parameter");
@@ -284,7 +302,7 @@ var texto_titulo=$(this).data("texto");
             $("#actualizar-"+campo_actualizar).hide();
             $("#cargando-cambio-"+campo_actualizar).show();
             var text_actualizar=$("#genieacs-"+campo_actualizar).val();
-                $.post(baseurl+"customers/actualizar_genieacs",{'mac_equipo_gns':mac_equipo_gns,'id_equipo_gns':id_equipo_gns,'text_actualizar':text_actualizar,"campo":campo_actualizar},function(data){
+                $.post(baseurl+"customers/actualizar_genieacs",{'type':"string",'mac_equipo_gns':mac_equipo_gns,'id_equipo_gns':id_equipo_gns,'text_actualizar':text_actualizar,"campo":campo_actualizar},function(data){
                     if(data=="Actualizado"){
                         alert(texto_titulo+" se a Actualizado con exito");                     
                     }else{
@@ -297,6 +315,53 @@ var texto_titulo=$(this).data("texto");
 
 }
 });
+
+
+
+//esto es para los campos de solo booleans
+$(document).on("click",".actualizar-gns-button-boolean",function(data){
+
+campo_actualizar=$(this).data("parameter");
+var texto_titulo=$(this).data("texto");
+        if(confirm("¿ Seguro deseas Cambiar "+texto_titulo+"?, esta accion no es revercible")){
+            $("#actualizar-"+campo_actualizar).hide();
+            $("#cargando-cambio-"+campo_actualizar).show();
+            var text_actualizar=$(this).data("valor");
+                $.post(baseurl+"customers/actualizar_genieacs",{'type':"boolean",'mac_equipo_gns':mac_equipo_gns,'id_equipo_gns':id_equipo_gns,'text_actualizar':text_actualizar,"campo":campo_actualizar},function(data){
+                    if(data=="Actualizado"){
+                        var dato1=false;
+                        if(text_actualizar=="false"){
+                            dato1=true;
+                        }
+                        interaccion_booleans(campo_actualizar,dato1)
+                        alert(texto_titulo+" se a Actualizado con exito");                     
+                    }else{
+                        alert("Cambio no realizado el equipo se encuentra inactivo");
+                    }
+                       $("#cargando-cambio-"+campo_actualizar).hide();
+                        $("#actualizar-"+campo_actualizar).show();
+                });
+        }
+
+
+});
+
+
+function interaccion_booleans(campo,dato1){
+
+            if(dato1==true){
+                $("#genieacs-"+campo+"-on").show();
+                $("#genieacs-"+campo+"-off").hide();
+                $("#actualizar-"+campo).data("valor","true");
+            }else{
+                $("#genieacs-"+campo+"-off").show();
+                $("#genieacs-"+campo+"-on").hide();
+                $("#actualizar-"+campo).data("valor","false");
+            }
+            console.log(dato1);
+}
+
+
 //traer puertos			
 $(document).ready(function(){
 	$("#naps_multiple").change(function(){
