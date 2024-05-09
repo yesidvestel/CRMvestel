@@ -117,6 +117,8 @@
 					<th>Tpo respuesta</th>
 					<th>Detalle</th>					
 					<th>Observacion</th>
+					<th>Debe</th>
+					<th>Pago</th>
                     <th class="no-sort"><?php echo $this->lang->line('Settings') ?></th>
 
 
@@ -135,6 +137,8 @@
 					<th>Tpo respuesta</th>
 					<th>Detalle</th>					
 					<th>Observacion</th>
+					<th>Debe</th>
+					<th>Pago</th>
                     <th class="no-sort"><?php echo $this->lang->line('Settings') ?></th>
 
                 </tr>

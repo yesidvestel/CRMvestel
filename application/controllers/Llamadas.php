@@ -277,10 +277,17 @@ class Llamadas extends CI_Controller
         $cid = $this->input->post('cid');
         $list = $this->llamadas->inv_datatables($cid);
         $data = array();
-
+		$this->load->model('customers_model', 'customers');
         $no = $this->input->post('start');
 
         foreach ($list as $llamada) {
+			$idusuario = $llamada->iduser;
+			$fcha = $llamada->fcha;
+			$fchavence = '2025-01-01';
+			$due=$this->customers->due_details($idusuario);
+			$debe_customer=($due['total']-$due['pamnt']);
+			$pagos=$this->customers->pago_details($idusuario,$fcha,$fchavence);
+			$pago_customer=$pagos['pago'];
             $no++;
             $row = array();
             $row[] = $no;
@@ -291,6 +298,8 @@ class Llamadas extends CI_Controller
 			$row[] = $llamada->trespuesta;
 			$row[] = $llamada->drespuesta;
 			$row[] = $llamada->notes;
+			$row[] = amountFormat($debe_customer);
+			$row[] = amountFormat($pago_customer);
             $row[] = '<a href="' . base_url("customers/view?id=$llamada->iduser") . '" class="btn btn-success btn-xs"><i class="icon-file-text"></i> ' . $this->lang->line('View').' Usuario' . '</a> &nbsp; &nbsp;<a href="#" data-object-id="' . $llamada->id . '" class="btn btn-danger btn-xs delete-object"><span class="icon-trash"></span></a>';
 
             $data[] = $row;
@@ -570,6 +579,7 @@ class Llamadas extends CI_Controller
         }
         $this->db->order_by("id","DESC");
         $lista_creditos=$this->db->get()->result();
+		$this->load->model('customers_model', 'customers');
         $this->load->library('Excel');
 		$lista_creditos2=array();
 		
@@ -584,7 +594,9 @@ class Llamadas extends CI_Controller
 		'Tipo de llamada' => 'string',
 		'Respuesta' => 'string',
 		'Detalle' => 'string',
-		'Observacion' => 'string');
+		'Observacion' => 'string',
+		'Debe' => 'integer',
+		'Pago' => 'integer');
     
     //fetch data from database
     //$salesinfo = $this->product_model->get_salesinfo();
@@ -614,12 +626,21 @@ class Llamadas extends CI_Controller
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ));
     
     //write rows to sheet1
 	
     foreach ($lista_creditos as $key => $creditos) {
 		//$fecha = date("d/m/Y",strtotime($creditos->date));
+			$idusuario = $creditos->iduser;
+			$fcha = $creditos->fcha;
+			$fchavence = "2025-01-01";
+			$due=$this->customers->due_details($idusuario);
+			$debe_customer=($due['total']-$due['pamnt']);
+			$pagos=$this->customers->pago_details($idusuario,$fcha,$fchavence);
+			$pago_customer=$pagos['pago'];
 			$user=$this->db->get_where("customers",array("id"=>$creditos->iduser))->row();
             $writer->writeSheetRow('Llamadas ',array(
 				$creditos->fcha,
@@ -630,7 +651,9 @@ class Llamadas extends CI_Controller
 				$creditos->tllamada,
 				$creditos->trespuesta,
 				$creditos->drespuesta,
-				$creditos->notes));
+				$creditos->notes,
+				amountFormat($debe_customer),
+				amountFormat($pago_customer)));
         
     }
         
