@@ -1846,7 +1846,11 @@ $x=0;
 		}
 		if($ticket->detalle=="AgregarTelevision" || ($ticket->detalle=="Reconexion Television2" && ($ticket->id_factura!=0 || $ticket->id_factura!=null))){
 			$factura = $this->db->get_where('invoices',array('tid'=>$idfactura))->row();
-			$producto = $this->db->get_where('products',array('product_name'=>$temporal->tv))->row();
+            $producto = $this->db->get_where('products',array('product_name'=>$factura->television))->row();
+            if($ticket->detalle=="AgregarTelevision"){
+                $producto = $this->db->get_where('products',array('product_name'=>$temporal->tv))->row();
+            }
+			
             $total=0;
             $taxvalue=0;
             
