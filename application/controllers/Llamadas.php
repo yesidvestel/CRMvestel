@@ -552,7 +552,9 @@ class Llamadas extends CI_Controller
 
     }
 	public function explortar_a_excel2(){
-        
+        set_time_limit(1000000000);
+        ini_set('memory_limit', '15000000000M');
+        ini_set("pcre.backtrack_limit", "30000000000");
         $this->db->select("*");
         $this->db->from("llamadas");
 		//$this->db->join('customers', 'tickets.cid=customers.id', 'left');
@@ -589,14 +591,14 @@ class Llamadas extends CI_Controller
         'Fecha' => 'date', 
         'Hora' => 'string',
         'Usuario' => 'string',
-        'Documento' => 'integer',
+        'Documento' => 'string',
         'Responsable' => 'string',
 		'Tipo de llamada' => 'string',
 		'Respuesta' => 'string',
 		'Detalle' => 'string',
 		'Observacion' => 'string',
-		'Debe' => 'integer',
-		'Pago' => 'integer');
+		'Debe' => 'string',
+		'Pago' => 'string');
     
     //fetch data from database
     //$salesinfo = $this->product_model->get_salesinfo();
