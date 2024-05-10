@@ -1846,7 +1846,7 @@ $x=0;
 		}
 		if($ticket->detalle=="AgregarTelevision" || ($ticket->detalle=="Reconexion Television2" && ($ticket->id_factura!=0 || $ticket->id_factura!=null))){
 			$factura = $this->db->get_where('invoices',array('tid'=>$idfactura))->row();
-			$producto = $this->db->get_where('products',array('product_name'=>$factura->television))->row();
+			$producto = $this->db->get_where('products',array('product_name'=>$temporal->tv))->row();
             $total=0;
             $taxvalue=0;
             
@@ -1923,7 +1923,23 @@ $x=0;
             //$data['total']=$data['subtotal']+$data['tax'];             
                     /*end serv ads*/
                     $this->db->insert('invoice_items',$datay);
-            
+            if(isset($temporal) && $temporal!=null && $temporal->puntos>0 ){
+                    $punto = $temporal->puntos;
+                    $producto2 = $this->db->get_where('products',array('product_name'=>'Punto Adicional'))->row();
+                    $data2=array();
+                        $data2['tid']=$idfactura;
+                        $data2['pid']=$producto2->pid;
+                        $data2['product']=$producto2->product_name;
+                        $x=intval($producto2->product_price);
+                        $x=($x/31)*$diferencia->days;
+                        $data2['price']=$x;
+                        $data2['qty']=$punto;
+                        $valorit = $x*$punto;
+                        $data2['subtotal']=$valorit;            
+                        $this->db->insert('invoice_items',$data2);
+
+                        $total+=$valorit;
+                }
             //var_dump($factura->subtotal);
             //var_dump($total);
 				$this->db->set('subtotal', $factura->subtotal+$total);

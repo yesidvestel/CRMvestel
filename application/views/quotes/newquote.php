@@ -459,7 +459,7 @@
 									<div class="col-sm-4">
 									<label for="invociedate" class="caption">Television</label>
 										<div class="input-group">									
-											<select name="teleB" class="form-control mb-1">
+											<select name="teleB" class="form-control mb-1" id="teleB">
 												<option value="no">No</option>
                                         		<?php
 													foreach ($paquete as $row) {
@@ -819,6 +819,23 @@ function validacion_agregar_internet (){
     //console.log(tele_instalacion);
     //console.log(internet_instalacion);
 }
+$(document).on('change',"#teleB",function(e){
+    validacion_agregar_tv();
+    
+});
+function validacion_agregar_tv(){
+	 var paquete01=$("#teleB option:selected").val();
+    var detalle01=$("#detalle option:selected").val();
+    if(detalle01=="AgregarTelevision"){
+    		if(paquete01!="no"){
+		        $("#teleB").parent().css("background-color","");
+		        $("#submit-data").removeAttr("disabled");
+		    }else{
+		        $("#teleB").parent().css("background-color","red");
+		        $("#submit-data").attr("disabled","disabled");
+		    }	
+    }
+}
 $(document).on('change',"#adinter",function(e){
     validacion_servicio_adicional();
     
@@ -1054,6 +1071,11 @@ $(document).on('click','.btn-mas-internet',function(e){
                 $("#factura").attr("disabled","disabled");
             }else if($("#detalle option:selected").val()=="AgregarInternet"){
             	validacion_agregar_internet();
+            	var facx=$("#factura").children();
+                facx=$("#factura").children()[facx.length-1];
+                $("#factura").val($(facx).val());
+            }else if($("#detalle option:selected").val()== "AgregarTelevision"){
+            	validacion_agregar_tv();
             	var facx=$("#factura").children();
                 facx=$("#factura").children()[facx.length-1];
                 $("#factura").val($(facx).val());
