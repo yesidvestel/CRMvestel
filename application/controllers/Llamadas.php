@@ -641,8 +641,8 @@ class Llamadas extends CI_Controller
 			$fchavence = "2025-01-01";
 			$due=$this->customers->due_details($idusuario);
 			$debe_customer=($due['total']-$due['pamnt']);
-			$pagos=$this->customers->pago_details($idusuario,$fcha,$fchavence);
-			$pago_customer=$pagos['pago'];
+			$pagos=$this->customers->pago_details2($idusuario,$fcha,$fchavence);
+			$pago_customer=$pagos[0]['pago'];
 			$user=$this->db->get_where("customers",array("id"=>$creditos->iduser))->row();
             $writer->writeSheetRow('Llamadas ',array(
 				$creditos->fcha,
