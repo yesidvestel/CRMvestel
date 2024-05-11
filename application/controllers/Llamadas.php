@@ -597,8 +597,8 @@ class Llamadas extends CI_Controller
 		'Respuesta' => 'string',
 		'Detalle' => 'string',
 		'Observacion' => 'string',
-		'Debe' => 'string',
-		'Pago' => 'string');
+		'Debe' => 'number',
+		'Pago' => 'number');
     
     //fetch data from database
     //$salesinfo = $this->product_model->get_salesinfo();
@@ -641,8 +641,8 @@ class Llamadas extends CI_Controller
 			$fchavence = "2025-01-01";
 			$due=$this->customers->due_details($idusuario);
 			$debe_customer=($due['total']-$due['pamnt']);
-			$pagos=$this->customers->pago_details2($idusuario,$fcha,$fchavence);
-			$pago_customer=$pagos[0]['pago'];
+			$pagos=$this->customers->pago_details($idusuario,$fcha,$fchavence);
+			$pago_customer=$pagos['pago'];
 			$user=$this->db->get_where("customers",array("id"=>$creditos->iduser))->row();
             $writer->writeSheetRow('Llamadas ',array(
 				$creditos->fcha,
@@ -654,8 +654,8 @@ class Llamadas extends CI_Controller
 				$creditos->trespuesta,
 				$creditos->drespuesta,
 				$creditos->notes,
-				amountFormat($debe_customer),
-				amountFormat($pago_customer)));
+				$debe_customer,
+				$pago_customer));
         
     }
         
