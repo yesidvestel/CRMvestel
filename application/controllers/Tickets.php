@@ -1976,6 +1976,12 @@ $x=0;
         $itemx1=$this->db->get_where("invoice_items",array("tid"=>$idfactura,"product"=>$factura->combo))->row();
                 if($data['combo']!=='no' && empty($itemx1)){
                     $producto = $this->db->get_where('products',array('product_name'=>$temporal->internet))->row();
+                    if(empty($producto)){
+                        $producto = $this->db->get_where('products',array('product_name'=>$data['combo']))->row();
+                    }
+                    
+                    
+                    
 					$datay['pid']=$producto->pid;
                     $x=intval($producto->product_price);
                     $x=($x/31)*$diferencia->days;
