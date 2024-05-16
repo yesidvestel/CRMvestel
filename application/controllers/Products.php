@@ -106,8 +106,10 @@ class Products extends CI_Controller
             $list = $this->products->get_datatables("",$_GET);
         }
         $data = array();
+		
         $no = $this->input->post('start');
         foreach ($list as $prd) {
+			$iva=($prd->product_price*$prd->taxrate)/100;
             $no++;
             $row = array();
             $row[] = $no;
@@ -118,6 +120,7 @@ class Products extends CI_Controller
             $row[] = $prd->product_code;
             $row[] = $prd->title;
             $row[] = amountFormat($prd->product_price);
+            $row[] = amountFormat($iva);
             $row[] = $prd->almacen;
             $delete='<a href="#" data-object-id="' . $pid . '" class="btn btn-danger btn-xs  delete-object"><span class="icon-bin"></span> ' . $this->lang->line('Delete') . '</a>';
             if($this->aauth->get_user()->roleid < 5){
@@ -470,6 +473,7 @@ class Products extends CI_Controller
         $data = array();
         $no = $this->input->post('start');
         foreach ($list as $prd) {
+			$iva=($prd->product_price*$prd->taxrate)/100;
             $no++;
             $row = array();
             $row[] = $no;
@@ -479,6 +483,7 @@ class Products extends CI_Controller
             $row[] = $prd->product_code;
             $row[] = $prd->cate;
             $row[] = amountFormat($prd->product_price);
+            $row[] = amountFormat($iva);
             $delete='<a href="#" data-object-id="' . $pid . '" class="btn btn-danger btn-xs  delete-object"><span class="icon-bin"></span> ' . $this->lang->line('Delete') . '</a>';
 
             if($this->aauth->get_user()->roleid < 5){

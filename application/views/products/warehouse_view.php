@@ -62,6 +62,7 @@
                     <th><?php echo $this->lang->line('Code') ?></th>
                     <th><?php echo $this->lang->line('Category') ?></th>
                     <th><?php echo $this->lang->line('Price') ?></th>
+                    <th><?php echo $this->lang->line('') ?>Iva</th>
                     <th><?php echo $this->lang->line('Settings') ?></th>
 
 
@@ -78,6 +79,7 @@
                     <th><?php echo $this->lang->line('Code') ?></th>
                     <th><?php echo $this->lang->line('Category') ?></th>
                     <th><?php echo $this->lang->line('Price') ?></th>
+                    <th><?php echo $this->lang->line('') ?>Iva</th>
                     <th><?php echo $this->lang->line('Settings') ?></th>
 
                 </tr>
