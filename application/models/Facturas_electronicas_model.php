@@ -276,7 +276,7 @@ $ob1=$this->db->get_where("config_facturacion_electronica",array("id"=>2))->row(
 
         if($dataApiTV!=null){
             $dataApiTV->items[0]->description="Servicio de Televisión por Cable";
-            
+            $total_para_autoretencion=0;
 
             $itemPuntoComercial=$this->db->get_where("invoice_items",array("product"=>"PuntoComercial","tid"=>$datos_facturar['tid_ult_fact']))->row();
             if(!empty($itemPuntoComercial)){
@@ -292,7 +292,7 @@ $ob1=$this->db->get_where("config_facturacion_electronica",array("id"=>2))->row(
                             //$dataApiTV->items[0]->taxes[0]->value=$v1;
                             $dataApiTV->payments[0]->value=$v2;
                              unset($dataApiTV->items[0]->taxes);
-                           
+                           $total_para_autoretencion+=($dataApiTV->items[0]->price*$itemPuntoComercial->qty);
             }else if(strtolower($datos_facturar['serv_tv_real'])!="television" && $datos_facturar['serv_tv_real']!="no" && $datos_facturar['serv_tv_real']!="" && $datos_facturar['serv_tv_real']!="-"){
                     $paquete_tv_diff=$this->db->get_where("products", array('product_name' => $datos_facturar['serv_tv_real']))->row();
                     if(isset($paquete_tv_diff)){
@@ -313,7 +313,7 @@ $ob1=$this->db->get_where("config_facturacion_electronica",array("id"=>2))->row(
                                  $dataApiTV->items[0]->code="001";
                                 unset($dataApiTV->items[0]->taxes);
                             }
-
+                            $total_para_autoretencion+=$dataApiTV->items[0]->price;
                     }
             }
              $pad=$this->db->get_where("invoice_items",array("tid"=>$datos_facturar['tid_ult_fact'],"pid"=>158))->row();
@@ -341,13 +341,17 @@ $ob1=$this->db->get_where("config_facturacion_electronica",array("id"=>2))->row(
                             $dataApiTV->items[1]->quantity=$pad->qty;
                             $dataApiTV->items[1]->price=$prod->product_price;
                             $dataApiTV->payments[0]->value=$dataApiTV->payments[0]->value+$v2;                            
-
+                    $total_para_autoretencion+=($dataApiTV->items[1]->price*$pad->qty);                        
             }
 
             //falta verificar el caso de la tv de mocoa que cambian los valores
+            $autorencion_valor=($total_para_autoretencion*2.2)/100;
+            $dataApiTV->retentions[0]->value=$autorencion_valor;
         }
         $producto_existe=false;
          if($dataApiNET!=null){
+            $dataApiNET->retentions[0]->id=20439;
+            $total_para_autoretencion=0;
             $array_servicios=$this->customers->servicios_detail($customer->id);
             /*  cambios de abajo se comentan son para facturar cortados*/
             /*
@@ -387,7 +391,9 @@ $ob1=$this->db->get_where("config_facturacion_electronica",array("id"=>2))->row(
 
                         }
                         
-                        
+                        $total_para_autoretencion+=$dataApiNET->items[0]->price;
+                        $autorencion_valor=($total_para_autoretencion*2.2)/100;
+                        $dataApiNET->retentions[0]->value=$autorencion_valor;           
                         break;
                     }
                 }

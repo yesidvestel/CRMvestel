@@ -2863,6 +2863,15 @@ return $str;
   },
   "cost_center": 1074,
   "seller": 1011,
+  "retentions": [
+                {
+                    "id": 19159,
+                    "name": "Autorretención 2.2",
+                    "type": "Autorretencion",
+                    "percentage": 2.2,
+                    "value": 1650.0
+                }
+            ],
   "observations": "Observaciones",
   "items": [
     {
