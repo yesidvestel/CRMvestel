@@ -488,7 +488,7 @@ class Tickets Extends CI_Controller
             
             if ($this->db->update('equipos', $datae)) {
                // $producto=$this->db->get_where("products",array("product_name"=>$mac))->row();
-                $this->db->update('products', array('product_name' => $mac),array("warehouse"=>89));
+                $this->db->update('products', array("warehouse"=>89),array('product_name' => $mac));
 				$datap = array(
                     'estado' => 'Ocupado',
                     'asignado' => $id,          

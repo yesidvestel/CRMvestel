@@ -1033,8 +1033,9 @@ public function traspaso(){
     }
 
     public function load_morosos(){ 
-        set_time_limit(10000);
-        
+         set_time_limit(1000000000);
+         ini_set("pcre.backtrack_limit", "30000000000");
+          ini_set('memory_limit', '15000000000M');
         if($this->input->post('start')!="0"  || (isset($_POST['order'][0]['column']) && $_POST['order'][0]['column']=="12") ){
             if(isset($_POST['order'][0]['column']) && $_POST['order'][0]['column']=="12" && $this->input->post('start')=="0" ){
                 $this->ordenar_clientes_por_deuda();
