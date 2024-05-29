@@ -71,8 +71,8 @@ class CellVozApi
         echo $response;
     } 
     public function envio_sms_masivos_por_curl($token,$mensaje,$name_campaign){
-        $curl = curl_init();
-        //curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+       /* $curl = curl_init();
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt_array($curl, array(
           CURLOPT_URL => 'https://api.cellvoz.com/v2/sms/multiple',
           CURLOPT_RETURNTRANSFER => true,
@@ -96,10 +96,29 @@ class CellVozApi
         ));
 
         $response = curl_exec($curl);
-
+var_dump($token);
         curl_close($curl);
         return $response;
+*/
 
+  $url = "https://api.cellvoz.com/v2/sms/multiple";
+    $payload = '{
+              "name": "'.$name_campaign.'",
+              "messages": [
+                    '.$mensaje.'
+              ]
+            }';
+
+    $cmd = 'curl -X POST -H "Content-Type: application/json" ' .
+           '-H "api-key: '.$_SESSION['variables_cellvoz']->api_key.'" ' .
+           '-H "Authorization: Bearer ' . $token . '" ' .
+           '--data \'' . $payload . '\' ' .
+           '"' . $url . '"';
+
+    
+
+    $output = exec($cmd);
+        return $output;
         /* es orden de los datos que resive este servidor
         {
               "name": "masivo",
