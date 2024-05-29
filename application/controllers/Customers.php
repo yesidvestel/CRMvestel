@@ -1767,6 +1767,7 @@ public function ajax_graficas2(){
         $data['details'] = $this->customers->details($custid);
         $data['due'] = $this->customers->due_details($custid);
         $data['servicios'] = $this->customers->servicios_detail($custid);
+		$data['clausula'] = $this->customers->group_clausula($data['details']['clausula']);
         if($data['servicios']['estado_combo']!=null){
             $data['servicios']['combo']=$data['servicios']['paquete'];
         }
