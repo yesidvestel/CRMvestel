@@ -857,10 +857,10 @@
 						$int2=$servicios['combo'];
 					}else{
 						$int='';
-					} echo '<span style="border-bottom: 1px solid;">'.$int.'</span>'
+					} 
 			?>
 			Tecnología Instalada: Radio <input type="checkbox" class="checkbox-input"></input> Fibra Optica <input type="checkbox" style="transform: scale(1.5)"></input>&nbsp; &nbsp;  Equipo CPE Marca:<span style="border-bottom: 1px solid;"><?php echo $eq ?></span>	Cable UTP o fibra:<?php echo $met ?>metros<br>
-			Referencia o Modelo:___________________________	Dirección MAC o serial: <?php echo $mac ?> Adaptador de corriente:___________<br>	
+			Referencia o Modelo:___________________________	Dirección MAC o serial: <?php echo $mac ?> Adaptador de corriente:___________	
 			Accesorios adicionales: <?php echo $acc ?><br>																
 			Plan contratado: <?php echo $int ?>Mbps <span style="border-bottom: 1px solid;"><?php echo $tv.' '.$int2 ?></span> Valor de mensualidad: <span style="border-bottom: 1px solid;"><?php echo amountFormat($totaltv+$inter) ?></span> Cláusula de permanencia: <span style="border-bottom: 1px solid;"><?php echo $clausula['meses'] ?></span> meses
 			</td>
