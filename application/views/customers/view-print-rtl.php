@@ -613,9 +613,10 @@ $fcontrato = $details['f_contrato'];
 	<!-- --------------------------------CONTRATO OTTIS ------------------------------------- -->
 	<?php  } else if($this->config->item('ctitle')=='FUTURE SOLUTIONS DEVELOPMENT SAS'){ ?>
 <div class="invoice-box">
-	<table width="100%">
-	<tr>
-		<td width="100%" style="font-size: 24px;line-height: normal;text-align: justify" > <!--COLUMNA IZQUIERDA-->
+	<table>
+		<tbody>
+		<tr>
+		<td style="font-size: 24px;line-height: normal;text-align: justify" > <!--COLUMNA IZQUIERDA-->
 			<table>
 				<tr>
 					<td style="text-align: right"><h2>CONTRATO ÚNICO DE <br>SERVICIOS FIJOS </h2>No. <span style="border-bottom: 1px solid;"><?php echo $details['abonado'] ?></span></td>
@@ -779,9 +780,9 @@ $fcontrato = $details['f_contrato'];
  	</table>
 			
 		</td>
-		<td><!--CENTRO-->
+		<td  ><!--CENTRO-->
 		</td>
-		<td width="100%" style="font-size: 24px;line-height: normal;text-align: justify"><!--COLUMNA DERECHO-->
+		<td  style="font-size: 24px;line-height: normal;text-align: justify"><!--COLUMNA DERECHO-->
 			<h4>PRINCIPALES OBLIGACIONES DEL USUARIO</h4>
 						1) 	Pagar oportunamente los servicios prestados,
 							incluyendo los intereses de mora cuando haya
@@ -817,7 +818,7 @@ $fcontrato = $details['f_contrato'];
 							Usted puede terminar el contrato en cualquier momento sin penalidades. Para esto debe realizar una solicitud a través de correo electrónico al buzón <span style="border-bottom: 1px solid;">comercial@ottis.com.co</span> o radicando la solicitud en la oficina física mínimo 3 días hábiles antes del corte de facturación (su corte de facturación es el día 30 de cada mes). Si presenta la solicitud con una anticipación menor, la terminación del servicio se dará en el siguiente periodo de facturación.
 							Así mismo, usted puede cancelar cualquiera de los servicios contratados, para lo que le informaremos las condiciones en las que serán prestados los servicios no cancelados y actualizaremos el contrato. Así mismo, si el operador no inicia la prestación del servicio en el plazo acordado, usted puede pedir la restitución de su dinero y la terminación del contrato.
 		</td>
-	</tr>
+		</tr>
 	</table>
 	<table width="100%"><!--hoja 2-->
 		<tr>
@@ -959,7 +960,7 @@ $fcontrato = $details['f_contrato'];
 	 			<h6>COBRO POR RECONEXIÓN DEL SERVICIO</h6>
 				En caso de suspensión del servicio por mora en el pago, podremos cobrarle un valor por reconexión que corresponderá estrictamente a los costos asociados a la operación de reconexión. Los valores de reconexión pueden variar dependiendo de su estado actual.<br><br>
 				En caso de servicios empaquetados procede máximo un cobro de reconexión por cada tipo de conexión empleado en la prestación de los servicios.<br><br>
-			</td>
+			
 		</tr>
 		<table border="1">
 		<tr>
