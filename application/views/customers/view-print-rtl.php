@@ -613,9 +613,10 @@ $fcontrato = $details['f_contrato'];
 	<!-- --------------------------------CONTRATO OTTIS ------------------------------------- -->
 	<?php  } else if($this->config->item('ctitle')=='FUTURE SOLUTIONS DEVELOPMENT SAS'){ ?>
 <div class="invoice-box">
-	<table width="100%">
-	<tr>
-		<td width="100%" style="font-size: 24px;line-height: normal;text-align: justify" > <!--COLUMNA IZQUIERDA-->
+	<table>
+		<tbody>
+		<tr>
+		<td style="font-size: 24px;line-height: normal;text-align: justify" > <!--COLUMNA IZQUIERDA-->
 			<table>
 				<tr>
 					<td style="text-align: right"><h2>CONTRATO ÚNICO DE <br>SERVICIOS FIJOS </h2>No. <span style="border-bottom: 1px solid;"><?php echo $details['abonado'] ?></span></td>
@@ -638,7 +639,7 @@ $fcontrato = $details['f_contrato'];
 						Este contrato explica las condiciones para la prestación de los servicios entre usted y Future
 					  Solutions Development SAS nit 830.502.580-6, con Registro TIC RTIC96000418 por el que pagará mínimo
 					  mensualmente <span style="border-bottom: 1px solid;"><?php echo amountFormat($totaltv+$inter) ?></span>. Este contrato
-					  tendrá vigencia de <span style="border-bottom: 1px solid;">12</span> meses, contados a partir
+					  tendrá vigencia de <span style="border-bottom: 1px solid;"><?php echo $clausula['meses'] ?></span> meses, contados a partir
 					  del <span style="border-bottom: 1px solid;"><?php echo date("d/m/Y",strtotime($fcontrato)) ?></span>. El plazo máximo de instalación
 					  es de 15 días hábiles. Acepto que mi contrato se
 					  renueve sucesivamente y automáticamente por un plazo
@@ -670,7 +671,6 @@ $fcontrato = $details['f_contrato'];
 					  Identificación: <span style="border-bottom: 1px solid;"><?php echo $details['tipo_documento'].' '.$details['documento'] ?></span><br><br>
 					Correo electrónico: <span style="border-bottom: 1px solid;"><?php echo $details['email'] ?></span><br><br>
 					Teléfono de contacto: <span style="border-bottom: 1px solid;"><?php echo $details['celular'].' '.$details['celular2'] ?></span><br><br>
-					Nombre Beneficiario: <span style="border-bottom: 1px solid;"></span><br><br>
 					Dirección de servicio: <span style="border-bottom: 1px solid;"><?php
 					if($details['numero1']==='' || $details['numero1']===0 || $details['numero2']===0){
 						if($details['divnum1']==0){
@@ -757,28 +757,20 @@ $fcontrato = $details['f_contrato'];
 						}else{
 							echo '__';
 						} ?></span><br><br>
-				a. El servicio prestado por OTTIS Comunicaciones es continuo
-				y permanente 30 días al mes 24 horas diarias.<br>
-				b. Los planes del servicio prestado consisten en entregar una
-				velocidad de acceso a internet constante, sin límite de
-				descargas. El servicio se da por velocidad no por cantidad de
-				datos descargados.<br>
-				c. Facturación mes presente. La factura se envía por correo electrónico dentro de los 20 primeros días y la misma tiene fecha de vencimiento el día 03 del mes siguiente y puede realizar el pago presencial mediante EFECTY Convenio 112389, Jer Convenio 432 o pago en línea  MI PAGO AMIGO en nuestra página web www.ottis.com.co<br>
-				d. El costo de la instalación en caso de aplicar consiste en la
-				habilitación del servicio y las obras civiles básicas que se
-				requieran (préstamo de equipo de comunicaciones,
-				instalación de mástil o herrajes, fibra óptica, cableado interno
-				a primer equipo, etc.)<br>
-				e. El soporte técnico es prestado de forma personalizada, con
-				atención telefónica de Lunes a Sábado de 6am a 9pm y
-				domingos y festivos de 9am a 5pm. El soporte técnico en
-				sitio es de lunes a sábado de 8am a 5pm.
+				a. El servicio prestado es prestado por FUTURE SOLUTIONS DEVELOPMENT SAS con su marca registrada OTTIS COMUNICACIONES, el cual es continuo y permanente 30 días al mes 24 horas diarias.<br>
+				b. Los planes del servicio prestado consisten en entregar una velocidad de acceso a internet constante, sin límite de descargas. El servicio se da por velocidad no por cantidad de datos descargados.<br>
+				c. Facturación mes presente. La factura se envía por correo electrónico dentro de los 20 primeros días y la misma tiene fecha de <strong>vencimiento el día 03 del mes siguiente</strong>  y puede realizar el pago mediante EFECTY Convenio 112389, JER Convenio 432 o pago en línea a través del Botón de Pagos MI PAGO AMIGO que se encuentra en nuestra página web www.ottis.com.co.<br>
+				d. El costo de la instalación en caso de aplicar consiste en la habilitación del servicio y las obras civiles básicas que se requieran (entrega de equipo de comunicaciones en calidad de comodato, instalación de mástil o herrajes, fibra óptica, cableado interno a primer equipo, etc.)<br>
+				e. El soporte técnico es prestado de forma personalizada, con atención telefónica de Lunes a Sábado de 6am a 9pm y domingos y festivos de 9am a 5pm. El soporte técnico en sitio es de lunes a sábado de 8am a 5pm.
 			</td>
 			<tr>
 			<td>
 			<h2>Valor Total <?php echo amountFormat(($totaltv+$inter)*$clausula['meses']) ?></h2>
-			Valor anual de acuerdo al monto mensual
-			</td>
+			Este valor incluye todas las mensualidades y el valor pagado por habilitación
+			</td>			
+			</tr>
+			<tr>
+				<td>* Espacio diligenciado por el usuario</td>
 			</tr>
     		</tr>
     		<tr>
@@ -788,9 +780,9 @@ $fcontrato = $details['f_contrato'];
  	</table>
 			
 		</td>
-		<td><!--CENTRO-->
+		<td  ><!--CENTRO-->
 		</td>
-		<td width="100%" style="font-size: 24px;line-height: normal;text-align: justify"><!--COLUMNA DERECHO-->
+		<td  style="font-size: 24px;line-height: normal;text-align: justify"><!--COLUMNA DERECHO-->
 			<h4>PRINCIPALES OBLIGACIONES DEL USUARIO</h4>
 						1) 	Pagar oportunamente los servicios prestados,
 							incluyendo los intereses de mora cuando haya
@@ -818,95 +810,32 @@ $fcontrato = $details['f_contrato'];
 							cesión queda liberado de cualquier responsabilidad con
 							nosotros.
 			<h4>MODIFICACIÓN</h4>
-							Nosotros no podemos modificar el contrato sin su
-							autorización. Esto incluye que no podemos cobrarle
-							servicios que no haya aceptado expresamente. Si esto
-							ocurre tiene derecho a terminar el contrato, incluso
-							estando vigente la cláusula de permanencia mínima, sin
-							la obligación de pagar suma alguna por este concepto.
-							No obstante, usted puede en cualquier momento
-							modificar los servicios contratados. Dicha modificación
-							se hará efectiva en el período de facturación siguiente,
-							para lo cual deberá presentar la solicitud de
-							modificación por lo menos con 3 días hábiles de
-							anterioridad al corte de facturación.
+							Nosotros no podemos modificar el contrato sin su autorización. Esto incluye que no podemos cobrarle servicios que no haya aceptado expresamente. Si esto ocurre tiene derecho a terminar el contrato, incluso estando vigente la cláusula de permanencia mínima, sin la obligación de pagar suma alguna por este concepto. No obstante, usted puede en cualquier momento modificar los servicios contratados.
+							Dicha modificación se hará efectiva en el período de facturación siguiente, para lo cual deberá presentar la solicitud de modificación por lo menos con 3 días hábiles de anterioridad al corte de facturación.
 			<h4>SUSPENSIÓN</h4>
-							Usted tiene derecho a solicitar la suspensión del servicio
-							por un máximo de 2 meses durante la vigencia del
-							contrato. Para esto debe presentar la solicitud antes del
-							inicio del ciclo de facturación que desea suspender. Si
-							existe una cláusula de permanencia mínima, su vigencia
-							se prorrogará por el tiempo que dure la suspensión.	
+							Usted tiene derecho a solicitar la suspensión del servicio por un máximo de 2 meses durante la vigencia del contrato. Para esto debe presentar la solicitud antes del inicio del ciclo de facturación que desea suspender. Si existe una cláusula de permanencia mínima, su vigencia se prorrogará por el tiempo que dure la suspensión.
 	  			<h4>TERMINACIÓN</h4>
-							Usted puede terminar el contrato en cualquier
-							momento sin penalidades siempre y cuando no cuente
-							aún con cláusula de permanencia. Para esto debe
-							realizar una solicitud a través de correo electrónico al
-							buzón comercial@ottis.com.co o radicando la solicitud
-							en la oficina física mínimo 3 días hábiles antes del corte
-							de facturación (su corte de facturación es el día 30 de
-							cada mes). Si presenta la solicitud con una anticipación
-							menor, la terminación del servicio se dará en el
-							siguiente periodo de facturación.
-							Así mismo, usted puede cancelar cualquiera de los
-							servicios contratados, para lo que le informaremos las
-							condiciones en las que serán prestados los servicios no
-							cancelados y actualizaremos el contrato. Así mismo, si
-							el operador no inicia la prestación del servicio en el
-							plazo acordado, usted puede pedir la restitución de su
-							dinero y la terminación del contrato.
+							Usted puede terminar el contrato en cualquier momento sin penalidades. Para esto debe realizar una solicitud a través de correo electrónico al buzón <span style="border-bottom: 1px solid;">comercial@ottis.com.co</span> o radicando la solicitud en la oficina física mínimo 3 días hábiles antes del corte de facturación (su corte de facturación es el día 30 de cada mes). Si presenta la solicitud con una anticipación menor, la terminación del servicio se dará en el siguiente periodo de facturación.
+							Así mismo, usted puede cancelar cualquiera de los servicios contratados, para lo que le informaremos las condiciones en las que serán prestados los servicios no cancelados y actualizaremos el contrato. Así mismo, si el operador no inicia la prestación del servicio en el plazo acordado, usted puede pedir la restitución de su dinero y la terminación del contrato.
 		</td>
-	</tr>
+		</tr>
 	</table>
 	<table width="100%"><!--hoja 2-->
 		<tr>
 			<td width="100%" style="font-size: 24px;line-height: normal;text-align: justify"><!--COLUMNA IZQUIERDA-->
 				<H4>PAGO Y FACTURACIÓN</H4>
-				La factura le debe llegar como mínimo 5 días hábiles
-				antes de la fecha de pago. Si no llega, puede solicitarla a
-				través de nuestro
-				s Medios de Atención y debe pagarla
-				oportunamente.
-				Si no paga a tiempo, previo aviso, suspenderemos su
-				servicio hasta que pague sus saldos pendientes.
-				Contamos con 3 días hábiles luego de su pago para
-				reconectarle el servicio. Si no paga a tiempo, también
-				podemos reportar su deuda a las centrales de riesgo.
-				Para esto tenemos que avisarle por lo menos con 20 días
-				calendario de anticipación. Si paga luego de este reporte
-				tenemos la obligación dentro del mes de seguimiento de
-				informar su pago para que ya no aparezca reportado.
-				Si tiene un reclamo sobre su factura, puede presentarlo
-				antes de la fecha de pago y en ese caso no debe pagar
-				las sumas reclamadas hasta que resolvamos su solicitud.
-				Si ya pagó, tiene 6 meses para presentar la reclamación.
-				<br>
-				<table width="100%" border="1">
-				<tbody>
-					<tr>
-					<td align="center"><?php if(file_exists($url_firma)){
-								?><span style="border-bottom: 1px solid;"><img height="130px" src="<?=$url_firma?>"></img></span><?php 
-								}else{
-									echo '____________________';
-								} 
-								if(file_exists($url_huella)){
-								?><span style="border-bottom: 1px solid;"><img height="130px" src="<?=$url_huella?>"></img></span><?php 
-								}else{
-									echo '____________________';
-								} ?><br>Con esta firma acepta recibir la factura solo por medios electrónicos</td>
-					</tr>
-				</tbody>
-				</table>
-				<br>
-				<h4>COMO COMUNICARSE CON NOSOTROS (MEDIOS DE ATENCIÓN)</h4>
+				La factura le debe llegar como mínimo 5 días hábiles antes de la fecha de pago. Si no llega, puede solicitarla a través de nuestros Medios de Atención y debe pagarla oportunamente. La factura será enviada por medios electrónicos.
+				Si no paga a tiempo, previo aviso, suspenderemos su servicio hasta que pague sus saldos pendientes. Contamos con 3 días hábiles luego de su pago para reconectarle el servicio. Si no paga a tiempo, también podemos reportar su deuda a las centrales de riesgo. Para esto tenemos que avisarle por lo menos con 20 días calendario de anticipación. Si paga luego de este reporte tenemos la obligación dentro del mes de seguimiento de informar su pago para que ya no aparezca reportado. Si tiene un reclamo sobre su factura, puede presentarlo antes de la fecha de pago y en ese caso no debe pagar las sumas reclamadas hasta que resolvamos su solicitud. Si ya pagó, tiene 6 meses para presentar la reclamación.
+				<br><br>
+				<h4>     COMO COMUNICARSE CON NOSOTROS<br> (MEDIOS DE ATENCIÓN)</h4>
 				<br>
 				<table border="1">
 					<tr>
-						<td>
+						<td style="background-color: black; color: white; font-size: x-large; text-align: center">
 							1
 						</td>
 						<td>
-							Nuestros medios de atención son:
+							Nuestros medios de atención son:<br>
 							a. Oficinas físicas Carrera 16A n. 13A - 19 Sogamoso<br>
 							b. Página web www.ottis.com.co<br>
 							c. Redes sociales @ottiscomunica<br>
@@ -916,7 +845,7 @@ $fcontrato = $details['f_contrato'];
 						</td>
 					</tr>
 					<tr>
-						<td>
+						<td style="background-color: black; color: white; font-size: x-large; text-align: center">
 							2
 						</td>
 						<td>
@@ -926,7 +855,7 @@ $fcontrato = $details['f_contrato'];
 						</td>
 					</tr>
 					<tr>
-						<td>
+						<td style="background-color: black; color: white; font-size: x-large; text-align: center">
 							3
 						</td>
 						<td>
@@ -941,35 +870,18 @@ $fcontrato = $details['f_contrato'];
 				<br>
 				<table border="1">
 					<tr>
-						<td>
+						<td style="background-color: black; color: white; font-size: x-large; text-align: center">
 							4
 						</td>
 						<td>
-							Cuando su queja o petición sea por los servicios de
-							telefonía y/o internet, y esté relacionada con actos de
-							negativa del contrato, suspensión del servicio,
-							terminación del contrato, corte y facturación; usted
-							puede insistir en su solicitud ante nosotros, dentro de los
-							10 días hábiles siguientes a la respuesta, y pedir que
-							si no llegamos a una solución satisfactoria para usted,
-							enviemos su reclamo directamente a la SIC
-							(Superintendencia de Industria y Comercio) quien
-							resolverá de manera definitiva su solicitud. Esto se
-							llama recurso de reposición y en subsidio apelación.
-							Cuando su queja o petición sea por el servicio de
-							televisión, puede enviar la misma a la Autoridad
-							Nacional de Televisión, para que esta Entidad resuelva
-							su solicitud.
+							Cuando su queja o petición sea por los servicios de telefonía y/o internet, y esté relacionada con actos de negativa del contrato, suspensión del servicio, terminación del contrato, corte y facturación; usted puede insistir en su solicitud ante nosotros, dentro de los 10 días hábiles siguientes a la respuesta, y pedir que si no llegamos a una solución satisfactoria para usted, enviemos su reclamo directamente a la SIC (Superintendencia de Industria y Comercio) quien resolverá de manera definitiva su solicitud. Esto se llama recurso de reposición y en subsidio apelación.
+							Cuando su queja o petición sea por el servicio de televisión, puede enviar la misma a la Autoridad Nacional de Televisión, para que esta Entidad resuelva su solicitud.
 						</td>
 					</tr>
 				</table>
 				<br>
 				<h4>ACEPTO CLAUSULA DE PERMANENCIA MÍNIMA</h4>
-				En consideración a que le estamos otorgando un descuento
-				respecto del valor del cargo por conexión, o le diferimos el
-				pago del mismo, se incluye la presente cláusula de
-				permanencia mínima. En la factura encontrará el valor a pagar
-				si decide terminar el contrato anticipadamente.
+				En consideración a que le estamos otorgando un descuento respecto del valor del cargo por conexión, o le diferimos el pago del mismo, se incluye la presente cláusula de permanencia mínima. En la factura encontrará el valor a pagar si decide terminar el contrato anticipadamente
 				<br>
 				<table width="100%" border="1">
 				   <tbody>
@@ -983,12 +895,22 @@ $fcontrato = $details['f_contrato'];
 						<td colspan="2"><?php  echo amountFormat($clausula['v_total']) ?></td>
 					</tr>
 					<tr>
+						<td colspan="4">Suma que le fue descontada o diferida del valor total del cargo por conexión</td>
+						<td colspan="2">$ 0</td>
+					</tr>
+					<tr>
 						<td colspan="4">Fecha inicio permanencia mínima</td>
 						<td colspan="2"><?php echo date("d/m/Y",strtotime($fcontrato)) ?></td>
 					</tr>
 					<tr>
 						<td colspan="4">Fecha de finalización de la permanencia mínima</td>
-						<td colspan="2"><?php echo date("d/m/Y",strtotime($fcontrato."+ 1 year")) ?></td>
+						<td colspan="2"><?php
+							if($clausula['meses']==12){
+								$fechafin=$fcontrato."+ 1 year";
+							}else{
+								$fechafin=$fcontrato."+ 6 months";
+							}
+							echo date("d/m/Y",strtotime($fechafin)) ?></td>
 					</tr>
 					<tr>
 						<td colspan="6" style="text-align: center;font-weight: bold">Valor a pagar si termina el contrato anticipadamente según el mes</td>
@@ -1032,47 +954,25 @@ $fcontrato = $details['f_contrato'];
 			</td>
 			<td width="100%" style="font-size: 24px;line-height: normal;text-align: justify"><!--COLUMNA DERECHO-->
 				<h6>CAMBIO DE DOMICILIO</h6>
-				Usted puede cambiar de domicilio y continuar con
-				el servicio siempre que sea técnicamente posible.
-				Si desde el punto de vista técnico no es viable el
-				traslado del servicio, usted puede ceder su
-				contrato a un tercero o terminarlo pagando el valor
-				de la cláusula de permanencia mínima si esta
-				vigente.
+				Usted puede cambiar de domicilio y continuar con el servicio siempre que sea técnicamente posible. Si desde el punto de vista técnico no es viable el traslado del servicio, usted puede ceder su contrato a un tercero o terminarlo pagando el valor de la cláusula de permanencia mínima si está vigente.
 	 			<h6>LARGA DISTANCIA (TELEFONÍA)</h6>
-				Nos comprometemos a usar el operador de larga
-				distancia que usted nos indique, para lo cual debe
-				marcar el código de larga distancia del operador que
-				elija.
+				Nos comprometemos a usar el operador de larga distancia que usted nos indique, para lo cual debe marcar el código de larga distancia del operador que elija.
 	 			<h6>COBRO POR RECONEXIÓN DEL SERVICIO</h6>
-				En caso de suspensión del servicio por mora en el pago,
-				podremos cobrarle un valor por reconexión que
-				corresponderá estrictamente a los costos asociados a la
-				operación de reconexión. Los valores de reconexión pueden 
-				variar dependiendo de su estado actual.</span>
-			</td>
+				En caso de suspensión del servicio por mora en el pago, podremos cobrarle un valor por reconexión que corresponderá estrictamente a los costos asociados a la operación de reconexión. Los valores de reconexión pueden variar dependiendo de su estado actual.<br><br>
+				En caso de servicios empaquetados procede máximo un cobro de reconexión por cada tipo de conexión empleado en la prestación de los servicios.<br><br>
+			
 		</tr>
 		<table border="1">
 		<tr>
 				<td colspan="2" style="background-color: black; color: white; font-size: x-large; text-align: justify">
-					El usuario es el ÚNICO responsable por el contenido y la información
-					que se curse a través de la red y del uso que se haga de los equipos o de
-					los servicios.<br><br>
-					Los equipos de comunicaciones que ya no use son desechos que no
-					deben ser botados a la caneca,consulte nuestra política de
-					recolección de aparatos en desuso.
+					El usuario es el ÚNICO responsable por el contenido y la información que se curse a través de la red y del uso que se haga de los equipos o de los servicios.<br><br>
+					Los equipos de comunicaciones que ya no use son desechos que no deben ser botados a la caneca, consulte nuestra política de recolección de aparatos en desuso.
 				</td>
 			</tr>
 			<tr>
 			<td colspan="2" style="text-align: justify">
 			<h4>ESPACIO PARA LOS OPERADORES:</h4>
-			Los equipos de comunicaciones y elementos consumibles a
-			continuación relacionados se instalan en la vivienda del
-			suscriptor y son entregados por Future Solutions
-			Development S.A.S. en calidad de Comodato (Tenencia o
-			Préstamo), por lo tanto, en el momento de la cancelación
-			definitiva del servicio, los equipos y sus consumibles serán
-			retirados en su totalidad por la empresa.
+			Los equipos de comunicaciones y elementos consumibles a continuación relacionados se instalan en la vivienda del suscriptor y son entregados por Future Solutions Development S.A.S. en calidad de Comodato (Tenencia o Préstamo), por lo tanto, en el momento de la cancelación definitiva del servicio, los equipos y sus consumibles serán retirados en su totalidad por la empresa.
 			<table width="100%" border="1">
 			<tbody>
 				<tr style="border-radius: 20px">
@@ -1106,15 +1006,15 @@ $fcontrato = $details['f_contrato'];
 							echo $equipo->accesorios;
 						}else{
 							echo '___________';
-						}  ?></span> Municipio: <span style="border-bottom: 1px solid;"><?php echo $ciudad['ciudad'] ?></span><br><br>
+						}  ?></span><br><br>
 				</td>
 				</tr>
 			<tr style="border-radius: 20px">
 				<td style="border: 0,0,0,0"></td>
 			</tr>
 			</table>
-		</table>
-			<table border="1">
+		</table><br><br><br><br><br><br><br>
+			<table >
 					<tbody>
 						<tr>
 							<td align="center">
@@ -1127,7 +1027,7 @@ $fcontrato = $details['f_contrato'];
 								?><span style="border-bottom: 1px solid;"><img height="130px" src="<?=$url_huella?>"></img></span><?php 
 								}else{
 									echo '____________________';
-								} ?><br>Aceptación contrato mediante firma o cualquier otro medio válido</td>
+								} ?><br>En señal de conocimiento, aceptación y autorización, firmo</td>
 						</tr>
 					</tbody>
 				</table>
@@ -1139,9 +1039,13 @@ $fcontrato = $details['f_contrato'];
 					<td >
 						<h2>FECHA <?php echo date("d/m/Y",strtotime($fcontrato)) ?></h2>
 					</td>
+					<tr>
+						<td colspan="2" style="border: 0">Consulte el régimen de protección de usuarios en www.crcom.gov.co</h4></td>
+					</tr>
+					
 				</table>
-				<h4>Consulte el régimen de protección de usuarios en www.crcom.gov.co</h4>
-	</table>
+					<h4>Consulte el régimen de protección de usuarios en www.crcom.gov.co</h4>
+	</table>			
 	 </tbody>
 	</table> 
 	</div>
