@@ -43,7 +43,7 @@ class FacturasElectronicas extends CI_Controller
         $head['usernm'] = $this->aauth->get_user()->username;
 $this->load->model("customers_model","customers");
         $data['servicios'] = $this->customers->servicios_detail($_GET['id']);
-        $data['due'] = $this->customers->due_details($_GET['id']);
+        $data['due'] = $this->customers->due_details_fa($data['servicios']['tid']);
         $data['afiliacion'] = $this->customers->tiene_afiliacion($_GET['id']);
         $this->facturas_electronicas->cargar_configuraciones_para_facturar();
         $this->load->view('fixed/header', $head);
@@ -826,7 +826,7 @@ set_time_limit(5000);
                      $datos['estcuenta']=$estcuenta;
                 }else{
                     $servicios=$this->customers->servicios_detail($id_customer);
-                $puntos = $this->customers->due_details($id_customer);
+                $puntos = $this->customers->due_details_fa($servicios['tid']);
                  $customer_data=$this->db->get_where("customers",array("id"=>$id_customer))->row();
                /*  cambios de abajo se comentan son para facturar cortados*/
                 /*
