@@ -320,13 +320,14 @@ class Customers_model extends CI_Model
         $query = $this->db->get();
         return $query->row_array();
     }
-       public function due_details_fa($id_invoice)
+       public function due_details_fa($custid)
     {
 
        $this->db->select('MAX(puntos) AS puntos');
         $this->db->from('invoices');
-        //$this->db->where('csd', $custid);
-        $this->db->where('tid', $id_invoice);
+        $this->db->where('csd', $custid);
+        $this->db->order_by('tid',"DESC");
+        $this->db->limit(1);
         $query = $this->db->get();
         return $query->row_array();
     }
