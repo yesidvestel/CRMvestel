@@ -296,7 +296,7 @@ class SmsApi
 //$this->config->setApiKey("0","a163f063dc8605d0faaa0d50ff43a9254034020b");
         //$this->config->setUsername("00486800430");
         //$this->config->setPassword("Admin2019");
-        $resourcePath = '/sms/single';
+        $resourcePath = '/sms/simple';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];

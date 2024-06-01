@@ -13,31 +13,67 @@ class CellVozApi
     {
     }
     public function getToken(){
-    	$AuthApi = new AuthApi();
-		$login = new Login( array('account' =>$_SESSION['variables_cellvoz']->account,"password"=>$_SESSION['variables_cellvoz']->password));
-		$x=$AuthApi->login($login);
-		return $x;
-    }
-    public function enviar_msm($token,$number,$mensaje){
-    	/*echo "<br>";
-    	var_dump("token=> ".$token);
-    	echo "<br>";
-        echo "<br>";
-        echo "<br>";*/
-    	$config = Swagger\Client\Configuration::getDefaultConfiguration()->setAccessToken($token);
-    	//$config->setApiKey("api-key","8529863e6706e0659cb610dfaded9c36db43e989");
-    	$SmsApi= new SmsApi(new GuzzleHttp\Client(),$config);
-    	//$SMSRequest= new SMSRequest(array("number"=>"573142349563","message"=>"MENSAJE PARA ENVIAR Duber"));
-        $SMSRequest= new SMSRequest(array("number"=>"57".$number,"message"=>$mensaje));
+    
+    $curl = curl_init();
 
-    	try {
-    $result = $SmsApi->sms($SMSRequest);
-    return $result;
-} catch (Exception $e) {
-    echo 'Exception when calling SmsApi->sms: ', $e->getMessage(), PHP_EOL;
-}
+curl_setopt_array($curl, array(
+  CURLOPT_URL => 'https://api.liwa.co/v2/auth/login',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 0,
+  CURLOPT_FOLLOWLOCATION => true,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'POST',
+  CURLOPT_POSTFIELDS =>'{
+  "account": "'.$_SESSION['variables_cellvoz']->account.'",
+  "password": "'.$_SESSION['variables_cellvoz']->password.'"
+}',
+  CURLOPT_HTTPHEADER => array(
+    'Content-Type: application/json',
+    'Accept: application/json'
+  ),
+));
+
+$response = curl_exec($curl);
+
+curl_close($curl);
+
+return array("token"=>json_decode($response)->token);
+
+    }
+
+    public function enviar_msm($token,$number,$mensaje){
+   
     	//$respuesta =$SmsApi->sms($SMSRequest);
     	//var_dump($respuesta);
+$curl = curl_init();
+        //curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt_array($curl, array(
+          CURLOPT_URL => 'https://api.liwa.co/v2/sms/simple',
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => '',
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 399,
+          CURLOPT_FOLLOWLOCATION => true,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => 'POST',
+          CURLOPT_POSTFIELDS =>'{
+            "number": "57'.$number.'",
+            "message": "'.$mensaje.'",
+            "type": 1
+            }',
+          CURLOPT_HTTPHEADER => array(
+            'Content-Type: application/json',
+            'api-key: '.$_SESSION['variables_cellvoz']->api_key,
+            'Authorization: Bearer '.$token
+          ),
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+        return $response;
 
     }
 
@@ -45,7 +81,7 @@ class CellVozApi
         $curl = curl_init();
         //curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt_array($curl, array(
-          CURLOPT_URL => 'https://api.cellvoz.co/v2/sms/single',
+          CURLOPT_URL => 'https://api.liwa.co/v2/sms/simple',
           CURLOPT_RETURNTRANSFER => true,
           CURLOPT_ENCODING => '',
           CURLOPT_MAXREDIRS => 10,
@@ -71,10 +107,10 @@ class CellVozApi
         echo $response;
     } 
     public function envio_sms_masivos_por_curl($token,$mensaje,$name_campaign){
-       /* $curl = curl_init();
+        $curl = curl_init();
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt_array($curl, array(
-          CURLOPT_URL => 'https://api.cellvoz.com/v2/sms/multiple',
+          CURLOPT_URL => 'https://api.liwa.co/v2/sms/multiple',
           CURLOPT_RETURNTRANSFER => true,
           CURLOPT_ENCODING => '',
           CURLOPT_MAXREDIRS => 10,
@@ -95,30 +131,16 @@ class CellVozApi
           ),
         ));
 
+
         $response = curl_exec($curl);
-var_dump($token);
+/*if($errno = curl_errno($curl)) {
+    $error_message = curl_strerror($errno);
+    echo "cURL error ({$errno}):\n {$error_message}";
+}*/
         curl_close($curl);
+
         return $response;
-*/
 
-  $url = "https://api.cellvoz.com/v2/sms/multiple";
-    $payload = '{
-              "name": "'.$name_campaign.'",
-              "messages": [
-                    '.$mensaje.'
-              ]
-            }';
-
-    $cmd = 'curl -X POST -H "Content-Type: application/json" ' .
-           '-H "api-key: '.$_SESSION['variables_cellvoz']->api_key.'" ' .
-           '-H "Authorization: Bearer ' . $token . '" ' .
-           '--data \'' . $payload . '\' ' .
-           '"' . $url . '"';
-
-    
-
-    $output = exec($cmd);
-        return $output;
         /* es orden de los datos que resive este servidor
         {
               "name": "masivo",
@@ -143,7 +165,7 @@ var_dump($token);
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt_array($curl, array(
-          CURLOPT_URL => 'https://api.cellvoz.co/v2/sms/multiple',
+          CURLOPT_URL => 'https://api.liwa.co/v2/sms/multiple',
           CURLOPT_RETURNTRANSFER => true,
           CURLOPT_ENCODING => '',
           CURLOPT_MAXREDIRS => 10,

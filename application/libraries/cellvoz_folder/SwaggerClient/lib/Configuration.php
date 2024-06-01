@@ -80,7 +80,7 @@ class Configuration
      *
      * @var string
      */
-    protected $host = 'https://api.cellvoz.com/v2';
+    protected $host = 'https://api.liwa.com/v2';
 
     /**
      * User agent of the HTTP request, set to "PHP-Swagger" by default
