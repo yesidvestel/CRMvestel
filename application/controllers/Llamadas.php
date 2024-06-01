@@ -591,7 +591,8 @@ class Llamadas extends CI_Controller
         'Fecha' => 'date', 
         'Hora' => 'string',
         'Usuario' => 'string',
-        'Documento' => 'string',
+        'Documento' => 'number',
+		'ID' => 'number',
         'Responsable' => 'string',
 		'Tipo de llamada' => 'string',
 		'Respuesta' => 'string',
@@ -630,6 +631,7 @@ class Llamadas extends CI_Controller
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ));
     
     //write rows to sheet1
@@ -649,6 +651,7 @@ class Llamadas extends CI_Controller
 				$creditos->hra,
 				$user->name.' '.$user->name.' '.$user->dosnombre.' '.$user->unoapellido.' '.$user->dosapellido,
 				$user->documento,
+				$user->id,
 				$creditos->responsable,
 				$creditos->tllamada,
 				$creditos->trespuesta,
