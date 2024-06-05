@@ -56,6 +56,14 @@
 {
  background-color: #2C60A7;
 }
+.st-Dado
+{
+ background-color: #A8531A;
+}
+.st-Por
+{
+ background-color: #180E97;
+}
 .st-Depurado
 {
  background-color: darkcyan;

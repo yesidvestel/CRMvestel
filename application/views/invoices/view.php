@@ -858,6 +858,8 @@
 								<?php } if ($this->aauth->get_user()->id == 96 || $this->aauth->get_user()->roleid == 5 || $this->aauth->get_user()->co != null) { ?>
 								<option value="Reportado"><?php echo $this->lang->line('') ?>Reportado</option>
 								<option value="Depurado"><?php echo $this->lang->line('') ?>Depurado</option>
+								<option value="Dado de Baja"><?php echo $this->lang->line('') ?>Dado de Baja</option>
+								<option value="Por retirar"><?php echo $this->lang->line('') ?>Por retirar</option>
 								<?php } ?>
                             </select>
 
