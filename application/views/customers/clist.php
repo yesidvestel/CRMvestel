@@ -1,5 +1,5 @@
 <style>
-.st-Activo, .st-Instalar , .st-Cortado, .st-Suspendido, .st-anulado, .st-Exonerado
+.st-Activo, .st-Instalar , .st-Cortado, .st-Suspendido, .st-anulado, .st-Exonerado, .st-Dado, .st-Por
 {
     text-transform: uppercase;
     color: #fff;
@@ -26,6 +26,14 @@
 .st-Exonerado
 {
  background-color: #24A9AB;
+}
+.st-Dado
+{
+ background-color: #A8531A;
+}
+.st-Por
+{
+ background-color: #180E97;
 }
 </style>
 <article class="content content items-list-page">

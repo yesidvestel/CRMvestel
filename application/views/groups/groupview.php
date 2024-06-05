@@ -51,7 +51,14 @@
 .cl-ck-f-electronicas:hover{
      transform: scale(4);
 }
-
+.st-Dado
+{
+ background-color: #A8531A;
+}
+.st-Por
+{
+ background-color: #180E97;
+}
 
 /*Cambios filtro multiple */
 .selectBox {
@@ -215,6 +222,8 @@
 														<option value='Retirado'>Retirado</option>
 														<option value='Depurado'>Depurado</option>
 														<option value='Reportado'>Reportado</option>
+														<option value='Dado de Baja'>Dado de Baja</option>
+														<option value='Por retirar'>Por retirar</option>
                                                     </select>
 
                                               </div>
