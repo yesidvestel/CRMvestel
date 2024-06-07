@@ -206,7 +206,7 @@ class Tools_model extends CI_Model
 
     public function settask($id, $stat)
     {
-
+		$this->load->model('communication_model');
         $data = array('status' => $stat);
         $this->db->set($data);
         $this->db->where('id', $id);
@@ -215,20 +215,34 @@ class Tools_model extends CI_Model
                     $this->db->set('color', '#4CB0CB');
                     $this->db->where('id_tarea', $id);
                     $this->db->update('events');
+					$lan='PENDIENTE';
             }else if($stat=="Progress"){//Realizando
                     $this->db->set('color', '#2DC548');
                     $fecha_final = date("Y-m-d H:i:s");     
                     $this->db->set('start', $fecha_final);
                     $this->db->where('id_tarea', $id);
                     $this->db->update('events');
-
+					$lan='REALIZANDO';
             }else if($stat=="Done"){//Hecho
                     $fecha_final = date("Y-m-d H:i:s");     
                     $this->db->set('color', '#a3a3a3');
                     $this->db->set('end', $fecha_final);
                     $this->db->where('id_tarea', $id);
                     $this->db->update('events');
+					$lan='RESUELTO';
             }
+			$tarea = $this->db->get_where("todolist", array('id' =>$id))->row();
+			$name = $tarea->name;
+			$variable_datos_pin=md5("variable_datos_pin");        
+			$url=$_SESSION[$variable_datos_pin]['url'];
+			$content = 'Su Tarea a pasado a estado '.$lan.' puedes revisar actividades en '.$url.'manager/historial?id='.$id;
+			$colaborador = $this->db->get_where("aauth_users", array('id' =>$tarea->eid))->row();
+			$mailtoc = $colaborador->email;
+			$mailtotilte = $colaborador->username;
+			$attachmenttrue = false;
+			$attachment = '';
+			//envio correo tarea
+			$this->communication_model->send_email($mailtoc, $mailtotilte, $name, $content, $attachmenttrue, $attachment);
             $this->tools->add_notification_task($id,$stat);
             $data_h['modulo']="tools";
                 $data_h['accion']="Editando evento tarea Tools_model linea 228";

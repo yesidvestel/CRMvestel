@@ -161,7 +161,7 @@ class Tools Extends CI_Controller
         $id = $this->input->post('tid');
         $stat = $this->input->post('stat');
         $this->tools->settask($id, $stat);
-        echo json_encode(array('status' => 'Success', 'message' => $this->lang->line('UPDATED'), 'pstatus' => 'Success'));
+        //echo json_encode(array('status' => 'Success', 'message' => $this->lang->line('UPDATED'), 'pstatus' => 'Success'));
 
 
     }
