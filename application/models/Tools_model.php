@@ -236,7 +236,7 @@ class Tools_model extends CI_Model
 			$variable_datos_pin=md5("variable_datos_pin");        
 			$url=$_SESSION[$variable_datos_pin]['url'];
 			$content = 'Su Tarea a pasado a estado '.$lan.' puedes revisar actividades en '.$url.'manager/historial?id='.$id;
-			$colaborador = $this->db->get_where("aauth_users", array('id' =>$tarea->eid))->row();
+			$colaborador = $this->db->get_where("aauth_users", array('id' =>$tarea->aid))->row();
 			$mailtoc = $colaborador->email;
 			$mailtotilte = $colaborador->username;
 			$attachmenttrue = false;
