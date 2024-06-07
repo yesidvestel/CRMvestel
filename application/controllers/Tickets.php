@@ -918,7 +918,12 @@ if($_SESSION[md5("variable_datos_pin")]['db_name'] != "admin_crmvestel" && $stat
 		$priority = 'Low';
 		$stdate = $stdate2;
 		$tdate = '';
-		$asignacion = $this->db->get_where('asignaciones', array('detalle' => 'encuesta','tipo'=> $ciudad))->row();
+		if($this->config->item('ctitle')=='VESTEL S.A.S'){
+		 	$cd=$ciudad;	
+		}else{
+			$cd='';
+		}
+		$asignacion = $this->db->get_where('asignaciones', array('detalle' => 'encuesta','tipo'=> $cd))->row();
 		
 			//var_dump($asignacion->colaborador);
 		$employee = $asignacion->colaborador;
