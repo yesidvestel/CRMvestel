@@ -969,3 +969,8 @@ UPDATE `invoices` SET `combo` = 'Mensualidad 1500 Usuario software SAVE' WHERE `
 FECHA DE INGRESO
 --------------------------------------
 ALTER TABLE `customers` ADD `f_ingreso` DATE NULL AFTER `f_contrato`;
+----------------------------------------------------------------------------
+caso de ayv cambios sql
+UPDATE `products` SET `pid` = '158' WHERE `products`.`pid` = 25;
+DELETE FROM `invoice_items` WHERE `invoice_items`.`tid` = 1428
+-------------------------------------------------------------------
