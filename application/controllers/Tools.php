@@ -126,6 +126,7 @@ class Tools Extends CI_Controller
 
     public function save_addtask()
     {
+		$this->load->model('communication_model');
         $name = $this->input->post('name');
         $estado = $this->input->post('status');
         $priority = $this->input->post('priority');
@@ -136,13 +137,19 @@ class Tools Extends CI_Controller
         $agendar = $this->input->post('agendar');
         $fagenda = $this->input->post('f_agenda');
         $hora = $this->input->post('hora');
-        $assign = $this->aauth->get_user()->id;
+        $assign = $this->aauth->get_user()->id;	
 		$ordenn = '';
         $stdate = datefordatabase($stdate);
         $tdate = datefordatabase($tdate);
-
+		$colaborador = $this->db->get_where("aauth_users", array('id' =>$employee))->row();
+        $mailtoc = $colaborador->email;
+        $mailtotilte = $colaborador->username;
+		$attachmenttrue = false;
+        $attachment = '';
+		//envio correo tarea
+		$this->communication_model->send_email($mailtoc, $mailtotilte, $name, $content, $attachmenttrue, $attachment);
         if ($this->tools->addtask2($name, $estado, $priority, $stdate, $tdate, $employee, $assign, $content, $ordenn,$agendar,$fagenda,$hora)) {
-            echo json_encode(array('status' => 'Success', 'message' => $this->lang->line('New Task Added')));
+           echo ''; //echo json_encode(array('status' => 'Success', 'message' => $this->lang->line('New Task Added')));
         } else {
             echo json_encode(array('status' => 'Error', 'message' => $this->lang->line('ERROR')));
         }
