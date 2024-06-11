@@ -90,6 +90,7 @@ public function exportar_a_excel_inv(){
         'Documento' => 'string', 
         'Fecha creada' => 'date',
         'Fecha vence' => 'date',
+        'Nota' => 'string',
         'Estado' => 'string',
         'Subtotal' => 'integer',
         'Iva' => 'integer',
@@ -139,6 +140,7 @@ public function exportar_a_excel_inv(){
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ));
     
     //write rows to sheet1
@@ -152,7 +154,7 @@ public function exportar_a_excel_inv(){
 		}else{
 			$ant=0;
 		}
-         $ar=array($invoices->tid,$invoices->name ." ".$invoices->dosnombre ." ". $invoices->unoapellido." ". $invoices->dosapellido,$invoices->abonado,$invoices->csd,$invoices->tipo_documento,$invoices->documento,$invoices->invoicedate,$invoices->invoiceduedate,$invoices->ron,$subtotal,$invoices->tax,$invoices->discount,$invoices->total,$invoices->pamnt,$deuda,$ant,$invoices->refer,$this->lang->line(ucwords($invoices->status)));
+         $ar=array($invoices->tid,$invoices->name ." ".$invoices->dosnombre ." ". $invoices->unoapellido." ". $invoices->dosapellido,$invoices->abonado,$invoices->csd,$invoices->tipo_documento,$invoices->documento,$invoices->invoicedate,$invoices->invoiceduedate,$invoices->notes,$invoices->ron,$subtotal,$invoices->tax,$invoices->discount,$invoices->total,$invoices->pamnt,$deuda,$ant,$invoices->refer,$this->lang->line(ucwords($invoices->status)));
             $writer->writeSheetRow('Reporte Facturas ',$ar);
         
     }
