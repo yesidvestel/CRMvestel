@@ -224,6 +224,7 @@
 														<option value='Reportado'>Reportado</option>
 														<option value='Dado de Baja'>Dado de Baja</option>
 														<option value='Por retirar'>Por retirar</option>
+														<option value='Cuentas dificil cobro'>Cuentas dificil cobro</option>
                                                     </select>
 
                                               </div>
