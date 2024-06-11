@@ -559,7 +559,7 @@ if($servs_eco!=""){
                         <!-- foter factura-->
                         <div class="datos_empresa" >
                             <p class="p_datos_empresa">
-                                <?=$company->cname.", Nit: ".$company->taxid." - Telefono : ".$company->telefono." - Dir : ".$company->direccion.", Sede ".$sede ?>
+                                <?=$company->cname.", Nit: ".$company->taxid." - Telefono : ".$company->phone." - Dir : ".$company->address.", Sede ".$sede ?>
                             </p>
                         </div>
 <!-- Fin Factura-->
