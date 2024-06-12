@@ -504,10 +504,18 @@ if($vrm>0){
     ?></div>
 	<table>
 		<tr>
+			<?php if($this->config->item('ctitle')=='VESTEL S.A.S'){ ?>
 			<td align="justify">Realice su pago a travez de nuestra pagina <strong>www.vestel.com.co</strong>, en el menu <strong>EN LINEA</strong>, con su codigo de usuario Nº <strong><?php echo $invoice['cid'] ?></strong> y en contraseña su numero de documento. A travez de un pad <strong>BANCOLOMBIA</strong> al número  de convenio <strong>93477</strong> con referencia codigo de usuario Nº <strong><?php echo $invoice['cid'] ?></strong></td>
+			<?php }else{ ?>
+			<td align="justify">Realice su pago a travez de un pad <strong>BANCOLOMBIA</strong> a las cuentas Nº <strong>84400003970</strong> o la Nº <strong>84900004024</strong>. En DAVIVIENDA cuenta Nº <strong>097070135989</strong> y en <strong>CONSUERTE</strong> con su cédula de cliente</td>
+			<?php } ?>
 		</tr>
 		<tr>
+			<?php if($this->config->item('ctitle')=='VESTEL S.A.S'){ ?>
 			<td align="center"><strong>LINEA PBX: (601) 9171700</strong></td>
+			<?php }else{ ?>
+			<td align="center"><strong>LINEA ATE: 3229649694</strong></td>
+			<?php } ?>
 		</tr>
 	</table>
 </div>
