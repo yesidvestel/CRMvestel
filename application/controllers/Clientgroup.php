@@ -889,7 +889,7 @@ public function traspaso(){
 		$data['sede'] =$this->clientgroup->group_info($data['group']['title']);
         $company=$this->db->get_where("app_system",array("id"=>1))->row();
 		$empresa=$this->config->item('ctitle');
-        $data['mensaje_correos']="Cordial saludo.<br><br> Para ".$empresa." es muy valiosa la confianza que ha depositado en nuestra compañía y esperamos poder satisfacer sus requerimientos y necesidades tecnológicas.Gracias por utilizar nuestros servicios, abre la siguiente url para visualizarlo:<br><p>Haz clic en este <a href='{url-automatica-segun-el-usuario}'>enlace</a> para visitar nuestro sitio web.</p> {url-automatica-segun-el-usuario}" ;
+        $data['mensaje_correos']="Cordial saludo.<br><br> Para ".$empresa." es muy valiosa la confianza que ha depositado en nuestra compañía y esperamos poder satisfacer sus requerimientos y necesidades tecnológicas.Gracias por utilizar nuestros servicios, abre la siguiente url para visualizarlo:<br>{url-automatica-segun-el-usuario}" ;
         //var_dump($array);
         $this->load->model('templates_model','templates');
         $data['plantillas'] = $this->templates->get_template();
