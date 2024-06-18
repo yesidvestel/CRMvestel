@@ -1058,6 +1058,13 @@ if($_SESSION[md5("variable_datos_pin")]['db_name'] != "admin_crmvestel" && $stat
                 //$_SESSION['x0a_temporal']=$temporal;
                 if((($data['television']!=="no" && $data['refer']!=="Mocoa") || ($tv!==null && $tv!=="no" && $ciudad!=="Mocoa")) && (($ticket->detalle=="Instalacion" || $ticket->detalle=="Reconexion Combo2" || $ticket->detalle=="Activacion" || $ticket->detalle=="Reconexion Television2") && ($ticket->id_factura==null || $ticket->id_factura==0)  && $status=="Resuelto") ){                
                     $producto = $this->db->get_where('products',array('product_name'=>$data['television']))->row();
+                    if(empty($producto)){
+                        $producto = $this->db->get_where('products',array('product_name'=>$tv))->row();
+                        if(empty($producto)){
+                            $producto = $this->db->get_where('products',array('product_name'=>"Television-PA"))->row();    
+                        }
+                        
+                    }
 					if($this->config->item('ctitle')=='VESTEL S.A.S' && $ticket->detalle=="Instalacion"){
 						$x=0;
 						$precio=0;

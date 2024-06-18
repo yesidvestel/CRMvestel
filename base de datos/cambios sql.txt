@@ -974,3 +974,4 @@ caso de ayv cambios sql
 UPDATE `products` SET `pid` = '158' WHERE `products`.`pid` = 25;
 DELETE FROM `invoice_items` WHERE `invoice_items`.`tid` = 1428
 -------------------------------------------------------------------
+INSERT INTO `products` (`pid`, `pcat`, `warehouse`, `sede`, `product_name`, `product_code`, `product_price`, `fproduct_price`, `taxrate`, `disrate`, `qty`, `product_des`, `alert`, `id_prod_transfer`, `tipo_servicio`, `pertence_a_tv_o_net`, `valores`) VALUES ('158', '5', '7', '0', 'Punto Adicional', 'TvP', '5000', '5000', '0', '0', '999999775', '', '0', NULL, 'Recurrente', 'Tv', '');
