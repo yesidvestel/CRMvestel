@@ -1997,9 +1997,12 @@ $x=0;
                     $producto = $this->db->get_where('products',array('product_name'=>$temporal->internet))->row();
                     if(empty($producto)){
                         $producto = $this->db->get_where('products',array('product_name'=>$data['combo']))->row();
+                        if(empty($producto)){
+                            $producto = $this->db->get_where('products',array('product_name'=>$factura->combo))->row();
+                        }
                     }
                     
-                    
+
                     
 					$datay['pid']=$producto->pid;
                     $x=intval($producto->product_price);
