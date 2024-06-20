@@ -196,7 +196,7 @@ class Servicio extends CI_Controller
                                 foreach ($lista_rb as $key_l => $value_rb) {
                                     $fecha = new DateTime($value_rb['date']);
                                     $lisa_resivos_agregar_st.='<a class="dropdown-item" style="padding:3px 0px;"
-                                           href="http://www.saves-vestel.com/comprobantes?name='.$value_rb['file_name'].'">&nbsp;&nbsp;R'.$key_l.' - '.$fecha->format("d/m/Y").'</a>';
+                                           href="https://www.saves-vestel.com/comprobantes?name='.$value_rb['file_name'].'">&nbsp;&nbsp;R'.$key_l.' - '.$fecha->format("d/m/Y").'</a>';
                                     $lisa_resivos_agregar_st.='<div class="dropdown-divider"></div>';   
                                 }
 
