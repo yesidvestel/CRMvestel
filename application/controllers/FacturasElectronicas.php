@@ -381,7 +381,7 @@ $this->load->model("customers_model","customers");
                     $prod->product_name=strtolower(str_replace(" ", "",$prod->product_name ));
                     if($prod->product_name==$array_servicios['combo']){
                         //var_dump($prod->product_name);
-                        $dataApiNET->items[0]->code="I01";
+                        $dataApiNET->items[0]->code=$prod->product_code;
 
                         if($prod->taxrate!=0){
 

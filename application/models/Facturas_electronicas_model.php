@@ -372,7 +372,7 @@ $ob1=$this->db->get_where("config_facturacion_electronica",array("id"=>2))->row(
                     if($prod->product_name==$array_servicios['combo']){
                         $producto_existe=true;
                         //var_dump($prod->product_name);
-                        $dataApiNET->items[0]->code="I01";
+                        $dataApiNET->items[0]->code=$prod->product_code;
 
                         if($prod->taxrate!=0){
 
