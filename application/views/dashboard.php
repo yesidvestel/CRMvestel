@@ -248,6 +248,7 @@
                                     <h5 class="pink"> <?php echo $this->lang->line('net_income') ?></h5>
                                     <h5 class="text-bold-400"><?php echo amountFormat($tt_inc - $tt_exp);
                                         echo '/' . amountFormat($goals['netincome']) ?></h5>
+                                        <?php if($goals['netincome']==0){$goals['netincome']=1;} ?>
                                     <progress class="progress progress-striped progress-pink mt-1 mb-0"
                                               value="<?php $ipt = sprintf("%0.2f", (($tt_inc - $tt_exp) * 100) / $goals['netincome']);
                                               echo $ipt; ?>" max="100"></progress>
