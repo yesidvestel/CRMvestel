@@ -213,7 +213,7 @@ if($_SESSION[md5("variable_datos_pin")]['db_name']=="admin_crmvestel"){
 <script type="text/javascript">
     
     <?php //($hay_emitidas) ? '':'' ?>
-     <?= (strpos(strtolower($_SERVER['REQUEST_URI']),"facturaselectronicas" )==true) ? '':'proceso_notificaciones(1000);' ?>
+     <?= (strpos(strtolower($_SERVER['REQUEST_URI']),"facturaselectronicas" )==true) ? '':'proceso_notificaciones(60000);' ?>
    
     //proceso_notificaciones();
     function pasar_a_vistas(){
