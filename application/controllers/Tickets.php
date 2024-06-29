@@ -931,7 +931,9 @@ if($_SESSION[md5("variable_datos_pin")]['db_name'] != "admin_crmvestel" && $stat
 			$cd='';
 		}
 		$asignacion = $this->db->get_where('asignaciones', array('detalle' => 'encuesta','tipo'=> $cd))->row();
-		
+        if(empty($asignacion)){
+            $asignacion = $this->db->get_where('asignaciones', array('idasig' => '1'))->row();
+        }
 			//var_dump($asignacion->colaborador);
 		$employee = $asignacion->colaborador;
 		/*if($ciudad=="YOPAL" || $ciudad=="Yopal"){
