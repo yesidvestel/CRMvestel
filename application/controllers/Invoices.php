@@ -381,8 +381,8 @@ $this->load->model("Notas_model","notas");
         $lista=$this->db->query("select * from invoices where combo like '% iva%' and invoicedate ='2024-07-02'")->result_array();
         ob_clean();
         foreach ($lista as $key => $value) {
-            echo "DELETE FROM invoices where tid=".$value['tid'].";";
-            echo "DELETE FROM item_invoices where tid=".$value['tid'].";";
+            echo "DELETE FROM invoices where tid=".$value['tid'].";<br>";
+            echo "DELETE FROM item_invoices where tid=".$value['tid'].";<br>";
             
         }
 
