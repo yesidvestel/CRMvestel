@@ -378,12 +378,11 @@ $this->load->model("Notas_model","notas");
         
     }
     public function regla1(){
-        $lista=$this->db->query("select * from invoices where combo like '% iva%'")->result_array();
+        $lista=$this->db->query("select * from invoices where combo like '% iva%' and invoicedate ='2024-07-02'")->result_array();
         ob_clean();
         foreach ($lista as $key => $value) {
-            echo "UPDATE invoices SET ron='Depurado' where id=".$value['id'].";<br>";
-            echo "UPDATE customers SET usu_estado='Depurado' where id=".$value['csd'].";<br>";
-
+            echo "DELETE FROM invoices where tid=".$value['tid'].";";
+            echo "DELETE FROM item_invoices where tid=".$value['tid'].";";
             
         }
 
