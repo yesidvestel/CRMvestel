@@ -382,7 +382,7 @@ $this->load->model("Notas_model","notas");
         ob_clean();
         foreach ($lista as $key => $value) {
             echo "DELETE FROM invoices where tid=".$value['tid'].";<br>";
-            echo "DELETE FROM item_invoices where tid=".$value['tid'].";<br>";
+            echo "DELETE FROM invoice_items where tid=".$value['tid'].";<br>";
             
         }
 
