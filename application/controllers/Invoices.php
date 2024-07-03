@@ -377,6 +377,17 @@ $this->load->model("Notas_model","notas");
         }
         
     }
+    public function regla1(){
+        $lista=$this->db->query("select * from invoices where combo like '% iva%'")->result_array();
+        ob_clean();
+        foreach ($lista as $key => $value) {
+            echo "UPDATE invoices SET estado='Depurado' where id=".$value['id'].";<br>";
+            echo "UPDATE customers SET usu_estado='Depurado' where id=".$value['csd'].";<br>";
+
+            
+        }
+
+    }
     public function generar_facturas_action(){
         set_time_limit(20000);
         
