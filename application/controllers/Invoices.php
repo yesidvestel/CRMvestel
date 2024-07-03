@@ -381,7 +381,7 @@ $this->load->model("Notas_model","notas");
         $lista=$this->db->query("select * from invoices where combo like '% iva%'")->result_array();
         ob_clean();
         foreach ($lista as $key => $value) {
-            echo "UPDATE invoices SET estado='Depurado' where id=".$value['id'].";<br>";
+            echo "UPDATE invoices SET ron='Depurado' where id=".$value['id'].";<br>";
             echo "UPDATE customers SET usu_estado='Depurado' where id=".$value['csd'].";<br>";
 
             
