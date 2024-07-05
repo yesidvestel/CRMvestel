@@ -5,7 +5,9 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
 				<h3 align="center">BIENVENIDO</h3>
+				<?php if($this->config->item('ctitle')=='VESTEL S.A.S'){ ?>
                 <h4 class="modal-title" align="center">Vestel trabaja con lógica, ética y estética</h4>
+				<?php } ?>
             </div>
 			<?php if ($this->aauth->get_user()->roleid == 5) { ?>
             <div class="modal-body">

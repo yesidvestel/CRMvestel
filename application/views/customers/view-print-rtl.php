@@ -199,7 +199,7 @@ $fcontrato = $details['f_contrato'];
 <body>
 
 
-	<?php if($this->config->item('ctitle')=='VESTEL S.A.S'){ ?>
+	<?php if($this->config->item('ctitle')!='FUTURE SOLUTIONS DEVELOPMENT SAS'){ ?>
 	<div class="invoice-box">
 	<table width="100%">
   <tbody>
@@ -236,13 +236,13 @@ $fcontrato = $details['f_contrato'];
     <tr>
 		
       <td style="width: 15%"><img src="<?php echo FCPATH . '/userfiles/company/qr_vestel.png'?>" style="float: left"></img></td>
-      <td align="left" style="width: 30%"><br><br><br><br><h1>VESTEL S.A.S</h1></td>
+      <td align="left" style="width: 30%"><br><br><br><br><h1 align="center"><?php echo $this->config->item('ctitle') ?></h1></td>
       
     </tr>
     <tr>
       <td colspan="2" style="background-color: black;color: white; font-size: x-large;text-align: justify">
 		  	Este contrato explica las condiciones para la prestación
-			de los servicios entre usted, Vesga Telecomunicaciones y Vesga Television (VESTEL S.A.S), por el que pagará mínimo
+			de los servicios entre usted y <?php echo $this->config->item('ctitle') ?>, por el que pagará mínimo
 			mensualmente <span style="border-bottom: 1px solid;border-bottom-color: white"><?php echo amountFormat($totaltv+$inter) ?></span>. Este contrato
 		  tendrá vigencia de <span style="border-bottom: 1px solid;border-bottom-color: white">12</span> meses, contados a partir
 			del <span style="border-bottom: 1px solid;border-bottom-color: white"><?php echo date("d/m/Y",strtotime($fcontrato)) ?></span>. El plazo máximo de instalación
@@ -418,17 +418,16 @@ $fcontrato = $details['f_contrato'];
       <td colspan="2" style="text-align: justify">
 		<h6>PRECIO DEL SERVICIO Y FORMA DE PAGO:</h6> El suscriptor se obliga a pagar mensualidades
 		por el valor contratado. El precio a pagar no incluye en suma alguna por el pago de los
-		derechos de autor por ejecución pública. Por lo tanto VESTEL S.A.S. no será responsable por el
-		pago de los derechos de autor que se causen por ejecución pública de obras protegidas. VESTEL
-		S.A.S. podrá incrementar el valor del servicio en cualquier momento, caso en el que
+		derechos de autor por ejecución pública. Por lo tanto <?php echo $this->config->item('ctitle') ?>. no será responsable por el
+		pago de los derechos de autor que se causen por ejecución pública de obras protegidas. <?php echo $this->config->item('ctitle') ?>. podrá incrementar el valor del servicio en cualquier momento, caso en el que
 		comunicará a EL SUSCRIPTOR el valor de dicho incremento previa a su aplicación y la fecha a
 		partir de la cual se le aplicará el reajuste, Las tarifas de los planes de internet se incrementarán
 		en un porcentaje máximo anual que no supere el 60% del valor tarifa al momento del reajuste
-		tarifario, quedando a elección de VESTEL S.A.S. el índice de reajuste que utilizará y la
+		tarifario, quedando a elección de <?php echo $this->config->item('ctitle') ?>. el índice de reajuste que utilizará y la
 		periodicidad de la misma. Todo esto conforme con el registro de tarifas ante la Entidad
 		competente si por ley o reglamento es necesario.
 		<h6>CONDICIONES DEL SERVICIO:</h6> La oferta del servicio para internet es no caracterizada, por lo
-		tanto, VESTEL S.A.S. se obliga a garantizar hasta la velocidad seleccionada en la portada del
+		tanto, <?php echo $this->config->item('ctitle') ?>. se obliga a garantizar hasta la velocidad seleccionada en la portada del
 		presente contrato, sin estar en obligación de mantenerla en oferta continua. Acepto y declaro
 		conocer las condiciones contractuales que me han sido informadas con o sin cláusula de
 		permanencia, las cuales puedo consultar en www.vestel.com.co la página web del
@@ -489,9 +488,9 @@ $fcontrato = $details['f_contrato'];
 		Para esto debe presentar la solicitud antes del inicio del ciclo de facturación que desea
 		suspender. Si existe una cláusula de permanencia mínima, su vigencia se prorrogará por el
 		tiempo que dure la suspensión.
-		<h6>ANEXO AL CONTRATO DE SUSCRIPCIÓN A LOS SERVICIOS DE INTERNET DE VESTEL S.A.S.</h6>
+		<h6>ANEXO AL CONTRATO DE SUSCRIPCIÓN A LOS SERVICIOS DE INTERNET DE <?php echo $this->config->item('ctitle') ?>.</h6>
 		<h6>AUTORIZACIÓN REPORTE CENTRALES DE RIESGOS:</h6> Declaro bajo juramento que la información
-		que he suministrado es verídica y con consentimiento expreso e irrevocable a VESTEL S.A.S. o
+		que he suministrado es verídica y con consentimiento expreso e irrevocable a <?php echo $this->config->item('ctitle') ?>. o
 		quien sea en el futuro el acreedor del crédito solicitado, para: a) Consultar o confirmar en
 		cualquier tiempo, en las centrales de riesgo, entidades financieras, autoridades competentes, y
 		con particulares toda la información relevante para conocer mi desempeño como deudor,
@@ -505,7 +504,7 @@ $fcontrato = $details['f_contrato'];
 		de riesgo de manera directa y también, por intermedio de la Superintendencia Financiera o las
 		demás entidades públicas que ejercen funciones de vigilancia y control, con el fin de que éstas
 		puedan tratarla, analizarla, clasificarla y luego suministrarla a dichas centrales. ____ d)
-		Conservar, tanto en VESTEL S.A.S. como en las centrales de riesgo, con las debidas
+		Conservar, tanto en <?php echo $this->config->item('ctitle') ?>. como en las centrales de riesgo, con las debidas
 		actualizaciones y durante el período necesario señalado en sus reglamentos la información
 		indicada en los literales b) y e) de esta cláusula.___ e) Suministrar a las centrales de
 		información de riesgo datos relativos a mis solicitudes de crédito así como otros atinentes a mis
@@ -514,7 +513,7 @@ $fcontrato = $details['f_contrato'];
 		Reportar a las autoridades tributarias, aduaneras o judiciales la información que requieran para
 		cumplir sus funciones de controlar y velar el acatamiento de mis deberes constitucionales y
 		legales.
-		<h6>AUTORIZACIÓN SOBRE TRATAMIENTO DE DATOS PERSONALES:</h6> Autorizo a VESTEL S.A.S. para
+		<h6>AUTORIZACIÓN SOBRE TRATAMIENTO DE DATOS PERSONALES:</h6> Autorizo a <?php echo $this->config->item('ctitle') ?>. para
 		recolectar, almacenar, depurar, usar, analizar, circular, actualizar, transferir intencionalmente y
 		cruzar con información propia o de terceros, mis datos personales con la finalidad de: realizar,
 		a través de cualquier medio incluyendo mensajería instantánea, en forma directa o a través de
@@ -530,22 +529,22 @@ $fcontrato = $details['f_contrato'];
 		evaluación del servicio, satisfacción y otras relacionadas con sus servicios y productos; prestar
 		asistencia, servicio y soporte técnico de sus productos y servicios; realizar las gestiones
 		necesarias para dar cumplimiento a las obligaciones inherentes a los servicios y productos
-		contratados con VESTEL S.A.S.; cumplir con las obligaciones contraídas con sus clientes,
+		contratados con <?php echo $this->config->item('ctitle') ?>.; cumplir con las obligaciones contraídas con sus clientes,
 		suscriptores, usuarios, proveedores, aliados, sus filiales, distribuidores, subcontratistas,
 		autsourcing y demás terceros públicos y/o privados, relacionados directa o indirectamente con
-		el objeto social de VESTEL S.A.S.; informar sobre cambios de productos y servicios relacionados
-		con el giro ordinario de los negocios de VESTEL S.A.S., controlar y prevenir el fraude en todas
+		el objeto social de <?php echo $this->config->item('ctitle') ?>.; informar sobre cambios de productos y servicios relacionados
+		con el giro ordinario de los negocios de <?php echo $this->config->item('ctitle') ?>., controlar y prevenir el fraude en todas
 		sus modalidades; facilitar la correcta ejecución de las compras y prestaciones de los servicios y
 		productos contratados. En todo caso el tratamiento de mis datos personales debe estar sujeto
 		a la protección establecidas en la Ley 1581 de 2012, sus decretos reglamentarios y las normas
 		que los modifiquen así como a la Política de Datos Personales establecida en el Manual interno
-		de tratamiento de datos personales de VESTEL S.A.S., que se encuentra disponible en
+		de tratamiento de datos personales de <?php echo $this->config->item('ctitle') ?>., que se encuentra disponible en
 		www.vestel.com.co enlace donde va a quedar disponible. En cualquier momento podré
 		ejercer los derechos establecidos en estas normas y particularmente modificar y/o revocar la
 		autorización prestada o solicitar la supresión parcial o definitiva de mis datos personales. Las
 		solicitudes de supresión y/o revocación de la autorización de datos personales no proceden
 		cuando EL SUSCRIPTOR tenga un deber legal o contractual de permanecer en las bases de datos
-		de VESTEL S.A.S. de conformidad con lo establecido en las normas aplicables.
+		de <?php echo $this->config->item('ctitle') ?>. de conformidad con lo establecido en las normas aplicables.
 		<h6>ADMINISTRACIÓN DE RIESGO DE LAVADO DE ACTIVOS Y FINANCIACIÓN DEL TERRORISMO:</h6>
 		EL SUSCRIPTOR declara de manera voluntaria y dando certeza de que lo aquí consignado es
 		información veraz y verificable, lo siguiente: __ (i) que los recursos utilizados para la ejecución
@@ -555,13 +554,13 @@ $fcontrato = $details['f_contrato'];
 		de acuerdo con las normas penales vigentes en Colombia. __ (ii) que el suscriptor, sus socios o
 		administradores (Cuando aplique, no ha sido incluido en listas de control de riesgo de lavado
 		de activos y financiación al terrorismo nacionales o internacionales vinculantes para Colombia) y
-		definidas por VESTEL S.A.S., de acuerdo con su sistema de Autocontrol y gestión de riesgo y
+		definidas por <?php echo $this->config->item('ctitle') ?>., de acuerdo con su sistema de Autocontrol y gestión de riesgo y
 		lavado de activos y financiación del terrorismo SAGRLAFT, entre las que se encuentran la lista
 		de la Oficina de Control de Activos en el exterior OFAC, emitida por el por la Oficina del Tesoro
 		de los Estados Unidos de Norteamérica y la lista de sanciones del Consejo de Seguridad de la
 		Organización de Naciones Unidas: __ (iii) que no incurre en sus actividades en ninguna
 		actividad ilícita de las contempladas en el Código Penal Colombiano o en cualquier otra norma
-		que lo modifique o adicione. EL SUSCRIPTOR se obliga con VESTEL S.A.S., a entregar
+		que lo modifique o adicione. EL SUSCRIPTOR se obliga con <?php echo $this->config->item('ctitle') ?>., a entregar
 		información veraz y verificable y a actualizar su información institucional, comercial y financiera
 		por lo menos una vez al año, o cada vez que así lo solicite la entidad, suministrando la totalidad
 		de los soportes documentales exigidos. 
@@ -569,9 +568,8 @@ $fcontrato = $details['f_contrato'];
 		</td>
       <td></td>
       <td colspan="2" style="text-align: justify">
-		  El incumplimiento de esta obligación faculta a VESTEL
-		S.A.S., para terminar de manera inmediata y unilateral cualquier tipo de relación que tenga con
-		EL SUSCRIPTOR. EL SUSCRIPTOR autoriza a VESTEL S.A.S., a realizar consultas a través de
+		  El incumplimiento de esta obligación faculta a <?php echo $this->config->item('ctitle') ?>., para terminar de manera inmediata y unilateral cualquier tipo de relación que tenga con
+		EL SUSCRIPTOR. EL SUSCRIPTOR autoriza a <?php echo $this->config->item('ctitle') ?>., a realizar consultas a través de
 		cualquier medio, por sí mismo o a través de un proveedor, para efectuar las verificaciones
 		necesarias para corroborar la información aquí consignada.
 		  <h6>PROHIBICIONES Y DEBERES PARA PREVENIR EL ACCESO A MENORES DE EDAD A
@@ -611,7 +609,7 @@ $fcontrato = $details['f_contrato'];
 	</table>
 </div>
 	<!-- --------------------------------CONTRATO OTTIS ------------------------------------- -->
-	<?php  } else if($this->config->item('ctitle')=='FUTURE SOLUTIONS DEVELOPMENT SAS'){ ?>
+	<?php  } else /* if($this->config->item('ctitle')=='FUTURE SOLUTIONS DEVELOPMENT SAS')*/{ ?>
 <div class="invoice-box">
 	<table>
 		<tbody>
