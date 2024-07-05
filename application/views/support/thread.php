@@ -47,7 +47,7 @@
 					$inter = '';
 				}
 				echo '<strong>Creado el: </strong> ' . $thread_info['created'];
-                echo '<br><strong>Usuario:</strong> ' . $thread_info['name'] .' '.$thread_info['dosnombre'].' '. $thread_info['unoapellido'].' '.$thread_info['dosapellido'];
+                echo '<br><strong>Usuario:</strong> <a href="'.base_url("customers/view?id=".$thread_info['id']).'">' . $thread_info['name'] .' '.$thread_info['dosnombre'].' '. $thread_info['unoapellido'].' '.$thread_info['dosapellido'].'</a>';
 				echo '<br><strong>Documento:</strong> ' . $thread_info['documento'];
 				echo '<br><strong>Abonado:</strong> ' . $thread_info['abonado'];
 				echo '<br><strong>Celular:</strong> ' . $thread_info['celular'];

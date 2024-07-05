@@ -527,7 +527,7 @@
                                                 class="icon-file-text2"></i> <?php echo $this->lang->line('View Invoices') ?></a>
 
                                 </div>
-								<?php } ?>
+								<?php } if ($this->aauth->get_user()->roleid > 2) { ?>
                                 <div class="col-md-4" style="margin-top: 5px;">
                                     <a href="<?php echo base_url('customers/transactions?id=' . $details['id']) ?>"
                                        class="btn btn-success btn-lg" style="width: 250px"><i
@@ -561,7 +561,7 @@
                                                 class="icon-tasks"></i> Ver Equipos</a>
 
                                 </div>
-								<?php if ($this->aauth->get_user()->roleid > 2) { ?>
+								<?php } if ($this->aauth->get_user()->roleid > 2) { ?>
 								<div class="col-md-4" style="margin-top: 5px;">
 
                                     <a href="#pop_model2" data-toggle="modal" onclick="funcion_status();" data-remote="false" 
@@ -569,7 +569,6 @@
                                                 class="icon-user"></i> Cambio Titular </a>
 
                                 </div>
-								<?php } ?>
 								<div class="col-md-4" style="margin-top: 5px;">
 
                                     <a href="<?php echo base_url('llamadas/index?id=' . $details['id']) ?>"
@@ -577,7 +576,7 @@
                                                 class="icon-mobile-phone"></i> Ate. Usuario</a>
 
                                 </div>
-								<?php if ($this->aauth->get_user()->roleid > 3) { ?>
+								<?php } if ($this->aauth->get_user()->roleid > 3) { ?>
                                 <div class="col-md-4" style="margin-top: 5px;">
 
                                     <a href="<?php echo base_url('facturasElectronicas?id=' . $details['id']) ?>"
@@ -608,7 +607,7 @@
                                                 class="icon-calendar"></i> Compromiso</a>
 
                                 </div>
-								<?php } ?>
+								
                                 <div class="col-md-4" style="margin-top: 5px;">
 
                                     <a title="Este boton es para que, si el usuario necesita de actualizacion en telefono o correo, aparesca un modal requiriendo esta informacion al visitar el perfil y al ver las facturas de este usuario, da click para configurar esta accion..." 
@@ -625,6 +624,7 @@
                                                 class="icon-calendar"></i> Datos Navegacion</a>
 
                                 </div>
+								<?php } ?>
                             </div>
                             <hr>
                             <h5 class="text-xs-center col-md-10">OBSERVACIONES</h5>
