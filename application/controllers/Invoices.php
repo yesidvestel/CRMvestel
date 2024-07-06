@@ -413,7 +413,7 @@ $this->load->model('customers_model', 'customers');
                 $time_dateinv=strtotime($value2->invoicedate);
                 $dtime2=new DateTime($value2->invoicedate);
                 $df1=new DateTime("1999-01-01");
-                if(isset($value2->fecha_modifica_promo)){
+                if(isset($value2->fecha_modifica_promo)  && $value2->promo!=null && $value2->promo!=0 ){
                     $df1=new DateTime($value2->fecha_modifica_promo);    
                 }
 
@@ -582,7 +582,7 @@ $this->load->model('customers_model', 'customers');
                                 $television_data['discount']=0;                                
                                 $television_data['totaldiscount']=0;
                                 if(empty($television_data['pid']) || $television_data['pid']==""){
-                                    continue;
+                                    //continue;
                                 }
                                     $this->db->insert("invoice_items",$television_data);
 
@@ -601,7 +601,7 @@ $this->load->model('customers_model', 'customers');
                                 $producto_internet=$this->db->query('SELECT * FROM products WHERE product_name = "'.ltrim($str1).'"')->result_array();
                                 $producto_internet=$producto_internet[0];
                                 if(empty($producto_internet)){
-                                    continue;
+                                    //continue;
                                 }
                                 $internet_data['tid']=$factura_data['tid'];
                                 $internet_data['pid']=$producto_internet['pid'];
@@ -649,7 +649,7 @@ $this->load->model('customers_model', 'customers');
                                 $factura_data['subtotal']+=$puntos_data['subtotal'];
                                 $factura_data['total']+=$puntos_data['subtotal'];
                                 if(empty($puntos_data['pid']) || $puntos_data['pid']==""){
-                                    continue;
+                                    //continue;
                                 }
                                     $this->db->insert("invoice_items",$puntos_data);
                                 
@@ -689,7 +689,7 @@ $list_servs=$this->invocies->servicios_adicionales_recurrentes($value2->tid);
                                             $data_item_serv['price']=$x;
                                             $data_item_serv['subtotal']=round($x*$data_item_serv['qty']);
                                             if(empty($data_item_serv['pid']) || $data_item_serv['pid']==""){
-                                                    continue;
+                                                    //continue;
                                              }
                                             $this->db->insert('invoice_items',$data_item_serv);
                                 }
@@ -704,7 +704,7 @@ $list_servs=$this->invocies->servicios_adicionales_recurrentes($value2->tid);
                                             $factura_data['total']=$factura_data['total']-abs($value_r['price']);
                                             $data_item=array("tid"=>$factura_data['tid'],"pid"=>0,"product"=>$value_r['product'],"qty"=>$value_r['qty'],"price"=>$value_r['price'],"tax"=>$value_r['tax'],"discount"=>$value_r['discount'],"subtotal"=>$value_r['subtotal'],"totaltax"=>$value_r['totaltax'],"totaldiscount"=>$value_r['totaldiscount'],"product_des"=>$value_r['product_des'],"tax_removed"=>$value_r['tax_removed'],"id_usuario_crea"=>$this->aauth->get_user()->id,"fecha_creacion"=>date("Y-m-d H:i:s"),"tipo_retencion"=>$value_r['tipo_retencion']);
                                             if(empty($data_item['pid']) || $data_item['pid']==""){
-                                                    continue;
+                                                    //continue;
                                              }
                                             $this->db->insert("invoice_items",$data_item);    
                                         }
