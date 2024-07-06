@@ -418,7 +418,7 @@ $this->load->model('customers_model', 'customers');
                 }
 
                 $df2=new DateTime("1999-01-01");
-                if(isset($value2->fecha_modifica_promo2)){
+                if(isset($value2->fecha_modifica_promo2) && $value2->promo2!=null && $value2->promo2!=0 ){
                     $df2=new DateTime($value2->fecha_modifica_promo2);    
                 }
                 
