@@ -772,6 +772,9 @@ $lista_permisos1=$this->db->query("SELECT permisos_usuario.id,permisos_usuario.i
                         <li>
                             <a href="<?php echo base_url(); ?>mikrotiks/lista_vista_ips">Ips Users</a>
                         </li>
+                        <li>
+                            <a href="<?php echo base_url(); ?>genieacs/index">Genieacs</a>
+                        </li>
                         <!--slbs-->
 
 
@@ -1535,6 +1538,11 @@ $lista_permisos1=$this->db->query("SELECT permisos_usuario.id,permisos_usuario.i
                         <?php }if ($lista_permisos_us['conf_ips_users'] != null) { ?>
                         <li>
                             <a href="<?php echo base_url(); ?>mikrotiks/lista_vista_ips">Ips Users</a>
+                        </li>
+                    <?php } ?>
+                    <?php  if ($lista_permisos_us['genieacs_conection_l'] != null) { ?>
+                        <li>
+                            <a href="<?php echo base_url(); ?>genieacs/index">Genieacs</a>
                         </li>
                     <?php } ?>
                     </ul>

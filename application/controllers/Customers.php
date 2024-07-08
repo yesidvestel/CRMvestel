@@ -1314,7 +1314,7 @@ public function ajax_graficas2(){
     }
 
     public function changepassword()
-    {
+    { ob_clean();
         if ($id = $this->input->post()) {
             $id = $this->input->post('id');
             $password = $this->input->post('password');

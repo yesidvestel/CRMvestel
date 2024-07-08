@@ -975,3 +975,45 @@ UPDATE `products` SET `pid` = '158' WHERE `products`.`pid` = 25;
 DELETE FROM `invoice_items` WHERE `invoice_items`.`tid` = 1428
 -------------------------------------------------------------------
 INSERT INTO `products` (`pid`, `pcat`, `warehouse`, `sede`, `product_name`, `product_code`, `product_price`, `fproduct_price`, `taxrate`, `disrate`, `qty`, `product_des`, `alert`, `id_prod_transfer`, `tipo_servicio`, `pertence_a_tv_o_net`, `valores`) VALUES ('158', '5', '7', '0', 'Punto Adicional', 'TvP', '5000', '5000', '0', '0', '999999775', '', '0', NULL, 'Recurrente', 'Tv', '');
+--------------------------- GENIEACS ----------------------------
+
+CREATE TABLE `genieacs_conections` (
+  `id_conexion` int(11) NOT NULL,
+  `nombre` varchar(100) NOT NULL,
+  `ip_remota` varchar(100) NOT NULL,
+  `puerto` int(10) NOT NULL,
+  `sede` int(10) NOT NULL,
+  `comentarios` varchar(500) NOT NULL,
+  `id_user_actualiza` int(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+--
+-- Volcado de datos para la tabla `genieacs_conections`
+--
+
+INSERT INTO `genieacs_conections` (`id_conexion`, `nombre`, `ip_remota`, `puerto`, `sede`, `comentarios`, `id_user_actualiza`) VALUES
+(1, 'Yopal', '190.14.233.186', 7557, 2, 'comnexion yopal 1', 8);
+
+--
+-- Índices para tablas volcadas
+--
+
+--
+-- Indices de la tabla `genieacs_conections`
+--
+ALTER TABLE `genieacs_conections`
+  ADD PRIMARY KEY (`id_conexion`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `genieacs_conections`
+--
+ALTER TABLE `genieacs_conections`
+  MODIFY `id_conexion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+COMMIT;
+
+
+INSERT INTO `modulos` (`id_modulo`, `rol`, `nombre`, `id_padre`, `codigo`, `orden`, `icono`) VALUES (NULL, 'Hijo', 'Genieacs', '110', 'genieacs_conection_l', '0', NULL)
