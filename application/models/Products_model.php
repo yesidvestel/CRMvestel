@@ -260,10 +260,7 @@ class Products_model extends CI_Model
     public function edit($pid, $catid, $warehouse, $sede, $product_name, $product_code,  $product_price, $factoryprice, $taxrate, $disrate, $product_qty,$product_qty_alert,$product_desc,$valores_servicio,$tipo_servicio,$servicio_pertenece_a)
     {
 		//actualizar producto en facturas que esten relacionadas
-		$antproducto=$this->db->get_where('products',array('pid'=>$pid))->row();		
-        $this->db->where('combo', $antproducto->product_name);
-		$this->db->set('combo', $product_name);
-		$this->db->update('invoices');
+
 		
 		$data = array(
             'pcat' => $catid,
@@ -282,12 +279,37 @@ class Products_model extends CI_Model
             'valores' => $valores_servicio,
             'pertence_a_tv_o_net' => $servicio_pertenece_a
         );
+        $pr=$this->db->get_where("products",array("pid"=>$pid))->row();
+        $cl=$this->db->query("SELECT * FROM invoices WHERE combo='".$pr->product_name."' or television='".$pr->product_name."' limit 1")->result_array();
+        //var_dump("SELECT * FROM invoices WHERE combo='".$pr->product_name."' or television='".$pr->product_name."' limit 1");
+        
+        $error_str="";
+        $valido1=true;
+      
+        if( count($cl)==0){
 
+        
+            $this->db->set($data);
+            $this->db->where('pid', $pid);    
+        
+        }else{
 
-        $this->db->set($data);
-        $this->db->where('pid', $pid);
+            if($product_name!==$pr->product_name){
 
-        if ($this->db->update('products')) {
+                $valido1 =false;
+                $error_str="Este producto ya esta asociado a una factura por lo tanto no es posible modificarle su nombre";
+            }else{
+                $this->db->set($data);
+                $this->db->where('pid', $pid);    
+            }
+            
+        }
+        if ($valido1 ) {
+            if($this->db->update('products')){
+                    $antproducto=$this->db->get_where('products',array('pid'=>$pid))->row();        
+                $this->db->where('combo', $antproducto->product_name);
+                $this->db->set('combo', $product_name);
+                $this->db->update('invoices');
             $data_h=array();
             $data_h['modulo']="Inventarios";
             $data_h['accion']="Editar producto {update}";
@@ -301,9 +323,11 @@ class Products_model extends CI_Model
             $this->db->insert("historial_crm",$data_h);
             echo json_encode(array('status' => 'Success', 'message' =>
                 $this->lang->line('UPDATED')));
+            }
         } else {
+
             echo json_encode(array('status' => 'Error', 'message' =>
-                $this->lang->line('ERROR')));
+                $this->lang->line('ERROR')."<br>".$error_str));
         }
 
     }
