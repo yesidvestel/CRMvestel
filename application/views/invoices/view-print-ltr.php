@@ -506,6 +506,8 @@ if($vrm>0){
 		<tr>
 			<?php if($this->config->item('ctitle')=='VESTEL S.A.S'){ ?>
 			<td align="justify">Realice su pago a travez de nuestra pagina <strong>www.vestel.com.co</strong>, en el menu <strong>EN LINEA</strong>, con su codigo de usuario Nº <strong><?php echo $invoice['cid'] ?></strong> y en contraseña su numero de documento. A travez de un pad <strong>BANCOLOMBIA</strong> al número  de convenio <strong>93477</strong> con referencia codigo de usuario Nº <strong><?php echo $invoice['cid'] ?></strong></td>
+			<?php }elseif($this->config->item('ctitle')=='FUTURE SOLUTIONS DEVELOPMENT SAS'){ ?>
+			<td align="justify">Nuestros medios de pagos son: <br> 1.Convenio <strong>EFECTY N° 112389</strong><br> 2.Botón de Pagos <strong>MI PAGO AMIGO</strong> ubicado en la página web de la empresa <strong>www.ottis.com.co</strong>.<br> 3. Convenio <strong>JER  N° 432</strong>.<br><br>El cliente deberá hacer los pagos con el número de identificación del titular registrado en el Contrato único de servicios fijos. Los pagos no identificados, serán ingresados como Consignaciones sin identificar (CSI) dentro del Sistema Contable de la Empresa y solo se tendrá en cuenta al enviar el comprobante de pago a los correos facturacion@ottis.com.co, profesionaladministrativo02@fsdcomunicaciones.com o al Whatsapp 311 491 6907.
 			<?php }else{ ?>
 			<td align="justify">Realice su pago a travez de un pad <strong>BANCOLOMBIA</strong> a las cuentas Nº <strong>84400003970</strong> o la Nº <strong>84900004024</strong>. En DAVIVIENDA cuenta Nº <strong>097070135989</strong> y en <strong>CONSUERTE</strong> con su cédula de cliente</td>
 			<?php } ?>
@@ -513,6 +515,8 @@ if($vrm>0){
 		<tr>
 			<?php if($this->config->item('ctitle')=='VESTEL S.A.S'){ ?>
 			<td align="center"><strong>LINEA PBX: (601) 9171700</strong></td>
+			<?php }elseif($this->config->item('ctitle')=='FUTURE SOLUTIONS DEVELOPMENT SAS'){ ?>
+			<td align="center"><strong>LINEA ATE: 311 491 6907</strong></td>
 			<?php }else{ ?>
 			<td align="center"><strong>LINEA ATE: 3229649694</strong></td>
 			<?php } ?>
