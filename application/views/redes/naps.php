@@ -41,10 +41,11 @@
         </div>
         <div class="grid_3 grid_4">
             <div class="header-block">
-                <h3 class="title">
-                    <?php echo $this->lang->line('') ?>Lista de Naps, VLAN  <?=$vlan   ?>, almacen <?=$almacen ?>
-                        
-                </h3></div>
+                <!--h3 class="title"-->
+				<label>
+                    <?php echo  'Lista de Naps, <strong>VLAN ' .$vlan. '</strong>, almacen <strong>' .$almacen ?>
+                 </label>       
+                <!--/h3--></div>
 			<?php foreach ($naps as $row) { 
 					$cid = $row['nap']; ?>
 			<a href="#" class="open_modal"  data-nap="<?=$row['idn']?>" data-id-equipo="<?=$row['idn'] ?>">

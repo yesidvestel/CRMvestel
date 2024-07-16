@@ -243,7 +243,8 @@ class Redes extends CI_Controller
 	public function cajasnap()
     {
 		
-        $vlan_orig = $this->db->get_where("equipos",array("id"=>$this->input->get('id')))->row();
+        $vlan_orig = $this->db->get_where("vlans",array("idv"=>$this->input->get('id')))->row();
+        $almacen_obj = $this->db->get_where("almacen_equipos",array("id"=>$vlan_orig->sede))->row();
         $caja = $this->input->get('id');
         $data['vlan']=$vlan_orig->vlan;
         $nap=$this->db->get_where("naps",array("idvlan"=>$caja))->row();
