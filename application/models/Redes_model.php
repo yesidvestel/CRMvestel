@@ -220,8 +220,14 @@ class Redes_model extends CI_Model
     }
 	public function nap_todas()
     {
+		$sede = $this->aauth->get_user()->sede_accede;
+        $sede =str_replace("-", "",$sede);
+		$tdx=explode(",", $sede);
         $this->db->select('*');
         $this->db->from('naps');
+		if($sede!=0){
+		$this->db->or_where_in('sede', $tdx);
+		}
         $query = $this->db->get();
         return $query->result_array();
     }
