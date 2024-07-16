@@ -434,8 +434,8 @@
 						
                         <div class="col-sm-12">
                             <select id="id_sede" name="customergroup" class="form-control"  onchange="cambia()">
+								<option value="">Seleccionar..</option>
                                 <?php
-
                                 foreach ($customergrouplist as $row) {
                                     $cid = $row['id'];
                                     $title = $row['title'];
