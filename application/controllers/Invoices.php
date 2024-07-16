@@ -1330,6 +1330,8 @@ $writer->writeSheetHeader($nombrey, $headers,$col_options);
 		if (!$this->aauth->is_loggedin()) {
             redirect('/user/', 'refresh');
         }
+		$this->load->model('transactions_model');
+        $data['accounts'] = $this->transactions_model->acc_list();
         $this->load->model('employee_model', 'employee');
         $id = $this->aauth->get_user()->id;
         $data['employee'] = $this->employee->employee_details($id);

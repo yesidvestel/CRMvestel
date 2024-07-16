@@ -31,12 +31,14 @@
                                 <div class="col-sm-9">
 
                                     <select name="perfil" class="form-control" id="perfil">
-                                        <option value='3'><?php echo $this->lang->line('') ?>Yopal </option>
-                                        <option value='3'><?php echo $this->lang->line('') ?>Monterrey</option>
-                                        <option value='3'><?php echo $this->lang->line('') ?>Villanueva</option>
-                                        <option value='3'><?php echo $this->lang->line('') ?>Aguazul</option>
-										<option value='3'><?php echo $this->lang->line('') ?>Mocoa</option>
-										<option value='3'><?php echo $this->lang->line('') ?>Tauramena</option>
+                                         <?php
+                                        foreach ($accounts as $row) {
+                                            $cid = $row['id'];
+                                            $acn = $row['acn'];
+                                            $holder = $row['holder'];
+                                            echo "<option value='$cid'>$acn - $holder</option>";
+                                        }
+                                        ?>
                                     </select>
 
 
