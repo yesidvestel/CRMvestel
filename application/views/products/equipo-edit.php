@@ -143,6 +143,11 @@
 								<option value="Click">Click</option>
 								<option value="Titanium">Titanium</option>
 								<option value="Targett">Targett</option>
+								<option value="Cideral">Cideral</option>
+								<option value="Dell">Dell</option>
+								<option value="Powest ">Powest</option>
+								<option value="LG">LG</option>
+								<option value="Inverter">Inverter</option>
 							</select>
                         </div>
                     </div>
