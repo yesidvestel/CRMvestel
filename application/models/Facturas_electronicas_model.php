@@ -569,11 +569,32 @@ $ob1=$this->db->get_where("config_facturacion_electronica",array("id"=>2))->row(
         //end fecha vencimiento
         
       
+      $cuantas_cuentas_cus=$this->db->query("SELECT * from customers where documento='".$customer->documento."' order by sucursal_siigo desc")->result_array();
+      if($cuantas_cuentas_cus[0]['sucursal_siigo']==null && count($cuantas_cuentas_cus)>1){
+            $n_inicial=$cuantas_cuentas_cus[count($cuantas_cuentas_cus)-1]['sucursal_siigo'];
+            if($n_inicial==null){
+                $n_inicial=0;
+            }
+            foreach ($cuantas_cuentas_cus as $key => $v1) {
+                if($v1['sucursal_siigo']==null){
+                    $n_inicial++;
+                    $this->db->update("customers",array("sucursal_siigo"=>$n_inicial),array("id"=>$v1['id']));
+                    if($v1['id']==$customer->id){
+                        $customer->sucursal_siigo=$n_inicial;
+                    }
+                }
+            }  
+      }
+     
+      
         
         if($dataApiNET!=null){
             $dataApiNET=json_decode($dataApiNET);
             $dataApiNET->document->id="28186";
             $dataApiNET->customer->identification=$customer->documento;
+             if($customer->sucursal_siigo!=null){
+                    $dataApiNET->customer->branch_office=$customer->sucursal_siigo;
+                }
             $dataApiNET->cost_center=$centro_de_costo_codeNET;
             $dataApiNET->seller="738";
             $dataApiNET->date=$dateTime->format("Y-m-d");

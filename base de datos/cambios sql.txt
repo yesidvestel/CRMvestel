@@ -1017,3 +1017,7 @@ COMMIT;
 
 
 INSERT INTO `modulos` (`id_modulo`, `rol`, `nombre`, `id_padre`, `codigo`, `orden`, `icono`) VALUES (NULL, 'Hijo', 'Genieacs', '110', 'genieacs_conection_l', '0', NULL)
+
+
+------------------------siigo ottis
+ALTER TABLE `customers` ADD `sucursal_siigo` INT NULL AFTER `coor2`;
