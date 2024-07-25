@@ -225,8 +225,8 @@ class Redes_model extends CI_Model
 		$tdx=explode(",", $sede);
         $this->db->select('*');
         $this->db->from('naps');
-		if($sede!=0){
-		$this->db->or_where_in('sede', $tdx);
+		if($sede!=0 && $this->config->item('ctitle')=='VESTEL S.A.S'){
+			$this->db->or_where_in('sede', $tdx);
 		}
         $query = $this->db->get();
         return $query->result_array();
