@@ -273,12 +273,12 @@ class Customers_model extends CI_Model
         $y=@unlink(FCPATH . 'userfiles/attach/thumbnail/' . $name);
         //$x=true;
         
-        if ($x || $y) {
+        //if ($x || $y) {
             /*if($type==null){
                 $type=6;
             }*/
             return $this->db->delete('meta_data', array('rid' => $id, 'type' => $type, 'col1' => $name));
-        }
+        //}
     }
 
     public function money_details($custid)

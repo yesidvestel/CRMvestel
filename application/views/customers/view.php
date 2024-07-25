@@ -1301,7 +1301,8 @@ $(document).on("click","#el_correo_es_correcto",function(ev){
             dataType: 'json',
             done: function (e, data) {
                 $.each(data.result.files, function (index, file) {
-                    $('#files2').append('<tr><td><a data-url="<?php echo base_url() ?>customers/file_handling?op=delete&name=' + file.name + '&invoice=<?php echo $details['id'] ?>" class="aj_delete"><i class="btn-danger btn-sm icon-trash-a"></i> ' + file.name + ' </a></td></tr>');
+                    console.log(file);
+                    $('#files2').append('<tr><td><a data-url="<?php echo base_url() ?>customers/file_handling?op=delete&name=' + file.name + '&invoice=<?php echo $details['id']."&type=6" ?>" class="aj_delete"><i class="btn-danger btn-sm icon-trash-a"></i> ' + file.name + ' </a></td></tr>');
 
                 });
             },
