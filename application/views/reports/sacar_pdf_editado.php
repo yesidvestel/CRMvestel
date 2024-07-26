@@ -443,6 +443,9 @@ $array_afiliaciones=array();
 						foreach ($invoice_items as $key => $item_invoic) {
 						$valor_parcial=intval($val1['credit']);
 						$valor_total=intval($inv1->total);
+						if($valor_total==0){
+							$valor_total=1;
+						}
 						$valor_item=intval($item_invoic['subtotal']);
 							if(strpos(strtolower($item_invoic['product']), "mega")!==false){
 
