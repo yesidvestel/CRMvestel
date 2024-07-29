@@ -34,7 +34,7 @@
     </div>
 </article>
 <script type="text/javascript">
-    var url_="<?= (isset($tipo) && $tipo=='estadisticas_servicios') ? 'reports/statistics_services':'reports/statistics'?>";
+    var url_="<?= (isset($tipo) && $tipo=='estadisticas_servicios') ? 'reports/statistics_services1':'reports/statistics'?>";
     var url_process="<?= (isset($tipo) && $tipo=='estadisticas_servicios') ? 'reports/statistics_services?tipo=process':'reports/refresh_process'?>";
     setTimeout(function () {
         $.ajax({

@@ -1271,6 +1271,7 @@ $lista_customers_activos=$this->db->query("select * from customers where (gid='2
 public function statistics_services(){
     $extraccion_dia=$this->db->get_where("estadisticas_servicios",array("fecha"=>date("Y-m-d")))->row();
     $data=array();
+    $this->load->model("customers_model","customers");
    ini_set('memory_limit', '15000000000');
     set_time_limit(20000000);
     if(empty($extraccion_dia) || (isset($_GET['tipo']) && $_GET['tipo']=="process")){
@@ -1280,7 +1281,7 @@ public function statistics_services(){
         $lista_customers_cartera=$this->db->query("select * from customers where gid='2' and usu_estado='Cartera'")->result();
         $lista_customers_suspendidos=$this->db->query("select * from customers where gid='2' and usu_estado='Suspendido'")->result();
         $lista_customers_retirado=$this->db->query("select * from customers where gid='2' and usu_estado='Retirado'")->result();
-        $this->load->model("customers_model","customers");
+        
         $obtenido_activos=$this->customers->conteo($lista_customers_activos);
         $obtenido_cortados=$this->customers->conteo($lista_customers_cortados);
         $obtenido_cartera=$this->customers->conteo($lista_customers_cartera);
