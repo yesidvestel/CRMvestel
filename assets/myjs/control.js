@@ -716,6 +716,10 @@ function removeObject(action,action_url) {
 //universal create
 $("#submit-data").on("click", function(e) {
     e.preventDefault();
+	// Deshabilita el botón después del primer clic
+	document.getElementById('submit-data').disabled = true;
+	// O puedes cambiar el texto del botón
+	document.getElementById('submit-data').innerText = 'Procesando...';
     var o_data =  $("#data_form").serialize();
     var action_url= $('#action-url').val();
     addObject(o_data,action_url);
