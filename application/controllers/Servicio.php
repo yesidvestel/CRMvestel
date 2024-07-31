@@ -80,6 +80,16 @@ class Servicio extends CI_Controller
         //$this->load->view('fixed/footer');
 
     }
+        public function aplicar_discount(){
+        $body_post=json_decode(file_get_contents("php://input",true));
+        $data_response=array();
+        $data_response['cid']=$body_post->cid;
+        $data_response['promo']=$body_post->promo;
+        //$data_response['monto']=$body_post->monto;
+        //$data_response['idorden']=$body_post->idorden;
+        $this->customers->aplicar_discuount_pago_oportuno($data_response['cid'],$data_response['promo']);
+        echo json_encode($data_response);
+    }
     public function pay_due_customer(){
         $body_post=json_decode(file_get_contents("php://input",true));
         $data_response=array();

@@ -1021,3 +1021,5 @@ INSERT INTO `modulos` (`id_modulo`, `rol`, `nombre`, `id_padre`, `codigo`, `orde
 
 ------------------------siigo ottis
 ALTER TABLE `customers` ADD `sucursal_siigo` INT NULL AFTER `coor2`;
+------------------------------------ promo sistema clientes ----------------
+ALTER TABLE `invoices` ADD `promo_sistema_clientes1` TINYINT NULL AFTER `fecha_actualizacion`;
