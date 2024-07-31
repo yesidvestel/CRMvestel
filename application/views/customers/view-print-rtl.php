@@ -1,8 +1,9 @@
 <!doctype html>
 <?php 
-if ($servicios['television']!=="no"){
-		$producto = $this->db->get_where('products',array('pid'=>27))->row();
-		$totaltv = $producto->product_price+3992;
+if ($servicios['television']!=="no" || $servicios['television']!==" " || $servicios['television']!==null){
+		$producto = $this->db->get_where('products',array('product_name'=>$servicios['television']))->row();
+		$ivatv = ($producto->product_price*$producto->taxrate)/100;
+		$totaltv = $producto->product_price+$ivatv;
 	
 }if ($servicios['combo']!=="no"){
 	
