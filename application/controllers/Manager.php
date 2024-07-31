@@ -134,13 +134,30 @@ class Manager Extends CI_Controller
     }
 
     public function guardar_historia_tarea(){
+		$this->load->model('communication_model');
         $data=array();
         $data['titulo']=$this->input->post("titulo");
         $data['comentario']=$this->input->post("content");
         $data['id_tarea']=$this->input->post("id_tarea");
         $data['id_usuario_historial']=$this->aauth->get_user()->id;
-
         $this->manager->guardar($data);
+		//envio correo tarea
+		$tarea = $this->db->get_where("todolist", array('id' =>$data['id_tarea']))->row();
+		$name = $tarea->name;
+		$variable_datos_pin=md5("variable_datos_pin");
+		$url=$_SESSION[$variable_datos_pin]['url'];
+		$contenido = '<strong>'.$data['titulo'].'</strong><br>'.$data['comentario'].'<br><a href="'.$url.'manager/historial?id='.$data['id_tarea'].'">Ver comentarios</a>';
+		if($data['id_usuario_historial']!==$tarea->eid){
+			$remite=$tarea->eid;
+		}else{
+			$remite=$tarea->aid;
+		}
+		$colaborador = $this->db->get_where("aauth_users", array('id' =>$remite))->row();
+        $mailtoc = $colaborador->email;
+        $mailtotilte = $colaborador->username;
+		$attachmenttrue = false;
+        $attachment = '';
+		$this->communication_model->send_email($mailtoc, $mailtotilte, $name, $contenido, $attachmenttrue, $attachment);
 
     }
     public function borrar_historia_tarea(){
