@@ -122,6 +122,8 @@ class Servicio extends CI_Controller
         $data_response=array();
         $data_response['due']=$this->customers->due_details($body_post->cid);
         $data_response['data_customer']=$this->db->get_where("customers",array("id"=>$body_post->cid))->row();
+        $id_ultima_factura=$this->db->query("SELECT promo_sistema_clientes1 as promo_sistema_clientes1 from invoices where csd=".$body_post->cid." order by tid desc limit 1")->result_array();
+        $data_response['data_promos']=$id_ultima_factura[0]['promo_sistema_clientes1'];
         echo json_encode($data_response);
     }
 
