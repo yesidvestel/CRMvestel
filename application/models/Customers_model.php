@@ -4055,6 +4055,7 @@ public function aplicar_discuount_pago_oportuno($cid,$promo)
         $id_ultima_factura=$this->db->query("SELECT tid from invoices where csd=".$cid." order by tid desc limit 1")->result_array();
         $id_ultima_factura=$id_ultima_factura[0]['tid'];
         $factura=$this->db->get_where("invoices",array('tid' =>$id_ultima_factura))->row();
+        if($factura->promo_sistema_clientes1==null){
         //$promocion=$this->db->get_where("promos",array('idprom' =>$promo))->row();
         $descuento=$factura->total*$promo;
         $total = $descuento/100;
@@ -4066,6 +4067,7 @@ public function aplicar_discuount_pago_oportuno($cid,$promo)
         );
             $this->db->where('id', $factura->id);
             $this->db->update('invoices', $datos);
+        }
         $this->invoices->procesar_pagos_adelantados($factura->csd);
        return true;
        
