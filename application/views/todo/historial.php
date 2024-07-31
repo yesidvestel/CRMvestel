@@ -340,6 +340,7 @@
             });
         }
     }
+	
     function validar_numeros (input){
         var valorInput =parseInt($(input).val());
         var valorMaximo = parseInt($(input).data('max'));
@@ -418,6 +419,10 @@ console.log(itemSeleccionado);
         $("#pop_model").modal("show");
     });
     $("#enviar").click(function(e){
+		// Deshabilita el botón después del primer clic
+        document.getElementById('enviar').disabled = true;
+        // O puedes cambiar el texto del botón
+        document.getElementById('enviar').innerText = 'Procesando...';
         var o_data=$("#form_model").serialize();
         $.post(baseurl+"manager/guardar_historia_tarea",o_data,function(data){
             
@@ -650,5 +655,6 @@ var url = baseurl + 'manager/file_handling?id=<?php echo $_GET['id']."&historia_
                 .parent().addClass($.support.fileInput ? undefined : 'disabled');
 <?php } ?>
      });
+	
     
 </script>
