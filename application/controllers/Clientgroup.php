@@ -893,7 +893,7 @@ public function traspaso(){
         //var_dump($array);
         $this->load->model('templates_model','templates');
         $data['plantillas'] = $this->templates->get_template();
-        if($_SESSION[md5("variable_datos_pin")]['db_name'] == "admin_crmvestel"){
+        if($_SESSION[md5("variable_datos_pin")]['db_name'] !== "admin_vestel"){
             $data['ciudades_filtro']=$this->clientgroup->get_citys();
         }
         //var_dump($data['plantillas']);
