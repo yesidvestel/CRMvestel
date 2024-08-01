@@ -48,6 +48,7 @@ class Invoices extends CI_Controller
 
         $data['due']=$data['dt']->due;
         $_SESSION['dt_customer']=$data['dt']->data_customer;
+        $data['promo1']=$data['dt']->data_promos;
         $data['wompi_data']=array();
         $x=(new DateTime())->format("U");
         $x=$x."_".$cid;
@@ -71,7 +72,12 @@ class Invoices extends CI_Controller
         $this->load->view('includes/footer');
     }
 
-
+public function aplicar_prom(){
+    $cid=$this->session->userdata('user_details')[0]->cid;
+    $cuerpo='"cid": '.$cid.',"promo":5,';
+     $respuesta=$this->communication->obtener($cuerpo,"aplicar_discount");
+        echo $respuesta;
+}
     public function ajax_list()
     { 
         $start = $this->input->post('start');

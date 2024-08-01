@@ -276,10 +276,29 @@
         </div>
     </div>
 </div>
+<div id="modal_promocion" class="modal fade" >
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" >
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Total : $<?php  echo ($due->total-$due->pamnt); ?> - Promocion :</h4>
+            </div>
+
+            <div class="modal-body" >
+                <img src="<?php base_url(); ?>userfiles/bannerpromo.gif" width="100%">
+            </div>
+            <div class="modal-footer">
+                
+                <button data-dismiss="modal" id="sub_prom" type="button" class="btn btn-primary"
+                        id="enviar">Aplicar </button>
+            </div>
+        </div>
+    </div>
+</div>
 <script type="text/javascript" src="https://checkout.wompi.co/widget.js"></script>
 <script type="text/javascript">
     
-
+//$("#modal_promocion").modal("show");
     var checkout = new WidgetCheckout({
   currency: 'COP',
   amountInCents: <?=$wompi_data['debe']."00" ?>,
@@ -301,13 +320,25 @@
   }
 });
     //esta es la forma personalizada que en el proceso echo queda al iniciar sesion o abrir facturas 
+    
+    <?php if($promo1!=null || date("d")>5){ echo "console.log('".date("d")."');" ?>
     checkout.open(function ( result ) {
   var transaction = result.transaction
   console.log('Transaction ID: ', transaction.id)
   console.log('Transaction object: ', transaction)
 });
+    <?php }else{ ?>
+$("#modal_promocion").modal("show");
+    <?php } ?>
 </script>
 <script type="text/javascript">
+     $(document).on("click","#sub_prom",function(event){
+           console.log("hola");
+           $.post(baseurl+"invoices/aplicar_prom",{},function(data){
+                location.reload();
+           });
+
+    });
     //alert("La resolución de tu pantalla es: " + window.innerWidth + " x " + window.innerHeight) 
     if(window.innerWidth<701){
         $("#img_efecti").attr("width","50%");
