@@ -272,9 +272,6 @@
                                     </div>
                                     <div id="div_direccion_personalizada">
                                             <div class="form-group row">
-                                        
-                                        
-                                        
 
                                             <div class="col-sm-12">
                                                 <h6><label class="col-sm-2 col-form-label"
@@ -282,7 +279,7 @@
                                                 <div id="ciudades">
                                                     <select id="cmbCiudades"  class="selectpicker form-control" name="ciudad" > 
                                                             <option value="">-</option>
-                                                            <?php if($_SESSION[md5("variable_datos_pin")]['db_name'] == "admin_crmvestel"){ ?>
+                                                            <?php if($_SESSION[md5("variable_datos_pin")]['db_name'] !== "admin_vestel"){ ?>
                                                                 <?php foreach ($ciudades_filtro as $keyx => $ciudadx) {?>
                                                                     <option value="<?=$ciudadx['id'] ?>"><?=$ciudadx['name']." ( ".$ciudadx['departamentName']." )" ?></option>
                                                                 <?php } ?>
