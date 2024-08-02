@@ -484,7 +484,7 @@ $('.summernote').summernote({
                 dataType: 'json',
                 autoUpload: false,
                 acceptFileTypes: /(\.|\/)(gif|jpe?g|png|docx|docs|txt|pdf|xls|xlsx)$/i,
-                maxFileSize: 999000,
+                maxFileSize: 10999000,
                 // Enable image resizing, except for Android and Opera,
                 // which actually support image resizing, but fail to
                 // send Blob objects via XHR requests:
