@@ -514,7 +514,7 @@ if($vrm>0){
 		</tr>
 		<tr>
 			<?php if($this->config->item('ctitle')=='VESTEL S.A.S'){ ?>
-			<td align="center"><strong>LINEA PBX: (601) 9171700</strong></td>
+			<td align="center"><strong>LINEA PBX: 300 9135141</strong></td>
 			<?php }elseif($this->config->item('ctitle')=='FUTURE SOLUTIONS DEVELOPMENT SAS'){ ?>
 			<td align="center"><strong>LINEA ATE: 311 491 6907</strong></td>
 			<?php }else{ ?>
