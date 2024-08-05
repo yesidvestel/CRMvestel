@@ -623,9 +623,9 @@ $ob1=$this->db->get_where("config_facturacion_electronica",array("id"=>2))->row(
             $dataApiNET->observations="TID : ".$datos_facturar['tid'].", Factura : ".$str_obs." ,metodo pago: ".$accoun_tr;
             $ob1=$this->db->get_where("config_facturacion_electronica",array("id"=>1))->row();
             $consulta_siigo1=$api->getCustomer1($customer->documento,$ob1->tocken);
-          
+            $repeticiones=$this->db->query("select * from customers where documento='".$customer->documento."'")->result_array();
             
-            if(isset($consulta_siigo1) && isset($consulta_siigo1['pagination']) && isset($consulta_siigo1['pagination']['total_results']) && $consulta_siigo1['pagination']['total_results']==0){
+            if(isset($consulta_siigo1) && isset($consulta_siigo1['pagination']) && (isset($consulta_siigo1['pagination']['total_results']) && $consulta_siigo1['pagination']['total_results']==0 || (count($repeticiones)>1 && $consulta_siigo1['pagination']['total_results']<count($repeticiones)) )){
                     $json_customer=json_decode($json_customer);
                     $json_customer->related_users->seller_id=738;
                     $json_customer->related_users->collector_id=738;
@@ -635,7 +635,30 @@ $ob1=$this->db->get_where("config_facturacion_electronica",array("id"=>2))->row(
                     }
                     $json_customer=json_encode($json_customer);
                     //$json_customer=str_replace("321", "282", subject)
-                     $api->saveCustomer1($json_customer,$ob1->tocken);//para crear cliente en siigo si no existe
+                    $rep=0;
+                    if(count($repeticiones)>1){
+                        $rep=count($repeticiones)-$consulta_siigo1['pagination']['total_results'];
+                        for ($i=0; $i < $rep; $i++) { 
+                            $json_customer=json_decode($json_customer);
+                            $json_customer->branch_office=$consulta_siigo1['pagination']['total_results']+1;
+                            $json_customer=json_encode($json_customer);
+                            //if($consulta_siigo1['pagination']['total_results']==1){
+                                    $x1=$this->db->query("select * from customers where documento='".$customer->documento."' and sucursal_siigo=1")->result_array();
+                                    if($consulta_siigo1['results'][$consulta_siigo1['pagination']['total_results']-1]['branch_office']==0 && count($x1)>0){
+                                        $this->db->update("customers",array("sucursal_siigo"=>0),array("id"=>$x1[0]['id']));
+                                        $customer->sucursal_siigo=0;
+                                    }
+
+                            //}
+                          $api->saveCustomer1($json_customer,$ob1->tocken);//para crear cliente en siigo si no existe          
+                        }
+
+                    }else{
+                     $api->saveCustomer1($json_customer,$ob1->tocken);//para crear cliente en siigo si no existe   
+                    }
+
+                     
+                    
             }else{
                     /*$json_customer=json_decode($json_customer);
                     $json_customer->related_users->seller_id=282;
