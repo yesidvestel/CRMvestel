@@ -3203,7 +3203,7 @@ return $str;
         $this->db->where('sede', $acid);
         $query = $this->db->get();
         $account = $query->row_array();
-        $note = "Pago de la factura #".$id_factura." metodo: ".$pmethod.", Sede: ".$account['holder'].", referencia: ".$id_orden;
+        $note = "Pago de la factura #".$id_factura." ".$customer->name." ".$customer->unoapellido." ".$customer->documento." metodo: ".$pmethod.", Sede: ".$account['holder'].", referencia: ".$id_orden;
         $mt=$this->db->get_where("accounts",array("holder"=>$pmethod))->row();
         $acid=$mt->id;
         $reconexion = "no";
