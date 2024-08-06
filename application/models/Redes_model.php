@@ -225,22 +225,20 @@ class Redes_model extends CI_Model
 		$tdx=explode(",", $sede);
         $this->db->select('*');
         $this->db->from('naps');
-		/*if($tdx!=0 && $this->config->item('ctitle')==='VESTEL S.A.S'){
-			var_dump($tdx);
-			/*if($tdx===2){
-				$alm=4;
-			}elseif ($tdx===3){
-				$alm=2;
-			}elseif ($tdx===4){
-				$alm=5;
-			}elseif ($tdx===6){
-				$alm=7;
-			}elseif ($tdx===7){
-				$alm=8;
+		if($sede!=0 && $this->config->item('ctitle')=='VESTEL S.A.S'){
+			if (in_array(3, $tdx)) {
+				$almacen = 2; // Asignamos el almacén correspondiente
+			}elseif (in_array(2, $tdx)) {
+				$almacen = 4;
+			}elseif (in_array(4, $tdx)) {
+				$almacen = 5;
+			}elseif (in_array(6, $tdx)) {
+				$almacen = 7;
+			}elseif (in_array(7, $tdx)) {
+				$almacen = 8;
 			}
-			//$this->db->or_where_in('sede', $alm);
-			$this->db->where('sede', $tdx);
-		}*/
+			$this->db->or_where_in('sede', $almacen);
+		}
         $query = $this->db->get();
         return $query->result_array();
     }
