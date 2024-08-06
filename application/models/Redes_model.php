@@ -237,7 +237,8 @@ class Redes_model extends CI_Model
 			}elseif ($tdx===7){
 				$alm=8;
 			}
-			$this->db->or_where_in('sede', $alm);
+			//$this->db->or_where_in('sede', $alm);
+			$this->db->where('sede', $alm);
 		}
         $query = $this->db->get();
         return $query->result_array();
