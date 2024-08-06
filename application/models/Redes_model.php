@@ -226,7 +226,7 @@ class Redes_model extends CI_Model
         $this->db->select('*');
         $this->db->from('naps');
 		if($sede!=0 && $this->config->item('ctitle')=='VESTEL S.A.S'){
-			if($tdx===2){
+			/*if($tdx===2){
 				$alm=4;
 			}elseif ($tdx===3){
 				$alm=2;
@@ -236,9 +236,9 @@ class Redes_model extends CI_Model
 				$alm=7;
 			}elseif ($tdx===7){
 				$alm=8;
-			}
+			}*/
 			//$this->db->or_where_in('sede', $alm);
-			$this->db->where('sede', $alm);
+			$this->db->where('sede', $tdx);
 		}
         $query = $this->db->get();
         return $query->result_array();
