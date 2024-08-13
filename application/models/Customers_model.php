@@ -4028,9 +4028,11 @@ public function get_equipo_genieacs_por_mac(){
         $encode= urlencode('{"InternetGatewayDevice.WANDevice.1.WANConnectionDevice.1.WANPPPConnection.1.MACAddress": "'.$mac.'"}');
        
         $curl = curl_init();
-
+         
+         $ip=$this->get_genieacs_ip($_SESSION['GENIEACS_CID']);
+        //CURLOPT_URL => 'http://190.14.233.186:7557/devices/?query='.$encode,
         curl_setopt_array($curl, array(
-          CURLOPT_URL => 'http://190.14.233.186:7557/devices/?query='.$encode,
+          CURLOPT_URL => 'http://'.$ip.'/devices/?query='.$encode,
           CURLOPT_RETURNTRANSFER => true,
           CURLOPT_ENCODING => '',
           CURLOPT_MAXREDIRS => 10,
@@ -4045,7 +4047,12 @@ public function get_equipo_genieacs_por_mac(){
         
     return $response;
 }
-
+public function get_genieacs_ip($cid){
+        $cus1=$this->db->get_where("customers",array("id"=>$cid))->row();
+        $conexion=$this->db->get_where("genieacs_conections",array("sede"=>$cus1->gid))->row();
+        $ip=$conexion->ip_remota.":".$conexion->puerto;
+         return $ip;
+}
 public function aplicar_discuount_pago_oportuno($cid,$promo)
     {
          $this->load->model('invoices_model', 'invoices');

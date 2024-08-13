@@ -38,6 +38,9 @@ class Customers extends CI_Controller
     public function get_genieacs_data(){
         ob_clean();
        $retorno=array();
+
+        $equipox=$this->db->get_where("equipos",array("codigo"=>$_POST['id_equipo_gns']))->row();
+       $_SESSION['GENIEACS_CID']=$equipox->asignado;
         $response=$this->customers->get_equipo_genieacs_por_mac();
         if(!empty($response) ) {
             $x=json_decode($response);
@@ -80,9 +83,9 @@ class Customers extends CI_Controller
         }else if($_POST['campo']=="tv"){
             $param=' ["InternetGatewayDevice.X_RZ_Catv.RF_Enable", '.$_POST['text_actualizar'].', "xsd:'.$_POST['type'].'"]';
         }
-        
+        $ip=$this->customers->get_genieacs_ip($var_equipo->asignado);
         curl_setopt_array($curl, array(
-          CURLOPT_URL => 'http://190.14.233.186:7557/devices/'.$id_actualizar.'/tasks?connection_request=null',
+          CURLOPT_URL => 'http://'.$ip.'/devices/'.$id_actualizar.'/tasks?connection_request=null',
           CURLOPT_RETURNTRANSFER => true,
           CURLOPT_ENCODING => '',
           CURLOPT_MAXREDIRS => 10,
@@ -104,7 +107,7 @@ class Customers extends CI_Controller
         $response = curl_exec($curl);
 
         curl_close($curl);
-
+        $_SESSION['GENIEACS_CID']=$var_equipo->asignado;
         $retorno=$this->customers->get_equipo_genieacs_por_mac();
         if(!empty($retorno) ) {
             $x=json_decode($retorno);
