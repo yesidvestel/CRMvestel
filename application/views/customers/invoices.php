@@ -473,7 +473,7 @@ text-transform: lowercase;
                         <!--<input type="hidden" id="object-cat" value="" name="cat">-->
                 <input type="hidden" id="action-url2" value="customers/add_promo">
                 <button type="button" data-dismiss="modal" class="btn btn-primary"
-                        id="submit_model2">Aplicar</button>
+                        id="submit_model2_promos">Aplicar</button>
                  </div>
                 </form>
             </div>
@@ -907,7 +907,7 @@ validar_monto_notas();
         $("#promo").val($(link).data("promo"));
 		var object =$(link).data("object-id2");	
 	}
-	$("#submit_model2").on("click", function(e) {
+	$("#submit_model2_promos").on("click", function(e) {
     e.preventDefault();
     var o_data =  $("#form_model2").serializeArray();
      var form_data = new FormData();
