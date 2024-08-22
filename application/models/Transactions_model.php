@@ -163,7 +163,7 @@ class Transactions_model extends CI_Model
 			$this->db->where('id', $asignacion->tipo);
 			$this->db->or_where('sede', '0');
 		}
-		if ($user!=8 || $user!=27){
+		if ($user!=8 && $user!=27){
 			$this->db->where('holder !=', 'payu');
 		}
         $query = $this->db->get();
