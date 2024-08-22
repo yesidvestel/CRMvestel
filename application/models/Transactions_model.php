@@ -158,10 +158,13 @@ class Transactions_model extends CI_Model
 		$this->load->model('employee_model', 'employee'); 
 		$asignacion = $this->db->get_where('asignaciones', array('detalle' => 'caja','colaborador'=>$user))->row();		
         $this->db->select('*');
-        $this->db->from('accounts');
+        $this->db->from('accounts');		
 		if ($this->employee->get_client_specific_permission($this->aauth->get_user()->id,"testran") == null){
 			$this->db->where('id', $asignacion->tipo);
 			$this->db->or_where('sede', '0');
+		}
+		if ($user!=8 || $user!=27){
+			$this->db->where('holder !=', 'payu');
 		}
         $query = $this->db->get();
         return $query->result_array();

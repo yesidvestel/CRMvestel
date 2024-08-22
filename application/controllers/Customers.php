@@ -1390,13 +1390,18 @@ public function ajax_graficas2(){
         $no = $this->input->post('start');
 
         foreach ($list as $prd) {
+			if ($prd->account=='PAYU'){
+				$cuenta='WOMPI';
+			}else{
+				$cuenta=$prd->account;
+			}
             $no++;
             $row = array();
             $pid = $prd->id;
             $row[] = $prd->date;
             $row[] = amountFormat($prd->debit);
             $row[] = amountFormat($prd->credit);
-            $row[] = $prd->account;
+            $row[] = $cuenta;
             $row[] = $prd->payer;
             $row[] = $prd->estado;
             $row[] = $this->lang->line($prd->method);

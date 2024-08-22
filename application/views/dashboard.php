@@ -440,9 +440,14 @@
                                     <?php
 
                                     foreach ($recent_payments as $item) {
+										if ($item['account']=='PAYU'){
+											$cuenta='WOMPI';
+										}else{
+											$cuenta=$item['account'];
+										}
                                         echo '<tr>
                                 <td class="text-truncate"><a href="' . base_url() . 'transactions/view?id=' . $item['id'] . '">' . dateformat($item['date']) . '</a></td>
-                                <td class="text-truncate"> ' . $item['account'] . '</td>
+                                <td class="text-truncate"> ' . $cuenta . '</td>
                                 <td class="text-truncate">' . amountFormat($item['debit']) . '</td>
                                 <td class="text-truncate">' . amountFormat($item['credit']) . '</td>
                                
