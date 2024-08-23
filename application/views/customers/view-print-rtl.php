@@ -826,6 +826,24 @@ $fcontrato = $details['f_contrato'];
 				La factura le debe llegar como mínimo 5 días hábiles antes de la fecha de pago. Si no llega, puede solicitarla a través de nuestros Medios de Atención y debe pagarla oportunamente. La factura será enviada por medios electrónicos.
 				Si no paga a tiempo, previo aviso, suspenderemos su servicio hasta que pague sus saldos pendientes. Contamos con 3 días hábiles luego de su pago para reconectarle el servicio. Si no paga a tiempo, también podemos reportar su deuda a las centrales de riesgo. Para esto tenemos que avisarle por lo menos con 20 días calendario de anticipación. Si paga luego de este reporte tenemos la obligación dentro del mes de seguimiento de informar su pago para que ya no aparezca reportado. Si tiene un reclamo sobre su factura, puede presentarlo antes de la fecha de pago y en ese caso no debe pagar las sumas reclamadas hasta que resolvamos su solicitud. Si ya pagó, tiene 6 meses para presentar la reclamación.
 				<br><br>
+				<table border="1">
+					<tr>
+						<td><?php if(file_exists($url_firma)){
+								?><span style="border-bottom: 1px solid;"><img height="130px" src="<?=$url_firma?>"></img></span><?php 
+								}else{
+									echo '<br><br><br>';
+								} 
+								if(file_exists($url_huella)){
+								?><span style="border-bottom: 1px solid;"><img height="130px" src="<?=$url_huella?>"></img></span><?php 
+								}else{
+									echo '<br><br><br>';
+								} ?><br></td>					
+					</tr>
+					<tr>
+						<td>Con esta firma acepta recibir la facturación por medios electrónicos.</td>					
+					</tr>
+				</table>
+				<br>
 				<h4>     COMO COMUNICARSE CON NOSOTROS<br> (MEDIOS DE ATENCIÓN)</h4>
 				<br>
 				<table border="1">
@@ -840,7 +858,7 @@ $fcontrato = $details['f_contrato'];
 							c. Redes sociales @ottiscomunica<br>
 							d. Líneas telefónicas fija (PBX): (601) 9172166
 							(601) 7943254<br>
-							e. WhatsApp: 3212893978 - 3114916907 - 3226093107
+							e. WhatsApp: 3212893978
 						</td>
 					</tr>
 					<tr>
