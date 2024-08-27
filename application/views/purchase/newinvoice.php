@@ -71,7 +71,14 @@
                                         <div type="text" id="customer_phone"></div>
                                     </div>
                                     <select id="warehouses" name="warehouse" class="selectpicker form-control" hidden="">
-                                        <option value="50" ><?php echo $this->lang->line('All') ?></option>
+										<?php if($this->config->item('ctitle')=='VESTEL S.A.S'){
+											$almacen = 50;
+										}else{
+											$almacen = 3;
+											var_dump($almacen);
+										} ?>
+									
+                                        <option value="<?php echo $almacen ?>" ><?php echo $almacen ?></option>
 
                                     </select>
                                 </div>
