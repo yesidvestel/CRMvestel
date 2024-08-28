@@ -50,7 +50,7 @@ return array("token"=>json_decode($response)->token);
 $curl = curl_init();
         //curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt_array($curl, array(
-          CURLOPT_URL => 'https://api.liwa.co/v2/sms/simple',
+          CURLOPT_URL => 'https://api.liwa.co/v2/sms/single',
           CURLOPT_RETURNTRANSFER => true,
           CURLOPT_ENCODING => '',
           CURLOPT_MAXREDIRS => 10,
@@ -81,7 +81,7 @@ $curl = curl_init();
         $curl = curl_init();
         //curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt_array($curl, array(
-          CURLOPT_URL => 'https://api.liwa.co/v2/sms/simple',
+          CURLOPT_URL => 'https://api.liwa.co/v2/sms/single',
           CURLOPT_RETURNTRANSFER => true,
           CURLOPT_ENCODING => '',
           CURLOPT_MAXREDIRS => 10,
