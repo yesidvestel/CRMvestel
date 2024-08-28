@@ -300,7 +300,7 @@ var_dump($output);
                                               "message": "'.$mensaje.'",
                                               "type": 1
                                             }';
-                        if($api->envio_sms_masivos_por_curl($retorno['token'],$mensajes_a_enviar,$name_campaign)){
+                        if($api->alternativa_por_curl_envio_sms_invividual($retorno['token'],$user->celular,$mensaje)){
                             $this->templates->insert_mensaje($name_campaign, $emp, $user->id, $mensaje);
                         }
                     }
