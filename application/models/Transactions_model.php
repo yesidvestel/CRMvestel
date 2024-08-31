@@ -110,7 +110,7 @@ class Transactions_model extends CI_Model
             $order = $this->order;
             $this->db->order_by(key($order), $order[key($order)]);
         }
-        if(empty($_GET['todas_las_tr'])){
+        if(empty($_GET['todas_las_tr']) && empty($_GET['id_tr'])){
             $this->db->where('transactions.id>'. $_SESSION['number_tr_min']);
             $this->db->order_by("transactions.id","desc");    
         }
