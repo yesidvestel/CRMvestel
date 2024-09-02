@@ -68,7 +68,19 @@
                                class="form-control margin-bottom  required" name="detalle">
                     </div>
                 </div>
+				<div class="form-group row">
 
+                    <label class="col-sm-2 col-form-label" for="body"><?php echo $this->lang->line('') ?>Coordenadas</label>
+
+                    <div class="col-sm-3">
+                        <input type="text" placeholder="Coordenada 1" value="<?php echo $info['coor1'] ?>"
+                               class="form-control margin-bottom  required" name="cor1">
+                    </div>
+					<div class="col-sm-3">
+                        <input type="text" placeholder="Coordenada 2" value="<?php echo $info['coor2'] ?>"
+                               class="form-control margin-bottom  required" name="cor2">
+                    </div>
+                </div>
                 <div class="form-group row">
 
                     <label class="col-sm-2 col-form-label"></label>

@@ -23,6 +23,7 @@
                     <th><?php echo $this->lang->line('') ?>Asignado</th>
                     <th><?php echo $this->lang->line('') ?>Estado</th>
                     <th><?php echo $this->lang->line('') ?>Detalle</th>
+                    <th><?php echo $this->lang->line('') ?>Coordenadas</th>
                     <th><?php echo $this->lang->line('') ?>Action</th>
 
 
@@ -43,6 +44,7 @@
                     $iduser = $usuario->id;
                     $estado = $row['estado'];
                     $detalle = $row['dir_nap'];
+					$cordenadas = $row['coor1'].' '.$row['coor2'];
                     echo "<tr>
                     <td>$i</td>
                     <td>$sede</td>
@@ -52,6 +54,7 @@
                     <td><a href='" . base_url("customers/view?id=$iduser") . "'>$asignado</a></td>
                     <td>$estado</td>
                     <td>$detalle</td>
+                    <td>$cordenadas</td>
                     
                   
                     <td><a href='" . base_url("redes/puertosedit?id=$cid") . "' class='btn btn-cyan btn-xs'><i class='icon-pencil'></i>" . $this->lang->line('Edit') . "</a>&nbsp&nbsp<a href='#' data-object-id=" . $cid ." class='btn btn-danger btn-xs delete-object'><span class='icon-bin'></span>" . $this->lang->line('Delete') . "</a></td></tr>";
@@ -69,6 +72,7 @@
                     <th><?php echo $this->lang->line('') ?>Asignado</th>
                     <th><?php echo $this->lang->line('') ?>Estado</th>
                     <th><?php echo $this->lang->line('') ?>Detalle</th>
+                    <th><?php echo $this->lang->line('') ?>Coordenadas</th>
                     <th><?php echo $this->lang->line('') ?>Action</th>
 
                 </tr>
