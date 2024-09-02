@@ -152,7 +152,9 @@ class Redes extends CI_Controller
             $nap = $this->input->post('nap');
             $puertos = $this->input->post('puertos');
             $detalle = $this->input->post('detalle');
-            $this->redes->input_nap($id,$almacen,$vlan,$nap,$puertos,$detalle);
+            $cor1 = $this->input->post('cor1');
+            $cor2 = $this->input->post('cor2');
+            $this->redes->input_nap($id,$almacen,$vlan,$nap,$puertos,$detalle,$cor1,$cor2);
 
     }
 	public function puertosadd()

@@ -67,7 +67,7 @@ class Redes_model extends CI_Model
                 $this->lang->line('ERROR')));
         }
     }
-	public function input_nap($id,$almacen,$vlan,$nap,$puertos,$detalle)
+	public function input_nap($id,$almacen,$vlan,$nap,$puertos,$detalle,$cor1,$cor2)
     {
         $data = array(
 			'sede' => $almacen,
@@ -75,6 +75,8 @@ class Redes_model extends CI_Model
 			'nap' => $nap,
 			'puertos' => $puertos,
 			'dir_nap' => $detalle,
+			'coor1' => $cor1,
+			'coor2' => $cor2,
         );
 
         $this->db->set($data);
