@@ -376,9 +376,9 @@ $this->load->model("customers_model","customers");
             if($array_servicios['combo']!="no"){
                 $dataApiNET->items[0]->description="Servicio de Internet ".$array_servicios['combo'];
                 $lista_de_productos=$this->db->from("products")->where_in("pcat",array("4","10","15"))->get()->result();
-                $array_servicios['combo']=strtolower(str_replace(" ", "",$array_servicios['combo'] ));
+                //$array_servicios['combo']=strtolower(str_replace(" ", "",$array_servicios['combo'] ));
                 foreach ($lista_de_productos as $key => $prod) {
-                    $prod->product_name=strtolower(str_replace(" ", "",$prod->product_name ));
+                    //$prod->product_name=strtolower(str_replace(" ", "",$prod->product_name ));
                     if($prod->product_name==$array_servicios['combo']){
                         //var_dump($prod->product_name);
                         $dataApiNET->items[0]->code=$prod->product_code;
@@ -426,6 +426,7 @@ $this->load->model("customers_model","customers");
          //var_dump($dataApiTV);
         $dataApiNET=json_encode($dataApiNET); 
         //var_dump($dataApiNET);
+        //exit();
         //var_dump($dataApiTV);
         $retorno=array("mensaje"=>"No");
         if($dataApiTV!=null && $dataApiTV!="null"){

@@ -366,9 +366,9 @@ $ob1=$this->db->get_where("config_facturacion_electronica",array("id"=>2))->row(
             if($array_servicios['combo']!="no"){
                 $dataApiNET->items[0]->description="Servicio de Internet ".$array_servicios['combo'];
                 $lista_de_productos=$this->db->from("products")->like("product_name","mega","both")->get()->result();
-                $array_servicios['combo']=strtolower(str_replace(" ", "",$array_servicios['combo'] ));
+                //$array_servicios['combo']=strtolower(str_replace(" ", "",$array_servicios['combo'] ));
                 foreach ($lista_de_productos as $key => $prod) {
-                    $prod->product_name=strtolower(str_replace(" ", "",$prod->product_name ));
+                    //$prod->product_name=strtolower(str_replace(" ", "",$prod->product_name ));
                     if($prod->product_name==$array_servicios['combo']){
                         $producto_existe=true;
                         //var_dump($prod->product_name);
@@ -1004,6 +1004,20 @@ $ob1=$this->db->get_where("config_facturacion_electronica",array("id"=>1))->row(
         return false;
 
 
+    }
+    public function conectar_siigo(){
+        $this->cargar_configuraciones_para_facturar();
+        
+        $api = new SiigoAPI();
+        $v1=$api->getAuth(1);
+        $this->db->update("config_facturacion_electronica",array("tocken"=>$v1['access_token']),array("id"=>1));
+        if(count($_SESSION['array_accesos_siigo'])==2){
+            $v2=$api->getAuth2(2);
+            $this->db->update("config_facturacion_electronica",array("tocken"=>$v2['access_token']),array("id"=>2));
+        }
+        $this->load->library('SiigoAPI');
+        $api = new SiigoAPI();
+        return $api;
     }
 
 }
