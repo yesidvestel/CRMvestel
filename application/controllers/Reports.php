@@ -507,6 +507,7 @@ class Reports extends CI_Controller
     }
 
     public function sacar_pdf(){
+        ini_set('pcre.backtrack_limit', 10000000000);
          //$this->load->model('accounts_model', 'accounts');
         $pay_acc = $this->input->post('pay_acc');
         $trans_type = $this->input->post('trans_type');
