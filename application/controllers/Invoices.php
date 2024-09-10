@@ -598,7 +598,7 @@ $this->load->model('customers_model', 'customers');
                                 //$str1=str_replace(" ", "", strtolower($internet));
                                 $str1=$internet;
                                 //$producto_internet=$this->db->query('SELECT * FROM products WHERE lower(REPLACE(product_name," ","")) = "'.$str1.'"')->result_array();
-                                $producto_internet=$this->db->query('SELECT * FROM products WHERE product_name = "'.ltrim($str1).'"')->result_array();
+                                $producto_internet=$this->db->query('SELECT * FROM products WHERE product_name = "'.$str1.'"')->result_array();
                                 $producto_internet=$producto_internet[0];
                                 if(empty($producto_internet)){
                                     continue;
