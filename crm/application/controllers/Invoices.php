@@ -74,6 +74,7 @@ class Invoices extends CI_Controller
 
 public function aplicar_prom(){
     $cid=$this->session->userdata('user_details')[0]->cid;
+    //promo es el porsentaje de la promo 
     $cuerpo='"cid": '.$cid.',"promo":5,';
      $respuesta=$this->communication->obtener($cuerpo,"aplicar_discount");
         echo $respuesta;
