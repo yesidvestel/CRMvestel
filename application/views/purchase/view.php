@@ -251,7 +251,7 @@
 								<div class="text-xs-center  col-sm-6">
 									 
 									<?php if($invoice['aid']==0){
-										 if ($this->aauth->get_user()->id == 54 || $this->aauth->get_user()->id == 17) {
+										 if ($this->aauth->get_user()->id == 8 || $this->aauth->get_user()->id == 18) {
 										echo '<input type="hidden" name="idorden" value="'.$invoice['tid'].'"></input><input type="hidden" name="estado" value="aprobado"></input><input type="submit" id="submit-data" class="btn btn-success margin-bottom"
 										value="AUTORIZAR" data-loading-text="Adding...">
                         				<input type="hidden" value="purchase/autorizar" id="action-url">';
