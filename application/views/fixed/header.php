@@ -339,6 +339,12 @@ $lista_permisos1=$this->db->query("SELECT permisos_usuario.id,permisos_usuario.i
 						<li>
                             <a href="<?php echo base_url(); ?>redes/conexionlist">Administrar Conexion</a>
                         </li>
+						<li>
+                            <a href="<?php echo base_url(); ?>redes/equip_transfer">Transferencias</a>
+                        </li>
+						<li>
+                            <a href="<?php echo base_url(); ?>redes/transferencias">Adm transferencias</a>
+                        </li>
 					</ul>
 				</li>
                 <li class="nav-item has-sub <?php if ($this->uri->segment(1) == "products") {

@@ -23,10 +23,13 @@ class Redes_model extends CI_Model
 
    	var $table = 'equipos';
     var $column_order = array(null, 'product_name', 'qty', 'product_code', 'title', 'product_price', null, 'mac', 'serial'); //set column field database for datatable orderable
+    var $column_order_actas = array('id', 'fecha', 'almacen_origen', 'almacen_destino'); //set column field database for datatable orderable
     var $column_search = array('product_name', 'product_code','product_cat.title' ); //Establecer base de datos de campo de columna para la tabla de datos
+    var $column_search_actas = array('id', 'fecha', 'almacen_origen', 'almacen_destino' ); //Establecer base de datos de campo de columna para la tabla de datos
 	var $column_search_equi = array('id', 'codigo','proveedor','almacen','mac','serial','llegada','final','marca','asignado','estado','observacion');
 	var $column_order_equi = array(null, 'id', 'codigo','mac','serial','estado','asignado','marca','null');
     var $order = array('pid' => 'desc'); // default order
+    var $order_actas = array('teid' => 'desc'); // default order
 	var $order_equi = array('id' => 'desc'); 
     public function __construct()
     {
@@ -620,118 +623,111 @@ FROM products ");
     }
     public function transfer($from_warehouse,$products_l,$to_warehouse)
     {   
-        foreach ($products_l as $key => $value) {
-            $producto = $this->db->get_where('products',array("pid"=>$value['pid']))->row();
-            if($value['qty']>0){
-                $qty_nuevo_pt=intval($value['qty']);//cantidad que se quiere transferir
-                $qty_viejo_pt=intval($producto->qty);//cantidad que hay en existencia
-                $qty_viejo_pt=$qty_viejo_pt-$qty_nuevo_pt;//cantidad que quedara al transferir las unidades
-                //trabajando sobre el producto transferido
-
-            $transferencia_creada=$this->db->select('transferencias.id_transferencia,transferencias.producto_a,transferencias.producto_b,rel_a.warehouse as almacen_a,rel_b.warehouse as almacen_b')->from('transferencias')->join('products as rel_a','rel_a.pid=transferencias.producto_a')->join('products as rel_b','rel_b.pid=transferencias.producto_b')->where('(rel_a.pid='.$value["pid"].' or rel_b.pid='.$value["pid"].') and (rel_a.warehouse='.$to_warehouse.' or rel_b.warehouse='.$to_warehouse.')')->get()->result();
-            
-            if(!empty($transferencia_creada)){
-                $id_a_transferir;
-                if($value['pid']==$transferencia_creada[0]->producto_a){
-                    $id_a_transferir=$transferencia_creada[0]->producto_b;                    
-                }else{
-                    $id_a_transferir=$transferencia_creada[0]->producto_a;
-                }
-                $producto_b=$this->db->get_where('products',array('pid'=>$id_a_transferir))->row();
-                $transferido_a=$producto_b->pid;
-                $datay['qty']=$qty_nuevo_pt+intval($producto_b->qty);
-                $this->db->update('products',$datay,array("pid"=>$id_a_transferir));
-
-                    $data_h=array();
-                    $data_h['modulo']="Inventarios";
-                    $data_h['accion']="Transferencia de acciones {update}";
-                    $data_h['id_usuario']=$this->aauth->get_user()->id;
-                    $data_h['fecha']=date("Y-m-d H:i:s");
-                    $data_h['descripcion']=json_encode($datay);
-                    $data_h['id_fila']=$id_a_transferir;
-                    $data_h['tabla']="products";
-                    $data_h['nombre_columna']="pid";
-                    $this->db->insert("historial_crm",$data_h);
-
-            }else{
-
-                $producto_por_nombre = $this->db->get_where('products',array('product_name'=>$producto->product_name,'warehouse'=>$to_warehouse))->row();
-
-                    $proximo_pid=$this->db->select('max(pid)+1 as pid')->from('products')->get()->result();
-                    $value['warehouse']=$to_warehouse;
-                    $value['pid']=null;
-                    //aqui es donde tengo que verificar por el nombre like y por el almacen claro esta al que se le transfiere el producto
-                    // si existe el primero en coincidir crea la relacion y la transferencia
-                    
-                    $data_transfer['producto_a']=$producto->pid;
-                    $data_transfer['producto_b']=$proximo_pid[0]->pid;
-                    
-                    if(!empty($producto_por_nombre)){
-                        $data_transfer['producto_b']=$producto_por_nombre->pid;
-                        if($producto_por_nombre->qty<0){
-                            $producto_por_nombre->qty=0;
-                        }
-                        $datay['qty']=$qty_nuevo_pt+intval($producto_por_nombre->qty);
-                        
-                        $this->db->update('products',$datay,array("pid"=>$producto_por_nombre->pid));
-                                $data_h=array();
-                                $data_h['modulo']="Inventarios";
-                                $data_h['accion']="Transferencia de acciones {update}";
-                                $data_h['id_usuario']=$this->aauth->get_user()->id;
-                                $data_h['fecha']=date("Y-m-d H:i:s");
-                                $data_h['descripcion']=json_encode($datay);
-                                $data_h['id_fila']=$producto_por_nombre->pid;
-                                $data_h['tabla']="products";
-                                $data_h['nombre_columna']="pid";
-                                $this->db->insert("historial_crm",$data_h);
-                    }else{
-                        $this->db->insert('products',$value);  
-
-                            $data_h=array();
-                            $data_h['modulo']="Inventarios";
-                            $data_h['accion']="Transferencia de acciones {insert}";
-                            $data_h['id_usuario']=$this->aauth->get_user()->id;
-                            $data_h['fecha']=date("Y-m-d H:i:s");
-                            $data_h['descripcion']=json_encode($value);
-                            $data_h['id_fila']=$this->db->insert_id();
-                            $data_h['tabla']="products";
-                            $data_h['nombre_columna']="pid";
-                            $this->db->insert("historial_crm",$data_h);  
-                    }
-                    
-                    $transferido_a=$data_transfer['producto_b'];
-
-                    $this->db->insert('transferencias',$data_transfer);
-
-                            $data_h=array();
-                            $data_h['modulo']="Inventarios";
-                            $data_h['accion']="Transferencia de acciones {insert}";
-                            $data_h['id_usuario']=$this->aauth->get_user()->id;
-                            $data_h['fecha']=date("Y-m-d H:i:s");
-                            $data_h['descripcion']=json_encode($data_transfer);
-                            $data_h['id_fila']=$this->db->insert_id();
-                            $data_h['tabla']="transferencias";
-                            $data_h['nombre_columna']="id_transferencia";
-                            $this->db->insert("historial_crm",$data_h); 
-            }
-            //trabajando sobre el producto a transferir
-            $datax['qty']=$qty_viejo_pt;
-            $this->db->update('products',$datax,array('pid'=>$producto->pid));
-
-                $data_h=array();
-                $data_h['modulo']="Inventarios";
-                $data_h['accion']="Transferencia de acciones {update}";
-                $data_h['id_usuario']=$this->aauth->get_user()->id;
-                $data_h['fecha']=date("Y-m-d H:i:s");
-                $data_h['descripcion']=json_encode($datax);
-                $data_h['id_fila']=$producto->pid;
-                $data_h['tabla']="products";
-                $data_h['nombre_columna']="pid";
-                $this->db->insert("historial_crm",$data_h);
-
-            }
+		$data = array(
+				'fecha' => date("Y-m-d H:i:s"),
+				'almacen_origen' => $from_warehouse,
+				'almacen_destino' => $to_warehouse,
+				'observaciones' => $_POST['observaciones_acta'],
+				'id_usuario_que_transfiere' => $this->aauth->get_user()->id,
+				);
+			$this->db->set($data);
+			if ($this->db->insert("transfer_equipos",$data)){
+			$idacta =  $this->db->insert_id();
+			foreach ($products_l as $key => $value) {
+				$this->db->set('almacen', $to_warehouse);
+				$this->db->where('id', $value['id']);
+				if ($this->db->update('equipos')){
+						$datae = array(
+							'id_transfer' => $idacta,
+							'id_equipo' => $value['id'],
+							);
+						$this->db->set($datae);
+						$this->db->insert("item_transfer_equipos",$datae);
+					}
+				}
+			$data_h=array();
+			$data_h['modulo']="Redes";
+			$data_h['accion']="Transferencia equipos";
+			$data_h['id_usuario']=$this->aauth->get_user()->id;
+			$data_h['fecha']=date("Y-m-d H:i:s");
+			$data_h['descripcion']="Se realiza transferencia de equipos ".json_encode($value);
+			$data_h['id_fila']=$this->db->insert_id();
+			$data_h['tabla']="transfer_equipos";
+			$data_h['nombre_columna']="teid";
+			$this->db->insert("historial_crm",$data_h);			
+			
+            echo json_encode(array('status'=>"success",'id_acta'=>$idacta));    
+        }else{
+            echo json_encode(array('status' => 'Error', 'message' =>$this->lang->line('ERROR')));    
         }
-        echo json_encode(array('status'=>"success",'transferido_a'=>$transferido_a));
+	}
+	private function _get_datatables_query_actas()
+    {
+        $this->db->select("transfer_equipos.teid, transfer_equipos.fecha, alm_o.almacen as almacen_origen, alm_d.almacen as almacen_destino, emp1.username as username");
+        $this->db->from("transfer_equipos");
+        $i=0;
+        $this->db->join("aauth_users as emp1","emp1.id=transfer_equipos.id_usuario_que_transfiere");
+        $this->db->join("almacen_equipos as alm_o","alm_o.id=transfer_equipos.almacen_origen");
+        $this->db->join("almacen_equipos as alm_d","alm_d.id=transfer_equipos.almacen_destino");
+        /*if($this->aauth->get_user()->roleid<=2){
+            $this->db->where("alm_d.id_tecnico='".$this->aauth->get_user()->username."'");
+        }else if(isset($_GET['tecnico'])){
+
+            $this->db->where("tr1.fecha>='".(new DateTime ($_GET['sdate']))->format("Y-m-d 00:00:01")."'");
+            $this->db->where("tr1.fecha<='".(new DateTime ($_GET['edate']))->format("Y-m-d 23:59:59")."'");
+            $this->db->where("alm_d.id_tecnico='".$_GET['tecnico']."'");
+        }*/
+        foreach ($this->column_search_actas as $item) // loop column
+        {
+            $search = $this->input->post('search');
+            $value = $search['value'];
+            if ($value) // if datatable send POST for search
+            {
+
+                if ($i === 0) // first loop
+                {
+                    $this->db->group_start(); // open bracket. query Where with OR clause better with bracket. because maybe can combine with other WHERE with AND.
+                    $this->db->like($item, $value);
+                } else {
+                    $this->db->or_like($item, $value);
+                }
+
+                if (count($this->column_search_actas) - 1 == $i) //last loop
+                    $this->db->group_end(); //close bracket
+            }
+            $i++;
+        }
+        $search = $this->input->post('order');
+        if ($search) // here order processing
+        {
+            $this->db->order_by($this->column_order_actas[$search['0']['column']], $search['0']['dir']);
+        } else if (isset($this->order_actas)) {
+            $order = $this->order_actas;
+            $this->db->order_by(key($order), $order[key($order)]);
+        }
+    }
+    function get_datatables_actas()
+    {
+        $this->_get_datatables_query_actas();
+        $this->db->order_by("teid","desc");
+        if ($this->input->post('length') != -1)
+            $this->db->limit($this->input->post('length'), $this->input->post('start'));
+        $query = $this->db->get();
+        return $query->result();
+    }
+    function count_filtered_actas()
+    {
+        $this->_get_datatables_query_actas();
+		
+        $query = $this->db->get();
+        return $query->num_rows();
+    }
+    public function count_all_actas()
+    {
+        $this->_get_datatables_query_actas();
+		
+        $query = $this->db->get();
+        return $query->num_rows();
     }
 
 }

@@ -778,21 +778,11 @@ class Redes extends CI_Controller
 
     }
 
-    public function stock_transfer_products()
-    {
-        $wid = $this->input->get('wid');
-        $result=$this->products->products_list($wid);
-        
-        echo json_encode($result);
-
-
-    }
-
     public function stock_transfer()
     {
         if ($this->input->post()) {
             
-            $this->products->transfer($_POST['from_warehouse'],$_POST['lista'],$_POST['to_warehouse']);
+            $this->redes->transfer($_POST['from_warehouse'],$_POST['lista'],$_POST['to_warehouse']);
 
         } else {
 
@@ -807,6 +797,152 @@ class Redes extends CI_Controller
 
 
     }
+	public function stock_transfer_products()
+    {
+		
+		$this->load->model('products_model', 'products');
+        $wid = $this->input->get('wid');
+        $result=$this->products->products_alm_list($wid);
+        
+        echo json_encode($result);
+
+
+    }
+	public function equip_transfer()
+    {
+        /*if ($this->input->post()) {
+            
+            $this->products->transfer($_POST['from_warehouse'],$_POST['lista'],$_POST['to_warehouse']);
+
+        } else {*/
+
+            //$data['cat'] = $this->categories_model->category_list();
+            $data['warehouse'] = $this->categories_model->almacen_list();
+            $head['title'] = "Stock Transfer";
+            $head['usernm'] = $this->aauth->get_user()->username;
+            $this->load->view('fixed/header', $head);
+            $this->load->view('redes/equip_transfer', $data);
+            $this->load->view('fixed/footer');
+        //}
+
+
+    }
+	public function transferencias()
+	{
+        $head=array("title"=>"Administrar Actas de Transferencias");
+        $this->load->view('fixed/header',$head);
+        //$data['lista_tecnicos']=$this->db->get_where("employee_profile")->result_array();
+
+        $this->load->view('redes/list_transfer');
+        $this->load->view('fixed/footer');
+    }
+	public function actas_list(){
+        
+        $list = $this->redes->get_datatables_actas();
+        $data = array();
+        $no = $this->input->post('start');
+        //setlocale(LC_TIME, "spanish");
+
+        foreach ($list as $key => $value) {            
+                $no++;  
+                $row = array();
+                $row[]="Acta#".$value->teid;
+               // $x=new DateTime($value->fecha);
+               // $row[]= utf8_encode(strftime("%A,".$x->format("d")." de %B del ".$x->format("Y"), strtotime($value->fecha)))."-<u>".$x->format("g").":".$x->format("i")." ".$x->format("a")."</u>";
+                $row[]=$value->fecha;
+                $row[]=$value->almacen_origen;
+                $row[]=$value->almacen_destino;
+                
+                
+                $row[]=$value->username;
+                if($value->estado==null){
+                    $value->estado="Emitida";
+                }
+                $row[]=$value->estado;
+                $row[]="<a href='".base_url()."redes/view_acta?id=".$value->teid."' class='btn btn-info'><i <i class='icon-eye'></i></a>";
+                $data[]=$row;
+
+        }
+            $output = array(
+                "draw" => $_POST['draw'],
+                "recordsTotal" => $this->redes->count_all_actas(),
+                "recordsFiltered" => $this->redes->count_filtered_actas(),
+                "data" => $data,
+            );
+            //output to json format
+            echo json_encode($output);
+
+    }
+	public function view_acta(){
+        
+        $data=array("id_acta"=>$_GET['id']);
+        $data['acta']=$this->db->get_where("transfer_equipos",array("teid"=>$_GET['id']))->row();
+        $data['almacen_origen']=$this->db->get_where("almacen_equipos",array("id"=>$data['acta']->almacen_origen))->row();
+        $data['almacen_destino']=$this->db->get_where("almacen_equipos",array("id"=>$data['acta']->almacen_destino))->row();
+        if($data['almacen_destino']->id_tecnico!=null){
+            $data['almacen_destino']->id_tecnico=$this->db->get_where("employee_profile",array("username"=>$data['almacen_destino']->id_tecnico))->row();
+        }
+        $data['lista_productos']=$this->db->query("select eq.codigo, eq.mac, eq.serial, eq.marca, eq.estado from equipos as eq inner join item_transfer_equipos as equi_tr on equi_tr.id_equipo=eq.id inner join transfer_equipos as tr_eq on tr_eq.teid=equi_tr.id_transfer where equi_tr.id_transfer=".$_GET['id'])->result();
+        $data['employee']=$this->db->get_where("employee_profile",array("id"=>$data['acta']->id_usuario_que_transfiere))->row();
+        $data['employee_aauth_users']=$this->db->get_where("aauth_users",array("id"=>$data['acta']->id_usuario_que_transfiere))->row();
+
+        //var_dump($data['tecnicoslista']);
+        $head['title']="Acta De Transferencia de Equipos #".$_GET['id'];
+        $this->load->view('fixed/header',$head);
+
+        $this->load->view('redes/view_acta',$data);
+        $this->load->view('fixed/footer');
+    }
+	public function printacta()
+    {
+        $data=array("id_acta"=>$_GET['id']);
+        $data['acta']=$this->db->get_where("transfer_equipos",array("teid"=>$_GET['teid']))->row();
+        $data['almacen_origen']=$this->db->get_where("almacen_equipos",array("id"=>$data['acta']->almacen_origen))->row();
+        $data['almacen_destino']=$this->db->get_where("almacen_equipos",array("id"=>$data['acta']->almacen_destino))->row();
+        /*if($data['almacen_destino']->id_tecnico!=null){
+            $data['almacen_destino']->id_tecnico=$this->db->get_where("employee_profile",array("username"=>$data['almacen_destino']->id_tecnico))->row();
+            $data['almacen_destino']->aauth_users=$this->db->get_where("aauth_users",array("id"=>$data['almacen_destino']->id_tecnico->id))->row();
+        }*/
+        $data['lista_productos']=$this->db->query("select eq.codigo, eq.mac, eq.serial, eq.marca, eq.estado from equipos as eq inner join item_transfer_equipos as equi_tr on equi_tr.id_equipo=eq.id inner join transfer_equipos as tr_eq on tr_eq.teid=equi_tr.id_transfer where equi_tr.id_transfer=".$_GET['id'])->result();
+        $data['employee']=$this->db->get_where("employee_profile",array("id"=>$data['acta']->id_usuario_que_transfiere))->row();
+        $data['employee_aauth_users']=$this->db->get_where("aauth_users",array("id"=>$data['acta']->id_usuario_que_transfiere))->row();
+
+        //var_dump($data['tecnicoslista']);
+        $head['title']="Acta De Transferencia de Equipos #".$_GET['id'];
+//before
+       /* $id = $this->input->get('id');
+
+        $data['id'] = $id;
+        $data['title'] = "Acta #$tid";
+        $data['acta'] = $this->actas->purchase_details($id);
+        $data['products'] = $this->purchase->purchase_products($id);
+        $data['employee'] = $this->purchase->employee($data['invoice']['eid']);
+        $data['employeeaut'] = $this->purchase->employee($data['invoice']['aid']);
+        $data['invoice']['multi'] = 0;
+*/
+        ini_set('memory_limit', '128M');
+
+        $html = $this->load->view('redes/view-print-'.LTR, $data, true);
+
+        //PDF Rendering
+        $this->load->library('pdf');
+
+        $pdf = $this->pdf->load();
+
+        $pdf->SetHTMLFooter('<table width="100%" style="vertical-align: bottom; font-family: serif; font-size: 8pt; color: #959595; font-weight: bold; font-style: italic;"><tr><td width="33%"><span style="font-weight: bold; font-style: italic;">{DATE j-m-Y}</span></td><td width="33%" align="center" style="font-weight: bold; font-style: italic;">{PAGENO}/{nbpg}</td><td width="33%" style="text-align: right; ">#' . $tid . '</td></tr></table>');
+
+        $pdf->WriteHTML($html);
+
+        if ($this->input->get('d')) {
+
+            $pdf->Output('Acta #' . $data['id_acta'] . '.pdf', 'D');
+        } else {
+            $pdf->Output('Acta #' . $data['id_acta'] . '.pdf', 'I');
+        }
+
+
+    }
+	
 
 
 }

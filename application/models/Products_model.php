@@ -555,5 +555,14 @@ FROM products ");
         }
         
     }
+	public function products_alm_list($id)
+    {
+        $this->db->select('*');
+        $this->db->from('equipos');
+        $this->db->where('almacen', $id);
+        $query = $this->db->get();
+        return $query->result_array();
+
+    }
 
 }
