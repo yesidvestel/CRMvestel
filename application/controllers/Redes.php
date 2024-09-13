@@ -896,7 +896,7 @@ class Redes extends CI_Controller
 	public function printacta()
     {
         $data=array("id_acta"=>$_GET['id']);
-        $data['acta']=$this->db->get_where("transfer_equipos",array("teid"=>$_GET['teid']))->row();
+        $data['acta']=$this->db->get_where("transfer_equipos",array("teid"=>$_GET['id']))->row();
         $data['almacen_origen']=$this->db->get_where("almacen_equipos",array("id"=>$data['acta']->almacen_origen))->row();
         $data['almacen_destino']=$this->db->get_where("almacen_equipos",array("id"=>$data['acta']->almacen_destino))->row();
         /*if($data['almacen_destino']->id_tecnico!=null){

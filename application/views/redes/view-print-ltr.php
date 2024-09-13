@@ -1,4 +1,7 @@
 <!doctype html>
+<?php 
+$almacen_origen=$this->db->get_where("almacen_equipos",array("id"=>$acta->almacen_origen))->row();
+?>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -212,7 +215,7 @@
         <tr>
             <td>
                 <strong><?php echo $almacen_origen->almacen ?></strong><br>
-                <?=$almacen_origen->extra ?>
+                <?=$almacen_origen->descripcion ?>
             </td>
             <td>
             <?php if($almacen_destino->id_tecnico!=null) { ?>
@@ -232,7 +235,8 @@
                         Dir: <?=$almacen_destino->id_tecnico->address ?>
                     
                 <?php }else{ ?>
-                    <strong><?=$almacen_destino->almacen ?></strong>
+                    <strong><?=$almacen_destino->almacen ?></strong><br>
+					<?=$almacen_destino->descripcion ?>
                 <?php } ?>
             </td>
         </tr>
