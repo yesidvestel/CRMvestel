@@ -68,8 +68,17 @@
 						</div>
 						<div class="row m-t-lg">
 							<label class="col-md-2 col-form-label">Categoria: </label>
-							<div class="col-md-2 col-form-label">
-								 <?php echo $trans['cat'] ?>
+							<div class="col-md-4 col-form-label">
+								 <select name="cat" class="form-control">
+									<option value="<?php echo $trans['cat'] ?>">>><?php echo $trans['cat'] ?></option>
+									<?php
+									foreach ($cat as $row) {
+										$cid = $row['id'];
+										$title = $row['name'];
+										echo "<option value='$title'>$title</option>";
+									}
+									?>
+								</select>
 							</div>
 						</div>
            	 	</div>

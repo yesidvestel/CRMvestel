@@ -2837,6 +2837,7 @@ $result=array();
         $head['usernm'] = $this->aauth->get_user()->username;
         $id = $this->input->get('id');
         $data['trans'] = $this->transactions->view($id);
+		$data['cat'] = $this->transactions->categories();
         if ($data['trans']['payerid'] > 0) {
             $data['cdata'] = $this->transactions->cview($data['trans']['payerid'],$data['trans']['ext']);
         } else {
@@ -2855,9 +2856,10 @@ $result=array();
 		$fcha = $this->input->post('fecha');
 		$nte = $this->input->post('nota');
 		$tid = $this->input->post('tid');
+		$cat = $this->input->post('cat');
 
         if ($id) {
-            $this->transactions->edit($id, $deb, $cred, $fcha, $nte,$tid);
+            $this->transactions->edit($id, $deb, $cred, $fcha, $nte,$tid, $cat);
         }
     }
 

@@ -191,13 +191,14 @@ class Transactions_model extends CI_Model
         $query = $this->db->get();
         return $query->result_array();
     }
-	public function edit($id, $deb, $cred, $fcha, $nte,$tid)
+	public function edit($id, $deb, $cred, $fcha, $nte,$tid,$cat)
     {
         $data = array(
 			'debit' => $deb,
             'credit' => $cred,
 			'date' => $fcha,
             'note' => $nte,
+            'cat' => $cat,
 
         );
         $this->db->set($data);
