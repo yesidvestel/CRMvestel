@@ -139,7 +139,8 @@
                             <select name="paymethod" class="form-control">
                                 <option value="Cash" selected><?php echo $this->lang->line('Cash') ?></option>
                                 <option value="Card"><?php echo $this->lang->line('Card') ?></option>
-                                <option value="Cheque"><?php echo $this->lang->line('Cheque') ?></option>
+                                <option value="Cheque"><?php echo $this->lang->line('') ?>Cheque</option>
+                                <option value="Cheque"><?php echo $this->lang->line('') ?>Banco</option>
                             </select>
 
                         </div>

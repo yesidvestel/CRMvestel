@@ -242,7 +242,7 @@
                     
                     mostrar_alerta1("mensaje1",1,"<b>Success</b> : Acta de transferencia creada con satisfaccion, sera dirijido a ella...");
                     setTimeout(function (e) {
-                            window.location.href = baseurl+"actas/view?id="+data.id_acta;
+                            window.location.href = baseurl+"redes/view_acta?id="+data.id_acta;
                     },1000);
 
                 }else{
