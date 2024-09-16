@@ -239,8 +239,14 @@ class Purchase_model extends CI_Model
     }
 	public function aut($idats, $estado, $autor)
     {
+		$orden=$this->db->get_where('purchase',array('tid'=>$idats))->row();
+		if($orden->aid==0){
+			$au1= 'aid';
+		}else{
+			$au1= 'a2id';
+		}
         $data = array(
-            'aid' => $autor,
+            $au1 => $autor,
             'status' => $estado,
         );
 

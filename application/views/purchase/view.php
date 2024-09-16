@@ -242,13 +242,13 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <div class="text-xs-center  col-sm-6">
+                                <div class="text-xs-center  col-sm-4">
                                     <p><?php echo $this->lang->line('') ?>Generado por</p>
                                     <?php echo '<img src="' . FCPATH . 'userfiles/employee_sign/' . $employee['sign'] . '" alt="signature" class="height-100"/>
                                     <h6>(' . $employee['name'] . ')</h6>
                                     <p class="text-muted">' . user_role($employee['name']) . '</p>'; ?>
                                 </div>
-								<div class="text-xs-center  col-sm-6">
+								<div class="text-xs-center  col-sm-4">
 									 
 									<?php if($invoice['aid']==0){
 										 if ($this->aauth->get_user()->id == 8 || $this->aauth->get_user()->id == 18 || $this->aauth->get_user()->id == 151) {
@@ -257,10 +257,26 @@
                         				<input type="hidden" value="purchase/autorizar" id="action-url">';
 										 }
 									}else{ ?>
-										<p><?php echo $this->lang->line('Authorized person') ?></p>
+										<p><?php echo $this->lang->line('') ?>Administrativo autoriza</p>
 										<?php echo '<img src="' . FCPATH . 'userfiles/employee_sign/' . $employeeaut['sign'] . '" alt="signature" class="height-100"/>
 										<h6>(' . $employeeaut['name'] . ')</h6>
 										<p class="text-muted">' . user_role($employeeaut['name']) . '</p>'; 
+									} ?>
+									
+                                </div>
+								<div class="text-xs-center  col-sm-4">
+									 
+									<?php if($invoice['a2id']==0){
+										 if ($this->aauth->get_user()->id == 8 || $this->aauth->get_user()->id == 130 || $this->aauth->get_user()->id == 158) {
+										echo '<input type="hidden" name="idorden" value="'.$invoice['tid'].'"></input><input type="hidden" name="estado" value="aprobado"></input><input type="submit" id="submit-data" class="btn btn-success margin-bottom"
+										value="AUTORIZAR" data-loading-text="Adding...">
+                        				<input type="hidden" value="purchase/autorizar" id="action-url">';
+										 }
+									}else{ ?>
+										<p><?php echo $this->lang->line('') ?>Contable Autoriza</p>
+										<?php echo '<img src="' . FCPATH . 'userfiles/employee_sign/' . $employeeaut2['sign'] . '" alt="signature" class="height-100"/>
+										<h6>(' . $employeeaut2['name'] . ')</h6>
+										<p class="text-muted">' . user_role($employeeaut2['name']) . '</p>'; 
 									} ?>
 									
                                 </div>

@@ -381,6 +381,7 @@ class Purchase extends CI_Controller
         $data['warehouse'] = $this->purchase->warehouses();
         $data['employee'] = $this->purchase->employee($data['invoice']['eid']);
         $data['employeeaut'] = $this->purchase->employee($data['invoice']['aid']);
+        $data['employeeaut2'] = $this->purchase->employee($data['invoice']['a2id']);
         $head['usernm'] = $this->aauth->get_user()->username;
         $this->load->view('fixed/header', $head);
         $this->load->view('purchase/view', $data);
