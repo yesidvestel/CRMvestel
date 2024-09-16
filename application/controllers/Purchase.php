@@ -410,6 +410,7 @@ class Purchase extends CI_Controller
         $data['products'] = $this->purchase->purchase_products($tid);
         $data['employee'] = $this->purchase->employee($data['invoice']['eid']);
         $data['employeeaut'] = $this->purchase->employee($data['invoice']['aid']);
+		$data['employeeaut2'] = $this->purchase->employee($data['invoice']['a2id']);
         $data['invoice']['multi'] = 0;
 
         ini_set('memory_limit', '128M');

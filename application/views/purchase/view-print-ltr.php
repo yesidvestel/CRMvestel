@@ -376,12 +376,22 @@
 		</td>
 		<td width="30%">
 			<div class="sign">
-			Autorizado por</div>
+			Administrativo autoriza</div>
 			<div class="sign1">
 				<img src="' . FCPATH . 'userfiles/employee_sign/' . $employeeaut['sign'] . '" width="160" height="50" border="0" alt="">
 			</div>
 			<div class="sign2">
 				' . $employeeaut['name'] . '
+			</div>
+		</td>
+		<td width="30%">
+			<div class="sign">
+			Contable autoriza</div>
+			<div class="sign1">
+				<img src="' . FCPATH . 'userfiles/employee_sign/' . $employeeaut2['sign'] . '" width="160" height="50" border="0" alt="">
+			</div>
+			<div class="sign2">
+				' . $employeeaut2['name'] . '
 			</div>
 		</td>
 		</tr>
