@@ -1026,6 +1026,14 @@ $lista_permisos1=$this->db->query("SELECT permisos_usuario.id,permisos_usuario.i
 						<li>
                             <a href="<?php echo base_url(); ?>redes/conexionlist">Administrar Conexion</a>
                         </li>
+						<?php } if ($lista_permisos_us['redtrans'] != null) { ?>
+						<li>
+                            <a href="<?php echo base_url(); ?>redes/equip_transfer">Transferencias</a>
+                        </li>
+						<?php } if ($lista_permisos_us['redadmtrans'] != null) { ?>
+						<li>
+                            <a href="<?php echo base_url(); ?>redes/transferencias">Adm transferencias</a>
+                        </li>
 						<?php } ?>
 					</ul>
 				</li>

@@ -1028,3 +1028,9 @@ COORDENADAS EN NAPS
 --------------------------------------
 
 ALTER TABLE `naps` ADD `coor1` VARCHAR(50) NULL AFTER `dir_nap`, ADD `coor2` VARCHAR(50) NULL AFTER `coor1`;
+----------------------------------------------------------------------------------------------------------
+PERMISOS TRANSFERENCIA EQUIPOS
+--------------------------------------
+
+INSERT INTO `modulos` (`id_modulo`, `rol`, `nombre`, `id_padre`, `codigo`, `orden`, `icono`) VALUES (NULL, 'Hijo', 'Transferencias', '9', 'redtrans', '0', NULL);
+INSERT INTO `modulos` (`id_modulo`, `rol`, `nombre`, `id_padre`, `codigo`, `orden`, `icono`) VALUES (NULL, 'Hijo', 'Adm transferencias', '9', 'redadmtrans', '0', NULL);
