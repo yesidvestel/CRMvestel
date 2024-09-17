@@ -205,7 +205,7 @@
                             </div>
                             <div class="col-md-5 col-sm-12">
                                 <p class="lead"><?php echo $this->lang->line('Total Due') ?></p>
-                                <div class="table-responsive">
+                                <div class="table-responsive" >
                                     <table class="table" >
                                         <tbody>
                                         <tr>
@@ -244,7 +244,7 @@
                                 </div>
                                 <div class="text-xs-center  col-sm-4">
                                     <p><?php echo $this->lang->line('') ?>Generado por</p>
-                                    <?php echo '<img src="' . FCPATH . 'userfiles/employee_sign/' . $employee['sign'] . '" alt="signature" class="height-100"/>
+                                    <img src="<?php echo base_url('userfiles/employee_sign/' . $employee['sign']) . '" class="img-responsive p-1 m-b-2" style="max-width: 100%"/>
                                     <h6>(' . $employee['name'] . ')</h6>
                                     <p class="text-muted">' . user_role($employee['name']) . '</p>'; ?>
                                 </div>
@@ -258,7 +258,7 @@
 										 }
 									}else{ ?>
 										<p><?php echo $this->lang->line('') ?>Administrativo autoriza</p>
-										<?php echo '<img src="' . FCPATH . 'userfiles/employee_sign/' . $employeeaut['sign'] . '" alt="signature" class="height-100"/>
+										 <img src="<?php echo base_url('userfiles/employee_sign/' . $employeeaut['sign']) . '" class="img-responsive p-1 m-b-2" style="max-width: 100%"/>
 										<h6>(' . $employeeaut['name'] . ')</h6>
 										<p class="text-muted">' . user_role($employeeaut['name']) . '</p>'; 
 									} ?>
@@ -274,7 +274,7 @@
 										 }
 									}else{ ?>
 										<p><?php echo $this->lang->line('') ?>Contable Autoriza</p>
-										<?php echo '<img src="' . FCPATH . 'userfiles/employee_sign/' . $employeeaut2['sign'] . '" alt="signature" class="height-100"/>
+										<img src="<?php echo base_url('userfiles/employee_sign/' . $employeeaut2['sign']) . '" class="img-responsive p-1 m-b-2" style="max-width: 100%"/>
 										<h6>(' . $employeeaut2['name'] . ')</h6>
 										<p class="text-muted">' . user_role($employeeaut2['name']) . '</p>'; 
 									} ?>
