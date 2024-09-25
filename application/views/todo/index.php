@@ -95,9 +95,9 @@
                     <th><?php echo $this->lang->line('') ?>Realizada</th>
                     <th><?php echo $this->lang->line('') ?>Asignado a</th>
                     <th><?php echo $this->lang->line('Status') ?></th>
-                    <th><?php echo $this->lang->line('Actions') ?></th>
+                    <th><?php echo $this->lang->line('') ?>Historial</th>
 					<?php if($this->aauth->get_user()->roleid == 5) { ?>
-                    <th>Admin</th>
+                    <th>Administrar</th>
 					<?php } ?>
 
                 </tr>

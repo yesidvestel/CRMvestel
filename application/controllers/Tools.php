@@ -224,9 +224,9 @@ class Tools Extends CI_Controller
             $row[] = dateformat($task->duedate);
             $row[] = $task->emp;
             $row[] = '<span class="task_' . $task->status . '">' . $this->lang->line($task->status) . '</span>';
-            $row[] = '<a class="btn-info btn-sm" href="edittask?id=' . $task->id . '" data-object-id="' . $task->id . '"> <i class="icon-pencil"></i> </a>&nbsp;<a href="'.base_url().'manager/historial?id='.$task->id.'" data-id="' . $task->id . '" class="historial_task btn-sm btn-indigo" title="Historial"> <i class="icon-eye"></i> </a>';
+            $row[] = '<a href="'.base_url().'manager/historial?id='.$task->id.'" data-id="' . $task->id . '" class="historial_task btn-sm btn-indigo" title="Historial"> <i class="icon-eye"></i> </a>';
 			if ($this->aauth->get_user()->roleid == 5) {
-			$row[] = '<a class="btn-brown btn-sm delete-object" href="#" data-object-id=" ' . $task->id . '"> <i class="icon-trash-o"></i> </a>';
+			$row[] = '<a class="btn-info btn-sm" href="edittask?id=' . $task->id . '" data-object-id="' . $task->id . '"> <i class="icon-pencil"></i> </a>&nbsp;<a class="btn-brown btn-sm delete-object" href="#" data-object-id=" ' . $task->id . '"> <i class="icon-trash-o"></i> </a>';
 			}
             $data[] = $row;
         }
