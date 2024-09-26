@@ -392,7 +392,7 @@ $lista_permisos1=$this->db->query("SELECT permisos_usuario.id,permisos_usuario.i
                                 class="fa arrow"></i> </a>
                     <ul class="menu-content">
                         <li>
-                            <a href="<?php echo base_url(); ?>purchase/create"><?php echo $this->lang->line('New Order') ?></a>
+                            <a href="<?php echo base_url(); ?>purchase/create"><?php echo $this->lang->line('') ?>Nueva orden</a>
                         </li>
                         <li>
                             <a href="<?php echo base_url(); ?>purchase">Adm. Ordenes de compra<?php echo $this->lang->line('') ?></a>
@@ -1096,7 +1096,7 @@ $lista_permisos1=$this->db->query("SELECT permisos_usuario.id,permisos_usuario.i
                     <ul class="menu-content">
 						<?php if ($lista_permisos_us['comnue'] != null) { ?>
                         <li>
-                            <a href="<?php echo base_url(); ?>purchase/create"><?php echo $this->lang->line('New Order') ?></a>
+                            <a href="<?php echo base_url(); ?>purchase/create"><?php echo $this->lang->line('') ?>Nueva orden</a>
                         </li>
 						<?php } ?>
 						<?php if ($lista_permisos_us['comadm'] != null) { ?>

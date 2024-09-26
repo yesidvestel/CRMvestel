@@ -75,7 +75,7 @@
                                 <label class="col-sm-3 col-form-label" for="pay_cat"></label>
 
                                 <div class="col-sm-4">
-                                    <input type="submit" class="btn btn-primary btn-md" value="View">
+                                    <input type="submit" class="btn btn-primary btn-md" value="ver">
 
 
                                 </div>
