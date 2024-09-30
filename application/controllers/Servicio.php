@@ -87,6 +87,10 @@ class Servicio extends CI_Controller
         $data_response['promo']=$body_post->promo;
         //$data_response['monto']=$body_post->monto;
         //$data_response['idorden']=$body_post->idorden;
+        $estado_customer=$this->customers->servicios_detail($data_response['cid']);
+        if($estado_customer['estado']=="Cortado" || $estado_customer['estado']=="cortado"){
+            $data_response['promo']=10;
+        }
         $this->customers->aplicar_discuount_pago_oportuno($data_response['cid'],$data_response['promo']);
         echo json_encode($data_response);
     }
