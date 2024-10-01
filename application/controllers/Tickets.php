@@ -898,7 +898,7 @@ if($_SESSION[md5("variable_datos_pin")]['db_name'] != "admin_crmvestel" && $stat
     	$tv =null;
         $inter = null;
         $ptos = null;
-    if(isset($temporal)){
+    if(isset($temporal) && $ticket->id_invoice==null && $ticket->id_invoice==0){
         $tv = $temporal->tv;
         $inter = $temporal->internet;
         $ptos = $temporal->puntos;
@@ -1003,7 +1003,7 @@ if($_SESSION[md5("variable_datos_pin")]['db_name'] != "admin_crmvestel" && $stat
         $total=0;
 		$tax2=0;//var_dump($invoice[0]);
         //cod x
-		if (isset($temporal) && $ticket->codigo===$temporal->corden){
+		if (isset($temporal) && $ticket->codigo===$temporal->corden && $ticket->id_invoice==null && $ticket->id_invoice==0){
 			$data['csd']=$ticket->cid;
 			$data['television']=$temporal->tv;
 			$data['combo']=$temporal->internet;
@@ -1171,7 +1171,6 @@ if($_SESSION[md5("variable_datos_pin")]['db_name'] != "admin_crmvestel" && $stat
                 $list_servs=$this->invoices->servicios_adicionales($ticket->id_invoice,false);
                 $list_servs=$this->invoices->servicios_adicionales_idt($ticket->idt,$list_servs);
                 //var_dump($ticket->id_invoice);
-                //var_dump($list_servs);
                 foreach ($list_servs as $key_s => $serv_val) {
                     $data_serv=array();
                     $data_serv['tid_invoice']=$data['tid'];
@@ -1206,6 +1205,9 @@ $x=0;
             $data['subtotal']=$total;
             
             $data['total']=$data['subtotal']+$data['tax'];
+			if($ticket->detalle=="Reconexion Television2"){
+				$data['estado_tv']=null;
+			}
             //$_SESSION['x2a']=$data;
             if($this->db->insert('invoices',$data)){
 				if($ticket->par!=null && ($ticket->detalle=="Reconexion Internet2" || $ticket->detalle=="Reconexion Television2")){
@@ -1865,11 +1867,13 @@ $x=0;
                 }
                 $this->customers->desactivar_estado_usuario($customerx->name_s,$id_sede_mk,$customerx->tegnologia_instalacion);
 		}
-		if($ticket->detalle=="AgregarTelevision" || ($ticket->detalle=="Reconexion Television2" && ($ticket->id_factura!=0 || $ticket->id_factura!=null))){
+		if($ticket->detalle=="AgregarTelevision" && ($ticket->id_factura!=0 || $ticket->id_factura!=null)){
 			$factura = $this->db->get_where('invoices',array('tid'=>$idfactura))->row();
             $producto = $this->db->get_where('products',array('product_name'=>$factura->television))->row();
+			var_dump($producto);
             if($ticket->detalle=="AgregarTelevision"){
                 $producto = $this->db->get_where('products',array('product_name'=>$temporal->tv))->row();
+				
             }
 			
             $total=0;
