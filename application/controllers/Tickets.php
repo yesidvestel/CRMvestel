@@ -1867,10 +1867,10 @@ $x=0;
                 }
                 $this->customers->desactivar_estado_usuario($customerx->name_s,$id_sede_mk,$customerx->tegnologia_instalacion);
 		}
-		if($ticket->detalle=="AgregarTelevision" && ($ticket->id_factura!=0 || $ticket->id_factura!=null)){
+		if($ticket->detalle=="AgregarTelevision" ||  $ticket->detalle=="Reconexion Television2" && ($ticket->id_factura!=0 || $ticket->id_factura!=null && ($ticket->id_invoice==null || $ticket->id_invoice==0))){
+			var_dump($ticket->detalle);
 			$factura = $this->db->get_where('invoices',array('tid'=>$idfactura))->row();
             $producto = $this->db->get_where('products',array('product_name'=>$factura->television))->row();
-			var_dump($producto);
             if($ticket->detalle=="AgregarTelevision"){
                 $producto = $this->db->get_where('products',array('product_name'=>$temporal->tv))->row();
 				
