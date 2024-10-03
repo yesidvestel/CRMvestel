@@ -898,7 +898,7 @@ if($_SESSION[md5("variable_datos_pin")]['db_name'] != "admin_crmvestel" && $stat
     	$tv =null;
         $inter = null;
         $ptos = null;
-    if(isset($temporal) && $ticket->id_invoice==null && $ticket->id_invoice==0){
+    if(isset($temporal)){
         $tv = $temporal->tv;
         $inter = $temporal->internet;
         $ptos = $temporal->puntos;
@@ -1003,7 +1003,7 @@ if($_SESSION[md5("variable_datos_pin")]['db_name'] != "admin_crmvestel" && $stat
         $total=0;
 		$tax2=0;//var_dump($invoice[0]);
         //cod x
-		if (isset($temporal) && $ticket->codigo===$temporal->corden && $ticket->id_invoice==null && $ticket->id_invoice==0){
+		if (isset($temporal) && $ticket->codigo===$temporal->corden){
 			$data['csd']=$ticket->cid;
 			$data['television']=$temporal->tv;
 			$data['combo']=$temporal->internet;
@@ -1867,8 +1867,7 @@ $x=0;
                 }
                 $this->customers->desactivar_estado_usuario($customerx->name_s,$id_sede_mk,$customerx->tegnologia_instalacion);
 		}
-		if($ticket->detalle=="AgregarTelevision" ||  $ticket->detalle=="Reconexion Television2" && ($ticket->id_factura!=0 || $ticket->id_factura!=null && ($ticket->id_invoice==null || $ticket->id_invoice==0))){
-			var_dump($ticket->detalle);
+		if($ticket->detalle=="AgregarTelevision" ||  ($ticket->detalle=="Reconexion Television2" && $ticket->id_factura != 0 && $ticket->id_factura !== "0" && $ticket->id_factura != null)){
 			$factura = $this->db->get_where('invoices',array('tid'=>$idfactura))->row();
             $producto = $this->db->get_where('products',array('product_name'=>$factura->television))->row();
             if($ticket->detalle=="AgregarTelevision"){
