@@ -87,9 +87,9 @@ class Servicio extends CI_Controller
         $data_response['promo']=$body_post->promo;
         //$data_response['monto']=$body_post->monto;
         //$data_response['idorden']=$body_post->idorden;
-        $estado_customer=$this->customers->servicios_detail($data_response['cid']);
-        if($estado_customer['estado']=="Cortado" || $estado_customer['estado']=="cortado"){
-            //$data_response['promo']=10;
+        $promo_estado=$this->customers->validar_promocion_estado_cus($data_response['cid']);
+        if(count($promo_estado)>0){
+            $data_response['promo']=$promo->porcentaje;
         }else{
             $data_response['promo']=2;//quitar esto y dejar solo el if es momentaneo
         }
@@ -130,6 +130,7 @@ class Servicio extends CI_Controller
         $data_response['data_customer']=$this->db->get_where("customers",array("id"=>$body_post->cid))->row();
         $id_ultima_factura=$this->db->query("SELECT promo_sistema_clientes1 as promo_sistema_clientes1 from invoices where csd=".$body_post->cid." order by tid desc limit 1")->result_array();
         $data_response['data_promos']=$id_ultima_factura[0]['promo_sistema_clientes1'];
+        $data_response['data_estados_promos']= $this->db->customers->validar_promocion_estado_cus($body_post->cid);
         echo json_encode($data_response);
     }
 

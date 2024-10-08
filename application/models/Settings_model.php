@@ -190,9 +190,18 @@ class Settings_model extends CI_Model
         }
 
     }
-	public function add_promo($dtalle,$nombre1,$nombre2,$finicial2,$ffinal2,$porcentaje,$colaborador)
+	public function add_promo($dtalle,$nombre1,$nombre2,$nombre3,$finicial2,$ffinal2,$porcentaje,$colaborador)
     {
+        $x1a=explode("-", $nombre3);
+        $promo_existe=$this->db->get_where("promos",array("id_estado_clientes"=>$x1a[0]) )->row();
 		$colaborador=json_encode($colaborador);
+        if($nombre3!=0){
+            if(isset($promo_existe)){
+                $dtalle = "actualizar";    
+                $nombre1=$promo_existe->idprom;
+            }
+            
+        }
 		if($dtalle=='actualizar'){
         $data = array(
             'f_inicio' => $finicial2,
@@ -200,17 +209,26 @@ class Settings_model extends CI_Model
             'porcentaje' => $porcentaje,
             'colaborador' => $colaborador
         );
+        if($nombre3!=0){
+            $data['colaborador'] = null;
+        }
         $this->db->set($data);
         $this->db->where('idprom', $nombre1);
 		$fun=$this->db->update('promos', $data);
 		}else{
 		$data = array(
-            'pro_nombre' => $nombre2,
             'f_inicio' => $finicial2,
             'f_final' => $ffinal2,
             'porcentaje' => $porcentaje,
             'colaborador' => $colaborador
         );
+        if($nombre3==0){
+            $data['pro_nombre'] = $nombre2;
+        }else{
+            $data['pro_nombre'] = $x1a[1]." - estado vestel.com.co/crm";
+            $data['id_estado_clientes'] = $x1a[0];
+
+        }
         //$this->db->set($data);
 		$fun=$this->db->insert('promos', $data);	
 		}
@@ -242,7 +260,14 @@ class Settings_model extends CI_Model
         $query = $this->db->get();
         return $query->result_array();
     }
-	
+	public function estadosL()
+    {
+         
+        $this->db->select('*');
+        $this->db->from('estados_clientes');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
     public function companylogo($id, $pic)
     {
         $this->db->select('logo');

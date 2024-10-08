@@ -24,10 +24,27 @@
                                         <option value="-">-</option>
                                         <option value="ingresar">Ingresar</option>
                                         <option value="actualizar">Actualizar</option>
+                                        <option value="estado_div">Estados Promos Para Clientes (vestel.com.co/crm)</option>
                                     </select>
                                 </div>
                             </div>
 							<div id="ocultar">
+                            <div class="form-group row" id="estado_div">
+                                <label class="col-sm-3 col-form-label"
+                                       for="pay_cat"><?php echo $this->lang->line('') ?>Estados</label>
+                                <div class="col-sm-9">
+                                    <select name="nombre3" class="form-control" id="caja2">
+                                        <option value="0">-</option>
+                                        <?php
+                                        foreach ($estadosL as $row) {
+                                            $cid = $row['id_estado'];
+                                            $acn = $row['nombre'];
+                                            echo "<option value='".$cid."-".$acn."'>$acn</option>";
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
 							<div class="form-group row" id="actualizar">
                                 <label class="col-sm-3 col-form-label"
                                        for="pay_cat"><?php echo $this->lang->line('') ?>Promocion</label>
@@ -43,7 +60,8 @@
                                         ?>
                                     </select>
                                 </div>
-                            </div>
+                            </div> 
+
 							<div class="form-group row" id="ingresar">
                                 <label class="col-sm-3 col-form-label"
                                        for="pay_cat"><?php echo $this->lang->line('') ?>Promocion</label>
@@ -81,7 +99,7 @@
 									<input type="text" placeholder="Porcentaje de descuento" name="porcentaje" class="form-control"></input>
                                 </div>
                             </div>
-							<div class="form-group row" id="actualizar">
+							<div class="form-group row colaboradores_div" id="actualizar">
                                 <label class="col-sm-3 col-form-label"
                                        for="pay_cat"><?php echo $this->lang->line('') ?>Colaborador</label>
                                 <div class="col-sm-9">
@@ -178,6 +196,13 @@ $(document).ready(function(){
 		var selectValor = '#'+$("#detalle option:selected").val();			
 			$('#ocultar').children('div').hide();			
 			$('#ocultar').children(selectValor).show();
+            console.log(selectValor);
+            if(selectValor=="#estado_div"){
+                $(".colaboradores_div").hide();
+            }else{
+                $(".colaboradores_div").show();
+            }
+            
 	}
 
 

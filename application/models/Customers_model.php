@@ -604,6 +604,14 @@ $var_excluir=false;
         return $servicios;
         
     }
+    public function validar_promocion_estado_cus($cid){
+        $estado_customer=$this->customers->servicios_detail($cid);
+        $estado_para_promo=$this->db->query("select id_estado as id from estados_clientes where LOWER(nombre) ='".strtolower($estado_customer['estado']."'"))->result_array();
+        $promo_estado=$this->db->query("select * from promos where (f_inicio<='".date("Y-m-d")."' and f_final>='".date("Y-m-d")."') and id_estado_clientes=".$estado_para_promo[0]['id'])->result_array();
+
+        return $promo_estado;
+
+    }
 public function calculo_ultimo_estado ($array_add,$customers){
  $sdate=new DateTime($_GET['sdate3']." 00:00:00");
  $edate=new DateTime($_GET['edate2']." 23:59:59");
@@ -996,7 +1004,7 @@ public function calculo_ultimo_estado ($array_add,$customers){
     }
 
 
-    public function edit($id, $abonado, $name, $dosnombre, $unoapellido, $dosapellido, $company, $celular, $celular2, $email, $nacimiento, $tipo_cliente, $tipo_documento, $documento, $fcontrato, $estrato, $suscripcion, $departamento, $ciudad, $localidad, $barrio, $nomenclatura, $numero1, $adicionauno, $numero2, $adicional2, $numero3, $residencia, $referencia, $divicion, $divnum1, $divicion2, $divnum2, $dirsuscriptor, $clausula, $coor1, $coor2, $customergroup, $name_s, $contra, $servicio, $perfil, $Iplocal, $Ipremota, $comentario,$tegnologia_instalacion)
+    public function edit($id, $abonado, $name, $dosnombre, $unoapellido, $dosapellido, $company, $celular, $celular2, $email, $nacimiento, $tipo_cliente, $tipo_documento, $documento, $fcontrato, $estrato, $suscripcion, $departamento, $ciudad, $localidad, $barrio, $nomenclatura, $numero1, $adicionauno, $numero2, $adicional2, $numero3, $residencia, $referencia, $divicion, $divnum1, $divicion2, $divnum2, $dirsuscriptor, $clausula, $coor1, $coor2, $customergroup, $name_s, $contra, $servicio, $perfil, $Iplocal, $Ipremota, $comentario,$tegnologia_instalacion,$sucursal)
     {
         if($tegnologia_instalacion==""){
             $tegnologia_instalacion=null;
@@ -1053,7 +1061,35 @@ public function calculo_ultimo_estado ($array_add,$customers){
             //si no agrega un username no agregue ip
             $data['Ipremota']="";            
         }
+/*nuevo codigo */
+ 
+if(is_numeric($sucursal) && $sucursal!=0 ){
+    $this->load->model("facturas_electronicas_model","facturas_electronicas");
+    $cuantas_cuentas_cus=$this->db->query("SELECT * from customers where documento='".$documento."' order by sucursal_siigo desc")->result_array();
+    if(count($cuantas_cuentas_cus)>1){
 
+        if($cuantas_cuentas_cus[count($cuantas_cuentas_cus)-1]['sucursal_siigo']!=null ){
+            $siguiente_sucursal_number++;
+        }else{
+            $data['sucursal_siigo']=(count($cuantas_cuentas_cus)-1);
+        }
+        $data['sucursal_siigo'] = $siguiente_sucursal_number;
+
+    }else{
+        $siguiente_sucursal_number=0;
+        $data['sucursal_siigo'] = 0;
+        
+        $api=$this->facturas_electronicas->conectar_siigo();
+        $ob1=$this->db->get_where("config_facturacion_electronica",array("id"=>1))->row();
+
+        $consulta_siigo1=$api->getCustomer1($customer->documento,$ob1->tocken);
+        //si existe la sucursal 0 verificar si lo existe en siigo de ese usuario obteniendo la lista via api, 
+        //si existe no crear el usuario si no crearlo en siigo
+    }
+}
+
+
+/* nuevo codigo end*/
         $this->db->set($data);
         $this->db->where('id', $id);
 
@@ -4069,7 +4105,7 @@ public function aplicar_discuount_pago_oportuno($cid,$promo)
         $datos = array(             
             'discount' => $total,
             'total' => $factura->total-$total,
-            'notes' => 'Descuento '.$promocion->pro_nombre,
+            'notes' => 'Descuento '.$promo." % ",
             'promo_sistema_clientes1'=>1
         );
             $this->db->where('id', $factura->id);
