@@ -606,7 +606,7 @@ $var_excluir=false;
     }
     public function validar_promocion_estado_cus($cid){
         $estado_customer=$this->servicios_detail($cid);
-        $estado_para_promo=$this->db->query("select id_estado as id from estados_clientes where LOWER(nombre) ='".strtolower($estado_customer['estado']."'"))->result_array();
+        $estado_para_promo=$this->db->query("select id_estado as id from estados_clientes where LOWER(nombre) ='".strtolower($estado_customer['estado'])."'")->result_array();
         $promo_estado=$this->db->query("select * from promos where (f_inicio<='".date("Y-m-d")."' and f_final>='".date("Y-m-d")."') and id_estado_clientes=".$estado_para_promo[0]['id'])->result_array();
 
         return $promo_estado;
