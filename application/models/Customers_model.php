@@ -1004,7 +1004,7 @@ public function calculo_ultimo_estado ($array_add,$customers){
     }
 
 
-    public function edit($id, $abonado, $name, $dosnombre, $unoapellido, $dosapellido, $company, $celular, $celular2, $email, $nacimiento, $tipo_cliente, $tipo_documento, $documento, $fcontrato, $estrato, $suscripcion, $departamento, $ciudad, $localidad, $barrio, $nomenclatura, $numero1, $adicionauno, $numero2, $adicional2, $numero3, $residencia, $referencia, $divicion, $divnum1, $divicion2, $divnum2, $dirsuscriptor, $clausula, $coor1, $coor2, $customergroup, $name_s, $contra, $servicio, $perfil, $Iplocal, $Ipremota, $comentario,$tegnologia_instalacion,$sucursal)
+    public function edit($id, $abonado, $name, $dosnombre, $unoapellido, $dosapellido, $company, $celular, $celular2, $email, $nacimiento, $tipo_cliente, $tipo_documento, $documento, $fcontrato, $estrato, $suscripcion, $departamento, $ciudad, $localidad, $barrio, $nomenclatura, $numero1, $adicionauno, $numero2, $adicional2, $numero3, $residencia, $referencia, $divicion, $divnum1, $divicion2, $divnum2, $dirsuscriptor, $clausula, $coor1, $coor2, $customergroup, $name_s, $contra, $servicio, $perfil, $Iplocal, $Ipremota, $comentario,$tegnologia_instalacion)
     {
         if($tegnologia_instalacion==""){
             $tegnologia_instalacion=null;
@@ -1061,7 +1061,7 @@ public function calculo_ultimo_estado ($array_add,$customers){
             //si no agrega un username no agregue ip
             $data['Ipremota']="";            
         }
-/*nuevo codigo */
+/*nuevo codigo 
  
 if(is_numeric($sucursal) && $sucursal!=0 ){
     $this->load->model("facturas_electronicas_model","facturas_electronicas");
@@ -1089,7 +1089,7 @@ if(is_numeric($sucursal) && $sucursal!=0 ){
 }
 
 
-/* nuevo codigo end*/
+ nuevo codigo end*/
         $this->db->set($data);
         $this->db->where('id', $id);
 
