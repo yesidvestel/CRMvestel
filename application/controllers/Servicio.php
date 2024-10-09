@@ -88,7 +88,7 @@ class Servicio extends CI_Controller
         //$data_response['monto']=$body_post->monto;
         //$data_response['idorden']=$body_post->idorden;
         $promo_estado=$this->customers->validar_promocion_estado_cus($data_response['cid']);
-        if(isset($promo_estado)count($promo_estado)>0){
+        if(isset($promo_estado) && count($promo_estado)>0){
             $data_response['promo']=$promo_estado[0]['porcentaje'];
         }else{
             $data_response['promo']=2;//quitar esto y dejar solo el if es momentaneo
