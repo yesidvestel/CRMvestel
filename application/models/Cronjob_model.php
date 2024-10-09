@@ -204,6 +204,139 @@ class Cronjob_model extends CI_Model
 
 
     }
+	public function reports_tickets()
+    {
+
+        $year = date('Y');
+        $this->conteo_tickets($year-1);
+        $this->conteo_tickets($year);
+        
+        return true;
+
+
+    }
+	public function conteo_tickets($year){
+        
+
+        $this->db->delete('reports_tickets', array('year' => $year));
+
+
+        $query = $this->db->query("SELECT MONTH(fecha_final) AS month,YEAR(fecha_final) AS year,COUNT(idt) AS ins, customers.gid AS sede FROM tickets JOIN customers ON tickets.cid = customers.id  WHERE (YEAR(fecha_final)='$year') and detalle='Instalacion' and status='Resuelto' and fecha_final IS NOT NULL GROUP BY MONTH(fecha_final), customers.gid");
+        $Ins = $query->result_array();
+		
+		$query = $this->db->query("SELECT MONTH(fecha_final) AS month,YEAR(fecha_final) AS year,COUNT(idt) AS ret, customers.gid AS sede FROM tickets JOIN customers ON tickets.cid = customers.id  WHERE (YEAR(fecha_final)='$year') and detalle='Retiro voluntario' and status='Resuelto' and fecha_final IS NOT NULL GROUP BY MONTH(fecha_final), customers.gid");
+        $ret = $query->result_array();
+		
+		$query = $this->db->query("SELECT MONTH(fecha_final) AS month,YEAR(fecha_final) AS year,COUNT(idt) AS agint, customers.gid AS sede FROM tickets JOIN customers ON tickets.cid = customers.id  WHERE (YEAR(fecha_final)='$year') and detalle='AgregarInternet' and status='Resuelto' and fecha_final IS NOT NULL GROUP BY MONTH(fecha_final), customers.gid");
+        $agint = $query->result_array();
+		
+		$query = $this->db->query("SELECT MONTH(fecha_final) AS month,YEAR(fecha_final) AS year,COUNT(idt) AS agtv, customers.gid AS sede FROM tickets JOIN customers ON tickets.cid = customers.id  WHERE (YEAR(fecha_final)='$year') and detalle='AgregarTelevision' and status='Resuelto' and fecha_final IS NOT NULL GROUP BY MONTH(fecha_final), customers.gid");
+        $agtv = $query->result_array();
+		
+		$query = $this->db->query("SELECT MONTH(fecha_final) AS month,YEAR(fecha_final) AS year,COUNT(idt) AS caequi, customers.gid AS sede FROM tickets JOIN customers ON tickets.cid = customers.id  WHERE (YEAR(fecha_final)='$year') and detalle='Cambio de equipo' and status='Resuelto' and fecha_final IS NOT NULL GROUP BY MONTH(fecha_final), customers.gid");
+        $caequi = $query->result_array();
+		
+		$query = $this->db->query("SELECT MONTH(fecha_final) AS month,YEAR(fecha_final) AS year,COUNT(idt) AS caclv, customers.gid AS sede FROM tickets JOIN customers ON tickets.cid = customers.id  WHERE (YEAR(fecha_final)='$year') and detalle='Cambio de clave' and status='Resuelto' and fecha_final IS NOT NULL GROUP BY MONTH(fecha_final), customers.gid");
+        $caclv = $query->result_array();
+		
+		$query = $this->db->query("SELECT MONTH(fecha_final) AS month,YEAR(fecha_final) AS year,COUNT(idt) AS corcom, customers.gid AS sede FROM tickets JOIN customers ON tickets.cid = customers.id  WHERE (YEAR(fecha_final)='$year') and detalle='Corte Combo' and status='Resuelto' and fecha_final IS NOT NULL GROUP BY MONTH(fecha_final), customers.gid");
+        $corcom = $query->result_array();
+		
+		$query = $this->db->query("SELECT MONTH(fecha_final) AS month,YEAR(fecha_final) AS year,COUNT(idt) AS corint, customers.gid AS sede FROM tickets JOIN customers ON tickets.cid = customers.id  WHERE (YEAR(fecha_final)='$year') and detalle='Corte Internet' and status='Resuelto' and fecha_final IS NOT NULL GROUP BY MONTH(fecha_final), customers.gid");
+        $corint = $query->result_array();
+		
+		$query = $this->db->query("SELECT MONTH(fecha_final) AS month,YEAR(fecha_final) AS year,COUNT(idt) AS cortv, customers.gid AS sede FROM tickets JOIN customers ON tickets.cid = customers.id  WHERE (YEAR(fecha_final)='$year') and detalle='Corte Television' and status='Resuelto' and fecha_final IS NOT NULL GROUP BY MONTH(fecha_final), customers.gid");
+        $cortv = $query->result_array();
+		
+		$query = $this->db->query("SELECT MONTH(fecha_final) AS month,YEAR(fecha_final) AS year,COUNT(idt) AS eqad, customers.gid AS sede FROM tickets JOIN customers ON tickets.cid = customers.id  WHERE (YEAR(fecha_final)='$year') and detalle='Equipo adicional' and status='Resuelto' and fecha_final IS NOT NULL GROUP BY MONTH(fecha_final), customers.gid");
+        $eqad = $query->result_array();
+		
+		$query = $this->db->query("SELECT MONTH(fecha_final) AS month,YEAR(fecha_final) AS year,COUNT(idt) AS ptnv, customers.gid AS sede FROM tickets JOIN customers ON tickets.cid = customers.id  WHERE (YEAR(fecha_final)='$year') and detalle='Punto nuevo' and status='Resuelto' and fecha_final IS NOT NULL GROUP BY MONTH(fecha_final), customers.gid");
+        $ptnv = $query->result_array();
+		
+		$query = $this->db->query("SELECT MONTH(fecha_final) AS month,YEAR(fecha_final) AS year,COUNT(idt) AS vee, customers.gid AS sede FROM tickets JOIN customers ON tickets.cid = customers.id  WHERE (YEAR(fecha_final)='$year') and detalle='Veeduria' and status='Resuelto' and fecha_final IS NOT NULL GROUP BY MONTH(fecha_final), customers.gid");
+        $vee = $query->result_array();
+		
+		$query = $this->db->query("SELECT MONTH(fecha_final) AS month,YEAR(fecha_final) AS year,COUNT(idt) AS revint, customers.gid AS sede FROM tickets JOIN customers ON tickets.cid = customers.id  WHERE (YEAR(fecha_final)='$year') and detalle='Revision de Internet' and status='Resuelto' and fecha_final IS NOT NULL GROUP BY MONTH(fecha_final), customers.gid");
+        $revint = $query->result_array();
+		
+		$query = $this->db->query("SELECT MONTH(fecha_final) AS month,YEAR(fecha_final) AS year,COUNT(idt) AS revtv, customers.gid AS sede FROM tickets JOIN customers ON tickets.cid = customers.id  WHERE (YEAR(fecha_final)='$year') and detalle='Revision de television' and status='Resuelto' and fecha_final IS NOT NULL GROUP BY MONTH(fecha_final), customers.gid");
+        $revtv = $query->result_array();
+		
+		$query = $this->db->query("SELECT MONTH(fecha_final) AS month,YEAR(fecha_final) AS year,COUNT(idt) AS revtvint, customers.gid AS sede FROM tickets JOIN customers ON tickets.cid = customers.id  WHERE (YEAR(fecha_final)='$year') and detalle='Revision tv e internet' and status='Resuelto' and fecha_final IS NOT NULL GROUP BY MONTH(fecha_final), customers.gid");
+        $revtvint = $query->result_array();
+		
+		$query = $this->db->query("SELECT MONTH(fecha_final) AS month,YEAR(fecha_final) AS year,COUNT(idt) AS rectvint, customers.gid AS sede FROM tickets JOIN customers ON tickets.cid = customers.id  WHERE (YEAR(fecha_final)='$year') and detalle='Reconexion Combo' and status='Resuelto' and fecha_final IS NOT NULL GROUP BY MONTH(fecha_final), customers.gid");
+        $rectvint = $query->result_array();
+		
+		$query = $this->db->query("SELECT MONTH(fecha_final) AS month,YEAR(fecha_final) AS year,COUNT(idt) AS rein, customers.gid AS sede FROM tickets JOIN customers ON tickets.cid = customers.id  WHERE (YEAR(fecha_final)='$year') and detalle='Reinstalación' and status='Resuelto' and fecha_final IS NOT NULL GROUP BY MONTH(fecha_final), customers.gid");
+        $rein = $query->result_array();
+		
+		$query = $this->db->query("SELECT MONTH(fecha_final) AS month,YEAR(fecha_final) AS year,COUNT(idt) AS recint, customers.gid AS sede FROM tickets JOIN customers ON tickets.cid = customers.id  WHERE (YEAR(fecha_final)='$year') and detalle='Reconexion Internet' and status='Resuelto' and fecha_final IS NOT NULL GROUP BY MONTH(fecha_final), customers.gid");
+        $recint = $query->result_array();
+		
+		$query = $this->db->query("SELECT MONTH(fecha_final) AS month,YEAR(fecha_final) AS year,COUNT(idt) AS rectv, customers.gid AS sede FROM tickets JOIN customers ON tickets.cid = customers.id  WHERE (YEAR(fecha_final)='$year') and detalle='Reconexion Television' and status='Resuelto' and fecha_final IS NOT NULL GROUP BY MONTH(fecha_final), customers.gid");
+        $rectv = $query->result_array();
+		
+		$query = $this->db->query("SELECT MONTH(fecha_final) AS month,YEAR(fecha_final) AS year,COUNT(idt) AS recmodem, customers.gid AS sede FROM tickets JOIN customers ON tickets.cid = customers.id  WHERE (YEAR(fecha_final)='$year') and detalle='Recuperación cable modem' and status='Resuelto' and fecha_final IS NOT NULL GROUP BY MONTH(fecha_final), customers.gid");
+        $recmodem = $query->result_array();
+		
+		$query = $this->db->query("SELECT MONTH(fecha_final) AS month,YEAR(fecha_final) AS year,COUNT(idt) AS submegas, customers.gid AS sede FROM tickets JOIN customers ON tickets.cid = customers.id  WHERE (YEAR(fecha_final)='$year') and detalle='Subir megas' and status='Resuelto' and fecha_final IS NOT NULL GROUP BY MONTH(fecha_final), customers.gid");
+        $submegas = $query->result_array();
+		
+		$query = $this->db->query("SELECT MONTH(fecha_final) AS month,YEAR(fecha_final) AS year,COUNT(idt) AS bajmegas, customers.gid AS sede FROM tickets JOIN customers ON tickets.cid = customers.id  WHERE (YEAR(fecha_final)='$year') and detalle='Bajar megas' and status='Resuelto' and fecha_final IS NOT NULL GROUP BY MONTH(fecha_final), customers.gid");
+        $bajmegas = $query->result_array();
+		
+		$query = $this->db->query("SELECT MONTH(fecha_final) AS month,YEAR(fecha_final) AS year,COUNT(idt) AS suscom, customers.gid AS sede FROM tickets JOIN customers ON tickets.cid = customers.id  WHERE (YEAR(fecha_final)='$year') and detalle='Suspension Combo' and status='Resuelto' and fecha_final IS NOT NULL GROUP BY MONTH(fecha_final), customers.gid");
+        $suscom = $query->result_array();
+		
+		$query = $this->db->query("SELECT MONTH(fecha_final) AS month,YEAR(fecha_final) AS year,COUNT(idt) AS susint, customers.gid AS sede FROM tickets JOIN customers ON tickets.cid = customers.id  WHERE (YEAR(fecha_final)='$year') and detalle='Suspension Internet' and status='Resuelto' and fecha_final IS NOT NULL GROUP BY MONTH(fecha_final), customers.gid");
+        $susint = $query->result_array();
+		
+		$query = $this->db->query("SELECT MONTH(fecha_final) AS month,YEAR(fecha_final) AS year,COUNT(idt) AS sustv, customers.gid AS sede FROM tickets JOIN customers ON tickets.cid = customers.id  WHERE (YEAR(fecha_final)='$year') and detalle='Suspension Television' and status='Resuelto' and fecha_final IS NOT NULL GROUP BY MONTH(fecha_final), customers.gid");
+        $sustv = $query->result_array();
+		
+		$query = $this->db->query("SELECT MONTH(fecha_final) AS month,YEAR(fecha_final) AS year,COUNT(idt) AS tras, customers.gid AS sede FROM tickets JOIN customers ON tickets.cid = customers.id  WHERE (YEAR(fecha_final)='$year') and detalle='Traslado' and status='Resuelto' and fecha_final IS NOT NULL GROUP BY MONTH(fecha_final), customers.gid");
+        $tras = $query->result_array();
+		
+		$query = $this->db->query("SELECT MONTH(fecha_final) AS month,YEAR(fecha_final) AS year,COUNT(idt) AS toma, customers.gid AS sede FROM tickets JOIN customers ON tickets.cid = customers.id  WHERE (YEAR(fecha_final)='$year') and detalle='Toma Adicional' and status='Resuelto' and fecha_final IS NOT NULL GROUP BY MONTH(fecha_final), customers.gid");
+        $toma = $query->result_array();
+		
+		$query = $this->db->query("SELECT MONTH(fecha_final) AS month,YEAR(fecha_final) AS year,COUNT(idt) AS migra, customers.gid AS sede FROM tickets JOIN customers ON tickets.cid = customers.id  WHERE (YEAR(fecha_final)='$year') and detalle='Migracion' and status='Resuelto' and fecha_final IS NOT NULL GROUP BY MONTH(fecha_final), customers.gid");
+        $migra = $query->result_array();
+		
+        $output = array();
+
+        $arrayAB = array_merge($Ins, $ret, $agint, $agtv, $caequi, $caclv, $corcom, $corint, $cortv, $eqad, $ptnv, $vee, $revint, $revtv, $revtvint, $rectvint, $rein, $recint, $rectv, $recmodem, $submegas, $bajmegas, $suscom, $susint, $sustv, $tras, $toma, $migra);
+
+
+
+            foreach ($arrayAB as $value) {
+                $id = $value['month']. '-' . $value['sede'];
+                if (!isset($output[$id])) {
+                    $output[$id] = array();
+                }
+                    $output[$id] = array_merge($output[$id], $value);
+            }
+
+
+
+
+
+        uasort($output, array_compare('month'));
+        //print_r($output);
+
+        $batch = array();
+        $i = 0;
+        foreach ($output as $row) {
+
+            $batch[$i] = array('month' => $row['month'], 'year' => $row['year'],'sede' => $row['sede'], 'Instalacion' => @$row['ins'], 'Retiro_voluntario' => @$row['ret'], 'AgregarInternet' => @$row['agint'], 'AgregarTelevision' => @$row['agtv'], 'Cambio_equipo' => @$row['caequi'], 'Cambio_clave' => @$row['caclv'], 'Corte_Combo' => @$row['corcom'], 'Corte_Internet' => @$row['corint'], 'Corte_Television' => @$row['cortv'], 'Equipo_adicional' => @$row['eqad'], 'Punto_nuevo' => @$row['ptnv'], 'Veeduria' => @$row['vee'], 'Revision_Internet' => @$row['revint'], 'Revision_television' => @$row['revtv'], 'Revision_tv_internet' => @$row['revtvint'], 'Reconexion_Combo' => @$row['rectvint'], 'Reinstalación' => @$row['rein'], 'Reconexion_Internet' => @$row['recint'], 'Reconexion_Television' => @$row['rectv'], 'Recuperación_modem' => @$row['recmodem'], 'Subir_megas' => @$row['submegas'], 'Bajar_megas' => @$row['bajmegas'], 'Suspension_Combo' => @$row['suscom'], 'Suspension_Internet' => @$row['susint'], 'Suspension_Television' => @$row['sustv'], 'Traslado' => @$row['tras'], 'Toma_Adicional' => @$row['toma'], 'Migracion' => @$row['migra']);
+            $i++;
+        }
+
+        $this->db->insert_batch('reports_tickets', $batch);
+
+    }
 
 
 }

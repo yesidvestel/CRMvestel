@@ -1344,6 +1344,17 @@ foreach ($est as $key => $value) {
 
         return $result;
     }
+	public function stat_tickets($limit = false)
+    {
+        $this->db->from('reports_tickets');
+         $ao_pasado = date('Y') - 1;
+        $this->db->where("year>=",$ao_pasado);
+        // if($limit) $this->db->limit(12);
+        //$this->db->order_by('id', 'DESC');
+        $query = $this->db->get();
+        $result = $query->result_array();
+        return $result;
+    }
 
 
 }

@@ -259,7 +259,7 @@ class Reports extends CI_Controller
         $account = $this->accounts->details($pay_acc);
         $data['filter'] = array($pay_acc, $trans_type, $sdate, $edate, $ttype, $account['holder']);
 		$data['income'] = $this->reports->incomestatement();
-        $head['title'] = "Account Statement";
+        $head['title'] = "Resumen Caja";
         $head['usernm'] = $this->aauth->get_user()->username;
 
 
@@ -1273,7 +1273,7 @@ public function statistics_services(){
     $extraccion_dia=$this->db->get_where("estadisticas_servicios",array("fecha"=>date("Y-m-d")))->row();
     $data=array();
     $this->load->model("customers_model","customers");
-   ini_set('memory_limit', '15000000000');
+    ini_set('memory_limit', '15000000000');
     set_time_limit(20000000);
     if(empty($extraccion_dia) || (isset($_GET['tipo']) && $_GET['tipo']=="process")){
 		if($this->config->item('ctitle')=='VESTEL S.A.S'){
@@ -1679,6 +1679,53 @@ else
 
 
 
+
+    }
+	public function statickets()
+
+    {
+		$this->load->model("dashboard_model");
+		$this->load->model('customers_model', 'customers');
+		$today = date("Y-m-d");
+        $month = date("m");
+        $month2 = date("m",strtotime($today."- 1 month"));
+        $year = date("Y");
+		$sede = "";//$this->input->get('sede');
+		$data['customergrouplist'] = $this->customers->group_list();
+        $data['stat'] = $this->reports->stat_tickets();
+		$data['incomechart'] = $this->dashboard_model->incomeChart($today, $month, $year,$sede);
+		$data['incomechart2'] = $this->dashboard_model->incomeChart($today, $month2, $year,$sede);
+        $data['expensechart'] = $this->dashboard_model->expenseChart($today, $month2, $year,$sede);
+        $head['title'] = "Estaditicas Tickets";
+        $head['usernm'] = $this->aauth->get_user()->username;
+        $this->load->view('fixed/header', $head);
+        $this->load->view('reports/statickets', $data);
+        $this->load->view('fixed/footer');
+
+    }
+	public function refresh_data_ticket()
+
+    {
+        $head['title'] = "Recargando Reporte";
+        $head['usernm'] = $this->aauth->get_user()->username;
+        $data=array();
+        if(isset($_GET['tipo']) && $_GET['tipo']=="estadisticas_servicios"){
+            $data['tipo']="estadisticas_servicios";
+        }
+        $this->load->view('fixed/header', $head);
+        $this->load->view('reports/refresh_data_ticket',$data);
+        $this->load->view('fixed/footer');
+
+    }
+	public function refresh_process_tickets()
+
+    {
+
+        $this->load->model('cronjob_model');
+        if ($this->cronjob_model->reports_tickets()) {
+
+            echo json_encode(array('status' => 'Success', 'message' => $this->lang->line('Calculated')));
+        }
 
     }
 

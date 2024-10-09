@@ -648,6 +648,9 @@ $lista_permisos1=$this->db->query("SELECT permisos_usuario.id,permisos_usuario.i
                             <a href="<?php echo base_url(); ?>reports/statistics"><?php echo $this->lang->line('Statistics') ?></a>
                         </li>
 						<li>
+                            <a href="<?php echo base_url(); ?>reports/statickets"><?php echo $this->lang->line('') ?>Estadisticas de tickets</a>
+                        </li>
+						<li>
                             <a href="<?php echo base_url(); ?>reports/metas"><?php echo $this->lang->line('') ?>Metas</a>
                         </li>
                         <li>
@@ -1396,6 +1399,9 @@ $lista_permisos1=$this->db->query("SELECT permisos_usuario.id,permisos_usuario.i
 						<?php if ($lista_permisos_us['datservicios'] != null) { ?>
 						<li>
                             <a href="<?php echo base_url(); ?>reports/statistics_services1">Estadisticas Servicios</a>
+                        </li>
+						<li>
+                            <a href="<?php echo base_url(); ?>reports/statickets"><?php echo $this->lang->line('') ?>Estadisticas de tickets</a>
                         </li>
 						<?php } if ($lista_permisos_us['datest'] != null) { ?>
                         <li>
