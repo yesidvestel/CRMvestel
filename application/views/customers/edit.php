@@ -14,7 +14,7 @@
                     <h5><?php echo $this->lang->line('') ?>DATOS PERSONALES</h5>
                     <input type="hidden" name="id" value="<?php echo $customer['id'] ?>" id="customer_id">
 					<input type="text" placeholder="Material nombre" class="form-control margin-bottom  required" name="abonado" value="<?php echo $customer['abonado'] ?>">
-					<input type="text" placeholder="Numero Sucursal" class="form-control margin-bottom  required" name="sucursal_siigo" value="<?php echo $customer['sucursal_siigo']; ?>">
+					<input type="text" placeholder="Numero Sucursal" class="form-control margin-bottom" name="sucursal_siigo" value="<?php echo $customer['sucursal_siigo']; ?>">
 					<hr>
 
                     <div class="form-group row">
