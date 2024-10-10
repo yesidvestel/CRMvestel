@@ -1308,13 +1308,13 @@ class Transactions extends CI_Controller
 				$data_h['tabla']="tickets";
 				$data_h['nombre_columna']="idt";
 				$this->db->insert("historial_crm",$data_h);
-                /*$data4 = array(
+                $data4 = array(
 						'corden' => $data2['codigo'],
 						'tv' => $tv,
 						'internet' => $factura_asociada->combo,             
 					);      
                 $reconexion_gen="si";
-            $this->db->insert('temporales', $data4);*/
+            //$this->db->insert('temporales', $data4);
                             $data_h=array();
                             $data_h['modulo']="Usuarios";
                             $data_h['accion']="Administrar Usuarios > Ver Usuario > Ver Facturas > Hacer el Pago (pago multiple) {insert}";
