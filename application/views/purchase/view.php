@@ -78,7 +78,7 @@
                                 <a href="<?php echo $link; ?>" class="btn btn-primary"><i
                                             class="icon-earth"></i> <?php echo $this->lang->line('Public Preview') ?>
                                 </a>
-                                 <?php if ($this->aauth->get_user()->roleid > 3) { ?> 
+                                 <?php if ($this->aauth->get_user()->roleid > 1) { ?> 
                                 <a href="#pop_model2" data-toggle="modal" data-remote="false"
                                    class="btn btn-large btn-success" title="Change Status"
                                 ><span class="icon-tab"></span> <?php echo $this->lang->line('Change Status') ?></a>
