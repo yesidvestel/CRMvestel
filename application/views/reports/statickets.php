@@ -3,6 +3,39 @@
 		width: 14%;
 		
 	}
+	th {
+		font-size: 10px;
+	}
+	.checkbox-container {
+		display: grid;
+		grid-template-columns: repeat(5, 1fr); /* 5 columnas */
+		gap: 10px; /* Espacio entre los elementos */
+		margin-bottom: 20px; /* Espacio inferior */
+	}
+
+	.checkbox-container div {
+		display: flex;
+		align-items: center;
+	}
+
+	.checkbox-container input[type="checkbox"] {
+		margin-right: 8px; /* Espacio entre el checkbox y el texto */
+	}
+	.checkbox-container label {
+		font-size: 10px; /* Ajusta el tamaño de la fuente (puedes reducir más si es necesario) */
+	}
+	.table-wrapper {
+		max-height: 400px; /* Define la altura máxima de la tabla */
+		overflow-y: auto;  /* Permite el desplazamiento vertical */
+	}
+
+	.table thead th {
+		position: sticky;
+		top: 0;
+		background-color: #fff;  /* Fondo para que se vea el encabezado */
+		z-index: 10;  /* Asegura que el encabezado esté por encima del contenido */
+		box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);  /* Sombra para mejor visibilidad */
+	}
 </style>
 <script type="text/javascript">
     var dataVisits = [
@@ -49,50 +82,42 @@
 					</div>
 					<button id="uncheck-all" onclick="uncheckAll()" class="btn btn-primary" style="margin-left: 18px">Desmarcar todos</button>
 					<hr>
-					<table width="100%">
-					<tr>
-						<td><input type="checkbox" id="show-instalaciones" checked onchange="updateChart()" > Instalaciones</td>
-						<td><input type="checkbox" id="show-retiros" checked onchange="updateChart()"> Retiros</td>
-						<td><input type="checkbox" id="show-agregar-internet" checked onchange="updateChart()"> Agregar Internet</td>
-						<td><input type="checkbox" id="show-agregar-television" checked onchange="updateChart()"> Agregar television</td>
-						<td><input type="checkbox" id="show-Activacion" checked onchange="updateChart()"> Activacion</td>
-					</tr>
-					<tr>
-						<td><input type="checkbox" id="show-Cambio-equipo" checked onchange="updateChart()" > Cambio de equipo</td>
-						<td><input type="checkbox" id="show-Cambio-clave" checked onchange="updateChart()"> Cambio de clave</td>
-						<td><input type="checkbox" id="show-Corte-Combo" checked onchange="updateChart()"> Corte Combo</td>
-						<td><input type="checkbox" id="show-Corte-Internet" checked onchange="updateChart()"> Corte Internet</td>
-						<td><input type="checkbox" id="show-Corte-television" checked onchange="updateChart()"> Corte television</td>
-					</tr>
-					<tr>
-						<td><input type="checkbox" id="show-Equipo-adicional" checked onchange="updateChart()" > Equipo adicional</td>
-						<td><input type="checkbox" id="show-Punto-nuevo" checked onchange="updateChart()"> Punto nuevo</td>
-						<td><input type="checkbox" id="show-Veeduria" checked onchange="updateChart()"> Veeduria</td>
-						<td><input type="checkbox" id="show-Revision-Internet" checked onchange="updateChart()"> Revision de Internet</td>
-						<td><input type="checkbox" id="show-Revision-television" checked onchange="updateChart()"> Revision de television</td>
-					</tr>
-					<tr>
-						<<td><input type="checkbox" id="show-Revision-tv-internet" checked onchange="updateChart()" > Revision tv e internet</td>
-						<td><input type="checkbox" id="show-Reconexion-Combo" checked onchange="updateChart()"> Reconexion Combo</td>
-						<td><input type="checkbox" id="show-Reinstalacion" checked onchange="updateChart()"> Reinstalación</td>
-						<td><input type="checkbox" id="show-Reconexion-Internet" checked onchange="updateChart()"> Reconexion Internet</td>
-						<td><input type="checkbox" id="show-Reconexion-Television" checked onchange="updateChart()"> Reconexion Television</td>
-					</tr>
-					<tr>
-						<td><input type="checkbox" id="show-Recuperacion-modem" checked onchange="updateChart()" > Recuperación modem</td>
-						<td><input type="checkbox" id="show-Subir-megas" checked onchange="updateChart()"> Subir megas</td>
-						<td><input type="checkbox" id="show-Bajar-megas" checked onchange="updateChart()"> Bajar megas</td>
-						<td><input type="checkbox" id="show-Suspension-Combo" checked onchange="updateChart()"> Suspension Combo</td>
-						<td><input type="checkbox" id="show-Suspension-Internet" checked onchange="updateChart()"> Suspension Internet</td>
-					</tr>
-					<tr>
-						<td><input type="checkbox" id="show-Suspension-Television" checked onchange="updateChart()" > Suspension Television</td>
-						<td><input type="checkbox" id="show-Traslado" checked onchange="updateChart()"> Traslado</td>
-						<td><input type="checkbox" id="show-Toma-Adicional" checked onchange="updateChart()"> Toma Adicional</td>
-						<td><input type="checkbox" id="show-Migracion" checked onchange="updateChart()"> Migracion</td>
-						<td></td>
-					</tr>
-					</table>
+					<div class="checkbox-container">
+						<div><input type="checkbox" id="show-instalaciones" checked onchange="updateChart()"> Instalaciones</div>
+						<div><input type="checkbox" id="show-retiros" checked onchange="updateChart()"> Retiros</div>
+						<div><input type="checkbox" id="show-agregar-internet" checked onchange="updateChart()"> Agregar Internet</div>
+						<div><input type="checkbox" id="show-agregar-television" checked onchange="updateChart()"> Agregar televisión</div>
+						<div><input type="checkbox" id="show-Activacion" checked onchange="updateChart()"> Activación</div>
+
+						<div><input type="checkbox" id="show-Cambio-equipo" checked onchange="updateChart()"> Cambio de equipo</div>
+						<div><input type="checkbox" id="show-Cambio-clave" checked onchange="updateChart()"> Cambio de clave</div>
+						<div><input type="checkbox" id="show-Corte-Combo" checked onchange="updateChart()"> Corte Combo</div>
+						<div><input type="checkbox" id="show-Corte-Internet" checked onchange="updateChart()"> Corte Internet</div>
+						<div><input type="checkbox" id="show-Corte-television" checked onchange="updateChart()"> Corte televisión</div>
+
+						<div><input type="checkbox" id="show-Equipo-adicional" checked onchange="updateChart()"> Equipo adicional</div>
+						<div><input type="checkbox" id="show-Punto-nuevo" checked onchange="updateChart()"> Punto nuevo</div>
+						<div><input type="checkbox" id="show-Veeduria" checked onchange="updateChart()"> Veeduría</div>
+						<div><input type="checkbox" id="show-Revision-Internet" checked onchange="updateChart()"> Revisión de Internet</div>
+						<div><input type="checkbox" id="show-Revision-television" checked onchange="updateChart()"> Revisión de televisión</div>
+
+						<div><input type="checkbox" id="show-Revision-tv-internet" checked onchange="updateChart()"> Revisión TV e Internet</div>
+						<div><input type="checkbox" id="show-Reconexion-Combo" checked onchange="updateChart()"> Reconexión Combo</div>
+						<div><input type="checkbox" id="show-Reinstalacion" checked onchange="updateChart()"> Reinstalación</div>
+						<div><input type="checkbox" id="show-Reconexion-Internet" checked onchange="updateChart()"> Reconexión Internet</div>
+						<div><input type="checkbox" id="show-Reconexion-Television" checked onchange="updateChart()"> Reconexión Televisión</div>
+
+						<div><input type="checkbox" id="show-Recuperacion-modem" checked onchange="updateChart()"> Recuperación módem</div>
+						<div><input type="checkbox" id="show-Subir-megas" checked onchange="updateChart()"> Subir megas</div>
+						<div><input type="checkbox" id="show-Bajar-megas" checked onchange="updateChart()"> Bajar megas</div>
+						<div><input type="checkbox" id="show-Suspension-Combo" checked onchange="updateChart()"> Suspensión Combo</div>
+						<div><input type="checkbox" id="show-Suspension-Internet" checked onchange="updateChart()"> Suspensión Internet</div>
+
+						<div><input type="checkbox" id="show-Suspension-Television" checked onchange="updateChart()"> Suspensión Televisión</div>
+						<div><input type="checkbox" id="show-Traslado" checked onchange="updateChart()"> Traslado</div>
+						<div><input type="checkbox" id="show-Toma-Adicional" checked onchange="updateChart()"> Toma adicional</div>
+						<div><input type="checkbox" id="show-Migracion" checked onchange="updateChart()"> Migración</div>
+					</div>
             </div>
         </div>
         <!--div class="content-body"><!-- stats -->
@@ -119,7 +144,7 @@
 
             </div>
              
-            <!--div class="row match-height">
+            <div class="row match-height">
 
                 <div class="col-xl-12 col-lg-12 ">
                     <div class="card">
@@ -135,16 +160,49 @@
                         </div>
                         <div class="card-body">
 
-                            <div class="table-responsive">
-                                <table class="table table-hover mb-1">
+                            <div class="table-wrapper">
+								<?php
+									usort($stat, function($a, $b) {
+										// Compara primero por año de manera descendente
+										if ($a['year'] != $b['year']) {
+											return $b['year'] - $a['year'];
+										}
+										// Si el año es el mismo, compara por mes de manera descendente
+										return $b['month'] - $a['month'];
+									});
+									?>
+    							<table class="table table-hover mb-1">
                                     <thead>
                                     <tr>
                                         <th><?php echo $this->lang->line('Month') ?></th>
-                                        <th><?php echo $this->lang->line('Income') ?></th>
-                                        <th><?php echo $this->lang->line('Expenses') ?></th>
-                                        <th><?php echo $this->lang->line('Sales') ?></th>
-                                        <th><?php echo $this->lang->line('Invoices') ?></th>
-                                        <th><?php echo $this->lang->line('products') .' vendidos'  ?></th>
+                                        <th>AgregarInternet</th>
+                                        <th>AgregarTelevision</th>
+                                        <th>Cambio de equipo</th>
+                                        <th>Cambio de clave</th>
+                                        <th>Corte Combo</th>
+                                        <th>Corte Internet</th>
+                                        <th>Corte Television</th>
+                                        <th>Equipo adicional</th>
+                                        <th>Instalacion</th>
+                                        <th>Punto nuevo</th>
+                                        <th>Veeduria</th>
+                                        <th>Revision de Internet</th>
+                                        <th>Revision de television</th>
+                                        <th>Revision tv e internet</th>
+                                        <th>Reconexion Combo</th>
+                                        <th>Reinstalación</th>
+                                        <th>Reconexion Internet</th>
+                                        <th>Retiro voluntario</th>
+                                        <th>Reconexion Television</th>
+                                        <th>Recuperación cable modem</th>
+                                        <th>Subir megas</th>
+                                        <th>Bajar megas</th>
+                                        <th>Suspension Combo</th>
+                                        <th>Suspension Internet</th>
+                                        <th>Suspension Television</th>
+                                        <th>Traslado</th>
+                                        <th>Toma Adicional</th>
+                                        <th>Migracion</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -153,20 +211,43 @@
                                     foreach ($stat as $item) {
                                         // $month=date("F", $item['month']);
 
-
+										$sede = $item['sede'];
                                         $dateObj = DateTime::createFromFormat('!m', $item['month']);
                                         $month = $dateObj->format('F');
 										setlocale(LC_TIME, "spanish");
-                                        echo '<tr>
-                                <td class="text-truncate">' . strftime("%B del", strtotime($month)) .' ' . $item['year'] . '</td>
-                                <td class="text-truncate"> ' . amountFormat($item['income']) . '</td>
-                            
-                                <td class="text-truncate">' . amountFormat($item['expense']) . '</td>
-                                 <td class="text-truncate">' . amountFormat($item['sales']) . '</td>
-                                  <td class="text-truncate">' . $item['invoices'] . '</td>
-                                   <td class="text-truncate">' . $item['items'] . '</td>
-                               
-                            </tr>';
+										
+                                        echo '<tr class="sede-' . $sede . '">
+											<td class="text-truncate">' . strftime("%B ", strtotime($month)) .' ' . $item['year'] . '</td>
+											<td class="text-truncate"> ' . $item['AgregarInternet'] . '</td>
+											<td class="text-truncate">' . $item['AgregarTelevision'] . '</td>
+											<td class="text-truncate">' . $item['Cambio_equipo'] . '</td>
+											<td class="text-truncate">' . $item['Cambio_clave'] . '</td>
+											<td class="text-truncate">' . $item['Corte_Combo'] . '</td>
+											<td class="text-truncate">' . $item['Corte_Internet']+$item['Corte_Combo'] . '</td>
+											<td class="text-truncate">' . $item['Corte_Television']+$item['Corte_Combo'] . '</td>
+											<td class="text-truncate">' . $item['Equipo_adicional'] . '</td>
+											<td class="text-truncate">' . $item['Instalacion'] . '</td>
+											<td class="text-truncate">' . $item['Punto_nuevo'] . '</td>
+											<td class="text-truncate">' . $item['Veeduria'] . '</td>
+											<td class="text-truncate">' . $item['Revision_Internet']+$item['Revision_tv_internet'] . '</td>
+											<td class="text-truncate">' . $item['Revision_television']+$item['Revision_tv_internet'] . '</td>
+											<td class="text-truncate">' . $item['Revision_tv_internet'] . '</td>
+											<td class="text-truncate">' . $item['Reconexion_Combo'] . '</td>
+											<td class="text-truncate">' . $item['Reinstalación'] . '</td>
+											<td class="text-truncate">' . $item['Reconexion_Internet']+$item['Reconexion_Combo'] . '</td>
+											<td class="text-truncate">' . $item['Retiro_voluntario'] . '</td>
+											<td class="text-truncate">' . $item['Reconexion_Television']+$item['Reconexion_Combo'] . '</td>
+											<td class="text-truncate">' . $item['Recuperación_modem'] . '</td>
+											<td class="text-truncate">' . $item['Subir_megas'] . '</td>
+											<td class="text-truncate">' . $item['Bajar_megas'] . '</td>
+											<td class="text-truncate">' . $item['Suspension_Combo'] . '</td>
+											<td class="text-truncate">' . $item['Suspension_Internet']+$item['Suspension_Combo'] . '</td>
+											<td class="text-truncate">' . $item['Suspension_Television']+$item['Suspension_Combo'] . '</td>
+											<td class="text-truncate">' . $item['Traslado'] . '</td>
+											<td class="text-truncate">' . $item['Toma_Adicional'] . '</td>
+											<td class="text-truncate">' . $item['Migracion'] . '</td>
+
+										</tr>';
                                     } ?>
 
                                     </tbody>
@@ -230,7 +311,24 @@ foreach ($stat as $row) {
 
  ?>
 <script type="text/javascript">
-	
+	function filtrarSede() {
+		var selector = document.getElementById("sede-select");
+		var sedeSeleccionada = selector.value;
+		var filas = document.querySelectorAll("table tbody tr");
+
+		filas.forEach(function(fila) {
+			if (sedeSeleccionada === "todas") {
+				fila.style.display = ""; // Muestra todas las filas
+			} else {
+				if (fila.classList.contains("sede-" + sedeSeleccionada)) {
+					fila.style.display = ""; // Muestra las filas que coinciden con la sede
+				} else {
+					fila.style.display = "none"; // Oculta las filas que no coinciden
+				}
+			}
+		});
+	}
+
 	// Pasar los datos generados por PHP a JavaScript
 	var allData = <?php echo json_encode($data); ?>;
 	// Función para desmarcar todos los checkboxes
@@ -274,6 +372,21 @@ foreach ($stat as $row) {
     // Filtrar los datos por la sede seleccionada
     var filteredData = allData.filter(function(row) {
         return row.sede == selectedSede;
+    });
+	// *** Nueva parte: Filtrar las filas de la tabla según la sede ***
+    var filasTabla = document.querySelectorAll("table tbody tr");
+
+    filasTabla.forEach(function(fila) {
+        // Asegúrate de que la clase de cada fila tenga el formato 'sede-X' (como 'sede-1', 'sede-2', etc.)
+        if (selectedSede === "todas") {
+            fila.style.display = "";  // Mostrar todas las filas
+        } else {
+            if (fila.classList.contains("sede-" + selectedSede)) {
+                fila.style.display = "";  // Mostrar solo las filas que coinciden con la sede seleccionada
+            } else {
+                fila.style.display = "none";  // Ocultar las demás
+            }
+        }
     });
 
     // Verificar qué series deben mostrarse
