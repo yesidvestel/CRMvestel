@@ -534,7 +534,7 @@ foreach ($stat as $row) {
     
     // Crear el gráfico solo si hay datos válidos
     if (filteredData.length > 0) {
-        Morris.Bar({
+        Morris.Line({
             element: 'invoices-sales-chart',
             data: filteredData,
             xkey: 'x',  // Llave X (fecha)
