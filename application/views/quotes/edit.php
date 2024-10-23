@@ -65,8 +65,9 @@
 											<input type="hidden" value="<?php echo $thread_info['idt'] ?>" name="customer_id"></input>
                                             	<select name="subject" class="form-control" onchange="cambia()">
 													<option value="<?php echo $thread_info['subject'] ?>">>><?php echo $thread_info['subject'] ?></option>
-													<option value="servicio">Orden de servicio</option>								
+													<option value="servicio">Orden de servicio</option>	
 													<option value="reclamo">Orden de reclamo</option>
+													<option value="incidente">Incidente</option>
 												</select>
                                         </div>
                                     </div>
@@ -661,7 +662,8 @@
 	<?php } else { ?>
 	var perfil_servicio = new Array ("...","AgregarInternet","AgregarTelevision","Autenticacion","Cambio de clave","Reinstalación","Recuperación cable modem","Migracion","Veeduria","Bajar_megas","Cambio de equipo","Corte Combo","Corte Internet","Corte Television","Equipo adicional","Habilitación de equipos en red interna de cliente final","Instalación y/o Mantenimiento de Equipos Activos de Red","Instalacion","Punto nuevo","Subir_megas","Suministro de equipos – OTTIS Hardware / Software","Traslado interno De Equipos Red en cliente final","Servicio_Adicional","Mejoramiento y/o Mantenimiento Red Fibra Óptica","Soporte técnico – OTTIS Hardware  / Software","Suministro De Dispositivo O Material","Traslado","Viabilidad y/o levantamiento técnico","Revisión y/o Configuración De Equipos De Red Lan De cliente final","Retiro_voluntario","Toma_Adicional","Retiro y Desinstalacion por Cartera","Entrega De Servicio A Satisfacción");
 	<?php }; ?>
-	var perfil_reclamo = new Array ("...","Revision_de_Internet","Revision_de_television","Revision tv e internet");	
+	var perfil_reclamo = new Array ("...","Revision_de_Internet","Revision_de_television","Revision tv e internet");
+	var perfil_incidente = new Array ("...","Garantía-devolución – OTTIS Hardware  / Software","Inconformidad Por Intermitencia En El Servicio de Internet","Inconformidad Por La Velocidad Del Servicio Contratada","Servicio de Internet in-operativo en cliente final","Servicio de Televisión in-operativo en cliente final","Soporte Acceso A Plataformas y/o URL’s","Inconformidad Por Intermitencia En El Servicio de Televisión","Peticion, Queja y Recurso");
 							//crear funcion que ejecute el cambio
 							function cambia(){
 								var subject;
