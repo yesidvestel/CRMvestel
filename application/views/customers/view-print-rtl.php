@@ -610,18 +610,20 @@ $fcontrato = $details['f_contrato'];
 	</table>
 </div>
 	<!-- --------------------------------CONTRATO OTTIS ------------------------------------- -->
-	<?php  } else /* if($this->config->item('ctitle')=='FUTURE SOLUTIONS DEVELOPMENT SAS')*/{ ?>
+	<?php  } else /* if($this->config->item('ctitle')=='FUTURE SOLUTIONS DEVELOPMENT SAS')*/{ 
+	
+	?>
 <div class="invoice-box">
-	<table>
+	<table width="100%" style="page-break-inside: avoid;">
 		<tbody>
 		<tr>
-		<td style="font-size: 24px;line-height: normal;text-align: justify" > <!--COLUMNA IZQUIERDA-->
-			<table>
+		<td style="font-size: 30px; text-align: justify;" width="850px"> <!--COLUMNA IZQUIERDA-->
+			<table width="100%" style="page-break-inside: avoid;">
 				<tr>
 					<td style="text-align: right"><h2>CONTRATO ÚNICO DE <br>SERVICIOS FIJOS </h2>No. <span style="border-bottom: 1px solid;"><?php echo $details['abonado'] ?></span></td>
 				</tr>
 			</table>
-			<table>
+			<table width="100%" style="page-break-inside: avoid;">
 				<tr>
 					<td align="center" ><img src="<?php echo FCPATH . 'userfiles/company/' . $this->config->item('logo') ?>" style="max-width:50%;"></td>
 				</tr>
@@ -632,9 +634,9 @@ $fcontrato = $details['f_contrato'];
 					<td align="left" valign="middle"><br><br><br><h1>OTTIS COMUNICACIONES</h1></td>
 				</tr>
 			</table>
-			<table border="1" >
+			<table border="1" width="100%" style="page-break-inside: avoid;">
 				<tr>
-					<td colspan="2" style="background-color: lightskyblue; font-size: x-large;text-align: justify;line-height: inherit">
+					<td colspan="2" style="background-color: lightskyblue; font-size: 25px;text-align: justify;line-height: inherit">
 						Este contrato explica las condiciones para la prestación de los servicios entre usted y Future
 					  Solutions Development SAS nit 830.502.580-6, con Registro TIC RTIC96000418 por el que pagará mínimo
 					  mensualmente <span style="border-bottom: 1px solid;"><?php echo amountFormat($totaltv+$inter) ?></span>. Este contrato
@@ -661,9 +663,9 @@ $fcontrato = $details['f_contrato'];
 			
 			Usted se compromete a pagar oportunamente el precio acordado. El servicio se activará a
 			más tardar el día <span style="border-bottom: 1px solid;"><?php echo date("d/m/Y",strtotime($fcontrato."+ 15 days")) ?></span>
-			<table border="1" width="100%">
+			<table border="1" width="100%" style="page-break-inside: avoid;">
 				<tr>
-					<td style="font-size: 17px">
+					<td style="font-size: 20px">
 					<h4>INFORMACIÓN DEL SUSCRIPTOR</h4><br>
 					Contrato No.: <span style="border-bottom: 1px solid;"><?php echo $details['abonado'] ?></span><br><br>
 					Nombre/Razón Social: <span style="border-bottom: 1px solid;"> <?php echo $details['name'].' '.$details['dosnombre'].' '.$details['unoapellido'].' '.$details['dosapellido'] ?></span><br><br>
@@ -706,10 +708,10 @@ $fcontrato = $details['f_contrato'];
 					</td>
 				</tr>
 			</table>
-			<table border="1" width="100%">
+			<table border="1" width="100%" style="page-break-inside: avoid;">
   		<tbody>
     		<tr style="border-radius: 20px">
-      		<td style="font-size: 17px;line-height: inherit">
+      		<td style="font-size: 20px;line-height: inherit">
 				<h4>CONDICIONES COMERCIALES CARACTERÍSTICAS DEL PLAN</h4><br>
 				Velocidad contratada: <span style="border-bottom: 1px solid;"><?php /*if($servicios['television']!='no'){
 						$tv=$servicios['television'];
@@ -763,7 +765,7 @@ $fcontrato = $details['f_contrato'];
 				e. El soporte técnico es prestado de forma personalizada, con atención telefónica de Lunes a Sábado de 6am a 9pm y domingos y festivos de 9am a 5pm. El soporte técnico en sitio es de lunes a sábado de 8am a 5pm.
 			</td>
 			<tr>
-			<td>
+			<td style="font-size: 20px;line-height: inherit">
 			<h2>Valor Total <?php echo amountFormat(($totaltv+$inter)*$clausula['meses']) ?></h2>
 			Este valor incluye todas las mensualidades y el valor pagado por habilitación
 			</td>			
@@ -781,7 +783,7 @@ $fcontrato = $details['f_contrato'];
 		</td>
 		<td  ><!--CENTRO-->
 		</td>
-		<td  style="font-size: 24px;line-height: normal;text-align: justify"><!--COLUMNA DERECHO-->
+		<td  style="font-size: 27px; text-align: justify; line-height: 1.5;" width="850px"><!--COLUMNA DERECHO-->
 			<h4>PRINCIPALES OBLIGACIONES DEL USUARIO</h4>
 						1) 	Pagar oportunamente los servicios prestados,
 							incluyendo los intereses de mora cuando haya
@@ -821,7 +823,7 @@ $fcontrato = $details['f_contrato'];
 	</table>
 	<table width="100%"><!--hoja 2-->
 		<tr>
-			<td width="100%" style="font-size: 24px;line-height: normal;text-align: justify"><!--COLUMNA IZQUIERDA-->
+			<td width="850px" style="font-size: 30px;line-height: normal;text-align: justify"><!--COLUMNA IZQUIERDA-->
 				<H4>PAGO Y FACTURACIÓN</H4>
 				La factura le debe llegar como mínimo 5 días hábiles antes de la fecha de pago. Si no llega, puede solicitarla a través de nuestros Medios de Atención y debe pagarla oportunamente. La factura será enviada por medios electrónicos.
 				Si no paga a tiempo, previo aviso, suspenderemos su servicio hasta que pague sus saldos pendientes. Contamos con 3 días hábiles luego de su pago para reconectarle el servicio. Si no paga a tiempo, también podemos reportar su deuda a las centrales de riesgo. Para esto tenemos que avisarle por lo menos con 20 días calendario de anticipación. Si paga luego de este reporte tenemos la obligación dentro del mes de seguimiento de informar su pago para que ya no aparezca reportado. Si tiene un reclamo sobre su factura, puede presentarlo antes de la fecha de pago y en ese caso no debe pagar las sumas reclamadas hasta que resolvamos su solicitud. Si ya pagó, tiene 6 meses para presentar la reclamación.
@@ -969,7 +971,7 @@ $fcontrato = $details['f_contrato'];
 			</td>
 			<td><!--CENTRO-->
 			</td>
-			<td width="100%" style="font-size: 24px;line-height: normal;text-align: justify"><!--COLUMNA DERECHO-->
+			<td width="850px" style="font-size: 30px;line-height: normal;text-align: justify"><!--COLUMNA DERECHO-->
 				<h6>CAMBIO DE DOMICILIO</h6>
 				Usted puede cambiar de domicilio y continuar con el servicio siempre que sea técnicamente posible. Si desde el punto de vista técnico no es viable el traslado del servicio, usted puede ceder su contrato a un tercero o terminarlo pagando el valor de la cláusula de permanencia mínima si está vigente.
 	 			<h6>LARGA DISTANCIA (TELEFONÍA)</h6>
