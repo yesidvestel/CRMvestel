@@ -875,7 +875,7 @@ $array_afiliaciones=array();
 	<table width="100%">
 		<tr>
 			<?php if($datos_informe['trans_type']!='Expense'){ ?>
-			<td valign="top"><!--general-->
+			<td valign="top" width='500px'><!--general-->
 			<h6 class="titulos">Resumen Cobranza</h6>
 			<table class="tablas_anchos tablast">
 					<thead>
@@ -944,7 +944,7 @@ $array_afiliaciones=array();
 					</tfoot>
 			</table>
 			<h6 style='font-size: 1rem;margin-bottom: 0.5rem;font-family: inherit;font-weight: 500;line-height: 1.2;color: inherit;margin-top: 10px;'>Resumen por Servicios</h6>
-			<table style='border-collapse: collapse;border: 1px solid #5F5F5F;border-spacing: 2px;' class="tablas_anchos">
+			<table style='border-collapse: collapse;border: 1px solid #5F5F5F;border-spacing: 2px;page-break-inside: auto;' class="tablas_anchos">
 					<thead>
 						<tr >
 							<th style='background: #555;color: #fff;text-transform: uppercase;text-align: center;font-size: 14px;padding: 10px;'>
@@ -996,7 +996,7 @@ $array_afiliaciones=array();
 			</table>
 			</td><!--general--><?php } ?>
 			<td></td><!--general-->
-			<td valign="top"><!--general--><?php if($datos_informe['trans_type']!='Expense'){ ?>
+			<td valign="top" width='500px'><!--general--><?php if($datos_informe['trans_type']!='Expense'){ ?>
 			<h6 style='font-size: 1rem;margin-bottom: 0.5rem;font-family: inherit;font-weight: 500;line-height: 1.2;color: inherit;margin-top: 0;'>Resumen por Forma de pago</h6>
 			<table style='border-collapse: collapse;border: 1px solid #5F5F5F;border-spacing: 2px;'  class="tablas_anchos">
 					<thead>
