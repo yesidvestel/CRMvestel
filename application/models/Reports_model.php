@@ -106,7 +106,7 @@ class Reports_model extends CI_Model
     public function get_statements($pay_acc, $trans_type, $sdate, $edate)
     {
         $adicional="";
-       if($_SESSION['pay_acc__']!="6" && $_SESSION['pay_acc__']!="7" && $_SESSION['pay_acc__']!="8"){
+       if($_SESSION['pay_acc__']!="6" && $_SESSION['pay_acc__']!="7" && $_SESSION['pay_acc__']!="8" ){
             $adicional=" AND no_mostrar=0";
        }
 

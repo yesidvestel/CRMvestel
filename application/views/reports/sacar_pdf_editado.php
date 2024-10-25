@@ -254,6 +254,18 @@ $array_afiliaciones=array();
 				}
 			}
 		 }
+		 foreach ($cuenta5 as $key => $value) {		 	
+		 	if($value['estado']!="Anulada"){
+			 	$invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
+			 	if($invoice->refer!=null){
+		 			$invoice->refer=str_replace(" ","",$invoice->refer);		 				 			
+		 		}
+			 	if(strtolower($invoice->refer)==strtolower($caja)){
+			 		$array_bancos['WOMPI']['cantidad']++;
+					$array_bancos['WOMPI']['monto']+=$value['credit'];
+				}
+			}
+		 }
 
 		 //caja virtual
 		 if($caja=="Caja Virtual"){
@@ -896,7 +908,7 @@ $array_afiliaciones=array();
 						</tr>
 					</tfoot>
 			</table>
-			<h6 style='font-size: 1rem;margin-bottom: 0.5rem;font-family: inherit;font-weight: 500;line-height: 1.2;color: inherit;margin-top: 10px;'>Resumen por Banco</h6>
+			<h6 style='font-size: 1rem;margin-bottom: 0.5rem;font-family: inherit;font-weight: 500;line-height: 1.2;color: inherit;margin-top: 10px;'>Resumen por Banco</h6><br>
 			<table  style='border-collapse: collapse;border: 1px solid #5F5F5F;border-spacing: 2px;'  class="tablas_anchos">
 					<thead >
 						<tr >
@@ -918,13 +930,16 @@ $array_afiliaciones=array();
 						<tr>
 							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>BANCOLOMBIA CUENTA CORRIENTE</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'><?=$array_bancos['BANCOLOMBIA CUENTA CORRIENTE']['cantidad']  ?></td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 1px;'><?=("$ ".number_format($array_bancos['BANCOLOMBIA CUENTA CORRIENTE']['monto'],0,",","."))  ?></td>
 						</tr>
+						<tr>
+							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>WOMPI</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'><?=$array_bancos['WOMPI']['cantidad']  ?></td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 1px;'><?=("$ ".number_format($array_bancos['WOMPI']['monto'],0,",","."))  ?></td>
+						</tr>
 						
 					</tbody>
 					<tfoot>
 						<tr>
 							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;' >TOTAL COBRANZA</th>
-							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'><?=($array_bancos['BANCOLOMBIA TV']['cantidad']+$array_bancos['BANCOLOMBIA TELECOMUNICACIONES']['cantidad']+$array_bancos['BANCOLOMBIA CUENTA CORRIENTE']['cantidad'])  ?></th>
-							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 1px;'><?=("$ ".number_format($array_bancos['BANCOLOMBIA TV']['monto']+$array_bancos['BANCOLOMBIA TELECOMUNICACIONES']['monto']+$array_bancos['BANCOLOMBIA CUENTA CORRIENTE']['monto'],0,",","."))  ?></th>			
+							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'><?=($array_bancos['BANCOLOMBIA TV']['cantidad']+$array_bancos['BANCOLOMBIA TELECOMUNICACIONES']['cantidad']+$array_bancos['BANCOLOMBIA CUENTA CORRIENTE']['cantidad']+$array_bancos['WOMPI']['cantidad'])  ?></th>
+							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 1px;'><?=("$ ".number_format($array_bancos['BANCOLOMBIA TV']['monto']+$array_bancos['BANCOLOMBIA TELECOMUNICACIONES']['monto']+$array_bancos['BANCOLOMBIA CUENTA CORRIENTE']['monto']+$array_bancos['WOMPI']['monto'],0,",","."))  ?></th>			
 						</tr>
 					</tfoot>
 			</table>
@@ -1015,6 +1030,9 @@ $array_afiliaciones=array();
 							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Transferencia</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'><?=($array_bancos['Caja Virtual']['cantidad']+$array_bancos['BANCOLOMBIA TV']['cantidad']+$array_bancos['BANCOLOMBIA TELECOMUNICACIONES']['cantidad']+$array_bancos['BANCOLOMBIA CUENTA CORRIENTE']['cantidad'])  ?></td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 1px;'><?=("$ ".number_format($array_bancos['Caja Virtual']['monto']+$array_bancos['BANCOLOMBIA TV']['monto']+$array_bancos['BANCOLOMBIA TELECOMUNICACIONES']['monto']+$array_bancos['BANCOLOMBIA CUENTA CORRIENTE']['monto'],0,",",".")) ?></td>
 						</tr>
 						<tr>
+							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>WOMPI</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'><?=$array_bancos['WOMPI']['cantidad'] ?></td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'><?=("$ ".number_format($array_bancos['WOMPI']['monto'],0,",",".")) ?></td>
+						</tr>
+						<tr>
 							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Cheque</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>0</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>$ 0</td>
 						</tr>
 						<tr>
@@ -1028,8 +1046,8 @@ $array_afiliaciones=array();
 					<tfoot>
 						<tr>
 							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;' >TOTAL FORMA PAGO</th>
-							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'><?=($cantidad_saldo_anterior+$array_bancos['Caja Virtual']['cantidad']+$array_efectivo['cantidad']+$array_bancos['BANCOLOMBIA TV']['cantidad']+$array_bancos['BANCOLOMBIA TELECOMUNICACIONES']['cantidad']+$array_bancos['BANCOLOMBIA CUENTA CORRIENTE']['cantidad'])  ?></th>
-							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 1px;'><?=("$ ".number_format($saldo_anterior+$array_bancos['Caja Virtual']['monto']+$array_efectivo['monto']+$array_bancos['BANCOLOMBIA TV']['monto']+$array_bancos['BANCOLOMBIA TELECOMUNICACIONES']['monto']+$array_bancos['BANCOLOMBIA CUENTA CORRIENTE']['monto'],0,",","."))  ?></th>			
+							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'><?=($cantidad_saldo_anterior+$array_bancos['Caja Virtual']['cantidad']+$array_efectivo['cantidad']+$array_bancos['BANCOLOMBIA TV']['cantidad']+$array_bancos['WOMPI']['cantidad']+$array_bancos['BANCOLOMBIA TELECOMUNICACIONES']['cantidad']+$array_bancos['BANCOLOMBIA CUENTA CORRIENTE']['cantidad'])  ?></th>
+							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 1px;'><?=("$ ".number_format($saldo_anterior+$array_bancos['Caja Virtual']['monto']+$array_efectivo['monto']+$array_bancos['BANCOLOMBIA TV']['monto']+$array_bancos['BANCOLOMBIA TELECOMUNICACIONES']['monto']+$array_bancos['BANCOLOMBIA CUENTA CORRIENTE']['monto']+$array_bancos['WOMPI']['monto'],0,",","."))  ?></th>			
 						</tr>
 					</tfoot>
 			</table>

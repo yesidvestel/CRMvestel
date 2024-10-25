@@ -359,10 +359,12 @@ class Reports extends CI_Controller
             $cuenta2 = $this->reports->get_statements(7, $trans_type, $sdate, $edate);
             $cuenta3 = $this->reports->get_statements(8, $trans_type, $sdate, $edate);
             $cuenta4 = $this->reports->get_statements(11, $trans_type, $sdate, $edate);
+            $cuenta5 = $this->reports->get_statements(23, $trans_type, $sdate, $edate);
             $data['cuenta1']=$cuenta1;
             $data['cuenta2']=$cuenta2;
             $data['cuenta3']=$cuenta3;
             $data['cuenta4']=$cuenta4;//caja virtual
+            $data['cuenta5']=$cuenta5;//caja virtual
             
             foreach ($cuenta1 as $key => $value) {
                 $invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
@@ -399,6 +401,21 @@ class Reports extends CI_Controller
          }
          
          foreach ($cuenta3 as $key => $value) {         
+            $invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
+            if($invoice->refer!=null){
+                $invoice->refer=str_replace(" ","",$invoice->refer);                                    
+            }
+            if($value['estado']!="Anulada"){
+                if(strtolower($invoice->refer)==strtolower($caja1->holder)){
+                    $lista2[]=$value;
+                }
+            }else{
+                    if(strtolower($invoice->refer)==strtolower($caja1->holder)){                    
+                        $anulaciones[]=$value; 
+                    }
+            }
+         }
+         foreach ($cuenta5 as $key => $value) {         
             $invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
             if($invoice->refer!=null){
                 $invoice->refer=str_replace(" ","",$invoice->refer);                                    
@@ -600,10 +617,12 @@ class Reports extends CI_Controller
             $cuenta2 = $this->reports->get_statements(7, $trans_type, $sdate, $edate);
             $cuenta3 = $this->reports->get_statements(8, $trans_type, $sdate, $edate);
             $cuenta4 = $this->reports->get_statements(11, $trans_type, $sdate, $edate);
+            $cuenta5 = $this->reports->get_statements(23, $trans_type, $sdate, $edate);
             $data['cuenta1']=$cuenta1;
             $data['cuenta2']=$cuenta2;
             $data['cuenta3']=$cuenta3;
             $data['cuenta4']=$cuenta4;
+            $data['cuenta5']=$cuenta5;
             
 
             foreach ($cuenta1 as $key => $value) {
@@ -640,6 +659,21 @@ class Reports extends CI_Controller
          }
          
          foreach ($cuenta3 as $key => $value) {         
+            $invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
+             if($invoice->refer!=null){
+                    $invoice->refer=str_replace(" ","",$invoice->refer);                                    
+                }
+            if($value['estado']!="Anulada"){
+                if(strtolower($invoice->refer)==strtolower($caja1->holder)){
+                    $lista2[]=$value;
+                }
+            }else{
+                    if(strtolower($invoice->refer)==strtolower($caja1->holder)){                    
+                        $anulaciones[]=$value; 
+                    }
+            }
+         }
+         foreach ($cuenta5 as $key => $value) {         
             $invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
              if($invoice->refer!=null){
                     $invoice->refer=str_replace(" ","",$invoice->refer);                                    
