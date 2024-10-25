@@ -72,6 +72,12 @@
 {
  background-color:darkgoldenrod;
 }
+.btn {
+    white-space: normal;
+    text-align: center;
+    font-size: 14px; /* Ajustar tamaño de fuente */
+    padding: 10px 15px; /* Ajustar padding para que el botón no sea tan grande */
+}
 <?php 
  $deuda=$due['total']-$due['pamnt'];
  $equipos=$details['macequipo'];
@@ -518,109 +524,109 @@
 
                             </div>
                             <hr>
-                            <div class="row mt-3">
+                            <div class="row row-cols-1 row-cols-md-3 g-1 mt-1">
 								<?php if ($this->aauth->get_user()->roleid > 3 || $this->aauth->get_user()->co['cocie'] != null) { ?>
-                                <div class="col-md-4">
+                                <div class="col-md-4 mb-1">
 
                                     <a href="<?php echo base_url('customers/invoices?id=' . $details['id']) ?>"
-                                       class="btn btn-primary btn-lg" style="width: 250px"><i
+                                       class="btn btn-primary btn-lg" style="width: 100%"><i
                                                 class="icon-file-text2"></i> <?php echo $this->lang->line('View Invoices') ?></a>
 
                                 </div>
 								<?php } if ($this->aauth->get_user()->roleid > 2) { ?>
-                                <div class="col-md-4" style="margin-top: 5px;">
+                                <div class="col-md-4 mb-1">
                                     <a href="<?php echo base_url('customers/transactions?id=' . $details['id']) ?>"
-                                       class="btn btn-success btn-lg" style="width: 250px"><i
+                                       class="btn btn-success btn-lg" style="width: 100%"><i
                                                 class="icon-money"></i> <?php echo $this->lang->line('View Transactions') ?>
                                     </a>
                                 </div>
-                                <div class="col-md-4" style="margin-top: 5px;">
+                                <div class="col-md-4 mb-1">
                                     <a href="<?php echo base_url('quote/create?id=' . $details['id']) ?>"
-                                       class="btn btn-primary btn-lg" style="width: 250px"><i
+                                       class="btn btn-primary btn-lg" style="width: 100%"><i
                                                 class="icon-ticket"></i> Generar ticket
                                     </a>
                                 </div>
-								<div class="col-md-4" style="margin-top: 5px;">
+								<div class="col-md-4 mb-1">
                                     <a href="<?php echo base_url('customers/hiscuenta?id=' . $details['id']) ?>"
-                                       class="btn btn-success btn-lg" style="width: 250px"><i
+                                       class="btn btn-success btn-lg" style="width: 100%"><i
                                                 class="icon-ticket"></i> Historial de Cuenta
                                     </a>
                                 </div>						
 								
-								<div class="col-md-4" style="margin-top: 5px;">
+								<div class="col-md-4 mb-1">
 
                                     <a href="<?php echo base_url('customers/soporte?id=' . $details['id']) ?>"
-                                       class="btn btn-primary btn-lg" style="width: 250px"><i
+                                       class="btn btn-primary btn-lg" style="width: 100%"><i
                                                 class="icon-ticket"></i> Ver Tickets </a>
 
                                 </div>
-								<div class="col-md-4" style="margin-top: 5px;">
+								<div class="col-md-4 mb-1">
 
                                     <a href="<?php echo base_url('customers/equipos?id=' . $details['id']) ?>"
-                                       class="btn btn-success btn-lg" style="width: 250px"><i
+                                       class="btn btn-success btn-lg" style="width: 100%"><i
                                                 class="icon-tasks"></i> Ver Equipos</a>
 
                                 </div>
 								<?php } if ($this->aauth->get_user()->roleid > 2) { ?>
-								<div class="col-md-4" style="margin-top: 5px;">
+								<div class="col-md-4 mb-1">
 
                                     <a href="#pop_model2" data-toggle="modal" onclick="funcion_status();" data-remote="false" 
-                                       class="btn btn-primary btn-lg" style="width: 250px"><i
+                                       class="btn btn-primary btn-lg" style="width: 100%"><i
                                                 class="icon-user"></i> Cambio Titular </a>
 
                                 </div>
-								<div class="col-md-4" style="margin-top: 5px;">
+								<div class="col-md-4 mb-1">
 
                                     <a href="<?php echo base_url('llamadas/index?id=' . $details['id']) ?>"
-                                       class="btn btn-success btn-lg" style="width: 250px"><i
+                                       class="btn btn-success btn-lg" style="width: 100%"><i
                                                 class="icon-mobile-phone"></i> Ate. Usuario</a>
 
                                 </div>
 								<?php } if ($this->aauth->get_user()->roleid > 3) { ?>
-                                <div class="col-md-4" style="margin-top: 5px;">
+                                <div class="col-md-4 mb-1">
 
                                     <a href="<?php echo base_url('facturasElectronicas?id=' . $details['id']) ?>"
-                                       class="btn btn-primary btn-lg" style="width: 250px"><i
+                                       class="btn btn-primary btn-lg" style="width: 100%"><i
                                                 class="icon-file-text2"></i> Facturas Electronicas</a>
 
                                 </div>
-								<div class="col-md-4" style="margin-top: 5px;">
+								<div class="col-md-4 mb-1">
 
                                     <a  href="<?php echo base_url('customers/estados?id=' . $details['id']) ?>"
-                                       class="btn btn-success btn-lg" style="width: 250px"><i
+                                       class="btn btn-success btn-lg" style="width: 100%"><i
                                                 class="icon-calendar"></i>Historial estados</a>
 
                                 </div>
 								<?php } if ($this->aauth->get_user()->roleid > 2) { ?>
-								<div class="col-md-4" style="margin-top: 5px;">
+								<div class="col-md-4 mb-1">
 
                                     <a id="link_paz_y_salvo" data-idc="<?=$details['id']  ?>" data-deuda="<?=$deuda ?>" data-equipo="<?=$equipos ?>" href="#" data-url1="<?php echo base_url('customers/pazysalvo?id=' . $details['id'].'&deuda='.$deuda) ?>"
-                                       class="btn btn-success btn-lg" style="width: 250px"><i
+                                       class="btn btn-success btn-lg" style="width: 100%"><i
                                                 class="icon-calendar"></i>Paz y Salvo</a>
 
                                 </div>
 								<?php } if ($this->aauth->get_user()->roleid > 2) { ?>
-								<div class="col-md-4" style="margin-top: 5px;">
+								<div class="col-md-4 mb-1">
 
                                     <a href="#pop_model3" data-toggle="modal" onclick="funcion_status();"
-                                       class="btn btn-primary btn-lg" style="width: 250px"><i
+                                       class="btn btn-primary btn-lg" style="width: 100%"><i
                                                 class="icon-calendar"></i> Compromiso</a>
 
                                 </div>
 								
-                                <div class="col-md-4" style="margin-top: 5px;">
+                                <div class="col-md-4 mb-1">
 
                                     <a title="Este boton es para que, si el usuario necesita de actualizacion en telefono o correo, aparesca un modal requiriendo esta informacion al visitar el perfil y al ver las facturas de este usuario, da click para configurar esta accion..." 
                                     href="#modal_conf_requerimientos" data-toggle="modal" 
-                                       class="btn btn-primary btn-lg" style="width: 250px"><i
+                                       class="btn btn-primary btn-lg" style="width: 100%"><i
                                                 class="icon-calendar"></i> Adm. Campos</a>
 
                                 </div>
-                                <div class="col-md-4" style="margin-top: 5px;">
+                                <div class="col-md-4 mb-3">
 
                                     <a  
                                     href="<?=base_url()."customers/graficas_c?id=".$details['id'] ?>" 
-                                       class="btn btn-primary btn-lg" style="width: 250px"><i
+                                       class="btn btn-primary btn-lg" style="width: 100%"><i
                                                 class="icon-calendar"></i> Datos Navegacion</a>
 
                                 </div>
