@@ -167,7 +167,7 @@
                                 </div>
                             </div>
                             <div class="row mt-1">
-                                <div class="offset-md-2 col-md-4">
+                                <div class="offset-md-2 col-md-8">
                                     <a href="<?php echo base_url('customers/changepassword?id=' . $details['id']) ?>" class="btn btn-danger btn-md">
 									<i class="icon-pencil"></i> <?php echo $this->lang->line('Change Password') ?>
                                     </a>
