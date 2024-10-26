@@ -980,6 +980,7 @@ class Reports extends CI_Controller
             //tengo un inconveniente pues debo agregar las facturas, luego los expense(purchase) y luego las transferencias
             $cuenta2 = $this->reports->get_statements(7, $trans_type, $sdate, $edate);
             $cuenta3 = $this->reports->get_statements(8, $trans_type, $sdate, $edate);
+            $cuenta4 = $this->reports->get_statements(23, $trans_type, $sdate, $edate);
             $caja1=$this->db->get_where('accounts',array('id' =>$pay_acc))->row();
             foreach ($cuenta1 as $key => $value) {
                 if($value['type']=="Income"){
@@ -1029,6 +1030,28 @@ class Reports extends CI_Controller
          }
          
          foreach ($cuenta3 as $key => $value) {         
+            if($value['type']=="Income"){
+                $invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
+                if($invoice->refer!=null){
+                    $invoice->refer=str_replace(" ","",$invoice->refer);                                    
+                }
+                if($value['estado']!="Anulada"){                
+                    if(strtolower($invoice->refer)==strtolower($caja1->holder)){                    
+                        $list[]=$value;                        
+                    }
+                }
+            }else if($value['type']=="Expense"){
+                $purchase=$this->reports->db->get_where('purchase',array('tid' =>$value['tid']))->row();
+                    if($purchase->refer!=null){
+
+                        $purchase->refer=str_replace(" ","",$purchase->refer);                                    
+                        if(strtolower($purchase->refer)==strtolower($caja1->holder)){
+                            $list[]=$value;
+                        }
+                    }
+            }
+         }
+         foreach ($cuenta4 as $key => $value) {         
             if($value['type']=="Income"){
                 $invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
                 if($invoice->refer!=null){
@@ -1136,6 +1159,7 @@ class Reports extends CI_Controller
         $cuenta1 = $this->reports->get_statements(6, $trans_type, $sdate, $edate);
             $cuenta2 = $this->reports->get_statements(7, $trans_type, $sdate, $edate);
             $cuenta3 = $this->reports->get_statements(8, $trans_type, $sdate, $edate);
+            $cuenta3 = $this->reports->get_statements(23, $trans_type, $sdate, $edate);
             $caja1=$this->db->get_where('accounts',array('id' =>$pay_acc))->row();
             foreach ($cuenta1 as $key => $value) {
                if($value['type']=="Income"){
@@ -1184,6 +1208,28 @@ class Reports extends CI_Controller
          }
          
          foreach ($cuenta3 as $key => $value) {         
+             if($value['type']=="Income"){
+                $invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
+                if($invoice->refer!=null){
+                    $invoice->refer=str_replace(" ","",$invoice->refer);                                    
+                }
+                if($value['estado']!="Anulada"){                
+                    if(strtolower($invoice->refer)==strtolower($caja1->holder)){                    
+                        $list[]=$value;                        
+                    }
+                }
+            }else if($value['type']=="Expense"){
+                $purchase=$this->reports->db->get_where('purchase',array('tid' =>$value['tid']))->row();
+                    if($purchase->refer!=null){
+
+                        $purchase->refer=str_replace(" ","",$purchase->refer);                                    
+                        if(strtolower($purchase->refer)==strtolower($caja1->holder)){
+                            $list[]=$value;
+                        }
+                    }
+            }
+         }
+         foreach ($cuenta4 as $key => $value) {         
              if($value['type']=="Income"){
                 $invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
                 if($invoice->refer!=null){
