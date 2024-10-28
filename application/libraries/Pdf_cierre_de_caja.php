@@ -35,6 +35,7 @@ class Pdf_cierre_de_caja
         $mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => 'letter', 'margin_left' => 8, 'margin_right' => 5, 'margin_top' => 5, 'margin_bottom' => 12]);
 
         //$mpdf->SetDirectionality('RTL');
+		$mpdf->keep_table_proportions = true;
         $mpdf->autoScriptToLang = true;
         $mpdf->autoLangToFont = true;
         return $mpdf;

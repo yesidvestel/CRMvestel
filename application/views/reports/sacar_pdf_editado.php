@@ -875,7 +875,7 @@ $array_afiliaciones=array();
 	<table width="100%">
 		<tr>
 			<?php if($datos_informe['trans_type']!='Expense'){ ?>
-			<td valign="top" width='500px'><!--general-->
+			<td valign="top" width='400px'><!--general-->
 			<h6 class="titulos">Resumen Cobranza</h6>
 			<table class="tablas_anchos tablast">
 					<thead>
@@ -943,8 +943,8 @@ $array_afiliaciones=array();
 						</tr>
 					</tfoot>
 			</table>
-			<h6 style='font-size: 1rem;margin-bottom: 0.5rem;font-family: inherit;font-weight: 500;line-height: 1.2;color: inherit;margin-top: 10px;'>Resumen por Servicios</h6>
-			<table style='border-collapse: collapse;border: 1px solid #5F5F5F;border-spacing: 2px;page-break-inside: auto;' class="tablas_anchos">
+			<h6 style='font-size: 1rem;margin-bottom: 0.5rem;font-family: inherit;font-weight: 500;line-height: 1.2;color: inherit;margin-top: 10px;'>Resumen de cargos cobrados por meses</h6>
+			<table style='border-collapse: collapse;border: 1px solid #5F5F5F;border-spacing: 2px;' class="tablas_anchos">
 					<thead>
 						<tr >
 							<th style='background: #555;color: #fff;text-transform: uppercase;text-align: center;font-size: 14px;padding: 10px;'>
@@ -956,47 +956,60 @@ $array_afiliaciones=array();
 						</tr>
 					</thead>
 					<tbody>
-						<?=$lineas_str_de_planes  ?>
+						<tr >
+							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'><?=$texto_mes_actual  ?></td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'><?=($valores_mes_actual['Internet']['cantidad']+$valores_mes_actual['Television']['cantidad'])  ?></td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 1px;'><?="$ ".number_format($valores_mes_actual['monto'],0,",",".")  ?></td>
+						</tr>
+						<tr>
+							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'><?=$texto_mes_anterior  ?></td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'><?=($valores_mes_anterior['Internet']['cantidad']+$valores_mes_anterior['Television']['cantidad'])  ?></td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 1px;'><?="$ ".number_format($valores_mes_anterior['monto'],0,",",".")  ?></td>
+						</tr>
+						<tr>
+							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Meses Anteriores</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'><?=($valores_meses_anteriores['Internet']['cantidad']+$valores_meses_anteriores['Television']['cantidad'])  ?></td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 1px;'><?="$ ".number_format($valores_meses_anteriores['monto'],0,",",".")  ?></td>
+						</tr>
+					
 						
-						<?php  if($var_cuenta_planes['Television']!=0){ ?><tr ><td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Television</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'><?=$var_cuenta_planes['Television']  ?></td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 1px;'><?="$ ".number_format($var_cuenta_planes_montos['TelevisionMonto'],0,",",".")  ?></td></tr><?php } ?>
-						<tr>
-							<td style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;' ><strong>TOTAL <br>MENSUALIDADES</strong></td>
-							<td style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'><strong><?=$var_cantidad_mensualidades  ?></strong></td>
-							<td style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 1px;'><strong><?="$ ".number_format($var_total_mensualidades,0,",",".")  ?></strong></td>			
-						</tr>
-						<?=$var1_afiliaciones  ?>
-						<tr>
-							<td style='border-bottom: 2px solid #111;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;' ><strong>TOTAL VENTAS</strong></td>
-							<td style='border-bottom: 2px solid #111;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'><strong><?=$var_cuenta_afiliaciones  ?></strong></td>
-							<td style='border-bottom: 2px solid #111;text-transform: uppercase;text-align: center;font-size: 10px;padding: 1px;'><strong><?="$ ".number_format($var_monto_afiliaciones,0,",",".")  ?></strong></td>			
-						</tr>
-						<tr>
-							<td style='border-bottom: 2px solid #111;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;' ><strong>TOTAL <br>RECONEXIONES</strong></td>
-							<td style='border-bottom: 2px solid #111;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'><strong><?=$array_reconexiones['cantidad']  ?></strong></td>
-							<td style='border-bottom: 2px solid #111;text-transform: uppercase;text-align: center;font-size: 10px;padding: 1px;'><strong><?="$ ".number_format($array_reconexiones['monto'],0,",",".")  ?></strong></td>			
-						</tr>
-						<tr>
-							<td style='border-bottom: 2px solid #111;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;' ><strong>TOTAL MATERIALES</strong></td>
-							<td style='border-bottom: 2px solid #111;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'><strong>0</strong></td>
-							<td style='border-bottom: 2px solid #111;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'><strong>$ 0</strong></td>			
-						</tr>
-						<tr>
-							<td style='border-bottom: 2px solid #111;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;' ><strong>TOTAL OTROS</strong></td>
-							<td style='border-bottom: 2px solid #111;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'><strong>0</strong></td>
-							<td style='border-bottom: 2px solid #111;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'><strong>$ 0</strong></td>			
-						</tr>
 					</tbody>
 					<tfoot>
 						<tr>
-							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;' >TOTAL</th>
-							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'><?=($var_cantidad_mensualidades+$var_cuenta_afiliaciones+$array_reconexiones['cantidad'])  ?></th>
-							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 1px;'><?="$ ".number_format($var_total_mensualidades+$var_monto_afiliaciones+$array_reconexiones['monto'],0,",",".")  ?></th>			
+							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;' >TOTAL COBRANZA<br>POR MESES</th>
+							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'><?=($valores_mes_actual['Internet']['cantidad']+$valores_mes_anterior['Internet']['cantidad']+$valores_meses_anteriores['Internet']['cantidad']+$valores_mes_actual['Television']['cantidad']+$valores_mes_anterior['Television']['cantidad']+$valores_meses_anteriores['Television']['cantidad']) ?></th>
+							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 1px;'><?="$ ".number_format($valores_mes_actual['monto']+$valores_mes_anterior['monto']+$valores_meses_anteriores['monto'],0,",",".")  ?></th>			
+						</tr>
+					</tfoot>
+			</table>
+			<h6 style='font-size: 1rem;margin-bottom: 0.5rem;font-family: inherit;font-weight: 500;line-height: 1.2;color: inherit;margin-top: 10px;'>Resumen por tipo de servicio</h6>
+			<table style='border-collapse: collapse;border: 1px solid #5F5F5F;border-spacing: 2px;' class="tablas_anchos">
+					<thead>
+						<tr >
+							<th style='background: #555;color: #fff;text-transform: uppercase;text-align: center;font-size: 14px;padding: 10px;'>
+							DESCRIPCION</th>
+							<th style='background: #555;color: #fff;text-transform: uppercase;text-align: center;font-size: 14px;padding: 10px;'>
+							CANT</th>
+							<th style='background: #555;color: #fff;text-transform: uppercase;text-align: center;font-size: 14px;padding: 10px;'>
+							MONTO</th>	
+						</tr>
+					</thead>
+					<tbody>
+						<tr >
+							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Internet</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'><?=$array_resumen_tipo_servicio['Internet']['cantidad']  ?></td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 1px;'><?="$ ".number_format($array_resumen_tipo_servicio['Internet']['monto'],0,",",".")  ?></td>
+						</tr>
+						<tr>
+							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Television</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'><?=$array_resumen_tipo_servicio['Television']['cantidad']  ?></td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 1px;'><?="$ ".number_format($array_resumen_tipo_servicio['Television']['monto'],0,",",".")  ?></td>
+						</tr>
+					
+						
+					</tbody>
+					<tfoot>
+						<tr>
+							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;' >TOTAL TIPO DE SERVICIOS</th>
+							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'><?=($array_resumen_tipo_servicio['Internet']['cantidad']+$array_resumen_tipo_servicio['Television']['cantidad'])  ?></th>
+							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 1px;'><?=("$ ".number_format($array_resumen_tipo_servicio['Internet']['monto']+$array_resumen_tipo_servicio['Television']['monto'],0,",","."))  ?></th>			
 						</tr>
 					</tfoot>
 			</table>
 			</td><!--general--><?php } ?>
 			<td></td><!--general-->
-			<td valign="top" width='500px'><!--general--><?php if($datos_informe['trans_type']!='Expense'){ ?>
+			<td valign="top" width='400px'><!--general--><?php if($datos_informe['trans_type']!='Expense'){ ?>
+			
 			<h6 style='font-size: 1rem;margin-bottom: 0.5rem;font-family: inherit;font-weight: 500;line-height: 1.2;color: inherit;margin-top: 0;'>Resumen por Forma de pago</h6>
 			<table style='border-collapse: collapse;border: 1px solid #5F5F5F;border-spacing: 2px;'  class="tablas_anchos">
 					<thead>
@@ -1088,12 +1101,12 @@ $array_afiliaciones=array();
 		</tr>
 		
 	</table>
-<table>
+<table width="100%">
 	<tr>
 	<?php if($datos_informe['trans_type']!='Expense'){ ?>
-		<td valign="top">
-			<h6 style='font-size: 1rem;margin-bottom: 0.5rem;font-family: inherit;font-weight: 500;line-height: 1.2;color: inherit;margin-top: 10px;'>Resumen de cargos cobrados por meses</h6>
-			<table style='border-collapse: collapse;border: 1px solid #5F5F5F;border-spacing: 2px;' class="tablas_anchos">
+		<td valign="top" width='400px'>
+			<h6 style='font-size: 1rem;margin-bottom: 0.5rem;font-family: inherit;font-weight: 500;line-height: 1.2;color: inherit;margin-top: 10px;'>Resumen por Servicios</h6>
+			<table style='border-collapse: collapse;border: 1px solid #5F5F5F;border-spacing: 2px;page-break-inside: auto;' class="tablas_anchos">
 					<thead>
 						<tr >
 							<th style='background: #555;color: #fff;text-transform: uppercase;text-align: center;font-size: 14px;padding: 10px;'>
@@ -1105,60 +1118,49 @@ $array_afiliaciones=array();
 						</tr>
 					</thead>
 					<tbody>
-						<tr >
-							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'><?=$texto_mes_actual  ?></td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'><?=($valores_mes_actual['Internet']['cantidad']+$valores_mes_actual['Television']['cantidad'])  ?></td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 1px;'><?="$ ".number_format($valores_mes_actual['monto'],0,",",".")  ?></td>
-						</tr>
-						<tr>
-							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'><?=$texto_mes_anterior  ?></td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'><?=($valores_mes_anterior['Internet']['cantidad']+$valores_mes_anterior['Television']['cantidad'])  ?></td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 1px;'><?="$ ".number_format($valores_mes_anterior['monto'],0,",",".")  ?></td>
-						</tr>
-						<tr>
-							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Meses Anteriores</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'><?=($valores_meses_anteriores['Internet']['cantidad']+$valores_meses_anteriores['Television']['cantidad'])  ?></td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 1px;'><?="$ ".number_format($valores_meses_anteriores['monto'],0,",",".")  ?></td>
-						</tr>
-					
+						<?=$lineas_str_de_planes  ?>
 						
+						<?php  if($var_cuenta_planes['Television']!=0){ ?><tr ><td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Television</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'><?=$var_cuenta_planes['Television']  ?></td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 1px;'><?="$ ".number_format($var_cuenta_planes_montos['TelevisionMonto'],0,",",".")  ?></td></tr><?php } ?>
+						<tr>
+							<td style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;' ><strong>TOTAL <br>MENSUALIDADES</strong></td>
+							<td style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'><strong><?=$var_cantidad_mensualidades  ?></strong></td>
+							<td style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 1px;'><strong><?="$ ".number_format($var_total_mensualidades,0,",",".")  ?></strong></td>			
+						</tr>
+						<?=$var1_afiliaciones  ?>
+						<tr>
+							<td style='border-bottom: 2px solid #111;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;' ><strong>TOTAL VENTAS</strong></td>
+							<td style='border-bottom: 2px solid #111;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'><strong><?=$var_cuenta_afiliaciones  ?></strong></td>
+							<td style='border-bottom: 2px solid #111;text-transform: uppercase;text-align: center;font-size: 10px;padding: 1px;'><strong><?="$ ".number_format($var_monto_afiliaciones,0,",",".")  ?></strong></td>			
+						</tr>
+						<tr>
+							<td style='border-bottom: 2px solid #111;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;' ><strong>TOTAL <br>RECONEXIONES</strong></td>
+							<td style='border-bottom: 2px solid #111;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'><strong><?=$array_reconexiones['cantidad']  ?></strong></td>
+							<td style='border-bottom: 2px solid #111;text-transform: uppercase;text-align: center;font-size: 10px;padding: 1px;'><strong><?="$ ".number_format($array_reconexiones['monto'],0,",",".")  ?></strong></td>			
+						</tr>
+						<tr>
+							<td style='border-bottom: 2px solid #111;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;' ><strong>TOTAL MATERIALES</strong></td>
+							<td style='border-bottom: 2px solid #111;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'><strong>0</strong></td>
+							<td style='border-bottom: 2px solid #111;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'><strong>$ 0</strong></td>			
+						</tr>
+						<tr>
+							<td style='border-bottom: 2px solid #111;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;' ><strong>TOTAL OTROS</strong></td>
+							<td style='border-bottom: 2px solid #111;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'><strong>0</strong></td>
+							<td style='border-bottom: 2px solid #111;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'><strong>$ 0</strong></td>			
+						</tr>
 					</tbody>
 					<tfoot>
 						<tr>
-							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;' >TOTAL COBRANZA<br>POR MESES</th>
-							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'><?=($valores_mes_actual['Internet']['cantidad']+$valores_mes_anterior['Internet']['cantidad']+$valores_meses_anteriores['Internet']['cantidad']+$valores_mes_actual['Television']['cantidad']+$valores_mes_anterior['Television']['cantidad']+$valores_meses_anteriores['Television']['cantidad']) ?></th>
-							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 1px;'><?="$ ".number_format($valores_mes_actual['monto']+$valores_mes_anterior['monto']+$valores_meses_anteriores['monto'],0,",",".")  ?></th>			
+							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;' >TOTAL</th>
+							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'><?=($var_cantidad_mensualidades+$var_cuenta_afiliaciones+$array_reconexiones['cantidad'])  ?></th>
+							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 1px;'><?="$ ".number_format($var_total_mensualidades+$var_monto_afiliaciones+$array_reconexiones['monto'],0,",",".")  ?></th>			
 						</tr>
 					</tfoot>
 			</table>
-			<h6 style='font-size: 1rem;margin-bottom: 0.5rem;font-family: inherit;font-weight: 500;line-height: 1.2;color: inherit;margin-top: 10px;'>Resumen por tipo de servicio</h6>
-			<table style='border-collapse: collapse;border: 1px solid #5F5F5F;border-spacing: 2px;' class="tablas_anchos">
-					<thead>
-						<tr >
-							<th style='background: #555;color: #fff;text-transform: uppercase;text-align: center;font-size: 14px;padding: 10px;'>
-							DESCRIPCION</th>
-							<th style='background: #555;color: #fff;text-transform: uppercase;text-align: center;font-size: 14px;padding: 10px;'>
-							CANT</th>
-							<th style='background: #555;color: #fff;text-transform: uppercase;text-align: center;font-size: 14px;padding: 10px;'>
-							MONTO</th>	
-						</tr>
-					</thead>
-					<tbody>
-						<tr >
-							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Internet</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'><?=$array_resumen_tipo_servicio['Internet']['cantidad']  ?></td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 1px;'><?="$ ".number_format($array_resumen_tipo_servicio['Internet']['monto'],0,",",".")  ?></td>
-						</tr>
-						<tr>
-							<td style='border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'>Television</td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 10px;'><?=$array_resumen_tipo_servicio['Television']['cantidad']  ?></td><td style='text-align: center;border-bottom: 2px solid #111;color: #333;font-size: 12px;padding: 1px;'><?="$ ".number_format($array_resumen_tipo_servicio['Television']['monto'],0,",",".")  ?></td>
-						</tr>
-					
-						
-					</tbody>
-					<tfoot>
-						<tr>
-							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;' >TOTAL TIPO DE SERVICIOS</th>
-							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 10px;'><?=($array_resumen_tipo_servicio['Internet']['cantidad']+$array_resumen_tipo_servicio['Television']['cantidad'])  ?></th>
-							<th style='background: #E1E1E1;color: #000000;text-transform: uppercase;text-align: center;font-size: 10px;padding: 1px;'><?=("$ ".number_format($array_resumen_tipo_servicio['Internet']['monto']+$array_resumen_tipo_servicio['Television']['monto'],0,",","."))  ?></th>			
-						</tr>
-					</tfoot>
-			</table>
+			
 		</td>
 		<td></td>
 		<?php } ?>
-		<td valign="top">
+		<td valign="top" width='400px'>
 			<h6 style='font-size: 1rem;margin-bottom: 0.5rem;font-family: inherit;font-weight: 500;line-height: 1.2;color: inherit;margin-top: 10px;'>Resumen de cargos cobrados por meses INTERNET</h6>
 			<table style='border-collapse: collapse;border: 1px solid #5F5F5F;border-spacing: 2px;' class="tablas_anchos">
 					<thead>
