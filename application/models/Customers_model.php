@@ -612,6 +612,11 @@ $var_excluir=false;
         return $promo_estado;
 
     }
+    public function get_data_wompi(){
+        $datos=$this->db->query("SELECT * from variables_de_entorno where nombre_api='WOMPI'")->result_array();
+        $datos=$datos[0];
+        return $datos;
+    }
 public function calculo_ultimo_estado ($array_add,$customers){
  $sdate=new DateTime($_GET['sdate3']." 00:00:00");
  $edate=new DateTime($_GET['edate2']." 23:59:59");

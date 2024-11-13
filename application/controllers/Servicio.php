@@ -131,6 +131,7 @@ class Servicio extends CI_Controller
         $id_ultima_factura=$this->db->query("SELECT promo_sistema_clientes1 as promo_sistema_clientes1 from invoices where csd=".$body_post->cid." order by tid desc limit 1")->result_array();
         $data_response['data_promos']=$id_ultima_factura[0]['promo_sistema_clientes1'];
         $data_response['data_estados_promos']= $this->customers->validar_promocion_estado_cus($body_post->cid);
+        $data_response['datos_wompi']=$this->customers->get_data_wompi();
         echo json_encode($data_response);
     }
 
