@@ -1366,21 +1366,60 @@ foreach ($est as $key => $value) {
 			$this->db->where('fecha <=', $end_date);
 		}
 
-		$this->db->select('fecha, 
+		$this->db->select('fecha,sede, 
 			SUM(act_int) as activos_internet, 
 			SUM(act_tv) as activos_television, 
+			SUM(internet_y_tv_act) as activos_tv_int, 
+			SUM(debido_act) as debido_activos, 
 			SUM(cor_int) as cortados_internet, 
 			SUM(cor_tv) as cortados_television, 
+			SUM(internet_y_tv_cor) as cortados_tv_int, 
+			SUM(debido_cor) as debido_cortados, 
 			SUM(car_int) as cartera_internet, 
 			SUM(car_tv) as cartera_television, 
+			SUM(internet_y_tv_car) as cartera_tv_int, 
+			SUM(debido_car) as debido_cartera, 
 			SUM(sus_int) as suspendidos_internet, 
 			SUM(sus_tv) as suspendidos_television, 
+			SUM(internet_y_tv_sus) as suspendidos_tv_int, 
+			SUM(debido_sus) as debido_suspendidos, 
 			SUM(ret_int) as retirados_internet, 
-			SUM(ret_tv) as retirados_television');
+			SUM(ret_tv) as retirados_television, 
+			SUM(internet_y_tv_ret) as retirados_tv_int, 
+			SUM(debido_ret) as debido_retirados');
 		$this->db->group_by('fecha');
+		$this->db->order_by('fecha', 'DESC');
 		return $this->db->get('reports_estados')->result_array();
 	}
+	public function getStatisticsByDateAndSede() {
+        $this->db->select('fecha,sede, 
+			SUM(act_int) as activos_internet, 
+			SUM(act_tv) as activos_television, 
+			SUM(internet_y_tv_act) as activos_tv_int, 
+			SUM(debido_act) as debido_activos, 
+			SUM(cor_int) as cortados_internet, 
+			SUM(cor_tv) as cortados_television, 
+			SUM(internet_y_tv_cor) as cortados_tv_int, 
+			SUM(debido_cor) as debido_cortados, 
+			SUM(car_int) as cartera_internet, 
+			SUM(car_tv) as cartera_television, 
+			SUM(internet_y_tv_car) as cartera_tv_int, 
+			SUM(debido_car) as debido_cartera, 
+			SUM(sus_int) as suspendidos_internet, 
+			SUM(sus_tv) as suspendidos_television, 
+			SUM(internet_y_tv_sus) as suspendidos_tv_int, 
+			SUM(debido_sus) as debido_suspendidos, 
+			SUM(ret_int) as retirados_internet, 
+			SUM(ret_tv) as retirados_television, 
+			SUM(internet_y_tv_ret) as retirados_tv_int, 
+			SUM(debido_ret) as debido_retirados');
+        $this->db->from('reports_estados');
+		$this->db->group_by('sede');
+        $this->db->order_by('fecha', 'DES'); // Ordenar por fecha
+        $query = $this->db->get();
 
+        return $query->result_array(); // Retornar todos los datos como array
+    }
 	
 
 
