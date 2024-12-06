@@ -337,6 +337,59 @@ class Cronjob_model extends CI_Model
         $this->db->insert_batch('reports_tickets', $batch);
 
     }
+	public function reports_estados()
+    {
 
+        $year = date('Y');
+        $this->conteo_estados($year-1);
+        $this->conteo_estados($year);
+        
+        return true;
+
+
+    }
+	public function conteo_tickets($year){
+        
+
+        //$this->db->delete('reports_estados', array('year' => $year));
+
+
+        $query = $this->db->query("SELECT MONTH(fecha_final) AS month,YEAR(fecha_final) AS year,COUNT(idt) AS ins, customers.gid AS sede FROM tickets JOIN customers ON tickets.cid = customers.id  WHERE (YEAR(fecha_final)='$year') and detalle='Instalacion' and status='Resuelto' and fecha_final IS NOT NULL GROUP BY MONTH(fecha_final), customers.gid");
+        $Ins = $query->result_array();
+		
+		
+		
+        $output = array();
+
+        $arrayAB = array_merge($Ins);
+
+
+
+            foreach ($arrayAB as $value) {
+                $id = $value['month']. '-' . $value['sede'];
+                if (!isset($output[$id])) {
+                    $output[$id] = array();
+                }
+                    $output[$id] = array_merge($output[$id], $value);
+            }
+
+
+
+
+
+        uasort($output, array_compare('month'));
+        //print_r($output);
+
+        $batch = array();
+        $i = 0;
+        foreach ($output as $row) {
+
+            $batch[$i] = array('month' => $row['month'], 'year' => $row['year'],'sede' => $row['sede'], 'Instalacion' => @$row['ins']);
+            $i++;
+        }
+
+        $this->db->insert_batch('reports_estados', $batch);
+
+    }
 
 }

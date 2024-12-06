@@ -47,30 +47,52 @@
                         <div class="card-header no-border">
                             <h4 style="text-align: center;" class="card-title">Usuarios por Estados <a class="float-xs-right" href="<?php echo base_url() ?>reports/refresh_data?tipo=estadisticas_servicios"><i
                                 class="icon-refresh2"></i></a></h4>
-                             <div class="row">
-				            	<div class="col-xl-12 col-lg-12"><!-- ['y','z','a','b','c','d','e','f','g','h','i','j'] -->
-								
-				            	</div>
-				            </div>
+                             <!-- Filtros -->
+<div class="row">
+    <div class="col-md-4">
+        <label for="sede">Seleccione una Sede:</label>
+        <select id="sede" class="form-control">
+            <option value="">Todas las Sedes</option>
+            <?php foreach ($sedes as $sede): ?>
+                <option value="<?= $sede['id'] ?>"><?= $sede['title'] ?></option>
+            <?php endforeach; ?>
+        </select>
+    </div>
+    <div class="col-md-4">
+        <label for="start_date">Fecha Inicio:</label>
+        <input type="date" id="start_date" class="form-control">
+    </div>
+    <div class="col-md-4">
+        <label for="end_date">Fecha Fin:</label>
+        <input type="date" id="end_date" class="form-control">
+    </div>
+</div>
+
+<!-- Botón para filtrar -->
+<button id="filter-btn" class="btn btn-primary mt-3">Filtrar</button>
+
+<!-- Checkboxes para seleccionar datos -->
+<!-- Checkboxes para seleccionar datos -->
+<div class="mt-3">
+    <label><input type="checkbox" class="data-checkbox" value="activos_internet"> Activos Internet</label>
+    <label><input type="checkbox" class="data-checkbox" value="activos_television"> Activos Televisión</label>
+    <label><input type="checkbox" class="data-checkbox" value="cortados_internet"> Cortados Internet</label>
+    <label><input type="checkbox" class="data-checkbox" value="cortados_television"> Cortados Televisión</label>
+    <label><input type="checkbox" class="data-checkbox" value="cartera_internet"> Cartera Internet</label>
+    <label><input type="checkbox" class="data-checkbox" value="cartera_television"> Cartera Televisión</label>
+    <label><input type="checkbox" class="data-checkbox" value="suspendidos_internet"> Suspendidos Internet</label>
+    <label><input type="checkbox" class="data-checkbox" value="suspendidos_television"> Suspendidos Televisión</label>
+    <label><input type="checkbox" class="data-checkbox" value="retirados_internet"> Retirados Internet</label>
+    <label><input type="checkbox" class="data-checkbox" value="retirados_television"> Retirados Televisión</label>
+</div>
+
+
+<!-- Gráfico -->
+<div id="statistics-chart" style="height: 250px;"></div>
+
                         </div>
 						
-                        <div class="card-body">
-                            <div id="invoices-products-chart">
-                            </div>
-							<div class="card-header no-border"><!-- ['y','z','a','b','c','d','e','f','g','h','i','j'] -->
-								<h4 style="text-align: center;" class="card-title">Ocultar estados</h4>	
-									<input type="checkbox" id="n_internet" style="cursor:pointer;" onclick="activar_desactivar_lines(null,'z');" class="case"><b style="cursor:pointer;" onclick="activar_desactivar_lines('n_internet','z');" ><i>&nbsp;Activos Internet&nbsp;</b></i>
-									<input type="checkbox" id="n_tv" style="cursor:pointer;" onclick="activar_desactivar_lines(null,'a');" class="case"><b style="cursor:pointer;" onclick="activar_desactivar_lines('n_tv','a');"><i>&nbsp;Activos Television&nbsp;</b></i>
-									<input type="checkbox" id="cor_int" style="cursor:pointer;" onclick="activar_desactivar_lines(null,'b');" class="case"><b style="cursor:pointer;" onclick="activar_desactivar_lines('cor_int','b');"><i>&nbsp;Cortados Internet&nbsp;</b></i>
-									<input type="checkbox" id="cor_tv" style="cursor:pointer;" onclick="activar_desactivar_lines(null,'c');" class="case"><b style="cursor:pointer;" onclick="activar_desactivar_lines('cor_tv','c');"><i>&nbsp;Cortados Television&nbsp;</b></i>
-									<input type="checkbox" id="car_int" style="cursor:pointer;" onclick="activar_desactivar_lines(null,'d');" class="case"><b style="cursor:pointer;" onclick="activar_desactivar_lines('cor_tv','d');"><i>&nbsp;Cartera Internet&nbsp;</b></i>
-									<input type="checkbox" id="car_tv" style="cursor:pointer;" onclick="activar_desactivar_lines(null,'e');" class="case"><b style="cursor:pointer;" onclick="activar_desactivar_lines('cor_tv','e');"><i>&nbsp;Cartera Television&nbsp;</b></i>
-									<input type="checkbox" id="sus_int" style="cursor:pointer;" onclick="activar_desactivar_lines(null,'f');" class="case"><b style="cursor:pointer;" onclick="activar_desactivar_lines('sus_int','f');"><i>&nbsp;Suspendidos Internet&nbsp;</b></i>
-									<input type="checkbox" id="sus_tv" style="cursor:pointer;" onclick="activar_desactivar_lines(null,'g');" class="case"><b style="cursor:pointer;" onclick="activar_desactivar_lines('sus_tv','g');"><i>&nbsp;Suspendidos Television&nbsp;</b></i>
-									<input type="checkbox" id="ret_int" style="cursor:pointer;" onclick="activar_desactivar_lines(null,'h');" class="case"><b style="cursor:pointer;" onclick="activar_desactivar_lines('ret_int','h');"><i>&nbsp;Retirados Internet&nbsp;</b></i>
-									<input type="checkbox" id="ret_tv" style="cursor:pointer;" onclick="activar_desactivar_lines(null,'i');" class="case"><b style="cursor:pointer;" onclick="activar_desactivar_lines('ret_tv','i');"><i>&nbsp;Retirados Television&nbsp;</b></i>
-							</div>
-                        </div>
+                        
 						
                     </div>
 					<div class="card">
@@ -78,7 +100,7 @@
                             <h4 style="text-align: center;" class="card-title">Usuarios por Estados <a class="float-xs-right" href="<?php echo base_url() ?>reports/refresh_data?tipo=estadisticas_servicios"><i
                                 class="icon-refresh2"></i></a></h4>
                              <div class="row">
-                             	<?php 	$x1=array_reverse($lista_estadisticas);?>
+                             	<?php 	$x1=$lista_estadisticas;?>
 								 <?php foreach ($x1 as $key => $row) { 
 									$datex = new DateTime($row['fecha']);?>	
 				            	<div class="col-md-6 mb-1"><!-- ['y','z','a','b','c','d','e','f','g','h','i','j'] -->
@@ -281,156 +303,85 @@
    </div>
 
    <script type="text/javascript">
-   	var lista_keys=[];
-    var lista_labels_total={z:'Activos Internet',a:"Activos Television",b:"Cortados Internet",c:"Cortados Television",d:"Cartera Internet",e:"Cartera Television",f:"Sus. Internet",g:"Sus. Television",h:"Ret. Internet",i:"Ret. Television"};
-    var lista_labels_personalizada=[];
-$('#invoices-products-chart').empty();
+   $(document).ready(function () {
+    // Renderizar gráfico inicial
+    var data = <?= json_encode($statistics) ?>;
+    var selectedKeys = [
+        'activos_internet', 'activos_television', 'cortados_internet', 'cortados_television',
+        'cartera_internet', 'cartera_television', 'suspendidos_internet', 'suspendidos_television',
+        'retirados_internet', 'retirados_television'
+    ];
 
-var datos={
-        element: 'invoices-products-chart',
-		 <?php $sdx=str_replace("-", "", $this->aauth->get_user()->sede_accede); $sede_a=explode(",", $sdx) ;
-		 if (in_array(0, $sede_a)) { ?>
-        data: [
-            <?php foreach ($lista_estadisticas as $key => $row) {
-			$sedesmas=0;
-			$sedestv=0;
-			$sedescorint=0;
-			$sedescortv=0;
-			$sedescarint=0;
-			$sedescartv=0;
-			$sedessusint=0;
-			$sedessustv=0;
-			$sedesretint=0;
-			$sedesrettv=0;
-            $datex = new DateTime($row['fecha']);
-			 foreach ($grupos as $row2) {
-				 $cod=$row2['id'];
-				 $sedesmas+=$row['n_internet_'.$cod];
-				 $sedestv+=$row['n_tv_'.$cod];
-				 $sedescorint+=$row['cor_int_'.$cod];
-				 $sedescortv+=$row['cor_tv_'.$cod];
-				 $sedescarint+=$row['car_int_'.$cod];
-				 $sedescartv+=$row['car_tv_'.$cod];
-				 $sedessusint+=$row['sus_int_'.$cod];
-				 $sedessustv+=$row['sus_tv_'.$cod];
-				 $sedesretint+=$row['ret_int_'.$cod];
-				 $sedesrettv+=$row['ret_tv_'.$cod];
-			 }
-			 if($this->config->item('ctitle')=='VESTEL S.A.S'){
-				 $vestel=$row['n_internet']+$row['n_internet_vill']+$row['n_internet_mon'];
-				 $vestel2=$row['n_tv']+$row['n_tv_vill']+$row['n_tv_mon'];
-				 $vestel3=$row['cor_int']+$row['cor_int_vill']+$row['cor_int_mon'];
-				 $vestel4=$row['cor_tv']+$row['cor_tv_vill']+$row['cor_tv_mon'];
-				 $vestel5=$row['car_int']+$row['car_int_vill']+$row['car_int_mon'];
-				 $vestel6=$row['car_tv']+$row['car_tv_vill']+$row['car_tv_mon'];
-				 $vestel7=$row['sus_int']+$row['sus_int_vill']+$row['sus_int_mon'];
-				 $vestel8=$row['sus_tv']+$row['sus_tv_vill']+$row['sus_tv_mon'];
-				 $vestel9=$row['ret_int']+$row['ret_int_vill']+$row['ret_int_mon'];
-				 $vestel10=$row['ret_tv']+$row['ret_tv_vill']+$row['ret_tv_mon'];
-			 }else{
-				 $vestel=0;
-				 $vestel2=0;
-				 $vestel3=0;
-				 $vestel4=0;
-				 $vestel5=0;
-				 $vestel6=0;
-				 $vestel7=0;
-				 $vestel8=0;
-				 $vestel9=0;
-				 $vestel10=0;
-			 }
-            //$num = cal_days_in_month(CAL_GREGORIAN, $row['month'], $row['year']);
-            echo "{ x: '".($datex->format("Y-m-d"))."',z: " . intval($vestel+$sedesmas) . ",a: " . intval($vestel2+$sedestv) .",b: " . intval($vestel3+$sedescorint) .",c: " . intval($vestel4+$sedescortv) .",d: " . intval($vestel5+$sedescarint) .",e: " . intval($vestel6+$sedescartv) .",f: " . intval($vestel7+$sedessusint) .",g: " . intval($vestel8+$sedessustv) .",h: " . intval($vestel9+$sedesretint) .",i: " . intval($vestel10+$sedesrettv) ."},";//,z: " . intval($tipos['instalaciones_tv'][$key]['numero']) . "
-			 
-        } ?>
+    var colors = {
+        'activos_internet': '#1D7A46',
+        'activos_television': '#FF5733',
+        'cortados_internet': '#FFC300',
+        'cortados_television': '#DAF7A6',
+        'cartera_internet': '#C70039',
+        'cartera_television': '#900C3F',
+        'suspendidos_internet': '#581845',
+        'suspendidos_television': '#3498DB',
+        'retirados_internet': '#8E44AD',
+        'retirados_television': '#2ECC71'
+    };
 
-        ],
-	//YOPAL
-		<?php } if (in_array(2, $sede_a)) { ?>
-        data: [
-            <?php foreach ($lista_estadisticas as $key => $row) {
-            $datex = new DateTime($row['fecha']);
-            //$num = cal_days_in_month(CAL_GREGORIAN, $row['month'], $row['year']);
-            echo "{ x: '".($datex->format("Y-m-d"))."',z: " . intval($row['n_internet']) . ",a: " . intval($row['n_tv']) .",b: " . intval($row['cor_int']) .",c: " . intval($row['cor_tv']) .",d: " . intval($row['car_int']) .",e: " . intval($row['car_tv']) .",f: " . intval($row['sus_int']) .",g: " . intval($row['sus_tv']) .",h: " . intval($row['ret_int']) .",i: " . intval($row['ret_tv']) ."},";//,z: " . intval($tipos['instalaciones_tv'][$key]['numero']) . "
-            
-        } ?>
+    renderChart(data, selectedKeys);
 
-        ],
-	//MONTERREY
-		<?php } if (in_array(4, $sede_a)) { ?>
-        data: [
-            <?php foreach ($lista_estadisticas as $key => $row) {
-            $datex = new DateTime($row['fecha']);
-            //$num = cal_days_in_month(CAL_GREGORIAN, $row['month'], $row['year']);
-            echo "{ x: '".($datex->format("Y-m-d"))."',z: " . intval($row['n_internet_mon']) . ",a: " . intval($row['n_tv_mon']) .",b: " . intval($row['cor_int_mon']) .",c: " . intval($row['cor_tv_mon']) .",d: " . intval($row['car_int_mon']) .",e: " . intval($row['car_tv_mon']) .",f: " . intval($row['sus_int_mon']) .",g: " . intval($row['sus_tv_mon']) .",h: " . intval($row['ret_int_mon']) .",i: " . intval($row['ret_tv_mon']) ."},";//,z: " . intval($tipos['instalaciones_tv'][$key]['numero']) . "
-            
-        } ?>
+    // Filtrar datos
+    $('#filter-btn').click(function () {
+        var sede_id = $('#sede').val();
+        var start_date = $('#start_date').val();
+        var end_date = $('#end_date').val();
 
-        ],
-	//VILLANUEVA
-		<?php } if (in_array(3, $sede_a)) { ?>
-        data: [
-            <?php foreach ($lista_estadisticas as $key => $row) {
-            $datex = new DateTime($row['fecha']);
-            //$num = cal_days_in_month(CAL_GREGORIAN, $row['month'], $row['year']);
-            echo "{ x: '".($datex->format("Y-m-d"))."',z: " . intval($row['n_internet_vill']) . ",a: " . intval($row['n_tv_vill']) .",b: " . intval($row['cor_int_vill']) .",c: " . intval($row['cor_tv_vill']) .",d: " . intval($row['car_int_vill']) .",e: " . intval($row['car_tv_vill']) .",f: " . intval($row['sus_int_vill']) .",g: " . intval($row['sus_tv_vill']) .",h: " . intval($row['ret_int_vill']) .",i: " . intval($row['ret_tv_vill']) ."},";//,z: " . intval($tipos['instalaciones_tv'][$key]['numero']) . "
-            
-        } ?>
+        $.post('<?= base_url('reports/filter') ?>', { sede_id, start_date, end_date }, function (response) {
+            var data = JSON.parse(response);
+            renderChart(data, selectedKeys);
+        });
+    });
 
-        ],
-		//DINAMICO
-		<?php } if ($sede['id']) { ?>
-        data: [
-            <?php foreach ($lista_estadisticas as $key => $row) {
-            $datex = new DateTime($row['fecha']);
-			$cod2=$sede['id'];
-            //$num = cal_days_in_month(CAL_GREGORIAN, $row['month'], $row['year']);
-            echo "{ x: '".($datex->format("Y-m-d"))."',z: " . intval($row['n_internet_'.$cod2]) . ",a: " . intval($row['n_tv_'.$cod2]) .",b: " . intval($row['cor_int_'.$cod2]) .",c: " . intval($row['cor_tv_'.$cod2]) .",d: " . intval($row['car_int_'.$cod2]) .",e: " . intval($row['car_tv_'.$cod2]) .",f: " . intval($row['sus_int_'.$cod2]) .",g: " . intval($row['sus_tv_'.$cod2]) .",h: " . intval($row['ret_int_'.$cod2]) .",i: " . intval($row['ret_tv_'.$cod2]) ."},";//,z: " . intval($tipos['instalaciones_tv'][$key]['numero']) . "
-            
-        } ?>
+    // Cambiar datos del gráfico según checkboxes
+    $('.data-checkbox').change(function () {
+        selectedKeys = $('.data-checkbox:checked').map(function () {
+            return $(this).val();
+        }).get();
 
-        ],
-		<?php } ?>
-        xkey: 'x',
-        ykeys: ['z','a','b','c','d','e','f','g','h','i'],
-        labels: ['Activos Internet','Activos Television','Cortados Internet','Cortados Television','Car. Internet','Car. Television','Sus. internet','Sus. Television','Ret. Internet','Ret. Television'],
-        hideHover: 'auto',
-        resize: true,
-        lineColors: ['#34cea7', '#ff6e40','#9A7D0A','#FFA633', '#FF7933','#FF3333','#33FFB8', '#33D3FF','#338AFF','#8033FF', '#C933FF','#FF33DA'],
-        parseTime:false
+        renderChart(data, selectedKeys);
+    });
+
+    // Función para renderizar el gráfico
+    function renderChart(data, keys) {
+        var chartData = data.map(function (item) {
+            var result = { fecha: item.fecha }; // La fecha será el eje X
+            keys.forEach(function (key) {
+                result[key] = item[key] || 0; // Agregar los valores de las claves seleccionadas
+            });
+            return result;
+        });
+
+        var chartColors = keys.map(function (key) {
+            return colors[key] || '#000000'; // Asignar el color según la clave, con negro como predeterminado
+        });
+
+        $('#statistics-chart').empty();
+        Morris.Line({
+            element: 'statistics-chart',
+            data: chartData,
+            xkey: 'fecha',
+            ykeys: keys,
+            labels: keys.map(function (key) { return key.replace('_', ' ').toUpperCase(); }),
+            lineColors: chartColors,
+            hideHover: 'auto',
+            resize: true,
+            xLabelAngle: 45
+        });
     }
-    Morris.Line(datos);
-	   
-	   function activar_desactivar_lines(ck,key){
-		if(ck!=null){
-			
-			if($("#"+ck).prop("checked")){
-				$("#"+ck).prop("checked",false);
-			}else{
-				$("#"+ck).prop("checked",true);
-			}
-		}
-		var indice_elemento=lista_keys.indexOf(key);
-		if(indice_elemento==-1){
-			lista_keys.push(key);
-		}else{
-			lista_keys.splice(indice_elemento,1);
-		}
+});
 
-		//console.log(lista_labels_total.a);
-		lista_labels_personalizada=[];	
-		$(lista_keys).each(function(index,dato){
-			lista_labels_personalizada.push(lista_labels_total[dato]);
-		});
-		
 
-		//console.log(lista_keys);
-		datos.ykeys=lista_keys;
-		datos.labels=lista_labels_personalizada;
-		$('#invoices-products-chart').empty();
-		Morris.Line(datos);
+
+
 
 		
-	}
+	
 
    </script>

@@ -1091,9 +1091,9 @@ foreach ($lista_tareas as $key => $value) {
 		$this->db->select('*');
         $this->db->from('customers_group');
         // if($limit) $this->db->limit(12);
-		if($this->config->item('ctitle')==='VESTEL S.A.S'){
-			$this->db->where('id >', 5);
-		}		
+		/*if($this->config->item('ctitle')==='VESTEL S.A.S'){
+			$this->db->where('id', 4);
+		}*/		
         $this->db->order_by('id', 'ASC');		
         $query = $this->db->get();
         $result = $query->result_array();
@@ -1355,6 +1355,33 @@ foreach ($est as $key => $value) {
         $result = $query->result_array();
         return $result;
     }
+	 // Obtener estadísticas por sede o totales
+    public function get_statistics($sede_id = null, $start_date = null, $end_date = null) {
+		if ($sede_id !== null) {
+			$this->db->where('sede', $sede_id);
+		}
+
+		if ($start_date && $end_date) {
+			$this->db->where('fecha >=', $start_date);
+			$this->db->where('fecha <=', $end_date);
+		}
+
+		$this->db->select('fecha, 
+			SUM(act_int) as activos_internet, 
+			SUM(act_tv) as activos_television, 
+			SUM(cor_int) as cortados_internet, 
+			SUM(cor_tv) as cortados_television, 
+			SUM(car_int) as cartera_internet, 
+			SUM(car_tv) as cartera_television, 
+			SUM(sus_int) as suspendidos_internet, 
+			SUM(sus_tv) as suspendidos_television, 
+			SUM(ret_int) as retirados_internet, 
+			SUM(ret_tv) as retirados_television');
+		$this->db->group_by('fecha');
+		return $this->db->get('reports_estados')->result_array();
+	}
+
+	
 
 
 }

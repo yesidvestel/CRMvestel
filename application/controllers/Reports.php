@@ -1330,34 +1330,34 @@ $lista_customers_activos=$this->db->query("select * from customers where (gid='2
         var_dump($tv);
     }
 	public function statistics_services1()
+		{
+			$data['sedes'] = $this->reports->grupos(); // Obtener todas las sedes
+			$data['statistics'] = $this->reports->get_statistics(); // Cargar los totales iniciales
 
-    {
-        //$lista_estadisticas=$this->db->order_by("fecha","asc")->get_where("estadisticas_servicios")->result_array();
-        $ao_pasado = date('Y') - 1;
-        $lista_estadisticas=$this->db->query("select * from estadisticas_servicios where fecha>='".$ao_pasado."-01-01' order by fecha asc")->result_array();
-        $datos=array("lista_estadisticas"=>$lista_estadisticas);
-		$this->load->model('dashboard_model');
-		$col1 = $this->aauth->get_user()->sede_accede;
-		$col2=str_replace("-", "", $col1);
-		$datos['list_users'] = $this->dashboard_model->lista_usuarios();
-		$datos['grupos'] = $this->reports->grupos();
-		$datos['sede'] = $this->reports->grupos_list($col2);
-        $head['title'] = "Por estados";
-        $head['usernm'] = $this->aauth->get_user()->username;
-        $this->load->view("fixed/header");
-        $this->load->view("reports/statistics_services",$datos);
-        $this->load->view("fixed/footer");
+			$this->load->view('fixed/header');
+			$this->load->view('reports/statistics_services', $data);
+			$this->load->view('fixed/footer');
+		}
+	// Obtener datos según filtro (AJAX)
+    public function filter() {
+        $sede_id = $this->input->post('sede_id');
+		$start_date = $this->input->post('start_date');
+		$end_date = $this->input->post('end_date');
 
+		$statistics = $this->reports->get_statistics($sede_id, $start_date, $end_date);
+
+		echo json_encode($statistics);
     }
+
 public function statistics_services(){
-    $extraccion_dia=$this->db->get_where("estadisticas_servicios",array("fecha"=>date("Y-m-d")))->row();
+    $extraccion_dia=$this->db->get_where("reports_estados",array("fecha"=>date("Y-m-d")))->row();
     $data=array();
     $this->load->model("customers_model","customers");
-    ini_set('memory_limit', '15000000000');
-    set_time_limit(20000000);
+    ini_set('memory_limit', '20000000000');
+    set_time_limit(30000000);
     if(empty($extraccion_dia) || (isset($_GET['tipo']) && $_GET['tipo']=="process")){
 		if($this->config->item('ctitle')=='VESTEL S.A.S'){
-        $lista_customers_activos=$this->db->query("select * from customers where gid='2' and  (usu_estado='Activo' or usu_estado='Compromiso')")->result();
+        /*$lista_customers_activos=$this->db->query("select * from customers where gid='2' and  (usu_estado='Activo' or usu_estado='Compromiso')")->result();
         $lista_customers_cortados=$this->db->query("select * from customers where gid='2' and usu_estado='Cortado'")->result();
         $lista_customers_cartera=$this->db->query("select * from customers where gid='2' and usu_estado='Cartera'")->result();
         $lista_customers_suspendidos=$this->db->query("select * from customers where gid='2' and usu_estado='Suspendido'")->result();
@@ -1450,56 +1450,74 @@ public function statistics_services(){
         $data['debido_cor_mon']=$obtenido_cortados_mon['deuda_todos'];
         $data['debido_car_mon']=$obtenido_cartera_mon['deuda_todos'];
         $data['debido_sus_mon']=$obtenido_suspendidos_mon['deuda_todos'];
-        $data['debido_ret_mon']=$obtenido_retirado_mon['deuda_todos'];
+        $data['debido_ret_mon']=$obtenido_retirado_mon['deuda_todos'];*/
 		}
-		$grupos=$this->reports->grupos();
+		$batchData = []; // Array para el insert_batch
+
+		$grupos = $this->reports->grupos();
 		foreach ($grupos as $row2) {
-			$adi=$row2['id'];
-			$lista_activos=$this->db->query("select * from customers where gid='".$adi."' and  (usu_estado='Activo' or usu_estado='Compromiso')")->result();
-			$lista_cortados=$this->db->query("select * from customers where gid='".$adi."' and usu_estado='Cortado'")->result();
-			$lista_cartera=$this->db->query("select * from customers where gid='".$adi."' and usu_estado='Cartera'")->result();
-			$lista_suspendidos=$this->db->query("select * from customers where gid='".$adi."' and usu_estado='Suspendido'")->result();
-			$lista_retirado=$this->db->query("select * from customers where gid='".$adi."' and usu_estado='Retirado'")->result();
-			//var_dump($lista_retirado);
-			$obtenido_activos=$this->customers->conteo($lista_activos);
-			$obtenido_cortados=$this->customers->conteo($lista_cortados);
-			$obtenido_cartera=$this->customers->conteo($lista_cartera);
-			$obtenido_suspendidos=$this->customers->conteo($lista_suspendidos);
-			$obtenido_retirado=$this->customers->conteo($lista_retirado);
-			//array
-			$data['n_internet_'.$adi]=$obtenido_activos['net']-$obtenido_activos['activo_con_algun_servicio'];
-			$data['n_tv_'.$adi]=$obtenido_activos['tv']-$obtenido_activos['int_tvcor'];
-			$data['internet_y_tv_act_'.$adi]=$obtenido_activos['internet_y_tv']-($obtenido_activos['activo_con_algun_servicio']+$obtenido_activos['int_tvcor']);
-			$data['cor_int_'.$adi]=$obtenido_cortados['internetcor'];
-			$data['cor_tv_'.$adi]=$obtenido_cortados['tvcor'];
-			$data['internet_y_tv_cor_'.$adi]=$obtenido_cortados['internet_y_tv_cor'];
-			$data['car_int_'.$adi]=$obtenido_cartera['net'];
-			$data['car_tv_'.$adi]=$obtenido_cartera['tv'];
-			$data['internet_y_tv_car_'.$adi]=$obtenido_cartera['internet_y_tv'];
-			$data['sus_int_'.$adi]=$obtenido_suspendidos['internet_sus'];
-			$data['sus_tv_'.$adi]=$obtenido_suspendidos['tv_sus'];
-			$data['internet_y_tv_sus_'.$adi]=$obtenido_suspendidos['internet_y_tv'];
-			$data['ret_int_'.$adi]=$obtenido_retirado['net'];
-			$data['ret_tv_'.$adi]=$obtenido_retirado['tv'];
-			$data['internet_y_tv_ret_'.$adi]=$obtenido_retirado['internet_y_tv'];
-			$data['debido_act_'.$adi]=$obtenido_activos['deuda_todos'];
-			$data['debido_cor_'.$adi]=$obtenido_cortados['deuda_todos'];
-			$data['debido_car_'.$adi]=$obtenido_cartera['deuda_todos'];
-			$data['debido_sus_'.$adi]=$obtenido_suspendidos['deuda_todos'];
-			$data['debido_ret_'.$adi]=$obtenido_retirado['deuda_todos'];
-			$data['fecha']=date("Y-m-d");
+			$adi = $row2['id'];
+
+			// Obtener todos los datos de los estados en una sola consulta
+			$lista = $this->db->query("
+				SELECT * FROM customers 
+				WHERE gid = '$adi' 
+				AND usu_estado IN ('Activo', 'Compromiso', 'Cortado', 'Cartera', 'Suspendido', 'Retirado')
+			")->result();
+
+			// Filtrar los resultados por estado
+			$estadoAgrupado = [];
+			foreach ($lista as $cliente) {
+				$estadoAgrupado[$cliente->usu_estado][] = $cliente;
+			}
+
+			// Procesar los datos agrupados
+			$obtenido_activos = $this->customers->conteo(isset($estadoAgrupado['Activo']) ? $estadoAgrupado['Activo'] : []);
+			$obtenido_cortados = $this->customers->conteo(isset($estadoAgrupado['Cortado']) ? $estadoAgrupado['Cortado'] : []);
+			$obtenido_cartera = $this->customers->conteo(isset($estadoAgrupado['Cartera']) ? $estadoAgrupado['Cartera'] : []);
+			$obtenido_suspendidos = $this->customers->conteo(isset($estadoAgrupado['Suspendido']) ? $estadoAgrupado['Suspendido'] : []);
+			$obtenido_retirado = $this->customers->conteo(isset($estadoAgrupado['Retirado']) ? $estadoAgrupado['Retirado'] : []);
+
+
+			// Construir un registro para la sede actual
+			$batchData[] = [
+				'sede' => $adi,
+				'act_int' => $obtenido_activos['net'] - $obtenido_activos['activo_con_algun_servicio'],
+				'act_tv' => $obtenido_activos['tv'] - $obtenido_activos['int_tvcor'],
+				'internet_y_tv_act' => $obtenido_activos['internet_y_tv'] - ($obtenido_activos['activo_con_algun_servicio'] + $obtenido_activos['int_tvcor']),
+				'cor_int' => $obtenido_cortados['internetcor'],
+				'cor_tv' => $obtenido_cortados['tvcor'],
+				'internet_y_tv_cor' => $obtenido_cortados['internet_y_tv_cor'],
+				'car_int' => $obtenido_cartera['net'],
+				'car_tv' => $obtenido_cartera['tv'],
+				'internet_y_tv_car' => $obtenido_cartera['internet_y_tv'],
+				'sus_int' => $obtenido_suspendidos['internet_sus'],
+				'sus_tv' => $obtenido_suspendidos['tv_sus'],
+				'internet_y_tv_sus' => $obtenido_suspendidos['internet_y_tv'],
+				'ret_int' => $obtenido_retirado['net'],
+				'ret_tv' => $obtenido_retirado['tv'],
+				'internet_y_tv_ret' => $obtenido_retirado['internet_y_tv'],
+				'debido_act' => $obtenido_activos['deuda_todos'],
+				'debido_cor' => $obtenido_cortados['deuda_todos'],
+				'debido_car' => $obtenido_cartera['deuda_todos'],
+				'debido_sus' => $obtenido_suspendidos['deuda_todos'],
+				'debido_ret' => $obtenido_retirado['deuda_todos'],
+				'fecha' => date("Y-m-d"),
+			];
 		}
-		
-        if(empty($extraccion_dia)){
-            $this->db->insert("estadisticas_servicios",$data);    
-        }else{
-            $this->db->update("estadisticas_servicios",$data,array("id_estadisticas_servicios"=>$extraccion_dia->id_estadisticas_servicios));
-        }
+
+		// Insertar todos los datos de las sedes de una sola vez
+		if (!empty($batchData)) {
+			$this->db->insert_batch('reports_estados', $batchData);
+		} else {
+			$this->db->update("reports_estados", $data, ["id" => $extraccion_dia->id]);
+		}
+
         
     }
     if(empty($_GET['tipo'])){
-        $lista_estadisticas=$this->db->order_by("fecha","asc")->get_where("estadisticas_servicios")->result_array();
-        $datos=array("lista_estadisticas"=>$lista_estadisticas);
+        $lista_estadisticas=$this->db->order_by("fecha","asc")->get_where("reports_estados")->result_array();
+        $datos=array("reports_estados"=>$lista_estadisticas);
 		$this->load->model('dashboard_model');
 		$datos['list_users'] = $this->dashboard_model->lista_usuarios();
         $this->load->view("fixed/header");
@@ -1803,6 +1821,17 @@ else
 
         $this->load->model('cronjob_model');
         if ($this->cronjob_model->reports_tickets()) {
+
+            echo json_encode(array('status' => 'Success', 'message' => $this->lang->line('Calculated')));
+        }
+
+    }
+	public function refresh_process_estados()
+
+    {
+
+        $this->load->model('cronjob_model');
+        if ($this->cronjob_model->reports_estados()) {
 
             echo json_encode(array('status' => 'Success', 'message' => $this->lang->line('Calculated')));
         }
