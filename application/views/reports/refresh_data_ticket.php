@@ -7,7 +7,7 @@
             <div class="message"></div>
         </div>
         <div class="grid_3 grid_4">
-            <h6><?php echo $this->lang->line('') ?>Los datos se estan generando</h6>
+            <h6><?php echo $this->lang->line('') ?>Los datos se estan actualizando</h6>
             <hr>
 
             <div class="row sameheight-container">

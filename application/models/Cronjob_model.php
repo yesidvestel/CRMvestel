@@ -208,6 +208,7 @@ class Cronjob_model extends CI_Model
     {
 
         $year = date('Y');
+		var_dump($year);
         $this->conteo_tickets($year-1);
         $this->conteo_tickets($year);
         
@@ -348,7 +349,7 @@ class Cronjob_model extends CI_Model
 
 
     }
-	public function conteo_tickets($year){
+	public function conteo_estados($year){
         
 
         //$this->db->delete('reports_estados', array('year' => $year));
