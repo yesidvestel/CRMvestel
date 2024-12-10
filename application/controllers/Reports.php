@@ -1378,7 +1378,12 @@ public function statistics_services(){
 			}
 
 			// Procesar los datos agrupados
-			$obtenido_activos = $this->customers->conteo(isset($estadoAgrupado['Activo']) ? $estadoAgrupado['Activo'] : []);
+			$estados = array_merge(
+				isset($estadoAgrupado['Activo']) ? $estadoAgrupado['Activo'] : [],
+				isset($estadoAgrupado['Compromiso']) ? $estadoAgrupado['Compromiso'] : []
+			);
+
+			$obtenido_activos = $this->customers->conteo($estados);
 			$obtenido_cortados = $this->customers->conteo(isset($estadoAgrupado['Cortado']) ? $estadoAgrupado['Cortado'] : []);
 			$obtenido_cartera = $this->customers->conteo(isset($estadoAgrupado['Cartera']) ? $estadoAgrupado['Cartera'] : []);
 			$obtenido_suspendidos = $this->customers->conteo(isset($estadoAgrupado['Suspendido']) ? $estadoAgrupado['Suspendido'] : []);
