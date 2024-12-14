@@ -273,6 +273,30 @@ class Cronjob extends CI_Controller
 
 
     }
+	function reportsTickets()
+    {
+
+        $corn = $this->cronjob->config();
+
+        $cornkey = $corn['cornkey'];
+
+
+        echo "---------------Updating Reports-------\n";
+
+
+        if ($cornkey == $this->input->get('token')) {
+
+
+            echo "---------------Cron started-------\n";
+
+            $this->cronjob->reports_tickets();
+
+            echo "---------------Task Done-------\n";
+
+        }
+
+
+    }
 
 
     public function update_exchange_rate()
