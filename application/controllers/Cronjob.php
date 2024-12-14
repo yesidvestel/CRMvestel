@@ -281,17 +281,17 @@ class Cronjob extends CI_Controller
         $cornkey = $corn['cornkey'];
 
 
-        echo "---------------Updating Reports-------\n";
+        echo "---------------Actualizando reporte tickets-------\n";
 
 
         if ($cornkey == $this->input->get('token')) {
 
 
-            echo "---------------Cron started-------\n";
+            echo "---------------Tarea iniciada-------\n";
 
             $this->cronjob->reports_tickets();
 
-            echo "---------------Task Done-------\n";
+            echo "---------------Tarea terminada-------\n";
 
         }
 
