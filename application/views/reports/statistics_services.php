@@ -190,7 +190,7 @@
         'activos_internet': '#1D7A46',
         'activos_television': '#FF5733',
         'cortados_internet': '#FFC300',
-        'cortados_television': '#DAF7A6',
+        'cortados_television': '#34495e',
         'cartera_internet': '#C70039',
         'cartera_television': '#900C3F',
         'suspendidos_internet': '#581845',
