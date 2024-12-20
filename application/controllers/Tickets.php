@@ -1872,6 +1872,9 @@ $x=0;
             $producto = $this->db->get_where('products',array('product_name'=>$factura->television))->row();
             if($ticket->detalle=="AgregarTelevision"){
                 $producto = $this->db->get_where('products',array('product_name'=>$temporal->tv))->row();
+                if(empty($producto)){
+                    $producto = $this->db->get_where('products',array('product_name'=>"Television"))->row();
+                }
 				
             }
 			
