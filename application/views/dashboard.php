@@ -15,14 +15,9 @@
 	
 </script>
 <?php 
-	$slint = $list_users['n_internet']-$list_users['internet_y_tv'];
-	$slintmon = $list_users['n_internet_mon']-$list_users['internet_y_tv_act_mon'];
-	$slintvill = $list_users['n_internet_vill']-$list_users['internet_y_tv_act_vill'];
-	$sltv = $list_users['n_tv']-$list_users['internet_y_tv'];
-	$sltvmon = $list_users['n_tv_mon']-$list_users['internet_y_tv_act_mon'];
-	$sltvvill = $list_users['n_tv_vill']-$list_users['internet_y_tv_act_vill'];
-	$tveint = $list_users['internet_y_tv']+$list_users['internet_y_tv_act_mon']+$list_users['internet_y_tv_act_vill'];
-	$actotal = $tveint+$slint+$slintmon+$slintvill+$sltv+$sltvmon+$sltvvill;
+	$actv = $list_users['act_television']-$list_users['act_totales'];
+	$actint = $list_users['act_internet']-$list_users['act_totales'];
+	$actotal = $actv+$actint+$list_users['act_totales'];
 
 ?>
 

@@ -194,15 +194,16 @@ class Dashboard_model extends CI_Model
     }
 
     public function lista_usuarios()
-    {
-        $this->db->select('*');
-        $this->db->from('estadisticas_servicios');
-        //$this->db->limit(1);
-        $this->db->order_by('DATE(fecha)','DESC');
-        $query = $this->db->get();
-        $result = $query->row_array();
-        return $result;
-    }
+	{
+		$this->db->select('DATE(fecha) as fecha, SUM(act_int) as act_internet, SUM(act_tv) as act_television, SUM(internet_y_tv_act) as act_totales');
+		$this->db->from('reports_estados');
+		$this->db->group_by('DATE(fecha)');
+		$this->db->order_by('fecha', 'DESC');
+		$query = $this->db->get();
+		$result = $query->row_array(); // Cambiado a result_array para múltiples filas
+		return $result;
+	}
+
 	public function tasks($id)
     {
         $this->db->select('*');
