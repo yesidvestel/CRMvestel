@@ -1017,6 +1017,10 @@ if($_SESSION[md5("variable_datos_pin")]['db_name'] != "admin_crmvestel" && $stat
         $datay['totaldiscount']=0;			
                 if($data['combo']!=="no" || $inter!=="no"){
                     $producto = $this->db->get_where('products',array('product_name'=>$data['combo']))->row();
+                    if(empty($producto)){
+                        $producto = $this->db->get_where('products',array('product_name'=>$inter))->row();
+                        
+                    }
 					if($this->config->item('ctitle')!='FUTURE SOLUTIONS DEVELOPMENT SAS' && $ticket->detalle=="Instalacion"){
 						$x=0;
 						$precio=0;
