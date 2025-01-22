@@ -320,15 +320,19 @@
 
                             </tbody>
                         </table>
-
-                        <div class="row">
+						<div class="row">
 
                             <div class="col-md-7 col-sm-12">
 
-                                <h6><?php echo $this->lang->line('Terms & Condition') ?></h6>
+                                <h6>RECIBIDO</h6>
                                 <p> <?php
-
-                                    echo '<strong>' . $invoice['termtit'] . '</strong><br>' . $invoice['terms'];
+									if($invoice['recibe']==0){
+										$esrecibido = 'Pendiente por recibir';
+									}else{
+										$esrecibido = '<strong>Recibido por: </strong>' . $employerec['name'].' <strong>Fecha: </strong> '. $invoice['fcha_recibido'];
+									}
+									
+                                    echo $esrecibido;
                                     ?></p>
                             </div>
 

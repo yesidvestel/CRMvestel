@@ -382,6 +382,7 @@ class Purchase extends CI_Controller
         $data['employee'] = $this->purchase->employee($data['invoice']['eid']);
         $data['employeeaut'] = $this->purchase->employee($data['invoice']['aid']);
         $data['employeeaut2'] = $this->purchase->employee($data['invoice']['a2id']);
+        $data['employerec'] = $this->purchase->employee($data['invoice']['recibe']);
         $head['usernm'] = $this->aauth->get_user()->username;
         $this->load->view('fixed/header', $head);
         $this->load->view('purchase/view', $data);
@@ -857,6 +858,8 @@ class Purchase extends CI_Controller
                         $update_stock=0;
                      }
                      $this->db->set('actualizar_stock', $update_stock);
+                     $this->db->set('recibe', $this->aauth->get_user()->id);
+                     $this->db->set('fcha_recibido', date("Y-m-d H:i:s"));
                      $this->db->where('tid', $tid);
                      $this->db->update('purchase');
 

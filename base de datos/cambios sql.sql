@@ -1117,3 +1117,9 @@ COMMIT;
 
 ALTER TABLE `promos` ADD `id_estado_clientes` INT NOT NULL AFTER `colaborador`;
 ALTER TABLE `promos` CHANGE `pro_nombre` `pro_nombre` VARCHAR(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL;
+
+
+ALTER TABLE `documents` ADD `carpeta` INT NOT NULL AFTER `id`;
+
+
+ALTER TABLE `purchase` ADD `recibe` INT NOT NULL AFTER `almacen_seleccionado`, ADD `fcha_recibido` DATETIME NULL AFTER `recibe`;
