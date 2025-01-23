@@ -1353,6 +1353,7 @@ $lista_customers_activos=$this->db->query("select * from customers where (gid='2
 public function statistics_services(){
     $extraccion_dia=$this->db->get_where("reports_estados",array("fecha"=>date("Y-m-d")))->row();
     $data=array();
+	$this->db->delete('reports_estados', array('fecha' => date("Y-m-d")));
     $this->load->model("customers_model","customers");
     ini_set('memory_limit', '20000000000');
     set_time_limit(30000000);
