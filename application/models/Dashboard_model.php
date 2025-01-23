@@ -113,7 +113,11 @@ class Dashboard_model extends CI_Model
     public function incomeChart($today, $month, $year, $sede)
     {
 		if ($sede ==''){
-        $query = $this->db->query("SELECT SUM(credit) AS total,date FROM transactions WHERE ((DATE(date) BETWEEN DATE('$year-$month-01') AND DATE('$year-$month-31')  AND CURDATE()) AND type!='Transfer')and estado is null and tid!=-1 GROUP BY date DESC");
+			if ($year==''){
+				$query = $this->db->query("SELECT SUM(credit) AS total,date FROM transactions WHERE (( CURDATE()) AND type!='Transfer')and estado is null and tid!=-1 GROUP BY date DESC");
+			}else{
+				$query = $this->db->query("SELECT SUM(credit) AS total,date FROM transactions WHERE ((DATE(date) BETWEEN DATE('$year-$month-01') AND DATE('$year-$month-31')  AND CURDATE()) AND type!='Transfer')and estado is null and tid!=-1 GROUP BY date DESC");
+			}
         return $query->result_array();
 		}else{
             $query = $this->db->query("SELECT SUM(credit) AS total,date FROM transactions WHERE ((DATE(date) BETWEEN DATE('$year-$month-01') AND CURDATE()) and account='$sede') and estado is null and tid!=-1 GROUP BY date DESC");    

@@ -50,9 +50,9 @@ class Reports extends CI_Controller
     {
 		$this->load->model("dashboard_model");
 		$today = date("Y-m-d");
-        $month = date("m");
+        $month = '';
         $month2 = date("m",strtotime($today."- 1 month"));
-        $year = date("Y");
+        $year = '';
 		$sede = "";//$this->input->get('sede');
         $data['stat'] = $this->reports->statistics();
 		$data['incomechart'] = $this->dashboard_model->incomeChart($today, $month, $year,$sede);
