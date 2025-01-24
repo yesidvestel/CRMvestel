@@ -1,3 +1,6 @@
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPGQt8yWSDFWFAM7XIZPc-Q3M59nj6yeY">
+</script>
 <style>
 .contenedor{
     position: relative;
@@ -94,7 +97,7 @@
     </div>
 </div>
 <div id="pop_model" class="modal fade">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -114,8 +117,17 @@
 							<tr id="bloque_puertos">
 								<a style="text-align: center;font-size: 10px"></a>
 							</tr>
+                           
 							</table>
-							
+							<table  align="center" width="100%" border="1">
+                                 <tr>
+                                <td>
+                                    
+
+                                    <div id="map" style="width: 100%; height: 450px;"></div>
+                                </td>
+                            </tr>                     
+                            </table>
                     	
                         </div>
                     
@@ -135,9 +147,16 @@
 		var nat =$(this).data("nap");
         var id_equipo =$(this).data("id-equipo");
 		$.post(baseurl+"redes/get_puertos_html",{"nat":nat,"id_equipo":id_equipo},function(data){
-			$("#bloque_puertos").html(data);
+			$("#bloque_puertos").html(data.datos);
             $("#titulo_modal1").text("Disponibilidad de puertos, nat N°"+nat);
-		});
+            if(data.coor1!=null){
+                initMap(Number(data.coor1),Number(data.coor2));    
+                $("#map").show();
+            }else{
+                $("#map").hide();
+            }
+            
+		},'json');
 		$("#pop_model").modal("show");
 	});
     $(document).ready(function () {
@@ -160,4 +179,26 @@
         });
 
     });
+
+    
+    function initMap(lat1,lng1) {
+  const myLatLng = { lat: lat1, lng: lng1 }; // Reemplaza con tus coordenadas
+  const map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 15,
+    center: myLatLng,
+  });
+
+  // Agrega un marcador en la ubicación
+  new google.maps.Marker({
+    position: myLatLng,
+    map: map,
+  });
+/* // codigo para agregar mas puntos al mismo mapa esto para colocar todas las naps de cada ciudad en un solo mapa
+   const myLatLng2 = { lat: 5.720472, lng: -72.924639 }; // Reemplaza con tus coordenadas
+  // Agrega un marcador en la ubicación
+  new google.maps.Marker({
+    position: myLatLng2,
+    map: map,
+  });*/
+}
 </script>

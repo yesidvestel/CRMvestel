@@ -304,8 +304,11 @@ class Redes extends CI_Controller
 			     $return.='<td><i class="icon-circle contenedor '.$color.' font-large-1"><h5 style="position: absolute" class="centrado2">'.$i.'</h5></i><div style="text-align:center;"><a href="'.base_url("customers/view?id=".$ids).'"  style="text-align: center;font-size: 10px">'.$user.'</a></div></td>';
             }
 		}
-		
-		echo $return;
+		$array_datos=array();
+        $array_datos['datos']=$return;
+        $array_datos['coor1']=$nap->coor1;
+        $array_datos['coor2']=$nap->coor2;
+		echo json_encode($array_datos);
 		
 	}
 
