@@ -520,7 +520,7 @@
 										<div class="input-group">									
 											<select name="supaquete" id="supaquete" class="form-control mb-1 subir-megas">
 												<option value="0">no</option>
-													<?php for ($i=1;$i<=6;$i++){
+													<?php for ($i=1;$i<=7;$i++){
 													echo '	<option value="'.$i*'50'.'Megas">'.$i*'50'.'Megas</option>
 															<option value="'.$i*'50'.'MegasSt">'.$i*'50'.'MegasSt</option>
 															<option value="'.$i*'50'.'MegasD">'.$i*'50'.'MegasD</option>'
