@@ -1,3 +1,6 @@
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPGQt8yWSDFWFAM7XIZPc-Q3M59nj6yeY">
+</script>
 <style>
     .checks_conf{
         cursor: pointer;
@@ -632,6 +635,7 @@
                                 </div>
 								<?php } ?>
                             </div>
+                            <div id="map" style="width: 100%; height: 450px;"></div>
                             <hr>
                             <h5 class="text-xs-center col-md-10">OBSERVACIONES</h5>
 							<div class="col-md-1">
@@ -1113,7 +1117,27 @@
 <!-- The basic File Upload plugin -->
 <script src="<?php echo base_url('assets/myjs/jquery.fileupload.js') ?>"></script>
 <script>
+    function initMap(lat1,lng1) {
+  const myLatLng = { lat: lat1, lng: lng1 }; // Reemplaza con tus coordenadas
+  const map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 15,
+    center: myLatLng,
+  });
 
+  // Agrega un marcador en la ubicación
+  new google.maps.Marker({
+    position: myLatLng,
+    map: map,
+  });
+/* // codigo para agregar mas puntos al mismo mapa esto para colocar todas las naps de cada ciudad en un solo mapa
+   const myLatLng2 = { lat: 5.720472, lng: -72.924639 }; // Reemplaza con tus coordenadas
+  // Agrega un marcador en la ubicación
+  new google.maps.Marker({
+    position: myLatLng2,
+    map: map,
+  });*/
+}
+//
 $(document).on("click","#el_correo_es_correcto",function(ev){
     ev.preventDefault();
     $("[name='es_correcto']").val("1");
@@ -1341,9 +1365,16 @@ $(document).on("click","#el_correo_es_correcto",function(ev){
         });
 
     });
+    
 </script>
 <script type="text/javascript">
     $(function () {
+        <?php if(empty($details['coor1']) || empty($details['coor2'])){ ?>
+            $("#map").hide();
+        <?php }else {?>
+       initMap(<?= $details['coor1'] ?>,<?= $details['coor2'] ?>);
+       $("#map").show();
+            <?php } ?>
         $('.summernote').summernote({
             height: 100,
             toolbar: [
