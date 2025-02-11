@@ -188,6 +188,7 @@ class Transactions_model extends CI_Model
     {			
         $this->db->select('*');
         $this->db->from('accounts');
+		$this->db->where('holder !=', 'PAYU');
         $query = $this->db->get();
         return $query->result_array();
     }
