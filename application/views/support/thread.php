@@ -215,10 +215,12 @@
                     <input type="submit" id="document_add" class="btn btn-blue mb-1"
                            value="DOCUMENTAR" data-loading-text="Updating..." style="width: 200px">
                 </div>
+				<?php if ($this->aauth->get_user()->roleid == 5 || $this->config->item('ctitle')!='VESTEL S.A.S') {?>
 				<div class="col-sm-2">			
 		 			<a href="#pop_model2" id="btn-asignar" class="btn btn-green mb-1" title="Change Status" style="width: 200px"
                 	> ASIGNAR EQUIPO</a>
 				</div>
+				<?php } ?>
 				<div class="col-sm-2">
 					<a href="#pop_model3" data-toggle="modal" onclick="funcion_status();" data-remote="false" class="btn btn-orange mb-1" title="Change Status" style="width: 200px">ASIGNAR MATERIAL</a>
 				</div>
