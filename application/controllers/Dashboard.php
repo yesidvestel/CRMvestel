@@ -42,7 +42,8 @@ class Dashboard extends CI_Controller
     {   
 $_SESSION['permisos']=null;
     //var_dump($this->aauth->get_user()->co['pagconf']);
-        
+        $_SESSION['pay_acc__']=1;
+        $this->load->model('reports_model', 'reports');
         $today = date("Y-m-d");
         $month = date("m");
         $year = date("Y");

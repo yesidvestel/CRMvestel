@@ -56,13 +56,55 @@ class Dashboard_model extends CI_Model
 		
         $query;
         if ($sede != '') {
-            $query=$this->db->query("SELECT SUM(debit) as debit,SUM(credit) as credit FROM transactions where DATE(date) ='$today' and account='$sede'  and estado is null and tid!=-1")->result();
+            $account1=$this->db->get_where('accounts',array('holder' =>$sede))->row();
+            $query=$this->db->query("SELECT SUM(debit) as debit,SUM(credit) as credit FROM transactions where DATE(date) ='$today' and account='$account1->holder'  and estado is null and tid!=-1")->result();
+            $valores_banks=$this->add_banks($today,$today,$account1->id);
+            $query[0]->credit+=$valores_banks['credit'];
+
         }else{
             $query=$this->db->query("SELECT SUM(debit) as debit,SUM(credit) as credit FROM transactions where DATE(date) ='$today'  and estado is null and tid!=-1")->result();
         }
+
+
         return $query;
     }
+public function add_banks($sdate,$edate,$pay_acc){
+            $retorno=array("credit"=>0,"debit"=>0);
+            $caja1=$this->db->get_where('accounts',array('id' =>$pay_acc))->row();
+            
+            $edate=$edate.=" 23:59:00";
+            $trans_type="All";
+            $cuentas=array();
+            $cuentas['cuenta1'] = $this->reports->get_statements(6, $trans_type, $sdate, $edate);
+            $cuentas['cuenta2'] = $this->reports->get_statements(7, $trans_type, $sdate, $edate);
+            $cuentas['cuenta3'] = $this->reports->get_statements(8, $trans_type, $sdate, $edate);
+            $cuentas['cuenta4'] = $this->reports->get_statements(11, $trans_type, $sdate, $edate);
+            $cuentas['cuenta5'] = $this->reports->get_statements(23, $trans_type, $sdate, $edate);
 
+            foreach ($cuentas as $key => $cuentax) {
+                if($key!=11){
+                    foreach ($cuentax as $key => $value) {
+                        $invoice = $this->db->get_where("invoices",array("tid"=>$value['tid']))->row(); 
+                        if($invoice->refer!=null){
+                            $invoice->refer=str_replace(" ","",$invoice->refer);                                    
+                        }
+                        if($value['estado']!="Anulada"){                
+                            if(strtolower($invoice->refer)==strtolower($caja1->holder)){
+                                //$lista2[]=$value;
+                                $retorno['credit']+=$value['credit'];
+                                $retorno['debit']+=$value['debit'];
+                            }
+                        }else{
+                                /*if(strtolower($invoice->refer)==strtolower($caja1->holder)){                    
+                                    $anulaciones[]=$value;
+                                }*/
+                        }
+                    }
+                }
+            }
+
+            return $retorno;
+}
     public function recent_payments($sede)
     {
         $this->db->limit(10);
@@ -116,12 +158,17 @@ class Dashboard_model extends CI_Model
 			if ($year==''){
 				$query = $this->db->query("SELECT SUM(credit) AS total,date FROM transactions WHERE (( CURDATE()) AND type!='Transfer')and estado is null and tid!=-1 GROUP BY date DESC");
 			}else{
-				$query = $this->db->query("SELECT SUM(credit) AS total,date FROM transactions WHERE ((DATE(date) BETWEEN DATE('$year-$month-01') AND DATE('$year-$month-31')  AND CURDATE()) )and estado is null and tid!=-1 GROUP BY date DESC");
+				$query = $this->db->query("SELECT SUM(credit) AS total,date FROM transactions WHERE ((DATE(date) BETWEEN DATE('$year-$month-01') AND CURDATE()) )and estado is null and tid!=-1 GROUP BY date DESC");
 			}
         return $query->result_array();
 		}else{
+            $account1=$this->db->get_where('accounts',array('holder' =>$sede))->row();
             $query = $this->db->query("SELECT SUM(credit) AS total,date FROM transactions WHERE ((DATE(date) BETWEEN DATE('$year-$month-01') AND CURDATE()) and account='$sede') and estado is null and tid!=-1 GROUP BY date DESC");    
-        return $query->result_array();
+
+            $valores_banks=$this->add_banks($year.'-'.$month.'-01',date("Y-m-d"),$account1->id);
+            $query=$query->result_array();
+            $query[0]['total']+=$valores_banks['credit'];
+        return $query;
         }
 		
         
@@ -133,8 +180,12 @@ class Dashboard_model extends CI_Model
         $query = $this->db->query("SELECT SUM(debit) AS total,date FROM transactions WHERE ((DATE(date) BETWEEN DATE('$year-$month-01') AND CURDATE()) ) and estado is null and tid!=-1 GROUP BY date DESC");
 		return $query->result_array();
 		}else{
+             $account1=$this->db->get_where('accounts',array('holder' =>$sede))->row();
         $query = $this->db->query("SELECT SUM(debit) AS total,date FROM transactions WHERE ((DATE(date) BETWEEN DATE('$year-$month-01') AND CURDATE())  AND account='$sede') and estado is null and tid!=-1 GROUP BY date DESC");
-        return $query->result_array();            
+        $valores_banks=$this->add_banks($year.'-'.$month.'-01',date("Y-m-d"),$account1->id);
+            $query=$query->result_array();
+            $query[0]['total']+=$valores_banks['debit'];
+        return $query;            
         }
 
     }
