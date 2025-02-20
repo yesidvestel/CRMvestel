@@ -416,6 +416,7 @@ class Transactions extends CI_Controller
 		$this->db->where('type', 'Income');
 		$this->db->where('estado');
 		$this->db->where('tid !=', -1);
+		$this->db->where('holder !=', 'PAYU');
 		if ($_GET['cuentas'] != '' && $_GET['cuentas'] != '-' && $_GET['cuentas'] != '0') {
                 $this->db->where('account=', $_GET['cuentas']);
             }
