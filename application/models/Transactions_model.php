@@ -81,6 +81,7 @@ class Transactions_model extends CI_Model
             //$this->db->where("estado!=","Anulada");
         $this->db->where("estado IS NULL",NULL);    
         }
+		$this->db->where('account !=', 'PAYU');
 		$this->db->join('customers', 'transactions.payerid=customers.id', 'left');
         
         $i = 0;
