@@ -57,12 +57,12 @@ class Dashboard_model extends CI_Model
         $query;
         if ($sede != '') {
             $account1=$this->db->get_where('accounts',array('holder' =>$sede))->row();
-            $query=$this->db->query("SELECT SUM(debit) as debit,SUM(credit) as credit FROM transactions where  type!='Transfer' and DATE(date) ='$today' and account='$account1->holder'  and estado is null and tid!=-1")->result();
+            $query=$this->db->query("SELECT SUM(debit) as debit,SUM(credit) as credit FROM transactions where  type!='Transfer' and DATE(date) ='$today' and account='$account1->holder'  and account!='PAYU'  and estado is null and tid!=-1")->result();
             $valores_banks=$this->add_banks($today,$today,$account1->id);
             $query[0]->credit+=$valores_banks['credit'];
 
         }else{
-            $query=$this->db->query("SELECT SUM(debit) as debit,SUM(credit) as credit FROM transactions where  type!='Transfer' and DATE(date) ='$today'  and estado is null and tid!=-1")->result();
+            $query=$this->db->query("SELECT SUM(debit) as debit,SUM(credit) as credit FROM transactions where  type!='Transfer' and account!='PAYU' and DATE(date) ='$today'  and estado is null and tid!=-1")->result();
         }
 
 
@@ -158,12 +158,12 @@ public function add_banks($sdate,$edate,$pay_acc){
 			if ($year==''){
 				$query = $this->db->query("SELECT SUM(credit) AS total,date FROM transactions WHERE (( CURDATE()) AND type!='Transfer')and estado is null and tid!=-1 GROUP BY date DESC");
 			}else{
-				$query = $this->db->query("SELECT SUM(credit) AS total,date FROM transactions WHERE ((DATE(date) BETWEEN DATE('$year-$month-01') AND CURDATE()) and type!='Transfer')and estado is null and tid!=-1 GROUP BY date DESC");
+				$query = $this->db->query("SELECT SUM(credit) AS total,date FROM transactions WHERE ((DATE(date) BETWEEN DATE('$year-$month-01') AND CURDATE()) and type!='Transfer' and account!='PAYU')and estado is null and tid!=-1 GROUP BY date DESC");
 			}
         return $query->result_array();
 		}else{
             $account1=$this->db->get_where('accounts',array('holder' =>$sede))->row();
-            $query = $this->db->query("SELECT SUM(credit) AS total,date FROM transactions WHERE ((DATE(date) BETWEEN DATE('$year-$month-01') AND CURDATE()) and account='$sede' and type!='Transfer') and estado is null and tid!=-1 GROUP BY date DESC");    
+            $query = $this->db->query("SELECT SUM(credit) AS total,date FROM transactions WHERE ((DATE(date) BETWEEN DATE('$year-$month-01') AND CURDATE()) and account='$sede' and type!='Transfer' and account!='PAYU') and estado is null and tid!=-1 GROUP BY date DESC");    
 
             $valores_banks=$this->add_banks($year.'-'.$month.'-01',date("Y-m-d"),$account1->id);
             $query=$query->result_array();
@@ -177,11 +177,11 @@ public function add_banks($sdate,$edate,$pay_acc){
     public function expenseChart($today, $month, $year, $sede)
     {
 		if ($sede ==''){
-        $query = $this->db->query("SELECT SUM(debit) AS total,date FROM transactions WHERE ((DATE(date) BETWEEN DATE('$year-$month-01') AND CURDATE()) and type!='Transfer') and estado is null and tid!=-1 GROUP BY date DESC");
+        $query = $this->db->query("SELECT SUM(debit) AS total,date FROM transactions WHERE ((DATE(date) BETWEEN DATE('$year-$month-01') AND CURDATE()) and type!='Transfer' and account!='PAYU') and estado is null and tid!=-1 GROUP BY date DESC");
 		return $query->result_array();
 		}else{
              $account1=$this->db->get_where('accounts',array('holder' =>$sede))->row();
-        $query = $this->db->query("SELECT SUM(debit) AS total,date FROM transactions WHERE ((DATE(date) BETWEEN DATE('$year-$month-01') AND CURDATE())  AND account='$sede' and type!='Transfer') and estado is null and tid!=-1 GROUP BY date DESC");
+        $query = $this->db->query("SELECT SUM(debit) AS total,date FROM transactions WHERE ((DATE(date) BETWEEN DATE('$year-$month-01') AND CURDATE())  AND account='$sede' and type!='Transfer' and account!='PAYU') and estado is null and tid!=-1 GROUP BY date DESC");
         $valores_banks=$this->add_banks($year.'-'.$month.'-01',date("Y-m-d"),$account1->id);
             $query=$query->result_array();
             $query[0]['total']+=$valores_banks['debit'];
