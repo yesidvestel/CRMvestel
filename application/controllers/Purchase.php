@@ -408,6 +408,7 @@ class Purchase extends CI_Controller
         $data['id'] = $tid;
         $data['title'] = "Purchase $tid";
         $data['invoice'] = $this->purchase->purchase_details($tid);
+        $data['sede'] = $this->purchase->sedes($data['invoice']['refer']);
         $data['products'] = $this->purchase->purchase_products($tid);
         $data['employee'] = $this->purchase->employee($data['invoice']['eid']);
         $data['employeeaut'] = $this->purchase->employee($data['invoice']['aid']);

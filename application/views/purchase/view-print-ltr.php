@@ -222,7 +222,7 @@
         <tr>
             <td><strong><?php echo $this->config->item('ctitle'); ?></strong><br>
                 <?php echo
-                    $this->config->item('address') . '<br>' . $this->config->item('city') . ', ' . $this->config->item('region') .'<br>'. $this->config->item('country') . $this->config->item('') . '<br>'.$this->lang->line('Phone').': ' . $this->config->item('phone') . '<br> '.$this->lang->line('Email').': ' . $this->config->item('email');
+                    $sede['dir'] . '<br>' . $invoice['refer'] . ', ' . $this->config->item('region') .'<br>'. $this->config->item('country') . $this->config->item('') . '<br>'.$this->lang->line('Phone').': ' . $this->config->item('phone') . '<br> '.$this->lang->line('Email').': ' . $this->config->item('email');
                 if ($this->config->item('postbox')) echo '<br>' . $this->lang->line('') . ' NIT: ' . $this->config->item('postbox');
                 ?>
             </td>

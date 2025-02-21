@@ -290,7 +290,15 @@ class Purchase_model extends CI_Model
             return $this->db->delete('meta_data', array('rid' => $id, 'type' => $type, 'col1' => $name));
         }
     }
+	public function sedes($id)
+    {
+        $this->db->select('*');
+        $this->db->from('customers_group');
+		$this->db->where('title', $id);
+        $query = $this->db->get();
+        return $query->row_array();
 
+    }
 
 
 
