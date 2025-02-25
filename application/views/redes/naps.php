@@ -125,7 +125,9 @@
                                     
 
                                     <div id="map" style="width: 100%; height: 450px;"></div>
+                                    <a id="btn_maps" href="https://www.google.com/maps/search/?api=1&query=" target="_blank" class="btn btn-primary"><i class="icon-ios-location"></i>Abrir en Maps<i class="icon-ios-location"></i></a>
                                 </td>
+
                             </tr>                     
                             </table>
                     	
@@ -150,10 +152,14 @@
 			$("#bloque_puertos").html(data.datos);
             $("#titulo_modal1").text("Disponibilidad de puertos, nat N°"+nat);
             if(data.coor1!=null){
+                $('#btn_maps').attr('href', 'https://www.google.com/maps/search/?api=1&query='+data.coor1+','+data.coor2);
+
                 initMap(Number(data.coor1),Number(data.coor2));    
                 $("#map").show();
+                $("#btn_maps").show();
             }else{
                 $("#map").hide();
+                $("#btn_maps").hide();
             }
             
 		},'json');

@@ -636,6 +636,7 @@
 								<?php } ?>
                             </div>
                             <div id="map" style="width: 100%; height: 450px;"></div>
+                            <a id="btn_maps" href="https://www.google.com/maps/search/?api=1&query=<?= $details['coor1'].','.$details['coor2'] ?>" target="_blank" class="btn btn-primary"><i class="icon-ios-location"></i>Abrir en Maps<i class="icon-ios-location"></i></a>
                             <hr>
                             <h5 class="text-xs-center col-md-10">OBSERVACIONES</h5>
 							<div class="col-md-1">
@@ -1136,6 +1137,18 @@
     position: myLatLng2,
     map: map,
   });*/
+  // Crear el enlace a Google Maps
+/*const googleMapsLink = `https://www.google.com/maps/search/?api=1&query=${lat1},${lng1}`;
+
+// Crear un botón (puedes usar un enlace <a> también)
+const openMapsButton = document.createElement('button');
+openMapsButton.textContent = 'Abrir en Google Maps';
+openMapsButton.addEventListener('click', () => {
+  window.open(googleMapsLink, '_blank'); // Abre el enlace en una nueva pestaña
+});
+
+// Agregar el botón a la página (por ejemplo, debajo del mapa)
+document.getElementById('map').after(openMapsButton);*/
 }
 //
 $(document).on("click","#el_correo_es_correcto",function(ev){
@@ -1371,9 +1384,11 @@ $(document).on("click","#el_correo_es_correcto",function(ev){
     $(function () {
         <?php if(empty($details['coor1']) || empty($details['coor2'])){ ?>
             $("#map").hide();
+            $("#btn_maps").hide();
         <?php }else {?>
        initMap(<?= $details['coor1'] ?>,<?= $details['coor2'] ?>);
        $("#map").show();
+       $("#btn_maps").show();
             <?php } ?>
         $('.summernote').summernote({
             height: 100,
