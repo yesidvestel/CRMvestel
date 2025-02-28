@@ -186,6 +186,7 @@ class Reports_model extends CI_Model
 
         $this->db->select_sum('lastbal');
         $this->db->from('accounts');
+		$this->db->where('holder !=', 'PAYU');
         $query = $this->db->get();
         $result = $query->row_array();
 
@@ -222,6 +223,7 @@ class Reports_model extends CI_Model
         $this->db->where('type', 'Income');
         $this->db->where('DATE(date) >=', $sdate);
         $this->db->where('DATE(date) <=', $edate);
+        $this->db->where('holder !=', 'PAYU');
         // $this->db->where("DATE(date) BETWEEN '$sdate' AND '$edate'");
         $query = $this->db->get();
         $result = $query->row_array();
