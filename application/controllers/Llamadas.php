@@ -283,7 +283,7 @@ class Llamadas extends CI_Controller
         foreach ($list as $llamada) {
 			$idusuario = $llamada->iduser;
 			$fcha = $llamada->fcha;
-			$fchavence = '2025-01-01';
+			$fchavence = '2026-01-01';
 			$due=$this->customers->due_details($idusuario);
 			$debe_customer=($due['total']-$due['pamnt']);
 			$pagos=$this->customers->pago_details($idusuario,$fcha,$fchavence);
