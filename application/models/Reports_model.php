@@ -194,7 +194,7 @@ class Reports_model extends CI_Model
 
         $this->db->select_sum('credit');
         $this->db->from('transactions');
-
+		$this->db->where('account !=', 'PAYU');
         $this->db->where('type', 'Income');
         $this->db->where('estado');
         $month = date('Y-m');
