@@ -222,6 +222,7 @@ class Reports_model extends CI_Model
         }
         $this->db->where('estado');
         $this->db->where('type', 'Income');
+		$this->db->where('tid !=' , -1);
         $this->db->where('DATE(date) >=', $sdate);
         $this->db->where('DATE(date) <=', $edate);
         $this->db->where('account !=', 'PAYU');
