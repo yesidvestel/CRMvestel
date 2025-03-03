@@ -1070,6 +1070,7 @@ foreach ($lista_tareas as $key => $value) {
             $this->db->where('acid', $acid);
         }
         $this->db->where('type', 'Expense');
+		$this->db->where('tid!=',-1);
         $this->db->where('DATE(date) >=', $sdate);
         $this->db->where('DATE(date) <=', $edate);
         // $this->db->where("DATE(date) BETWEEN '$sdate' AND '$edate'");
