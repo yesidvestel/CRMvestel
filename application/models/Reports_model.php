@@ -196,7 +196,7 @@ class Reports_model extends CI_Model
         $this->db->from('transactions');
 		$this->db->where('account !=', 'PAYU');
         $this->db->where('type', 'Income');
-        $this->db->where('estado');
+        $this->db->where('estado !=', 'Anulada');
         $month = date('Y-m');
         $today = date('Y-m-d');
         $this->db->where('DATE(date) >=', "$month-01");
