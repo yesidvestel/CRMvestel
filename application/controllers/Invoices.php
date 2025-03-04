@@ -561,13 +561,17 @@ $this->load->model('customers_model', 'customers');
                                             $television_data['product']=$tv_product->product_name;
                                     }else{
                                          $tv_product= $this->db->get_where("products", array('pid' => "27"))->row();
-                                    $x1=3992+$tv_product->product_price;
+                                         $iva1=0;
+                                        if($tv_product->taxrate!="0"){
+                                            $iva1=round(($tv_product->product_price*$tv_product->taxrate)/100);
+                                        }
+                                    $x1=$iva1+$tv_product->product_price;
                                     $television_data['pid']=$tv_product->pid;
                                     $television_data['price']=$tv_product->product_price;
                                     $television_data['subtotal']=$x1;
-                                    $television_data['totaltax']=3992;
+                                    $television_data['totaltax']=$iva1;
                                     $television_data['tax']=$tv_product->taxrate;
-                                    $factura_data['tax']=3992;
+                                    $factura_data['tax']=$iva1;
                                     $factura_data['subtotal']=$tv_product->product_price;
                                     $factura_data['total']=$x1;
 

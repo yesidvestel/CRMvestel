@@ -346,6 +346,15 @@ $this->load->model("customers_model","customers");
                             }
                             //$total_para_autoretencion+=$dataApiTV->items[0]->price;
                     }
+            }else{
+                    $paquete_tv=$this->db->get_where("products", array('pid' => "27"))->row();
+                                $v2=$paquete_tv->product_price;
+
+                                $v1=($paquete_tv->product_price*19)/100;
+                                $v2=$paquete_tv->product_price+$v1;
+                                $dataApiTV->items[0]->price=$paquete_tv->product_price;
+                                $dataApiTV->items[0]->taxes[0]->value=$v1;
+                                $dataApiTV->payments[0]->value=$v2;
             }
 
             $pad=$this->db->get_where("invoice_items",array("tid"=>$array_servicios2['tid'],"pid"=>158))->row();
