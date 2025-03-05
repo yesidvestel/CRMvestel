@@ -1,3 +1,6 @@
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPGQt8yWSDFWFAM7XIZPc-Q3M59nj6yeY">
+</script>
 <article class="content">
 	
     <div class="card card-block">
@@ -234,13 +237,12 @@
                 <div class="col-sm-2" style="margin-left: 8%;">          
                     <a href="#pop_model5" data-toggle="modal" onclick="funcion_status();" data-remote="false" class="btn btn- btn-blue mb-1" title="Change Status"
                     > DEVOLVER EQUIPO</a>
-                
                 </div>
                 <?php }} ?>
-                
+				<div id="map" style="width: 100%; height: 450px;"></div>
+                <a id="btn_maps" href="https://www.google.com/maps/search/?api=1&query=<?= $thread_info['coor1'].','.$thread_info['coor2'];?>" target="_blank" class="btn btn-primary"><i class="icon-ios-location"></i>Abrir en Maps<i class="icon-ios-location"></i></a>
 				
             </div>
-            
 			<?php }if ($thread_info['status'] == 'Resuelto'){
 					echo '<h2 class="btn btn-oval btn-success">RESUELTO</h2>';
 				}if ($thread_info['status'] == 'Anulada'){
@@ -930,6 +932,54 @@ $("#btn-habilitar-edicion").click(function(ev){
 $("#firma_link").click(function(ev){
         guardar_datos_firma(2);
 });
+ function initMap(lat1,lng1) {
+  const myLatLng = { lat: lat1, lng: lng1 }; // Reemplaza con tus coordenadas
+  const map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 15,
+    center: myLatLng,
+  });
+
+  // Agrega un marcador en la ubicación
+  new google.maps.Marker({
+    position: myLatLng,
+    map: map,
+  });
+/* // codigo para agregar mas puntos al mismo mapa esto para colocar todas las naps de cada ciudad en un solo mapa
+   const myLatLng2 = { lat: 5.720472, lng: -72.924639 }; // Reemplaza con tus coordenadas
+  // Agrega un marcador en la ubicación
+  new google.maps.Marker({
+    position: myLatLng2,
+    map: map,
+  });*/
+}
+//
+$(function () {
+        <?php if(empty($thread_info['coor1']) || empty($thread_info['coor2'])){ ?>
+            $("#map").hide();
+            $("#btn_maps").hide();
+        <?php }else {?>
+       initMap(<?= $thread_info['coor1'] ?>,<?= $thread_info['coor2'] ?>);
+		console.log(<?=$thread_info['coor1'] ?>);
+       $("#map").show();
+       $("#btn_maps").show();
+            <?php } ?>
+        $('.summernote').summernote({
+            height: 100,
+            toolbar: [
+                // [groupName, [list of button]]
+                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['font', ['strikethrough', 'superscript', 'subscript']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['height', ['height']],
+                ['fullscreen', ['fullscreen']],
+                ['codeview', ['codeview']]
+            ]
+        });
+
+
+    });
     
 </script>
 <script>
