@@ -209,7 +209,7 @@
                 map: map2,
               });
               var infowindow = new google.maps.InfoWindow({
-                                    content: 'NAP <?=$np["idn"] ?>',
+                                    content: 'NAP <?=$np["idn"] ?>-<?=$np["nap"] ?>',
                                   });
             market.addListener('click', () => {
                 infowindow.open(map2, market);
@@ -227,7 +227,7 @@
                           });
 
                          var infowindow<?=$np["idn"]?> = new google.maps.InfoWindow({
-                                    content: 'NAP <?=$np["idn"] ?>',
+                                    content: 'NAP <?=$np["idn"] ?>-<?=$np["nap"] ?>',
                                   });
                         market<?=$np["idn"]?>.addListener('click', () => {
                             infowindow<?=$np["idn"]?>.open(map2, market<?=$np["idn"]?>);
