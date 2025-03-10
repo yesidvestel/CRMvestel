@@ -73,6 +73,12 @@
            </a>
         </div>
     </div>
+    
+</article>
+<article class="content">
+    <div class="card card-block">
+        <div id="map2" style="width: 100%; height: 450px;"></div>
+    </div>
 </article>
 <div id="delete_model" class="modal fade">
     <div class="modal-dialog">
@@ -166,7 +172,7 @@
 		$("#pop_model").modal("show");
 	});
     $(document).ready(function () {
-
+        initMap2();
         $('#doctable').DataTable({
 
             "processing": true,
@@ -186,7 +192,55 @@
 
     });
 
-    
+    function initMap2(){
+          
+
+
+  <?php $naps_cor=false;foreach ($naps as $key => $np) { ?>
+            <?php if($naps_cor==false && $np['coor1']!=null ) { ?>
+
+              var myLatLng1 = { lat: Number(<?=$np['coor1']?>), lng: Number(<?=$np['coor2']?>) }; // Reemplaza con tus coordenadas
+              const map2 = new google.maps.Map(document.getElementById('map2'), {
+                zoom: 13,
+                center: myLatLng1,
+              });
+              var market= new google.maps.Marker({
+                position: myLatLng1,
+                map: map2,
+              });
+              var infowindow = new google.maps.InfoWindow({
+                                    content: 'NAP <?=$np["idn"] ?>',
+                                  });
+            market.addListener('click', () => {
+                infowindow.open(map2, market);
+              });
+
+
+          <?php $naps_cor=true;
+                }else if($naps_cor && $np['coor1']!=null){?>
+                         myLatLng1 = { lat: Number(<?=$np['coor1']?>), lng: Number(<?=$np['coor2']?>) }; // Reemplaza con tus coordenadas
+                          // Agrega un marcador en la ubicación
+
+                         var market<?=$np["idn"]?>= new google.maps.Marker({
+                            position: myLatLng1,
+                            map: map2,
+                          });
+
+                         var infowindow<?=$np["idn"]?> = new google.maps.InfoWindow({
+                                    content: 'NAP <?=$np["idn"] ?>',
+                                  });
+                        market<?=$np["idn"]?>.addListener('click', () => {
+                            infowindow<?=$np["idn"]?>.open(map2, market<?=$np["idn"]?>);
+                          });
+
+
+          <?php } ?>
+
+    <?php } ?>
+
+
+    }
+
     function initMap(lat1,lng1) {
   const myLatLng = { lat: lat1, lng: lng1 }; // Reemplaza con tus coordenadas
   const map = new google.maps.Map(document.getElementById('map'), {
