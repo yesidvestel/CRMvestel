@@ -1,5 +1,5 @@
 <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPGQt8yWSDFWFAM7XIZPc-Q3M59nj6yeY">
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPGQt8yWSDFWFAM7XIZPc-Q3M59nj6yeY&callback=initMap2">
 </script>
 <style>
 .contenedor{
@@ -172,7 +172,6 @@
 		$("#pop_model").modal("show");
 	});
     $(document).ready(function () {
-        initMap2();
         $('#doctable').DataTable({
 
             "processing": true,
