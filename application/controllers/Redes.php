@@ -37,7 +37,56 @@ class Redes extends CI_Controller
         }
 
     }
+    public function prueba1(){
+        ob_clean();
+        //$nap=$this->db->get_where("naps",array("idn"=>"1020"))->row();
 
+        $naps=$this->db->query("SELECT * FROM naps WHERE coor2 LIKE '%°%'")->result();
+        $sql="";
+        foreach ($naps as $key => $nap) {
+
+            if(preg_match('/[a-zA-Z]/', $nap->coor2)===1){
+                $nap->coor2=str_replace("O", "W", $nap->coor2);    
+            }else{
+                $nap->coor1.='"N';
+                $nap->coor2.='"W';    
+            }
+            
+            $coor2=$this->dms_a_dd($nap->coor2);
+            $coor1=$this->dms_a_dd($nap->coor1);
+            //var_dump($coor1.",".$coor2);
+            //var_dump($nap->coor1."".$nap->coor2);echo "<br>" ;
+            $sql.="UPDATE naps SET coor1 = '".$coor1."', coor2 ='".$coor2."' WHERE naps.idn =".$nap->idn." ;<br>";
+
+        }
+
+        echo $sql;
+        
+    }
+
+    function dms_a_dd($coordenada) {
+    // Dividir la coordenada en grados, minutos y segundos
+    preg_match('/(\d+)°(\d+)\'([\d.]+)"([NSWE])/', $coordenada, $matches);
+
+    if (count($matches) !== 5) {
+        return false; // Formato de coordenada inválido
+    }
+
+    $grados = (int) $matches[1];
+    $minutos = (int) $matches[2];
+    $segundos = (float) $matches[3];
+    $direccion = $matches[4];
+
+    // Calcular grados decimales
+    $dd = $grados + ($minutos / 60) + ($segundos / 3600);
+
+    // Ajustar signo según la dirección
+    if ($direccion === 'S' || $direccion === 'W') {
+        $dd *= -1;
+    }
+
+    return $dd;
+}
     public function index()
     {
 		$sede = $this->input->get('id');
