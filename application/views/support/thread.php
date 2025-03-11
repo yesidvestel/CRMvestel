@@ -54,13 +54,27 @@
 				echo '<br><strong>Documento:</strong> ' . $thread_info['documento'];
 				echo '<br><strong>Abonado:</strong> ' . $thread_info['abonado'];
 				echo '<br><strong>Celular:</strong> ' . $thread_info['celular'];
-				echo '<br><strong>Direccion:</strong> ' . $thread_info['nomenclatura'].' '. $thread_info['numero1']. $thread_info['adicionauno'].' N°'. $thread_info['numero2']. $thread_info['adicional2'].' - '. $thread_info['numero3'];
+				echo '<br><strong>Direccion:</strong> ' . $thread_info['nomenclatura'].' '. $thread_info['numero1']. $thread_info['adicionauno'].' # '. $thread_info['numero2']. $thread_info['adicional2'].' - '. $thread_info['numero3'];
 				echo '<br><strong>Referencia:</strong> ' . $thread_info['residencia'].'/'. $thread_info['referencia'];
 				echo '<br><strong>Barrio:</strong> ' . $barrio2['barrio'];
-				if($thread_info['coor1']!=''){
-					echo '<br><strong>Coordenadas:</strong> ' . $thread_info['coor1'].' '.$thread_info['coor2'];	
+				// Coordenadas con opción de edición
+				echo '<br><strong>Coordenadas:</strong> ';
+				if ($thread_info['coor1'] != '') {
+					echo '<span id="text_coordenadas">' . $thread_info['coor1'] . ' ' . $thread_info['coor2'] . '</span>';
+				} else {
+					echo '<span id="text_coordenadas">No registradas</span>';
 				}
-                echo '<br><strong>Estado:</strong> <span id="pstatus">' . $thread_info['status'];
+				?>
+				<input id="input_coordenadas" type="text" class="campo_edicion" style="display: none;">
+				<a href="#" data-dato="<?= $thread_info['coor1'] . ' ' . $thread_info['coor2'] ?>" data-type="coordenadas" 
+				   style="border-radius: 20px;" id="open_update_coordenadas" class="open_update btn btn-success btn-sm">
+					<span class="icon-pencil"></span>
+				</a>
+				<a href="#" data-type="coordenadas" style="border-radius: 20px;" id="cancel_coordenadas" class="cancel_update btn btn-danger btn-sm">
+					<span class="icon-remove"></span>
+				</a>
+				<?php
+				echo '<br><strong>Estado:</strong> <span id="pstatus">' . $thread_info['status'];
 				echo '<br><strong>Servicios Contratados:</strong> <span id="pstatus">' . $tv.' '.$inter;
 				echo '<br><strong>Equipo Asignado:</strong> <span id="pstatus">' . $thread_info['macequipo'].'<strong>'.$equipo->t_instalacion.'</strong><strong> V:</strong>'.$equipo->vlan.'<strong> N:</strong>'.$equipo->nat.'<strong> PN:</strong>'.$equipo->puerto;
                 ?></p>
@@ -980,6 +994,65 @@ $(function () {
 
 
     });
+	$(".cancel_update").hide();
+	$(".campo_edicion").hide();
+	$(".cancel_update").attr("title", "Cancelar");
+	$(".open_update").attr("title", "Editar");
+
+	var id_customer_update = "<?php echo $thread_info['id'] ?>";
+	var campos = { 'coordenadas': false };
+
+	$(document).on("click", '.open_update', function (e) {
+		e.preventDefault();
+		var elementox = this;
+		var tipo = $(this).data("type");
+		var dato = $(this).data("dato"); // Valor antiguo
+		var inputSelector = "#input_" + tipo;
+
+		// Capturar el nuevo valor
+		if (campos[tipo]) {
+			var valor_env = $(inputSelector).val().trim(); // Tomamos el valor del input
+			console.log("Valor enviado:", valor_env);
+
+			$.post(baseurl + "tickets/edit_campos", {
+				'id': id_customer_update,
+				'campo': tipo,
+				'value': valor_env,
+				'dato_anterior': dato
+			}, function (data) {
+				console.log("Respuesta del servidor:", data);
+				if (data !== "0") {
+					$("#text_" + tipo).text(valor_env);
+					$(elementox).data("dato", valor_env);
+					cerrar_campo(tipo);
+				}
+			});
+		} else {
+			$(inputSelector).val(dato).show();
+		}
+
+		$("#text_" + tipo).hide();
+		$("#cancel_" + tipo).show();
+		$(this).children("span").removeClass("icon-pencil").addClass("icon-save");
+
+		campos[tipo] = true;
+	});
+
+	$(document).on("click", '.cancel_update', function (e) {
+		e.preventDefault();
+		cerrar_campo($(this).data("type"));
+	});
+
+	function cerrar_campo(campox) {
+		var span = $("#open_update_" + campox).children()[0];
+		$(span).removeClass("icon-save").addClass("icon-pencil");
+		$("#text_" + campox).show();
+		$("#cancel_" + campox).hide();
+		$("#input_" + campox).hide();
+		campos[campox] = false;
+	}
+
+
     
 </script>
 <script>

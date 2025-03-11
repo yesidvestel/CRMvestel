@@ -2307,6 +2307,81 @@ $x=0;
 
 
     }
+	public function edit_campos() {
+		if (!isset($_POST['campo'], $_POST['value'], $_POST['id'])) {
+			echo "Error: Datos incompletos";
+			exit();
+		}
+
+		$campo = $_POST['campo'];
+		$valor = trim($_POST['value']);
+		$id = $_POST['id'];
+
+		// Validar ID antes de ejecutar la consulta
+		if (!is_numeric($id) || $id <= 0) {
+			echo "Error: ID inválido";
+			exit();
+		}
+
+		// Si estamos editando coordenadas, limpiar y dividir el valor
+		if ($campo == 'coordenadas') {
+			// Reemplazar comas por nada (eliminar comas)
+			$valor_limpio = str_replace(",", "", $valor);
+
+			$coords = explode(" ", $valor_limpio);
+			$coor1 = isset($coords[0]) ? trim($coords[0]) : '';
+			$coor2 = isset($coords[1]) ? trim($coords[1]) : '';
+
+			// Obtener valores actuales en la base de datos
+			$this->db->select('coor1, coor2');
+			$this->db->where('id', $id);
+			$query = $this->db->get('customers');
+			$row = $query->row();
+
+			if ($row && $row->coor1 == $coor1 && $row->coor2 == $coor2) {
+				echo 0;
+				exit();
+			}
+
+			$data = array('coor1' => $coor1, 'coor2' => $coor2);
+		} else {
+			// Para otros campos, validar si hubo cambios
+			if ($valor == trim($_POST['dato_anterior'])) {
+				echo 0;
+				exit();
+			}
+			$data = array($campo => $valor);
+		}
+
+		// Asegurar que solo se actualiza el registro correcto
+		$this->db->where("id", $id);
+		$this->db->update("customers", $data);
+
+		if ($this->db->affected_rows() > 0) {
+			// Guardar en historial solo si hubo cambios
+			$data_h = array(
+				'modulo' => "Customers",
+				'accion' => "Actualizar campo " . $campo,
+				'id_usuario' => $this->aauth->get_user()->id,
+				'fecha' => date("Y-m-d H:i:s"),
+				'descripcion' => json_encode($data),
+				'id_fila' => $id,
+				'tabla' => "customers",
+				'nombre_columna' => "id"
+			);
+			$this->db->insert("historial_crm", $data_h);
+
+			echo "1"; // Se actualizó correctamente
+		} else {
+			echo "0"; // No se hicieron cambios
+		}
+	}
+
+
+
+
+
+
     
 
 
