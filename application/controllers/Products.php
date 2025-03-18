@@ -167,6 +167,7 @@ class Products extends CI_Controller
             $row[]= $usuario->abonado;
 			}else{ $row[] = $prd->asignado;}
 			$row[] = $prd->marca;
+			$row[] = $prd->almacen;
 			$row[] = $prd->t_instalacion;
 			if ($prd->idvlan!=='0'){
 			$row[] = $prd->vlan;
