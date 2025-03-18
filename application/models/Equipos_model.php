@@ -39,7 +39,6 @@ class Equipos_model extends CI_Model
 		 	//$this->db->join('puertos', 'puertos.idp = equipos.puerto','left');
 		 	$this->db->join('naps', 'naps.idn = equipos.nat','left');
 		 	$this->db->join('vlans', 'vlans.idv = naps.idvlan','left');
-		 	$this->db->join('almacen_equipos', 'almacen_equipos.id = equipos.almacen','left');
 		 	
 			
 		 if ($id > 0) {
