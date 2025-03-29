@@ -156,6 +156,7 @@ class Products extends CI_Controller
         foreach ($list as $prd) {
 			$usuario = $this->db->get_where('customers', array('id' => $prd->asignado))->row();
 			$puerto = $this->db->get_where('puertos', array('idp' => $prd->puerto))->row();
+			$almacen = $this->db->get_where('almacen_equipos', array('id' => $prd->almacen))->row();
             $no++;
             $row = array();
             $row[] = $no;
@@ -167,6 +168,9 @@ class Products extends CI_Controller
             $row[]= $usuario->abonado;
 			}else{ $row[] = $prd->asignado;}
 			$row[] = $prd->marca;
+			if ($alid == '') {
+				$row[] = $almacen->almacen;
+			}
 			$row[] = $prd->t_instalacion;
 			if ($prd->idvlan!=='0'){
 			$row[] = $prd->vlan;

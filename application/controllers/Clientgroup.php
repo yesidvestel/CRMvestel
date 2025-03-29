@@ -577,6 +577,19 @@ public function traspaso(){
                             }
                         }
                     }
+					if( isset($filtro_deudores_multiple_2['masdediez'])){
+                        if($fact_valida && $debe_customer>=10000 && $customer_moroso==false && $invoice->total>=10000){
+                            $customer_moroso=true;
+                            $valor_ultima_factura=$invoice->total;
+                            break;                    
+                        }else if($fact_valida){
+                            $filtros_deuda_customers++;
+                            if($filtros_deuda_customers==$n_filtro_deudores){
+                                break;    
+                            }
+                            
+                        }
+                    }
                      if(isset($filtro_deudores_multiple_2['saldoaFavor'])){
                         if($fact_valida && $debe_customer<0 && $customer_moroso==false && $invoice->total>0){
                             $customer_moroso=true;
@@ -1548,6 +1561,19 @@ public function traspaso(){
                         }
 
                     }
+					if( isset($filtro_deudores_multiple_2['masdediez'])){
+                        if($fact_valida && $debe_customer>=10000 && $customer_moroso==false && $invoice->total>=10000){
+                            $customer_moroso=true;
+                            $valor_ultima_factura=$invoice->total;
+                            break;                    
+                        }else if($fact_valida){
+                            $filtros_deuda_customers++;
+                            if($filtros_deuda_customers==$n_filtro_deudores){
+                                break;    
+                            }
+                            
+                        }
+                    }
                      if( isset($filtro_deudores_multiple_2['al Dia'])){
                         if($fact_valida && $debe_customer==0 && $customer_moroso==false){
                             $customer_moroso=true;
@@ -2391,6 +2417,19 @@ $suscripcion_str2=$suscripcion_str;
                     }
                      if( isset($filtro_deudores_multiple_2['Todos'])){
                         if($fact_valida && $debe_customer>0 && $customer_moroso==false && $invoice->total>0){
+                            $customer_moroso=true;
+                            $valor_ultima_factura=$invoice->total;
+                            break;                    
+                        }else if($fact_valida){
+                            $filtros_deuda_customers++;
+                            if($filtros_deuda_customers==$n_filtro_deudores){
+                                break;    
+                            }
+                            
+                        }
+                    }
+					if( isset($filtro_deudores_multiple_2['masdediez'])){
+                        if($fact_valida && $debe_customer>=10000 && $customer_moroso==false && $invoice->total>=10000){
                             $customer_moroso=true;
                             $valor_ultima_factura=$invoice->total;
                             break;                    

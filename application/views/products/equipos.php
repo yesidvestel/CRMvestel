@@ -78,6 +78,7 @@
                     <th>Estado</th>
                     <th>Asignado a:</th>
 					<th>Marca</th>
+					<th>Almacen</th>
 					<th>T/po sistema</th>
 					<th>Vlan</th>
 					<th>Nat</th>
@@ -98,6 +99,7 @@
                     <th>Estado</th>
                     <th>Asignado a:</th>
 					<th>Marca</th>
+					<th>Almacen</th>
 					<th>T/po sistema</th>
 					<th>Vlan</th>
 					<th>Nat</th>

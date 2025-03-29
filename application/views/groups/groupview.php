@@ -420,6 +420,7 @@
                                                         <option value='2meses'>Mas de 2 meses</option>
                                                         <option value='3y4meses'>Mas de 3 y 4 meses</option>
                                                         <option value='Todos'>Todos los Deudores</option>
+                                                        <option value='masdediez'>Debe mas de 10 mil</option>
                                                         <option value='saldoaFavor'>Saldo a Favor</option>
                                                         <option value='al Dia'>Al Dia</option>       
                                              </select>

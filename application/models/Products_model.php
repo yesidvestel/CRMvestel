@@ -219,43 +219,55 @@ class Products_model extends CI_Model
         }
 
     }
-	public function addequipo($codigo, $proveedor, $almacen, $mac, $serial, $llegada, $final, $marca, $asignado,$estado,$observacion)
-    {
+	public function addequipo($codigo, $proveedor, $almacen, $mac, $serial, $llegada, $final, $marca, $asignado, $estado, $observacion)
+	{
 		$bill_final = datefordatabase($final);
 		$bill_llegada = datefordatabase($llegada);
-        $data = array(
-            'codigo' => $codigo,
-            'proveedor' => $proveedor,
-            'almacen' => $almacen,
-            'mac' => $mac,
-            'serial' => $serial,
-            'llegada' => $bill_llegada,
-            'final' => $bill_final,
-            'marca' => $marca,
-            'asignado' => $asignado,
-            'estado' => $estado,
-            'observacion' => $observacion
-        );
 
-        if ($this->db->insert('equipos', $data)) {
-                    $data_h=array();
-                    $data_h['modulo']="Redes";
-                    $data_h['accion']="Ingreso de equipo {insert}";
-                    $data_h['id_usuario']=$this->aauth->get_user()->id;
-                    $data_h['fecha']=date("Y-m-d H:i:s");
-                    $data_h['descripcion']=json_encode($data);
-                    $data_h['id_fila']=$this->db->insert_id();
-                    $data_h['tabla']="equipos";
-                    $data_h['nombre_columna']="id";
-                    $this->db->insert("historial_crm",$data_h);
-            echo json_encode(array('status' => 'Success', 'message' =>
-                $this->lang->line('ADDED')));
-        } else {
-            echo json_encode(array('status' => 'Error', 'message' =>
-                $this->lang->line('ERROR')));
-        }
+		// Verificar si el serial ya existe en la base de datos
+		$this->db->where('serial', $serial);
+		$query = $this->db->get('equipos');
 
-    }
+		if ($query->num_rows() > 0) {
+			// Serial ya registrado
+			echo json_encode(array('status' => 'Error', 'message' => 'El serial ya existe en el sistema.'));
+			return; // Se detiene la ejecución
+		}
+
+		$data = array(
+			'codigo' => $codigo,
+			'proveedor' => $proveedor,
+			'almacen' => $almacen,
+			'mac' => $mac,
+			'serial' => $serial,
+			'llegada' => $bill_llegada,
+			'final' => $bill_final,
+			'marca' => $marca,
+			'asignado' => $asignado,
+			'estado' => $estado,
+			'observacion' => $observacion
+		);
+
+		if ($this->db->insert('equipos', $data)) {
+			$data_h = array();
+			$data_h['modulo'] = "Redes";
+			$data_h['accion'] = "Ingreso de equipo {insert}";
+			$data_h['id_usuario'] = $this->aauth->get_user()->id;
+			$data_h['fecha'] = date("Y-m-d H:i:s");
+			$data_h['descripcion'] = json_encode($data);
+			$data_h['id_fila'] = $this->db->insert_id();
+			$data_h['tabla'] = "equipos";
+			$data_h['nombre_columna'] = "id";
+			$this->db->insert("historial_crm", $data_h);
+
+			echo json_encode(array('status' => 'Success', 'message' =>
+				$this->lang->line('ADDED')));
+		} else {
+			echo json_encode(array('status' => 'Error', 'message' =>
+				$this->lang->line('ERROR')));
+		}
+	}
+
 
     public function edit($pid, $catid, $warehouse, $sede, $product_name, $product_code,  $product_price, $factoryprice, $taxrate, $disrate, $product_qty,$product_qty_alert,$product_desc,$valores_servicio,$tipo_servicio,$servicio_pertenece_a)
     {
