@@ -456,7 +456,7 @@ setlocale(LC_TIME, "spanish");
 
     private function _get_datatables_query($opt = '',$filt2)
     {
-		$this->db->select('invoices.*,customers.name,customers.dosnombre,customers.unoapellido,customers.dosapellido,customers.abonado,customers.documento');
+		$this->db->select('invoices.*,customers.name,customers.dosnombre,customers.unoapellido,customers.dosapellido,customers.abonado,customers.documento,customers.facturar_electronicamente,customers.f_elec_tv,customers.f_elec_internet');
         $this->db->from($this->table);
 		if($filt2['opcselect']!=''){
 
@@ -471,22 +471,36 @@ setlocale(LC_TIME, "spanish");
             
         }
 		if($filt2['estado']!=""){
-            $this->db->where('status', $filt2['estado']);       
+			
+            $this->db->where('status', $filt2['estado']);
         }
 		if($filt2['sede']!=""){
             $this->db->where('refer', $filt2['sede']);       
         }
-		if($filt2['siigo']!=""){
-			if($filt2['siigo']=="null"){
-				$filt2['siigo']=null;
-			}
-            $this->db->where('facturacion_electronica', $filt2['siigo']);       
-        }
+		
         if ($opt) {
             $this->db->where('invoices.eid', $opt);
         }
         $this->db->join('customers', 'invoices.csd=customers.id', 'left');
-
+		if($filt2['siigo']!=""){
+			if($filt2['siigo']!='facint' && $filt2['siigo']!='factv'){
+				if($filt2['siigo']=="null"){
+					$filt2['siigo']=null;
+				}
+				$this->db->where('facturacion_electronica', $filt2['siigo']);
+			}else{
+				if($filt2['siigo']=='facint'){
+					$this->db->where('customers.facturar_electronicamente', 1);
+					$this->db->where('customers.f_elec_internet', 1);
+					$this->db->where('tipo_factura', 'Recurrente');
+				}
+				if($filt2['siigo']=='factv'){
+					$this->db->where('customers.facturar_electronicamente', 1);
+					$this->db->where('customers.f_elec_tv', 1);
+					$this->db->where('tipo_factura', 'Recurrente');
+				}
+			}
+        }
         $i = 0;
 
         foreach ($this->column_search as $item) // loop column

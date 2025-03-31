@@ -178,6 +178,8 @@ text-transform: lowercase;
                                                 <option value='null'>Pendiente</option>
                                                 <option value='Crear Factura Electronica'>Preparado</option>
                                                 <option value='Factura Electronica Creada'>Facturado</option>
+                                                <option value='facint'>Fac Internet</option>
+                                                <option value='factv'>Fac Television</option>
                                             </select>
                                         </div>
                                     </div>
@@ -322,12 +324,13 @@ text-transform: lowercase;
         var siigo =$("#siigo option:selected").val();
         var sdate =$("#sdate").val();
         var edate =$("#edate").val();
+		var estfac = 1;
         var opcion_seleccionada=$("#fechas option:selected").val();
         var sede_filtrar=$("#sede_sel option:selected").val();
         if(estado=="" && sede=="" && siigo=="" && opcion_seleccionada==""){
             tb.ajax.url( baseurl+'invoices/ajax_list').load();     
         }else{
-            tb.ajax.url( baseurl+"invoices/ajax_list?sdate="+sdate+"&edate="+edate+"&opcselect="+opcion_seleccionada+"&estado="+estado+"&sede="+sede+"&siigo="+siigo).load();     
+            tb.ajax.url( baseurl+"invoices/ajax_list?sdate="+sdate+"&edate="+edate+"&opcselect="+opcion_seleccionada+"&estado="+estado+"&sede="+sede+"&siigo="+siigo+"&estfac="+estfac).load();     
         }
        
 
@@ -335,10 +338,11 @@ text-transform: lowercase;
 	function redirect_to_export(){
         var estado =$("#estado option:selected").val();
 		var sede =$("#sede option:selected").val();
+		var siigo =$("#siigo option:selected").val();
         var sdate =$("#sdate").val();
         var edate =$("#edate").val();
 		var opcion_seleccionada=$("#fechas option:selected").val();
-        var url_redirect=baseurl+'invoices/exportar_a_excel_inv?sdate='+sdate+"&edate="+edate+"&opcselect="+opcion_seleccionada+"&estado="+estado+"&sede="+sede;
+        var url_redirect=baseurl+'invoices/exportar_a_excel_inv?sdate='+sdate+"&edate="+edate+"&opcselect="+opcion_seleccionada+"&estado="+estado+"&sede="+sede+"&siigo="+siigo;
             window.location.replace(url_redirect);
 
     }

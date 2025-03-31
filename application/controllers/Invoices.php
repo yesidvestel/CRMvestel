@@ -49,49 +49,24 @@ public function notas(){
 
 }
 public function exportar_a_excel_inv(){
-    ini_set('memory_limit', '50000000000M');
-    set_time_limit(500000000);
-     $this->db->select("invoices.* ,customers.*");
-        $this->db->from("invoices");
-		if ($_GET['estado'] != '' && $_GET['estado'] != '-' && $_GET['estado'] != '0') {
-                $this->db->where('status=', $_GET['estado']);
-            }
-		if ($_GET['sede'] != '' && $_GET['sede'] != '-' && $_GET['sede'] != '0') {
-                $this->db->where('refer=', $_GET['sede']);
-           }
-		if($_GET['opcselect']!=''){
+    ini_set('memory_limit', '-1');
+    set_time_limit(0);
 
-            $dateTime= new DateTime($_GET['sdate']);
-            $sdate=$dateTime->format("Y-m-d");
-            $dateTime= new DateTime($_GET['edate']);
-            $edate=$dateTime->format("Y-m-d");
-            if($_GET['opcselect']=="fcreada"){
-                $this->db->where('invoicedate>=', $sdate);   
-                $this->db->where('invoicedate<=', $edate);       
-            }
-            
-        }
-        //$this->db->where_in("invoice_items.product",array("Nota Credito","Nota Debito"));
-        //$this->db->join("invoices","invoice_items.tid=invoices.tid", 'left');
-        $this->db->join("customers","invoices.csd=customers.id", 'left');
-        $this->db->order_by("tid","DESC");
-        $lista_invoices=$this->db->get()->result();
-        $this->load->library('Excel');
-        
-        
-    
-    //define column headers
+    // Columnas a exportar
     $headers = array(
         'TID' => 'integer', 
         'Cliente' => 'string', 
         'Abonado' => 'string', 
         'id' => 'string', 
-        'Tipo Documneto' => 'string', 
+        'Tipo Documento' => 'string', 
         'Documento' => 'string', 
         'Fecha creada' => 'date',
         'Fecha vence' => 'date',
         'Nota' => 'string',
         'Estado' => 'string',
+        'Producto' => 'string',
+        'Cantidad' => 'integer',
+        'Precio' => 'integer',
         'Subtotal' => 'integer',
         'Iva' => 'integer',
         'Descuento' => 'integer',
@@ -102,94 +77,105 @@ public function exportar_a_excel_inv(){
         'Sede' => 'string',
         'Pago' => 'string',
     );
-    
-    //fetch data from database
-    //$salesinfo = $this->product_model->get_salesinfo();
-    
-    //create writer object
+
+    // Consulta principal
+    $this->db->select("invoices.*, customers.*, invoice_items.product, invoice_items.qty, invoice_items.price");
+    $this->db->from("invoices");
+    $this->db->join("customers","invoices.csd=customers.id", 'left');
+    $this->db->join("invoice_items", "invoice_items.tid=invoices.tid", 'left'); // JOIN PRODUCTOS
+
+    // Filtros
+    if ($_GET['estado'] != '' && $_GET['estado'] != '-' && $_GET['estado'] != '0') {
+        $this->db->where('status=', $_GET['estado']);
+    }
+    if ($_GET['sede'] != '' && $_GET['sede'] != '-' && $_GET['sede'] != '0') {
+        $this->db->where('refer=', $_GET['sede']);
+    }
+
+    if($_GET['opcselect']!=''){
+        $sdate = (new DateTime($_GET['sdate']))->format("Y-m-d");
+        $edate = (new DateTime($_GET['edate']))->format("Y-m-d");
+        if($_GET['opcselect']=="fcreada"){
+            $this->db->where('invoicedate >=', $sdate);   
+            $this->db->where('invoicedate <=', $edate);       
+        }
+    }
+
+    if($_GET['siigo']=='facint'){
+		$this->db->where('customers.facturar_electronicamente', 1);
+		$this->db->where('customers.f_elec_internet', 1);
+		$this->db->where('tipo_factura', 'Recurrente');
+	}
+	if($_GET['siigo']=='factv'){
+		$this->db->where('customers.facturar_electronicamente', 1);
+		$this->db->where('customers.f_elec_tv', 1);
+		$this->db->where('tipo_factura', 'Recurrente');
+	}
+
+    $this->db->order_by("invoices.tid","DESC");
+    $lista_invoices=$this->db->get()->result();
+
+    $this->load->library('Excel');
+
     $writer = new Excel();
-    
-        //meta data info
-    $keywords = array('xlsx','CUSTOMERS','VESTEL');
-    $writer->setTitle('Reporte Facturas ');
-    $writer->setSubject('');
+    $writer->setTitle('Reporte Facturas');
     $writer->setAuthor('VESTEL');
     $writer->setCompany('VESTEL');
-    $writer->setKeywords($keywords);
-    $writer->setDescription('Reporte Facturas ');
+    $writer->setDescription('Reporte Facturas con productos');
     $writer->setTempDir(sys_get_temp_dir());
-    
-    //write headers el primer campo que es nombre de la hoja de excel deve de coincidir en writeSheetHeader y writeSheetRow para tener en cuenta si se piensan agregar otras hojas o algo por el estilo
-    $writer->writeSheetHeader('Reporte Facturas ',$headers,$col_options = array(
 
-['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
-['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
-['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
-['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
-['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
-['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
-['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
-['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
-['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
-['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
-['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
-['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
-['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
-['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
-['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
-['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
-['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
-['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
-['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
-));
-    
-    //write rows to sheet1
-    
-    foreach ($lista_invoices as $key => $invoices) {
-        //$fecha = date("d/m/Y",strtotime($debito->fecha_creacion));
-         $deuda=$invoices->total-$invoices->pamnt;
-         $subtotal=$invoices->subtotal+$invoices->discount;
-		if($invoices->pamnt>$invoices->total){
-			$ant=$invoices->pamnt-$invoices->total;
-		}else{
-			$ant=0;
-		}
-         $ar=array($invoices->tid,$invoices->name ." ".$invoices->dosnombre ." ". $invoices->unoapellido." ". $invoices->dosapellido,$invoices->abonado,$invoices->csd,$invoices->tipo_documento,$invoices->documento,$invoices->invoicedate,$invoices->invoiceduedate,$invoices->notes,$invoices->ron,$subtotal,$invoices->tax,$invoices->discount,$invoices->total,$invoices->pamnt,$deuda,$ant,$invoices->refer,$this->lang->line(ucwords($invoices->status)));
-            $writer->writeSheetRow('Reporte Facturas ',$ar);
-        
+    // Escribir encabezados
+    $writer->writeSheetHeader('Reporte Facturas',$headers);
+
+    // Escribir filas
+    foreach ($lista_invoices as $invoice) {
+        $deuda = $invoice->total - $invoice->pamnt;
+        $subtotal = $invoice->subtotal + $invoice->discount;
+        $anticipo = ($invoice->pamnt > $invoice->total) ? $invoice->pamnt - $invoice->total : 0;
+
+        $writer->writeSheetRow('Reporte Facturas', [
+            $invoice->tid,
+            $invoice->name." ".$invoice->dosnombre." ".$invoice->unoapellido." ".$invoice->dosapellido,
+            $invoice->abonado,
+            $invoice->csd,
+            $invoice->tipo_documento,
+            $invoice->documento,
+            $invoice->invoicedate,
+            $invoice->invoiceduedate,
+            $invoice->notes,
+            $invoice->ron,
+            $invoice->product,
+            $invoice->qty,
+            $invoice->price,
+            $subtotal,
+            $invoice->tax,
+            $invoice->discount,
+            $invoice->total,
+            $invoice->pamnt,
+            $deuda,
+            $anticipo,
+            $invoice->refer,
+            $this->lang->line(ucwords($invoice->status))
+        ]);
     }
-        
-        
-    
-    $fecha_actual= date("d-m-Y");
-    $dia= date("N");
-    $this->load->model('reports_model', 'reports');
-    $fecha_actual=$this->reports->obtener_dia($dia)." ".$fecha_actual;
-    $fileLocation = 'Facturas '.$fecha_actual.'.xlsx';
-    
-    //write to xlsx file
+
+    $fecha_actual = date("d-m-Y");
+    $fileLocation = 'Facturas_con_productos_'.$fecha_actual.'.xlsx';
+
     $writer->writeToFile($fileLocation);
-    //echo $writer->writeToString();
-    
-    //force download
+
     header('Content-Description: File Transfer');
     header("Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
     header("Content-Disposition: attachment; filename=".basename($fileLocation));
     header("Content-Transfer-Encoding: binary");
-    header("Expires: 0");
-    header("Pragma: public");
-    header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-    header('Content-Length: ' . filesize($fileLocation)); //Remove
-
-    ob_clean();
-    flush();
+    header('Content-Length: ' . filesize($fileLocation));
+    ob_clean(); flush();
 
     readfile($fileLocation);
     unlink($fileLocation);
-    exit(0);
-       
-
+    exit;
 }
+
 public function explortar_a_excel_notas(){
         
         $this->db->select("invoice_items.*,invoices.tid as itid,invoices.invoicedate,invoice_items.id as id2,customers.id as id3, customers.name");
@@ -1969,6 +1955,7 @@ ini_set('memory_limit', '500M');
         echo json_encode($output);
 
     }
+	
 public function lista_resivos_tb(){
     if(empty($_GET['tid'])){
         $_GET['tid']=-500;
@@ -3248,5 +3235,6 @@ foreach ($lista as $key => $value) {
         $this->load->view('invoices/historial_inv');
         $this->load->view('fixed/footer');
 	}
+	
 
 }
