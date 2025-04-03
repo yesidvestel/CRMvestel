@@ -315,6 +315,7 @@ $this->load->model("customers_model","customers");
             $total_para_autoretencion=0;
             $dataApiNET->retentions[0]->id=20439;
             $itemPuntoComercial=$this->db->get_where("invoice_items",array("product"=>"PuntoComercial","tid"=>$array_servicios2['tid']))->row();
+            $dataApiTV->items[0]->taxes[0]->id=5869;
             if(!empty($itemPuntoComercial)){
                 $dataApiTV->items[0]->description="Puntos de Tv Comerciales ".$itemPuntoComercial->qty;
                 //$itemPuntoComercial->price=$itemPuntoComercial->price*$itemPuntoComercial->qty;
