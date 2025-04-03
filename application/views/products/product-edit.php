@@ -72,14 +72,15 @@
 					   for="product_cat">Servicio de</label>
 					<div class="col-sm-6">
 						 <select name="sede" class="form-control">
-							<?php if($product['sede']==-1){
+							<?php if($product['sede']==1){
 								$sede = 'Television';
-								}if($product['sede']==-2){
+								}if($product['sede']==2){
 								$sede = 'Internet';
 								}if($product['sede']==0){
 								$sede = '';
 									}
                            	echo '<option value="'.$product['sede'].'">'.$sede.'</option>';?>
+							<option value="0">Ninguno</option>
 							<option value="1">Television</option>
 							<option value="2">Internet</option>
                         </select>
