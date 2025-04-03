@@ -56,6 +56,8 @@
 					$user=$this->db->get_where("employee_profile",array('id' =>$col))->row();
 					if($col==$user->id){						
 						$realizo = $user->username;
+					}else if($col==2){
+						$realizo = 'Masivo Cartera';
 					}else{
 						$realizo = 'Orden Nº '.$col;
 					}

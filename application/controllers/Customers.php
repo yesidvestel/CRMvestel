@@ -2489,7 +2489,7 @@ public function ajax_graficas2(){
         // Encuentra los usuarios que han tenido un cambio en el campo estado dentro de los últimos 2 meses
         $fechaLimite = date('Y-m-d', strtotime('-2 months')); // Fecha límite hace 2 meses
         $usuariosConCambio = $this->db->select('id')
-                                      ->where('DATE(fecha_cambio) <', $fechaLimite)
+                                      ->where('DATE(fecha_cambio) <=', $fechaLimite)
                                       ->where('usu_estado', 'Cortado')
                                       ->get('customers')
                                       ->result_array();
@@ -2511,8 +2511,17 @@ public function ajax_graficas2(){
 
             // Actualiza el campo estado_usuario a 'cartera' para la última factura del usuario actual
             if ($ultimaFactura && isset($ultimaFactura['id'])) {
-                $this->db->where('id', $ultimaFactura['id']);
-                $this->db->update('invoices', array('ron' => 'Cartera'));
+                $this->db->where('id', $ultimaFactura['id']);				
+        		if($this->db->update('invoices', array('ron' => 'Cartera'))){
+					//historial estados
+					 $dataes = array(
+						'cid' => $usuario['id'],
+						'fecha' => date("Y-m-d H:i:s"),
+						'estado' => 'Cartera',
+						'col' => 2,
+						);
+						 $this->db->insert("estados",$dataes);
+					}
             }
         }
         $usuarios_afectados_str="# de usuarios afechatos = <b>".count($usuariosConCambio)."</b> los ids de los usuarios son : <br><b>".$usuarios_afectados_str."</b>";
