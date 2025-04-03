@@ -92,8 +92,8 @@ $this->load->model("customers_model","customers");
         $this->facturas_electronicas->cargar_configuraciones_para_facturar();
     	$this->load->library('SiigoAPI');
        $api = new SiigoAPI();
-        $v1=$api->getAuth(1);
-        $this->db->update("config_facturacion_electronica",array("tocken"=>$v1['access_token']),array("id"=>1));
+        //$v1=$api->getAuth(1);
+        //$this->db->update("config_facturacion_electronica",array("tocken"=>$v1['access_token']),array("id"=>1));
         
             $v2=$api->getAuth2(2);
             $this->db->update("config_facturacion_electronica",array("tocken"=>$v2['access_token']),array("id"=>2));
@@ -223,7 +223,7 @@ $this->load->model("customers_model","customers");
             $dateTimeVencimiento=new DateTime($date);
         //end fecha vencimiento
         
-        if($dataApiTV!=null){
+       /* if($dataApiTV!=null){
             $dataApiTV=json_decode($dataApiTV);
             $dataApiTV->document->id="12434";
             $dataApiTV->customer->identification=$customer->documento;
@@ -246,8 +246,13 @@ $this->load->model("customers_model","customers");
 //                var_dump($consulta_siigo1);
                   //  $api->updateCustomer($json_customer,$consulta_siigo1['results'][0]['id'],1);//para acturalizar cliente en siigo 
             }   
-        }
-        if($dataApiNET!=null){
+        }*/
+         $solotv=false;
+        if($dataApiNET!=null || $dataApiTV!=null){
+            if($dataApiNET==null){
+                $solotv=true;
+                $dataApiNET=$dataApiTV;
+            }
             $dataApiNET=json_decode($dataApiNET);
             $dataApiNET->document->id="27274";
             $dataApiNET->customer->identification=$customer->documento;
@@ -304,15 +309,17 @@ $this->load->model("customers_model","customers");
         }else{
        	//falta el manejo de los saldos saldos
         if($dataApiTV!=null){
+            $dataApiTV=json_decode($dataApiTV);
             $dataApiTV->items[0]->description="Servicio de Televisión por Cable";
             $array_servicios2=$this->customers->servicios_detail($customer->id);
             $total_para_autoretencion=0;
+            $dataApiNET->retentions[0]->id=20439;
             $itemPuntoComercial=$this->db->get_where("invoice_items",array("product"=>"PuntoComercial","tid"=>$array_servicios2['tid']))->row();
             if(!empty($itemPuntoComercial)){
                 $dataApiTV->items[0]->description="Puntos de Tv Comerciales ".$itemPuntoComercial->qty;
                 //$itemPuntoComercial->price=$itemPuntoComercial->price*$itemPuntoComercial->qty;
                          
-                 $dataApiTV->items[0]->code="024";
+                 $dataApiTV->items[0]->code="T02";
                             //$v1=($itemPuntoComercial->price*19)/100;
                             $v2=$itemPuntoComercial->price*$itemPuntoComercial->qty;
                             //$dataApiNET->items[0]->taxes[0]->id=5869;
@@ -325,6 +332,7 @@ $this->load->model("customers_model","customers");
                            
             }else if(strtolower($array_servicios2['television'])!="television" && $array_servicios2['television']!="no" && $array_servicios2['television']!="" && $array_servicios2['television']!="-"){
                     $paquete_tv_diff=$this->db->get_where("products", array('product_name' => $array_servicios2['television']))->row();
+                    $dataApiTV->items[0]->code="T02";
                     if(isset($paquete_tv_diff)){
                         $dataApiTV->items[0]->description="Television ".$paquete_tv_diff->product_name;
                         
@@ -332,6 +340,7 @@ $this->load->model("customers_model","customers");
                             $dataApiTV->items[0]->price=$paquete_tv_diff->product_price;
                             $dataApiTV->payments[0]->value=$v2;
                             if($paquete_tv_diff->taxrate!=0){
+                                $dataApiNET->items[0]->taxes[0]->id=5869;
                                 $v1=($paquete_tv_diff->product_price*19)/100;
                                 $v2=$paquete_tv_diff->product_price+$v1;
                                 
@@ -341,7 +350,7 @@ $this->load->model("customers_model","customers");
                                 
                              
                             }else{
-                                 $dataApiTV->items[0]->code="001";
+                                 $dataApiTV->items[0]->code="T02";
                                 unset($dataApiTV->items[0]->taxes);
                             }
                             //$total_para_autoretencion+=$dataApiTV->items[0]->price;
@@ -365,7 +374,8 @@ $this->load->model("customers_model","customers");
 
                     $v2=$prod->product_price*intval($pad->qty);
 
-                    $dataApiTV->items[1]->code="024";
+                    $dataApiTV->items[1]->taxes[0]->id=5869;
+                    $dataApiTV->items[1]->code="T02";
                             $dataApiTV->items[1]->quantity=$pad->qty;
                             $dataApiTV->items[1]->price=$prod->product_price;
                             $dataApiTV->payments[0]->value=$dataApiTV->payments[0]->value+$v2;    
@@ -378,7 +388,7 @@ $this->load->model("customers_model","customers");
             $dataApiTV->retentions[0]->value=$autorencion_valor;
         }
          //var_dump($dataApiNET);
-         if($dataApiNET!=null){
+         if($dataApiNET!=null && $solotv==false){
             $total_para_autoretencion=0;
             $dataApiNET->retentions[0]->id=20439;
             $array_servicios=$this->customers->servicios_detail($customer->id);
@@ -419,6 +429,29 @@ $this->load->model("customers_model","customers");
             //falta esta parte identificar el paquete de internet del usuario y agregar sus valores
         }
 }
+if($dataApiTV !=null){
+            if($producto_existe){
+                //significa que los 2 servicios se facturan se adiciona items tv y retencion + valores
+                foreach ($dataApiTV->items as $key => $obj) {
+                    array_push($dataApiNET->items, $obj);    
+                }
+                $dataApiNET->payments[0]->value=$dataApiNET->payments[0]->value+$dataApiTV->payments[0]->value;
+                if(isset($dataApiTV->retentions[0]->value) && isset($dataApiNET->retentions[0]->value) ){
+                    $dataApiNET->retentions[0]->value+=$dataApiTV->retentions[0]->value;
+                }
+                
+            }else{
+                //significa que solo existe la tv se procede a reemplazar items y valores
+                $dataApiNET->items=$dataApiTV->items;
+                $dataApiNET->retentions[0]->value+=$dataApiTV->retentions[0]->value;
+                $dataApiNET->payments[0]->value=$dataApiTV->payments[0]->value;
+            }
+
+
+
+           
+
+        }
        	/*var_dump($dateTime->format("Ymd"));
        	var_dump($dataApi->Payments[0]->DueDate);
         var_dump($dataApi->Header->Number);
@@ -438,7 +471,7 @@ $this->load->model("customers_model","customers");
         //exit();
         //var_dump($dataApiTV);
         $retorno=array("mensaje"=>"No");
-        if($dataApiTV!=null && $dataApiTV!="null"){
+       /* if($dataApiTV!=null && $dataApiTV!="null"){
             $ob1=$this->db->get_where("config_facturacion_electronica",array("id"=>1))->row();
             $retorno = $api->accionar2($api,$dataApiTV,$ob1->tocken); 
             
@@ -446,7 +479,9 @@ $this->load->model("customers_model","customers");
                 $ob1=$this->db->get_where("config_facturacion_electronica",array("id"=>2))->row();
                 $retorno = $api->accionar2($api,$dataApiNET,$ob1->tocken);  
             }
-        }else if($dataApiNET!=null && $dataApiNET!="null"){
+        }else */
+
+        if($dataApiNET!=null && $dataApiNET!="null"){
             $ob1=$this->db->get_where("config_facturacion_electronica",array("id"=>2))->row();
             $retorno = $api->accionar2($api,$dataApiNET,$ob1->tocken);         
         }
