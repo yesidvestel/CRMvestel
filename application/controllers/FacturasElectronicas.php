@@ -389,6 +389,7 @@ $this->load->model("customers_model","customers");
             $dataApiTV->retentions[0]->value=$autorencion_valor;
         }
          //var_dump($dataApiNET);
+        $producto_existe=false;
          if($dataApiNET!=null && $solotv==false){
             $total_para_autoretencion=0;
             $dataApiNET->retentions[0]->id=20439;
@@ -400,6 +401,7 @@ $this->load->model("customers_model","customers");
                 foreach ($lista_de_productos as $key => $prod) {
                     //$prod->product_name=strtolower(str_replace(" ", "",$prod->product_name ));
                     if($prod->product_name==$array_servicios['combo']){
+                        $producto_existe=true;
                         //var_dump($prod->product_name);
                         $dataApiNET->items[0]->code=$prod->product_code;
 
