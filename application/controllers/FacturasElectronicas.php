@@ -297,10 +297,12 @@ $this->load->model("customers_model","customers");
                             unset($dataApiTV->items[0]->taxes);
                             $dataApiTV->items[0]->price="20000";                            
                             $dataApiTV->payments[0]->value="20000";
+                            $dataApiNET->retentions[0]->id=20439;
+                            $dataApiTV->items[0]->code="T02";
                 }   
 
                 if($dataApiNET!=null){
-                    $dataApiNET->items[0]->code="I01";
+                    $dataApiNET->items[0]->code="T02";
                     $dataApiNET->items[0]->description="Afiliación Internet";
                             unset($dataApiNET->items[0]->taxes);
                             $dataApiNET->items[0]->price="30000";                            
@@ -439,8 +441,10 @@ if($dataApiTV !=null){
                     array_push($dataApiNET->items, $obj);    
                 }
                 $dataApiNET->payments[0]->value=$dataApiNET->payments[0]->value+$dataApiTV->payments[0]->value;
+                $dataApiNET->payments[0]->value="".$dataApiNET->payments[0]->value.""; // si presenta problemas de valores hacer lo mismo con retenciones
                 if(isset($dataApiTV->retentions[0]->value) && isset($dataApiNET->retentions[0]->value) ){
                     $dataApiNET->retentions[0]->value+=$dataApiTV->retentions[0]->value;
+                    $dataApiNET->retentions[0]->value="".$dataApiNET->retentions[0]->value."";
                 }
                 
             }else{
