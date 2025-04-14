@@ -971,7 +971,7 @@ if($_SESSION[md5("variable_datos_pin")]['db_name'] != "admin_crmvestel" && $stat
         $tidactualmasuno= $this->db->select('max(tid)+1 as tid')->from('invoices')->get()->result();
         //esta data es de la nueva factura para insertar
         $data['tid']=$tidactualmasuno[0]->tid;
-	  	if($this->config->item('ctitle')!='FUTURE SOLUTIONS DEVELOPMENT SAS' && $ticket->detalle=="Instalacion"){
+	  	if($this->config->item('ctitle')=='VESTEL S.A.S' && $ticket->detalle=="Instalacion"){
 			$data['status']='paid';
 		}else{
 			$data['status']='due';
@@ -1024,7 +1024,7 @@ if($_SESSION[md5("variable_datos_pin")]['db_name'] != "admin_crmvestel" && $stat
                         $producto = $this->db->get_where('products',array('product_name'=>$inter))->row();
                         
                     }
-					if($this->config->item('ctitle')!='FUTURE SOLUTIONS DEVELOPMENT SAS' && $ticket->detalle=="Instalacion"){
+					if($this->config->item('ctitle')=='VESTEL S.A.S' && $ticket->detalle=="Instalacion"){
 						$x=0;
 						$precio=0;
 						$iva=0;
@@ -1074,7 +1074,7 @@ if($_SESSION[md5("variable_datos_pin")]['db_name'] != "admin_crmvestel" && $stat
                         }
                         
                     }
-					if($this->config->item('ctitle')!='FUTURE SOLUTIONS DEVELOPMENT SAS' && $ticket->detalle=="Instalacion"){
+					if($this->config->item('ctitle')=='VESTEL S.A.S' && $ticket->detalle=="Instalacion"){
 						$x=0;
 						$precio=0;
 						$iva=0;
