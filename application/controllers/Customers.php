@@ -293,7 +293,7 @@ var_dump($output);
                         $valido=false;
                         $emp=$this->aauth->get_user()->id;
                         $name_campaign="Bien".$user->abonado;
-                        $mensaje="Gracias por preferirnos, VESTEL te da la BIENVENIDA.  Sabemos que tu experiencia con nosotros será extraordinaria";
+                        $mensaje="Gracias por preferirnos, ".$this->config->item('ctitle')." te da la BIENVENIDA.  Sabemos que tu experiencia con nosotros será extraordinaria";
                         $mensajes_a_enviar.='{
                                               "codeCountry": "57",
                                               "number": "'.$user->celular.'",
