@@ -341,7 +341,8 @@ public function traspaso(){
                                     }
                                     $suma+=$producto->product_price+$iva2;    
                                 }else{
-                                    $suma+=$producto->product_price+3992;    
+                                     $v1=($producto->product_price*19)/100;
+                                    $suma+=$producto->product_price+$v1;    
                                 }
                             }
                             if($producto!=null){$var_excluir=false;
@@ -1312,7 +1313,8 @@ public function traspaso(){
                                     }
                                     $suma+=$producto->product_price+$iva2;    
                                 }else{
-                                    $suma+=$producto->product_price+3992;    
+                                      $v1=($producto->product_price*19)/100;
+                                    $suma+=$producto->product_price+$v1;    
                                 }
                                 
                             }
@@ -2193,7 +2195,8 @@ $suscripcion_str2=$suscripcion_str;
                                 $suma+=$producto->product_price;
                             }else{
                                 $producto=$this->db->get_where('products', array("pid"=>"27"))->row();
-                                $suma+=$producto->product_price+3992;
+                                $v1=($producto->product_price*19)/100;
+                                $suma+=$producto->product_price+$v1;
                             }
                             if($producto!=null){$var_excluir=false;
                                 $suscripcion_str="Tv";

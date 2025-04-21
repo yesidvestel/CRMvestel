@@ -811,7 +811,8 @@ public function ajax_graficas2(){
                                 $suma+=$producto->product_price;
                             }else{
                                 $producto=$this->db->get_where('products', array("pid"=>"27"))->row();
-                                $suma+=$producto->product_price+3992;
+                                $v1=($producto->product_price*19)/100;
+                                $suma+=$producto->product_price+$v1;
                             }
                             
                         }

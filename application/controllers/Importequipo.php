@@ -626,7 +626,8 @@ fclose ($fp);*/
 								$x=intval($producto->product_price);							
 								$datay['price']=$x;
 								$datay['tax']=19;
-								$datay['totaltax']=3992;
+                                  $v1=($producto->product_price*19)/100;
+								$datay['totaltax']=$v1;
 								$datay['subtotal']=$x+$datay['totaltax'];
 								$this->db->insert('invoice_items',$datay);
 							}
