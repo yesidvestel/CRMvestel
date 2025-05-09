@@ -1904,11 +1904,11 @@ public function ajax_graficas2(){
             }else{
                 $resivos_var='';
             }
-            $row[] = '<a  href="' . base_url("invoices/view?id=$invoices->tid") . '" class="btn btn-success btn-xs" title="Ver"><i class="icon-file-text"></i></a> &nbsp;
+            $row[] = '<a  href="' . base_url("invoices/view?id=$invoices->tid") . '" class="btn btn-success btn-xs" title="Ver"><i class="icon-file-text"></i></a>&nbsp;'.$resivos_var.'&nbsp;&nbsp;
 			<a href="#pop_model2" data-object-id2="' . $invoices->tid . '" data-object-cat="' . $prd->cat . '" class="btn btn-xs btn-orange" onclick="abrir_modal2(this);" title="Promociones"><i class="icon-gift"></i></a>&nbsp;&nbsp;
 			<a href="#pop_model" data-object-id3="' . $invoices->tid . '" data-object-cat="' . $prd->cat . '" class="btn btn-xs btn-blue" onclick="abrir_modal(this);" title="Siigo"><i class="icon-cloud"></i></a>';
             if ($this->aauth->get_user()->roleid == 5) {
-            $row[] = '<a href="#" data-object-id="' . $invoices->tid . '" class="btn btn-danger btn-xs delete-object"><span class="icon-trash"></span></a>&nbsp;'.$resivos_var.'&nbsp;&nbsp';
+            $row[] = '<a href="#" data-object-id="' . $invoices->tid . '" class="btn btn-danger btn-xs delete-object"><span class="icon-trash"></span></a>';
             
             }
             $data[] = $row;
