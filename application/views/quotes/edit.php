@@ -494,6 +494,36 @@
 										</div>
                                    </div>
 								</div>
+								<div class="form-group row" id="Retiro_voluntario">	
+                                    <div class="col-sm-12">
+										<h3 class="title">Motivo</h3>
+                                    </div>
+									<div class="col-sm-12">
+										<label for="invociedate" class="caption">Razon de Retiro</label>
+											<select name="motretiro" class="form-control mb-1">
+												<option value="mal servicio">mal servicio</option>
+												<option value="Cambio de proveedor">Cambio de proveedor</option>
+												<option value="No necesita el servicio">No necesita el servicio</option>
+												<option value="No tenemos cobertura">No tenemos cobertura</option>
+												<option value="Traslado de municipio">Traslado de municipio</option>
+												<option value="Motivo personal">Motivo personal</option>
+												<option value="Economico">Economico</option>
+												<option value="Cambio de municipio que no cuenta con cobertura">Cambio de municipio que no cuenta con cobertura</option>
+												<option value="Intermitencia constante del servicio">Intermitencia constante del servicio</option>
+												<option value="Inconvenientes con la velocidad del servicio">Inconvenientes con la velocidad del servicio</option>
+												<option value="Falta de recursos economicos">Falta de recursos economicos </option>
+												<option value="Requerimiento de television lineal">Requerimiento de television lineal</option>
+												<option value="Inconveniente con el funcionamiento de iptv">Inconveniente con el funcionamiento de iptv</option>
+												<option value="Inconformidad con la parrilla de IPTV">Inconformidad con la parrilla de IPTV</option>
+												<option value="Servicios de valor agregado de otro operador">Servicios de valor agregado de otro operador</option>
+												<option value="Inconformidad con la tarifa">Inconformidad con la tarifa</option>
+												<option value="Cambio de Residencia">Cambio de Residencia</option>
+												<option value="Ya no requiere el servicio">Ya no requiere el servicio</option>
+												<option value="Cesión del contrato">Cesión del contrato</option>
+												<option value="Tiempo de respuesta de una solicitud de traslado">Tiempo de respuesta de una solicitud de traslado</option>
+											</select>
+									</div>
+								</div>
 								<div class="form-group row" id="AgregarTelevision">	
                                     <div class="col-sm-12">
 										<h3 class="title">Asignar servicio</h3>

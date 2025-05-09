@@ -614,6 +614,19 @@
 												<option value="Traslado de municipio">Traslado de municipio</option>
 												<option value="Motivo personal">Motivo personal</option>
 												<option value="Economico">Economico</option>
+												<option value="Cambio de municipio que no cuenta con cobertura">Cambio de municipio que no cuenta con cobertura</option>
+												<option value="Intermitencia constante del servicio">Intermitencia constante del servicio</option>
+												<option value="Inconvenientes con la velocidad del servicio">Inconvenientes con la velocidad del servicio</option>
+												<option value="Falta de recursos economicos">Falta de recursos economicos </option>
+												<option value="Requerimiento de television lineal">Requerimiento de television lineal</option>
+												<option value="Inconveniente con el funcionamiento de iptv">Inconveniente con el funcionamiento de iptv</option>
+												<option value="Inconformidad con la parrilla de IPTV">Inconformidad con la parrilla de IPTV</option>
+												<option value="Servicios de valor agregado de otro operador">Servicios de valor agregado de otro operador</option>
+												<option value="Inconformidad con la tarifa">Inconformidad con la tarifa</option>
+												<option value="Cambio de Residencia">Cambio de Residencia</option>
+												<option value="Ya no requiere el servicio">Ya no requiere el servicio</option>
+												<option value="Cesión del contrato">Cesión del contrato</option>
+												<option value="Tiempo de respuesta de una solicitud de traslado">Tiempo de respuesta de una solicitud de traslado</option>
 											</select>
 									</div>
 								</div>
