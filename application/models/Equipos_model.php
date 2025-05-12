@@ -34,7 +34,7 @@ class Equipos_model extends CI_Model
 	// Consulta para tabla de equipos
 	 private function _get_datatables_query($id = '')
     {
-         
+         	$this->db->select('*, equipos.observacion as obs');
 			$this->db->from($this->table);
 		 	//$this->db->join('puertos', 'puertos.idp = equipos.puerto','left');
 		 	$this->db->join('naps', 'naps.idn = equipos.nat','left');

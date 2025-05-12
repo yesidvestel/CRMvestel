@@ -181,6 +181,7 @@ class Products extends CI_Controller
 			if ($prd->puerto!=='0'){
 			$row[] = $puerto->puerto;
 			}else{$row[]= 'N/A';}
+			$row[] = $prd->obs;
 			if(empty($prd->imagen)){
                 $row[]="Sin Img.";
             }else{

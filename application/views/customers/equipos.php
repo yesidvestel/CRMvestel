@@ -27,6 +27,7 @@
 					<th>Vlan</th>
 					<th>Nat</th>
 					<th>P/to Nat</th>
+					<th>Observacion</th>
                     <th>GENIEACS</th>
                 </tr>
                 </thead>
@@ -45,6 +46,7 @@
 					<th>Vlan</th>
 					<th>Nat</th>
 					<th>P/to Nat</th>
+					<th>Observacion</th>
                     <th>GENIEACS</th>
                 </tr>
                 </tfoot>

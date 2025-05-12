@@ -1510,7 +1510,7 @@ public function ajax_graficas2(){
             if ($prd->puerto!=='0'){
             $row[] = $prd->puerto;
             }else{$row[]= 'N/A';}
-
+			$row[] = $prd->obs;
             if(isset($prd->asignado_equipo) && $prd->asignado_equipo!=0 && $prd->asignado_equipo!=""){
                 $cs=$this->db->get_where("customers",array("id"=>$prd->asignado_equipo))->row();
                 if($cs->gid==2){
