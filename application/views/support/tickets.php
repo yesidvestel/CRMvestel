@@ -202,10 +202,13 @@
 													<option value='Revision de television'>Revision de television</option>
 													<option value='Revision tv e internet'>Revision tv e internet</option>
 													<option value='Reconexion Combo'>Reconexion Combo</option>
+													<option value='Reconexion Combo2'>Reconexion Combo2</option>
 													<option value='Reinstalación'>Reinstalación</option>
 													<option value='Reconexion Internet'>Reconexion Internet</option>
+													<option value='Reconexion Internet2'>Reconexion Internet2</option>
 													<option value='Retiro voluntario'>Retiro voluntario</option>
 													<option value='Reconexion Television'>Reconexion Television</option>
+													<option value='Reconexion Television2'>Reconexion Television2</option>
 													<option value='Recuperación cable modem'>Recuperación cable modem</option>
 													<option value='Subir megas'>Subir megas</option>
 													<option value='Bajar megas'>Bajar megas</option>
