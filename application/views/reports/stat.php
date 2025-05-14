@@ -2,36 +2,67 @@
 
 $currentMonth = date('Y-m'); // Mes actual en formato YYYY-MM
 $previousMonth = date('Y-m', strtotime('-1 month')); // Mes anterior en formato YYYY-MM
+$twoMonthsAgo = date('Y-m', strtotime('-2 month')); // Mes anterior en formato YYYY-MM
 setlocale(LC_TIME, "spanish");
 $currentMonthName = strftime('%B', strtotime(date('Y-m-01'))); // Nombre del mes actual
 $previousMonthName = strftime('%B', strtotime('-1 month')); 
- 
+$twoMonthsAgoName = strftime('%B', strtotime('-2 month'));
 
 // Crear un rango de días (1 al 31, porque queremos comparar día por día)
+// Crear un rango de días (1 al 31)
 $dataVisits = [];
 for ($day = 1; $day <= 31; $day++) {
-    $formattedDay = str_pad($day, 2, '0', STR_PAD_LEFT); // Asegurar formato "01", "02", etc.
+    $formattedDay = str_pad($day, 2, '0', STR_PAD_LEFT);
     $dataVisits[$formattedDay] = [
         'x' => $formattedDay,
         'currentMonth' => 0,
-        'previousMonth' => 0
+        'previousMonth' => 0,
+        'twoMonthsAgo' => 0
     ];
 }
 
-// Procesar los datos de $incomechart
-foreach ($incomechart as $row) {
-    $rowDay = date('d', strtotime($row['date'])); // Obtener el día (01, 02, ...)
-    $rowMonth = date('Y-m', strtotime($row['date'])); // Obtener el mes (YYYY-MM)
+// Arrays para llevar el acumulado
+$currentTotal = 0;
+$previousTotal = 0;
+$twoMonthsAgoTotal = 0;
 
-    if ($rowMonth === $currentMonth) {
-        $dataVisits[$rowDay]['currentMonth'] += intval($row['total']); // Sumar al mes actual
-    } elseif ($rowMonth === $previousMonth) {
-        $dataVisits[$rowDay]['previousMonth'] += intval($row['total']); // Sumar al mes anterior
+// Agrupar por día los ingresos por mes (de la base de datos)
+$dailyTotals = [];
+foreach ($incomechart as $row) {
+    $day = date('d', strtotime($row['date']));
+    $month = date('Y-m', strtotime($row['date']));
+    $total = intval($row['total']);
+
+    if (!isset($dailyTotals[$month][$day])) {
+        $dailyTotals[$month][$day] = 0;
     }
+
+    $dailyTotals[$month][$day] += $total;
 }
 
-// Convierte el array a JSON para JavaScript
+// Llenar la estructura acumulativa
+for ($day = 1; $day <= 31; $day++) {
+    $formattedDay = str_pad($day, 2, '0', STR_PAD_LEFT);
+
+    // Acumulados
+    if (isset($dailyTotals[$twoMonthsAgo][$formattedDay])) {
+        $twoMonthsAgoTotal += $dailyTotals[$twoMonthsAgo][$formattedDay];
+    }
+    if (isset($dailyTotals[$previousMonth][$formattedDay])) {
+        $previousTotal += $dailyTotals[$previousMonth][$formattedDay];
+    }
+    if (isset($dailyTotals[$currentMonth][$formattedDay])) {
+        $currentTotal += $dailyTotals[$currentMonth][$formattedDay];
+    }
+
+    $dataVisits[$formattedDay]['twoMonthsAgo'] = $twoMonthsAgoTotal;
+    $dataVisits[$formattedDay]['previousMonth'] = $previousTotal;
+    $dataVisits[$formattedDay]['currentMonth'] = $currentTotal;
+}
+
+// Convertir a JSON para el gráfico
 $dataVisitsJson = json_encode(array_values($dataVisits));
+
 	$currentMonthExpenses = []; // Gastos del mes actual
 	$previousMonthExpenses = []; // Gastos del mes anterior
 
@@ -288,15 +319,16 @@ $dataVisitsJson = json_encode(array_values($dataVisits));
 			element: 'dashboard-income-chart',
 			data: dataVisits,
 			xkey: 'x', // Día del mes (01, 02, ..., 31)
-			ykeys: ['currentMonth', 'previousMonth'], // Claves para las dos líneas
+			ykeys: ['currentMonth', 'previousMonth','twoMonthsAgo'], // Claves para las dos líneas
 			labels: [
 				'<?php echo ucfirst($currentMonthName); ?>',  // Nombre del mes actual
-            	'<?php echo ucfirst($previousMonthName); ?>'
+            	'<?php echo ucfirst($previousMonthName); ?>',
+            	'<?php echo ucfirst($twoMonthsAgoName); ?>'
 			],
 			hideHover: 'auto',
 			resize: true,
-			lineColors: ['#34cea7', '#ff6e40'], // Colores para cada línea
-			pointFillColors: ['#34cea7', '#ff6e40'],
+			lineColors: ['#34cea7', '#ff6e40', '#34495e'], // Colores para cada línea
+			pointFillColors: ['#34cea7', '#ff6e40', '#34495e'],
 			fillOpacity: 0.4,
 		});
 	}
