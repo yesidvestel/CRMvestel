@@ -682,6 +682,7 @@ public function ajax_graficas2(){
             $row[] = $customers->abonado;
             $row[] = '<a href="customers/view?id=' . $customers->id . '">' . $customers->name ." ". $customers->unoapellido. '</a>';
             $row[] = $customers->celular;
+            $row[] = $customers->celular2;
             $row[] = $customers->documento;
             $row[] = $customers->nomenclatura . ' ' . $customers->numero1 . $customers->adicionauno.' Nº '.$customers->numero2.$customers->adicional2.' - '.$customers->numero3;
 			$row[] = amountFormat($debe_cliente);

@@ -753,7 +753,27 @@ public function traspaso(){
         $this->load->library('Excel');
     
     //define column headers
-    $headers = array('ID' => 'integer','Abonado' => 'string','Tipo Documento' => 'string','Cedula' => 'string', 'Nombre' => 'string', 'Celular' => 'string', 'Correo' => 'string' ,'Direccion' => 'string','Barrio' => 'string','Serv. Suscritos' => 'string', 'Tegnologia' => 'string','Estado' => 'string','Estrato' => 'string','Coordenadas' => 'string','Municipio' => 'string','Deuda' => 'integer','Suscripcion' => 'integer','Ingreso' => 'integer','Clausula' => 'string');
+    $headers = array(
+		'ID' => 'integer',
+		'Abonado' => 'integer',
+		'Tipo Documento' => 'string',
+		'Cedula' => 'integer', 
+		'Nombre' => 'string', 
+		'Celular' => 'integer', 
+		'Celular AD' => 'integer', 
+		'Correo' => 'integer' ,
+		'Direccion' => 'string',
+		'Barrio' => 'string',
+		'Serv. Suscritos' => 'string', 
+		'Tegnologia' => 'string',
+		'Estado' => 'string',
+		'Estrato' => 'string',
+		'Coordenadas' => 'string',
+		'Municipio' => 'string',
+		'Deuda' => 'integer',
+		'Suscripcion' => 'integer',
+		'Ingreso' => 'integer',
+		'Clausula' => 'string');
     if($_GET['ultimo_estado_sel']=="Si"){
         $headers['UltimoEstado']="string";
         $headers['FechaCambio']="string";
@@ -787,6 +807,7 @@ public function traspaso(){
     //write headers el primer campo que es nombre de la hoja de excel deve de coincidir en writeSheetHeader y writeSheetRow para tener en cuenta si se piensan agregar otras hojas o algo por el estilo
     $col_options = array(
 
+['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
 ['font'=>'Arial','font-style'=>'bold','font-size'=>'12',"fill"=>"#BDD7EE",'halign'=>'center'],
@@ -842,9 +863,9 @@ public function traspaso(){
 
 
                             if($_GET['ultimo_estado_sel']=="Si"){
-                                $array_excel=array($customer->id,$customer->abonado,$customer->tipo_documento,$customer->documento ,$nombre_completo, $customer->celular, $customer->email,$direccion,$str_barrio ,$customer->suscripcion_str,$customer->tegnologia,$customer->usu_estado,$customer->estrato,$coors,$municipiox->ciudad,$customer->deuda,$customer->suscripcion,$customer->money, $clausula->nombre,$customer->ultimo_estado,$customer->fecha_ultimo_estado);
+                                $array_excel=array($customer->id,$customer->abonado,$customer->tipo_documento,$customer->documento ,$nombre_completo, $customer->celular,$customer->celular2, $customer->email,$direccion,$str_barrio ,$customer->suscripcion_str,$customer->tegnologia,$customer->usu_estado,$customer->estrato,$coors,$municipiox->ciudad,$customer->deuda,$customer->suscripcion,$customer->money, $clausula->nombre,$customer->ultimo_estado,$customer->fecha_ultimo_estado);
                             }else{
-                                $array_excel=array($customer->id,$customer->abonado,$customer->tipo_documento,$customer->documento ,$nombre_completo, $customer->celular,$customer->email, $direccion,$str_barrio ,$customer->suscripcion_str,$customer->tegnologia,$customer->usu_estado,$customer->estrato,$coors,$municipiox->ciudad,$customer->deuda,$customer->suscripcion,$customer->money, $clausula->nombre);
+                                $array_excel=array($customer->id,$customer->abonado,$customer->tipo_documento,$customer->documento ,$nombre_completo, $customer->celular,$customer->celular2,$customer->email, $direccion,$str_barrio ,$customer->suscripcion_str,$customer->tegnologia,$customer->usu_estado,$customer->estrato,$coors,$municipiox->ciudad,$customer->deuda,$customer->suscripcion,$customer->money, $clausula->nombre);
                             }
 
                             if($_GET['check_agregar_ultima_transaccion']=="true"){
@@ -979,6 +1000,7 @@ public function traspaso(){
              $nombre_completo=$this->customers->get_nombre_completo($customers->name,$customers->dosnombre,$customers->unoapellido,$customers->dosapellido);
             $row[] = '<a href="' . $base . 'view?id=' . $customers->id . '">' . $nombre_completo. ' </a>';
 			$row[] = $customers->celular;			
+			$row[] = $customers->celular2;			
             $row[] = $customers->email;           
             $row[] = $customers->nomenclatura . ' ' . $customers->numero1 . $customers->adicionauno.' Nº '.$customers->numero2.$customers->adicional2.' - '.$customers->numero3;
             $obj_barrio=$this->db->get_where("barrio",array("idBarrio"=>$customers->barrio))->row();
@@ -1716,6 +1738,7 @@ $suscripcion_str2=$suscripcion_str;
                             $nombre_completo=$this->customers->get_nombre_completo($customers->name,$customers->dosnombre,$customers->unoapellido,$customers->dosapellido);
                             $row[] = '<a href="'.base_url().'customers/view?id=' . $customers->id . '">' . $nombre_completo. ' </a>';
                             $row[] = $customers->celular;   
+                            $row[] = $customers->celular2;   
                             $row[] = $customers->email;           
                             $row[] = $customers->nomenclatura . ' ' . $customers->numero1 . $customers->adicionauno.' Nº '.$customers->numero2.$customers->adicional2.' - '.$customers->numero3;
                             $obj_barrio=$this->db->get_where("barrio",array("idBarrio"=>$customers->barrio))->row();

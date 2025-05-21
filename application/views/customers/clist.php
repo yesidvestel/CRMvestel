@@ -318,6 +318,7 @@
 						<th>Abonado</th>
                         <th><?php echo $this->lang->line('Name') ?></th>
 						<th>Celular</th>
+						<th>Celular Ad</th>
 						<th>Cedula</th>
                         <th><?php echo $this->lang->line('Address') ?></th>
                         <th><?php echo $this->lang->line('') ?>Deuda</th>
@@ -337,6 +338,7 @@
 						<th>Abonado</th>
                         <th><?php echo $this->lang->line('Name') ?></th>
 						<th>Celular</th>
+						<th>Celular Ad</th>
 						<th>Cedula</th>
                         <th><?php echo $this->lang->line('Address') ?></th>
                         <th><?php echo $this->lang->line('') ?>Deuda</th>

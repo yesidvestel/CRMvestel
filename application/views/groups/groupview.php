@@ -580,6 +580,7 @@
 					<th class="cedula_th">Cedula</th>
                     <th class="nombre_th"><?php echo $this->lang->line('Name') ?></th>
 					<th class="celular_th">Celular</th>
+					<th class="celular2_th">Celular Ad</th>
                     <th class="Email_th">Correo</th>
                     <th class="direccion_th"><?php echo $this->lang->line('Address') ?></th>
                     <th class="barrio_th">Barrio</th>
@@ -614,6 +615,7 @@
                     <th class="cedula_th">Cedula</th>
                     <th class="nombre_th"><?php echo $this->lang->line('Name') ?></th>
                     <th class="celular_th">Celular</th>
+                    <th class="celular2_th">Celular Ad</th>
                     <th class="Email_th">Correo</th>
                     <th class="direccion_th"><?php echo $this->lang->line('Address') ?></th>
                     <th class="barrio_th">Barrio</th>
