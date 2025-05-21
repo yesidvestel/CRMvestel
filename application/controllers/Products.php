@@ -187,9 +187,10 @@ class Products extends CI_Controller
             }else{
                 $row[] = '<img class="cl-imagen_equipo" data-codigo="'.$prd->codigo.'" style="cursor:pointer" src="'.base_url().'userfiles/support/'.$prd->imagen.'" width="50px;">';              
             }
-            $row[] = '<a href="' . base_url() . 'products/editequipoview?id=' . $prd->id . '" class="btn btn-primary btn-xs"><span class="icon-pencil"></span> ' . $this->lang->line('Edit') . '</a> 
-					  <a href="#" data-object-id="' . $prd->id  . '" class="btn btn-danger btn-xs  delete-object"><span class="icon-bin"></span> ' . $this->lang->line('Delete') . '</a>
-					  <a href="#" data-object-id2="' . $prd->id  . '" class="btn btn-warning clasignar"><span class="icon-arrow-up"></span> ' . $this->lang->line('') . 'Asignar</a>';
+            $row[] = '
+				<a href="' . base_url() . 'products/editequipoview?id=' . $prd->id . '" class="btn btn-primary btn-xs" title="Editar"><span class="icon-pencil"></span></a> 
+				<a href="#" data-object-id="' . $prd->id  . '" class="btn btn-danger btn-xs  delete-object" title="Borrar"><span class="icon-bin"></span></a>
+				<a href="#" data-object-id2="' . $prd->id  . '" class="btn btn-warning btn-xs clasignar" title="Asignar"><span class="icon-arrow-up"></span></a>';
             $data[] = $row;
         }
 		
