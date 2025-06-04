@@ -22,26 +22,20 @@
 								<h4 class="modal-title">Servicios Adicionales Tv</h4>
 							</div>
 							<div class="modal-body" id="body_modal">
-								<?php foreach ($servicios_por_sedes as $key => $value1) { ?>
-									<div id="servs_tv_sede_<?=$value1['title']?>" data-id-sede="<?=$value1['id'] ?>" class="servs_sede_<?=$value1['title']?> serv_sedes">
-										<?php if(count($value1['servicios_tv'])!=0){ 
-													foreach ($value1['servicios_tv'] as $key => $serv) 
-													{?>
-										<div class="form-group row">
-											<label class="col-sm-3 control-label" for="serv_add_<?=$serv['pid']  ?>"><?=$serv['product_name'] ?></label>
-											<div  class="col-sm-9">
-												<select name="serv_add_<?=$serv['pid']  ?>" class="selectpicker form-control select_sedex select_sede_<?=$value1['title']?>">
-													<option value="0">no </option>
-													<?php foreach ($serv['valores'] as $key => $valora1) {
-															echo '<option value="'.$valora1.'">'.$valora1.'</option>';}?>
-												</select>
-												<small></small>
-											</div>
-										</div>
-													<?php } ?>
-												<?php } ?>
-									</div>
-									<?php } ?>
+								<?php if (!empty($servicios_por_sedes['servicios_tv'])) {
+															foreach ($servicios_por_sedes['servicios_tv'] as $serv) { ?>
+																<div class="form-group row">
+																	<label class="col-sm-3 control-label" for="serv_add_<?=$serv['pid']?>"><?=$serv['product_name']?></label>
+																	<div class="col-sm-9">
+																		<select name="serv_add_<?=$serv['pid']?>" class="selectpicker form-control">
+																			<option value="0">no</option>
+																			<?php foreach ($serv['valores'] as $valora1) {
+																				echo '<option value="'.$valora1.'">'.$valora1.'</option>';
+																			} ?>
+																		</select>
+																	</div>
+																</div>
+														<?php } } ?>
 							</div>
                             <div class="modal-footer">
                                 <a data-dismiss="modal" href="#" class="btn btn-success">Guardar</a>
@@ -60,26 +54,20 @@
                                     <h4 class="modal-title">Servicios Adicionales Internet</h4>
                                  </div>
 							   <div class="modal-body" id="body_modal">
-                                    <?php foreach ($servicios_por_sedes as $key => $value1) { ?>
-                                          <div id="servs_internet_sede_<?=$value1['title']?>" class="servs_sede_<?=$value1['title']?> serv_sedes" data-id-sede="<?=$value1['id'] ?>">
-											  <?php if(count($value1['servicios_internet'])!=0){ 
-                                                     foreach ($value1['servicios_internet'] as $key => $serv) {?>
-                                                 <div class="form-group row">
-													 <label class="col-sm-3 control-label"
-                                                          for="serv_add_<?=$serv['pid']  ?>"><?=$serv['product_name'] ?></label>
-                                                      <div  class="col-sm-9">
-                                                           <select name="serv_add_<?=$serv['pid']  ?>" class="selectpicker form-control select_sedex select_sede_<?=$value1['title']?>">
-                                                                <option value="0">no </option>
-                                                                <?php foreach ($serv['valores'] as $key => $valora1) {
-                                                                    echo '<option value="'.$valora1.'">'.$valora1.'</option>';}?>
-                                                             </select>
-														  	<small></small>
-                                                        </div>
-                                                     </div>
-                                                   <?php } ?>
-                                               <?php } ?>
-								   			</div>
-                                            <?php } ?>
+                                    <?php if (!empty($servicios_por_sedes['servicios_internet'])) {
+													foreach ($servicios_por_sedes['servicios_internet'] as $serv) { ?>
+														<div class="form-group row">
+															<label class="col-sm-3 control-label" for="serv_add_<?=$serv['pid']?>"><?=$serv['product_name']?></label>
+															<div class="col-sm-9">
+																<select name="serv_add_<?=$serv['pid']?>" class="selectpicker form-control">
+																	<option value="0">no</option>
+																	<?php foreach ($serv['valores'] as $valora1) {
+																		echo '<option value="'.$valora1.'">'.$valora1.'</option>';
+																	} ?>
+																</select>
+															</div>
+														</div>
+												<?php } } ?>
 							   		</div>
                                     <div class="modal-footer">
                                       <a data-dismiss="modal" href="#" class="btn btn-success">Guardar</a>
