@@ -96,7 +96,9 @@
                     <th><?php echo $this->lang->line('') ?>Asignado a</th>
                     <th><?php echo $this->lang->line('Status') ?></th>
                     <th><?php echo $this->lang->line('') ?>Historial</th>
-					<?php if($this->aauth->get_user()->roleid == 5) { ?>
+					<?php if($this->aauth->get_user()->roleid == 5 || $this->aauth->get_user()->id == 18) { ?>
+                    <th><?php echo $this->lang->line('') ?>Editar</th>
+					<?php } if($this->aauth->get_user()->roleid == 5) { ?>
                     <th>Administrar</th>
 					<?php } ?>
 
