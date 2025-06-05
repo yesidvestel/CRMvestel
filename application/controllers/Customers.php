@@ -700,6 +700,42 @@ public function ajax_graficas2(){
         //output to json format
         echo json_encode($output);
     }
+	public function load_list2()
+    {
+        $list = $this->customers->get_datatables();
+        $data = array();
+        $no = $this->input->post('start');
+        foreach ($list as $customers) {
+			$due=$this->customers->due_details2($customers->id);
+			$debe_cliente=($due['total']-$due['pamnt']);
+            //$escuenta['debit']=$customers->debit;
+            $no++;
+
+            $row = array();
+            $row[] = $no;
+            $row[] = $customers->id;
+            $row[] = $customers->abonado;
+			$row[] = $customers->documento;
+			$row[] = $customers->celular2;
+            $row[] = '<a href="customers/view?id=' . $customers->id . '">' . $customers->name ." ". $customers->unoapellido. '</a>';
+            
+            $row[] = $customers->nomenclatura . ' ' . $customers->numero1 . $customers->adicionauno.' Nº '.$customers->numero2.$customers->adicional2.' - '.$customers->numero3;
+			$row[] = $customers->celular;
+			$row[] = '<span class="st-'.$customers->usu_estado. '">' .$customers->usu_estado. '</span>';
+			$row[] = amountFormat($debe_cliente);
+            $row[] = '<a href="customers/view?id=' . $customers->id . '" class="btn btn-info btn-sm"><span class="icon-eye"></span>  '.$this->lang->line('View').'</a> <a href="customers/edit?id=' . $customers->id . '" class="btn btn-primary btn-sm"><span class="icon-pencil"></span>  '.$this->lang->line('Edit').'</a> <a href="#" data-object-id="' . $customers->id . '" class="btn btn-danger btn-sm delete-object"><span class="icon-bin"></span></a>';
+            $data[] = $row;
+        }
+
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->customers->count_all(),
+            "recordsFiltered" => $this->customers->count_filtered(),
+            "data" => $data,
+        );
+        //output to json format
+        echo json_encode($output);
+    }
     public function load_morosos(){
         ini_set('memory_limit', '250M');
         if($this->input->post('start')!="0"){

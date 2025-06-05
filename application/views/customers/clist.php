@@ -316,16 +316,14 @@
                         <th>#</th>
                         <th>ID</th>
 						<th>Abonado</th>
-                        <th><?php echo $this->lang->line('Name') ?></th>
-						<th>Celular</th>
-						<th>Celular Ad</th>
 						<th>Cedula</th>
+						<th>Celular Ad</th>
+                        <th><?php echo $this->lang->line('Name') ?></th>
                         <th><?php echo $this->lang->line('Address') ?></th>
-                        <th><?php echo $this->lang->line('') ?>Deuda</th>
+						<th>Celular</th>
 						<th id="despues_de_thead">Estado</th>
+                        <th><?php echo $this->lang->line('') ?>Deuda</th>
                         <th><?php echo $this->lang->line('Settings') ?></th>
-
-
                     </tr>
                     </thead>
                     <tbody>
@@ -336,29 +334,19 @@
                         <th>#</th>
                         <th>ID</th>
 						<th>Abonado</th>
-                        <th><?php echo $this->lang->line('Name') ?></th>
-						<th>Celular</th>
-						<th>Celular Ad</th>
 						<th>Cedula</th>
+						<th>Celular Ad</th>
+                        <th><?php echo $this->lang->line('Name') ?></th>
                         <th><?php echo $this->lang->line('Address') ?></th>
+						<th>Celular</th>
+						<th id="despues_de_thead">Estado</th>
                         <th><?php echo $this->lang->line('') ?>Deuda</th>
-						<th id="despues_de_tfoot">Estado</th>
                         <th><?php echo $this->lang->line('Settings') ?></th>
 
 
                     </tr>
                     </tfoot>
                 </table>
-                 <div style="float: right;">Seccionamiento ->
-                    <a  id="pagination_1" data-start="<?=$array_pagination['1']['start']?>" data-end="<?=$array_pagination['1']['end']?>" onclick="filtrar(1)">1&nbsp;&nbsp;&nbsp;&nbsp;</a>
-                    <a  id="pagination_2" data-start="<?=$array_pagination['2']['start']?>" data-end="<?=$array_pagination['2']['end']?>" onclick="filtrar(2)">2&nbsp;&nbsp;&nbsp;&nbsp;</a>
-                    <a  id="pagination_3" data-start="<?=$array_pagination['3']['start']?>" data-end="<?=$array_pagination['3']['end']?>" onclick="filtrar(3)">3&nbsp;&nbsp;&nbsp;&nbsp;</a>
-                    <a  id="pagination_4" data-start="<?=$array_pagination['4']['start']?>" data-end="<?=$array_pagination['4']['end']?>" onclick="filtrar(4)">4&nbsp;&nbsp;&nbsp;&nbsp;</a>
-                    <a  id="pagination_5" data-start="<?=$array_pagination['5']['start']?>" data-end="<?=$array_pagination['5']['end']?>" onclick="filtrar(5)">5&nbsp;&nbsp;&nbsp;&nbsp;</a>
-                    <a  id="pagination_6" data-start="<?=$array_pagination['6']['start']?>" data-end="<?=$array_pagination['6']['end']?>" onclick="filtrar(6)">6&nbsp;&nbsp;&nbsp;&nbsp;</a>
-                    <a  id="pagination_7" data-start="<?=$array_pagination['7']['start']?>" data-end="<?=$array_pagination['7']['end']?>" onclick="filtrar(7)">7&nbsp;&nbsp;&nbsp;&nbsp;</a>
-
-            </div>
             </div>
         </div>
     </div>
@@ -397,7 +385,7 @@
             'stateSave': true,
             'order': [],
             'ajax': {
-                'url': "<?php echo site_url('customers/load_list')?>",
+                'url': "<?php echo site_url('customers/load_list2')?>",
                 'type': 'POST'
             },
             'columnDefs': [
