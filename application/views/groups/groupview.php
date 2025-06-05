@@ -225,6 +225,8 @@
 														<option value='Dado de Baja'>Dado de Baja</option>
 														<option value='Por retirar'>Por retirar</option>
 														<option value='Cuentas dificil cobro'>Cuentas dificil cobro</option>
+													  	<option value="Por definir"><?php echo $this->lang->line('') ?>Por definir</option>
+														<option value="No instalado"><?php echo $this->lang->line('') ?>No instalado</option>
                                                     </select>
 
                                               </div>

@@ -1123,3 +1123,5 @@ ALTER TABLE `documents` ADD `carpeta` INT NOT NULL AFTER `id`;
 
 
 ALTER TABLE `purchase` ADD `recibe` INT NOT NULL AFTER `almacen_seleccionado`, ADD `fcha_recibido` DATETIME NULL AFTER `recibe`;
+
+ALTER TABLE `invoices` CHANGE `ron` `ron` ENUM('Activo','Instalar','Cortado','Suspendido','Exonerado','Cartera','Compromiso','Depurado','Retirado','Anulado','Reportado','Evento','Dado de Baja','Por retirar','Cuentas dificil cobro','No instalado','Por definir') CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL;
