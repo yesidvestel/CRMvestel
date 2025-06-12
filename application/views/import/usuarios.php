@@ -41,6 +41,7 @@
                         <select class="form-control" name="tipo">
 									<option value="Insertar">Insertar</option>
 									<option value="Actualizar">Actualizar</option>
+									<option value="Actualizar Estado">Actualizar Estado</option>
 							   </select>
                     </div>
                 </div>

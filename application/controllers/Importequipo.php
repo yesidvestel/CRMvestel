@@ -271,8 +271,38 @@ class Importequipo extends CI_Controller
                     }
 					}
                     //aumento indice en cada iteracion
-                    $i++;
-                }
+                    $i++;if ($tipo === 'Actualizar Estado') {
+						if ($i != 0 && isset($array[0]) && trim($array[0]) !== '') {
+							$customer_id = trim($array[0]);
+							$nuevo_estado = trim($array[1]);
+
+							// 1. Actualizar estado en tabla customers
+							$this->db->where('id', $customer_id);
+							$this->db->update('customers', ['usu_estado' => $nuevo_estado]);
+
+							// 2. Buscar la última factura recurrente del cliente
+							$sql = "
+								SELECT id
+								FROM invoices
+								WHERE csd = ?
+								  AND tipo_factura = 'Recurrente'
+								ORDER BY invoicedate DESC
+								LIMIT 1
+							";
+							$query = $this->db->query($sql, [$customer_id]);
+							$row = $query->row();
+
+							if ($row) {
+								// 3. Actualizar campo 'ron' con el nuevo estado
+								$this->db->where('id', $row->id);
+								$this->db->update('invoices', ['ron' => $nuevo_estado]);
+							}
+						}
+					}
+
+					// Aumentar el contador de línea
+					$i++;
+				} 
                 fclose($fp);
                 $_SESSION['importacion']=true;
                 redirect(base_url().'Customers/index' , 'refresh');
